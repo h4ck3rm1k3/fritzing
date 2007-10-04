@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.3"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.fritzing.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.fritzing.application"
+            name="Fritzing">
+         <property
+               name="appName"
+               value="Fritzing">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.fritzing.rcp.Perspective"
+            id="org.fritzing.perspective"
+            name="Fritzing Perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            default="true"
+            name="%Fritzing_example_graphical_editor_name"
+            extensions="fritzing"
+            icon="fritzing.gif"
+            class="org.fritzing.FritzingEditor"
+            contributorClass="org.fritzing.actions.FritzingActionBarContributor"
+            id="org.fritzing.fritzingEditor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%Fritzing_wizard_category_name"
+            parentCategory="org.eclipse.ui.Examples"
+            id="org.eclipse.gef.examples">
+      </category>
+      <wizard
+            name="%Fritzing_example_wizard_name"
+            icon="fritzing.gif"
+            category="org.eclipse.ui.Examples/org.eclipse.gef.examples"
+            class="org.fritzing.FritzingCreationWizard"
+            id="org.eclipse.gef.examples.fritzing.wizard.new.file">
+         <description>
+            %Fritzing_example_wizard_description
+         </description>
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+   </extension>
+
+</plugin>
