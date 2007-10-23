@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:gmfgraph="http://www.eclipse.org/gmf/2006/GraphicalDefinition" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_NG_WIIC2EdyRrd9rUayl_Q" type="GMFGraph" measurementUnit="Pixel">
+  <children xmi:type="notation:Node" xmi:id="_NJMVkIC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJM8oIC2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJQnAIC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJQnAYC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJQnAoC2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJQnA4C2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJQnBIC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJMVkYC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#Resistor"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJMVkoC2EdyRrd9rUayl_Q" x="55" y="55"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJQnBYC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJROEIC2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJROEYC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJROEoC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJROE4C2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJROFIC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJROFYC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJQnBoC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#LED"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJQnB4C2EdyRrd9rUayl_Q" x="178" y="55"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJROFoC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJR1IIC2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJR1IYC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJR1IoC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJR1I4C2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJR1JIC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJR1JYC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJROF4C2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#Terminal"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJROGIC2EdyRrd9rUayl_Q" x="301" y="55"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJR1JoC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJR1KYC2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJScMIC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJScMYC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJScMoC2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJScM4C2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJScNIC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJR1J4C2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#Sketch"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJR1KIC2EdyRrd9rUayl_Q" x="427" y="55"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJTDQIC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJTDQ4C2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJTDRIC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJTDRYC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJTDRoC2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJTDR4C2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJTDSIC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJTDQYC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#Module"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJTDQoC2EdyRrd9rUayl_Q" x="672" y="60"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJTqUIC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJTqU4C2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJTqVIC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJTqVYC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJTqVoC2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJTqV4C2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJTqWIC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJTqUYC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#Arduino"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJTqUoC2EdyRrd9rUayl_Q" x="816" y="60"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJTqWYC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJURYIC2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJURYYC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJURYoC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJURY4C2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJURZIC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJURZYC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJTqWoC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#Breadboard"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJTqW4C2EdyRrd9rUayl_Q" x="948" y="48"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJURZoC2EdyRrd9rUayl_Q" type="2006">
+    <children xmi:type="notation:Node" xmi:id="_NJURaYC2EdyRrd9rUayl_Q" type="5006"/>
+    <children xmi:type="notation:Node" xmi:id="_NJU4cIC2EdyRrd9rUayl_Q" type="7006">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJU4cYC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJU4coC2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJU4c4C2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJU4dIC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJURZ4C2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Node" href="fritzing.gmfgraph#Button"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJURaIC2EdyRrd9rUayl_Q" x="1088" y="48"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJU4dYC2EdyRrd9rUayl_Q" type="2007">
+    <children xmi:type="notation:Node" xmi:id="_NJVfgIC2EdyRrd9rUayl_Q" type="5007"/>
+    <children xmi:type="notation:Node" xmi:id="_NJWGkIC2EdyRrd9rUayl_Q" type="7007">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJWGkYC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJWGkoC2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJWGk4C2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJWGlIC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJU4doC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Connection" href="fritzing.gmfgraph#Wire"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJU4d4C2EdyRrd9rUayl_Q" x="-204" y="53"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJWGlYC2EdyRrd9rUayl_Q" type="2007">
+    <children xmi:type="notation:Node" xmi:id="_NJWtoIC2EdyRrd9rUayl_Q" type="5007"/>
+    <children xmi:type="notation:Node" xmi:id="_NJWtoYC2EdyRrd9rUayl_Q" type="7007">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJWtooC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJWto4C2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJWtpIC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJWtpYC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJWGloC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Connection" href="fritzing.gmfgraph#Leg"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJWGl4C2EdyRrd9rUayl_Q" x="-81" y="53"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_NJWtpoC2EdyRrd9rUayl_Q" type="2008">
+    <children xmi:type="notation:Node" xmi:id="_NJX7wIC2EdyRrd9rUayl_Q" type="5009"/>
+    <children xmi:type="notation:Node" xmi:id="_NJYi0IC2EdyRrd9rUayl_Q" type="7008">
+      <children xmi:type="notation:Node" xmi:id="_NJ6uUIC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ7VYIC2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ6uUYC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#WireFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ6uUoC2EdyRrd9rUayl_Q" x="55" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ7VYYC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ7VZIC2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ7VYoC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#LegFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ7VY4C2EdyRrd9rUayl_Q" x="191" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ7VZYC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ78cIC2EdyRrd9rUayl_Q" type="5008"/>
+        <children xmi:type="notation:Node" xmi:id="_NKJX0IC2EdyRrd9rUayl_Q" type="3010">
+          <children xmi:type="notation:Node" xmi:id="_E-TTgIGBEdyIkZMw-3sjHw" type="3011">
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_E-TTgYGBEdyIkZMw-3sjHw" fontName="Segoe UI"/>
+            <element xmi:type="gmfgraph:Rectangle" href="fritzing.gmfgraph#//@figures.0/@descriptors.2/@actualFigure/@children.1"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_E-TTgoGBEdyIkZMw-3sjHw" x="28" y="18"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_NKJX0YC2EdyRrd9rUayl_Q" fontName="Segoe UI" fillColor="8905185"/>
+          <element xmi:type="gmfgraph:Rectangle" href="fritzing.gmfgraph#//@figures.0/@descriptors.2/@actualFigure"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NKJX0oC2EdyRrd9rUayl_Q" width="20" height="20"/>
+        </children>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ7VZoC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#ResistorFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ7VZ4C2EdyRrd9rUayl_Q" x="322" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ78cYC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ78dIC2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ78coC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#LEDFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ78c4C2EdyRrd9rUayl_Q" x="475" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ78dYC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ8jgIC2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ78doC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#TerminalFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ78d4C2EdyRrd9rUayl_Q" x="607" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ8jgYC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ8jhIC2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ8jgoC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#SketchFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ8jg4C2EdyRrd9rUayl_Q" x="766" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ8jhYC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ9KkYC2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ8jhoC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#ModuleFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ9KkIC2EdyRrd9rUayl_Q" x="913" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ9KkoC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ9KlYC2EdyRrd9rUayl_Q" type="5008"/>
+        <children xmi:type="notation:Node" xmi:id="_NKmDwIC2EdyRrd9rUayl_Q" type="3010">
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_NKmDwYC2EdyRrd9rUayl_Q" fontName="Segoe UI" fillColor="8404992"/>
+          <element xmi:type="gmfgraph:Rectangle" href="fritzing.gmfgraph#//@figures.0/@descriptors.7/@actualFigure"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NKmDwoC2EdyRrd9rUayl_Q" width="20" height="20"/>
+        </children>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ9Kk4C2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#ArduinoFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ9KlIC2EdyRrd9rUayl_Q" x="1066" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ9xoIC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ9xo4C2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ9xoYC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#BreadboardFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ9xooC2EdyRrd9rUayl_Q" x="1221" y="55"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_NJ9xpIC2EdyRrd9rUayl_Q" type="3009">
+        <children xmi:type="notation:Node" xmi:id="_NJ9xp4C2EdyRrd9rUayl_Q" type="5008"/>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_NJ9xpYC2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+        <element xmi:type="gmfgraph:FigureDescriptor" href="fritzing.gmfgraph#ButtonFigure"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJ9xpoC2EdyRrd9rUayl_Q" x="1394" y="55"/>
+      </children>
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_NJYi0YC2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_NJYi0oC2EdyRrd9rUayl_Q" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_NJYi04C2EdyRrd9rUayl_Q"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_NJYi1IC2EdyRrd9rUayl_Q"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_NJWtp4C2EdyRrd9rUayl_Q" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:FigureGallery" href="fritzing.gmfgraph#Physical"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_NJWtqIC2EdyRrd9rUayl_Q" x="-276" y="-168"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_pf_8kIGGEdyIkZMw-3sjHw" type="2005">
+    <children xmi:type="notation:Node" xmi:id="_pgAjoIGGEdyIkZMw-3sjHw" type="5005"/>
+    <children xmi:type="notation:Node" xmi:id="_pgBKsIGGEdyIkZMw-3sjHw" type="7005">
+      <styles xmi:type="notation:DrawerStyle" xmi:id="_pgBKsYGGEdyIkZMw-3sjHw"/>
+      <styles xmi:type="notation:TitleStyle" xmi:id="_pgBKsoGGEdyIkZMw-3sjHw" showTitle="true"/>
+      <styles xmi:type="notation:SortingStyle" xmi:id="_pgBKs4GGEdyIkZMw-3sjHw"/>
+      <styles xmi:type="notation:FilteringStyle" xmi:id="_pgBKtIGGEdyIkZMw-3sjHw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_pf_8kYGGEdyIkZMw-3sjHw" fontName="Segoe UI"/>
+    <element xmi:type="gmfgraph:Compartment" href="fritzing.gmfgraph#ModuleCompartment"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_pf_8koGGEdyIkZMw-3sjHw" x="540" y="120"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_NG_WIYC2EdyRrd9rUayl_Q"/>
+  <element xmi:type="gmfgraph:Canvas" href="fritzing.gmfgraph#fritzing"/>
+</notation:Diagram>
