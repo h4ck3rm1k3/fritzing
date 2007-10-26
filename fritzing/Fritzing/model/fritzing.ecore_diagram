@@ -342,7 +342,18 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_drPoIIC1EdyRrd9rUayl_Q" fontName="Segoe UI"/>
     <element xmi:type="ecore:EClass" href="fritzing.ecore#//Arduino"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_drPoIYC1EdyRrd9rUayl_Q" x="648" y="360" width="121" height="61"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_drPoIYC1EdyRrd9rUayl_Q" x="660" y="360" width="121" height="61"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_dZ22sIPiEdyFTf9OdsdlcQ" type="Note">
+    <children xmi:type="notation:Node" xmi:id="_dZ4E0IPiEdyFTf9OdsdlcQ" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_dZ4E0YPiEdyFTf9OdsdlcQ" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_dZ3dwIPiEdyFTf9OdsdlcQ" fontName="Segoe UI" fontHeight="8" description="Arduino should be a child of Module, but that currently produces an error in the UI" fillColor="13369343" lineColor="6737151"/>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dZ3dwYPiEdyFTf9OdsdlcQ" x="804" y="360" width="133"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_iVZ9oXaPEdyqQY0mUTMiug"/>
   <element xmi:type="ecore:EPackage" href="fritzing.ecore#/"/>
@@ -492,11 +503,18 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dl9tc32qEdya3dZy2YHfBA" points="[78, 0, 38, 130]$[136, 0, 96, 130]$[90, -130, 50, 0]$[43, -130, 3, 0]"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_lKsqMH2qEdya3dZy2YHfBA" id="(0.97931033,0.16923077)"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_drccYIC1EdyRrd9rUayl_Q" type="4004" source="_drPoEIC1EdyRrd9rUayl_Q" target="_CwpeYHsZEdy3N5BxjibVOw">
+  <edges xmi:type="notation:Edge" xmi:id="_drccYIC1EdyRrd9rUayl_Q" type="4004" source="_drPoEIC1EdyRrd9rUayl_Q" target="_ixPlEHaPEdyqQY0mUTMiug">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_drccYYC1EdyRrd9rUayl_Q"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_drccYoC1EdyRrd9rUayl_Q" fontName="Segoe UI"/>
     <element xsi:nil="true"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_drccY4C1EdyRrd9rUayl_Q" points="[0, 0, -708, -197]$[636, 177, -72, -20]"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_e-95wIC1EdyRrd9rUayl_Q" id="(0.49586776,0.9672131)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_e-95wIC1EdyRrd9rUayl_Q" id="(0.59310347,0.9830508)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_ks0uAIPiEdyFTf9OdsdlcQ" type="NoteAttachment" source="_drPoEIC1EdyRrd9rUayl_Q" target="_dZ22sIPiEdyFTf9OdsdlcQ">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_ks0uAYPiEdyFTf9OdsdlcQ"/>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ks0uAoPiEdyFTf9OdsdlcQ" points="[0, -6, -60, 0]$[51, -7, -9, -1]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ks2jMIPiEdyFTf9OdsdlcQ" id="(1.0,0.59016395)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ks2jMYPiEdyFTf9OdsdlcQ" id="(0.054545455,0.41428572)"/>
   </edges>
 </notation:Diagram>

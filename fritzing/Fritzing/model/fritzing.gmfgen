@@ -2,8 +2,7 @@
 <gmfgen:GenEditorGenerator xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:gmfgen="http://www.eclipse.org/gmf/2006/GenModel" diagramFileExtension="fbb"
-    copyrightText="(c) FH Potsdam">
+    xmlns:gmfgen="http://www.eclipse.org/gmf/2006/GenModel" copyrightText="(c) Fachhochschule Potsdam">
   <diagram
       visualID="1000"
       editPartClassName="SketchEditPart"
@@ -23,14 +22,15 @@
     <domainDiagramElement
         href="fritzing.genmodel#//fritzing/Sketch"/>
     <childNodes
+        xsi:type="gmfgen:GenChildSideAffixedNode"
         visualID="3001"
-        editPartClassName="Resistor2EditPart"
-        itemSemanticEditPolicyClassName="Resistor2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="Resistor2ViewFactory"
-        canonicalEditPolicyClassName="Resistor2CanonicalEditPolicy"
-        graphicalNodeEditPolicyClassName="Resistor2GraphicalNodeEditPolicy"
-        createCommandClassName="Resistor2CreateCommand"
-        containers="//@diagram/@topLevelNodes.0 //@diagram/@topLevelNodes.1 //@diagram/@topLevelNodes.2 //@diagram/@topLevelNodes.3 //@diagram/@topLevelNodes.5 //@diagram/@topLevelNodes.6">
+        editPartClassName="Terminal2EditPart"
+        itemSemanticEditPolicyClassName="Terminal2ItemSemanticEditPolicy"
+        notationViewFactoryClassName="Terminal2ViewFactory"
+        canonicalEditPolicyClassName="Terminal2CanonicalEditPolicy"
+        graphicalNodeEditPolicyClassName="Terminal2GraphicalNodeEditPolicy"
+        createCommandClassName="Terminal2CreateCommand"
+        containers="//@diagram/@topLevelNodes.0 //@diagram/@topLevelNodes.1 //@diagram/@topLevelNodes.2 //@diagram/@topLevelNodes.3 //@diagram/@topLevelNodes.4 //@diagram/@topLevelNodes.5">
       <diagramRunTimeClass
           href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
       <elementType
@@ -39,10 +39,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="TerminalFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminalFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureTerminalNameFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminalFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;this.setMaximumSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;this.setMinimumSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureTerminalNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureTerminalNameFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureTerminalNameFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureTerminalNameFigure() {&#xA;&#x9;&#x9;return fFigureTerminalNameFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminalFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminalFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setForegroundColor(THIS_FORE&#xA;);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_FORE = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
             fixedBackground="true"/>
+        <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="5"
@@ -58,16 +61,19 @@
             href="fritzing.genmodel#//fritzing/Part/terminals"/>
       </modelFacet>
       <labels
-          visualID="5006"
+          xsi:type="gmfgen:GenExternalNodeLabel"
+          visualID="5001"
           editPartClassName="TerminalName2EditPart"
           itemSemanticEditPolicyClassName="TerminalName2ItemSemanticEditPolicy"
           notationViewFactoryClassName="TerminalName2ViewFactory">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
-            xsi:type="gmfgen:ParentAssignedViewmap"
-            getterName="getFigureTerminalNameFigure"
-            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel"/>
+            xsi:type="gmfgen:InnerClassViewmap"
+            className="TerminalNameFigure"
+            classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminalNameFigure extends org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminalNameFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setText(&quot;&lt;...>&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
+        </viewmap>
         <modelFacet
             xsi:type="gmfgen:FeatureLabelModelFacet">
           <metaFeatures
@@ -77,59 +83,6 @@
     </childNodes>
     <topLevelNodes
         visualID="2001"
-        editPartClassName="LEDEditPart"
-        itemSemanticEditPolicyClassName="LEDItemSemanticEditPolicy"
-        notationViewFactoryClassName="LEDViewFactory"
-        canonicalEditPolicyClassName="LEDCanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.0"
-        graphicalNodeEditPolicyClassName="LEDGraphicalNodeEditPolicy"
-        createCommandClassName="LEDCreateCommand">
-      <diagramRunTimeClass
-          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
-      <elementType
-          xsi:type="gmfgen:MetamodelType"
-          editHelperClassName="LEDEditHelper"/>
-      <viewmap
-          xsi:type="gmfgen:InnerClassViewmap"
-          className="LEDFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class LEDFigure extends org.eclipse.draw2d.Ellipse {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureLEDIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public LEDFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;this.setMaximumSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;this.setLocation(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureLEDIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureLEDIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureLEDIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureLEDIdFigure() {&#xA;&#x9;&#x9;return fFigureLEDIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 255, 0, 0);&#xA;&#xA;">
-        <attributes
-            xsi:type="gmfgen:StyleAttributes"
-            fixedBackground="true"/>
-        <attributes
-            xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
-        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
-      </viewmap>
-      <modelFacet>
-        <metaClass
-            href="fritzing.genmodel#//fritzing/LED"/>
-        <containmentMetaFeature
-            href="fritzing.genmodel#//fritzing/Composite/parts"/>
-        <childMetaFeature
-            href="fritzing.genmodel#//fritzing/Composite/parts"/>
-      </modelFacet>
-      <labels
-          visualID="5001"
-          editPartClassName="LEDIdEditPart"
-          itemSemanticEditPolicyClassName="LEDIdItemSemanticEditPolicy"
-          notationViewFactoryClassName="LEDIdViewFactory">
-        <diagramRunTimeClass
-            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
-        <viewmap
-            xsi:type="gmfgen:ParentAssignedViewmap"
-            getterName="getFigureLEDIdFigure"
-            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel"/>
-        <modelFacet
-            xsi:type="gmfgen:FeatureLabelModelFacet">
-          <metaFeatures
-              href="fritzing.genmodel#//fritzing/Element/id"/>
-        </modelFacet>
-      </labels>
-    </topLevelNodes>
-    <topLevelNodes
-        visualID="2002"
         editPartClassName="ModuleEditPart"
         itemSemanticEditPolicyClassName="ModuleItemSemanticEditPolicy"
         notationViewFactoryClassName="ModuleViewFactory"
@@ -179,14 +132,14 @@
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2003"
-        editPartClassName="Sketch2EditPart"
-        itemSemanticEditPolicyClassName="Sketch2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="Sketch2ViewFactory"
-        canonicalEditPolicyClassName="Sketch2CanonicalEditPolicy"
+        visualID="2002"
+        editPartClassName="ArduinoEditPart"
+        itemSemanticEditPolicyClassName="ArduinoItemSemanticEditPolicy"
+        notationViewFactoryClassName="ArduinoViewFactory"
+        canonicalEditPolicyClassName="ArduinoCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.0"
-        graphicalNodeEditPolicyClassName="SketchGraphicalNodeEditPolicy"
-        createCommandClassName="SketchCreateCommand">
+        graphicalNodeEditPolicyClassName="ArduinoGraphicalNodeEditPolicy"
+        createCommandClassName="ArduinoCreateCommand">
       <diagramRunTimeClass
           href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
       <elementType
@@ -195,14 +148,17 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ArduinoFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ArduinoFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureArduinoIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ArduinoFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(300)&#xA;, getMapMode().DPtoLP(500)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureArduinoIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureArduinoIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureArduinoIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureArduinoIdFigure() {&#xA;&#x9;&#x9;return fFigureArduinoIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 0, 64, 128);&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ArduinoFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureArduinoIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ArduinoFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setForegroundColor(THIS_FORE&#xA;);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(300)&#xA;, getMapMode().DPtoLP(400)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureArduinoIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureArduinoIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureArduinoIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureArduinoIdFigure() {&#xA;&#x9;&#x9;return fFigureArduinoIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_FORE = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 20, 70, 120);&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
             fixedBackground="true"/>
+        <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="300"
-            height="500"/>
+            height="400"/>
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
       <modelFacet>
@@ -212,12 +168,250 @@
             href="fritzing.genmodel#//fritzing/Composite/parts"/>
         <childMetaFeature
             href="fritzing.genmodel#//fritzing/Composite/parts"/>
+        <modelElementInitializer
+            xsi:type="gmfgen:GenFeatureSeqInitializer">
+          <initializers
+              xsi:type="gmfgen:GenReferenceNewElementSpec">
+            <feature
+                href="fritzing.genmodel#//fritzing/Part/terminals"/>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'RESET'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'3V3'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'5V'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'Gnd'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'Gnd'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'Vin'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'A0'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'A1'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'A2'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'A3'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'A4'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'A5'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D0'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D1'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D2'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D3'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D4'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D5'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D6'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D7'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D8'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D9'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D10'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D11'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D12'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'D13'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'GND'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'AREF'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+          </initializers>
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              body="'Arduino Diecimila'">
+            <feature
+                href="fritzing.genmodel#//fritzing/Element/id"/>
+          </initializers>
+        </modelElementInitializer>
       </modelFacet>
       <labels
           visualID="5003"
-          editPartClassName="SketchIdEditPart"
-          itemSemanticEditPolicyClassName="SketchIdItemSemanticEditPolicy"
-          notationViewFactoryClassName="SketchIdViewFactory">
+          editPartClassName="ArduinoIdEditPart"
+          itemSemanticEditPolicyClassName="ArduinoIdItemSemanticEditPolicy"
+          notationViewFactoryClassName="ArduinoIdViewFactory">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -232,7 +426,7 @@
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2004"
+        visualID="2003"
         editPartClassName="BreadboardEditPart"
         itemSemanticEditPolicyClassName="BreadboardItemSemanticEditPolicy"
         notationViewFactoryClassName="BreadboardViewFactory"
@@ -248,14 +442,15 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="BreadboardFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class BreadboardFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureBreadboardIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public BreadboardFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(200)&#xA;, getMapMode().DPtoLP(500)&#xA;));&#xA;this.setLocation(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureBreadboardIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureBreadboardIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureBreadboardIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureBreadboardIdFigure() {&#xA;&#x9;&#x9;return fFigureBreadboardIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 225, 225, 225);&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class BreadboardFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureBreadboardIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public BreadboardFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setForegroundColor(THIS_FORE&#xA;);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(200)&#xA;, getMapMode().DPtoLP(400)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureBreadboardIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureBreadboardIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureBreadboardIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureBreadboardIdFigure() {&#xA;&#x9;&#x9;return fFigureBreadboardIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_FORE = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 225, 225, 225);&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
             fixedBackground="true"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="200"
-            height="500"/>
+            height="400"/>
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
       <modelFacet>
@@ -285,59 +480,93 @@
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2005"
-        editPartClassName="TerminalEditPart"
-        itemSemanticEditPolicyClassName="TerminalItemSemanticEditPolicy"
-        notationViewFactoryClassName="TerminalViewFactory"
-        canonicalEditPolicyClassName="TerminalCanonicalEditPolicy"
-        graphicalNodeEditPolicyClassName="TerminalGraphicalNodeEditPolicy"
-        createCommandClassName="TerminalCreateCommand">
+        visualID="2004"
+        editPartClassName="LEDEditPart"
+        itemSemanticEditPolicyClassName="LEDItemSemanticEditPolicy"
+        notationViewFactoryClassName="LEDViewFactory"
+        canonicalEditPolicyClassName="LEDCanonicalEditPolicy"
+        childNodes="//@diagram/@childNodes.0"
+        graphicalNodeEditPolicyClassName="LEDGraphicalNodeEditPolicy"
+        createCommandClassName="LEDCreateCommand">
       <diagramRunTimeClass
           href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
       <elementType
-          xsi:type="gmfgen:SpecializationType"
-          metamodelType="//@diagram/@childNodes.0/@elementType"/>
+          xsi:type="gmfgen:MetamodelType"
+          editHelperClassName="LEDEditHelper"/>
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
-          className="TerminalFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminalFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureTerminalNameFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminalFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;this.setMaximumSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;this.setMinimumSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureTerminalNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureTerminalNameFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureTerminalNameFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureTerminalNameFigure() {&#xA;&#x9;&#x9;return fFigureTerminalNameFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;">
+          className="LEDFigure"
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class LEDFigure extends org.eclipse.draw2d.Ellipse {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureLEDIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public LEDFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setForegroundColor(THIS_FORE&#xA;);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureLEDIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureLEDIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureLEDIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureLEDIdFigure() {&#xA;&#x9;&#x9;return fFigureLEDIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_FORE = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 255, 50, 50);&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
             fixedBackground="true"/>
         <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
+        <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="5"
-            height="5"/>
+            width="20"
+            height="20"/>
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
       <modelFacet>
         <metaClass
-            href="fritzing.genmodel#//fritzing/Terminal"/>
+            href="fritzing.genmodel#//fritzing/LED"/>
         <containmentMetaFeature
-            href="fritzing.genmodel#//fritzing/Part/terminals"/>
+            href="fritzing.genmodel#//fritzing/Composite/parts"/>
         <childMetaFeature
-            href="fritzing.genmodel#//fritzing/Part/terminals"/>
+            href="fritzing.genmodel#//fritzing/Composite/parts"/>
+        <modelElementInitializer
+            xsi:type="gmfgen:GenFeatureSeqInitializer">
+          <initializers
+              xsi:type="gmfgen:GenReferenceNewElementSpec">
+            <feature
+                href="fritzing.genmodel#//fritzing/Part/terminals"/>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'+'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'-'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+          </initializers>
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              body="'L'">
+            <feature
+                href="fritzing.genmodel#//fritzing/Element/id"/>
+          </initializers>
+        </modelElementInitializer>
       </modelFacet>
       <labels
           visualID="5005"
-          editPartClassName="TerminalNameEditPart"
-          itemSemanticEditPolicyClassName="TerminalNameItemSemanticEditPolicy"
-          notationViewFactoryClassName="TerminalNameViewFactory">
+          editPartClassName="LEDIdEditPart"
+          itemSemanticEditPolicyClassName="LEDIdItemSemanticEditPolicy"
+          notationViewFactoryClassName="LEDIdViewFactory">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
             xsi:type="gmfgen:ParentAssignedViewmap"
-            getterName="getFigureTerminalNameFigure"
+            getterName="getFigureLEDIdFigure"
             figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel"/>
         <modelFacet
             xsi:type="gmfgen:FeatureLabelModelFacet">
           <metaFeatures
-              href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              href="fritzing.genmodel#//fritzing/Element/id"/>
         </modelFacet>
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2006"
+        visualID="2005"
         editPartClassName="ResistorEditPart"
         itemSemanticEditPolicyClassName="ResistorItemSemanticEditPolicy"
         notationViewFactoryClassName="ResistorViewFactory"
@@ -353,14 +582,17 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ResistorFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ResistorFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureResistorIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ResistorFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureResistorIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureResistorIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureResistorIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureResistorIdFigure() {&#xA;&#x9;&#x9;return fFigureResistorIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 225, 225, 135);&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ResistorFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureResistorIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ResistorFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setForegroundColor(THIS_FORE&#xA;);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(30)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureResistorIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureResistorIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureResistorIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureResistorIdFigure() {&#xA;&#x9;&#x9;return fFigureResistorIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_FORE = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 135, 225, 225);&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
             fixedBackground="true"/>
         <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
+        <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="30"
+            height="15"/>
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
       <modelFacet>
@@ -370,9 +602,39 @@
             href="fritzing.genmodel#//fritzing/Composite/parts"/>
         <childMetaFeature
             href="fritzing.genmodel#//fritzing/Composite/parts"/>
+        <modelElementInitializer
+            xsi:type="gmfgen:GenFeatureSeqInitializer">
+          <initializers
+              xsi:type="gmfgen:GenReferenceNewElementSpec">
+            <feature
+                href="fritzing.genmodel#//fritzing/Part/terminals"/>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'0'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'1'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+          </initializers>
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              body="'R'">
+            <feature
+                href="fritzing.genmodel#//fritzing/Element/id"/>
+          </initializers>
+        </modelElementInitializer>
       </modelFacet>
       <labels
-          visualID="5007"
+          visualID="5006"
           editPartClassName="ResistorIdEditPart"
           itemSemanticEditPolicyClassName="ResistorIdItemSemanticEditPolicy"
           notationViewFactoryClassName="ResistorIdViewFactory">
@@ -390,7 +652,7 @@
       </labels>
     </topLevelNodes>
     <topLevelNodes
-        visualID="2007"
+        visualID="2006"
         editPartClassName="ButtonEditPart"
         itemSemanticEditPolicyClassName="ButtonItemSemanticEditPolicy"
         notationViewFactoryClassName="ButtonViewFactory"
@@ -406,10 +668,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ButtonFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ButtonFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureButtonIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ButtonFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;this.setLocation(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureButtonIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureButtonIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureButtonIdFigure);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse elli0 = new org.eclipse.draw2d.Ellipse();&#xA;&#x9;elli0.setBackgroundColor(ELLI0_BACK&#xA;);&#xA;elli0.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(-1)&#xA;, getMapMode().DPtoLP(-1)&#xA;));&#xA;elli0.setLocation(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(44)&#xA;, getMapMode().DPtoLP(19)&#xA;));&#xA;&#xA;this.add(elli0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureButtonIdFigure() {&#xA;&#x9;&#x9;return fFigureButtonIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 128, 128, 128);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color ELLI0_BACK = new org.eclipse.swt.graphics.Color(null, 192, 192, 192);&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ButtonFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureButtonIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ButtonFigure() {&#xA;&#x9;&#x9;&#xA;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;&#x9;this.setForegroundColor(THIS_FORE&#xA;);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureButtonIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureButtonIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureButtonIdFigure);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse elli0 = new org.eclipse.draw2d.Ellipse();&#xA;&#x9;elli0.setBackgroundColor(ELLI0_BACK&#xA;);&#xA;&#xA;this.add(elli0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureButtonIdFigure() {&#xA;&#x9;&#x9;return fFigureButtonIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_FORE = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 128, 128, 128);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color ELLI0_BACK = new org.eclipse.swt.graphics.Color(null, 192, 192, 192);&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
             fixedBackground="true"/>
+        <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="20"
@@ -423,9 +688,55 @@
             href="fritzing.genmodel#//fritzing/Composite/parts"/>
         <childMetaFeature
             href="fritzing.genmodel#//fritzing/Composite/parts"/>
+        <modelElementInitializer
+            xsi:type="gmfgen:GenFeatureSeqInitializer">
+          <initializers
+              xsi:type="gmfgen:GenReferenceNewElementSpec">
+            <feature
+                href="fritzing.genmodel#//fritzing/Part/terminals"/>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'0'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'1'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'0'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+            <newElementInitializers>
+              <initializers
+                  xsi:type="gmfgen:GenFeatureValueSpec"
+                  body="'1'">
+                <feature
+                    href="fritzing.genmodel#//fritzing/Terminal/name"/>
+              </initializers>
+            </newElementInitializers>
+          </initializers>
+          <initializers
+              xsi:type="gmfgen:GenFeatureValueSpec"
+              body="'B'">
+            <feature
+                href="fritzing.genmodel#//fritzing/Element/id"/>
+          </initializers>
+        </modelElementInitializer>
       </modelFacet>
       <labels
-          visualID="5008"
+          visualID="5007"
           editPartClassName="ButtonIdEditPart"
           itemSemanticEditPolicyClassName="ButtonIdItemSemanticEditPolicy"
           notationViewFactoryClassName="ButtonIdViewFactory">
@@ -439,6 +750,64 @@
             xsi:type="gmfgen:FeatureLabelModelFacet">
           <metaFeatures
               href="fritzing.genmodel#//fritzing/Element/id"/>
+        </modelFacet>
+      </labels>
+    </topLevelNodes>
+    <topLevelNodes
+        visualID="2007"
+        editPartClassName="TerminalEditPart"
+        itemSemanticEditPolicyClassName="TerminalItemSemanticEditPolicy"
+        notationViewFactoryClassName="TerminalViewFactory"
+        canonicalEditPolicyClassName="TerminalCanonicalEditPolicy"
+        graphicalNodeEditPolicyClassName="TerminalGraphicalNodeEditPolicy"
+        createCommandClassName="TerminalCreateCommand">
+      <diagramRunTimeClass
+          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+      <elementType
+          xsi:type="gmfgen:SpecializationType"
+          metamodelType="//@diagram/@childNodes.0/@elementType"/>
+      <viewmap
+          xsi:type="gmfgen:InnerClassViewmap"
+          className="TerminalFigure"
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminalFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminalFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;this.setForegroundColor(THIS_FORE&#xA;);&#xA;&#x9;this.setBackgroundColor(THIS_BACK&#xA;);&#xA;this.setPreferredSize(new org.eclipse.draw2d.geometry.Dimension(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private boolean myUseLocalCoordinates = false;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected boolean useLocalCoordinates() {&#xA;&#x9;&#x9;return myUseLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;protected void setUseLocalCoordinates(boolean useLocalCoordinates) {&#xA;&#x9;&#x9;myUseLocalCoordinates = useLocalCoordinates;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_FORE = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Color THIS_BACK = new org.eclipse.swt.graphics.Color(null, 0, 0, 0);&#xA;&#xA;">
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
+            fixedBackground="true"/>
+        <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
+        <attributes
+            xsi:type="gmfgen:DefaultSizeAttributes"
+            width="5"
+            height="5"/>
+        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
+      </viewmap>
+      <modelFacet>
+        <metaClass
+            href="fritzing.genmodel#//fritzing/Terminal"/>
+        <containmentMetaFeature
+            href="fritzing.genmodel#//fritzing/Part/terminals"/>
+        <childMetaFeature
+            href="fritzing.genmodel#//fritzing/Part/terminals"/>
+      </modelFacet>
+      <labels
+          xsi:type="gmfgen:GenExternalNodeLabel"
+          visualID="5008"
+          editPartClassName="TerminalNameEditPart"
+          itemSemanticEditPolicyClassName="TerminalNameItemSemanticEditPolicy"
+          notationViewFactoryClassName="TerminalNameViewFactory">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:InnerClassViewmap"
+            className="TerminalNameFigure"
+            classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminalNameFigure extends org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminalNameFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setText(&quot;&lt;...>&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
+        </viewmap>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet">
+          <metaFeatures
+              href="fritzing.genmodel#//fritzing/Terminal/name"/>
         </modelFacet>
       </labels>
     </topLevelNodes>
@@ -457,7 +826,7 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="WireFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class WireFigure extends org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureWireIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public WireFigure() {&#xA;&#x9;&#x9;this.setLineWidth(3);&#xA;this.setLineStyle(org.eclipse.draw2d.Graphics.LINE_CUSTOM);&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureWireIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureWireIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureWireIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureWireIdFigure() {&#xA;&#x9;&#x9;return fFigureWireIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class WireFigure extends org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureWireIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public WireFigure() {&#xA;&#x9;&#x9;this.setLineWidth(3);&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureWireIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureWireIdFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureWireIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureWireIdFigure() {&#xA;&#x9;&#x9;return fFigureWireIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
       </viewmap>
       <modelFacet
@@ -485,8 +854,7 @@
             getterName="getFigureWireIdFigure"
             figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel">
           <attributes
-              xsi:type="gmfgen:LabelOffsetAttributes"
-              y="40"/>
+              xsi:type="gmfgen:LabelOffsetAttributes"/>
         </viewmap>
         <modelFacet
             xsi:type="gmfgen:FeatureLabelModelFacet">
@@ -494,28 +862,6 @@
               href="fritzing.genmodel#//fritzing/Element/id"/>
         </modelFacet>
       </labels>
-    </links>
-    <links
-        visualID="4002"
-        editPartClassName="PartTerminalsEditPart"
-        itemSemanticEditPolicyClassName="PartTerminalsItemSemanticEditPolicy"
-        notationViewFactoryClassName="PartTerminalsViewFactory"
-        createCommandClassName="PartTerminalsCreateCommand"
-        reorientCommandClassName="PartTerminalsReorientCommand">
-      <diagramRunTimeClass
-          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Edge"/>
-      <elementType
-          xsi:type="gmfgen:SpecializationType"/>
-      <viewmap
-          xsi:type="gmfgen:FigureViewmap"
-          figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx">
-        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
-      </viewmap>
-      <modelFacet
-          xsi:type="gmfgen:FeatureLinkModelFacet">
-        <metaFeature
-            href="fritzing.genmodel#//fritzing/Part/terminals"/>
-      </modelFacet>
     </links>
     <palette>
       <groups
@@ -525,85 +871,64 @@
             title="Wire"
             description="Create new Wire"
             genLinks="//@diagram/@links.0"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Terminal"
-            description="Create new Terminal"
-            genNodes="//@diagram/@childNodes.0 //@diagram/@topLevelNodes.4"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Leg"
-            description="Create new Leg"
-            genLinks="//@diagram/@links.1"/>
       </groups>
       <groups
           title="Parts"
           collapse="true">
         <entries
             xsi:type="gmfgen:ToolEntry"
-            title="Breadboard"
-            description="Create new Breadboard"
-            genNodes="//@diagram/@topLevelNodes.3"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Module"
-            description="Create new Module"
-            genNodes="//@diagram/@topLevelNodes.1"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
             title="Arduino"
             description="Create new Arduino"
-            genNodes="//@diagram/@topLevelNodes.2"/>
+            genNodes="//@diagram/@topLevelNodes.1"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Resistor"
             description="Create new Resistor"
-            genNodes="//@diagram/@topLevelNodes.5"/>
+            genNodes="//@diagram/@topLevelNodes.4"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="LED"
             description="Create new LED"
-            genNodes="//@diagram/@topLevelNodes.0"/>
+            genNodes="//@diagram/@topLevelNodes.3"/>
         <entries
             xsi:type="gmfgen:ToolEntry"
             title="Button"
             description="Create new Button"
-            genNodes="//@diagram/@topLevelNodes.6"/>
+            genNodes="//@diagram/@topLevelNodes.5"/>
       </groups>
     </palette>
     <preferencePages
         xsi:type="gmfgen:GenStandardPreferencePage"
-        iD="FritzingGMF.diagram.general"
+        iD="Fritzing.diagram.general"
         name="Fritzing Diagram">
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="FritzingGMF.diagram.appearance"
+          iD="Fritzing.diagram.appearance"
           name="Appearance"
           kind="Appearance"/>
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="FritzingGMF.diagram.connections"
+          iD="Fritzing.diagram.connections"
           name="Connections"
           kind="Connections"/>
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="FritzingGMF.diagram.printing"
+          iD="Fritzing.diagram.printing"
           name="Printing"
           kind="Printing"/>
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="FritzingGMF.diagram.rulersAndGrid"
+          iD="Fritzing.diagram.rulersAndGrid"
           name="Rulers And Grid"
           kind="RulersAndGrid"/>
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="FritzingGMF.diagram.pathmaps"
+          iD="Fritzing.diagram.pathmaps"
           name="Pathmaps"
           kind="Pathmaps"/>
     </preferencePages>
   </diagram>
-  <plugin
-      provider="Fritzing Plugin Provider"/>
+  <plugin/>
   <editor/>
   <diagramUpdater/>
   <propertySheet>
@@ -856,4 +1181,9 @@
   </application>
   <domainGenModel
       href="fritzing.genmodel#/"/>
+  <expressionProviders>
+    <providers
+        xsi:type="gmfgen:GenExpressionInterpreter"
+        expressions="//@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.2/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.3/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.4/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.5/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.6/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.7/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.8/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.9/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.10/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.11/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.12/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.13/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.14/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.15/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.16/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.17/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.18/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.19/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.20/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.21/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.22/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.23/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.24/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.25/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.26/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.27/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.4/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.4/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.4/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.5/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.5/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.5/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.2/@initializers.0 //@diagram/@topLevelNodes.5/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.3/@initializers.0 //@diagram/@topLevelNodes.5/@modelFacet/@modelElementInitializer/@initializers.1"/>
+  </expressionProviders>
 </gmfgen:GenEditorGenerator>

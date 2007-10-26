@@ -10,8 +10,7 @@
       <actualFigure
           xsi:type="gmfgraph:PolylineConnection"
           name="WireFigure"
-          lineWidth="3"
-          lineKind="LINE_CUSTOM">
+          lineWidth="3">
         <children
             xsi:type="gmfgraph:Label"
             name="WireIdFigure"
@@ -21,47 +20,43 @@
           figure="//@figures.0/@descriptors.0/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
-        name="LegFigure">
-      <actualFigure
-          xsi:type="gmfgraph:PolylineConnection"
-          name="LegFigure"/>
-    </descriptors>
-    <descriptors
         name="ResistorFigure">
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
           name="ResistorFigure">
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"
-            red="225"
+            red="135"
             green="225"
-            blue="135"/>
+            blue="225"/>
         <preferredSize
-            dx="20"
-            dy="20"/>
+            dx="30"
+            dy="15"/>
         <children
             xsi:type="gmfgraph:Label"
             name="ResistorIdFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
-          figure="//@figures.0/@descriptors.2/@actualFigure/@children.0"/>
+          figure="//@figures.0/@descriptors.1/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
         name="LEDFigure">
       <actualFigure
           xsi:type="gmfgraph:Ellipse"
           name="LEDFigure">
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"
-            red="255"/>
-        <maximumSize
-            dx="20"
-            dy="20"/>
+            red="255"
+            green="50"
+            blue="50"/>
         <preferredSize
             dx="20"
             dy="20"/>
-        <location/>
         <children
             xsi:type="gmfgraph:Label"
             name="LEDIdFigure"
@@ -69,6 +64,39 @@
       </actualFigure>
       <accessors
           accessor="getFigureLEDIdFigure"
+          figure="//@figures.0/@descriptors.2/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors
+        name="ButtonFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Rectangle"
+          name="ButtonFigure">
+        <layout
+            xsi:type="gmfgraph:StackLayout"/>
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
+        <backgroundColor
+            xsi:type="gmfgraph:RGBColor"
+            red="128"
+            green="128"
+            blue="128"/>
+        <preferredSize
+            dx="20"
+            dy="20"/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="ButtonIdFigure"
+            text="&lt;...>"/>
+        <children
+            xsi:type="gmfgraph:Ellipse">
+          <backgroundColor
+              xsi:type="gmfgraph:RGBColor"
+              red="192"
+              green="192"
+              blue="192"/>
+        </children>
+      </actualFigure>
+      <accessors
           figure="//@figures.0/@descriptors.3/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
@@ -76,34 +104,20 @@
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
           name="TerminalFigure">
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"/>
-        <maximumSize
-            dx="5"
-            dy="5"/>
-        <minimumSize
-            dx="5"
-            dy="5"/>
         <preferredSize
             dx="5"
             dy="5"/>
-        <children
-            xsi:type="gmfgraph:Label"
-            name="TerminalNameFigure"
-            text="&lt;...>"/>
       </actualFigure>
-      <accessors
-          figure="//@figures.0/@descriptors.4/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
         name="SketchFigure">
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
           name="SketchFigure">
-        <preferredSize
-            dx="20"
-            dy="20"/>
-        <location/>
         <children
             xsi:type="gmfgraph:Label"
             name="SketchIdFigure"
@@ -136,19 +150,23 @@
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
           name="ArduinoFigure">
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"
-            green="64"
-            blue="128"/>
+            red="20"
+            green="70"
+            blue="120"/>
         <preferredSize
             dx="300"
-            dy="500"/>
+            dy="400"/>
         <children
             xsi:type="gmfgraph:Label"
             name="ArduinoIdFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
+          accessor="getFigureArduinoIdFigure"
           figure="//@figures.0/@descriptors.7/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
@@ -156,6 +174,8 @@
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
           name="BreadboardFigure">
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"
             red="225"
@@ -163,62 +183,37 @@
             blue="225"/>
         <preferredSize
             dx="200"
-            dy="500"/>
-        <location/>
+            dy="400"/>
         <children
             xsi:type="gmfgraph:Label"
             name="BreadboardIdFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
+          accessor="getFigureBreadboardIdFigure"
           figure="//@figures.0/@descriptors.8/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
-        name="ButtonFigure">
+        name="TerminalNameFigure">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
-          name="ButtonFigure">
-        <backgroundColor
-            xsi:type="gmfgraph:RGBColor"
-            red="128"
-            green="128"
-            blue="128"/>
-        <preferredSize
-            dx="20"
-            dy="20"/>
-        <location/>
-        <children
-            xsi:type="gmfgraph:Label"
-            name="ButtonIdFigure"
-            text="&lt;...>"/>
-        <children
-            xsi:type="gmfgraph:Ellipse">
-          <backgroundColor
-              xsi:type="gmfgraph:RGBColor"
-              red="192"
-              green="192"
-              blue="192"/>
-          <preferredSize
-              dx="-1"
-              dy="-1"/>
-          <location
-              x="44"
-              y="19"/>
-        </children>
-      </actualFigure>
-      <accessors
-          figure="//@figures.0/@descriptors.9/@actualFigure/@children.0"/>
+          xsi:type="gmfgraph:Label"
+          name="TerminalNameFigure"
+          text="&lt;...>"/>
     </descriptors>
   </figures>
   <nodes
-      name="Resistor"
-      figure="ResistorFigure"/>
-  <nodes
       name="LED"
-      figure="LEDFigure"/>
+      figure="LEDFigure"
+      resizeConstraint="NONE"/>
   <nodes
       name="Terminal"
-      figure="TerminalFigure"/>
+      figure="TerminalFigure"
+      resizeConstraint="NONE"
+      affixedParentSide="EAST_WEST"/>
+  <nodes
+      name="Arduino"
+      figure="ArduinoFigure"
+      resizeConstraint="NONE"/>
   <nodes
       name="Sketch"
       figure="SketchFigure"/>
@@ -226,50 +221,52 @@
       name="Module"
       figure="ModuleFigure"/>
   <nodes
-      name="Arduino"
-      figure="ArduinoFigure"/>
-  <nodes
       name="Breadboard"
       figure="BreadboardFigure"/>
   <nodes
       name="Button"
-      figure="ButtonFigure"/>
+      figure="ButtonFigure"
+      resizeConstraint="NONE"/>
+  <nodes
+      name="Resistor"
+      figure="ResistorFigure"
+      resizeConstraint="NONE"/>
   <connections
       name="Wire"
       figure="WireFigure"/>
-  <connections
-      name="Leg"
-      figure="LegFigure"/>
   <labels
       name="WireId"
       figure="WireFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.0/@accessors.0"/>
+      accessor="//@figures.0/@descriptors.0/@accessors.0">
+    <facets
+        xsi:type="gmfgraph:AlignmentFacet"
+        alignment="CENTER"/>
+    <facets
+        xsi:type="gmfgraph:LabelOffsetFacet"/>
+  </labels>
   <labels
       name="ResistorId"
       figure="ResistorFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.2/@accessors.0"/>
+      accessor="//@figures.0/@descriptors.1/@accessors.0"/>
   <labels
       name="LEDId"
       figure="LEDFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.3/@accessors.0"/>
+      accessor="//@figures.0/@descriptors.2/@accessors.0"/>
   <labels
       name="TerminalName"
-      figure="TerminalFigure"
-      elementIcon="false"
-      accessor="//@figures.0/@descriptors.4/@accessors.0"/>
+      figure="TerminalNameFigure"
+      elementIcon="false">
+    <facets
+        xsi:type="gmfgraph:LabelOffsetFacet"/>
+  </labels>
   <labels
       name="SketchId"
       figure="SketchFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.5/@accessors.0"/>
-  <labels
-      name="ArduinoId"
-      figure="ArduinoFigure"
-      elementIcon="false"
-      accessor="//@figures.0/@descriptors.7/@accessors.0"/>
   <labels
       name="ModuleId"
       figure="ModuleFigure"
@@ -281,8 +278,13 @@
       elementIcon="false"
       accessor="//@figures.0/@descriptors.8/@accessors.0"/>
   <labels
+      name="ArduinoId"
+      figure="ArduinoFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.7/@accessors.0"/>
+  <labels
       name="ButtonId"
       figure="ButtonFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.9/@accessors.0"/>
+      accessor="//@figures.0/@descriptors.3/@accessors.0"/>
 </gmfgraph:Canvas>
