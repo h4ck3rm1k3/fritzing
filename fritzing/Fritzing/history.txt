@@ -1,0 +1,8 @@
+Changelog for Fritzing
+
+    (name of developer listed in brackets)
+
+Fritzing 0001 ALPHA - unreleased
+
+    - Initial import
+      [andre]

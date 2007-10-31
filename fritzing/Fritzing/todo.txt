@@ -1,0 +1,40 @@
+// ========= GMF ==========
+
+// SVG import for shapes
+// http://wiki.eclipse.org/GMF_Tutorial_BPMN#Custom_Figures_.28SVG.29
+
+// Dynamic Shape import
+// via GMFGraph templates 
+
+// Creating own modules/parts
+// Extensible Type Registry  http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.gmf.doc/tutorials/common/Extensible%20Type%20Registry/extensibleTypeRegistryTutorial.html
+
+// Multiple editors (physical/schematic/pcb)
+// http://wiki.eclipse.org/index.php/GMF_Archived_Newsgroup_Q&A#How_can_I_synchronize_editing_domains.3F
+
+// Nets, i.e. connecting a wire to another wire
+// http://wiki.eclipse.org/GMF_2.0_New_and_Noteworthy#Links_to_Links
+
+
+// ========= EMF ==========
+
+// XML file generation
+// see IBM redbook, chapter 2.3
+
+
+// ========= RCP ==========
+
+// Styling
+// using Presentations, see RCP book
+// also http://wiki.eclipse.org/RCP_Custom_Look_and_Feel
+
+// to get OS-specific install directory
+Plugin.getDefault().getDescriptor().getInstallURL();
+
+// adding a console
+// http://dev.eclipse.org/newslists/news.eclipse.platform.rcp/msg00199.html
+
+// adding help support
+// http://www.eclipse.org/articles/article.php?file=Article-AddingHelpToRCP/index.html
+
+// some RCP tips at http://www.jroller.com/wsnyder6/entry/rcp_tips_and_tricks

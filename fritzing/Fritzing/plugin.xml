@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ (c) Fachhochschule Potsdam
+
+ $Id$
+-->
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.fritzing.org" 
+       class = "org.fritzing.fritzing.FritzingPackage"
+       genModel = "model/fritzing.genmodel" /> 
+  </extension>
+
+  <extension point="org.eclipse.emf.ecore.extension_parser">
+    <parser 
+       type="fritzing" 
+       class="org.fritzing.fritzing.util.FritzingResourceFactoryImpl" />
+  </extension>
+  <extension
+        id="product"
+        point="org.eclipse.core.runtime.products">
+     <product
+           application="Fritzing.diagram.FritzingApplication"
+           name="Fritzing">
+        <property
+              name="appName"
+              value="Fritzing">
+        </property>
+        <property
+              name="aboutImage"
+              value="icons/fritzingbanner.gif">
+        </property>
+        <property
+              name="aboutText"
+              value="(c) Fachhochschule Potsdam">
+        </property>
+        <property
+              name="windowImages"
+              value="icons/fritzing.gif,icons/FritzingBranding32.gif,icons/FritzingBranding48.gif,icons/FritzingBranding64.gif,icons/FritzingBranding128.gif">
+        </property>
+        <property
+              name="startupForegroundColor"
+              value="000000">
+        </property>
+        <property
+              name="startupMessageRect"
+              value="7,200,540,20">
+        </property>
+        <property
+              name="startupProgressRect"
+              value="0,222,560,15">
+        </property>
+        <property
+              name="preferenceCustomization"
+              value="plugin_customization.ini">
+        </property>
+     </product>
+  </extension>
+
+</plugin>

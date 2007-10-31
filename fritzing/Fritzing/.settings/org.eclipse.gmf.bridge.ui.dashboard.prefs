@@ -1,0 +1,9 @@
+#Wed Oct 10 16:22:10 CEST 2007
+eclipse.preferences.version=1
+gmf_dashboard/domainGenerationModel=platform\:/resource/Fritzing/model/fritzing.genmodel
+gmf_dashboard/domainModel=platform\:/resource/Fritzing%20GMF/model/fritzing.ecore
+gmf_dashboard/generationModel=platform\:/resource/Fritzing/model/fritzing.gmfgen
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/Fritzing/model/fritzing.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/Fritzing/model/fritzing.gmfmap
+gmf_dashboard/option_rcp=*
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/Fritzing/model/fritzing.gmftool
