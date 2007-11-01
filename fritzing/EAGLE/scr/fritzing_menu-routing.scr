@@ -1,0 +1,49 @@
+# Command Menu Setup
+# To display the command menu in
+# the editor windows you have to activate the option 'Command texts'
+# in the 'Options/User Interface' menu.
+
+MENU 	'Add to board {Text | Line : Wire | Circle | Arc | Rectangle : Rect | Polygon | Board Outline : Layer 20 outline; Wire | Hole}' \
+		'Edit {Move | Select Group : Group | Rotate | Name | Value | Width | Text {Size : Change Size | Ratio : Change Ratio | Font : Change Font}}' \
+		'Routing {Ripup | Ripup all : Ripup; | Route | Change width {Wide : Change Width 24 | Medium : Change Width 16 | Narrow : Change width 8}}' \
+		'---' \
+		'AUTO RE-ROUTE {Two Sided : Ripup; Auto;}' \
+		'EXPORT BOARD {Image | PDF | Gerbers}';
+
+#MENU \
+#	'Draw { \
+#		text \
+#		'Text' : text; |\
+#		'Line' : wire; |\
+#		'Circle' : circle; |\
+#		'Arc' : arc; |\
+#		'Rectangle' : rect; |\
+#		'Polygon' : polygon;\
+#	}'\
+#;
+		
+
+#MENU 'Grid {\
+#             Metric   {\
+#                        Fine   : Grid mm 0.1; |\
+#                        Coarse : Grid mm 1;\
+#                      } | \
+#             Imperial {\
+#                        Fine   : Grid inch 0.001; |\
+#                        Coarse : Grid inch 0.1;\
+#                      } | \
+#             On  : Grid On; | \
+#             Off : Grid Off;\
+#           }'\
+#     'Display {\
+#                Top       : Display None Top    Pads Vias Dimension; |\
+#                Bottom    : Display None Bottom Pads Vias Dimension; |\
+#                Placeplan {\
+#                            Top    : Display None tPlace Dimension; |\
+#                            Bottom : Display None bPlace Dimension;\
+#                          }\
+#              }'\
+#     '---'\
+#     'Fit : Window Fit;'\
+#     'Add' 'Delete' 'Move' ';' 'Edit' 'Quit'\
+#     ;
