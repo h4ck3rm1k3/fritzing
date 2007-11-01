@@ -48,6 +48,7 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -455,4 +456,16 @@ public class FritzingDiagramEditorUtil {
 		}
 	} //LazyElement2ViewMap	
 
+	
+	/**
+	 * @generated NOT
+	 */
+	public static URI getActiveDiagramURI() 
+	throws NullPointerException {
+    	IEditorInput input = PlatformUI.getWorkbench()
+    		.getActiveWorkbenchWindow().getActivePage().
+    		getActiveEditor().getEditorInput();
+    	return ((URIEditorInput)input).getURI();
+	}
+	
 }

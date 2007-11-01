@@ -74,6 +74,36 @@ public class Messages extends NLS {
 	public static String FritzingCreationWizardPageExtensionError;
 
 	/**
+	 * @generated NOT
+	 */
+	public static String PCBExportWizardTitle;
+
+	/**
+	 * @generated NOT
+	 */
+	public static String PCBExportWizardCreationError;
+
+	/**
+	 * @generated NOT
+	 */
+	public static String PCBExportWizard_DiagramModelFilePageTitle;
+
+	/**
+	 * @generated NOT
+	 */
+	public static String PCBExportWizard_DiagramModelFilePageDescription;
+	
+	/**
+	 * @generated NOT
+	 */
+	public static String PCBExportWizardPageExtensionError;
+
+	/**
+	 * @generated NOT
+	 */
+	public static String PCBExportWizardSourceError;
+	
+	/**
 	 * @generated
 	 */
 	public static String FritzingDiagramEditorUtil_OpenModelResourceErrorDialogTitle;

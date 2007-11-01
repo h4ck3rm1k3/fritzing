@@ -55,6 +55,14 @@
   	     id="org.fritzing.fritzing.diagram.part.FritzingCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
+     <wizard
+           name="%pcbWizardName"
+           icon="icons/obj16/PCBFile.gif"
+           category="org.eclipse.ui.Examples"
+           class="org.fritzing.fritzing.diagram.part.PCBExportWizard"
+           id="org.fritzing.fritzing.diagram.part.PCBExportWizardID">
+        <description>%pcbWizardDesc</description>
+     </wizard>
    </extension>
 
    <extension point="org.eclipse.ui.popupMenus">
@@ -152,6 +160,12 @@
             id="Fritzing.diagram.general"
             name="%preference.page.title.Fritzing.diagram.general"
             class="org.fritzing.fritzing.diagram.preferences.DiagramGeneralPreferencePage">
+      </page>
+      <page
+            category="Fritzing.diagram.general"
+            class="org.fritzing.fritzing.diagram.preferences.EaglePreferencePage"
+            id="Fritzing.diagram.eagle"
+            name="%preference.page.title.Fritzing.diagram.eagle">
       </page>
       <page
             id="Fritzing.diagram.appearance"
@@ -465,6 +479,12 @@
                class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
                menubarPath="file/new/additions"
                id="Fritzing.diagram.NewDiagramAction">
+         </action>
+         <action
+               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$PCBExportAction"
+               id="Fritzing.diagram.PCBExportAction"
+               label="%pcbExportActionLabel"
+               menubarPath="file/additions">
          </action>
          <action
                label="%aboutActionLabel"

@@ -38,6 +38,7 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.fritzing.fritzing.diagram.part.FritzingCreationWizard;
 import org.fritzing.fritzing.diagram.part.Messages;
+import org.fritzing.fritzing.diagram.part.PCBExportWizard;
 
 /**
  * @generated
@@ -69,7 +70,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void makeActions(IWorkbenchWindow window) {
 		toggleCoolbarAction = ActionFactory.TOGGLE_COOLBAR.create(window);
@@ -106,10 +107,12 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(ActionFactory.OPEN_NEW_WINDOW.create(window));
 
 		register(ActionFactory.PRINT.create(window));
+		
+		register(ActionFactory.PREFERENCES.create(window));
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void fillMenuBar(IMenuManager menu) {
 
@@ -191,6 +194,10 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.EDIT_END));
 
 			menuX.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+
+			menuX.add(new Separator());
+
+			menuX.add(getAction(ActionFactory.PREFERENCES.getId()));
 			menu.add(menuX);
 		}
 
@@ -324,6 +331,23 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		}
 	}
 
+	/**
+	 * @generated NOT
+	 */
+	public static class PCBExportAction extends WorkbenchWindowActionDelegate {
+
+		/**
+		 * @generated NOT
+		 */
+		public void run(IAction action) {
+			PCBExportWizard wizard = new PCBExportWizard();
+			wizard.init(getWindow().getWorkbench(), StructuredSelection.EMPTY);
+			WizardDialog wizardDialog = new WizardDialog(
+					getWindow().getShell(), wizard);
+			wizardDialog.open();
+		}
+	}
+	
 	/**
 	 * @generated
 	 */
