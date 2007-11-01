@@ -1,0 +1,12 @@
+// Creates PCB from a Fritzing2Eagle file
+// Paramaters: the Fritzing2Eagle file to start from
+// Run from the shell like this: eagle -C "RUN 'fritzing_master.ulp' '<fritzing2eagleFile.scr>'" newSchematicFile.sch
+
+string c,cmd;
+
+cmd += "; SCR " + argv[1] + "; \n";
+cmd += "script fritzing_menu-placement; \n";
+cmd += "run autoplace_v3_f; \n";
+cmd += "script fritzing_setup-arduino_shield; \n";
+
+exit(cmd);
