@@ -13,7 +13,7 @@
           lineWidth="3">
         <children
             xsi:type="gmfgraph:Label"
-            name="WireIdFigure"
+            name="WireNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
@@ -84,10 +84,6 @@
             dx="20"
             dy="20"/>
         <children
-            xsi:type="gmfgraph:Label"
-            name="ButtonIdFigure"
-            text="&lt;...>"/>
-        <children
             xsi:type="gmfgraph:Ellipse">
           <backgroundColor
               xsi:type="gmfgraph:RGBColor"
@@ -95,9 +91,13 @@
               green="192"
               blue="192"/>
         </children>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="ButtonIdFigure"
+            text="&lt;...>"/>
       </actualFigure>
       <accessors
-          figure="//@figures.0/@descriptors.3/@actualFigure/@children.0"/>
+          figure="//@figures.0/@descriptors.3/@actualFigure/@children.1"/>
     </descriptors>
     <descriptors
         name="TerminalFigure">
@@ -235,7 +235,7 @@
       name="Wire"
       figure="WireFigure"/>
   <labels
-      name="WireId"
+      name="WireName"
       figure="WireFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.0/@accessors.0">

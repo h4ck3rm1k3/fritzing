@@ -10,28 +10,6 @@
         href="fritzing.ecore#//Composite/parts"/>
     <ownedChild>
       <domainMetaElement
-          href="fritzing.ecore#//Module"/>
-      <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
-        <diagramLabel
-            href="fritzing.gmfgraph#ModuleId"/>
-        <features
-            href="fritzing.ecore#//Element/id"/>
-      </labelMappings>
-      <diagramNode
-          href="fritzing.gmfgraph#Module"/>
-      <children
-          referencedChild="//@nodes.6/@ownedChild">
-        <containmentFeature
-            href="fritzing.ecore#//Part/terminals"/>
-      </children>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="fritzing.ecore#//Composite/parts"/>
-    <ownedChild>
-      <domainMetaElement
           href="fritzing.ecore#//Arduino"/>
       <domainInitializer
           xsi:type="gmfmap:FeatureSeqInitializer">
@@ -295,10 +273,10 @@
         </initializers>
         <initializers
             xsi:type="gmfmap:FeatureValueSpec"
-            body="'Arduino Diecimila'">
+            body="'Arduino'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Element/id"/>
+              href="fritzing.ecore#//Part/id"/>
         </initializers>
       </domainInitializer>
       <labelMappings
@@ -306,7 +284,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#ArduinoId"/>
         <features
-            href="fritzing.ecore#//Element/id"/>
+            href="fritzing.ecore#//Part/id"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -314,29 +292,7 @@
       <diagramNode
           href="fritzing.gmfgraph#Arduino"/>
       <children
-          referencedChild="//@nodes.6/@ownedChild">
-        <containmentFeature
-            href="fritzing.ecore#//Part/terminals"/>
-      </children>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="fritzing.ecore#//Composite/parts"/>
-    <ownedChild>
-      <domainMetaElement
-          href="fritzing.ecore#//Breadboard"/>
-      <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
-        <diagramLabel
-            href="fritzing.gmfgraph#BreadboardId"/>
-        <features
-            href="fritzing.ecore#//Element/id"/>
-      </labelMappings>
-      <diagramNode
-          href="fritzing.gmfgraph#Breadboard"/>
-      <children
-          referencedChild="//@nodes.6/@ownedChild">
+          referencedChild="//@nodes.4/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -379,7 +335,7 @@
             body="'L'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Element/id"/>
+              href="fritzing.ecore#//Part/id"/>
         </initializers>
       </domainInitializer>
       <labelMappings
@@ -387,7 +343,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#LEDId"/>
         <features
-            href="fritzing.ecore#//Element/id"/>
+            href="fritzing.ecore#//Part/id"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -395,7 +351,7 @@
       <diagramNode
           href="fritzing.gmfgraph#LED"/>
       <children
-          referencedChild="//@nodes.6/@ownedChild">
+          referencedChild="//@nodes.4/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -438,7 +394,7 @@
             body="'R'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Element/id"/>
+              href="fritzing.ecore#//Part/id"/>
         </initializers>
       </domainInitializer>
       <labelMappings
@@ -446,7 +402,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#ResistorId"/>
         <features
-            href="fritzing.ecore#//Element/id"/>
+            href="fritzing.ecore#//Part/id"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -454,7 +410,7 @@
       <diagramNode
           href="fritzing.gmfgraph#Resistor"/>
       <children
-          referencedChild="//@nodes.6/@ownedChild">
+          referencedChild="//@nodes.4/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -515,7 +471,7 @@
             body="'B'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Element/id"/>
+              href="fritzing.ecore#//Part/id"/>
         </initializers>
       </domainInitializer>
       <labelMappings
@@ -523,7 +479,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#ButtonId"/>
         <features
-            href="fritzing.ecore#//Element/id"/>
+            href="fritzing.ecore#//Part/id"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -531,7 +487,7 @@
       <diagramNode
           href="fritzing.gmfgraph#Button"/>
       <children
-          referencedChild="//@nodes.6/@ownedChild">
+          referencedChild="//@nodes.4/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -560,9 +516,9 @@
     <labelMappings
         xsi:type="gmfmap:FeatureLabelMapping">
       <diagramLabel
-          href="fritzing.gmfgraph#WireId"/>
+          href="fritzing.gmfgraph#WireName"/>
       <features
-          href="fritzing.ecore#//Element/id"/>
+          href="fritzing.ecore#//Wire/name"/>
     </labelMappings>
     <containmentFeature
         href="fritzing.ecore#//Composite/wires"/>

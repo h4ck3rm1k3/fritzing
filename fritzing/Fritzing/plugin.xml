@@ -25,7 +25,7 @@
         id="product"
         point="org.eclipse.core.runtime.products">
      <product
-           application="Fritzing.diagram.FritzingApplication"
+           application="Fritzing.diagram.FritzingPhysicalApplication"
            name="Fritzing">
         <property
               name="appName"

@@ -11,6 +11,8 @@
 
 // Multiple editors (physical/schematic/pcb)
 // http://wiki.eclipse.org/index.php/GMF_Archived_Newsgroup_Q&A#How_can_I_synchronize_editing_domains.3F
+// http://wiki.eclipse.org/GMF_Tips#Sharing_single_EditingDomain_instance_across_several_diagrams
+// http://wiki.eclipse.org/GMF_GenModel_Hints -> see "Model ID"
 
 // Nets, i.e. connecting a wire to another wire
 // http://wiki.eclipse.org/GMF_2.0_New_and_Noteworthy#Links_to_Links
@@ -18,10 +20,16 @@
 // Rotatable parts
 // http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg02705.html
 
+// "mil" unit for grid
+
+
 // ========= EMF ==========
 
-// XML file generation
+// Customise XML file generation
 // see IBM redbook, chapter 2.3
+
+// Export to Eagle script
+// using JET
 
 
 // ========= RCP ==========
