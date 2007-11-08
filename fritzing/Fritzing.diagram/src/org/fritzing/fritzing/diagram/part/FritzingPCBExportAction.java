@@ -91,16 +91,15 @@ public class FritzingPCBExportAction implements
 		// EAGLE executable
 		String eagleExec = "";
 	    if(Platform.getOS().equals(Platform.OS_WIN32)) {
-	    	eagleExec = "bin/eagle.exe"; 
+	    	eagleExec = "\"" + eagleLocation + "bin/eagle.exe" + "\""; 
 	    }
 	    else if(Platform.getOS().equals(Platform.OS_MACOSX)) {
-	    	eagleExec = "EAGLE.app/Contents/MacOS/eagle"; 
+	    	eagleExec = eagleLocation + "EAGLE.app/Contents/MacOS/eagle"; 
 	    }
 	    else if(Platform.getOS().equals(Platform.OS_LINUX)) {
-	    	eagleExec = "bin/eagle"; 
+	    	eagleExec = eagleLocation + "bin/eagle"; 
 	    }
 	    // EAGLE PCB ULP
-//	    String eagleULP = Platform.getLocation().toString() + "/eagle/ulp/fritzing_master.ulp";
 		String eagleULP = eagleLocation + "ulp/fritzing_master.ulp";
 	    // EAGLE Schematc
 		String eagleSCH = fritzingDiagramURI.trimFileExtension()
@@ -109,10 +108,10 @@ public class FritzingPCBExportAction implements
 	    String eagleParams = "-C\"RUN " + 
 	    	"'" + eagleULP + "' " + 
 	    	"'" + fritzing2eagleSCR + "'\" " +
-	    	"\"" + eagleSCH + "\"" ;	
+	    	"\"" + eagleSCH + "\"";
 	    // Run!
 	    String command = 
-	    	"\"" + eagleLocation + eagleExec + "\" " + eagleParams;
+	    	 eagleExec + " " + eagleParams;
 	    try {
 			Runtime.getRuntime().exec(command);
 		} catch (IOException e) {
