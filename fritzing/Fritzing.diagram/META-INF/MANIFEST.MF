@@ -33,6 +33,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.runtime.draw2d.ui;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport,
  Fritzing;visibility:=reexport,
- Fritzing.edit;visibility:=reexport
+ Fritzing.edit;visibility:=reexport,
+ org.eclipse.emf.validation.ocl,
+ org.eclipse.emf.validation.ui,
+ org.eclipse.emf.validation;visibility:=reexport
 Eclipse-LazyStart: true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

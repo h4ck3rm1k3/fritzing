@@ -119,7 +119,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'Gnd\'", //$NON-NLS-1$
+										.getExpression("\'Gnd1\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}
@@ -591,7 +591,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'0\'", //$NON-NLS-1$
+										.getExpression("\'0p\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}
@@ -606,7 +606,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'1\'", //$NON-NLS-1$
+										.getExpression("\'1p\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}

@@ -73,23 +73,6 @@
       </objectContribution>           
    </extension>
 
-<!--
-   <extension point="org.eclipse.ui.actionSets">
-      <?gmfgen generated="true"?>
-      <actionSet
-            label="%initDiagramActionLabel"
-            visible="true"
-            id="Fritzing.diagram.InitDiagram">
-         <action
-               label="%initDiagramActionLabel"
-               class="org.fritzing.fritzing.diagram.part.FritzingInitDiagramFileAction"
-               menubarPath="file/additions"
-               id="Fritzing.diagram.InitDiagramAction">
-         </action>
-      </actionSet>
-   </extension>
--->
-
    <extension point="org.eclipse.ui.actionSets">
       <?gmfgen generated="false"?>
       <actionSet
@@ -453,6 +436,47 @@
    <extension point="org.eclipse.ui.actionSets">
       <?gmfgen generated="true"?>
       <actionSet
+            label="%initDiagramActionLabel"
+            visible="false"
+            id="Fritzing.diagram.InitDiagram">
+         <action
+               label="%initDiagramActionLabel"
+               class="org.fritzing.fritzing.diagram.part.FritzingInitDiagramFileAction"
+               menubarPath="file/new/additions"
+               id="Fritzing.diagram.InitDiagramAction">
+         </action>
+      </actionSet>
+   </extension>
+   
+   <extension point="org.eclipse.ui.commands">
+      <?gmfgen generated="true"?>
+      <command
+            name="%openURIActionLabel"
+            description="%openURIActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="Fritzing.diagram.OpenURICommand"/>  
+      <command
+            name="%openActionLabel"
+            description="%openActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="Fritzing.diagram.OpenCommand"/>  
+   </extension>
+
+   <extension point="org.eclipse.ui.bindings">
+      <?gmfgen generated="true"?>
+      <key
+            commandId="Fritzing.diagram.OpenURICommand"
+            sequence="M1+U"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="Fritzing.diagram.OpenCommand"
+            sequence="M1+O"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+   </extension>
+   
+   <extension point="org.eclipse.ui.actionSets">
+      <?gmfgen generated="true"?>
+      <actionSet
             label="%applicationActionSetLabel"
             visible="true"
             id="Fritzing.diagram.ActionSet">
@@ -471,14 +495,8 @@
          </action>
       </actionSet>
    </extension>
-   
-   <extension point="org.eclipse.ui.commands">
+<extension point="org.eclipse.ui.commands">
       <?gmfgen generated="true"?>
-      <command
-            name="%openActionLabel"
-            description="%openActionDescription"
-            categoryId="org.eclipse.ui.category.file"
-            id="Fritzing.diagram.OpenCommand"/>  
       <command
          categoryId="org.eclipse.ui.category.edit"
          defaultHandler="org.fritzing.fritzing.diagram.part.FritzingDiagramUpdateCommand"
@@ -486,18 +504,76 @@
          id="org.fritzing.fritzing.diagram.updateDiagram"
          name="%update.diagram.name"/>
    </extension>
-
-   <extension point="org.eclipse.ui.bindings">
+<extension point="org.eclipse.ui.bindings">
       <?gmfgen generated="true"?>
-      <key
-            commandId="Fritzing.diagram.OpenCommand"
-            sequence="M1+O"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
       <key 
          commandId="org.fritzing.fritzing.diagram.updateDiagram"
          contextId="org.fritzing.fritzing.diagram.ui.diagramContext"
          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
          sequence="F5"/>
    </extension>
+
+
+
+<!--
+<extension point="org.eclipse.emf.validation.constraintProviders">
+      <?gmfgen generated="true"?>
+            <category id="org.fritzing.audits" mandatory="false" name="Fritzing Audits">
+         <![CDATA[Model validation for Fritzing Sketches]]>
+      </category>
+      <constraintProvider cache="true">
+         <package namespaceUri="http://www.fritzing.org"/>
+               <constraints categories="org.fritzing.audits">
+                  <constraint id="org.fritzing.audits.partId"
+            lang="OCL"
+            name="Part Id Check"
+            mode="Live"
+            severity="ERROR" statusCode="200">
+            <![CDATA[self.parent.parts->forAll(p1, p2 : Part | p1 <> p2 implies p1.id <> p2.id)]]>
+            <description><![CDATA[Checks that every part has a unique ID]]></description>
+            <message><![CDATA[Every part has to have a unique ID/name.]]></message>
+            <target class="fritzing.Part"/>
+         </constraint>
+                  </constraints>
+      </constraintProvider>
+   </extension>
+-->
+   
+<extension point="org.eclipse.emf.validation.constraintBindings">
+      <?gmfgen generated="true"?>
+                  <clientContext default="false" id="Fritzing.diagram.DefaultCtx">
+         <selector class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider$DefaultCtx1"/>
+      </clientContext>
+      <binding context="Fritzing.diagram.DefaultCtx">
+                  <constraint ref="Fritzing.diagram.org.fritzing.audits.partId"/>
+               </binding>
+               </extension>
+<extension point="org.eclipse.emf.validation.ui.UIRegisteredClientContext">
+      <?gmfgen generated="true"?>
+      
+      <clientContext id="Fritzing.diagram.DefaultCtx"/>
+         </extension><extension id="ValidationContributionItemProvider" name="Validation"
+      point="org.eclipse.gmf.runtime.common.ui.services.action.contributionItemProviders">
+      <?gmfgen generated="true"?>
+      <contributionItemProvider
+         class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider">
+         <Priority name="Low"/>
+         <partContribution id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
+            <partMenuGroup menubarPath="/diagramMenu/" id="validationGroup"/>
+            <partAction id="validateAction" menubarPath="/diagramMenu/validationGroup"/>
+         </partContribution>
+      </contributionItemProvider>
+   </extension>
+<extension id="validationDecoratorProvider" name="ValidationDecorations" point="org.eclipse.gmf.runtime.diagram.ui.decoratorProviders">
+      <?gmfgen generated="true"?>
+      <decoratorProvider class="org.fritzing.fritzing.diagram.providers.FritzingValidationDecoratorProvider">
+         <Priority name="Medium"/>
+         <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart(org.eclipse.gmf.runtime.diagram.ui)" id="PRIMARY_VIEW"/>
+         <context decoratorTargets="PRIMARY_VIEW"/>
+      </decoratorProvider>
+   </extension>
+
+
+
    
 </plugin>

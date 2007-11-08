@@ -84,24 +84,25 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser resistorId_5006Parser;
+	private IParser resistorIdValue_5006Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getResistorId_5006Parser() {
-		if (resistorId_5006Parser == null) {
-			resistorId_5006Parser = createResistorId_5006Parser();
+	private IParser getResistorIdValue_5006Parser() {
+		if (resistorIdValue_5006Parser == null) {
+			resistorIdValue_5006Parser = createResistorIdValue_5006Parser();
 		}
-		return resistorId_5006Parser;
+		return resistorIdValue_5006Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected IParser createResistorId_5006Parser() {
-		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getPart_Id(), };
+	protected IParser createResistorIdValue_5006Parser() {
+		EAttribute[] features = new EAttribute[] {
+				FritzingPackage.eINSTANCE.getPart_Id(),
+				FritzingPackage.eINSTANCE.getResistor_Value(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -216,7 +217,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 		case LEDIdEditPart.VISUAL_ID:
 			return getLEDId_5005Parser();
 		case ResistorIdEditPart.VISUAL_ID:
-			return getResistorId_5006Parser();
+			return getResistorIdValue_5006Parser();
 		case ButtonIdEditPart.VISUAL_ID:
 			return getButtonId_5007Parser();
 		case TerminalNameEditPart.VISUAL_ID:

@@ -76,7 +76,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(toggleCoolbarAction);
 		lockToolBarAction = ActionFactory.LOCK_TOOL_BAR.create(window);
 		register(lockToolBarAction);
-		
+
 		register(ActionFactory.CLOSE.create(window));
 
 		register(ActionFactory.CLOSE_ALL.create(window));
@@ -106,7 +106,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(ActionFactory.DELETE.create(window));
 
 		register(ActionFactory.SELECT_ALL.create(window));
-		
+
 		register(ActionFactory.ABOUT.create(window));
 	}
 
@@ -117,9 +117,8 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 
 		{
 			IMenuManager menuX = new MenuManager(
-					Messages.ApplicationMenuName_File,
-					"file1");
-//					IWorkbenchActionConstants.M_FILE);
+					Messages.ApplicationMenuName_File, "file1");
+			//					IWorkbenchActionConstants.M_FILE);
 			// changed to custom, because otherwise the "Open File.." action is forced in
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
@@ -132,9 +131,9 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 						IWorkbenchActionConstants.MB_ADDITIONS));
 				menuX.add(menuXX);
 			}
-						
+
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-			
+
 			menuX.add(getAction(ActionFactory.CLOSE.getId()));
 
 			menuX.add(getAction(ActionFactory.SAVE.getId()));
@@ -144,13 +143,13 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			menuX.add(new Separator());
 
 			menuX.add(getAction(ActionFactory.PRINT.getId()));
-			
+
 			// TODO: add "Page Setup" and "Print Preview" manually
 
 			menuX.add(new Separator());
 
 			menuX.add(getAction(ActionFactory.PREFERENCES.getId()));
-			
+
 			menuX.add(new Separator());
 
 			menuX.add(getAction(ActionFactory.QUIT.getId()));
@@ -193,7 +192,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.ADD_EXT));
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.EDIT_END));
-			
+
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 			menu.add(menuX);
 		}
@@ -337,7 +336,22 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			}
 		}
 	}
-	
+
+	/**
+	 * @generated
+	 */
+	public static class AboutAction extends WorkbenchWindowActionDelegate {
+
+		/**
+		 * @generated
+		 */
+		public void run(IAction action) {
+			MessageDialog.openInformation(getWindow().getShell(),
+					Messages.DiagramEditorActionBarAdvisor_AboutDialogTitle,
+					Messages.DiagramEditorActionBarAdvisor_AboutDialogMessage);
+		}
+	}
+
 	/**
 	 * @generated
 	 */

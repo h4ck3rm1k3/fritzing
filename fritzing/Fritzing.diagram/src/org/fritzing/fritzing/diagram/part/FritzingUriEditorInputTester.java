@@ -20,7 +20,7 @@ public class FritzingUriEditorInputTester extends PropertyTester {
 			return false;
 		}
 		URIEditorInput editorInput = (URIEditorInput) receiver;
-		return "fphy".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
+		return "fzb".equals(editorInput.getURI().fileExtension()); //$NON-NLS-1$
 	}
 
 }
