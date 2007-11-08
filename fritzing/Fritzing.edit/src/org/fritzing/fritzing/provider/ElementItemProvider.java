@@ -63,31 +63,8 @@ public class ElementItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Id feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Element_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Element_id_feature", "_UI_Element_type"),
-				 FritzingPackage.Literals.ELEMENT__ID,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -98,10 +75,7 @@ public class ElementItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Element)object).getId();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Element_type") :
-			getString("_UI_Element_type") + " " + label;
+		return getString("_UI_Element_type");
 	}
 
 	/**
@@ -114,12 +88,6 @@ public class ElementItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(Element.class)) {
-			case FritzingPackage.ELEMENT__ID:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 

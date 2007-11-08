@@ -35,7 +35,7 @@ import org.fritzing.fritzing.Terminal;
  * @generated
  */
 public class TerminalItemProvider
-	extends ItemProviderAdapter
+	extends ElementItemProvider
 	implements	
 		IEditingDomainItemProvider,	
 		IStructuredItemContentProvider,	
