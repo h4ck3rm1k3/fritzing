@@ -34,23 +34,11 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case SketchEditPart.VISUAL_ID:
 				return new SketchEditPart(view);
 
-			case ModuleEditPart.VISUAL_ID:
-				return new ModuleEditPart(view);
-
-			case ModuleIdEditPart.VISUAL_ID:
-				return new ModuleIdEditPart(view);
-
 			case ArduinoEditPart.VISUAL_ID:
 				return new ArduinoEditPart(view);
 
 			case ArduinoIdEditPart.VISUAL_ID:
 				return new ArduinoIdEditPart(view);
-
-			case BreadboardEditPart.VISUAL_ID:
-				return new BreadboardEditPart(view);
-
-			case BreadboardIdEditPart.VISUAL_ID:
-				return new BreadboardIdEditPart(view);
 
 			case LEDEditPart.VISUAL_ID:
 				return new LEDEditPart(view);

@@ -49,6 +49,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -456,16 +457,33 @@ public class FritzingDiagramEditorUtil {
 		}
 	} //LazyElement2ViewMap	
 
-	
 	/**
 	 * @generated NOT
 	 */
-	public static URI getActiveDiagramURI() 
-	throws NullPointerException {
-    	IEditorInput input = PlatformUI.getWorkbench()
-    		.getActiveWorkbenchWindow().getActivePage().
-    		getActiveEditor().getEditorInput();
-    	return ((URIEditorInput)input).getURI();
+	public static URI getActiveDiagramURI() throws NullPointerException {
+		IEditorInput input = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage().getActiveEditor()
+				.getEditorInput();
+		return ((URIEditorInput) input).getURI();
 	}
-	
+
+	/**
+	 * @generated NOT
+	 */
+	public static Diagram getActiveDiagram() throws NullPointerException {
+		IEditorPart editor = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		return ((IDiagramWorkbenchPart) editor).getDiagram();
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public static IDiagramWorkbenchPart getActiveDiagramEditor()
+			throws NullPointerException {
+		IEditorPart editor = PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		return ((IDiagramWorkbenchPart) editor);
+	}
+
 }

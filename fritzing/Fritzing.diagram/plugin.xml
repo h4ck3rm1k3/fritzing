@@ -9,14 +9,14 @@
       <?gmfgen generated="true"?>
       <fileTypes
          type="text"
-         extension="fritzing_diagram">
+         extension="fzb">
       </fileTypes>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
       <?gmfgen generated="true"?>
       <parser
-         type="fritzing_diagram"
+         type="fzb"
          class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
       </parser>
    </extension>
@@ -27,7 +27,7 @@
          id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID"
          name="%editorName"
          icon="icons/obj16/FritzingDiagramFile.gif"
-         extensions="fritzing_diagram"
+         extensions="fzb"
          default="true"
          class="org.fritzing.fritzing.diagram.part.FritzingDiagramEditor"
          matchingStrategy="org.fritzing.fritzing.diagram.part.FritzingMatchingStrategy"
@@ -55,14 +55,6 @@
   	     id="org.fritzing.fritzing.diagram.part.FritzingCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
-     <wizard
-           name="%pcbWizardName"
-           icon="icons/obj16/PCBFile.gif"
-           category="org.eclipse.ui.Examples"
-           class="org.fritzing.fritzing.diagram.part.PCBExportWizard"
-           id="org.fritzing.fritzing.diagram.part.PCBExportWizardID">
-        <description>%pcbWizardDesc</description>
-     </wizard>
    </extension>
 
    <extension point="org.eclipse.ui.popupMenus">
@@ -81,7 +73,8 @@
       </objectContribution>           
    </extension>
 
-      <extension point="org.eclipse.ui.actionSets">
+<!--
+   <extension point="org.eclipse.ui.actionSets">
       <?gmfgen generated="true"?>
       <actionSet
             label="%initDiagramActionLabel"
@@ -95,12 +88,28 @@
          </action>
       </actionSet>
    </extension>
-	
+-->
+
+   <extension point="org.eclipse.ui.actionSets">
+      <?gmfgen generated="false"?>
+      <actionSet
+            label="%pcbExportActionLabel"
+            visible="true"
+            id="Fritzing.diagram.PCBExport">
+         <action
+               label="%pcbExportActionLabel"
+               class="org.fritzing.fritzing.diagram.part.FritzingPCBExportAction"
+               menubarPath="file1/additions"
+               id="Fritzing.diagram.PCBExportAction">
+         </action>
+      </actionSet>
+   </extension>
+   
    <extension point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders">
       <?gmfgen generated="true"?>
       <GlobalActionHandlerProvider
          class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandlerProvider"
-         id="FritzingPresentation">
+         id="FritzingPhysicalPresentation">
          <Priority name="Lowest"/>
          <ViewId id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
             <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
@@ -112,8 +121,18 @@
          </ViewId>
       </GlobalActionHandlerProvider>
       <GlobalActionHandlerProvider
+         class="org.eclipse.gmf.runtime.diagram.ui.printing.render.providers.DiagramWithPrintGlobalActionHandlerProvider"
+         id="FritzingPhysicalPresentationPrint">
+         <Priority name="Lowest"/>
+         <ViewId id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="print"/>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+      <GlobalActionHandlerProvider
             class="org.eclipse.gmf.runtime.diagram.ui.render.providers.DiagramUIRenderGlobalActionHandlerProvider"
-            id="FritzingRender">
+            id="FritzingPhysicalRender">
          <Priority name="Lowest"/>
          <ViewId id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
             <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
@@ -127,6 +146,14 @@
 
    <extension point="org.eclipse.gmf.runtime.common.ui.services.action.contributionItemProviders">
       <?gmfgen generated="true"?>
+      <contributionItemProvider class="org.fritzing.fritzing.diagram.providers.FritzingContributionItemProvider">
+         <Priority name="Low">
+         </Priority>
+         <partContribution id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
+            <partAction menubarPath="/file1/print" id="printPreviewAction">
+            </partAction>
+         </partContribution>
+      </contributionItemProvider>
       <contributionItemProvider
             class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramContributionItemProvider"
             checkPluginLoaded="false">
@@ -162,12 +189,6 @@
             class="org.fritzing.fritzing.diagram.preferences.DiagramGeneralPreferencePage">
       </page>
       <page
-            category="Fritzing.diagram.general"
-            class="org.fritzing.fritzing.diagram.preferences.EaglePreferencePage"
-            id="Fritzing.diagram.eagle"
-            name="%preference.page.title.Fritzing.diagram.eagle">
-      </page>
-      <page
             id="Fritzing.diagram.appearance"
             name="%preference.page.title.Fritzing.diagram.appearance"
             category="Fritzing.diagram.general"
@@ -199,11 +220,20 @@
       </page>
    </extension>
 
+   <extension point="org.eclipse.ui.preferencePages">
+      <?gmfgen generated="false"?>
+      <page
+            id="Fritzing.diagram.eagle"
+            name="%preference.page.title.Fritzing.diagram.eagle"
+            category="Fritzing.diagram.general"
+            class="org.fritzing.fritzing.diagram.preferences.EaglePreferencePage">
+      </page>
+   </extension>
+     
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
       <?gmfgen generated="true"?>
       <propertyContributor
-            contributorId="Fritzing.diagram"
-            labelProvider="org.fritzing.fritzing.diagram.sheet.FritzingSheetLabelProvider">
+            contributorId="Fritzing.diagram">
          <propertyCategory category="domain"/>
          <propertyCategory category="visual"/>
          <propertyCategory category="extra"/>
@@ -265,7 +295,7 @@
       <?gmfgen generated="true"?>
       <viewProvider class="org.fritzing.fritzing.diagram.providers.FritzingViewProvider">
          <Priority name="Lowest"/>
-         <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="Fritzing"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="FritzingPhysical"/>
          <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints=""/>
          <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints=""/>
       </viewProvider>
@@ -313,32 +343,12 @@
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
-               id="Fritzing.diagram.Module_2001"
-               name="%metatype.name.Module_2001"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="Module"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ModuleEditHelper">
-            <param name="semanticHint" value="2001"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.fritzing.org">
-         <metamodelType
                id="Fritzing.diagram.Arduino_2002"
                name="%metatype.name.Arduino_2002"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Arduino"
                edithelper="org.fritzing.fritzing.diagram.edit.helpers.ArduinoEditHelper">
             <param name="semanticHint" value="2002"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.fritzing.org">
-         <metamodelType
-               id="Fritzing.diagram.Breadboard_2003"
-               name="%metatype.name.Breadboard_2003"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="Breadboard"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.BreadboardEditHelper">
-            <param name="semanticHint" value="2003"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
@@ -404,18 +414,16 @@
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypeBindings">
       <?gmfgen generated="true"?>
-      <clientContext id="FritzingClientContext">
+      <clientContext id="FritzingPhysicalClientContext">
          <enablement>
             <test
                property="org.eclipse.gmf.runtime.emf.core.editingDomain"
                value="Fritzing.diagram.EditingDomain"/>
          </enablement>
       </clientContext> 
-      <binding context="FritzingClientContext">
+      <binding context="FritzingPhysicalClientContext">
          <elementType ref="Fritzing.diagram.Sketch_1000"/>
-         <elementType ref="Fritzing.diagram.Module_2001"/>
          <elementType ref="Fritzing.diagram.Arduino_2002"/>
-         <elementType ref="Fritzing.diagram.Breadboard_2003"/>
          <elementType ref="Fritzing.diagram.LED_2004"/>
          <elementType ref="Fritzing.diagram.Resistor_2005"/>
          <elementType ref="Fritzing.diagram.Button_2006"/>
@@ -426,7 +434,7 @@
       </binding>
    </extension>
 
-   <extension id="FritzingApplication" point="org.eclipse.core.runtime.applications">
+   <extension id="FritzingPhysicalApplication" point="org.eclipse.core.runtime.applications">
       <?gmfgen generated="true"?>
       <application>
          <run class="org.fritzing.fritzing.diagram.application.FritzingApplication"/>
@@ -436,36 +444,10 @@
    <extension point="org.eclipse.ui.perspectives">
       <?gmfgen generated="true"?>
       <perspective
-            id="org.fritzing.fritzing.diagram.FritzingPerspective"
+            id="org.fritzing.fritzing.diagram.FritzingPhysicalPerspective"
             name="%perspectiveName"
             class="org.fritzing.fritzing.diagram.application.DiagramEditorPerspective">
       </perspective>
-   </extension>
-
-   <extension point="org.eclipse.ui.commands">
-      <?gmfgen generated="true"?>
-      <command
-            name="%openURIActionLabel"
-            description="%openURIActionDescription"
-            categoryId="org.eclipse.ui.category.file"
-            id="Fritzing.diagram.OpenURICommand"/>  
-      <command
-            name="%openActionLabel"
-            description="%openActionDescription"
-            categoryId="org.eclipse.ui.category.file"
-            id="Fritzing.diagram.OpenCommand"/>  
-   </extension>
-
-   <extension point="org.eclipse.ui.bindings">
-      <?gmfgen generated="true"?>
-      <key
-            commandId="Fritzing.diagram.OpenURICommand"
-            sequence="M1+U"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-      <key
-            commandId="Fritzing.diagram.OpenCommand"
-            sequence="M1+O"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
    </extension>
 
    <extension point="org.eclipse.ui.actionSets">
@@ -477,39 +459,26 @@
          <action
                label="%newDiagramActionLabel"
                class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
-               menubarPath="file/new/additions"
+               menubarPath="file1/new/additions"
                id="Fritzing.diagram.NewDiagramAction">
-         </action>
-         <action
-               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$PCBExportAction"
-               id="Fritzing.diagram.PCBExportAction"
-               label="%pcbExportActionLabel"
-               menubarPath="file/additions">
-         </action>
-         <action
-               label="%aboutActionLabel"
-               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$AboutAction"
-               menubarPath="help/additions"
-               id="Fritzing.diagram.AboutAction">
-         </action>
-         <action
-               label="%openURIActionLabel"
-               definitionId="Fritzing.diagram.OpenURICommand"
-               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$OpenURIAction"
-               menubarPath="file/additions"
-               id="Fritzing.diagram.OpenURIAction">
          </action>
          <action
                label="%openActionLabel"
                definitionId="Fritzing.diagram.OpenCommand"
                class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$OpenAction"
-               menubarPath="file/additions"
+               menubarPath="file1/additions"
                id="Fritzing.diagram.OpenAction">
          </action>
       </actionSet>
    </extension>
+   
    <extension point="org.eclipse.ui.commands">
       <?gmfgen generated="true"?>
+      <command
+            name="%openActionLabel"
+            description="%openActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="Fritzing.diagram.OpenCommand"/>  
       <command
          categoryId="org.eclipse.ui.category.edit"
          defaultHandler="org.fritzing.fritzing.diagram.part.FritzingDiagramUpdateCommand"
@@ -517,13 +486,18 @@
          id="org.fritzing.fritzing.diagram.updateDiagram"
          name="%update.diagram.name"/>
    </extension>
-   
+
    <extension point="org.eclipse.ui.bindings">
       <?gmfgen generated="true"?>
+      <key
+            commandId="Fritzing.diagram.OpenCommand"
+            sequence="M1+O"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
       <key 
          commandId="org.fritzing.fritzing.diagram.updateDiagram"
          contextId="org.fritzing.fritzing.diagram.ui.diagramContext"
          schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
          sequence="F5"/>
    </extension>
+   
 </plugin>

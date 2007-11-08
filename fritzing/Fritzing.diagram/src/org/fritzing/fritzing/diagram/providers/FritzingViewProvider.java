@@ -11,14 +11,10 @@ import org.eclipse.gmf.runtime.emf.type.core.IHintedType;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoIdEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.BreadboardEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.BreadboardIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDIdEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ModuleEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ModuleIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -31,14 +27,10 @@ import org.fritzing.fritzing.diagram.edit.parts.WireIdEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.view.factories.ArduinoIdViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ArduinoViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.BreadboardIdViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.BreadboardViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ButtonIdViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ButtonViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDIdViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.ModuleIdViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.ModuleViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorIdViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.SketchViewFactory;
@@ -118,9 +110,7 @@ public class FritzingViewProvider extends AbstractViewProvider {
 					return null; // foreign diagram
 				}
 				switch (visualID) {
-				case ModuleEditPart.VISUAL_ID:
 				case ArduinoEditPart.VISUAL_ID:
-				case BreadboardEditPart.VISUAL_ID:
 				case LEDEditPart.VISUAL_ID:
 				case ResistorEditPart.VISUAL_ID:
 				case ButtonEditPart.VISUAL_ID:
@@ -133,22 +123,8 @@ public class FritzingViewProvider extends AbstractViewProvider {
 						return null; // visual id in semantic hint should match visual id for domain element
 					}
 					break;
-				case ModuleIdEditPart.VISUAL_ID:
-					if (ModuleEditPart.VISUAL_ID != FritzingVisualIDRegistry
-							.getVisualID(containerView)
-							|| containerView.getElement() != domainElement) {
-						return null; // wrong container
-					}
-					break;
 				case ArduinoIdEditPart.VISUAL_ID:
 					if (ArduinoEditPart.VISUAL_ID != FritzingVisualIDRegistry
-							.getVisualID(containerView)
-							|| containerView.getElement() != domainElement) {
-						return null; // wrong container
-					}
-					break;
-				case BreadboardIdEditPart.VISUAL_ID:
-					if (BreadboardEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
 						return null; // wrong container
@@ -214,18 +190,10 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return null;
 		}
 		switch (visualID) {
-		case ModuleEditPart.VISUAL_ID:
-			return ModuleViewFactory.class;
-		case ModuleIdEditPart.VISUAL_ID:
-			return ModuleIdViewFactory.class;
 		case ArduinoEditPart.VISUAL_ID:
 			return ArduinoViewFactory.class;
 		case ArduinoIdEditPart.VISUAL_ID:
 			return ArduinoIdViewFactory.class;
-		case BreadboardEditPart.VISUAL_ID:
-			return BreadboardViewFactory.class;
-		case BreadboardIdEditPart.VISUAL_ID:
-			return BreadboardIdViewFactory.class;
 		case LEDEditPart.VISUAL_ID:
 			return LEDViewFactory.class;
 		case LEDIdEditPart.VISUAL_ID:

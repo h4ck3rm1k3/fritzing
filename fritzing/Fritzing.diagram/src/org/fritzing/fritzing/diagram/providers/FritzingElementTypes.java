@@ -54,15 +54,7 @@ public class FritzingElementTypes extends ElementInitializers {
 	/**
 	 * @generated
 	 */
-	public static final IElementType Module_2001 = getElementType("Fritzing.diagram.Module_2001"); //$NON-NLS-1$
-	/**
-	 * @generated
-	 */
 	public static final IElementType Arduino_2002 = getElementType("Fritzing.diagram.Arduino_2002"); //$NON-NLS-1$
-	/**
-	 * @generated
-	 */
-	public static final IElementType Breadboard_2003 = getElementType("Fritzing.diagram.Breadboard_2003"); //$NON-NLS-1$
 	/**
 	 * @generated
 	 */
@@ -201,12 +193,7 @@ public class FritzingElementTypes extends ElementInitializers {
 
 			elements.put(Sketch_1000, FritzingPackage.eINSTANCE.getSketch());
 
-			elements.put(Module_2001, FritzingPackage.eINSTANCE.getModule());
-
 			elements.put(Arduino_2002, FritzingPackage.eINSTANCE.getArduino());
-
-			elements.put(Breadboard_2003, FritzingPackage.eINSTANCE
-					.getBreadboard());
 
 			elements.put(LED_2004, FritzingPackage.eINSTANCE.getLED());
 
@@ -240,9 +227,7 @@ public class FritzingElementTypes extends ElementInitializers {
 		if (KNOWN_ELEMENT_TYPES == null) {
 			KNOWN_ELEMENT_TYPES = new HashSet();
 			KNOWN_ELEMENT_TYPES.add(Sketch_1000);
-			KNOWN_ELEMENT_TYPES.add(Module_2001);
 			KNOWN_ELEMENT_TYPES.add(Arduino_2002);
-			KNOWN_ELEMENT_TYPES.add(Breadboard_2003);
 			KNOWN_ELEMENT_TYPES.add(LED_2004);
 			KNOWN_ELEMENT_TYPES.add(Resistor_2005);
 			KNOWN_ELEMENT_TYPES.add(Button_2006);

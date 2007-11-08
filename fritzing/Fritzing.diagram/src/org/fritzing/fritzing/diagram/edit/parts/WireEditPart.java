@@ -44,7 +44,7 @@ public class WireEditPart extends ConnectionNodeEditPart {
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof WireIdEditPart) {
 			((WireIdEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureWireIdFigure());
+					.getFigureWireNameFigure());
 			return true;
 		}
 		return false;
@@ -88,7 +88,7 @@ public class WireEditPart extends ConnectionNodeEditPart {
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureWireIdFigure;
+		private WrapLabel fFigureWireNameFigure;
 
 		/**
 		 * @generated
@@ -104,18 +104,18 @@ public class WireEditPart extends ConnectionNodeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureWireIdFigure = new WrapLabel();
-			fFigureWireIdFigure.setText("<...>");
+			fFigureWireNameFigure = new WrapLabel();
+			fFigureWireNameFigure.setText("<...>");
 
-			this.add(fFigureWireIdFigure);
+			this.add(fFigureWireNameFigure);
 
 		}
 
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureWireIdFigure() {
-			return fFigureWireIdFigure;
+		public WrapLabel getFigureWireNameFigure() {
+			return fFigureWireNameFigure;
 		}
 
 	}

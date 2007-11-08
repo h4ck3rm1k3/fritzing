@@ -24,10 +24,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.BreadboardEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ModuleEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
@@ -47,17 +45,7 @@ public class FritzingModelingAssistantProvider extends
 	public List getTypesForPopupBar(IAdaptable host) {
 		IGraphicalEditPart editPart = (IGraphicalEditPart) host
 				.getAdapter(IGraphicalEditPart.class);
-		if (editPart instanceof ModuleEditPart) {
-			List types = new ArrayList();
-			types.add(FritzingElementTypes.Terminal_3001);
-			return types;
-		}
 		if (editPart instanceof ArduinoEditPart) {
-			List types = new ArrayList();
-			types.add(FritzingElementTypes.Terminal_3001);
-			return types;
-		}
-		if (editPart instanceof BreadboardEditPart) {
 			List types = new ArrayList();
 			types.add(FritzingElementTypes.Terminal_3001);
 			return types;
@@ -79,9 +67,7 @@ public class FritzingModelingAssistantProvider extends
 		}
 		if (editPart instanceof SketchEditPart) {
 			List types = new ArrayList();
-			types.add(FritzingElementTypes.Module_2001);
 			types.add(FritzingElementTypes.Arduino_2002);
-			types.add(FritzingElementTypes.Breadboard_2003);
 			types.add(FritzingElementTypes.LED_2004);
 			types.add(FritzingElementTypes.Resistor_2005);
 			types.add(FritzingElementTypes.Button_2006);

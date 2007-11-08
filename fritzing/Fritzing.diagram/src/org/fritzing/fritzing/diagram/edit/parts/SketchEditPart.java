@@ -17,7 +17,7 @@ public class SketchEditPart extends DiagramEditPart {
 	/**
 	 * @generated
 	 */
-	public final static String MODEL_ID = "Fritzing"; //$NON-NLS-1$
+	public final static String MODEL_ID = "FritzingPhysical"; //$NON-NLS-1$
 
 	/**
 	 * @generated

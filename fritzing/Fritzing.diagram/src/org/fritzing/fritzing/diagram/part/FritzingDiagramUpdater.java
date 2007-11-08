@@ -15,21 +15,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Arduino;
-import org.fritzing.fritzing.Breadboard;
 import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.Module;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.BreadboardEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ModuleEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
@@ -47,12 +43,8 @@ public class FritzingDiagramUpdater {
 	 */
 	public static List getSemanticChildren(View view) {
 		switch (FritzingVisualIDRegistry.getVisualID(view)) {
-		case ModuleEditPart.VISUAL_ID:
-			return getModule_2001SemanticChildren(view);
 		case ArduinoEditPart.VISUAL_ID:
 			return getArduino_2002SemanticChildren(view);
-		case BreadboardEditPart.VISUAL_ID:
-			return getBreadboard_2003SemanticChildren(view);
 		case LEDEditPart.VISUAL_ID:
 			return getLED_2004SemanticChildren(view);
 		case ResistorEditPart.VISUAL_ID:
@@ -68,53 +60,11 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getModule_2001SemanticChildren(View view) {
-		if (!view.isSetElement()) {
-			return Collections.EMPTY_LIST;
-		}
-		Module modelElement = (Module) view.getElement();
-		List result = new LinkedList();
-		for (Iterator it = modelElement.getTerminals().iterator(); it.hasNext();) {
-			Terminal childElement = (Terminal) it.next();
-			int visualID = FritzingVisualIDRegistry.getNodeVisualID(view,
-					childElement);
-			if (visualID == Terminal2EditPart.VISUAL_ID) {
-				result.add(new FritzingNodeDescriptor(childElement, visualID));
-				continue;
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * @generated
-	 */
 	public static List getArduino_2002SemanticChildren(View view) {
 		if (!view.isSetElement()) {
 			return Collections.EMPTY_LIST;
 		}
 		Arduino modelElement = (Arduino) view.getElement();
-		List result = new LinkedList();
-		for (Iterator it = modelElement.getTerminals().iterator(); it.hasNext();) {
-			Terminal childElement = (Terminal) it.next();
-			int visualID = FritzingVisualIDRegistry.getNodeVisualID(view,
-					childElement);
-			if (visualID == Terminal2EditPart.VISUAL_ID) {
-				result.add(new FritzingNodeDescriptor(childElement, visualID));
-				continue;
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * @generated
-	 */
-	public static List getBreadboard_2003SemanticChildren(View view) {
-		if (!view.isSetElement()) {
-			return Collections.EMPTY_LIST;
-		}
-		Breadboard modelElement = (Breadboard) view.getElement();
 		List result = new LinkedList();
 		for (Iterator it = modelElement.getTerminals().iterator(); it.hasNext();) {
 			Terminal childElement = (Terminal) it.next();
@@ -205,15 +155,7 @@ public class FritzingDiagramUpdater {
 			Part childElement = (Part) it.next();
 			int visualID = FritzingVisualIDRegistry.getNodeVisualID(view,
 					childElement);
-			if (visualID == ModuleEditPart.VISUAL_ID) {
-				result.add(new FritzingNodeDescriptor(childElement, visualID));
-				continue;
-			}
 			if (visualID == ArduinoEditPart.VISUAL_ID) {
-				result.add(new FritzingNodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == BreadboardEditPart.VISUAL_ID) {
 				result.add(new FritzingNodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -249,12 +191,8 @@ public class FritzingDiagramUpdater {
 		switch (FritzingVisualIDRegistry.getVisualID(view)) {
 		case SketchEditPart.VISUAL_ID:
 			return getSketch_1000ContainedLinks(view);
-		case ModuleEditPart.VISUAL_ID:
-			return getModule_2001ContainedLinks(view);
 		case ArduinoEditPart.VISUAL_ID:
 			return getArduino_2002ContainedLinks(view);
-		case BreadboardEditPart.VISUAL_ID:
-			return getBreadboard_2003ContainedLinks(view);
 		case LEDEditPart.VISUAL_ID:
 			return getLED_2004ContainedLinks(view);
 		case ResistorEditPart.VISUAL_ID:
@@ -276,12 +214,8 @@ public class FritzingDiagramUpdater {
 	 */
 	public static List getIncomingLinks(View view) {
 		switch (FritzingVisualIDRegistry.getVisualID(view)) {
-		case ModuleEditPart.VISUAL_ID:
-			return getModule_2001IncomingLinks(view);
 		case ArduinoEditPart.VISUAL_ID:
 			return getArduino_2002IncomingLinks(view);
-		case BreadboardEditPart.VISUAL_ID:
-			return getBreadboard_2003IncomingLinks(view);
 		case LEDEditPart.VISUAL_ID:
 			return getLED_2004IncomingLinks(view);
 		case ResistorEditPart.VISUAL_ID:
@@ -303,12 +237,8 @@ public class FritzingDiagramUpdater {
 	 */
 	public static List getOutgoingLinks(View view) {
 		switch (FritzingVisualIDRegistry.getVisualID(view)) {
-		case ModuleEditPart.VISUAL_ID:
-			return getModule_2001OutgoingLinks(view);
 		case ArduinoEditPart.VISUAL_ID:
 			return getArduino_2002OutgoingLinks(view);
-		case BreadboardEditPart.VISUAL_ID:
-			return getBreadboard_2003OutgoingLinks(view);
 		case LEDEditPart.VISUAL_ID:
 			return getLED_2004OutgoingLinks(view);
 		case ResistorEditPart.VISUAL_ID:
@@ -338,28 +268,8 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getModule_2001ContainedLinks(View view) {
-		Module modelElement = (Module) view.getElement();
-		List result = new LinkedList();
-		result.addAll(getContainedTypeModelFacetLinks_Wire_4001(modelElement));
-		return result;
-	}
-
-	/**
-	 * @generated
-	 */
 	public static List getArduino_2002ContainedLinks(View view) {
 		Arduino modelElement = (Arduino) view.getElement();
-		List result = new LinkedList();
-		result.addAll(getContainedTypeModelFacetLinks_Wire_4001(modelElement));
-		return result;
-	}
-
-	/**
-	 * @generated
-	 */
-	public static List getBreadboard_2003ContainedLinks(View view) {
-		Breadboard modelElement = (Breadboard) view.getElement();
 		List result = new LinkedList();
 		result.addAll(getContainedTypeModelFacetLinks_Wire_4001(modelElement));
 		return result;
@@ -410,21 +320,7 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getModule_2001IncomingLinks(View view) {
-		return Collections.EMPTY_LIST;
-	}
-
-	/**
-	 * @generated
-	 */
 	public static List getArduino_2002IncomingLinks(View view) {
-		return Collections.EMPTY_LIST;
-	}
-
-	/**
-	 * @generated
-	 */
-	public static List getBreadboard_2003IncomingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
@@ -485,21 +381,7 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getModule_2001OutgoingLinks(View view) {
-		return Collections.EMPTY_LIST;
-	}
-
-	/**
-	 * @generated
-	 */
 	public static List getArduino_2002OutgoingLinks(View view) {
-		return Collections.EMPTY_LIST;
-	}
-
-	/**
-	 * @generated
-	 */
-	public static List getBreadboard_2003OutgoingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 

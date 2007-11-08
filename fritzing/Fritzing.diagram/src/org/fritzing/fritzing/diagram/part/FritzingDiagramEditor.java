@@ -12,6 +12,8 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.ui.part.IShowInTargetList;
 
 /**
  * @generated

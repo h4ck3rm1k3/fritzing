@@ -287,15 +287,15 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureButtonIdFigure = new WrapLabel();
-			fFigureButtonIdFigure.setText("<...>");
-
-			this.add(fFigureButtonIdFigure);
-
 			Ellipse elli0 = new Ellipse();
 			elli0.setBackgroundColor(ELLI0_BACK);
 
 			this.add(elli0);
+
+			fFigureButtonIdFigure = new WrapLabel();
+			fFigureButtonIdFigure.setText("<...>");
+
+			this.add(fFigureButtonIdFigure);
 
 		}
 

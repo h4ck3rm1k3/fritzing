@@ -83,7 +83,7 @@ public class FritzingNewDiagramFileWizard extends Wizard {
 		}
 		myFileCreationPage.setContainerFullPath(filePath);
 		myFileCreationPage.setFileName(FritzingDiagramEditorUtil
-				.getUniqueFileName(filePath, fileName, "fritzing_diagram")); //$NON-NLS-1$
+				.getUniqueFileName(filePath, fileName, "fzb")); //$NON-NLS-1$
 
 		diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
 				Messages.FritzingNewDiagramFileWizard_RootSelectionPageName);

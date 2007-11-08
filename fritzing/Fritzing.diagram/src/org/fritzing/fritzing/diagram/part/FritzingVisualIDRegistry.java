@@ -12,14 +12,10 @@ import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoIdEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.BreadboardEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.BreadboardIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDIdEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ModuleEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ModuleIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorIdEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -140,19 +136,7 @@ public class FritzingVisualIDRegistry {
 			}
 		}
 		switch (containerVisualID) {
-		case ModuleEditPart.VISUAL_ID:
-			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
-					domainElement.eClass())) {
-				return Terminal2EditPart.VISUAL_ID;
-			}
-			break;
 		case ArduinoEditPart.VISUAL_ID:
-			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
-					domainElement.eClass())) {
-				return Terminal2EditPart.VISUAL_ID;
-			}
-			break;
-		case BreadboardEditPart.VISUAL_ID:
 			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
 					domainElement.eClass())) {
 				return Terminal2EditPart.VISUAL_ID;
@@ -177,17 +161,9 @@ public class FritzingVisualIDRegistry {
 			}
 			break;
 		case SketchEditPart.VISUAL_ID:
-			if (FritzingPackage.eINSTANCE.getModule().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ModuleEditPart.VISUAL_ID;
-			}
 			if (FritzingPackage.eINSTANCE.getArduino().isSuperTypeOf(
 					domainElement.eClass())) {
 				return ArduinoEditPart.VISUAL_ID;
-			}
-			if (FritzingPackage.eINSTANCE.getBreadboard().isSuperTypeOf(
-					domainElement.eClass())) {
-				return BreadboardEditPart.VISUAL_ID;
 			}
 			if (FritzingPackage.eINSTANCE.getLED().isSuperTypeOf(
 					domainElement.eClass())) {
@@ -231,24 +207,8 @@ public class FritzingVisualIDRegistry {
 			}
 		}
 		switch (containerVisualID) {
-		case ModuleEditPart.VISUAL_ID:
-			if (ModuleIdEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
 		case ArduinoEditPart.VISUAL_ID:
 			if (ArduinoIdEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
-		case BreadboardEditPart.VISUAL_ID:
-			if (BreadboardIdEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
@@ -290,13 +250,7 @@ public class FritzingVisualIDRegistry {
 			}
 			break;
 		case SketchEditPart.VISUAL_ID:
-			if (ModuleEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
 			if (ArduinoEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (BreadboardEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (LEDEditPart.VISUAL_ID == nodeVisualID) {

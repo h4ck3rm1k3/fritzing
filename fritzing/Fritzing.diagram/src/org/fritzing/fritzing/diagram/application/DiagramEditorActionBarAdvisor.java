@@ -38,7 +38,6 @@ import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.fritzing.fritzing.diagram.part.FritzingCreationWizard;
 import org.fritzing.fritzing.diagram.part.Messages;
-import org.fritzing.fritzing.diagram.part.PCBExportWizard;
 
 /**
  * @generated
@@ -77,7 +76,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(toggleCoolbarAction);
 		lockToolBarAction = ActionFactory.LOCK_TOOL_BAR.create(window);
 		register(lockToolBarAction);
-
+		
 		register(ActionFactory.CLOSE.create(window));
 
 		register(ActionFactory.CLOSE_ALL.create(window));
@@ -87,6 +86,10 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(ActionFactory.SAVE_AS.create(window));
 
 		register(ActionFactory.SAVE_ALL.create(window));
+
+		register(ActionFactory.PRINT.create(window));
+
+		register(ActionFactory.PREFERENCES.create(window));
 
 		register(ActionFactory.QUIT.create(window));
 
@@ -103,12 +106,8 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(ActionFactory.DELETE.create(window));
 
 		register(ActionFactory.SELECT_ALL.create(window));
-
-		register(ActionFactory.OPEN_NEW_WINDOW.create(window));
-
-		register(ActionFactory.PRINT.create(window));
 		
-		register(ActionFactory.PREFERENCES.create(window));
+		register(ActionFactory.ABOUT.create(window));
 	}
 
 	/**
@@ -119,7 +118,9 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		{
 			IMenuManager menuX = new MenuManager(
 					Messages.ApplicationMenuName_File,
-					IWorkbenchActionConstants.M_FILE);
+					"file1");
+//					IWorkbenchActionConstants.M_FILE);
+			// changed to custom, because otherwise the "Open File.." action is forced in
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
 
@@ -131,25 +132,25 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 						IWorkbenchActionConstants.MB_ADDITIONS));
 				menuX.add(menuXX);
 			}
-
-			menuX.add(new Separator());
-
+						
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-
-			menuX.add(new Separator());
-
+			
 			menuX.add(getAction(ActionFactory.CLOSE.getId()));
-
-			menuX.add(getAction(ActionFactory.CLOSE_ALL.getId()));
-
-			menuX.add(new Separator());
 
 			menuX.add(getAction(ActionFactory.SAVE.getId()));
 
 			menuX.add(getAction(ActionFactory.SAVE_AS.getId()));
 
-			menuX.add(getAction(ActionFactory.SAVE_ALL.getId()));
+			menuX.add(new Separator());
 
+			menuX.add(getAction(ActionFactory.PRINT.getId()));
+			
+			// TODO: add "Page Setup" and "Print Preview" manually
+
+			menuX.add(new Separator());
+
+			menuX.add(getAction(ActionFactory.PREFERENCES.getId()));
+			
 			menuX.add(new Separator());
 
 			menuX.add(getAction(ActionFactory.QUIT.getId()));
@@ -192,27 +193,12 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.ADD_EXT));
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.EDIT_END));
-
-			menuX.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-
-			menuX.add(new Separator());
-
-			menuX.add(getAction(ActionFactory.PREFERENCES.getId()));
+			
+			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 			menu.add(menuX);
 		}
 
 		menu.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-
-		{
-			IMenuManager menuX = new MenuManager(
-					Messages.ApplicationMenuName_Window,
-					IWorkbenchActionConstants.M_WINDOW);
-
-			menuX.add(getAction(ActionFactory.OPEN_NEW_WINDOW.getId()));
-
-			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-			menu.add(menuX);
-		}
 
 		{
 			IMenuManager menuX = new MenuManager(
@@ -221,15 +207,19 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.HELP_START));
 
-			menuX.add(new GroupMarker(IWorkbenchActionConstants.HELP_END));
-
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+
+			menuX.add(new Separator());
+
+			menuX.add(getAction(ActionFactory.ABOUT.getId()));
+
+			menuX.add(new GroupMarker(IWorkbenchActionConstants.HELP_END));
 			menu.add(menuX);
 		}
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void fillCoolBar(ICoolBarManager toolBar) {
 		IMenuManager popUpMenu = new MenuManager();
@@ -251,10 +241,6 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			toolBarX.add(getAction(ActionFactory.SAVE.getId()));
 
 			toolBarX.add(new GroupMarker(IWorkbenchActionConstants.SAVE_EXT));
-
-			toolBarX.add(getAction(ActionFactory.PRINT.getId()));
-
-			toolBarX.add(new GroupMarker(IWorkbenchActionConstants.PRINT_EXT));
 
 			toolBarX.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 			toolBar.add(new ToolBarContributionItem(toolBarX,
@@ -332,19 +318,23 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	/**
-	 * @generated NOT
+	 * @generated
 	 */
-	public static class PCBExportAction extends WorkbenchWindowActionDelegate {
+	public static class OpenAction extends WorkbenchWindowActionDelegate {
 
 		/**
-		 * @generated NOT
+		 * @generated
 		 */
 		public void run(IAction action) {
-			PCBExportWizard wizard = new PCBExportWizard();
-			wizard.init(getWindow().getWorkbench(), StructuredSelection.EMPTY);
-			WizardDialog wizardDialog = new WizardDialog(
-					getWindow().getShell(), wizard);
-			wizardDialog.open();
+			FileDialog fileDialog = new FileDialog(getWindow().getShell(),
+					SWT.OPEN);
+			fileDialog.open();
+			if (fileDialog.getFileName() != null
+					&& fileDialog.getFileName().length() > 0) {
+				openEditor(getWindow().getWorkbench(), URI
+						.createFileURI(fileDialog.getFilterPath()
+								+ File.separator + fileDialog.getFileName()));
+			}
 		}
 	}
 	
@@ -367,41 +357,4 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			}
 		}
 	}
-
-	/**
-	 * @generated
-	 */
-	public static class OpenAction extends WorkbenchWindowActionDelegate {
-
-		/**
-		 * @generated
-		 */
-		public void run(IAction action) {
-			FileDialog fileDialog = new FileDialog(getWindow().getShell(),
-					SWT.OPEN);
-			fileDialog.open();
-			if (fileDialog.getFileName() != null
-					&& fileDialog.getFileName().length() > 0) {
-				openEditor(getWindow().getWorkbench(), URI
-						.createFileURI(fileDialog.getFilterPath()
-								+ File.separator + fileDialog.getFileName()));
-			}
-		}
-	}
-
-	/**
-	 * @generated
-	 */
-	public static class AboutAction extends WorkbenchWindowActionDelegate {
-
-		/**
-		 * @generated
-		 */
-		public void run(IAction action) {
-			MessageDialog.openInformation(getWindow().getShell(),
-					Messages.DiagramEditorActionBarAdvisor_AboutDialogTitle,
-					Messages.DiagramEditorActionBarAdvisor_AboutDialogMessage);
-		}
-	}
-
 }

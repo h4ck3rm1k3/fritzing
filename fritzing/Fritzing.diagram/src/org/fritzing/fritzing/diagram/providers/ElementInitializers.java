@@ -46,9 +46,8 @@ public class ElementInitializers {
 								terminals_24(), terminals_25(), terminals_26(),
 								terminals_27(), terminals_28(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getElement_Id(),
-						FritzingOCLFactory.getExpression(
-								"\'Arduino Diecimila\'", //$NON-NLS-1$
+						FritzingPackage.eINSTANCE.getPart_Id(),
+						FritzingOCLFactory.getExpression("\'Arduino\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getArduino())));
 			}
 
@@ -484,7 +483,7 @@ public class ElementInitializers {
 						FritzingPackage.eINSTANCE.getPart_Terminals(),
 						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getElement_Id(),
+						FritzingPackage.eINSTANCE.getPart_Id(),
 						FritzingOCLFactory.getExpression("\'L\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getLED())));
 			}
@@ -531,7 +530,7 @@ public class ElementInitializers {
 						FritzingPackage.eINSTANCE.getPart_Terminals(),
 						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getElement_Id(),
+						FritzingPackage.eINSTANCE.getPart_Id(),
 						FritzingOCLFactory.getExpression("\'R\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getResistor())));
 			}
@@ -579,7 +578,7 @@ public class ElementInitializers {
 						new ObjectInitializer[] { terminals_1(), terminals_2(),
 								terminals_3(), terminals_4(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getElement_Id(),
+						FritzingPackage.eINSTANCE.getPart_Id(),
 						FritzingOCLFactory.getExpression("\'B\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getButton())));
 			}

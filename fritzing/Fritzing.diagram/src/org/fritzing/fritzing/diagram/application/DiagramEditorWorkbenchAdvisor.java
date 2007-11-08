@@ -15,7 +15,7 @@ public class DiagramEditorWorkbenchAdvisor extends WorkbenchAdvisor {
 	/**
 	 * @generated
 	 */
-	public static final String PERSPECTIVE_ID = "org.fritzing.fritzing.diagram.FritzingPerspective"; //$NON-NLS-1$
+	public static final String PERSPECTIVE_ID = "org.fritzing.fritzing.diagram.FritzingPhysicalPerspective"; //$NON-NLS-1$
 
 	/**
 	 * @generated

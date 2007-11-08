@@ -104,7 +104,7 @@ public class FritzingCreationWizard extends Wizard implements INewWizard {
 	 */
 	public void addPages() {
 		diagramModelFilePage = new FritzingCreationWizardPage(
-				"DiagramModelFile", getSelection(), "fritzing_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
+				"DiagramModelFile", getSelection(), "fzb"); //$NON-NLS-1$ //$NON-NLS-2$
 		diagramModelFilePage
 				.setTitle(Messages.FritzingCreationWizard_DiagramModelFilePageTitle);
 		diagramModelFilePage
@@ -112,7 +112,7 @@ public class FritzingCreationWizard extends Wizard implements INewWizard {
 		addPage(diagramModelFilePage);
 
 		domainModelFilePage = new FritzingCreationWizardPage(
-				"DomainModelFile", getSelection(), "fritzing"); //$NON-NLS-1$ //$NON-NLS-2$
+				"DomainModelFile", getSelection(), "fz"); //$NON-NLS-1$ //$NON-NLS-2$
 		domainModelFilePage
 				.setTitle(Messages.FritzingCreationWizard_DomainModelFilePageTitle);
 		domainModelFilePage

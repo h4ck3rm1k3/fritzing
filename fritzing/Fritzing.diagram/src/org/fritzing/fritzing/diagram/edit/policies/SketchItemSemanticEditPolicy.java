@@ -29,26 +29,12 @@ public class SketchItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	protected Command getCreateCommand(CreateElementRequest req) {
-		if (FritzingElementTypes.Module_2001 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new ModuleCreateCommand(req));
-		}
 		if (FritzingElementTypes.Arduino_2002 == req.getElementType()) {
 			if (req.getContainmentFeature() == null) {
 				req.setContainmentFeature(FritzingPackage.eINSTANCE
 						.getComposite_Parts());
 			}
 			return getGEFWrapper(new ArduinoCreateCommand(req));
-		}
-		if (FritzingElementTypes.Breadboard_2003 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new BreadboardCreateCommand(req));
 		}
 		if (FritzingElementTypes.LED_2004 == req.getElementType()) {
 			if (req.getContainmentFeature() == null) {

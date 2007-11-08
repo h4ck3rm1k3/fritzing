@@ -29,6 +29,6 @@ public class SketchViewFactory extends DiagramViewFactory {
 	 * @generated
 	 */
 	protected MeasurementUnit getMeasurementUnit() {
-		return MeasurementUnit.PIXEL_LITERAL;
+		return MeasurementUnit.HIMETRIC_LITERAL;
 	}
 }

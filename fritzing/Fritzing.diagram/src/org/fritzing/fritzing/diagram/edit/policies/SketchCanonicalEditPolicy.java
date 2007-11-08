@@ -29,10 +29,8 @@ import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.BreadboardEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ModuleEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
@@ -80,9 +78,7 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 	protected boolean isOrphaned(Collection semanticChildren, final View view) {
 		int visualID = FritzingVisualIDRegistry.getVisualID(view);
 		switch (visualID) {
-		case ModuleEditPart.VISUAL_ID:
 		case ArduinoEditPart.VISUAL_ID:
-		case BreadboardEditPart.VISUAL_ID:
 		case LEDEditPart.VISUAL_ID:
 		case ResistorEditPart.VISUAL_ID:
 		case ButtonEditPart.VISUAL_ID:
@@ -223,22 +219,10 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 					.getSketch_1000ContainedLinks(view));
 			break;
 		}
-		case ModuleEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getModule_2001ContainedLinks(view));
-			break;
-		}
 		case ArduinoEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
 					.getArduino_2002ContainedLinks(view));
-			break;
-		}
-		case BreadboardEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getBreadboard_2003ContainedLinks(view));
 			break;
 		}
 		case LEDEditPart.VISUAL_ID: {
