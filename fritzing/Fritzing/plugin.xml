@@ -37,7 +37,7 @@
         </property>
         <property
               name="aboutText"
-              value="Fritzing 0001 Alpha&#x0D;&#x0A;&#x0D;&#x0A;Contributors: André Knörig, Zach Eveland, Reto Wettach&#x0D;&#x0A;&#x0D;&#x0A;(c) 2007 Fachhochschule Potsdam&#x0D;&#x0A;Visit http://fritzing.org">
+              value="Fritzing 0001 Alpha&#x0A;&#x0A;Contributors: André Knörig, Zach Eveland, Reto Wettach&#x0A;&#x0A;(c) 2007 Fachhochschule Potsdam&#x0A;Visit http://fritzing.org">
         </property>
         <property
               name="windowImages"

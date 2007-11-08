@@ -38,7 +38,6 @@ Visit http://fritzing.org
       </win>
    </launcher>
 
-
    <vm>
    </vm>
 
@@ -88,8 +87,11 @@ Visit http://fritzing.org
       <plugin id="org.eclipse.emf.ecore.xmi"/>
       <plugin id="org.eclipse.emf.edit"/>
       <plugin id="org.eclipse.emf.edit.ui"/>
+      <plugin id="org.eclipse.emf.ocl"/>
       <plugin id="org.eclipse.emf.transaction"/>
       <plugin id="org.eclipse.emf.validation"/>
+      <plugin id="org.eclipse.emf.validation.ocl"/>
+      <plugin id="org.eclipse.emf.validation.ui"/>
       <plugin id="org.eclipse.emf.workspace"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
