@@ -6,6 +6,29 @@
     diagramFileExtension="fzb"
     domainFileExtension="fz"
     copyrightText="(c) Fachhochschule Potsdam">
+  <audits>
+    <categories
+        id="org.fritzing.audits"
+        name="Fritzing Audits"
+        description="Model validation for Fritzing Sketches"
+        path="//@audits/@categories.0"
+        audits="//@audits/@rules.0"/>
+    <rules
+        name="Part Id Check"
+        description="Checks that every part has a unique ID"
+        id="org.fritzing.audits.partId"
+        message="Every part has to have a unique ID/name."
+        useInLiveMode="true"
+        category="//@audits/@categories.0">
+      <rule
+          body="self.parent.parts->forAll(p1, p2 | p1 &lt;> p2 implies p1.id &lt;> p2.id)"/>
+      <target
+          xsi:type="gmfgen:GenDomainElementTarget">
+        <element
+            href="fritzing.genmodel#//fritzing/Part"/>
+      </target>
+    </rules>
+  </audits>
   <diagram
       visualID="1000"
       editPartClassName="SketchEditPart"
@@ -14,6 +37,9 @@
       canonicalEditPolicyClassName="SketchCanonicalEditPolicy"
       iconProviderPriority="Low"
       validationProviderPriority="Low"
+      validationEnabled="true"
+      validationDecorators="true"
+      validationDecoratorProviderPriority="Medium"
       liveValidationUIFeedback="true"
       units="Himetric">
     <diagramRunTimeClass
@@ -164,7 +190,7 @@
             <newElementInitializers>
               <initializers
                   xsi:type="gmfgen:GenFeatureValueSpec"
-                  body="'Gnd'">
+                  body="'Gnd1'">
                 <feature
                     href="fritzing.genmodel#//fritzing/Terminal/name"/>
               </initializers>
@@ -460,7 +486,10 @@
             getterName="getFigureLEDIdFigure"
             figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel"/>
         <modelFacet
-            xsi:type="gmfgen:FeatureLabelModelFacet">
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            viewPattern=""
+            editorPattern=""
+            editPattern="">
           <metaFeatures
               href="fritzing.genmodel#//fritzing/Part/id"/>
         </modelFacet>
@@ -546,9 +575,14 @@
             getterName="getFigureResistorIdFigure"
             figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel"/>
         <modelFacet
-            xsi:type="gmfgen:FeatureLabelModelFacet">
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            viewPattern=""
+            editorPattern=""
+            editPattern="">
           <metaFeatures
               href="fritzing.genmodel#//fritzing/Part/id"/>
+          <metaFeatures
+              href="fritzing.genmodel#//fritzing/Resistor/value"/>
         </modelFacet>
       </labels>
     </topLevelNodes>
@@ -598,7 +632,7 @@
             <newElementInitializers>
               <initializers
                   xsi:type="gmfgen:GenFeatureValueSpec"
-                  body="'0'">
+                  body="'0p'">
                 <feature
                     href="fritzing.genmodel#//fritzing/Terminal/name"/>
               </initializers>
@@ -606,7 +640,7 @@
             <newElementInitializers>
               <initializers
                   xsi:type="gmfgen:GenFeatureValueSpec"
-                  body="'1'">
+                  body="'1p'">
                 <feature
                     href="fritzing.genmodel#//fritzing/Terminal/name"/>
               </initializers>
@@ -861,10 +895,16 @@
         name="CLOSE"/>
     <sharedContributionItems
         xsi:type="gmfgen:GenActionFactoryContributionItem"
+        name="CLOSE_ALL"/>
+    <sharedContributionItems
+        xsi:type="gmfgen:GenActionFactoryContributionItem"
         name="SAVE"/>
     <sharedContributionItems
         xsi:type="gmfgen:GenActionFactoryContributionItem"
         name="SAVE_AS"/>
+    <sharedContributionItems
+        xsi:type="gmfgen:GenActionFactoryContributionItem"
+        name="SAVE_ALL"/>
     <sharedContributionItems
         xsi:type="gmfgen:GenActionFactoryContributionItem"
         name="QUIT"/>
@@ -891,10 +931,10 @@
         name="SELECT_ALL"/>
     <sharedContributionItems
         xsi:type="gmfgen:GenActionFactoryContributionItem"
-        name="PRINT"/>
+        name="OPEN_NEW_WINDOW"/>
     <sharedContributionItems
         xsi:type="gmfgen:GenActionFactoryContributionItem"
-        name="ABOUT"/>
+        name="PRINT"/>
     <mainMenu>
       <items
           xsi:type="gmfgen:GenMenuManager"
@@ -904,8 +944,15 @@
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.FILE_START"/>
         <items
-            xsi:type="gmfgen:GenGroupMarker"
-            groupName="org.eclipse.ui.IWorkbenchActionConstants.MB_ADDITIONS"/>
+            xsi:type="gmfgen:GenMenuManager"
+            iD="&quot;new&quot;"
+            name="&amp;New">
+          <items
+              xsi:type="gmfgen:GenGroupMarker"
+              groupName="org.eclipse.ui.IWorkbenchActionConstants.MB_ADDITIONS"/>
+        </items>
+        <items
+            xsi:type="gmfgen:GenSeparator"/>
         <items
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.MB_ADDITIONS"/>
@@ -913,23 +960,26 @@
             xsi:type="gmfgen:GenSeparator"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
+            actualItem="//@application/@sharedContributionItems.0"/>
+        <items
+            xsi:type="gmfgen:GenSharedContributionItem"
             actualItem="//@application/@sharedContributionItems.1"/>
+        <items
+            xsi:type="gmfgen:GenSeparator"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
             actualItem="//@application/@sharedContributionItems.2"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.0"/>
-        <items
-            xsi:type="gmfgen:GenSeparator"/>
-        <items
-            xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.12"/>
-        <items
-            xsi:type="gmfgen:GenSeparator"/>
-        <items
-            xsi:type="gmfgen:GenSharedContributionItem"
             actualItem="//@application/@sharedContributionItems.3"/>
+        <items
+            xsi:type="gmfgen:GenSharedContributionItem"
+            actualItem="//@application/@sharedContributionItems.4"/>
+        <items
+            xsi:type="gmfgen:GenSeparator"/>
+        <items
+            xsi:type="gmfgen:GenSharedContributionItem"
+            actualItem="//@application/@sharedContributionItems.5"/>
         <items
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.FILE_END"/>
@@ -943,10 +993,10 @@
             groupName="org.eclipse.ui.IWorkbenchActionConstants.EDIT_START"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.4"/>
+            actualItem="//@application/@sharedContributionItems.6"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.5"/>
+            actualItem="//@application/@sharedContributionItems.7"/>
         <items
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.UNDO_EXT"/>
@@ -954,13 +1004,13 @@
             xsi:type="gmfgen:GenSeparator"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.6"/>
-        <items
-            xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.7"/>
-        <items
-            xsi:type="gmfgen:GenSharedContributionItem"
             actualItem="//@application/@sharedContributionItems.8"/>
+        <items
+            xsi:type="gmfgen:GenSharedContributionItem"
+            actualItem="//@application/@sharedContributionItems.9"/>
+        <items
+            xsi:type="gmfgen:GenSharedContributionItem"
+            actualItem="//@application/@sharedContributionItems.10"/>
         <items
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.CUT_EXT"/>
@@ -968,10 +1018,10 @@
             xsi:type="gmfgen:GenSeparator"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.9"/>
+            actualItem="//@application/@sharedContributionItems.11"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.10"/>
+            actualItem="//@application/@sharedContributionItems.12"/>
         <items
             xsi:type="gmfgen:GenSeparator"/>
         <items
@@ -989,6 +1039,17 @@
           groupName="org.eclipse.ui.IWorkbenchActionConstants.MB_ADDITIONS"/>
       <items
           xsi:type="gmfgen:GenMenuManager"
+          iD="org.eclipse.ui.IWorkbenchActionConstants.M_WINDOW"
+          name="&amp;Window">
+        <items
+            xsi:type="gmfgen:GenSharedContributionItem"
+            actualItem="//@application/@sharedContributionItems.13"/>
+        <items
+            xsi:type="gmfgen:GenGroupMarker"
+            groupName="org.eclipse.ui.IWorkbenchActionConstants.MB_ADDITIONS"/>
+      </items>
+      <items
+          xsi:type="gmfgen:GenMenuManager"
           iD="org.eclipse.ui.IWorkbenchActionConstants.M_HELP"
           name="&amp;Help">
         <items
@@ -1000,9 +1061,6 @@
         <items
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.MB_ADDITIONS"/>
-        <items
-            xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.12"/>
       </items>
     </mainMenu>
     <mainToolBar>
@@ -1023,13 +1081,13 @@
             groupName="org.eclipse.ui.IWorkbenchActionConstants.SAVE_GROUP"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.1"/>
+            actualItem="//@application/@sharedContributionItems.2"/>
         <items
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.SAVE_EXT"/>
         <items
             xsi:type="gmfgen:GenSharedContributionItem"
-            actualItem="//@application/@sharedContributionItems.12"/>
+            actualItem="//@application/@sharedContributionItems.14"/>
         <items
             xsi:type="gmfgen:GenGroupMarker"
             groupName="org.eclipse.ui.IWorkbenchActionConstants.PRINT_EXT"/>
@@ -1066,6 +1124,6 @@
   <expressionProviders>
     <providers
         xsi:type="gmfgen:GenExpressionInterpreter"
-        expressions="//@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.2/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.3/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.4/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.5/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.6/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.7/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.8/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.9/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.10/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.11/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.12/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.13/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.14/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.15/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.16/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.17/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.18/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.19/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.20/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.21/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.22/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.23/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.24/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.25/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.26/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.27/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.2/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.2/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.2/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.2/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.3/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.1"/>
+        expressions="//@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.2/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.3/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.4/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.5/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.6/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.7/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.8/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.9/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.10/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.11/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.12/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.13/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.14/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.15/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.16/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.17/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.18/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.19/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.20/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.21/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.22/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.23/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.24/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.25/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.26/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.27/@initializers.0 //@diagram/@topLevelNodes.0/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.1/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.2/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.2/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.2/@modelFacet/@modelElementInitializer/@initializers.1 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.0/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.1/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.2/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.0/@newElementInitializers.3/@initializers.0 //@diagram/@topLevelNodes.3/@modelFacet/@modelElementInitializer/@initializers.1 //@audits/@rules.0/@rule"/>
   </expressionProviders>
 </gmfgen:GenEditorGenerator>

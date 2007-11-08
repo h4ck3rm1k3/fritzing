@@ -57,7 +57,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'Gnd'">
+                body="'Gnd1'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -339,7 +339,10 @@
         </initializers>
       </domainInitializer>
       <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
+          xsi:type="gmfmap:FeatureLabelMapping"
+          viewPattern=""
+          editorPattern=""
+          editPattern="">
         <diagramLabel
             href="fritzing.gmfgraph#LEDId"/>
         <features
@@ -398,7 +401,10 @@
         </initializers>
       </domainInitializer>
       <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
+          xsi:type="gmfmap:FeatureLabelMapping"
+          viewPattern=""
+          editorPattern=""
+          editPattern="">
         <diagramLabel
             href="fritzing.gmfgraph#ResistorId"/>
         <features
@@ -432,7 +438,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'0'">
+                body="'0p'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -441,7 +447,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'1'">
+                body="'1p'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -544,4 +550,23 @@
     <palette
         href="fritzing.gmftool#//@palette"/>
   </diagram>
+  <audits
+      id="org.fritzing.audits"
+      name="Fritzing Audits"
+      description="Model validation for Fritzing Sketches">
+    <audits
+        name="Part Id Check"
+        description="Checks that every part has a unique ID"
+        id="org.fritzing.audits.partId"
+        useInLiveMode="true"
+        message="Every part has to have a unique ID/name.">
+      <rule
+          body="self.parent.parts->forAll(p1, p2 | p1 &lt;> p2 implies p1.id &lt;> p2.id)"/>
+      <target
+          xsi:type="gmfmap:DomainElementTarget">
+        <element
+            href="fritzing.ecore#//Part"/>
+      </target>
+    </audits>
+  </audits>
 </gmfmap:Mapping>
