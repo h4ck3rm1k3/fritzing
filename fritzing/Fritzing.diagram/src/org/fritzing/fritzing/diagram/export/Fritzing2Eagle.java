@@ -1,8 +1,8 @@
 package org.fritzing.fritzing.diagram.export;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
@@ -13,7 +13,12 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
+import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
+import org.fritzing.fritzing.impl.ArduinoImpl;
+import org.fritzing.fritzing.impl.ButtonImpl;
+import org.fritzing.fritzing.impl.LEDImpl;
+import org.fritzing.fritzing.impl.ResistorImpl;
 
 public class Fritzing2Eagle {
 
@@ -23,31 +28,81 @@ public class Fritzing2Eagle {
 		SketchEditPart sketchEP = (SketchEditPart) viewer.getContents();
 		Sketch sketch = (Sketch) ((View) sketchEP.getModel()).getElement();
 		
-		// TODO: implement transformation here
+		ArrayList<EagleSCRPart> partList = new ArrayList<EagleSCRPart>();
+		ArrayList<EagleSCRNet> netList = new ArrayList<EagleSCRNet>();
+	
+		// create a new entry in the ArrayList 'partList' for each component:		
 		for (Part p: sketch.getParts()) {
-			result += getLayoutInfo(viewer, p).getLocation().x;
+			String partClass = "";
+			if (p instanceof ResistorImpl)	
+				partClass = "Resistor";
+			if (p instanceof ArduinoImpl) 
+				partClass = "Arduino";
+			if (p instanceof ButtonImpl)
+				partClass = "Button";
+			if (p instanceof LEDImpl)
+				partClass = "LED";
+			
+			EagleSCRPart part = new EagleSCRPart(
+				p.getId(),			// part name (e.g. 'R1')
+				partClass,			// part type (e.g. 'Resistor')
+				"fritzing-0001a",	// library name
+				new CoordPair(		// Fritzing coordinates
+					((float)getLayoutInfo(viewer, p).getLocation().x), 
+					(float)getLayoutInfo(viewer, p).getLocation().y)
+				);
+			partList.add(part);			 
 		}
 		
-		// just for testing until real transformation is in place
-		System.out.println(result);
-		try {
-			Reader r = new FileReader("C:/Users/andre/Fritzing/default.scr");
-			StringBuffer sb = new StringBuffer();
-			char[] b = new char[8192];
-			int n;
-			while ((n= r.read(b)) > 0) {
-				sb.append(b,0,n);
+		// fine-tune component placement - scale and convert Fritzing coordinates into
+		// coordinates appropriate for Eagle components
+		// first reflect component positions around the X-axis to account for Fritzing 
+		// assuming an origin in the top left and Eagle assuming an origin in the bottom 
+		// left
+		for (int i=0; i<partList.size(); i++) {
+//			System.out.print(getPartEntry((EagleSCRPart)partList.get(i)));
+//			result = result.concat(getPartEntry((EagleSCRPart)partList.get(i)));
+//			(EagleSCRPart)partList.get(i).partPos.yVal = 3.2 - partList.get(i).partPos.yVal;
+			float xPos = partList.get(i).partPos.xVal;
+			float yPos = partList.get(i).partPos.yVal;
+			float yLimit = (float)3.2;
+			
+			partList.get(i).setPosition(new CoordPair(xPos, (float)(yLimit - yPos)));
+			if (partList.get(i).partType.equalsIgnoreCase("Arduino"))  {
+				partList.get(i).setPosition(new CoordPair((float)0, (float)0));
+				partList.get(i).lockPos();
 			}
-			result = sb.toString();
-			r.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		
+		// create a new entry in the ArrayList 'netList' for each component:	
+		for (Wire w: sketch.getWires()) {
+			String sourceParentType = "";
+			EagleSCRNet net = new EagleSCRNet(
+				w.getName(),
+				w.getSource(),
+				w.getTarget()
+				);
+			System.out.println("_____WIRE____");
+			System.out.print("source:" + w.getSource().getParent().getId() + "." + w.getSource().getName());
+			for (int i=0; i<partList.size(); i++) {
+				if (partList.get(i).partName.equalsIgnoreCase(w.getSource().getParent().getId())) 
+					// set the terminal's parent type to be the same as for the part
+					sourceParentType = partList.get(i).partType;
+			}
+			System.out.print("target:" + w.getTarget().getParent().getId() + "." + w.getTarget().getName());
+//			w.getSource().getParent().getId();
+			netList.add(net);
+		}
+		
+		ScriptExporter exporter = new ScriptExporter();
+		result = exporter.export(partList, netList);
+		System.out.println(result);
 		
 		return result;
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	private static ShapeEditPart getLayoutInfo(IDiagramGraphicalViewer viewer, Element e) {
 		List<EditPart> editParts = viewer.findEditPartsForElement(
 				EMFCoreUtil.getProxyID(e), ShapeEditPart.class);
