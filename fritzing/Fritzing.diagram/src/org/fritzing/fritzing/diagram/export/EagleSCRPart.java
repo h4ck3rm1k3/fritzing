@@ -45,6 +45,40 @@ public class EagleSCRPart {
 		this.partPos = partPos;
 	}
 	
+	public CoordPair getTerminalCoords(String terminal) {
+		CoordPair result = new CoordPair(); 
+		double xOffset = 0;
+		double yOffset = 0;
+		
+		if (partType.equalsIgnoreCase("arduino")) {			
+			if (terminal.equals("RESET")) {
+				xOffset = 2.7;
+				yOffset = 1.4;
+			}
+			if (terminal.equals("3V3")) {
+				xOffset = 2.7;
+				yOffset = 1.5;
+			}
+		}
+		if (partType.equalsIgnoreCase("resistor")) {
+			if (terminal.equals("0")) {
+				
+			}
+			if (terminal.equals("1")) {
+				
+			}
+		}
+		if (partType.equalsIgnoreCase("led")) {
+			
+		}
+		if (partType.equalsIgnoreCase("button")) {
+			
+		}
+		result.xVal = partPos.xVal + (float)xOffset;
+		result.yVal = partPos.yVal + (float)yOffset;
+		return result;
+	}
+	
 	// we provide the 'locked' flag and a few methods to control the so-called "locked" status
 	// of a part.  some parts, once placed, should not be moved (e.g. the Arduino in very simple cases,
 	// or buttons, LEDs, etc. if a user would like them in a particular place)
