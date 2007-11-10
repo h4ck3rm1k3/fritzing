@@ -49,7 +49,7 @@ public class ResistorCreateCommand extends CreateElementCommand {
 	protected EObject doDefaultElementCreation() {
 		Resistor newElement = (Resistor) super.doDefaultElementCreation();
 		if (newElement != null) {
-			FritzingElementTypes.Initializers.Resistor_2005.init(newElement);
+			FritzingElementTypes.Initializers.Resistor_2003.init(newElement);
 		}
 		return newElement;
 	}

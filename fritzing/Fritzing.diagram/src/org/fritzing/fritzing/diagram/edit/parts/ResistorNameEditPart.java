@@ -55,13 +55,13 @@ import org.fritzing.fritzing.diagram.providers.FritzingParserProvider;
 /**
  * @generated
  */
-public class ArduinoIdEditPart extends CompartmentEditPart implements
+public class ResistorNameEditPart extends CompartmentEditPart implements
 		ITextAwareEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5003;
+	public static final int VISUAL_ID = 5004;
 
 	/**
 	 * @generated
@@ -86,7 +86,7 @@ public class ArduinoIdEditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public ArduinoIdEditPart(View view) {
+	public ResistorNameEditPart(View view) {
 		super(view);
 	}
 
@@ -305,7 +305,7 @@ public class ArduinoIdEditPart extends CompartmentEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.Arduino_2002, getParserElement(),
+					FritzingElementTypes.Resistor_2003, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}

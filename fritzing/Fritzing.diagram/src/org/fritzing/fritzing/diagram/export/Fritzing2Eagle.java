@@ -45,7 +45,7 @@ public class Fritzing2Eagle {
 				partClass = "LED";
 			
 			EagleSCRPart part = new EagleSCRPart(
-				p.getId(),			// part name (e.g. 'R1')
+				p.getName(),			// part name (e.g. 'R1')
 				partClass,			// part type (e.g. 'Resistor')
 				"fritzing-0001a",	// library name
 				new CoordPair(		// Fritzing coordinates
@@ -85,9 +85,9 @@ public class Fritzing2Eagle {
 				);
 			System.out.println("_____" + w.getName() +"____");
 			
-			System.out.println("source:" + w.getSource().getParent().getId() + "." + w.getSource().getName());			
+			System.out.println("source:" + w.getSource().getParent().getName() + "." + w.getSource().getName());			
 			for (int i=0; i<partList.size(); i++) {
-				if (partList.get(i).partName.equalsIgnoreCase(w.getSource().getParent().getId())) {
+				if (partList.get(i).partName.equalsIgnoreCase(w.getSource().getParent().getName())) {
 					// set the terminal's parent type to be the same as for the part
 //					sourceParentType = partList.get(i).partType;
 					CoordPair sourceCoords = partList.get(i).getTerminalCoords(w.getSource().getName());
@@ -96,9 +96,9 @@ public class Fritzing2Eagle {
 				}
 			}
 			
-			System.out.println("target:" + w.getTarget().getParent().getId() + "." + w.getTarget().getName());
+			System.out.println("target:" + w.getTarget().getParent().getName() + "." + w.getTarget().getName());
 			for (int i=0; i<partList.size(); i++) {
-				if (partList.get(i).partName.equalsIgnoreCase(w.getTarget().getParent().getId())) {
+				if (partList.get(i).partName.equalsIgnoreCase(w.getTarget().getParent().getName())) {
 					// set the terminal's parent type to be the same as for the part
 //					sourceParentType = partList.get(i).partType;
 					CoordPair targetCoords = partList.get(i).getTerminalCoords(w.getTarget().getName());

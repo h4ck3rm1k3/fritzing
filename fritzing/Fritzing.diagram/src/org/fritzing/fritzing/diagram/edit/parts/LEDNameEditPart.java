@@ -55,13 +55,13 @@ import org.fritzing.fritzing.diagram.providers.FritzingParserProvider;
 /**
  * @generated
  */
-public class LEDIdEditPart extends CompartmentEditPart implements
+public class LEDNameEditPart extends CompartmentEditPart implements
 		ITextAwareEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5005;
+	public static final int VISUAL_ID = 5003;
 
 	/**
 	 * @generated
@@ -86,7 +86,7 @@ public class LEDIdEditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public LEDIdEditPart(View view) {
+	public LEDNameEditPart(View view) {
 		super(view);
 	}
 
@@ -305,7 +305,7 @@ public class LEDIdEditPart extends CompartmentEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.LED_2004, getParserElement(),
+					FritzingElementTypes.LED_2002, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}

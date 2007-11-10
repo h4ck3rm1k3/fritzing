@@ -42,7 +42,7 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2004;
+	public static final int VISUAL_ID = 2002;
 
 	/**
 	 * @generated
@@ -128,9 +128,9 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof LEDIdEditPart) {
-			((LEDIdEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureLEDIdFigure());
+		if (childEditPart instanceof LEDNameEditPart) {
+			((LEDNameEditPart) childEditPart).setLabel(getPrimaryShape()
+					.getFigureLEDNameFigure());
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
@@ -255,7 +255,7 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(LEDIdEditPart.VISUAL_ID));
+				.getType(LEDNameEditPart.VISUAL_ID));
 	}
 
 	/**
@@ -266,7 +266,7 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureLEDIdFigure;
+		private WrapLabel fFigureLEDNameFigure;
 
 		/**
 		 * @generated
@@ -284,10 +284,10 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureLEDIdFigure = new WrapLabel();
-			fFigureLEDIdFigure.setText("<...>");
+			fFigureLEDNameFigure = new WrapLabel();
+			fFigureLEDNameFigure.setText("<...>");
 
-			this.add(fFigureLEDIdFigure);
+			this.add(fFigureLEDNameFigure);
 
 		}
 
@@ -313,8 +313,8 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureLEDIdFigure() {
-			return fFigureLEDIdFigure;
+		public WrapLabel getFigureLEDNameFigure() {
+			return fFigureLEDNameFigure;
 		}
 
 	}

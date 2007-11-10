@@ -42,7 +42,7 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2002;
+	public static final int VISUAL_ID = 2001;
 
 	/**
 	 * @generated
@@ -128,9 +128,9 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof ArduinoIdEditPart) {
-			((ArduinoIdEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureArduinoIdFigure());
+		if (childEditPart instanceof ArduinoNameEditPart) {
+			((ArduinoNameEditPart) childEditPart).setLabel(getPrimaryShape()
+					.getFigureArduinoNameFigure());
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
@@ -255,7 +255,7 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(ArduinoIdEditPart.VISUAL_ID));
+				.getType(ArduinoNameEditPart.VISUAL_ID));
 	}
 
 	/**
@@ -266,7 +266,7 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureArduinoIdFigure;
+		private WrapLabel fFigureArduinoNameFigure;
 
 		/**
 		 * @generated
@@ -284,10 +284,10 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureArduinoIdFigure = new WrapLabel();
-			fFigureArduinoIdFigure.setText("<...>");
+			fFigureArduinoNameFigure = new WrapLabel();
+			fFigureArduinoNameFigure.setText("<...>");
 
-			this.add(fFigureArduinoIdFigure);
+			this.add(fFigureArduinoNameFigure);
 
 		}
 
@@ -313,8 +313,8 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureArduinoIdFigure() {
-			return fFigureArduinoIdFigure;
+		public WrapLabel getFigureArduinoNameFigure() {
+			return fFigureArduinoNameFigure;
 		}
 
 	}

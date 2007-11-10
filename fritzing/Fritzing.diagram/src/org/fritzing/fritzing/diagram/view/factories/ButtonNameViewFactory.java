@@ -12,7 +12,7 @@ import org.eclipse.gmf.runtime.notation.View;
 /**
  * @generated
  */
-public class ArduinoIdViewFactory extends BasicNodeViewFactory {
+public class ButtonNameViewFactory extends BasicNodeViewFactory {
 
 	/**
 	 * @generated

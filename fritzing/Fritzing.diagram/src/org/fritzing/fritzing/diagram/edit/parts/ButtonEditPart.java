@@ -43,7 +43,7 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2006;
+	public static final int VISUAL_ID = 2004;
 
 	/**
 	 * @generated
@@ -129,9 +129,9 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof ButtonIdEditPart) {
-			((ButtonIdEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureButtonIdFigure());
+		if (childEditPart instanceof ButtonNameEditPart) {
+			((ButtonNameEditPart) childEditPart).setLabel(getPrimaryShape()
+					.getFigureButtonNameFigure());
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
@@ -256,7 +256,7 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(ButtonIdEditPart.VISUAL_ID));
+				.getType(ButtonNameEditPart.VISUAL_ID));
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureButtonIdFigure;
+		private WrapLabel fFigureButtonNameFigure;
 
 		/**
 		 * @generated
@@ -292,10 +292,10 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 
 			this.add(elli0);
 
-			fFigureButtonIdFigure = new WrapLabel();
-			fFigureButtonIdFigure.setText("<...>");
+			fFigureButtonNameFigure = new WrapLabel();
+			fFigureButtonNameFigure.setText("<...>");
 
-			this.add(fFigureButtonIdFigure);
+			this.add(fFigureButtonNameFigure);
 
 		}
 
@@ -321,8 +321,8 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureButtonIdFigure() {
-			return fFigureButtonIdFigure;
+		public WrapLabel getFigureButtonNameFigure() {
+			return fFigureButtonNameFigure;
 		}
 
 	}

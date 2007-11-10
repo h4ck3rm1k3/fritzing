@@ -37,26 +37,26 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case ArduinoEditPart.VISUAL_ID:
 				return new ArduinoEditPart(view);
 
-			case ArduinoIdEditPart.VISUAL_ID:
-				return new ArduinoIdEditPart(view);
+			case ArduinoNameEditPart.VISUAL_ID:
+				return new ArduinoNameEditPart(view);
 
 			case LEDEditPart.VISUAL_ID:
 				return new LEDEditPart(view);
 
-			case LEDIdEditPart.VISUAL_ID:
-				return new LEDIdEditPart(view);
+			case LEDNameEditPart.VISUAL_ID:
+				return new LEDNameEditPart(view);
 
 			case ResistorEditPart.VISUAL_ID:
 				return new ResistorEditPart(view);
 
-			case ResistorIdEditPart.VISUAL_ID:
-				return new ResistorIdEditPart(view);
+			case ResistorNameEditPart.VISUAL_ID:
+				return new ResistorNameEditPart(view);
 
 			case ButtonEditPart.VISUAL_ID:
 				return new ButtonEditPart(view);
 
-			case ButtonIdEditPart.VISUAL_ID:
-				return new ButtonIdEditPart(view);
+			case ButtonNameEditPart.VISUAL_ID:
+				return new ButtonNameEditPart(view);
 
 			case TerminalEditPart.VISUAL_ID:
 				return new TerminalEditPart(view);
@@ -73,8 +73,8 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case WireEditPart.VISUAL_ID:
 				return new WireEditPart(view);
 
-			case WireIdEditPart.VISUAL_ID:
-				return new WireIdEditPart(view);
+			case WireNameEditPart.VISUAL_ID:
+				return new WireNameEditPart(view);
 			}
 		}
 		return createUnrecognizedEditPart(context, model);

@@ -326,51 +326,51 @@
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
-               id="Fritzing.diagram.Arduino_2002"
-               name="%metatype.name.Arduino_2002"
+               id="Fritzing.diagram.Arduino_2001"
+               name="%metatype.name.Arduino_2001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Arduino"
                edithelper="org.fritzing.fritzing.diagram.edit.helpers.ArduinoEditHelper">
+            <param name="semanticHint" value="2001"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.LED_2002"
+               name="%metatype.name.LED_2002"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="LED"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.LEDEditHelper">
             <param name="semanticHint" value="2002"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
-               id="Fritzing.diagram.LED_2004"
-               name="%metatype.name.LED_2004"
+               id="Fritzing.diagram.Resistor_2003"
+               name="%metatype.name.Resistor_2003"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="LED"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.LEDEditHelper">
+               eclass="Resistor"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ResistorEditHelper">
+            <param name="semanticHint" value="2003"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.Button_2004"
+               name="%metatype.name.Button_2004"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Button"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ButtonEditHelper">
             <param name="semanticHint" value="2004"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
-         <metamodelType
-               id="Fritzing.diagram.Resistor_2005"
-               name="%metatype.name.Resistor_2005"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="Resistor"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ResistorEditHelper">
-            <param name="semanticHint" value="2005"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.fritzing.org">
-         <metamodelType
-               id="Fritzing.diagram.Button_2006"
-               name="%metatype.name.Button_2006"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="Button"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ButtonEditHelper">
-            <param name="semanticHint" value="2006"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.fritzing.org">
          <specializationType
-               id="Fritzing.diagram.Terminal_2007"
-               name="%metatype.name.Terminal_2007"
+               id="Fritzing.diagram.Terminal_2005"
+               name="%metatype.name.Terminal_2005"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
             <specializes id="Fritzing.diagram.Terminal_3001"/>
-            <param name="semanticHint" value="2007"/>
+            <param name="semanticHint" value="2005"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
@@ -406,11 +406,11 @@
       </clientContext> 
       <binding context="FritzingPhysicalClientContext">
          <elementType ref="Fritzing.diagram.Sketch_1000"/>
-         <elementType ref="Fritzing.diagram.Arduino_2002"/>
-         <elementType ref="Fritzing.diagram.LED_2004"/>
-         <elementType ref="Fritzing.diagram.Resistor_2005"/>
-         <elementType ref="Fritzing.diagram.Button_2006"/>
-         <elementType ref="Fritzing.diagram.Terminal_2007"/>
+         <elementType ref="Fritzing.diagram.Arduino_2001"/>
+         <elementType ref="Fritzing.diagram.LED_2002"/>
+         <elementType ref="Fritzing.diagram.Resistor_2003"/>
+         <elementType ref="Fritzing.diagram.Button_2004"/>
+         <elementType ref="Fritzing.diagram.Terminal_2005"/>
          <elementType ref="Fritzing.diagram.Terminal_3001"/>
          <elementType ref="Fritzing.diagram.Wire_4001"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
@@ -437,7 +437,7 @@
       <?gmfgen generated="true"?>
       <actionSet
             label="%initDiagramActionLabel"
-            visible="false"
+            visible="true"
             id="Fritzing.diagram.InitDiagram">
          <action
                label="%initDiagramActionLabel"
@@ -524,14 +524,14 @@
       <constraintProvider cache="true">
          <package namespaceUri="http://www.fritzing.org"/>
                <constraints categories="org.fritzing.audits">
-                  <constraint id="org.fritzing.audits.partId"
+                  <constraint id="org.fritzing.audits.partName"
             lang="OCL"
-            name="Part Id Check"
+            name="Part Name Check"
             mode="Live"
             severity="ERROR" statusCode="200">
-            <![CDATA[self.parent.parts->forAll(p1, p2 : Part | p1 <> p2 implies p1.id <> p2.id)]]>
-            <description><![CDATA[Checks that every part has a unique ID]]></description>
-            <message><![CDATA[Every part has to have a unique ID/name.]]></message>
+            <![CDATA[self.parent.parts->forAll(p1, p2 : Part | p1 <> p2 implies p1.name <> p2.name)]]>
+            <description><![CDATA[Checks that every part has a unique name]]></description>
+            <message><![CDATA[Every part has to have a unique name.]]></message>
             <target class="fritzing.Part"/>
          </constraint>
                   </constraints>
@@ -557,7 +557,7 @@
       <?gmfgen generated="true"?>
       <contributionItemProvider
          class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider">
-         <Priority name="Low"/>
+         <Priority name="Medium"/>
          <partContribution id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
             <partMenuGroup menubarPath="/diagramMenu/" id="validationGroup"/>
             <partAction id="validateAction" menubarPath="/diagramMenu/validationGroup"/>
@@ -568,7 +568,7 @@
       <?gmfgen generated="true"?>
       <decoratorProvider class="org.fritzing.fritzing.diagram.providers.FritzingValidationDecoratorProvider">
          <Priority name="Medium"/>
-         <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart(org.eclipse.gmf.runtime.diagram.ui)" id="PRIMARY_VIEW"/>
+         <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart" id="PRIMARY_VIEW"/>
          <context decoratorTargets="PRIMARY_VIEW"/>
       </decoratorProvider>
    </extension>

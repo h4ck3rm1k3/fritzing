@@ -11,20 +11,20 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ArduinoIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ArduinoNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ButtonIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.LEDIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ResistorIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.WireIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 
 /**
@@ -208,7 +208,7 @@ public class FritzingVisualIDRegistry {
 		}
 		switch (containerVisualID) {
 		case ArduinoEditPart.VISUAL_ID:
-			if (ArduinoIdEditPart.VISUAL_ID == nodeVisualID) {
+			if (ArduinoNameEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
@@ -216,7 +216,7 @@ public class FritzingVisualIDRegistry {
 			}
 			break;
 		case LEDEditPart.VISUAL_ID:
-			if (LEDIdEditPart.VISUAL_ID == nodeVisualID) {
+			if (LEDNameEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
@@ -224,7 +224,7 @@ public class FritzingVisualIDRegistry {
 			}
 			break;
 		case ResistorEditPart.VISUAL_ID:
-			if (ResistorIdEditPart.VISUAL_ID == nodeVisualID) {
+			if (ResistorNameEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
@@ -232,7 +232,7 @@ public class FritzingVisualIDRegistry {
 			}
 			break;
 		case ButtonEditPart.VISUAL_ID:
-			if (ButtonIdEditPart.VISUAL_ID == nodeVisualID) {
+			if (ButtonNameEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
@@ -267,7 +267,7 @@ public class FritzingVisualIDRegistry {
 			}
 			break;
 		case WireEditPart.VISUAL_ID:
-			if (WireIdEditPart.VISUAL_ID == nodeVisualID) {
+			if (WireNameEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;

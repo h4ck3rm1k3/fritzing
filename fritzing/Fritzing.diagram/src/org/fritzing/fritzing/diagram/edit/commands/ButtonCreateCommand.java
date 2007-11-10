@@ -49,7 +49,7 @@ public class ButtonCreateCommand extends CreateElementCommand {
 	protected EObject doDefaultElementCreation() {
 		Button newElement = (Button) super.doDefaultElementCreation();
 		if (newElement != null) {
-			FritzingElementTypes.Initializers.Button_2006.init(newElement);
+			FritzingElementTypes.Initializers.Button_2004.init(newElement);
 		}
 		return newElement;
 	}

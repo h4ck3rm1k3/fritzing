@@ -42,7 +42,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2005;
+	public static final int VISUAL_ID = 2003;
 
 	/**
 	 * @generated
@@ -128,9 +128,9 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof ResistorIdEditPart) {
-			((ResistorIdEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureResistorIdFigure());
+		if (childEditPart instanceof ResistorNameEditPart) {
+			((ResistorNameEditPart) childEditPart).setLabel(getPrimaryShape()
+					.getFigureResistorNameFigure());
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
@@ -255,7 +255,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(ResistorIdEditPart.VISUAL_ID));
+				.getType(ResistorNameEditPart.VISUAL_ID));
 	}
 
 	/**
@@ -266,7 +266,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureResistorIdFigure;
+		private WrapLabel fFigureResistorNameFigure;
 
 		/**
 		 * @generated
@@ -284,10 +284,10 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureResistorIdFigure = new WrapLabel();
-			fFigureResistorIdFigure.setText("<...>");
+			fFigureResistorNameFigure = new WrapLabel();
+			fFigureResistorNameFigure.setText("<...>");
 
-			this.add(fFigureResistorIdFigure);
+			this.add(fFigureResistorNameFigure);
 
 		}
 
@@ -313,8 +313,8 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureResistorIdFigure() {
-			return fFigureResistorIdFigure;
+		public WrapLabel getFigureResistorNameFigure() {
+			return fFigureResistorNameFigure;
 		}
 
 	}

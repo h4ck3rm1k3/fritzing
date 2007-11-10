@@ -67,11 +67,11 @@ public class FritzingModelingAssistantProvider extends
 		}
 		if (editPart instanceof SketchEditPart) {
 			List types = new ArrayList();
-			types.add(FritzingElementTypes.Arduino_2002);
-			types.add(FritzingElementTypes.LED_2004);
-			types.add(FritzingElementTypes.Resistor_2005);
-			types.add(FritzingElementTypes.Button_2006);
-			types.add(FritzingElementTypes.Terminal_2007);
+			types.add(FritzingElementTypes.Arduino_2001);
+			types.add(FritzingElementTypes.LED_2002);
+			types.add(FritzingElementTypes.Resistor_2003);
+			types.add(FritzingElementTypes.Button_2004);
+			types.add(FritzingElementTypes.Terminal_2005);
 			return types;
 		}
 		return Collections.EMPTY_LIST;
@@ -157,7 +157,7 @@ public class FritzingModelingAssistantProvider extends
 		if (targetEditPart instanceof TerminalEditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2007);
+				types.add(FritzingElementTypes.Terminal_2005);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);
@@ -167,7 +167,7 @@ public class FritzingModelingAssistantProvider extends
 		if (targetEditPart instanceof Terminal2EditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2007);
+				types.add(FritzingElementTypes.Terminal_2005);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);
@@ -187,7 +187,7 @@ public class FritzingModelingAssistantProvider extends
 		if (sourceEditPart instanceof TerminalEditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2007);
+				types.add(FritzingElementTypes.Terminal_2005);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);
@@ -197,7 +197,7 @@ public class FritzingModelingAssistantProvider extends
 		if (sourceEditPart instanceof Terminal2EditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2007);
+				types.add(FritzingElementTypes.Terminal_2005);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);

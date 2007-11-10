@@ -15,7 +15,7 @@ import org.eclipse.gmf.runtime.notation.View;
 /**
  * @generated
  */
-public class WireIdViewFactory extends AbstractLabelViewFactory {
+public class WireNameViewFactory extends AbstractLabelViewFactory {
 
 	/**
 	 * @generated

@@ -16,7 +16,7 @@ import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ArduinoIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ArduinoNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
@@ -61,8 +61,12 @@ public class ArduinoViewFactory extends AbstractShapeViewFactory {
 		if (eObject != null) {
 			eObjectAdapter = new EObjectAdapter(eObject);
 		}
-		getViewService().createNode(eObjectAdapter, view,
-				FritzingVisualIDRegistry.getType(ArduinoIdEditPart.VISUAL_ID),
-				ViewUtil.APPEND, true, getPreferencesHint());
+		getViewService()
+				.createNode(
+						eObjectAdapter,
+						view,
+						FritzingVisualIDRegistry
+								.getType(ArduinoNameEditPart.VISUAL_ID),
+						ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }

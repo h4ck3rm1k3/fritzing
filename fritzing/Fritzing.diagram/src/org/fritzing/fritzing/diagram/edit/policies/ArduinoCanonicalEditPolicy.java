@@ -35,7 +35,7 @@ public class ArduinoCanonicalEditPolicy extends CanonicalEditPolicy {
 		View viewObject = (View) getHost().getModel();
 		List result = new LinkedList();
 		for (Iterator it = FritzingDiagramUpdater
-				.getArduino_2002SemanticChildren(viewObject).iterator(); it
+				.getArduino_2001SemanticChildren(viewObject).iterator(); it
 				.hasNext();) {
 			result.add(((FritzingNodeDescriptor) it.next()).getModelElement());
 		}

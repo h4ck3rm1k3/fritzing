@@ -14,7 +14,7 @@ import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.WireIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
@@ -51,7 +51,7 @@ public class WireViewFactory extends ConnectionViewFactory {
 			eObjectAdapter = new EObjectAdapter(eObject);
 		}
 		getViewService().createNode(eObjectAdapter, view,
-				FritzingVisualIDRegistry.getType(WireIdEditPart.VISUAL_ID),
+				FritzingVisualIDRegistry.getType(WireNameEditPart.VISUAL_ID),
 				ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }

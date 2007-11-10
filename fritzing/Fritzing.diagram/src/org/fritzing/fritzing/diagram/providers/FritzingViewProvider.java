@@ -10,35 +10,35 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.type.core.IHintedType;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ArduinoIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ArduinoNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ButtonIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.LEDIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ResistorIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.WireIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
-import org.fritzing.fritzing.diagram.view.factories.ArduinoIdViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.ArduinoNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ArduinoViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.ButtonIdViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.ButtonNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ButtonViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.LEDIdViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.LEDNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.ResistorIdViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.ResistorNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.SketchViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.Terminal2ViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalName2ViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalViewFactory;
-import org.fritzing.fritzing.diagram.view.factories.WireIdViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.WireNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.WireViewFactory;
 
 /**
@@ -123,28 +123,28 @@ public class FritzingViewProvider extends AbstractViewProvider {
 						return null; // visual id in semantic hint should match visual id for domain element
 					}
 					break;
-				case ArduinoIdEditPart.VISUAL_ID:
+				case ArduinoNameEditPart.VISUAL_ID:
 					if (ArduinoEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
 						return null; // wrong container
 					}
 					break;
-				case LEDIdEditPart.VISUAL_ID:
+				case LEDNameEditPart.VISUAL_ID:
 					if (LEDEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
 						return null; // wrong container
 					}
 					break;
-				case ResistorIdEditPart.VISUAL_ID:
+				case ResistorNameEditPart.VISUAL_ID:
 					if (ResistorEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
 						return null; // wrong container
 					}
 					break;
-				case ButtonIdEditPart.VISUAL_ID:
+				case ButtonNameEditPart.VISUAL_ID:
 					if (ButtonEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
@@ -165,7 +165,7 @@ public class FritzingViewProvider extends AbstractViewProvider {
 						return null; // wrong container
 					}
 					break;
-				case WireIdEditPart.VISUAL_ID:
+				case WireNameEditPart.VISUAL_ID:
 					if (WireEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
@@ -192,20 +192,20 @@ public class FritzingViewProvider extends AbstractViewProvider {
 		switch (visualID) {
 		case ArduinoEditPart.VISUAL_ID:
 			return ArduinoViewFactory.class;
-		case ArduinoIdEditPart.VISUAL_ID:
-			return ArduinoIdViewFactory.class;
+		case ArduinoNameEditPart.VISUAL_ID:
+			return ArduinoNameViewFactory.class;
 		case LEDEditPart.VISUAL_ID:
 			return LEDViewFactory.class;
-		case LEDIdEditPart.VISUAL_ID:
-			return LEDIdViewFactory.class;
+		case LEDNameEditPart.VISUAL_ID:
+			return LEDNameViewFactory.class;
 		case ResistorEditPart.VISUAL_ID:
 			return ResistorViewFactory.class;
-		case ResistorIdEditPart.VISUAL_ID:
-			return ResistorIdViewFactory.class;
+		case ResistorNameEditPart.VISUAL_ID:
+			return ResistorNameViewFactory.class;
 		case ButtonEditPart.VISUAL_ID:
 			return ButtonViewFactory.class;
-		case ButtonIdEditPart.VISUAL_ID:
-			return ButtonIdViewFactory.class;
+		case ButtonNameEditPart.VISUAL_ID:
+			return ButtonNameViewFactory.class;
 		case TerminalEditPart.VISUAL_ID:
 			return TerminalViewFactory.class;
 		case TerminalNameEditPart.VISUAL_ID:
@@ -214,8 +214,8 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return Terminal2ViewFactory.class;
 		case TerminalName2EditPart.VISUAL_ID:
 			return TerminalName2ViewFactory.class;
-		case WireIdEditPart.VISUAL_ID:
-			return WireIdViewFactory.class;
+		case WireNameEditPart.VISUAL_ID:
+			return WireNameViewFactory.class;
 		}
 		return null;
 	}

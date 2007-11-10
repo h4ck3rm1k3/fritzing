@@ -34,7 +34,7 @@ public class LEDCanonicalEditPolicy extends CanonicalEditPolicy {
 	protected List getSemanticChildrenList() {
 		View viewObject = (View) getHost().getModel();
 		List result = new LinkedList();
-		for (Iterator it = FritzingDiagramUpdater.getLED_2004SemanticChildren(
+		for (Iterator it = FritzingDiagramUpdater.getLED_2002SemanticChildren(
 				viewObject).iterator(); it.hasNext();) {
 			result.add(((FritzingNodeDescriptor) it.next()).getModelElement());
 		}

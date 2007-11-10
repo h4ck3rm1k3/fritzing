@@ -35,7 +35,7 @@ public class ButtonCanonicalEditPolicy extends CanonicalEditPolicy {
 		View viewObject = (View) getHost().getModel();
 		List result = new LinkedList();
 		for (Iterator it = FritzingDiagramUpdater
-				.getButton_2006SemanticChildren(viewObject).iterator(); it
+				.getButton_2004SemanticChildren(viewObject).iterator(); it
 				.hasNext();) {
 			result.add(((FritzingNodeDescriptor) it.next()).getModelElement());
 		}

@@ -44,13 +44,13 @@ public class FritzingDiagramUpdater {
 	public static List getSemanticChildren(View view) {
 		switch (FritzingVisualIDRegistry.getVisualID(view)) {
 		case ArduinoEditPart.VISUAL_ID:
-			return getArduino_2002SemanticChildren(view);
+			return getArduino_2001SemanticChildren(view);
 		case LEDEditPart.VISUAL_ID:
-			return getLED_2004SemanticChildren(view);
+			return getLED_2002SemanticChildren(view);
 		case ResistorEditPart.VISUAL_ID:
-			return getResistor_2005SemanticChildren(view);
+			return getResistor_2003SemanticChildren(view);
 		case ButtonEditPart.VISUAL_ID:
-			return getButton_2006SemanticChildren(view);
+			return getButton_2004SemanticChildren(view);
 		case SketchEditPart.VISUAL_ID:
 			return getSketch_1000SemanticChildren(view);
 		}
@@ -60,7 +60,7 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getArduino_2002SemanticChildren(View view) {
+	public static List getArduino_2001SemanticChildren(View view) {
 		if (!view.isSetElement()) {
 			return Collections.EMPTY_LIST;
 		}
@@ -81,7 +81,7 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getLED_2004SemanticChildren(View view) {
+	public static List getLED_2002SemanticChildren(View view) {
 		if (!view.isSetElement()) {
 			return Collections.EMPTY_LIST;
 		}
@@ -103,7 +103,7 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getResistor_2005SemanticChildren(View view) {
+	public static List getResistor_2003SemanticChildren(View view) {
 		if (!view.isSetElement()) {
 			return Collections.EMPTY_LIST;
 		}
@@ -124,7 +124,7 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getButton_2006SemanticChildren(View view) {
+	public static List getButton_2004SemanticChildren(View view) {
 		if (!view.isSetElement()) {
 			return Collections.EMPTY_LIST;
 		}
@@ -192,15 +192,15 @@ public class FritzingDiagramUpdater {
 		case SketchEditPart.VISUAL_ID:
 			return getSketch_1000ContainedLinks(view);
 		case ArduinoEditPart.VISUAL_ID:
-			return getArduino_2002ContainedLinks(view);
+			return getArduino_2001ContainedLinks(view);
 		case LEDEditPart.VISUAL_ID:
-			return getLED_2004ContainedLinks(view);
+			return getLED_2002ContainedLinks(view);
 		case ResistorEditPart.VISUAL_ID:
-			return getResistor_2005ContainedLinks(view);
+			return getResistor_2003ContainedLinks(view);
 		case ButtonEditPart.VISUAL_ID:
-			return getButton_2006ContainedLinks(view);
+			return getButton_2004ContainedLinks(view);
 		case TerminalEditPart.VISUAL_ID:
-			return getTerminal_2007ContainedLinks(view);
+			return getTerminal_2005ContainedLinks(view);
 		case Terminal2EditPart.VISUAL_ID:
 			return getTerminal_3001ContainedLinks(view);
 		case WireEditPart.VISUAL_ID:
@@ -215,15 +215,15 @@ public class FritzingDiagramUpdater {
 	public static List getIncomingLinks(View view) {
 		switch (FritzingVisualIDRegistry.getVisualID(view)) {
 		case ArduinoEditPart.VISUAL_ID:
-			return getArduino_2002IncomingLinks(view);
+			return getArduino_2001IncomingLinks(view);
 		case LEDEditPart.VISUAL_ID:
-			return getLED_2004IncomingLinks(view);
+			return getLED_2002IncomingLinks(view);
 		case ResistorEditPart.VISUAL_ID:
-			return getResistor_2005IncomingLinks(view);
+			return getResistor_2003IncomingLinks(view);
 		case ButtonEditPart.VISUAL_ID:
-			return getButton_2006IncomingLinks(view);
+			return getButton_2004IncomingLinks(view);
 		case TerminalEditPart.VISUAL_ID:
-			return getTerminal_2007IncomingLinks(view);
+			return getTerminal_2005IncomingLinks(view);
 		case Terminal2EditPart.VISUAL_ID:
 			return getTerminal_3001IncomingLinks(view);
 		case WireEditPart.VISUAL_ID:
@@ -238,15 +238,15 @@ public class FritzingDiagramUpdater {
 	public static List getOutgoingLinks(View view) {
 		switch (FritzingVisualIDRegistry.getVisualID(view)) {
 		case ArduinoEditPart.VISUAL_ID:
-			return getArduino_2002OutgoingLinks(view);
+			return getArduino_2001OutgoingLinks(view);
 		case LEDEditPart.VISUAL_ID:
-			return getLED_2004OutgoingLinks(view);
+			return getLED_2002OutgoingLinks(view);
 		case ResistorEditPart.VISUAL_ID:
-			return getResistor_2005OutgoingLinks(view);
+			return getResistor_2003OutgoingLinks(view);
 		case ButtonEditPart.VISUAL_ID:
-			return getButton_2006OutgoingLinks(view);
+			return getButton_2004OutgoingLinks(view);
 		case TerminalEditPart.VISUAL_ID:
-			return getTerminal_2007OutgoingLinks(view);
+			return getTerminal_2005OutgoingLinks(view);
 		case Terminal2EditPart.VISUAL_ID:
 			return getTerminal_3001OutgoingLinks(view);
 		case WireEditPart.VISUAL_ID:
@@ -268,7 +268,7 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getArduino_2002ContainedLinks(View view) {
+	public static List getArduino_2001ContainedLinks(View view) {
 		Arduino modelElement = (Arduino) view.getElement();
 		List result = new LinkedList();
 		result.addAll(getContainedTypeModelFacetLinks_Wire_4001(modelElement));
@@ -278,28 +278,28 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getLED_2004ContainedLinks(View view) {
+	public static List getLED_2002ContainedLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getResistor_2005ContainedLinks(View view) {
+	public static List getResistor_2003ContainedLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getButton_2006ContainedLinks(View view) {
+	public static List getButton_2004ContainedLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getTerminal_2007ContainedLinks(View view) {
+	public static List getTerminal_2005ContainedLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
@@ -320,35 +320,35 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getArduino_2002IncomingLinks(View view) {
+	public static List getArduino_2001IncomingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getLED_2004IncomingLinks(View view) {
+	public static List getLED_2002IncomingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getResistor_2005IncomingLinks(View view) {
+	public static List getResistor_2003IncomingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getButton_2006IncomingLinks(View view) {
+	public static List getButton_2004IncomingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getTerminal_2007IncomingLinks(View view) {
+	public static List getTerminal_2005IncomingLinks(View view) {
 		Terminal modelElement = (Terminal) view.getElement();
 		Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
 				.getResourceSet().getResources());
@@ -381,35 +381,35 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
-	public static List getArduino_2002OutgoingLinks(View view) {
+	public static List getArduino_2001OutgoingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getLED_2004OutgoingLinks(View view) {
+	public static List getLED_2002OutgoingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getResistor_2005OutgoingLinks(View view) {
+	public static List getResistor_2003OutgoingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getButton_2006OutgoingLinks(View view) {
+	public static List getButton_2004OutgoingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
 	/**
 	 * @generated
 	 */
-	public static List getTerminal_2007OutgoingLinks(View view) {
+	public static List getTerminal_2005OutgoingLinks(View view) {
 		Terminal modelElement = (Terminal) view.getElement();
 		List result = new LinkedList();
 		result.addAll(getOutgoingTypeModelFacetLinks_Wire_4001(modelElement));

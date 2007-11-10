@@ -49,7 +49,7 @@ public class ArduinoCreateCommand extends CreateElementCommand {
 	protected EObject doDefaultElementCreation() {
 		Arduino newElement = (Arduino) super.doDefaultElementCreation();
 		if (newElement != null) {
-			FritzingElementTypes.Initializers.Arduino_2002.init(newElement);
+			FritzingElementTypes.Initializers.Arduino_2001.init(newElement);
 		}
 		return newElement;
 	}

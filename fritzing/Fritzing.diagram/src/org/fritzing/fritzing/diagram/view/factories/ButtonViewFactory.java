@@ -16,7 +16,7 @@ import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ButtonIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
@@ -62,7 +62,7 @@ public class ButtonViewFactory extends AbstractShapeViewFactory {
 			eObjectAdapter = new EObjectAdapter(eObject);
 		}
 		getViewService().createNode(eObjectAdapter, view,
-				FritzingVisualIDRegistry.getType(ButtonIdEditPart.VISUAL_ID),
+				FritzingVisualIDRegistry.getType(ButtonNameEditPart.VISUAL_ID),
 				ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }

@@ -4,6 +4,7 @@
 package org.fritzing.fritzing.diagram.edit.policies;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -43,9 +44,11 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Composite;
+import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.helpers.FritzingBaseEditHelper;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
+import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
@@ -356,6 +359,22 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
+		private static final FritzingAbstractExpression Wire_4001_SourceExpression;
+
+		/**
+		 * @generated
+		 */
+		static {
+			Map env = new HashMap(3);
+			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE.getTerminal());
+			Wire_4001_SourceExpression = FritzingOCLFactory
+					.getExpression(
+							"self <> oppositeEnd", FritzingPackage.eINSTANCE.getTerminal(), env); //$NON-NLS-1$
+		}
+
+		/**
+		 * @generated
+		 */
 		public static boolean canCreateWire_4001(Composite container,
 				Terminal source, Terminal target) {
 			return canExistWire_4001(container, source, target);
@@ -366,6 +385,9 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		 */
 		public static boolean canExistWire_4001(Composite container,
 				Terminal source, Terminal target) {
+			if (!evaluate(Wire_4001_SourceExpression, source, target, false)) {
+				return false;
+			}
 			return true;
 		}
 

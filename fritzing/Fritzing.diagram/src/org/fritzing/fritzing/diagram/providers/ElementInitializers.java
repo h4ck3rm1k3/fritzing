@@ -29,7 +29,7 @@ public class ElementInitializers {
 		/**
 		 * @generated
 		 */
-		public static final IObjectInitializer Arduino_2002 = new ObjectInitializer(
+		public static final IObjectInitializer Arduino_2001 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getArduino()) {
 
 			protected void init() {
@@ -46,7 +46,7 @@ public class ElementInitializers {
 								terminals_24(), terminals_25(), terminals_26(),
 								terminals_27(), terminals_28(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Id(),
+						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'Arduino\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getArduino())));
 			}
@@ -475,7 +475,7 @@ public class ElementInitializers {
 		/**
 		 * @generated
 		 */
-		public static final IObjectInitializer LED_2004 = new ObjectInitializer(
+		public static final IObjectInitializer LED_2002 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getLED()) {
 
 			protected void init() {
@@ -483,7 +483,7 @@ public class ElementInitializers {
 						FritzingPackage.eINSTANCE.getPart_Terminals(),
 						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Id(),
+						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'L\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getLED())));
 			}
@@ -522,7 +522,7 @@ public class ElementInitializers {
 		/**
 		 * @generated
 		 */
-		public static final IObjectInitializer Resistor_2005 = new ObjectInitializer(
+		public static final IObjectInitializer Resistor_2003 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getResistor()) {
 
 			protected void init() {
@@ -530,7 +530,7 @@ public class ElementInitializers {
 						FritzingPackage.eINSTANCE.getPart_Terminals(),
 						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Id(),
+						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'R\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getResistor())));
 			}
@@ -569,7 +569,7 @@ public class ElementInitializers {
 		/**
 		 * @generated
 		 */
-		public static final IObjectInitializer Button_2006 = new ObjectInitializer(
+		public static final IObjectInitializer Button_2004 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getButton()) {
 
 			protected void init() {
@@ -578,7 +578,7 @@ public class ElementInitializers {
 						new ObjectInitializer[] { terminals_1(), terminals_2(),
 								terminals_3(), terminals_4(), }));
 				add(createExpressionFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Id(),
+						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'B\'", //$NON-NLS-1$
 								FritzingPackage.eINSTANCE.getButton())));
 			}

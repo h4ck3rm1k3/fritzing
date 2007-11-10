@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.emf.type.core.commands.CreateElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
+import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
@@ -49,7 +50,7 @@ public class LEDCreateCommand extends CreateElementCommand {
 		org.fritzing.fritzing.LED newElement = (org.fritzing.fritzing.LED) super
 				.doDefaultElementCreation();
 		if (newElement != null) {
-			FritzingElementTypes.Initializers.LED_2004.init(newElement);
+			FritzingElementTypes.Initializers.LED_2002.init(newElement);
 		}
 		return newElement;
 	}

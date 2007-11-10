@@ -222,31 +222,31 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 		case ArduinoEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getArduino_2002ContainedLinks(view));
+					.getArduino_2001ContainedLinks(view));
 			break;
 		}
 		case LEDEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getLED_2004ContainedLinks(view));
+					.getLED_2002ContainedLinks(view));
 			break;
 		}
 		case ResistorEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getResistor_2005ContainedLinks(view));
+					.getResistor_2003ContainedLinks(view));
 			break;
 		}
 		case ButtonEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getButton_2006ContainedLinks(view));
+					.getButton_2004ContainedLinks(view));
 			break;
 		}
 		case TerminalEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getTerminal_2007ContainedLinks(view));
+					.getTerminal_2005ContainedLinks(view));
 			break;
 		}
 		case Terminal2EditPart.VISUAL_ID: {

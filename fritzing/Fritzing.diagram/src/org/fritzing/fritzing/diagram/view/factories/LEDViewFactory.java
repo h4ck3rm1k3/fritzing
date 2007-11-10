@@ -16,7 +16,7 @@ import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.LEDIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
@@ -62,7 +62,7 @@ public class LEDViewFactory extends AbstractShapeViewFactory {
 			eObjectAdapter = new EObjectAdapter(eObject);
 		}
 		getViewService().createNode(eObjectAdapter, view,
-				FritzingVisualIDRegistry.getType(LEDIdEditPart.VISUAL_ID),
+				FritzingVisualIDRegistry.getType(LEDNameEditPart.VISUAL_ID),
 				ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }

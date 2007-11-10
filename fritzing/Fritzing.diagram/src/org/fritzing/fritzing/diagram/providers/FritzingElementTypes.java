@@ -54,23 +54,28 @@ public class FritzingElementTypes extends ElementInitializers {
 	/**
 	 * @generated
 	 */
-	public static final IElementType Arduino_2002 = getElementType("Fritzing.diagram.Arduino_2002"); //$NON-NLS-1$
+	public static final IElementType Arduino_2001 = getElementType("Fritzing.diagram.Arduino_2001"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
-	public static final IElementType LED_2004 = getElementType("Fritzing.diagram.LED_2004"); //$NON-NLS-1$
+	public static final IElementType LED_2002 = getElementType("Fritzing.diagram.LED_2002"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
-	public static final IElementType Resistor_2005 = getElementType("Fritzing.diagram.Resistor_2005"); //$NON-NLS-1$
+	public static final IElementType Resistor_2003 = getElementType("Fritzing.diagram.Resistor_2003"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
-	public static final IElementType Button_2006 = getElementType("Fritzing.diagram.Button_2006"); //$NON-NLS-1$
+	public static final IElementType Button_2004 = getElementType("Fritzing.diagram.Button_2004"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
-	public static final IElementType Terminal_2007 = getElementType("Fritzing.diagram.Terminal_2007"); //$NON-NLS-1$
+	public static final IElementType Terminal_2005 = getElementType("Fritzing.diagram.Terminal_2005"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
@@ -193,17 +198,17 @@ public class FritzingElementTypes extends ElementInitializers {
 
 			elements.put(Sketch_1000, FritzingPackage.eINSTANCE.getSketch());
 
-			elements.put(Arduino_2002, FritzingPackage.eINSTANCE.getArduino());
+			elements.put(Arduino_2001, FritzingPackage.eINSTANCE.getArduino());
 
-			elements.put(LED_2004, FritzingPackage.eINSTANCE.getLED());
-
-			elements
-					.put(Resistor_2005, FritzingPackage.eINSTANCE.getResistor());
-
-			elements.put(Button_2006, FritzingPackage.eINSTANCE.getButton());
+			elements.put(LED_2002, FritzingPackage.eINSTANCE.getLED());
 
 			elements
-					.put(Terminal_2007, FritzingPackage.eINSTANCE.getTerminal());
+					.put(Resistor_2003, FritzingPackage.eINSTANCE.getResistor());
+
+			elements.put(Button_2004, FritzingPackage.eINSTANCE.getButton());
+
+			elements
+					.put(Terminal_2005, FritzingPackage.eINSTANCE.getTerminal());
 
 			elements
 					.put(Terminal_3001, FritzingPackage.eINSTANCE.getTerminal());
@@ -227,11 +232,11 @@ public class FritzingElementTypes extends ElementInitializers {
 		if (KNOWN_ELEMENT_TYPES == null) {
 			KNOWN_ELEMENT_TYPES = new HashSet();
 			KNOWN_ELEMENT_TYPES.add(Sketch_1000);
-			KNOWN_ELEMENT_TYPES.add(Arduino_2002);
-			KNOWN_ELEMENT_TYPES.add(LED_2004);
-			KNOWN_ELEMENT_TYPES.add(Resistor_2005);
-			KNOWN_ELEMENT_TYPES.add(Button_2006);
-			KNOWN_ELEMENT_TYPES.add(Terminal_2007);
+			KNOWN_ELEMENT_TYPES.add(Arduino_2001);
+			KNOWN_ELEMENT_TYPES.add(LED_2002);
+			KNOWN_ELEMENT_TYPES.add(Resistor_2003);
+			KNOWN_ELEMENT_TYPES.add(Button_2004);
+			KNOWN_ELEMENT_TYPES.add(Terminal_2005);
 			KNOWN_ELEMENT_TYPES.add(Terminal_3001);
 			KNOWN_ELEMENT_TYPES.add(Wire_4001);
 		}

@@ -15,13 +15,13 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.diagram.edit.parts.ArduinoIdEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ButtonIdEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.LEDIdEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ResistorIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ArduinoNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.WireIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.parsers.MessageFormatParser;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
@@ -34,24 +34,24 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser arduinoId_5003Parser;
+	private IParser arduinoName_5002Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getArduinoId_5003Parser() {
-		if (arduinoId_5003Parser == null) {
-			arduinoId_5003Parser = createArduinoId_5003Parser();
+	private IParser getArduinoName_5002Parser() {
+		if (arduinoName_5002Parser == null) {
+			arduinoName_5002Parser = createArduinoName_5002Parser();
 		}
-		return arduinoId_5003Parser;
+		return arduinoName_5002Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected IParser createArduinoId_5003Parser() {
+	protected IParser createArduinoName_5002Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getPart_Id(), };
+				.getPart_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -59,24 +59,24 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser lEDId_5005Parser;
+	private IParser lEDName_5003Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getLEDId_5005Parser() {
-		if (lEDId_5005Parser == null) {
-			lEDId_5005Parser = createLEDId_5005Parser();
+	private IParser getLEDName_5003Parser() {
+		if (lEDName_5003Parser == null) {
+			lEDName_5003Parser = createLEDName_5003Parser();
 		}
-		return lEDId_5005Parser;
+		return lEDName_5003Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected IParser createLEDId_5005Parser() {
+	protected IParser createLEDName_5003Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getPart_Id(), };
+				.getPart_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -84,50 +84,24 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser resistorIdValue_5006Parser;
+	private IParser resistorName_5004Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getResistorIdValue_5006Parser() {
-		if (resistorIdValue_5006Parser == null) {
-			resistorIdValue_5006Parser = createResistorIdValue_5006Parser();
+	private IParser getResistorName_5004Parser() {
+		if (resistorName_5004Parser == null) {
+			resistorName_5004Parser = createResistorName_5004Parser();
 		}
-		return resistorIdValue_5006Parser;
+		return resistorName_5004Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected IParser createResistorIdValue_5006Parser() {
-		EAttribute[] features = new EAttribute[] {
-				FritzingPackage.eINSTANCE.getPart_Id(),
-				FritzingPackage.eINSTANCE.getResistor_Value(), };
-		MessageFormatParser parser = new MessageFormatParser(features);
-		return parser;
-	}
-
-	/**
-	 * @generated
-	 */
-	private IParser buttonId_5007Parser;
-
-	/**
-	 * @generated
-	 */
-	private IParser getButtonId_5007Parser() {
-		if (buttonId_5007Parser == null) {
-			buttonId_5007Parser = createButtonId_5007Parser();
-		}
-		return buttonId_5007Parser;
-	}
-
-	/**
-	 * @generated
-	 */
-	protected IParser createButtonId_5007Parser() {
+	protected IParser createResistorName_5004Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getPart_Id(), };
+				.getPart_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -135,22 +109,47 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser terminalName_5008Parser;
+	private IParser buttonName_5005Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getTerminalName_5008Parser() {
-		if (terminalName_5008Parser == null) {
-			terminalName_5008Parser = createTerminalName_5008Parser();
+	private IParser getButtonName_5005Parser() {
+		if (buttonName_5005Parser == null) {
+			buttonName_5005Parser = createButtonName_5005Parser();
 		}
-		return terminalName_5008Parser;
+		return buttonName_5005Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected IParser createTerminalName_5008Parser() {
+	protected IParser createButtonName_5005Parser() {
+		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
+				.getPart_Name(), };
+		MessageFormatParser parser = new MessageFormatParser(features);
+		return parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	private IParser terminalName_5006Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getTerminalName_5006Parser() {
+		if (terminalName_5006Parser == null) {
+			terminalName_5006Parser = createTerminalName_5006Parser();
+		}
+		return terminalName_5006Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected IParser createTerminalName_5006Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
 				.getTerminal_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
@@ -212,19 +211,19 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser getParser(int visualID) {
 		switch (visualID) {
-		case ArduinoIdEditPart.VISUAL_ID:
-			return getArduinoId_5003Parser();
-		case LEDIdEditPart.VISUAL_ID:
-			return getLEDId_5005Parser();
-		case ResistorIdEditPart.VISUAL_ID:
-			return getResistorIdValue_5006Parser();
-		case ButtonIdEditPart.VISUAL_ID:
-			return getButtonId_5007Parser();
+		case ArduinoNameEditPart.VISUAL_ID:
+			return getArduinoName_5002Parser();
+		case LEDNameEditPart.VISUAL_ID:
+			return getLEDName_5003Parser();
+		case ResistorNameEditPart.VISUAL_ID:
+			return getResistorName_5004Parser();
+		case ButtonNameEditPart.VISUAL_ID:
+			return getButtonName_5005Parser();
 		case TerminalNameEditPart.VISUAL_ID:
-			return getTerminalName_5008Parser();
+			return getTerminalName_5006Parser();
 		case TerminalName2EditPart.VISUAL_ID:
 			return getTerminalName_5001Parser();
-		case WireIdEditPart.VISUAL_ID:
+		case WireNameEditPart.VISUAL_ID:
 			return getWireName_6001Parser();
 		}
 		return null;

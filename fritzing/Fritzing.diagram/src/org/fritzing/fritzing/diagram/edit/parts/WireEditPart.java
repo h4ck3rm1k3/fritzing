@@ -42,8 +42,8 @@ public class WireEditPart extends ConnectionNodeEditPart {
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof WireIdEditPart) {
-			((WireIdEditPart) childEditPart).setLabel(getPrimaryShape()
+		if (childEditPart instanceof WireNameEditPart) {
+			((WireNameEditPart) childEditPart).setLabel(getPrimaryShape()
 					.getFigureWireNameFigure());
 			return true;
 		}

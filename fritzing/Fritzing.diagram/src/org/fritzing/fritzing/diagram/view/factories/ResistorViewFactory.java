@@ -16,7 +16,7 @@ import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ResistorIdEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
@@ -61,8 +61,11 @@ public class ResistorViewFactory extends AbstractShapeViewFactory {
 		if (eObject != null) {
 			eObjectAdapter = new EObjectAdapter(eObject);
 		}
-		getViewService().createNode(eObjectAdapter, view,
-				FritzingVisualIDRegistry.getType(ResistorIdEditPart.VISUAL_ID),
+		getViewService().createNode(
+				eObjectAdapter,
+				view,
+				FritzingVisualIDRegistry
+						.getType(ResistorNameEditPart.VISUAL_ID),
 				ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }

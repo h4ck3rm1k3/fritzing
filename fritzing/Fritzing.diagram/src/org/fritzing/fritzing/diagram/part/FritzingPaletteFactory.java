@@ -74,12 +74,12 @@ public class FritzingPaletteFactory {
 	 */
 	private ToolEntry createArduino1CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Arduino_2002);
+		types.add(FritzingElementTypes.Arduino_2001);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Arduino1CreationTool_title,
 				Messages.Arduino1CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Arduino_2002));
+				.getImageDescriptor(FritzingElementTypes.Arduino_2001));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -89,12 +89,12 @@ public class FritzingPaletteFactory {
 	 */
 	private ToolEntry createResistor2CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Resistor_2005);
+		types.add(FritzingElementTypes.Resistor_2003);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Resistor2CreationTool_title,
 				Messages.Resistor2CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Resistor_2005));
+				.getImageDescriptor(FritzingElementTypes.Resistor_2003));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -104,12 +104,12 @@ public class FritzingPaletteFactory {
 	 */
 	private ToolEntry createLED3CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.LED_2004);
+		types.add(FritzingElementTypes.LED_2002);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.LED3CreationTool_title,
 				Messages.LED3CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.LED_2004));
+				.getImageDescriptor(FritzingElementTypes.LED_2002));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -119,12 +119,12 @@ public class FritzingPaletteFactory {
 	 */
 	private ToolEntry createButton4CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Button_2006);
+		types.add(FritzingElementTypes.Button_2004);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Button4CreationTool_title,
 				Messages.Button4CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Button_2006));
+				.getImageDescriptor(FritzingElementTypes.Button_2004));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
