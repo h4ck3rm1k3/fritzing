@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="(c) Fachhochschule Potsdam"
+    modelDirectory="/Fritzing/src" editDirectory="/Fritzing.edit/src" editorDirectory="/Fritzing.editor/src"
+    modelPluginID="Fritzing" forceOverwrite="true" modelName="Fritzing" richClientPlatform="true"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    providerRootExtendsClass="">
+  <foreignModel>fritzing.ecore</foreignModel>
+  <genPackages prefix="Fritzing" basePackage="org.fritzing" resource="XML" disposableProviderFactory="true"
+      ecorePackage="fritzing.ecore#/">
+    <genClasses ecoreClass="fritzing.ecore#//DocumentRoot">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//DocumentRoot/mixed"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//DocumentRoot/xMLNSPrefixMap"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//DocumentRoot/xSISchemaLocation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//DocumentRoot/sketch"/>
+    </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//Terminal">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Terminal/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Terminal/parent"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//Element"/>
+    <genClasses ecoreClass="fritzing.ecore#//Wire">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Wire/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/parent"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//Part">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/partNumber"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/terminals"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Part/parent"/>
+    </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//Resistor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Resistor/value"/>
+    </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//LED">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//LED/color"/>
+    </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//Button"/>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//Composite">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Composite/parts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Composite/wires"/>
+    </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//Sketch"/>
+    <genClasses ecoreClass="fritzing.ecore#//Breadboard">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Breadboard/lines"/>
+    </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//Module"/>
+    <genClasses ecoreClass="fritzing.ecore#//Arduino"/>
+  </genPackages>
+</genmodel:GenModel>
