@@ -81,7 +81,7 @@ public class ArduinoItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Arduino)object).getId();
+		String label = ((Arduino)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Arduino_type") :
 			getString("_UI_Arduino_type") + " " + label;

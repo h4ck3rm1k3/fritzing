@@ -65,11 +65,32 @@ public class PartItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 			addPartNumberPropertyDescriptor(object);
-			addTerminalsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Part_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Part_name_feature", "_UI_Part_type"),
+				 FritzingPackage.Literals.PART__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -86,50 +107,6 @@ public class PartItemProvider
 				 getString("_UI_Part_partNumber_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Part_partNumber_feature", "_UI_Part_type"),
 				 FritzingPackage.Literals.PART__PART_NUMBER,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Terminals feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addTerminalsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Part_terminals_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Part_terminals_feature", "_UI_Part_type"),
-				 FritzingPackage.Literals.PART__TERMINALS,
-				 true,
-				 false,
-				 false,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Id feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Part_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Part_id_feature", "_UI_Part_type"),
-				 FritzingPackage.Literals.PART__ID,
 				 true,
 				 false,
 				 false,
@@ -176,7 +153,7 @@ public class PartItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Part)object).getId();
+		String label = ((Part)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Part_type") :
 			getString("_UI_Part_type") + " " + label;
@@ -194,7 +171,7 @@ public class PartItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Part.class)) {
-			case FritzingPackage.PART__ID:
+			case FritzingPackage.PART__NAME:
 			case FritzingPackage.PART__PART_NUMBER:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

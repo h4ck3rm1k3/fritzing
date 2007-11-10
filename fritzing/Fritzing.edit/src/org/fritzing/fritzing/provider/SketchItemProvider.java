@@ -81,7 +81,7 @@ public class SketchItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Sketch)object).getId();
+		String label = ((Sketch)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Sketch_type") :
 			getString("_UI_Sketch_type") + " " + label;

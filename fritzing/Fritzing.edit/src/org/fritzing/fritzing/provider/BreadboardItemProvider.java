@@ -108,7 +108,7 @@ public class BreadboardItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Breadboard)object).getId();
+		String label = ((Breadboard)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Breadboard_type") :
 			getString("_UI_Breadboard_type") + " " + label;

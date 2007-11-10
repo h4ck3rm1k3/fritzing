@@ -108,7 +108,7 @@ public class ResistorItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Resistor)object).getId();
+		String label = ((Resistor)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Resistor_type") :
 			getString("_UI_Resistor_type") + " " + label;

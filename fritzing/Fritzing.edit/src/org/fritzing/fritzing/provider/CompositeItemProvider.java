@@ -64,54 +64,8 @@ public class CompositeItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addPartsPropertyDescriptor(object);
-			addWiresPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Parts feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addPartsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Composite_parts_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Composite_parts_feature", "_UI_Composite_type"),
-				 FritzingPackage.Literals.COMPOSITE__PARTS,
-				 true,
-				 false,
-				 false,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Wires feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addWiresPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Composite_wires_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Composite_wires_feature", "_UI_Composite_type"),
-				 FritzingPackage.Literals.COMPOSITE__WIRES,
-				 true,
-				 false,
-				 false,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -153,7 +107,7 @@ public class CompositeItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Composite)object).getId();
+		String label = ((Composite)object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Composite_type") :
 			getString("_UI_Composite_type") + " " + label;
