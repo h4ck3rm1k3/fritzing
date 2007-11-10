@@ -59,13 +59,23 @@ public class EagleSCRPart {
 				xOffset = 2.7;
 				yOffset = 1.5;
 			}
+			if (terminal.equals("5V")) {
+				xOffset = 2.7;
+				yOffset = 1.6;
+			}
+			if (terminal.equals("GND")) {
+				xOffset = 2.7;
+				yOffset = 1.8;
+			}
 		}
 		if (partType.equalsIgnoreCase("resistor")) {
 			if (terminal.equals("0")) {
-				
+				xOffset = -0.2;
+				yOffset = 0;
 			}
 			if (terminal.equals("1")) {
-				
+				xOffset = 0.2;
+				yOffset = 0;
 			}
 		}
 		if (partType.equalsIgnoreCase("led")) {

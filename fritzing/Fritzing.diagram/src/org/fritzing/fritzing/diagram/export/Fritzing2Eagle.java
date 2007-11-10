@@ -11,6 +11,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Element;
+import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Wire;
@@ -51,7 +52,7 @@ public class Fritzing2Eagle {
 					((float)getLayoutInfo(viewer, p).getLocation().x), 
 					(float)getLayoutInfo(viewer, p).getLocation().y)
 				);
-			partList.add(part);			 
+			partList.add(part);			
 		}
 		
 		// fine-tune component placement - scale and convert Fritzing coordinates into
@@ -82,15 +83,29 @@ public class Fritzing2Eagle {
 				w.getSource(),
 				w.getTarget()
 				);
-			System.out.println("_____WIRE____");
-			System.out.print("source:" + w.getSource().getParent().getId() + "." + w.getSource().getName());
+			System.out.println("_____" + w.getName() +"____");
+			
+			System.out.println("source:" + w.getSource().getParent().getId() + "." + w.getSource().getName());			
 			for (int i=0; i<partList.size(); i++) {
-				if (partList.get(i).partName.equalsIgnoreCase(w.getSource().getParent().getId())) 
+				if (partList.get(i).partName.equalsIgnoreCase(w.getSource().getParent().getId())) {
 					// set the terminal's parent type to be the same as for the part
-					sourceParentType = partList.get(i).partType;
+//					sourceParentType = partList.get(i).partType;
+					CoordPair sourceCoords = partList.get(i).getTerminalCoords(w.getSource().getName());
+					System.out.println("coords: " + sourceCoords.xVal + "," + sourceCoords.yVal);
+					net.sourcePos = sourceCoords;
+				}
 			}
-			System.out.print("target:" + w.getTarget().getParent().getId() + "." + w.getTarget().getName());
-//			w.getSource().getParent().getId();
+			
+			System.out.println("target:" + w.getTarget().getParent().getId() + "." + w.getTarget().getName());
+			for (int i=0; i<partList.size(); i++) {
+				if (partList.get(i).partName.equalsIgnoreCase(w.getTarget().getParent().getId())) {
+					// set the terminal's parent type to be the same as for the part
+//					sourceParentType = partList.get(i).partType;
+					CoordPair targetCoords = partList.get(i).getTerminalCoords(w.getTarget().getName());
+					System.out.println("coords: " + targetCoords.xVal + "," + targetCoords.yVal);
+					net.targetPos = targetCoords;
+				}
+			}
 			netList.add(net);
 		}
 		
