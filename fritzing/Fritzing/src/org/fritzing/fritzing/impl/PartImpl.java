@@ -33,7 +33,7 @@ import org.fritzing.fritzing.Terminal;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getPartNumber <em>Part Number</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getTerminals <em>Terminals</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getParent <em>Parent</em>}</li>
@@ -44,24 +44,24 @@ import org.fritzing.fritzing.Terminal;
  */
 public abstract class PartImpl extends ElementImpl implements Part {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getPartNumber() <em>Part Number</em>}' attribute.
@@ -117,8 +117,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -126,11 +126,11 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__NAME, oldName, name));
 	}
 
 	/**
@@ -264,8 +264,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case FritzingPackage.PART__ID:
-				return getId();
+			case FritzingPackage.PART__NAME:
+				return getName();
 			case FritzingPackage.PART__PART_NUMBER:
 				return getPartNumber();
 			case FritzingPackage.PART__TERMINALS:
@@ -285,8 +285,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case FritzingPackage.PART__ID:
-				setId((String)newValue);
+			case FritzingPackage.PART__NAME:
+				setName((String)newValue);
 				return;
 			case FritzingPackage.PART__PART_NUMBER:
 				setPartNumber((String)newValue);
@@ -310,8 +310,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case FritzingPackage.PART__ID:
-				setId(ID_EDEFAULT);
+			case FritzingPackage.PART__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 			case FritzingPackage.PART__PART_NUMBER:
 				setPartNumber(PART_NUMBER_EDEFAULT);
@@ -334,8 +334,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case FritzingPackage.PART__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case FritzingPackage.PART__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case FritzingPackage.PART__PART_NUMBER:
 				return PART_NUMBER_EDEFAULT == null ? partNumber != null : !PART_NUMBER_EDEFAULT.equals(partNumber);
 			case FritzingPackage.PART__TERMINALS:
@@ -356,8 +356,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
+		result.append(" (name: ");
+		result.append(name);
 		result.append(", partNumber: ");
 		result.append(partNumber);
 		result.append(')');

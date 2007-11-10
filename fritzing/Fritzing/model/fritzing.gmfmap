@@ -276,15 +276,15 @@
             body="'Arduino'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Part/id"/>
+              href="fritzing.ecore#//Part/name"/>
         </initializers>
       </domainInitializer>
       <labelMappings
           xsi:type="gmfmap:FeatureLabelMapping">
         <diagramLabel
-            href="fritzing.gmfgraph#ArduinoId"/>
+            href="fritzing.gmfgraph#ArduinoName"/>
         <features
-            href="fritzing.ecore#//Part/id"/>
+            href="fritzing.ecore#//Part/name"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -335,7 +335,7 @@
             body="'L'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Part/id"/>
+              href="fritzing.ecore#//Part/name"/>
         </initializers>
       </domainInitializer>
       <labelMappings
@@ -344,9 +344,9 @@
           editorPattern=""
           editPattern="">
         <diagramLabel
-            href="fritzing.gmfgraph#LEDId"/>
+            href="fritzing.gmfgraph#LEDName"/>
         <features
-            href="fritzing.ecore#//Part/id"/>
+            href="fritzing.ecore#//Part/name"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -397,7 +397,7 @@
             body="'R'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Part/id"/>
+              href="fritzing.ecore#//Part/name"/>
         </initializers>
       </domainInitializer>
       <labelMappings
@@ -406,9 +406,9 @@
           editorPattern=""
           editPattern="">
         <diagramLabel
-            href="fritzing.gmfgraph#ResistorId"/>
+            href="fritzing.gmfgraph#ResistorName"/>
         <features
-            href="fritzing.ecore#//Part/id"/>
+            href="fritzing.ecore#//Part/name"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -477,15 +477,15 @@
             body="'B'">
           <feature
               xsi:type="ecore:EAttribute"
-              href="fritzing.ecore#//Part/id"/>
+              href="fritzing.ecore#//Part/name"/>
         </initializers>
       </domainInitializer>
       <labelMappings
           xsi:type="gmfmap:FeatureLabelMapping">
         <diagramLabel
-            href="fritzing.gmfgraph#ButtonId"/>
+            href="fritzing.gmfgraph#ButtonName"/>
         <features
-            href="fritzing.ecore#//Part/id"/>
+            href="fritzing.ecore#//Part/name"/>
       </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
@@ -539,6 +539,10 @@
     <linkMetaFeature
         xsi:type="ecore:EReference"
         href="fritzing.ecore#//Wire/target"/>
+    <creationConstraints>
+      <sourceEnd
+          body="self &lt;> oppositeEnd"/>
+    </creationConstraints>
   </links>
   <diagram>
     <diagramCanvas
@@ -555,13 +559,13 @@
       name="Fritzing Audits"
       description="Model validation for Fritzing Sketches">
     <audits
-        name="Part Id Check"
-        description="Checks that every part has a unique ID"
-        id="org.fritzing.audits.partId"
+        name="Part Name Check"
+        description="Checks that every part has a unique name"
+        id="org.fritzing.audits.partName"
         useInLiveMode="true"
-        message="Every part has to have a unique ID/name.">
+        message="Every part has to have a unique name.">
       <rule
-          body="self.parent.parts->forAll(p1, p2 | p1 &lt;> p2 implies p1.id &lt;> p2.id)"/>
+          body="self.parent.parts->forAll(p1, p2 | p1 &lt;> p2 implies p1.name &lt;> p2.name)"/>
       <target
           xsi:type="gmfmap:DomainElementTarget">
         <element

@@ -53,7 +53,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Part"
-        transient="true" eOpposite="#//Part/terminals" eKeys="#//Part/id"/>
+        transient="true" eOpposite="#//Part/terminals" eKeys="#//Part/name"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -87,17 +87,17 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Composite"
-        transient="true" eOpposite="#//Composite/wires" eKeys="#//Part/id"/>
+        transient="true" eOpposite="#//Composite/wires" eKeys="#//Part/name"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Part" abstract="true" eSuperTypes="#//Element">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Part"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"
         iD="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="name" value="id"/>
+        <details key="name" value="name"/>
         <details key="kind" value="attribute"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -116,7 +116,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Composite"
-        transient="true" eOpposite="#//Composite/parts" eKeys="#//Part/id"/>
+        transient="true" eOpposite="#//Composite/parts" eKeys="#//Part/name"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Resistor" eSuperTypes="#//Part">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -154,7 +154,7 @@
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parts" upperBound="-1"
-        eType="#//Part" containment="true" eOpposite="#//Part/parent" eKeys="#//Part/id">
+        eType="#//Part" containment="true" eOpposite="#//Part/parent" eKeys="#//Part/name">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="part"/>

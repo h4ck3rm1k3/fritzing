@@ -338,7 +338,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_Id() {
+	public EAttribute getPart_Name() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -533,7 +533,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEReference(wireEClass, WIRE__PARENT);
 
 		partEClass = createEClass(PART);
-		createEAttribute(partEClass, PART__ID);
+		createEAttribute(partEClass, PART__NAME);
 		createEAttribute(partEClass, PART__PART_NUMBER);
 		createEReference(partEClass, PART__TERMINALS);
 		createEReference(partEClass, PART__PARENT);
@@ -613,7 +613,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEClass(terminalEClass, Terminal.class, "Terminal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTerminal_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Terminal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTerminal_Parent(), this.getPart(), this.getPart_Terminals(), "parent", null, 0, 1, Terminal.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getTerminal_Parent().getEKeys().add(this.getPart_Id());
+		getTerminal_Parent().getEKeys().add(this.getPart_Name());
 
 		initEClass(elementEClass, Element.class, "Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -622,15 +622,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEReference(getWire_Target(), this.getTerminal(), null, "target", null, 1, 1, Wire.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWire_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Wire.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getWire_Parent(), this.getComposite(), this.getComposite_Wires(), "parent", null, 0, 1, Wire.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getWire_Parent().getEKeys().add(this.getPart_Id());
+		getWire_Parent().getEKeys().add(this.getPart_Name());
 
 		initEClass(partEClass, Part.class, "Part", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPart_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPart_PartNumber(), theXMLTypePackage.getString(), "partNumber", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPart_Terminals(), this.getTerminal(), this.getTerminal_Parent(), "terminals", null, 0, -1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getPart_Terminals().getEKeys().add(this.getTerminal_Name());
 		initEReference(getPart_Parent(), this.getComposite(), this.getComposite_Parts(), "parent", null, 0, 1, Part.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getPart_Parent().getEKeys().add(this.getPart_Id());
+		getPart_Parent().getEKeys().add(this.getPart_Name());
 
 		initEClass(resistorEClass, Resistor.class, "Resistor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getResistor_Value(), theXMLTypePackage.getInt(), "value", null, 0, 1, Resistor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -642,7 +642,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComposite_Parts(), this.getPart(), this.getPart_Parent(), "parts", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getComposite_Parts().getEKeys().add(this.getPart_Id());
+		getComposite_Parts().getEKeys().add(this.getPart_Name());
 		initEReference(getComposite_Wires(), this.getWire(), this.getWire_Parent(), "wires", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getComposite_Wires().getEKeys().add(this.getWire_Name());
 
@@ -764,10 +764,10 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 			 "kind", "elementOnly"
 		   });		
 		addAnnotation
-		  (getPart_Id(), 
+		  (getPart_Name(), 
 		   source, 
 		   new String[] {
-			 "name", "id",
+			 "name", "name",
 			 "kind", "attribute"
 		   });		
 		addAnnotation

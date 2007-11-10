@@ -120,7 +120,7 @@ public interface Wire extends Element {
 	 * @see #setParent(Composite)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Parent()
 	 * @see org.fritzing.fritzing.Composite#getWires
-	 * @model opposite="wires" keys="id"
+	 * @model opposite="wires" keys="name"
 	 * @generated
 	 */
 	Composite getParent();

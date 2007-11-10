@@ -64,7 +64,7 @@ public interface Terminal extends Element {
 	 * @see #setParent(Part)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTerminal_Parent()
 	 * @see org.fritzing.fritzing.Part#getTerminals
-	 * @model opposite="terminals" keys="id"
+	 * @model opposite="terminals" keys="name"
 	 * @generated
 	 */
 	Part getParent();

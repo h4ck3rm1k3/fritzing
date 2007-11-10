@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.fritzing.fritzing.Part#getId <em>Id</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.Part#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getPartNumber <em>Part Number</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getTerminals <em>Terminals</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getParent <em>Parent</em>}</li>
@@ -29,31 +29,31 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Part extends Element {
 	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Id()
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Name()
 	 * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name='id' kind='attribute'"
+	 *        extendedMetaData="name='name' kind='attribute'"
 	 * @generated
 	 */
-	String getId();
+	String getName();
 
 	/**
-	 * Sets the value of the '{@link org.fritzing.fritzing.Part#getId <em>Id</em>}' attribute.
+	 * Sets the value of the '{@link org.fritzing.fritzing.Part#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
 	 * @generated
 	 */
-	void setId(String value);
+	void setName(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Part Number</b></em>' attribute.
@@ -114,7 +114,7 @@ public interface Part extends Element {
 	 * @see #setParent(Composite)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Parent()
 	 * @see org.fritzing.fritzing.Composite#getParts
-	 * @model opposite="parts" keys="id"
+	 * @model opposite="parts" keys="name"
 	 * @generated
 	 */
 	Composite getParent();

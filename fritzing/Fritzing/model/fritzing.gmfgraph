@@ -36,7 +36,7 @@
             dy="15"/>
         <children
             xsi:type="gmfgraph:Label"
-            name="ResistorIdFigure"
+            name="ResistorNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
@@ -59,11 +59,11 @@
             dy="20"/>
         <children
             xsi:type="gmfgraph:Label"
-            name="LEDIdFigure"
+            name="LEDNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
-          accessor="getFigureLEDIdFigure"
+          accessor="getFigureLEDNameFigure"
           figure="//@figures.0/@descriptors.2/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
@@ -93,7 +93,7 @@
         </children>
         <children
             xsi:type="gmfgraph:Label"
-            name="ButtonIdFigure"
+            name="ButtonNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
@@ -120,7 +120,7 @@
           name="SketchFigure">
         <children
             xsi:type="gmfgraph:Label"
-            name="SketchIdFigure"
+            name="SketchNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
@@ -139,7 +139,7 @@
         <location/>
         <children
             xsi:type="gmfgraph:Label"
-            name="ModuleIdFigure"
+            name="ModuleNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
@@ -162,11 +162,11 @@
             dy="400"/>
         <children
             xsi:type="gmfgraph:Label"
-            name="ArduinoIdFigure"
+            name="ArduinoNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
-          accessor="getFigureArduinoIdFigure"
+          accessor="getFigureArduinoNameFigure"
           figure="//@figures.0/@descriptors.7/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
@@ -186,11 +186,11 @@
             dy="400"/>
         <children
             xsi:type="gmfgraph:Label"
-            name="BreadboardIdFigure"
+            name="BreadboardNameFigure"
             text="&lt;...>"/>
       </actualFigure>
       <accessors
-          accessor="getFigureBreadboardIdFigure"
+          accessor="getFigureBreadboardNameFigure"
           figure="//@figures.0/@descriptors.8/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
@@ -246,12 +246,12 @@
         xsi:type="gmfgraph:LabelOffsetFacet"/>
   </labels>
   <labels
-      name="ResistorId"
+      name="ResistorName"
       figure="ResistorFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.1/@accessors.0"/>
   <labels
-      name="LEDId"
+      name="LEDName"
       figure="LEDFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.2/@accessors.0"/>
@@ -263,27 +263,27 @@
         xsi:type="gmfgraph:LabelOffsetFacet"/>
   </labels>
   <labels
-      name="SketchId"
+      name="SketchName"
       figure="SketchFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.5/@accessors.0"/>
   <labels
-      name="ModuleId"
+      name="ModuleName"
       figure="ModuleFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.6/@accessors.0"/>
   <labels
-      name="BreadboardId"
+      name="BreadboardName"
       figure="BreadboardFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.8/@accessors.0"/>
   <labels
-      name="ArduinoId"
+      name="ArduinoName"
       figure="ArduinoFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.7/@accessors.0"/>
   <labels
-      name="ButtonId"
+      name="ButtonName"
       figure="ButtonFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.3/@accessors.0"/>

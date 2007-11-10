@@ -85,10 +85,6 @@
         <element xmi:type="ecore:EAttribute" href="fritzing.ecore#//Part/partNumber"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_Q3xIMXc2EdyDG70ZmLhbaA"/>
       </children>
-      <children xmi:type="notation:Node" xmi:id="_8QbNlHcxEdyDG70ZmLhbaA" type="3001">
-        <element xmi:type="ecore:EAttribute" href="fritzing.ecore#//Part/id"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_8QbNlXcxEdyDG70ZmLhbaA"/>
-      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_ixYvAnaPEdyqQY0mUTMiug"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_ixYvA3aPEdyqQY0mUTMiug"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_ixYvBHaPEdyqQY0mUTMiug"/>
@@ -513,33 +509,5 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_dreAE4xyEdysN7JQMRVt0Q" points="[0, 0, 284, 67]$[0, -10, 284, 57]$[-291, -10, -7, 57]$[-291, -61, -7, 6]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_drhqcIxyEdysN7JQMRVt0Q" id="(0.53103447,0.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_drhqcYxyEdysN7JQMRVt0Q" id="(0.518797,0.89830506)"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_Grf9AIx1EdysN7JQMRVt0Q" type="4002" source="_rZFawHfmEdyXNemcPEzoxg" target="_ixYH-HaPEdyqQY0mUTMiug">
-    <children xmi:type="notation:Node" xmi:id="_GrhLIIx1EdysN7JQMRVt0Q" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_GrhLIYx1EdysN7JQMRVt0Q" x="8" y="19"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_GrhyMIx1EdysN7JQMRVt0Q" type="6003">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_GrhyMYx1EdysN7JQMRVt0Q" x="-12" y="49"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_Grf9AYx1EdysN7JQMRVt0Q"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_Grf9Aox1EdysN7JQMRVt0Q" fontName="Segoe UI"/>
-    <element xmi:type="ecore:EReference" href="fritzing.ecore#//Terminal/parent"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Grf9A4x1EdysN7JQMRVt0Q" points="[-5, 7, 155, -113]$[-60, 7, 100, -113]$[-112, 120, 48, 0]$[-148, 120, 12, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GrkOcIx1EdysN7JQMRVt0Q" id="(0.03448276,0.12307692)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GrkOcYx1EdysN7JQMRVt0Q" id="(0.9097744,0.24390244)"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_TEgEkIx2EdysN7JQMRVt0Q" type="4002" source="_ixYH-HaPEdyqQY0mUTMiug" target="_ixPlEHaPEdyqQY0mUTMiug">
-    <children xmi:type="notation:Node" xmi:id="_TEgroIx2EdysN7JQMRVt0Q" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_TEgroYx2EdysN7JQMRVt0Q" x="-3" y="-27"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_TEgroox2EdysN7JQMRVt0Q" type="6003">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_TEgro4x2EdysN7JQMRVt0Q" y="60"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_TEgEkYx2EdysN7JQMRVt0Q"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_TEgEkox2EdysN7JQMRVt0Q" fontName="Segoe UI"/>
-    <element xmi:type="ecore:EReference" href="fritzing.ecore#//Part/parent"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TEgEk4x2EdysN7JQMRVt0Q" points="[-1, 9, 129, -94]$[-91, 9, 39, -94]$[-126, 93, 4, -10]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TEjH4Ix2EdysN7JQMRVt0Q" id="(0.007518797,0.76829267)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TEjH4Yx2EdysN7JQMRVt0Q" id="(0.07586207,0.0)"/>
   </edges>
 </notation:Diagram>

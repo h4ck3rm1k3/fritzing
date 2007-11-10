@@ -235,13 +235,13 @@ public interface FritzingPackage extends EPackage {
 	int PART = 4;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PART__ID = ELEMENT_FEATURE_COUNT + 0;
+	int PART__NAME = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -290,13 +290,13 @@ public interface FritzingPackage extends EPackage {
 	int RESISTOR = 5;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESISTOR__ID = PART__ID;
+	int RESISTOR__NAME = PART__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -354,13 +354,13 @@ public interface FritzingPackage extends EPackage {
 	int LED = 6;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LED__ID = PART__ID;
+	int LED__NAME = PART__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -418,13 +418,13 @@ public interface FritzingPackage extends EPackage {
 	int BUTTON = 7;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BUTTON__ID = PART__ID;
+	int BUTTON__NAME = PART__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -473,13 +473,13 @@ public interface FritzingPackage extends EPackage {
 	int COMPOSITE = 8;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSITE__ID = PART__ID;
+	int COMPOSITE__NAME = PART__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -546,13 +546,13 @@ public interface FritzingPackage extends EPackage {
 	int SKETCH = 9;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SKETCH__ID = COMPOSITE__ID;
+	int SKETCH__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -619,13 +619,13 @@ public interface FritzingPackage extends EPackage {
 	int BREADBOARD = 10;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD__ID = COMPOSITE__ID;
+	int BREADBOARD__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -701,13 +701,13 @@ public interface FritzingPackage extends EPackage {
 	int MODULE = 11;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__ID = COMPOSITE__ID;
+	int MODULE__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -774,13 +774,13 @@ public interface FritzingPackage extends EPackage {
 	int ARDUINO = 12;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__ID = COMPOSITE__ID;
+	int ARDUINO__NAME = COMPOSITE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -998,15 +998,15 @@ public interface FritzingPackage extends EPackage {
 	EClass getPart();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.fritzing.fritzing.Part#getId()
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.fritzing.fritzing.Part#getName()
 	 * @see #getPart()
 	 * @generated
 	 */
-	EAttribute getPart_Id();
+	EAttribute getPart_Name();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getPartNumber <em>Part Number</em>}'.
@@ -1329,12 +1329,12 @@ public interface FritzingPackage extends EPackage {
 		EClass PART = eINSTANCE.getPart();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PART__ID = eINSTANCE.getPart_Id();
+		EAttribute PART__NAME = eINSTANCE.getPart_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Part Number</b></em>' attribute feature.
