@@ -67,6 +67,62 @@ public class EagleSCRPart {
 				xOffset = 2.7;
 				yOffset = 1.8;
 			}
+			if (terminal.equals("Vin")) {
+				xOffset = 2.7;
+				yOffset = 1.9;
+			}
+			if (terminal.equals("A0")) {
+				xOffset = 2.7;
+				yOffset = 2.6;
+			}
+			if (terminal.equals("A1")) {
+				xOffset = 2.7;
+				yOffset = 2.5;
+			}
+			if (terminal.equals("A2")) {
+				xOffset = 2.7;
+				yOffset = 2.4;
+			}
+			if (terminal.equals("A3")) {
+				xOffset = 2.7;
+				yOffset = 2.3;
+			}
+			if (terminal.equals("A4")) {
+				xOffset = 2.7;
+				yOffset = 2.2;
+			}
+			if (terminal.equals("A5")) {
+				xOffset = 2.7;
+				yOffset = 2.1;
+			}
+			if (terminal.equals("D0")) {
+				xOffset = 0.1;
+				yOffset = 2.6;
+			}
+			if (terminal.equals("D1")) {
+				xOffset = 0.1;
+				yOffset = 2.5;
+			}
+			if (terminal.equals("D2")) {
+				xOffset = 0.1;
+				yOffset = 2.4;
+			}
+			if (terminal.equals("D3")) {
+				xOffset = 0.1;
+				yOffset = 2.3;
+			}
+			if (terminal.equals("D4")) {
+				xOffset = 0.1;
+				yOffset = 2.2;
+			}
+			if (terminal.equals("D5")) {
+				xOffset = 0.1;
+				yOffset = 2.1;
+			}
+			if (terminal.equals("D6")) {
+				xOffset = 0.1;
+				yOffset = 2.0;
+			}
 		}
 		if (partType.equalsIgnoreCase("resistor")) {
 			if (terminal.equals("0")) {
