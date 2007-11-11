@@ -48,9 +48,12 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.fritzing.fritzing.DocumentRoot;
@@ -456,11 +459,12 @@ public class FritzingDiagramEditorUtil {
 			return element2ViewMap;
 		}
 	} //LazyElement2ViewMap	
-
+	
 	/**
 	 * @generated NOT
 	 */
-	public static URI getActiveDiagramURI() throws NullPointerException {
+	public static URI getActiveDiagramURI() 
+		throws NullPointerException {
 		IEditorInput input = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor()
 				.getEditorInput();
@@ -470,20 +474,35 @@ public class FritzingDiagramEditorUtil {
 	/**
 	 * @generated NOT
 	 */
-	public static Diagram getActiveDiagram() throws NullPointerException {
+	public static IDiagramWorkbenchPart getActiveDiagramPart()
+		throws NullPointerException {
 		IEditorPart editor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		return ((IDiagramWorkbenchPart) editor).getDiagram();
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	public static IDiagramWorkbenchPart getActiveDiagramEditor()
-			throws NullPointerException {
-		IEditorPart editor = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+			.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		return ((IDiagramWorkbenchPart) editor);
 	}
-
+	
+	public static Boolean openFritzingFile(URI fileURI) {
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+		IWorkbenchPage page = workbenchWindow.getActivePage();
+		IEditorDescriptor editorDescriptor = workbench.getEditorRegistry()
+				.getDefaultEditor(fileURI.toFileString());
+		if (editorDescriptor == null) {
+			MessageDialog.openError(workbenchWindow.getShell(),
+							Messages.DiagramEditorActionBarAdvisor_DefaultFileEditorTitle,
+							NLS.bind(Messages.DiagramEditorActionBarAdvisor_DefaultFileEditorMessage,
+							fileURI.toFileString()));
+			return false;
+		} else {
+			try {
+				page.openEditor(new URIEditorInput(fileURI), editorDescriptor.getId());
+			} catch (PartInitException exception) {
+				MessageDialog.openError(workbenchWindow.getShell(),
+								Messages.DiagramEditorActionBarAdvisor_DefaultEditorOpenErrorTitle,
+								exception.getMessage());
+				return false;
+			}
+		}
+		return true;
+	}
 }

@@ -6,6 +6,7 @@ package org.fritzing.fritzing.diagram.application;
 import java.io.File;
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 import org.eclipse.emf.common.util.URI;
@@ -132,6 +133,19 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 				menuX.add(menuXX);
 			}
 
+			{
+				IMenuManager menuXX = new MenuManager(
+						"Examples", "examples");
+
+				menuXX.add(new GroupMarker(
+						IWorkbenchActionConstants.MB_ADDITIONS));
+				menuX.add(menuXX);
+			}
+
+			// Open..
+			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+			
+			// Export..
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 
 			menuX.add(getAction(ActionFactory.CLOSE.getId()));
@@ -143,8 +157,6 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			menuX.add(new Separator());
 
 			menuX.add(getAction(ActionFactory.PRINT.getId()));
-
-			// TODO: add "Page Setup" and "Print Preview" manually
 
 			menuX.add(new Separator());
 
@@ -317,16 +329,22 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	/**
-	 * @generated
+	 * @generated not
 	 */
 	public static class OpenAction extends WorkbenchWindowActionDelegate {
 
 		/**
-		 * @generated
+		 * @generated not
 		 */
 		public void run(IAction action) {
 			FileDialog fileDialog = new FileDialog(getWindow().getShell(),
 					SWT.OPEN);
+//			String fritzingFolder = Platform.getUserLocation().getURL().toString() + "/Fritzing/";
+//			if (! new File(fritzingFolder).exists())
+//				new File(fritzingFolder).mkdir();
+//			fileDialog.setFilterPath(fritzingFolder);
+			fileDialog.setFilterExtensions(new String[]{"*.fzb"});
+			fileDialog.setFilterNames(new String[]{"Fritzing Sketch (.fzb)"});
 			fileDialog.open();
 			if (fileDialog.getFileName() != null
 					&& fileDialog.getFileName().length() > 0) {

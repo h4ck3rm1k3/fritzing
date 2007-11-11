@@ -86,6 +86,17 @@
                id="Fritzing.diagram.PCBExportAction">
          </action>
       </actionSet>
+      <actionSet
+            label="%fritzingExampleActionLabel"
+            visible="true"
+            id="Fritzing.diagram.FritzingExample">
+         <action
+               label="%fritzingExampleActionLabel"
+               class="org.fritzing.fritzing.diagram.part.FritzingExampleAction"
+               menubarPath="file1/examples/additions"
+               id="Fritzing.diagram.FritzingExampleAction">
+         </action>
+      </actionSet>
    </extension>
    
    <extension point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders">

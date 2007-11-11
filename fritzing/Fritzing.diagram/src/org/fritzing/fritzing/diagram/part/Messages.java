@@ -463,4 +463,9 @@ public class Messages extends NLS {
 	 * @generated NOT
 	 */
 	public static String NavigatorActionProvider_OpenDiagramActionName;
+	
+	/**
+	 * @generated NOT
+	 */
+	public static String FritzingPCBExportAction_NoOpenSketchError;
 }

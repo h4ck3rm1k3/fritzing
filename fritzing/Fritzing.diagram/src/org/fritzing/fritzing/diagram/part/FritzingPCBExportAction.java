@@ -10,9 +10,12 @@ import java.io.Writer;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Preferences;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -23,8 +26,7 @@ import org.fritzing.fritzing.diagram.preferences.EaglePreferencePage;
 /**
  * @generated NOT
  */
-public class FritzingPCBExportAction implements
-		IWorkbenchWindowActionDelegate {
+public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 
 	/**
 	 * @generated NOT
@@ -63,59 +65,105 @@ public class FritzingPCBExportAction implements
 	 */
 	public void run(IAction action) {
 		// STEP 1: create Eagle script file from Fritzing files
-				
-	    // use currently active diagram
-		IDiagramGraphicalViewer viewer = FritzingDiagramEditorUtil.getActiveDiagramEditor()
-			.getDiagramGraphicalViewer();
-		String script = Fritzing2Eagle.createEagleScript(viewer);
 		
-		// TODO: write script to file
-	    URI fritzingDiagramURI = FritzingDiagramEditorUtil.getActiveDiagramURI();
-	    String fritzing2eagleSCR = fritzingDiagramURI.trimFileExtension()
-    		.appendFileExtension("scr").toFileString();
+		IDiagramWorkbenchPart editor = null;
+		URI diagramUri = null;
 		
-	    try {
+		try {
+			// use currently active diagram
+			editor = FritzingDiagramEditorUtil.getActiveDiagramPart();
+			diagramUri = FritzingDiagramEditorUtil.getActiveDiagramURI();
+		} catch (NullPointerException npe) {
+			ErrorDialog.openError(getShell(), "PCB Export Error",
+					Messages.FritzingPCBExportAction_NoOpenSketchError,
+					new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
+							"No sketch currently opened.", npe));
+			return;
+		}
+		// transform into EAGLE script
+		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer());
+
+		String fritzing2eagleSCR = diagramUri.trimFileExtension()
+				.appendFileExtension("scr").toFileString();
+		try {
 			Writer w = new FileWriter(fritzing2eagleSCR);
+			// TODO: warn if file already exists
 			w.write(script);
 			w.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException ioe) {	
+			ErrorDialog.openError(getShell(), "PCB Export Error",
+				"Could not create file " + fritzing2eagleSCR + " for writing the EAGLE script.\n"+
+				"Please check if Fritzing has write access.",
+				new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
+						"File could not be written.", ioe));
+			return;
 		}
-	    
-	    // STEP 2: start Eagle ULP on the created script file
-	    
+
+		// STEP 2: start Eagle ULP on the created script file
+
 		// EAGLE folder
-		Preferences preferences = FritzingDiagramEditorPlugin.getInstance().getPluginPreferences();
-		String eagleLocation = preferences.getString(
-			EaglePreferencePage.EAGLE_LOCATION) + File.separator;
+		Preferences preferences = FritzingDiagramEditorPlugin.getInstance()
+				.getPluginPreferences();
+		String eagleLocation = preferences
+				.getString(EaglePreferencePage.EAGLE_LOCATION) + File.separator;
 		// EAGLE executable
 		String eagleExec = "";
-	    if(Platform.getOS().equals(Platform.OS_WIN32)) {
-	    	eagleExec = "\"" + eagleLocation + "bin/eagle.exe" + "\""; 
-	    }
-	    else if(Platform.getOS().equals(Platform.OS_MACOSX)) {
-	    	eagleExec = eagleLocation + "EAGLE.app/Contents/MacOS/eagle"; 
-	    }
-	    else if(Platform.getOS().equals(Platform.OS_LINUX)) {
-	    	eagleExec = eagleLocation + "bin/eagle"; 
-	    }
-	    // EAGLE PCB ULP
-		String eagleULP = eagleLocation + "ulp/fritzing_master.ulp";
-	    // EAGLE Schematc
-		String eagleSCH = fritzingDiagramURI.trimFileExtension()
-    		.appendFileExtension("sch").toFileString();
-	    // EAGLE parameters
-	    String eagleParams = "-C\"RUN " + 
-	    	"'" + eagleULP + "' " + 
-	    	"'" + fritzing2eagleSCR + "'\" " +
-	    	"\"" + eagleSCH + "\"";
-	    // Run!
-	    String command = 
-	    	 eagleExec + " " + eagleParams;
-	    try {
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			eagleExec = eagleLocation + "bin\\eagle.exe";
+		} else if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+			eagleExec = eagleLocation + "EAGLE.app/Contents/MacOS/eagle";
+		} else if (Platform.getOS().equals(Platform.OS_LINUX)) {
+			eagleExec = eagleLocation + "bin/eagle";
+		}
+		if (! new File(eagleExec).exists()) {
+			ErrorDialog.openError(getShell(), "PCB Export Error",
+				"Could not find EAGLE installation at " + eagleLocation + ".\n"+
+				"Please check if you correctly set the EAGLE location in the preferences.",
+				new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
+						"No EAGLE executable at "+eagleExec, null));
+			return;
+		}
+		// EAGLE PCB ULP
+		String eagleULP = eagleLocation + "ulp\\fritzing_master.ulp";
+		if (! new File(eagleULP).exists()) {
+			System.out.println("eö");
+			ErrorDialog.openError(getShell(), "PCB Export Error",
+				"Could not find Fritzing ULP at " + eagleULP + ".\n"+
+				"Please check if you copied the Fritzing EAGLE files to the EAGLE subfolders.",
+				new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
+						"Fritzing ULP not found.", null));
+			return;
+		} 
+		// EAGLE .sch and .brd files
+		String eagleSCH = diagramUri.trimFileExtension()
+				.appendFileExtension("sch").toFileString();
+		String eagleBRD = diagramUri.trimFileExtension()
+				.appendFileExtension("brd").toFileString();
+		// Delete existing ones so that EAGLE will create new ones
+		// TODO: warn user before deleting files
+		File eagleSchFile = new File(eagleSCH);
+		if (eagleSchFile.exists()) {
+			eagleSchFile.delete();
+		}
+		File eagleBrdFile = new File(eagleBRD);
+		if (eagleBrdFile.exists()) {
+			eagleBrdFile.delete();
+		}
+		// EAGLE parameters
+		String eagleParams = "-C\"RUN " + "'" + eagleULP + "' " + "'"
+				+ fritzing2eagleSCR + "'\" " + "\"" + eagleSCH + "\"";
+		// Run!
+		String command = eagleExec + " " + eagleParams;
+		try {
 			Runtime.getRuntime().exec(command);
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ioe1) {
+			ErrorDialog.openError(getShell(), "PCB Export Error",
+					"Could not launch EAGLE PCB export.\n"+
+					"Please check that all of the files in the following command exist:\n\n"+
+					command,
+					new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
+							"EAGLE PCB export failed.", ioe1));
+				return;
 		}
 	}
 }
