@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fritzing="http://www.fritzing.org" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_M3TNQJBtEdyxFpEcZiTD-w" type="FritzingPhysical" name="HelloWorld.fzb" measurementUnit="Himetric">
+  <children xmi:type="notation:Node" xmi:id="_awpNwJCQEdyrm_yTBNLRhQ" type="2001">
+    <children xmi:type="notation:Node" xmi:id="_awp00JCQEdyrm_yTBNLRhQ" type="5002"/>
+    <children xmi:type="notation:Node" xmi:id="_awxJkJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_awxwoJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_awxwoZCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_awxJkZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='RESET']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_awxJkpCQEdyrm_yTBNLRhQ" x="-131" y="2112"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_awyXsJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_awy-wJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_awy-wZCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_awyXsZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='3V3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_awyXspCQEdyrm_yTBNLRhQ" x="-131" y="2376"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_awy-wpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_awzl0JCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_awzl0ZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_awy-w5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='5V']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_awy-xJCQEdyrm_yTBNLRhQ" x="-131" y="2640"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_awzl0pCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw0M4JCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw0M4ZCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_awzl05CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='Gnd']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_awzl1JCQEdyrm_yTBNLRhQ" x="-131" y="2904"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw0M4pCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw0M5ZCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw0M5pCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw0M45CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='Gnd1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw0M5JCQEdyrm_yTBNLRhQ" x="-131" y="3168"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw0z8JCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw0z85CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw0z9JCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw0z8ZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='Vin']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw0z8pCQEdyrm_yTBNLRhQ" x="-131" y="3432"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw1bAJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw1bA5CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw1bBJCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw1bAZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='A0']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw1bApCQEdyrm_yTBNLRhQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw2CEJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw2CE5CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw2CFJCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw2CEZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='A1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw2CEpCQEdyrm_yTBNLRhQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw2CFZCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw3QMJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw3QMZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw2CFpCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='A2']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw2CF5CQEdyrm_yTBNLRhQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw3QMpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw3QNZCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw3QNpCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw3QM5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='A3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw3QNJCQEdyrm_yTBNLRhQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw33QJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw33Q5CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw33RJCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw33QZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='A4']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw33QpCQEdyrm_yTBNLRhQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw4eUJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw4eU5CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw4eVJCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw4eUZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='A5']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw4eUpCQEdyrm_yTBNLRhQ"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw4eVZCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw5FYJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw5FYZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw4eVpCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D0']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw4eV5CQEdyrm_yTBNLRhQ" x="6613" y="5940"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw5FYpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw5scJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw5scZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw5FY5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw5FZJCQEdyrm_yTBNLRhQ" x="6613" y="5676"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw5scpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw8IsJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw8IsZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw5sc5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D2']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw5sdJCQEdyrm_yTBNLRhQ" x="6613" y="5412"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw8IspCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw8vwJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw8vwZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw8Is5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw8ItJCQEdyrm_yTBNLRhQ" x="6613" y="5148"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw8vwpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw9W0JCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw9W0ZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw8vw5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D4']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw8vxJCQEdyrm_yTBNLRhQ" x="6613" y="4884"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw9W0pCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw9W1ZCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw9W1pCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw9W05CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D5']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw9W1JCQEdyrm_yTBNLRhQ" x="6613" y="4620"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw994JCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw9945CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw995JCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw994ZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D6']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw994pCQEdyrm_yTBNLRhQ" x="6613" y="4356"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw-k8JCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw-k85CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw-k9JCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw-k8ZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D7']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw-k8pCQEdyrm_yTBNLRhQ" x="6613" y="4092"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw-k9ZCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw_MAJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw_MAZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw-k9pCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D8']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw-k95CQEdyrm_yTBNLRhQ" x="6613" y="3828"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw_MApCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw_zEJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw_zEZCQEdyrm_yTBNLRhQ" x="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw_MA5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D9']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw_MBJCQEdyrm_yTBNLRhQ" x="6613" y="3564"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_aw_zEpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_aw_zFZCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_aw_zFpCQEdyrm_yTBNLRhQ" x="-423"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_aw_zE5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D10']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_aw_zFJCQEdyrm_yTBNLRhQ" x="6613" y="3300"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_axAaIJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_axAaI5CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_axAaJJCQEdyrm_yTBNLRhQ" x="-423"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_axAaIZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D11']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_axAaIpCQEdyrm_yTBNLRhQ" x="6613" y="3036"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_axBBMJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_axBBM5CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_axBBNJCQEdyrm_yTBNLRhQ" x="-423"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_axBBMZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D12']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_axBBMpCQEdyrm_yTBNLRhQ" x="6613" y="2772"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_axBBNZCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_axBoQJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_axBoQZCQEdyrm_yTBNLRhQ" x="-423"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_axBBNpCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='D13']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_axBBN5CQEdyrm_yTBNLRhQ" x="6613" y="2508"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_axBoQpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_axCPUJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_axCPUZCQEdyrm_yTBNLRhQ" x="-502"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_axBoQ5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='GND']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_axBoRJCQEdyrm_yTBNLRhQ" x="6613" y="2244"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_axCPUpCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_axCPVZCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_axCPVpCQEdyrm_yTBNLRhQ" x="-529"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_axCPU5CQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='Arduino']/@terminals[name='AREF']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_axCPVJCQEdyrm_yTBNLRhQ" x="6613" y="1980"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_awpNwZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Arduino" href="HelloWorld.fz#Arduino"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_awpNwpCQEdyrm_yTBNLRhQ" x="7608"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_cWvo4JCQEdyrm_yTBNLRhQ" type="2004">
+    <children xmi:type="notation:Node" xmi:id="_cWw3AJCQEdyrm_yTBNLRhQ" type="5005"/>
+    <children xmi:type="notation:Node" xmi:id="_cW7PEJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_cW72IpCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_cW72I5CQEdyrm_yTBNLRhQ" x="-132" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_cW72IJCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='B1']/@terminals[name='0p']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cW72IZCQEdyrm_yTBNLRhQ" x="528" y="396"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_cW8dMJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_cW9EQJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_cW9EQZCQEdyrm_yTBNLRhQ" x="-132" y="-317"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_cW8dMZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='B1']/@terminals[name='1p']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cW8dMpCQEdyrm_yTBNLRhQ" x="528" y="1"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_cW9rUJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_cW-SYJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_cW-SYZCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_cW9rUZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='B1']/@terminals[name='0']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cW9rUpCQEdyrm_yTBNLRhQ" x="-131" y="396"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_qHDLgJCaEdywb60pJcO5Yw" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_qHDykJCaEdywb60pJcO5Yw" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_qHDykZCaEdywb60pJcO5Yw" x="-132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_qHDLgZCaEdywb60pJcO5Yw" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='B1']/@terminals[name='1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_qHDLgpCaEdywb60pJcO5Yw" x="-131" y="1"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_cWwP8JCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Button" href="HelloWorld.fz#B1"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cWwP8ZCQEdyrm_yTBNLRhQ" x="1452" y="2772"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_dQGSwJCQEdyrm_yTBNLRhQ" type="2002">
+    <children xmi:type="notation:Node" xmi:id="_dQHg4JCQEdyrm_yTBNLRhQ" type="5003"/>
+    <children xmi:type="notation:Node" xmi:id="_dQSgAJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_dQTHEJCQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_dQTHEZCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_dQSgAZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='L1']/@terminals[name='+']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dQSgApCQEdyrm_yTBNLRhQ" x="395" y="132"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_dQTuIJCQEdyrm_yTBNLRhQ" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_dQTuI5CQEdyrm_yTBNLRhQ" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_dQTuJJCQEdyrm_yTBNLRhQ" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_dQTuIZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='L1']/@terminals[name='-']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dQTuIpCQEdyrm_yTBNLRhQ" x="-131" y="132"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_dQGSwZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:LED" href="HelloWorld.fz#L1"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dQGSwpCQEdyrm_yTBNLRhQ" x="1452" y="1188"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_jMD-EJCUEdyrm_yTBNLRhQ" type="Text">
+    <children xmi:type="notation:Node" xmi:id="_jMElIJCUEdyrm_yTBNLRhQ" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_jMElIZCUEdyrm_yTBNLRhQ" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_jMD-EZCUEdyrm_yTBNLRhQ" fontName="Segoe UI" description="Press the button to light the LED&#xD;&#xA;http://www.arduino.cc/en/Tutorial/Button"/>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_jMD-EpCUEdyrm_yTBNLRhQ" x="792" y="5544" width="6449" height="1305"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_Er5jMJCbEdywb60pJcO5Yw" type="2003">
+    <children xmi:type="notation:Node" xmi:id="_Er6KQJCbEdywb60pJcO5Yw" type="5004"/>
+    <children xmi:type="notation:Node" xmi:id="_Er7YYJCbEdywb60pJcO5Yw" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_Er7YY5CbEdywb60pJcO5Yw" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Er7YZJCbEdywb60pJcO5Yw" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_Er7YYZCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='R1']/@terminals[name='0']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Er7YYpCbEdywb60pJcO5Yw" x="-131" y="132"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_Er7_cJCbEdywb60pJcO5Yw" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_Er7_c5CbEdywb60pJcO5Yw" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Er7_dJCbEdywb60pJcO5Yw" y="132"/>
+      </children>
+      <styles xmi:type="notation:ShapeStyle" xmi:id="_Er7_cZCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[name='R1']/@terminals[name='1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Er7_cpCbEdywb60pJcO5Yw" x="792" y="126"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_Er5jMZCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Resistor" href="HelloWorld.fz#R1"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Er5jMpCbEdywb60pJcO5Yw" x="3564" y="2772"/>
+  </children>
+  <styles xmi:type="notation:DiagramStyle" xmi:id="_M3TNQZBtEdyxFpEcZiTD-w"/>
+  <element xmi:type="fritzing:Sketch" href="HelloWorld.fz#//@sketch"/>
+  <edges xmi:type="notation:Edge" xmi:id="_6fE_UJCZEdywb60pJcO5Yw" type="4001" source="_cW7PEJCQEdyrm_yTBNLRhQ" target="_awzl0pCQEdyrm_yTBNLRhQ">
+    <children xmi:type="notation:Node" xmi:id="_6fE_VJCZEdywb60pJcO5Yw" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fE_VZCZEdywb60pJcO5Yw"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_6fE_UZCZEdywb60pJcO5Yw" smoothness="Normal" lineColor="2697513"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_6fE_UpCZEdywb60pJcO5Yw" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='b1-']"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fE_U5CZEdywb60pJcO5Yw" points="[79, 27, -5424, 291]$[1190, 397, -4313, 661]$[5424, -264, -79, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_6fFmYJCZEdywb60pJcO5Yw" type="4001" source="_dQSgAJCQEdyrm_yTBNLRhQ" target="_axBBNZCQEdyrm_yTBNLRhQ">
+    <children xmi:type="notation:Node" xmi:id="_6fGNcJCZEdywb60pJcO5Yw" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fGNcZCZEdywb60pJcO5Yw" x="-2506" y="-103"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_6fFmYZCZEdywb60pJcO5Yw" smoothness="Normal" lineColor="1361867"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_6fFmYpCZEdywb60pJcO5Yw" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='l1+']"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fFmY5CZEdywb60pJcO5Yw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_6fG0gJCZEdywb60pJcO5Yw" type="4001" source="_dQTuIJCQEdyrm_yTBNLRhQ" target="_axBoQpCQEdyrm_yTBNLRhQ">
+    <children xmi:type="notation:Node" xmi:id="_6fG0hJCZEdywb60pJcO5Yw" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fG0hZCZEdywb60pJcO5Yw" x="-1732" y="-154"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_6fG0gZCZEdywb60pJcO5Yw" smoothness="Normal" lineColor="2697513"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_6fG0gpCZEdywb60pJcO5Yw" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='l1-']"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fG0g5CZEdywb60pJcO5Yw" points="[-53, -79, -12965, -1005]$[-344, -476, -13256, -1402]$[662, -793, -12250, -1719]$[2435, -476, -10477, -1402]$[12833, 926, -79, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_H4pzEJCbEdywb60pJcO5Yw" type="4001" source="_Er7YYJCbEdywb60pJcO5Yw" target="_cW8dMJCQEdyrm_yTBNLRhQ">
+    <children xmi:type="notation:Node" xmi:id="_H4pzFJCbEdywb60pJcO5Yw" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_H4pzFZCbEdywb60pJcO5Yw"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_H4pzEZCbEdywb60pJcO5Yw"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_H4pzEpCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='r1b1']"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_H4pzE5CbEdywb60pJcO5Yw" points="[-10, -1, 210, 19]$[-209, -21, 11, -1]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_NulEoJCbEdywb60pJcO5Yw" type="4001" source="_Er7_cJCbEdywb60pJcO5Yw" target="_awy-wpCQEdyrm_yTBNLRhQ">
+    <children xmi:type="notation:Node" xmi:id="_NulrsJCbEdywb60pJcO5Yw" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_NulrsZCbEdywb60pJcO5Yw"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_NulEoZCbEdywb60pJcO5Yw" lineColor="854678"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_NulEopCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='b1+']"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_NulEo5CbEdywb60pJcO5Yw" points="[4, 3, -143, 13]$[151, -9, 4, 1]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Nung4JCbEdywb60pJcO5Yw" id="(0.46969697,0.09090909)"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_YZE4cJCbEdywb60pJcO5Yw" type="4001" source="_aw5scpCQEdyrm_yTBNLRhQ" target="_Er7YYJCbEdywb60pJcO5Yw">
+    <children xmi:type="notation:Node" xmi:id="_YZFfgJCbEdywb60pJcO5Yw" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_YZFfgZCbEdywb60pJcO5Yw" x="2460" y="18"/>
+    </children>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_YZE4cZCbEdywb60pJcO5Yw" smoothness="Normal" lineColor="1361867"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_YZE4cpCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
+    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='b1a']"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YZE4c5CbEdywb60pJcO5Yw" points="[-79, 0, 10663, 2487]$[-8652, -609, 2090, 1878]$[-10821, -1614, -79, 873]$[-10821, -2408, -79, 79]"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_YZHUsJCbEdywb60pJcO5Yw" id="(0.8484849,0.4469697)"/>
+  </edges>
+</notation:Diagram>
