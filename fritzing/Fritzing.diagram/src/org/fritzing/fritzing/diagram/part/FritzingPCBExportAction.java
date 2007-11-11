@@ -124,7 +124,15 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			return;
 		}
 		// EAGLE PCB ULP
-		String eagleULP = eagleLocation + "ulp\\fritzing_master.ulp";
+		String eagleULP = "";
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			eagleULP = eagleLocation + "ulp\\fritzing_master.ulp";
+		} else if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+			eagleULP = eagleLocation + "ulp/fritzing_master.ulp";		
+		} else if (Platform.getOS().equals(Platform.OS_LINUX)) {
+			eagleULP = eagleLocation + "ulp/fritzing_master.ulp";
+		}
+		
 		if (! new File(eagleULP).exists()) {
 			System.out.println("eö");
 			ErrorDialog.openError(getShell(), "PCB Export Error",
@@ -154,6 +162,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				+ fritzing2eagleSCR + "'\" " + "\"" + eagleSCH + "\"";
 		// Run!
 		String command = eagleExec + " " + eagleParams;
+		System.out.println(command);
 		try {
 			Runtime.getRuntime().exec(command);
 		} catch (IOException ioe1) {
