@@ -22,8 +22,11 @@ import org.fritzing.fritzing.DocumentRoot;
 import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.FsrSensor;
+import org.fritzing.fritzing.LightSensor;
 import org.fritzing.fritzing.Module;
 import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Potentiometer;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
@@ -126,6 +129,27 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * @generated
 	 */
 	private EClass arduinoEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass potentiometerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass fsrSensorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass lightSensorEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -491,6 +515,33 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getPotentiometer() {
+		return potentiometerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getFsrSensor() {
+		return fsrSensorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLightSensor() {
+		return lightSensorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public FritzingFactory getFritzingFactory() {
 		return (FritzingFactory)getEFactoryInstance();
 	}
@@ -558,6 +609,12 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		moduleEClass = createEClass(MODULE);
 
 		arduinoEClass = createEClass(ARDUINO);
+
+		potentiometerEClass = createEClass(POTENTIOMETER);
+
+		fsrSensorEClass = createEClass(FSR_SENSOR);
+
+		lightSensorEClass = createEClass(LIGHT_SENSOR);
 	}
 
 	/**
@@ -601,7 +658,10 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		sketchEClass.getESuperTypes().add(this.getComposite());
 		breadboardEClass.getESuperTypes().add(this.getComposite());
 		moduleEClass.getESuperTypes().add(this.getComposite());
-		arduinoEClass.getESuperTypes().add(this.getComposite());
+		arduinoEClass.getESuperTypes().add(this.getPart());
+		potentiometerEClass.getESuperTypes().add(this.getPart());
+		fsrSensorEClass.getESuperTypes().add(this.getPart());
+		lightSensorEClass.getESuperTypes().add(this.getPart());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -654,6 +714,12 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(arduinoEClass, Arduino.class, "Arduino", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(potentiometerEClass, Potentiometer.class, "Potentiometer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(fsrSensorEClass, FsrSensor.class, "FsrSensor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(lightSensorEClass, LightSensor.class, "LightSensor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -873,6 +939,27 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   source, 
 		   new String[] {
 			 "name", "Arduino",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (potentiometerEClass, 
+		   source, 
+		   new String[] {
+			 "name", "Potentiometer",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (fsrSensorEClass, 
+		   source, 
+		   new String[] {
+			 "name", "FsrSensor",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (lightSensorEClass, 
+		   source, 
+		   new String[] {
+			 "name", "LightSensor",
 			 "kind", "elementOnly"
 		   });
 	}

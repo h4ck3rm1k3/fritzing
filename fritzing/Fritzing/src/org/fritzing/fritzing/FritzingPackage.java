@@ -780,7 +780,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__NAME = COMPOSITE__NAME;
+	int ARDUINO__NAME = PART__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
@@ -789,7 +789,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__PART_NUMBER = COMPOSITE__PART_NUMBER;
+	int ARDUINO__PART_NUMBER = PART__PART_NUMBER;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -798,7 +798,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__TERMINALS = COMPOSITE__TERMINALS;
+	int ARDUINO__TERMINALS = PART__TERMINALS;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -807,25 +807,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__PARENT = COMPOSITE__PARENT;
-
-	/**
-	 * The feature id for the '<em><b>Parts</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARDUINO__PARTS = COMPOSITE__PARTS;
-
-	/**
-	 * The feature id for the '<em><b>Wires</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARDUINO__WIRES = COMPOSITE__WIRES;
+	int ARDUINO__PARENT = PART__PARENT;
 
 	/**
 	 * The number of structural features of the '<em>Arduino</em>' class.
@@ -834,7 +816,173 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
+	int ARDUINO_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.PotentiometerImpl <em>Potentiometer</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.PotentiometerImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPotentiometer()
+	 * @generated
+	 */
+	int POTENTIOMETER = 13;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__PART_NUMBER = PART__PART_NUMBER;
+
+	/**
+	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__TERMINALS = PART__TERMINALS;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__PARENT = PART__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Potentiometer</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.FsrSensorImpl <em>Fsr Sensor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.FsrSensorImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getFsrSensor()
+	 * @generated
+	 */
+	int FSR_SENSOR = 14;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__PART_NUMBER = PART__PART_NUMBER;
+
+	/**
+	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__TERMINALS = PART__TERMINALS;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__PARENT = PART__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Fsr Sensor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.LightSensorImpl <em>Light Sensor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.LightSensorImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLightSensor()
+	 * @generated
+	 */
+	int LIGHT_SENSOR = 15;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__PART_NUMBER = PART__PART_NUMBER;
+
+	/**
+	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__TERMINALS = PART__TERMINALS;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__PARENT = PART__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Light Sensor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
 
 
 	/**
@@ -1177,6 +1325,36 @@ public interface FritzingPackage extends EPackage {
 	EClass getArduino();
 
 	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.Potentiometer <em>Potentiometer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Potentiometer</em>'.
+	 * @see org.fritzing.fritzing.Potentiometer
+	 * @generated
+	 */
+	EClass getPotentiometer();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.FsrSensor <em>Fsr Sensor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Fsr Sensor</em>'.
+	 * @see org.fritzing.fritzing.FsrSensor
+	 * @generated
+	 */
+	EClass getFsrSensor();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.LightSensor <em>Light Sensor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Light Sensor</em>'.
+	 * @see org.fritzing.fritzing.LightSensor
+	 * @generated
+	 */
+	EClass getLightSensor();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1479,6 +1657,36 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ARDUINO = eINSTANCE.getArduino();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.PotentiometerImpl <em>Potentiometer</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.PotentiometerImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPotentiometer()
+		 * @generated
+		 */
+		EClass POTENTIOMETER = eINSTANCE.getPotentiometer();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.FsrSensorImpl <em>Fsr Sensor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.FsrSensorImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getFsrSensor()
+		 * @generated
+		 */
+		EClass FSR_SENSOR = eINSTANCE.getFsrSensor();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.LightSensorImpl <em>Light Sensor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.LightSensorImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLightSensor()
+		 * @generated
+		 */
+		EClass LIGHT_SENSOR = eINSTANCE.getLightSensor();
 
 	}
 

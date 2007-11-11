@@ -69,6 +69,9 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 			case FritzingPackage.BREADBOARD: return createBreadboard();
 			case FritzingPackage.MODULE: return createModule();
 			case FritzingPackage.ARDUINO: return createArduino();
+			case FritzingPackage.POTENTIOMETER: return createPotentiometer();
+			case FritzingPackage.FSR_SENSOR: return createFsrSensor();
+			case FritzingPackage.LIGHT_SENSOR: return createLightSensor();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -172,6 +175,36 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 	public Arduino createArduino() {
 		ArduinoImpl arduino = new ArduinoImpl();
 		return arduino;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Potentiometer createPotentiometer() {
+		PotentiometerImpl potentiometer = new PotentiometerImpl();
+		return potentiometer;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FsrSensor createFsrSensor() {
+		FsrSensorImpl fsrSensor = new FsrSensorImpl();
+		return fsrSensor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public LightSensor createLightSensor() {
+		LightSensorImpl lightSensor = new LightSensorImpl();
+		return lightSensor;
 	}
 
 	/**

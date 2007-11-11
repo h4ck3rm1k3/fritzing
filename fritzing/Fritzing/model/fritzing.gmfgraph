@@ -14,7 +14,11 @@
         <children
             xsi:type="gmfgraph:Label"
             name="WireNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.0/@actualFigure/@children.0"/>
@@ -28,16 +32,20 @@
             xsi:type="gmfgraph:RGBColor"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"
-            red="135"
-            green="225"
-            blue="225"/>
+            red="190"
+            green="177"
+            blue="88"/>
         <preferredSize
             dx="30"
-            dy="15"/>
+            dy="10"/>
         <children
             xsi:type="gmfgraph:Label"
             name="ResistorNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.1/@actualFigure/@children.0"/>
@@ -55,12 +63,16 @@
             green="50"
             blue="50"/>
         <preferredSize
-            dx="20"
-            dy="20"/>
+            dx="15"
+            dy="15"/>
         <children
             xsi:type="gmfgraph:Label"
             name="LEDNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           accessor="getFigureLEDNameFigure"
@@ -94,7 +106,11 @@
         <children
             xsi:type="gmfgraph:Label"
             name="ButtonNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.3/@actualFigure/@children.1"/>
@@ -103,9 +119,13 @@
         name="TerminalFigure">
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
-          name="TerminalFigure">
+          name="TerminalFigure"
+          lineWidth="0">
         <foregroundColor
-            xsi:type="gmfgraph:RGBColor"/>
+            xsi:type="gmfgraph:RGBColor"
+            red="80"
+            green="80"
+            blue="80"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"/>
         <preferredSize
@@ -121,7 +141,11 @@
         <children
             xsi:type="gmfgraph:Label"
             name="SketchNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.5/@actualFigure/@children.0"/>
@@ -140,7 +164,11 @@
         <children
             xsi:type="gmfgraph:Label"
             name="ModuleNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.6/@actualFigure/@children.0"/>
@@ -154,16 +182,20 @@
             xsi:type="gmfgraph:RGBColor"/>
         <backgroundColor
             xsi:type="gmfgraph:RGBColor"
-            red="20"
-            green="70"
-            blue="120"/>
+            red="39"
+            green="128"
+            blue="157"/>
         <preferredSize
-            dx="300"
-            dy="400"/>
+            dx="250"
+            dy="350"/>
         <children
             xsi:type="gmfgraph:Label"
             name="ArduinoNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           accessor="getFigureArduinoNameFigure"
@@ -187,18 +219,129 @@
         <children
             xsi:type="gmfgraph:Label"
             name="BreadboardNameFigure"
-            text="&lt;...>"/>
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
       </actualFigure>
       <accessors
           accessor="getFigureBreadboardNameFigure"
           figure="//@figures.0/@descriptors.8/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
+        name="LightSensorFigure">
+      <actualFigure
+          xsi:type="gmfgraph:RoundedRectangle"
+          name="LightSensorFigure"
+          cornerWidth="10"
+          cornerHeight="10">
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"
+            red="150"
+            green="150"
+            blue="150"/>
+        <backgroundColor
+            xsi:type="gmfgraph:RGBColor"
+            red="194"
+            green="84"
+            blue="84"/>
+        <preferredSize
+            dx="25"
+            dy="15"/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="LightSensorNameFigure"
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
+      </actualFigure>
+      <accessors
+          accessor="getFigureLightSensorNameFigure"
+          figure="//@figures.0/@descriptors.9/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors
+        name="FsrSensorFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Ellipse"
+          name="FsrSensorFigure">
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
+        <backgroundColor
+            xsi:type="gmfgraph:RGBColor"
+            red="170"
+            green="120"
+            blue="15"/>
+        <preferredSize
+            dx="20"
+            dy="20"/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="FsrSensorNameFigure"
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
+      </actualFigure>
+      <accessors
+          accessor="getFigureFsrSensorNameFigure"
+          figure="//@figures.0/@descriptors.10/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors
+        name="PotentiometerFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Ellipse"
+          name="PotentiometerFigure">
+        <layout
+            xsi:type="gmfgraph:StackLayout"/>
+        <foregroundColor
+            xsi:type="gmfgraph:RGBColor"/>
+        <backgroundColor
+            xsi:type="gmfgraph:RGBColor"/>
+        <preferredSize
+            dx="20"
+            dy="20"/>
+        <children
+            xsi:type="gmfgraph:Ellipse"
+            name="PotentiometerStickFigure">
+          <backgroundColor
+              xsi:type="gmfgraph:RGBColor"
+              red="150"
+              green="150"
+              blue="150"/>
+          <preferredSize
+              dx="14"
+              dy="14"/>
+          <location
+              x="3"
+              y="3"/>
+        </children>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="PotentiometerNameFigure"
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
+      </actualFigure>
+      <accessors
+          accessor="getFigurePotentiometerNameFigure"
+          figure="//@figures.0/@descriptors.11/@actualFigure/@children.1"/>
+    </descriptors>
+    <descriptors
         name="TerminalNameFigure">
       <actualFigure
           xsi:type="gmfgraph:Label"
           name="TerminalNameFigure"
-          text="&lt;...>"/>
+          text="..">
+        <font
+            xsi:type="gmfgraph:BasicFont"
+            height="7"/>
+      </actualFigure>
     </descriptors>
   </figures>
   <nodes
@@ -230,6 +373,18 @@
   <nodes
       name="Resistor"
       figure="ResistorFigure"
+      resizeConstraint="NONE"/>
+  <nodes
+      name="LightSensor"
+      figure="LightSensorFigure"
+      resizeConstraint="NONE"/>
+  <nodes
+      name="FsrSensor"
+      figure="FsrSensorFigure"
+      resizeConstraint="NONE"/>
+  <nodes
+      name="Potentiometer"
+      figure="PotentiometerFigure"
       resizeConstraint="NONE"/>
   <connections
       name="Wire"
@@ -287,4 +442,19 @@
       figure="ButtonFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.3/@accessors.0"/>
+  <labels
+      name="LightSensorName"
+      figure="LightSensorFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.9/@accessors.0"/>
+  <labels
+      name="FsrSensorName"
+      figure="FsrSensorFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.10/@accessors.0"/>
+  <labels
+      name="PotentiometerName"
+      figure="PotentiometerFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.11/@accessors.0"/>
 </gmfgraph:Canvas>

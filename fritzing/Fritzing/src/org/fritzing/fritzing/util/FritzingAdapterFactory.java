@@ -123,6 +123,18 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 				return createArduinoAdapter();
 			}
 			@Override
+			public Adapter casePotentiometer(Potentiometer object) {
+				return createPotentiometerAdapter();
+			}
+			@Override
+			public Adapter caseFsrSensor(FsrSensor object) {
+				return createFsrSensorAdapter();
+			}
+			@Override
+			public Adapter caseLightSensor(LightSensor object) {
+				return createLightSensorAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -321,6 +333,48 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createArduinoAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Potentiometer <em>Potentiometer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.Potentiometer
+	 * @generated
+	 */
+	public Adapter createPotentiometerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.FsrSensor <em>Fsr Sensor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.FsrSensor
+	 * @generated
+	 */
+	public Adapter createFsrSensorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.LightSensor <em>Light Sensor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.LightSensor
+	 * @generated
+	 */
+	public Adapter createLightSensorAdapter() {
 		return null;
 	}
 

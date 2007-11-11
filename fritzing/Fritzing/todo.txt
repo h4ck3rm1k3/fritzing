@@ -41,8 +41,9 @@
 // using Presentations, see RCP book
 // also http://wiki.eclipse.org/RCP_Custom_Look_and_Feel
 
-// to get OS-specific install directory
-Plugin.getDefault().getDescriptor().getInstallURL();
+// make Fritzing folder sketch folder management in user directory
+Platform.getUserLocation().getURL() // not quite - adds the subfolder /user under Vista
+System.getProperty("user.home") // this works
 
 // adding a console
 // http://dev.eclipse.org/newslists/news.eclipse.platform.rcp/msg00199.html

@@ -16,5 +16,5 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Arduino' kind='elementOnly'"
  * @generated
  */
-public interface Arduino extends Composite {
+public interface Arduino extends Part {
 } // Arduino

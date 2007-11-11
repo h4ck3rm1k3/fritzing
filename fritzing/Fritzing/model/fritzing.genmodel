@@ -49,5 +49,8 @@
     </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//Module"/>
     <genClasses ecoreClass="fritzing.ecore#//Arduino"/>
+    <genClasses ecoreClass="fritzing.ecore#//Potentiometer"/>
+    <genClasses ecoreClass="fritzing.ecore#//FsrSensor"/>
+    <genClasses ecoreClass="fritzing.ecore#//LightSensor"/>
   </genPackages>
 </genmodel:GenModel>

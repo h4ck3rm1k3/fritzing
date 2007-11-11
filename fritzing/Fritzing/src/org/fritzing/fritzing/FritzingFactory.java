@@ -115,6 +115,33 @@ public interface FritzingFactory extends EFactory {
 	Arduino createArduino();
 
 	/**
+	 * Returns a new object of class '<em>Potentiometer</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Potentiometer</em>'.
+	 * @generated
+	 */
+	Potentiometer createPotentiometer();
+
+	/**
+	 * Returns a new object of class '<em>Fsr Sensor</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Fsr Sensor</em>'.
+	 * @generated
+	 */
+	FsrSensor createFsrSensor();
+
+	/**
+	 * Returns a new object of class '<em>Light Sensor</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Light Sensor</em>'.
+	 * @generated
+	 */
+	LightSensor createLightSensor();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

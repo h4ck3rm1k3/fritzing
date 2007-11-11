@@ -292,7 +292,7 @@
       <diagramNode
           href="fritzing.gmfgraph#Arduino"/>
       <children
-          referencedChild="//@nodes.4/@ownedChild">
+          referencedChild="//@nodes.7/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -354,7 +354,7 @@
       <diagramNode
           href="fritzing.gmfgraph#LED"/>
       <children
-          referencedChild="//@nodes.4/@ownedChild">
+          referencedChild="//@nodes.7/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -416,7 +416,7 @@
       <diagramNode
           href="fritzing.gmfgraph#Resistor"/>
       <children
-          referencedChild="//@nodes.4/@ownedChild">
+          referencedChild="//@nodes.7/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -493,7 +493,193 @@
       <diagramNode
           href="fritzing.gmfgraph#Button"/>
       <children
-          referencedChild="//@nodes.4/@ownedChild">
+          referencedChild="//@nodes.7/@ownedChild">
+        <containmentFeature
+            href="fritzing.ecore#//Part/terminals"/>
+      </children>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="fritzing.ecore#//Composite/parts"/>
+    <ownedChild>
+      <domainMetaElement
+          href="fritzing.ecore#//Potentiometer"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:ReferenceNewElementSpec">
+          <feature
+              xsi:type="ecore:EReference"
+              href="fritzing.ecore#//Part/terminals"/>
+          <newElementInitializers>
+            <initializers
+                xsi:type="gmfmap:FeatureValueSpec"
+                body="'T1'">
+              <feature
+                  xsi:type="ecore:EAttribute"
+                  href="fritzing.ecore#//Terminal/name"/>
+            </initializers>
+          </newElementInitializers>
+          <newElementInitializers>
+            <initializers
+                xsi:type="gmfmap:FeatureValueSpec"
+                body="'W'">
+              <feature
+                  xsi:type="ecore:EAttribute"
+                  href="fritzing.ecore#//Terminal/name"/>
+            </initializers>
+          </newElementInitializers>
+          <newElementInitializers>
+            <initializers
+                xsi:type="gmfmap:FeatureValueSpec"
+                body="'T2'">
+              <feature
+                  xsi:type="ecore:EAttribute"
+                  href="fritzing.ecore#//Terminal/name"/>
+            </initializers>
+          </newElementInitializers>
+        </initializers>
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec"
+            body="'P'">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="fritzing.ecore#//Part/name"/>
+        </initializers>
+      </domainInitializer>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="fritzing.gmfgraph#PotentiometerName"/>
+        <features
+            href="fritzing.ecore#//Part/name"/>
+      </labelMappings>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="fritzing.gmftool#//@palette/@tools.1/@tools.4"/>
+      <diagramNode
+          href="fritzing.gmfgraph#Potentiometer"/>
+      <children
+          referencedChild="//@nodes.7/@ownedChild">
+        <containmentFeature
+            href="fritzing.ecore#//Part/terminals"/>
+      </children>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="fritzing.ecore#//Composite/parts"/>
+    <ownedChild>
+      <domainMetaElement
+          href="fritzing.ecore#//FsrSensor"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:ReferenceNewElementSpec">
+          <feature
+              xsi:type="ecore:EReference"
+              href="fritzing.ecore#//Part/terminals"/>
+          <newElementInitializers>
+            <initializers
+                xsi:type="gmfmap:FeatureValueSpec"
+                body="'0'">
+              <feature
+                  xsi:type="ecore:EAttribute"
+                  href="fritzing.ecore#//Terminal/name"/>
+            </initializers>
+          </newElementInitializers>
+          <newElementInitializers>
+            <initializers
+                xsi:type="gmfmap:FeatureValueSpec"
+                body="'1'">
+              <feature
+                  xsi:type="ecore:EAttribute"
+                  href="fritzing.ecore#//Terminal/name"/>
+            </initializers>
+          </newElementInitializers>
+        </initializers>
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec"
+            body="'FSR'">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="fritzing.ecore#//Part/name"/>
+        </initializers>
+      </domainInitializer>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="fritzing.gmfgraph#FsrSensorName"/>
+        <features
+            href="fritzing.ecore#//Part/name"/>
+      </labelMappings>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="fritzing.gmftool#//@palette/@tools.1/@tools.5"/>
+      <diagramNode
+          href="fritzing.gmfgraph#FsrSensor"/>
+      <children
+          referencedChild="//@nodes.7/@ownedChild">
+        <containmentFeature
+            href="fritzing.ecore#//Part/terminals"/>
+      </children>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="fritzing.ecore#//Composite/parts"/>
+    <ownedChild>
+      <domainMetaElement
+          href="fritzing.ecore#//LightSensor"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:ReferenceNewElementSpec">
+          <feature
+              xsi:type="ecore:EReference"
+              href="fritzing.ecore#//Part/terminals"/>
+          <newElementInitializers>
+            <initializers
+                xsi:type="gmfmap:FeatureValueSpec"
+                body="'0'">
+              <feature
+                  xsi:type="ecore:EAttribute"
+                  href="fritzing.ecore#//Terminal/name"/>
+            </initializers>
+          </newElementInitializers>
+          <newElementInitializers>
+            <initializers
+                xsi:type="gmfmap:FeatureValueSpec"
+                body="'1'">
+              <feature
+                  xsi:type="ecore:EAttribute"
+                  href="fritzing.ecore#//Terminal/name"/>
+            </initializers>
+          </newElementInitializers>
+        </initializers>
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec"
+            body="'LS'">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="fritzing.ecore#//Part/name"/>
+        </initializers>
+      </domainInitializer>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="fritzing.gmfgraph#LightSensorName"/>
+        <features
+            href="fritzing.ecore#//Part/name"/>
+      </labelMappings>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="fritzing.gmftool#//@palette/@tools.1/@tools.6"/>
+      <diagramNode
+          href="fritzing.gmfgraph#LightSensor"/>
+      <children
+          referencedChild="//@nodes.7/@ownedChild">
         <containmentFeature
             href="fritzing.ecore#//Part/terminals"/>
       </children>
@@ -562,7 +748,6 @@
         name="Part Name Check"
         description="Checks that every part has a unique name"
         id="org.fritzing.audits.partName"
-        useInLiveMode="true"
         message="Every part has to have a unique name.">
       <rule
           body="self.parent.parts->forAll(p1, p2 | p1 &lt;> p2 implies p1.name &lt;> p2.name)"/>

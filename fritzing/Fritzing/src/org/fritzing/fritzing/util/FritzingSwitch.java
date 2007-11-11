@@ -181,9 +181,32 @@ public class FritzingSwitch<T> {
 			case FritzingPackage.ARDUINO: {
 				Arduino arduino = (Arduino)theEObject;
 				T result = caseArduino(arduino);
-				if (result == null) result = caseComposite(arduino);
 				if (result == null) result = casePart(arduino);
 				if (result == null) result = caseElement(arduino);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.POTENTIOMETER: {
+				Potentiometer potentiometer = (Potentiometer)theEObject;
+				T result = casePotentiometer(potentiometer);
+				if (result == null) result = casePart(potentiometer);
+				if (result == null) result = caseElement(potentiometer);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.FSR_SENSOR: {
+				FsrSensor fsrSensor = (FsrSensor)theEObject;
+				T result = caseFsrSensor(fsrSensor);
+				if (result == null) result = casePart(fsrSensor);
+				if (result == null) result = caseElement(fsrSensor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.LIGHT_SENSOR: {
+				LightSensor lightSensor = (LightSensor)theEObject;
+				T result = caseLightSensor(lightSensor);
+				if (result == null) result = casePart(lightSensor);
+				if (result == null) result = caseElement(lightSensor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -383,6 +406,51 @@ public class FritzingSwitch<T> {
 	 * @generated
 	 */
 	public T caseArduino(Arduino object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Potentiometer</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Potentiometer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePotentiometer(Potentiometer object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Fsr Sensor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Fsr Sensor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFsrSensor(FsrSensor object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Light Sensor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Light Sensor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLightSensor(LightSensor object) {
 		return null;
 	}
 
