@@ -134,8 +134,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			}
 
 			{
-				IMenuManager menuXX = new MenuManager(
-						"Examples", "examples");
+				IMenuManager menuXX = new MenuManager("Examples", "examples");
 
 				menuXX.add(new GroupMarker(
 						IWorkbenchActionConstants.MB_ADDITIONS));
@@ -144,7 +143,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 
 			// Open..
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
-			
+
 			// Export..
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
 
@@ -329,22 +328,24 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 	}
 
 	/**
-	 * @generated not
+	 * @generated NOT
 	 */
 	public static class OpenAction extends WorkbenchWindowActionDelegate {
 
 		/**
-		 * @generated not
+		 * @generated NOT
 		 */
 		public void run(IAction action) {
 			FileDialog fileDialog = new FileDialog(getWindow().getShell(),
 					SWT.OPEN);
-			String fritzingFolder = System.getProperty("user.home") + "/Fritzing";
-			if (! new File(fritzingFolder).exists())
+			String fritzingFolder = System.getProperty("user.home")
+					+ "/Fritzing";
+			if (!new File(fritzingFolder).exists())
 				new File(fritzingFolder).mkdir();
 			fileDialog.setFilterPath(fritzingFolder);
-			fileDialog.setFilterExtensions(new String[]{"*.fzb"});
-			fileDialog.setFilterNames(new String[]{"Fritzing Sketch (.fzb)"});
+			fileDialog.setFilterExtensions(new String[] { "*.fzb" });
+			fileDialog
+					.setFilterNames(new String[] { "Fritzing Sketch (.fzb)" });
 			fileDialog.open();
 			if (fileDialog.getFileName() != null
 					&& fileDialog.getFileName().length() > 0) {

@@ -19,6 +19,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.edit.ui,
+ org.eclipse.emf.validation.ocl,
+ org.eclipse.emf.validation.ui,
+ org.eclipse.emf.validation;visibility:=reexport,
  org.eclipse.gef;visibility:=reexport,
  org.eclipse.gmf.runtime.emf.core,
  org.eclipse.gmf.runtime.emf.commands.core,
@@ -31,11 +34,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.runtime.diagram.ui.printing,
  org.eclipse.gmf.runtime.diagram.ui.printing.render,
  org.eclipse.gmf.runtime.draw2d.ui;visibility:=reexport,
+ org.eclipse.gmf.runtime.draw2d.ui.render,
  org.eclipse.ocl.ecore;visibility:=reexport,
  Fritzing;visibility:=reexport,
- Fritzing.edit;visibility:=reexport,
- org.eclipse.emf.validation.ocl,
- org.eclipse.emf.validation.ui,
- org.eclipse.emf.validation;visibility:=reexport
+ Fritzing.edit;visibility:=reexport
 Eclipse-LazyStart: true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

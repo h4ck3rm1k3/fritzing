@@ -3,9 +3,14 @@
  */
 package org.fritzing.fritzing.diagram.edit.parts;
 
+import java.net.URL;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.gef.EditPart;
@@ -26,6 +31,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
+import org.eclipse.gmf.runtime.draw2d.ui.render.factory.RenderedImageFactory;
+import org.eclipse.gmf.runtime.draw2d.ui.render.figures.ScalableImageFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
@@ -33,19 +40,20 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
-import org.fritzing.fritzing.diagram.edit.policies.ResistorCanonicalEditPolicy;
-import org.fritzing.fritzing.diagram.edit.policies.ResistorItemSemanticEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.LightSensorCanonicalEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.LightSensorItemSemanticEditPolicy;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
  * @generated
  */
-public class ResistorEditPart extends AbstractBorderedShapeEditPart {
+public class LightSensorEditPart extends AbstractBorderedShapeEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2003;
+	public static final int VISUAL_ID = 2008;
 
 	/**
 	 * @generated
@@ -60,7 +68,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	public ResistorEditPart(View view) {
+	public LightSensorEditPart(View view) {
 		super(view);
 	}
 
@@ -73,11 +81,11 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 
 		super.createDefaultEditPolicies();
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-				new ResistorItemSemanticEditPolicy());
+				new LightSensorItemSemanticEditPolicy());
 		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
 				new DragDropEditPolicy());
 		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-				new ResistorCanonicalEditPolicy());
+				new LightSensorCanonicalEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -116,24 +124,25 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected IFigure createNodeShape() {
-		ResistorFigure figure = new ResistorFigure();
+		LightSensorFigure figure = new LightSensorFigure();
 		return primaryShape = figure;
 	}
 
 	/**
 	 * @generated
 	 */
-	public ResistorFigure getPrimaryShape() {
-		return (ResistorFigure) primaryShape;
+	public LightSensorFigure getPrimaryShape() {
+		return (LightSensorFigure) primaryShape;
 	}
 
 	/**
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof ResistorNameEditPart) {
-			((ResistorNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureResistorNameFigure());
+		if (childEditPart instanceof LightSensorNameEditPart) {
+			((LightSensorNameEditPart) childEditPart)
+					.setLabel(getPrimaryShape()
+							.getFigureLightSensorNameFigure());
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
@@ -195,7 +204,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(30), getMapMode().DPtoLP(10));
+				.DPtoLP(25), getMapMode().DPtoLP(15));
 		return result;
 	}
 
@@ -258,27 +267,30 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(ResistorNameEditPart.VISUAL_ID));
+				.getType(LightSensorNameEditPart.VISUAL_ID));
 	}
 
 	/**
 	 * @generated
 	 */
-	public class ResistorFigure extends RectangleFigure {
+	public class LightSensorFigure extends RoundedRectangle {
 
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureResistorNameFigure;
+		private WrapLabel fFigureLightSensorNameFigure;
+		private ScalableImageFigure lightSensorSVGFigure0;
 
 		/**
 		 * @generated
 		 */
-		public ResistorFigure() {
+		public LightSensorFigure() {
+			this.setCornerDimensions(new Dimension(getMapMode().DPtoLP(10),
+					getMapMode().DPtoLP(10)));
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(30),
-					getMapMode().DPtoLP(10)));
+			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(25),
+					getMapMode().DPtoLP(15)));
 			createContents();
 		}
 
@@ -287,14 +299,22 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureResistorNameFigure = new WrapLabel();
-			fFigureResistorNameFigure.setText("..");
+			fFigureLightSensorNameFigure = new WrapLabel();
+			fFigureLightSensorNameFigure.setText("..");
 
-			fFigureResistorNameFigure.setFont(FFIGURERESISTORNAMEFIGURE_FONT);
+			fFigureLightSensorNameFigure
+					.setFont(FFIGURELIGHTSENSORNAMEFIGURE_FONT);
 
-			this.add(fFigureResistorNameFigure);
+			this.add(fFigureLightSensorNameFigure);
 
 		}
+
+		//		URL url = FileLocator.find(FritzingDiagramEditorPlugin
+		//				.getInstance().getBundle(), new Path(
+		//				"icons/parts/circle.svg"), null); //$NON-NLS-1$
+		//		lightSensorSVGFigure0 = new ScalableImageFigure(
+		//				RenderedImageFactory.getInstance(url), true, true, true);
+		//		this.add(lightSensorSVGFigure0);
 
 		/**
 		 * @generated
@@ -318,8 +338,8 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureResistorNameFigure() {
-			return fFigureResistorNameFigure;
+		public WrapLabel getFigureLightSensorNameFigure() {
+			return fFigureLightSensorNameFigure;
 		}
 
 	}
@@ -327,17 +347,17 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
+	static final Color THIS_FORE = new Color(null, 150, 150, 150);
 
 	/**
 	 * @generated
 	 */
-	static final Color THIS_BACK = new Color(null, 190, 177, 88);
+	static final Color THIS_BACK = new Color(null, 194, 84, 84);
 
 	/**
 	 * @generated
 	 */
-	static final Font FFIGURERESISTORNAMEFIGURE_FONT = new Font(Display
+	static final Font FFIGURELIGHTSENSORNAMEFIGURE_FONT = new Font(Display
 			.getCurrent(),
 			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
 			SWT.NORMAL);

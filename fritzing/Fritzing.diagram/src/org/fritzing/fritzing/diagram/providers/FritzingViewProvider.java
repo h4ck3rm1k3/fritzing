@@ -13,8 +13,14 @@ import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.FsrSensorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LightSensorNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PotentiometerNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -29,8 +35,14 @@ import org.fritzing.fritzing.diagram.view.factories.ArduinoNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ArduinoViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ButtonNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ButtonViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.FsrSensorNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.FsrSensorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.LightSensorNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.LightSensorViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.PotentiometerNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.PotentiometerViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.SketchViewFactory;
@@ -114,6 +126,9 @@ public class FritzingViewProvider extends AbstractViewProvider {
 				case LEDEditPart.VISUAL_ID:
 				case ResistorEditPart.VISUAL_ID:
 				case ButtonEditPart.VISUAL_ID:
+				case PotentiometerEditPart.VISUAL_ID:
+				case FsrSensorEditPart.VISUAL_ID:
+				case LightSensorEditPart.VISUAL_ID:
 				case Terminal2EditPart.VISUAL_ID:
 				case TerminalEditPart.VISUAL_ID:
 					if (domainElement == null
@@ -146,6 +161,27 @@ public class FritzingViewProvider extends AbstractViewProvider {
 					break;
 				case ButtonNameEditPart.VISUAL_ID:
 					if (ButtonEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
+				case PotentiometerNameEditPart.VISUAL_ID:
+					if (PotentiometerEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
+				case FsrSensorNameEditPart.VISUAL_ID:
+					if (FsrSensorEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
+				case LightSensorNameEditPart.VISUAL_ID:
+					if (LightSensorEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
 						return null; // wrong container
@@ -206,6 +242,18 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return ButtonViewFactory.class;
 		case ButtonNameEditPart.VISUAL_ID:
 			return ButtonNameViewFactory.class;
+		case PotentiometerEditPart.VISUAL_ID:
+			return PotentiometerViewFactory.class;
+		case PotentiometerNameEditPart.VISUAL_ID:
+			return PotentiometerNameViewFactory.class;
+		case FsrSensorEditPart.VISUAL_ID:
+			return FsrSensorViewFactory.class;
+		case FsrSensorNameEditPart.VISUAL_ID:
+			return FsrSensorNameViewFactory.class;
+		case LightSensorEditPart.VISUAL_ID:
+			return LightSensorViewFactory.class;
+		case LightSensorNameEditPart.VISUAL_ID:
+			return LightSensorNameViewFactory.class;
 		case TerminalEditPart.VISUAL_ID:
 			return TerminalViewFactory.class;
 		case TerminalNameEditPart.VISUAL_ID:

@@ -346,6 +346,36 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
+	public static String Potentiometer5CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String Potentiometer5CreationTool_desc;
+
+	/**
+	 * @generated
+	 */
+	public static String FSRSensor6CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String FSRSensor6CreationTool_desc;
+
+	/**
+	 * @generated
+	 */
+	public static String LightSensor7CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String LightSensor7CreationTool_desc;
+
+	/**
+	 * @generated
+	 */
 	public static String DiagramEditorActionBarAdvisor_DefaultFileEditorTitle;
 
 	/**
@@ -463,7 +493,7 @@ public class Messages extends NLS {
 	 * @generated NOT
 	 */
 	public static String NavigatorActionProvider_OpenDiagramActionName;
-	
+
 	/**
 	 * @generated NOT
 	 */

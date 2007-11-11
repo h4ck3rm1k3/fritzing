@@ -29,7 +29,10 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.ArduinoCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ArduinoItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -192,7 +195,7 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(300), getMapMode().DPtoLP(400));
+				.DPtoLP(250), getMapMode().DPtoLP(350));
 		return result;
 	}
 
@@ -274,8 +277,8 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 		public ArduinoFigure() {
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(300),
-					getMapMode().DPtoLP(400)));
+			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(250),
+					getMapMode().DPtoLP(350)));
 			createContents();
 		}
 
@@ -285,7 +288,9 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 		private void createContents() {
 
 			fFigureArduinoNameFigure = new WrapLabel();
-			fFigureArduinoNameFigure.setText("<...>");
+			fFigureArduinoNameFigure.setText("..");
+
+			fFigureArduinoNameFigure.setFont(FFIGUREARDUINONAMEFIGURE_FONT);
 
 			this.add(fFigureArduinoNameFigure);
 
@@ -327,6 +332,14 @@ public class ArduinoEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	static final Color THIS_BACK = new Color(null, 20, 70, 120);
+	static final Color THIS_BACK = new Color(null, 39, 128, 157);
+
+	/**
+	 * @generated
+	 */
+	static final Font FFIGUREARDUINONAMEFIGURE_FONT = new Font(Display
+			.getCurrent(),
+			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
+			SWT.NORMAL);
 
 }

@@ -202,6 +202,7 @@ public class TerminalEditPart extends AbstractBorderedShapeEditPart {
 		 * @generated
 		 */
 		public TerminalFigure() {
+			this.setLineWidth(0);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
 			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(5),
@@ -232,7 +233,7 @@ public class TerminalEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
+	static final Color THIS_FORE = new Color(null, 80, 80, 80);
 
 	/**
 	 * @generated

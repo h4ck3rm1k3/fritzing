@@ -18,14 +18,20 @@ import org.fritzing.fritzing.Arduino;
 import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.FsrSensor;
+import org.fritzing.fritzing.LightSensor;
 import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Potentiometer;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
@@ -51,6 +57,12 @@ public class FritzingDiagramUpdater {
 			return getResistor_2003SemanticChildren(view);
 		case ButtonEditPart.VISUAL_ID:
 			return getButton_2004SemanticChildren(view);
+		case PotentiometerEditPart.VISUAL_ID:
+			return getPotentiometer_2006SemanticChildren(view);
+		case FsrSensorEditPart.VISUAL_ID:
+			return getFsrSensor_2007SemanticChildren(view);
+		case LightSensorEditPart.VISUAL_ID:
+			return getLightSensor_2008SemanticChildren(view);
 		case SketchEditPart.VISUAL_ID:
 			return getSketch_1000SemanticChildren(view);
 		}
@@ -145,6 +157,69 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List getPotentiometer_2006SemanticChildren(View view) {
+		if (!view.isSetElement()) {
+			return Collections.EMPTY_LIST;
+		}
+		Potentiometer modelElement = (Potentiometer) view.getElement();
+		List result = new LinkedList();
+		for (Iterator it = modelElement.getTerminals().iterator(); it.hasNext();) {
+			Terminal childElement = (Terminal) it.next();
+			int visualID = FritzingVisualIDRegistry.getNodeVisualID(view,
+					childElement);
+			if (visualID == Terminal2EditPart.VISUAL_ID) {
+				result.add(new FritzingNodeDescriptor(childElement, visualID));
+				continue;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getFsrSensor_2007SemanticChildren(View view) {
+		if (!view.isSetElement()) {
+			return Collections.EMPTY_LIST;
+		}
+		FsrSensor modelElement = (FsrSensor) view.getElement();
+		List result = new LinkedList();
+		for (Iterator it = modelElement.getTerminals().iterator(); it.hasNext();) {
+			Terminal childElement = (Terminal) it.next();
+			int visualID = FritzingVisualIDRegistry.getNodeVisualID(view,
+					childElement);
+			if (visualID == Terminal2EditPart.VISUAL_ID) {
+				result.add(new FritzingNodeDescriptor(childElement, visualID));
+				continue;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getLightSensor_2008SemanticChildren(View view) {
+		if (!view.isSetElement()) {
+			return Collections.EMPTY_LIST;
+		}
+		LightSensor modelElement = (LightSensor) view.getElement();
+		List result = new LinkedList();
+		for (Iterator it = modelElement.getTerminals().iterator(); it.hasNext();) {
+			Terminal childElement = (Terminal) it.next();
+			int visualID = FritzingVisualIDRegistry.getNodeVisualID(view,
+					childElement);
+			if (visualID == Terminal2EditPart.VISUAL_ID) {
+				result.add(new FritzingNodeDescriptor(childElement, visualID));
+				continue;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List getSketch_1000SemanticChildren(View view) {
 		if (!view.isSetElement()) {
 			return Collections.EMPTY_LIST;
@@ -168,6 +243,18 @@ public class FritzingDiagramUpdater {
 				continue;
 			}
 			if (visualID == ButtonEditPart.VISUAL_ID) {
+				result.add(new FritzingNodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == PotentiometerEditPart.VISUAL_ID) {
+				result.add(new FritzingNodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == FsrSensorEditPart.VISUAL_ID) {
+				result.add(new FritzingNodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == LightSensorEditPart.VISUAL_ID) {
 				result.add(new FritzingNodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -199,6 +286,12 @@ public class FritzingDiagramUpdater {
 			return getResistor_2003ContainedLinks(view);
 		case ButtonEditPart.VISUAL_ID:
 			return getButton_2004ContainedLinks(view);
+		case PotentiometerEditPart.VISUAL_ID:
+			return getPotentiometer_2006ContainedLinks(view);
+		case FsrSensorEditPart.VISUAL_ID:
+			return getFsrSensor_2007ContainedLinks(view);
+		case LightSensorEditPart.VISUAL_ID:
+			return getLightSensor_2008ContainedLinks(view);
 		case TerminalEditPart.VISUAL_ID:
 			return getTerminal_2005ContainedLinks(view);
 		case Terminal2EditPart.VISUAL_ID:
@@ -222,6 +315,12 @@ public class FritzingDiagramUpdater {
 			return getResistor_2003IncomingLinks(view);
 		case ButtonEditPart.VISUAL_ID:
 			return getButton_2004IncomingLinks(view);
+		case PotentiometerEditPart.VISUAL_ID:
+			return getPotentiometer_2006IncomingLinks(view);
+		case FsrSensorEditPart.VISUAL_ID:
+			return getFsrSensor_2007IncomingLinks(view);
+		case LightSensorEditPart.VISUAL_ID:
+			return getLightSensor_2008IncomingLinks(view);
 		case TerminalEditPart.VISUAL_ID:
 			return getTerminal_2005IncomingLinks(view);
 		case Terminal2EditPart.VISUAL_ID:
@@ -245,6 +344,12 @@ public class FritzingDiagramUpdater {
 			return getResistor_2003OutgoingLinks(view);
 		case ButtonEditPart.VISUAL_ID:
 			return getButton_2004OutgoingLinks(view);
+		case PotentiometerEditPart.VISUAL_ID:
+			return getPotentiometer_2006OutgoingLinks(view);
+		case FsrSensorEditPart.VISUAL_ID:
+			return getFsrSensor_2007OutgoingLinks(view);
+		case LightSensorEditPart.VISUAL_ID:
+			return getLightSensor_2008OutgoingLinks(view);
 		case TerminalEditPart.VISUAL_ID:
 			return getTerminal_2005OutgoingLinks(view);
 		case Terminal2EditPart.VISUAL_ID:
@@ -269,10 +374,7 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getArduino_2001ContainedLinks(View view) {
-		Arduino modelElement = (Arduino) view.getElement();
-		List result = new LinkedList();
-		result.addAll(getContainedTypeModelFacetLinks_Wire_4001(modelElement));
-		return result;
+		return Collections.EMPTY_LIST;
 	}
 
 	/**
@@ -293,6 +395,27 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getButton_2004ContainedLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getPotentiometer_2006ContainedLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getFsrSensor_2007ContainedLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getLightSensor_2008ContainedLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
@@ -342,6 +465,27 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getButton_2004IncomingLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getPotentiometer_2006IncomingLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getFsrSensor_2007IncomingLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getLightSensor_2008IncomingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
@@ -403,6 +547,27 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getButton_2004OutgoingLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getPotentiometer_2006OutgoingLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getFsrSensor_2007OutgoingLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getLightSensor_2008OutgoingLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 

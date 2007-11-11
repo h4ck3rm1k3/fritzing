@@ -12,7 +12,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -80,6 +79,9 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 							"No sketch currently opened.", npe));
 			return;
 		}
+		// validate
+//		ValidateAction.runValidation(editor.getDiagramEditPart(), editor.getDiagram());
+		
 		// transform into EAGLE script
 		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer());
 

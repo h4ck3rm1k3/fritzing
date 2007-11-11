@@ -44,8 +44,10 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingTextSelectionEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
@@ -530,7 +532,7 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	 * @generated
 	 */
 	private View getFontStyleOwnerView() {
-		return getPrimaryView();
+		return (View) getModel();
 	}
 
 	/**
@@ -601,9 +603,19 @@ public class TerminalName2EditPart extends LabelEditPart implements
 		 * @generated
 		 */
 		public TerminalNameFigure() {
-			this.setText("<...>");
+			this.setText("..");
+
+			this.setFont(THIS_FONT);
+
 		}
 
 	}
+
+	/**
+	 * @generated
+	 */
+	static final Font THIS_FONT = new Font(Display.getCurrent(), Display
+			.getDefault().getSystemFont().getFontData()[0].getName(), 7,
+			SWT.NORMAL);
 
 }

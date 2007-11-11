@@ -163,7 +163,7 @@
             <popupPredefinedItem id="deleteFromModelAction" remove="true"/>
          </popupContribution>
          <popupContribution class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramContextMenuProvider">
-            <popupStructuredContributionCriteria objectClass="org.fritzing.fritzing.diagram.edit.parts.WireIdEditPart"/>
+            <popupStructuredContributionCriteria objectClass="org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart"/>
             <popupPredefinedItem id="deleteFromDiagramAction" remove="true"/>
             <popupPredefinedItem id="deleteFromModelAction" remove="true"/>
          </popupContribution>
@@ -376,6 +376,36 @@
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.Potentiometer_2006"
+               name="%metatype.name.Potentiometer_2006"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Potentiometer"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.PotentiometerEditHelper">
+            <param name="semanticHint" value="2006"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.FsrSensor_2007"
+               name="%metatype.name.FsrSensor_2007"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="FsrSensor"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.FsrSensorEditHelper">
+            <param name="semanticHint" value="2007"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.LightSensor_2008"
+               name="%metatype.name.LightSensor_2008"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="LightSensor"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.LightSensorEditHelper">
+            <param name="semanticHint" value="2008"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
          <specializationType
                id="Fritzing.diagram.Terminal_2005"
                name="%metatype.name.Terminal_2005"
@@ -421,6 +451,9 @@
          <elementType ref="Fritzing.diagram.LED_2002"/>
          <elementType ref="Fritzing.diagram.Resistor_2003"/>
          <elementType ref="Fritzing.diagram.Button_2004"/>
+         <elementType ref="Fritzing.diagram.Potentiometer_2006"/>
+         <elementType ref="Fritzing.diagram.FsrSensor_2007"/>
+         <elementType ref="Fritzing.diagram.LightSensor_2008"/>
          <elementType ref="Fritzing.diagram.Terminal_2005"/>
          <elementType ref="Fritzing.diagram.Terminal_3001"/>
          <elementType ref="Fritzing.diagram.Wire_4001"/>
@@ -453,7 +486,7 @@
          <action
                label="%initDiagramActionLabel"
                class="org.fritzing.fritzing.diagram.part.FritzingInitDiagramFileAction"
-               menubarPath="file/new/additions"
+               menubarPath="file/additions"
                id="Fritzing.diagram.InitDiagramAction">
          </action>
       </actionSet>
@@ -496,6 +529,13 @@
                class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
                menubarPath="file1/new/additions"
                id="Fritzing.diagram.NewDiagramAction">
+         </action>
+         <action
+               label="%openURIActionLabel"
+               definitionId="Fritzing.diagram.OpenURICommand"
+               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$OpenURIAction"
+               menubarPath="file/additions"
+               id="Fritzing.diagram.OpenURIAction">
          </action>
          <action
                label="%openActionLabel"
@@ -556,7 +596,7 @@
          <selector class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider$DefaultCtx1"/>
       </clientContext>
       <binding context="Fritzing.diagram.DefaultCtx">
-                  <constraint ref="Fritzing.diagram.org.fritzing.audits.partId"/>
+                  <constraint ref="Fritzing.diagram.org.fritzing.audits.partName"/>
                </binding>
                </extension>
 <extension point="org.eclipse.emf.validation.ui.UIRegisteredClientContext">
@@ -568,7 +608,7 @@
       <?gmfgen generated="true"?>
       <contributionItemProvider
          class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider">
-         <Priority name="Medium"/>
+         <Priority name="Low"/>
          <partContribution id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
             <partMenuGroup menubarPath="/diagramMenu/" id="validationGroup"/>
             <partAction id="validateAction" menubarPath="/diagramMenu/validationGroup"/>
@@ -579,10 +619,31 @@
       <?gmfgen generated="true"?>
       <decoratorProvider class="org.fritzing.fritzing.diagram.providers.FritzingValidationDecoratorProvider">
          <Priority name="Medium"/>
-         <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart" id="PRIMARY_VIEW"/>
+         <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart(org.eclipse.gmf.runtime.diagram.ui)" id="PRIMARY_VIEW"/>
          <context decoratorTargets="PRIMARY_VIEW"/>
       </decoratorProvider>
+   </extension><extension point="org.eclipse.emf.validation.constraintProviders">
+      <?gmfgen generated="true"?>
+            <category id="org.fritzing.audits" mandatory="false" name="Fritzing Audits">
+         <![CDATA[Model validation for Fritzing Sketches]]>
+      </category>
+      <constraintProvider cache="true">
+         <package namespaceUri="http://www.fritzing.org"/>
+               <constraints categories="org.fritzing.audits">
+                  <constraint id="org.fritzing.audits.partName"
+            lang="OCL"
+            name="Part Name Check"
+            mode="Batch"
+            severity="ERROR" statusCode="200">
+            <![CDATA[self.parent.parts->forAll(p1, p2 | p1 <> p2 implies p1.name <> p2.name)]]>
+            <description><![CDATA[Checks that every part has a unique name]]></description>
+            <message><![CDATA[Every part has to have a unique name.]]></message>
+            <target class="fritzing.Part"/>
+         </constraint>
+                  </constraints>
+      </constraintProvider>
    </extension>
+
 
 
 

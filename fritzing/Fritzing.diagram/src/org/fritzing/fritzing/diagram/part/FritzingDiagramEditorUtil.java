@@ -459,12 +459,11 @@ public class FritzingDiagramEditorUtil {
 			return element2ViewMap;
 		}
 	} //LazyElement2ViewMap	
-	
+
 	/**
 	 * @generated NOT
 	 */
-	public static URI getActiveDiagramURI() 
-		throws NullPointerException {
+	public static URI getActiveDiagramURI() throws NullPointerException {
 		IEditorInput input = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor()
 				.getEditorInput();
@@ -475,12 +474,12 @@ public class FritzingDiagramEditorUtil {
 	 * @generated NOT
 	 */
 	public static IDiagramWorkbenchPart getActiveDiagramPart()
-		throws NullPointerException {
+			throws NullPointerException {
 		IEditorPart editor = PlatformUI.getWorkbench()
-			.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
 		return ((IDiagramWorkbenchPart) editor);
 	}
-	
+
 	public static Boolean openFritzingFile(URI fileURI) {
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
@@ -488,16 +487,23 @@ public class FritzingDiagramEditorUtil {
 		IEditorDescriptor editorDescriptor = workbench.getEditorRegistry()
 				.getDefaultEditor(fileURI.toFileString());
 		if (editorDescriptor == null) {
-			MessageDialog.openError(workbenchWindow.getShell(),
+			MessageDialog
+					.openError(
+							workbenchWindow.getShell(),
 							Messages.DiagramEditorActionBarAdvisor_DefaultFileEditorTitle,
-							NLS.bind(Messages.DiagramEditorActionBarAdvisor_DefaultFileEditorMessage,
-							fileURI.toFileString()));
+							NLS
+									.bind(
+											Messages.DiagramEditorActionBarAdvisor_DefaultFileEditorMessage,
+											fileURI.toFileString()));
 			return false;
 		} else {
 			try {
-				page.openEditor(new URIEditorInput(fileURI), editorDescriptor.getId());
+				page.openEditor(new URIEditorInput(fileURI), editorDescriptor
+						.getId());
 			} catch (PartInitException exception) {
-				MessageDialog.openError(workbenchWindow.getShell(),
+				MessageDialog
+						.openError(
+								workbenchWindow.getShell(),
 								Messages.DiagramEditorActionBarAdvisor_DefaultEditorOpenErrorTitle,
 								exception.getMessage());
 				return false;

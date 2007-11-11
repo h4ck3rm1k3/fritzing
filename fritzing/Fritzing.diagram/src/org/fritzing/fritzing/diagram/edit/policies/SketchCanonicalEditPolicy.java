@@ -30,7 +30,10 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
@@ -82,6 +85,9 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 		case LEDEditPart.VISUAL_ID:
 		case ResistorEditPart.VISUAL_ID:
 		case ButtonEditPart.VISUAL_ID:
+		case PotentiometerEditPart.VISUAL_ID:
+		case FsrSensorEditPart.VISUAL_ID:
+		case LightSensorEditPart.VISUAL_ID:
 		case TerminalEditPart.VISUAL_ID:
 			return !semanticChildren.contains(view.getElement())
 					|| visualID != FritzingVisualIDRegistry.getNodeVisualID(
@@ -241,6 +247,24 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
 					.getButton_2004ContainedLinks(view));
+			break;
+		}
+		case PotentiometerEditPart.VISUAL_ID: {
+			domain2NotationMap.put(view.getElement(), view);
+			result.addAll(FritzingDiagramUpdater
+					.getPotentiometer_2006ContainedLinks(view));
+			break;
+		}
+		case FsrSensorEditPart.VISUAL_ID: {
+			domain2NotationMap.put(view.getElement(), view);
+			result.addAll(FritzingDiagramUpdater
+					.getFsrSensor_2007ContainedLinks(view));
+			break;
+		}
+		case LightSensorEditPart.VISUAL_ID: {
+			domain2NotationMap.put(view.getElement(), view);
+			result.addAll(FritzingDiagramUpdater
+					.getLightSensor_2008ContainedLinks(view));
 			break;
 		}
 		case TerminalEditPart.VISUAL_ID: {

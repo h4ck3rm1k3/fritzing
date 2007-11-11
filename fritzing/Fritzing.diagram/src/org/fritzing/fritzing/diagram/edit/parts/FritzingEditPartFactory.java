@@ -58,6 +58,24 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case ButtonNameEditPart.VISUAL_ID:
 				return new ButtonNameEditPart(view);
 
+			case PotentiometerEditPart.VISUAL_ID:
+				return new PotentiometerEditPart(view);
+
+			case PotentiometerNameEditPart.VISUAL_ID:
+				return new PotentiometerNameEditPart(view);
+
+			case FsrSensorEditPart.VISUAL_ID:
+				return new FsrSensorEditPart(view);
+
+			case FsrSensorNameEditPart.VISUAL_ID:
+				return new FsrSensorNameEditPart(view);
+
+			case LightSensorEditPart.VISUAL_ID:
+				return new LightSensorEditPart(view);
+
+			case LightSensorNameEditPart.VISUAL_ID:
+				return new LightSensorNameEditPart(view);
+
 			case TerminalEditPart.VISUAL_ID:
 				return new TerminalEditPart(view);
 

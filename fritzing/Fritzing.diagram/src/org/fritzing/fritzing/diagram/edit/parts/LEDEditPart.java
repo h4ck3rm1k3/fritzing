@@ -29,7 +29,10 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.LEDCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.LEDItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -192,7 +195,7 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(20), getMapMode().DPtoLP(20));
+				.DPtoLP(15), getMapMode().DPtoLP(15));
 		return result;
 	}
 
@@ -274,8 +277,8 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 		public LEDFigure() {
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
-					getMapMode().DPtoLP(20)));
+			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(15),
+					getMapMode().DPtoLP(15)));
 			createContents();
 		}
 
@@ -285,7 +288,9 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 		private void createContents() {
 
 			fFigureLEDNameFigure = new WrapLabel();
-			fFigureLEDNameFigure.setText("<...>");
+			fFigureLEDNameFigure.setText("..");
+
+			fFigureLEDNameFigure.setFont(FFIGURELEDNAMEFIGURE_FONT);
 
 			this.add(fFigureLEDNameFigure);
 
@@ -328,5 +333,12 @@ public class LEDEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	static final Color THIS_BACK = new Color(null, 255, 50, 50);
+
+	/**
+	 * @generated
+	 */
+	static final Font FFIGURELEDNAMEFIGURE_FONT = new Font(
+			Display.getCurrent(), Display.getDefault().getSystemFont()
+					.getFontData()[0].getName(), 8, SWT.NORMAL);
 
 }

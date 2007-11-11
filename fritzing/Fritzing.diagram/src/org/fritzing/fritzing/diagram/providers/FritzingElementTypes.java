@@ -74,6 +74,21 @@ public class FritzingElementTypes extends ElementInitializers {
 	/**
 	 * @generated
 	 */
+	public static final IElementType Potentiometer_2006 = getElementType("Fritzing.diagram.Potentiometer_2006"); //$NON-NLS-1$
+
+	/**
+	 * @generated
+	 */
+	public static final IElementType FsrSensor_2007 = getElementType("Fritzing.diagram.FsrSensor_2007"); //$NON-NLS-1$
+
+	/**
+	 * @generated
+	 */
+	public static final IElementType LightSensor_2008 = getElementType("Fritzing.diagram.LightSensor_2008"); //$NON-NLS-1$
+
+	/**
+	 * @generated
+	 */
 	public static final IElementType Terminal_2005 = getElementType("Fritzing.diagram.Terminal_2005"); //$NON-NLS-1$
 
 	/**
@@ -207,6 +222,15 @@ public class FritzingElementTypes extends ElementInitializers {
 
 			elements.put(Button_2004, FritzingPackage.eINSTANCE.getButton());
 
+			elements.put(Potentiometer_2006, FritzingPackage.eINSTANCE
+					.getPotentiometer());
+
+			elements.put(FsrSensor_2007, FritzingPackage.eINSTANCE
+					.getFsrSensor());
+
+			elements.put(LightSensor_2008, FritzingPackage.eINSTANCE
+					.getLightSensor());
+
 			elements
 					.put(Terminal_2005, FritzingPackage.eINSTANCE.getTerminal());
 
@@ -236,6 +260,9 @@ public class FritzingElementTypes extends ElementInitializers {
 			KNOWN_ELEMENT_TYPES.add(LED_2002);
 			KNOWN_ELEMENT_TYPES.add(Resistor_2003);
 			KNOWN_ELEMENT_TYPES.add(Button_2004);
+			KNOWN_ELEMENT_TYPES.add(Potentiometer_2006);
+			KNOWN_ELEMENT_TYPES.add(FsrSensor_2007);
+			KNOWN_ELEMENT_TYPES.add(LightSensor_2008);
 			KNOWN_ELEMENT_TYPES.add(Terminal_2005);
 			KNOWN_ELEMENT_TYPES.add(Terminal_3001);
 			KNOWN_ELEMENT_TYPES.add(Wire_4001);

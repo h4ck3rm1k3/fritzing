@@ -30,7 +30,10 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -293,7 +296,9 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 			this.add(elli0);
 
 			fFigureButtonNameFigure = new WrapLabel();
-			fFigureButtonNameFigure.setText("<...>");
+			fFigureButtonNameFigure.setText("..");
+
+			fFigureButtonNameFigure.setFont(FFIGUREBUTTONNAMEFIGURE_FONT);
 
 			this.add(fFigureButtonNameFigure);
 
@@ -341,5 +346,13 @@ public class ButtonEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	static final Color ELLI0_BACK = new Color(null, 192, 192, 192);
+
+	/**
+	 * @generated
+	 */
+	static final Font FFIGUREBUTTONNAMEFIGURE_FONT = new Font(Display
+			.getCurrent(),
+			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
+			SWT.NORMAL);
 
 }

@@ -3,11 +3,15 @@
  */
 package org.fritzing.fritzing.diagram.edit.parts;
 
+import org.eclipse.draw2d.Ellipse;
+import org.eclipse.draw2d.FlowLayout;
+import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
-import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -23,6 +27,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPo
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ResizableShapeEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.XYLayoutEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
@@ -33,19 +39,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
-import org.fritzing.fritzing.diagram.edit.policies.ResistorCanonicalEditPolicy;
-import org.fritzing.fritzing.diagram.edit.policies.ResistorItemSemanticEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.PotentiometerCanonicalEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.PotentiometerItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
  * @generated
  */
-public class ResistorEditPart extends AbstractBorderedShapeEditPart {
+public class PotentiometerEditPart extends AbstractBorderedShapeEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2003;
+	public static final int VISUAL_ID = 2006;
 
 	/**
 	 * @generated
@@ -60,7 +66,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	public ResistorEditPart(View view) {
+	public PotentiometerEditPart(View view) {
 		super(view);
 	}
 
@@ -73,11 +79,11 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 
 		super.createDefaultEditPolicies();
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-				new ResistorItemSemanticEditPolicy());
+				new PotentiometerItemSemanticEditPolicy());
 		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
 				new DragDropEditPolicy());
 		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-				new ResistorCanonicalEditPolicy());
+				new PotentiometerCanonicalEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -116,24 +122,25 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected IFigure createNodeShape() {
-		ResistorFigure figure = new ResistorFigure();
+		PotentiometerFigure figure = new PotentiometerFigure();
 		return primaryShape = figure;
 	}
 
 	/**
 	 * @generated
 	 */
-	public ResistorFigure getPrimaryShape() {
-		return (ResistorFigure) primaryShape;
+	public PotentiometerFigure getPrimaryShape() {
+		return (PotentiometerFigure) primaryShape;
 	}
 
 	/**
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof ResistorNameEditPart) {
-			((ResistorNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureResistorNameFigure());
+		if (childEditPart instanceof PotentiometerNameEditPart) {
+			((PotentiometerNameEditPart) childEditPart)
+					.setLabel(getPrimaryShape()
+							.getFigurePotentiometerNameFigure());
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
@@ -195,7 +202,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(30), getMapMode().DPtoLP(10));
+				.DPtoLP(20), getMapMode().DPtoLP(20));
 		return result;
 	}
 
@@ -258,27 +265,28 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(ResistorNameEditPart.VISUAL_ID));
+				.getType(PotentiometerNameEditPart.VISUAL_ID));
 	}
 
 	/**
 	 * @generated
 	 */
-	public class ResistorFigure extends RectangleFigure {
+	public class PotentiometerFigure extends Ellipse {
 
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureResistorNameFigure;
+		private WrapLabel fFigurePotentiometerNameFigure;
 
 		/**
 		 * @generated
 		 */
-		public ResistorFigure() {
+		public PotentiometerFigure() {
+			this.setLayoutManager(new StackLayout());
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(30),
-					getMapMode().DPtoLP(10)));
+			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
+					getMapMode().DPtoLP(20)));
 			createContents();
 		}
 
@@ -287,12 +295,23 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureResistorNameFigure = new WrapLabel();
-			fFigureResistorNameFigure.setText("..");
+			Ellipse potentiometerStickFigure0 = new Ellipse();
+			potentiometerStickFigure0
+					.setBackgroundColor(POTENTIOMETERSTICKFIGURE0_BACK);
+			potentiometerStickFigure0.setMaximumSize(new Dimension(
+					getMapMode().DPtoLP(14), getMapMode().DPtoLP(14)));
+			potentiometerStickFigure0.setLocation(new Point(getMapMode()
+					.DPtoLP(3), getMapMode().DPtoLP(3)));
 
-			fFigureResistorNameFigure.setFont(FFIGURERESISTORNAMEFIGURE_FONT);
+			this.add(potentiometerStickFigure0);
 
-			this.add(fFigureResistorNameFigure);
+			fFigurePotentiometerNameFigure = new WrapLabel();
+			fFigurePotentiometerNameFigure.setText("..");
+
+			fFigurePotentiometerNameFigure
+					.setFont(FFIGUREPOTENTIOMETERNAMEFIGURE_FONT);
+
+			this.add(fFigurePotentiometerNameFigure);
 
 		}
 
@@ -318,8 +337,8 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureResistorNameFigure() {
-			return fFigureResistorNameFigure;
+		public WrapLabel getFigurePotentiometerNameFigure() {
+			return fFigurePotentiometerNameFigure;
 		}
 
 	}
@@ -332,12 +351,18 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	static final Color THIS_BACK = new Color(null, 190, 177, 88);
+	static final Color THIS_BACK = new Color(null, 0, 0, 0);
 
 	/**
 	 * @generated
 	 */
-	static final Font FFIGURERESISTORNAMEFIGURE_FONT = new Font(Display
+	static final Color POTENTIOMETERSTICKFIGURE0_BACK = new Color(null, 150,
+			150, 150);
+
+	/**
+	 * @generated
+	 */
+	static final Font FFIGUREPOTENTIOMETERNAMEFIGURE_FONT = new Font(Display
 			.getCurrent(),
 			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
 			SWT.NORMAL);

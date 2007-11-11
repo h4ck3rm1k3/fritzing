@@ -12,7 +12,7 @@ import org.eclipse.ui.IPerspectiveFactory;
  */
 public class DiagramEditorPerspective implements IPerspectiveFactory {
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public void createInitialLayout(IPageLayout layout) {
 		layout.setEditorAreaVisible(true);

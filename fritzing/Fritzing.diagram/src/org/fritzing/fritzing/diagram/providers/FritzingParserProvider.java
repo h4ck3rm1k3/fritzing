@@ -17,7 +17,10 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.FsrSensorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LightSensorNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PotentiometerNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
@@ -134,6 +137,81 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
+	private IParser potentiometerName_5007Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getPotentiometerName_5007Parser() {
+		if (potentiometerName_5007Parser == null) {
+			potentiometerName_5007Parser = createPotentiometerName_5007Parser();
+		}
+		return potentiometerName_5007Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected IParser createPotentiometerName_5007Parser() {
+		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
+				.getPart_Name(), };
+		MessageFormatParser parser = new MessageFormatParser(features);
+		return parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	private IParser fsrSensorName_5008Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getFsrSensorName_5008Parser() {
+		if (fsrSensorName_5008Parser == null) {
+			fsrSensorName_5008Parser = createFsrSensorName_5008Parser();
+		}
+		return fsrSensorName_5008Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected IParser createFsrSensorName_5008Parser() {
+		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
+				.getPart_Name(), };
+		MessageFormatParser parser = new MessageFormatParser(features);
+		return parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	private IParser lightSensorName_5009Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getLightSensorName_5009Parser() {
+		if (lightSensorName_5009Parser == null) {
+			lightSensorName_5009Parser = createLightSensorName_5009Parser();
+		}
+		return lightSensorName_5009Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected IParser createLightSensorName_5009Parser() {
+		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
+				.getPart_Name(), };
+		MessageFormatParser parser = new MessageFormatParser(features);
+		return parser;
+	}
+
+	/**
+	 * @generated
+	 */
 	private IParser terminalName_5006Parser;
 
 	/**
@@ -219,6 +297,12 @@ public class FritzingParserProvider extends AbstractProvider implements
 			return getResistorName_5004Parser();
 		case ButtonNameEditPart.VISUAL_ID:
 			return getButtonName_5005Parser();
+		case PotentiometerNameEditPart.VISUAL_ID:
+			return getPotentiometerName_5007Parser();
+		case FsrSensorNameEditPart.VISUAL_ID:
+			return getFsrSensorName_5008Parser();
+		case LightSensorNameEditPart.VISUAL_ID:
+			return getLightSensorName_5009Parser();
 		case TerminalNameEditPart.VISUAL_ID:
 			return getTerminalName_5006Parser();
 		case TerminalName2EditPart.VISUAL_ID:

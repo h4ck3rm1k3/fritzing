@@ -51,6 +51,9 @@ public class FritzingPaletteFactory {
 		paletteContainer.add(createResistor2CreationTool());
 		paletteContainer.add(createLED3CreationTool());
 		paletteContainer.add(createButton4CreationTool());
+		paletteContainer.add(createPotentiometer5CreationTool());
+		paletteContainer.add(createFSRSensor6CreationTool());
+		paletteContainer.add(createLightSensor7CreationTool());
 		return paletteContainer;
 	}
 
@@ -125,6 +128,51 @@ public class FritzingPaletteFactory {
 				Messages.Button4CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.Button_2004));
+		entry.setLargeIcon(entry.getSmallIcon());
+		return entry;
+	}
+
+	/**
+	 * @generated
+	 */
+	private ToolEntry createPotentiometer5CreationTool() {
+		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
+		types.add(FritzingElementTypes.Potentiometer_2006);
+		NodeToolEntry entry = new NodeToolEntry(
+				Messages.Potentiometer5CreationTool_title,
+				Messages.Potentiometer5CreationTool_desc, types);
+		entry.setSmallIcon(FritzingElementTypes
+				.getImageDescriptor(FritzingElementTypes.Potentiometer_2006));
+		entry.setLargeIcon(entry.getSmallIcon());
+		return entry;
+	}
+
+	/**
+	 * @generated
+	 */
+	private ToolEntry createFSRSensor6CreationTool() {
+		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
+		types.add(FritzingElementTypes.FsrSensor_2007);
+		NodeToolEntry entry = new NodeToolEntry(
+				Messages.FSRSensor6CreationTool_title,
+				Messages.FSRSensor6CreationTool_desc, types);
+		entry.setSmallIcon(FritzingElementTypes
+				.getImageDescriptor(FritzingElementTypes.FsrSensor_2007));
+		entry.setLargeIcon(entry.getSmallIcon());
+		return entry;
+	}
+
+	/**
+	 * @generated
+	 */
+	private ToolEntry createLightSensor7CreationTool() {
+		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
+		types.add(FritzingElementTypes.LightSensor_2008);
+		NodeToolEntry entry = new NodeToolEntry(
+				Messages.LightSensor7CreationTool_title,
+				Messages.LightSensor7CreationTool_desc, types);
+		entry.setSmallIcon(FritzingElementTypes
+				.getImageDescriptor(FritzingElementTypes.LightSensor_2008));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}

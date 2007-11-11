@@ -14,8 +14,14 @@ import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.FsrSensorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LightSensorNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PotentiometerNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -160,6 +166,24 @@ public class FritzingVisualIDRegistry {
 				return Terminal2EditPart.VISUAL_ID;
 			}
 			break;
+		case PotentiometerEditPart.VISUAL_ID:
+			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
+					domainElement.eClass())) {
+				return Terminal2EditPart.VISUAL_ID;
+			}
+			break;
+		case FsrSensorEditPart.VISUAL_ID:
+			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
+					domainElement.eClass())) {
+				return Terminal2EditPart.VISUAL_ID;
+			}
+			break;
+		case LightSensorEditPart.VISUAL_ID:
+			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
+					domainElement.eClass())) {
+				return Terminal2EditPart.VISUAL_ID;
+			}
+			break;
 		case SketchEditPart.VISUAL_ID:
 			if (FritzingPackage.eINSTANCE.getArduino().isSuperTypeOf(
 					domainElement.eClass())) {
@@ -176,6 +200,18 @@ public class FritzingVisualIDRegistry {
 			if (FritzingPackage.eINSTANCE.getButton().isSuperTypeOf(
 					domainElement.eClass())) {
 				return ButtonEditPart.VISUAL_ID;
+			}
+			if (FritzingPackage.eINSTANCE.getPotentiometer().isSuperTypeOf(
+					domainElement.eClass())) {
+				return PotentiometerEditPart.VISUAL_ID;
+			}
+			if (FritzingPackage.eINSTANCE.getFsrSensor().isSuperTypeOf(
+					domainElement.eClass())) {
+				return FsrSensorEditPart.VISUAL_ID;
+			}
+			if (FritzingPackage.eINSTANCE.getLightSensor().isSuperTypeOf(
+					domainElement.eClass())) {
+				return LightSensorEditPart.VISUAL_ID;
 			}
 			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
 					domainElement.eClass())) {
@@ -239,6 +275,30 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			break;
+		case PotentiometerEditPart.VISUAL_ID:
+			if (PotentiometerNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case FsrSensorEditPart.VISUAL_ID:
+			if (FsrSensorNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case LightSensorEditPart.VISUAL_ID:
+			if (LightSensorNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		case TerminalEditPart.VISUAL_ID:
 			if (TerminalNameEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
@@ -260,6 +320,15 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			if (ButtonEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (PotentiometerEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (FsrSensorEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (LightSensorEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (TerminalEditPart.VISUAL_ID == nodeVisualID) {

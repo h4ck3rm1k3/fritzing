@@ -3,9 +3,9 @@
  */
 package org.fritzing.fritzing.diagram.edit.parts;
 
+import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
-import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.gef.EditPart;
@@ -33,19 +33,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
-import org.fritzing.fritzing.diagram.edit.policies.ResistorCanonicalEditPolicy;
-import org.fritzing.fritzing.diagram.edit.policies.ResistorItemSemanticEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.FsrSensorCanonicalEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.FsrSensorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
  * @generated
  */
-public class ResistorEditPart extends AbstractBorderedShapeEditPart {
+public class FsrSensorEditPart extends AbstractBorderedShapeEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2003;
+	public static final int VISUAL_ID = 2007;
 
 	/**
 	 * @generated
@@ -60,7 +60,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	public ResistorEditPart(View view) {
+	public FsrSensorEditPart(View view) {
 		super(view);
 	}
 
@@ -73,11 +73,11 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 
 		super.createDefaultEditPolicies();
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-				new ResistorItemSemanticEditPolicy());
+				new FsrSensorItemSemanticEditPolicy());
 		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
 				new DragDropEditPolicy());
 		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-				new ResistorCanonicalEditPolicy());
+				new FsrSensorCanonicalEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -116,24 +116,24 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	protected IFigure createNodeShape() {
-		ResistorFigure figure = new ResistorFigure();
+		FsrSensorFigure figure = new FsrSensorFigure();
 		return primaryShape = figure;
 	}
 
 	/**
 	 * @generated
 	 */
-	public ResistorFigure getPrimaryShape() {
-		return (ResistorFigure) primaryShape;
+	public FsrSensorFigure getPrimaryShape() {
+		return (FsrSensorFigure) primaryShape;
 	}
 
 	/**
 	 * @generated
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof ResistorNameEditPart) {
-			((ResistorNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureResistorNameFigure());
+		if (childEditPart instanceof FsrSensorNameEditPart) {
+			((FsrSensorNameEditPart) childEditPart).setLabel(getPrimaryShape()
+					.getFigureFsrSensorNameFigure());
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
@@ -195,7 +195,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(30), getMapMode().DPtoLP(10));
+				.DPtoLP(20), getMapMode().DPtoLP(20));
 		return result;
 	}
 
@@ -258,27 +258,27 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 */
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(ResistorNameEditPart.VISUAL_ID));
+				.getType(FsrSensorNameEditPart.VISUAL_ID));
 	}
 
 	/**
 	 * @generated
 	 */
-	public class ResistorFigure extends RectangleFigure {
+	public class FsrSensorFigure extends Ellipse {
 
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureResistorNameFigure;
+		private WrapLabel fFigureFsrSensorNameFigure;
 
 		/**
 		 * @generated
 		 */
-		public ResistorFigure() {
+		public FsrSensorFigure() {
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(30),
-					getMapMode().DPtoLP(10)));
+			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
+					getMapMode().DPtoLP(20)));
 			createContents();
 		}
 
@@ -287,12 +287,12 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		 */
 		private void createContents() {
 
-			fFigureResistorNameFigure = new WrapLabel();
-			fFigureResistorNameFigure.setText("..");
+			fFigureFsrSensorNameFigure = new WrapLabel();
+			fFigureFsrSensorNameFigure.setText("..");
 
-			fFigureResistorNameFigure.setFont(FFIGURERESISTORNAMEFIGURE_FONT);
+			fFigureFsrSensorNameFigure.setFont(FFIGUREFSRSENSORNAMEFIGURE_FONT);
 
-			this.add(fFigureResistorNameFigure);
+			this.add(fFigureFsrSensorNameFigure);
 
 		}
 
@@ -318,8 +318,8 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 		/**
 		 * @generated
 		 */
-		public WrapLabel getFigureResistorNameFigure() {
-			return fFigureResistorNameFigure;
+		public WrapLabel getFigureFsrSensorNameFigure() {
+			return fFigureFsrSensorNameFigure;
 		}
 
 	}
@@ -332,12 +332,12 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	/**
 	 * @generated
 	 */
-	static final Color THIS_BACK = new Color(null, 190, 177, 88);
+	static final Color THIS_BACK = new Color(null, 170, 120, 15);
 
 	/**
 	 * @generated
 	 */
-	static final Font FFIGURERESISTORNAMEFIGURE_FONT = new Font(Display
+	static final Font FFIGUREFSRSENSORNAMEFIGURE_FONT = new Font(Display
 			.getCurrent(),
 			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
 			SWT.NORMAL);

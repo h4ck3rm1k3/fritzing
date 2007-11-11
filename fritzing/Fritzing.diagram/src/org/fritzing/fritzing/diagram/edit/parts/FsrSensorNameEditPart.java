@@ -3,6 +3,7 @@
  */
 package org.fritzing.fritzing.diagram.edit.parts;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,13 +11,16 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RunnableWithResult;
 import org.eclipse.gef.AccessibleEditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
+import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
+import org.eclipse.gef.handles.NonResizableHandleKit;
 import org.eclipse.gef.requests.DirectEditRequest;
 import org.eclipse.gef.tools.DirectEditManager;
 import org.eclipse.gmf.runtime.common.ui.services.parser.IParser;
@@ -24,12 +28,10 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserOptions;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserService;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.CompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.LabelEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.LabelDirectEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
 import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramColorRegistry;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager;
@@ -44,25 +46,22 @@ import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingTextSelectionEditPolicy;
-import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 import org.fritzing.fritzing.diagram.providers.FritzingParserProvider;
 
 /**
  * @generated
  */
-public class TerminalNameEditPart extends LabelEditPart implements
-		ITextAwareEditPart, IBorderItemEditPart {
+public class FsrSensorNameEditPart extends CompartmentEditPart implements
+		ITextAwareEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5006;
+	public static final int VISUAL_ID = 5008;
 
 	/**
 	 * @generated
@@ -87,17 +86,7 @@ public class TerminalNameEditPart extends LabelEditPart implements
 	/**
 	 * @generated
 	 */
-	static {
-		registerSnapBackPosition(
-				FritzingVisualIDRegistry
-						.getType(org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart.VISUAL_ID),
-				new Point(0, 0));
-	}
-
-	/**
-	 * @generated
-	 */
-	public TerminalNameEditPart(View view) {
+	public FsrSensorNameEditPart(View view) {
 		super(view);
 	}
 
@@ -108,35 +97,24 @@ public class TerminalNameEditPart extends LabelEditPart implements
 		super.createDefaultEditPolicies();
 		installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE,
 				new LabelDirectEditPolicy());
-	}
+		installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE,
+				new NonResizableEditPolicy() {
 
-	/**
-	 * @generated
-	 */
-	public IBorderItemLocator getBorderItemLocator() {
-		IFigure parentFigure = getFigure().getParent();
-		if (parentFigure != null && parentFigure.getLayoutManager() != null) {
-			Object constraint = parentFigure.getLayoutManager().getConstraint(
-					getFigure());
-			return (IBorderItemLocator) constraint;
-		}
-		return null;
-	}
+					protected List createSelectionHandles() {
+						List handles = new ArrayList();
+						NonResizableHandleKit.addMoveHandle(
+								(GraphicalEditPart) getHost(), handles);
+						return handles;
+					}
 
-	/**
-	 * @generated
-	 */
-	public void refreshBounds() {
-		int x = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getLocation_X())).intValue();
-		int y = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getLocation_Y())).intValue();
-		int width = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getSize_Width())).intValue();
-		int height = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getSize_Height())).intValue();
-		getBorderItemLocator()
-				.setConstraint(new Rectangle(x, y, width, height));
+					public Command getCommand(Request request) {
+						return null;
+					}
+
+					public boolean understandsRequest(Request request) {
+						return false;
+					}
+				});
 	}
 
 	/**
@@ -186,7 +164,7 @@ public class TerminalNameEditPart extends LabelEditPart implements
 	/**
 	 * @generated
 	 */
-	public void setLabel(IFigure figure) {
+	public void setLabel(WrapLabel figure) {
 		unregisterVisuals();
 		setFigure(figure);
 		defaultText = getLabelTextHelper(figure);
@@ -327,7 +305,7 @@ public class TerminalNameEditPart extends LabelEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.Terminal_2005, getParserElement(),
+					FritzingElementTypes.FsrSensor_2007, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}
@@ -538,6 +516,22 @@ public class TerminalNameEditPart extends LabelEditPart implements
 	/**
 	 * @generated
 	 */
+	protected void addNotationalListeners() {
+		super.addNotationalListeners();
+		addListenerFilter("PrimaryView", this, getPrimaryView()); //$NON-NLS-1$
+	}
+
+	/**
+	 * @generated
+	 */
+	protected void removeNotationalListeners() {
+		super.removeNotationalListeners();
+		removeListenerFilter("PrimaryView"); //$NON-NLS-1$
+	}
+
+	/**
+	 * @generated
+	 */
 	protected void handleNotificationEvent(Notification event) {
 		Object feature = event.getFeature();
 		if (NotationPackage.eINSTANCE.getFontStyle_FontColor().equals(feature)) {
@@ -582,40 +576,7 @@ public class TerminalNameEditPart extends LabelEditPart implements
 	 * @generated
 	 */
 	protected IFigure createFigure() {
-		IFigure label = createFigurePrim();
-		defaultText = getLabelTextHelper(label);
-		return label;
+		// Parent should assign one using setLabel() method
+		return null;
 	}
-
-	/**
-	 * @generated
-	 */
-	protected IFigure createFigurePrim() {
-		return new TerminalNameFigure();
-	}
-
-	/**
-	 * @generated
-	 */
-	public class TerminalNameFigure extends WrapLabel {
-
-		/**
-		 * @generated
-		 */
-		public TerminalNameFigure() {
-			this.setText("..");
-
-			this.setFont(THIS_FONT);
-
-		}
-
-	}
-
-	/**
-	 * @generated
-	 */
-	static final Font THIS_FONT = new Font(Display.getCurrent(), Display
-			.getDefault().getSystemFont().getFontData()[0].getName(), 7,
-			SWT.NORMAL);
-
 }

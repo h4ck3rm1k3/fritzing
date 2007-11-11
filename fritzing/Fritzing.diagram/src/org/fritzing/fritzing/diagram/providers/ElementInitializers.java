@@ -647,6 +647,163 @@ public class ElementInitializers {
 		/**
 		 * @generated
 		 */
+		public static final IObjectInitializer Potentiometer_2006 = new ObjectInitializer(
+				FritzingPackage.eINSTANCE.getPotentiometer()) {
+
+			protected void init() {
+				add(createNewElementFeatureInitializer(
+						FritzingPackage.eINSTANCE.getPart_Terminals(),
+						new ObjectInitializer[] { terminals_1(), terminals_2(),
+								terminals_3(), }));
+				add(createExpressionFeatureInitializer(
+						FritzingPackage.eINSTANCE.getPart_Name(),
+						FritzingOCLFactory.getExpression("\'P\'", //$NON-NLS-1$
+								FritzingPackage.eINSTANCE.getPotentiometer())));
+			}
+
+			ObjectInitializer terminals_1() {
+				return new ObjectInitializer(FritzingPackage.eINSTANCE
+						.getTerminal()) {
+
+					protected void init() {
+						add(createExpressionFeatureInitializer(
+								FritzingPackage.eINSTANCE.getTerminal_Name(),
+								FritzingOCLFactory
+										.getExpression("\'T1\'", //$NON-NLS-1$
+												FritzingPackage.eINSTANCE
+														.getTerminal())));
+					}
+				};
+			}
+
+			ObjectInitializer terminals_2() {
+				return new ObjectInitializer(FritzingPackage.eINSTANCE
+						.getTerminal()) {
+
+					protected void init() {
+						add(createExpressionFeatureInitializer(
+								FritzingPackage.eINSTANCE.getTerminal_Name(),
+								FritzingOCLFactory
+										.getExpression("\'W\'", //$NON-NLS-1$
+												FritzingPackage.eINSTANCE
+														.getTerminal())));
+					}
+				};
+			}
+
+			ObjectInitializer terminals_3() {
+				return new ObjectInitializer(FritzingPackage.eINSTANCE
+						.getTerminal()) {
+
+					protected void init() {
+						add(createExpressionFeatureInitializer(
+								FritzingPackage.eINSTANCE.getTerminal_Name(),
+								FritzingOCLFactory
+										.getExpression("\'T2\'", //$NON-NLS-1$
+												FritzingPackage.eINSTANCE
+														.getTerminal())));
+					}
+				};
+			}
+		};
+
+		/**
+		 * @generated
+		 */
+		public static final IObjectInitializer FsrSensor_2007 = new ObjectInitializer(
+				FritzingPackage.eINSTANCE.getFsrSensor()) {
+
+			protected void init() {
+				add(createNewElementFeatureInitializer(
+						FritzingPackage.eINSTANCE.getPart_Terminals(),
+						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
+				add(createExpressionFeatureInitializer(
+						FritzingPackage.eINSTANCE.getPart_Name(),
+						FritzingOCLFactory.getExpression("\'FSR\'", //$NON-NLS-1$
+								FritzingPackage.eINSTANCE.getFsrSensor())));
+			}
+
+			ObjectInitializer terminals_1() {
+				return new ObjectInitializer(FritzingPackage.eINSTANCE
+						.getTerminal()) {
+
+					protected void init() {
+						add(createExpressionFeatureInitializer(
+								FritzingPackage.eINSTANCE.getTerminal_Name(),
+								FritzingOCLFactory
+										.getExpression("\'0\'", //$NON-NLS-1$
+												FritzingPackage.eINSTANCE
+														.getTerminal())));
+					}
+				};
+			}
+
+			ObjectInitializer terminals_2() {
+				return new ObjectInitializer(FritzingPackage.eINSTANCE
+						.getTerminal()) {
+
+					protected void init() {
+						add(createExpressionFeatureInitializer(
+								FritzingPackage.eINSTANCE.getTerminal_Name(),
+								FritzingOCLFactory
+										.getExpression("\'1\'", //$NON-NLS-1$
+												FritzingPackage.eINSTANCE
+														.getTerminal())));
+					}
+				};
+			}
+		};
+
+		/**
+		 * @generated
+		 */
+		public static final IObjectInitializer LightSensor_2008 = new ObjectInitializer(
+				FritzingPackage.eINSTANCE.getLightSensor()) {
+
+			protected void init() {
+				add(createNewElementFeatureInitializer(
+						FritzingPackage.eINSTANCE.getPart_Terminals(),
+						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
+				add(createExpressionFeatureInitializer(
+						FritzingPackage.eINSTANCE.getPart_Name(),
+						FritzingOCLFactory.getExpression("\'LS\'", //$NON-NLS-1$
+								FritzingPackage.eINSTANCE.getLightSensor())));
+			}
+
+			ObjectInitializer terminals_1() {
+				return new ObjectInitializer(FritzingPackage.eINSTANCE
+						.getTerminal()) {
+
+					protected void init() {
+						add(createExpressionFeatureInitializer(
+								FritzingPackage.eINSTANCE.getTerminal_Name(),
+								FritzingOCLFactory
+										.getExpression("\'0\'", //$NON-NLS-1$
+												FritzingPackage.eINSTANCE
+														.getTerminal())));
+					}
+				};
+			}
+
+			ObjectInitializer terminals_2() {
+				return new ObjectInitializer(FritzingPackage.eINSTANCE
+						.getTerminal()) {
+
+					protected void init() {
+						add(createExpressionFeatureInitializer(
+								FritzingPackage.eINSTANCE.getTerminal_Name(),
+								FritzingOCLFactory
+										.getExpression("\'1\'", //$NON-NLS-1$
+												FritzingPackage.eINSTANCE
+														.getTerminal())));
+					}
+				};
+			}
+		};
+
+		/**
+		 * @generated
+		 */
 		private Initializers() {
 		}
 

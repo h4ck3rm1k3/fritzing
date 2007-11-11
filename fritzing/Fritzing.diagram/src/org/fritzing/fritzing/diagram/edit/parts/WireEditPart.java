@@ -10,6 +10,9 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.WireItemSemanticEditPolicy;
 
 /**
@@ -105,7 +108,9 @@ public class WireEditPart extends ConnectionNodeEditPart {
 		private void createContents() {
 
 			fFigureWireNameFigure = new WrapLabel();
-			fFigureWireNameFigure.setText("<...>");
+			fFigureWireNameFigure.setText("..");
+
+			fFigureWireNameFigure.setFont(FFIGUREWIRENAMEFIGURE_FONT);
 
 			this.add(fFigureWireNameFigure);
 
@@ -119,5 +124,13 @@ public class WireEditPart extends ConnectionNodeEditPart {
 		}
 
 	}
+
+	/**
+	 * @generated
+	 */
+	static final Font FFIGUREWIRENAMEFIGURE_FONT = new Font(Display
+			.getCurrent(),
+			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
+			SWT.NORMAL);
 
 }

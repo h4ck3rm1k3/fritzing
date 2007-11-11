@@ -12,7 +12,10 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.DuplicateElementsRequest;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.commands.ArduinoCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.ButtonCreateCommand;
+import org.fritzing.fritzing.diagram.edit.commands.FsrSensorCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.LEDCreateCommand;
+import org.fritzing.fritzing.diagram.edit.commands.LightSensorCreateCommand;
+import org.fritzing.fritzing.diagram.edit.commands.PotentiometerCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.ResistorCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.TerminalCreateCommand;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
@@ -54,6 +57,27 @@ public class SketchItemSemanticEditPolicy extends
 						.getComposite_Parts());
 			}
 			return getGEFWrapper(new ButtonCreateCommand(req));
+		}
+		if (FritzingElementTypes.Potentiometer_2006 == req.getElementType()) {
+			if (req.getContainmentFeature() == null) {
+				req.setContainmentFeature(FritzingPackage.eINSTANCE
+						.getComposite_Parts());
+			}
+			return getGEFWrapper(new PotentiometerCreateCommand(req));
+		}
+		if (FritzingElementTypes.FsrSensor_2007 == req.getElementType()) {
+			if (req.getContainmentFeature() == null) {
+				req.setContainmentFeature(FritzingPackage.eINSTANCE
+						.getComposite_Parts());
+			}
+			return getGEFWrapper(new FsrSensorCreateCommand(req));
+		}
+		if (FritzingElementTypes.LightSensor_2008 == req.getElementType()) {
+			if (req.getContainmentFeature() == null) {
+				req.setContainmentFeature(FritzingPackage.eINSTANCE
+						.getComposite_Parts());
+			}
+			return getGEFWrapper(new LightSensorCreateCommand(req));
 		}
 		if (FritzingElementTypes.Terminal_2005 == req.getElementType()) {
 			if (req.getContainmentFeature() == null) {
