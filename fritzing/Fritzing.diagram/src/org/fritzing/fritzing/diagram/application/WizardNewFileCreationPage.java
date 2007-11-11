@@ -47,7 +47,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 	private Text fileNameEditor;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public WizardNewFileCreationPage(String name,
 			IStructuredSelection currentSelection) {
@@ -55,7 +55,7 @@ public class WizardNewFileCreationPage extends WizardPage {
 		this.currentSelection = currentSelection;
 		String home = System.getProperty("user.home"); //$NON-NLS-1$
 		if (home != null) {
-			initialContainerFullPath = new Path(home);
+			initialContainerFullPath = new Path(home + "/Fritzing");
 		}
 	}
 

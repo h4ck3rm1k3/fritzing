@@ -339,10 +339,10 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		public void run(IAction action) {
 			FileDialog fileDialog = new FileDialog(getWindow().getShell(),
 					SWT.OPEN);
-//			String fritzingFolder = Platform.getUserLocation().getURL().toString() + "/Fritzing/";
-//			if (! new File(fritzingFolder).exists())
-//				new File(fritzingFolder).mkdir();
-//			fileDialog.setFilterPath(fritzingFolder);
+			String fritzingFolder = System.getProperty("user.home") + "/Fritzing";
+			if (! new File(fritzingFolder).exists())
+				new File(fritzingFolder).mkdir();
+			fileDialog.setFilterPath(fritzingFolder);
 			fileDialog.setFilterExtensions(new String[]{"*.fzb"});
 			fileDialog.setFilterNames(new String[]{"Fritzing Sketch (.fzb)"});
 			fileDialog.open();
