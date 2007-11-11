@@ -21,15 +21,15 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
-import org.fritzing.fritzing.Arduino;
+import org.fritzing.fritzing.LightSensor;
 
 /**
- * This is the item provider adapter for a {@link org.fritzing.fritzing.Arduino} object.
+ * This is the item provider adapter for a {@link org.fritzing.fritzing.LightSensor} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ArduinoItemProvider
+public class LightSensorItemProvider
 	extends PartItemProvider
 	implements	
 		IEditingDomainItemProvider,	
@@ -43,7 +43,7 @@ public class ArduinoItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ArduinoItemProvider(AdapterFactory adapterFactory) {
+	public LightSensorItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,14 +63,14 @@ public class ArduinoItemProvider
 	}
 
 	/**
-	 * This returns Arduino.gif.
+	 * This returns LightSensor.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Arduino"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/LightSensor"));
 	}
 
 	/**
@@ -81,10 +81,10 @@ public class ArduinoItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Arduino)object).getName();
+		String label = ((LightSensor)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Arduino_type") :
-			getString("_UI_Arduino_type") + " " + label;
+			getString("_UI_LightSensor_type") :
+			getString("_UI_LightSensor_type") + " " + label;
 	}
 
 	/**

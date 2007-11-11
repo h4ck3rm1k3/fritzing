@@ -181,6 +181,21 @@ public class CompositeItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(FritzingPackage.Literals.COMPOSITE__PARTS,
+				 FritzingFactory.eINSTANCE.createPotentiometer()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(FritzingPackage.Literals.COMPOSITE__PARTS,
+				 FritzingFactory.eINSTANCE.createFsrSensor()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(FritzingPackage.Literals.COMPOSITE__PARTS,
+				 FritzingFactory.eINSTANCE.createLightSensor()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(FritzingPackage.Literals.COMPOSITE__WIRES,
 				 FritzingFactory.eINSTANCE.createWire()));
 	}

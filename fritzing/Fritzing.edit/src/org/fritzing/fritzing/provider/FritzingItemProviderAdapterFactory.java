@@ -305,6 +305,75 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Potentiometer} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PotentiometerItemProvider potentiometerItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.Potentiometer}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPotentiometerAdapter() {
+		if (potentiometerItemProvider == null) {
+			potentiometerItemProvider = new PotentiometerItemProvider(this);
+		}
+
+		return potentiometerItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.FsrSensor} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected FsrSensorItemProvider fsrSensorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.FsrSensor}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createFsrSensorAdapter() {
+		if (fsrSensorItemProvider == null) {
+			fsrSensorItemProvider = new FsrSensorItemProvider(this);
+		}
+
+		return fsrSensorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.LightSensor} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LightSensorItemProvider lightSensorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.LightSensor}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLightSensorAdapter() {
+		if (lightSensorItemProvider == null) {
+			lightSensorItemProvider = new LightSensorItemProvider(this);
+		}
+
+		return lightSensorItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -413,6 +482,9 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 		if (breadboardItemProvider != null) breadboardItemProvider.dispose();
 		if (moduleItemProvider != null) moduleItemProvider.dispose();
 		if (arduinoItemProvider != null) arduinoItemProvider.dispose();
+		if (potentiometerItemProvider != null) potentiometerItemProvider.dispose();
+		if (fsrSensorItemProvider != null) fsrSensorItemProvider.dispose();
+		if (lightSensorItemProvider != null) lightSensorItemProvider.dispose();
 	}
 
 }
