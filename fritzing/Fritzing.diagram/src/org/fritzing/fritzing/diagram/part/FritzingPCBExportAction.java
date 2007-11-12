@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.Status;
@@ -164,7 +165,26 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				+ fritzing2eagleSCR + "'\" " + "\"" + eagleSCH + "\"";
 		// Run!
 		String command = eagleExec + " " + eagleParams;
-		System.out.println(command);
+		// special case for OSX:
+		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+			// write command to file
+			String macExec = diagramUri.trimFileExtension()
+					.appendFileExtension("sh").toFileString();
+			try {
+				FileWriter w = new FileWriter(macExec);
+				w.write(command);
+				w.close();
+			} catch (IOException ioe) {	
+				System.out.println(ioe.getMessage());
+			}
+			// make it executable
+			try {
+				Runtime.getRuntime().exec("chmod a+x " + macExec);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+			command = macExec;
+		}
 		try {
 			Runtime.getRuntime().exec(command);
 		} catch (IOException ioe1) {
