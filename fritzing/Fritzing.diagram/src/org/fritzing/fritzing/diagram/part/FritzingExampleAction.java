@@ -53,8 +53,8 @@ public class FritzingExampleAction implements IWorkbenchWindowActionDelegate {
 	 */
 	public void run(IAction action) {
 		String exampleLocation = 
-//			Platform.getInstallLocation().getURL() 
-			System.getProperty("user.dir") + "/examples/HelloWorld.fzb";
+			Platform.getInstallLocation().getURL().getPath()
+			+ "examples/HelloWorld.fzb";
 		FritzingDiagramEditorUtil.openFritzingFile(
 				URI.createFileURI(exampleLocation));
 	}

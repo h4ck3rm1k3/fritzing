@@ -337,11 +337,12 @@
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
-               id="Fritzing.diagram.Arduino_2001"
-               name="%metatype.name.Arduino_2001"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Arduino"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ArduinoEditHelper">
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ArduinoEditHelper"
+               icon="icons/obj16/Arduino.gif"
+               id="Fritzing.diagram.Arduino_2001"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               name="%metatype.name.Arduino_2001">
             <param name="semanticHint" value="2001"/>
          </metamodelType>
       </metamodel>
@@ -564,32 +565,6 @@
          sequence="F5"/>
    </extension>
 
-
-
-<!--
-<extension point="org.eclipse.emf.validation.constraintProviders">
-      <?gmfgen generated="true"?>
-            <category id="org.fritzing.audits" mandatory="false" name="Fritzing Audits">
-         <![CDATA[Model validation for Fritzing Sketches]]>
-      </category>
-      <constraintProvider cache="true">
-         <package namespaceUri="http://www.fritzing.org"/>
-               <constraints categories="org.fritzing.audits">
-                  <constraint id="org.fritzing.audits.partName"
-            lang="OCL"
-            name="Part Name Check"
-            mode="Live"
-            severity="ERROR" statusCode="200">
-            <![CDATA[self.parent.parts->forAll(p1, p2 : Part | p1 <> p2 implies p1.name <> p2.name)]]>
-            <description><![CDATA[Checks that every part has a unique name]]></description>
-            <message><![CDATA[Every part has to have a unique name.]]></message>
-            <target class="fritzing.Part"/>
-         </constraint>
-                  </constraints>
-      </constraintProvider>
-   </extension>
--->
-   
 <extension point="org.eclipse.emf.validation.constraintBindings">
       <?gmfgen generated="true"?>
                   <clientContext default="false" id="Fritzing.diagram.DefaultCtx">
@@ -608,7 +583,7 @@
       <?gmfgen generated="true"?>
       <contributionItemProvider
          class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider">
-         <Priority name="Low"/>
+         <Priority name="Medium"/>
          <partContribution id="org.fritzing.fritzing.diagram.part.FritzingDiagramEditorID">
             <partMenuGroup menubarPath="/diagramMenu/" id="validationGroup"/>
             <partAction id="validateAction" menubarPath="/diagramMenu/validationGroup"/>
@@ -622,7 +597,10 @@
          <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart(org.eclipse.gmf.runtime.diagram.ui)" id="PRIMARY_VIEW"/>
          <context decoratorTargets="PRIMARY_VIEW"/>
       </decoratorProvider>
-   </extension><extension point="org.eclipse.emf.validation.constraintProviders">
+   </extension>
+   
+<!--
+   <extension point="org.eclipse.emf.validation.constraintProviders">
       <?gmfgen generated="true"?>
             <category id="org.fritzing.audits" mandatory="false" name="Fritzing Audits">
          <![CDATA[Model validation for Fritzing Sketches]]>
@@ -635,15 +613,15 @@
             name="Part Name Check"
             mode="Batch"
             severity="ERROR" statusCode="200">
-            <![CDATA[self.parent.parts->forAll(p1, p2 | p1 <> p2 implies p1.name <> p2.name)]]>
+            <![CDATA[self.parts->forAll(p1, p2 | p1 <> p2 implies p1.name <> p2.name)]]>
             <description><![CDATA[Checks that every part has a unique name]]></description>
             <message><![CDATA[Every part has to have a unique name.]]></message>
-            <target class="fritzing.Part"/>
+            <target class="fritzing.Sketch"/>
          </constraint>
                   </constraints>
       </constraintProvider>
    </extension>
-
+-->
 
 
 

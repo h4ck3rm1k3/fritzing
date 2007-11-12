@@ -81,7 +81,8 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			return;
 		}
 		// validate
-//		ValidateAction.runValidation(editor.getDiagramEditPart(), editor.getDiagram());
+		ValidateAction.runValidation(editor.getDiagramEditPart(), editor.getDiagram());
+		// TODO: warn if validation shows errors
 		
 		// transform into EAGLE script
 		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer());
@@ -137,7 +138,6 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		}
 		
 		if (! new File(eagleULP).exists()) {
-			System.out.println("eö");
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 				"Could not find Fritzing ULP at " + eagleULP + ".\n"+
 				"Please check if you copied the Fritzing EAGLE files to the EAGLE subfolders.",
@@ -154,7 +154,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		// TODO: warn user before deleting files
 		File eagleSchFile = new File(eagleSCH);
 		if (eagleSchFile.exists()) {
-			eagleSchFile.delete();
+			eagleSchFile.delete(); 
 		}
 		File eagleBrdFile = new File(eagleBRD);
 		if (eagleBrdFile.exists()) {
