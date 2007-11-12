@@ -7,8 +7,8 @@ MENU 	'Add to board {Text | Line : Wire | Circle | Arc | Rectangle : Rect | Poly
 		'Edit {Move | Select Group : Group | Rotate | Name | Value | Width | Text {Size : Change Size | Ratio : Change Ratio | Font : Change Font}}' \
 		'Routing {Ripup | Ripup all : Ripup; | Route | Change width {Wide : Change Width 24 | Medium : Change Width 16 | Narrow : Change width 8}}' \
 		'---' \
-		'AUTO RE-ROUTE {Two Sided : Ripup; Auto;}' \
-		'EXPORT BOARD {Image | PDF | Gerbers}';
+		'AUTO RE-ROUTE {Two Sided : Ripup; Auto;}';
+#		'EXPORT BOARD {Image | PDF | Gerbers}';
 
 #MENU \
 #	'Draw { \
