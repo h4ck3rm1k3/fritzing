@@ -67,6 +67,14 @@ public class EagleSCRPart {
 				xOffset = 2.7;
 				yOffset = 1.8;
 			}
+			if (terminal.equals("Gnd")) {
+				xOffset = 2.7;
+				yOffset = 1.8;
+			}
+			if (terminal.equals("Gnd1")) {
+				xOffset = 2.7;
+				yOffset = 1.8;
+			}
 			if (terminal.equals("Vin")) {
 				xOffset = 2.7;
 				yOffset = 1.9;
