@@ -194,6 +194,41 @@ public class EagleSCRPart {
 				yOffset = 0.0;
 			}
 		}
+		if (partType.equalsIgnoreCase("Potentiometer")) {
+			if (terminal.equals("T1")) {
+				xOffset = -0.1;
+				yOffset = 0.1;
+			}
+			if (terminal.equals("W")) {
+				xOffset = -0.1;
+				yOffset = 0;
+			}
+			if (terminal.equals("T2")) {
+				xOffset = -0.1;
+				yOffset = -0.1;
+			}
+		}
+		if (partType.equalsIgnoreCase("FsrSensor")) {
+			if (terminal.equals("0")) {
+				xOffset = -0.1;
+				yOffset = 0.1;
+			}
+			if (terminal.equals("1")) {
+				xOffset = -0.1;
+				yOffset = 0;
+			}
+		}
+		if (partType.equalsIgnoreCase("LightSensor")) {
+			if (terminal.equals("0")) {
+				xOffset = -0.1;
+				yOffset = 0.1;
+			}
+			if (terminal.equals("1")) {
+				xOffset = -0.1;
+				yOffset = 0;
+			}
+		}
+		
 		result.xVal = partPos.xVal + (float)xOffset;
 		result.yVal = partPos.yVal + (float)yOffset;
 		return result;
