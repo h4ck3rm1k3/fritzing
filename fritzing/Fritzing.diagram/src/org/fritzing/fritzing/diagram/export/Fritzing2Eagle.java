@@ -11,8 +11,10 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Element;
-import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.FsrSensor;
+import org.fritzing.fritzing.LightSensor;
 import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Potentiometer;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -43,6 +45,12 @@ public class Fritzing2Eagle {
 				partClass = "Button";
 			if (p instanceof LEDImpl)
 				partClass = "LED";
+			if (p instanceof Potentiometer)
+				partClass = "Potentiometer";
+			if (p instanceof FsrSensor)
+				partClass = "FsrSensor";
+			if (p instanceof LightSensor)
+				partClass = "LightSensor";
 			
 			EagleSCRPart part = new EagleSCRPart(
 				p.getName(),			// part name (e.g. 'R1')
