@@ -123,6 +123,38 @@ public class EagleSCRPart {
 				xOffset = 0.1;
 				yOffset = 2.0;
 			}
+			if (terminal.equals("D7")) {
+				xOffset = 0.1;
+				yOffset = 1.9;
+			}
+			if (terminal.equals("D8")) {
+				xOffset = 0.1;
+				yOffset = 1.7;
+			}
+			if (terminal.equals("D9")) {
+				xOffset = 0.1;
+				yOffset = 1.6;
+			}
+			if (terminal.equals("D10")) {
+				xOffset = 0.1;
+				yOffset = 1.5;
+			}
+			if (terminal.equals("D11")) {
+				xOffset = 0.1;
+				yOffset = 1.4;
+			}
+			if (terminal.equals("D12")) {
+				xOffset = 0.1;
+				yOffset = 1.3;
+			}
+			if (terminal.equals("D13")) {
+				xOffset = 0.1;
+				yOffset = 1.2;
+			}
+			if (terminal.equals("AREF")) {
+				xOffset = 0.1;
+				yOffset = 1.0;
+			}
 		}
 		if (partType.equalsIgnoreCase("resistor")) {
 			if (terminal.equals("0")) {
@@ -135,10 +167,32 @@ public class EagleSCRPart {
 			}
 		}
 		if (partType.equalsIgnoreCase("led")) {
-			
+			if (terminal.equals("-")) {
+				xOffset = 0.0; 
+				yOffset = -0.1;
+			}
+			if (terminal.equals("+")) {
+				xOffset = 0.0;
+				yOffset = 0.2;
+			}
 		}
 		if (partType.equalsIgnoreCase("button")) {
-			
+			if (terminal.equals("0")) {
+				xOffset = -0.2;
+				yOffset = -0.1;
+			}
+			if (terminal.equals("1")) {
+				xOffset = 0.2;
+				yOffset = -0.1;
+			}
+			if (terminal.equals("0p")) {
+				xOffset = -0.2;
+				yOffset = 0.0;
+			}
+			if (terminal.equals("1p")) {
+				xOffset = 0.2;
+				yOffset = 0.0;
+			}
 		}
 		result.xVal = partPos.xVal + (float)xOffset;
 		result.yVal = partPos.yVal + (float)yOffset;
