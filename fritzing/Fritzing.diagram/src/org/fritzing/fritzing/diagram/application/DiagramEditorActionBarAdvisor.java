@@ -6,7 +6,6 @@ package org.fritzing.fritzing.diagram.application;
 import java.io.File;
 import java.util.Iterator;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 import org.eclipse.emf.common.util.URI;
@@ -65,10 +64,12 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 	/**
 	 * @generated
 	 */
+	// getWindow() is never used locally
+	/* 
 	private IWorkbenchWindow getWindow() {
 		return getActionBarConfigurer().getWindowConfigurer().getWindow();
 	}
-
+	*/
 	/**
 	 * @generated NOT
 	 */
