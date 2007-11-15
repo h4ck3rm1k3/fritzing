@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- This file shows how properties can be set on a Plone Site portal.
+     For instance, how to add new views (selectable from the 'Display' menu)
+     to the Plone portal.
+     -->
+
+<site>
+ <!-- Templates that can be chosen from the 'Display' content menu are
+      defined in the "selectable_views" property.
+      Note: use 'purge="False"' if you just want to add one or more views to
+      the original list. If you don't you'll have to define the list of all
+      elements explicitly.
+      Note: there is no support for insert-before/insert-after with property
+      in properties.xml, unlike with skin-path layers in skins.xml.
+      -->
+<!-- EXAMPLE (UNCOMMENT TO MAKE AVAILABLE):
+ <property name="selectable_views" purge="False">
+  <element value="folder_listing"/>
+  <element value="news_listing"/>
+ </property>
+-->
+</site>

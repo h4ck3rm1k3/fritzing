@@ -1,0 +1,33 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="fritzingtheme">
+
+    <!-- "Fritzing" layer.
+         Register viewlets and pages for this 'layer' to make sure they only
+         apply to the Fritzing theme. You can also use this to override
+         browser views and viewlets for this theme only.
+      -->
+    <interface
+        interface=".interfaces.IThemeSpecific"
+        type="zope.publisher.interfaces.browser.IBrowserSkinType"
+        name="Fritzing"
+        />
+        
+    <!-- Custom viewlet -->
+    <browser:viewlet
+        name="plone.footer"
+        manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+        class=".viewlets.FooterViewlet"
+        layer=".interfaces.IThemeSpecific"
+        permission="zope.Public"
+        />
+    <browser:viewlet
+        name="plone.colophon"
+        manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+        class=".viewlets.ColophonViewlet"
+        layer=".interfaces.IThemeSpecific"
+        permission="zope.Public"
+        />
+
+</configure>

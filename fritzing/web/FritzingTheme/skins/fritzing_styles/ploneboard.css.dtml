@@ -1,0 +1,49 @@
+/*
+  This file is based on the ploneCustom.css.dtml shipped with Plone.
+
+  <dtml-with base_properties> (do not remove this)
+  <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either)
+*/
+
+/* YOUR CSS RULES START HERE */
+
+/* 
+in HTML:
+
+div.documentActions to the bottom
+
+"Show all .." link list with own id
+
+*/
+
+
+/* Bug Fixing */
+
+table.listing a {
+  border-bottom: 1px solid transparent !important;
+}
+#content ul.discreet li {
+  display: inline;
+  margin-left: 1em;
+}
+
+
+/* Hiding confusing elements */
+
+div.boardCommentReplyActions,
+img.portraitPhoto {
+  display: none;
+}
+div.poweredBy, 
+div.poweredBy a {
+  color: #BBB;
+  border-color: #BBB !important;
+}
+
+
+/* YOUR CSS RULES STOP HERE */
+
+/* </dtml-with> */
+
+/* Latest version of the documentation on pre-defined properties from Plone 
+   can be found in CMFPlone/skins/plone_styles/ploneCustom.css.dtml */
