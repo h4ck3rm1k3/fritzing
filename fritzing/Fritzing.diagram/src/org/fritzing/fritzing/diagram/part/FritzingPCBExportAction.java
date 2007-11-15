@@ -4,11 +4,12 @@
 package org.fritzing.fritzing.diagram.part;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-//import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.Status;
@@ -90,10 +91,13 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		String fritzing2eagleSCR = diagramUri.trimFileExtension()
 				.appendFileExtension("scr").toFileString();
 		try {
-			Writer w = new FileWriter(fritzing2eagleSCR);
-			// TODO: warn if file already exists
-			w.write(script);
-			w.close();
+			FileOutputStream fos = new FileOutputStream(fritzing2eagleSCR);
+			OutputStreamWriter osw = new OutputStreamWriter(fos);
+			osw.write(script);
+			osw.flush();
+			fos.flush();
+			fos.getFD().sync();
+			// NOTE: FileWriter would be nice here, but it doesn't sync immediately
 		} catch (IOException ioe) {	
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 				"Could not create file " + fritzing2eagleSCR + " for writing the EAGLE script.\n"+
@@ -171,9 +175,13 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			String macExec = diagramUri.trimFileExtension()
 					.appendFileExtension("sh").toFileString();
 			try {
-				FileWriter w = new FileWriter(macExec);
-				w.write(command);
-				w.close();
+				FileOutputStream fos = new FileOutputStream(macExec);
+				OutputStreamWriter osw = new OutputStreamWriter(fos);
+				osw.write(command);
+				osw.flush();
+				fos.flush();
+				fos.getFD().sync();
+				// NOTE: FileWriter would be nice here, but it doesn't sync immediately
 			} catch (IOException ioe) {	
 				System.out.println(ioe.getMessage());
 			}
