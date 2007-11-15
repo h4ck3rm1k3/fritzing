@@ -12,6 +12,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -93,7 +94,7 @@ public class FritzingDiagramEditorPlugin extends AbstractUIPlugin {
 	 * @generated
 	 */
 	protected ComposedAdapterFactory createAdapterFactory() {
-		List factories = new ArrayList();
+		List<AdapterFactoryImpl> factories = new ArrayList<AdapterFactoryImpl>();
 		fillItemProviderFactories(factories);
 		return new ComposedAdapterFactory(factories);
 	}
@@ -101,7 +102,7 @@ public class FritzingDiagramEditorPlugin extends AbstractUIPlugin {
 	/**
 	 * @generated
 	 */
-	protected void fillItemProviderFactories(List factories) {
+	protected void fillItemProviderFactories(List<AdapterFactoryImpl> factories) {
 		factories.add(new FritzingItemProviderAdapterFactory());
 		factories.add(new ResourceItemProviderAdapterFactory());
 		factories.add(new ReflectiveItemProviderAdapterFactory());
