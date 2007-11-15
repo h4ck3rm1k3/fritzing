@@ -86,7 +86,6 @@ public class Fritzing2Eagle {
 		// create a new entry in the ArrayList 'netList' for each component:
 		int genericNet = 1;
 		for (Wire w: sketch.getWires()) {
-			String sourceParentType = "";
 			String netName = w.getName();
 			if (netName == null) {
 				netName = "N$" + genericNet;
