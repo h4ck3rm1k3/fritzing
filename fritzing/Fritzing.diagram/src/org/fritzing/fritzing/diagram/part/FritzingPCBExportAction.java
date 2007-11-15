@@ -132,16 +132,8 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
 			eagleExec = "\"" + eagleExec + "\"";
 		}
-		// EAGLE PCB ULP
-		String eagleULP = "";
-		if (Platform.getOS().equals(Platform.OS_WIN32)) {
-			eagleULP = eagleLocation + "ulp\\fritzing_master.ulp";
-		} else if (Platform.getOS().equals(Platform.OS_MACOSX)) {
-			eagleULP = eagleLocation + "ulp/fritzing_master.ulp";		
-		} else if (Platform.getOS().equals(Platform.OS_LINUX)) {
-			eagleULP = eagleLocation + "ulp/fritzing_master.ulp";
-		}
-		
+		// EAGLE PCB .ulp
+		String eagleULP = eagleLocation + "ulp/fritzing_master.ulp";
 		if (! new File(eagleULP).exists()) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 				"Could not find Fritzing ULP at " + eagleULP + ".\n"+
@@ -164,49 +156,20 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		if (eagleBrdFile.exists()) {
 			eagleBrdFile.delete();
 		}
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			eagleSCH = "\"" + eagleSCH + "\"";
+		}
 		// EAGLE parameters
-		String eagleParams = ""
-//				+ "-C"
-				+ "\"RUN " 
-				+ "'" + eagleULP + "'"
-				+ " "
-				+ "'" + fritzing2eagleSCR + "'"
-				+ "\""
-//				+ " "
-//				+ "\"" + eagleSCH + "\""
-				;
+		String eagleParams = "RUN " 
+				+ "'" + eagleULP + "' "
+				+ "'" + fritzing2eagleSCR + "'"	;
 		// Run!
 		String command = eagleExec + " " + eagleParams;
-		/*
-		// special case for OSX:
-		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
-			// write command to file
-			String macExec = diagramUri.trimFileExtension()
-					.appendFileExtension("sh").toFileString();
-			try {
-				FileOutputStream fos = new FileOutputStream(macExec);
-				OutputStreamWriter osw = new OutputStreamWriter(fos);
-				osw.write(command);
-				fos.flush();
-				fos.getFD().sync();
-				osw.close();
-				// NOTE: FileWriter would be nice here, but it doesn't sync immediately
-			} catch (IOException ioe) {	
-				System.out.println(ioe.getMessage());
-			}
-			// make it executable
-			try {
-				Runtime.getRuntime().exec("chmod a+x " + macExec);
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
-			command = macExec;
-		}
-		*/
 		try {
-			ProcessBuilder runEagle = new ProcessBuilder(eagleExec, "-C", eagleParams, "\""+eagleSCH+"\"");
+			ProcessBuilder runEagle = new ProcessBuilder(
+					eagleExec, "-C", eagleParams, eagleSCH);
 			Process p = runEagle.start();
-			System.out.println(p.exitValue());
+			//	p.waitFor(); // don't wait for Eagle to quit
 		} catch (IOException ioe1) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 					"Could not launch EAGLE PCB export.\n"+
@@ -215,6 +178,6 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 					new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
 							"EAGLE PCB export failed.", ioe1));
 				return;
-		}
+		} 
 	}
 }
