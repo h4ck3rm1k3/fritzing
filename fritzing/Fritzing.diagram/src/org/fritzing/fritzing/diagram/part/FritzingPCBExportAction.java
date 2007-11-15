@@ -165,15 +165,24 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			eagleBrdFile.delete();
 		}
 		// EAGLE parameters
-		String eagleParams = "-C\"RUN " + "'" + eagleULP + "' " + "'"
-				+ fritzing2eagleSCR + "'\" " + "\"" + eagleSCH + "\"";
+		String eagleParams = ""
+//				+ "-C"
+				+ "\"RUN " 
+				+ "'" + eagleULP + "'"
+				+ " "
+				+ "'" + fritzing2eagleSCR + "'"
+				+ "\""
+//				+ " "
+//				+ "\"" + eagleSCH + "\""
+				;
 		// Run!
 		String command = eagleExec + " " + eagleParams;
+		/*
 		// special case for OSX:
 		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
 			// write command to file
 			String macExec = diagramUri.trimFileExtension()
-					.appendFileExtension("bat").toFileString();
+					.appendFileExtension("sh").toFileString();
 			try {
 				FileOutputStream fos = new FileOutputStream(macExec);
 				OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -186,17 +195,18 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				System.out.println(ioe.getMessage());
 			}
 			// make it executable
-			File macExecFile = new File(macExec);
-			macExecFile.setExecutable(true, false);
-//			try {
-//				Runtime.getRuntime().exec("chmod a+x " + macExec);
-//			} catch (IOException e) {
-//				System.out.println(e.getMessage());
-//			}
+			try {
+				Runtime.getRuntime().exec("chmod a+x " + macExec);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
 			command = macExec;
 		}
+		*/
 		try {
-			Runtime.getRuntime().exec(command);
+			ProcessBuilder runEagle = new ProcessBuilder(eagleExec, "-C", eagleParams, "\""+eagleSCH+"\"");
+			Process p = runEagle.start();
+			System.out.println(p.exitValue());
 		} catch (IOException ioe1) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 					"Could not launch EAGLE PCB export.\n"+
