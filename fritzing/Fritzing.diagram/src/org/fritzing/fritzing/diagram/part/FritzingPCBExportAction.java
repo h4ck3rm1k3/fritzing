@@ -5,10 +5,8 @@ package org.fritzing.fritzing.diagram.part;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Preferences;
@@ -94,9 +92,9 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			FileOutputStream fos = new FileOutputStream(fritzing2eagleSCR);
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
 			osw.write(script);
-			osw.flush();
 			fos.flush();
 			fos.getFD().sync();
+			osw.close();
 			// NOTE: FileWriter would be nice here, but it doesn't sync immediately
 		} catch (IOException ioe) {	
 			ErrorDialog.openError(getShell(), "PCB Export Error",
@@ -105,7 +103,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
 						"File could not be written.", ioe));
 			return;
-		}
+		} 
 
 		// STEP 2: start Eagle ULP on the created script file
 
@@ -131,6 +129,9 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 						"No EAGLE executable at "+eagleExec, null));
 			return;
 		}
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			eagleExec = "\"" + eagleExec + "\"";
+		}
 		// EAGLE PCB ULP
 		String eagleULP = "";
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
@@ -155,7 +156,6 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		String eagleBRD = diagramUri.trimFileExtension()
 				.appendFileExtension("brd").toFileString();
 		// Delete existing ones so that EAGLE will create new ones
-		// TODO: warn user before deleting files
 		File eagleSchFile = new File(eagleSCH);
 		if (eagleSchFile.exists()) {
 			eagleSchFile.delete(); 
@@ -173,24 +173,26 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
 			// write command to file
 			String macExec = diagramUri.trimFileExtension()
-					.appendFileExtension("sh").toFileString();
+					.appendFileExtension("bat").toFileString();
 			try {
 				FileOutputStream fos = new FileOutputStream(macExec);
 				OutputStreamWriter osw = new OutputStreamWriter(fos);
 				osw.write(command);
-				osw.flush();
 				fos.flush();
 				fos.getFD().sync();
+				osw.close();
 				// NOTE: FileWriter would be nice here, but it doesn't sync immediately
 			} catch (IOException ioe) {	
 				System.out.println(ioe.getMessage());
 			}
 			// make it executable
-			try {
-				Runtime.getRuntime().exec("chmod a+x " + macExec);
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
+			File macExecFile = new File(macExec);
+			macExecFile.setExecutable(true, false);
+//			try {
+//				Runtime.getRuntime().exec("chmod a+x " + macExec);
+//			} catch (IOException e) {
+//				System.out.println(e.getMessage());
+//			}
 			command = macExec;
 		}
 		try {
