@@ -5,20 +5,16 @@
   <dtml-call "REQUEST.set('portal_url', portal_url())"> (not this either)
 */
 
-/* YOUR CSS RULES START HERE */
-
-/* 
-in HTML:
-
-div.documentActions to the bottom
-
-"Show all .." link list with own id
-
-*/
-
-
-/* Bug Fixing */
-
+/* Readability */
+table td.forumTitleCell {
+  width: 60%;
+}
+table td.forumConversationsCell {
+  width: 10%;
+}
+table td.forumMostRecentCell {
+  width: 20%;
+}
 table.listing a {
   border-bottom: 1px solid transparent !important;
 }
@@ -26,22 +22,28 @@ table.listing a {
   display: inline;
   margin-left: 1em;
 }
-
+div.boardComment {
+  border-top: 1px solid #CCC;
+}
+div.boardCommentDetails {
+  margin-bottom: 0.5em;
+  color: #666;
+}
+div.boardCommentActions form {
+  width: auto;
+  float: left;
+}
 
 /* Hiding confusing elements */
-
+br,
+.documentAuthor,
+div.boardCommentHeaderTitleBlock h3,
+div.documentDescription,
 div.boardCommentReplyActions,
-img.portraitPhoto {
+img.portraitPhoto,
+div.poweredBy {
   display: none;
 }
-div.poweredBy, 
-div.poweredBy a {
-  color: #BBB;
-  border-color: #BBB !important;
-}
-
-
-/* YOUR CSS RULES STOP HERE */
 
 /* </dtml-with> */
 
