@@ -16,7 +16,7 @@ body {
     font: 69% Verdana, sans-serif;
     background-image: none;
     background-color: #E8E3E3;
-    color: #444;
+    color: #303030;
     margin: 0;
     padding: 0;
 }
@@ -63,7 +63,7 @@ body {
   width: 700px;
 }
 a#portal-logo {
-  width: 280px;
+  width: 290px;
 }
 #portal-searchbox {
   display: inline;
@@ -108,7 +108,7 @@ ul#portal-siteactions a {
 }
 ul#portal-personaltools a {
   color: #fff;
-  font-size: 79%;
+  font-size: 84%;
 }
 
 
@@ -193,9 +193,17 @@ img {
   font-size: 11px;
   line-height: 1.6em;
 }
-#content ul, 
-#content ol {
+#content ul {
   list-style-type: square;
+}
+#content ol {
+  list-style-type: decimal;
+}
+#content ol ol{
+  list-style-type: lower-alpha;
+}
+#content ol ol ol{
+  list-style-type: lower-roman;
 }
 #content table.listing a {
   border-width: 1px;
@@ -228,7 +236,7 @@ a.state-published {
 
 #document-toc {
   float: right;
-  border-left: 1px solid #999;
+  border-left: 1px solid #BBB;
   padding-left: 1em;
   margin-left: 1em;
 }
@@ -240,13 +248,18 @@ a.state-published {
 }
 #document-toc dd > ol > ol {
   margin-left: 0;
+  list-style-type: none;
 }
 #document-toc dd > ol > ol > li {
   font-weight: bold;
 }
+#document-toc dd > ol > ol > ol {
+  margin-left: 1.0em;
+  list-style-type: none;
+}
 #document-toc dd a {
   float: none;
-  padding: 0 0 3px 0;
+  padding: 0 0 1px 0;
 }
 
 
