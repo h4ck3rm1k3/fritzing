@@ -51,4 +51,7 @@ System.getProperty("user.home") // this works
 // adding help support
 // http://www.eclipse.org/articles/article.php?file=Article-AddingHelpToRCP/index.html
 
+// Executing external commands
+// http://www.javaworld.com/javaworld/jw-12-2000/jw-1229-traps.html
+
 // some RCP tips at http://www.jroller.com/wsnyder6/entry/rcp_tips_and_tricks

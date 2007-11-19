@@ -2,7 +2,9 @@ Changelog for Fritzing
 
     (name of developer listed in brackets)
 
-Fritzing 0001 ALPHA - unreleased
+Fritzing 0002 ALPHA - unreleased
+
+Fritzing 0001 ALPHA - Nov 11 2007
 
     - Initial import
       [andre]
