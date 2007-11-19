@@ -83,8 +83,9 @@ div.searchSection {
   margin-top: 1px;
 }
 div.searchSection label {
-font-weight: normal;
+  font-weight: normal;
   color: #666;
+  font-size: 89%;
 }
 #LSResult {
   background-color: white;
@@ -100,12 +101,14 @@ ul#portal-siteactions a {
   font-size: 9px !important;
 }
 #portal-personaltools-wrapper {
-  left: 510px;
-  top: 47px;
+  left: 250px;
+  top: 17px;
+  width: 300px;
   z-index: 10;
 }
 ul#portal-personaltools a {
-  color: #4D3333;
+  color: #fff;
+  font-size: 79%;
 }
 
 
