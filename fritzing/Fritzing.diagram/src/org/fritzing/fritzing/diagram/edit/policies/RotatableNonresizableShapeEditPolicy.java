@@ -72,27 +72,27 @@ public class RotatableNonresizableShapeEditPolicy extends RotatableShapeEditPoli
 		switch (direction) {
 		case PositionConstants.SOUTH_EAST:
 			hotY = 0;
-			hotX = 1;
+			hotX = 0;
 			prefix = "SE";
 			break;
 		case PositionConstants.NORTH_EAST:
 			prefix = "NE";
 			hotY = 1;
-			hotX = 1;
+			hotX = 0;
 			break;
 		case PositionConstants.SOUTH_WEST:
 			hotY = 0;
-			hotX = 0;
+			hotX = 1;
 			prefix = "SW";
 			break;
 		case PositionConstants.NORTH_WEST:
 			hotY = 1;
-			hotX = 0;
+			hotX = 1;
 			prefix = "NW";
 			break;
 		default:
 			hotY = 0;
-			hotX = 1;
+			hotX = 0;
 			direction = PositionConstants.SOUTH_EAST;
 			prefix = "SE";
 		}
