@@ -46,9 +46,9 @@ import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
- * @generated
+ * @generated NOT
  */
-public class LightSensorEditPart extends AbstractBorderedShapeEditPart {
+public class LightSensorEditPart extends PartEditPart {
 
 	/**
 	 * @generated
@@ -209,15 +209,10 @@ public class LightSensorEditPart extends AbstractBorderedShapeEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
-		EditPolicy result = super.getPrimaryDragEditPolicy();
-		if (result instanceof ResizableEditPolicy) {
-			ResizableEditPolicy ep = (ResizableEditPolicy) result;
-			ep.setResizeDirections(PositionConstants.NONE);
-		}
-		return result;
+		return super.getPrimaryDragEditPolicy();
 	}
 
 	/**

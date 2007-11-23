@@ -38,9 +38,9 @@ import org.fritzing.fritzing.diagram.edit.policies.ResistorItemSemanticEditPolic
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
- * @generated
+ * @generated NOT
  */
-public class ResistorEditPart extends AbstractBorderedShapeEditPart {
+public class ResistorEditPart extends PartEditPart {
 
 	/**
 	 * @generated
@@ -203,12 +203,7 @@ public class ResistorEditPart extends AbstractBorderedShapeEditPart {
 	 * @generated
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
-		EditPolicy result = super.getPrimaryDragEditPolicy();
-		if (result instanceof ResizableEditPolicy) {
-			ResizableEditPolicy ep = (ResizableEditPolicy) result;
-			ep.setResizeDirections(PositionConstants.NONE);
-		}
-		return result;
+		return super.getPrimaryDragEditPolicy();
 	}
 
 	/**

@@ -44,9 +44,9 @@ import org.fritzing.fritzing.diagram.edit.policies.PotentiometerItemSemanticEdit
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
- * @generated
+ * @generated NOT
  */
-public class PotentiometerEditPart extends AbstractBorderedShapeEditPart {
+public class PotentiometerEditPart extends PartEditPart {
 
 	/**
 	 * @generated
@@ -207,15 +207,10 @@ public class PotentiometerEditPart extends AbstractBorderedShapeEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
-		EditPolicy result = super.getPrimaryDragEditPolicy();
-		if (result instanceof ResizableEditPolicy) {
-			ResizableEditPolicy ep = (ResizableEditPolicy) result;
-			ep.setResizeDirections(PositionConstants.NONE);
-		}
-		return result;
+		return super.getPrimaryDragEditPolicy();
 	}
 
 	/**
@@ -298,8 +293,8 @@ public class PotentiometerEditPart extends AbstractBorderedShapeEditPart {
 			Ellipse potentiometerStickFigure0 = new Ellipse();
 			potentiometerStickFigure0
 					.setBackgroundColor(POTENTIOMETERSTICKFIGURE0_BACK);
-			potentiometerStickFigure0.setMaximumSize(new Dimension(
-					getMapMode().DPtoLP(14), getMapMode().DPtoLP(14)));
+			potentiometerStickFigure0.setMaximumSize(new Dimension(getMapMode()
+					.DPtoLP(14), getMapMode().DPtoLP(14)));
 			potentiometerStickFigure0.setLocation(new Point(getMapMode()
 					.DPtoLP(3), getMapMode().DPtoLP(3)));
 

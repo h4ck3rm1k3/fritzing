@@ -37,131 +37,133 @@ import org.fritzing.fritzing.diagram.edit.policies.FsrSensorCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.FsrSensorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
-/**
+	/**
+ * @generated NOT
+ */
+public class FsrSensorEditPart extends PartEditPart {
+
+			/**
  * @generated
  */
-public class FsrSensorEditPart extends AbstractBorderedShapeEditPart {
-
-	/**
-	 * @generated
-	 */
 	public static final int VISUAL_ID = 2007;
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected IFigure contentPane;
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected IFigure primaryShape;
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	public FsrSensorEditPart(View view) {
 		super(view);
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected void createDefaultEditPolicies() {
-		installEditPolicy(EditPolicyRoles.CREATION_ROLE,
+						installEditPolicy(EditPolicyRoles.CREATION_ROLE,
 				new CreationEditPolicy());
 
 		super.createDefaultEditPolicies();
-		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-				new FsrSensorItemSemanticEditPolicy());
-		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
-				new DragDropEditPolicy());
-		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-				new FsrSensorCanonicalEditPolicy());
-		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
-		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
+					installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new FsrSensorItemSemanticEditPolicy());
+							installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
+			new DragDropEditPolicy());
+					installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new FsrSensorCanonicalEditPolicy());
+			installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
+					// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
-		LayoutEditPolicy lep = new LayoutEditPolicy() {
+						LayoutEditPolicy lep =
+				new LayoutEditPolicy() {
 
 			protected EditPolicy createChildEditPolicy(EditPart child) {
-				if (child instanceof IBorderItemEditPart) {
+								if (child instanceof IBorderItemEditPart) {
 					return new BorderItemSelectionEditPolicy();
 				}
-				EditPolicy result = child
-						.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+								EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
 				if (result == null) {
 					result = new NonResizableEditPolicy();
 				}
 				return result;
 			}
 
-			protected Command getMoveChildrenCommand(Request request) {
+			protected Command getMoveChildrenCommand(
+					Request request) {
 				return null;
 			}
 
-			protected Command getCreateCommand(CreateRequest request) {
+			protected Command getCreateCommand(
+					CreateRequest request) {
 				return null;
 			}
 		};
 		return lep;
-	}
+			}
 
-	/**
-	 * @generated
-	 */
+	
+		/**
+ * @generated
+ */
 	protected IFigure createNodeShape() {
 		FsrSensorFigure figure = new FsrSensorFigure();
-		return primaryShape = figure;
+		 		return primaryShape = figure;
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	public FsrSensorFigure getPrimaryShape() {
 		return (FsrSensorFigure) primaryShape;
 	}
 
-	/**
-	 * @generated
-	 */
+			/**
+ * @generated
+ */
 	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof FsrSensorNameEditPart) {
-			((FsrSensorNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureFsrSensorNameFigure());
+							if (childEditPart instanceof FsrSensorNameEditPart) {
+			((FsrSensorNameEditPart) childEditPart).setLabel(
+				getPrimaryShape().getFigureFsrSensorNameFigure());
 			return true;
 		}
-		if (childEditPart instanceof Terminal2EditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.NONE);
+											if (childEditPart instanceof Terminal2EditPart) {
+			BorderItemLocator locator =
+				new BorderItemLocator(
+					getMainFigure(), PositionConstants.NONE);
 			getBorderedFigure().getBorderItemContainer().add(
-					((Terminal2EditPart) childEditPart).getFigure(), locator);
+				((Terminal2EditPart) childEditPart).getFigure(), locator);
 			return true;
 		}
-		return false;
+				return false;
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected boolean removeFixedChild(EditPart childEditPart) {
-
-		if (childEditPart instanceof Terminal2EditPart) {
+		
+						if (childEditPart instanceof Terminal2EditPart) {
 			getBorderedFigure().getBorderItemContainer().remove(
-					((Terminal2EditPart) childEditPart).getFigure());
+				((Terminal2EditPart) childEditPart).getFigure());
 			return true;
 		}
-		return false;
+				return false;
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected void addChildVisual(EditPart childEditPart, int index) {
 		if (addFixedChild(childEditPart)) {
 			return;
@@ -169,56 +171,55 @@ public class FsrSensorEditPart extends AbstractBorderedShapeEditPart {
 		super.addChildVisual(childEditPart, -1);
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected void removeChildVisual(EditPart childEditPart) {
-		if (removeFixedChild(childEditPart)) {
+		if (removeFixedChild(childEditPart)){
 			return;
 		}
 		super.removeChildVisual(childEditPart);
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	protected IFigure getContentPaneFor(IGraphicalEditPart editPart) {
-
-		if (editPart instanceof Terminal2EditPart) {
+		
+						if (editPart instanceof Terminal2EditPart) {
 			return getBorderedFigure().getBorderItemContainer();
 		}
-		return super.getContentPaneFor(editPart);
+				return super.getContentPaneFor(editPart);
 	}
 
-	/**
-	 * @generated
-	 */
+	
+	
+		/**
+ * @generated
+ */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(20), getMapMode().DPtoLP(20));
-		return result;
+		DefaultSizeNodeFigure result =
+			new DefaultSizeNodeFigure(
+				getMapMode().DPtoLP(20),
+				getMapMode().DPtoLP(20));
+				return result;
 	}
 
-	/**
-	 * @generated
-	 */
+				/**
+ * @generated NOT
+ */
 	public EditPolicy getPrimaryDragEditPolicy() {
-		EditPolicy result = super.getPrimaryDragEditPolicy();
-		if (result instanceof ResizableEditPolicy) {
-			ResizableEditPolicy ep = (ResizableEditPolicy) result;
-			ep.setResizeDirections(PositionConstants.NONE);
-		}
-		return result;
+		return super.getPrimaryDragEditPolicy();
 	}
-
+		
 	/**
-	 * Creates figure for this edit part.
-	 * 
-	 * Body of this method does not depend on settings in generation model
-	 * so you may safely remove <i>generated</i> tag and modify it.
-	 * 
-	 * @generated
-	 */
+ * Creates figure for this edit part.
+ * 
+ * Body of this method does not depend on settings in generation model
+ * so you may safely remove <i>generated</i> tag and modify it.
+ * 
+ * @generated
+ */
 	protected NodeFigure createMainFigure() {
 		NodeFigure figure = createNodePlate();
 		figure.setLayoutManager(new StackLayout());
@@ -229,23 +230,24 @@ public class FsrSensorEditPart extends AbstractBorderedShapeEditPart {
 	}
 
 	/**
-	 * Default implementation treats passed figure as content pane.
-	 * Respects layout one may have set for generated figure.
-	 * @param nodeShape instance of generated figure class
-	 * @generated
-	 */
+ * Default implementation treats passed figure as content pane.
+ * Respects layout one may have set for generated figure.
+ * @param nodeShape instance of generated figure class
+ * @generated
+ */
 	protected IFigure setupContentPane(IFigure nodeShape) {
 		if (nodeShape.getLayoutManager() == null) {
-			ConstrainedToolbarLayout layout = new ConstrainedToolbarLayout();
+					ConstrainedToolbarLayout layout =
+				new ConstrainedToolbarLayout();
 			layout.setSpacing(getMapMode().DPtoLP(5));
 			nodeShape.setLayoutManager(layout);
-		}
+				}
 		return nodeShape; // use nodeShape itself as contentPane
 	}
 
-	/**
-	 * @generated
-	 */
+		/**
+ * @generated
+ */
 	public IFigure getContentPane() {
 		if (contentPane != null) {
 			return contentPane;
@@ -253,93 +255,111 @@ public class FsrSensorEditPart extends AbstractBorderedShapeEditPart {
 		return super.getContentPane();
 	}
 
-	/**
-	 * @generated
-	 */
+			/**
+ * @generated
+ */
 	public EditPart getPrimaryChildEditPart() {
-		return getChildBySemanticHint(FritzingVisualIDRegistry
-				.getType(FsrSensorNameEditPart.VISUAL_ID));
+		return getChildBySemanticHint(FritzingVisualIDRegistry.getType(
+			FsrSensorNameEditPart.VISUAL_ID));
+	}
+	
+	
+	
+	
+		
+	
+	
+/**
+ * @generated
+ */
+public class FsrSensorFigure extends Ellipse {
+
+
+	/**
+	 * @generated
+	 */
+	private WrapLabel fFigureFsrSensorNameFigure; 
+
+
+	/**
+	 * @generated
+	 */
+	public FsrSensorFigure() {
+					this.setForegroundColor(THIS_FORE
+);
+	this.setBackgroundColor(THIS_BACK
+);
+this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20)
+, getMapMode().DPtoLP(20)
+));
+		createContents();
+	}
+	/**
+	 * @generated
+	 */
+	private void createContents(){
+
+
+fFigureFsrSensorNameFigure = new WrapLabel();
+fFigureFsrSensorNameFigure.setText("..");
+
+fFigureFsrSensorNameFigure.setFont(FFIGUREFSRSENSORNAMEFIGURE_FONT);
+
+
+
+this.add(fFigureFsrSensorNameFigure);
+
+
+	}
+
+
+
+
+	/**
+	 * @generated
+	 */
+	private boolean myUseLocalCoordinates = false;
+
+	/**
+	 * @generated
+	 */
+	protected boolean useLocalCoordinates() {
+		return myUseLocalCoordinates;
 	}
 
 	/**
 	 * @generated
 	 */
-	public class FsrSensorFigure extends Ellipse {
-
-		/**
-		 * @generated
-		 */
-		private WrapLabel fFigureFsrSensorNameFigure;
-
-		/**
-		 * @generated
-		 */
-		public FsrSensorFigure() {
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
-					getMapMode().DPtoLP(20)));
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			fFigureFsrSensorNameFigure = new WrapLabel();
-			fFigureFsrSensorNameFigure.setText("..");
-
-			fFigureFsrSensorNameFigure.setFont(FFIGUREFSRSENSORNAMEFIGURE_FONT);
-
-			this.add(fFigureFsrSensorNameFigure);
-
-		}
-
-		/**
-		 * @generated
-		 */
-		private boolean myUseLocalCoordinates = false;
-
-		/**
-		 * @generated
-		 */
-		protected boolean useLocalCoordinates() {
-			return myUseLocalCoordinates;
-		}
-
-		/**
-		 * @generated
-		 */
-		protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
-			myUseLocalCoordinates = useLocalCoordinates;
-		}
-
-		/**
-		 * @generated
-		 */
-		public WrapLabel getFigureFsrSensorNameFigure() {
-			return fFigureFsrSensorNameFigure;
-		}
-
+	protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
+		myUseLocalCoordinates = useLocalCoordinates;
 	}
 
-	/**
-	 * @generated
-	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
+
 
 	/**
 	 * @generated
 	 */
-	static final Color THIS_BACK = new Color(null, 170, 120, 15);
+	public WrapLabel getFigureFsrSensorNameFigure() {
+		return fFigureFsrSensorNameFigure;
+	}
 
-	/**
-	 * @generated
-	 */
-	static final Font FFIGUREFSRSENSORNAMEFIGURE_FONT = new Font(Display
-			.getCurrent(),
-			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
-			SWT.NORMAL);
+
+}
+
+/**
+ * @generated
+ */
+static final Color THIS_FORE = new Color(null, 0, 0, 0);
+
+/**
+ * @generated
+ */
+static final Color THIS_BACK = new Color(null, 170, 120, 15);
+
+/**
+ * @generated
+ */
+static final Font FFIGUREFSRSENSORNAMEFIGURE_FONT = new Font(Display.getCurrent(), Display.getDefault().getSystemFont().getFontData()[0].getName(), 8, SWT.NORMAL);
+
 
 }
