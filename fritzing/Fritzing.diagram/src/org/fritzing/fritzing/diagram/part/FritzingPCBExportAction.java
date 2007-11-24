@@ -88,6 +88,11 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 
 		String fritzing2eagleSCR = diagramUri.trimFileExtension()
 				.appendFileExtension("scr").toFileString();
+		// Delete existing one so that EAGLE will create new ones
+		File eagleScrFile = new File(fritzing2eagleSCR);
+		if (eagleScrFile.exists()) {
+			eagleScrFile.delete(); 
+		}
 		try {
 			FileOutputStream fos = new FileOutputStream(fritzing2eagleSCR);
 			OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -164,7 +169,6 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				+ "'" + eagleULP + "' "
 				+ "'" + fritzing2eagleSCR + "'"	;
 		// Run!
-		String command = eagleExec + " " + eagleParams;
 		try {
 			ProcessBuilder runEagle = new ProcessBuilder(
 					eagleExec, "-C", eagleParams, eagleSCH);
@@ -173,8 +177,8 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		} catch (IOException ioe1) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 					"Could not launch EAGLE PCB export.\n"+
-					"Please check that all of the files in the following command exist:\n\n"+
-					command,
+					"Please check that all of the following files exist:\n\n"+
+					String.format("%s, %s, %s, %s", eagleExec, eagleULP, fritzing2eagleSCR, eagleSCH),
 					new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
 							"EAGLE PCB export failed.", ioe1));
 				return;
