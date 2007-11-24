@@ -73,35 +73,38 @@ public class RotatableNonresizableShapeEditPolicy extends RotatableShapeEditPoli
 		case PositionConstants.SOUTH_EAST:
 			hotY = 0;
 			hotX = 0;
-			prefix = "SE";
+			prefix = "rotateSE";
 			break;
 		case PositionConstants.NORTH_EAST:
-			prefix = "NE";
 			hotY = 1;
 			hotX = 0;
+			prefix = "rotateNE";
 			break;
 		case PositionConstants.SOUTH_WEST:
 			hotY = 0;
 			hotX = 1;
-			prefix = "SW";
+			prefix = "rotateSW";
 			break;
 		case PositionConstants.NORTH_WEST:
 			hotY = 1;
 			hotX = 1;
-			prefix = "NW";
+			prefix = "rotateNW";
 			break;
 		default:
+			direction = PositionConstants.SOUTH_EAST;
 			hotY = 0;
 			hotX = 0;
-			direction = PositionConstants.SOUTH_EAST;
-			prefix = "SE";
+			prefix = "rotateSE";
 		}
 		
 		Integer key = new Integer(direction);
 		Cursor rotateCursor = rotateCursors.get(key);
 		if (rotateCursor == null) {
 			try {
-				InputStream stream = FileLocator.openStream(FritzingDiagramEditorPlugin.getInstance().getBundle(), new Path("icons/cursors/" + prefix + cursorImageFileSuffix), false);
+				InputStream stream = FileLocator.openStream(
+						FritzingDiagramEditorPlugin.getInstance().getBundle(), 
+						new Path("icons/cursors/" + prefix + cursorImageFileSuffix), 
+						false);
 				if (stream != null) {		
 					ImageData imageData = new ImageData(stream);
 					if (hotY == 1) hotY = imageData.height - 1;
