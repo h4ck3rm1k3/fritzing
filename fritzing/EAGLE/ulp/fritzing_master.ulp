@@ -4,9 +4,9 @@
 
 string c,cmd;
 
-cmd += "; SCR '" + argv[1] + "'; \n";
-cmd += "script fritzing_menu-placement; \n";
+cmd += "script '" + argv[1] + "'; \n";
 cmd += "run autoplace_v3_f; \n";
 cmd += "script fritzing_setup-arduino_shield; \n";
+cmd += "script fritzing_menu-placement; \n";
 
 exit(cmd);
