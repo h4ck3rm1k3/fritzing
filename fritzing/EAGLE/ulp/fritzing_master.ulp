@@ -5,8 +5,8 @@
 string c,cmd;
 
 cmd += "script '" + argv[1] + "'; \n";
-cmd += "run " + argv[2] + "fritzing_autoplace; \n";
-cmd += "script fritzing_setup-arduino_shield; \n";
-cmd += "script fritzing_menu-placement; \n";
+cmd += "run " + argv[2] + "autoplace_v3_f; \n";
+cmd += "script " + argv[3] + "fritzing_setup-arduino_shield; \n";
+cmd += "script " + argv[3] + "fritzing_menu-placement; \n";
 
 exit(cmd);
