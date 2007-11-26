@@ -5,7 +5,7 @@
 string c,cmd;
 
 cmd += "script '" + argv[1] + "'; \n";
-cmd += "run autoplace_v3_f; \n";
+cmd += "run " + argv[2] + "fritzing_autoplace; \n";
 cmd += "script fritzing_setup-arduino_shield; \n";
 cmd += "script fritzing_menu-placement; \n";
 
