@@ -24,10 +24,13 @@ public class Terminal2ItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	protected Command getDestroyElementCommand(DestroyElementRequest req) {
-		CompoundCommand cc = getDestroyEdgesCommand();
-		addDestroyShortcutsCommand(cc);
-		cc.add(getGEFWrapper(new DestroyElementCommand(req)));
-		return cc.unwrap();
+		// don't want to delete
+		return null;
+		
+//		CompoundCommand cc = getDestroyEdgesCommand();
+//		addDestroyShortcutsCommand(cc);
+//		cc.add(getGEFWrapper(new DestroyElementCommand(req)));
+//		return cc.unwrap();
 	}
 
 	/**

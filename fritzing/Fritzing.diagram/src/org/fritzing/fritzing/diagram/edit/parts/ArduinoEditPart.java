@@ -83,13 +83,13 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
 		LayoutEditPolicy lep = new LayoutEditPolicy() {
 
 			protected EditPolicy createChildEditPolicy(EditPart child) {
-				if (child instanceof IBorderItemEditPart) {
+				if ((child instanceof IBorderItemEditPart) && !(child instanceof Terminal2EditPart)) {
 					return new BorderItemSelectionEditPolicy();
 				}
 				EditPolicy result = child

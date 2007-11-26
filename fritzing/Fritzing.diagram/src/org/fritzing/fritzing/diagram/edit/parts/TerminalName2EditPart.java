@@ -49,6 +49,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingTextSelectionEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 import org.fritzing.fritzing.diagram.providers.FritzingParserProvider;
@@ -102,10 +103,13 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
+		// don't want delete
+		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
+
 		installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE,
 				new LabelDirectEditPolicy());
 	}

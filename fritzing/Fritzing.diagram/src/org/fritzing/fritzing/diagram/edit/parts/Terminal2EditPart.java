@@ -19,6 +19,7 @@ import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.BorderedBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
@@ -27,6 +28,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.fritzing.fritzing.diagram.edit.policies.Terminal2ItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
+import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 
 /**
  * @generated
@@ -56,7 +58,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void createDefaultEditPolicies() {
 
@@ -66,19 +68,25 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
 				new Terminal2ItemSemanticEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
+		
+		// don't want delete
+		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
+		
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
 		LayoutEditPolicy lep = new LayoutEditPolicy() {
 
 			protected EditPolicy createChildEditPolicy(EditPart child) {
 				if (child instanceof IBorderItemEditPart) {
-					return new BorderItemSelectionEditPolicy();
+					BorderItemSelectionEditPolicy bisep = new BorderItemSelectionEditPolicy();
+					bisep.setDragAllowed(false);   // disable move
+					return bisep;
 				}
 				EditPolicy result = child
 						.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
@@ -142,15 +150,21 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
+				
 		EditPolicy result = super.getPrimaryDragEditPolicy();
 		if (result instanceof ResizableEditPolicy) {
 			ResizableEditPolicy ep = (ResizableEditPolicy) result;
 			ep.setResizeDirections(PositionConstants.NONE);
 		}
+		if (result instanceof NonResizableEditPolicy) {
+			// don't allow terminals to be moved
+			((NonResizableEditPolicy) result).setDragAllowed(false);
+		}
 		return result;
+
 	}
 
 	/**
