@@ -24,7 +24,7 @@ import org.fritzing.fritzing.impl.LEDImpl;
 import org.fritzing.fritzing.impl.ResistorImpl;
 
 public class Fritzing2Eagle {	
-	public static String createEagleScript(IDiagramGraphicalViewer viewer, String eagleLBRLocation) {
+	public static String createEagleScript(IDiagramGraphicalViewer viewer) {
 		String result = "";
 		SketchEditPart sketchEP = (SketchEditPart) viewer.getContents();
 		Sketch sketch = (Sketch) ((View) sketchEP.getModel()).getElement();

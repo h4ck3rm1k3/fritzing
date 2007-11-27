@@ -89,12 +89,9 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		// (done here because the location of the Fritzing Eagle library must be passed
 		// to the method that creates the schematic-generation script)
 		String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
-		String eagleSCRLocation = fritzingLocation + "scr" + File.separator;
-		String eagleULPLocation = fritzingLocation + "ulp" + File.separator;
-		String eagleLBRLocation	= fritzingLocation + "lbr" + File.separator;
 		
 		// transform into EAGLE script
-		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer(), eagleLBRLocation);
+		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer());
 
 		String fritzing2eagleSCR = diagramUri.trimFileExtension()
 				.appendFileExtension("scr").toFileString();
@@ -149,7 +146,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			eagleExec = "\"" + eagleExec + "\"";
 		}
 		// EAGLE PCB .ulp
-		String eagleULP = eagleULPLocation + File.separator + "fritzing_master.ulp";
+		String eagleULP = fritzingLocation + "ulp" + File.separator + "fritzing_master.ulp";
 		if (! new File(eagleULP).exists()) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 				"Could not find Fritzing ULP at " + eagleULP + ".\n"+
@@ -179,9 +176,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		String eagleParams = "RUN " 
 				+ "'" + eagleULP + "' "
 				+ "'" + fritzing2eagleSCR + "' "	
-				+ "'" + eagleULPLocation + "' " 
-				+ "'" + eagleSCRLocation + "'";
-		System.out.println(eagleParams);
+				+ "'" + fritzingLocation + "'";
 		// Run!
 		try {
 			ProcessBuilder runEagle = new ProcessBuilder(
