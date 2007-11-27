@@ -1,0 +1,43 @@
+MENU 	'(1) Arrange parts {\
+			Move |\
+			Rotate |\
+			Select group : Group}' \
+		'(2) Auto-route {\
+			Single-sided : layer tRestrict; polygon AAAA (0 0) (2200 0) (2200 2800) (0 2800) (0 0); display -tRestrict; auto; layer Top;|\
+			Double-sided : ;}' \
+		'(3) Routing tools {\ 
+			Ripup |\ 
+			Ripup all : ripup *; |\ 
+			Manual route : route |\
+			Change width {\
+				Thin : ; |\ 
+				Medium : ; |\ 
+				Thick : ; }}' \
+		'(4) Add other {\ 
+			Text {\
+				Top : change font vector; change size 70; change ratio 15; layer Top; text |\
+				Bottom : change font vector; change size 70; change ratio 15; Layer Bottom; text |\
+				Silkscreen : change font vector; change size 70; change ratio 15; Layer tDocu; text } |\
+			Line {\ 
+				Top copper : ; |\ 
+				Bottom copper : ; |\ 
+				Silkscreen : ; } |\ 
+			Circle {\ 
+				Top copper : ; |\ 
+				Bottom copper : ; |\ 
+				Silkscreen : ; } |\
+			Polygon {\
+				Top copper : ; |\
+				Bottom copper : ; |\
+				Silkscreen : ; } |\
+			Logo {\
+				Top copper : ; |\
+				Bottom copper : ; |\
+				Silkscreen : ; }}' \	
+		'(5) Export {\ 
+			PDF |\ 
+			EPS |\ 
+			Gerbers |\ 
+			Image }'
+		
+			
