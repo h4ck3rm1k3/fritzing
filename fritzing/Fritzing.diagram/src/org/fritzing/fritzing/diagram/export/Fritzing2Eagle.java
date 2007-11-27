@@ -23,10 +23,8 @@ import org.fritzing.fritzing.impl.ButtonImpl;
 import org.fritzing.fritzing.impl.LEDImpl;
 import org.fritzing.fritzing.impl.ResistorImpl;
 
-public class Fritzing2Eagle {
-
-	
-	public static String createEagleScript(IDiagramGraphicalViewer viewer) {
+public class Fritzing2Eagle {	
+	public static String createEagleScript(IDiagramGraphicalViewer viewer, String eagleLBRLocation) {
 		String result = "";
 		SketchEditPart sketchEP = (SketchEditPart) viewer.getContents();
 		Sketch sketch = (Sketch) ((View) sketchEP.getModel()).getElement();
@@ -55,7 +53,7 @@ public class Fritzing2Eagle {
 			EagleSCRPart part = new EagleSCRPart(
 				p.getName(),			// part name (e.g. 'R1')
 				partClass,			// part type (e.g. 'Resistor')
-				"fritzing-0001a",	// library name
+				"fritzing",			// library name
 				new CoordPair(		// Fritzing coordinates
 					((float)getLayoutInfo(viewer, p).getLocation().x), 
 					(float)getLayoutInfo(viewer, p).getLocation().y)
@@ -69,9 +67,6 @@ public class Fritzing2Eagle {
 		// assuming an origin in the top left and Eagle assuming an origin in the bottom 
 		// left
 		for (int i=0; i<partList.size(); i++) {
-//			System.out.print(getPartEntry((EagleSCRPart)partList.get(i)));
-//			result = result.concat(getPartEntry((EagleSCRPart)partList.get(i)));
-//			(EagleSCRPart)partList.get(i).partPos.yVal = 3.2 - partList.get(i).partPos.yVal;
 			float xPos = partList.get(i).partPos.xVal;
 			float yPos = partList.get(i).partPos.yVal;
 			float yLimit = (float)3.2;
@@ -103,7 +98,6 @@ public class Fritzing2Eagle {
 			for (int i=0; i<partList.size(); i++) {
 				if (partList.get(i).partName.equalsIgnoreCase(w.getSource().getParent().getName())) {
 					// set the terminal's parent type to be the same as for the part
-//					sourceParentType = partList.get(i).partType;
 					CoordPair sourceCoords = partList.get(i).getTerminalCoords(w.getSource().getName());
 					System.out.println("coords: " + sourceCoords.xVal + "," + sourceCoords.yVal);
 					net.sourcePos = sourceCoords;
@@ -114,7 +108,6 @@ public class Fritzing2Eagle {
 			for (int i=0; i<partList.size(); i++) {
 				if (partList.get(i).partName.equalsIgnoreCase(w.getTarget().getParent().getName())) {
 					// set the terminal's parent type to be the same as for the part
-//					sourceParentType = partList.get(i).partType;
 					CoordPair targetCoords = partList.get(i).getTerminalCoords(w.getTarget().getName());
 					System.out.println("coords: " + targetCoords.xVal + "," + targetCoords.yVal);
 					net.targetPos = targetCoords;
@@ -124,6 +117,7 @@ public class Fritzing2Eagle {
 		}
 		
 		ScriptExporter exporter = new ScriptExporter();
+
 		result = exporter.export(partList, netList);
 		System.out.println(result);
 		

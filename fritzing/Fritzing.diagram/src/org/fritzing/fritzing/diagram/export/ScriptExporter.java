@@ -1,9 +1,15 @@
 package org.fritzing.fritzing.diagram.export;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import org.eclipse.core.runtime.Platform;
 
-public class ScriptExporter {
+
+public class ScriptExporter {	
+	String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
+	String eagleLBRLocation	= fritzingLocation + "lbr" + File.separator;
+	
 	// the following header text string is prepended to all schematic-
 	// generating script files we produce - it sets up the schematic 
 	// editing environment, opens a schematic sheet, and generally gets
@@ -36,7 +42,7 @@ public class ScriptExporter {
 		"CHANGE STYLE 'Continuous' \n" + 
 		// tell the schematic editor to use the Fritzing Eagle library
 		// it is not loaded by default
-		"USE fritzing-0001a.lbr;\n";
+		"USE " + eagleLBRLocation + "fritzing.lbr;\n";
 	
 	// the following footer text is appended to all schematic-generating
 	// script files we produce.  these commands are used primarily to return
@@ -93,21 +99,16 @@ public class ScriptExporter {
 		// this should take a file handle and the pre-populated part and net listArrays as arguments
 		// iterate through each entry, printing corresponding lines plus header and footer text
 		String result = "";
-		
-//		System.out.print(getHeaderText());
 		result = result.concat(getHeaderText());
 		
 		for (int i=0; i<partList.size(); i++) {
-//			System.out.print(getPartEntry((EagleSCRPart)partList.get(i)));
 			result = result.concat(getPartEntry((EagleSCRPart)partList.get(i)));
 		}
 		
 		for (int i=0; i<netList.size(); i++) {
-//			System.out.print(getNetEntry((EagleSCRNet)netList.get(i)));
 			result = result.concat(getNetEntry((EagleSCRNet)netList.get(i)));
 		}
 		
-//		System.out.print(getFooterText());
 		result = result.concat(getFooterText());
 		
 		return result;

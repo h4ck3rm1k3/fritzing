@@ -83,8 +83,18 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		ValidateAction.runValidation(editor.getDiagramEditPart(), editor.getDiagram());
 		// TODO: warn if validation shows errors
 		
+		// Specify paths to scripts and ULPs needed by Eagle
+		// these include fritzing_master.ulp, auto_place.ulp, fritzing_setup-arduino_shield.scr,
+		// and fritzing_menu-placement.scr at the moment
+		// (done here because the location of the Fritzing Eagle library must be passed
+		// to the method that creates the schematic-generation script)
+		String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
+		String eagleSCRLocation = fritzingLocation + "scr" + File.separator;
+		String eagleULPLocation = fritzingLocation + "ulp" + File.separator;
+		String eagleLBRLocation	= fritzingLocation + "lbr" + File.separator;
+		
 		// transform into EAGLE script
-		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer());
+		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer(), eagleLBRLocation);
 
 		String fritzing2eagleSCR = diagramUri.trimFileExtension()
 				.appendFileExtension("scr").toFileString();
@@ -117,6 +127,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				.getPluginPreferences();
 		String eagleLocation = preferences
 				.getString(EaglePreferencePage.EAGLE_LOCATION) + File.separator;
+		
 		// EAGLE executable
 		String eagleExec = "";
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
@@ -138,7 +149,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			eagleExec = "\"" + eagleExec + "\"";
 		}
 		// EAGLE PCB .ulp
-		String eagleULP = eagleLocation + "ulp/fritzing_master.ulp";
+		String eagleULP = eagleULPLocation + File.separator + "fritzing_master.ulp";
 		if (! new File(eagleULP).exists()) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 				"Could not find Fritzing ULP at " + eagleULP + ".\n"+
@@ -167,7 +178,10 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		// EAGLE parameters
 		String eagleParams = "RUN " 
 				+ "'" + eagleULP + "' "
-				+ "'" + fritzing2eagleSCR + "'"	;
+				+ "'" + fritzing2eagleSCR + "' "	
+				+ "'" + eagleULPLocation + "' " 
+				+ "'" + eagleSCRLocation + "'";
+		System.out.println(eagleParams);
 		// Run!
 		try {
 			ProcessBuilder runEagle = new ProcessBuilder(
