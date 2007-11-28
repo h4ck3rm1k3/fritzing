@@ -61,7 +61,7 @@ if (schematic) schematic(SCH) {
 if (dlgMessageBox(";Your circuit board design will now be created.\n\nCheck part placement and adjust using the MOVE and ROTATE tools.\nWhen you are satisfied, click ROUTE to continue.") == 0) {
 
 }
-sprintf(c, "SCR fritzing_menu-placement.scr\n;");
+
 cmd+= c;
 
 exit(cmd);
