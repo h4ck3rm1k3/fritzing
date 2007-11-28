@@ -473,11 +473,11 @@ public class FritzingDiagramEditorUtil {
 	/**
 	 * @generated NOT
 	 */
-	public static IDiagramWorkbenchPart getActiveDiagramPart()
+	public static FritzingDiagramEditor getActiveDiagramPart()
 			throws NullPointerException {
 		IEditorPart editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		return ((IDiagramWorkbenchPart) editor);
+		return ((FritzingDiagramEditor) editor);
 	}
 
 	public static Boolean openFritzingFile(URI fileURI) {

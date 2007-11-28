@@ -402,6 +402,11 @@ public class Messages extends NLS {
 	 * @generated NOT
 	 */
 	public static String ApplicationMenuName_New;
+	
+	/**
+	 * @generated NOT
+	 */
+	public static String ApplicationMenuName_Export;
 
 	/**
 	 * @generated
