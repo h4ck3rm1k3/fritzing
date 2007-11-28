@@ -1,21 +1,41 @@
+Notes on the Fritzing releases. Related issue numbers in brackets.
+
+
+< > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
+
 0002 ALPHA - scheduled for Dec 4th 2007
 
-ENHANCEMENTS
+Smoothening of the first release: less pain, slightly improving
+on the eye.
+
+< ENHANCEMENTS >
+
 Usability
 - Parts are now rotatable (though in steps of 90° only) [#28]
-- Terminals/Pins of parts are now fixed
-- Wires can connect to wires, turning them into nets
-- Removed some of the default, annoying GMF UI (more to come) 
-  * hover context menus
+- Terminals/Pins of parts are now fixated
+- Wires can connect to wires
+- Smoothened some of the default, annoying GMF UI 
+  (more reduction to come): 
+  - removed pop-up context menus [#35]
+  - moved image export menu to File > Export [#34]
+
 Beautification
-- New splash screen!
+- New splash screen! [#19]
+- Tuned logo!
+
 Installation
 - No longer need to copy Eagle scripts to Eagle directories [#10]
 
-BUG FIXES
+< BUG FIXES >
+
 - "Export to PCB" now works reliably [#20]
 
 
+< > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
+
 0001 ALPHA - Nov 12 2007
 
-Initial release
+Initial release. Supporting the basic functionality of a Hello World-
+example from the creation of a circuit to the automatic export as
+an Arduino shield. No work on aesthetics or usability yet, almost
+everything is the GMF default.

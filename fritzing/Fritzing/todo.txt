@@ -10,6 +10,8 @@
 // Extensible Type Registry  http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.gmf.doc/tutorials/common/Extensible%20Type%20Registry/extensibleTypeRegistryTutorial.html
 
 // Multiple editors (physical/schematic/pcb)
+// MultiPageEditorPart
+// https://bugs.eclipse.org/bugs/show_bug.cgi?id=189399
 // http://wiki.eclipse.org/index.php/GMF_Archived_Newsgroup_Q&A#How_can_I_synchronize_editing_domains.3F
 // http://wiki.eclipse.org/GMF_Tips#Sharing_single_EditingDomain_instance_across_several_diagrams
 // http://wiki.eclipse.org/GMF_GenModel_Hints -> see "Model ID"
@@ -20,11 +22,16 @@
 // Rotatable parts
 // http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg02705.html
 
+// Drag & drop parts from the palette
+// http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg01537.html
+
 // Make LED color editable, resistor rings
 // http://wiki.eclipse.org/GMF_Tips#Making_figures_sensitive_to_attributes_of_semantic_elements
 
 // "mil" unit for grid
 
+// Change background color
+// http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg01141.html
 
 // ========= EMF ==========
 
