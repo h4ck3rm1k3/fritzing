@@ -1,10 +1,21 @@
-Changelog for Fritzing
+0002 ALPHA - scheduled for Dec 4th 2007
 
-    (name of developer listed in brackets)
+ENHANCEMENTS
+Usability
+- Parts are now rotatable (though in steps of 90° only) [#28]
+- Terminals/Pins of parts are now fixed
+- Wires can connect to wires, turning them into nets
+- Removed some of the default, annoying GMF UI (more to come) 
+  * hover context menus
+Beautification
+- New splash screen!
+Installation
+- No longer need to copy Eagle scripts to Eagle directories [#10]
 
-Fritzing 0002 ALPHA - unreleased
+BUG FIXES
+- "Export to PCB" now works reliably [#20]
 
-Fritzing 0001 ALPHA - Nov 11 2007
 
-    - Initial import
-      [andre]
+0001 ALPHA - Nov 12 2007
+
+Initial release
