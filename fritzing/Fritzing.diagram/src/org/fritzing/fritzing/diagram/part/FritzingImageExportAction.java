@@ -10,12 +10,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.gef.Request;
 import org.eclipse.gmf.runtime.common.core.util.Log;
 import org.eclipse.gmf.runtime.common.core.util.Trace;
@@ -99,15 +101,14 @@ public class FritzingImageExportAction extends WorkbenchWindowActionDelegate {
 				// represents the place where the editor's input file resides.
 				// We can extrapolate a destination path from this file.
 				if (path == null) {
-					IFile file = (IFile) editor.getEditorInput().getAdapter(
-							IFile.class);
+					URIEditorInput input = (URIEditorInput) editor.getEditorInput();
+					URI uri = input.getURI();
 
 					// We can't necessarily assume that the editor input is a
 					// file.
-					if (file != null) {
-						path = file.getLocation().removeLastSegments(1);
-						fileName = file.getLocation().removeFileExtension()
-								.lastSegment();
+					if (uri != null) {
+						path = new Path(uri.trimSegments(1).devicePath());
+						fileName = uri.trimFileExtension().lastSegment();
 					}
 				}
 			}
