@@ -72,11 +72,8 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		// don't want delete
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
 
-		// removing these polices removes popups.  There are two popups, one from the diagramming assistant (CONNECTION_HANDLES_ROLE),
-		// which popups up a pair of connection boxes; the other (POPUPBAR_ROLE) pops up child items that can be added to the diagram
-		removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.POPUPBAR_ROLE);
-		removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
-			
+		// POPUP_BAR and CONNECTOR_HANDLES are disabled in preferences
+		
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
 	}

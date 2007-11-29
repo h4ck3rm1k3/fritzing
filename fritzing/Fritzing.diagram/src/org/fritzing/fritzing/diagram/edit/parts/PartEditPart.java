@@ -37,11 +37,9 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	 */
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
-		
-		// removing these polices removes popups.  There are two popups, one from the diagramming assistant (CONNECTION_HANDLES_ROLE),
-		// which popups up a pair of connection boxes; the other (POPUPBAR_ROLE) pops up child items that can be added to the diagram
-		removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.POPUPBAR_ROLE);
-		removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
+
+		// place to add or remove policies
+		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in preferences
 	}
 	
 	public EditPolicy getPrimaryDragEditPolicy() {

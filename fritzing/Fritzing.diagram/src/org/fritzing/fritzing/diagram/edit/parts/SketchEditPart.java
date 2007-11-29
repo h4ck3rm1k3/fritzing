@@ -40,9 +40,8 @@ public class SketchEditPart extends DiagramEditPart {
 				new SketchItemSemanticEditPolicy());
 		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
 				new SketchCanonicalEditPolicy());
-		
-		// get rid of hover popup of children to add to the diagram
-		removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.POPUPBAR_ROLE);
+
+		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in preferences
 	}
 
 }
