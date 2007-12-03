@@ -11,7 +11,9 @@ import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
+import org.eclipse.gmf.runtime.diagram.ui.services.palette.PaletteService;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
@@ -22,11 +24,32 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 public class FritzingPaletteFactory {
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public void fillPalette(PaletteRoot paletteRoot) {
+		customiseStandardGroup(paletteRoot);
 		paletteRoot.add(createConnect1Group());
 		paletteRoot.add(createParts2Group());
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public void customiseStandardGroup(PaletteRoot paletteRoot) {
+		PaletteContainer standard = (PaletteContainer) paletteRoot.getChildren().get(0);
+		ToolEntry standardSelectionTool = (ToolEntry) standard.getChildren().get(1);
+		standard.remove(standardSelectionTool);
+		ToolEntry selectionPanTool = createPanningSelectionTool();
+		standard.add(1, selectionPanTool);
+		paletteRoot.setDefaultEntry(selectionPanTool);
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	private ToolEntry createPanningSelectionTool() {
+		PanningSelectionToolEntry entry = new PanningSelectionToolEntry();
+		return entry;
 	}
 
 	/**
