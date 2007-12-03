@@ -7,12 +7,16 @@ import java.lang.ref.WeakReference;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
+import org.eclipse.gef.RootEditPart;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.AbstractEditPartProvider;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.CreateGraphicEditPartOperation;
+import org.eclipse.gmf.runtime.diagram.ui.services.editpart.CreateRootEditPartOperation;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.IEditPartOperation;
+import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
+import org.fritzing.fritzing.diagram.edit.parts.FritzingDiagramRootEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.FritzingEditPartFactory;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -119,9 +123,13 @@ public class FritzingEditPartProvider extends AbstractEditPartProvider {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public synchronized boolean provides(IOperation operation) {
+		if (operation instanceof CreateRootEditPartOperation) {
+			// also needed to set Priority of this provider to Medium in plugin.xml
+			return true;
+		}
 		if (operation instanceof CreateGraphicEditPartOperation) {
 			View view = ((IEditPartOperation) operation).getView();
 			if (!SketchEditPart.MODEL_ID.equals(FritzingVisualIDRegistry
@@ -141,5 +149,15 @@ public class FritzingEditPartProvider extends AbstractEditPartProvider {
 			}
 		}
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.gmf.runtime.diagram.ui.services.editpart.AbstractEditPartProvider#createRootEditPart(org.eclipse.gmf.runtime.notation.Diagram)
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	public RootEditPart createRootEditPart(Diagram diagram) {
+		return new FritzingDiagramRootEditPart(diagram.getMeasurementUnit());
 	}
 }

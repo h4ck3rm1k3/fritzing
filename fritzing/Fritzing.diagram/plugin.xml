@@ -378,7 +378,7 @@
    <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders">
       <?gmfgen generated="true"?>
       <editpartProvider class="org.fritzing.fritzing.diagram.providers.FritzingEditPartProvider">
-         <Priority name="Lowest"/>
+         <Priority name="Medium"/>
       </editpartProvider>
    </extension>
 
