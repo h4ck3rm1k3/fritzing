@@ -1,0 +1,32 @@
+// fritzing_pdf_print.ulp for release with Fritzing v 0002
+// handles PDF export operations 
+// called from Eagle command texts menu - the type of PDF to be created (top, bottom, both, or diy) is passed as an argument to the ULP.
+// the ULP handles the PDF creation with the print commands and associated flags and produces a success message when done.
+// necessary, and an improvement over doing the same with the Eagle menu script directly because no message is produced when the process
+// is succesful
+
+// (c) Fritzing, 2007
+
+string cmd;
+
+void main(void) {
+
+	if (argv[1] == "top") {
+		cmd = "display none dimension pads top tdocu tplace tvalues tnames vias; print 3 -mirror -black file top.pdf; display all;";
+		dlgMessageBox(";'top.pdf' saved.");
+	}
+	if (argv[1] == "bottom") {
+		cmd = "display none dimension pads bottom bdocu bplace bvalues bnames vias; print 3 mirror -black file bottom.pdf; display all;";
+		dlgMessageBox(";'bottom.pdf' saved.");
+	}
+	if (argv[1] == "both") {
+		cmd = "display none dimension pads top tdocu tplace tvalues tnames bottom bdocu bplace bvalues bnames vias; print 3 -mirror -black file both.pdf; display all;";	
+		dlgMessageBox(";'both.pdf' saved.");
+	}
+	if (argv[1] == "diy") {
+		cmd = "display none dimension pads top vias; print 1 mirror black file diy_top.pdf; display none dimension pads bottom vias; print 1 -mirror black file diy_bottom.pdf; display all;";
+		dlgMessageBox(";'diy_top.pdf' and 'diy_bottom.pdf' saved.");
+	}
+
+	exit(cmd);
+}

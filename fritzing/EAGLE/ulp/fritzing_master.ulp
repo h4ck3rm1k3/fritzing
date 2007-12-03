@@ -1,12 +1,1 @@
-// Creates PCB from a Fritzing2Eagle file
-// Paramaters: the Fritzing2Eagle file to start from
-// Run from the shell like this: eagle -C "RUN 'fritzing_master.ulp' '<fritzing2eagleFile.scr>'" newSchematicFile.sch
-
-string c,cmd;
-
-cmd += "script '" + argv[1] + "'; \n";
-cmd += "run '" + argv[2] + "ulp/fritzing_autoplace'; \n";
-cmd += "script '" + argv[2] + "scr/fritzing_setup-arduino_shield'; \n";
-cmd += "script '" + argv[2] + "scr/fritzing_menu'; \n";
-
-exit(cmd);
+// Creates PCB from a Fritzing2Eagle file// Paramaters: the Fritzing2Eagle file to start from// Run from the shell like this: eagle -C "RUN 'fritzing_master.ulp' '<fritzing2eagleFile.scr>'" newSchematicFile.schstring c,cmd;if (dlgMessageBox(";Fritzing will now create your board in Eagle.  \n\nWhen asked if you would like to create a new board from the schematic, please choose \"Yes\".  \n\nIf you have any questions, please see http://www.fritzing.org/learning/eagle") == 0) {}cmd += "script '" + argv[1] + "'; \n";cmd += "run '" + argv[2] + "ulp/fritzing_autoplace'; \n";cmd += "script '" + argv[2] + "scr/fritzing_setup-arduino_shield'; \n";cmd += "script '" + argv[2] + "scr/fritzing_menu'; \n";exit(cmd);
