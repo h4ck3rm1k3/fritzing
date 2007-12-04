@@ -3,13 +3,10 @@ package org.fritzing.fritzing.diagram.export;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.eclipse.core.runtime.Platform;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 
 
 public class ScriptExporter {	
-	String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
-	String eagleLBRLocation	= fritzingLocation + "lbr" + File.separator;
-	
 	// the following header text string is prepended to all schematic-
 	// generating script files we produce - it sets up the schematic 
 	// editing environment, opens a schematic sheet, and generally gets
@@ -42,7 +39,8 @@ public class ScriptExporter {
 		"CHANGE STYLE 'Continuous' \n" + 
 		// tell the schematic editor to use the Fritzing Eagle library
 		// it is not loaded by default
-		"USE " + eagleLBRLocation + "fritzing.lbr;\n";
+		"USE '" + FritzingDiagramEditorUtil.getFritzingLocation() +
+				"lbr/fritzing.lbr';\n";
 	
 	// the following footer text is appended to all schematic-generating
 	// script files we produce.  these commands are used primarily to return

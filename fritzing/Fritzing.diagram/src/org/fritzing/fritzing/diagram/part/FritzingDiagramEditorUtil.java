@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
@@ -63,6 +64,10 @@ import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 
 /**
  * @generated
+ */
+/**
+ * @author andre
+ *
  */
 public class FritzingDiagramEditorUtil {
 
@@ -480,6 +485,9 @@ public class FritzingDiagramEditorUtil {
 		return ((FritzingDiagramEditor) editor);
 	}
 
+	/**
+	 * @generated NOT
+	 */
 	public static Boolean openFritzingFile(URI fileURI) {
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
@@ -510,5 +518,19 @@ public class FritzingDiagramEditorUtil {
 			}
 		}
 		return true;
+	}
+	
+	
+	/**
+	 * @return the install location of Fritzing on the hard drive
+	 * @generated NOT
+	 */
+	public static String getFritzingLocation() {
+		String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			fritzingLocation = fritzingLocation.startsWith("/") ? 
+					fritzingLocation.substring(1) : fritzingLocation;
+		}
+		return fritzingLocation;
 	}
 }
