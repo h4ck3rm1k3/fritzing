@@ -129,18 +129,18 @@ public class FsrSensorEditPart extends PartEditPart {
 	}
 
 			/**
- * @generated
+ * @generated NOT
  */
 	protected boolean addFixedChild(EditPart childEditPart) {
-							if (childEditPart instanceof FsrSensorNameEditPart) {
+		if (childEditPart instanceof FsrSensorNameEditPart) {
 			((FsrSensorNameEditPart) childEditPart).setLabel(
 				getPrimaryShape().getFigureFsrSensorNameFigure());
 			return true;
 		}
-											if (childEditPart instanceof Terminal2EditPart) {
+		if (childEditPart instanceof Terminal2EditPart) {
 			BorderItemLocator locator =
 				new BorderItemLocator(
-					getMainFigure(), PositionConstants.NONE);
+					getMainFigure(), getEastWestBorderPositionConstants());
 			getBorderedFigure().getBorderItemContainer().add(
 				((Terminal2EditPart) childEditPart).getFigure(), locator);
 			return true;

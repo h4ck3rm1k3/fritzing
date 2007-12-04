@@ -42,6 +42,9 @@ import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.PotentiometerCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.PotentiometerItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
+import org.eclipse.emf.ecore.EObject;
+import org.fritzing.fritzing.Terminal;
 
 /**
  * @generated NOT
@@ -134,7 +137,7 @@ public class PotentiometerEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof PotentiometerNameEditPart) {
@@ -144,8 +147,28 @@ public class PotentiometerEditPart extends PartEditPart {
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
+			
+			int positionConstants = PositionConstants.NONE;
+			Object model = childEditPart.getModel();
+			if (model instanceof NodeImpl) {
+				EObject eobject = ((NodeImpl) model).getElement();
+				if (eobject instanceof Terminal) {
+					String name = ((Terminal) eobject).getName();
+					if (name.equalsIgnoreCase("W")) {
+						positionConstants = PositionConstants.SOUTH;
+					}
+					else if (name.equalsIgnoreCase("T1")) {
+						positionConstants = PositionConstants.EAST;
+					}
+					else if (name.equalsIgnoreCase("T2")) {
+						positionConstants = PositionConstants.WEST;
+					}
+					
+				}
+				
+			}
 			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.NONE);
+					positionConstants);
 			getBorderedFigure().getBorderItemContainer().add(
 					((Terminal2EditPart) childEditPart).getFigure(), locator);
 			return true;

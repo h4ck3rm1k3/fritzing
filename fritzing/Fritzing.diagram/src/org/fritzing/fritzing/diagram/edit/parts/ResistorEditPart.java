@@ -128,7 +128,7 @@ public class ResistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof ResistorNameEditPart) {
@@ -138,7 +138,7 @@ public class ResistorEditPart extends PartEditPart {
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
 			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.NONE);
+					getEastWestBorderPositionConstants());
 			getBorderedFigure().getBorderItemContainer().add(
 					((Terminal2EditPart) childEditPart).getFigure(), locator);
 			return true;

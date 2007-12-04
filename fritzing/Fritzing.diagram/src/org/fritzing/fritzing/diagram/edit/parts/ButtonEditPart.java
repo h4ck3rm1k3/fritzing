@@ -9,6 +9,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -28,19 +29,43 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
+
+
 
 /**
  * @generated NOT
  */
 public class ButtonEditPart extends PartEditPart {
 
+	/**
+	 * @generated NOT
+	 */
+	public static final String UPPER_LEFT_TERMINAL = "0p";
+
+	/**
+	 * @generated NOT
+	 */
+	public static final String UPPER_RIGHT_TERMINAL = "1p";
+
+	/**
+	 * @generated NOT
+	 */
+	public static final String LOWER_LEFT_TERMINAL = "0";
+
+	/**
+	 * @generated NOT
+	 */
+	public static final String LOWER_RIGHT_TERMINAL = "1";
+	
 	/**
 	 * @generated
 	 */
@@ -136,13 +161,70 @@ public class ButtonEditPart extends PartEditPart {
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.NONE);
+			String name = null;
+			Object model = childEditPart.getModel();
+			int pos = 0;
+			if (model instanceof NodeImpl) {
+				EObject eobject = ((NodeImpl) model).getElement();
+				if (eobject instanceof Terminal) {
+					name = ((Terminal) eobject).getName();
+					if (name == null) {						
+					}
+					if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
+						pos = PositionConstants.NORTH_WEST;
+					}
+					else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
+						pos = PositionConstants.NORTH_EAST;
+					}
+					else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
+						pos = PositionConstants.SOUTH_WEST;
+					}
+					else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
+						pos = PositionConstants.SOUTH_EAST;
+					}
+				}
+			}
+
+			ButtonBorderItemLocator locator = new ButtonBorderItemLocator(getMainFigure(), 0, pos);
+			//BorderItemLocator locator = new BorderItemLocator(getMainFigure(), 0);
 			getBorderedFigure().getBorderItemContainer().add(
 					((Terminal2EditPart) childEditPart).getFigure(), locator);
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public int getTerminalNamePosition(Terminal2EditPart terminal2, int defaultPosition) {
+		String name = null;
+		Object model = terminal2.getModel();
+		if (model instanceof NodeImpl) {
+			EObject eobject = ((NodeImpl) model).getElement();
+			if (eobject instanceof Terminal) {
+				name = ((Terminal) eobject).getName();					
+			}
+		}
+		
+		if (name == null) return defaultPosition;
+		
+		if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
+			return PositionConstants.NORTH;
+		}
+		else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
+			return PositionConstants.NORTH;
+		}
+		else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
+			return PositionConstants.SOUTH;
+		}
+		else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
+			return PositionConstants.SOUTH;
+		}
+		
+		
+		return defaultPosition;
+		
 	}
 
 	/**
@@ -349,3 +431,5 @@ public class ButtonEditPart extends PartEditPart {
 			SWT.NORMAL);
 
 }
+
+

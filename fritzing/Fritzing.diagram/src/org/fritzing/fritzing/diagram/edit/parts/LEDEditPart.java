@@ -3,6 +3,8 @@
  */
 package org.fritzing.fritzing.diagram.edit.parts;
 
+import java.util.Iterator;
+
 import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
@@ -57,6 +59,7 @@ public class LEDEditPart extends PartEditPart {
 	 * @generated
 	 */
 	protected IFigure primaryShape;
+	
 
 	/**
 	 * @generated
@@ -129,7 +132,7 @@ public class LEDEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof LEDNameEditPart) {
@@ -138,8 +141,9 @@ public class LEDEditPart extends PartEditPart {
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
+			
 			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.NONE);
+					getEastWestBorderPositionConstants());
 			getBorderedFigure().getBorderItemContainer().add(
 					((Terminal2EditPart) childEditPart).getFigure(), locator);
 			return true;

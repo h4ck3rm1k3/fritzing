@@ -130,8 +130,11 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	protected void addBorderItem(IFigure borderItemContainer,
 			IBorderItemEditPart borderItemEditPart) {
 		if (borderItemEditPart instanceof TerminalName2EditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.SOUTH_WEST);
+			int positionConstants = PositionConstants.SOUTH_WEST;
+			if (this.getParent() instanceof PartEditPart) {
+				positionConstants = ((PartEditPart) this.getParent()).getTerminalNamePosition(this, PositionConstants.SOUTH_WEST);
+			}
+			BorderItemLocator locator = new BorderItemLocator(getMainFigure(), positionConstants);
 			locator.setBorderItemOffset(new Dimension(0, 0));
 			borderItemContainer.add(borderItemEditPart.getFigure(), locator);
 		} else {
