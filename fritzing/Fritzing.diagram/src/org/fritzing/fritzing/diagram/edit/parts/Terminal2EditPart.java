@@ -29,6 +29,7 @@ import org.eclipse.swt.graphics.Color;
 import org.fritzing.fritzing.diagram.edit.policies.Terminal2ItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
+import org.eclipse.swt.graphics.Color;
 
 /**
  * @generated
@@ -76,6 +77,19 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	public void setTextColor(Color color) {
+		for (int i = 0; i < this.getChildren().size(); i++) {
+			if (this.getChildren().get(i) instanceof TerminalName2EditPart) {
+				((TerminalName2EditPart) this.getChildren().get(i)).setFontColor(color);
+				break;
+			}
+		}
+			
 	}
 
 	/**

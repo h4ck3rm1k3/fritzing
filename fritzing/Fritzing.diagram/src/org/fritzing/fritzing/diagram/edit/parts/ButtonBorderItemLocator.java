@@ -70,10 +70,6 @@ public class ButtonBorderItemLocator implements IBorderItemLocator {
 		}
 		return new Point(x, y);
 	}
-
-	protected Point getPreferredLocation(int side, IFigure borderItem) {
-		return getPreferredLocation(borderItem);
-	}
 	
 	protected final Dimension getSize(IFigure borderItem) {
         Dimension size = getConstraint().getSize();

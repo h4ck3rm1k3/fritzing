@@ -8,6 +8,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -28,13 +29,18 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.policies.ArduinoCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ArduinoItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
+import java.util.List;
+import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
  * @generated NOT
@@ -127,7 +133,7 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof ArduinoNameEditPart) {
@@ -136,13 +142,63 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 			return true;
 		}
 		if (childEditPart instanceof Terminal2EditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.NONE);
+			ArduinoBorderItemLocator.TerminalPosition terminalPosition = ArduinoBorderItemLocator.TerminalPosition.UNKNOWN;
+			Object model = childEditPart.getModel();
+			
+			if (model instanceof NodeImpl) {
+				EObject eobject = ((NodeImpl) model).getElement();
+				if (eobject instanceof Terminal) {
+					String name = ((Terminal) eobject).getName();
+					terminalPosition = ArduinoBorderItemLocator.parseTerminalName(name);
+				}
+			}
+			
+			IBorderItemLocator locator = null;
+			if (terminalPosition == ArduinoBorderItemLocator.TerminalPosition.UNKNOWN) {
+				locator = new BorderItemLocator(getMainFigure(), PositionConstants.NONE);
+			}
+			else {
+				locator = new ArduinoBorderItemLocator(getMainFigure(), terminalPosition);
+			}
 			getBorderedFigure().getBorderItemContainer().add(
 					((Terminal2EditPart) childEditPart).getFigure(), locator);
+			
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public int getTerminalNamePosition(Terminal2EditPart terminal2, int defaultPosition) {
+		
+		terminal2.setTextColor(new Color(null, 255, 0, 0));	
+		
+		String name = null;
+		Object model = terminal2.getModel();
+		if (model instanceof NodeImpl) {
+			EObject eobject = ((NodeImpl) model).getElement();
+			if (eobject instanceof Terminal) {
+				name = ((Terminal) eobject).getName();					
+			}
+		}
+		
+		if (name == null) return defaultPosition;
+				
+		ArduinoBorderItemLocator.TerminalPosition terminalPosition = ArduinoBorderItemLocator.parseTerminalName(name);
+		if (terminalPosition == ArduinoBorderItemLocator.TerminalPosition.UNKNOWN) return defaultPosition;
+
+		if (terminalPosition.getSide() == PositionConstants.NORTH) {
+			return PositionConstants.SOUTH;
+		}
+		else if (terminalPosition.getSide() == PositionConstants.SOUTH) {
+			return PositionConstants.NORTH;
+		}
+		
+		
+		return defaultPosition;
+		
 	}
 
 	/**
@@ -194,7 +250,7 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(250), getMapMode().DPtoLP(350));
+				.DPtoLP(350), getMapMode().DPtoLP(250));
 		return result;
 	}
 
@@ -219,6 +275,7 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 		IFigure shape = createNodeShape();
 		figure.add(shape);
 		contentPane = setupContentPane(shape);
+		
 		return figure;
 	}
 
@@ -271,8 +328,8 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 		public ArduinoFigure() {
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(250),
-					getMapMode().DPtoLP(350)));
+			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(350),
+					getMapMode().DPtoLP(250)));
 			createContents();
 		}
 
@@ -280,7 +337,26 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 		 * @generated
 		 */
 		private void createContents() {
-
+			setLayoutManager(new StackLayout() {
+			    public void layout(IFigure figure) {
+			        Rectangle r = figure.getClientArea();
+					List children = figure.getChildren();
+					IFigure child;
+					Dimension d;
+					for (int i = 0; i < children.size(); i++) {
+						child = (IFigure)children.get(i);
+						d = child.getPreferredSize(r.width, r.height);
+						d.width = Math.min(d.width, r.width);
+						d.height = Math.min(d.height, r.height);
+						Rectangle childRect = new Rectangle(
+						r.x + (r.width - d.width)/2,
+						r.y + (r.height - d.height)/2,
+						d.width,
+						d.height);
+						child.setBounds(childRect);
+					}
+				}
+			});
 			fFigureArduinoNameFigure = new WrapLabel();
 			fFigureArduinoNameFigure.setText("..");
 

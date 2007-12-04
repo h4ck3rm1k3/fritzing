@@ -170,7 +170,7 @@ public class ButtonEditPart extends PartEditPart {
 					name = ((Terminal) eobject).getName();
 					if (name == null) {						
 					}
-					if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
+					else if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
 						pos = PositionConstants.NORTH_WEST;
 					}
 					else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {

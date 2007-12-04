@@ -154,7 +154,9 @@ public class PotentiometerEditPart extends PartEditPart {
 				EObject eobject = ((NodeImpl) model).getElement();
 				if (eobject instanceof Terminal) {
 					String name = ((Terminal) eobject).getName();
-					if (name.equalsIgnoreCase("W")) {
+					if (name == null) {					
+					}
+					else if (name.equalsIgnoreCase("W")) {
 						positionConstants = PositionConstants.SOUTH;
 					}
 					else if (name.equalsIgnoreCase("T1")) {

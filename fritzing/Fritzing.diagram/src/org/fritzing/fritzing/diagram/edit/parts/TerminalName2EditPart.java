@@ -613,6 +613,24 @@ public class TerminalName2EditPart extends LabelEditPart implements
 			this.setFont(THIS_FONT);
 
 		}
+		
+		/**
+		 * @generated NOT
+		 */
+		public void setText(String text) {
+			if (text == null) {
+				super.setText(text);
+				return;
+			}
+			
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < text.length(); i++) {
+				sb.append(text.charAt(i));
+				sb.append('\n');
+			}
+			sb.deleteCharAt(sb.length() - 1);
+			super.setText(sb.toString());
+		}
 
 	}
 
