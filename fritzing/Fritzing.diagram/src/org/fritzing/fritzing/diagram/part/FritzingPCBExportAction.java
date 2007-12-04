@@ -89,7 +89,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		// (done here because the location of the Fritzing Eagle library must be passed
 		// to the method that creates the schematic-generation script)
 		String scriptsLocation = FritzingDiagramEditorUtil.getFritzingLocation()
-									+ "/eagle";
+									+ "eagle/";
 		
 		// transform into EAGLE script
 		String script = Fritzing2Eagle.createEagleScript(editor.getDiagramGraphicalViewer());

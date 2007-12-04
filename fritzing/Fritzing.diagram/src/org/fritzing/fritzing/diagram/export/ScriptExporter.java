@@ -40,7 +40,7 @@ public class ScriptExporter {
 		// tell the schematic editor to use the Fritzing Eagle library
 		// it is not loaded by default
 		"USE '" + FritzingDiagramEditorUtil.getFritzingLocation() +
-				"lbr/fritzing.lbr';\n";
+				"eagle/lbr/fritzing.lbr';\n";
 	
 	// the following footer text is appended to all schematic-generating
 	// script files we produce.  these commands are used primarily to return
