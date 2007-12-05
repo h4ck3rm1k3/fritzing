@@ -117,9 +117,10 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 		if (getDiagramGraphicalViewer() instanceof DiagramGraphicalViewer) {
 			((DiagramGraphicalViewer) getDiagramGraphicalViewer())
 					.hookWorkspacePreferenceStore(getWorkspaceViewerPreferenceStore());
-			getWorkspaceViewerPreferenceStore().setValue(
-					WorkspaceViewerProperties.GRIDLINECOLOR,
-					SketchGridLayer.THIS_FORE.hashCode());
+// XXX: turns the grid color RED on Mac..
+//			getWorkspaceViewerPreferenceStore().setValue(
+//					WorkspaceViewerProperties.GRIDLINECOLOR,
+//					SketchGridLayer.THIS_FORE.hashCode());
 			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.GRIDLINESTYLE, 
 					SWT.LINE_SOLID);
