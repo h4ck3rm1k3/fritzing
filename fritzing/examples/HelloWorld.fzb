@@ -228,7 +228,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_awpNwZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Arduino" href="HelloWorld.fz#Arduino"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_awpNwpCQEdyrm_yTBNLRhQ" x="7608"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_awpNwpCQEdyrm_yTBNLRhQ" x="528" y="2640"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_cWvo4JCQEdyrm_yTBNLRhQ" type="2004">
     <children xmi:type="notation:Node" xmi:id="_cWw3AJCQEdyrm_yTBNLRhQ" type="5005"/>
@@ -266,7 +266,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_cWwP8JCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Button" href="HelloWorld.fz#B1"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cWwP8ZCQEdyrm_yTBNLRhQ" x="1452" y="2772"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cWwP8ZCQEdyrm_yTBNLRhQ" x="6072" y="528"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_dQGSwJCQEdyrm_yTBNLRhQ" type="2002">
     <children xmi:type="notation:Node" xmi:id="_dQHg4JCQEdyrm_yTBNLRhQ" type="5003"/>
@@ -288,7 +288,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_dQGSwZCQEdyrm_yTBNLRhQ" fontName="Segoe UI"/>
     <element xmi:type="fritzing:LED" href="HelloWorld.fz#L1"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dQGSwpCQEdyrm_yTBNLRhQ" x="1452" y="1188"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dQGSwpCQEdyrm_yTBNLRhQ" x="3696" y="528"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_jMD-EJCUEdyrm_yTBNLRhQ" type="Text">
     <children xmi:type="notation:Node" xmi:id="_jMElIJCUEdyrm_yTBNLRhQ" type="DiagramName">
@@ -299,7 +299,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_jMD-EZCUEdyrm_yTBNLRhQ" fontName="Segoe UI" description="Press the button to light the LED&#xD;&#xA;http://www.arduino.cc/en/Tutorial/Button"/>
     <element xsi:nil="true"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_jMD-EpCUEdyrm_yTBNLRhQ" x="792" y="5544" width="6449" height="1305"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_jMD-EpCUEdyrm_yTBNLRhQ" x="10296" y="2640" width="6449" height="1305"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_Er5jMJCbEdywb60pJcO5Yw" type="2003">
     <children xmi:type="notation:Node" xmi:id="_Er6KQJCbEdywb60pJcO5Yw" type="5004"/>
@@ -321,64 +321,66 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_Er5jMZCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Resistor" href="HelloWorld.fz#R1"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Er5jMpCbEdywb60pJcO5Yw" x="3564" y="2772"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Er5jMpCbEdywb60pJcO5Yw" x="7920" y="528"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_M3TNQZBtEdyxFpEcZiTD-w"/>
   <element xmi:type="fritzing:Sketch" href="HelloWorld.fz#//@sketch"/>
   <edges xmi:type="notation:Edge" xmi:id="_6fE_UJCZEdywb60pJcO5Yw" type="4001" source="_cW7PEJCQEdyrm_yTBNLRhQ" target="_awzl0pCQEdyrm_yTBNLRhQ">
-    <children xmi:type="notation:Node" xmi:id="_6fE_VJCZEdywb60pJcO5Yw" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fE_VZCZEdywb60pJcO5Yw"/>
+    <children xmi:type="notation:Node" xmi:id="_6fE_VJCZEdywb60pJcO5Yw" visible="false" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fE_VZCZEdywb60pJcO5Yw" x="-198" y="754"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_6fE_UZCZEdywb60pJcO5Yw" smoothness="Normal" lineColor="2697513"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_6fE_UpCZEdywb60pJcO5Yw" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='b1-']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fE_U5CZEdywb60pJcO5Yw" points="[79, 27, -5424, 291]$[1190, 397, -4313, 661]$[5424, -264, -79, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fE_U5CZEdywb60pJcO5Yw" points="[-80, 53, -318, -8651]$[-424, 264, -662, -8440]$[238, 8651, 0, -53]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_6fFmYJCZEdywb60pJcO5Yw" type="4001" source="_dQSgAJCQEdyrm_yTBNLRhQ" target="_axBBNZCQEdyrm_yTBNLRhQ">
-    <children xmi:type="notation:Node" xmi:id="_6fGNcJCZEdywb60pJcO5Yw" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fGNcZCZEdywb60pJcO5Yw" x="-2506" y="-103"/>
+    <children xmi:type="notation:Node" xmi:id="_6fGNcJCZEdywb60pJcO5Yw" visible="false" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fGNcZCZEdywb60pJcO5Yw" x="-55" y="223"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_6fFmYZCZEdywb60pJcO5Yw" smoothness="Normal" lineColor="1361867"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_6fFmYpCZEdywb60pJcO5Yw" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='l1+']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fFmY5CZEdywb60pJcO5Yw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fFmY5CZEdywb60pJcO5Yw" points="[27, 53, -26, -1826]$[239, 397, 186, -1482]$[53, 1799, 0, -80]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_XwyekKNhEdyQP72efq9KWg" id="(0.8712121,0.20454545)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_6fG0gJCZEdywb60pJcO5Yw" type="4001" source="_dQTuIJCQEdyrm_yTBNLRhQ" target="_axBoQpCQEdyrm_yTBNLRhQ">
-    <children xmi:type="notation:Node" xmi:id="_6fG0hJCZEdywb60pJcO5Yw" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fG0hZCZEdywb60pJcO5Yw" x="-1732" y="-154"/>
+    <children xmi:type="notation:Node" xmi:id="_6fG0hJCZEdywb60pJcO5Yw" visible="false" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_6fG0hZCZEdywb60pJcO5Yw" x="-882" y="120"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_6fG0gZCZEdywb60pJcO5Yw" smoothness="Normal" lineColor="2697513"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_6fG0gpCZEdywb60pJcO5Yw" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='l1-']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fG0g5CZEdywb60pJcO5Yw" points="[-53, -79, -12965, -1005]$[-344, -476, -13256, -1402]$[662, -793, -12250, -1719]$[2435, -476, -10477, -1402]$[12833, 926, -79, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_6fG0g5CZEdywb60pJcO5Yw" points="[0, 0, -317, -1826]$[-212, 450, -529, -1376]$[291, 1746, -26, -80]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_M9Kj8KNhEdyQP72efq9KWg" id="(0.022727273,0.4090909)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_H4pzEJCbEdywb60pJcO5Yw" type="4001" source="_Er7YYJCbEdywb60pJcO5Yw" target="_cW8dMJCQEdyrm_yTBNLRhQ">
-    <children xmi:type="notation:Node" xmi:id="_H4pzFJCbEdywb60pJcO5Yw" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_H4pzFZCbEdywb60pJcO5Yw"/>
+    <children xmi:type="notation:Node" xmi:id="_H4pzFJCbEdywb60pJcO5Yw" visible="false" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_H4pzFZCbEdywb60pJcO5Yw" x="54" y="206"/>
     </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_H4pzEZCbEdywb60pJcO5Yw"/>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_H4pzEZCbEdywb60pJcO5Yw" lineColor="8421504"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_H4pzEpCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='r1b1']"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_H4pzE5CbEdywb60pJcO5Yw" points="[-10, -1, 210, 19]$[-209, -21, 11, -1]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_NulEoJCbEdywb60pJcO5Yw" type="4001" source="_Er7_cJCbEdywb60pJcO5Yw" target="_awy-wpCQEdyrm_yTBNLRhQ">
-    <children xmi:type="notation:Node" xmi:id="_NulrsJCbEdywb60pJcO5Yw" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_NulrsZCbEdywb60pJcO5Yw"/>
+    <children xmi:type="notation:Node" xmi:id="_NulrsJCbEdywb60pJcO5Yw" visible="false" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_NulrsZCbEdywb60pJcO5Yw" x="-132" y="242"/>
     </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_NulEoZCbEdywb60pJcO5Yw" lineColor="854678"/>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_NulEoZCbEdywb60pJcO5Yw" smoothness="Normal" lineColor="854678"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_NulEopCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='b1+']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_NulEo5CbEdywb60pJcO5Yw" points="[4, 3, -143, 13]$[151, -9, 4, 1]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_NulEo5CbEdywb60pJcO5Yw" points="[53, 158, 2963, -8493]$[185, 291, 3095, -8360]$[-794, 4392, 2116, -4259]$[-2884, 8598, 26, -53]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Nung4JCbEdywb60pJcO5Yw" id="(0.46969697,0.09090909)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_YZE4cJCbEdywb60pJcO5Yw" type="4001" source="_aw5scpCQEdyrm_yTBNLRhQ" target="_Er7YYJCbEdywb60pJcO5Yw">
-    <children xmi:type="notation:Node" xmi:id="_YZFfgJCbEdywb60pJcO5Yw" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_YZFfgZCbEdywb60pJcO5Yw" x="2460" y="18"/>
+    <children xmi:type="notation:Node" xmi:id="_YZFfgJCbEdywb60pJcO5Yw" visible="false" type="6001">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_YZFfgZCbEdywb60pJcO5Yw" x="-1197" y="439"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_YZE4cZCbEdywb60pJcO5Yw" smoothness="Normal" lineColor="1361867"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_YZE4cpCbEdywb60pJcO5Yw" fontName="Segoe UI"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[name='b1a']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YZE4c5CbEdywb60pJcO5Yw" points="[-79, 0, 10663, 2487]$[-8652, -609, 2090, 1878]$[-10821, -1614, -79, 873]$[-10821, -2408, -79, 79]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YZE4c5CbEdywb60pJcO5Yw" points="[0, -80, 740, 1746]$[186, -583, 926, 1243]$[-1137, -1535, -397, 291]$[-846, -1747, -106, 79]"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_YZHUsJCbEdywb60pJcO5Yw" id="(0.8484849,0.4469697)"/>
   </edges>
 </notation:Diagram>
