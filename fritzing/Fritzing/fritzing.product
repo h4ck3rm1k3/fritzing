@@ -8,7 +8,10 @@
       <text>
          Fritzing 0002 Alpha
 
-Contributors: André Knörig, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Reto Wettach
+Contributors: Reto Wettach, André Knörig, Zach Eveland, Dirk van Oosterbosch, 
+Jonathan Cohen, Myriel Milicevic, Julia Werner, Omer Yosha, Travis Robertson,
+Fabian Brunsing, Marcus Paeschke, Klaus Zimmermann, Elisabeth Eichhorn,
+Stefan Hermann, Hendrik Gäbler, Haik Dettmann
 
 (c) 2007 Fachhochschule Potsdam
 Visit http://fritzing.org
@@ -38,6 +41,7 @@ Visit http://fritzing.org
       </win>
    </launcher>
 
+
    <vm>
       <macos type="ee">J2SE-1.5</macos>
    </vm>
@@ -64,11 +68,11 @@ Visit http://fritzing.org
       <plugin id="org.eclipse.core.databinding"/>
       <plugin id="org.eclipse.core.expressions"/>
       <plugin id="org.eclipse.core.filesystem"/>
-      <plugin id="org.eclipse.core.filesystem.linux.ppc"/>
-      <plugin id="org.eclipse.core.filesystem.linux.x86"/>
-      <plugin id="org.eclipse.core.filesystem.linux.x86_64"/>
-      <plugin id="org.eclipse.core.filesystem.macosx"/>
-      <plugin id="org.eclipse.core.filesystem.solaris.sparc"/>
+      <plugin id="org.eclipse.core.filesystem.linux.ppc" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.macosx" fragment="true"/>
+      <plugin id="org.eclipse.core.filesystem.solaris.sparc" fragment="true"/>
       <plugin id="org.eclipse.core.filesystem.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.core.jobs"/>
       <plugin id="org.eclipse.core.net"/>
@@ -135,18 +139,18 @@ Visit http://fritzing.org
       <plugin id="org.eclipse.ocl.ecore"/>
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.swt"/>
-      <plugin id="org.eclipse.swt.carbon.macosx"/>
-      <plugin id="org.eclipse.swt.gtk.linux.ppc"/>
-      <plugin id="org.eclipse.swt.gtk.linux.x86"/>
-      <plugin id="org.eclipse.swt.gtk.linux.x86_64"/>
-      <plugin id="org.eclipse.swt.gtk.solaris.sparc"/>
-      <plugin id="org.eclipse.swt.motif.aix.ppc"/>
+      <plugin id="org.eclipse.swt.carbon.macosx" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.ppc" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.swt.gtk.solaris.sparc" fragment="true"/>
+      <plugin id="org.eclipse.swt.motif.aix.ppc" fragment="true"/>
       <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
-      <plugin id="org.eclipse.swt.wpf.win32.x86"/>
+      <plugin id="org.eclipse.swt.wpf.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.team.core"/>
       <plugin id="org.eclipse.text"/>
       <plugin id="org.eclipse.ui"/>
-      <plugin id="org.eclipse.ui.carbon"/>
+      <plugin id="org.eclipse.ui.carbon" fragment="true"/>
       <plugin id="org.eclipse.ui.console"/>
       <plugin id="org.eclipse.ui.forms"/>
       <plugin id="org.eclipse.ui.ide"/>
@@ -159,7 +163,7 @@ Visit http://fritzing.org
       <plugin id="org.eclipse.ui.workbench.texteditor"/>
       <plugin id="org.eclipse.update.configurator"/>
       <plugin id="org.eclipse.update.core"/>
-      <plugin id="org.eclipse.update.core.linux"/>
+      <plugin id="org.eclipse.update.core.linux" fragment="true"/>
       <plugin id="org.eclipse.update.core.win32" fragment="true"/>
       <plugin id="org.eclipse.update.ui"/>
       <plugin id="org.w3c.css.sac"/>

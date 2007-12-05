@@ -1,64 +1,58 @@
-// ========= GMF ==========
+========= GMF ==========
 
-// SVG import for shapes
-// http://wiki.eclipse.org/GMF_Tutorial_BPMN#Custom_Figures_.28SVG.29
+Dynamic Shape import
+via GMFGraph templates 
 
-// Dynamic Shape import
-// via GMFGraph templates 
+Creating own modules/parts
+Extensible Type Registry  http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.gmf.doc/tutorials/common/Extensible%20Type%20Registry/extensibleTypeRegistryTutorial.html
 
-// Creating own modules/parts
-// Extensible Type Registry  http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.gmf.doc/tutorials/common/Extensible%20Type%20Registry/extensibleTypeRegistryTutorial.html
+Multiple editors (physical/schematic/pcb)
+MultiPageEditorPart
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=189399
+http://wiki.eclipse.org/index.php/GMF_Archived_Newsgroup_Q&A#How_can_I_synchronize_editing_domains.3F
+http://wiki.eclipse.org/GMF_Tips#Sharing_single_EditingDomain_instance_across_several_diagrams
+http://wiki.eclipse.org/GMF_GenModel_Hints -> see "Model ID"
 
-// Multiple editors (physical/schematic/pcb)
-// MultiPageEditorPart
-// https://bugs.eclipse.org/bugs/show_bug.cgi?id=189399
-// http://wiki.eclipse.org/index.php/GMF_Archived_Newsgroup_Q&A#How_can_I_synchronize_editing_domains.3F
-// http://wiki.eclipse.org/GMF_Tips#Sharing_single_EditingDomain_instance_across_several_diagrams
-// http://wiki.eclipse.org/GMF_GenModel_Hints -> see "Model ID"
+Drag & drop parts from the palette
+http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg01537.html
+org.eclipse.draw2d.makeGhostShape(Shape s) Shape
 
-// Nets, i.e. connecting a wire to another wire
-// http://wiki.eclipse.org/GMF_2.0_New_and_Noteworthy#Links_to_Links
+Panning
+GEF Logic Example: PanningSelectionToolEntry
 
-// Rotatable parts
-// http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg02705.html
+Make LED color editable, resistor rings
+http://wiki.eclipse.org/GMF_Tips#Making_figures_sensitive_to_attributes_of_semantic_elements
 
-// Drag & drop parts from the palette
-// http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg01537.html
+Grid
+-"mil" unit for grid
+- Grid in Front := false
+	https://bugs.eclipse.org/bugs/attachment.cgi?id=46538
+- Grid pattern
+- resolution dependent on zoom
+- no grid in overview
 
-// Make LED color editable, resistor rings
-// http://wiki.eclipse.org/GMF_Tips#Making_figures_sensitive_to_attributes_of_semantic_elements
+========= EMF ==========
 
-// "mil" unit for grid
+Customise XML file generation
+see IBM redbook, chapter 2.3
 
-// Change background color
-// http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg01141.html
+========= RCP ==========
 
-// ========= EMF ==========
+Styling
+using Presentations, see RCP book
+also http://wiki.eclipse.org/RCP_Custom_Look_and_Feel
 
-// Customise XML file generation
-// see IBM redbook, chapter 2.3
+make Fritzing folder sketch folder management in user directory
+Platform.getUserLocation().getURL() not quite - adds the subfolder /user under Vista
+System.getProperty("user.home") this works
 
-// Export to Eagle script
-// using JET
+adding a console
+http://dev.eclipse.org/newslists/news.eclipse.platform.rcp/msg00199.html
 
+adding help support
+http://www.eclipse.org/articles/article.php?file=Article-AddingHelpToRCP/index.html
 
-// ========= RCP ==========
+Executing external commands
+http://www.javaworld.com/javaworld/jw-12-2000/jw-1229-traps.html
 
-// Styling
-// using Presentations, see RCP book
-// also http://wiki.eclipse.org/RCP_Custom_Look_and_Feel
-
-// make Fritzing folder sketch folder management in user directory
-Platform.getUserLocation().getURL() // not quite - adds the subfolder /user under Vista
-System.getProperty("user.home") // this works
-
-// adding a console
-// http://dev.eclipse.org/newslists/news.eclipse.platform.rcp/msg00199.html
-
-// adding help support
-// http://www.eclipse.org/articles/article.php?file=Article-AddingHelpToRCP/index.html
-
-// Executing external commands
-// http://www.javaworld.com/javaworld/jw-12-2000/jw-1229-traps.html
-
-// some RCP tips at http://www.jroller.com/wsnyder6/entry/rcp_tips_and_tricks
+some RCP tips at http://www.jroller.com/wsnyder6/entry/rcp_tips_and_tricks

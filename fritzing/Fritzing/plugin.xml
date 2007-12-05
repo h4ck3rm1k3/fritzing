@@ -37,7 +37,7 @@
         </property>
         <property
               name="aboutText"
-              value="Fritzing 0002 Alpha&#x0A;&#x0A;Contributors: André Knörig, Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, Reto Wettach&#x0A;&#x0A;(c) 2007 Fachhochschule Potsdam&#x0A;Visit http://fritzing.org">
+              value="Fritzing 0002 Alpha&#x0D;&#x0A;&#x0D;&#x0A;Contributors: Reto Wettach, André Knörig, Zach Eveland, Dirk van Oosterbosch, &#x0D;&#x0A;Jonathan Cohen, Myriel Milicevic, Julia Werner, Omer Yosha, Travis Robertson,&#x0D;&#x0A;Fabian Brunsing, Marcus Paeschke, Klaus Zimmermann, Elisabeth Eichhorn,&#x0D;&#x0A;Stefan Hermann, Hendrik Gäbler, Haik Dettmann&#x0D;&#x0A;&#x0D;&#x0A;(c) 2007 Fachhochschule Potsdam&#x0D;&#x0A;Visit http://fritzing.org">
         </property>
         <property
               name="windowImages"

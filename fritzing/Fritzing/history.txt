@@ -11,24 +11,32 @@ on the eye.
 < ENHANCEMENTS >
 
 Usability
-- Parts are now rotatable (though in steps of 90° only) [#28]
 - Terminals/Pins of parts are now fixated
-- Wires can connect to wires
-- Smoothened some of the default, annoying GMF UI 
-  (more reduction to come): 
-  - removed pop-up context menus [#35]
-  - moved image export menu to File > Export [#34]
+- Parts are now rotatable (though in steps of 90° only, 
+    and terminals don't follow..) [#28]
+- Hold spacebar to pan (with the selection tool enabled)
+- Removed pop-up context menus; if you like them, you can enable
+    them through the preferences again [#35]
+- Moved image export menu to File > Export [#34]
+- Eagle export more streamlined
+  - more explanatory dialogs
+  - better menu structure and naming [#17]
+  - more helpful features in the menu (multiple exports, etc.) [#12]
 
 Beautification
 - New splash screen! [#19]
 - Tuned logo!
+- New icons!
+- New default colors for background, grid, and wires
 
 Installation
 - No longer need to copy Eagle scripts to Eagle directories [#10]
 
 < BUG FIXES >
 
-- "Export to PCB" now works reliably [#20]
+- "Export to PCB" now works reliably
+  - no path problems anymore [#20]
+  - no place.scr file anymore [#30]
 
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
