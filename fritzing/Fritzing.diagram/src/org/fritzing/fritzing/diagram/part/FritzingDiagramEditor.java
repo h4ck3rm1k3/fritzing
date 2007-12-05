@@ -7,11 +7,15 @@ import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.gmf.runtime.diagram.ui.internal.properties.WorkspaceViewerProperties;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorInput;
+import org.fritzing.fritzing.diagram.edit.parts.SketchGridLayer;
 
 /**
  * @generated
@@ -97,6 +101,34 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 					.getDocumentProvider());
 		} else {
 			super.setDocumentProvider(input);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor#configureGraphicalViewer()
+	 * 
+	 * @generated NOT
+	 */
+	@Override
+	protected void configureGraphicalViewer() {
+		super.configureGraphicalViewer();
+		if (getDiagramGraphicalViewer() instanceof DiagramGraphicalViewer) {
+			((DiagramGraphicalViewer) getDiagramGraphicalViewer())
+					.hookWorkspacePreferenceStore(getWorkspaceViewerPreferenceStore());
+			getWorkspaceViewerPreferenceStore().setValue(
+					WorkspaceViewerProperties.GRIDLINECOLOR,
+					SketchGridLayer.THIS_FORE.hashCode());
+			getWorkspaceViewerPreferenceStore().setValue(
+					WorkspaceViewerProperties.GRIDLINESTYLE, 
+					SWT.LINE_SOLID);
+			getWorkspaceViewerPreferenceStore().setValue(
+					WorkspaceViewerProperties.GRIDORDER, 
+					false);
+			getWorkspaceViewerPreferenceStore().setValue(
+					WorkspaceViewerProperties.ZOOM, 
+					1.33);
 		}
 	}
 

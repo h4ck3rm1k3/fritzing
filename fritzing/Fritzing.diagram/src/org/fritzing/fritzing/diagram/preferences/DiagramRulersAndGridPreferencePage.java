@@ -38,5 +38,8 @@ public class DiagramRulersAndGridPreferencePage extends RulerGridPreferencePage 
 		preferenceStore.setDefault(IPreferenceConstants.PREF_SHOW_GRID, true);
 		preferenceStore.setDefault(IPreferenceConstants.PREF_SNAP_TO_GRID, true);
 		preferenceStore.setDefault(IPreferenceConstants.PREF_GRID_SPACING, 0.1);
+		/* more preferences (WorkbenchPreferences) are set in 
+		 * FritzingDiagramEditor.configureGraphicalViewer()
+		 */
 	}
 }

@@ -45,22 +45,7 @@ public class SketchEditPart extends DiagramEditPart {
 		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
 				new SketchCanonicalEditPolicy());
 
-		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in preferences
+		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in
+		// preferences
 	}
-
-	/**
-	 * @generated NOT
-	 */
-	protected IFigure createFigure() {
-	      IFigure fig = super.createFigure();
-	      fig.setBackgroundColor(THIS_BACK);
-	      fig.setOpaque(true);
-	      
-	      return fig;
-	   }
-
-	/**
-	 * @generated NOT
-	 */
-	static final Color THIS_BACK = new Color(null, 204, 204, 204);
 }

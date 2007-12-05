@@ -1,6 +1,7 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 import org.eclipse.draw2d.FreeformLayer;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.ScalableFreeformLayeredPane;
 import org.eclipse.gef.editparts.GridLayer;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
@@ -33,5 +34,21 @@ public class FritzingDiagramRootEditPart extends DiagramRootEditPart {
 	protected GridLayer createGridLayer(int r, int g, int b) {
 		return new SketchGridLayer(new Color(null,r,g,b));
 	}
+
+	/* (non-Javadoc)
+	 * @see org.eclipse.gef.editparts.FreeformGraphicalRootEditPart#createFigure()
+	 */
+	@Override
+	protected IFigure createFigure() {
+		IFigure fig = super.createFigure();
+		fig.setBackgroundColor(THIS_BACK);
+		fig.setOpaque(true);
+		return fig;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	static final Color THIS_BACK = new Color(null, 204, 204, 204);
 
 }
