@@ -91,9 +91,9 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	}
 
 	protected void handleNotificationEvent(Notification notification) {
-		Object feature = notification.getFeature();
 		
-
+/*
+		Object feature = notification.getFeature();
 		System.out.println("got a notification " + 
 				notification.getEventType() + " " + 
 				notification.getNotifier().getClass().getName() 
@@ -102,7 +102,8 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		if (feature instanceof EAttributeImpl) {
 			System.out.println("feature " + ((EAttributeImpl) feature).getName());			
 		}
-
+*/
+		
 		super.handleNotificationEvent(notification);
 	}
 }
