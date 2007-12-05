@@ -173,7 +173,7 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 	 */
 	public int getTerminalNamePosition(Terminal2EditPart terminal2, int defaultPosition) {
 		
-		terminal2.setTextColor(new Color(null, 255, 0, 0));	
+		terminal2.setTextColor(new Color(null, 255, 255, 255));	
 		
 		String name = null;
 		Object model = terminal2.getModel();

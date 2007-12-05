@@ -86,6 +86,11 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	private String defaultText;
 
 	/**
+	 * @generated NOT
+	 */
+	private Color fontColor = null;
+
+	/**
 	 * @generated
 	 */
 	static {
@@ -489,6 +494,23 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	}
 
 	/**
+	 * @generated NOT
+	 */
+	protected void setFontColorEx(Color color) {
+		fontColor = color;
+		setFontColor(color);
+	}
+
+    protected void refreshFontColor() {
+    	if (fontColor == null) {
+    		super.refreshFontColor();
+    		return;
+    	}
+    	
+    	setFontColor(fontColor);
+    }
+
+    /**
 	 * @generated
 	 */
 	protected void addSemanticListeners() {

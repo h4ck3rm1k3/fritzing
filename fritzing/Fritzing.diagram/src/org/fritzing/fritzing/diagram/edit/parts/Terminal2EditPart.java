@@ -85,7 +85,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	public void setTextColor(Color color) {
 		for (int i = 0; i < this.getChildren().size(); i++) {
 			if (this.getChildren().get(i) instanceof TerminalName2EditPart) {
-				((TerminalName2EditPart) this.getChildren().get(i)).setFontColor(color);
+				((TerminalName2EditPart) this.getChildren().get(i)).setFontColorEx(color);
 				break;
 			}
 		}
