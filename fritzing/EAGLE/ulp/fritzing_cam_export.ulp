@@ -4,6 +4,6 @@
 // (c) Fritzing, 2007
 
 
-	if (dlgMessageBox(";Oh, snap.  You want to make CAM files, but Fritzing doesn't do that yet.  Please see the page at http://www.fritzing.org/learning/eagle/cam-export for more information.") == 0) {
+	if (dlgMessageBox(";Oh, snap.  You want to make CAM files, but Fritzing doesn't do that automatically (yet).  The page at http://www.fritzing.org/learning/eagle/cam-export has instructions for doing it manually.") == 0) {
 
 	}
