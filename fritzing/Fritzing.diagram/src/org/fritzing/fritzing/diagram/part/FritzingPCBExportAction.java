@@ -151,7 +151,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		if (! new File(eagleULP).exists()) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 				"Could not find Fritzing ULP at " + eagleULP + ".\n"+
-				"Please check if you copied the Fritzing EAGLE files to the EAGLE subfolders.",
+				"Please check if the Fritzing EAGLE files exist.",
 				new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
 						"Fritzing ULP not found.", null));
 			return;
