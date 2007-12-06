@@ -13,19 +13,19 @@ void main(void) {
 
 	if (argv[1] == "top") {
 		cmd = "display none dimension pads top tdocu tplace tvalues tnames vias; print 3 -mirror -black file top.pdf; display all;";
-		dlgMessageBox(";'top.pdf' saved.");
+		dlgMessageBox(";Saving 'top.pdf'.");
 	}
 	if (argv[1] == "bottom") {
 		cmd = "display none dimension pads bottom bdocu bplace bvalues bnames vias; print 3 mirror -black file bottom.pdf; display all;";
-		dlgMessageBox(";'bottom.pdf' saved.");
+		dlgMessageBox(";Saving 'bottom.pdf'.");
 	}
 	if (argv[1] == "both") {
 		cmd = "display none dimension pads top tdocu tplace tvalues tnames bottom bdocu bplace bvalues bnames vias; print 3 -mirror -black file both.pdf; display all;";	
-		dlgMessageBox(";'both.pdf' saved.");
+		dlgMessageBox(";Saving 'both.pdf'.");
 	}
 	if (argv[1] == "diy") {
 		cmd = "display none dimension pads top vias; print 1 mirror black file diy_top.pdf; display none dimension pads bottom vias; print 1 -mirror black file diy_bottom.pdf; display all;";
-		dlgMessageBox(";'diy_top.pdf' and 'diy_bottom.pdf' saved.");
+		dlgMessageBox(";Saving 'diy_top.pdf' and 'diy_bottom.pdf'.");
 	}
 
 	exit(cmd);
