@@ -3,10 +3,10 @@ Notes on the Fritzing releases. Related issue numbers in brackets.
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
-0002 ALPHA - scheduled for Dec 4th 2007
+0002 ALPHA - Dec 6th 2007
 
 Smoothening of the first release: less pain, slightly improving
-on the eye.
+on the eye, better PCB export workflow.
 
 < ENHANCEMENTS >
 
