@@ -14,19 +14,14 @@ http://wiki.eclipse.org/GMF_Tips#Sharing_single_EditingDomain_instance_across_se
 http://wiki.eclipse.org/GMF_GenModel_Hints -> see "Model ID"
 
 Drag & drop parts from the palette
-http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg01537.html
+seems broken: http://dev.eclipse.org/newslists/news.eclipse.modeling.gmf/msg01537.html
 org.eclipse.draw2d.makeGhostShape(Shape s) Shape
-
-Panning
-GEF Logic Example: PanningSelectionToolEntry
 
 Make LED color editable, resistor rings
 http://wiki.eclipse.org/GMF_Tips#Making_figures_sensitive_to_attributes_of_semantic_elements
 
 Grid
 -"mil" unit for grid
-- Grid in Front := false
-	https://bugs.eclipse.org/bugs/attachment.cgi?id=46538
 - Grid pattern
 - resolution dependent on zoom
 - no grid in overview
