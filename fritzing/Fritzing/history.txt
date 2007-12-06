@@ -3,6 +3,11 @@ Notes on the Fritzing releases. Related issue numbers in brackets.
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
+0003 ALPHA
+
+
+< > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
+
 0002 ALPHA - Dec 6th 2007
 
 Smoothening of the first release: less pain, slightly improving

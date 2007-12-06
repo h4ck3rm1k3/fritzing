@@ -7,7 +7,7 @@
       <image path="/Fritzing/icons/fritzingbanner.gif"/>
       <text>
          Fritzing - From Prototype to Product
-Release 0002 ALPHA, Dec 6th 2007
+Release 0003 ALPHA, Dec 6th 2007
 
 Contributors: Reto Wettach, André Knörig, Zach Eveland, Dirk van Oosterbosch, 
 Jonathan Cohen, Myriel Milicevic, Julia Werner, Omer Yosha, Travis Robertson,
@@ -34,7 +34,7 @@ Visit http://fritzing.org
       startupProgressRect="12,184,220,12"
       startupMessageRect="12,207,540,20"
       startupForegroundColor="000000" />
-   <launcher name="Fritzing">
+   <launcher name="fritzing-0003">
       <linux icon="/Fritzing/icons/fritzing.xpm"/>
       <macosx icon="/Fritzing/icons/fritzing.icns"/>
       <solaris/>
@@ -46,7 +46,6 @@ Visit http://fritzing.org
 
 
    <vm>
-      <macos type="ee">J2SE-1.5</macos>
    </vm>
 
    <plugins>
