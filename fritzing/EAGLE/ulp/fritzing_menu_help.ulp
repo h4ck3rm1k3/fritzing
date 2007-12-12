@@ -5,6 +5,6 @@
 // (c) Fritzing, 2007
 	
 if (dlgMessageBox(";"
-		+ "Complete your PCB design by using the tools in this menu.  More information is available at <a href=\"http://www.fritzing.org/learning/eagle\">Eagle help page</a> at fritzing.org.") == 0) {
+		+ "Complete your PCB design by using the tools in this menu.  More information is available on the <a href=\"http://www.fritzing.org/learning/eagle\">Eagle help page</a> at fritzing.org.") == 0) {
 	
 }
