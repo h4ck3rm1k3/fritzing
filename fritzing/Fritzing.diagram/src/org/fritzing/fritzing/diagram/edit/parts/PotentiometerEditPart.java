@@ -93,32 +93,10 @@ public class PotentiometerEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
-		LayoutEditPolicy lep = new LayoutEditPolicy() {
-
-			protected EditPolicy createChildEditPolicy(EditPart child) {
-				if (child instanceof IBorderItemEditPart) {
-					return new BorderItemSelectionEditPolicy();
-				}
-				EditPolicy result = child
-						.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-				if (result == null) {
-					result = new NonResizableEditPolicy();
-				}
-				return result;
-			}
-
-			protected Command getMoveChildrenCommand(Request request) {
-				return null;
-			}
-
-			protected Command getCreateCommand(CreateRequest request) {
-				return null;
-			}
-		};
-		return lep;
+		return super.createLayoutEditPolicy();
 	}
 
 	/**
@@ -146,36 +124,7 @@ public class PotentiometerEditPart extends PartEditPart {
 							.getFigurePotentiometerNameFigure());
 			return true;
 		}
-		if (childEditPart instanceof Terminal2EditPart) {
-			
-			int positionConstants = PositionConstants.NONE;
-			Object model = childEditPart.getModel();
-			if (model instanceof NodeImpl) {
-				EObject eobject = ((NodeImpl) model).getElement();
-				if (eobject instanceof Terminal) {
-					String name = ((Terminal) eobject).getName();
-					if (name == null) {					
-					}
-					else if (name.equalsIgnoreCase("W")) {
-						positionConstants = PositionConstants.SOUTH;
-					}
-					else if (name.equalsIgnoreCase("T1")) {
-						positionConstants = PositionConstants.EAST;
-					}
-					else if (name.equalsIgnoreCase("T2")) {
-						positionConstants = PositionConstants.WEST;
-					}
-					
-				}
-				
-			}
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					positionConstants);
-			getBorderedFigure().getBorderItemContainer().add(
-					((Terminal2EditPart) childEditPart).getFigure(), locator);
-			return true;
-		}
-		return false;
+		return addEastWestFixedChild(childEditPart);
 	}
 
 	/**

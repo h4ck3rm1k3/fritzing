@@ -72,6 +72,10 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		
 		// don't want delete
 		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
+		
+		// make it non-selectable? (doesn't seem to work)
+		//removeEditPolicy(EditPolicyRoles.CONNECTION_HANDLES_ROLE);
+		//removeEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
 
 		// POPUP_BAR and CONNECTOR_HANDLES are disabled in preferences
 		

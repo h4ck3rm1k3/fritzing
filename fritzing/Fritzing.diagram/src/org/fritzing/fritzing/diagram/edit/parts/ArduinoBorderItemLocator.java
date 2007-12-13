@@ -8,12 +8,11 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
 import org.eclipse.gmf.runtime.diagram.ui.figures.LayoutHelper;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import java.util.EnumSet;
 
-public class ArduinoBorderItemLocator implements IBorderItemLocator {
+public class ArduinoBorderItemLocator extends PartBorderItemLocator {
 	
 	static public enum TerminalPosition {
 		AREF (15, PositionConstants.NORTH),
@@ -85,67 +84,12 @@ public class ArduinoBorderItemLocator implements IBorderItemLocator {
 	}
 
 	protected TerminalPosition terminalPosition;
-	protected IFigure parentFigure;
-	private Rectangle constraint = new Rectangle(0, 0, 0, 0);
-	private Dimension borderItemOffset = new Dimension(2, 2);
 		
 	
-	public ArduinoBorderItemLocator(IFigure parent, TerminalPosition terminalPosition) {
-		parentFigure = parent;
+	public ArduinoBorderItemLocator(IFigure parent, PartEditPart parentPart, TerminalPosition terminalPosition) {
+		super(parent, parentPart);
 		this.terminalPosition = terminalPosition;
-	}
-
-	public Rectangle getValidLocation(Rectangle proposedLocation, IFigure borderItem) {
-		Point p = getPreferredLocation(borderItem);
-		Dimension d = getSize(borderItem);
-		return new Rectangle(p.x, p.y, d.width, d.height);
-	}
-
-	protected final Dimension getSize(IFigure borderItem) {
-        Dimension size = getConstraint().getSize();
-        if (LayoutHelper.UNDEFINED.getSize().equals(size)) {
-        	size = borderItem.getPreferredSize();
-        }
-        return size;
-	}
-
-	public void relocate(IFigure borderItem) {
-        Dimension size = getSize(borderItem);
-
-		Point ptNewLocation = getPreferredLocation(borderItem);
-		borderItem.setLocation(ptNewLocation);
-		borderItem.setSize(size);
-	}
-
-	public int getCurrentSideOfParent() {
-		return terminalPosition.getSide();
-	}
-
-	public Dimension getBorderItemOffset() {
-		return borderItemOffset;
-	}
-	
-	protected Rectangle getConstraint() {
-		return constraint;
-	}
-	
-	public void setConstraint(Rectangle theConstraint) {
-		this.constraint = theConstraint;
-
-		getParentFigure().revalidate();
-	}
-
-	protected IFigure getParentFigure() {
-		return parentFigure;
-	}
-	
-	protected Rectangle getParentBorder() {
-		Rectangle bounds = getParentFigure().getBounds().getCopy();
-		if (getParentFigure() instanceof NodeFigure) {
-			bounds = ((NodeFigure) getParentFigure()).getHandleBounds()
-				.getCopy();
-		}
-		return bounds;
+		borderItemOffset.height = this.borderItemOffset.width = 2;
 	}
 
 	protected Point getPreferredLocation(IFigure borderItem) {

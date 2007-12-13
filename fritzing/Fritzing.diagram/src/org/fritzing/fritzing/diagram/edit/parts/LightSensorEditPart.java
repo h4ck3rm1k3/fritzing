@@ -92,32 +92,10 @@ public class LightSensorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
-		LayoutEditPolicy lep = new LayoutEditPolicy() {
-
-			protected EditPolicy createChildEditPolicy(EditPart child) {
-				if (child instanceof IBorderItemEditPart) {
-					return new BorderItemSelectionEditPolicy();
-				}
-				EditPolicy result = child
-						.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-				if (result == null) {
-					result = new NonResizableEditPolicy();
-				}
-				return result;
-			}
-
-			protected Command getMoveChildrenCommand(Request request) {
-				return null;
-			}
-
-			protected Command getCreateCommand(CreateRequest request) {
-				return null;
-			}
-		};
-		return lep;
+		return super.createLayoutEditPolicy();
 	}
 
 	/**
@@ -145,14 +123,7 @@ public class LightSensorEditPart extends PartEditPart {
 							.getFigureLightSensorNameFigure());
 			return true;
 		}
-		if (childEditPart instanceof Terminal2EditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					getEastWestBorderPositionConstants());
-			getBorderedFigure().getBorderItemContainer().add(
-					((Terminal2EditPart) childEditPart).getFigure(), locator);
-			return true;
-		}
-		return false;
+		return addEastWestFixedChild(childEditPart);
 	}
 
 	/**

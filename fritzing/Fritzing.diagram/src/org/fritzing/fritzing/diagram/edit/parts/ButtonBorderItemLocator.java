@@ -7,40 +7,15 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.diagram.ui.figures.LayoutHelper;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
-import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
 
-// non-deprecated version breaks the code
-// import org.eclipse.gmf.runtime.draw2d.ui.figures.IBorderItemLocator;
- 
-public class ButtonBorderItemLocator implements IBorderItemLocator {
+
+public class ButtonBorderItemLocator extends PartBorderItemLocator {
 	
 	int terminalPosition;
-	IFigure parentFigure;
-	private Rectangle constraint = new Rectangle(0, 0, 0, 0);
-	private Dimension borderItemOffset = new Dimension(1, 1);
 	
-	public ButtonBorderItemLocator(IFigure figure, int positionConstants, int pos) {
-		parentFigure = figure;
+	public ButtonBorderItemLocator(IFigure figure, PartEditPart parentPart, int pos) {
+		super(figure, parentPart);
 		terminalPosition = pos;
-	}
-
-	public Rectangle getValidLocation(Rectangle proposedLocation, IFigure borderItem) {
-		Point p = getPreferredLocation(borderItem);
-		Dimension d = getSize(borderItem);
-		return new Rectangle(p.x, p.y, d.width, d.height);
-	}
-	
-	protected IFigure getParentFigure() {
-		return parentFigure;
-	}
-	
-	protected Rectangle getParentBorder() {
-		Rectangle bounds = getParentFigure().getBounds().getCopy();
-		if (getParentFigure() instanceof NodeFigure) {
-			bounds = ((NodeFigure) getParentFigure()).getHandleBounds()
-				.getCopy();
-		}
-		return bounds;
 	}
 
 	protected Point getPreferredLocation(IFigure borderItem) {
@@ -71,39 +46,8 @@ public class ButtonBorderItemLocator implements IBorderItemLocator {
 		return new Point(x, y);
 	}
 	
-	protected final Dimension getSize(IFigure borderItem) {
-        Dimension size = getConstraint().getSize();
-        if (LayoutHelper.UNDEFINED.getSize().equals(size)) {
-        	size = borderItem.getPreferredSize();
-        }
-        return size;
-	}
-
 	public int getCurrentSideOfParent() {
 		return terminalPosition;
-	}
-
-	public Dimension getBorderItemOffset() {
-		return borderItemOffset;
-	}
-	
-	protected Rectangle getConstraint() {
-		return constraint;
-	}
-	
-	public void setConstraint(Rectangle theConstraint) {
-		this.constraint = theConstraint;
-
-		getParentFigure().revalidate();
-	}
-
-	public void relocate(IFigure borderItem) {
-        Dimension size = getSize(borderItem);
-
-		Point ptNewLocation = getPreferredLocation(borderItem);
-		borderItem.setLocation(ptNewLocation);
-		borderItem.setSize(size);
-
 	}
 
 }

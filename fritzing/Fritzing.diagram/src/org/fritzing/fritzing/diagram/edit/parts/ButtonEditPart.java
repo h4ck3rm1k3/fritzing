@@ -108,32 +108,10 @@ public class ButtonEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
-		LayoutEditPolicy lep = new LayoutEditPolicy() {
-
-			protected EditPolicy createChildEditPolicy(EditPart child) {
-				if (child instanceof IBorderItemEditPart) {
-					return new BorderItemSelectionEditPolicy();
-				}
-				EditPolicy result = child
-						.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-				if (result == null) {
-					result = new NonResizableEditPolicy();
-				}
-				return result;
-			}
-
-			protected Command getMoveChildrenCommand(Request request) {
-				return null;
-			}
-
-			protected Command getCreateCommand(CreateRequest request) {
-				return null;
-			}
-		};
-		return lep;
+		return super.createLayoutEditPolicy();
 	}
 
 	/**
@@ -185,7 +163,7 @@ public class ButtonEditPart extends PartEditPart {
 				}
 			}
 
-			ButtonBorderItemLocator locator = new ButtonBorderItemLocator(getMainFigure(), 0, pos);
+			ButtonBorderItemLocator locator = new ButtonBorderItemLocator(getMainFigure(), this, pos);
 			//BorderItemLocator locator = new BorderItemLocator(getMainFigure(), 0);
 			getBorderedFigure().getBorderItemContainer().add(
 					((Terminal2EditPart) childEditPart).getFigure(), locator);
