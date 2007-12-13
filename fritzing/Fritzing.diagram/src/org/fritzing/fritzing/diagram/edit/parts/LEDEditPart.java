@@ -10,6 +10,8 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -17,6 +19,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
+import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderedShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
@@ -35,6 +38,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.LED;
 import org.fritzing.fritzing.diagram.edit.policies.LEDCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.LEDItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -92,6 +97,22 @@ public class LEDEditPart extends PartEditPart {
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
 		return super.createLayoutEditPolicy();
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected void handleNotificationEvent(Notification evt) {
+		if (FritzingPackage.eINSTANCE.getLED_Color().equals(evt.getFeature())) {
+			EObject led = ViewUtil.resolveSemanticElement((View) getModel());
+			if (led instanceof LED) {
+				int color = ((LED) led).getColor();
+				getPrimaryShape().setColor(color);
+			}
+		} 
+		else {
+			super.handleNotificationEvent(evt);
+		}
 	}
 
 	/**
@@ -291,6 +312,15 @@ public class LEDEditPart extends PartEditPart {
 		 */
 		public WrapLabel getFigureLEDNameFigure() {
 			return fFigureLEDNameFigure;
+		}
+
+		/**
+		 * @generated NOT
+		 */
+		public void setColor(int color) {
+			Color c = new Color(null, (color >> 16) & 255, (color >> 8) & 255, color & 255); 
+			this.setBackgroundColor(c);
+			repaint();
 		}
 
 	}

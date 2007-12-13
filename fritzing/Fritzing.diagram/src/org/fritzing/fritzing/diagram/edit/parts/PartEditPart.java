@@ -6,7 +6,9 @@ package org.fritzing.fritzing.diagram.edit.parts;
 
 import java.util.Iterator;
 
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -105,7 +107,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 
 	protected void handleNotificationEvent(Notification notification) {
 		
-/*
 		Object feature = notification.getFeature();
 		System.out.println("got a notification " + 
 				notification.getEventType() + " " + 
@@ -115,7 +116,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		if (feature instanceof EAttributeImpl) {
 			System.out.println("feature " + ((EAttributeImpl) feature).getName());			
 		}
-*/
 		
 		super.handleNotificationEvent(notification);
 	}
@@ -175,4 +175,5 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		};
 		return lep;
 	}
+
 }
