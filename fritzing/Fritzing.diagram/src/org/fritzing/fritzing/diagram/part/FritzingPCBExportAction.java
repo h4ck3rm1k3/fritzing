@@ -178,7 +178,8 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		String eagleParams = "RUN " 
 				+ "'" + eagleULP + "' "
 				+ "'" + fritzing2eagleSCR + "' "	
-				+ "'" + scriptsLocation + "'";
+				+ "'" + scriptsLocation + "' " 
+				+ "'" + eagleBRD + "'";
 		// Run!
 		try {
 			ProcessBuilder runEagle = new ProcessBuilder(
