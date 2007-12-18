@@ -172,6 +172,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		}
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
 			eagleSCH = "\"" + eagleSCH + "\"";
+			eagleBRD = "\"" + eagleBRD + "\"";
 		}
 		// EAGLE parameters
 		String eagleParams = "RUN " 
@@ -181,7 +182,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		// Run!
 		try {
 			ProcessBuilder runEagle = new ProcessBuilder(
-					eagleExec, "-C", eagleParams, eagleSCH);
+					eagleExec, "-C", eagleParams, eagleBRD);
 			Process p = runEagle.start();
 			//	p.waitFor(); // don't wait for Eagle to quit
 		} catch (IOException ioe1) {

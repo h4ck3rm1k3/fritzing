@@ -19,24 +19,26 @@ public class ScriptExporter {
 		// (here accomplished with 'LAYER <number> <name>')
 		// first, turn on all needed schematic layers in case they are 
 		// not already available.
-		"LAYER 91 Nets; \n" + 	
-		"LAYER 92 Busses; \n" + 
-		"LAYER 93 Pins; \n" + 
-		"LAYER 94 Symbols; \n" + 
-		"LAYER 95 Names; \n" + 
-		"LAYER 96 Values; \n" + 
+//		"LAYER 91 Nets; \n" + 	
+//		"LAYER 92 Busses; \n" + 
+//		"LAYER 93 Pins; \n" + 
+//		"LAYER 94 Symbols; \n" + 
+//		"LAYER 95 Names; \n" + 
+//		"LAYER 96 Values; \n" + 
 		// act on the layers already entered in the layer setup AND
 		// turn OFF visibility of the PINS layer
-		"DISPLAY -PINS \n" +	 
-		" \n" + 
+//		"DISPLAY -PINS \n" +	 
+//		" \n" + 
 		// load the drawing to be acted on - here schematic sheet 1 (.S1)
-		"EDIT .S1 \n" + 
+//		"EDIT .S1 \n" +
+		// load the board drawing to be acted on (B1)
+//		"EDIT .B1 \n" + 
 		// set the bend angle for wires in the schematic sheet 
 		// bend angle 2 used here produces straight-line connections at
 		// arbitrary angles
-		"SET WIRE_BEND 2; \n" + 
+//		"SET WIRE_BEND 2; \n" + 
 		// set the wire style visual appearance - we want continuous lines
-		"CHANGE STYLE 'Continuous' \n" + 
+//		"CHANGE STYLE 'Continuous' \n" + 
 		// tell the schematic editor to use the Fritzing Eagle library
 		// it is not loaded by default
 		"USE '" + FritzingDiagramEditorUtil.getFritzingLocation() +
@@ -62,13 +64,21 @@ public class ScriptExporter {
 	public String getPartEntry(EagleSCRPart part) {
 		// place a schematic symbol 
 		// Eagle syntax is "ADD <libraryPart>@<libraryName> 'partName' 'gateName' R<rotationAngle> (<componentCoords>)"
+		/*
 		String result = "ADD " + 
 			part.partType.toUpperCase() + 
 			"@" + part.libraryName + " " + 
 			"'" + part.partName.toUpperCase() + "' " + 
 			"'" + part.gateNumber + "' " + 
 			part.rotationPrefix + part.rotationVal + " " +  
-			"(" + part.partPos.xVal + " " + part.partPos.yVal + "); \n";		
+			"(" + part.partPos.xVal + " " + part.partPos.yVal + "); \n";
+		*/
+		String result = "ADD " + 
+			part.partType.toUpperCase() + 
+			"@" + part.libraryName + " " + 
+			"'" + part.partName.toUpperCase() + "' " + 
+			part.rotationPrefix + part.rotationVal + " " + 
+			"(" + part.partPos.xVal + " " + part.partPos.yVal + "); \n";
 		return result;
 	}
 	
@@ -76,12 +86,38 @@ public class ScriptExporter {
 		// place a net to connect two terminals - we are using simple,
 		// straight line, arbitrary-angle nets
 		// Eagle syntax is "NET '<netName>' (<sourceCoords>) (<targetCoords>)"
+		/*
 		String result = "NET '" + net.netName + "' (" + 
 			net.sourcePos.xVal + " " + net.sourcePos.yVal + ") (" +
 			net.targetPos.xVal + " " + net.targetPos.yVal + "); \n";
+		*/
+		String result = "";
+		/* we have to do this check for "Gnd" with that capitalization to match the proper Arduino
+		  ground pin in Fritzing to the proper pin in Eagle since Fritzing respects different capitalization
+		  and Eagle doesn't */		  
+		if (net.source.getParent().getName().equalsIgnoreCase("arduino") && net.source.getName().equals("Gnd")) {
+			result = "SIGNAL '" + net.netName + "' " + 
+				"'" + net.source.getParent().getName() + "' " + 
+				"'GND_C' " +
+				"'" + net.target.getParent().getName() + "' " + 
+				"'" + net.target.getName() + "'; \n";
+		} else if (net.target.getParent().getName().equalsIgnoreCase("arduino") && net.target.getName().equals("Gnd")) {
+			result = "SIGNAL '" + net.netName + "' " + 
+				"'" + net.source.getParent().getName() + "' " + 
+				"'" + net.source.getName() + "' " +
+				"'" + net.target.getParent().getName() + "' " + 
+				"'GND_C'; \n";			
+		} else {
+			result = "SIGNAL '" + net.netName + "' " + 
+				"'" + net.source.getParent().getName() + "' " + 
+				"'" + net.source.getName() + "' " +
+				"'" + net.target.getParent().getName() + "' " + 
+				"'" + net.target.getName() + "'; \n";
+		}
 		return result;
 	}
 	
+	/*
 	public String getNetNameEntry(EagleSCRNet net) {
 		// name the net (not strictly required, but it's nice)
 		// Eagle script syntax is "NAME '<netName>' (<xpos> <ypos>)"
@@ -92,6 +128,7 @@ public class ScriptExporter {
 			"(" + net.sourcePos.xVal + " " + net.sourcePos.yVal + "); \n";
 		return result;
 	}
+	*/
 	
 	public String export(ArrayList<EagleSCRPart> partList, ArrayList<EagleSCRNet> netList) {
 		// this should take a file handle and the pre-populated part and net listArrays as arguments
