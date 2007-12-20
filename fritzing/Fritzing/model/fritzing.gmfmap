@@ -48,7 +48,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'Gnd'">
+                body="'Gnd@1'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -57,7 +57,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'Gnd1'">
+                body="'Gnd@2'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -255,7 +255,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'GND'">
+                body="'GND@3'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -376,7 +376,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'0'">
+                body="'1'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -385,7 +385,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'1'">
+                body="'2'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -786,7 +786,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'C'">
+                body="'c'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -795,7 +795,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'B'">
+                body="'b'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
@@ -804,7 +804,7 @@
           <newElementInitializers>
             <initializers
                 xsi:type="gmfmap:FeatureValueSpec"
-                body="'E'">
+                body="'e'">
               <feature
                   xsi:type="ecore:EAttribute"
                   href="fritzing.ecore#//Terminal/name"/>
