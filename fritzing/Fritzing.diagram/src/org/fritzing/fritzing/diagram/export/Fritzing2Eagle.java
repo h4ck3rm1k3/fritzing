@@ -49,6 +49,10 @@ public class Fritzing2Eagle {
 				partClass = "FsrSensor";
 			if (p instanceof LightSensor)
 				partClass = "LightSensor";
+			if (p instanceof Transistor)
+				partClass = "Transistor";
+			if (p instanceof PowerTransistor)
+				partClass = "PowerTransistor";
 			
 			EagleSCRPart part = new EagleSCRPart(
 				p.getName(),			// part name (e.g. 'R1')
