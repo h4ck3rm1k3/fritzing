@@ -142,6 +142,33 @@ public interface FritzingFactory extends EFactory {
 	LightSensor createLightSensor();
 
 	/**
+	 * Returns a new object of class '<em>Transistor</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Transistor</em>'.
+	 * @generated
+	 */
+	Transistor createTransistor();
+
+	/**
+	 * Returns a new object of class '<em>Power Transistor</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Power Transistor</em>'.
+	 * @generated
+	 */
+	PowerTransistor createPowerTransistor();
+
+	/**
+	 * Returns a new object of class '<em>Generic Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Generic Part</em>'.
+	 * @generated
+	 */
+	GenericPart createGenericPart();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

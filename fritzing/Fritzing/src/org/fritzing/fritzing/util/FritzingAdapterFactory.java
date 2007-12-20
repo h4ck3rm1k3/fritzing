@@ -135,6 +135,18 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 				return createLightSensorAdapter();
 			}
 			@Override
+			public Adapter caseTransistor(Transistor object) {
+				return createTransistorAdapter();
+			}
+			@Override
+			public Adapter casePowerTransistor(PowerTransistor object) {
+				return createPowerTransistorAdapter();
+			}
+			@Override
+			public Adapter caseGenericPart(GenericPart object) {
+				return createGenericPartAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -375,6 +387,48 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createLightSensorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Transistor <em>Transistor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.Transistor
+	 * @generated
+	 */
+	public Adapter createTransistorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.PowerTransistor <em>Power Transistor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.PowerTransistor
+	 * @generated
+	 */
+	public Adapter createPowerTransistorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.GenericPart <em>Generic Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.GenericPart
+	 * @generated
+	 */
+	public Adapter createGenericPartAdapter() {
 		return null;
 	}
 

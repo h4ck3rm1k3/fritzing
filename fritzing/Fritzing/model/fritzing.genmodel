@@ -52,5 +52,8 @@
     <genClasses ecoreClass="fritzing.ecore#//Potentiometer"/>
     <genClasses ecoreClass="fritzing.ecore#//FsrSensor"/>
     <genClasses ecoreClass="fritzing.ecore#//LightSensor"/>
+    <genClasses ecoreClass="fritzing.ecore#//Transistor"/>
+    <genClasses ecoreClass="fritzing.ecore#//PowerTransistor"/>
+    <genClasses ecoreClass="fritzing.ecore#//GenericPart"/>
   </genPackages>
 </genmodel:GenModel>

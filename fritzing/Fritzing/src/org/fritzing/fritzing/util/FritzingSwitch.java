@@ -210,6 +210,30 @@ public class FritzingSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case FritzingPackage.TRANSISTOR: {
+				Transistor transistor = (Transistor)theEObject;
+				T result = caseTransistor(transistor);
+				if (result == null) result = casePart(transistor);
+				if (result == null) result = caseElement(transistor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.POWER_TRANSISTOR: {
+				PowerTransistor powerTransistor = (PowerTransistor)theEObject;
+				T result = casePowerTransistor(powerTransistor);
+				if (result == null) result = casePart(powerTransistor);
+				if (result == null) result = caseElement(powerTransistor);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.GENERIC_PART: {
+				GenericPart genericPart = (GenericPart)theEObject;
+				T result = caseGenericPart(genericPart);
+				if (result == null) result = casePart(genericPart);
+				if (result == null) result = caseElement(genericPart);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -451,6 +475,51 @@ public class FritzingSwitch<T> {
 	 * @generated
 	 */
 	public T caseLightSensor(LightSensor object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Transistor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Transistor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTransistor(Transistor object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Power Transistor</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Power Transistor</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePowerTransistor(PowerTransistor object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Generic Part</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Generic Part</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGenericPart(GenericPart object) {
 		return null;
 	}
 

@@ -343,6 +343,69 @@
             height="7"/>
       </actualFigure>
     </descriptors>
+    <descriptors
+        name="TransistorFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Rectangle"
+          name="TransistorFigure">
+        <preferredSize
+            dx="20"
+            dy="20"/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="TransistorNameFigure"
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
+      </actualFigure>
+      <accessors
+          accessor="getFigureTransistorNameFigure"
+          figure="//@figures.0/@descriptors.13/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors
+        name="PowerTransistorFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Rectangle"
+          name="PowerTransistorFigure">
+        <preferredSize
+            dx="20"
+            dy="20"/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="PowerTransistorNameFigure"
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
+      </actualFigure>
+      <accessors
+          accessor="getFigurePowerTransistorNameFigure"
+          figure="//@figures.0/@descriptors.14/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors
+        name="GenericPartFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Rectangle"
+          name="GenericPartFigure">
+        <preferredSize
+            dx="30"
+            dy="10"/>
+      </actualFigure>
+    </descriptors>
+    <descriptors
+        name="GenericPartNameFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Label"
+          name="GenericPartNameFigure"
+          text="..">
+        <font
+            xsi:type="gmfgraph:BasicFont"
+            height="8"/>
+      </actualFigure>
+    </descriptors>
   </figures>
   <nodes
       name="LED"
@@ -385,6 +448,18 @@
   <nodes
       name="Potentiometer"
       figure="PotentiometerFigure"
+      resizeConstraint="NONE"/>
+  <nodes
+      name="Transistor"
+      figure="TransistorFigure"
+      resizeConstraint="NONE"/>
+  <nodes
+      name="PowerTransistor"
+      figure="PowerTransistorFigure"
+      resizeConstraint="NONE"/>
+  <nodes
+      name="GenericPart"
+      figure="GenericPartFigure"
       resizeConstraint="NONE"/>
   <connections
       name="Wire"
@@ -457,4 +532,18 @@
       figure="PotentiometerFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.11/@accessors.0"/>
+  <labels
+      name="TransistorName"
+      figure="TransistorFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.13/@accessors.0"/>
+  <labels
+      name="PowerTransistorName"
+      figure="PowerTransistorFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.14/@accessors.0"/>
+  <labels
+      name="GenericPartName"
+      figure="GenericPartNameFigure"
+      elementIcon="false"/>
 </gmfgraph:Canvas>

@@ -72,6 +72,9 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 			case FritzingPackage.POTENTIOMETER: return createPotentiometer();
 			case FritzingPackage.FSR_SENSOR: return createFsrSensor();
 			case FritzingPackage.LIGHT_SENSOR: return createLightSensor();
+			case FritzingPackage.TRANSISTOR: return createTransistor();
+			case FritzingPackage.POWER_TRANSISTOR: return createPowerTransistor();
+			case FritzingPackage.GENERIC_PART: return createGenericPart();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -205,6 +208,36 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 	public LightSensor createLightSensor() {
 		LightSensorImpl lightSensor = new LightSensorImpl();
 		return lightSensor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Transistor createTransistor() {
+		TransistorImpl transistor = new TransistorImpl();
+		return transistor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PowerTransistor createPowerTransistor() {
+		PowerTransistorImpl powerTransistor = new PowerTransistorImpl();
+		return powerTransistor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GenericPart createGenericPart() {
+		GenericPartImpl genericPart = new GenericPartImpl();
+		return genericPart;
 	}
 
 	/**

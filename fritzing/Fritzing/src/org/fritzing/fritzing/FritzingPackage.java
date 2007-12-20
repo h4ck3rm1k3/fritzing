@@ -986,6 +986,172 @@ public interface FritzingPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.TransistorImpl <em>Transistor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.TransistorImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getTransistor()
+	 * @generated
+	 */
+	int TRANSISTOR = 16;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__PART_NUMBER = PART__PART_NUMBER;
+
+	/**
+	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__TERMINALS = PART__TERMINALS;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__PARENT = PART__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Transistor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.PowerTransistorImpl <em>Power Transistor</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.PowerTransistorImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPowerTransistor()
+	 * @generated
+	 */
+	int POWER_TRANSISTOR = 17;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__PART_NUMBER = PART__PART_NUMBER;
+
+	/**
+	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__TERMINALS = PART__TERMINALS;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__PARENT = PART__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Power Transistor</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.GenericPartImpl <em>Generic Part</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.GenericPartImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getGenericPart()
+	 * @generated
+	 */
+	int GENERIC_PART = 18;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__PART_NUMBER = PART__PART_NUMBER;
+
+	/**
+	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__TERMINALS = PART__TERMINALS;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__PARENT = PART__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Generic Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1355,6 +1521,36 @@ public interface FritzingPackage extends EPackage {
 	EClass getLightSensor();
 
 	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.Transistor <em>Transistor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Transistor</em>'.
+	 * @see org.fritzing.fritzing.Transistor
+	 * @generated
+	 */
+	EClass getTransistor();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.PowerTransistor <em>Power Transistor</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Power Transistor</em>'.
+	 * @see org.fritzing.fritzing.PowerTransistor
+	 * @generated
+	 */
+	EClass getPowerTransistor();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.GenericPart <em>Generic Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Generic Part</em>'.
+	 * @see org.fritzing.fritzing.GenericPart
+	 * @generated
+	 */
+	EClass getGenericPart();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1687,6 +1883,36 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EClass LIGHT_SENSOR = eINSTANCE.getLightSensor();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.TransistorImpl <em>Transistor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.TransistorImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getTransistor()
+		 * @generated
+		 */
+		EClass TRANSISTOR = eINSTANCE.getTransistor();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.PowerTransistorImpl <em>Power Transistor</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.PowerTransistorImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPowerTransistor()
+		 * @generated
+		 */
+		EClass POWER_TRANSISTOR = eINSTANCE.getPowerTransistor();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.GenericPartImpl <em>Generic Part</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.GenericPartImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getGenericPart()
+		 * @generated
+		 */
+		EClass GENERIC_PART = eINSTANCE.getGenericPart();
 
 	}
 

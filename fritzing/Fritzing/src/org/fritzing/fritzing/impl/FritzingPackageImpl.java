@@ -23,13 +23,16 @@ import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.FsrSensor;
+import org.fritzing.fritzing.GenericPart;
 import org.fritzing.fritzing.LightSensor;
 import org.fritzing.fritzing.Module;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Potentiometer;
+import org.fritzing.fritzing.PowerTransistor;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.Transistor;
 import org.fritzing.fritzing.Wire;
 
 /**
@@ -150,6 +153,27 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * @generated
 	 */
 	private EClass lightSensorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass transistorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass powerTransistorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass genericPartEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -542,6 +566,33 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTransistor() {
+		return transistorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getPowerTransistor() {
+		return powerTransistorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGenericPart() {
+		return genericPartEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public FritzingFactory getFritzingFactory() {
 		return (FritzingFactory)getEFactoryInstance();
 	}
@@ -615,6 +666,12 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		fsrSensorEClass = createEClass(FSR_SENSOR);
 
 		lightSensorEClass = createEClass(LIGHT_SENSOR);
+
+		transistorEClass = createEClass(TRANSISTOR);
+
+		powerTransistorEClass = createEClass(POWER_TRANSISTOR);
+
+		genericPartEClass = createEClass(GENERIC_PART);
 	}
 
 	/**
@@ -662,6 +719,9 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		potentiometerEClass.getESuperTypes().add(this.getPart());
 		fsrSensorEClass.getESuperTypes().add(this.getPart());
 		lightSensorEClass.getESuperTypes().add(this.getPart());
+		transistorEClass.getESuperTypes().add(this.getPart());
+		powerTransistorEClass.getESuperTypes().add(this.getPart());
+		genericPartEClass.getESuperTypes().add(this.getPart());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -720,6 +780,12 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEClass(fsrSensorEClass, FsrSensor.class, "FsrSensor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(lightSensorEClass, LightSensor.class, "LightSensor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(transistorEClass, Transistor.class, "Transistor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(powerTransistorEClass, PowerTransistor.class, "PowerTransistor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(genericPartEClass, GenericPart.class, "GenericPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -960,6 +1026,27 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   source, 
 		   new String[] {
 			 "name", "LightSensor",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (transistorEClass, 
+		   source, 
+		   new String[] {
+			 "name", "Transistor",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (powerTransistorEClass, 
+		   source, 
+		   new String[] {
+			 "name", "PowerTransistor",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (genericPartEClass, 
+		   source, 
+		   new String[] {
+			 "name", "GenericPart",
 			 "kind", "elementOnly"
 		   });
 	}
