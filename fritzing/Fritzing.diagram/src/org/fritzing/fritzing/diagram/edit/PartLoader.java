@@ -137,10 +137,10 @@ public class PartLoader {
 			}
 			
 			Node gridOffsetNode = (Node) xp.evaluate("/part/gridOffset", document, XPathConstants.NODE);			
-			gridOffset = parseLocation(gridOffsetNode, defaultUnits);
+			gridOffset = parseLocation(gridOffsetNode, defaultUnits, "x", "y");
 			
 			Node boundsNode = (Node) xp.evaluate("/part/bounds", document, XPathConstants.NODE);			
-			Point sz = parseLocation(boundsNode, defaultUnits);
+			Point sz = parseLocation(boundsNode, defaultUnits, "width", "height");
 			
 			size = new Dimension(sz.x, sz.y);
 
@@ -160,7 +160,7 @@ public class PartLoader {
 				// they will not be predefined in the generator
 							
 				Node loc = (Node) xpath.evaluate("connectorLocation", child, XPathConstants.NODE);
-				Point p = parseLocation(loc, defaultUnits );
+				Point p = parseLocation(loc, defaultUnits, "x", "y" );
 				p.x += gridOffset.x;
 				p.y += gridOffset.y;
 				terminalHash.put(name, p);						
@@ -174,13 +174,13 @@ public class PartLoader {
 		
 	}
 
-	protected Point parseLocation(Node node, String defaultUnits) {
+	protected Point parseLocation(Node node, String defaultUnits, String axis1, String axis2) {
 		if (node == null) return new Point(0,0);
 		
 		try {
 			XPath xpath = XPathFactory.newInstance().newXPath();
-			Double x = (Double) xpath.evaluate("@x", node, XPathConstants.NUMBER);
-			Double y = (Double) xpath.evaluate("@y", node, XPathConstants.NUMBER);
+			Double x = (Double) xpath.evaluate("@" + axis1, node, XPathConstants.NUMBER);
+			Double y = (Double) xpath.evaluate("@" + axis2, node, XPathConstants.NUMBER);
 			String units = (String) xpath.evaluate("@units", node, XPathConstants.STRING);
 			if (units == null || units == "") {
 				units = defaultUnits;
@@ -188,17 +188,17 @@ public class PartLoader {
 			if (units.equalsIgnoreCase("himetric")) {			
 			}
 			else if (units.equalsIgnoreCase("tenths")) {
-				x *= 25400 / dpi;  //254;
-				y *= 25400 / dpi; // 254
+				x *= 254;  // 25400 / dpi;  
+				y *= 254;  // 25400 / dpi;
 			}
 			else if (units.equalsIgnoreCase("inches")) {
-				x *= 254000 / dpi;
-				y *= 254000 / dpi;
+				x *= 2540;  // 254000 / dpi;
+				y *= 2540;  // 254000 / dpi;
 			}
-			else if (units.equalsIgnoreCase("pixels")) {
-				x *= 2540 / dpi;  // 2540 / 100
-				y *= 2540 / dpi;  // 2540 / 100
-			}
+//			else if (units.equalsIgnoreCase("pixels")) {
+//				x *= 2540 / dpi;  // 2540 / 100
+//				y *= 2540 / dpi;  // 2540 / 100
+//			}
 			else {
 				throw new Exception("unknown units " + units);
 			}

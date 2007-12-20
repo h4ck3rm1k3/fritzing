@@ -24,10 +24,13 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
+import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramColorRegistry;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.notation.FontStyle;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -112,6 +115,17 @@ public class PowerTransistorEditPart extends PartEditPart {
 		if (childEditPart instanceof PowerTransistorNameEditPart) {
 			((PowerTransistorNameEditPart) childEditPart).setLabel(getPrimaryShape()
 					.getFigurePowerTransistorNameFigure());
+				
+//			try {
+//			    FontStyle style = (FontStyle)  ((PowerTransistorNameEditPart) childEditPart).getPrimaryView().getStyle(NotationPackage.Literals.FONT_STYLE);
+//			    if (style != null) {
+//			    	style.setFontColor((255 << 16) + (255 << 8) + 255);
+//			    }
+//			}
+//			catch (Exception ex) {
+//				System.out.println("Cannot modify resource set without a write transaction");
+//			}
+			
 			return true;
 		}
 		return addEastWestFixedChild(childEditPart);
@@ -299,7 +313,7 @@ public class PowerTransistorEditPart extends PartEditPart {
 	/**
 	 * @generated NOT
 	 */
-	static final Color THIS_BACK = new Color(null, 50, 50, 50);
+	static final Color THIS_BACK = new Color(null, 80, 80, 80);
 
 	/**
 	 * @generated

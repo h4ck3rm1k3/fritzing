@@ -278,9 +278,10 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 	 */
 	protected NodeFigure createNodePlate() {
 		Dimension size = partLoader.getSize();
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP((int) (size.width / multiplier)), getMapMode().DPtoLP(
-				(int) (size.height / multiplier)));
+//		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
+//				.DPtoLP((int) (size.width / multiplier)), getMapMode().DPtoLP(
+//				(int) (size.height / multiplier)));
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(size.width, size.height);
 		return result;
 	}
 
@@ -378,18 +379,22 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
 			createContents();
-			if (image != null) {
-				org.eclipse.swt.graphics.Rectangle r = image.getBounds();
-				int w = (int) (r.width / multiplier);
-				int h = (int) (r.height / multiplier);
-				this.setPreferredSize(new Dimension(getMapMode().DPtoLP(w),
-						getMapMode().DPtoLP(h)));
-			} else if (renderedImage != null) {
-				RenderInfo rinfo = renderedImage.getRenderInfo();
-				this.setPreferredSize(new Dimension(getMapMode().DPtoLP(
-						rinfo.getWidth()), getMapMode().DPtoLP(
-						rinfo.getHeight())));
-			}
+//			if (image != null) {
+//				org.eclipse.swt.graphics.Rectangle r = image.getBounds();
+//				int w = (int) (r.width / multiplier);
+//				int h = (int) (r.height / multiplier);
+//				this.setPreferredSize(new Dimension(getMapMode().DPtoLP(w),
+//						getMapMode().DPtoLP(h)));
+//			} else if (renderedImage != null) {
+//				RenderInfo rinfo = renderedImage.getRenderInfo();
+//				this.setPreferredSize(new Dimension(getMapMode().DPtoLP(
+//						rinfo.getWidth()), getMapMode().DPtoLP(
+//						rinfo.getHeight())));
+//			}
+		
+			this.setPreferredSize(new Dimension(partLoader.getSize()));
+		
+
 		}
 
 		/**

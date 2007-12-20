@@ -299,7 +299,7 @@ public class TransistorEditPart extends PartEditPart {
 	/**
 	 * @generated NOT
 	 */
-	static final Color THIS_BACK = new Color(null, 50, 50, 50);
+	static final Color THIS_BACK = new Color(null, 80, 80, 80);
 
 	/**
 	 * @generated
