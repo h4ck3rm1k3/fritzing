@@ -42,6 +42,12 @@ div.boardCommentActions form {
   width: auto;
   float: left;
 }
+form {
+  float:right;
+}
+input.inputLabelActive {
+  width: auto;
+}
 
 /* Hiding confusing elements */
 br,
@@ -53,7 +59,6 @@ img.portraitPhoto,
 div.poweredBy {
   display: none;
 }
-
 
 /* </dtml-with> */
 
