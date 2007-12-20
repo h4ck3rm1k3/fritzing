@@ -10,6 +10,16 @@
 
 /* YOUR CSS RULES START HERE */
 
+
+/* bug fixes */
+
+.inlineForm .formHelp,
+.inlineForm .fieldRequired,
+.inlineForm label {
+  display: inline;
+}
+
+
 /* 760px wide + column two */
 
 body {
