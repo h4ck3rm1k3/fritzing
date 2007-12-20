@@ -196,6 +196,21 @@ public class CompositeItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(FritzingPackage.Literals.COMPOSITE__PARTS,
+				 FritzingFactory.eINSTANCE.createTransistor()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(FritzingPackage.Literals.COMPOSITE__PARTS,
+				 FritzingFactory.eINSTANCE.createPowerTransistor()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(FritzingPackage.Literals.COMPOSITE__PARTS,
+				 FritzingFactory.eINSTANCE.createGenericPart()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(FritzingPackage.Literals.COMPOSITE__WIRES,
 				 FritzingFactory.eINSTANCE.createWire()));
 	}

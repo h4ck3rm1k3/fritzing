@@ -374,6 +374,75 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Transistor} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TransistorItemProvider transistorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.Transistor}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTransistorAdapter() {
+		if (transistorItemProvider == null) {
+			transistorItemProvider = new TransistorItemProvider(this);
+		}
+
+		return transistorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.PowerTransistor} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PowerTransistorItemProvider powerTransistorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.PowerTransistor}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createPowerTransistorAdapter() {
+		if (powerTransistorItemProvider == null) {
+			powerTransistorItemProvider = new PowerTransistorItemProvider(this);
+		}
+
+		return powerTransistorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.GenericPart} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected GenericPartItemProvider genericPartItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.GenericPart}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createGenericPartAdapter() {
+		if (genericPartItemProvider == null) {
+			genericPartItemProvider = new GenericPartItemProvider(this);
+		}
+
+		return genericPartItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -485,6 +554,9 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 		if (potentiometerItemProvider != null) potentiometerItemProvider.dispose();
 		if (fsrSensorItemProvider != null) fsrSensorItemProvider.dispose();
 		if (lightSensorItemProvider != null) lightSensorItemProvider.dispose();
+		if (transistorItemProvider != null) transistorItemProvider.dispose();
+		if (powerTransistorItemProvider != null) powerTransistorItemProvider.dispose();
+		if (genericPartItemProvider != null) genericPartItemProvider.dispose();
 	}
 
 }
