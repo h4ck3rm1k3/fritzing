@@ -94,7 +94,9 @@ public class ScriptExporter {
 		String result = "";
 		/* we have to do this check for "Gnd" with that capitalization to match the proper Arduino
 		  ground pin in Fritzing to the proper pin in Eagle since Fritzing respects different capitalization
-		  and Eagle doesn't */		  
+		  and Eagle doesn't */	
+		/* EDIT - not anymore - we updated the pin names in Fritzing */
+		/*
 		if (net.source.getParent().getName().equalsIgnoreCase("arduino") && net.source.getName().equals("Gnd")) {
 			result = "SIGNAL '" + net.netName + "' " + 
 				"'" + net.source.getParent().getName() + "' " + 
@@ -108,12 +110,13 @@ public class ScriptExporter {
 				"'" + net.target.getParent().getName() + "' " + 
 				"'GND_C'; \n";			
 		} else {
-			result = "SIGNAL '" + net.netName + "' " + 
-				"'" + net.source.getParent().getName() + "' " + 
-				"'" + net.source.getName() + "' " +
-				"'" + net.target.getParent().getName() + "' " + 
-				"'" + net.target.getName() + "'; \n";
-		}
+		*/
+		result = "SIGNAL '" + net.netName + "' " + 
+			"'" + net.source.getParent().getName() + "' " + 
+			"'" + net.source.getName() + "' " +
+			"'" + net.target.getParent().getName() + "' " + 
+			"'" + net.target.getName() + "'; \n";
+//		}
 		return result;
 	}
 	
