@@ -47,22 +47,22 @@ public class ButtonEditPart extends PartEditPart {
 	/**
 	 * @generated NOT
 	 */
-	public static final String UPPER_LEFT_TERMINAL = "0p";
+	public static final String UPPER_LEFT_TERMINAL = "1";
 
 	/**
 	 * @generated NOT
 	 */
-	public static final String UPPER_RIGHT_TERMINAL = "1p";
+	public static final String UPPER_RIGHT_TERMINAL = "2";
 
 	/**
 	 * @generated NOT
 	 */
-	public static final String LOWER_LEFT_TERMINAL = "0";
+	public static final String LOWER_LEFT_TERMINAL = "3";
 
 	/**
 	 * @generated NOT
 	 */
-	public static final String LOWER_RIGHT_TERMINAL = "1";
+	public static final String LOWER_RIGHT_TERMINAL = "4";
 
 	/**
 	 * @generated
