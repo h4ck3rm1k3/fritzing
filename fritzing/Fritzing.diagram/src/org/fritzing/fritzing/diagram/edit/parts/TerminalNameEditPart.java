@@ -62,7 +62,7 @@ public class TerminalNameEditPart extends LabelEditPart implements
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5006;
+	public static final int VISUAL_ID = 5009;
 
 	/**
 	 * @generated
@@ -327,7 +327,7 @@ public class TerminalNameEditPart extends LabelEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.Terminal_2005, getParserElement(),
+					FritzingElementTypes.Terminal_2008, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}

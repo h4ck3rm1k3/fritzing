@@ -36,14 +36,16 @@ public class FritzingPaletteFactory {
 	 * @generated NOT
 	 */
 	public void customiseStandardGroup(PaletteRoot paletteRoot) {
-		PaletteContainer standard = (PaletteContainer) paletteRoot.getChildren().get(0);
-		ToolEntry standardSelectionTool = (ToolEntry) standard.getChildren().get(1);
+		PaletteContainer standard = (PaletteContainer) paletteRoot
+				.getChildren().get(0);
+		ToolEntry standardSelectionTool = (ToolEntry) standard.getChildren()
+				.get(1);
 		standard.remove(standardSelectionTool);
 		ToolEntry selectionPanTool = createPanningSelectionTool();
 		standard.add(1, selectionPanTool);
 		paletteRoot.setDefaultEntry(selectionPanTool);
 	}
-	
+
 	/**
 	 * @generated NOT
 	 */
@@ -77,6 +79,8 @@ public class FritzingPaletteFactory {
 		paletteContainer.add(createPotentiometer5CreationTool());
 		paletteContainer.add(createFSRSensor6CreationTool());
 		paletteContainer.add(createLightSensor7CreationTool());
+		paletteContainer.add(createTransistor8CreationTool());
+		paletteContainer.add(createPowerTransistor9CreationTool());
 		return paletteContainer;
 	}
 
@@ -160,12 +164,12 @@ public class FritzingPaletteFactory {
 	 */
 	private ToolEntry createPotentiometer5CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Potentiometer_2006);
+		types.add(FritzingElementTypes.Potentiometer_2005);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Potentiometer5CreationTool_title,
 				Messages.Potentiometer5CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Potentiometer_2006));
+				.getImageDescriptor(FritzingElementTypes.Potentiometer_2005));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -175,12 +179,12 @@ public class FritzingPaletteFactory {
 	 */
 	private ToolEntry createFSRSensor6CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.FsrSensor_2007);
+		types.add(FritzingElementTypes.FsrSensor_2006);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.FSRSensor6CreationTool_title,
 				Messages.FSRSensor6CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.FsrSensor_2007));
+				.getImageDescriptor(FritzingElementTypes.FsrSensor_2006));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -190,12 +194,42 @@ public class FritzingPaletteFactory {
 	 */
 	private ToolEntry createLightSensor7CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.LightSensor_2008);
+		types.add(FritzingElementTypes.LightSensor_2007);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.LightSensor7CreationTool_title,
 				Messages.LightSensor7CreationTool_desc, types);
 		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.LightSensor_2008));
+				.getImageDescriptor(FritzingElementTypes.LightSensor_2007));
+		entry.setLargeIcon(entry.getSmallIcon());
+		return entry;
+	}
+
+	/**
+	 * @generated
+	 */
+	private ToolEntry createTransistor8CreationTool() {
+		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
+		types.add(FritzingElementTypes.Transistor_2009);
+		NodeToolEntry entry = new NodeToolEntry(
+				Messages.Transistor8CreationTool_title,
+				Messages.Transistor8CreationTool_desc, types);
+		entry.setSmallIcon(FritzingElementTypes
+				.getImageDescriptor(FritzingElementTypes.Transistor_2009));
+		entry.setLargeIcon(entry.getSmallIcon());
+		return entry;
+	}
+
+	/**
+	 * @generated
+	 */
+	private ToolEntry createPowerTransistor9CreationTool() {
+		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
+		types.add(FritzingElementTypes.PowerTransistor_2010);
+		NodeToolEntry entry = new NodeToolEntry(
+				Messages.PowerTransistor9CreationTool_title,
+				Messages.PowerTransistor9CreationTool_desc, types);
+		entry.setSmallIcon(FritzingElementTypes
+				.getImageDescriptor(FritzingElementTypes.PowerTransistor_2010));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}

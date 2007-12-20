@@ -15,12 +15,16 @@ import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.FsrSensorNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.GenericPartNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LightSensorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.PotentiometerNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PowerTransistorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PowerTransistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -28,6 +32,8 @@ import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TransistorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TransistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -37,12 +43,16 @@ import org.fritzing.fritzing.diagram.view.factories.ButtonNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ButtonViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.FsrSensorNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.FsrSensorViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.GenericPartNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.GenericPartViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LightSensorNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LightSensorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.PotentiometerNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.PotentiometerViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.PowerTransistorNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.PowerTransistorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.SketchViewFactory;
@@ -50,6 +60,8 @@ import org.fritzing.fritzing.diagram.view.factories.Terminal2ViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalName2ViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.TransistorNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.TransistorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.WireNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.WireViewFactory;
 
@@ -129,6 +141,9 @@ public class FritzingViewProvider extends AbstractViewProvider {
 				case PotentiometerEditPart.VISUAL_ID:
 				case FsrSensorEditPart.VISUAL_ID:
 				case LightSensorEditPart.VISUAL_ID:
+				case TransistorEditPart.VISUAL_ID:
+				case PowerTransistorEditPart.VISUAL_ID:
+				case GenericPartEditPart.VISUAL_ID:
 				case Terminal2EditPart.VISUAL_ID:
 				case TerminalEditPart.VISUAL_ID:
 					if (domainElement == null
@@ -189,6 +204,27 @@ public class FritzingViewProvider extends AbstractViewProvider {
 					break;
 				case TerminalNameEditPart.VISUAL_ID:
 					if (TerminalEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
+				case TransistorNameEditPart.VISUAL_ID:
+					if (TransistorEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
+				case PowerTransistorNameEditPart.VISUAL_ID:
+					if (PowerTransistorEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
+				case GenericPartNameEditPart.VISUAL_ID:
+					if (GenericPartEditPart.VISUAL_ID != FritzingVisualIDRegistry
 							.getVisualID(containerView)
 							|| containerView.getElement() != domainElement) {
 						return null; // wrong container
@@ -258,6 +294,18 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return TerminalViewFactory.class;
 		case TerminalNameEditPart.VISUAL_ID:
 			return TerminalNameViewFactory.class;
+		case TransistorEditPart.VISUAL_ID:
+			return TransistorViewFactory.class;
+		case TransistorNameEditPart.VISUAL_ID:
+			return TransistorNameViewFactory.class;
+		case PowerTransistorEditPart.VISUAL_ID:
+			return PowerTransistorViewFactory.class;
+		case PowerTransistorNameEditPart.VISUAL_ID:
+			return PowerTransistorNameViewFactory.class;
+		case GenericPartEditPart.VISUAL_ID:
+			return GenericPartViewFactory.class;
+		case GenericPartNameEditPart.VISUAL_ID:
+			return GenericPartNameViewFactory.class;
 		case Terminal2EditPart.VISUAL_ID:
 			return Terminal2ViewFactory.class;
 		case TerminalName2EditPart.VISUAL_ID:

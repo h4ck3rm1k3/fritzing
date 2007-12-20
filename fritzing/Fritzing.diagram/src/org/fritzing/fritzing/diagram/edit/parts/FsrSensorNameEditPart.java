@@ -61,7 +61,7 @@ public class FsrSensorNameEditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5008;
+	public static final int VISUAL_ID = 5007;
 
 	/**
 	 * @generated
@@ -305,7 +305,7 @@ public class FsrSensorNameEditPart extends CompartmentEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.FsrSensor_2007, getParserElement(),
+					FritzingElementTypes.FsrSensor_2006, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}

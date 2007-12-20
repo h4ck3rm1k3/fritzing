@@ -30,7 +30,9 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
 	 */
 	public static void initDefaults(IPreferenceStore preferenceStore) {
 		DiagramsPreferencePage.initDefaults(preferenceStore);
-		preferenceStore.setDefault(IPreferenceConstants.PREF_SHOW_CONNECTION_HANDLES, false);
-		preferenceStore.setDefault(IPreferenceConstants.PREF_SHOW_POPUP_BARS, false);
+		preferenceStore.setDefault(
+				IPreferenceConstants.PREF_SHOW_CONNECTION_HANDLES, false);
+		preferenceStore.setDefault(IPreferenceConstants.PREF_SHOW_POPUP_BARS,
+				false);
 	}
 }

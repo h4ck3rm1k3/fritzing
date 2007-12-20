@@ -7,8 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.emf.type.core.commands.CreateElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
-import org.eclipse.gmf.runtime.notation.View;
-//import org.fritzing.fritzing.Button;
+import org.eclipse.gmf.runtime.notation.View; //import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 

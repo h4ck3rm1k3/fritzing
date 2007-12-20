@@ -61,7 +61,7 @@ public class LightSensorNameEditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5009;
+	public static final int VISUAL_ID = 5008;
 
 	/**
 	 * @generated
@@ -305,7 +305,7 @@ public class LightSensorNameEditPart extends CompartmentEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.LightSensor_2008, getParserElement(),
+					FritzingElementTypes.LightSensor_2007, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}

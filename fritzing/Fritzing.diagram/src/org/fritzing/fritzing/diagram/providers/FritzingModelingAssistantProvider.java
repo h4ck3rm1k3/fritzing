@@ -26,13 +26,16 @@ import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PowerTransistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TransistorEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
 import org.fritzing.fritzing.diagram.part.Messages;
 
@@ -83,16 +86,34 @@ public class FritzingModelingAssistantProvider extends
 			types.add(FritzingElementTypes.Terminal_3001);
 			return types;
 		}
+		if (editPart instanceof TransistorEditPart) {
+			List types = new ArrayList();
+			types.add(FritzingElementTypes.Terminal_3001);
+			return types;
+		}
+		if (editPart instanceof PowerTransistorEditPart) {
+			List types = new ArrayList();
+			types.add(FritzingElementTypes.Terminal_3001);
+			return types;
+		}
+		if (editPart instanceof GenericPartEditPart) {
+			List types = new ArrayList();
+			types.add(FritzingElementTypes.Terminal_3001);
+			return types;
+		}
 		if (editPart instanceof SketchEditPart) {
 			List types = new ArrayList();
 			types.add(FritzingElementTypes.Arduino_2001);
 			types.add(FritzingElementTypes.LED_2002);
 			types.add(FritzingElementTypes.Resistor_2003);
 			types.add(FritzingElementTypes.Button_2004);
-			types.add(FritzingElementTypes.Potentiometer_2006);
-			types.add(FritzingElementTypes.FsrSensor_2007);
-			types.add(FritzingElementTypes.LightSensor_2008);
-			types.add(FritzingElementTypes.Terminal_2005);
+			types.add(FritzingElementTypes.Potentiometer_2005);
+			types.add(FritzingElementTypes.FsrSensor_2006);
+			types.add(FritzingElementTypes.LightSensor_2007);
+			types.add(FritzingElementTypes.Terminal_2008);
+			types.add(FritzingElementTypes.Transistor_2009);
+			types.add(FritzingElementTypes.PowerTransistor_2010);
+			types.add(FritzingElementTypes.GenericPart_2011);
 			return types;
 		}
 		return Collections.EMPTY_LIST;
@@ -178,7 +199,7 @@ public class FritzingModelingAssistantProvider extends
 		if (targetEditPart instanceof TerminalEditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2005);
+				types.add(FritzingElementTypes.Terminal_2008);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);
@@ -188,7 +209,7 @@ public class FritzingModelingAssistantProvider extends
 		if (targetEditPart instanceof Terminal2EditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2005);
+				types.add(FritzingElementTypes.Terminal_2008);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);
@@ -208,7 +229,7 @@ public class FritzingModelingAssistantProvider extends
 		if (sourceEditPart instanceof TerminalEditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2005);
+				types.add(FritzingElementTypes.Terminal_2008);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);
@@ -218,7 +239,7 @@ public class FritzingModelingAssistantProvider extends
 		if (sourceEditPart instanceof Terminal2EditPart) {
 			List types = new ArrayList();
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2005);
+				types.add(FritzingElementTypes.Terminal_2008);
 			}
 			if (relationshipType == FritzingElementTypes.Wire_4001) {
 				types.add(FritzingElementTypes.Terminal_3001);

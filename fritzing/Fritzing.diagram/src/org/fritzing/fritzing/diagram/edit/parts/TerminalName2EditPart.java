@@ -113,7 +113,8 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
 		// don't want delete
-		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
+		installEditPolicy(EditPolicy.COMPONENT_ROLE,
+				new NonDeleteComponentEditPolicy());
 
 		installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE,
 				new LabelDirectEditPolicy());
@@ -161,9 +162,13 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void setLabelTextHelper(IFigure figure, String text) {
+		text = ((Terminal2EditPart) getParent()).filterNameEditText(this, text);
+		if (text == null)
+			return;
+
 		if (figure instanceof WrapLabel) {
 			((WrapLabel) figure).setText(text);
 		} else {
@@ -501,16 +506,16 @@ public class TerminalName2EditPart extends LabelEditPart implements
 		setFontColor(color);
 	}
 
-    protected void refreshFontColor() {
-    	if (fontColor == null) {
-    		super.refreshFontColor();
-    		return;
-    	}
-    	
-    	setFontColor(fontColor);
-    }
+	protected void refreshFontColor() {
+		if (fontColor == null) {
+			super.refreshFontColor();
+			return;
+		}
 
-    /**
+		setFontColor(fontColor);
+	}
+
+	/**
 	 * @generated
 	 */
 	protected void addSemanticListeners() {
@@ -635,7 +640,7 @@ public class TerminalName2EditPart extends LabelEditPart implements
 			this.setFont(THIS_FONT);
 
 		}
-		
+
 		/**
 		 * @generated NOT
 		 */
@@ -644,13 +649,15 @@ public class TerminalName2EditPart extends LabelEditPart implements
 				super.setText(text);
 				return;
 			}
-			
+
 			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < text.length(); i++) {
 				sb.append(text.charAt(i));
 				sb.append('\n');
 			}
-			sb.deleteCharAt(sb.length() - 1);
+			if (sb.length() > 0) {
+				sb.deleteCharAt(sb.length() - 1);
+			}
 			super.setText(sb.toString());
 		}
 

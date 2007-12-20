@@ -22,7 +22,6 @@ public class DiagramRulersAndGridPreferencePage extends RulerGridPreferencePage 
 		setPreferenceStore(FritzingDiagramEditorPlugin.getInstance()
 				.getPreferenceStore());
 	}
-	
 
 	/**
 	 * Initializes the default preference values for this preference store.
@@ -33,10 +32,13 @@ public class DiagramRulersAndGridPreferencePage extends RulerGridPreferencePage 
 	 */
 	public static void initDefaults(IPreferenceStore preferenceStore) {
 		RulerGridPreferencePage.initDefaults(preferenceStore);
-		preferenceStore.setDefault(IPreferenceConstants.PREF_SHOW_RULERS, false);
-		preferenceStore.setDefault(IPreferenceConstants.PREF_RULER_UNITS, RulerProvider.UNIT_INCHES);
+		preferenceStore
+				.setDefault(IPreferenceConstants.PREF_SHOW_RULERS, false);
+		preferenceStore.setDefault(IPreferenceConstants.PREF_RULER_UNITS,
+				RulerProvider.UNIT_INCHES);
 		preferenceStore.setDefault(IPreferenceConstants.PREF_SHOW_GRID, true);
-		preferenceStore.setDefault(IPreferenceConstants.PREF_SNAP_TO_GRID, true);
+		preferenceStore
+				.setDefault(IPreferenceConstants.PREF_SNAP_TO_GRID, true);
 		preferenceStore.setDefault(IPreferenceConstants.PREF_GRID_SPACING, 0.1);
 		/* more preferences (WorkbenchPreferences) are set in 
 		 * FritzingDiagramEditor.configureGraphicalViewer()

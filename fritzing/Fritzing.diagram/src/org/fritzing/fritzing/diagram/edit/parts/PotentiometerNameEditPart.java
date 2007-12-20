@@ -63,7 +63,7 @@ public class PotentiometerNameEditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5007;
+	public static final int VISUAL_ID = 5006;
 
 	/**
 	 * @generated
@@ -307,7 +307,7 @@ public class PotentiometerNameEditPart extends CompartmentEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.Potentiometer_2006,
+					FritzingElementTypes.Potentiometer_2005,
 					getParserElement(), parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}

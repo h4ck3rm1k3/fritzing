@@ -39,8 +39,6 @@ import org.fritzing.fritzing.diagram.edit.policies.ButtonCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
-
-
 /**
  * @generated NOT
  */
@@ -65,7 +63,7 @@ public class ButtonEditPart extends PartEditPart {
 	 * @generated NOT
 	 */
 	public static final String LOWER_RIGHT_TERMINAL = "1";
-	
+
 	/**
 	 * @generated
 	 */
@@ -130,7 +128,7 @@ public class ButtonEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof ButtonNameEditPart) {
@@ -146,24 +144,21 @@ public class ButtonEditPart extends PartEditPart {
 				EObject eobject = ((NodeImpl) model).getElement();
 				if (eobject instanceof Terminal) {
 					name = ((Terminal) eobject).getName();
-					if (name == null) {						
-					}
-					else if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
+					if (name == null) {
+					} else if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
 						pos = PositionConstants.NORTH_WEST;
-					}
-					else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
+					} else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
 						pos = PositionConstants.NORTH_EAST;
-					}
-					else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
+					} else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
 						pos = PositionConstants.SOUTH_WEST;
-					}
-					else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
+					} else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
 						pos = PositionConstants.SOUTH_EAST;
 					}
 				}
 			}
 
-			ButtonBorderItemLocator locator = new ButtonBorderItemLocator(getMainFigure(), this, pos);
+			ButtonBorderItemLocator locator = new ButtonBorderItemLocator(
+					getMainFigure(), this, pos);
 			//BorderItemLocator locator = new BorderItemLocator(getMainFigure(), 0);
 			getBorderedFigure().getBorderItemContainer().add(
 					((Terminal2EditPart) childEditPart).getFigure(), locator);
@@ -175,34 +170,32 @@ public class ButtonEditPart extends PartEditPart {
 	/**
 	 * @generated NOT
 	 */
-	public int getTerminalNamePosition(Terminal2EditPart terminal2, int defaultPosition) {
+	public int getTerminalNamePosition(Terminal2EditPart terminal2,
+			TerminalName2EditPart namePart, int defaultPosition) {
 		String name = null;
 		Object model = terminal2.getModel();
 		if (model instanceof NodeImpl) {
 			EObject eobject = ((NodeImpl) model).getElement();
 			if (eobject instanceof Terminal) {
-				name = ((Terminal) eobject).getName();					
+				name = ((Terminal) eobject).getName();
 			}
 		}
-		
-		if (name == null) return defaultPosition;
-		
+
+		if (name == null)
+			return defaultPosition;
+
 		if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
 			return PositionConstants.NORTH;
-		}
-		else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
+		} else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
 			return PositionConstants.NORTH;
-		}
-		else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
+		} else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
+			return PositionConstants.SOUTH;
+		} else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
 			return PositionConstants.SOUTH;
 		}
-		else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
-			return PositionConstants.SOUTH;
-		}
-		
-		
+
 		return defaultPosition;
-		
+
 	}
 
 	/**
@@ -409,5 +402,3 @@ public class ButtonEditPart extends PartEditPart {
 			SWT.NORMAL);
 
 }
-
-

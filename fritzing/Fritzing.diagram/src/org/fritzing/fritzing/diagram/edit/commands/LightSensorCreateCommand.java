@@ -49,7 +49,7 @@ public class LightSensorCreateCommand extends CreateElementCommand {
 	protected EObject doDefaultElementCreation() {
 		LightSensor newElement = (LightSensor) super.doDefaultElementCreation();
 		if (newElement != null) {
-			FritzingElementTypes.Initializers.LightSensor_2008.init(newElement);
+			FritzingElementTypes.Initializers.LightSensor_2007.init(newElement);
 		}
 		return newElement;
 	}

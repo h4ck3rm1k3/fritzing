@@ -14,7 +14,7 @@ public class FritzingDiagramActionBarContributor extends
 	/**
 	 * @generated
 	 */
-	protected Class<FritzingDiagramEditor> getEditorClass() {
+	protected Class getEditorClass() {
 		return FritzingDiagramEditor.class;
 	}
 

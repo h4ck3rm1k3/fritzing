@@ -50,7 +50,7 @@ public class PotentiometerCreateCommand extends CreateElementCommand {
 		Potentiometer newElement = (Potentiometer) super
 				.doDefaultElementCreation();
 		if (newElement != null) {
-			FritzingElementTypes.Initializers.Potentiometer_2006
+			FritzingElementTypes.Initializers.Potentiometer_2005
 					.init(newElement);
 		}
 		return newElement;

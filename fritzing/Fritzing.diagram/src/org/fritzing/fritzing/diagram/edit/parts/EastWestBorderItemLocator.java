@@ -50,13 +50,20 @@ public class EastWestBorderItemLocator extends PartBorderItemLocator {
 			x += parentFigureWidth + getBorderItemOffset().width;
 			y += (parentFigureHeight - borderItemSize.height) / 2;
 		} 
+		else if (rpc == PositionConstants.NORTH) {
+			y -= borderItemSize.height;
+			x += (parentFigureWidth - borderItemSize.width) / 2;						
+		}
 		else if (rpc == PositionConstants.SOUTH) {
 			y += parentFigureHeight;
 			x += (parentFigureWidth - borderItemSize.width) / 2;						
 		}
-		else if (rpc == PositionConstants.NORTH) {
-			y -= borderItemSize.height;
-			x += (parentFigureWidth - borderItemSize.width) / 2;						
+		else if (rpc == PositionConstants.SOUTH_WEST) {
+			y += parentFigureHeight;
+		}
+		else if (rpc == PositionConstants.SOUTH_EAST) {
+			x += parentFigureWidth + getBorderItemOffset().width - borderItemSize.width;
+			y += parentFigureHeight;
 		}
 		return new Point(x, y);
 	}
@@ -88,6 +95,26 @@ public class EastWestBorderItemLocator extends PartBorderItemLocator {
 			return PositionConstants.EAST;
 		}
 		else if (name.equals("W")) {
+			return PositionConstants.SOUTH;
+		}
+		else if (name.equals("E")) {
+			return PositionConstants.SOUTH_WEST;
+		}
+		else if (name.equals("B")) {
+			return PositionConstants.SOUTH;
+		}
+		else if (name.equals("C")) {
+			return PositionConstants.SOUTH_EAST;
+		}
+		
+		// hack for the moment to distinguish terminals from Transistor and PowerTransistor parts
+		else if (name.equals("e")) {
+			return PositionConstants.SOUTH_EAST;
+		}
+		else if (name.equals("b")) {
+			return PositionConstants.SOUTH_WEST;
+		}
+		else if (name.equals("c")) {
 			return PositionConstants.SOUTH;
 		}
 		

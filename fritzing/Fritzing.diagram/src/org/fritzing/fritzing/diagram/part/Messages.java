@@ -376,6 +376,26 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
+	public static String Transistor8CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String Transistor8CreationTool_desc;
+
+	/**
+	 * @generated
+	 */
+	public static String PowerTransistor9CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String PowerTransistor9CreationTool_desc;
+
+	/**
+	 * @generated
+	 */
 	public static String DiagramEditorActionBarAdvisor_DefaultFileEditorTitle;
 
 	/**
@@ -402,7 +422,7 @@ public class Messages extends NLS {
 	 * @generated NOT
 	 */
 	public static String ApplicationMenuName_New;
-	
+
 	/**
 	 * @generated NOT
 	 */

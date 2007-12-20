@@ -54,7 +54,7 @@ public class PotentiometerEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2006;
+	public static final int VISUAL_ID = 2005;
 
 	/**
 	 * @generated

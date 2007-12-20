@@ -94,7 +94,7 @@ public class FritzingDiagramEditorPlugin extends AbstractUIPlugin {
 	 * @generated
 	 */
 	protected ComposedAdapterFactory createAdapterFactory() {
-		List<AdapterFactoryImpl> factories = new ArrayList<AdapterFactoryImpl>();
+		List factories = new ArrayList();
 		fillItemProviderFactories(factories);
 		return new ComposedAdapterFactory(factories);
 	}
@@ -102,7 +102,7 @@ public class FritzingDiagramEditorPlugin extends AbstractUIPlugin {
 	/**
 	 * @generated
 	 */
-	protected void fillItemProviderFactories(List<AdapterFactoryImpl> factories) {
+	protected void fillItemProviderFactories(List factories) {
 		factories.add(new FritzingItemProviderAdapterFactory());
 		factories.add(new ResourceItemProviderAdapterFactory());
 		factories.add(new ReflectiveItemProviderAdapterFactory());

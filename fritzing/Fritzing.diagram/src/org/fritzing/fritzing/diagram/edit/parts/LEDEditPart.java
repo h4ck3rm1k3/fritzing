@@ -64,7 +64,6 @@ public class LEDEditPart extends PartEditPart {
 	 * @generated
 	 */
 	protected IFigure primaryShape;
-	
 
 	/**
 	 * @generated
@@ -109,8 +108,7 @@ public class LEDEditPart extends PartEditPart {
 				int color = ((LED) led).getColor();
 				getPrimaryShape().setColor(color);
 			}
-		} 
-		else {
+		} else {
 			super.handleNotificationEvent(evt);
 		}
 	}
@@ -318,7 +316,8 @@ public class LEDEditPart extends PartEditPart {
 		 * @generated NOT
 		 */
 		public void setColor(int color) {
-			Color c = new Color(null, (color >> 16) & 255, (color >> 8) & 255, color & 255); 
+			Color c = new Color(null, (color >> 16) & 255, (color >> 8) & 255,
+					color & 255);
 			this.setBackgroundColor(c);
 			repaint();
 		}

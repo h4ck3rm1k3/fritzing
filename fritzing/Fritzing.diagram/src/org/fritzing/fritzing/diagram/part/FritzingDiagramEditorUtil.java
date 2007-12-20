@@ -74,8 +74,8 @@ public class FritzingDiagramEditorUtil {
 	/**
 	 * @generated
 	 */
-	public static Map<String, String> getSaveOptions() {
-		Map<String, String> saveOptions = new HashMap<String, String>();
+	public static Map getSaveOptions() {
+		Map saveOptions = new HashMap();
 		saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8"); //$NON-NLS-1$
 		saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED,
 				Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
@@ -299,7 +299,7 @@ public class FritzingDiagramEditorUtil {
 	 * @generated
 	 */
 	private static int findElementsInDiagramByID(DiagramEditPart diagramPart,
-			EObject element, List<EditPart> editPartCollector) {
+			EObject element, List editPartCollector) {
 		IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) diagramPart
 				.getViewer();
 		final int intialNumOfEditParts = editPartCollector.size();
@@ -314,7 +314,7 @@ public class FritzingDiagramEditorUtil {
 		}
 
 		String elementID = EMFCoreUtil.getProxyID(element);
-		List<EditPart> associatedParts = viewer.findEditPartsForElement(elementID,
+		List associatedParts = viewer.findEditPartsForElement(elementID,
 				IGraphicalEditPart.class);
 		// perform the possible hierarchy disjoint -> take the top-most parts only
 		for (Iterator editPartIt = associatedParts.iterator(); editPartIt
@@ -519,17 +519,18 @@ public class FritzingDiagramEditorUtil {
 		}
 		return true;
 	}
-	
-	
+
 	/**
 	 * @return the install location of Fritzing on the hard drive
 	 * @generated NOT
 	 */
 	public static String getFritzingLocation() {
-		String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
+		String fritzingLocation = Platform.getInstallLocation().getURL()
+				.getPath();
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
-			fritzingLocation = fritzingLocation.startsWith("/") ? 
-					fritzingLocation.substring(1) : fritzingLocation;
+			fritzingLocation = fritzingLocation.startsWith("/") ? fritzingLocation
+					.substring(1)
+					: fritzingLocation;
 		}
 		return fritzingLocation;
 	}

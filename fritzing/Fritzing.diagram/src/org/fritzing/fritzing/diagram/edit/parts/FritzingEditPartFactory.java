@@ -82,6 +82,24 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case TerminalNameEditPart.VISUAL_ID:
 				return new TerminalNameEditPart(view);
 
+			case TransistorEditPart.VISUAL_ID:
+				return new TransistorEditPart(view);
+
+			case TransistorNameEditPart.VISUAL_ID:
+				return new TransistorNameEditPart(view);
+
+			case PowerTransistorEditPart.VISUAL_ID:
+				return new PowerTransistorEditPart(view);
+
+			case PowerTransistorNameEditPart.VISUAL_ID:
+				return new PowerTransistorNameEditPart(view);
+
+			case GenericPartEditPart.VISUAL_ID:
+				return new GenericPartEditPart(view);
+
+			case GenericPartNameEditPart.VISUAL_ID:
+				return new GenericPartNameEditPart(view);
+
 			case Terminal2EditPart.VISUAL_ID:
 				return new Terminal2EditPart(view);
 

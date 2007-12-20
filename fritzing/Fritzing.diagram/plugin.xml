@@ -417,12 +417,11 @@
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
-               eclass="Arduino"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ArduinoEditHelper"
-               icon="icons/obj16/Arduino.gif"
                id="Fritzing.diagram.Arduino_2001"
+               name="%metatype.name.Arduino_2001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               name="%metatype.name.Arduino_2001">
+               eclass="Arduino"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.ArduinoEditHelper">
             <param name="semanticHint" value="2001"/>
          </metamodelType>
       </metamodel>
@@ -458,42 +457,72 @@
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
-               id="Fritzing.diagram.Potentiometer_2006"
-               name="%metatype.name.Potentiometer_2006"
+               id="Fritzing.diagram.Potentiometer_2005"
+               name="%metatype.name.Potentiometer_2005"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Potentiometer"
                edithelper="org.fritzing.fritzing.diagram.edit.helpers.PotentiometerEditHelper">
+            <param name="semanticHint" value="2005"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.FsrSensor_2006"
+               name="%metatype.name.FsrSensor_2006"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="FsrSensor"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.FsrSensorEditHelper">
             <param name="semanticHint" value="2006"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
-               id="Fritzing.diagram.FsrSensor_2007"
-               name="%metatype.name.FsrSensor_2007"
+               id="Fritzing.diagram.LightSensor_2007"
+               name="%metatype.name.LightSensor_2007"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="FsrSensor"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.FsrSensorEditHelper">
+               eclass="LightSensor"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.LightSensorEditHelper">
             <param name="semanticHint" value="2007"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
-         <metamodelType
-               id="Fritzing.diagram.LightSensor_2008"
-               name="%metatype.name.LightSensor_2008"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="LightSensor"
-               edithelper="org.fritzing.fritzing.diagram.edit.helpers.LightSensorEditHelper">
+         <specializationType
+               id="Fritzing.diagram.Terminal_2008"
+               name="%metatype.name.Terminal_2008"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="Fritzing.diagram.Terminal_3001"/>
             <param name="semanticHint" value="2008"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.Transistor_2009"
+               name="%metatype.name.Transistor_2009"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Transistor"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.TransistorEditHelper">
+            <param name="semanticHint" value="2009"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
-         <specializationType
-               id="Fritzing.diagram.Terminal_2005"
-               name="%metatype.name.Terminal_2005"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="Fritzing.diagram.Terminal_3001"/>
-            <param name="semanticHint" value="2005"/>
-         </specializationType>
+         <metamodelType
+               id="Fritzing.diagram.PowerTransistor_2010"
+               name="%metatype.name.PowerTransistor_2010"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="PowerTransistor"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.PowerTransistorEditHelper">
+            <param name="semanticHint" value="2010"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.GenericPart_2011"
+               name="%metatype.name.GenericPart_2011"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="GenericPart"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.GenericPartEditHelper">
+            <param name="semanticHint" value="2011"/>
+         </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.fritzing.org">
          <metamodelType
@@ -532,10 +561,13 @@
          <elementType ref="Fritzing.diagram.LED_2002"/>
          <elementType ref="Fritzing.diagram.Resistor_2003"/>
          <elementType ref="Fritzing.diagram.Button_2004"/>
-         <elementType ref="Fritzing.diagram.Potentiometer_2006"/>
-         <elementType ref="Fritzing.diagram.FsrSensor_2007"/>
-         <elementType ref="Fritzing.diagram.LightSensor_2008"/>
-         <elementType ref="Fritzing.diagram.Terminal_2005"/>
+         <elementType ref="Fritzing.diagram.Potentiometer_2005"/>
+         <elementType ref="Fritzing.diagram.FsrSensor_2006"/>
+         <elementType ref="Fritzing.diagram.LightSensor_2007"/>
+         <elementType ref="Fritzing.diagram.Terminal_2008"/>
+         <elementType ref="Fritzing.diagram.Transistor_2009"/>
+         <elementType ref="Fritzing.diagram.PowerTransistor_2010"/>
+         <elementType ref="Fritzing.diagram.GenericPart_2011"/>
          <elementType ref="Fritzing.diagram.Terminal_3001"/>
          <elementType ref="Fritzing.diagram.Wire_4001"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
@@ -545,7 +577,7 @@
 <extension point="org.eclipse.emf.validation.constraintBindings">
       <?gmfgen generated="true"?>
                   <clientContext default="false" id="Fritzing.diagram.DefaultCtx">
-         <selector class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider$DefaultCtx1"/>
+         <selector class="org.fritzing.fritzing.diagram.providers.FritzingValidationProvider$DefaultCtx"/>
       </clientContext>
       <binding context="Fritzing.diagram.DefaultCtx">
                   <constraint ref="Fritzing.diagram.org.fritzing.audits.partName"/>

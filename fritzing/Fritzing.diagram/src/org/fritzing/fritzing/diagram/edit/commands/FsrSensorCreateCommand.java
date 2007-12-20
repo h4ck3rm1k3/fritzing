@@ -49,7 +49,7 @@ public class FsrSensorCreateCommand extends CreateElementCommand {
 	protected EObject doDefaultElementCreation() {
 		FsrSensor newElement = (FsrSensor) super.doDefaultElementCreation();
 		if (newElement != null) {
-			FritzingElementTypes.Initializers.FsrSensor_2007.init(newElement);
+			FritzingElementTypes.Initializers.FsrSensor_2006.init(newElement);
 		}
 		return newElement;
 	}

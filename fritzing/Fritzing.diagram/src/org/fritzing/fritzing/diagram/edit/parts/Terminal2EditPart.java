@@ -69,31 +69,40 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
 				new Terminal2ItemSemanticEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
-		
+
 		// don't want delete
-		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
-		
+		installEditPolicy(EditPolicy.COMPONENT_ROLE,
+				new NonDeleteComponentEditPolicy());
+
 		// make it non-selectable? (doesn't seem to work)
 		//removeEditPolicy(EditPolicyRoles.CONNECTION_HANDLES_ROLE);
 		//removeEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
 
 		// POPUP_BAR and CONNECTOR_HANDLES are disabled in preferences
-		
+
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
 	}
-	
+
 	/**
 	 * @generated NOT
 	 */
 	public void setTextColor(Color color) {
 		for (int i = 0; i < this.getChildren().size(); i++) {
 			if (this.getChildren().get(i) instanceof TerminalName2EditPart) {
-				((TerminalName2EditPart) this.getChildren().get(i)).setFontColorEx(color);
+				((TerminalName2EditPart) this.getChildren().get(i))
+						.setFontColorEx(color);
 				break;
 			}
 		}
-			
+
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public String filterNameEditText(TerminalName2EditPart part, String s) {
+		return ((PartEditPart) this.getParent()).filterNameEditText(part, s);
 	}
 
 	/**
@@ -105,7 +114,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			protected EditPolicy createChildEditPolicy(EditPart child) {
 				if (child instanceof IBorderItemEditPart) {
 					BorderItemSelectionEditPolicy bisep = new BorderItemSelectionEditPolicy();
-					bisep.setDragAllowed(false);   // disable move
+					bisep.setDragAllowed(false); // disable move
 					return bisep;
 				}
 				EditPolicy result = child
@@ -150,9 +159,13 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		if (borderItemEditPart instanceof TerminalName2EditPart) {
 			int positionConstants = PositionConstants.SOUTH_WEST;
 			if (this.getParent() instanceof PartEditPart) {
-				positionConstants = ((PartEditPart) this.getParent()).getTerminalNamePosition(this, PositionConstants.SOUTH_WEST);
+				positionConstants = ((PartEditPart) this.getParent())
+						.getTerminalNamePosition(this,
+								(TerminalName2EditPart) borderItemEditPart,
+								PositionConstants.SOUTH_WEST);
 			}
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(), positionConstants);
+			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
+					positionConstants);
 			locator.setBorderItemOffset(new Dimension(0, 0));
 			borderItemContainer.add(borderItemEditPart.getFigure(), locator);
 		} else {
@@ -176,7 +189,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
-				
+
 		EditPolicy result = super.getPrimaryDragEditPolicy();
 		if (result instanceof ResizableEditPolicy) {
 			ResizableEditPolicy ep = (ResizableEditPolicy) result;

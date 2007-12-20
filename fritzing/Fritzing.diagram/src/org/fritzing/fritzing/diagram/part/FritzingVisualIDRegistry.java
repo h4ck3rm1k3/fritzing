@@ -16,12 +16,16 @@ import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ButtonNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.FsrSensorNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.GenericPartNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LightSensorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.PotentiometerNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PowerTransistorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.PowerTransistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -29,6 +33,8 @@ import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TransistorEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TransistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
@@ -184,6 +190,24 @@ public class FritzingVisualIDRegistry {
 				return Terminal2EditPart.VISUAL_ID;
 			}
 			break;
+		case TransistorEditPart.VISUAL_ID:
+			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
+					domainElement.eClass())) {
+				return Terminal2EditPart.VISUAL_ID;
+			}
+			break;
+		case PowerTransistorEditPart.VISUAL_ID:
+			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
+					domainElement.eClass())) {
+				return Terminal2EditPart.VISUAL_ID;
+			}
+			break;
+		case GenericPartEditPart.VISUAL_ID:
+			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
+					domainElement.eClass())) {
+				return Terminal2EditPart.VISUAL_ID;
+			}
+			break;
 		case SketchEditPart.VISUAL_ID:
 			if (FritzingPackage.eINSTANCE.getArduino().isSuperTypeOf(
 					domainElement.eClass())) {
@@ -216,6 +240,18 @@ public class FritzingVisualIDRegistry {
 			if (FritzingPackage.eINSTANCE.getTerminal().isSuperTypeOf(
 					domainElement.eClass())) {
 				return TerminalEditPart.VISUAL_ID;
+			}
+			if (FritzingPackage.eINSTANCE.getTransistor().isSuperTypeOf(
+					domainElement.eClass())) {
+				return TransistorEditPart.VISUAL_ID;
+			}
+			if (FritzingPackage.eINSTANCE.getPowerTransistor().isSuperTypeOf(
+					domainElement.eClass())) {
+				return PowerTransistorEditPart.VISUAL_ID;
+			}
+			if (FritzingPackage.eINSTANCE.getGenericPart().isSuperTypeOf(
+					domainElement.eClass())) {
+				return GenericPartEditPart.VISUAL_ID;
 			}
 			break;
 		}
@@ -304,6 +340,30 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			break;
+		case TransistorEditPart.VISUAL_ID:
+			if (TransistorNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case PowerTransistorEditPart.VISUAL_ID:
+			if (PowerTransistorNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case GenericPartEditPart.VISUAL_ID:
+			if (GenericPartNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (Terminal2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		case Terminal2EditPart.VISUAL_ID:
 			if (TerminalName2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
@@ -332,6 +392,15 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			if (TerminalEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (TransistorEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (PowerTransistorEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (GenericPartEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;

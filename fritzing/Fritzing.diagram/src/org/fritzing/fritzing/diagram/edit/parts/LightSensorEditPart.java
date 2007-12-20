@@ -53,7 +53,7 @@ public class LightSensorEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2008;
+	public static final int VISUAL_ID = 2007;
 
 	/**
 	 * @generated

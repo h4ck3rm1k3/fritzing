@@ -35,7 +35,7 @@ public class FsrSensorCanonicalEditPolicy extends CanonicalEditPolicy {
 		View viewObject = (View) getHost().getModel();
 		List result = new LinkedList();
 		for (Iterator it = FritzingDiagramUpdater
-				.getFsrSensor_2007SemanticChildren(viewObject).iterator(); it
+				.getFsrSensor_2006SemanticChildren(viewObject).iterator(); it
 				.hasNext();) {
 			result.add(((FritzingNodeDescriptor) it.next()).getModelElement());
 		}

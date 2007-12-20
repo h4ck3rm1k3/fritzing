@@ -117,19 +117,16 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 		if (getDiagramGraphicalViewer() instanceof DiagramGraphicalViewer) {
 			((DiagramGraphicalViewer) getDiagramGraphicalViewer())
 					.hookWorkspacePreferenceStore(getWorkspaceViewerPreferenceStore());
-// XXX: turns the grid color RED on Mac..
-//			getWorkspaceViewerPreferenceStore().setValue(
-//					WorkspaceViewerProperties.GRIDLINECOLOR,
-//					SketchGridLayer.THIS_FORE.hashCode());
+			// XXX: turns the grid color RED on Mac..
+			//			getWorkspaceViewerPreferenceStore().setValue(
+			//					WorkspaceViewerProperties.GRIDLINECOLOR,
+			//					SketchGridLayer.THIS_FORE.hashCode());
 			getWorkspaceViewerPreferenceStore().setValue(
-					WorkspaceViewerProperties.GRIDLINESTYLE, 
-					SWT.LINE_SOLID);
+					WorkspaceViewerProperties.GRIDLINESTYLE, SWT.LINE_SOLID);
 			getWorkspaceViewerPreferenceStore().setValue(
-					WorkspaceViewerProperties.GRIDORDER, 
-					false);
+					WorkspaceViewerProperties.GRIDORDER, false);
 			getWorkspaceViewerPreferenceStore().setValue(
-					WorkspaceViewerProperties.ZOOM, 
-					1.33);
+					WorkspaceViewerProperties.ZOOM, 1.33);
 		}
 	}
 

@@ -35,7 +35,7 @@ public class PotentiometerCanonicalEditPolicy extends CanonicalEditPolicy {
 		View viewObject = (View) getHost().getModel();
 		List result = new LinkedList();
 		for (Iterator it = FritzingDiagramUpdater
-				.getPotentiometer_2006SemanticChildren(viewObject).iterator(); it
+				.getPotentiometer_2005SemanticChildren(viewObject).iterator(); it
 				.hasNext();) {
 			result.add(((FritzingNodeDescriptor) it.next()).getModelElement());
 		}

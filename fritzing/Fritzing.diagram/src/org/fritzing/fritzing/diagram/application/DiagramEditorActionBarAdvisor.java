@@ -64,12 +64,19 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 	/**
 	 * @generated
 	 */
+	private IWorkbenchWindow getWindow() {
+		return getActionBarConfigurer().getWindowConfigurer().getWindow();
+	}
+
+	/**
+	 * @generated
+	 */
 	// getWindow() is never used locally
 	/* 
 	private IWorkbenchWindow getWindow() {
 		return getActionBarConfigurer().getWindowConfigurer().getWindow();
 	}
-	*/
+	 */
 	/**
 	 * @generated NOT
 	 */
@@ -80,7 +87,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(lockToolBarAction);
 
 		register(ActionFactory.NEW.create(window));
-		
+
 		register(ActionFactory.CLOSE.create(window));
 
 		register(ActionFactory.CLOSE_ALL.create(window));
@@ -92,7 +99,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		register(ActionFactory.SAVE_ALL.create(window));
 
 		register(ActionFactory.EXPORT.create(window));
-		
+
 		register(ActionFactory.PRINT.create(window));
 
 		register(ActionFactory.PREFERENCES.create(window));
@@ -124,7 +131,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		{
 			IMenuManager menuX = new MenuManager(
 					Messages.ApplicationMenuName_File, "file1");
-//								IWorkbenchActionConstants.M_FILE);
+			//								IWorkbenchActionConstants.M_FILE);
 			// changed to custom, because otherwise the "Open File.." action is forced in
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
@@ -136,8 +143,8 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 				menuXX.add(new GroupMarker(
 						IWorkbenchActionConstants.MB_ADDITIONS));
 
-//				menuXX.add(getAction(ActionFactory.NEW.getId()));
-				
+				//				menuXX.add(getAction(ActionFactory.NEW.getId()));
+
 				menuX.add(menuXX);
 			}
 
@@ -155,20 +162,20 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			// Export..
 			{
 				IMenuManager menuXX = new MenuManager(
-					Messages.ApplicationMenuName_Export, "export");
+						Messages.ApplicationMenuName_Export, "export");
 
 				menuXX.add(new GroupMarker(
 						IWorkbenchActionConstants.MB_ADDITIONS));
 				menuX.add(menuXX);
 			}
-			
-//			menuX.add(getAction(ActionFactory.EXPORT.getId()));
-			
+
+			//			menuX.add(getAction(ActionFactory.EXPORT.getId()));
+
 			menuX.add(getAction(ActionFactory.CLOSE.getId()));
 
 			menuX.add(getAction(ActionFactory.SAVE.getId()));
 
-//			menuX.add(getAction(ActionFactory.SAVE_AS.getId()));
+			//			menuX.add(getAction(ActionFactory.SAVE_AS.getId()));
 
 			menuX.add(new Separator());
 
@@ -400,7 +407,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 			LoadResourceAction.LoadResourceDialog loadResourceDialog = new LoadResourceAction.LoadResourceDialog(
 					getWindow().getShell());
 			if (Dialog.OK == loadResourceDialog.open()) {
-				for (Iterator<URI> i = loadResourceDialog.getURIs().iterator(); i
+				for (Iterator i = loadResourceDialog.getURIs().iterator(); i
 						.hasNext();) {
 					openEditor(getWindow().getWorkbench(), (URI) i.next());
 				}

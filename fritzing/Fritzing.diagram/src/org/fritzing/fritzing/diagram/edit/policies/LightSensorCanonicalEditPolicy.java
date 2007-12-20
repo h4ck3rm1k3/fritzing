@@ -35,7 +35,7 @@ public class LightSensorCanonicalEditPolicy extends CanonicalEditPolicy {
 		View viewObject = (View) getHost().getModel();
 		List result = new LinkedList();
 		for (Iterator it = FritzingDiagramUpdater
-				.getLightSensor_2008SemanticChildren(viewObject).iterator(); it
+				.getLightSensor_2007SemanticChildren(viewObject).iterator(); it
 				.hasNext();) {
 			result.add(((FritzingNodeDescriptor) it.next()).getModelElement());
 		}

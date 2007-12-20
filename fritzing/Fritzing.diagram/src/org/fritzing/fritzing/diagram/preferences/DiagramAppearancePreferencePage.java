@@ -24,47 +24,38 @@ public class DiagramAppearancePreferencePage extends AppearancePreferencePage {
 		setPreferenceStore(FritzingDiagramEditorPlugin.getInstance()
 				.getPreferenceStore());
 	}
-	
 
 	/**
-     * Initializes the default preference values 
-     * for this preference store.
-     * 
-     * @param store
-     */
-    public static void initDefaults(IPreferenceStore store) {
-    	AppearancePreferencePage.initDefaults(store);
-    	
-    	setDefaultFontPreference(store);
+	 * Initializes the default preference values 
+	 * for this preference store.
+	 * 
+	 * @param store
+	 */
+	public static void initDefaults(IPreferenceStore store) {
+		AppearancePreferencePage.initDefaults(store);
 
-        Color fontColor = ColorConstants.black;
-        PreferenceConverter.setDefault(
-            store,
-            IPreferenceConstants.PREF_FONT_COLOR,
-            fontColor.getRGB());
+		setDefaultFontPreference(store);
 
-        Color fillColor = DiagramColorConstants.white;
-        PreferenceConverter.setDefault(
-            store,
-            IPreferenceConstants.PREF_FILL_COLOR,
-            fillColor.getRGB());
+		Color fontColor = ColorConstants.black;
+		PreferenceConverter.setDefault(store,
+				IPreferenceConstants.PREF_FONT_COLOR, fontColor.getRGB());
 
-        Color lineColor = DiagramColorConstants.white;
-        PreferenceConverter.setDefault(
-            store,
-            IPreferenceConstants.PREF_LINE_COLOR,
-            lineColor.getRGB());
+		Color fillColor = DiagramColorConstants.white;
+		PreferenceConverter.setDefault(store,
+				IPreferenceConstants.PREF_FILL_COLOR, fillColor.getRGB());
 
-        Color noteFillColor = DiagramColorConstants.diagramLightYellow;
-        PreferenceConverter.setDefault(
-            store,
-            IPreferenceConstants.PREF_NOTE_FILL_COLOR,
-			noteFillColor.getRGB());
+		Color lineColor = DiagramColorConstants.white;
+		PreferenceConverter.setDefault(store,
+				IPreferenceConstants.PREF_LINE_COLOR, lineColor.getRGB());
 
-        Color noteLineColor = DiagramColorConstants.diagramDarkYellow;
-        PreferenceConverter.setDefault(
-            store,
-            IPreferenceConstants.PREF_NOTE_LINE_COLOR,
-			noteLineColor.getRGB());
-    }
+		Color noteFillColor = DiagramColorConstants.diagramLightYellow;
+		PreferenceConverter.setDefault(store,
+				IPreferenceConstants.PREF_NOTE_FILL_COLOR, noteFillColor
+						.getRGB());
+
+		Color noteLineColor = DiagramColorConstants.diagramDarkYellow;
+		PreferenceConverter.setDefault(store,
+				IPreferenceConstants.PREF_NOTE_LINE_COLOR, noteLineColor
+						.getRGB());
+	}
 }

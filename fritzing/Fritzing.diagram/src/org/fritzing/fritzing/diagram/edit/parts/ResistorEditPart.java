@@ -171,7 +171,7 @@ public class ResistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
 		return super.getPrimaryDragEditPolicy();

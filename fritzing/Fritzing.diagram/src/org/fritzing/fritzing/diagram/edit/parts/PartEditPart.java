@@ -4,11 +4,16 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Hashtable;
 import java.util.Iterator;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -28,7 +33,13 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.RotatableNonresizableShapeEditPolicy;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EAttributeImpl;
@@ -38,19 +49,38 @@ import org.eclipse.emf.ecore.impl.EAttributeImpl;
  */
 class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEditPart 
 {
+
+	/**
+	 * @generated NOT
+	 */
+	PartLoader partLoader;
+	
+	/**
+	 * @generated NOT
+	 */
+	protected Point gridOffset;
+	
 	/**
 	 * @generated NOT
 	 */
 	public PartEditPart(View view) {
 		super(view);
+		partLoader = new PartLoader();
 	}
 	
 	
 	/**
 	 * @generated NOT
 	 */
-	public int getTerminalNamePosition(Terminal2EditPart terminal, int defaultPosition) {
+	public int getTerminalNamePosition(Terminal2EditPart terminal, TerminalName2EditPart namePart, int defaultPosition) {
 		return defaultPosition;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public String filterNameEditText(TerminalName2EditPart part, String s) {
+		return s;
 	}
 
 	/**
@@ -108,14 +138,14 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	protected void handleNotificationEvent(Notification notification) {
 		
 		Object feature = notification.getFeature();
-		System.out.println("got a notification " + 
-				notification.getEventType() + " " + 
-				notification.getNotifier().getClass().getName() 
-				);
+//		System.out.println("got a notification " + 
+//				notification.getEventType() + " " + 
+//				notification.getNotifier().getClass().getName() 
+//				);
 		        
-		if (feature instanceof EAttributeImpl) {
-			System.out.println("feature " + ((EAttributeImpl) feature).getName());			
-		}
+		//if (feature instanceof EAttributeImpl) {
+			//System.out.println("feature " + ((EAttributeImpl) feature).getName());			
+		//}
 		
 		super.handleNotificationEvent(notification);
 	}
@@ -176,4 +206,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		return lep;
 	}
 
+	
+	
 }
