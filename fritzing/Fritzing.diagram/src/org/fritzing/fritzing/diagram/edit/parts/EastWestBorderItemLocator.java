@@ -73,6 +73,7 @@ public class EastWestBorderItemLocator extends PartBorderItemLocator {
 	}
 		
 	static public int parseTerminalName(String name) {
+		// can't rely on unique names--fix this		
 		if (name == null) {	
 			return PositionConstants.NONE;
 		}
@@ -82,10 +83,10 @@ public class EastWestBorderItemLocator extends PartBorderItemLocator {
 		if (name.equals("-")) {
 			return PositionConstants.EAST;
 		}
-		if (name.equals("0")) {
+		if (name.equals("1")) {
 			return PositionConstants.WEST;
 		}
-		else if (name.equals("1")) {
+		else if (name.equals("2")) {
 			return PositionConstants.EAST;
 		}
 		if (name.equals("T2")) {

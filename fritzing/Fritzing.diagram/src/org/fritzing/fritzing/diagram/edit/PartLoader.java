@@ -14,6 +14,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.w3c.dom.Document;
@@ -26,7 +27,7 @@ public class PartLoader {
 	/**
 	 * @generated NOT
 	 */
-	public static final double dpi = 96.0;
+	public static double dpi = 96.0;
 	
 	protected Hashtable<String, Point> terminalHash;
 	protected Point gridOffset;
@@ -35,6 +36,13 @@ public class PartLoader {
 	protected Dimension size;
 	
 	public PartLoader() {
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			dpi = 96.0;
+		}
+		else {
+			dpi = 72.0;
+		}
+				
 		terminalHash = new Hashtable<String, Point>();
 		size = new Dimension(0,0);
 		gridOffset = new Point(0,0);

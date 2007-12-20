@@ -102,8 +102,8 @@
 				<connectorType>headerPin</connectorType>
 				<connectorIdentifier>org.fritzing.parts.connectors.arduinosocket</connectorIdentifier>
 				<connectorLocation x="9" y="0"  />
-				<name>GND</name>
-				<internalName>GND</internalName>
+				<name>Gnd@3</name>
+				<internalName>Gnd@3</internalName>
 			</connector>
 			<connector>
 				<connectorType>headerPin</connectorType>
@@ -228,15 +228,15 @@
 				<connectorType>headerPin</connectorType>
 				<connectorIdentifier>org.fritzing.parts.connectors.arduinosocket</connectorIdentifier>
 				<connectorLocation x="15" y="19"  />
-				<name>Gnd1</name>
-				<internalName>Gnd</internalName>
+				<name>Gnd@1</name>
+				<internalName>Gnd@1</internalName>
 			</connector>
 			<connector>
 				<connectorType>headerPin</connectorType>
 				<connectorIdentifier>org.fritzing.parts.connectors.arduinosocket</connectorIdentifier>
 				<connectorLocation x="16" y="19"  />
-				<name>Gnd2</name>
-				<internalName>Gnd1</internalName>
+				<name>Gnd@2</name>
+				<internalName>Gnd@2</internalName>
 			</connector>
 			<connector>
 				<connectorType>headerPin</connectorType>

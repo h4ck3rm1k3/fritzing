@@ -104,7 +104,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'Gnd\'", //$NON-NLS-1$
+										.getExpression("\'Gnd@1\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}
@@ -119,7 +119,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'Gnd1\'", //$NON-NLS-1$
+										.getExpression("\'Gnd@2\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}
@@ -449,7 +449,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'GND\'", //$NON-NLS-1$
+										.getExpression("\'Gnd@3\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}
@@ -538,7 +538,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'0\'", //$NON-NLS-1$
+										.getExpression("\'1\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}
@@ -552,7 +552,7 @@ public class ElementInitializers {
 						add(createExpressionFeatureInitializer(
 								FritzingPackage.eINSTANCE.getTerminal_Name(),
 								FritzingOCLFactory
-										.getExpression("\'1\'", //$NON-NLS-1$
+										.getExpression("\'2\'", //$NON-NLS-1$
 												FritzingPackage.eINSTANCE
 														.getTerminal())));
 					}
@@ -840,7 +840,7 @@ public class ElementInitializers {
 		}; // Transistor_2009 ObjectInitializer		
 
 		/**
-		 * @generated NOT
+		 * @generated
 		 */
 		public static final IObjectInitializer PowerTransistor_2010 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getPowerTransistor()) {
