@@ -28,7 +28,11 @@
     </genClasses>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Part">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/partNumber"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/species"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/genus"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/footprint"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/terminals"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Part/parent"/>
     </genClasses>
@@ -38,7 +42,9 @@
     <genClasses ecoreClass="fritzing.ecore#//LED">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//LED/color"/>
     </genClasses>
-    <genClasses ecoreClass="fritzing.ecore#//Button"/>
+    <genClasses ecoreClass="fritzing.ecore#//Button">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Button/type"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Composite">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Composite/parts"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Composite/wires"/>
@@ -48,7 +54,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Breadboard/lines"/>
     </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//Module"/>
-    <genClasses ecoreClass="fritzing.ecore#//Arduino"/>
+    <genClasses ecoreClass="fritzing.ecore#//Arduino">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Arduino/type"/>
+    </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//Potentiometer"/>
     <genClasses ecoreClass="fritzing.ecore#//FsrSensor"/>
     <genClasses ecoreClass="fritzing.ecore#//LightSensor"/>

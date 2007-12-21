@@ -34,7 +34,11 @@ import org.fritzing.fritzing.Terminal;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getPartNumber <em>Part Number</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getSpecies <em>Species</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getGenus <em>Genus</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getFootprint <em>Footprint</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getTerminals <em>Terminals</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getParent <em>Parent</em>}</li>
  * </ul>
@@ -64,24 +68,104 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPartNumber() <em>Part Number</em>}' attribute.
+	 * The default value of the '{@link #getSpecies() <em>Species</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPartNumber()
+	 * @see #getSpecies()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PART_NUMBER_EDEFAULT = null;
+	protected static final String SPECIES_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getPartNumber() <em>Part Number</em>}' attribute.
+	 * The cached value of the '{@link #getSpecies() <em>Species</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPartNumber()
+	 * @see #getSpecies()
 	 * @generated
 	 * @ordered
 	 */
-	protected String partNumber = PART_NUMBER_EDEFAULT;
+	protected String species = SPECIES_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getGenus() <em>Genus</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGenus()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String GENUS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getGenus() <em>Genus</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGenus()
+	 * @generated
+	 * @ordered
+	 */
+	protected String genus = GENUS_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getVersion() <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String VERSION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getVersion() <em>Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected String version = VERSION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescription()
+	 * @generated
+	 * @ordered
+	 */
+	protected String description = DESCRIPTION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getFootprint() <em>Footprint</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFootprint()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String FOOTPRINT_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getFootprint() <em>Footprint</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFootprint()
+	 * @generated
+	 * @ordered
+	 */
+	protected String footprint = FOOTPRINT_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTerminals() <em>Terminals</em>}' containment reference list.
@@ -138,8 +222,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPartNumber() {
-		return partNumber;
+	public String getSpecies() {
+		return species;
 	}
 
 	/**
@@ -147,11 +231,95 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setPartNumber(String newPartNumber) {
-		String oldPartNumber = partNumber;
-		partNumber = newPartNumber;
+	public void setSpecies(String newSpecies) {
+		String oldSpecies = species;
+		species = newSpecies;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__PART_NUMBER, oldPartNumber, partNumber));
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__SPECIES, oldSpecies, species));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getGenus() {
+		return genus;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGenus(String newGenus) {
+		String oldGenus = genus;
+		genus = newGenus;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__GENUS, oldGenus, genus));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVersion(String newVersion) {
+		String oldVersion = version;
+		version = newVersion;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__VERSION, oldVersion, version));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescription(String newDescription) {
+		String oldDescription = description;
+		description = newDescription;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__DESCRIPTION, oldDescription, description));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getFootprint() {
+		return footprint;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFootprint(String newFootprint) {
+		String oldFootprint = footprint;
+		footprint = newFootprint;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__FOOTPRINT, oldFootprint, footprint));
 	}
 
 	/**
@@ -266,8 +434,16 @@ public abstract class PartImpl extends ElementImpl implements Part {
 		switch (featureID) {
 			case FritzingPackage.PART__NAME:
 				return getName();
-			case FritzingPackage.PART__PART_NUMBER:
-				return getPartNumber();
+			case FritzingPackage.PART__SPECIES:
+				return getSpecies();
+			case FritzingPackage.PART__GENUS:
+				return getGenus();
+			case FritzingPackage.PART__VERSION:
+				return getVersion();
+			case FritzingPackage.PART__DESCRIPTION:
+				return getDescription();
+			case FritzingPackage.PART__FOOTPRINT:
+				return getFootprint();
 			case FritzingPackage.PART__TERMINALS:
 				return getTerminals();
 			case FritzingPackage.PART__PARENT:
@@ -288,8 +464,20 @@ public abstract class PartImpl extends ElementImpl implements Part {
 			case FritzingPackage.PART__NAME:
 				setName((String)newValue);
 				return;
-			case FritzingPackage.PART__PART_NUMBER:
-				setPartNumber((String)newValue);
+			case FritzingPackage.PART__SPECIES:
+				setSpecies((String)newValue);
+				return;
+			case FritzingPackage.PART__GENUS:
+				setGenus((String)newValue);
+				return;
+			case FritzingPackage.PART__VERSION:
+				setVersion((String)newValue);
+				return;
+			case FritzingPackage.PART__DESCRIPTION:
+				setDescription((String)newValue);
+				return;
+			case FritzingPackage.PART__FOOTPRINT:
+				setFootprint((String)newValue);
 				return;
 			case FritzingPackage.PART__TERMINALS:
 				getTerminals().clear();
@@ -313,8 +501,20 @@ public abstract class PartImpl extends ElementImpl implements Part {
 			case FritzingPackage.PART__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case FritzingPackage.PART__PART_NUMBER:
-				setPartNumber(PART_NUMBER_EDEFAULT);
+			case FritzingPackage.PART__SPECIES:
+				setSpecies(SPECIES_EDEFAULT);
+				return;
+			case FritzingPackage.PART__GENUS:
+				setGenus(GENUS_EDEFAULT);
+				return;
+			case FritzingPackage.PART__VERSION:
+				setVersion(VERSION_EDEFAULT);
+				return;
+			case FritzingPackage.PART__DESCRIPTION:
+				setDescription(DESCRIPTION_EDEFAULT);
+				return;
+			case FritzingPackage.PART__FOOTPRINT:
+				setFootprint(FOOTPRINT_EDEFAULT);
 				return;
 			case FritzingPackage.PART__TERMINALS:
 				getTerminals().clear();
@@ -336,8 +536,16 @@ public abstract class PartImpl extends ElementImpl implements Part {
 		switch (featureID) {
 			case FritzingPackage.PART__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case FritzingPackage.PART__PART_NUMBER:
-				return PART_NUMBER_EDEFAULT == null ? partNumber != null : !PART_NUMBER_EDEFAULT.equals(partNumber);
+			case FritzingPackage.PART__SPECIES:
+				return SPECIES_EDEFAULT == null ? species != null : !SPECIES_EDEFAULT.equals(species);
+			case FritzingPackage.PART__GENUS:
+				return GENUS_EDEFAULT == null ? genus != null : !GENUS_EDEFAULT.equals(genus);
+			case FritzingPackage.PART__VERSION:
+				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
+			case FritzingPackage.PART__DESCRIPTION:
+				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+			case FritzingPackage.PART__FOOTPRINT:
+				return FOOTPRINT_EDEFAULT == null ? footprint != null : !FOOTPRINT_EDEFAULT.equals(footprint);
 			case FritzingPackage.PART__TERMINALS:
 				return terminals != null && !terminals.isEmpty();
 			case FritzingPackage.PART__PARENT:
@@ -358,8 +566,16 @@ public abstract class PartImpl extends ElementImpl implements Part {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", partNumber: ");
-		result.append(partNumber);
+		result.append(", species: ");
+		result.append(species);
+		result.append(", genus: ");
+		result.append(genus);
+		result.append(", version: ");
+		result.append(version);
+		result.append(", description: ");
+		result.append(description);
+		result.append(", footprint: ");
+		result.append(footprint);
 		result.append(')');
 		return result.toString();
 	}

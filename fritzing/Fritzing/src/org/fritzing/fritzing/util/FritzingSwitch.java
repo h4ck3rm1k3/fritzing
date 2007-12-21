@@ -163,7 +163,6 @@ public class FritzingSwitch<T> {
 			case FritzingPackage.BREADBOARD: {
 				Breadboard breadboard = (Breadboard)theEObject;
 				T result = caseBreadboard(breadboard);
-				if (result == null) result = caseComposite(breadboard);
 				if (result == null) result = casePart(breadboard);
 				if (result == null) result = caseElement(breadboard);
 				if (result == null) result = defaultCase(theEObject);

@@ -244,13 +244,49 @@ public interface FritzingPackage extends EPackage {
 	int PART__NAME = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PART__PART_NUMBER = ELEMENT_FEATURE_COUNT + 1;
+	int PART__SPECIES = ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PART__GENUS = ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PART__VERSION = ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PART__DESCRIPTION = ELEMENT_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PART__FOOTPRINT = ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -259,7 +295,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__TERMINALS = ELEMENT_FEATURE_COUNT + 2;
+	int PART__TERMINALS = ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -268,7 +304,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__PARENT = ELEMENT_FEATURE_COUNT + 3;
+	int PART__PARENT = ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Part</em>' class.
@@ -277,7 +313,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 4;
+	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ResistorImpl <em>Resistor</em>}' class.
@@ -299,13 +335,49 @@ public interface FritzingPackage extends EPackage {
 	int RESISTOR__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RESISTOR__PART_NUMBER = PART__PART_NUMBER;
+	int RESISTOR__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESISTOR__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESISTOR__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESISTOR__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESISTOR__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -363,13 +435,49 @@ public interface FritzingPackage extends EPackage {
 	int LED__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LED__PART_NUMBER = PART__PART_NUMBER;
+	int LED__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LED__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LED__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LED__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LED__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -427,13 +535,49 @@ public interface FritzingPackage extends EPackage {
 	int BUTTON__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BUTTON__PART_NUMBER = PART__PART_NUMBER;
+	int BUTTON__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUTTON__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUTTON__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUTTON__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUTTON__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -454,13 +598,22 @@ public interface FritzingPackage extends EPackage {
 	int BUTTON__PARENT = PART__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BUTTON__TYPE = PART_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Button</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BUTTON_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+	int BUTTON_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.CompositeImpl <em>Composite</em>}' class.
@@ -482,13 +635,49 @@ public interface FritzingPackage extends EPackage {
 	int COMPOSITE__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOSITE__PART_NUMBER = PART__PART_NUMBER;
+	int COMPOSITE__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -555,13 +744,49 @@ public interface FritzingPackage extends EPackage {
 	int SKETCH__NAME = COMPOSITE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SKETCH__PART_NUMBER = COMPOSITE__PART_NUMBER;
+	int SKETCH__SPECIES = COMPOSITE__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SKETCH__GENUS = COMPOSITE__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SKETCH__VERSION = COMPOSITE__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SKETCH__DESCRIPTION = COMPOSITE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SKETCH__FOOTPRINT = COMPOSITE__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -625,16 +850,52 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD__NAME = COMPOSITE__NAME;
+	int BREADBOARD__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD__PART_NUMBER = COMPOSITE__PART_NUMBER;
+	int BREADBOARD__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -643,7 +904,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD__TERMINALS = COMPOSITE__TERMINALS;
+	int BREADBOARD__TERMINALS = PART__TERMINALS;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -652,25 +913,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD__PARENT = COMPOSITE__PARENT;
-
-	/**
-	 * The feature id for the '<em><b>Parts</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__PARTS = COMPOSITE__PARTS;
-
-	/**
-	 * The feature id for the '<em><b>Wires</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__WIRES = COMPOSITE__WIRES;
+	int BREADBOARD__PARENT = PART__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Lines</b></em>' attribute.
@@ -679,7 +922,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD__LINES = COMPOSITE_FEATURE_COUNT + 0;
+	int BREADBOARD__LINES = PART_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Breadboard</em>' class.
@@ -688,7 +931,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 1;
+	int BREADBOARD_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ModuleImpl <em>Module</em>}' class.
@@ -710,13 +953,49 @@ public interface FritzingPackage extends EPackage {
 	int MODULE__NAME = COMPOSITE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODULE__PART_NUMBER = COMPOSITE__PART_NUMBER;
+	int MODULE__SPECIES = COMPOSITE__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__GENUS = COMPOSITE__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__VERSION = COMPOSITE__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__DESCRIPTION = COMPOSITE__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__FOOTPRINT = COMPOSITE__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -783,13 +1062,49 @@ public interface FritzingPackage extends EPackage {
 	int ARDUINO__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__PART_NUMBER = PART__PART_NUMBER;
+	int ARDUINO__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARDUINO__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARDUINO__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARDUINO__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARDUINO__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -810,13 +1125,22 @@ public interface FritzingPackage extends EPackage {
 	int ARDUINO__PARENT = PART__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ARDUINO__TYPE = PART_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Arduino</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+	int ARDUINO_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
 
 
 	/**
@@ -839,13 +1163,49 @@ public interface FritzingPackage extends EPackage {
 	int POTENTIOMETER__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POTENTIOMETER__PART_NUMBER = PART__PART_NUMBER;
+	int POTENTIOMETER__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POTENTIOMETER__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -894,13 +1254,49 @@ public interface FritzingPackage extends EPackage {
 	int FSR_SENSOR__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FSR_SENSOR__PART_NUMBER = PART__PART_NUMBER;
+	int FSR_SENSOR__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FSR_SENSOR__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -949,13 +1345,49 @@ public interface FritzingPackage extends EPackage {
 	int LIGHT_SENSOR__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIGHT_SENSOR__PART_NUMBER = PART__PART_NUMBER;
+	int LIGHT_SENSOR__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIGHT_SENSOR__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -1005,13 +1437,49 @@ public interface FritzingPackage extends EPackage {
 	int TRANSISTOR__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSISTOR__PART_NUMBER = PART__PART_NUMBER;
+	int TRANSISTOR__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSISTOR__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -1060,13 +1528,49 @@ public interface FritzingPackage extends EPackage {
 	int POWER_TRANSISTOR__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int POWER_TRANSISTOR__PART_NUMBER = PART__PART_NUMBER;
+	int POWER_TRANSISTOR__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int POWER_TRANSISTOR__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -1115,13 +1619,49 @@ public interface FritzingPackage extends EPackage {
 	int GENERIC_PART__NAME = PART__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Part Number</b></em>' attribute.
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GENERIC_PART__PART_NUMBER = PART__PART_NUMBER;
+	int GENERIC_PART__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__DESCRIPTION = PART__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -1323,15 +1863,59 @@ public interface FritzingPackage extends EPackage {
 	EAttribute getPart_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getPartNumber <em>Part Number</em>}'.
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getSpecies <em>Species</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Part Number</em>'.
-	 * @see org.fritzing.fritzing.Part#getPartNumber()
+	 * @return the meta object for the attribute '<em>Species</em>'.
+	 * @see org.fritzing.fritzing.Part#getSpecies()
 	 * @see #getPart()
 	 * @generated
 	 */
-	EAttribute getPart_PartNumber();
+	EAttribute getPart_Species();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getGenus <em>Genus</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Genus</em>'.
+	 * @see org.fritzing.fritzing.Part#getGenus()
+	 * @see #getPart()
+	 * @generated
+	 */
+	EAttribute getPart_Genus();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getVersion <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Version</em>'.
+	 * @see org.fritzing.fritzing.Part#getVersion()
+	 * @see #getPart()
+	 * @generated
+	 */
+	EAttribute getPart_Version();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.fritzing.fritzing.Part#getDescription()
+	 * @see #getPart()
+	 * @generated
+	 */
+	EAttribute getPart_Description();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getFootprint <em>Footprint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Footprint</em>'.
+	 * @see org.fritzing.fritzing.Part#getFootprint()
+	 * @see #getPart()
+	 * @generated
+	 */
+	EAttribute getPart_Footprint();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.fritzing.fritzing.Part#getTerminals <em>Terminals</em>}'.
@@ -1406,6 +1990,17 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getButton();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Button#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.fritzing.fritzing.Button#getType()
+	 * @see #getButton()
+	 * @generated
+	 */
+	EAttribute getButton_Type();
 
 	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Composite <em>Composite</em>}'.
@@ -1489,6 +2084,17 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getArduino();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Arduino#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.fritzing.fritzing.Arduino#getType()
+	 * @see #getArduino()
+	 * @generated
+	 */
+	EAttribute getArduino_Type();
 
 	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Potentiometer <em>Potentiometer</em>}'.
@@ -1711,12 +2317,44 @@ public interface FritzingPackage extends EPackage {
 		EAttribute PART__NAME = eINSTANCE.getPart_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Part Number</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Species</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PART__PART_NUMBER = eINSTANCE.getPart_PartNumber();
+		EAttribute PART__SPECIES = eINSTANCE.getPart_Species();
+
+		/**
+		 * The meta object literal for the '<em><b>Genus</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PART__GENUS = eINSTANCE.getPart_Genus();
+
+		/**
+		 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PART__VERSION = eINSTANCE.getPart_Version();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PART__DESCRIPTION = eINSTANCE.getPart_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Footprint</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PART__FOOTPRINT = eINSTANCE.getPart_Footprint();
 
 		/**
 		 * The meta object literal for the '<em><b>Terminals</b></em>' containment reference list feature.
@@ -1779,6 +2417,14 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EClass BUTTON = eINSTANCE.getButton();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BUTTON__TYPE = eINSTANCE.getButton_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.CompositeImpl <em>Composite</em>}' class.
@@ -1853,6 +2499,14 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ARDUINO = eINSTANCE.getArduino();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ARDUINO__TYPE = eINSTANCE.getArduino_Type();
 
 		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.PotentiometerImpl <em>Potentiometer</em>}' class.

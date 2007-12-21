@@ -22,7 +22,7 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Breaedboard' kind='elementOnly'"
  * @generated
  */
-public interface Breadboard extends Composite {
+public interface Breadboard extends Part {
 	/**
 	 * Returns the value of the '<em><b>Lines</b></em>' attribute.
 	 * <!-- begin-user-doc -->

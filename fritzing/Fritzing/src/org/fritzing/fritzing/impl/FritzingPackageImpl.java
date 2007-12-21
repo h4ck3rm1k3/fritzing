@@ -395,7 +395,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_PartNumber() {
+	public EAttribute getPart_Species() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -404,8 +404,44 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getPart_Genus() {
+		return (EAttribute)partEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPart_Version() {
+		return (EAttribute)partEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPart_Description() {
+		return (EAttribute)partEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPart_Footprint() {
+		return (EAttribute)partEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getPart_Terminals() {
-		return (EReference)partEClass.getEStructuralFeatures().get(2);
+		return (EReference)partEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -414,7 +450,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * @generated
 	 */
 	public EReference getPart_Parent() {
-		return (EReference)partEClass.getEStructuralFeatures().get(3);
+		return (EReference)partEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -460,6 +496,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 */
 	public EClass getButton() {
 		return buttonEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getButton_Type() {
+		return (EAttribute)buttonEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -532,6 +577,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 */
 	public EClass getArduino() {
 		return arduinoEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getArduino_Type() {
+		return (EAttribute)arduinoEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -636,7 +690,11 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		partEClass = createEClass(PART);
 		createEAttribute(partEClass, PART__NAME);
-		createEAttribute(partEClass, PART__PART_NUMBER);
+		createEAttribute(partEClass, PART__SPECIES);
+		createEAttribute(partEClass, PART__GENUS);
+		createEAttribute(partEClass, PART__VERSION);
+		createEAttribute(partEClass, PART__DESCRIPTION);
+		createEAttribute(partEClass, PART__FOOTPRINT);
 		createEReference(partEClass, PART__TERMINALS);
 		createEReference(partEClass, PART__PARENT);
 
@@ -647,6 +705,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEAttribute(ledEClass, LED__COLOR);
 
 		buttonEClass = createEClass(BUTTON);
+		createEAttribute(buttonEClass, BUTTON__TYPE);
 
 		compositeEClass = createEClass(COMPOSITE);
 		createEReference(compositeEClass, COMPOSITE__PARTS);
@@ -660,6 +719,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		moduleEClass = createEClass(MODULE);
 
 		arduinoEClass = createEClass(ARDUINO);
+		createEAttribute(arduinoEClass, ARDUINO__TYPE);
 
 		potentiometerEClass = createEClass(POTENTIOMETER);
 
@@ -713,7 +773,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		buttonEClass.getESuperTypes().add(this.getPart());
 		compositeEClass.getESuperTypes().add(this.getPart());
 		sketchEClass.getESuperTypes().add(this.getComposite());
-		breadboardEClass.getESuperTypes().add(this.getComposite());
+		breadboardEClass.getESuperTypes().add(this.getPart());
 		moduleEClass.getESuperTypes().add(this.getComposite());
 		arduinoEClass.getESuperTypes().add(this.getPart());
 		potentiometerEClass.getESuperTypes().add(this.getPart());
@@ -746,7 +806,11 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		initEClass(partEClass, Part.class, "Part", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPart_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPart_PartNumber(), theXMLTypePackage.getString(), "partNumber", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Species(), theXMLTypePackage.getString(), "species", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Genus(), theXMLTypePackage.getString(), "genus", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Version(), theXMLTypePackage.getString(), "version", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Description(), theXMLTypePackage.getString(), "description", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Footprint(), theXMLTypePackage.getString(), "footprint", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPart_Terminals(), this.getTerminal(), this.getTerminal_Parent(), "terminals", null, 0, -1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getPart_Terminals().getEKeys().add(this.getTerminal_Name());
 		initEReference(getPart_Parent(), this.getComposite(), this.getComposite_Parts(), "parent", null, 0, 1, Part.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -759,6 +823,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEAttribute(getLED_Color(), theXMLTypePackage.getInt(), "color", null, 0, 1, org.fritzing.fritzing.LED.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(buttonEClass, Button.class, "Button", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getButton_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, Button.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComposite_Parts(), this.getPart(), this.getPart_Parent(), "parts", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -774,6 +839,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(arduinoEClass, Arduino.class, "Arduino", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getArduino_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, Arduino.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(potentiometerEClass, Potentiometer.class, "Potentiometer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -903,11 +969,39 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 			 "kind", "attribute"
 		   });		
 		addAnnotation
-		  (getPart_PartNumber(), 
+		  (getPart_Species(), 
 		   source, 
 		   new String[] {
-			 "kind", "attribute",
-			 "name", "partNumber"
+			 "name", "species",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getPart_Genus(), 
+		   source, 
+		   new String[] {
+			 "name", "genus",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getPart_Version(), 
+		   source, 
+		   new String[] {
+			 "name", "version",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getPart_Description(), 
+		   source, 
+		   new String[] {
+			 "name", "description",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
+		  (getPart_Footprint(), 
+		   source, 
+		   new String[] {
+			 "name", "footprint",
+			 "kind", "attribute"
 		   });		
 		addAnnotation
 		  (getPart_Terminals(), 
@@ -950,6 +1044,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   new String[] {
 			 "name", "Button",
 			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getButton_Type(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "type"
 		   });		
 		addAnnotation
 		  (compositeEClass, 
@@ -1006,6 +1107,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   new String[] {
 			 "name", "Arduino",
 			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getArduino_Type(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "type"
 		   });		
 		addAnnotation
 		  (potentiometerEClass, 

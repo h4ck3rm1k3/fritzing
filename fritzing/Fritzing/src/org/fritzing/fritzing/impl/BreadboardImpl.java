@@ -27,7 +27,7 @@ import org.fritzing.fritzing.FritzingPackage;
  *
  * @generated
  */
-public class BreadboardImpl extends CompositeImpl implements Breadboard {
+public class BreadboardImpl extends PartImpl implements Breadboard {
 	/**
 	 * The default value of the '{@link #getLines() <em>Lines</em>}' attribute.
 	 * <!-- begin-user-doc -->
