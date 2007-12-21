@@ -34,7 +34,7 @@ import org.fritzing.fritzing.FritzingPackage;
  * @generated
  */
 public class BreadboardItemProvider
-	extends CompositeItemProvider
+	extends PartItemProvider
 	implements	
 		IEditingDomainItemProvider,	
 		IStructuredItemContentProvider,	

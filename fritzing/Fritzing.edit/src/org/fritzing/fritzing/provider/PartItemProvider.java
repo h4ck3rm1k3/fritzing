@@ -66,7 +66,11 @@ public class PartItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addPartNumberPropertyDescriptor(object);
+			addSpeciesPropertyDescriptor(object);
+			addGenusPropertyDescriptor(object);
+			addVersionPropertyDescriptor(object);
+			addDescriptionPropertyDescriptor(object);
+			addFootprintPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -94,19 +98,107 @@ public class PartItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Part Number feature.
+	 * This adds a property descriptor for the Species feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addPartNumberPropertyDescriptor(Object object) {
+	protected void addSpeciesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Part_partNumber_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Part_partNumber_feature", "_UI_Part_type"),
-				 FritzingPackage.Literals.PART__PART_NUMBER,
+				 getString("_UI_Part_species_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Part_species_feature", "_UI_Part_type"),
+				 FritzingPackage.Literals.PART__SPECIES,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Genus feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGenusPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Part_genus_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Part_genus_feature", "_UI_Part_type"),
+				 FritzingPackage.Literals.PART__GENUS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Version feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addVersionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Part_version_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Part_version_feature", "_UI_Part_type"),
+				 FritzingPackage.Literals.PART__VERSION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Description feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDescriptionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Part_description_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Part_description_feature", "_UI_Part_type"),
+				 FritzingPackage.Literals.PART__DESCRIPTION,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Footprint feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addFootprintPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Part_footprint_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Part_footprint_feature", "_UI_Part_type"),
+				 FritzingPackage.Literals.PART__FOOTPRINT,
 				 true,
 				 false,
 				 false,
@@ -172,7 +264,11 @@ public class PartItemProvider
 
 		switch (notification.getFeatureID(Part.class)) {
 			case FritzingPackage.PART__NAME:
-			case FritzingPackage.PART__PART_NUMBER:
+			case FritzingPackage.PART__SPECIES:
+			case FritzingPackage.PART__GENUS:
+			case FritzingPackage.PART__VERSION:
+			case FritzingPackage.PART__DESCRIPTION:
+			case FritzingPackage.PART__FOOTPRINT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case FritzingPackage.PART__TERMINALS:
