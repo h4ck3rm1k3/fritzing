@@ -16,8 +16,8 @@ import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.ResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderedShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IRotatableEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
@@ -32,9 +32,9 @@ import org.fritzing.fritzing.diagram.edit.policies.GenericPartItemSemanticEditPo
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
- * @generated
+ * @generated NOT
  */
-public class GenericPartEditPart extends AbstractBorderedShapeEditPart {
+public class GenericPartEditPart extends PartEditPart implements IRotatableEditPart {
 
 	/**
 	 * @generated
