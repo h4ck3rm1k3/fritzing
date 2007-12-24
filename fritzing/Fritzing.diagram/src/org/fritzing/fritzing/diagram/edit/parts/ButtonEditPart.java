@@ -35,6 +35,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -43,26 +44,6 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
  * @generated NOT
  */
 public class ButtonEditPart extends PartEditPart {
-
-	/**
-	 * @generated NOT
-	 */
-	public static final String UPPER_LEFT_TERMINAL = "1";
-
-	/**
-	 * @generated NOT
-	 */
-	public static final String UPPER_RIGHT_TERMINAL = "2";
-
-	/**
-	 * @generated NOT
-	 */
-	public static final String LOWER_LEFT_TERMINAL = "3";
-
-	/**
-	 * @generated NOT
-	 */
-	public static final String LOWER_RIGHT_TERMINAL = "4";
 
 	/**
 	 * @generated
@@ -80,10 +61,11 @@ public class ButtonEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public ButtonEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/button/partdescription.xml");   
 	}
 
 	/**
@@ -113,10 +95,10 @@ public class ButtonEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		ButtonFigure figure = new ButtonFigure();
+		ButtonFigure figure = new ButtonFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -136,66 +118,7 @@ public class ButtonEditPart extends PartEditPart {
 					.getFigureButtonNameFigure());
 			return true;
 		}
-		if (childEditPart instanceof Terminal2EditPart) {
-			String name = null;
-			Object model = childEditPart.getModel();
-			int pos = 0;
-			if (model instanceof NodeImpl) {
-				EObject eobject = ((NodeImpl) model).getElement();
-				if (eobject instanceof Terminal) {
-					name = ((Terminal) eobject).getName();
-					if (name == null) {
-					} else if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
-						pos = PositionConstants.NORTH_WEST;
-					} else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
-						pos = PositionConstants.NORTH_EAST;
-					} else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
-						pos = PositionConstants.SOUTH_WEST;
-					} else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
-						pos = PositionConstants.SOUTH_EAST;
-					}
-				}
-			}
-
-			ButtonBorderItemLocator locator = new ButtonBorderItemLocator(
-					getMainFigure(), this, pos);
-			//BorderItemLocator locator = new BorderItemLocator(getMainFigure(), 0);
-			getBorderedFigure().getBorderItemContainer().add(
-					((Terminal2EditPart) childEditPart).getFigure(), locator);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	public int getTerminalNamePosition(Terminal2EditPart terminal2,
-			TerminalName2EditPart namePart, int defaultPosition) {
-		String name = null;
-		Object model = terminal2.getModel();
-		if (model instanceof NodeImpl) {
-			EObject eobject = ((NodeImpl) model).getElement();
-			if (eobject instanceof Terminal) {
-				name = ((Terminal) eobject).getName();
-			}
-		}
-
-		if (name == null)
-			return defaultPosition;
-
-		if (name.equalsIgnoreCase(UPPER_LEFT_TERMINAL)) {
-			return PositionConstants.NORTH;
-		} else if (name.equalsIgnoreCase(UPPER_RIGHT_TERMINAL)) {
-			return PositionConstants.NORTH;
-		} else if (name.equalsIgnoreCase(LOWER_LEFT_TERMINAL)) {
-			return PositionConstants.SOUTH;
-		} else if (name.equalsIgnoreCase(LOWER_RIGHT_TERMINAL)) {
-			return PositionConstants.SOUTH;
-		}
-
-		return defaultPosition;
-
+		return addEastWestFixedChild(childEditPart);
 	}
 
 	/**
@@ -243,12 +166,10 @@ public class ButtonEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(20), getMapMode().DPtoLP(20));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -311,7 +232,7 @@ public class ButtonEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public class ButtonFigure extends RectangleFigure {
+	public class ButtonFigure extends PartFigure {
 
 		/**
 		 * @generated
@@ -321,26 +242,25 @@ public class ButtonEditPart extends PartEditPart {
 		/**
 		 * @generated
 		 */
-		public ButtonFigure() {
-
-			this.setLayoutManager(new StackLayout());
+		public ButtonFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
-					getMapMode().DPtoLP(20)));
-			createContents();
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
+		public void setContentsPath() {
+			contentsPath = "libraries/core/button/";	
+		}
 
-			Ellipse elli0 = new Ellipse();
-			elli0.setBackgroundColor(ELLI0_BACK);
+		/**
+		 * @generated NOT
+		 */
+		protected void createContents() {
 
-			this.add(elli0);
-
+			super.createContents();
 			fFigureButtonNameFigure = new WrapLabel();
 			fFigureButtonNameFigure.setText("..");
 

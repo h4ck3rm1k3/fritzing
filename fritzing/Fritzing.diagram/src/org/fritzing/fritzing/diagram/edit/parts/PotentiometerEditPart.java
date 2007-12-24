@@ -39,6 +39,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.PotentiometerCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.PotentiometerItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -67,10 +68,11 @@ public class PotentiometerEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public PotentiometerEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/potentiometer/partdescription.xml");   
 	}
 
 	/**
@@ -100,10 +102,10 @@ public class PotentiometerEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	protected IFigure createNodeShape() {
-		PotentiometerFigure figure = new PotentiometerFigure();
+	protected IFigure createNodeShape(PartLoader partLoader) {
+		PotentiometerFigure figure = new PotentiometerFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -172,12 +174,10 @@ public class PotentiometerEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(20), getMapMode().DPtoLP(20));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -193,12 +193,12 @@ public class PotentiometerEditPart extends PartEditPart {
 	 * Body of this method does not depend on settings in generation model
 	 * so you may safely remove <i>generated</i> tag and modify it.
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createMainFigure() {
 		NodeFigure figure = createNodePlate();
 		figure.setLayoutManager(new StackLayout());
-		IFigure shape = createNodeShape();
+		IFigure shape = createNodeShape(partLoader);
 		figure.add(shape);
 		contentPane = setupContentPane(shape);
 		return figure;
@@ -238,9 +238,9 @@ public class PotentiometerEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	public class PotentiometerFigure extends Ellipse {
+	public class PotentiometerFigure extends PartFigure {
 
 		/**
 		 * @generated
@@ -250,30 +250,26 @@ public class PotentiometerEditPart extends PartEditPart {
 		/**
 		 * @generated
 		 */
-		public PotentiometerFigure() {
-			this.setLayoutManager(new StackLayout());
+		public PotentiometerFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
-					getMapMode().DPtoLP(20)));
-			createContents();
+		}
+
+
+		/**
+		 * @generated NOT
+		 */
+		public void setContentsPath() {
+			contentsPath = "libraries/core/potentiometer/";	
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
+		protected void createContents() {
 
-			Ellipse potentiometerStickFigure0 = new Ellipse();
-			potentiometerStickFigure0
-					.setBackgroundColor(POTENTIOMETERSTICKFIGURE0_BACK);
-			potentiometerStickFigure0.setMaximumSize(new Dimension(getMapMode()
-					.DPtoLP(14), getMapMode().DPtoLP(14)));
-			potentiometerStickFigure0.setLocation(new Point(getMapMode()
-					.DPtoLP(3), getMapMode().DPtoLP(3)));
-
-			this.add(potentiometerStickFigure0);
-
+			super.createContents();
 			fFigurePotentiometerNameFigure = new WrapLabel();
 			fFigurePotentiometerNameFigure.setText("..");
 

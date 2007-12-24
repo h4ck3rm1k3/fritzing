@@ -10,6 +10,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Potentiometer;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -44,7 +45,7 @@ public class PotentiometerCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
 		Potentiometer newElement = (Potentiometer) super
@@ -53,6 +54,9 @@ public class PotentiometerCreateCommand extends CreateElementCommand {
 			FritzingElementTypes.Initializers.Potentiometer_2005
 					.init(newElement);
 		}
+		// use "our" initializers instead		
+		PartLoader partLoader = new PartLoader();
+		partLoader.createTerminals("libraries/core/potentiometer/partdescription.xml", newElement);		
 		return newElement;
 	}
 }

@@ -36,6 +36,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.PowerTransistorCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.PowerTransistorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -61,10 +62,11 @@ public class PowerTransistorEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public PowerTransistorEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/powertransistor/partdescription.xml");   
 	}
 
 	/**
@@ -94,10 +96,10 @@ public class PowerTransistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		PowerTransistorFigure figure = new PowerTransistorFigure();
+		PowerTransistorFigure figure = new PowerTransistorFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -115,17 +117,7 @@ public class PowerTransistorEditPart extends PartEditPart {
 		if (childEditPart instanceof PowerTransistorNameEditPart) {
 			((PowerTransistorNameEditPart) childEditPart).setLabel(getPrimaryShape()
 					.getFigurePowerTransistorNameFigure());
-				
-//			try {
-//			    FontStyle style = (FontStyle)  ((PowerTransistorNameEditPart) childEditPart).getPrimaryView().getStyle(NotationPackage.Literals.FONT_STYLE);
-//			    if (style != null) {
-//			    	style.setFontColor((255 << 16) + (255 << 8) + 255);
-//			    }
-//			}
-//			catch (Exception ex) {
-//				System.out.println("Cannot modify resource set without a write transaction");
-//			}
-			
+							
 			return true;
 		}
 		return addEastWestFixedChild(childEditPart);
@@ -176,12 +168,10 @@ public class PowerTransistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(40), getMapMode().DPtoLP(30));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -244,7 +234,7 @@ public class PowerTransistorEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public class PowerTransistorFigure extends RectangleFigure {
+	public class PowerTransistorFigure extends PartFigure {
 
 		/**
 		 * @generated
@@ -254,19 +244,24 @@ public class PowerTransistorEditPart extends PartEditPart {
 		/**
 		 * @generated NOT
 		 */
-		public PowerTransistorFigure() {
+		public PowerTransistorFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(40),
-					getMapMode().DPtoLP(30)));
-			createContents();
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
-
+		public void setContentsPath() {
+			contentsPath = "libraries/core/powertransistor/";	
+		}
+	
+		/**
+		 * @generated NOT
+		 */
+		protected void createContents() {
+			super.createContents();
 			fFigurePowerTransistorNameFigure = new WrapLabel();
 			fFigurePowerTransistorNameFigure.setText("..");
 

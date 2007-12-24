@@ -33,6 +33,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.TransistorCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.TransistorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -58,10 +59,11 @@ public class TransistorEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public TransistorEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/transistor/partdescription.xml");   
 	}
 
 	/**
@@ -91,10 +93,10 @@ public class TransistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		TransistorFigure figure = new TransistorFigure();
+		TransistorFigure figure = new TransistorFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -162,12 +164,10 @@ public class TransistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(20), getMapMode().DPtoLP(20));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -230,7 +230,7 @@ public class TransistorEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public class TransistorFigure extends RectangleFigure {
+	public class TransistorFigure extends PartFigure {
 
 		/**
 		 * @generated
@@ -240,19 +240,25 @@ public class TransistorEditPart extends PartEditPart {
 		/**
 		 * @generated NOT
 		 */
-		public TransistorFigure() {
+		public TransistorFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
-					getMapMode().DPtoLP(20)));
-			createContents();
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
+		public void setContentsPath() {
+			contentsPath = "libraries/core/transistor/";	
+		}
+	
+		/**
+		 * @generated NOT
+		 */
+		protected void createContents() {
 
+			super.createContents();
 			fFigureTransistorNameFigure = new WrapLabel();
 			fFigureTransistorNameFigure.setText("..");
 

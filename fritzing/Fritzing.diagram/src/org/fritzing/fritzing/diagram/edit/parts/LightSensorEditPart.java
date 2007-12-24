@@ -40,6 +40,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.LightSensorCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.LightSensorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
@@ -66,10 +67,11 @@ public class LightSensorEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public LightSensorEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/lightsensor/partdescription.xml");   
 	}
 
 	/**
@@ -99,10 +101,10 @@ public class LightSensorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		LightSensorFigure figure = new LightSensorFigure();
+		LightSensorFigure figure = new LightSensorFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -171,12 +173,10 @@ public class LightSensorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(25), getMapMode().DPtoLP(15));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -237,33 +237,36 @@ public class LightSensorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	public class LightSensorFigure extends RoundedRectangle {
+	public class LightSensorFigure extends PartFigure {
 
 		/**
 		 * @generated
 		 */
 		private WrapLabel fFigureLightSensorNameFigure;
-		private ScalableImageFigure lightSensorSVGFigure0;
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		public LightSensorFigure() {
-			this.setCornerDimensions(new Dimension(getMapMode().DPtoLP(10),
-					getMapMode().DPtoLP(10)));
+		public LightSensorFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(25),
-					getMapMode().DPtoLP(15)));
-			createContents();
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
+		public void setContentsPath() {
+			contentsPath = "libraries/core/lightsensor/";	
+		}
+
+		/**
+		 * @generated NOT
+		 */
+		protected void createContents() {
+			super.createContents();
 
 			fFigureLightSensorNameFigure = new WrapLabel();
 			fFigureLightSensorNameFigure.setText("..");
@@ -274,13 +277,6 @@ public class LightSensorEditPart extends PartEditPart {
 			this.add(fFigureLightSensorNameFigure);
 
 		}
-
-		//		URL url = FileLocator.find(FritzingDiagramEditorPlugin
-		//				.getInstance().getBundle(), new Path(
-		//				"icons/parts/circle.svg"), null); //$NON-NLS-1$
-		//		lightSensorSVGFigure0 = new ScalableImageFigure(
-		//				RenderedImageFactory.getInstance(url), true, true, true);
-		//		this.add(lightSensorSVGFigure0);
 
 		/**
 		 * @generated

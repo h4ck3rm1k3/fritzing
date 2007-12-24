@@ -566,10 +566,10 @@ public class ElementInitializers {
 		public static final IObjectInitializer Button_2004 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getButton()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(),
-								terminals_3(), terminals_4(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(),
+//								terminals_3(), terminals_4(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'B\'", //$NON-NLS-1$
@@ -737,14 +737,14 @@ public class ElementInitializers {
 		}; // FsrSensor_2006 ObjectInitializer		
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public static final IObjectInitializer LightSensor_2007 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getLightSensor()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'LS\'", //$NON-NLS-1$
@@ -781,15 +781,15 @@ public class ElementInitializers {
 		}; // LightSensor_2007 ObjectInitializer		
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public static final IObjectInitializer Transistor_2009 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getTransistor()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(),
-								terminals_3(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(),
+//								terminals_3(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'Q\'", //$NON-NLS-1$
@@ -840,15 +840,15 @@ public class ElementInitializers {
 		}; // Transistor_2009 ObjectInitializer		
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public static final IObjectInitializer PowerTransistor_2010 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getPowerTransistor()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(),
-								terminals_3(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(),
+//								terminals_3(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'Q\'", //$NON-NLS-1$

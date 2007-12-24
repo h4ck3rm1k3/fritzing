@@ -10,6 +10,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.PowerTransistor;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -44,7 +45,7 @@ public class PowerTransistorCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
 		PowerTransistor newElement = (PowerTransistor) super
@@ -53,6 +54,9 @@ public class PowerTransistorCreateCommand extends CreateElementCommand {
 			FritzingElementTypes.Initializers.PowerTransistor_2010
 					.init(newElement);
 		}
+		// use "our" initializers instead		
+		PartLoader partLoader = new PartLoader();
+		partLoader.createTerminals("libraries/core/powertransistor/partdescription.xml", newElement);		
 		return newElement;
 	}
 }
