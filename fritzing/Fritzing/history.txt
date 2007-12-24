@@ -3,7 +3,35 @@ Notes on the Fritzing releases. Related issue numbers in brackets.
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
-0003 ALPHA
+0003 ALPHA - Dec 24th 2007
+
+Started work on getting a decent part library.
+
+Work has begun on nicer design of the parts and a scheme for the
+parts to be designed in, so that external part designers might be
+able in the future to design parts. [#25]
+
+< ENHANCEMENTS >
+
+For the following parts, there is now a nicer part in the canvas
+and a nicer corresponding 16x16 pixel icon in the toolbar.
+- Arduino
+- red LED
+- Voltage Regulator
+- Resistor
+- Button
+- Photocel (lsr)
+- Power Transistor
+- Transistor
+- Potmeter trimmer
+
+
+Usability
+- The sockets on the arduino now line up on the 0.1" grid
+	(not corresponding the exact locations in physical reality) [#36] 
+- The application name on OS X has now been CamelCased and cleaned of
+	its version number: Fritzing.app instead of fritzing-0003.app [#57]
+
 
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
