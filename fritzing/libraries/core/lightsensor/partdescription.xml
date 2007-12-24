@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<version>1.0</version>
+	<partIdentifier>org.fritzing.parts.lightsensor.idunno</partIdentifier>
+	<partFamily>org.fritzing.parts.lightsensor</partFamily>
+	<isModule>TRUE</isModule>
+	<defaultName>lightsensor idunno</defaultName>
+  <label>LSR</label>
+  <partCode>LSR#</partCode>
+  <id>org.fritzing.parts.lightsensor.idunno</id>
+  <family>org.fritzing.parts.lightsensor</family>
+  <isModule>1</isModule>
+  <defaultUnits>tenths</defaultUnits>               <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+  <gridOffset x="0" y="0" units="himetric" />
+  <bounds width="705.55" height="529.16" units="himetric" nwidth="20" nheight="15" />
+  <selectionShape>
+    <polygon points="285.1,49.9 285.1,5.1 279.6,0 30.5,0 30.5,35.3 0,35.3 0,82.4 30.5,82.4 30.5,158.5 20.5,158.5 20.5,194.9 30.5,194.9 30.5,205.6 285.1,205.6 285.1,198.6 294.7,188.7 294.7,59 "/>
+  </selectionShape>
+<children>
+  <layer editable="false">
+		<name>arduino connector layer</name>
+		<isSubPart>FALSE</isSubPart>
+		<moduleData>
+			<connector>
+				<connectorType>headerPin</connectorType>
+				<connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
+				<connectorLocation x="-0.5" y="0.5" />
+				<name>1</name>
+        <internalName>1</internalName>
+			</connector>
+			<connector>
+				<connectorType>headerPin</connectorType>
+				<connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
+				<connectorLocation x="2.75" y="0.5"  />
+				<name>2</name>
+        <internalName>2</internalName>
+      </connector>
+
+      <shapeLayer>
+        <name>whatever</name>
+        <!-- 
+        <svgShapeFile>led.svg</svgShapeFile> -->
+        <resolutionIndependentImageSet>
+          <bitmapImage>
+            <zoomLevel>100</zoomLevel>
+            <bitmapFile>lsr_100pct.png</bitmapFile>
+          </bitmapImage>
+        </resolutionIndependentImageSet>
+      </shapeLayer>
+		</moduleData>
+	</layer>
+</children>
+</part>
