@@ -29,6 +29,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.PopupBarEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
+import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
@@ -118,6 +119,18 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		return null;
 	}
 	
+	/**
+	 * @generated NOT
+	 */
+	protected NodeFigure createNodePlate() {
+		Dimension size = partLoader.getSize();
+//		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
+//				.DPtoLP((int) (size.width / multiplier)), getMapMode().DPtoLP(
+//				(int) (size.height / multiplier)));
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(size.width, size.height);
+		return result;
+	}
+
 	protected int getEastWestBorderPositionConstants() {
 		int count = 0;
 		for (Iterator it = this.getChildren().iterator(); it.hasNext();  ) {
@@ -153,18 +166,22 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	protected boolean addEastWestFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof Terminal2EditPart) {
 			int terminalPosition = PositionConstants.NONE;
+			Point p = null;
 			Object model = childEditPart.getModel();		
 			if (model instanceof NodeImpl) {
 				EObject eobject = ((NodeImpl) model).getElement();
 				if (eobject instanceof Terminal) {
 					String name = ((Terminal) eobject).getName();
-					terminalPosition = EastWestBorderItemLocator.parseTerminalName(name);
+					p = findTerminal(childEditPart);
+					if (p == null) {
+						terminalPosition = EastWestBorderItemLocator.parseTerminalName(name);
+					}
 				}
 			}
 			
 			IBorderItemLocator locator = null;			
-			if (terminalPosition != PositionConstants.NONE) {
-				locator = new EastWestBorderItemLocator(getMainFigure(), this, terminalPosition);
+			if ((p != null) || (terminalPosition != PositionConstants.NONE)) {
+				locator = new EastWestBorderItemLocator(getMainFigure(), this, terminalPosition, p);
 			}
 			else {
 				locator =  new BorderItemLocator( getMainFigure(), terminalPosition);
@@ -206,6 +223,25 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		return lep;
 	}
 
+	protected Point findTerminal(EditPart childEditPart) {
+		if (!(childEditPart instanceof Terminal2EditPart)) return null;
+		
+		Object model = childEditPart.getModel();
 	
-	
+		if (model instanceof NodeImpl) {
+			EObject eobject = ((NodeImpl) model).getElement();
+			if (eobject instanceof Terminal) {
+				String name = ((Terminal) eobject).getName();
+				if (name != null) {
+					Point q = partLoader.getTerminalPoint(name);
+					if (q != null) {
+						return q;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+
 }

@@ -10,6 +10,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Resistor;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -44,13 +45,18 @@ public class ResistorCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
 		Resistor newElement = (Resistor) super.doDefaultElementCreation();
 		if (newElement != null) {
 			FritzingElementTypes.Initializers.Resistor_2003.init(newElement);
 		}
+		
+		// use "our" initializers instead		
+		PartLoader partLoader = new PartLoader();
+		partLoader.createTerminals("libraries/core/resistor/partdescription.xml", newElement);		
+
 		return newElement;
 	}
 }

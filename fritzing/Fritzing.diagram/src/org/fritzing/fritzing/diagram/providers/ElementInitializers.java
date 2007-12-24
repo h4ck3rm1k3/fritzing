@@ -473,14 +473,14 @@ public class ElementInitializers {
 		};
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public static final IObjectInitializer LED_2002 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getLED()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'L\'", //$NON-NLS-1$
@@ -517,14 +517,14 @@ public class ElementInitializers {
 		};
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public static final IObjectInitializer Resistor_2003 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getResistor()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'R\'", //$NON-NLS-1$

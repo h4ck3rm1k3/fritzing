@@ -40,6 +40,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.LED;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.LEDCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.LEDItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -66,10 +67,11 @@ public class LEDEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public LEDEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/led/partdescription.xml");   
 	}
 
 	/**
@@ -114,10 +116,10 @@ public class LEDEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		LEDFigure figure = new LEDFigure();
+		LEDFigure figure = new LEDFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -185,12 +187,10 @@ public class LEDEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(15), getMapMode().DPtoLP(15));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -252,9 +252,9 @@ public class LEDEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	public class LEDFigure extends Ellipse {
+	public class LEDFigure extends PartFigure {
 
 		/**
 		 * @generated
@@ -262,21 +262,26 @@ public class LEDEditPart extends PartEditPart {
 		private WrapLabel fFigureLEDNameFigure;
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		public LEDFigure() {
+		public LEDFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(15),
-					getMapMode().DPtoLP(15)));
-			createContents();
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
+		public void setContentsPath() {
+			contentsPath = "libraries/core/led/";	
+		}
 
+		/**
+		 * @generated NOT
+		 */
+		protected void createContents() {
+			super.createContents();
 			fFigureLEDNameFigure = new WrapLabel();
 			fFigureLEDNameFigure.setText("..");
 

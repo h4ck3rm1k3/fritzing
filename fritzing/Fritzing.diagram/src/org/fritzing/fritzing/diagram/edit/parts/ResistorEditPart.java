@@ -33,6 +33,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.ResistorCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ResistorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -58,10 +59,11 @@ public class ResistorEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public ResistorEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/resistor/partdescription.xml");   
 	}
 
 	/**
@@ -91,10 +93,10 @@ public class ResistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		ResistorFigure figure = new ResistorFigure();
+		ResistorFigure figure = new ResistorFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -162,12 +164,10 @@ public class ResistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(30), getMapMode().DPtoLP(10));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -228,9 +228,9 @@ public class ResistorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	public class ResistorFigure extends RectangleFigure {
+	public class ResistorFigure extends PartFigure {
 
 		/**
 		 * @generated
@@ -238,20 +238,26 @@ public class ResistorEditPart extends PartEditPart {
 		private WrapLabel fFigureResistorNameFigure;
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		public ResistorFigure() {
+		public ResistorFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(30),
-					getMapMode().DPtoLP(10)));
-			createContents();
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
+		public void setContentsPath() {
+			contentsPath = "libraries/core/resistor/";	
+		}
+
+		/**
+		 * @generated NOT
+		 */
+		protected void createContents() {
+			super.createContents();
 
 			fFigureResistorNameFigure = new WrapLabel();
 			fFigureResistorNameFigure.setText("..");

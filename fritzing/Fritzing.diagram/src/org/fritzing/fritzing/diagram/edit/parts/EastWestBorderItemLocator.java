@@ -11,9 +11,11 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 public class EastWestBorderItemLocator extends PartBorderItemLocator {
 	
 	int positionConstants;
+	Point offset;
 	
-	public EastWestBorderItemLocator(IFigure figure, PartEditPart parentEditPart, int positionConstants) {
+	public EastWestBorderItemLocator(IFigure figure, PartEditPart parentEditPart, int positionConstants, Point offset) {
 		super(figure, parentEditPart);
+		this.offset = offset;
 		this.positionConstants = positionConstants;
 	}
 	
@@ -28,6 +30,12 @@ public class EastWestBorderItemLocator extends PartBorderItemLocator {
 
 		Dimension borderItemSize = getSize(borderItem);
 		
+		if (offset != null) {
+			x += offset.x;
+			y += offset.y;
+			return new Point(x, y);
+		}
+			
 		int rpc = positionConstants;
 		
 		/*
