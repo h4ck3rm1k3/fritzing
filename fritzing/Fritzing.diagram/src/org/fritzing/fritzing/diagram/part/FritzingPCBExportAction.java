@@ -172,7 +172,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 		}
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
 			eagleSCH = "\"" + eagleSCH + "\"";
-			eagleBRD = "\"" + eagleBRD.replaceAll("\\\\", "\\\\\\\\") + "\"";
+			eagleBRD = "\"" + eagleBRD + "\"";
 		}
 		// EAGLE parameters
 		String eagleParams = "RUN " 
