@@ -36,7 +36,8 @@ public class DiagramAppearancePreferencePage extends AppearancePreferencePage {
 
 		setDefaultFontPreference(store);
 
-		Color fontColor = ColorConstants.black;
+//		Color fontColor = ColorConstants.black;
+		Color fontColor = new Color(null, 30, 30, 30);
 		PreferenceConverter.setDefault(store,
 				IPreferenceConstants.PREF_FONT_COLOR, fontColor.getRGB());
 
@@ -44,7 +45,8 @@ public class DiagramAppearancePreferencePage extends AppearancePreferencePage {
 		PreferenceConverter.setDefault(store,
 				IPreferenceConstants.PREF_FILL_COLOR, fillColor.getRGB());
 
-		Color lineColor = DiagramColorConstants.white;
+//		Color lineColor = DiagramColorConstants.white;
+		Color lineColor = new Color(null, 230, 230, 215);
 		PreferenceConverter.setDefault(store,
 				IPreferenceConstants.PREF_LINE_COLOR, lineColor.getRGB());
 

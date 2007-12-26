@@ -126,7 +126,7 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.GRIDORDER, false);
 			getWorkspaceViewerPreferenceStore().setValue(
-					WorkspaceViewerProperties.ZOOM, 1.33);
+					WorkspaceViewerProperties.ZOOM, 1.0);
 		}
 	}
 
