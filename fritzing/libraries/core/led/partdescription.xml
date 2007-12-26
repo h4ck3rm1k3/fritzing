@@ -12,7 +12,7 @@
   <isModule>1</isModule>
   <defaultUnits>tenths</defaultUnits>               <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
   <gridOffset x="0" y="0" units="himetric" />
-  <bounds width="776.11" height="1164.16" units="himetric" nwidth="22" nheight="33" />
+  <bounds width="558.8" height="838.2" units="himetric" nwidth="22" nheight="33" />
   <selectionShape>
     <polygon points="285.1,49.9 285.1,5.1 279.6,0 30.5,0 30.5,35.3 0,35.3 0,82.4 30.5,82.4 30.5,158.5 20.5,158.5 20.5,194.9 30.5,194.9 30.5,205.6 285.1,205.6 285.1,198.6 294.7,188.7 294.7,59 "/>
   </selectionShape>
@@ -24,14 +24,14 @@
 			<connector>
 				<connectorType>headerPin</connectorType>
 				<connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
-				<connectorLocation x="1" y="4.5" />
+				<connectorLocation x="0.3" y="3.3" />
 				<name>+</name>
         <internalName>+</internalName>
 			</connector>
 			<connector>
 				<connectorType>headerPin</connectorType>
 				<connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
-				<connectorLocation x="2" y="4.5"  />
+				<connectorLocation x="1.3" y="3.3"  />
 				<name>-</name>
         <internalName>-</internalName>
       </connector>
