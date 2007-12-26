@@ -50,7 +50,7 @@
         <resolutionIndependentImageSet>
           <bitmapImage>
             <zoomLevel>100</zoomLevel>
-            <bitmapFile>Voltageregulator_100pct.png</bitmapFile>
+            <bitmapFile>PowerTransistor_100pct.png</bitmapFile>
           </bitmapImage>
         </resolutionIndependentImageSet>
       </shapeLayer>
