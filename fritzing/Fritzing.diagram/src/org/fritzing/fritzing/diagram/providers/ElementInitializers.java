@@ -698,9 +698,9 @@ public class ElementInitializers {
 		public static final IObjectInitializer FsrSensor_2006 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getFsrSensor()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'FSR\'", //$NON-NLS-1$

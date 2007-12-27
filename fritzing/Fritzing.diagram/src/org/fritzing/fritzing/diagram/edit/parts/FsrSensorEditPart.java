@@ -33,6 +33,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.policies.FsrSensorCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.FsrSensorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -58,10 +59,11 @@ public class FsrSensorEditPart extends PartEditPart {
 	protected IFigure primaryShape;
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public FsrSensorEditPart(View view) {
 		super(view);
+		partLoader.loadXMLFromLibrary("libraries/core/fsr/partdescription.xml");   
 	}
 
 	/**
@@ -91,10 +93,10 @@ public class FsrSensorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		FsrSensorFigure figure = new FsrSensorFigure();
+		FsrSensorFigure figure = new FsrSensorFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -162,12 +164,10 @@ public class FsrSensorEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(20), getMapMode().DPtoLP(20));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
@@ -230,7 +230,7 @@ public class FsrSensorEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public class FsrSensorFigure extends Ellipse {
+	public class FsrSensorFigure extends PartFigure {
 
 		/**
 		 * @generated
@@ -238,21 +238,28 @@ public class FsrSensorEditPart extends PartEditPart {
 		private WrapLabel fFigureFsrSensorNameFigure;
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		public FsrSensorFigure() {
+		public FsrSensorFigure(PartLoader partLoader) {
+			super(partLoader);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(20),
-					getMapMode().DPtoLP(20)));
-			createContents();
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private void createContents() {
+		public void setContentsPath() {
+			contentsPath = "libraries/core/fsr/";	
+		}
 
+
+		/**
+		 * @generated NOT
+		 */
+		protected void createContents() {
+
+			super.createContents();
 			fFigureFsrSensorNameFigure = new WrapLabel();
 			fFigureFsrSensorNameFigure.setText("..");
 
