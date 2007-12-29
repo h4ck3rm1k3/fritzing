@@ -29,7 +29,6 @@ Extensibility
 
 Usability
 - Parts now have real sizes according to the internal grid
-- Terminals are now really fixed
 - Sockets on the Arduino now line up on the 0.1" grid
 	(not corresponding to the exact locations in physical reality) [#36] 
 - Application name is now 'Fritzing' on all platforms [#57]
@@ -41,6 +40,12 @@ Eagle
     we are approaching our own schematic editor.
 - Fritzing menu got a headline and is now easier to identify [#60]
 - Cleaned up menu structure and benefit from new Eagle beta [#62]
+
+< BUG FIXES >
+
+- Changed default wire color to off-white to make it visible on
+  white backgrounds in exported images
+- Terminals are now really fixed
 
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
