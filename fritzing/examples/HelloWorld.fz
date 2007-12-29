@@ -2,54 +2,63 @@
 <fritzing:DocumentRoot xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fritzing="http://www.fritzing.org">
   <sketch>
     <parts xsi:type="fritzing:Arduino" name="Arduino">
-      <terminals name="RESET"/>
-      <terminals name="3V3"/>
-      <terminals name="5V"/>
-      <terminals name="Gnd"/>
-      <terminals name="Gnd1"/>
-      <terminals name="Vin"/>
-      <terminals name="A0"/>
-      <terminals name="A1"/>
-      <terminals name="A2"/>
-      <terminals name="A3"/>
-      <terminals name="A4"/>
-      <terminals name="A5"/>
-      <terminals name="D0"/>
-      <terminals name="D1"/>
-      <terminals name="D2"/>
-      <terminals name="D3"/>
-      <terminals name="D4"/>
-      <terminals name="D5"/>
-      <terminals name="D6"/>
-      <terminals name="D7"/>
-      <terminals name="D8"/>
       <terminals name="D9"/>
-      <terminals name="D10"/>
-      <terminals name="D11"/>
-      <terminals name="D12"/>
+      <terminals name="D8"/>
+      <terminals name="A5"/>
+      <terminals name="D7"/>
+      <terminals name="A4"/>
+      <terminals name="D6"/>
+      <terminals name="A3"/>
+      <terminals name="D5"/>
+      <terminals name="A2"/>
+      <terminals name="D4"/>
+      <terminals name="psu"/>
+      <terminals name="A1"/>
+      <terminals name="D3"/>
+      <terminals name="A0"/>
+      <terminals name="D2"/>
+      <terminals name="D1"/>
+      <terminals name="D0"/>
+      <terminals name="pse"/>
+      <terminals name="psc"/>
+      <terminals name="icsp6"/>
+      <terminals name="icsp5"/>
+      <terminals name="3V3"/>
+      <terminals name="icsp4"/>
+      <terminals name="icsp3"/>
+      <terminals name="icsp2"/>
+      <terminals name="icsp1"/>
       <terminals name="D13"/>
-      <terminals name="GND"/>
+      <terminals name="D12"/>
+      <terminals name="Vin"/>
+      <terminals name="D11"/>
+      <terminals name="D10"/>
+      <terminals name="Gnd@3"/>
+      <terminals name="Gnd@2"/>
+      <terminals name="Gnd@1"/>
+      <terminals name="5V"/>
+      <terminals name="RESET"/>
       <terminals name="AREF"/>
     </parts>
     <parts xsi:type="fritzing:Button" name="B1">
-      <terminals name="0p"/>
-      <terminals name="1p"/>
-      <terminals name="0"/>
+      <terminals name="4"/>
+      <terminals name="3"/>
+      <terminals name="2"/>
+      <terminals name="1"/>
+    </parts>
+    <parts xsi:type="fritzing:Resistor" name="R1">
+      <terminals name="2"/>
       <terminals name="1"/>
     </parts>
     <parts xsi:type="fritzing:LED" name="L1">
       <terminals name="+"/>
       <terminals name="-"/>
     </parts>
-    <parts xsi:type="fritzing:Resistor" name="R1">
-      <terminals name="0"/>
-      <terminals name="1"/>
-    </parts>
-    <wires source="//@sketch/@parts[name='B1']/@terminals[name='0p']" target="//@sketch/@parts[name='Arduino']/@terminals[name='Gnd']" name="b1-"/>
-    <wires source="//@sketch/@parts[name='L1']/@terminals[name='+']" target="//@sketch/@parts[name='Arduino']/@terminals[name='D13']" name="l1+"/>
-    <wires source="//@sketch/@parts[name='L1']/@terminals[name='-']" target="//@sketch/@parts[name='Arduino']/@terminals[name='GND']" name="l1-"/>
-    <wires source="//@sketch/@parts[name='R1']/@terminals[name='0']" target="//@sketch/@parts[name='B1']/@terminals[name='1p']" name="r1b1"/>
-    <wires source="//@sketch/@parts[name='R1']/@terminals[name='1']" target="//@sketch/@parts[name='Arduino']/@terminals[name='5V']" name="b1+"/>
-    <wires source="//@sketch/@parts[name='Arduino']/@terminals[name='D2']" target="//@sketch/@parts[name='R1']/@terminals[name='0']" name="b1a"/>
+    <wires source="//@sketch/@parts[name='L1']/@terminals[name='-']" target="//@sketch/@parts[name='Arduino']/@terminals[name='Gnd@3']" name="l-"/>
+    <wires source="//@sketch/@parts[name='L1']/@terminals[name='+']" target="//@sketch/@parts[name='Arduino']/@terminals[name='D13']" name="l+"/>
+    <wires source="//@sketch/@parts[name='B1']/@terminals[name='3']" target="//@sketch/@parts[name='Arduino']/@terminals[name='Gnd@1']" name="gnd"/>
+    <wires source="//@sketch/@parts[name='R1']/@terminals[name='2']" target="//@sketch/@parts[name='Arduino']/@terminals[name='5V']" name="pwr"/>
+    <wires source="//@sketch/@parts[name='R1']/@terminals[name='1']" target="//@sketch/@parts[name='B1']/@terminals[name='4']" name="rb"/>
+    <wires source="//@sketch/@parts[name='B1']/@terminals[name='4']" target="//@sketch/@parts[name='Arduino']/@terminals[name='D2']" name="btn"/>
   </sketch>
 </fritzing:DocumentRoot>
