@@ -1,37 +1,46 @@
 Notes on the Fritzing releases. Related issue numbers in brackets.
+As this is early alpha work, do not expect anything to be compatible
+between versions!
 
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
-0003 ALPHA - Dec 24th 2007
+0003 ALPHA - Dec 29th 2007
 
 Started work on getting a decent part library.
 
-Work has begun on nicer design of the parts and a scheme for the
-parts to be designed in, so that external part designers might be
-able in the future to design parts. [#25]
+Work has begun on nicer design of the parts and a scheme for defining
+and designing parts externally. From the next release on, it should be
+possible for everyone to add parts.
 
 < ENHANCEMENTS >
 
-For the following parts, there is now a nicer part in the canvas
-and a nicer corresponding 16x16 pixel icon in the toolbar.
-- Arduino
-- red LED
-- Voltage Regulator
-- Resistor
-- Button
-- Photocel (lsr)
-- Power Transistor
-- Transistor
-- Potmeter trimmer
+Beautification
+- Nicer visual representation and corresponding icon for these parts: [#25]
+    Arduino, red LED, resistor, button, photocell (lsr), force resistor 
+    (fsr), power transistor, transistor, potentiometer trimmer
 
+Extensibility
+- Parts are defined via XML in the /libraries/core subfolder of Fritzing now. [#56]
+    This is not complete - don't try to add your own parts yet! Currently,
+    it's only possible to redefine the image, size, and terminals of 
+    existing parts. More to come in the next release!
+- New parts: Transistor, Power Transistor
 
 Usability
-- The sockets on the arduino now line up on the 0.1" grid
-	(not corresponding the exact locations in physical reality) [#36] 
-- The application name on OS X has now been CamelCased and cleaned of
-	its version number: Fritzing.app instead of fritzing-0003.app [#57]
+- Parts now have real sizes according to the internal grid
+- Terminals are now really fixed
+- Sockets on the Arduino now line up on the 0.1" grid
+	(not corresponding to the exact locations in physical reality) [#36] 
+- Application name is now 'Fritzing' on all platforms [#57]
 
+Eagle
+- Board is now created directly, omitting the schematics creation step. [#61]
+    This makes the export much easier to generalize for library parts,
+    and we assume that the Eagle schematics are not of much value as 
+    we are approaching our own schematic editor.
+- Fritzing menu got a headline and is now easier to identify [#60]
+- Cleaned up menu structure and benefit from new Eagle beta [#62]
 
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
