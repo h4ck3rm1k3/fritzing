@@ -10,6 +10,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View; //import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -54,8 +55,8 @@ public class LEDCreateCommand extends CreateElementCommand {
 		}
 
 		// use "our" initializers instead		
-		PartLoader partLoader = new PartLoader();
-		partLoader.createTerminals("libraries/core/led/partdescription.xml", newElement);		
+		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/led/partdescription.xml");
+		partLoader.createTerminals(newElement);		
 	
 		return newElement;
 	}

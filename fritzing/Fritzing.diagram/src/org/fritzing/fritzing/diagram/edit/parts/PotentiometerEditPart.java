@@ -40,6 +40,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.PotentiometerCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.PotentiometerItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -72,7 +73,7 @@ public class PotentiometerEditPart extends PartEditPart {
 	 */
 	public PotentiometerEditPart(View view) {
 		super(view);
-		partLoader.loadXMLFromLibrary("libraries/core/potentiometer/partdescription.xml");   
+		partLoader = PartLoaderRegistry.getInstance().get("libraries/core/potentiometer/partdescription.xml");   
 	}
 
 	/**

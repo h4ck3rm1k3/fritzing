@@ -11,6 +11,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -54,8 +55,8 @@ public class ResistorCreateCommand extends CreateElementCommand {
 		}
 		
 		// use "our" initializers instead		
-		PartLoader partLoader = new PartLoader();
-		partLoader.createTerminals("libraries/core/resistor/partdescription.xml", newElement);		
+		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/resistor/partdescription.xml");
+		partLoader.createTerminals(newElement);		
 
 		return newElement;
 	}

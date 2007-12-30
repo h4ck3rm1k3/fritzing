@@ -36,6 +36,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ButtonItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -65,7 +66,7 @@ public class ButtonEditPart extends PartEditPart {
 	 */
 	public ButtonEditPart(View view) {
 		super(view);
-		partLoader.loadXMLFromLibrary("libraries/core/button/partdescription.xml");   
+		partLoader = PartLoaderRegistry.getInstance().get("libraries/core/button/partdescription.xml");   
 	}
 
 	/**

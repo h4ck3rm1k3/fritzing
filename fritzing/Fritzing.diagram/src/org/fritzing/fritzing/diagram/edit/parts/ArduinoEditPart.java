@@ -45,6 +45,7 @@ import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.ArduinoCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.ArduinoItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
@@ -85,7 +86,7 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 	 */
 	public ArduinoEditPart(View view) {
 		super(view);
-		partLoader.loadXMLFromLibrary("libraries/core/arduino/partdescription.xml");   
+		partLoader = PartLoaderRegistry.getInstance().get("libraries/core/arduino/partdescription.xml");   
 	}
 
 	/**

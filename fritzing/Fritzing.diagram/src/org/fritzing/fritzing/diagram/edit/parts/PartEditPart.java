@@ -66,7 +66,7 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	 */
 	public PartEditPart(View view) {
 		super(view);
-		partLoader = new PartLoader();
+		partLoader = null;
 	}
 	
 	

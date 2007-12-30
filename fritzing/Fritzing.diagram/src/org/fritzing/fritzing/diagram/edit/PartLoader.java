@@ -1,3 +1,6 @@
+/*
+ * (c) Fachhochschule Potsdam
+ */
 package org.fritzing.fritzing.diagram.edit;
 
 import java.io.File;
@@ -84,6 +87,20 @@ public class PartLoader {
 //			url = FileLocator.toFileURL(url);
 
 			if (!loadXMLFromLibrary(path)) return false;
+			
+			return createTerminals(newElement);
+		}
+		catch (Exception ex) {
+			
+		}
+		
+		return false;
+	}
+				
+	public boolean createTerminals(EObject newElement) {
+		if (!this.loaded) return false;
+		
+		try {
 			
 			for (Enumeration<String> e = getTerminalKeys(); e
 					.hasMoreElements();) {

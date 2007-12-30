@@ -20,6 +20,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Arduino;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
@@ -67,8 +68,8 @@ public class ArduinoCreateCommand extends CreateElementCommand {
 		}
 
 		// use "our" initializers instead		
-		PartLoader partLoader = new PartLoader();
-		partLoader.createTerminals("libraries/core/arduino/partdescription.xml", newElement);		
+		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/arduino/partdescription.xml");
+		partLoader.createTerminals(newElement);		
 
 		return newElement;
 	}

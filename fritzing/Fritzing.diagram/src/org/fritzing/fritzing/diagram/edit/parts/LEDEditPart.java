@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.LED;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.LEDCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.LEDItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -71,7 +72,7 @@ public class LEDEditPart extends PartEditPart {
 	 */
 	public LEDEditPart(View view) {
 		super(view);
-		partLoader.loadXMLFromLibrary("libraries/core/led/partdescription.xml");   
+		partLoader = PartLoaderRegistry.getInstance().get("libraries/core/led/partdescription.xml");   
 	}
 
 	/**

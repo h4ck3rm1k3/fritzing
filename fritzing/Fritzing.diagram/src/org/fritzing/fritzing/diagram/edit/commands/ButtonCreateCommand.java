@@ -11,6 +11,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -53,8 +54,9 @@ public class ButtonCreateCommand extends CreateElementCommand {
 			FritzingElementTypes.Initializers.Button_2004.init(newElement);
 		}
 		// use "our" initializers instead		
-		PartLoader partLoader = new PartLoader();
-		partLoader.createTerminals("libraries/core/button/partdescription.xml", newElement);		
+		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/button/partdescription.xml");
+		partLoader.createTerminals(newElement);		
+
 		return newElement;
 	}
 }

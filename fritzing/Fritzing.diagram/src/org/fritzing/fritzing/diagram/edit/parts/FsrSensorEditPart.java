@@ -34,6 +34,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.FsrSensorCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.FsrSensorItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -63,7 +64,7 @@ public class FsrSensorEditPart extends PartEditPart {
 	 */
 	public FsrSensorEditPart(View view) {
 		super(view);
-		partLoader.loadXMLFromLibrary("libraries/core/fsr/partdescription.xml");   
+		partLoader = PartLoaderRegistry.getInstance().get("libraries/core/fsr/partdescription.xml");   
 	}
 
 	/**
