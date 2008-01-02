@@ -26,23 +26,22 @@
 				<connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
 				<connectorLocation x="0" y="2.0" />
 				<name>E</name>
-        <internalName>E</internalName>
+        		<internalName>E</internalName>
 			</connector>
 			<connector>
 				<connectorType>headerPin</connectorType>
 				<connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
 				<connectorLocation x="0.75" y="2.0"  />
-				<name>C</name>
-        <internalName>C</internalName>
-      </connector>
-      <connector>
-        <connectorType>headerPin</connectorType>
-        <connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
-        <connectorLocation x="1.5" y="2.0"  />
-        <name>B</name>
-        <internalName>B</internalName>
-      </connector>
-
+				<name>B</name>
+        		<internalName>B</internalName>
+      		</connector>
+      		<connector>
+        		<connectorType>headerPin</connectorType>
+		        <connectorIdentifier>org.fritzing.parts.connectors.headerpin</connectorIdentifier>
+		        <connectorLocation x="1.5" y="2.0"  />
+		        <name>C</name>
+		        <internalName>C</internalName>
+		    </connector>
       <shapeLayer>
         <name>whatever</name>
         <!-- 
