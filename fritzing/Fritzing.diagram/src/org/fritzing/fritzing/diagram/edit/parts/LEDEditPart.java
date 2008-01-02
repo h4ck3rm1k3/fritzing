@@ -4,6 +4,8 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.IFigure;
@@ -136,9 +138,16 @@ public class LEDEditPart extends PartEditPart {
 	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof LEDNameEditPart) {
+
 			((LEDNameEditPart) childEditPart).setLabel(getPrimaryShape()
 					.getFigureLEDNameFigure());
 			return true;
+		}
+		else if (childEditPart instanceof Terminal2EditPart) {
+			
+//			TimerTask task = new Terminal2TimerTask((Terminal2EditPart) childEditPart);
+//			Timer t = new Timer();
+//			t.schedule(task, 5000L);				
 		}
 		return addEastWestFixedChild(childEditPart);
 	}
@@ -267,15 +276,6 @@ public class LEDEditPart extends PartEditPart {
 		 */
 		public LEDFigure(PartLoader partLoader) {
 			super(partLoader);
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		public void setContentsPath() {
-			contentsPath = "libraries/core/led/";	
 		}
 
 		/**
@@ -333,18 +333,23 @@ public class LEDEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_BACK = new Color(null, 255, 50, 50);
-
-	/**
-	 * @generated
-	 */
 	static final Font FFIGURELEDNAMEFIGURE_FONT = new Font(
 			Display.getCurrent(), Display.getDefault().getSystemFont()
 					.getFontData()[0].getName(), 8, SWT.NORMAL);
+	
+	class Terminal2TimerTask extends TimerTask {
+		protected Terminal2EditPart terminal;
+		
+		public Terminal2TimerTask(Terminal2EditPart terminal) {
+			super();
+			this.terminal = terminal;
+		}
+		
+		public void run() {
+			if (terminal != null) {
+				terminal.refreshAll();
+			}
+		}
+	}
 
 }

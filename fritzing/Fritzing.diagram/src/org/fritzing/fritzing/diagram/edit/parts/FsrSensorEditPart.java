@@ -243,17 +243,7 @@ public class FsrSensorEditPart extends PartEditPart {
 		 */
 		public FsrSensorFigure(PartLoader partLoader) {
 			super(partLoader);
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
 		}
-
-		/**
-		 * @generated NOT
-		 */
-		public void setContentsPath() {
-			contentsPath = "libraries/core/fsr/";	
-		}
-
 
 		/**
 		 * @generated NOT
@@ -297,16 +287,6 @@ public class FsrSensorEditPart extends PartEditPart {
 		}
 
 	}
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_BACK = new Color(null, 170, 120, 15);
 
 	/**
 	 * @generated

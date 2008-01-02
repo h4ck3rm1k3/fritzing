@@ -55,6 +55,9 @@ public class PartLoaderRegistry {
 		value = new PartLoader();
 		value.loadXMLFromLibrary(path);
 		partLoaderRegistry.put(path, value);
+		if (value.genus != null && value.species != null) {
+			partLoaderRegistry.put(value.genus + value.species, value);
+		}
 		return value;
 	}
 

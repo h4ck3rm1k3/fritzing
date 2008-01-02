@@ -55,7 +55,6 @@ public class PartFigure extends RectangleFigure {
 	
 	public PartFigure(PartLoader partLoader) {
 		this.partLoader = partLoader;
-		setContentsPath();
 		createContents();
 		
 	//	if (image != null) {
@@ -77,10 +76,6 @@ public class PartFigure extends RectangleFigure {
 	/**
 	 * @generated NOT
 	 */
-	public void setContentsPath() {
-		contentsPath = "";	
-	}
-
 	protected void createContents() {
 		setLayoutManager(new StackLayout() {
 			public void layout(IFigure figure) {
@@ -110,8 +105,7 @@ public class PartFigure extends RectangleFigure {
 //				RenderedImage ri = RenderedImageFactory.getInstance(url);
 //				image = ri.getSWTImage();
 									
-				image = new Image(null,
-						FritzingDiagramEditorUtil.getFritzingLocation() + contentsPath + partLoader.getBitmapFilename());
+				image = new Image(null, partLoader.getContentsPath() + partLoader.getBitmapFilename());
 			
 				// stick image on the registry
 			} 

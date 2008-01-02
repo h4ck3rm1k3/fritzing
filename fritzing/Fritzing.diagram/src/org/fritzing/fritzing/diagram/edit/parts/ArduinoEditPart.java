@@ -328,17 +328,8 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 		 */
 		public ArduinoFigure(PartLoader partLoader) {
 			super(partLoader);
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
 		}
 		
-		/**
-		 * @generated NOT
-		 */
-		public void setContentsPath() {
-			contentsPath = "libraries/core/arduino/";	
-		}
-
 
 		/**
 		 * @generated NOT
@@ -381,16 +372,6 @@ public class ArduinoEditPart extends PartEditPart implements IRotatableEditPart 
 		}
 
 	}
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_BACK = new Color(null, 39, 128, 157);
 
 	/**
 	 * @generated

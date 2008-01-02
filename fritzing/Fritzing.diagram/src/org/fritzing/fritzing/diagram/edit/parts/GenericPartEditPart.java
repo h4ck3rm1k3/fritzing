@@ -8,6 +8,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -27,6 +28,9 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.fritzing.fritzing.GenericPart;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.GenericPartCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.GenericPartItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -34,7 +38,7 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 /**
  * @generated NOT
  */
-public class GenericPartEditPart extends PartEditPart implements IRotatableEditPart {
+public class GenericPartEditPart extends PartEditPart  {
 
 	/**
 	 * @generated
@@ -56,6 +60,14 @@ public class GenericPartEditPart extends PartEditPart implements IRotatableEditP
 	 */
 	public GenericPartEditPart(View view) {
 		super(view);
+		EObject element = view.getElement();
+		if (element instanceof GenericPart) {
+			String genus = ((GenericPart) element).getGenus();
+			String species = ((GenericPart) element).getSpecies();
+			if (genus != null && species != null) {
+				partLoader = PartLoaderRegistry.getInstance().get(genus + species);   
+			}
+		}
 	}
 
 	/**
@@ -78,39 +90,17 @@ public class GenericPartEditPart extends PartEditPart implements IRotatableEditP
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
-		LayoutEditPolicy lep = new LayoutEditPolicy() {
-
-			protected EditPolicy createChildEditPolicy(EditPart child) {
-				if (child instanceof IBorderItemEditPart) {
-					return new BorderItemSelectionEditPolicy();
-				}
-				EditPolicy result = child
-						.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-				if (result == null) {
-					result = new NonResizableEditPolicy();
-				}
-				return result;
-			}
-
-			protected Command getMoveChildrenCommand(Request request) {
-				return null;
-			}
-
-			protected Command getCreateCommand(CreateRequest request) {
-				return null;
-			}
-		};
-		return lep;
+		return super.createLayoutEditPolicy();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		GenericPartFigure figure = new GenericPartFigure();
+		GenericPartFigure figure = new GenericPartFigure(partLoader);
 		return primaryShape = figure;
 	}
 
@@ -122,39 +112,18 @@ public class GenericPartEditPart extends PartEditPart implements IRotatableEditP
 	}
 
 	/**
-	 * @generated
-	 */
-	protected void addBorderItem(IFigure borderItemContainer,
-			IBorderItemEditPart borderItemEditPart) {
-		if (borderItemEditPart instanceof GenericPartNameEditPart) {
-			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					PositionConstants.SOUTH);
-			locator.setBorderItemOffset(new Dimension(-20, -20));
-			borderItemContainer.add(borderItemEditPart.getFigure(), locator);
-		} else {
-			super.addBorderItem(borderItemContainer, borderItemEditPart);
-		}
-	}
-
-	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(30), getMapMode().DPtoLP(10));
-		return result;
+		return super.createNodePlate();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
-		EditPolicy result = super.getPrimaryDragEditPolicy();
-		if (result instanceof ResizableEditPolicy) {
-			ResizableEditPolicy ep = (ResizableEditPolicy) result;
-			ep.setResizeDirections(PositionConstants.NONE);
-		}
-		return result;
+
+		return super.getPrimaryDragEditPolicy();
 	}
 
 	/**
@@ -208,16 +177,15 @@ public class GenericPartEditPart extends PartEditPart implements IRotatableEditP
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	public class GenericPartFigure extends RectangleFigure {
+	public class GenericPartFigure extends PartFigure {
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		public GenericPartFigure() {
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(30),
-					getMapMode().DPtoLP(10)));
+		public GenericPartFigure(PartLoader partLoader) {
+			super(partLoader);
 		}
 
 		/**

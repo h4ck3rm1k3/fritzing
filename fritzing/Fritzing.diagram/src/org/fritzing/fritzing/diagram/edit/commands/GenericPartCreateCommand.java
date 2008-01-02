@@ -10,18 +10,26 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.GenericPart;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
  * @generated
  */
 public class GenericPartCreateCommand extends CreateElementCommand {
+	/**
+	 * @generated NOT
+	 */
+	
+	PartLoader partLoader;
 
 	/**
 	 * @generated
 	 */
 	public GenericPartCreateCommand(CreateElementRequest req) {
 		super(req);
+		partLoader = (PartLoader) req.getParameter("partLoader");
 	}
 
 	/**
@@ -51,6 +59,17 @@ public class GenericPartCreateCommand extends CreateElementCommand {
 		if (newElement != null) {
 			FritzingElementTypes.Initializers.GenericPart_2011.init(newElement);
 		}
+		
+		if (partLoader == null) {
+			// signal the user that something is wrong
+			return newElement;		
+		}
+		
+		// use "our" initializers instead		
+		partLoader.createTerminals(newElement);	
+		newElement.setSpecies(partLoader.getSpecies());
+		newElement.setGenus(partLoader.getGenus());
+
 		return newElement;
 	}
 }

@@ -899,14 +899,14 @@ public class ElementInitializers {
 		}; // PowerTransistor_2010 ObjectInitializer		
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public static final IObjectInitializer GenericPart_2011 = new ObjectInitializer(
 				FritzingPackage.eINSTANCE.getGenericPart()) {
 			protected void init() {
-				add(createNewElementFeatureInitializer(
-						FritzingPackage.eINSTANCE.getPart_Terminals(),
-						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
+//				add(createNewElementFeatureInitializer(
+//						FritzingPackage.eINSTANCE.getPart_Terminals(),
+//						new ObjectInitializer[] { terminals_1(), terminals_2(), }));
 				add(createExpressionFeatureInitializer(
 						FritzingPackage.eINSTANCE.getPart_Name(),
 						FritzingOCLFactory.getExpression("\'G\'", //$NON-NLS-1$

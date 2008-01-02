@@ -61,6 +61,15 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	/**
 	 * @generated NOT
 	 */
+	public void refreshAll() {
+		this.refreshSourceConnections();
+		this.refreshTargetConnections();
+	}
+
+		
+	/**
+	 * @generated NOT
+	 */
 	protected void createDefaultEditPolicies() {
 
 		super.createDefaultEditPolicies();

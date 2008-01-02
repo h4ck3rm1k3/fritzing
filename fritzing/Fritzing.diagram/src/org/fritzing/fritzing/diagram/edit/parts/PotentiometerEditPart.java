@@ -249,21 +249,12 @@ public class PotentiometerEditPart extends PartEditPart {
 		private WrapLabel fFigurePotentiometerNameFigure;
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public PotentiometerFigure(PartLoader partLoader) {
 			super(partLoader);
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
 		}
 
-
-		/**
-		 * @generated NOT
-		 */
-		public void setContentsPath() {
-			contentsPath = "libraries/core/potentiometer/";	
-		}
 
 		/**
 		 * @generated NOT
@@ -308,16 +299,6 @@ public class PotentiometerEditPart extends PartEditPart {
 		}
 
 	}
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_BACK = new Color(null, 0, 0, 0);
 
 	/**
 	 * @generated

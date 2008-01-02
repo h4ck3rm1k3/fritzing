@@ -252,15 +252,6 @@ public class LightSensorEditPart extends PartEditPart {
 		 */
 		public LightSensorFigure(PartLoader partLoader) {
 			super(partLoader);
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		public void setContentsPath() {
-			contentsPath = "libraries/core/lightsensor/";	
 		}
 
 		/**
@@ -306,16 +297,6 @@ public class LightSensorEditPart extends PartEditPart {
 		}
 
 	}
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_FORE = new Color(null, 150, 150, 150);
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_BACK = new Color(null, 194, 84, 84);
 
 	/**
 	 * @generated

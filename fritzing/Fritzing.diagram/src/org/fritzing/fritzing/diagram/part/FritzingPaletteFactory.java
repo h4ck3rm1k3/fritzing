@@ -3,9 +3,12 @@
  */
 package org.fritzing.fritzing.diagram.part;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.gef.Request;
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
@@ -13,9 +16,16 @@ import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
+import org.eclipse.gef.requests.CreateRequest;
+import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateUnspecifiedTypeRequest;
 import org.eclipse.gmf.runtime.diagram.ui.services.palette.PaletteService;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
+import org.eclipse.gmf.runtime.emf.type.core.IElementType;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -29,7 +39,51 @@ public class FritzingPaletteFactory {
 	public void fillPalette(PaletteRoot paletteRoot) {
 		customiseStandardGroup(paletteRoot);
 		paletteRoot.add(createConnect1Group());
-		paletteRoot.add(createParts2Group());
+		PaletteContainer pc = createParts2Group();		
+		addGenerics(pc);
+		paletteRoot.add(pc);
+	}
+	
+	
+	/**
+	 * @generated NOT
+	 */
+	protected void addGenerics(PaletteContainer pc) {
+		File file = new File(FritzingDiagramEditorUtil.getFritzingLocation() + "libraries/core/");
+		File[] files = file.listFiles();
+		String[] ignores = { "arduino", "button", "fsr", "led", "lightsensor", "potentiometer", "powertransistor", "resistor", "transistor" };
+		for (int i = 0; i < files.length; i++) {
+			boolean gotOne = false;
+			String filename = files[i].getName();
+			for (int j = 0; j < ignores.length; j++) {
+				if (filename.equalsIgnoreCase(ignores[j])) {
+					gotOne = true;
+					break;
+				}
+			}
+			
+			if (gotOne) continue;
+			
+			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/" + filename + "/partdescription.xml");
+			
+			List<IElementType>types = new ArrayList<IElementType>(1);
+			types.add(FritzingElementTypes.GenericPart_2011);
+			NodeToolEntry entry = new GenericNodeToolEntry(
+					partLoader.getSpecies(),
+					partLoader.getDescription(), 
+					types, partLoader);
+			
+			ImageDescriptor id = ImageDescriptor.createFromFile(null, 
+					FritzingDiagramEditorUtil.getFritzingLocation() + 
+						"libraries/core/" + 
+						filename + "/" + 
+						partLoader.getIconFilename());
+			entry.setSmallIcon(id);
+			entry.setLargeIcon(entry.getSmallIcon());
+			pc.add(entry);
+			
+		}
+		
 	}
 
 	/**
@@ -81,6 +135,10 @@ public class FritzingPaletteFactory {
 		paletteContainer.add(createLightSensor7CreationTool());
 		paletteContainer.add(createTransistor8CreationTool());
 		paletteContainer.add(createPowerTransistor9CreationTool());
+		
+		
+		
+		
 		return paletteContainer;
 	}
 
@@ -234,15 +292,108 @@ public class FritzingPaletteFactory {
 		return entry;
 	}
 
+	
+	
+	/**
+	 * @generated NOT
+	 */
+	private static class GenericNodeToolEntry extends NodeToolEntry {
+		/**
+		 * @generated NOT
+		 */
+		private final PartLoader partLoader;
+
+		/**
+		 * @generated NOT
+		 */
+		private GenericNodeToolEntry(String title, String description,
+				List elementTypes, PartLoader partLoader) {
+			super(title, description, elementTypes);
+			
+			// eventually passes the partloader along to GenericPartCreateCommand
+			this.partLoader = partLoader;
+		}
+		
+		/**
+		 * @generated NOT
+		 */
+		public Tool createTool() {
+			// eventually passes the partloader along to GenericPartCreateCommand
+			Tool tool = new GenericUnspecifiedTypeCreationTool(elementTypes, partLoader);
+			tool.setProperties(getToolProperties());
+			return tool;
+		}
+	}
+	
+
+	/**
+	 * @generated NOT
+	 */
+	private static class GenericUnspecifiedTypeCreationTool extends UnspecifiedTypeCreationTool {
+		/**
+		 * keep a copy for later.
+		 */
+		private List et;
+
+		/**
+		 * @generated NOT
+		 */
+		private final PartLoader partLoader;
+
+		/**
+		 * @generated NOT
+		 */
+		public GenericUnspecifiedTypeCreationTool(List elementTypes, PartLoader partLoader) {
+			super(elementTypes);
+			// eventually passes the partloader along to GenericPartCreateCommand
+			this.partLoader = partLoader;
+			et = elementTypes;
+		}
+		
+		protected Request createTargetRequest() {
+			// eventually passes the partloader along to GenericPartCreateCommand
+			return new GenericCreateUnspecifiedTypeRequest(et, getPreferencesHint(), partLoader);
+		}
+	}
+	
+	/**
+	 * @generated NOT
+	 */
+	private static class GenericCreateUnspecifiedTypeRequest extends CreateUnspecifiedTypeRequest {
+		/**
+		 * @generated NOT
+		 */
+		private final PartLoader partLoader;
+		/**
+		 * @generated NOT
+		 */
+		public GenericCreateUnspecifiedTypeRequest(List elementTypes, PreferencesHint preferencesHint, PartLoader partLoader) {
+			super(elementTypes, preferencesHint);
+			// eventually passes the partloader along to GenericPartCreateCommand
+			this.partLoader = partLoader;
+		}
+				
+		/**
+		 * @generated NOT
+		 */
+		public CreateRequest getRequestForType(IElementType creationHint) {
+			CreateRequest cr = super.getRequestForType(creationHint);
+			
+			// eventually passes the partloader along to GenericPartCreateCommand
+			cr.getExtendedData().put("partLoader", partLoader);
+			return cr;
+		}
+	}	
+		
 	/**
 	 * @generated
 	 */
 	private static class NodeToolEntry extends ToolEntry {
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		private final List elementTypes;
+		protected final List elementTypes;
 
 		/**
 		 * @generated

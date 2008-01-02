@@ -247,15 +247,6 @@ public class PowerTransistorEditPart extends PartEditPart {
 		 */
 		public PowerTransistorFigure(PartLoader partLoader) {
 			super(partLoader);
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		public void setContentsPath() {
-			contentsPath = "libraries/core/powertransistor/";	
 		}
 	
 		/**
@@ -300,16 +291,6 @@ public class PowerTransistorEditPart extends PartEditPart {
 		}
 
 	}
-
-	/**
-	 * @generated NOT
-	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
-
-	/**
-	 * @generated NOT
-	 */
-	static final Color THIS_BACK = new Color(null, 80, 80, 80);
 
 	/**
 	 * @generated

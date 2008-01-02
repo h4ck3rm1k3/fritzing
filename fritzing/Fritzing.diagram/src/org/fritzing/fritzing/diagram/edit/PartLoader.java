@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -41,9 +42,14 @@ public class PartLoader {
 	protected String svgFilename;
 	protected Dimension size;
 	protected boolean loaded;
+	protected String iconFilename;
+	protected String description;
+	protected String species;
+	protected String genus;
+	protected String contentsPath;
 	
 	public PartLoader() {
-		
+		contentsPath = "";
 		terminalHash = new Hashtable<String, Point>();
 		size = new Dimension(0,0);
 		gridOffset = new Point(0,0);
@@ -76,6 +82,26 @@ public class PartLoader {
 	
 	public String getBitmapFilename() {
 		return bitmapFilename;
+	}
+	
+	public String getIconFilename() {
+		return iconFilename;
+	}
+	
+	public String getContentsPath() {
+		return contentsPath;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public String getSpecies() {
+		return species;
+	}
+	
+	public String getGenus() {
+		return genus;
 	}
 	
 	public boolean createTerminals(String path, EObject newElement) {
@@ -115,6 +141,7 @@ public class PartLoader {
 				EStructuralFeature feature = FritzingPackage.eINSTANCE
 						.getPart_Terminals();
 				((Collection) newElement.eGet(feature)).add(terminal);
+				
 				FritzingAbstractExpression expr = FritzingOCLFactory
 						.getExpression("\'" + name + "\'",
 								FritzingPackage.eINSTANCE.getTerminal());
@@ -134,6 +161,8 @@ public class PartLoader {
 	public boolean loadXMLFromLibrary(String path) {
 		try {
 			URL url = new URL("File://" + FritzingDiagramEditorUtil.getFritzingLocation() + path);
+			File f = new File(FritzingDiagramEditorUtil.getFritzingLocation() + path);
+			contentsPath = f.getParent() + File.separator;
 			return loadXML(url);	
 		}
 		catch (Exception ex) {
@@ -202,6 +231,11 @@ public class PartLoader {
 	protected void parseXML(Document document) {
 		XPath xp = XPathFactory.newInstance().newXPath();
 		try {
+			species = (String) xp.evaluate("/part/species", document, XPathConstants.STRING);
+			genus = (String) xp.evaluate("/part/genus", document, XPathConstants.STRING);
+			description = (String) xp.evaluate("/part/description", document, XPathConstants.STRING);
+			iconFilename = (String) xp.evaluate("/part/icon", document, XPathConstants.STRING);
+			
 			String defaultUnits = (String) xp.evaluate("/part/defaultUnits", document, XPathConstants.STRING);
 			if (defaultUnits == null || defaultUnits == "") {
 				defaultUnits = "pixels";

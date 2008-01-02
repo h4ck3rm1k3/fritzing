@@ -245,15 +245,6 @@ public class ButtonEditPart extends PartEditPart {
 		 */
 		public ButtonFigure(PartLoader partLoader) {
 			super(partLoader);
-			this.setForegroundColor(THIS_FORE);
-			this.setBackgroundColor(THIS_BACK);
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		public void setContentsPath() {
-			contentsPath = "libraries/core/button/";	
 		}
 
 		/**
@@ -298,16 +289,6 @@ public class ButtonEditPart extends PartEditPart {
 		}
 
 	}
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_FORE = new Color(null, 0, 0, 0);
-
-	/**
-	 * @generated
-	 */
-	static final Color THIS_BACK = new Color(null, 128, 128, 128);
 
 	/**
 	 * @generated
