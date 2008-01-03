@@ -516,7 +516,7 @@
     <element xmi:type="ecore:EReference" href="fritzing.ecore#//Composite/parts"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_i1krc3aPEdyqQY0mUTMiug" points="[-2, 0, -147, 165]$[-58, 0, -203, 165]$[30, -165, -115, 0]$[142, -165, -3, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_PQ-UEHc3EdyDG70ZmLhbaA" id="(0.013793103,0.55932206)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-0gPsHc4EdyDG70ZmLhbaA" id="(0.02255639,0.36363637)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-0gPsHc4EdyDG70ZmLhbaA" id="(0.0,0.2962963)"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_FzvaEHc2EdyDG70ZmLhbaA" type="4004" source="_Wr7UoHc1EdyDG70ZmLhbaA" target="_ixYH-HaPEdyqQY0mUTMiug">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_FzvaEXc2EdyDG70ZmLhbaA" routing="Rectilinear"/>

@@ -39,7 +39,7 @@ public interface Composite extends Part {
 	 * @return the value of the '<em>Parts</em>' containment reference list.
 	 * @see org.fritzing.fritzing.FritzingPackage#getComposite_Parts()
 	 * @see org.fritzing.fritzing.Part#getParent
-	 * @model opposite="parent" containment="true" keys="name"
+	 * @model opposite="parent" containment="true" keys="id"
 	 *        extendedMetaData="kind='element' name='part'"
 	 * @generated
 	 */

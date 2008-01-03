@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.fritzing.fritzing.Part#getId <em>Id</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getSpecies <em>Species</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getGenus <em>Genus</em>}</li>
@@ -33,6 +34,33 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Part extends Element {
 	/**
+	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Id</em>' attribute.
+	 * @see #setId(String)
+	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Id()
+	 * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="name='id' kind='attribute'"
+	 * @generated
+	 */
+	String getId();
+
+	/**
+	 * Sets the value of the '{@link org.fritzing.fritzing.Part#getId <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Id</em>' attribute.
+	 * @see #getId()
+	 * @generated
+	 */
+	void setId(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -43,7 +71,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Name()
-	 * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='name' kind='attribute'"
 	 * @generated
 	 */
@@ -70,7 +98,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Species</em>' attribute.
 	 * @see #setSpecies(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Species()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='species' kind='attribute'"
 	 * @generated
 	 */
@@ -97,7 +125,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Genus</em>' attribute.
 	 * @see #setGenus(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Genus()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='genus' kind='attribute'"
 	 * @generated
 	 */
@@ -124,7 +152,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Version</em>' attribute.
 	 * @see #setVersion(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Version()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='version' kind='attribute'"
 	 * @generated
 	 */
@@ -151,7 +179,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Description</em>' attribute.
 	 * @see #setDescription(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Description()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='description' kind='attribute'"
 	 * @generated
 	 */
@@ -178,7 +206,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Footprint</em>' attribute.
 	 * @see #setFootprint(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Footprint()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='footprint' kind='attribute'"
 	 * @generated
 	 */
@@ -207,7 +235,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Terminals</em>' containment reference list.
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Terminals()
 	 * @see org.fritzing.fritzing.Terminal#getParent
-	 * @model opposite="parent" containment="true" keys="name"
+	 * @model opposite="parent" containment="true" keys="id"
 	 *        extendedMetaData="kind='element' name='terminal'"
 	 * @generated
 	 */

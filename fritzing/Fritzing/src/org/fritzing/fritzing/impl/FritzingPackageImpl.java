@@ -305,7 +305,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getTerminal_Name() {
+	public EAttribute getTerminal_Id() {
 		return (EAttribute)terminalEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -314,8 +314,17 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getTerminal_Name() {
+		return (EAttribute)terminalEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getTerminal_Parent() {
-		return (EReference)terminalEClass.getEStructuralFeatures().get(1);
+		return (EReference)terminalEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -386,7 +395,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_Name() {
+	public EAttribute getPart_Id() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -395,7 +404,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_Species() {
+	public EAttribute getPart_Name() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -404,7 +413,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_Genus() {
+	public EAttribute getPart_Species() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -413,7 +422,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_Version() {
+	public EAttribute getPart_Genus() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -422,7 +431,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_Description() {
+	public EAttribute getPart_Version() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -431,7 +440,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPart_Footprint() {
+	public EAttribute getPart_Description() {
 		return (EAttribute)partEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -440,8 +449,17 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getPart_Footprint() {
+		return (EAttribute)partEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getPart_Terminals() {
-		return (EReference)partEClass.getEStructuralFeatures().get(6);
+		return (EReference)partEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -450,7 +468,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * @generated
 	 */
 	public EReference getPart_Parent() {
-		return (EReference)partEClass.getEStructuralFeatures().get(7);
+		return (EReference)partEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -677,6 +695,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEReference(documentRootEClass, DOCUMENT_ROOT__SKETCH);
 
 		terminalEClass = createEClass(TERMINAL);
+		createEAttribute(terminalEClass, TERMINAL__ID);
 		createEAttribute(terminalEClass, TERMINAL__NAME);
 		createEReference(terminalEClass, TERMINAL__PARENT);
 
@@ -689,6 +708,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEReference(wireEClass, WIRE__PARENT);
 
 		partEClass = createEClass(PART);
+		createEAttribute(partEClass, PART__ID);
 		createEAttribute(partEClass, PART__NAME);
 		createEAttribute(partEClass, PART__SPECIES);
 		createEAttribute(partEClass, PART__GENUS);
@@ -791,7 +811,8 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEReference(getDocumentRoot_Sketch(), this.getSketch(), null, "sketch", null, 0, -2, null, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(terminalEClass, Terminal.class, "Terminal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTerminal_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Terminal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTerminal_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, Terminal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTerminal_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Terminal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTerminal_Parent(), this.getPart(), this.getPart_Terminals(), "parent", null, 0, 1, Terminal.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getTerminal_Parent().getEKeys().add(this.getPart_Name());
 
@@ -805,14 +826,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		getWire_Parent().getEKeys().add(this.getPart_Name());
 
 		initEClass(partEClass, Part.class, "Part", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getPart_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPart_Species(), theXMLTypePackage.getString(), "species", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPart_Genus(), theXMLTypePackage.getString(), "genus", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPart_Version(), theXMLTypePackage.getString(), "version", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPart_Description(), theXMLTypePackage.getString(), "description", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPart_Footprint(), theXMLTypePackage.getString(), "footprint", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Species(), theXMLTypePackage.getString(), "species", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Genus(), theXMLTypePackage.getString(), "genus", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Version(), theXMLTypePackage.getString(), "version", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Description(), theXMLTypePackage.getString(), "description", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPart_Footprint(), theXMLTypePackage.getString(), "footprint", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPart_Terminals(), this.getTerminal(), this.getTerminal_Parent(), "terminals", null, 0, -1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getPart_Terminals().getEKeys().add(this.getTerminal_Name());
+		getPart_Terminals().getEKeys().add(this.getTerminal_Id());
 		initEReference(getPart_Parent(), this.getComposite(), this.getComposite_Parts(), "parent", null, 0, 1, Part.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getPart_Parent().getEKeys().add(this.getPart_Name());
 
@@ -827,7 +849,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComposite_Parts(), this.getPart(), this.getPart_Parent(), "parts", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getComposite_Parts().getEKeys().add(this.getPart_Name());
+		getComposite_Parts().getEKeys().add(this.getPart_Id());
 		initEReference(getComposite_Wires(), this.getWire(), this.getWire_Parent(), "wires", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getComposite_Wires().getEKeys().add(this.getWire_Name());
 
@@ -913,6 +935,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 			 "kind", "empty"
 		   });		
 		addAnnotation
+		  (getTerminal_Id(), 
+		   source, 
+		   new String[] {
+			 "name", "id",
+			 "kind", "attribute"
+		   });		
+		addAnnotation
 		  (getTerminal_Name(), 
 		   source, 
 		   new String[] {
@@ -960,6 +989,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   new String[] {
 			 "name", "Part",
 			 "kind", "elementOnly"
+		   });		
+		addAnnotation
+		  (getPart_Id(), 
+		   source, 
+		   new String[] {
+			 "name", "id",
+			 "kind", "attribute"
 		   });		
 		addAnnotation
 		  (getPart_Name(), 
