@@ -128,7 +128,7 @@ public class FritzingPaletteFactory {
 			List<IElementType>types = new ArrayList<IElementType>(1);
 			types.add(FritzingElementTypes.GenericPart_2011);
 			NodeToolEntry entry = new NodeToolEntry(
-					partLoader.getSpecies(),
+					partLoader.getTitle(),
 					partLoader.getDescription(), 
 					types, partLoader);
 			
@@ -232,8 +232,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.Arduino_2001);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.Arduino1CreationTool_title,
-				Messages.Arduino1CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "arduino" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.Arduino_2001));
@@ -248,8 +247,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.Resistor_2003);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.Resistor2CreationTool_title,
-				Messages.Resistor2CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "resistor" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.Resistor_2003));
@@ -264,8 +262,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.LED_2002);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.LED3CreationTool_title,
-				Messages.LED3CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "led" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.LED_2002));
@@ -280,8 +277,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.Button_2004);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.Button4CreationTool_title,
-				Messages.Button4CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "button" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.Button_2004));
@@ -296,8 +292,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.Potentiometer_2005);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.Potentiometer5CreationTool_title,
-				Messages.Potentiometer5CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "potentiometer" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.Potentiometer_2005));
@@ -312,8 +307,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.FsrSensor_2006);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.FSRSensor6CreationTool_title,
-				Messages.FSRSensor6CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "fsr" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.FsrSensor_2006));
@@ -328,8 +322,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.LightSensor_2007);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.LightSensor7CreationTool_title,
-				Messages.LightSensor7CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "lightsensor" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.LightSensor_2007));
@@ -344,8 +337,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.Transistor_2009);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.Transistor8CreationTool_title,
-				Messages.Transistor8CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "transistor" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.Transistor_2009));
@@ -360,8 +352,7 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.PowerTransistor_2010);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.PowerTransistor9CreationTool_title,
-				Messages.PowerTransistor9CreationTool_desc, types,
+				null, null, types,
 				PartLoaderRegistry.getInstance().get("libraries/core/" + "powertransistor" + "/partdescription.xml"));
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.PowerTransistor_2010));
@@ -450,8 +441,8 @@ public class FritzingPaletteFactory {
 		 */
 		private NodeToolEntry(String title, String description,
 				List elementTypes, PartLoader partLoader) {
-			super(title, description, null, null);
-			
+			super(partLoader.getTitle(), partLoader.getDescription(), null, null);
+						
 			// eventually passes the partloader along to PartCreateCommand
 			this.partLoader = partLoader;
 			this.elementTypes = elementTypes;

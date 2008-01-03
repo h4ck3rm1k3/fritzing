@@ -29,10 +29,12 @@ import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
 
 public class PartLoader {
 	
@@ -49,6 +51,7 @@ public class PartLoader {
 	protected String genus;
 	protected String contentsPath;
 	protected String label;
+	protected String title;
 	
 	public PartLoader() {
 		contentsPath = "";
@@ -96,6 +99,10 @@ public class PartLoader {
 	
 	public String getLabel() {
 		return label;
+	}
+	
+	public String getTitle() {
+		return title;
 	}
 	
 	public String getContentsPath() {
@@ -251,9 +258,11 @@ public class PartLoader {
 			species = (String) xp.evaluate("/part/species", document, XPathConstants.STRING);
 			genus = (String) xp.evaluate("/part/genus", document, XPathConstants.STRING);
 			description = (String) xp.evaluate("/part/description", document, XPathConstants.STRING);
-			iconFilename = (String) xp.evaluate("/part/icon", document, XPathConstants.STRING);
-			largeIconFilename = (String) xp.evaluate("/part/largeIcon", document, XPathConstants.STRING);
+			title = (String) xp.evaluate("/part/title", document, XPathConstants.STRING);
 			label = (String) xp.evaluate("/part/label", document, XPathConstants.STRING);
+			
+			parseIcons((NodeList) xp.evaluate("/part/icons/icon", document, XPathConstants.NODESET));
+			parseImages((NodeList) xp.evaluate("/part/layers/layer", document, XPathConstants.NODESET));
 			
 			String defaultUnits = (String) xp.evaluate("/part/defaultUnits", document, XPathConstants.STRING);
 			if (defaultUnits == null || defaultUnits == "") {
@@ -268,22 +277,19 @@ public class PartLoader {
 			
 			size = new Dimension(sz.x, sz.y);
 
-			// add multiple layers, etc...
-			svgFilename = (String) xp.evaluate("/part/children/layer/moduleData/shapeLayer/svgShapeFile", document, XPathConstants.STRING);
-			bitmapFilename = (String) xp.evaluate("/part/children/layer/moduleData/shapeLayer/resolutionIndependentImageSet/bitmapImage/bitmapFile", document, XPathConstants.STRING);
-
-			NodeList nodes = (NodeList) xp.evaluate("/part/children/layer/moduleData/connector", document, XPathConstants.NODESET);
+			NodeList nodes = (NodeList) xp.evaluate("/part/connectors/connector", document, XPathConstants.NODESET);
 			for (int i = 0; i < nodes.getLength(); i++) {
 				Node child = nodes.item(i);
 				XPath xpath = XPathFactory.newInstance().newXPath();
-				String name = (String) xpath.evaluate("internalName", child, XPathConstants.STRING);
-				if (name == null || name == "") continue;
-				
-				// eventually will need to add a child terminal part here
-				// they will not be predefined in the generator
-							
-				Node loc = (Node) xpath.evaluate("connectorLocation", child, XPathConstants.NODE);
-				Point p = parseLocation(loc, defaultUnits, "x", "y" );
+				String id = (String) xpath.evaluate("@id", child, XPathConstants.STRING);
+				if (id == null || id == "") continue;
+											
+				String name = (String) xpath.evaluate("@name", child, XPathConstants.STRING);
+				if (name == null || id == "") {
+					name = id;
+				}
+
+				Point p = parseLocation(child, defaultUnits, "x", "y" );
 				p.x += gridOffset.x;
 				p.y += gridOffset.y;
 				terminalHash.put(name, p);						
@@ -293,8 +299,56 @@ public class PartLoader {
 		catch (XPathExpressionException xpee) {
 			// alert the user
 			return;
-		}
+		}		
+	}
 		
+	protected void parseImages(NodeList nodeList) {
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			try {
+				Node node = nodeList.item(i);
+				String type = (String) xpath.evaluate("@type", node, XPathConstants.STRING);
+				if (type.equalsIgnoreCase("image")) {
+					NodeList imageList = (NodeList) xpath.evaluate("image", node, XPathConstants.NODESET);
+					
+					// need to add multiple zoom images, etc...
+					for (int j = 0; j < imageList.getLength(); j++ ) {
+						Node imageNode = imageList.item(j);
+						type = (String) xpath.evaluate("@type", imageNode, XPathConstants.STRING);
+						if (type.equalsIgnoreCase("bitmap")) {
+							bitmapFilename = (String) xpath.evaluate("@source", imageNode, XPathConstants.STRING);
+						}
+						else if (type.equalsIgnoreCase("svg")) {
+							svgFilename = (String) xpath.evaluate("@source", imageNode, XPathConstants.STRING);
+						}
+					}
+					
+				}
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+				// alert the user
+			}
+		}
+	}
+	
+	protected void parseIcons(NodeList nodeList) {
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			try {
+				Node node = nodeList.item(i);
+				String size = (String) xpath.evaluate("@size", node, XPathConstants.STRING);
+				if (size.equalsIgnoreCase("small")) {
+					iconFilename = (String) xpath.evaluate("@source", node, XPathConstants.STRING);
+				}
+				else if (size.equalsIgnoreCase("large")) {
+					largeIconFilename = (String) xpath.evaluate("@source", node, XPathConstants.STRING);
+				}
+			}
+			catch (Exception ex) {
+				// alert the user
+			}
+		}
 	}
 
 	protected Point parseLocation(Node node, String defaultUnits, String axis1, String axis2) {
