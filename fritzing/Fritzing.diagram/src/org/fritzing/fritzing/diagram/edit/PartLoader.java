@@ -43,6 +43,7 @@ public class PartLoader {
 	protected Dimension size;
 	protected boolean loaded;
 	protected String iconFilename;
+	protected String largeIconFilename;
 	protected String description;
 	protected String species;
 	protected String genus;
@@ -86,6 +87,10 @@ public class PartLoader {
 	
 	public String getIconFilename() {
 		return iconFilename;
+	}
+	
+	public String getLargeIconFilename() {
+		return largeIconFilename;
 	}
 	
 	public String getContentsPath() {
@@ -235,6 +240,7 @@ public class PartLoader {
 			genus = (String) xp.evaluate("/part/genus", document, XPathConstants.STRING);
 			description = (String) xp.evaluate("/part/description", document, XPathConstants.STRING);
 			iconFilename = (String) xp.evaluate("/part/icon", document, XPathConstants.STRING);
+			largeIconFilename = (String) xp.evaluate("/part/largeIcon", document, XPathConstants.STRING);
 			
 			String defaultUnits = (String) xp.evaluate("/part/defaultUnits", document, XPathConstants.STRING);
 			if (defaultUnits == null || defaultUnits == "") {

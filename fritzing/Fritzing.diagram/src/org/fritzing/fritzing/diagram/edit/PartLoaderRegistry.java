@@ -43,7 +43,7 @@ public class PartLoaderRegistry {
 	 * cache, creates a new one and caches.
 	 * 
 	 * @param path -
-	 *            a string
+	 *            a string, either genus.species or the relative path (e.g. libraries/core/arduino/partDescription.xml)
 	 * @return PartLoader
 	 */
 	public PartLoader get(String path) {

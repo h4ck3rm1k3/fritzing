@@ -116,9 +116,9 @@ public class FritzingElementTypes extends ElementInitializers {
 	public static final IElementType Wire_4001 = getElementType("Fritzing.diagram.Wire_4001"); //$NON-NLS-1$
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	private static ImageRegistry getImageRegistry() {
+	public static ImageRegistry getImageRegistry() {
 		if (imageRegistry == null) {
 			imageRegistry = new ImageRegistry();
 		}
@@ -126,9 +126,9 @@ public class FritzingElementTypes extends ElementInitializers {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	private static String getImageRegistryKey(ENamedElement element) {
+	public static String getImageRegistryKey(ENamedElement element) {
 		return element.getName();
 	}
 
