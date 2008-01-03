@@ -17,7 +17,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 /**
  * @generated
  */
-public class PotentiometerCreateCommand extends CreateElementCommand {
+public class PotentiometerCreateCommand extends PartCreateCommand {
 
 	/**
 	 * @generated
@@ -27,37 +27,24 @@ public class PotentiometerCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject getElementToEdit() {
-		EObject container = ((CreateElementRequest) getRequest())
-				.getContainer();
-		if (container instanceof View) {
-			container = ((View) container).getElement();
-		}
-		return container;
+		return super.getElementToEdit();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EClass getEClassToEdit() {
-		return FritzingPackage.eINSTANCE.getComposite();
+		return super.getEClassToEdit();
 	}
 
 	/**
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		Potentiometer newElement = (Potentiometer) super
-				.doDefaultElementCreation();
-		if (newElement != null) {
-			FritzingElementTypes.Initializers.Potentiometer_2005
-					.init(newElement);
-		}
-		// use "our" initializers instead		
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/potentiometer/partdescription.xml");
-		partLoader.createTerminals(newElement);		
-		return newElement;
+		return super.doDefaultElementCreation();
+
 	}
 }

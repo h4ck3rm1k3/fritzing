@@ -30,7 +30,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 /**
  * @generated
  */
-public class ArduinoCreateCommand extends CreateElementCommand {
+public class ArduinoCreateCommand extends PartCreateCommand {
 
 	/**
 	 * @generated
@@ -40,37 +40,23 @@ public class ArduinoCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject getElementToEdit() {
-		EObject container = ((CreateElementRequest) getRequest())
-				.getContainer();
-		if (container instanceof View) {
-			container = ((View) container).getElement();
-		}
-		return container;
+		return super.getElementToEdit();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EClass getEClassToEdit() {
-		return FritzingPackage.eINSTANCE.getComposite();
+		return super.getEClassToEdit();
 	}
 
 	/**
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		Arduino newElement = (Arduino) super.doDefaultElementCreation();
-		if (newElement != null) {
-			FritzingElementTypes.Initializers.Arduino_2001.init(newElement);
-		}
-
-		// use "our" initializers instead		
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/arduino/partdescription.xml");
-		partLoader.createTerminals(newElement);		
-
-		return newElement;
+		return super.doDefaultElementCreation();
 	}
 }

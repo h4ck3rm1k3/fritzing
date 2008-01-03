@@ -29,7 +29,7 @@ import org.fritzing.fritzing.impl.SketchImpl;
 /**
  * @generated
  */
-public class LEDCreateCommand extends CreateElementCommand {
+public class LEDCreateCommand extends PartCreateCommand {
 
 	/**
 	 * @generated
@@ -39,38 +39,24 @@ public class LEDCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject getElementToEdit() {
-		EObject container = ((CreateElementRequest) getRequest())
-				.getContainer();
-		if (container instanceof View) {
-			container = ((View) container).getElement();
-		}
-		return container;
+		return super.getElementToEdit();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EClass getEClassToEdit() {
-		return FritzingPackage.eINSTANCE.getComposite();
+		return super.getEClassToEdit();
 	}
 
 	/**
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		org.fritzing.fritzing.LED newElement = (org.fritzing.fritzing.LED) super
-				.doDefaultElementCreation();
-		if (newElement != null) {
-			FritzingElementTypes.Initializers.LED_2002.init(newElement);
-		}
-
-		// use "our" initializers instead		
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/led/partdescription.xml");
-		partLoader.createTerminals(newElement);		
-
+		return super.doDefaultElementCreation();
 		
 		/*
 
@@ -111,7 +97,8 @@ public class LEDCreateCommand extends CreateElementCommand {
 		}
 		
 		*/
-	
-		return newElement;
 	}
+
+	
+	
 }

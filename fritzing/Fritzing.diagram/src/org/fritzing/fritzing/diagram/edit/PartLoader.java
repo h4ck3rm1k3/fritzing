@@ -48,6 +48,7 @@ public class PartLoader {
 	protected String species;
 	protected String genus;
 	protected String contentsPath;
+	protected String label;
 	
 	public PartLoader() {
 		contentsPath = "";
@@ -93,6 +94,10 @@ public class PartLoader {
 		return largeIconFilename;
 	}
 	
+	public String getLabel() {
+		return label;
+	}
+	
 	public String getContentsPath() {
 		return contentsPath;
 	}
@@ -109,7 +114,7 @@ public class PartLoader {
 		return genus;
 	}
 	
-	public boolean createTerminals(String path, EObject newElement) {
+	public boolean initialize(String path, EObject newElement) {
 		try {
 			
 //			URL url = FileLocator.find(FritzingDiagramEditorPlugin
@@ -119,7 +124,7 @@ public class PartLoader {
 
 			if (!loadXMLFromLibrary(path)) return false;
 			
-			return createTerminals(newElement);
+			return initialize(newElement);
 		}
 		catch (Exception ex) {
 			
@@ -128,7 +133,7 @@ public class PartLoader {
 		return false;
 	}
 				
-	public boolean createTerminals(EObject newElement) {
+	public boolean initialize(EObject newElement) {
 		if (!this.loaded) return false;
 		
 		try {
@@ -153,6 +158,13 @@ public class PartLoader {
 				expr.assignTo(FritzingPackage.eINSTANCE.getTerminal_Name(),
 						terminal);
 			}
+			
+			EStructuralFeature feature = FritzingPackage.eINSTANCE.getPart_Name();
+			FritzingAbstractExpression expr = FritzingOCLFactory
+					.getExpression("\'" + label + "\'",
+							newElement.eClass());
+			expr.assignTo(feature, newElement);
+						
 			return true;
 	
 		}
@@ -241,6 +253,7 @@ public class PartLoader {
 			description = (String) xp.evaluate("/part/description", document, XPathConstants.STRING);
 			iconFilename = (String) xp.evaluate("/part/icon", document, XPathConstants.STRING);
 			largeIconFilename = (String) xp.evaluate("/part/largeIcon", document, XPathConstants.STRING);
+			label = (String) xp.evaluate("/part/label", document, XPathConstants.STRING);
 			
 			String defaultUnits = (String) xp.evaluate("/part/defaultUnits", document, XPathConstants.STRING);
 			if (defaultUnits == null || defaultUnits == "") {

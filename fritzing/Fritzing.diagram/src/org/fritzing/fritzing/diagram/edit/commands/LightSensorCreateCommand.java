@@ -17,7 +17,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 /**
  * @generated
  */
-public class LightSensorCreateCommand extends CreateElementCommand {
+public class LightSensorCreateCommand extends PartCreateCommand {
 
 	/**
 	 * @generated
@@ -27,35 +27,24 @@ public class LightSensorCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject getElementToEdit() {
-		EObject container = ((CreateElementRequest) getRequest())
-				.getContainer();
-		if (container instanceof View) {
-			container = ((View) container).getElement();
-		}
-		return container;
+		return super.getElementToEdit();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EClass getEClassToEdit() {
-		return FritzingPackage.eINSTANCE.getComposite();
+		return super.getEClassToEdit();
 	}
 
 	/**
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		LightSensor newElement = (LightSensor) super.doDefaultElementCreation();
-		if (newElement != null) {
-			FritzingElementTypes.Initializers.LightSensor_2007.init(newElement);
-		}
-		// use "our" initializers instead		
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/lightsensor/partdescription.xml");
-		partLoader.createTerminals(newElement);		
-		return newElement;
+		return super.doDefaultElementCreation();
+
 	}
 }

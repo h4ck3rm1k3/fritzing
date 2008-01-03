@@ -17,7 +17,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 /**
  * @generated
  */
-public class TransistorCreateCommand extends CreateElementCommand {
+public class TransistorCreateCommand extends PartCreateCommand {
 
 	/**
 	 * @generated
@@ -27,35 +27,24 @@ public class TransistorCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject getElementToEdit() {
-		EObject container = ((CreateElementRequest) getRequest())
-				.getContainer();
-		if (container instanceof View) {
-			container = ((View) container).getElement();
-		}
-		return container;
+		return super.getElementToEdit();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EClass getEClassToEdit() {
-		return FritzingPackage.eINSTANCE.getComposite();
+		return super.getEClassToEdit();
 	}
 
 	/**
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		Transistor newElement = (Transistor) super.doDefaultElementCreation();
-		if (newElement != null) {
-			FritzingElementTypes.Initializers.Transistor_2009.init(newElement);
-		}
-		// use "our" initializers instead		
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/transistor/partdescription.xml");
-		partLoader.createTerminals(newElement);		
-		return newElement;
+		return super.doDefaultElementCreation();
+
 	}
 }
