@@ -127,6 +127,7 @@ public class TerminalItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Terminal.class)) {
+			case FritzingPackage.TERMINAL__ID:
 			case FritzingPackage.TERMINAL__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;

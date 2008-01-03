@@ -111,7 +111,7 @@ public class PartItemProvider
 				 getString("_UI_Part_species_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Part_species_feature", "_UI_Part_type"),
 				 FritzingPackage.Literals.PART__SPECIES,
-				 true,
+				 false,
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
@@ -133,7 +133,7 @@ public class PartItemProvider
 				 getString("_UI_Part_genus_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Part_genus_feature", "_UI_Part_type"),
 				 FritzingPackage.Literals.PART__GENUS,
-				 true,
+				 false,
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
@@ -155,7 +155,7 @@ public class PartItemProvider
 				 getString("_UI_Part_version_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Part_version_feature", "_UI_Part_type"),
 				 FritzingPackage.Literals.PART__VERSION,
-				 true,
+				 false,
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
@@ -177,8 +177,8 @@ public class PartItemProvider
 				 getString("_UI_Part_description_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Part_description_feature", "_UI_Part_type"),
 				 FritzingPackage.Literals.PART__DESCRIPTION,
-				 true,
 				 false,
+				 true,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
@@ -263,6 +263,7 @@ public class PartItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Part.class)) {
+			case FritzingPackage.PART__ID:
 			case FritzingPackage.PART__NAME:
 			case FritzingPackage.PART__SPECIES:
 			case FritzingPackage.PART__GENUS:
