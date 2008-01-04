@@ -60,7 +60,7 @@ public class FritzingPaletteFactory {
 		coreMap.put("transistor", FritzingElementTypes.Transistor_2009);
 		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
 			String folder = keys.nextElement();
-			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/" + folder + "/partdescription.xml");
+			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries" + File.separator + "core" + File.separator + folder + File.separator + "partdescription.xml");
 			if (partLoader == null) {
 				// alert user;
 				continue;
@@ -70,7 +70,7 @@ public class FritzingPaletteFactory {
 		customiseStandardGroup(paletteRoot);
 		paletteRoot.add(createConnect1Group());
 		createParts2Group();		
-		addGenerics();
+		addGenerics("libraries");
 		for (Enumeration<PaletteDrawer> e = drawerMap.elements(); e.hasMoreElements(); ) {
 			paletteRoot.add(e.nextElement());
 		}
@@ -89,30 +89,27 @@ public class FritzingPaletteFactory {
 	/**
 	 * @generated NOT
 	 */
-	protected void addGenerics() {
-		File file = new File(FritzingDiagramEditorUtil.getFritzingLocation() + "libraries/core/");
+	protected void addGenerics(String folder) {
+		if (folder.equals("libraries" + File.separator + "core")) return;
+		
+		File file = new File(FritzingDiagramEditorUtil.getFritzingLocation() + folder);		
+		if (!file.exists()) return;
+		if (!file.isDirectory()) return;
+		
+		File xmlFile = new File(file.getAbsolutePath() + File.separator + "partdescription.xml");
+		if (xmlFile.exists()) {
+			addPart(folder, FritzingElementTypes.GenericPart_2011);	
+		}
+				
 		File[] files = file.listFiles();
 		for (int i = 0; i < files.length; i++) {			
 			String filename = files[i].getName();
-			// now go on to deal with generics
-			boolean gotOne = false;
-			
-			for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
-				if (filename.equalsIgnoreCase(keys.nextElement())) {
-					gotOne = true;
-					break;
-				}
-			}
-
-			if (gotOne) continue;
-			
-			addPart("libraries/core/" + filename, FritzingElementTypes.GenericPart_2011);					
-		}
-		
+			addGenerics(folder + File.separator + filename);
+		}	
 	}
 	
 	protected void addPart(String prefix, IElementType type) {
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get(prefix + "/partdescription.xml");
+		PartLoader partLoader = PartLoaderRegistry.getInstance().get(prefix + File.separator + "partdescription.xml");
 		if (partLoader == null) return;
 		
 		if (partLoader.isGeneric()) {
@@ -193,7 +190,7 @@ public class FritzingPaletteFactory {
 			
 			addPart("libraries/core/" + key, type);
 			
-			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/" + key + "/partdescription.xml");
+			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries" + File.separator + "core" + File.separator + key + File.separator + "partdescription.xml");
 			
 		}
 		
