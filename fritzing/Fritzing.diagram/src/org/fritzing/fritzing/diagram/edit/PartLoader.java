@@ -38,7 +38,7 @@ import org.xml.sax.SAXParseException;
 
 public class PartLoader {
 	
-	protected Hashtable<String, Point> terminalHash;
+	protected Hashtable<String, PointName> terminalHash;
 	protected Point gridOffset;
 	protected String bitmapFilename;
 	protected String svgFilename;
@@ -55,7 +55,7 @@ public class PartLoader {
 	
 	public PartLoader() {
 		contentsPath = "";
-		terminalHash = new Hashtable<String, Point>();
+		terminalHash = new Hashtable<String, PointName>();
 		size = new Dimension(0,0);
 		gridOffset = new Point(0,0);
 		bitmapFilename = svgFilename = null;
@@ -64,21 +64,18 @@ public class PartLoader {
 	public boolean getLoaded() {
 		return loaded;
 	}
-	
-	public Enumeration<String> getTerminalKeys() {
-		if (terminalHash == null) return null;
 		
-		return terminalHash.keys();
-	}
-	
 	public Dimension getSize() {
 		return size;
 	}
 	
-	public Point getTerminalPoint(String name) {
+	public Point getTerminalPoint(String id) {
 		if (terminalHash == null) return null;
 	
-		return terminalHash.get(name);
+		PointName pointName = terminalHash.get(id);
+		if (pointName == null) return null;
+		
+		return pointName.point;
 	}
 	
 	public String getSvgFilename() {
@@ -145,11 +142,12 @@ public class PartLoader {
 		
 		try {
 			
-			for (Enumeration<String> e = getTerminalKeys(); e
-					.hasMoreElements();) {
-				String name = e.nextElement();
-				if (name == null || name == "")
-					continue;
+			for (Enumeration<String> e = terminalHash.keys(); e.hasMoreElements();) {
+				String id = e.nextElement();
+				if (id == null || id == "") continue;
+								
+				PointName pointName = terminalHash.get(id);
+				if (pointName == null) continue;
 
 				EObject terminal = FritzingPackage.eINSTANCE.getTerminal()
 						.getEPackage().getEFactoryInstance().create(
@@ -160,10 +158,17 @@ public class PartLoader {
 				((Collection) newElement.eGet(feature)).add(terminal);
 				
 				FritzingAbstractExpression expr = FritzingOCLFactory
-						.getExpression("\'" + name + "\'",
+						.getExpression("\'" + pointName.name + "\'",
 								FritzingPackage.eINSTANCE.getTerminal());
 				expr.assignTo(FritzingPackage.eINSTANCE.getTerminal_Name(),
 						terminal);
+
+				expr = FritzingOCLFactory
+				.getExpression("\'" + id + "\'",
+						FritzingPackage.eINSTANCE.getTerminal());
+				expr.assignTo(FritzingPackage.eINSTANCE.getTerminal_Id(),
+				terminal);
+
 			}
 			
 			EStructuralFeature feature = FritzingPackage.eINSTANCE.getPart_Name();
@@ -292,7 +297,7 @@ public class PartLoader {
 				Point p = parseLocation(child, defaultUnits, "x", "y" );
 				p.x += gridOffset.x;
 				p.y += gridOffset.y;
-				terminalHash.put(name, p);						
+				terminalHash.put(id, new PointName(p, name));
 			}
 			return;
 		}
@@ -388,6 +393,16 @@ public class PartLoader {
 		}
 		
 		return new Point();
+	}
+	
+	static class PointName {
+		public Point point;
+		public String name;
+		
+		public PointName(Point point, String name) {
+			this.point = point;
+			this.name = name;
+		}
 	}
 
 }

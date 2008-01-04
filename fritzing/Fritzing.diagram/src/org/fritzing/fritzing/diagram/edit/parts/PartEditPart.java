@@ -131,22 +131,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		return result;
 	}
 
-	protected int getEastWestBorderPositionConstants() {
-		int count = 0;
-		for (Iterator it = this.getChildren().iterator(); it.hasNext();  ) {
-			if (it.next() instanceof Terminal2EditPart) count++;
-		}
-		
-		switch (count) {
-		case 1:
-			return PositionConstants.EAST;
-		case 2:
-			return PositionConstants.WEST;
-		default:
-			return PositionConstants.NONE;
-		
-		}
-	}
 
 	protected void handleNotificationEvent(Notification notification) {
 		
@@ -171,7 +155,7 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 			if (model instanceof NodeImpl) {
 				EObject eobject = ((NodeImpl) model).getElement();
 				if (eobject instanceof Terminal) {
-					String name = ((Terminal) eobject).getName();
+					String name = ((Terminal) eobject).getId();
 					p = findTerminal(childEditPart);
 					if (p == null) {
 						terminalPosition = EastWestBorderItemLocator.parseTerminalName(name);
@@ -231,7 +215,7 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		if (model instanceof NodeImpl) {
 			EObject eobject = ((NodeImpl) model).getElement();
 			if (eobject instanceof Terminal) {
-				String name = ((Terminal) eobject).getName();
+				String name = ((Terminal) eobject).getId();
 				if (name != null) {
 					Point q = partLoader.getTerminalPoint(name);
 					if (q != null) {
