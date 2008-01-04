@@ -43,6 +43,7 @@ public class FritzingPaletteFactory {
 	 * differentiates between predefined class xml and generic xml
 	 */
 	static final Hashtable<String, IElementType> coreMap = new Hashtable<String, IElementType>();	
+	Hashtable<String, PaletteDrawer> drawerMap = new Hashtable<String, PaletteDrawer>();	
 	
 	/**
 	 * @generated NOT
@@ -63,50 +64,32 @@ public class FritzingPaletteFactory {
 			if (partLoader == null) {
 				// alert user;
 				continue;
-			}
-			
-			IElementType type = coreMap.get(folder);
-					
-			String key = FritzingElementTypes.getImageRegistryKey(FritzingElementTypes.getElement(type));
-			if (key == null) {
-				// alert user
-				continue;
-			}
-				
-			
-			// set up the ImageDescriptor for the icon to point to the library
-			// instead of internal icons
-			ImageDescriptor id = ImageDescriptor.createFromFile(null, 
-					FritzingDiagramEditorUtil.getFritzingLocation() + 
-						"libraries/core/" + 
-						folder + "/" + 
-						partLoader.getIconFilename());
-			FritzingElementTypes.getImageRegistry().put(key, id);
-			
-			
-			// set up the ImageDescriptor for the icon to point to the library
-			// instead of internal icons
-			id = ImageDescriptor.createFromFile(null, 
-					FritzingDiagramEditorUtil.getFritzingLocation() + 
-						"libraries/core/" + 
-						folder + "/" + 
-						partLoader.getLargeIconFilename());
-			FritzingElementTypes.getImageRegistry().put(key + "Large", id);
-
+			}				
 		}
 			
 		customiseStandardGroup(paletteRoot);
 		paletteRoot.add(createConnect1Group());
-		PaletteContainer pc = createParts2Group();		
-		addGenerics(pc);
-		paletteRoot.add(pc);
+		createParts2Group();		
+		addGenerics();
+		for (Enumeration<PaletteDrawer> e = drawerMap.elements(); e.hasMoreElements(); ) {
+			paletteRoot.add(e.nextElement());
+		}
+	}
+	
+	protected PaletteDrawer getDrawer(String drawerName) {
+		PaletteDrawer drawer = drawerMap.get(drawerName);
+		if (drawer == null) {
+			drawer = new PaletteDrawer(drawerName);
+			drawerMap.put(drawerName, drawer);
+		}
+		return drawer;
 	}
 	
 	
 	/**
 	 * @generated NOT
 	 */
-	protected void addGenerics(PaletteContainer pc) {
+	protected void addGenerics() {
 		File file = new File(FritzingDiagramEditorUtil.getFritzingLocation() + "libraries/core/");
 		File[] files = file.listFiles();
 		for (int i = 0; i < files.length; i++) {			
@@ -122,34 +105,43 @@ public class FritzingPaletteFactory {
 			}
 
 			if (gotOne) continue;
-
-			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/" + filename + "/partdescription.xml");
 			
-			List<IElementType>types = new ArrayList<IElementType>(1);
-			types.add(FritzingElementTypes.GenericPart_2011);
-			NodeToolEntry entry = new NodeToolEntry(
-					partLoader.getTitle(),
-					partLoader.getDescription(), 
-					types, partLoader);
-			
-			ImageDescriptor id = ImageDescriptor.createFromFile(null, 
-					FritzingDiagramEditorUtil.getFritzingLocation() + 
-						"libraries/core/" + 
-						filename + "/" + 
-						partLoader.getIconFilename());
-			entry.setSmallIcon(id);
-						
-			id = ImageDescriptor.createFromFile(null, 
-					FritzingDiagramEditorUtil.getFritzingLocation() + 
-						"libraries/core/" + 
-						filename + "/" + 
-						partLoader.getLargeIconFilename());
-			
-			entry.setLargeIcon(id);
-			pc.add(entry);
-			
+			addPart("libraries/core/" + filename, FritzingElementTypes.GenericPart_2011);					
 		}
 		
+	}
+	
+	protected void addPart(String prefix, IElementType type) {
+		PartLoader partLoader = PartLoaderRegistry.getInstance().get(prefix + "/partdescription.xml");
+		if (partLoader == null) return;
+		
+		if (partLoader.isGeneric()) {
+			type = FritzingElementTypes.GenericPart_2011;
+		}
+		
+		List<IElementType>types = new ArrayList<IElementType>(1);
+		types.add(type);
+		NodeToolEntry entry = new NodeToolEntry(
+				partLoader.getTitle(),
+				partLoader.getDescription(), 
+				types, partLoader);
+		
+		ImageDescriptor id = ImageDescriptor.createFromFile(null, 
+				FritzingDiagramEditorUtil.getFritzingLocation() + 
+					prefix + File.separator + 
+					partLoader.getIconFilename());
+		entry.setSmallIcon(id);
+					
+		id = ImageDescriptor.createFromFile(null, 
+				FritzingDiagramEditorUtil.getFritzingLocation() + 
+					prefix + File.separator + 
+					partLoader.getLargeIconFilename());
+		
+		entry.setLargeIcon(id);
+		
+		PaletteDrawer drawer = getDrawer(partLoader.getGenus());
+		drawer.add(entry);
+
 	}
 
 	/**
@@ -192,22 +184,20 @@ public class FritzingPaletteFactory {
 
 	/**
 	 * Creates "Parts" palette tool group
-	 * @generated
+	 * @generated NOT
 	 */
-	private PaletteContainer createParts2Group() {
-		PaletteDrawer paletteContainer = new PaletteDrawer(
-				Messages.Parts2Group_title);
-		paletteContainer.add(createArduino1CreationTool());
-		paletteContainer.add(createResistor2CreationTool());
-		paletteContainer.add(createLED3CreationTool());
-		paletteContainer.add(createButton4CreationTool());
-		paletteContainer.add(createPotentiometer5CreationTool());
-		paletteContainer.add(createFSRSensor6CreationTool());
-		paletteContainer.add(createLightSensor7CreationTool());
-		paletteContainer.add(createTransistor8CreationTool());
-		paletteContainer.add(createPowerTransistor9CreationTool());
+	private void createParts2Group() {
+		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
+			String key = keys.nextElement();
+			IElementType type = coreMap.get(key);
+			
+			addPart("libraries/core/" + key, type);
+			
+			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries/core/" + key + "/partdescription.xml");
+			
+		}
 		
-		return paletteContainer;
+		
 	}
 
 	/**
@@ -225,143 +215,6 @@ public class FritzingPaletteFactory {
 		return entry;
 	}
 
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createArduino1CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Arduino_2001);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "arduino" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Arduino_2001));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.Arduino_2001));
-		return entry;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createResistor2CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Resistor_2003);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "resistor" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Resistor_2003));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.Resistor_2003));
-		return entry;
-	}
-
-	/** 
-	 * @generated NOT
-	 */
-	private ToolEntry createLED3CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.LED_2002);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "led" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.LED_2002));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.LED_2002));
-		return entry;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createButton4CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Button_2004);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "button" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Button_2004));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.Button_2004));
-		return entry;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createPotentiometer5CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Potentiometer_2005);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "potentiometer" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Potentiometer_2005));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.Potentiometer_2005));
-		return entry;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createFSRSensor6CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.FsrSensor_2006);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "fsr" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.FsrSensor_2006));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.FsrSensor_2006));
-		return entry;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createLightSensor7CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.LightSensor_2007);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "lightsensor" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.LightSensor_2007));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.LightSensor_2007));
-		return entry;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createTransistor8CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.Transistor_2009);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "transistor" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Transistor_2009));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.Transistor_2009));
-		return entry;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	private ToolEntry createPowerTransistor9CreationTool() {
-		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-		types.add(FritzingElementTypes.PowerTransistor_2010);
-		NodeToolEntry entry = new NodeToolEntry(
-				null, null, types,
-				PartLoaderRegistry.getInstance().get("libraries/core/" + "powertransistor" + "/partdescription.xml"));
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.PowerTransistor_2010));
-		entry.setLargeIcon(getLargeImageDescriptor(FritzingElementTypes.PowerTransistor_2010));
-		return entry;
-	}
-
-	
-	
 
 	/**
 	 * @generated NOT

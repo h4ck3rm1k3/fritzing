@@ -28,7 +28,9 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.fritzing.fritzing.GenericPart;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.GenericPartCanonicalEditPolicy;
@@ -102,6 +104,45 @@ public class GenericPartEditPart extends PartEditPart  {
 	protected IFigure createNodeShape() {
 		GenericPartFigure figure = new GenericPartFigure(partLoader);
 		return primaryShape = figure;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		if (addFixedChild(childEditPart)) {
+			return;
+		}
+		super.addChildVisual(childEditPart, -1);
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public String filterNameEditText(TerminalName2EditPart part, String s) {
+		if (part != null) {
+			Object model = part.getModel();
+			if (model instanceof NodeImpl) {
+				EObject eobject = ((NodeImpl) model).getElement();
+				if (eobject instanceof Terminal) {
+					String id = ((Terminal) eobject).getId();
+					boolean vis = partLoader.getTerminalLabelVisible(id);
+					if (part.getFigure() != null) {
+						part.getFigure().setVisible(vis);
+					}
+					return (vis) ? s : null;
+				}
+			}
+		}
+		
+		return s;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected boolean addFixedChild(EditPart childEditPart) {
+		return addEastWestFixedChild(childEditPart);
 	}
 
 	/**
