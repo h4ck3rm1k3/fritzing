@@ -14,8 +14,9 @@
 	<defaultUnits>tenths</defaultUnits>   <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="863.6" y="127" units="himetric"/><!-- 34x5 pixels -->
 	<bounds width="7493" height="5232.4" units="himetric"/><!-- 295x206 pixels -->
-	<connectors units="tenths">
-		<connector id="psu" name="Power Select USB" x="1" y="9" type="male" />
+	<connectors units="tenths" >
+    	<nameLayout visible="false" />
+    	<connector id="psu" name="Power Select USB" x="1" y="9" type="male" />
 		<connector id="psc" name="Power Select Common" x="1" y="10" type="male" />
 		<connector id="pse" name="Power Select External" x="1" y="11" type="male" />
 		<connector id="icsp1" name="ICSP 1" x="24" y="8" type="male" />
