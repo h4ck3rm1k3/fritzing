@@ -288,7 +288,6 @@ public class PartLoader {
 			((Part) newElement).setGenus(genus);
 			((Part) newElement).setVersion(version);
 			((Part) newElement).setFootprint(footprint);
-			((Part) newElement).setDescription(description);
 		}
 			
 		try {
