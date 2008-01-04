@@ -60,6 +60,8 @@ public class PartLoader {
 	protected String label;
 	protected String title;
 	protected boolean generic;
+	protected String version;
+	protected String footprint;
 	
 	public PartLoader() {
 		if (bitHash.size() == 0) {
@@ -282,8 +284,13 @@ public class PartLoader {
 		
 		if (newElement instanceof Part) {
 			((Part) newElement).setId(genID());
+			((Part) newElement).setSpecies(species);
+			((Part) newElement).setGenus(genus);
+			((Part) newElement).setVersion(version);
+			((Part) newElement).setFootprint(footprint);
+			((Part) newElement).setDescription(description);
 		}
-		
+			
 		try {
 			
 			for (Enumeration<String> e = terminalHash.keys(); e.hasMoreElements();) {
@@ -410,6 +417,8 @@ public class PartLoader {
 			description = (String) xp.evaluate("/part/description", document, XPathConstants.STRING);
 			title = (String) xp.evaluate("/part/title", document, XPathConstants.STRING);
 			label = (String) xp.evaluate("/part/label", document, XPathConstants.STRING);
+			version = (String) xp.evaluate("/part/version", document, XPathConstants.STRING);
+			footprint = (String) xp.evaluate("/part/footprints/footprint/@source", document, XPathConstants.STRING);
 			
 			parseIcons((NodeList) xp.evaluate("/part/icons/icon", document, XPathConstants.NODESET));
 			parseImages((NodeList) xp.evaluate("/part/layers/layer", document, XPathConstants.NODESET));

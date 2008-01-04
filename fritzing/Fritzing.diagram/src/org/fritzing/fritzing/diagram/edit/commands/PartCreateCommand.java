@@ -66,8 +66,6 @@ public class PartCreateCommand extends CreateElementCommand {
 			
 			// use "our" initializers instead		
 			partLoader.initialize(newElement);	
-			newElement.setSpecies(partLoader.getSpecies());
-			newElement.setGenus(partLoader.getGenus());
 	
 			return newElement;
 		}
