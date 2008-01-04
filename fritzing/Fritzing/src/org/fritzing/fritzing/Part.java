@@ -20,7 +20,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.fritzing.fritzing.Part#getSpecies <em>Species</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getGenus <em>Genus</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getVersion <em>Version</em>}</li>
- *   <li>{@link org.fritzing.fritzing.Part#getDescription <em>Description</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getFootprint <em>Footprint</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getTerminals <em>Terminals</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getParent <em>Parent</em>}</li>
@@ -169,33 +168,6 @@ public interface Part extends Element {
 	void setVersion(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Description</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Description</em>' attribute.
-	 * @see #setDescription(String)
-	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Description()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name='description' kind='attribute'"
-	 * @generated
-	 */
-	String getDescription();
-
-	/**
-	 * Sets the value of the '{@link org.fritzing.fritzing.Part#getDescription <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Description</em>' attribute.
-	 * @see #getDescription()
-	 * @generated
-	 */
-	void setDescription(String value);
-
-	/**
 	 * Returns the value of the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -254,7 +226,7 @@ public interface Part extends Element {
 	 * @see #setParent(Composite)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Parent()
 	 * @see org.fritzing.fritzing.Composite#getParts
-	 * @model opposite="parts" keys="name"
+	 * @model opposite="parts" keys="id"
 	 * @generated
 	 */
 	Composite getParent();

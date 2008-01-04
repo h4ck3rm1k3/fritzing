@@ -36,7 +36,7 @@ public interface Terminal extends Element {
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTerminal_Id()
-	 * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='id' kind='attribute'"
 	 * @generated
 	 */
@@ -92,7 +92,7 @@ public interface Terminal extends Element {
 	 * @see #setParent(Part)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTerminal_Parent()
 	 * @see org.fritzing.fritzing.Part#getTerminals
-	 * @model opposite="terminals" keys="name"
+	 * @model opposite="terminals" keys="id"
 	 * @generated
 	 */
 	Part getParent();

@@ -289,22 +289,13 @@ public interface FritzingPackage extends EPackage {
 	int PART__VERSION = ELEMENT_FEATURE_COUNT + 4;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__DESCRIPTION = ELEMENT_FEATURE_COUNT + 5;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PART__FOOTPRINT = ELEMENT_FEATURE_COUNT + 6;
+	int PART__FOOTPRINT = ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -313,7 +304,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__TERMINALS = ELEMENT_FEATURE_COUNT + 7;
+	int PART__TERMINALS = ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -322,7 +313,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__PARENT = ELEMENT_FEATURE_COUNT + 8;
+	int PART__PARENT = ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Part</em>' class.
@@ -331,7 +322,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 9;
+	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ResistorImpl <em>Resistor</em>}' class.
@@ -387,15 +378,6 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESISTOR__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESISTOR__DESCRIPTION = PART__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
@@ -498,15 +480,6 @@ public interface FritzingPackage extends EPackage {
 	int LED__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LED__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -607,15 +580,6 @@ public interface FritzingPackage extends EPackage {
 	int BUTTON__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -714,15 +678,6 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSITE__DESCRIPTION = PART__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
@@ -834,15 +789,6 @@ public interface FritzingPackage extends EPackage {
 	int SKETCH__VERSION = COMPOSITE__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SKETCH__DESCRIPTION = COMPOSITE__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -952,15 +898,6 @@ public interface FritzingPackage extends EPackage {
 	int BREADBOARD__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1059,15 +996,6 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE__VERSION = COMPOSITE__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE__DESCRIPTION = COMPOSITE__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
@@ -1179,15 +1107,6 @@ public interface FritzingPackage extends EPackage {
 	int ARDUINO__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ARDUINO__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1289,15 +1208,6 @@ public interface FritzingPackage extends EPackage {
 	int POTENTIOMETER__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1389,15 +1299,6 @@ public interface FritzingPackage extends EPackage {
 	int FSR_SENSOR__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1487,15 +1388,6 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int LIGHT_SENSOR__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__DESCRIPTION = PART__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
@@ -1590,15 +1482,6 @@ public interface FritzingPackage extends EPackage {
 	int TRANSISTOR__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1690,15 +1573,6 @@ public interface FritzingPackage extends EPackage {
 	int POWER_TRANSISTOR__VERSION = PART__VERSION;
 
 	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__DESCRIPTION = PART__DESCRIPTION;
-
-	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1788,15 +1662,6 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int GENERIC_PART__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__DESCRIPTION = PART__DESCRIPTION;
 
 	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
@@ -2060,17 +1925,6 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPart_Version();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getDescription <em>Description</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see org.fritzing.fritzing.Part#getDescription()
-	 * @see #getPart()
-	 * @generated
-	 */
-	EAttribute getPart_Description();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getFootprint <em>Footprint</em>}'.
@@ -2521,14 +2375,6 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PART__VERSION = eINSTANCE.getPart_Version();
-
-		/**
-		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PART__DESCRIPTION = eINSTANCE.getPart_Description();
 
 		/**
 		 * The meta object literal for the '<em><b>Footprint</b></em>' attribute feature.

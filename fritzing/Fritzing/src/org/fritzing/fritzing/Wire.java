@@ -37,7 +37,7 @@ public interface Wire extends Element {
 	 * @return the value of the '<em>Source</em>' reference.
 	 * @see #setSource(Terminal)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Source()
-	 * @model required="true"
+	 * @model keys="id" required="true"
 	 *        extendedMetaData="kind='attribute' name='source'"
 	 * @generated
 	 */
@@ -64,7 +64,7 @@ public interface Wire extends Element {
 	 * @return the value of the '<em>Target</em>' reference.
 	 * @see #setTarget(Terminal)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Target()
-	 * @model required="true"
+	 * @model keys="id" required="true"
 	 *        extendedMetaData="kind='attribute' name='target'"
 	 * @generated
 	 */
@@ -91,7 +91,7 @@ public interface Wire extends Element {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Name()
-	 * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
 	 *        extendedMetaData="name='name' kind='attribute'"
 	 * @generated
 	 */
@@ -120,7 +120,7 @@ public interface Wire extends Element {
 	 * @see #setParent(Composite)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Parent()
 	 * @see org.fritzing.fritzing.Composite#getWires
-	 * @model opposite="wires" keys="name"
+	 * @model opposite="wires" keys="id"
 	 * @generated
 	 */
 	Composite getParent();

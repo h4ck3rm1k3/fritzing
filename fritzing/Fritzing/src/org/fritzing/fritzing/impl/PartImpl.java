@@ -38,7 +38,6 @@ import org.fritzing.fritzing.Terminal;
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getSpecies <em>Species</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getGenus <em>Genus</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getVersion <em>Version</em>}</li>
- *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getFootprint <em>Footprint</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getTerminals <em>Terminals</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getParent <em>Parent</em>}</li>
@@ -147,26 +146,6 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * @ordered
 	 */
 	protected String version = VERSION_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDescription()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String DESCRIPTION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDescription()
-	 * @generated
-	 * @ordered
-	 */
-	protected String description = DESCRIPTION_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getFootprint() <em>Footprint</em>}' attribute.
@@ -327,27 +306,6 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setDescription(String newDescription) {
-		String oldDescription = description;
-		description = newDescription;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.PART__DESCRIPTION, oldDescription, description));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getFootprint() {
 		return footprint;
 	}
@@ -484,8 +442,6 @@ public abstract class PartImpl extends ElementImpl implements Part {
 				return getGenus();
 			case FritzingPackage.PART__VERSION:
 				return getVersion();
-			case FritzingPackage.PART__DESCRIPTION:
-				return getDescription();
 			case FritzingPackage.PART__FOOTPRINT:
 				return getFootprint();
 			case FritzingPackage.PART__TERMINALS:
@@ -519,9 +475,6 @@ public abstract class PartImpl extends ElementImpl implements Part {
 				return;
 			case FritzingPackage.PART__VERSION:
 				setVersion((String)newValue);
-				return;
-			case FritzingPackage.PART__DESCRIPTION:
-				setDescription((String)newValue);
 				return;
 			case FritzingPackage.PART__FOOTPRINT:
 				setFootprint((String)newValue);
@@ -560,9 +513,6 @@ public abstract class PartImpl extends ElementImpl implements Part {
 			case FritzingPackage.PART__VERSION:
 				setVersion(VERSION_EDEFAULT);
 				return;
-			case FritzingPackage.PART__DESCRIPTION:
-				setDescription(DESCRIPTION_EDEFAULT);
-				return;
 			case FritzingPackage.PART__FOOTPRINT:
 				setFootprint(FOOTPRINT_EDEFAULT);
 				return;
@@ -594,8 +544,6 @@ public abstract class PartImpl extends ElementImpl implements Part {
 				return GENUS_EDEFAULT == null ? genus != null : !GENUS_EDEFAULT.equals(genus);
 			case FritzingPackage.PART__VERSION:
 				return VERSION_EDEFAULT == null ? version != null : !VERSION_EDEFAULT.equals(version);
-			case FritzingPackage.PART__DESCRIPTION:
-				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case FritzingPackage.PART__FOOTPRINT:
 				return FOOTPRINT_EDEFAULT == null ? footprint != null : !FOOTPRINT_EDEFAULT.equals(footprint);
 			case FritzingPackage.PART__TERMINALS:
@@ -626,8 +574,6 @@ public abstract class PartImpl extends ElementImpl implements Part {
 		result.append(genus);
 		result.append(", version: ");
 		result.append(version);
-		result.append(", description: ");
-		result.append(description);
 		result.append(", footprint: ");
 		result.append(footprint);
 		result.append(')');

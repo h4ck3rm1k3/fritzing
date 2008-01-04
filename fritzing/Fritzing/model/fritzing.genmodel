@@ -16,7 +16,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//DocumentRoot/sketch"/>
     </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//Terminal">
-      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Terminal/id"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Terminal/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Terminal/name"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Terminal/parent"/>
     </genClasses>
@@ -34,8 +34,6 @@
       <genFeatures property="Readonly" createChild="false" propertyDescription=""
           ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/genus"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/version"/>
-      <genFeatures property="Readonly" createChild="false" propertyMultiLine="true"
-          ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/footprint"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/terminals"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Part/parent"/>
