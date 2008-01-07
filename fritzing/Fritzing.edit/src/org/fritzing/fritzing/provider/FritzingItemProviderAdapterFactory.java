@@ -144,6 +144,29 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Track} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TrackItemProvider trackItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.Track}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTrackAdapter() {
+		if (trackItemProvider == null) {
+			trackItemProvider = new TrackItemProvider(this);
+		}
+
+		return trackItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Resistor} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -382,13 +405,14 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 	public void dispose() {
 		if (documentRootItemProvider != null) documentRootItemProvider.dispose();
 		if (terminalItemProvider != null) terminalItemProvider.dispose();
-		if (wireItemProvider != null) wireItemProvider.dispose();
 		if (genericPartItemProvider != null) genericPartItemProvider.dispose();
 		if (resistorItemProvider != null) resistorItemProvider.dispose();
 		if (ledItemProvider != null) ledItemProvider.dispose();
 		if (sketchItemProvider != null) sketchItemProvider.dispose();
 		if (moduleItemProvider != null) moduleItemProvider.dispose();
 		if (breadboardItemProvider != null) breadboardItemProvider.dispose();
+		if (wireItemProvider != null) wireItemProvider.dispose();
+		if (trackItemProvider != null) trackItemProvider.dispose();
 	}
 
 }

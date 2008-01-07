@@ -197,6 +197,7 @@ public class PartItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(FritzingPackage.Literals.PART__TERMINALS);
+			childrenFeatures.add(FritzingPackage.Literals.PART__TRACKS);
 		}
 		return childrenFeatures;
 	}
@@ -249,6 +250,7 @@ public class PartItemProvider
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case FritzingPackage.PART__TERMINALS:
+			case FritzingPackage.PART__TRACKS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -270,6 +272,11 @@ public class PartItemProvider
 			(createChildParameter
 				(FritzingPackage.Literals.PART__TERMINALS,
 				 FritzingFactory.eINSTANCE.createTerminal()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(FritzingPackage.Literals.PART__TRACKS,
+				 FritzingFactory.eINSTANCE.createTrack()));
 	}
 
 	/**

@@ -21,20 +21,18 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.fritzing.fritzing.Breadboard;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.Track;
 
 /**
- * This is the item provider adapter for a {@link org.fritzing.fritzing.Breadboard} object.
+ * This is the item provider adapter for a {@link org.fritzing.fritzing.Track} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class BreadboardItemProvider
-	extends PartItemProvider
+public class TrackItemProvider
+	extends ConnectionItemProvider
 	implements	
 		IEditingDomainItemProvider,	
 		IStructuredItemContentProvider,	
@@ -47,7 +45,7 @@ public class BreadboardItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BreadboardItemProvider(AdapterFactory adapterFactory) {
+	public TrackItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -62,65 +60,65 @@ public class BreadboardItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addLinesPropertyDescriptor(object);
-			addColumnsPropertyDescriptor(object);
+			addTargetPropertyDescriptor(object);
+			addSourcePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Lines feature.
+	 * This adds a property descriptor for the Target feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLinesPropertyDescriptor(Object object) {
+	protected void addTargetPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Breadboard_lines_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Breadboard_lines_feature", "_UI_Breadboard_type"),
-				 FritzingPackage.Literals.BREADBOARD__LINES,
+				 getString("_UI_Track_target_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Track_target_feature", "_UI_Track_type"),
+				 FritzingPackage.Literals.TRACK__TARGET,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This adds a property descriptor for the Columns feature.
+	 * This adds a property descriptor for the Source feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addColumnsPropertyDescriptor(Object object) {
+	protected void addSourcePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Breadboard_columns_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Breadboard_columns_feature", "_UI_Breadboard_type"),
-				 FritzingPackage.Literals.BREADBOARD__COLUMNS,
+				 getString("_UI_Track_source_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Track_source_feature", "_UI_Track_type"),
+				 FritzingPackage.Literals.TRACK__SOURCE,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This returns Breadboard.gif.
+	 * This returns Track.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Breadboard"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Track"));
 	}
 
 	/**
@@ -131,10 +129,10 @@ public class BreadboardItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Breadboard)object).getName();
+		String label = ((Track)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Breadboard_type") :
-			getString("_UI_Breadboard_type") + " " + label;
+			getString("_UI_Track_type") :
+			getString("_UI_Track_type") + " " + label;
 	}
 
 	/**
@@ -147,13 +145,6 @@ public class BreadboardItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(Breadboard.class)) {
-			case FritzingPackage.BREADBOARD__LINES:
-			case FritzingPackage.BREADBOARD__COLUMNS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 

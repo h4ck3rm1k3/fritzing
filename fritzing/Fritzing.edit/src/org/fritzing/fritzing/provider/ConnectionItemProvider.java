@@ -24,17 +24,17 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.fritzing.fritzing.Breadboard;
+import org.fritzing.fritzing.Connection;
 import org.fritzing.fritzing.FritzingPackage;
 
 /**
- * This is the item provider adapter for a {@link org.fritzing.fritzing.Breadboard} object.
+ * This is the item provider adapter for a {@link org.fritzing.fritzing.Connection} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class BreadboardItemProvider
-	extends PartItemProvider
+public class ConnectionItemProvider
+	extends ElementItemProvider
 	implements	
 		IEditingDomainItemProvider,	
 		IStructuredItemContentProvider,	
@@ -47,7 +47,7 @@ public class BreadboardItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BreadboardItemProvider(AdapterFactory adapterFactory) {
+	public ConnectionItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -62,65 +62,31 @@ public class BreadboardItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addLinesPropertyDescriptor(object);
-			addColumnsPropertyDescriptor(object);
+			addNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Lines feature.
+	 * This adds a property descriptor for the Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLinesPropertyDescriptor(Object object) {
+	protected void addNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Breadboard_lines_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Breadboard_lines_feature", "_UI_Breadboard_type"),
-				 FritzingPackage.Literals.BREADBOARD__LINES,
+				 getString("_UI_Connection_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Connection_name_feature", "_UI_Connection_type"),
+				 FritzingPackage.Literals.CONNECTION__NAME,
 				 true,
 				 false,
 				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
 				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Columns feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addColumnsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Breadboard_columns_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Breadboard_columns_feature", "_UI_Breadboard_type"),
-				 FritzingPackage.Literals.BREADBOARD__COLUMNS,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This returns Breadboard.gif.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Breadboard"));
 	}
 
 	/**
@@ -131,10 +97,10 @@ public class BreadboardItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Breadboard)object).getName();
+		String label = ((Connection)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Breadboard_type") :
-			getString("_UI_Breadboard_type") + " " + label;
+			getString("_UI_Connection_type") :
+			getString("_UI_Connection_type") + " " + label;
 	}
 
 	/**
@@ -148,9 +114,8 @@ public class BreadboardItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Breadboard.class)) {
-			case FritzingPackage.BREADBOARD__LINES:
-			case FritzingPackage.BREADBOARD__COLUMNS:
+		switch (notification.getFeatureID(Connection.class)) {
+			case FritzingPackage.CONNECTION__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}
