@@ -190,29 +190,6 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Button} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ButtonItemProvider buttonItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.fritzing.fritzing.Button}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createButtonAdapter() {
-		if (buttonItemProvider == null) {
-			buttonItemProvider = new ButtonItemProvider(this);
-		}
-
-		return buttonItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Sketch} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -279,144 +256,6 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 		}
 
 		return moduleItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Arduino} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ArduinoItemProvider arduinoItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.fritzing.fritzing.Arduino}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createArduinoAdapter() {
-		if (arduinoItemProvider == null) {
-			arduinoItemProvider = new ArduinoItemProvider(this);
-		}
-
-		return arduinoItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Potentiometer} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected PotentiometerItemProvider potentiometerItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.fritzing.fritzing.Potentiometer}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createPotentiometerAdapter() {
-		if (potentiometerItemProvider == null) {
-			potentiometerItemProvider = new PotentiometerItemProvider(this);
-		}
-
-		return potentiometerItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.FsrSensor} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected FsrSensorItemProvider fsrSensorItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.fritzing.fritzing.FsrSensor}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createFsrSensorAdapter() {
-		if (fsrSensorItemProvider == null) {
-			fsrSensorItemProvider = new FsrSensorItemProvider(this);
-		}
-
-		return fsrSensorItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.LightSensor} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected LightSensorItemProvider lightSensorItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.fritzing.fritzing.LightSensor}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createLightSensorAdapter() {
-		if (lightSensorItemProvider == null) {
-			lightSensorItemProvider = new LightSensorItemProvider(this);
-		}
-
-		return lightSensorItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Transistor} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected TransistorItemProvider transistorItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.fritzing.fritzing.Transistor}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createTransistorAdapter() {
-		if (transistorItemProvider == null) {
-			transistorItemProvider = new TransistorItemProvider(this);
-		}
-
-		return transistorItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.PowerTransistor} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected PowerTransistorItemProvider powerTransistorItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.fritzing.fritzing.PowerTransistor}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createPowerTransistorAdapter() {
-		if (powerTransistorItemProvider == null) {
-			powerTransistorItemProvider = new PowerTransistorItemProvider(this);
-		}
-
-		return powerTransistorItemProvider;
 	}
 
 	/**
@@ -544,19 +383,12 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 		if (documentRootItemProvider != null) documentRootItemProvider.dispose();
 		if (terminalItemProvider != null) terminalItemProvider.dispose();
 		if (wireItemProvider != null) wireItemProvider.dispose();
+		if (genericPartItemProvider != null) genericPartItemProvider.dispose();
 		if (resistorItemProvider != null) resistorItemProvider.dispose();
 		if (ledItemProvider != null) ledItemProvider.dispose();
-		if (buttonItemProvider != null) buttonItemProvider.dispose();
 		if (sketchItemProvider != null) sketchItemProvider.dispose();
-		if (breadboardItemProvider != null) breadboardItemProvider.dispose();
 		if (moduleItemProvider != null) moduleItemProvider.dispose();
-		if (arduinoItemProvider != null) arduinoItemProvider.dispose();
-		if (potentiometerItemProvider != null) potentiometerItemProvider.dispose();
-		if (fsrSensorItemProvider != null) fsrSensorItemProvider.dispose();
-		if (lightSensorItemProvider != null) lightSensorItemProvider.dispose();
-		if (transistorItemProvider != null) transistorItemProvider.dispose();
-		if (powerTransistorItemProvider != null) powerTransistorItemProvider.dispose();
-		if (genericPartItemProvider != null) genericPartItemProvider.dispose();
+		if (breadboardItemProvider != null) breadboardItemProvider.dispose();
 	}
 
 }

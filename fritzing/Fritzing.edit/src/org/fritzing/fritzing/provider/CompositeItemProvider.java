@@ -147,6 +147,11 @@ public class CompositeItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(FritzingPackage.Literals.COMPOSITE__PARTS,
+				 FritzingFactory.eINSTANCE.createGenericPart()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(FritzingPackage.Literals.COMPOSITE__PARTS,
 				 FritzingFactory.eINSTANCE.createResistor()));
 
 		newChildDescriptors.add
@@ -157,17 +162,7 @@ public class CompositeItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createButton()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
 				 FritzingFactory.eINSTANCE.createSketch()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createBreadboard()));
 
 		newChildDescriptors.add
 			(createChildParameter
@@ -177,37 +172,7 @@ public class CompositeItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createArduino()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createPotentiometer()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createFsrSensor()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createLightSensor()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createTransistor()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createPowerTransistor()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.COMPOSITE__PARTS,
-				 FritzingFactory.eINSTANCE.createGenericPart()));
+				 FritzingFactory.eINSTANCE.createBreadboard()));
 
 		newChildDescriptors.add
 			(createChildParameter
