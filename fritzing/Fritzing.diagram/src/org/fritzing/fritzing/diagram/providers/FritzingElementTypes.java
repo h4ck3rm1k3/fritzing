@@ -54,57 +54,22 @@ public class FritzingElementTypes extends ElementInitializers {
 	/**
 	 * @generated
 	 */
-	public static final IElementType Arduino_2001 = getElementType("Fritzing.diagram.Arduino_2001"); //$NON-NLS-1$
+	public static final IElementType LED_2001 = getElementType("Fritzing.diagram.LED_2001"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType LED_2002 = getElementType("Fritzing.diagram.LED_2002"); //$NON-NLS-1$
+	public static final IElementType Resistor_2002 = getElementType("Fritzing.diagram.Resistor_2002"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType Resistor_2003 = getElementType("Fritzing.diagram.Resistor_2003"); //$NON-NLS-1$
+	public static final IElementType Terminal_2003 = getElementType("Fritzing.diagram.Terminal_2003"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType Button_2004 = getElementType("Fritzing.diagram.Button_2004"); //$NON-NLS-1$
-
-	/**
-	 * @generated
-	 */
-	public static final IElementType Potentiometer_2005 = getElementType("Fritzing.diagram.Potentiometer_2005"); //$NON-NLS-1$
-
-	/**
-	 * @generated
-	 */
-	public static final IElementType FsrSensor_2006 = getElementType("Fritzing.diagram.FsrSensor_2006"); //$NON-NLS-1$
-
-	/**
-	 * @generated
-	 */
-	public static final IElementType LightSensor_2007 = getElementType("Fritzing.diagram.LightSensor_2007"); //$NON-NLS-1$
-
-	/**
-	 * @generated
-	 */
-	public static final IElementType Terminal_2008 = getElementType("Fritzing.diagram.Terminal_2008"); //$NON-NLS-1$
-
-	/**
-	 * @generated
-	 */
-	public static final IElementType Transistor_2009 = getElementType("Fritzing.diagram.Transistor_2009"); //$NON-NLS-1$
-
-	/**
-	 * @generated
-	 */
-	public static final IElementType PowerTransistor_2010 = getElementType("Fritzing.diagram.PowerTransistor_2010"); //$NON-NLS-1$
-
-	/**
-	 * @generated
-	 */
-	public static final IElementType GenericPart_2011 = getElementType("Fritzing.diagram.GenericPart_2011"); //$NON-NLS-1$
+	public static final IElementType GenericPart_2004 = getElementType("Fritzing.diagram.GenericPart_2004"); //$NON-NLS-1$
 
 	/**
 	 * @generated
@@ -228,34 +193,15 @@ public class FritzingElementTypes extends ElementInitializers {
 
 			elements.put(Sketch_1000, FritzingPackage.eINSTANCE.getSketch());
 
-			elements.put(Arduino_2001, FritzingPackage.eINSTANCE.getArduino());
-
-			elements.put(LED_2002, FritzingPackage.eINSTANCE.getLED());
+			elements.put(LED_2001, FritzingPackage.eINSTANCE.getLED());
 
 			elements
-					.put(Resistor_2003, FritzingPackage.eINSTANCE.getResistor());
-
-			elements.put(Button_2004, FritzingPackage.eINSTANCE.getButton());
-
-			elements.put(Potentiometer_2005, FritzingPackage.eINSTANCE
-					.getPotentiometer());
-
-			elements.put(FsrSensor_2006, FritzingPackage.eINSTANCE
-					.getFsrSensor());
-
-			elements.put(LightSensor_2007, FritzingPackage.eINSTANCE
-					.getLightSensor());
+					.put(Resistor_2002, FritzingPackage.eINSTANCE.getResistor());
 
 			elements
-					.put(Terminal_2008, FritzingPackage.eINSTANCE.getTerminal());
+					.put(Terminal_2003, FritzingPackage.eINSTANCE.getTerminal());
 
-			elements.put(Transistor_2009, FritzingPackage.eINSTANCE
-					.getTransistor());
-
-			elements.put(PowerTransistor_2010, FritzingPackage.eINSTANCE
-					.getPowerTransistor());
-
-			elements.put(GenericPart_2011, FritzingPackage.eINSTANCE
+			elements.put(GenericPart_2004, FritzingPackage.eINSTANCE
 					.getGenericPart());
 
 			elements
@@ -280,17 +226,10 @@ public class FritzingElementTypes extends ElementInitializers {
 		if (KNOWN_ELEMENT_TYPES == null) {
 			KNOWN_ELEMENT_TYPES = new HashSet();
 			KNOWN_ELEMENT_TYPES.add(Sketch_1000);
-			KNOWN_ELEMENT_TYPES.add(Arduino_2001);
-			KNOWN_ELEMENT_TYPES.add(LED_2002);
-			KNOWN_ELEMENT_TYPES.add(Resistor_2003);
-			KNOWN_ELEMENT_TYPES.add(Button_2004);
-			KNOWN_ELEMENT_TYPES.add(Potentiometer_2005);
-			KNOWN_ELEMENT_TYPES.add(FsrSensor_2006);
-			KNOWN_ELEMENT_TYPES.add(LightSensor_2007);
-			KNOWN_ELEMENT_TYPES.add(Terminal_2008);
-			KNOWN_ELEMENT_TYPES.add(Transistor_2009);
-			KNOWN_ELEMENT_TYPES.add(PowerTransistor_2010);
-			KNOWN_ELEMENT_TYPES.add(GenericPart_2011);
+			KNOWN_ELEMENT_TYPES.add(LED_2001);
+			KNOWN_ELEMENT_TYPES.add(Resistor_2002);
+			KNOWN_ELEMENT_TYPES.add(Terminal_2003);
+			KNOWN_ELEMENT_TYPES.add(GenericPart_2004);
 			KNOWN_ELEMENT_TYPES.add(Terminal_3001);
 			KNOWN_ELEMENT_TYPES.add(Wire_4001);
 		}

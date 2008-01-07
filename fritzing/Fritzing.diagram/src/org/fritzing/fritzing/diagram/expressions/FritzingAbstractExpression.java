@@ -76,8 +76,7 @@ public abstract class FritzingAbstractExpression {
 			FritzingDiagramEditorPlugin
 					.getInstance()
 					.logError(
-							"Expression problem:" + message + "body:" + body, throwable); //$NON-NLS-1$ //$NON-NLS-2$
-
+							"Expression problem: " + message + " body: " + body, throwable); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -202,6 +201,7 @@ public abstract class FritzingAbstractExpression {
 	public static final FritzingAbstractExpression createNullExpression(
 			EClassifier context) {
 		return new FritzingAbstractExpression(context) {
+
 			protected Object doEvaluate(Object context, Map env) {
 				// TODO - log entry about not provider available for this expression
 				return null;

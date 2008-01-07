@@ -49,26 +49,21 @@ public class FritzingPaletteFactory {
 	 * @generated NOT
 	 */
 	public void fillPalette(PaletteRoot paletteRoot) {
-		coreMap.put("arduino", FritzingElementTypes.Arduino_2001);
-		coreMap.put("button", FritzingElementTypes.Button_2004);
-		coreMap.put("fsr", FritzingElementTypes.FsrSensor_2006);
-		coreMap.put("led", FritzingElementTypes.LED_2002);
-		coreMap.put("lightsensor", FritzingElementTypes.LightSensor_2007);
-		coreMap.put("potentiometer", FritzingElementTypes.Potentiometer_2005);
-		coreMap.put("powertransistor", FritzingElementTypes.PowerTransistor_2010);
-		coreMap.put("resistor", FritzingElementTypes.Resistor_2003);
-		coreMap.put("transistor", FritzingElementTypes.Transistor_2009);
+		coreMap.put("led", FritzingElementTypes.LED_2001);
+		coreMap.put("resistor", FritzingElementTypes.Resistor_2002);
+		
 		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
 			String folder = keys.nextElement();
-			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries" + File.separator + "core" + File.separator + folder + File.separator + "partdescription.xml");
+			PartLoader partLoader = PartLoaderRegistry.getInstance().get(
+					"libraries" + File.separator + "core" + File.separator + folder + File.separator + "partdescription.xml");
 			if (partLoader == null) {
-				// alert user;
+				// TODO: alert user;
+				System.out.println("Couldn't load part " + folder);
 				continue;
 			}				
 		}
 			
 		customiseStandardGroup(paletteRoot);
-		paletteRoot.add(createConnect1Group());
 		createParts2Group();		
 		addGenerics("libraries");
 		for (Enumeration<PaletteDrawer> e = drawerMap.elements(); e.hasMoreElements(); ) {
@@ -90,7 +85,7 @@ public class FritzingPaletteFactory {
 	 * @generated NOT
 	 */
 	protected void addGenerics(String folder) {
-		if (folder.equals("libraries" + File.separator + "core")) return;
+//		if (folder.equals("libraries" + File.separator + "core")) return;
 		
 		File file = new File(FritzingDiagramEditorUtil.getFritzingLocation() + folder);		
 		if (!file.exists()) return;
@@ -98,7 +93,7 @@ public class FritzingPaletteFactory {
 		
 		File xmlFile = new File(file.getAbsolutePath() + File.separator + "partdescription.xml");
 		if (xmlFile.exists()) {
-			addPart(folder, FritzingElementTypes.GenericPart_2011);	
+			addPart(folder, FritzingElementTypes.GenericPart_2004);	
 		}
 				
 		File[] files = file.listFiles();
@@ -113,7 +108,7 @@ public class FritzingPaletteFactory {
 		if (partLoader == null) return;
 		
 		if (partLoader.isGeneric()) {
-			type = FritzingElementTypes.GenericPart_2011;
+			type = FritzingElementTypes.GenericPart_2004;
 		}
 		
 		List<IElementType>types = new ArrayList<IElementType>(1);
@@ -153,6 +148,8 @@ public class FritzingPaletteFactory {
 		ToolEntry selectionPanTool = createPanningSelectionTool();
 		standard.add(1, selectionPanTool);
 		paletteRoot.setDefaultEntry(selectionPanTool);
+		
+		standard.add(createWire1CreationTool());
 	}
 
 	/**
@@ -166,17 +163,6 @@ public class FritzingPaletteFactory {
 	protected ImageDescriptor getLargeImageDescriptor(IElementType type) {
 		return FritzingElementTypes.getImageRegistry().getDescriptor(
 				FritzingElementTypes.getImageRegistryKey(FritzingElementTypes.getElement(type)) + "Large");
-	}
-
-	/**
-	 * Creates "Connect" palette tool group
-	 * @generated
-	 */
-	private PaletteContainer createConnect1Group() {
-		PaletteGroup paletteContainer = new PaletteGroup(
-				Messages.Connect1Group_title);
-		paletteContainer.add(createWire1CreationTool());
-		return paletteContainer;
 	}
 
 	/**
@@ -204,8 +190,8 @@ public class FritzingPaletteFactory {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.Wire_4001);
 		LinkToolEntry entry = new LinkToolEntry(
-				Messages.Wire1CreationTool_title,
-				Messages.Wire1CreationTool_desc, types);
+				"Wire",
+				"Connect parts with a wire", types);
 		entry.setSmallIcon(FritzingElementTypes
 				.getImageDescriptor(FritzingElementTypes.Wire_4001));
 		entry.setLargeIcon(entry.getSmallIcon());

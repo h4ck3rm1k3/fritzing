@@ -13,7 +13,7 @@ import org.fritzing.fritzing.GenericPart;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
- * @generated
+ * @generated NOT
  */
 public class GenericPartCreateCommand extends PartCreateCommand {
 

@@ -62,7 +62,7 @@ public class GenericPartNameEditPart extends LabelEditPart implements
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5012;
+	public static final int VISUAL_ID = 5005;
 
 	/**
 	 * @generated
@@ -327,7 +327,7 @@ public class GenericPartNameEditPart extends LabelEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.GenericPart_2011, getParserElement(),
+					FritzingElementTypes.GenericPart_2004, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}
@@ -603,7 +603,7 @@ public class GenericPartNameEditPart extends LabelEditPart implements
 		 * @generated
 		 */
 		public GenericPartNameFigure() {
-			this.setText("..");
+			this.setText("");
 
 			this.setFont(THIS_FONT);
 

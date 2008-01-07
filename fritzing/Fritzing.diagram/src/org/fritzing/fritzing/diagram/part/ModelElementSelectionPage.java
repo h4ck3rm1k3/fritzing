@@ -35,7 +35,7 @@ public class ModelElementSelectionPage extends WizardPage {
 	/**
 	 * @generated
 	 */
-	private TreeViewer modelViewer;
+	private TreeViewer modelVewer;
 
 	/**
 	 * @generated
@@ -56,13 +56,13 @@ public class ModelElementSelectionPage extends WizardPage {
 	 */
 	public void setModelElement(EObject modelElement) {
 		selectedModelElement = modelElement;
-		if (modelViewer != null) {
+		if (modelVewer != null) {
 			if (selectedModelElement != null) {
-				modelViewer.setInput(selectedModelElement.eResource());
-				modelViewer.setSelection(new StructuredSelection(
+				modelVewer.setInput(selectedModelElement.eResource());
+				modelVewer.setSelection(new StructuredSelection(
 						selectedModelElement));
 			} else {
-				modelViewer.setInput(null);
+				modelVewer.setInput(null);
 			}
 			setPageComplete(validatePage());
 		}
@@ -85,31 +85,31 @@ public class ModelElementSelectionPage extends WizardPage {
 		label.setText(getSelectionTitle());
 		label.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_BEGINNING));
 
-		modelViewer = new TreeViewer(plate, SWT.SINGLE | SWT.H_SCROLL
+		modelVewer = new TreeViewer(plate, SWT.SINGLE | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.BORDER);
 		GridData layoutData = new GridData(GridData.FILL_BOTH);
 		layoutData.heightHint = 300;
 		layoutData.widthHint = 300;
-		modelViewer.getTree().setLayoutData(layoutData);
-		modelViewer.setContentProvider(new AdapterFactoryContentProvider(
+		modelVewer.getTree().setLayoutData(layoutData);
+		modelVewer.setContentProvider(new AdapterFactoryContentProvider(
 				FritzingDiagramEditorPlugin.getInstance()
 						.getItemProvidersAdapterFactory()));
-		modelViewer.setLabelProvider(new AdapterFactoryLabelProvider(
+		modelVewer.setLabelProvider(new AdapterFactoryLabelProvider(
 				FritzingDiagramEditorPlugin.getInstance()
 						.getItemProvidersAdapterFactory()));
 		if (selectedModelElement != null) {
-			modelViewer.setInput(selectedModelElement.eResource());
-			modelViewer.setSelection(new StructuredSelection(
+			modelVewer.setInput(selectedModelElement.eResource());
+			modelVewer.setSelection(new StructuredSelection(
 					selectedModelElement));
 		}
-		modelViewer
-				.addSelectionChangedListener(new ISelectionChangedListener() {
-					public void selectionChanged(SelectionChangedEvent event) {
-						ModelElementSelectionPage.this
-								.updateSelection((IStructuredSelection) event
-										.getSelection());
-					}
-				});
+		modelVewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			public void selectionChanged(SelectionChangedEvent event) {
+				ModelElementSelectionPage.this
+						.updateSelection((IStructuredSelection) event
+								.getSelection());
+			}
+		});
 
 		setPageComplete(validatePage());
 	}

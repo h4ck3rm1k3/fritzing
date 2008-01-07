@@ -120,12 +120,128 @@ public class FritzingValidationProvider extends
 	/**
 	 * @generated
 	 */
-	public static class DefaultCtx implements IClientSelector {
+	static final Map semanticCtxIdMap = new HashMap();
+
+	/**
+	 * @generated
+	 */
+	public static ITraversalStrategy getNotationTraversalStrategy(
+			IBatchValidator validator) {
+		return new CtxSwitchStrategy(validator);
+	}
+
+	/**
+	 * @generated
+	 */
+	private static class CtxSwitchStrategy implements ITraversalStrategy {
+
 		/**
 		 * @generated
 		 */
-		public boolean selects(Object object) {
-			return isInDefaultEditorContext(object);
+		private ITraversalStrategy defaultStrategy;
+
+		/**
+		 * @generated
+		 */
+		private String currentSemanticCtxId;
+
+		/**
+		 * @generated
+		 */
+		private boolean ctxChanged = true;
+
+		/**
+		 * @generated
+		 */
+		private EObject currentTarget;
+
+		/**
+		 * @generated
+		 */
+		private EObject preFetchedNextTarget;
+
+		/**
+		 * @generated
+		 */
+		CtxSwitchStrategy(IBatchValidator validator) {
+			this.defaultStrategy = validator.getDefaultTraversalStrategy();
 		}
+
+		/**
+		 * @generated
+		 */
+		public void elementValidated(EObject element, IStatus status) {
+			defaultStrategy.elementValidated(element, status);
+		}
+
+		/**
+		 * @generated
+		 */
+		public boolean hasNext() {
+			return defaultStrategy.hasNext();
+		}
+
+		/**
+		 * @generated
+		 */
+		public boolean isClientContextChanged() {
+			if (preFetchedNextTarget == null) {
+				preFetchedNextTarget = next();
+				prepareNextClientContext(preFetchedNextTarget);
+			}
+			return ctxChanged;
+		}
+
+		/**
+		 * @generated
+		 */
+		public EObject next() {
+			EObject nextTarget = preFetchedNextTarget;
+			if (nextTarget == null) {
+				nextTarget = defaultStrategy.next();
+			}
+			this.preFetchedNextTarget = null;
+			return this.currentTarget = nextTarget;
+		}
+
+		/**
+		 * @generated
+		 */
+		public void startTraversal(Collection traversalRoots,
+				IProgressMonitor monitor) {
+			defaultStrategy.startTraversal(traversalRoots, monitor);
+		}
+
+		/**
+		 * @generated
+		 */
+		private void prepareNextClientContext(EObject nextTarget) {
+			if (nextTarget != null && currentTarget != null) {
+				if (nextTarget instanceof View) {
+					String id = ((View) nextTarget).getType();
+					String nextSemanticId = id != null
+							&& semanticCtxIdMap.containsKey(id) ? id : null;
+					if ((currentSemanticCtxId != null && !currentSemanticCtxId
+							.equals(nextSemanticId))
+							|| (nextSemanticId != null && !nextSemanticId
+									.equals(currentSemanticCtxId))) {
+						this.ctxChanged = true;
+					}
+					currentSemanticCtxId = nextSemanticId;
+				} else {
+					// context of domain model
+					this.ctxChanged = currentSemanticCtxId != null;
+					currentSemanticCtxId = null;
+				}
+			} else {
+				this.ctxChanged = false;
+			}
+		}
+	}
+
+	/**
+	 * @generated
+	 */
+	static class JavaAudits {
 	}
 }

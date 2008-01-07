@@ -66,7 +66,6 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		this.refreshTargetConnections();
 	}
 
-		
 	/**
 	 * @generated NOT
 	 */

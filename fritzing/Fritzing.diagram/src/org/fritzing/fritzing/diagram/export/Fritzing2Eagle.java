@@ -11,17 +11,10 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Element;
-import org.fritzing.fritzing.FsrSensor;
-import org.fritzing.fritzing.LightSensor;
 import org.fritzing.fritzing.Part;
-import org.fritzing.fritzing.Potentiometer;
-import org.fritzing.fritzing.PowerTransistor;
 import org.fritzing.fritzing.Sketch;
-import org.fritzing.fritzing.Transistor;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
-import org.fritzing.fritzing.impl.ArduinoImpl;
-import org.fritzing.fritzing.impl.ButtonImpl;
 import org.fritzing.fritzing.impl.LEDImpl;
 import org.fritzing.fritzing.impl.ResistorImpl;
 
@@ -39,22 +32,8 @@ public class Fritzing2Eagle {
 			String partClass = "";
 			if (p instanceof ResistorImpl)	
 				partClass = "Resistor";
-			if (p instanceof ArduinoImpl) 
-				partClass = "Arduino";
-			if (p instanceof ButtonImpl)
-				partClass = "Button";
 			if (p instanceof LEDImpl)
 				partClass = "LED";
-			if (p instanceof Potentiometer)
-				partClass = "Potentiometer";
-			if (p instanceof FsrSensor)
-				partClass = "FsrSensor";
-			if (p instanceof LightSensor)
-				partClass = "LightSensor";
-			if (p instanceof Transistor)
-				partClass = "Transistor";
-			if (p instanceof PowerTransistor)
-				partClass = "PowerTransistor";
 			
 			EagleSCRPart part = new EagleSCRPart(
 				p.getName(),			// part name (e.g. 'R1')

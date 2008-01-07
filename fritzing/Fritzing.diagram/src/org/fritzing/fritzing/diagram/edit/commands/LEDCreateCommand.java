@@ -27,7 +27,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 import org.fritzing.fritzing.impl.SketchImpl;
 
 /**
- * @generated
+ * @generated NOT
  */
 public class LEDCreateCommand extends PartCreateCommand {
 
@@ -57,13 +57,13 @@ public class LEDCreateCommand extends PartCreateCommand {
 	 */
 	protected EObject doDefaultElementCreation() {
 		return super.doDefaultElementCreation();
-		
+
 		/*
 
- 		// attempt to create a wire
- 		// it doesn't appear on the diagram
- 		// but if you save and reload, it shows up
- 
+		// attempt to create a wire
+		// it doesn't appear on the diagram
+		// but if you save and reload, it shows up
+		
 		EObject wire = FritzingPackage.eINSTANCE.getWire()
 		.getEPackage().getEFactoryInstance().create(
 				FritzingPackage.eINSTANCE.getWire());
@@ -76,29 +76,27 @@ public class LEDCreateCommand extends PartCreateCommand {
 			newElement.getParent().getWires().add((Wire) wire);
 			 
 			
-//			//((SketchImpl) newElement.getParent()).
-//			
-//			FritzingDiagramEditor diagram = FritzingDiagramEditorUtil.getActiveDiagramPart();
-//			if (diagram != null) {
-//				DiagramEditPart part = diagram.getDiagramEditPart();
-//				//((SketchEditPart) part).refresh();
-//				
-//				for (Iterator it = part.getChildren().iterator(); it.hasNext(); ) {
-//					EditPart editPart = (EditPart) it.next();
-//					if (editPart.getModel() == newElement) {
-//						System.out.println("got part");
-//					}
-//				}
-//				
-//				//refreshSourceConnections()
-//				//refreshTargetConnections()
-//			}
+		//			//((SketchImpl) newElement.getParent()).
+		//			
+		//			FritzingDiagramEditor diagram = FritzingDiagramEditorUtil.getActiveDiagramPart();
+		//			if (diagram != null) {
+		//				DiagramEditPart part = diagram.getDiagramEditPart();
+		//				//((SketchEditPart) part).refresh();
+		//				
+		//				for (Iterator it = part.getChildren().iterator(); it.hasNext(); ) {
+		//					EditPart editPart = (EditPart) it.next();
+		//					if (editPart.getModel() == newElement) {
+		//						System.out.println("got part");
+		//					}
+		//				}
+		//				
+		//				//refreshSourceConnections()
+		//				//refreshTargetConnections()
+		//			}
 		
 		}
 		
-		*/
+		 */
 	}
 
-	
-	
 }

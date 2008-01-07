@@ -40,12 +40,12 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 /**
  * @generated NOT
  */
-public class GenericPartEditPart extends PartEditPart  {
+public class GenericPartEditPart extends PartEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2011;
+	public static final int VISUAL_ID = 2004;
 
 	/**
 	 * @generated
@@ -67,7 +67,8 @@ public class GenericPartEditPart extends PartEditPart  {
 			String genus = ((GenericPart) element).getGenus();
 			String species = ((GenericPart) element).getSpecies();
 			if (genus != null && species != null) {
-				partLoader = PartLoaderRegistry.getInstance().get(genus + species);   
+				partLoader = PartLoaderRegistry.getInstance().get(
+						genus + species);
 			}
 		}
 	}
@@ -134,7 +135,7 @@ public class GenericPartEditPart extends PartEditPart  {
 				}
 			}
 		}
-		
+
 		return s;
 	}
 

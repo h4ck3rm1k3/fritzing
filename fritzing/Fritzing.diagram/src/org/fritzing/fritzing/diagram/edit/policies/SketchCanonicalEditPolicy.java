@@ -28,19 +28,12 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.diagram.edit.parts.ArduinoEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.ButtonEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.FsrSensorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.LightSensorEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.PotentiometerEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.PowerTransistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.TransistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramUpdater;
 import org.fritzing.fritzing.diagram.part.FritzingLinkDescriptor;
@@ -84,16 +77,9 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 	protected boolean isOrphaned(Collection semanticChildren, final View view) {
 		int visualID = FritzingVisualIDRegistry.getVisualID(view);
 		switch (visualID) {
-		case ArduinoEditPart.VISUAL_ID:
 		case LEDEditPart.VISUAL_ID:
 		case ResistorEditPart.VISUAL_ID:
-		case ButtonEditPart.VISUAL_ID:
-		case PotentiometerEditPart.VISUAL_ID:
-		case FsrSensorEditPart.VISUAL_ID:
-		case LightSensorEditPart.VISUAL_ID:
 		case TerminalEditPart.VISUAL_ID:
-		case TransistorEditPart.VISUAL_ID:
-		case PowerTransistorEditPart.VISUAL_ID:
 		case GenericPartEditPart.VISUAL_ID:
 			return !semanticChildren.contains(view.getElement())
 					|| visualID != FritzingVisualIDRegistry.getNodeVisualID(
@@ -231,70 +217,28 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 					.getSketch_1000ContainedLinks(view));
 			break;
 		}
-		case ArduinoEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getArduino_2001ContainedLinks(view));
-			break;
-		}
 		case LEDEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getLED_2002ContainedLinks(view));
+					.getLED_2001ContainedLinks(view));
 			break;
 		}
 		case ResistorEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getResistor_2003ContainedLinks(view));
-			break;
-		}
-		case ButtonEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getButton_2004ContainedLinks(view));
-			break;
-		}
-		case PotentiometerEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getPotentiometer_2005ContainedLinks(view));
-			break;
-		}
-		case FsrSensorEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getFsrSensor_2006ContainedLinks(view));
-			break;
-		}
-		case LightSensorEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getLightSensor_2007ContainedLinks(view));
+					.getResistor_2002ContainedLinks(view));
 			break;
 		}
 		case TerminalEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getTerminal_2008ContainedLinks(view));
-			break;
-		}
-		case TransistorEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getTransistor_2009ContainedLinks(view));
-			break;
-		}
-		case PowerTransistorEditPart.VISUAL_ID: {
-			domain2NotationMap.put(view.getElement(), view);
-			result.addAll(FritzingDiagramUpdater
-					.getPowerTransistor_2010ContainedLinks(view));
+					.getTerminal_2003ContainedLinks(view));
 			break;
 		}
 		case GenericPartEditPart.VISUAL_ID: {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
-					.getGenericPart_2011ContainedLinks(view));
+					.getGenericPart_2004ContainedLinks(view));
 			break;
 		}
 		case Terminal2EditPart.VISUAL_ID: {

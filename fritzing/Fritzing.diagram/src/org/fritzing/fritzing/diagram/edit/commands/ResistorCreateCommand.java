@@ -15,7 +15,7 @@ import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
- * @generated
+ * @generated NOT
  */
 public class ResistorCreateCommand extends PartCreateCommand {
 

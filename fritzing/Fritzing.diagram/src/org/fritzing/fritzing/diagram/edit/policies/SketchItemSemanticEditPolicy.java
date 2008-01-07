@@ -10,17 +10,10 @@ import org.eclipse.gmf.runtime.emf.commands.core.commands.DuplicateEObjectsComma
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DuplicateElementsRequest;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.diagram.edit.commands.ArduinoCreateCommand;
-import org.fritzing.fritzing.diagram.edit.commands.ButtonCreateCommand;
-import org.fritzing.fritzing.diagram.edit.commands.FsrSensorCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.GenericPartCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.LEDCreateCommand;
-import org.fritzing.fritzing.diagram.edit.commands.LightSensorCreateCommand;
-import org.fritzing.fritzing.diagram.edit.commands.PotentiometerCreateCommand;
-import org.fritzing.fritzing.diagram.edit.commands.PowerTransistorCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.ResistorCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.TerminalCreateCommand;
-import org.fritzing.fritzing.diagram.edit.commands.TransistorCreateCommand;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -33,77 +26,28 @@ public class SketchItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	protected Command getCreateCommand(CreateElementRequest req) {
-		if (FritzingElementTypes.Arduino_2001 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new ArduinoCreateCommand(req));
-		}
-		if (FritzingElementTypes.LED_2002 == req.getElementType()) {
+		if (FritzingElementTypes.LED_2001 == req.getElementType()) {
 			if (req.getContainmentFeature() == null) {
 				req.setContainmentFeature(FritzingPackage.eINSTANCE
 						.getComposite_Parts());
 			}
 			return getGEFWrapper(new LEDCreateCommand(req));
 		}
-		if (FritzingElementTypes.Resistor_2003 == req.getElementType()) {
+		if (FritzingElementTypes.Resistor_2002 == req.getElementType()) {
 			if (req.getContainmentFeature() == null) {
 				req.setContainmentFeature(FritzingPackage.eINSTANCE
 						.getComposite_Parts());
 			}
 			return getGEFWrapper(new ResistorCreateCommand(req));
 		}
-		if (FritzingElementTypes.Button_2004 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new ButtonCreateCommand(req));
-		}
-		if (FritzingElementTypes.Potentiometer_2005 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new PotentiometerCreateCommand(req));
-		}
-		if (FritzingElementTypes.FsrSensor_2006 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new FsrSensorCreateCommand(req));
-		}
-		if (FritzingElementTypes.LightSensor_2007 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new LightSensorCreateCommand(req));
-		}
-		if (FritzingElementTypes.Terminal_2008 == req.getElementType()) {
+		if (FritzingElementTypes.Terminal_2003 == req.getElementType()) {
 			if (req.getContainmentFeature() == null) {
 				req.setContainmentFeature(FritzingPackage.eINSTANCE
 						.getPart_Terminals());
 			}
 			return getGEFWrapper(new TerminalCreateCommand(req));
 		}
-		if (FritzingElementTypes.Transistor_2009 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new TransistorCreateCommand(req));
-		}
-		if (FritzingElementTypes.PowerTransistor_2010 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getComposite_Parts());
-			}
-			return getGEFWrapper(new PowerTransistorCreateCommand(req));
-		}
-		if (FritzingElementTypes.GenericPart_2011 == req.getElementType()) {
+		if (FritzingElementTypes.GenericPart_2004 == req.getElementType()) {
 			if (req.getContainmentFeature() == null) {
 				req.setContainmentFeature(FritzingPackage.eINSTANCE
 						.getComposite_Parts());

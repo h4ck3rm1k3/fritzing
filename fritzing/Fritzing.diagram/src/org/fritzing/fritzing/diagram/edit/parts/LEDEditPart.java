@@ -57,7 +57,7 @@ public class LEDEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2002;
+	public static final int VISUAL_ID = 2001;
 
 	/**
 	 * @generated
@@ -74,7 +74,8 @@ public class LEDEditPart extends PartEditPart {
 	 */
 	public LEDEditPart(View view) {
 		super(view);
-		partLoader = PartLoaderRegistry.getInstance().get("libraries/core/led/partdescription.xml");   
+		partLoader = PartLoaderRegistry.getInstance().get(
+				"libraries/core/led/partdescription.xml");
 	}
 
 	/**
@@ -142,12 +143,11 @@ public class LEDEditPart extends PartEditPart {
 			((LEDNameEditPart) childEditPart).setLabel(getPrimaryShape()
 					.getFigureLEDNameFigure());
 			return true;
-		}
-		else if (childEditPart instanceof Terminal2EditPart) {
-			
-//			TimerTask task = new Terminal2TimerTask((Terminal2EditPart) childEditPart);
-//			Timer t = new Timer();
-//			t.schedule(task, 5000L);				
+		} else if (childEditPart instanceof Terminal2EditPart) {
+
+			//			TimerTask task = new Terminal2TimerTask((Terminal2EditPart) childEditPart);
+			//			Timer t = new Timer();
+			//			t.schedule(task, 5000L);				
 		}
 		return addEastWestFixedChild(childEditPart);
 	}
@@ -336,15 +336,15 @@ public class LEDEditPart extends PartEditPart {
 	static final Font FFIGURELEDNAMEFIGURE_FONT = new Font(
 			Display.getCurrent(), Display.getDefault().getSystemFont()
 					.getFontData()[0].getName(), 8, SWT.NORMAL);
-	
+
 	class Terminal2TimerTask extends TimerTask {
 		protected Terminal2EditPart terminal;
-		
+
 		public Terminal2TimerTask(Terminal2EditPart terminal) {
 			super();
 			this.terminal = terminal;
 		}
-		
+
 		public void run() {
 			if (terminal != null) {
 				terminal.refreshAll();

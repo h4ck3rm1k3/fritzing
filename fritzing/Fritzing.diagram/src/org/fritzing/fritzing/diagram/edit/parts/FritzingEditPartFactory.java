@@ -34,12 +34,6 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case SketchEditPart.VISUAL_ID:
 				return new SketchEditPart(view);
 
-			case ArduinoEditPart.VISUAL_ID:
-				return new ArduinoEditPart(view);
-
-			case ArduinoNameEditPart.VISUAL_ID:
-				return new ArduinoNameEditPart(view);
-
 			case LEDEditPart.VISUAL_ID:
 				return new LEDEditPart(view);
 
@@ -52,47 +46,11 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case ResistorNameEditPart.VISUAL_ID:
 				return new ResistorNameEditPart(view);
 
-			case ButtonEditPart.VISUAL_ID:
-				return new ButtonEditPart(view);
-
-			case ButtonNameEditPart.VISUAL_ID:
-				return new ButtonNameEditPart(view);
-
-			case PotentiometerEditPart.VISUAL_ID:
-				return new PotentiometerEditPart(view);
-
-			case PotentiometerNameEditPart.VISUAL_ID:
-				return new PotentiometerNameEditPart(view);
-
-			case FsrSensorEditPart.VISUAL_ID:
-				return new FsrSensorEditPart(view);
-
-			case FsrSensorNameEditPart.VISUAL_ID:
-				return new FsrSensorNameEditPart(view);
-
-			case LightSensorEditPart.VISUAL_ID:
-				return new LightSensorEditPart(view);
-
-			case LightSensorNameEditPart.VISUAL_ID:
-				return new LightSensorNameEditPart(view);
-
 			case TerminalEditPart.VISUAL_ID:
 				return new TerminalEditPart(view);
 
 			case TerminalNameEditPart.VISUAL_ID:
 				return new TerminalNameEditPart(view);
-
-			case TransistorEditPart.VISUAL_ID:
-				return new TransistorEditPart(view);
-
-			case TransistorNameEditPart.VISUAL_ID:
-				return new TransistorNameEditPart(view);
-
-			case PowerTransistorEditPart.VISUAL_ID:
-				return new PowerTransistorEditPart(view);
-
-			case PowerTransistorNameEditPart.VISUAL_ID:
-				return new PowerTransistorNameEditPart(view);
 
 			case GenericPartEditPart.VISUAL_ID:
 				return new GenericPartEditPart(view);

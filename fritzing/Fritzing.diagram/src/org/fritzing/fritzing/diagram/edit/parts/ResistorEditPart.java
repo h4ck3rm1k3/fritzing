@@ -47,7 +47,7 @@ public class ResistorEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2003;
+	public static final int VISUAL_ID = 2002;
 
 	/**
 	 * @generated
@@ -64,7 +64,8 @@ public class ResistorEditPart extends PartEditPart {
 	 */
 	public ResistorEditPart(View view) {
 		super(view);
-		partLoader = PartLoaderRegistry.getInstance().get("libraries/core/resistor/partdescription.xml");   
+		partLoader = PartLoaderRegistry.getInstance().get(
+				"libraries/core/resistor/partdescription.xml");
 	}
 
 	/**

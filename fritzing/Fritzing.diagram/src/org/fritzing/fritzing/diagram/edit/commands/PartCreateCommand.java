@@ -55,12 +55,12 @@ public class PartCreateCommand extends CreateElementCommand {
 		try {
 			Part newElement = (Part) super.doDefaultElementCreation();
 			if (newElement == null) {
-				// signal the user that something is wrong
+				// TODO: signal the user that something is wrong
 				return null;
 			}
 			
 			if (partLoader == null) {
-				// signal the user that something is wrong
+				// TODO: signal the user that something is wrong
 				return newElement;		
 			}
 			
@@ -70,7 +70,7 @@ public class PartCreateCommand extends CreateElementCommand {
 			return newElement;
 		}
 		catch (Exception ex) {
-			// alert the user
+			// TODO: alert the user
 			return null;
 		}
 	}

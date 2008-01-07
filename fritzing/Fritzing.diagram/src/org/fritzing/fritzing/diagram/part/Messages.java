@@ -286,112 +286,32 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String Connect1Group_title;
+	public static String Default1Group_title;
 
 	/**
 	 * @generated
 	 */
-	public static String Parts2Group_title;
+	public static String Default1Group_desc;
 
 	/**
 	 * @generated
 	 */
-	public static String Wire1CreationTool_title;
+	public static String SelectPanTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String Wire1CreationTool_desc;
+	public static String ZoomPanTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String Arduino1CreationTool_title;
+	public static String Wire3CreationTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String Arduino1CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String Resistor2CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Resistor2CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String LED3CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String LED3CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String Button4CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Button4CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String Potentiometer5CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Potentiometer5CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String FSRSensor6CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String FSRSensor6CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String LightSensor7CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String LightSensor7CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String Transistor8CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Transistor8CreationTool_desc;
-
-	/**
-	 * @generated
-	 */
-	public static String PowerTransistor9CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String PowerTransistor9CreationTool_desc;
+	public static String Wire3CreationTool_desc;
 
 	/**
 	 * @generated

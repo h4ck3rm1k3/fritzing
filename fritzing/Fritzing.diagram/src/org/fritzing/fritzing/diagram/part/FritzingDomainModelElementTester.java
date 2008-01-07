@@ -44,9 +44,6 @@ public class FritzingDomainModelElementTester extends PropertyTester {
 		if (eClass == FritzingPackage.eINSTANCE.getLED()) {
 			return true;
 		}
-		if (eClass == FritzingPackage.eINSTANCE.getButton()) {
-			return true;
-		}
 		if (eClass == FritzingPackage.eINSTANCE.getComposite()) {
 			return true;
 		}
@@ -57,9 +54,6 @@ public class FritzingDomainModelElementTester extends PropertyTester {
 			return true;
 		}
 		if (eClass == FritzingPackage.eINSTANCE.getModule()) {
-			return true;
-		}
-		if (eClass == FritzingPackage.eINSTANCE.getArduino()) {
 			return true;
 		}
 		return false;
