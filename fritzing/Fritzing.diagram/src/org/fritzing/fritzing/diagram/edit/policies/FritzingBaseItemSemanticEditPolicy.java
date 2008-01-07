@@ -377,7 +377,23 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
+		private static final FritzingAbstractExpression Wire_4001_TargetExpression;
+
+		/**
+		 * @generated
+		 */
 		private static final FritzingAbstractExpression Track_4002_SourceExpression;
+
+		/**
+		 * @generated
+		 */
+		static {
+			Map env = new HashMap(3);
+			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE.getTerminal());
+			Wire_4001_TargetExpression = FritzingOCLFactory
+					.getExpression(
+							"not self.parent.oclIsTypeOf(Sketch)", FritzingPackage.eINSTANCE.getTerminal(), env); //$NON-NLS-1$
+		}
 
 		/**
 		 * @generated
@@ -413,6 +429,9 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		public static boolean canExistWire_4001(Composite container,
 				Terminal source, Terminal target) {
 			if (!evaluate(Wire_4001_SourceExpression, source, target, false)) {
+				return false;
+			}
+			if (!evaluate(Wire_4001_TargetExpression, target, source, true)) {
 				return false;
 			}
 			return true;
