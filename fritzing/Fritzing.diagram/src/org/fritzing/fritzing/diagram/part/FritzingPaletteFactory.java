@@ -85,6 +85,11 @@ public class FritzingPaletteFactory {
 		if (drawer == null) {
 			drawer = new SortPaletteDrawer(drawerName);
 			drawerMap.put(drawerName, drawer);
+						
+//			drawer.setSmallIcon(FritzingDiagramEditorPlugin
+//					.getBundledImageDescriptor("full/obj16/dot.gif") );
+//			drawer.setLargeIcon(FritzingDiagramEditorPlugin
+//					.getBundledImageDescriptor("full/obj16/dot.gif") );
 		}
 		return drawer;
 	}

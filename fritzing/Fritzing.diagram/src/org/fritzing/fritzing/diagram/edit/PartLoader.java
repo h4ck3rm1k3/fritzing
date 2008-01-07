@@ -6,6 +6,7 @@ package org.fritzing.fritzing.diagram.edit;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -62,6 +63,7 @@ public class PartLoader {
 	protected boolean generic;
 	protected String version;
 	protected String footprint;
+	protected ArrayList<ArrayList<String>> nets;
 	
 	public PartLoader() {
 		if (bitHash.size() == 0) {
@@ -155,6 +157,7 @@ public class PartLoader {
 			c64Hash.put("111111", '-');	
 		}
 		
+		nets = new ArrayList<ArrayList<String>>();
 		contentsPath = "";
 		terminalHash = new Hashtable<String, PointName>();
 		size = new Dimension(0,0);
@@ -302,6 +305,8 @@ public class PartLoader {
 				EObject terminal = FritzingPackage.eINSTANCE.getTerminal()
 						.getEPackage().getEFactoryInstance().create(
 								FritzingPackage.eINSTANCE.getTerminal());
+				
+				pointName.terminal = terminal;
 
 				EStructuralFeature feature = FritzingPackage.eINSTANCE
 						.getPart_Terminals();
@@ -319,6 +324,55 @@ public class PartLoader {
 				expr.assignTo(FritzingPackage.eINSTANCE.getTerminal_Id(),
 				terminal);
 
+			}
+			
+			if (nets.size() > 0) {
+				for (int i = 0; i < nets.size(); i++) {
+					ArrayList<String> net = nets.get(i);
+					for (int j = 0; j < net.size() - 1; j++) {
+						
+						String sourceID = net.get(j);
+						if (sourceID == null) {
+							// alert user
+							continue;							
+						}
+						
+						String targetID = net.get(j + 1);
+						if (targetID == null) {
+							// alert user
+							continue;							
+						}
+
+						PointName spn = terminalHash.get(sourceID);
+						if (spn == null) {
+							// alert user
+							continue;							
+						}
+
+						PointName tpn = terminalHash.get(targetID);
+						if (tpn == null) {
+							// alert user
+							continue;							
+						}
+												
+						EObject track = FritzingPackage.eINSTANCE.getTrack()
+						.getEPackage().getEFactoryInstance().create(
+								FritzingPackage.eINSTANCE.getTrack());
+
+						EStructuralFeature feature = FritzingPackage.eINSTANCE.getTrack_Source();
+						track.eSet(feature, spn.terminal);
+
+						feature = FritzingPackage.eINSTANCE.getTrack_Target();
+						track.eSet(feature, tpn.terminal);
+						
+						feature = FritzingPackage.eINSTANCE.getTrack_Parent();
+						track.eSet(feature, newElement);
+						
+						feature = FritzingPackage.eINSTANCE
+														.getPart_Tracks();
+						((Collection) newElement.eGet(feature)).add(track);											
+					}
+				}
 			}
 			
 			EStructuralFeature feature = FritzingPackage.eINSTANCE.getPart_Name();
@@ -400,6 +454,7 @@ public class PartLoader {
             // I/O error
         }	
         catch (Exception ex) {
+        	ex.printStackTrace();
         }
         
         return false;
@@ -457,6 +512,25 @@ public class PartLoader {
 				boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, child);
 				terminalHash.put(id, new PointName(p, name, visible));
 			}
+			
+			nodes = (NodeList) xp.evaluate("/part/nets/net", document, XPathConstants.NODESET);
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Node child = nodes.item(i);
+				XPath xpath = XPathFactory.newInstance().newXPath();
+				
+				NodeList connectors = (NodeList) xp.evaluate("connector", child, XPathConstants.NODESET);
+				ArrayList<String> names = new ArrayList<String>();
+				for (int j = 0; j < connectors.getLength(); j++) {
+					String id = (String) xpath.evaluate("@id", connectors.item(j), XPathConstants.STRING);
+					if (id == null || id == "") continue;
+					
+					names.add(id);
+				}
+				if (names.size() > 0) {
+					nets.add(names);
+				}
+			}
+						
 			return;
 		}
 		catch (XPathExpressionException xpee) {
@@ -571,11 +645,13 @@ public class PartLoader {
 		public Point point;
 		public String name;
 		public boolean visible;
+		public EObject terminal;
 		
 		public PointName(Point point, String name, boolean visible) {
 			this.point = point;
 			this.name = name;
 			this.visible = visible;
+			this.terminal = null;
 		}
 	}
 

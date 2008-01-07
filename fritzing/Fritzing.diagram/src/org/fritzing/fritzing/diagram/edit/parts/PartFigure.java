@@ -71,6 +71,8 @@ public class PartFigure extends RectangleFigure {
 	//	}
 	
 		this.setPreferredSize(new Dimension(partLoader.getSize()));
+		this.setMaximumSize(new Dimension(partLoader.getSize()));
+		this.setMinimumSize(new Dimension(partLoader.getSize()));
 	}
 
 	/**
