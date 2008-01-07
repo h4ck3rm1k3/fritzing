@@ -392,6 +392,8 @@
       <creationConstraints>
         <sourceEnd
             body="self &lt;> oppositeEnd"/>
+        <targetEnd
+            body="not self.parent.oclIsTypeOf(Sketch)"/>
       </creationConstraints>
     </links>
     <links
@@ -756,6 +758,6 @@
   <expressionProviders>
     <providers
         xsi:type="gmfgen:GenExpressionInterpreter"
-        expressions="//@diagram/@links.0/@creationConstraints/@sourceEnd //@diagram/@links.1/@creationConstraints/@sourceEnd"/>
+        expressions="//@diagram/@links.0/@creationConstraints/@sourceEnd //@diagram/@links.0/@creationConstraints/@targetEnd //@diagram/@links.1/@creationConstraints/@sourceEnd"/>
   </expressionProviders>
 </gmfgen:GenEditorGenerator>

@@ -123,6 +123,8 @@
     <creationConstraints>
       <sourceEnd
           body="self &lt;> oppositeEnd"/>
+      <targetEnd
+          body="not self.parent.oclIsTypeOf(Sketch)"/>
     </creationConstraints>
   </links>
   <links>
