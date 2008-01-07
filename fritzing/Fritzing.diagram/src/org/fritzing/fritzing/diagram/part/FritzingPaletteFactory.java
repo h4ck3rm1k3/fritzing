@@ -6,6 +6,8 @@ package org.fritzing.fritzing.diagram.part;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -17,6 +19,7 @@ import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteDrawer;
 import org.eclipse.gef.palette.PaletteGroup;
 import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.palette.PaletteSeparator;
 import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.requests.CreateRequest;
@@ -43,7 +46,7 @@ public class FritzingPaletteFactory {
 	 * differentiates between predefined class xml and generic xml
 	 */
 	static final Hashtable<String, IElementType> coreMap = new Hashtable<String, IElementType>();	
-	Hashtable<String, PaletteDrawer> drawerMap = new Hashtable<String, PaletteDrawer>();	
+	Hashtable<String, SortPaletteDrawer> drawerMap = new Hashtable<String, SortPaletteDrawer>();	
 	
 	/**
 	 * @generated NOT
@@ -51,30 +54,25 @@ public class FritzingPaletteFactory {
 	public void fillPalette(PaletteRoot paletteRoot) {
 		coreMap.put("LED", FritzingElementTypes.LED_2001);
 		coreMap.put("Resistor", FritzingElementTypes.Resistor_2002);
+					
+		customiseStandardGroup(paletteRoot);		
+		addParts("libraries");
 		
-//		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
-//			String folder = keys.nextElement();
-//			PartLoader partLoader = PartLoaderRegistry.getInstance().get(
-//					"libraries" + File.separator + "core" + File.separator + folder + File.separator + "partdescription.xml");
-//			if (partLoader == null) {
-//				// TODO: alert user;
-//				System.out.println("Couldn't load part " + folder);
-//				continue;
-//			}				
-//		}
-			
-		customiseStandardGroup(paletteRoot);
-//		createParts2Group();		
-		addGenerics("libraries");
-		for (Enumeration<PaletteDrawer> e = drawerMap.elements(); e.hasMoreElements(); ) {
-			paletteRoot.add(e.nextElement());
+		String[] keys = drawerMap.keySet().toArray( new String[1]);
+		Arrays.sort(keys);
+		
+		for (int i = 0; i < keys.length; i++) {
+			SortPaletteDrawer drawer = drawerMap.get(keys[i]); 
+			drawer.sortAdd();
+			paletteRoot.add(drawer);
 		}
+		
 	}
 	
-	protected PaletteDrawer getDrawer(String drawerName) {
-		PaletteDrawer drawer = drawerMap.get(drawerName);
+	protected SortPaletteDrawer getDrawer(String drawerName) {
+		SortPaletteDrawer drawer = drawerMap.get(drawerName);
 		if (drawer == null) {
-			drawer = new PaletteDrawer(drawerName);
+			drawer = new SortPaletteDrawer(drawerName);
 			drawerMap.put(drawerName, drawer);
 		}
 		return drawer;
@@ -84,8 +82,7 @@ public class FritzingPaletteFactory {
 	/**
 	 * @generated NOT
 	 */
-	protected void addGenerics(String folder) {
-//		if (folder.equals("libraries" + File.separator + "core")) return;
+	protected void addParts(String folder) {
 		
 		File file = new File(FritzingDiagramEditorUtil.getFritzingLocation() + folder);		
 		if (!file.exists()) return;
@@ -99,7 +96,7 @@ public class FritzingPaletteFactory {
 		File[] files = file.listFiles();
 		for (int i = 0; i < files.length; i++) {			
 			String filename = files[i].getName();
-			addGenerics(folder + File.separator + filename);
+			addParts(folder + File.separator + filename);
 		}	
 	}
 	
@@ -124,7 +121,7 @@ public class FritzingPaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				partLoader.getTitle(),
 				partLoader.getDescription(), 
-				types, partLoader);
+				types, partLoader, prefix.startsWith("libraries" + File.separator + "core"));
 		
 		ImageDescriptor id = ImageDescriptor.createFromFile(null, 
 				FritzingDiagramEditorUtil.getFritzingLocation() + 
@@ -139,8 +136,8 @@ public class FritzingPaletteFactory {
 		
 		entry.setLargeIcon(id);
 		
-		PaletteDrawer drawer = getDrawer(partLoader.getGenus());
-		drawer.add(entry);
+		SortPaletteDrawer drawer = getDrawer(partLoader.getGenus());
+		drawer.preAdd(entry);
 
 	}
 
@@ -173,23 +170,6 @@ public class FritzingPaletteFactory {
 				FritzingElementTypes.getImageRegistryKey(FritzingElementTypes.getElement(type)) + "Large");
 	}
 
-	/**
-	 * Creates "Parts" palette tool group
-	 * @generated NOT
-	 */
-	private void createParts2Group() {
-//		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
-//			String key = keys.nextElement();
-//			IElementType type = coreMap.get(key);
-//			
-//			addPart("libraries/core/" + key, type);
-//			
-//			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries" + File.separator + "core" + File.separator + key + File.separator + "partdescription.xml");
-//			
-//		}
-		
-		
-	}
 
 	/**
 	 * @generated
@@ -265,15 +245,55 @@ public class FritzingPaletteFactory {
 			return cr;
 		}
 	}	
+	
+	
+	/**
+	 * @generated NOT
+	 */
+	private static class SortPaletteDrawer extends PaletteDrawer {
+		protected ArrayList<NodeToolEntry> entries;
+		
+		/**
+		 * @generated NOT
+		 */
+		public SortPaletteDrawer(String drawerName) {
+			super(drawerName);
+			entries = new ArrayList<NodeToolEntry>();
+		}
+		
+		public void preAdd(NodeToolEntry entry) {
+			entries.add(entry);
+		}
+		
+		public void sortAdd() {
+			NodeToolEntry[] tools = entries.toArray(new NodeToolEntry[1]);
+			Arrays.sort(tools);
+			boolean needSeparator = true;
+			for (int i = 0; i < tools.length; i++) {
+				NodeToolEntry tool = tools[i];
+				if (!tool.core && needSeparator) {
+					this.add(new PaletteSeparator());
+					needSeparator = false;
+				}
+				this.add(tool);
+			}		
+		}
+	}
+
 		
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	private static class NodeToolEntry extends ToolEntry {
+	private static class NodeToolEntry extends ToolEntry implements Comparable<NodeToolEntry> {
 		/**
 		 * @generated NOT
 		 */
 		private final PartLoader partLoader;
+		
+		/**
+		 * @generated NOT
+		 */
+		private final boolean core;
 
 		/**
 		 * @generated NOT
@@ -284,12 +304,13 @@ public class FritzingPaletteFactory {
 		 * @generated NOT
 		 */
 		private NodeToolEntry(String title, String description,
-				List elementTypes, PartLoader partLoader) {
+				List elementTypes, PartLoader partLoader, boolean core) {
 			super(partLoader.getTitle(), partLoader.getDescription(), null, null);
 						
 			// eventually passes the partloader along to PartCreateCommand
 			this.partLoader = partLoader;
 			this.elementTypes = elementTypes;
+			this.core = core;
 		}
 
 		/**
@@ -301,6 +322,17 @@ public class FritzingPaletteFactory {
 			tool.setProperties(getToolProperties());
 			return tool;
 		}
+		
+		/**
+		 * @generated NOT
+		 */
+		public int compareTo(NodeToolEntry other) {
+			if (this.core && !other.core) return -1;
+			if (other.core && ! this.core) return 1;
+			
+			return this.partLoader.getTitle().compareTo(other.partLoader.getTitle());
+		}
+
 	}
 
 	/**
