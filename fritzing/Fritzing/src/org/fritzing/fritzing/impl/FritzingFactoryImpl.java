@@ -62,19 +62,12 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 			case FritzingPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case FritzingPackage.TERMINAL: return createTerminal();
 			case FritzingPackage.WIRE: return createWire();
+			case FritzingPackage.GENERIC_PART: return createGenericPart();
 			case FritzingPackage.RESISTOR: return createResistor();
 			case FritzingPackage.LED: return createLED();
-			case FritzingPackage.BUTTON: return createButton();
 			case FritzingPackage.SKETCH: return createSketch();
-			case FritzingPackage.BREADBOARD: return createBreadboard();
 			case FritzingPackage.MODULE: return createModule();
-			case FritzingPackage.ARDUINO: return createArduino();
-			case FritzingPackage.POTENTIOMETER: return createPotentiometer();
-			case FritzingPackage.FSR_SENSOR: return createFsrSensor();
-			case FritzingPackage.LIGHT_SENSOR: return createLightSensor();
-			case FritzingPackage.TRANSISTOR: return createTransistor();
-			case FritzingPackage.POWER_TRANSISTOR: return createPowerTransistor();
-			case FritzingPackage.GENERIC_PART: return createGenericPart();
+			case FritzingPackage.BREADBOARD: return createBreadboard();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -135,16 +128,6 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Button createButton() {
-		ButtonImpl button = new ButtonImpl();
-		return button;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Sketch createSketch() {
 		SketchImpl sketch = new SketchImpl();
 		return sketch;
@@ -168,66 +151,6 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 	public Module createModule() {
 		ModuleImpl module = new ModuleImpl();
 		return module;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Arduino createArduino() {
-		ArduinoImpl arduino = new ArduinoImpl();
-		return arduino;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Potentiometer createPotentiometer() {
-		PotentiometerImpl potentiometer = new PotentiometerImpl();
-		return potentiometer;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public FsrSensor createFsrSensor() {
-		FsrSensorImpl fsrSensor = new FsrSensorImpl();
-		return fsrSensor;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public LightSensor createLightSensor() {
-		LightSensorImpl lightSensor = new LightSensorImpl();
-		return lightSensor;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Transistor createTransistor() {
-		TransistorImpl transistor = new TransistorImpl();
-		return transistor;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public PowerTransistor createPowerTransistor() {
-		PowerTransistorImpl powerTransistor = new PowerTransistorImpl();
-		return powerTransistor;
 	}
 
 	/**

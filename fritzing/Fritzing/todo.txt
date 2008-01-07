@@ -1,7 +1,7 @@
 ========= GMF ==========
 
-Dynamic Shape import
-via GMFGraph templates 
+Fix copy & paste
+diagram.edit.policies.SketchItemSemanticEditPolicy
 
 Creating own modules/parts
 Extensible Type Registry  http://help.eclipse.org/help32/index.jsp?topic=/org.eclipse.gmf.doc/tutorials/common/Extensible%20Type%20Registry/extensibleTypeRegistryTutorial.html

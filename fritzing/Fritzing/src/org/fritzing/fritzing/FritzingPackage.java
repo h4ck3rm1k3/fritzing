@@ -332,7 +332,148 @@ public interface FritzingPackage extends EPackage {
 	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getResistor()
 	 * @generated
 	 */
-	int RESISTOR = 5;
+	int RESISTOR = 6;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.LEDImpl <em>LED</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.LEDImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLED()
+	 * @generated
+	 */
+	int LED = 7;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.CompositeImpl <em>Composite</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.CompositeImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getComposite()
+	 * @generated
+	 */
+	int COMPOSITE = 8;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.SketchImpl <em>Sketch</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.SketchImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getSketch()
+	 * @generated
+	 */
+	int SKETCH = 9;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.BreadboardImpl <em>Breadboard</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.BreadboardImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getBreadboard()
+	 * @generated
+	 */
+	int BREADBOARD = 11;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ModuleImpl <em>Module</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.ModuleImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getModule()
+	 * @generated
+	 */
+	int MODULE = 10;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.GenericPartImpl <em>Generic Part</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.GenericPartImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getGenericPart()
+	 * @generated
+	 */
+	int GENERIC_PART = 5;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__ID = PART__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Species</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__SPECIES = PART__SPECIES;
+
+	/**
+	 * The feature id for the '<em><b>Genus</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__VERSION = PART__VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__FOOTPRINT = PART__FOOTPRINT;
+
+	/**
+	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__TERMINALS = PART__TERMINALS;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__PARENT = PART__PARENT;
+
+	/**
+	 * The number of structural features of the '<em>Generic Part</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -425,16 +566,6 @@ public interface FritzingPackage extends EPackage {
 	int RESISTOR_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.LEDImpl <em>LED</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.LEDImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLED()
-	 * @generated
-	 */
-	int LED = 6;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -523,116 +654,6 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int LED_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ButtonImpl <em>Button</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.ButtonImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getButton()
-	 * @generated
-	 */
-	int BUTTON = 7;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__PARENT = PART__PARENT;
-
-	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON__TYPE = PART_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Button</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BUTTON_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.CompositeImpl <em>Composite</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.CompositeImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getComposite()
-	 * @generated
-	 */
-	int COMPOSITE = 8;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -734,16 +755,6 @@ public interface FritzingPackage extends EPackage {
 	int COMPOSITE_FEATURE_COUNT = PART_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.SketchImpl <em>Sketch</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.SketchImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getSketch()
-	 * @generated
-	 */
-	int SKETCH = 9;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -841,116 +852,6 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int SKETCH_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.BreadboardImpl <em>Breadboard</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.BreadboardImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getBreadboard()
-	 * @generated
-	 */
-	int BREADBOARD = 10;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__PARENT = PART__PARENT;
-
-	/**
-	 * The feature id for the '<em><b>Lines</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__LINES = PART_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Breadboard</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ModuleImpl <em>Module</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.ModuleImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getModule()
-	 * @generated
-	 */
-	int MODULE = 11;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1052,23 +953,13 @@ public interface FritzingPackage extends EPackage {
 	int MODULE_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ArduinoImpl <em>Arduino</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.ArduinoImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getArduino()
-	 * @generated
-	 */
-	int ARDUINO = 12;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__ID = PART__ID;
+	int BREADBOARD__ID = PART__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1077,7 +968,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__NAME = PART__NAME;
+	int BREADBOARD__NAME = PART__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -1086,7 +977,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__SPECIES = PART__SPECIES;
+	int BREADBOARD__SPECIES = PART__SPECIES;
 
 	/**
 	 * The feature id for the '<em><b>Genus</b></em>' attribute.
@@ -1095,7 +986,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__GENUS = PART__GENUS;
+	int BREADBOARD__GENUS = PART__GENUS;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -1104,7 +995,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__VERSION = PART__VERSION;
+	int BREADBOARD__VERSION = PART__VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
@@ -1113,7 +1004,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__FOOTPRINT = PART__FOOTPRINT;
+	int BREADBOARD__FOOTPRINT = PART__FOOTPRINT;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -1122,7 +1013,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__TERMINALS = PART__TERMINALS;
+	int BREADBOARD__TERMINALS = PART__TERMINALS;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1131,573 +1022,25 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__PARENT = PART__PARENT;
+	int BREADBOARD__PARENT = PART__PARENT;
 
 	/**
-	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * The feature id for the '<em><b>Lines</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO__TYPE = PART_FEATURE_COUNT + 0;
+	int BREADBOARD__LINES = PART_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Arduino</em>' class.
+	 * The number of structural features of the '<em>Breadboard</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ARDUINO_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
-
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.PotentiometerImpl <em>Potentiometer</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.PotentiometerImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPotentiometer()
-	 * @generated
-	 */
-	int POTENTIOMETER = 13;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER__PARENT = PART__PARENT;
-
-	/**
-	 * The number of structural features of the '<em>Potentiometer</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POTENTIOMETER_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.FsrSensorImpl <em>Fsr Sensor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.FsrSensorImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getFsrSensor()
-	 * @generated
-	 */
-	int FSR_SENSOR = 14;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR__PARENT = PART__PARENT;
-
-	/**
-	 * The number of structural features of the '<em>Fsr Sensor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FSR_SENSOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.LightSensorImpl <em>Light Sensor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.LightSensorImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLightSensor()
-	 * @generated
-	 */
-	int LIGHT_SENSOR = 15;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR__PARENT = PART__PARENT;
-
-	/**
-	 * The number of structural features of the '<em>Light Sensor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIGHT_SENSOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
-
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.TransistorImpl <em>Transistor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.TransistorImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getTransistor()
-	 * @generated
-	 */
-	int TRANSISTOR = 16;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR__PARENT = PART__PARENT;
-
-	/**
-	 * The number of structural features of the '<em>Transistor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSISTOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.PowerTransistorImpl <em>Power Transistor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.PowerTransistorImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPowerTransistor()
-	 * @generated
-	 */
-	int POWER_TRANSISTOR = 17;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR__PARENT = PART__PARENT;
-
-	/**
-	 * The number of structural features of the '<em>Power Transistor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int POWER_TRANSISTOR_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.GenericPartImpl <em>Generic Part</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.GenericPartImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getGenericPart()
-	 * @generated
-	 */
-	int GENERIC_PART = 18;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__ID = PART__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__NAME = PART__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Species</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__SPECIES = PART__SPECIES;
-
-	/**
-	 * The feature id for the '<em><b>Genus</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__GENUS = PART__GENUS;
-
-	/**
-	 * The feature id for the '<em><b>Version</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__VERSION = PART__VERSION;
-
-	/**
-	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__FOOTPRINT = PART__FOOTPRINT;
-
-	/**
-	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__TERMINALS = PART__TERMINALS;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__PARENT = PART__PARENT;
-
-	/**
-	 * The number of structural features of the '<em>Generic Part</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
+	int BREADBOARD_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
 
 
 	/**
@@ -2002,27 +1345,6 @@ public interface FritzingPackage extends EPackage {
 	EAttribute getLED_Color();
 
 	/**
-	 * Returns the meta object for class '{@link org.fritzing.fritzing.Button <em>Button</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Button</em>'.
-	 * @see org.fritzing.fritzing.Button
-	 * @generated
-	 */
-	EClass getButton();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Button#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.fritzing.fritzing.Button#getType()
-	 * @see #getButton()
-	 * @generated
-	 */
-	EAttribute getButton_Type();
-
-	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Composite <em>Composite</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2094,77 +1416,6 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getModule();
-
-	/**
-	 * Returns the meta object for class '{@link org.fritzing.fritzing.Arduino <em>Arduino</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Arduino</em>'.
-	 * @see org.fritzing.fritzing.Arduino
-	 * @generated
-	 */
-	EClass getArduino();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Arduino#getType <em>Type</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Type</em>'.
-	 * @see org.fritzing.fritzing.Arduino#getType()
-	 * @see #getArduino()
-	 * @generated
-	 */
-	EAttribute getArduino_Type();
-
-	/**
-	 * Returns the meta object for class '{@link org.fritzing.fritzing.Potentiometer <em>Potentiometer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Potentiometer</em>'.
-	 * @see org.fritzing.fritzing.Potentiometer
-	 * @generated
-	 */
-	EClass getPotentiometer();
-
-	/**
-	 * Returns the meta object for class '{@link org.fritzing.fritzing.FsrSensor <em>Fsr Sensor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Fsr Sensor</em>'.
-	 * @see org.fritzing.fritzing.FsrSensor
-	 * @generated
-	 */
-	EClass getFsrSensor();
-
-	/**
-	 * Returns the meta object for class '{@link org.fritzing.fritzing.LightSensor <em>Light Sensor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Light Sensor</em>'.
-	 * @see org.fritzing.fritzing.LightSensor
-	 * @generated
-	 */
-	EClass getLightSensor();
-
-	/**
-	 * Returns the meta object for class '{@link org.fritzing.fritzing.Transistor <em>Transistor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Transistor</em>'.
-	 * @see org.fritzing.fritzing.Transistor
-	 * @generated
-	 */
-	EClass getTransistor();
-
-	/**
-	 * Returns the meta object for class '{@link org.fritzing.fritzing.PowerTransistor <em>Power Transistor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Power Transistor</em>'.
-	 * @see org.fritzing.fritzing.PowerTransistor
-	 * @generated
-	 */
-	EClass getPowerTransistor();
 
 	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.GenericPart <em>Generic Part</em>}'.
@@ -2437,24 +1688,6 @@ public interface FritzingPackage extends EPackage {
 		EAttribute LED__COLOR = eINSTANCE.getLED_Color();
 
 		/**
-		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.ButtonImpl <em>Button</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.fritzing.fritzing.impl.ButtonImpl
-		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getButton()
-		 * @generated
-		 */
-		EClass BUTTON = eINSTANCE.getButton();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute BUTTON__TYPE = eINSTANCE.getButton_Type();
-
-		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.CompositeImpl <em>Composite</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2517,74 +1750,6 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MODULE = eINSTANCE.getModule();
-
-		/**
-		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.ArduinoImpl <em>Arduino</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.fritzing.fritzing.impl.ArduinoImpl
-		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getArduino()
-		 * @generated
-		 */
-		EClass ARDUINO = eINSTANCE.getArduino();
-
-		/**
-		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ARDUINO__TYPE = eINSTANCE.getArduino_Type();
-
-		/**
-		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.PotentiometerImpl <em>Potentiometer</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.fritzing.fritzing.impl.PotentiometerImpl
-		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPotentiometer()
-		 * @generated
-		 */
-		EClass POTENTIOMETER = eINSTANCE.getPotentiometer();
-
-		/**
-		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.FsrSensorImpl <em>Fsr Sensor</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.fritzing.fritzing.impl.FsrSensorImpl
-		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getFsrSensor()
-		 * @generated
-		 */
-		EClass FSR_SENSOR = eINSTANCE.getFsrSensor();
-
-		/**
-		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.LightSensorImpl <em>Light Sensor</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.fritzing.fritzing.impl.LightSensorImpl
-		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLightSensor()
-		 * @generated
-		 */
-		EClass LIGHT_SENSOR = eINSTANCE.getLightSensor();
-
-		/**
-		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.TransistorImpl <em>Transistor</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.fritzing.fritzing.impl.TransistorImpl
-		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getTransistor()
-		 * @generated
-		 */
-		EClass TRANSISTOR = eINSTANCE.getTransistor();
-
-		/**
-		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.PowerTransistorImpl <em>Power Transistor</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.fritzing.fritzing.impl.PowerTransistorImpl
-		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getPowerTransistor()
-		 * @generated
-		 */
-		EClass POWER_TRANSISTOR = eINSTANCE.getPowerTransistor();
 
 		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.GenericPartImpl <em>Generic Part</em>}' class.

@@ -91,16 +91,16 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 				return createPartAdapter();
 			}
 			@Override
+			public Adapter caseGenericPart(GenericPart object) {
+				return createGenericPartAdapter();
+			}
+			@Override
 			public Adapter caseResistor(Resistor object) {
 				return createResistorAdapter();
 			}
 			@Override
 			public Adapter caseLED(LED object) {
 				return createLEDAdapter();
-			}
-			@Override
-			public Adapter caseButton(Button object) {
-				return createButtonAdapter();
 			}
 			@Override
 			public Adapter caseComposite(Composite object) {
@@ -111,40 +111,12 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 				return createSketchAdapter();
 			}
 			@Override
-			public Adapter caseBreadboard(Breadboard object) {
-				return createBreadboardAdapter();
-			}
-			@Override
 			public Adapter caseModule(Module object) {
 				return createModuleAdapter();
 			}
 			@Override
-			public Adapter caseArduino(Arduino object) {
-				return createArduinoAdapter();
-			}
-			@Override
-			public Adapter casePotentiometer(Potentiometer object) {
-				return createPotentiometerAdapter();
-			}
-			@Override
-			public Adapter caseFsrSensor(FsrSensor object) {
-				return createFsrSensorAdapter();
-			}
-			@Override
-			public Adapter caseLightSensor(LightSensor object) {
-				return createLightSensorAdapter();
-			}
-			@Override
-			public Adapter caseTransistor(Transistor object) {
-				return createTransistorAdapter();
-			}
-			@Override
-			public Adapter casePowerTransistor(PowerTransistor object) {
-				return createPowerTransistorAdapter();
-			}
-			@Override
-			public Adapter caseGenericPart(GenericPart object) {
-				return createGenericPartAdapter();
+			public Adapter caseBreadboard(Breadboard object) {
+				return createBreadboardAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -265,20 +237,6 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Button <em>Button</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.fritzing.fritzing.Button
-	 * @generated
-	 */
-	public Adapter createButtonAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Composite <em>Composite</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -331,90 +289,6 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createModuleAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Arduino <em>Arduino</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.fritzing.fritzing.Arduino
-	 * @generated
-	 */
-	public Adapter createArduinoAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Potentiometer <em>Potentiometer</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.fritzing.fritzing.Potentiometer
-	 * @generated
-	 */
-	public Adapter createPotentiometerAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.FsrSensor <em>Fsr Sensor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.fritzing.fritzing.FsrSensor
-	 * @generated
-	 */
-	public Adapter createFsrSensorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.LightSensor <em>Light Sensor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.fritzing.fritzing.LightSensor
-	 * @generated
-	 */
-	public Adapter createLightSensorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Transistor <em>Transistor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.fritzing.fritzing.Transistor
-	 * @generated
-	 */
-	public Adapter createTransistorAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.PowerTransistor <em>Power Transistor</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.fritzing.fritzing.PowerTransistor
-	 * @generated
-	 */
-	public Adapter createPowerTransistorAdapter() {
 		return null;
 	}
 

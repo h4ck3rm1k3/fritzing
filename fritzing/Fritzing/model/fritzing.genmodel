@@ -38,32 +38,21 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/terminals"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Part/parent"/>
     </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//GenericPart"/>
     <genClasses ecoreClass="fritzing.ecore#//Resistor">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Resistor/value"/>
     </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//LED">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//LED/color"/>
     </genClasses>
-    <genClasses ecoreClass="fritzing.ecore#//Button">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Button/type"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Composite">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Composite/parts"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Composite/wires"/>
     </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//Sketch"/>
+    <genClasses ecoreClass="fritzing.ecore#//Module"/>
     <genClasses ecoreClass="fritzing.ecore#//Breadboard">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Breadboard/lines"/>
     </genClasses>
-    <genClasses ecoreClass="fritzing.ecore#//Module"/>
-    <genClasses ecoreClass="fritzing.ecore#//Arduino">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Arduino/type"/>
-    </genClasses>
-    <genClasses ecoreClass="fritzing.ecore#//Potentiometer"/>
-    <genClasses ecoreClass="fritzing.ecore#//FsrSensor"/>
-    <genClasses ecoreClass="fritzing.ecore#//LightSensor"/>
-    <genClasses ecoreClass="fritzing.ecore#//Transistor"/>
-    <genClasses ecoreClass="fritzing.ecore#//PowerTransistor"/>
-    <genClasses ecoreClass="fritzing.ecore#//GenericPart"/>
   </genPackages>
 </genmodel:GenModel>

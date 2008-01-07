@@ -9,30 +9,20 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-
-import org.fritzing.fritzing.Arduino;
 import org.fritzing.fritzing.Breadboard;
-import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.DocumentRoot;
 import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.FsrSensor;
 import org.fritzing.fritzing.GenericPart;
-import org.fritzing.fritzing.LightSensor;
 import org.fritzing.fritzing.Module;
 import org.fritzing.fritzing.Part;
-import org.fritzing.fritzing.Potentiometer;
-import org.fritzing.fritzing.PowerTransistor;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.Transistor;
 import org.fritzing.fritzing.Wire;
 
 /**
@@ -96,13 +86,6 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass buttonEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass compositeEClass = null;
 
 	/**
@@ -125,48 +108,6 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * @generated
 	 */
 	private EClass moduleEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass arduinoEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass potentiometerEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass fsrSensorEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass lightSensorEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass transistorEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass powerTransistorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -503,24 +444,6 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getButton() {
-		return buttonEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getButton_Type() {
-		return (EAttribute)buttonEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getComposite() {
 		return compositeEClass;
 	}
@@ -577,69 +500,6 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 */
 	public EClass getModule() {
 		return moduleEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getArduino() {
-		return arduinoEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getArduino_Type() {
-		return (EAttribute)arduinoEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getPotentiometer() {
-		return potentiometerEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getFsrSensor() {
-		return fsrSensorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getLightSensor() {
-		return lightSensorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTransistor() {
-		return transistorEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getPowerTransistor() {
-		return powerTransistorEClass;
 	}
 
 	/**
@@ -708,14 +568,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEReference(partEClass, PART__TERMINALS);
 		createEReference(partEClass, PART__PARENT);
 
+		genericPartEClass = createEClass(GENERIC_PART);
+
 		resistorEClass = createEClass(RESISTOR);
 		createEAttribute(resistorEClass, RESISTOR__VALUE);
 
 		ledEClass = createEClass(LED);
 		createEAttribute(ledEClass, LED__COLOR);
-
-		buttonEClass = createEClass(BUTTON);
-		createEAttribute(buttonEClass, BUTTON__TYPE);
 
 		compositeEClass = createEClass(COMPOSITE);
 		createEReference(compositeEClass, COMPOSITE__PARTS);
@@ -723,25 +582,10 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		sketchEClass = createEClass(SKETCH);
 
-		breadboardEClass = createEClass(BREADBOARD);
-		createEAttribute(breadboardEClass, BREADBOARD__LINES);
-
 		moduleEClass = createEClass(MODULE);
 
-		arduinoEClass = createEClass(ARDUINO);
-		createEAttribute(arduinoEClass, ARDUINO__TYPE);
-
-		potentiometerEClass = createEClass(POTENTIOMETER);
-
-		fsrSensorEClass = createEClass(FSR_SENSOR);
-
-		lightSensorEClass = createEClass(LIGHT_SENSOR);
-
-		transistorEClass = createEClass(TRANSISTOR);
-
-		powerTransistorEClass = createEClass(POWER_TRANSISTOR);
-
-		genericPartEClass = createEClass(GENERIC_PART);
+		breadboardEClass = createEClass(BREADBOARD);
+		createEAttribute(breadboardEClass, BREADBOARD__LINES);
 	}
 
 	/**
@@ -778,20 +622,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		terminalEClass.getESuperTypes().add(this.getElement());
 		wireEClass.getESuperTypes().add(this.getElement());
 		partEClass.getESuperTypes().add(this.getElement());
+		genericPartEClass.getESuperTypes().add(this.getPart());
 		resistorEClass.getESuperTypes().add(this.getPart());
 		ledEClass.getESuperTypes().add(this.getPart());
-		buttonEClass.getESuperTypes().add(this.getPart());
 		compositeEClass.getESuperTypes().add(this.getPart());
 		sketchEClass.getESuperTypes().add(this.getComposite());
-		breadboardEClass.getESuperTypes().add(this.getPart());
 		moduleEClass.getESuperTypes().add(this.getComposite());
-		arduinoEClass.getESuperTypes().add(this.getPart());
-		potentiometerEClass.getESuperTypes().add(this.getPart());
-		fsrSensorEClass.getESuperTypes().add(this.getPart());
-		lightSensorEClass.getESuperTypes().add(this.getPart());
-		transistorEClass.getESuperTypes().add(this.getPart());
-		powerTransistorEClass.getESuperTypes().add(this.getPart());
-		genericPartEClass.getESuperTypes().add(this.getPart());
+		breadboardEClass.getESuperTypes().add(this.getPart());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -829,14 +666,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEReference(getPart_Parent(), this.getComposite(), this.getComposite_Parts(), "parent", null, 0, 1, Part.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getPart_Parent().getEKeys().add(this.getPart_Id());
 
+		initEClass(genericPartEClass, GenericPart.class, "GenericPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
 		initEClass(resistorEClass, Resistor.class, "Resistor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getResistor_Value(), theXMLTypePackage.getInt(), "value", null, 0, 1, Resistor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ledEClass, org.fritzing.fritzing.LED.class, "LED", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLED_Color(), theXMLTypePackage.getInt(), "color", null, 0, 1, org.fritzing.fritzing.LED.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(buttonEClass, Button.class, "Button", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getButton_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, Button.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(compositeEClass, Composite.class, "Composite", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComposite_Parts(), this.getPart(), this.getPart_Parent(), "parts", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -846,25 +682,10 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		initEClass(sketchEClass, Sketch.class, "Sketch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(breadboardEClass, Breadboard.class, "Breadboard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getBreadboard_Lines(), theXMLTypePackage.getInt(), "lines", null, 0, 1, Breadboard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(arduinoEClass, Arduino.class, "Arduino", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getArduino_Type(), theXMLTypePackage.getString(), "type", null, 0, 1, Arduino.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(potentiometerEClass, Potentiometer.class, "Potentiometer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(fsrSensorEClass, FsrSensor.class, "FsrSensor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(lightSensorEClass, LightSensor.class, "LightSensor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(transistorEClass, Transistor.class, "Transistor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(powerTransistorEClass, PowerTransistor.class, "PowerTransistor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		initEClass(genericPartEClass, GenericPart.class, "GenericPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(breadboardEClass, Breadboard.class, "Breadboard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBreadboard_Lines(), theXMLTypePackage.getInt(), "lines", null, 0, 1, Breadboard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -1031,6 +852,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 			 "name", "terminal"
 		   });		
 		addAnnotation
+		  (genericPartEClass, 
+		   source, 
+		   new String[] {
+			 "name", "GenericPart",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
 		  (resistorEClass, 
 		   source, 
 		   new String[] {
@@ -1057,20 +885,6 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "color"
-		   });		
-		addAnnotation
-		  (buttonEClass, 
-		   source, 
-		   new String[] {
-			 "name", "Button",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getButton_Type(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "type"
 		   });		
 		addAnnotation
 		  (compositeEClass, 
@@ -1101,6 +915,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 			 "kind", "elementOnly"
 		   });		
 		addAnnotation
+		  (moduleEClass, 
+		   source, 
+		   new String[] {
+			 "name", "Module",
+			 "kind", "elementOnly"
+		   });		
+		addAnnotation
 		  (breadboardEClass, 
 		   source, 
 		   new String[] {
@@ -1113,69 +934,6 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "lines"
-		   });		
-		addAnnotation
-		  (moduleEClass, 
-		   source, 
-		   new String[] {
-			 "name", "Module",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (arduinoEClass, 
-		   source, 
-		   new String[] {
-			 "name", "Arduino",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (getArduino_Type(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "type"
-		   });		
-		addAnnotation
-		  (potentiometerEClass, 
-		   source, 
-		   new String[] {
-			 "name", "Potentiometer",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (fsrSensorEClass, 
-		   source, 
-		   new String[] {
-			 "name", "FsrSensor",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (lightSensorEClass, 
-		   source, 
-		   new String[] {
-			 "name", "LightSensor",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (transistorEClass, 
-		   source, 
-		   new String[] {
-			 "name", "Transistor",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (powerTransistorEClass, 
-		   source, 
-		   new String[] {
-			 "name", "PowerTransistor",
-			 "kind", "elementOnly"
-		   });		
-		addAnnotation
-		  (genericPartEClass, 
-		   source, 
-		   new String[] {
-			 "name", "GenericPart",
-			 "kind", "elementOnly"
 		   });
 	}
 

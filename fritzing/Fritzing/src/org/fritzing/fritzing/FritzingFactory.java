@@ -70,15 +70,6 @@ public interface FritzingFactory extends EFactory {
 	LED createLED();
 
 	/**
-	 * Returns a new object of class '<em>Button</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Button</em>'.
-	 * @generated
-	 */
-	Button createButton();
-
-	/**
 	 * Returns a new object of class '<em>Sketch</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -104,60 +95,6 @@ public interface FritzingFactory extends EFactory {
 	 * @generated
 	 */
 	Module createModule();
-
-	/**
-	 * Returns a new object of class '<em>Arduino</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Arduino</em>'.
-	 * @generated
-	 */
-	Arduino createArduino();
-
-	/**
-	 * Returns a new object of class '<em>Potentiometer</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Potentiometer</em>'.
-	 * @generated
-	 */
-	Potentiometer createPotentiometer();
-
-	/**
-	 * Returns a new object of class '<em>Fsr Sensor</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Fsr Sensor</em>'.
-	 * @generated
-	 */
-	FsrSensor createFsrSensor();
-
-	/**
-	 * Returns a new object of class '<em>Light Sensor</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Light Sensor</em>'.
-	 * @generated
-	 */
-	LightSensor createLightSensor();
-
-	/**
-	 * Returns a new object of class '<em>Transistor</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Transistor</em>'.
-	 * @generated
-	 */
-	Transistor createTransistor();
-
-	/**
-	 * Returns a new object of class '<em>Power Transistor</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Power Transistor</em>'.
-	 * @generated
-	 */
-	PowerTransistor createPowerTransistor();
 
 	/**
 	 * Returns a new object of class '<em>Generic Part</em>'.
