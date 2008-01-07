@@ -20,6 +20,8 @@ import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TrackEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TrackNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -34,6 +36,8 @@ import org.fritzing.fritzing.diagram.view.factories.Terminal2ViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalName2ViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.TerminalViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.TrackNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.TrackViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.WireNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.WireViewFactory;
 
@@ -160,6 +164,13 @@ public class FritzingViewProvider extends AbstractViewProvider {
 						return null; // wrong container
 					}
 					break;
+				case TrackNameEditPart.VISUAL_ID:
+					if (TrackEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
 				default:
 					return null;
 				}
@@ -200,6 +211,8 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return TerminalName2ViewFactory.class;
 		case WireNameEditPart.VISUAL_ID:
 			return WireNameViewFactory.class;
+		case TrackNameEditPart.VISUAL_ID:
+			return TrackNameViewFactory.class;
 		}
 		return null;
 	}
@@ -238,6 +251,8 @@ public class FritzingViewProvider extends AbstractViewProvider {
 		switch (visualID) {
 		case WireEditPart.VISUAL_ID:
 			return WireViewFactory.class;
+		case TrackEditPart.VISUAL_ID:
+			return TrackViewFactory.class;
 		}
 		return null;
 	}

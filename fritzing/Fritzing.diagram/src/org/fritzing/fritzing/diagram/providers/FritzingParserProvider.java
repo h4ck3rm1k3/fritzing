@@ -20,6 +20,7 @@ import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TrackNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.parsers.MessageFormatParser;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -175,7 +176,32 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createWireName_6001Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getWire_Name(), };
+				.getConnection_Name(), };
+		MessageFormatParser parser = new MessageFormatParser(features);
+		return parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	private IParser trackName_6002Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getTrackName_6002Parser() {
+		if (trackName_6002Parser == null) {
+			trackName_6002Parser = createTrackName_6002Parser();
+		}
+		return trackName_6002Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected IParser createTrackName_6002Parser() {
+		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
+				.getConnection_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -197,6 +223,8 @@ public class FritzingParserProvider extends AbstractProvider implements
 			return getTerminalName_5001Parser();
 		case WireNameEditPart.VISUAL_ID:
 			return getWireName_6001Parser();
+		case TrackNameEditPart.VISUAL_ID:
+			return getTrackName_6002Parser();
 		}
 		return null;
 	}

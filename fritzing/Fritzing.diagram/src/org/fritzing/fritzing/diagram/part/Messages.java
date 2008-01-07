@@ -296,22 +296,12 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String SelectPanTool_title;
+	public static String Wire1CreationTool_title;
 
 	/**
 	 * @generated
 	 */
-	public static String ZoomPanTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Wire3CreationTool_title;
-
-	/**
-	 * @generated
-	 */
-	public static String Wire3CreationTool_desc;
+	public static String Wire1CreationTool_desc;
 
 	/**
 	 * @generated

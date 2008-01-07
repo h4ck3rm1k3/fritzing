@@ -9,8 +9,11 @@ import org.eclipse.gmf.runtime.emf.type.core.commands.DestroyElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
+import org.fritzing.fritzing.diagram.edit.commands.TrackCreateCommand;
+import org.fritzing.fritzing.diagram.edit.commands.TrackReorientCommand;
 import org.fritzing.fritzing.diagram.edit.commands.WireCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.WireReorientCommand;
+import org.fritzing.fritzing.diagram.edit.parts.TrackEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
@@ -49,6 +52,10 @@ public class Terminal2ItemSemanticEditPolicy extends
 			return getGEFWrapper(new WireCreateCommand(req, req.getSource(),
 					req.getTarget()));
 		}
+		if (FritzingElementTypes.Track_4002 == req.getElementType()) {
+			return getGEFWrapper(new TrackCreateCommand(req, req.getSource(),
+					req.getTarget()));
+		}
 		return null;
 	}
 
@@ -59,6 +66,10 @@ public class Terminal2ItemSemanticEditPolicy extends
 			CreateRelationshipRequest req) {
 		if (FritzingElementTypes.Wire_4001 == req.getElementType()) {
 			return getGEFWrapper(new WireCreateCommand(req, req.getSource(),
+					req.getTarget()));
+		}
+		if (FritzingElementTypes.Track_4002 == req.getElementType()) {
+			return getGEFWrapper(new TrackCreateCommand(req, req.getSource(),
 					req.getTarget()));
 		}
 		return null;
@@ -75,6 +86,8 @@ public class Terminal2ItemSemanticEditPolicy extends
 		switch (getVisualID(req)) {
 		case WireEditPart.VISUAL_ID:
 			return getGEFWrapper(new WireReorientCommand(req));
+		case TrackEditPart.VISUAL_ID:
+			return getGEFWrapper(new TrackReorientCommand(req));
 		}
 		return super.getReorientRelationshipCommand(req);
 	}

@@ -34,6 +34,7 @@ import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TrackEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramUpdater;
 import org.fritzing.fritzing.diagram.part.FritzingLinkDescriptor;
@@ -251,6 +252,12 @@ public class SketchCanonicalEditPolicy extends CanonicalConnectionEditPolicy {
 			domain2NotationMap.put(view.getElement(), view);
 			result.addAll(FritzingDiagramUpdater
 					.getWire_4001ContainedLinks(view));
+			break;
+		}
+		case TrackEditPart.VISUAL_ID: {
+			domain2NotationMap.put(view.getElement(), view);
+			result.addAll(FritzingDiagramUpdater
+					.getTrack_4002ContainedLinks(view));
 			break;
 		}
 		}

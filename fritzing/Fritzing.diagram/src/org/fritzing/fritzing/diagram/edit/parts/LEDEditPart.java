@@ -156,7 +156,6 @@ public class LEDEditPart extends PartEditPart {
 		return super.createNodePlate();
 	}
 
-	
 	/**
 	 * @generated NOT
 	 */
@@ -214,9 +213,6 @@ public class LEDEditPart extends PartEditPart {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
 				.getType(LEDNameEditPart.VISUAL_ID));
 	}
-
-
-
 
 	/**
 	 * @generated NOT

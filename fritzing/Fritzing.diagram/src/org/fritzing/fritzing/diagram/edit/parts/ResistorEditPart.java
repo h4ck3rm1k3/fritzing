@@ -100,7 +100,6 @@ public class ResistorEditPart extends PartEditPart {
 		return primaryShape = figure;
 	}
 
-
 	/**
 	 * @generated
 	 */
@@ -157,9 +156,8 @@ public class ResistorEditPart extends PartEditPart {
 		super.removeChildVisual(childEditPart);
 	}
 
-
-    /**
-     * @generated NOT
+	/**
+	 * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
 		return super.getPrimaryDragEditPolicy();

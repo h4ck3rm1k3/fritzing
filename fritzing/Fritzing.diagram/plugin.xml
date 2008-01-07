@@ -342,6 +342,11 @@
             <popupPredefinedItem id="deleteFromDiagramAction" remove="true"/>
             <popupPredefinedItem id="deleteFromModelAction" remove="true"/>
          </popupContribution>
+         <popupContribution class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramContextMenuProvider">
+            <popupStructuredContributionCriteria objectClass="org.fritzing.fritzing.diagram.edit.parts.TrackNameEditPart"/>
+            <popupPredefinedItem id="deleteFromDiagramAction" remove="true"/>
+            <popupPredefinedItem id="deleteFromModelAction" remove="true"/>
+         </popupContribution>
       </contributionItemProvider>
    </extension>
 
@@ -489,6 +494,16 @@
             <param name="semanticHint" value="4001"/>
          </metamodelType>
       </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.Track_4002"
+               name="%metatype.name.Track_4002"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Track"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.TrackEditHelper">
+            <param name="semanticHint" value="4002"/>
+         </metamodelType>
+      </metamodel>
    </extension>
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypeBindings">
@@ -508,6 +523,7 @@
          <elementType ref="Fritzing.diagram.GenericPart_2004"/>
          <elementType ref="Fritzing.diagram.Terminal_3001"/>
          <elementType ref="Fritzing.diagram.Wire_4001"/>
+         <elementType ref="Fritzing.diagram.Track_4002"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
       </binding>
    </extension>
@@ -533,6 +549,15 @@
          <context decoratorTargets="PRIMARY_VIEW"/>
       </decoratorProvider>
    </extension>
+<extension point="org.eclipse.ui.bindings">
+      <?gmfgen generated="true"?>
+      <key 
+         commandId="org.fritzing.fritzing.diagram.updateDiagram"
+         contextId="org.fritzing.fritzing.diagram.ui.diagramContext"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="F5"/>
+   </extension>
+
 
    
 <!--

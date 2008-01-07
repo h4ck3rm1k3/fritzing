@@ -21,6 +21,8 @@ import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TrackEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.TrackNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireNameEditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
@@ -248,6 +250,11 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			break;
+		case TrackEditPart.VISUAL_ID:
+			if (TrackNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		}
 		return false;
 	}
@@ -262,6 +269,10 @@ public class FritzingVisualIDRegistry {
 		if (FritzingPackage.eINSTANCE.getWire().isSuperTypeOf(
 				domainElement.eClass())) {
 			return WireEditPart.VISUAL_ID;
+		}
+		if (FritzingPackage.eINSTANCE.getTrack().isSuperTypeOf(
+				domainElement.eClass())) {
+			return TrackEditPart.VISUAL_ID;
 		}
 		return -1;
 	}

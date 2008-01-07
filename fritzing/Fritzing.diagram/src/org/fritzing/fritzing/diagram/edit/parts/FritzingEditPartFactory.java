@@ -69,6 +69,12 @@ public class FritzingEditPartFactory implements EditPartFactory {
 
 			case WireNameEditPart.VISUAL_ID:
 				return new WireNameEditPart(view);
+
+			case TrackEditPart.VISUAL_ID:
+				return new TrackEditPart(view);
+
+			case TrackNameEditPart.VISUAL_ID:
+				return new TrackNameEditPart(view);
 			}
 		}
 		return createUnrecognizedEditPart(context, model);

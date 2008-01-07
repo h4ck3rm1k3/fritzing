@@ -57,7 +57,7 @@ public class LEDCreateCommand extends PartCreateCommand {
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		EObject newElement =  super.doDefaultElementCreation();
+		EObject newElement = super.doDefaultElementCreation();
 		EList<Terminal> trmnls = ((Part) newElement).getTerminals();
 		return newElement;
 
