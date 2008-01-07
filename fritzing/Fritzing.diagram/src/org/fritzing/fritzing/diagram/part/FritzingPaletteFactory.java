@@ -49,22 +49,22 @@ public class FritzingPaletteFactory {
 	 * @generated NOT
 	 */
 	public void fillPalette(PaletteRoot paletteRoot) {
-		coreMap.put("led", FritzingElementTypes.LED_2001);
-		coreMap.put("resistor", FritzingElementTypes.Resistor_2002);
+		coreMap.put("LED", FritzingElementTypes.LED_2001);
+		coreMap.put("Resistor", FritzingElementTypes.Resistor_2002);
 		
-		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
-			String folder = keys.nextElement();
-			PartLoader partLoader = PartLoaderRegistry.getInstance().get(
-					"libraries" + File.separator + "core" + File.separator + folder + File.separator + "partdescription.xml");
-			if (partLoader == null) {
-				// TODO: alert user;
-				System.out.println("Couldn't load part " + folder);
-				continue;
-			}				
-		}
+//		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
+//			String folder = keys.nextElement();
+//			PartLoader partLoader = PartLoaderRegistry.getInstance().get(
+//					"libraries" + File.separator + "core" + File.separator + folder + File.separator + "partdescription.xml");
+//			if (partLoader == null) {
+//				// TODO: alert user;
+//				System.out.println("Couldn't load part " + folder);
+//				continue;
+//			}				
+//		}
 			
 		customiseStandardGroup(paletteRoot);
-		createParts2Group();		
+//		createParts2Group();		
 		addGenerics("libraries");
 		for (Enumeration<PaletteDrawer> e = drawerMap.elements(); e.hasMoreElements(); ) {
 			paletteRoot.add(e.nextElement());
@@ -93,7 +93,7 @@ public class FritzingPaletteFactory {
 		
 		File xmlFile = new File(file.getAbsolutePath() + File.separator + "partdescription.xml");
 		if (xmlFile.exists()) {
-			addPart(folder, FritzingElementTypes.GenericPart_2004);	
+			addPart(folder);	
 		}
 				
 		File[] files = file.listFiles();
@@ -103,12 +103,20 @@ public class FritzingPaletteFactory {
 		}	
 	}
 	
-	protected void addPart(String prefix, IElementType type) {
+	protected void addPart(String prefix) {
 		PartLoader partLoader = PartLoaderRegistry.getInstance().get(prefix + File.separator + "partdescription.xml");
 		if (partLoader == null) return;
 		
-		if (partLoader.isGeneric()) {
-			type = FritzingElementTypes.GenericPart_2004;
+		IElementType type = FritzingElementTypes.GenericPart_2004;
+		
+		if (!partLoader.isGeneric()) {
+			IElementType tempType = coreMap.get(partLoader.getSpecies());
+			if (tempType != null) {
+				type = tempType;
+			}
+			else {
+				// alert the user
+			}
 		}
 		
 		List<IElementType>types = new ArrayList<IElementType>(1);
@@ -170,15 +178,15 @@ public class FritzingPaletteFactory {
 	 * @generated NOT
 	 */
 	private void createParts2Group() {
-		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
-			String key = keys.nextElement();
-			IElementType type = coreMap.get(key);
-			
-			addPart("libraries/core/" + key, type);
-			
-			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries" + File.separator + "core" + File.separator + key + File.separator + "partdescription.xml");
-			
-		}
+//		for (Enumeration<String> keys = coreMap.keys(); keys.hasMoreElements(); ) {
+//			String key = keys.nextElement();
+//			IElementType type = coreMap.get(key);
+//			
+//			addPart("libraries/core/" + key, type);
+//			
+//			PartLoader partLoader = PartLoaderRegistry.getInstance().get("libraries" + File.separator + "core" + File.separator + key + File.separator + "partdescription.xml");
+//			
+//		}
 		
 		
 	}

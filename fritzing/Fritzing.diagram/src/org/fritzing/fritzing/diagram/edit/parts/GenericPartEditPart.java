@@ -30,6 +30,7 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.fritzing.fritzing.GenericPart;
+import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
@@ -62,15 +63,6 @@ public class GenericPartEditPart extends PartEditPart {
 	 */
 	public GenericPartEditPart(View view) {
 		super(view);
-		EObject element = view.getElement();
-		if (element instanceof GenericPart) {
-			String genus = ((GenericPart) element).getGenus();
-			String species = ((GenericPart) element).getSpecies();
-			if (genus != null && species != null) {
-				partLoader = PartLoaderRegistry.getInstance().get(
-						genus + species);
-			}
-		}
 	}
 
 	/**

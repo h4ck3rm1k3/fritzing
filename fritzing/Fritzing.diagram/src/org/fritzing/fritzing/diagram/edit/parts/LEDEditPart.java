@@ -74,8 +74,6 @@ public class LEDEditPart extends PartEditPart {
 	 */
 	public LEDEditPart(View view) {
 		super(view);
-		partLoader = PartLoaderRegistry.getInstance().get(
-				"libraries/core/led/partdescription.xml");
 	}
 
 	/**
@@ -130,44 +128,6 @@ public class LEDEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	public LEDFigure getPrimaryShape() {
-		return (LEDFigure) primaryShape;
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof LEDNameEditPart) {
-
-			((LEDNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureLEDNameFigure());
-			return true;
-		} else if (childEditPart instanceof Terminal2EditPart) {
-
-			//			TimerTask task = new Terminal2TimerTask((Terminal2EditPart) childEditPart);
-			//			Timer t = new Timer();
-			//			t.schedule(task, 5000L);				
-		}
-		return addEastWestFixedChild(childEditPart);
-	}
-
-	/**
-	 * @generated
-	 */
-	protected boolean removeFixedChild(EditPart childEditPart) {
-
-		if (childEditPart instanceof Terminal2EditPart) {
-			getBorderedFigure().getBorderItemContainer().remove(
-					((Terminal2EditPart) childEditPart).getFigure());
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @generated
-	 */
 	protected void addChildVisual(EditPart childEditPart, int index) {
 		if (addFixedChild(childEditPart)) {
 			return;
@@ -176,24 +136,17 @@ public class LEDEditPart extends PartEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
-	protected void removeChildVisual(EditPart childEditPart) {
-		if (removeFixedChild(childEditPart)) {
-			return;
-		}
-		super.removeChildVisual(childEditPart);
+	protected boolean addFixedChild(EditPart childEditPart) {
+		return addEastWestFixedChild(childEditPart);
 	}
 
 	/**
 	 * @generated
 	 */
-	protected IFigure getContentPaneFor(IGraphicalEditPart editPart) {
-
-		if (editPart instanceof Terminal2EditPart) {
-			return getBorderedFigure().getBorderItemContainer();
-		}
-		return super.getContentPaneFor(editPart);
+	public LEDFigure getPrimaryShape() {
+		return (LEDFigure) primaryShape;
 	}
 
 	/**
@@ -203,6 +156,7 @@ public class LEDEditPart extends PartEditPart {
 		return super.createNodePlate();
 	}
 
+	
 	/**
 	 * @generated NOT
 	 */
@@ -261,35 +215,19 @@ public class LEDEditPart extends PartEditPart {
 				.getType(LEDNameEditPart.VISUAL_ID));
 	}
 
+
+
+
 	/**
 	 * @generated NOT
 	 */
 	public class LEDFigure extends PartFigure {
 
 		/**
-		 * @generated
-		 */
-		private WrapLabel fFigureLEDNameFigure;
-
-		/**
 		 * @generated NOT
 		 */
 		public LEDFigure(PartLoader partLoader) {
 			super(partLoader);
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		protected void createContents() {
-			super.createContents();
-			fFigureLEDNameFigure = new WrapLabel();
-			fFigureLEDNameFigure.setText("..");
-
-			fFigureLEDNameFigure.setFont(FFIGURELEDNAMEFIGURE_FONT);
-
-			this.add(fFigureLEDNameFigure);
-
 		}
 
 		/**
@@ -312,13 +250,6 @@ public class LEDEditPart extends PartEditPart {
 		}
 
 		/**
-		 * @generated
-		 */
-		public WrapLabel getFigureLEDNameFigure() {
-			return fFigureLEDNameFigure;
-		}
-
-		/**
 		 * @generated NOT
 		 */
 		public void setColor(int color) {
@@ -328,28 +259,6 @@ public class LEDEditPart extends PartEditPart {
 			repaint();
 		}
 
-	}
-
-	/**
-	 * @generated
-	 */
-	static final Font FFIGURELEDNAMEFIGURE_FONT = new Font(
-			Display.getCurrent(), Display.getDefault().getSystemFont()
-					.getFontData()[0].getName(), 8, SWT.NORMAL);
-
-	class Terminal2TimerTask extends TimerTask {
-		protected Terminal2EditPart terminal;
-
-		public Terminal2TimerTask(Terminal2EditPart terminal) {
-			super();
-			this.terminal = terminal;
-		}
-
-		public void run() {
-			if (terminal != null) {
-				terminal.refreshAll();
-			}
-		}
 	}
 
 }

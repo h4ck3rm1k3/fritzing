@@ -16,6 +16,7 @@ import org.eclipse.gmf.runtime.emf.type.core.commands.CreateElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View; //import org.fritzing.fritzing.Button;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
@@ -56,7 +57,9 @@ public class LEDCreateCommand extends PartCreateCommand {
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		return super.doDefaultElementCreation();
+		EObject newElement =  super.doDefaultElementCreation();
+		EList<Terminal> trmnls = ((Part) newElement).getTerminals();
+		return newElement;
 
 		/*
 

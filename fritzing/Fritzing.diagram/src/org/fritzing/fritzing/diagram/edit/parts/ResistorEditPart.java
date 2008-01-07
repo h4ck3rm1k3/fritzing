@@ -64,8 +64,6 @@ public class ResistorEditPart extends PartEditPart {
 	 */
 	public ResistorEditPart(View view) {
 		super(view);
-		partLoader = PartLoaderRegistry.getInstance().get(
-				"libraries/core/resistor/partdescription.xml");
 	}
 
 	/**
@@ -102,6 +100,24 @@ public class ResistorEditPart extends PartEditPart {
 		return primaryShape = figure;
 	}
 
+
+	/**
+	 * @generated
+	 */
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		if (addFixedChild(childEditPart)) {
+			return;
+		}
+		super.addChildVisual(childEditPart, -1);
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected boolean addFixedChild(EditPart childEditPart) {
+		return addEastWestFixedChild(childEditPart);
+	}
+
 	/**
 	 * @generated
 	 */
@@ -112,14 +128,11 @@ public class ResistorEditPart extends PartEditPart {
 	/**
 	 * @generated NOT
 	 */
-	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof ResistorNameEditPart) {
-			((ResistorNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureResistorNameFigure());
-			return true;
-		}
-		return addEastWestFixedChild(childEditPart);
+	protected NodeFigure createNodePlate() {
+		return super.createNodePlate();
 	}
+
+	/**
 
 	/**
 	 * @generated
@@ -137,16 +150,6 @@ public class ResistorEditPart extends PartEditPart {
 	/**
 	 * @generated
 	 */
-	protected void addChildVisual(EditPart childEditPart, int index) {
-		if (addFixedChild(childEditPart)) {
-			return;
-		}
-		super.addChildVisual(childEditPart, -1);
-	}
-
-	/**
-	 * @generated
-	 */
 	protected void removeChildVisual(EditPart childEditPart) {
 		if (removeFixedChild(childEditPart)) {
 			return;
@@ -154,26 +157,9 @@ public class ResistorEditPart extends PartEditPart {
 		super.removeChildVisual(childEditPart);
 	}
 
-	/**
-	 * @generated
-	 */
-	protected IFigure getContentPaneFor(IGraphicalEditPart editPart) {
 
-		if (editPart instanceof Terminal2EditPart) {
-			return getBorderedFigure().getBorderItemContainer();
-		}
-		return super.getContentPaneFor(editPart);
-	}
-
-	/**
-	 * @generated NOT
-	 */
-	protected NodeFigure createNodePlate() {
-		return super.createNodePlate();
-	}
-
-	/**
-	 * @generated NOT
+    /**
+     * @generated NOT
 	 */
 	public EditPolicy getPrimaryDragEditPolicy() {
 		return super.getPrimaryDragEditPolicy();
@@ -235,30 +221,10 @@ public class ResistorEditPart extends PartEditPart {
 	public class ResistorFigure extends PartFigure {
 
 		/**
-		 * @generated
-		 */
-		private WrapLabel fFigureResistorNameFigure;
-
-		/**
 		 * @generated NOT
 		 */
 		public ResistorFigure(PartLoader partLoader) {
 			super(partLoader);
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		protected void createContents() {
-			super.createContents();
-
-			fFigureResistorNameFigure = new WrapLabel();
-			fFigureResistorNameFigure.setText("..");
-
-			fFigureResistorNameFigure.setFont(FFIGURERESISTORNAMEFIGURE_FONT);
-
-			this.add(fFigureResistorNameFigure);
-
 		}
 
 		/**
@@ -280,21 +246,6 @@ public class ResistorEditPart extends PartEditPart {
 			myUseLocalCoordinates = useLocalCoordinates;
 		}
 
-		/**
-		 * @generated
-		 */
-		public WrapLabel getFigureResistorNameFigure() {
-			return fFigureResistorNameFigure;
-		}
-
 	}
-
-	/**
-	 * @generated
-	 */
-	static final Font FFIGURERESISTORNAMEFIGURE_FONT = new Font(Display
-			.getCurrent(),
-			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
-			SWT.NORMAL);
 
 }

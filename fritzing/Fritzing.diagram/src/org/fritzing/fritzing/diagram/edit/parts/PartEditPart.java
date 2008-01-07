@@ -33,8 +33,10 @@ import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
+import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.RotatableNonresizableShapeEditPolicy;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -66,7 +68,15 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	 */
 	public PartEditPart(View view) {
 		super(view);
-		partLoader = null;
+		EObject element = view.getElement();
+		if (element instanceof Part) {
+			String genus = ((Part) element).getGenus();
+			String species = ((Part) element).getSpecies();
+			if (genus != null && species != null) {
+				partLoader = PartLoaderRegistry.getInstance().get(
+						genus + species);
+			}
+		}
 	}
 	
 	
