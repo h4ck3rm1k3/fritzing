@@ -15,27 +15,27 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.Wire;
+import org.fritzing.fritzing.ITrackConnection;
+import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Track;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Wire</b></em>'.
+ * An implementation of the model object '<em><b>Track</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.fritzing.fritzing.impl.WireImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.fritzing.fritzing.impl.WireImpl#getTarget <em>Target</em>}</li>
- *   <li>{@link org.fritzing.fritzing.impl.WireImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.TrackImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.TrackImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.TrackImpl#getSource <em>Source</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class WireImpl extends ConnectionImpl implements Wire {
+public class TrackImpl extends ConnectionImpl implements Track {
 	/**
 	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -44,7 +44,7 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * @generated
 	 * @ordered
 	 */
-	protected Terminal target;
+	protected ITrackConnection target;
 
 	/**
 	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
@@ -54,14 +54,14 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * @generated
 	 * @ordered
 	 */
-	protected Terminal source;
+	protected ITrackConnection source;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected WireImpl() {
+	protected TrackImpl() {
 		super();
 	}
 
@@ -72,7 +72,7 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return FritzingPackage.Literals.WIRE;
+		return FritzingPackage.Literals.TRACK;
 	}
 
 	/**
@@ -80,16 +80,9 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Terminal getSource() {
-		if (source != null && source.eIsProxy()) {
-			InternalEObject oldSource = (InternalEObject)source;
-			source = (Terminal)eResolveProxy(oldSource);
-			if (source != oldSource) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FritzingPackage.WIRE__SOURCE, oldSource, source));
-			}
-		}
-		return source;
+	public Part getParent() {
+		if (eContainerFeatureID != FritzingPackage.TRACK__PARENT) return null;
+		return (Part)eContainer();
 	}
 
 	/**
@@ -97,77 +90,8 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Terminal basicGetSource() {
-		return source;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSource(Terminal newSource) {
-		Terminal oldSource = source;
-		source = newSource;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.WIRE__SOURCE, oldSource, source));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Terminal getTarget() {
-		if (target != null && target.eIsProxy()) {
-			InternalEObject oldTarget = (InternalEObject)target;
-			target = (Terminal)eResolveProxy(oldTarget);
-			if (target != oldTarget) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FritzingPackage.WIRE__TARGET, oldTarget, target));
-			}
-		}
-		return target;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Terminal basicGetTarget() {
-		return target;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setTarget(Terminal newTarget) {
-		Terminal oldTarget = target;
-		target = newTarget;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.WIRE__TARGET, oldTarget, target));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Composite getParent() {
-		if (eContainerFeatureID != FritzingPackage.WIRE__PARENT) return null;
-		return (Composite)eContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetParent(Composite newParent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newParent, FritzingPackage.WIRE__PARENT, msgs);
+	public NotificationChain basicSetParent(Part newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, FritzingPackage.TRACK__PARENT, msgs);
 		return msgs;
 	}
 
@@ -176,20 +100,96 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParent(Composite newParent) {
-		if (newParent != eInternalContainer() || (eContainerFeatureID != FritzingPackage.WIRE__PARENT && newParent != null)) {
+	public void setParent(Part newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID != FritzingPackage.TRACK__PARENT && newParent != null)) {
 			if (EcoreUtil.isAncestor(this, newParent))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParent != null)
-				msgs = ((InternalEObject)newParent).eInverseAdd(this, FritzingPackage.COMPOSITE__WIRES, Composite.class, msgs);
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, FritzingPackage.PART__TRACKS, Part.class, msgs);
 			msgs = basicSetParent(newParent, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.WIRE__PARENT, newParent, newParent));
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.TRACK__PARENT, newParent, newParent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ITrackConnection getTarget() {
+		if (target != null && target.eIsProxy()) {
+			InternalEObject oldTarget = (InternalEObject)target;
+			target = (ITrackConnection)eResolveProxy(oldTarget);
+			if (target != oldTarget) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FritzingPackage.TRACK__TARGET, oldTarget, target));
+			}
+		}
+		return target;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ITrackConnection basicGetTarget() {
+		return target;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTarget(ITrackConnection newTarget) {
+		ITrackConnection oldTarget = target;
+		target = newTarget;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.TRACK__TARGET, oldTarget, target));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ITrackConnection getSource() {
+		if (source != null && source.eIsProxy()) {
+			InternalEObject oldSource = (InternalEObject)source;
+			source = (ITrackConnection)eResolveProxy(oldSource);
+			if (source != oldSource) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FritzingPackage.TRACK__SOURCE, oldSource, source));
+			}
+		}
+		return source;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ITrackConnection basicGetSource() {
+		return source;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSource(ITrackConnection newSource) {
+		ITrackConnection oldSource = source;
+		source = newSource;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.TRACK__SOURCE, oldSource, source));
 	}
 
 	/**
@@ -200,10 +200,10 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case FritzingPackage.WIRE__PARENT:
+			case FritzingPackage.TRACK__PARENT:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParent((Composite)otherEnd, msgs);
+				return basicSetParent((Part)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -216,7 +216,7 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case FritzingPackage.WIRE__PARENT:
+			case FritzingPackage.TRACK__PARENT:
 				return basicSetParent(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -230,8 +230,8 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID) {
-			case FritzingPackage.WIRE__PARENT:
-				return eInternalContainer().eInverseRemove(this, FritzingPackage.COMPOSITE__WIRES, Composite.class, msgs);
+			case FritzingPackage.TRACK__PARENT:
+				return eInternalContainer().eInverseRemove(this, FritzingPackage.PART__TRACKS, Part.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -244,12 +244,12 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case FritzingPackage.WIRE__PARENT:
+			case FritzingPackage.TRACK__PARENT:
 				return getParent();
-			case FritzingPackage.WIRE__TARGET:
+			case FritzingPackage.TRACK__TARGET:
 				if (resolve) return getTarget();
 				return basicGetTarget();
-			case FritzingPackage.WIRE__SOURCE:
+			case FritzingPackage.TRACK__SOURCE:
 				if (resolve) return getSource();
 				return basicGetSource();
 		}
@@ -264,14 +264,14 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case FritzingPackage.WIRE__PARENT:
-				setParent((Composite)newValue);
+			case FritzingPackage.TRACK__PARENT:
+				setParent((Part)newValue);
 				return;
-			case FritzingPackage.WIRE__TARGET:
-				setTarget((Terminal)newValue);
+			case FritzingPackage.TRACK__TARGET:
+				setTarget((ITrackConnection)newValue);
 				return;
-			case FritzingPackage.WIRE__SOURCE:
-				setSource((Terminal)newValue);
+			case FritzingPackage.TRACK__SOURCE:
+				setSource((ITrackConnection)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -285,14 +285,14 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case FritzingPackage.WIRE__PARENT:
-				setParent((Composite)null);
+			case FritzingPackage.TRACK__PARENT:
+				setParent((Part)null);
 				return;
-			case FritzingPackage.WIRE__TARGET:
-				setTarget((Terminal)null);
+			case FritzingPackage.TRACK__TARGET:
+				setTarget((ITrackConnection)null);
 				return;
-			case FritzingPackage.WIRE__SOURCE:
-				setSource((Terminal)null);
+			case FritzingPackage.TRACK__SOURCE:
+				setSource((ITrackConnection)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -306,14 +306,14 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case FritzingPackage.WIRE__PARENT:
+			case FritzingPackage.TRACK__PARENT:
 				return getParent() != null;
-			case FritzingPackage.WIRE__TARGET:
+			case FritzingPackage.TRACK__TARGET:
 				return target != null;
-			case FritzingPackage.WIRE__SOURCE:
+			case FritzingPackage.TRACK__SOURCE:
 				return source != null;
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //WireImpl
+} //TrackImpl

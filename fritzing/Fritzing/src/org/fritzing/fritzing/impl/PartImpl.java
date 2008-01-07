@@ -25,6 +25,7 @@ import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.Track;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,6 +42,7 @@ import org.fritzing.fritzing.Terminal;
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getFootprint <em>Footprint</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getTerminals <em>Terminals</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.PartImpl#getTracks <em>Tracks</em>}</li>
  * </ul>
  * </p>
  *
@@ -176,6 +178,16 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * @ordered
 	 */
 	protected EList<Terminal> terminals;
+
+	/**
+	 * The cached value of the '{@link #getTracks() <em>Tracks</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTracks()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Track> tracks;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -380,6 +392,18 @@ public abstract class PartImpl extends ElementImpl implements Part {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Track> getTracks() {
+		if (tracks == null) {
+			tracks = new EObjectContainmentWithInverseEList<Track>(Track.class, this, FritzingPackage.PART__TRACKS, FritzingPackage.TRACK__PARENT);
+		}
+		return tracks;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -390,6 +414,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetParent((Composite)otherEnd, msgs);
+			case FritzingPackage.PART__TRACKS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTracks()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -406,6 +432,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 				return ((InternalEList<?>)getTerminals()).basicRemove(otherEnd, msgs);
 			case FritzingPackage.PART__PARENT:
 				return basicSetParent(null, msgs);
+			case FritzingPackage.PART__TRACKS:
+				return ((InternalEList<?>)getTracks()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -448,6 +476,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 				return getTerminals();
 			case FritzingPackage.PART__PARENT:
 				return getParent();
+			case FritzingPackage.PART__TRACKS:
+				return getTracks();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -486,6 +516,10 @@ public abstract class PartImpl extends ElementImpl implements Part {
 			case FritzingPackage.PART__PARENT:
 				setParent((Composite)newValue);
 				return;
+			case FritzingPackage.PART__TRACKS:
+				getTracks().clear();
+				getTracks().addAll((Collection<? extends Track>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -522,6 +556,9 @@ public abstract class PartImpl extends ElementImpl implements Part {
 			case FritzingPackage.PART__PARENT:
 				setParent((Composite)null);
 				return;
+			case FritzingPackage.PART__TRACKS:
+				getTracks().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -550,6 +587,8 @@ public abstract class PartImpl extends ElementImpl implements Part {
 				return terminals != null && !terminals.isEmpty();
 			case FritzingPackage.PART__PARENT:
 				return getParent() != null;
+			case FritzingPackage.PART__TRACKS:
+				return tracks != null && !tracks.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -179,32 +179,14 @@ public interface FritzingPackage extends EPackage {
 	int TERMINAL_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.fritzing.fritzing.impl.WireImpl <em>Wire</em>}' class.
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ConnectionImpl <em>Connection</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.fritzing.fritzing.impl.WireImpl
-	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getWire()
+	 * @see org.fritzing.fritzing.impl.ConnectionImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getConnection()
 	 * @generated
 	 */
-	int WIRE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WIRE__SOURCE = ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int WIRE__TARGET = ELEMENT_FEATURE_COUNT + 1;
+	int CONNECTION = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -213,25 +195,46 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WIRE__NAME = ELEMENT_FEATURE_COUNT + 2;
+	int CONNECTION__NAME = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * The number of structural features of the '<em>Connection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WIRE__PARENT = ELEMENT_FEATURE_COUNT + 3;
+	int CONNECTION_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Wire</em>' class.
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.WireImpl <em>Wire</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.WireImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getWire()
 	 * @generated
-	 * @ordered
 	 */
-	int WIRE_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 4;
+	int WIRE = 12;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.TrackImpl <em>Track</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.TrackImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getTrack()
+	 * @generated
+	 */
+	int TRACK = 13;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.ITrackConnection <em>ITrack Connection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.ITrackConnection
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getITrackConnection()
+	 * @generated
+	 */
+	int ITRACK_CONNECTION = 14;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.PartImpl <em>Part</em>}' class.
@@ -316,13 +319,22 @@ public interface FritzingPackage extends EPackage {
 	int PART__PARENT = ELEMENT_FEATURE_COUNT + 7;
 
 	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PART__TRACKS = ELEMENT_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>Part</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 8;
+	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ResistorImpl <em>Resistor</em>}' class.
@@ -467,6 +479,15 @@ public interface FritzingPackage extends EPackage {
 	int GENERIC_PART__PARENT = PART__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__TRACKS = PART__TRACKS;
+
+	/**
 	 * The number of structural features of the '<em>Generic Part</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -546,6 +567,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESISTOR__PARENT = PART__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESISTOR__TRACKS = PART__TRACKS;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -638,6 +668,15 @@ public interface FritzingPackage extends EPackage {
 	int LED__PARENT = PART__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LED__TRACKS = PART__TRACKS;
+
+	/**
 	 * The feature id for the '<em><b>Color</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -726,6 +765,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE__PARENT = PART__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__TRACKS = PART__TRACKS;
 
 	/**
 	 * The feature id for the '<em><b>Parts</b></em>' containment reference list.
@@ -827,6 +875,15 @@ public interface FritzingPackage extends EPackage {
 	int SKETCH__PARENT = COMPOSITE__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SKETCH__TRACKS = COMPOSITE__TRACKS;
+
+	/**
 	 * The feature id for the '<em><b>Parts</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -924,6 +981,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE__PARENT = COMPOSITE__PARENT;
+
+	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__TRACKS = COMPOSITE__TRACKS;
 
 	/**
 	 * The feature id for the '<em><b>Parts</b></em>' containment reference list.
@@ -1025,6 +1091,15 @@ public interface FritzingPackage extends EPackage {
 	int BREADBOARD__PARENT = PART__PARENT;
 
 	/**
+	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__TRACKS = PART__TRACKS;
+
+	/**
 	 * The feature id for the '<em><b>Lines</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1034,13 +1109,121 @@ public interface FritzingPackage extends EPackage {
 	int BREADBOARD__LINES = PART_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Columns</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__COLUMNS = PART_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Breadboard</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BREADBOARD_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
+	int BREADBOARD_FEATURE_COUNT = PART_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRE__NAME = CONNECTION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRE__PARENT = CONNECTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRE__TARGET = CONNECTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRE__SOURCE = CONNECTION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Wire</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRE_FEATURE_COUNT = CONNECTION_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRACK__NAME = CONNECTION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRACK__PARENT = CONNECTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRACK__TARGET = CONNECTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRACK__SOURCE = CONNECTION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Track</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRACK_FEATURE_COUNT = CONNECTION_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>ITrack Connection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITRACK_CONNECTION_FEATURE_COUNT = 0;
 
 
 	/**
@@ -1151,6 +1334,27 @@ public interface FritzingPackage extends EPackage {
 	EClass getElement();
 
 	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.Connection <em>Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Connection</em>'.
+	 * @see org.fritzing.fritzing.Connection
+	 * @generated
+	 */
+	EClass getConnection();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Connection#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.fritzing.fritzing.Connection#getName()
+	 * @see #getConnection()
+	 * @generated
+	 */
+	EAttribute getConnection_Name();
+
+	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Wire <em>Wire</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1172,6 +1376,59 @@ public interface FritzingPackage extends EPackage {
 	EReference getWire_Source();
 
 	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.Track <em>Track</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Track</em>'.
+	 * @see org.fritzing.fritzing.Track
+	 * @generated
+	 */
+	EClass getTrack();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.fritzing.fritzing.Track#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.fritzing.fritzing.Track#getParent()
+	 * @see #getTrack()
+	 * @generated
+	 */
+	EReference getTrack_Parent();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.fritzing.fritzing.Track#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see org.fritzing.fritzing.Track#getTarget()
+	 * @see #getTrack()
+	 * @generated
+	 */
+	EReference getTrack_Target();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.fritzing.fritzing.Track#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Source</em>'.
+	 * @see org.fritzing.fritzing.Track#getSource()
+	 * @see #getTrack()
+	 * @generated
+	 */
+	EReference getTrack_Source();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.ITrackConnection <em>ITrack Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>ITrack Connection</em>'.
+	 * @see org.fritzing.fritzing.ITrackConnection
+	 * @generated
+	 */
+	EClass getITrackConnection();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.fritzing.fritzing.Wire#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1181,17 +1438,6 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getWire_Target();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Wire#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.fritzing.fritzing.Wire#getName()
-	 * @see #getWire()
-	 * @generated
-	 */
-	EAttribute getWire_Name();
 
 	/**
 	 * Returns the meta object for the container reference '{@link org.fritzing.fritzing.Wire#getParent <em>Parent</em>}'.
@@ -1303,6 +1549,17 @@ public interface FritzingPackage extends EPackage {
 	EReference getPart_Parent();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.fritzing.fritzing.Part#getTracks <em>Tracks</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Tracks</em>'.
+	 * @see org.fritzing.fritzing.Part#getTracks()
+	 * @see #getPart()
+	 * @generated
+	 */
+	EReference getPart_Tracks();
+
+	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Resistor <em>Resistor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1406,6 +1663,17 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getBreadboard_Lines();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Breadboard#getColumns <em>Columns</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Columns</em>'.
+	 * @see org.fritzing.fritzing.Breadboard#getColumns()
+	 * @see #getBreadboard()
+	 * @generated
+	 */
+	EAttribute getBreadboard_Columns();
 
 	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Module <em>Module</em>}'.
@@ -1536,6 +1804,24 @@ public interface FritzingPackage extends EPackage {
 		EClass ELEMENT = eINSTANCE.getElement();
 
 		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.ConnectionImpl <em>Connection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.ConnectionImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getConnection()
+		 * @generated
+		 */
+		EClass CONNECTION = eINSTANCE.getConnection();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONNECTION__NAME = eINSTANCE.getConnection_Name();
+
+		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.WireImpl <em>Wire</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1554,20 +1840,56 @@ public interface FritzingPackage extends EPackage {
 		EReference WIRE__SOURCE = eINSTANCE.getWire_Source();
 
 		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.TrackImpl <em>Track</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.TrackImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getTrack()
+		 * @generated
+		 */
+		EClass TRACK = eINSTANCE.getTrack();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRACK__PARENT = eINSTANCE.getTrack_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRACK__TARGET = eINSTANCE.getTrack_Target();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TRACK__SOURCE = eINSTANCE.getTrack_Source();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.ITrackConnection <em>ITrack Connection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.ITrackConnection
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getITrackConnection()
+		 * @generated
+		 */
+		EClass ITRACK_CONNECTION = eINSTANCE.getITrackConnection();
+
+		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference WIRE__TARGET = eINSTANCE.getWire_Target();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute WIRE__NAME = eINSTANCE.getWire_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
@@ -1650,6 +1972,14 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EReference PART__PARENT = eINSTANCE.getPart_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Tracks</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PART__TRACKS = eINSTANCE.getPart_Tracks();
 
 		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.ResistorImpl <em>Resistor</em>}' class.
@@ -1740,6 +2070,14 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute BREADBOARD__LINES = eINSTANCE.getBreadboard_Lines();
+
+		/**
+		 * The meta object literal for the '<em><b>Columns</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BREADBOARD__COLUMNS = eINSTANCE.getBreadboard_Columns();
 
 		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.ModuleImpl <em>Module</em>}' class.

@@ -15,6 +15,7 @@ package org.fritzing.fritzing;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.fritzing.fritzing.Breadboard#getLines <em>Lines</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.Breadboard#getColumns <em>Columns</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,5 +50,32 @@ public interface Breadboard extends Part {
 	 * @generated
 	 */
 	void setLines(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Columns</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Columns</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Columns</em>' attribute.
+	 * @see #setColumns(int)
+	 * @see org.fritzing.fritzing.FritzingPackage#getBreadboard_Columns()
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.Int"
+	 *        extendedMetaData="kind='attribute' name='lines'"
+	 * @generated
+	 */
+	int getColumns();
+
+	/**
+	 * Sets the value of the '{@link org.fritzing.fritzing.Breadboard#getColumns <em>Columns</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Columns</em>' attribute.
+	 * @see #getColumns()
+	 * @generated
+	 */
+	void setColumns(int value);
 
 } // Breadboard

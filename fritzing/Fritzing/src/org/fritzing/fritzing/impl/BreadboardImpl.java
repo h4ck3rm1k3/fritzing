@@ -22,6 +22,7 @@ import org.fritzing.fritzing.FritzingPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.fritzing.fritzing.impl.BreadboardImpl#getLines <em>Lines</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.BreadboardImpl#getColumns <em>Columns</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +48,26 @@ public class BreadboardImpl extends PartImpl implements Breadboard {
 	 * @ordered
 	 */
 	protected int lines = LINES_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getColumns() <em>Columns</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getColumns()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int COLUMNS_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getColumns() <em>Columns</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getColumns()
+	 * @generated
+	 * @ordered
+	 */
+	protected int columns = COLUMNS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -93,11 +114,34 @@ public class BreadboardImpl extends PartImpl implements Breadboard {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public int getColumns() {
+		return columns;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setColumns(int newColumns) {
+		int oldColumns = columns;
+		columns = newColumns;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.BREADBOARD__COLUMNS, oldColumns, columns));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case FritzingPackage.BREADBOARD__LINES:
 				return new Integer(getLines());
+			case FritzingPackage.BREADBOARD__COLUMNS:
+				return new Integer(getColumns());
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,6 +156,9 @@ public class BreadboardImpl extends PartImpl implements Breadboard {
 		switch (featureID) {
 			case FritzingPackage.BREADBOARD__LINES:
 				setLines(((Integer)newValue).intValue());
+				return;
+			case FritzingPackage.BREADBOARD__COLUMNS:
+				setColumns(((Integer)newValue).intValue());
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -128,6 +175,9 @@ public class BreadboardImpl extends PartImpl implements Breadboard {
 			case FritzingPackage.BREADBOARD__LINES:
 				setLines(LINES_EDEFAULT);
 				return;
+			case FritzingPackage.BREADBOARD__COLUMNS:
+				setColumns(COLUMNS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -142,6 +192,8 @@ public class BreadboardImpl extends PartImpl implements Breadboard {
 		switch (featureID) {
 			case FritzingPackage.BREADBOARD__LINES:
 				return lines != LINES_EDEFAULT;
+			case FritzingPackage.BREADBOARD__COLUMNS:
+				return columns != COLUMNS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -158,6 +210,8 @@ public class BreadboardImpl extends PartImpl implements Breadboard {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (lines: ");
 		result.append(lines);
+		result.append(", columns: ");
+		result.append(columns);
 		result.append(')');
 		return result.toString();
 	}

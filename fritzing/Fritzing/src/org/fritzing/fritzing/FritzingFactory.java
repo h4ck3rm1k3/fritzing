@@ -52,6 +52,15 @@ public interface FritzingFactory extends EFactory {
 	Wire createWire();
 
 	/**
+	 * Returns a new object of class '<em>Track</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Track</em>'.
+	 * @generated
+	 */
+	Track createTrack();
+
+	/**
 	 * Returns a new object of class '<em>Resistor</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

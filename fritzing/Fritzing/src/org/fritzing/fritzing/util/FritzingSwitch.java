@@ -96,6 +96,7 @@ public class FritzingSwitch<T> {
 				Terminal terminal = (Terminal)theEObject;
 				T result = caseTerminal(terminal);
 				if (result == null) result = caseElement(terminal);
+				if (result == null) result = caseITrackConnection(terminal);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -105,10 +106,10 @@ public class FritzingSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case FritzingPackage.WIRE: {
-				Wire wire = (Wire)theEObject;
-				T result = caseWire(wire);
-				if (result == null) result = caseElement(wire);
+			case FritzingPackage.CONNECTION: {
+				Connection connection = (Connection)theEObject;
+				T result = caseConnection(connection);
+				if (result == null) result = caseElement(connection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -177,6 +178,29 @@ public class FritzingSwitch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case FritzingPackage.WIRE: {
+				Wire wire = (Wire)theEObject;
+				T result = caseWire(wire);
+				if (result == null) result = caseConnection(wire);
+				if (result == null) result = caseElement(wire);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.TRACK: {
+				Track track = (Track)theEObject;
+				T result = caseTrack(track);
+				if (result == null) result = caseConnection(track);
+				if (result == null) result = caseITrackConnection(track);
+				if (result == null) result = caseElement(track);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.ITRACK_CONNECTION: {
+				ITrackConnection iTrackConnection = (ITrackConnection)theEObject;
+				T result = caseITrackConnection(iTrackConnection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -227,6 +251,21 @@ public class FritzingSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Connection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Connection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConnection(Connection object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Wire</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -238,6 +277,36 @@ public class FritzingSwitch<T> {
 	 * @generated
 	 */
 	public T caseWire(Wire object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Track</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Track</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTrack(Track object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>ITrack Connection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>ITrack Connection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseITrackConnection(ITrackConnection object) {
 		return null;
 	}
 

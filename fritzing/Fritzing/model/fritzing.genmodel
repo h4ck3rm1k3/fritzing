@@ -21,11 +21,8 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Terminal/parent"/>
     </genClasses>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Element"/>
-    <genClasses ecoreClass="fritzing.ecore#//Wire">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/source"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/target"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Wire/name"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/parent"/>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//Connection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Connection/name"/>
     </genClasses>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Part">
       <genFeatures property="None" createChild="false" propertyDescription="" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/id"/>
@@ -37,6 +34,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/footprint"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/terminals"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Part/parent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/tracks"/>
     </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//GenericPart"/>
     <genClasses ecoreClass="fritzing.ecore#//Resistor">
@@ -53,6 +51,18 @@
     <genClasses ecoreClass="fritzing.ecore#//Module"/>
     <genClasses ecoreClass="fritzing.ecore#//Breadboard">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Breadboard/lines"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Breadboard/columns"/>
     </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//Wire">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/parent"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Wire/source"/>
+    </genClasses>
+    <genClasses ecoreClass="fritzing.ecore#//Track">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Track/parent"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Track/target"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Track/source"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//ITrackConnection"/>
   </genPackages>
 </genmodel:GenModel>

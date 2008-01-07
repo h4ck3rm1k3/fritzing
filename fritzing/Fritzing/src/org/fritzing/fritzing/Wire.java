@@ -14,10 +14,9 @@ package org.fritzing.fritzing;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.fritzing.fritzing.Wire#getSource <em>Source</em>}</li>
- *   <li>{@link org.fritzing.fritzing.Wire#getTarget <em>Target</em>}</li>
- *   <li>{@link org.fritzing.fritzing.Wire#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Wire#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.Wire#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.Wire#getSource <em>Source</em>}</li>
  * </ul>
  * </p>
  *
@@ -25,7 +24,7 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Wire' kind='empty'"
  * @generated
  */
-public interface Wire extends Element {
+public interface Wire extends Connection {
 	/**
 	 * Returns the value of the '<em><b>Source</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -79,33 +78,6 @@ public interface Wire extends Element {
 	 * @generated
 	 */
 	void setTarget(Terminal value);
-
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Name()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name='name' kind='attribute'"
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link org.fritzing.fritzing.Wire#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' container reference.

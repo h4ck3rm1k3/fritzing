@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.fritzing.fritzing.Part#getFootprint <em>Footprint</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getTerminals <em>Terminals</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.Part#getTracks <em>Tracks</em>}</li>
  * </ul>
  * </p>
  *
@@ -240,5 +241,23 @@ public interface Part extends Element {
 	 * @generated
 	 */
 	void setParent(Composite value);
+
+	/**
+	 * Returns the value of the '<em><b>Tracks</b></em>' containment reference list.
+	 * The list contents are of type {@link org.fritzing.fritzing.Track}.
+	 * It is bidirectional and its opposite is '{@link org.fritzing.fritzing.Track#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tracks</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tracks</em>' containment reference list.
+	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Tracks()
+	 * @see org.fritzing.fritzing.Track#getParent
+	 * @model opposite="parent" containment="true"
+	 * @generated
+	 */
+	EList<Track> getTracks();
 
 } // Part

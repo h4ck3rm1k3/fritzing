@@ -83,8 +83,8 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 				return createElementAdapter();
 			}
 			@Override
-			public Adapter caseWire(Wire object) {
-				return createWireAdapter();
+			public Adapter caseConnection(Connection object) {
+				return createConnectionAdapter();
 			}
 			@Override
 			public Adapter casePart(Part object) {
@@ -117,6 +117,18 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseBreadboard(Breadboard object) {
 				return createBreadboardAdapter();
+			}
+			@Override
+			public Adapter caseWire(Wire object) {
+				return createWireAdapter();
+			}
+			@Override
+			public Adapter caseTrack(Track object) {
+				return createTrackAdapter();
+			}
+			@Override
+			public Adapter caseITrackConnection(ITrackConnection object) {
+				return createITrackConnectionAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -181,6 +193,20 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Connection <em>Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.Connection
+	 * @generated
+	 */
+	public Adapter createConnectionAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Wire <em>Wire</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -191,6 +217,34 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createWireAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Track <em>Track</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.Track
+	 * @generated
+	 */
+	public Adapter createTrackAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.ITrackConnection <em>ITrack Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.ITrackConnection
+	 * @generated
+	 */
+	public Adapter createITrackConnectionAdapter() {
 		return null;
 	}
 

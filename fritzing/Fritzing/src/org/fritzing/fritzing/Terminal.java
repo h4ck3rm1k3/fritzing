@@ -24,7 +24,7 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Terminal' kind='empty'"
  * @generated
  */
-public interface Terminal extends Element {
+public interface Terminal extends Element, ITrackConnection {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

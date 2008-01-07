@@ -105,13 +105,13 @@
       <diagramLabel
           href="fritzing.gmfgraph#WireName"/>
       <features
-          href="fritzing.ecore#//Wire/name"/>
+          href="fritzing.ecore#//Connection/name"/>
     </labelMappings>
     <containmentFeature
         href="fritzing.ecore#//Composite/wires"/>
     <tool
         xsi:type="gmftool:CreationTool"
-        href="fritzing.gmftool#//@palette/@tools.2"/>
+        href="fritzing.gmftool#//@palette/@tools.0"/>
     <diagramLink
         href="fritzing.gmfgraph#Wire"/>
     <sourceMetaFeature
@@ -120,6 +120,31 @@
     <linkMetaFeature
         xsi:type="ecore:EReference"
         href="fritzing.ecore#//Wire/target"/>
+    <creationConstraints>
+      <sourceEnd
+          body="self &lt;> oppositeEnd"/>
+    </creationConstraints>
+  </links>
+  <links>
+    <domainMetaElement
+        href="fritzing.ecore#//Track"/>
+    <labelMappings
+        xsi:type="gmfmap:FeatureLabelMapping">
+      <diagramLabel
+          href="fritzing.gmfgraph#TrackName"/>
+      <features
+          href="fritzing.ecore#//Connection/name"/>
+    </labelMappings>
+    <containmentFeature
+        href="fritzing.ecore#//Part/tracks"/>
+    <diagramLink
+        href="fritzing.gmfgraph#Track"/>
+    <sourceMetaFeature
+        xsi:type="ecore:EReference"
+        href="fritzing.ecore#//Track/source"/>
+    <linkMetaFeature
+        xsi:type="ecore:EReference"
+        href="fritzing.ecore#//Track/target"/>
     <creationConstraints>
       <sourceEnd
           body="self &lt;> oppositeEnd"/>

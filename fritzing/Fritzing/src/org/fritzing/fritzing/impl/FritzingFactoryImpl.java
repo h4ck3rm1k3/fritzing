@@ -61,13 +61,14 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 		switch (eClass.getClassifierID()) {
 			case FritzingPackage.DOCUMENT_ROOT: return createDocumentRoot();
 			case FritzingPackage.TERMINAL: return createTerminal();
-			case FritzingPackage.WIRE: return createWire();
 			case FritzingPackage.GENERIC_PART: return createGenericPart();
 			case FritzingPackage.RESISTOR: return createResistor();
 			case FritzingPackage.LED: return createLED();
 			case FritzingPackage.SKETCH: return createSketch();
 			case FritzingPackage.MODULE: return createModule();
 			case FritzingPackage.BREADBOARD: return createBreadboard();
+			case FritzingPackage.WIRE: return createWire();
+			case FritzingPackage.TRACK: return createTrack();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -101,6 +102,16 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 	public Wire createWire() {
 		WireImpl wire = new WireImpl();
 		return wire;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Track createTrack() {
+		TrackImpl track = new TrackImpl();
+		return track;
 	}
 
 	/**

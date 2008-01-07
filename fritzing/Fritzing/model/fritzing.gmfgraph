@@ -24,6 +24,23 @@
           figure="//@figures.0/@descriptors.0/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
+        name="TrackFigure">
+      <actualFigure
+          xsi:type="gmfgraph:PolylineConnection"
+          name="TrackFigure">
+        <children
+            xsi:type="gmfgraph:Label"
+            name="TrackNameFigure"
+            text="..">
+          <font
+              xsi:type="gmfgraph:BasicFont"
+              height="8"/>
+        </children>
+      </actualFigure>
+      <accessors
+          figure="//@figures.0/@descriptors.1/@actualFigure/@children.0"/>
+    </descriptors>
+    <descriptors
         name="ResistorFigure">
       <actualFigure
           xsi:type="gmfgraph:Rectangle"
@@ -105,7 +122,7 @@
         </children>
       </actualFigure>
       <accessors
-          figure="//@figures.0/@descriptors.7/@actualFigure/@children.0"/>
+          figure="//@figures.0/@descriptors.8/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
         name="ModuleFigure">
@@ -128,7 +145,7 @@
         </children>
       </actualFigure>
       <accessors
-          figure="//@figures.0/@descriptors.8/@actualFigure/@children.0"/>
+          figure="//@figures.0/@descriptors.9/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
         name="BreadboardFigure">
@@ -156,7 +173,7 @@
       </actualFigure>
       <accessors
           accessor="getFigureBreadboardNameFigure"
-          figure="//@figures.0/@descriptors.9/@actualFigure/@children.0"/>
+          figure="//@figures.0/@descriptors.10/@actualFigure/@children.0"/>
     </descriptors>
     <descriptors
         name="GenericPartFigure">
@@ -209,11 +226,25 @@
   <connections
       name="Wire"
       figure="WireFigure"/>
+  <connections
+      name="Track"
+      figure="TrackFigure"/>
   <labels
       name="WireName"
       figure="WireFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.0/@accessors.0">
+    <facets
+        xsi:type="gmfgraph:AlignmentFacet"
+        alignment="CENTER"/>
+    <facets
+        xsi:type="gmfgraph:LabelOffsetFacet"/>
+  </labels>
+  <labels
+      name="TrackName"
+      figure="TrackFigure"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.1/@accessors.0">
     <facets
         xsi:type="gmfgraph:AlignmentFacet"
         alignment="CENTER"/>
@@ -239,17 +270,17 @@
       name="SketchName"
       figure="SketchFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.7/@accessors.0"/>
+      accessor="//@figures.0/@descriptors.8/@accessors.0"/>
   <labels
       name="ModuleName"
       figure="ModuleFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.8/@accessors.0"/>
+      accessor="//@figures.0/@descriptors.9/@accessors.0"/>
   <labels
       name="BreadboardName"
       figure="BreadboardFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.9/@accessors.0"/>
+      accessor="//@figures.0/@descriptors.10/@accessors.0"/>
   <labels
       name="GenericPartName"
       figure="GenericPartNameFigure"

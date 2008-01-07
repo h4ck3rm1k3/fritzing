@@ -13,16 +13,19 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.fritzing.fritzing.Breadboard;
 import org.fritzing.fritzing.Composite;
+import org.fritzing.fritzing.Connection;
 import org.fritzing.fritzing.DocumentRoot;
 import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.GenericPart;
+import org.fritzing.fritzing.ITrackConnection;
 import org.fritzing.fritzing.Module;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.Wire;
 
 /**
@@ -58,7 +61,28 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass connectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass wireEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass trackEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass iTrackConnectionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -282,6 +306,24 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getConnection() {
+		return connectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getConnection_Name() {
+		return (EAttribute)connectionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getWire() {
 		return wireEClass;
 	}
@@ -292,7 +334,52 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * @generated
 	 */
 	public EReference getWire_Source() {
-		return (EReference)wireEClass.getEStructuralFeatures().get(0);
+		return (EReference)wireEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getTrack() {
+		return trackEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTrack_Parent() {
+		return (EReference)trackEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTrack_Target() {
+		return (EReference)trackEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTrack_Source() {
+		return (EReference)trackEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getITrackConnection() {
+		return iTrackConnectionEClass;
 	}
 
 	/**
@@ -309,17 +396,8 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getWire_Name() {
-		return (EAttribute)wireEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getWire_Parent() {
-		return (EReference)wireEClass.getEStructuralFeatures().get(3);
+		return (EReference)wireEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -401,6 +479,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 */
 	public EReference getPart_Parent() {
 		return (EReference)partEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPart_Tracks() {
+		return (EReference)partEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -498,6 +585,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getBreadboard_Columns() {
+		return (EAttribute)breadboardEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getModule() {
 		return moduleEClass;
 	}
@@ -552,11 +648,8 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		elementEClass = createEClass(ELEMENT);
 
-		wireEClass = createEClass(WIRE);
-		createEReference(wireEClass, WIRE__SOURCE);
-		createEReference(wireEClass, WIRE__TARGET);
-		createEAttribute(wireEClass, WIRE__NAME);
-		createEReference(wireEClass, WIRE__PARENT);
+		connectionEClass = createEClass(CONNECTION);
+		createEAttribute(connectionEClass, CONNECTION__NAME);
 
 		partEClass = createEClass(PART);
 		createEAttribute(partEClass, PART__ID);
@@ -567,6 +660,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEAttribute(partEClass, PART__FOOTPRINT);
 		createEReference(partEClass, PART__TERMINALS);
 		createEReference(partEClass, PART__PARENT);
+		createEReference(partEClass, PART__TRACKS);
 
 		genericPartEClass = createEClass(GENERIC_PART);
 
@@ -586,6 +680,19 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		breadboardEClass = createEClass(BREADBOARD);
 		createEAttribute(breadboardEClass, BREADBOARD__LINES);
+		createEAttribute(breadboardEClass, BREADBOARD__COLUMNS);
+
+		wireEClass = createEClass(WIRE);
+		createEReference(wireEClass, WIRE__PARENT);
+		createEReference(wireEClass, WIRE__TARGET);
+		createEReference(wireEClass, WIRE__SOURCE);
+
+		trackEClass = createEClass(TRACK);
+		createEReference(trackEClass, TRACK__PARENT);
+		createEReference(trackEClass, TRACK__TARGET);
+		createEReference(trackEClass, TRACK__SOURCE);
+
+		iTrackConnectionEClass = createEClass(ITRACK_CONNECTION);
 	}
 
 	/**
@@ -620,7 +727,8 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		// Add supertypes to classes
 		terminalEClass.getESuperTypes().add(this.getElement());
-		wireEClass.getESuperTypes().add(this.getElement());
+		terminalEClass.getESuperTypes().add(this.getITrackConnection());
+		connectionEClass.getESuperTypes().add(this.getElement());
 		partEClass.getESuperTypes().add(this.getElement());
 		genericPartEClass.getESuperTypes().add(this.getPart());
 		resistorEClass.getESuperTypes().add(this.getPart());
@@ -629,6 +737,9 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		sketchEClass.getESuperTypes().add(this.getComposite());
 		moduleEClass.getESuperTypes().add(this.getComposite());
 		breadboardEClass.getESuperTypes().add(this.getPart());
+		wireEClass.getESuperTypes().add(this.getConnection());
+		trackEClass.getESuperTypes().add(this.getConnection());
+		trackEClass.getESuperTypes().add(this.getITrackConnection());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -645,14 +756,8 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		initEClass(elementEClass, Element.class, "Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(wireEClass, Wire.class, "Wire", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getWire_Source(), this.getTerminal(), null, "source", null, 1, 1, Wire.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getWire_Source().getEKeys().add(this.getTerminal_Id());
-		initEReference(getWire_Target(), this.getTerminal(), null, "target", null, 1, 1, Wire.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getWire_Target().getEKeys().add(this.getTerminal_Id());
-		initEAttribute(getWire_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Wire.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWire_Parent(), this.getComposite(), this.getComposite_Wires(), "parent", null, 0, 1, Wire.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getWire_Parent().getEKeys().add(this.getPart_Id());
+		initEClass(connectionEClass, Connection.class, "Connection", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConnection_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Connection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(partEClass, Part.class, "Part", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPart_Id(), theXMLTypePackage.getString(), "id", null, 0, 1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -665,6 +770,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		getPart_Terminals().getEKeys().add(this.getTerminal_Id());
 		initEReference(getPart_Parent(), this.getComposite(), this.getComposite_Parts(), "parent", null, 0, 1, Part.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getPart_Parent().getEKeys().add(this.getPart_Id());
+		initEReference(getPart_Tracks(), this.getTrack(), this.getTrack_Parent(), "tracks", null, 0, -1, Part.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(genericPartEClass, GenericPart.class, "GenericPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -678,7 +784,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEReference(getComposite_Parts(), this.getPart(), this.getPart_Parent(), "parts", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getComposite_Parts().getEKeys().add(this.getPart_Id());
 		initEReference(getComposite_Wires(), this.getWire(), this.getWire_Parent(), "wires", null, 0, -1, Composite.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		getComposite_Wires().getEKeys().add(this.getWire_Name());
+		getComposite_Wires().getEKeys().add(this.getConnection_Name());
 
 		initEClass(sketchEClass, Sketch.class, "Sketch", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -686,6 +792,23 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 
 		initEClass(breadboardEClass, Breadboard.class, "Breadboard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getBreadboard_Lines(), theXMLTypePackage.getInt(), "lines", null, 0, 1, Breadboard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBreadboard_Columns(), theXMLTypePackage.getInt(), "columns", null, 0, 1, Breadboard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(wireEClass, Wire.class, "Wire", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getWire_Parent(), this.getComposite(), this.getComposite_Wires(), "parent", null, 0, 1, Wire.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getWire_Parent().getEKeys().add(this.getPart_Id());
+		initEReference(getWire_Target(), this.getTerminal(), null, "target", null, 1, 1, Wire.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getWire_Target().getEKeys().add(this.getTerminal_Id());
+		initEReference(getWire_Source(), this.getTerminal(), null, "source", null, 1, 1, Wire.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getWire_Source().getEKeys().add(this.getTerminal_Id());
+
+		initEClass(trackEClass, Track.class, "Track", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getTrack_Parent(), this.getPart(), this.getPart_Tracks(), "parent", null, 0, 1, Track.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getTrack_Parent().getEKeys().add(this.getPart_Id());
+		initEReference(getTrack_Target(), this.getITrackConnection(), null, "target", null, 1, 1, Track.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTrack_Source(), this.getITrackConnection(), null, "source", null, 1, 1, Track.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(iTrackConnectionEClass, ITrackConnection.class, "ITrackConnection", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -768,28 +891,14 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 			 "kind", "elementOnly"
 		   });		
 		addAnnotation
-		  (wireEClass, 
+		  (connectionEClass, 
 		   source, 
 		   new String[] {
-			 "name", "Wire",
+			 "name", "Connection",
 			 "kind", "empty"
 		   });		
 		addAnnotation
-		  (getWire_Source(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "source"
-		   });		
-		addAnnotation
-		  (getWire_Target(), 
-		   source, 
-		   new String[] {
-			 "kind", "attribute",
-			 "name", "target"
-		   });		
-		addAnnotation
-		  (getWire_Name(), 
+		  (getConnection_Name(), 
 		   source, 
 		   new String[] {
 			 "name", "name",
@@ -934,6 +1043,55 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   new String[] {
 			 "kind", "attribute",
 			 "name", "lines"
+		   });		
+		addAnnotation
+		  (getBreadboard_Columns(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "lines"
+		   });		
+		addAnnotation
+		  (wireEClass, 
+		   source, 
+		   new String[] {
+			 "name", "Wire",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getWire_Target(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "target"
+		   });		
+		addAnnotation
+		  (getWire_Source(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "source"
+		   });		
+		addAnnotation
+		  (trackEClass, 
+		   source, 
+		   new String[] {
+			 "name", "Track",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getTrack_Target(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "target"
+		   });		
+		addAnnotation
+		  (getTrack_Source(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "source"
 		   });
 	}
 
