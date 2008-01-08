@@ -112,28 +112,6 @@ public class GenericPartEditPart extends PartEditPart {
 	/**
 	 * @generated NOT
 	 */
-	public String filterNameEditText(TerminalName2EditPart part, String s) {
-		if (part != null) {
-			Object model = part.getModel();
-			if (model instanceof NodeImpl) {
-				EObject eobject = ((NodeImpl) model).getElement();
-				if (eobject instanceof Terminal) {
-					String id = ((Terminal) eobject).getId();
-					boolean vis = partLoader.getTerminalLabelVisible(id);
-					if (part.getFigure() != null) {
-						part.getFigure().setVisible(vis);
-					}
-					return (vis) ? s : null;
-				}
-			}
-		}
-
-		return s;
-	}
-
-	/**
-	 * @generated NOT
-	 */
 	protected boolean addFixedChild(EditPart childEditPart) {
 		return addEastWestFixedChild(childEditPart);
 	}

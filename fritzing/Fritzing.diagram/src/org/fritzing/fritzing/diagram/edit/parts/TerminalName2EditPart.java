@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Point;
@@ -39,6 +40,7 @@ import org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser;
 import org.eclipse.gmf.runtime.notation.FontStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.SWT;
@@ -48,6 +50,11 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
+import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.Track;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingTextSelectionEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -91,6 +98,11 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	private Color fontColor = null;
 
 	/**
+	 * @generated NOT
+	 */
+	private boolean visible = true;
+
+	/**
 	 * @generated
 	 */
 	static {
@@ -101,10 +113,23 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public TerminalName2EditPart(View view) {
 		super(view);
+		if (view.eContainer() instanceof NodeImpl) {
+			EObject obj = ((NodeImpl) view.eContainer()).getElement();
+			if (obj instanceof Terminal) {
+				Part parent = ((Terminal) obj).getParent();
+				if (parent != null) {
+					PartLoader partLoader = PartLoaderRegistry.getInstance().get(parent.getGenus() + parent.getSpecies());
+					if (partLoader != null) {	
+						String id = ((Terminal) obj).getId();
+						visible = partLoader.getTerminalLabelVisible(id);
+					}				
+				}
+			}			
+		}
 	}
 
 	/**
@@ -162,13 +187,9 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	}
 
 	/**
-	 * @generated NOT
+	 * @generated
 	 */
 	protected void setLabelTextHelper(IFigure figure, String text) {
-		text = ((Terminal2EditPart) getParent()).filterNameEditText(this, text);
-		if (text == null)
-			return;
-
 		if (figure instanceof WrapLabel) {
 			((WrapLabel) figure).setText(text);
 		} else {
@@ -623,7 +644,7 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	 * @generated
 	 */
 	protected IFigure createFigurePrim() {
-		return new TerminalNameFigure();
+		return new TerminalNameFigure(visible);
 	}
 
 	/**
@@ -631,14 +652,29 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	 */
 	public class TerminalNameFigure extends WrapLabel {
 
+
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
-		public TerminalNameFigure() {
+		private boolean visible;
+
+		/**
+		 * @generated NOT
+		 */
+		public TerminalNameFigure(boolean visible) {
 			this.setText("..");
 
 			this.setFont(THIS_FONT);
+			this.visible = visible;
+		}
 
+		/**
+		 * @generated NOT
+		 */
+		public void paint(Graphics graphics) {
+			if (this.visible) {
+				super.paint(graphics);
+			}
 		}
 
 		/**

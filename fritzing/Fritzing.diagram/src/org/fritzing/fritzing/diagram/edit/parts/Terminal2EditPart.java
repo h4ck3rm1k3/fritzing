@@ -109,13 +109,6 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	/**
 	 * @generated NOT
 	 */
-	public String filterNameEditText(TerminalName2EditPart part, String s) {
-		return ((PartEditPart) this.getParent()).filterNameEditText(part, s);
-	}
-
-	/**
-	 * @generated NOT
-	 */
 	protected LayoutEditPolicy createLayoutEditPolicy() {
 		LayoutEditPolicy lep = new LayoutEditPolicy() {
 

@@ -45,11 +45,13 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 		if (view.getElement() instanceof Track) {
 			Track track = (Track) view.getElement();
 			Part parent = track.getParent();
-			PartLoader partLoader = PartLoaderRegistry.getInstance().get(parent.getGenus() + parent.getSpecies());
-			if (partLoader != null) {			
-				Terminal source = (Terminal) track.getSource();
-				Terminal target = (Terminal) track.getTarget();
-				visible = partLoader.getTrackVisible(source.getId() + target.getId());
+			if (parent != null) {
+				PartLoader partLoader = PartLoaderRegistry.getInstance().get(parent.getGenus() + parent.getSpecies());
+				if (partLoader != null) {			
+					Terminal source = (Terminal) track.getSource();
+					Terminal target = (Terminal) track.getTarget();
+					visible = partLoader.getTrackVisible(source.getId() + target.getId());
+				}
 			}
 		}
 	}

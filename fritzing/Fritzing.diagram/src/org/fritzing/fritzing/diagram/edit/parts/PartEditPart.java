@@ -87,12 +87,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		return defaultPosition;
 	}
 
-	/**
-	 * @generated NOT
-	 */
-	public String filterNameEditText(TerminalName2EditPart part, String s) {
-		return s;
-	}
 
 	/**
 	 * @generated NOT
