@@ -292,7 +292,7 @@ public class PartLoader {
 	public boolean initialize(EObject newElement) {
 		if (!this.loaded) return false;
 		
-		System.out.println("initialize " + newElement + " " + System.currentTimeMillis());
+		//System.out.println("initialize " + newElement + " " + System.currentTimeMillis());
 		
 		if (newElement instanceof Part) {
 			((Part) newElement).setId(genID());
@@ -390,7 +390,7 @@ public class PartLoader {
 							newElement.eClass());
 			expr.assignTo(feature, newElement);
 
-			System.out.println("done initialize " + newElement + " " + System.currentTimeMillis());
+			//System.out.println("done initialize " + newElement + " " + System.currentTimeMillis());
 
 			return true;
 	
@@ -429,9 +429,7 @@ public class PartLoader {
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.parse(new File(xml.getFile()));
-            System.out.println("parsexmla " + System.currentTimeMillis());
             parseXML(document);
-            System.out.println("parsexmlb " + System.currentTimeMillis());
             loaded = true;
             return true;           
         } 
