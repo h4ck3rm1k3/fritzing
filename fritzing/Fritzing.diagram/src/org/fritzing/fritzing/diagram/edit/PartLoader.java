@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
@@ -63,7 +64,8 @@ public class PartLoader {
 	protected boolean generic;
 	protected String version;
 	protected String footprint;
-	protected ArrayList<ArrayList<String>> nets;
+	protected ArrayList<ArrayList<PointName>> nets;
+	protected Hashtable<String, Boolean> trackHash = new Hashtable<String, Boolean>();
 	
 	public PartLoader() {
 		if (bitHash.size() == 0) {
@@ -157,7 +159,7 @@ public class PartLoader {
 			c64Hash.put("111111", '-');	
 		}
 		
-		nets = new ArrayList<ArrayList<String>>();
+		nets = new ArrayList<ArrayList<PointName>>();
 		contentsPath = "";
 		terminalHash = new Hashtable<String, PointName>();
 		size = new Dimension(0,0);
@@ -175,6 +177,13 @@ public class PartLoader {
 		
 	public Dimension getSize() {
 		return size;
+	}
+	
+	public boolean getTrackVisible(String trackString) {
+		Boolean b = trackHash.get(trackString);
+		if (b == null) return false;
+		
+		return b;
 	}
 	
 	public Point getTerminalPoint(String id) {
@@ -285,6 +294,8 @@ public class PartLoader {
 	public boolean initialize(EObject newElement) {
 		if (!this.loaded) return false;
 		
+		System.out.println("initialize " + newElement + " " + System.currentTimeMillis());
+		
 		if (newElement instanceof Part) {
 			((Part) newElement).setId(genID());
 			((Part) newElement).setSpecies(species);
@@ -328,28 +339,28 @@ public class PartLoader {
 			
 			if (nets.size() > 0) {
 				for (int i = 0; i < nets.size(); i++) {
-					ArrayList<String> net = nets.get(i);
+					ArrayList<PointName> net = nets.get(i);
 					for (int j = 0; j < net.size() - 1; j++) {
 						
-						String sourceID = net.get(j);
-						if (sourceID == null) {
+						PointName source = net.get(j);
+						if (source == null) {
 							// alert user
-							continue;							
+							continue;														
 						}
 						
-						String targetID = net.get(j + 1);
-						if (targetID == null) {
+						PointName target = net.get(j + 1);
+						if (target == null) {
 							// alert user
-							continue;							
+							continue;														
 						}
-
-						PointName spn = terminalHash.get(sourceID);
+						
+						PointName spn = terminalHash.get(source.name);
 						if (spn == null) {
 							// alert user
 							continue;							
 						}
 
-						PointName tpn = terminalHash.get(targetID);
+						PointName tpn = terminalHash.get(target.name);
 						if (tpn == null) {
 							// alert user
 							continue;							
@@ -358,7 +369,7 @@ public class PartLoader {
 						EObject track = FritzingPackage.eINSTANCE.getTrack()
 						.getEPackage().getEFactoryInstance().create(
 								FritzingPackage.eINSTANCE.getTrack());
-
+						
 						EStructuralFeature feature = FritzingPackage.eINSTANCE.getTrack_Source();
 						track.eSet(feature, spn.terminal);
 
@@ -380,7 +391,9 @@ public class PartLoader {
 					.getExpression("\'" + label + "\'",
 							newElement.eClass());
 			expr.assignTo(feature, newElement);
-						
+
+			System.out.println("done initialize " + newElement + " " + System.currentTimeMillis());
+
 			return true;
 	
 		}
@@ -393,10 +406,13 @@ public class PartLoader {
 	
 	public boolean loadXMLFromLibrary(String path) {
 		try {
+			System.out.println("loading" + path + " " + System.currentTimeMillis());
 			URL url = new URL("File://" + FritzingDiagramEditorUtil.getFritzingLocation() + path);
 			File f = new File(FritzingDiagramEditorUtil.getFritzingLocation() + path);
 			contentsPath = f.getParent() + File.separator;
-			return loadXML(url);	
+			boolean result = loadXML(url);
+			System.out.println("done loading" + path + " " + System.currentTimeMillis());
+			return result;
 		}
 		catch (Exception ex) {
 			
@@ -490,8 +506,8 @@ public class PartLoader {
 			
 			size = new Dimension(sz.x, sz.y);
 			
-			Node defaultLayoutNode = (Node) xp.evaluate("/part/connectors", document, XPathConstants.NODE);
-			boolean defaultTerminalLabelVisible = parseTerminalLabelLayout(true, defaultLayoutNode);
+			Node defaultNameLayoutNode = (Node) xp.evaluate("/part/connectors", document, XPathConstants.NODE);
+			boolean defaultTerminalLabelVisible = parseTerminalLabelLayout(true, defaultNameLayoutNode);
 			
 
 			NodeList nodes = (NodeList) xp.evaluate("/part/connectors/connector", document, XPathConstants.NODESET);
@@ -513,20 +529,36 @@ public class PartLoader {
 				terminalHash.put(id, new PointName(p, name, visible));
 			}
 			
+			
+			Node defaultTrackLayoutNode = (Node) xp.evaluate("/part/nets", document, XPathConstants.NODE);
+			boolean defaultTrackVisible = parseTrackLayout(false, defaultTrackLayoutNode);
 			nodes = (NodeList) xp.evaluate("/part/nets/net", document, XPathConstants.NODESET);
 			for (int i = 0; i < nodes.getLength(); i++) {
 				Node child = nodes.item(i);
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				
+				boolean netDefaultTrackVisible = parseTrackLayout(defaultTrackVisible, child);
+				
 				NodeList connectors = (NodeList) xp.evaluate("connector", child, XPathConstants.NODESET);
-				ArrayList<String> names = new ArrayList<String>();
+				ArrayList<PointName> names = new ArrayList<PointName>();
 				for (int j = 0; j < connectors.getLength(); j++) {
 					String id = (String) xpath.evaluate("@id", connectors.item(j), XPathConstants.STRING);
 					if (id == null || id == "") continue;
 					
-					names.add(id);
+					boolean visible = parseTrackLayout(netDefaultTrackVisible, connectors.item(j));
+					
+					// stick the ID into the name field
+					PointName pn = new PointName(null, id, visible);
+					names.add(pn);
 				}
 				if (names.size() > 0) {
+					for (int j = 0; j < names.size() - 1; j++) {
+						PointName source = names.get(j);
+						PointName target = names.get(j + 1);
+						// the name field has the ID 
+						trackHash.put(source.name + target.name, source.visible && target.visible);
+
+					}
 					nets.add(names);
 				}
 			}
@@ -544,6 +576,20 @@ public class PartLoader {
 		Node child = null;
 		try {
 			child = (Node) xpath.evaluate("nameLayout", node, XPathConstants.NODE);
+			String value = (String) xpath.evaluate("@visible", child, XPathConstants.STRING);
+			return !(value.equalsIgnoreCase("false"));
+		}
+		catch (Exception ex) {
+		}
+		
+		return defaultValue;			
+	}
+		
+	protected boolean parseTrackLayout(boolean defaultValue, Node node) {
+		XPath xpath = XPathFactory.newInstance().newXPath();
+		Node child = null;
+		try {
+			child = (Node) xpath.evaluate("trackLayout", node, XPathConstants.NODE);
 			String value = (String) xpath.evaluate("@visible", child, XPathConstants.STRING);
 			return !(value.equalsIgnoreCase("false"));
 		}
