@@ -15,10 +15,6 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.draw2d.geometry.Dimension;
@@ -31,7 +27,9 @@ import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -406,12 +404,10 @@ public class PartLoader {
 	
 	public boolean loadXMLFromLibrary(String path) {
 		try {
-			System.out.println("loading" + path + " " + System.currentTimeMillis());
 			URL url = new URL("File://" + FritzingDiagramEditorUtil.getFritzingLocation() + path);
 			File f = new File(FritzingDiagramEditorUtil.getFritzingLocation() + path);
 			contentsPath = f.getParent() + File.separator;
 			boolean result = loadXML(url);
-			System.out.println("done loading" + path + " " + System.currentTimeMillis());
 			return result;
 		}
 		catch (Exception ex) {
@@ -433,7 +429,9 @@ public class PartLoader {
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.parse(new File(xml.getFile()));
+            System.out.println("parsexmla " + System.currentTimeMillis());
             parseXML(document);
+            System.out.println("parsexmlb " + System.currentTimeMillis());
             loaded = true;
             return true;           
         } 
@@ -474,8 +472,199 @@ public class PartLoader {
         }
         
         return false;
-
 	}
+	
+	
+	protected void parseXML(Document document) {
+
+		try {
+			Element partNode = document.getDocumentElement();
+			if (!partNode.getNodeName().equals("part")) {
+				// alert user
+				return;								
+			}
+			
+			generic = true;
+			Attr attr = partNode.getAttributeNode("generic");
+			if (attr != null) {
+				String s = attr.getNodeValue();
+				if (s != null) {
+					generic = !s.equalsIgnoreCase("false");
+				}
+			}
+			
+			
+			// do gridoffset and defaultunits first
+			String defaultUnits = null;					
+			NodeList nodes = partNode.getChildNodes();
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Node node = nodes.item(i);
+				String nodeName = node.getNodeName();
+				if (nodeName.equals("defaultUnits")) {
+					defaultUnits = node.getTextContent();					
+				}
+				else if (nodeName.equals("gridOffset")) {
+					gridOffset = parseLocation(node, defaultUnits, "x", "y");
+				}
+			}
+			if (defaultUnits == null || defaultUnits == "") {
+				defaultUnits = "pixels";
+			}
+					
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Node node = nodes.item(i);
+				String nodeName = node.getNodeName();
+				if (nodeName.equals("species")) {
+					species = node.getTextContent();
+				}
+				else if (nodeName.equals("genus")) {
+					genus = node.getTextContent();				
+				}
+				else if (nodeName.equals("description")) {
+					description = node.getTextContent();				
+				}
+				else if (nodeName.equals("title")) {
+					title = node.getTextContent();					
+				}
+				else if (nodeName.equals("label")) {
+					label = node.getTextContent();					
+				}
+				else if (nodeName.equals("version")) {
+					version = node.getTextContent();					
+				}
+				else if (nodeName.equals("footprint")) {
+					footprint = node.getTextContent();					
+				}
+				else if (nodeName.equals("icons")) {
+					parseIcons(node.getChildNodes());		
+				}
+				else if (nodeName.equals("layers")) {
+					parseImages(node.getChildNodes());
+				}
+				else if (nodeName.equals("bounds")) {
+					Point sz = parseLocation(node, defaultUnits, "width", "height");					
+					size = new Dimension(sz.x, sz.y);
+				}
+				else if (nodeName.equals("connectors")) {
+					boolean defaultTerminalLabelVisible = parseTerminalLabelLayout(true, node);
+					NodeList connectors = node.getChildNodes();
+					for (int j = 0; j < connectors.getLength(); j++) {
+						Node connector = connectors.item(j);
+						if (!connector.getNodeName().equals("connector")) continue;
+						
+						attr = ((Element) connector).getAttributeNode("id");
+						if (attr == null) continue;
+						
+						String id = attr.getNodeValue();
+						if (id == null || id == "") continue;
+						
+						String name = id;
+						attr = ((Element) connector).getAttributeNode("name");
+						if (attr != null) {						
+							String s = attr.getNodeValue();
+							if (s != null && s != "") {
+								name = s;
+							}
+						}
+						
+						Point p = parseLocation(connector, defaultUnits, "x", "y" );
+						p.x += gridOffset.x;
+						p.y += gridOffset.y;
+						boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, connector);
+						terminalHash.put(id, new PointName(p, name, visible));
+					}
+				}
+				else if (nodeName.equals("nets")) {
+					boolean defaultTrackVisible = parseTrackLayout(false, node);
+					NodeList netList = node.getChildNodes();
+					for (int j = 0; j < netList.getLength(); j++) {
+						Node net = netList.item(j);
+						if (!net.getNodeName().equals("net")) continue;
+						
+						boolean netDefaultTrackVisible = parseTrackLayout(defaultTrackVisible, net);
+						NodeList connectors = net.getChildNodes();
+						ArrayList<PointName> names = new ArrayList<PointName>();
+						for (int k = 0; k < connectors.getLength(); k++) {
+							Node connector = connectors.item(k);
+							if (!connector.getNodeName().equals("connector")) continue;
+							
+							NamedNodeMap map = connector.getAttributes();
+							if (map == null) continue;
+														
+							Node idNode = map.getNamedItem("id");
+							if (idNode == null) continue;
+							
+							String id = idNode.getNodeValue();
+							if (id == null || id == "") continue;
+							
+							boolean visible = parseTrackLayout(netDefaultTrackVisible, connector);
+							
+							// stick the ID into the name field
+							PointName pn = new PointName(null, id, visible);
+							names.add(pn);						
+						}
+						
+						if (names.size() > 0) {
+							for (int k = 0; k < names.size() - 1; k++) {
+								PointName source = names.get(k);
+								PointName target = names.get(k + 1);
+								// the name field has the ID 
+								trackHash.put(source.name + target.name, source.visible && target.visible);
+
+							}
+							
+							nets.add(names);
+						}
+
+					}
+				}
+			}
+					
+/*			
+								
+			
+			nodes = (NodeList) xp.evaluate("/part/nets/net", document, XPathConstants.NODESET);
+			for (int i = 0; i < nodes.getLength(); i++) {
+				Node child = nodes.item(i);
+				XPath xpath = XPathFactory.newInstance().newXPath();
+				
+				boolean netDefaultTrackVisible = parseTrackLayout(defaultTrackVisible, child);
+				
+				NodeList connectors = (NodeList) xp.evaluate("connector", child, XPathConstants.NODESET);
+				ArrayList<PointName> names = new ArrayList<PointName>();
+				for (int j = 0; j < connectors.getLength(); j++) {
+					String id = (String) xpath.evaluate("@id", connectors.item(j), XPathConstants.STRING);
+					if (id == null || id == "") continue;
+					
+					boolean visible = parseTrackLayout(netDefaultTrackVisible, connectors.item(j));
+					
+					// stick the ID into the name field
+					PointName pn = new PointName(null, id, visible);
+					names.add(pn);
+				}
+				if (names.size() > 0) {
+					for (int j = 0; j < names.size() - 1; j++) {
+						PointName source = names.get(j);
+						PointName target = names.get(j + 1);
+						// the name field has the ID 
+						trackHash.put(source.name + target.name, source.visible && target.visible);
+
+					}
+					nets.add(names);
+				}
+			}
+			
+			*/
+						
+			return;
+		}
+		catch (Exception ex) {
+			// alert the user
+			return;
+		}		
+	}
+	
+	/*
 	protected void parseXML(Document document) {
 		XPath xp = XPathFactory.newInstance().newXPath();
 		try {
@@ -518,7 +707,7 @@ public class PartLoader {
 				if (id == null || id == "") continue;
 											
 				String name = (String) xpath.evaluate("@name", child, XPathConstants.STRING);
-				if (name == null || id == "") {
+				if (name == null || name == "") {
 					name = id;
 				}
 
@@ -570,53 +759,85 @@ public class PartLoader {
 			return;
 		}		
 	}
+*/
 	
 	protected boolean parseTerminalLabelLayout(boolean defaultValue, Node node) {
-		XPath xpath = XPathFactory.newInstance().newXPath();
-		Node child = null;
-		try {
-			child = (Node) xpath.evaluate("nameLayout", node, XPathConstants.NODE);
-			String value = (String) xpath.evaluate("@visible", child, XPathConstants.STRING);
-			return !(value.equalsIgnoreCase("false"));
-		}
-		catch (Exception ex) {
-		}
-		
-		return defaultValue;			
+		return parseXLayout(defaultValue, node, "nameLayout");
 	}
-		
+	
 	protected boolean parseTrackLayout(boolean defaultValue, Node node) {
-		XPath xpath = XPathFactory.newInstance().newXPath();
-		Node child = null;
+		return parseXLayout(defaultValue, node, "trackLayout");
+	}
+
+	protected boolean parseXLayout(boolean defaultValue, Node node, String nodeName) {
 		try {
-			child = (Node) xpath.evaluate("trackLayout", node, XPathConstants.NODE);
-			String value = (String) xpath.evaluate("@visible", child, XPathConstants.STRING);
-			return !(value.equalsIgnoreCase("false"));
+			NodeList children = node.getChildNodes();
+			if (children == null) return defaultValue;
+			
+			for (int i = 0; i < children.getLength(); i++) {
+				Node child = children.item(i);
+				if (!child.getNodeName().equals(nodeName)) continue;
+				
+				NamedNodeMap map = child.getAttributes();
+				if (map != null) {
+					Node att = map.getNamedItem("visible");
+					if (att != null) {
+						String value = att.getNodeValue();
+						return !(value.equalsIgnoreCase("false"));
+					}
+				}
+			
+				return defaultValue;
+			}
 		}
 		catch (Exception ex) {
 		}
 		
-		return defaultValue;			
+		return defaultValue;					
 	}
+
 		
 	protected void parseImages(NodeList nodeList) {
-		XPath xpath = XPathFactory.newInstance().newXPath();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			try {
 				Node node = nodeList.item(i);
-				String type = (String) xpath.evaluate("@type", node, XPathConstants.STRING);
+				NamedNodeMap map = node.getAttributes();
+				if (map == null) continue;
+				
+				Node typeNode = map.getNamedItem("type");
+				if (typeNode == null) continue;
+				
+				String type = typeNode.getNodeValue();
+				if (type == null) continue;
+				
 				if (type.equalsIgnoreCase("image")) {
-					NodeList imageList = (NodeList) xpath.evaluate("image", node, XPathConstants.NODESET);
-					
-					// need to add multiple zoom images, etc...
-					for (int j = 0; j < imageList.getLength(); j++ ) {
-						Node imageNode = imageList.item(j);
-						type = (String) xpath.evaluate("@type", imageNode, XPathConstants.STRING);
+					NodeList children = node.getChildNodes();
+					for (int j = 0; j < children.getLength(); j++) {
+						Node imageNode = children.item(j);
+						if (!imageNode.getNodeName().equals("image")) continue;
+									
+						// need to add multiple zoom images, etc...
+						
+						map = imageNode.getAttributes();
+						if (map == null) continue;
+						
+						typeNode = map.getNamedItem("type");
+						if (typeNode == null) continue;
+						
+						type = typeNode.getNodeValue();
+						if (type == null) continue;						
+
+						Node sourceNode = map.getNamedItem("source");
+						if (sourceNode == null) continue;
+						
+						String source = sourceNode.getNodeValue();
+						if (source == null) continue;						
+
 						if (type.equalsIgnoreCase("bitmap")) {
-							bitmapFilename = (String) xpath.evaluate("@source", imageNode, XPathConstants.STRING);
+							bitmapFilename = source;
 						}
 						else if (type.equalsIgnoreCase("svg")) {
-							svgFilename = (String) xpath.evaluate("@source", imageNode, XPathConstants.STRING);
+							svgFilename = source;
 						}
 					}
 					
@@ -630,16 +851,29 @@ public class PartLoader {
 	}
 	
 	protected void parseIcons(NodeList nodeList) {
-		XPath xpath = XPathFactory.newInstance().newXPath();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			try {
 				Node node = nodeList.item(i);
-				String size = (String) xpath.evaluate("@size", node, XPathConstants.STRING);
+				NamedNodeMap map = node.getAttributes();
+				if (map == null) continue;
+				
+				Node sizeNode = map.getNamedItem("size");
+				if (sizeNode == null) continue;
+
+				Node sourceNode = map.getNamedItem("source");
+				if (sourceNode == null) continue;
+				
+				String size = sizeNode.getNodeValue();
+				if (size == null) continue;
+				
+				String source = sourceNode.getNodeValue();
+				if (source == null) continue;
+								
 				if (size.equalsIgnoreCase("small")) {
-					iconFilename = (String) xpath.evaluate("@source", node, XPathConstants.STRING);
+					iconFilename = source;
 				}
 				else if (size.equalsIgnoreCase("large")) {
-					largeIconFilename = (String) xpath.evaluate("@source", node, XPathConstants.STRING);
+					largeIconFilename = source;
 				}
 			}
 			catch (Exception ex) {
@@ -647,15 +881,42 @@ public class PartLoader {
 			}
 		}
 	}
+	
+	protected Double parseDouble(Node node) {
+		if (node == null) return 0.0;
+		
+		String s = node.getNodeValue();
+		if (s == null) return 0.0;
+		
+		if (s == "") return 0.0;
+		
+		try {
+			return Double.parseDouble(s);	
+		}
+		catch (Exception ex) {
+			return 0.0;
+		}
+	}
 
 	protected Point parseLocation(Node node, String defaultUnits, String axis1, String axis2) {
 		if (node == null) return new Point(0,0);
 		
 		try {
-			XPath xpath = XPathFactory.newInstance().newXPath();
-			Double x = (Double) xpath.evaluate("@" + axis1, node, XPathConstants.NUMBER);
-			Double y = (Double) xpath.evaluate("@" + axis2, node, XPathConstants.NUMBER);
-			String units = (String) xpath.evaluate("@units", node, XPathConstants.STRING);
+			String units = null;
+			NamedNodeMap map = node.getAttributes();
+			if (map == null) {
+				return new Point(0,0);
+			}
+			
+			Node ax1Node = map.getNamedItem(axis1);
+			Node ax2Node = map.getNamedItem(axis2);
+			Node unitsNode = map.getNamedItem("units");
+			Double x = parseDouble(ax1Node);
+			Double y = parseDouble(ax2Node);
+			if (unitsNode != null) {
+				units = unitsNode.getNodeValue();
+			}
+					
 			if (units == null || units == "") {
 				units = defaultUnits;
 			}
