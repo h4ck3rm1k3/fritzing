@@ -15,7 +15,8 @@
 	<gridOffset x="355.6" y="254" units="himetric"/> <!-- 14x10 pixels -->
 	<bounds width="16764" height="5334" units="himetric"/> <!-- 660x210 pixels -->
 	<connectors units="tenths">
-		<connector id="1a" x="0" y="4" type="female" />
+    <nameLayout visible="false" />
+    <connector id="1a" x="0" y="4" type="female" />
 		<connector id="1b" x="0" y="5" type="female" />
 		<connector id="1c" x="0" y="6" type="female" />
 		<connector id="1d" x="0" y="7" type="female" />
@@ -37,7 +38,14 @@
 		<connector id="2j" x="1" y="15" type="female" />
 	</connectors>
 	<nets>
-		<net><connector id="1a"/><connector id="1b"/><connector id="1c"/><connector id="1d"/><connector id="1e"/></net>
+    <trackLayout visible="false" />
+		<net>
+      <connector id="1a"/>
+      <connector id="1b" />
+      <connector id="1c"/>
+      <connector id="1d"/>
+      <connector id="1e"/>
+    </net>
 		<net><connector id="2a"/><connector id="2b"/><connector id="2c"/><connector id="2d"/><connector id="2e"/></net>
 	</nets>
 	<layers>
