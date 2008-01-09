@@ -542,24 +542,12 @@ public class FritzingDiagramEditorUtil {
 
 		// taken from Arduinos Base.getDefaultSketchbookFolder():
 	    if (Platform.getOS().equals(Platform.OS_MACOSX)) {
-
 	    	try {
-		        String uri = "http://www.apple.com/";
-		        Class mrjOSTypeClass = Class.forName("com.apple.mrj.MRJOSType");
-		        Constructor mrjOSTypeConstructor = mrjOSTypeClass.getConstructor(
-		        		new Class[]{String.class});
-		        Object mrjOSTypeDocs = mrjOSTypeConstructor.newInstance(
-		        		new Object[]{new String("docs")});
-		        
-				Class mrjFileUtilsClass = Class
-						.forName("com.apple.mrj.MRJFileUtils");
-				Method findFolderMethod = mrjFileUtilsClass.getMethod("findFolder",
-                        new Class[] { Short.TYPE, mrjOSTypeClass });
+		        Class clazz = Class.forName("com.apple.eio.FileManager");
+		        java.lang.reflect.Method m = clazz.getMethod("findFolder",new Class[]{int.class});
+		        String docPath = (String)m.invoke(null,new Object []{new Integer(kUserDomain)});
 				
-				File documentsFolder = (File)
-		          findFolderMethod.invoke(null, new Object[] { 
-		        		  new Short(kUserDomain), mrjOSTypeDocs });
-		        location = new File(documentsFolder, "Fritzing");
+		        location = new File(docPath + "/Fritzing");
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
