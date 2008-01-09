@@ -3,6 +3,8 @@
  */
 package org.fritzing.fritzing.diagram.application;
 
+import java.net.URL;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -19,6 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 import org.fritzing.fritzing.diagram.part.Messages;
 
 /**
@@ -53,9 +56,10 @@ public class WizardNewFileCreationPage extends WizardPage {
 			IStructuredSelection currentSelection) {
 		super(name);
 		this.currentSelection = currentSelection;
-		String home = System.getProperty("user.home"); //$NON-NLS-1$
+		String home = 
+			FritzingDiagramEditorUtil.getFritzingUserFolder().getPath();
 		if (home != null) {
-			initialContainerFullPath = new Path(home + "/Fritzing");
+			initialContainerFullPath = new Path(home);
 		}
 	}
 

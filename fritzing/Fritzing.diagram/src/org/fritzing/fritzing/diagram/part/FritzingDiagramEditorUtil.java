@@ -5,6 +5,8 @@ package org.fritzing.fritzing.diagram.part;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,6 +47,7 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -61,7 +64,10 @@ import org.fritzing.fritzing.DocumentRoot;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
-
+import com.apple.mrj.MRJFileUtils;
+import com.apple.mrj.MRJOSType;
+import com.ice.jni.registry.Registry;
+import com.ice.jni.registry.RegistryKey;
 /**
  * @generated
  */
@@ -522,11 +528,9 @@ public class FritzingDiagramEditorUtil {
 
 	/**
 	 * @return the install location of Fritzing on the hard drive
-	 * @generated NOT
 	 */
 	public static String getFritzingLocation() {
-		String fritzingLocation = Platform.getInstallLocation().getURL()
-				.getPath();
+		String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
 			fritzingLocation = fritzingLocation.startsWith("/") ? fritzingLocation
 					.substring(1)
@@ -534,4 +538,98 @@ public class FritzingDiagramEditorUtil {
 		}
 		return fritzingLocation;
 	}
+	  
+	public static URL getFritzingUserFolder() {
+		URL location = Platform.getUserLocation().getURL(); // fallback location
+
+		// taken from Arduinos Base.getDefaultSketchbookFolder():
+	    if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+	      // carbon folder constants
+	      // http://developer.apple.com/documentation/Carbon/Reference/Folder_Manager/folder_manager_ref/constant_6.html#//apple_ref/doc/uid/TP30000238/C006889
+
+	      // additional information found in the local file:
+	      // /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/CarbonCore.framework/Headers/
+
+	      try {
+	        MRJOSType domainDocuments = new MRJOSType("docs");
+	        //File libraryFolder = MRJFileUtils.findFolder(domainDocuments);
+
+	        // for 77, try switching this to the user domain, just to be sure
+	        Method findFolderMethod =
+	          MRJFileUtils.class.getMethod("findFolder",
+	                                       new Class[] { Short.TYPE,
+	                                                     MRJOSType.class });
+	        File documentsFolder = (File)
+	          findFolderMethod.invoke(null, new Object[] { new Short(kUserDomain),
+	                                                       domainDocuments });
+	        location = (new File(documentsFolder, "Fritzing").toURI().toURL());
+
+	      } catch (Exception e) {
+	        //showError("Could not find folder",
+	        //          "Could not locate the Documents folder.", e);
+//	        sketchbookFolder = promptSketchbookLocation();
+	      }
+
+	    } else if (Platform.getOS().equals(Platform.OS_WIN32)) {
+	      // looking for Documents and Settings/blah/My Documents/Fritzing
+	      // or on Vista Users/blah/Documents/Fritzing
+	      // (though using a reg key since it's different on other platforms)
+
+	      // http://support.microsoft.com/?kbid=221837&sd=RMVP
+	      // The path to the My Documents folder is stored in the
+	      // following registry key, where path is the complete path
+	      // to your storage location:
+	      // HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
+	      // Value Name: Personal
+	      // Value Type: REG_SZ
+	      // Value Data: path
+
+	      try {
+	        RegistryKey topKey = Registry.HKEY_CURRENT_USER;
+
+	        String localKeyPath =
+	          "Software\\Microsoft\\Windows\\CurrentVersion" +
+	          "\\Explorer\\Shell Folders";
+	        RegistryKey localKey = topKey.openSubKey(localKeyPath);
+	        String personalPath = cleanKey(localKey.getStringValue("Personal"));
+	        //topKey.closeKey();  // necessary?
+	        //localKey.closeKey();
+	        location = (new File(personalPath, "Fritzing").toURI().toURL());
+
+	      } catch (Exception e) {
+	        //showError("Problem getting folder",
+	        //          "Could not locate the Documents folder.", e);
+//	        sketchbookFolder = promptSketchbookLocation();
+	      }
+	    }
+		return location;
+	}
+
+	// taken from Arduinos Base.cleanKey():
+	static public String cleanKey(String what) {
+		// jnireg seems to be reading the chars as bytes
+		// so maybe be as simple as & 0xff and then running through decoder
+
+		char c[] = what.toCharArray();
+
+		// if chars are in the tooHigh range, it's prolly because
+		// a byte from the jni registry was turned into a char
+		// and there was a sign extension.
+		// e.g. 0xFC (252, umlaut u) became 0xFFFC (65532).
+		// but on a japanese system, maybe this is two-byte and ok?
+		int tooHigh = 65536 - 128;
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] >= tooHigh)
+				c[i] &= 0xff;
+		}
+		return new String(c);
+	}
+	
+	static final int kDocumentsFolderType = ('d' << 24) | ('o' << 16)
+			| ('c' << 8) | 's';
+	static final int kPreferencesFolderType = ('p' << 24) | ('r' << 16)
+			| ('e' << 8) | 'f';
+	static final int kDomainLibraryFolderType = ('d' << 24) | ('l' << 16)
+			| ('i' << 8) | 'b';
+	static final short kUserDomain = -32763;
 }

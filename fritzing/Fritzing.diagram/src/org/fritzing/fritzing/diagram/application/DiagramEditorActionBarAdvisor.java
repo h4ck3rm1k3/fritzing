@@ -37,6 +37,7 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.fritzing.fritzing.diagram.part.FritzingCreationWizard;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 import org.fritzing.fritzing.diagram.part.Messages;
 
 /**
@@ -362,8 +363,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		public void run(IAction action) {
 			FileDialog fileDialog = new FileDialog(getWindow().getShell(),
 					SWT.OPEN);
-			String fritzingFolder = System.getProperty("user.home")
-					+ "/Fritzing";
+			String fritzingFolder = FritzingDiagramEditorUtil.getFritzingUserFolder().getPath();
 			if (!new File(fritzingFolder).exists())
 				new File(fritzingFolder).mkdir();
 			fileDialog.setFilterPath(fritzingFolder);
