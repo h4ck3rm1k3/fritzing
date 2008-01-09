@@ -3,11 +3,18 @@
  */
 package org.fritzing.fritzing.diagram.edit.parts;
 
+import org.eclipse.draw2d.ConnectionAnchor;
+import org.eclipse.draw2d.Ellipse;
+import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Insets;
+import org.eclipse.draw2d.geometry.PrecisionPoint;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -15,6 +22,7 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.ResizableEditPolicy;
+import org.eclipse.gef.handles.HandleBounds;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.BorderedBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
@@ -22,8 +30,10 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPo
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
+import org.eclipse.gmf.runtime.draw2d.ui.internal.figures.TransparentBorder;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.gef.ui.figures.SlidableAnchor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.fritzing.fritzing.diagram.edit.policies.Terminal2ItemSemanticEditPolicy;
@@ -45,6 +55,16 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated
 	 */
 	protected IFigure contentPane;
+
+	/**
+	 * @generated NOT
+	 */
+	protected static final int standardPlateMeasure = 10;
+
+	/**
+	 * @generated NOT
+	 */
+	protected static final int standardTerminalMeasure = 5;
 
 	/**
 	 * @generated
@@ -178,11 +198,12 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(5), getMapMode().DPtoLP(5));
+		DefaultSizeNodeFigure result = new TerminalDefaultSizeNodeFigure(getMapMode()
+				.DPtoLP(standardPlateMeasure), getMapMode().DPtoLP(standardPlateMeasure));
 
 		//FIXME: workaround for #154536
 		result.getBounds().setSize(result.getPreferredSize());
+				
 		return result;
 	}
 
@@ -248,23 +269,85 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
 				.getType(TerminalName2EditPart.VISUAL_ID));
 	}
+	
+	public class TerminalDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
+		
+		public TerminalDefaultSizeNodeFigure(Dimension defSize) {
+			super(defSize);
+		}
+
+		public TerminalDefaultSizeNodeFigure(int width, int height) {
+			super(width, height);
+		}
+		
+		protected ConnectionAnchor createAnchor(PrecisionPoint p) {
+			return super.createAnchor(null);
+		}
+		protected ConnectionAnchor createConnectionAnchor(PrecisionPoint p) {
+			return super.createConnectionAnchor(null);
+		}
+		public ConnectionAnchor getConnectionAnchor(String terminal) {
+			return super.getConnectionAnchor(szAnchor);
+		}
+		
+				
+		protected ConnectionAnchor createDefaultAnchor() {
+			return new TerminalSlidableAnchor(this);
+		}
+	}
+	
+	public class TerminalSlidableAnchor extends SlidableAnchor {
+		public TerminalSlidableAnchor(IFigure f) {
+			super(f);
+		}
+		
+		protected Rectangle getBox() {
+			Rectangle rBox = getOwner().getBounds().getCopy();
+			if (getOwner() instanceof HandleBounds)
+				rBox = ((HandleBounds)getOwner()).getHandleBounds().getCopy();
+			
+			getOwner().translateToAbsolute(rBox);
+			
+			rBox.x += rBox.width / 2;
+			rBox.y += rBox.height / 2;
+			rBox.width = 0;
+			rBox.height = 0;
+			
+			return rBox;
+		}
+
+	}
 
 	/**
 	 * @generated
 	 */
 	public class TerminalFigure extends RectangleFigure {
 
+		protected int standardTerminalConverted;
+		
 		/**
 		 * @generated
 		 */
 		public TerminalFigure() {
+			standardTerminalConverted = getMapMode().DPtoLP(standardTerminalMeasure);
 			this.setLineWidth(0);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(getMapMode().DPtoLP(5),
-					getMapMode().DPtoLP(5)));
+			this.setPreferredSize(new Dimension(standardTerminalConverted, standardTerminalConverted));
 		}
-
+		
+		/**
+		 * @generated NOT
+		 */
+		protected void fillShape(Graphics graphics) {
+			Rectangle r = getBounds();
+			int d = (r.width - standardTerminalConverted) / 2;
+			r.x += d;
+			r.y += d;
+			r.setSize(standardTerminalConverted, standardTerminalConverted);
+			graphics.fillRectangle(r);
+		}
+				
 		/**
 		 * @generated
 		 */
