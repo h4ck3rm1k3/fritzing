@@ -5,6 +5,7 @@ package org.fritzing.fritzing.diagram.part;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,7 +64,6 @@ import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 
-import com.apple.mrj.MRJOSType;
 import com.ice.jni.registry.Registry;
 import com.ice.jni.registry.RegistryKey;
 /**
@@ -544,15 +544,21 @@ public class FritzingDiagramEditorUtil {
 	    if (Platform.getOS().equals(Platform.OS_MACOSX)) {
 
 	    	try {
-		        MRJOSType domainDocuments = new MRJOSType("docs");
-				String uri = "http://www.apple.com/";
+		        String uri = "http://www.apple.com/";
+		        Class mrjOSTypeClass = Class.forName("com.apple.mrj.MRJOSType");
+		        Constructor mrjOSTypeConstructor = mrjOSTypeClass.getConstructor(
+		        		new Class[]{String.class});
+		        Object mrjOSTypeDocs = mrjOSTypeConstructor.newInstance(
+		        		new Object[]{new String("docs")});
+		        
 				Class mrjFileUtilsClass = Class
 						.forName("com.apple.mrj.MRJFileUtils");
 				Method findFolderMethod = mrjFileUtilsClass.getMethod("findFolder",
-                        new Class[] { Short.TYPE, MRJOSType.class });
+                        new Class[] { Short.TYPE, mrjOSTypeClass });
+				
 				File documentsFolder = (File)
 		          findFolderMethod.invoke(null, new Object[] { 
-		        		  new Short(kUserDomain), domainDocuments });
+		        		  new Short(kUserDomain), mrjOSTypeDocs });
 		        location = new File(documentsFolder, "Fritzing");
 			} catch (Exception ex) {
 				ex.printStackTrace();
