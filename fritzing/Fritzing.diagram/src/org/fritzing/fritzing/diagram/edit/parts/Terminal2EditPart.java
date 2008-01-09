@@ -59,12 +59,12 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	/**
 	 * @generated NOT
 	 */
-	protected static final int standardPlateMeasure = 10;
+	public static final int standardPlateMeasure = 10;
 
 	/**
 	 * @generated NOT
 	 */
-	protected static final int standardTerminalMeasure = 5;
+	public static final int standardTerminalMeasure = 5;
 
 	/**
 	 * @generated

@@ -135,6 +135,7 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 		 */
 		private void createContents() {
 
+
 			fFigureTrackNameFigure = new WrapLabel();
 			fFigureTrackNameFigure.setText("..");
 
@@ -142,6 +143,9 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 
 			this.add(fFigureTrackNameFigure);
 
+			if (!visible) {
+				this.setVisible(false);
+			}
 		}
 
 		/**
@@ -155,6 +159,9 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 		public void paint(Graphics graphics) {
 			if (this.visible) {
 				super.paint(graphics);
+			}
+			else {
+				this.setVisible(false);
 			}
 		}
 	}

@@ -490,8 +490,7 @@ public class PartLoader {
 					generic = !s.equalsIgnoreCase("false");
 				}
 			}
-			
-			
+						
 			// do gridoffset and defaultunits first
 			String defaultUnits = null;					
 			NodeList nodes = partNode.getChildNodes();

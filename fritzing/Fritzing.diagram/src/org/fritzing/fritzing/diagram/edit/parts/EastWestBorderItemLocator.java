@@ -5,8 +5,13 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.LayoutHelper;
+import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditor;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 
 public class EastWestBorderItemLocator extends PartBorderItemLocator {
 	
@@ -16,6 +21,28 @@ public class EastWestBorderItemLocator extends PartBorderItemLocator {
 	public EastWestBorderItemLocator(IFigure figure, PartEditPart parentEditPart, int positionConstants, Point offset) {
 		super(figure, parentEditPart);
 		this.offset = offset;
+		
+		
+		int d = parentEditPart.DPtoLP(Terminal2EditPart.standardPlateMeasure / 2);
+		this.offset.x -= d;
+		this.offset.y -= d;
+	
+		/*
+		FritzingDiagramEditor diagram = FritzingDiagramEditorUtil.getActiveDiagramPart();
+		if (diagram != null) {
+			DiagramEditPart part = diagram.getDiagramEditPart();
+			
+	        if (part instanceof DiagramRootEditPart) {
+	            DiagramRootEditPart dgrmRoot = (DiagramRootEditPart)part;
+	            return dgrmRoot.getMapMode();
+	        }
+	        
+	        return MapModeUtil.getMapMode();
+
+		}
+		*/
+		
+		
 		this.positionConstants = positionConstants;
 	}
 	

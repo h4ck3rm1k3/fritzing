@@ -666,6 +666,9 @@ public class TerminalName2EditPart extends LabelEditPart implements
 
 			this.setFont(THIS_FONT);
 			this.visible = visible;
+			if (!visible) {
+				this.setVisible(false);
+			}
 		}
 
 		/**
@@ -674,6 +677,9 @@ public class TerminalName2EditPart extends LabelEditPart implements
 		public void paint(Graphics graphics) {
 			if (this.visible) {
 				super.paint(graphics);
+			}
+			else {
+				this.setVisible(false);
 			}
 		}
 
