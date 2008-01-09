@@ -6,7 +6,6 @@ package org.fritzing.fritzing.diagram.part;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,7 +46,6 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
@@ -64,7 +62,7 @@ import org.fritzing.fritzing.DocumentRoot;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
-import com.apple.mrj.MRJFileUtils;
+
 import com.apple.mrj.MRJOSType;
 import com.ice.jni.registry.Registry;
 import com.ice.jni.registry.RegistryKey;
@@ -539,17 +537,33 @@ public class FritzingDiagramEditorUtil {
 		return fritzingLocation;
 	}
 	  
-	public static URL getFritzingUserFolder() {
-		URL location = Platform.getUserLocation().getURL(); // fallback location
+	public static File getFritzingUserFolder() {
+		File location = new File(System.getProperty("user.home") + "/Fritzing"); // fallback location
 
 		// taken from Arduinos Base.getDefaultSketchbookFolder():
 	    if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+
+	    	try {
+		        MRJOSType domainDocuments = new MRJOSType("docs");
+				String uri = "http://www.apple.com/";
+				Class mrjFileUtilsClass = Class
+						.forName("com.apple.mrj.MRJFileUtils");
+				Method findFolderMethod = mrjFileUtilsClass.getMethod("findFolder",
+                        new Class[] { Short.TYPE, MRJOSType.class });
+				File documentsFolder = (File)
+		          findFolderMethod.invoke(null, new Object[] { 
+		        		  new Short(kUserDomain), domainDocuments });
+		        location = new File(documentsFolder, "Fritzing");
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+	    	
 	      // carbon folder constants
 	      // http://developer.apple.com/documentation/Carbon/Reference/Folder_Manager/folder_manager_ref/constant_6.html#//apple_ref/doc/uid/TP30000238/C006889
 
 	      // additional information found in the local file:
 	      // /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/CarbonCore.framework/Headers/
-
+/*
 	      try {
 	        MRJOSType domainDocuments = new MRJOSType("docs");
 	        //File libraryFolder = MRJFileUtils.findFolder(domainDocuments);
@@ -562,14 +576,14 @@ public class FritzingDiagramEditorUtil {
 	        File documentsFolder = (File)
 	          findFolderMethod.invoke(null, new Object[] { new Short(kUserDomain),
 	                                                       domainDocuments });
-	        location = (new File(documentsFolder, "Fritzing").toURI().toURL());
+	        location = new File(documentsFolder, "Fritzing");
 
 	      } catch (Exception e) {
 	        //showError("Could not find folder",
 	        //          "Could not locate the Documents folder.", e);
 //	        sketchbookFolder = promptSketchbookLocation();
 	      }
-
+*/
 	    } else if (Platform.getOS().equals(Platform.OS_WIN32)) {
 	      // looking for Documents and Settings/blah/My Documents/Fritzing
 	      // or on Vista Users/blah/Documents/Fritzing
@@ -594,7 +608,7 @@ public class FritzingDiagramEditorUtil {
 	        String personalPath = cleanKey(localKey.getStringValue("Personal"));
 	        //topKey.closeKey();  // necessary?
 	        //localKey.closeKey();
-	        location = (new File(personalPath, "Fritzing").toURI().toURL());
+	        location = new File(personalPath, "Fritzing");
 
 	      } catch (Exception e) {
 	        //showError("Problem getting folder",
