@@ -198,9 +198,10 @@ public class FritzingPaletteFactory {
 		LinkToolEntry entry = new LinkToolEntry(
 				Messages.Wire1CreationTool_title,
 				Messages.Wire1CreationTool_desc, types);
-		entry.setSmallIcon(FritzingElementTypes
-				.getImageDescriptor(FritzingElementTypes.Wire_4001));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(FritzingDiagramEditorPlugin
+				.getBundledImageDescriptor("icons/obj16/wireIconSmall.gif"));
+		entry.setLargeIcon(FritzingDiagramEditorPlugin
+				.getBundledImageDescriptor("icons/obj16/wireIconLarge.gif"));
 		return entry;
 	}
 	
