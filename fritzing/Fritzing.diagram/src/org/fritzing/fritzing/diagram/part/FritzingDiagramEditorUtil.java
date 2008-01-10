@@ -549,7 +549,7 @@ public class FritzingDiagramEditorUtil {
 				java.lang.reflect.Method m = clazz.getMethod("findFolder",
 						new Class[] { int.class });
 				String docPath = (String) m.invoke(null,
-						new Object[] { new Integer(kUserDomain) });
+						new Object[] { new Short(kUserDomain), new Integer(kDocumentsFolderType) });
 
 				location = new File(docPath + "/Fritzing");
 			} catch (Exception ex) {
