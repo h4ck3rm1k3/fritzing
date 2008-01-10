@@ -12,12 +12,12 @@
 	<label>POT</label>
 	<reference>http://fritzing.org/reference/parts/core/potentiometer</reference>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset x="0" y="0" units="himetric"/> <!-- 0x0 pixels -->
-	<bounds width="635" height="685.8" units="himetric"/> <!-- 25x27 pixels -->
+	<gridOffset x="100" y="125" units="himetric"/> <!-- approx 4x5 pixels -->
+    <bounds width="660" height="737" units="himetric"/> <!-- 26x29 pixels -->
 	<connectors units="tenths">
-		<connector id="T1" name="T1" x="-0.5" y="1.5" type="leg" />
-		<connector id="T2" name="T2" x="2.5" y="1.5" type="leg" />
-		<connector id="W" name="W" x="1" y="2.7" type="leg" />
+		<connector id="T1" name="T1" x="0" y="3" type="leg" />
+		<connector id="T2" name="T2" x="2" y="3" type="leg" />
+		<connector id="W" name="W" x="1" y="-1" type="leg" />
 	</connectors>
 	<layers>
 		<layer type="image">
