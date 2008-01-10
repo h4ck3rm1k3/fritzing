@@ -541,46 +541,30 @@ public class FritzingDiagramEditorUtil {
 	public static File getFritzingUserFolder() {
 		File location = new File(System.getProperty("user.home") + "/Fritzing"); // fallback location
 
-		// taken from Arduinos Base.getDefaultSketchbookFolder():
+		// taken from Arduinos Base.getDefaultSketchbookFolder() and updated to Java 1.5:
 		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
-			try {
-				Class clazz = Class.forName("com.apple.eio.FileManager");
-				Method m = clazz.getMethod("findFolder",
-						new Class[] { Short.class, Integer.class });
-				String docPath = (String) m.invoke(null,
-						new Object[] { new Short(kUserDomain), new Integer(kDocumentsFolderType) });
-
-				location = new File(docPath + "/Fritzing");
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
+			// API http://developer.apple.com/documentation/Java/Reference/1.5.0/appledoc/api/com/apple/eio/FileManager.html
+			
 			// carbon folder constants
 			// http://developer.apple.com/documentation/Carbon/Reference/Folder_Manager/folder_manager_ref/constant_6.html#//apple_ref/doc/uid/TP30000238/C006889
 
 			// additional information found in the local file:
 			// /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/CarbonCore.framework/Headers/
-			/*
-			 try {
-			 MRJOSType domainDocuments = new MRJOSType("docs");
-			 //File libraryFolder = MRJFileUtils.findFolder(domainDocuments);
+			
+			try {
+				Class clazz = Class.forName("com.apple.eio.FileManager");
+				Method m = clazz.getMethod("findFolder",
+						new Class[] { short.class, int.class });
+				String docPath = (String) m.invoke(null,
+						new Object[] { new Short(kUserDomain), new Integer(kDocumentsFolderType) });
 
-			 // for 77, try switching this to the user domain, just to be sure
-			 Method findFolderMethod =
-			 MRJFileUtils.class.getMethod("findFolder",
-			 new Class[] { Short.TYPE,
-			 MRJOSType.class });
-			 File documentsFolder = (File)
-			 findFolderMethod.invoke(null, new Object[] { new Short(kUserDomain),
-			 domainDocuments });
-			 location = new File(documentsFolder, "Fritzing");
-
+				location = new File(docPath + "/Fritzing");
 			 } catch (Exception e) {
 			 //showError("Could not find folder",
 			 //          "Could not locate the Documents folder.", e);
 			 //	        sketchbookFolder = promptSketchbookLocation();
+				 e.printStackTrace();
 			 }
-			 */
 		} else if (Platform.getOS().equals(Platform.OS_WIN32)) {
 			// looking for Documents and Settings/blah/My Documents/Fritzing
 			// or on Vista Users/blah/Documents/Fritzing
@@ -611,6 +595,7 @@ public class FritzingDiagramEditorUtil {
 				//showError("Problem getting folder",
 				//          "Could not locate the Documents folder.", e);
 				//	        sketchbookFolder = promptSketchbookLocation();
+				e.printStackTrace();
 			}
 		}
 		return location;
