@@ -5,7 +5,6 @@ package org.fritzing.fritzing.diagram.part;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -546,8 +545,8 @@ public class FritzingDiagramEditorUtil {
 		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
 			try {
 				Class clazz = Class.forName("com.apple.eio.FileManager");
-				java.lang.reflect.Method m = clazz.getMethod("findFolder",
-						new Class[] { int.class });
+				Method m = clazz.getMethod("findFolder",
+						new Class[] { Short.class, Integer.class });
 				String docPath = (String) m.invoke(null,
 						new Object[] { new Short(kUserDomain), new Integer(kDocumentsFolderType) });
 
