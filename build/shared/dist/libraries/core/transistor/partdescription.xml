@@ -12,12 +12,12 @@
 	<label>Q</label>
 	<reference>http://fritzing.org/reference/parts/transistor</reference>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset x="0" y="0" units="himetric"/> <!-- 0x0 pixels -->
-	<bounds width="482.6" height="584.2" units="himetric"/> <!-- 19x23 pixels -->
+	<gridOffset x="70" y="630" units="himetric"/> <!-- approx 3x25 pixels -->
+    <bounds width="610" height="864" units="himetric"/> <!-- 24x34 pixels -->
 	<connectors units="tenths">
-		<connector id="E" name="E" x="0" y="2.0" type="leg" />
-		<connector id="B" name="B" x="0.75" y="2.0" type="leg" />
-		<connector id="C" name="C" x="1.5" y="2.0" type="leg" />
+		<connector id="E" name="E" x="0" y="2" type="leg" />
+		<connector id="B" name="B" x="1" y="2" type="leg" />
+		<connector id="C" name="C" x="2" y="2" type="leg" />
 	</connectors>
 	<layers>
 		<layer type="image">
