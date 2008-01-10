@@ -12,7 +12,7 @@
 	<label>POT</label>
 	<reference>http://fritzing.org/reference/parts/core/potentiometer</reference>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset x="100" y="125" units="himetric"/> <!-- approx 4x5 pixels -->
+	<gridOffset x="92" y="118" units="himetric"/> <!-- approx 4x5 pixels -->
     <bounds width="660" height="737" units="himetric"/> <!-- 26x29 pixels -->
 	<connectors units="tenths">
 		<connector id="T1" name="T1" x="0" y="3" type="leg" />
