@@ -167,6 +167,29 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Leg} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected LegItemProvider legItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.fritzing.fritzing.Leg}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createLegAdapter() {
+		if (legItemProvider == null) {
+			legItemProvider = new LegItemProvider(this);
+		}
+
+		return legItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.fritzing.fritzing.Resistor} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -413,6 +436,7 @@ public class FritzingItemProviderAdapterFactory extends FritzingAdapterFactory i
 		if (breadboardItemProvider != null) breadboardItemProvider.dispose();
 		if (wireItemProvider != null) wireItemProvider.dispose();
 		if (trackItemProvider != null) trackItemProvider.dispose();
+		if (legItemProvider != null) legItemProvider.dispose();
 	}
 
 }

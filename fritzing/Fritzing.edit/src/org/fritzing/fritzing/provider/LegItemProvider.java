@@ -14,7 +14,6 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -22,22 +21,18 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-//import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.Leg;
 
 /**
- * This is the item provider adapter for a {@link org.fritzing.fritzing.Terminal} object.
+ * This is the item provider adapter for a {@link org.fritzing.fritzing.Leg} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class TerminalItemProvider
-	extends ElementItemProvider
+public class LegItemProvider
+	extends ConnectionItemProvider
 	implements	
 		IEditingDomainItemProvider,	
 		IStructuredItemContentProvider,	
@@ -50,7 +45,7 @@ public class TerminalItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TerminalItemProvider(AdapterFactory adapterFactory) {
+	public LegItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -65,95 +60,65 @@ public class TerminalItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addIdPropertyDescriptor(object);
-			addNamePropertyDescriptor(object);
+			addTargetPropertyDescriptor(object);
+			addSourcePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Id feature.
+	 * This adds a property descriptor for the Target feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addIdPropertyDescriptor(Object object) {
+	protected void addTargetPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Terminal_id_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Terminal_id_feature", "_UI_Terminal_type"),
-				 FritzingPackage.Literals.TERMINAL__ID,
-				 false,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Name feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Terminal_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Terminal_name_feature", "_UI_Terminal_type"),
-				 FritzingPackage.Literals.TERMINAL__NAME,
+				 getString("_UI_Leg_target_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Leg_target_feature", "_UI_Leg_type"),
+				 FritzingPackage.Literals.LEG__TARGET,
 				 true,
 				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 true,
+				 null,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+	 * This adds a property descriptor for the Source feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(FritzingPackage.Literals.TERMINAL__LEG);
-		}
-		return childrenFeatures;
+	protected void addSourcePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Leg_source_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Leg_source_feature", "_UI_Leg_type"),
+				 FritzingPackage.Literals.LEG__SOURCE,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns Terminal.gif.
+	 * This returns Leg.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Terminal"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Leg"));
 	}
 
 	/**
@@ -164,10 +129,10 @@ public class TerminalItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Terminal)object).getName();
+		String label = ((Leg)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Terminal_type") :
-			getString("_UI_Terminal_type") + " " + label;
+			getString("_UI_Leg_type") :
+			getString("_UI_Leg_type") + " " + label;
 	}
 
 	/**
@@ -180,16 +145,6 @@ public class TerminalItemProvider
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
-
-		switch (notification.getFeatureID(Terminal.class)) {
-			case FritzingPackage.TERMINAL__ID:
-			case FritzingPackage.TERMINAL__NAME:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case FritzingPackage.TERMINAL__LEG:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
-		}
 		super.notifyChanged(notification);
 	}
 
@@ -203,11 +158,6 @@ public class TerminalItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(FritzingPackage.Literals.TERMINAL__LEG,
-				 FritzingFactory.eINSTANCE.createLeg()));
 	}
 
 	/**
