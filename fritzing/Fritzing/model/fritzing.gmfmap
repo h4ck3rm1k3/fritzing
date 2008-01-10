@@ -123,8 +123,6 @@
     <creationConstraints>
       <sourceEnd
           body="self &lt;> oppositeEnd"/>
-      <targetEnd
-          body="not self.parent.oclIsTypeOf(Sketch)"/>
     </creationConstraints>
   </links>
   <links>
@@ -147,6 +145,31 @@
     <linkMetaFeature
         xsi:type="ecore:EReference"
         href="fritzing.ecore#//Track/target"/>
+    <creationConstraints>
+      <sourceEnd
+          body="self &lt;> oppositeEnd"/>
+    </creationConstraints>
+  </links>
+  <links>
+    <domainMetaElement
+        href="fritzing.ecore#//Leg"/>
+    <labelMappings
+        xsi:type="gmfmap:FeatureLabelMapping">
+      <diagramLabel
+          href="fritzing.gmfgraph#LegName"/>
+      <features
+          href="fritzing.ecore#//Connection/name"/>
+    </labelMappings>
+    <containmentFeature
+        href="fritzing.ecore#//Terminal/leg"/>
+    <diagramLink
+        href="fritzing.gmfgraph#Leg"/>
+    <sourceMetaFeature
+        xsi:type="ecore:EReference"
+        href="fritzing.ecore#//Leg/source"/>
+    <linkMetaFeature
+        xsi:type="ecore:EReference"
+        href="fritzing.ecore#//Leg/target"/>
     <creationConstraints>
       <sourceEnd
           body="self &lt;> oppositeEnd"/>

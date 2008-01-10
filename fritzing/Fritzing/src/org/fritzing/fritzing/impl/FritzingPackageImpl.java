@@ -19,7 +19,9 @@ import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.GenericPart;
+import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.ITrackConnection;
+import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Module;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Resistor;
@@ -83,6 +85,20 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * @generated
 	 */
 	private EClass iTrackConnectionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass legEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass iLegConnectionEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -297,6 +313,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getTerminal_Leg() {
+		return (EReference)terminalEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getElement() {
 		return elementEClass;
 	}
@@ -380,6 +405,51 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 	 */
 	public EClass getITrackConnection() {
 		return iTrackConnectionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getLeg() {
+		return legEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLeg_Parent() {
+		return (EReference)legEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLeg_Target() {
+		return (EReference)legEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getLeg_Source() {
+		return (EReference)legEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getILegConnection() {
+		return iLegConnectionEClass;
 	}
 
 	/**
@@ -645,6 +715,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEAttribute(terminalEClass, TERMINAL__ID);
 		createEAttribute(terminalEClass, TERMINAL__NAME);
 		createEReference(terminalEClass, TERMINAL__PARENT);
+		createEReference(terminalEClass, TERMINAL__LEG);
 
 		elementEClass = createEClass(ELEMENT);
 
@@ -693,6 +764,13 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		createEReference(trackEClass, TRACK__SOURCE);
 
 		iTrackConnectionEClass = createEClass(ITRACK_CONNECTION);
+
+		legEClass = createEClass(LEG);
+		createEReference(legEClass, LEG__PARENT);
+		createEReference(legEClass, LEG__TARGET);
+		createEReference(legEClass, LEG__SOURCE);
+
+		iLegConnectionEClass = createEClass(ILEG_CONNECTION);
 	}
 
 	/**
@@ -728,6 +806,7 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		// Add supertypes to classes
 		terminalEClass.getESuperTypes().add(this.getElement());
 		terminalEClass.getESuperTypes().add(this.getITrackConnection());
+		terminalEClass.getESuperTypes().add(this.getILegConnection());
 		connectionEClass.getESuperTypes().add(this.getElement());
 		partEClass.getESuperTypes().add(this.getElement());
 		genericPartEClass.getESuperTypes().add(this.getPart());
@@ -735,11 +814,15 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		ledEClass.getESuperTypes().add(this.getPart());
 		compositeEClass.getESuperTypes().add(this.getPart());
 		sketchEClass.getESuperTypes().add(this.getComposite());
+		sketchEClass.getESuperTypes().add(this.getILegConnection());
 		moduleEClass.getESuperTypes().add(this.getComposite());
 		breadboardEClass.getESuperTypes().add(this.getPart());
 		wireEClass.getESuperTypes().add(this.getConnection());
+		wireEClass.getESuperTypes().add(this.getILegConnection());
 		trackEClass.getESuperTypes().add(this.getConnection());
 		trackEClass.getESuperTypes().add(this.getITrackConnection());
+		legEClass.getESuperTypes().add(this.getConnection());
+		legEClass.getESuperTypes().add(this.getILegConnection());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -753,6 +836,8 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEAttribute(getTerminal_Name(), theXMLTypePackage.getString(), "name", null, 0, 1, Terminal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getTerminal_Parent(), this.getPart(), this.getPart_Terminals(), "parent", null, 0, 1, Terminal.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getTerminal_Parent().getEKeys().add(this.getPart_Id());
+		initEReference(getTerminal_Leg(), this.getLeg(), this.getLeg_Parent(), "leg", null, 0, 1, Terminal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getTerminal_Leg().getEKeys().add(this.getConnection_Name());
 
 		initEClass(elementEClass, Element.class, "Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -809,6 +894,14 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		initEReference(getTrack_Source(), this.getITrackConnection(), null, "source", null, 1, 1, Track.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(iTrackConnectionEClass, ITrackConnection.class, "ITrackConnection", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(legEClass, Leg.class, "Leg", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getLeg_Parent(), this.getTerminal(), this.getTerminal_Leg(), "parent", null, 0, 1, Leg.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getLeg_Parent().getEKeys().add(this.getTerminal_Id());
+		initEReference(getLeg_Target(), this.getILegConnection(), null, "target", null, 0, 1, Leg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLeg_Source(), this.getILegConnection(), null, "source", null, 1, 1, Leg.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(iLegConnectionEClass, ILegConnection.class, "ILegConnection", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -1088,6 +1181,27 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		   });		
 		addAnnotation
 		  (getTrack_Source(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "source"
+		   });		
+		addAnnotation
+		  (legEClass, 
+		   source, 
+		   new String[] {
+			 "name", "Leg",
+			 "kind", "empty"
+		   });		
+		addAnnotation
+		  (getLeg_Target(), 
+		   source, 
+		   new String[] {
+			 "kind", "attribute",
+			 "name", "target"
+		   });		
+		addAnnotation
+		  (getLeg_Source(), 
 		   source, 
 		   new String[] {
 			 "kind", "attribute",

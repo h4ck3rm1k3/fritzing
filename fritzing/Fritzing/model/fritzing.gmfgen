@@ -392,8 +392,6 @@
       <creationConstraints>
         <sourceEnd
             body="self &lt;> oppositeEnd"/>
-        <targetEnd
-            body="not self.parent.oclIsTypeOf(Sketch)"/>
       </creationConstraints>
     </links>
     <links
@@ -437,6 +435,65 @@
         <viewmap
             xsi:type="gmfgen:ParentAssignedViewmap"
             getterName="getFigureTrackNameFigure"
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel">
+          <attributes
+              xsi:type="gmfgen:StyleAttributes"
+              fixedFont="true"/>
+          <attributes
+              xsi:type="gmfgen:LabelOffsetAttributes"/>
+        </viewmap>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet">
+          <metaFeatures
+              href="fritzing.genmodel#//fritzing/Connection/name"/>
+        </modelFacet>
+      </labels>
+      <creationConstraints>
+        <sourceEnd
+            body="self &lt;> oppositeEnd"/>
+      </creationConstraints>
+    </links>
+    <links
+        visualID="4003"
+        editPartClassName="LegEditPart"
+        itemSemanticEditPolicyClassName="LegItemSemanticEditPolicy"
+        notationViewFactoryClassName="LegViewFactory"
+        createCommandClassName="LegCreateCommand"
+        reorientCommandClassName="LegReorientCommand">
+      <diagramRunTimeClass
+          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Edge"/>
+      <elementType
+          xsi:type="gmfgen:MetamodelType"
+          editHelperClassName="LegEditHelper"/>
+      <viewmap
+          xsi:type="gmfgen:InnerClassViewmap"
+          className="LegFigure"
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class LegFigure extends org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel fFigureLegNameFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public LegFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureLegNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel();&#xA;fFigureLegNameFigure.setText(&quot;..&quot;);&#xA;&#xA;fFigureLegNameFigure.setFont(FFIGURELEGNAMEFIGURE_FONT);&#xA;&#xA;&#xA;&#xA;this.add(fFigureLegNameFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel getFigureLegNameFigure() {&#xA;&#x9;&#x9;return fFigureLegNameFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Font FFIGURELEGNAMEFIGURE_FONT = new org.eclipse.swt.graphics.Font(org.eclipse.swt.widgets.Display.getCurrent(), org.eclipse.swt.widgets.Display.getDefault().getSystemFont().getFontData()[0].getName(), 8, org.eclipse.swt.SWT.NORMAL);&#xA;&#xA;">
+        <requiredPluginIDs>org.eclipse.gmf.runtime.draw2d.ui</requiredPluginIDs>
+      </viewmap>
+      <modelFacet
+          xsi:type="gmfgen:TypeLinkModelFacet">
+        <metaClass
+            href="fritzing.genmodel#//fritzing/Leg"/>
+        <containmentMetaFeature
+            href="fritzing.genmodel#//fritzing/Terminal/leg"/>
+        <childMetaFeature
+            href="fritzing.genmodel#//fritzing/Terminal/leg"/>
+        <sourceMetaFeature
+            href="fritzing.genmodel#//fritzing/Leg/source"/>
+        <targetMetaFeature
+            href="fritzing.genmodel#//fritzing/Leg/target"/>
+      </modelFacet>
+      <labels
+          visualID="6003"
+          editPartClassName="LegNameEditPart"
+          itemSemanticEditPolicyClassName="LegNameItemSemanticEditPolicy"
+          notationViewFactoryClassName="LegNameViewFactory">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:ParentAssignedViewmap"
+            getterName="getFigureLegNameFigure"
             figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel">
           <attributes
               xsi:type="gmfgen:StyleAttributes"
@@ -758,6 +815,6 @@
   <expressionProviders>
     <providers
         xsi:type="gmfgen:GenExpressionInterpreter"
-        expressions="//@diagram/@links.0/@creationConstraints/@sourceEnd //@diagram/@links.0/@creationConstraints/@targetEnd //@diagram/@links.1/@creationConstraints/@sourceEnd"/>
+        expressions="//@diagram/@links.0/@creationConstraints/@sourceEnd //@diagram/@links.1/@creationConstraints/@sourceEnd //@diagram/@links.2/@creationConstraints/@sourceEnd"/>
   </expressionProviders>
 </gmfgen:GenEditorGenerator>

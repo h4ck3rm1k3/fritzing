@@ -41,7 +41,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Terminal" eSuperTypes="#//Element #//ITrackConnection">
+  <eClassifiers xsi:type="ecore:EClass" name="Terminal" eSuperTypes="#//Element #//ITrackConnection #//ILegConnection">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Terminal"/>
       <details key="kind" value="empty"/>
@@ -60,6 +60,8 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Part"
         transient="true" eOpposite="#//Part/terminals" eKeys="#//Part/id"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="leg" eType="#//Leg" containment="true"
+        eOpposite="#//Leg/parent" eKeys="#//Connection/name"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -186,7 +188,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Sketch" eSuperTypes="#//Composite">
+  <eClassifiers xsi:type="ecore:EClass" name="Sketch" eSuperTypes="#//Composite #//ILegConnection">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Sketch"/>
       <details key="kind" value="elementOnly"/>
@@ -216,7 +218,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Wire" eSuperTypes="#//Connection">
+  <eClassifiers xsi:type="ecore:EClass" name="Wire" eSuperTypes="#//Connection #//ILegConnection">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Wire"/>
       <details key="kind" value="empty"/>
@@ -261,4 +263,26 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ITrackConnection" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Leg" eSuperTypes="#//Connection #//ILegConnection">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="Leg"/>
+      <details key="kind" value="empty"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Terminal"
+        transient="true" eOpposite="#//Terminal/leg" eKeys="#//Terminal/id"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//ILegConnection">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="target"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
+        eType="#//ILegConnection">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="source"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ILegConnection" abstract="true" interface="true"/>
 </ecore:EPackage>

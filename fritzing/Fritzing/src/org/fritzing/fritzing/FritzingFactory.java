@@ -61,6 +61,15 @@ public interface FritzingFactory extends EFactory {
 	Track createTrack();
 
 	/**
+	 * Returns a new object of class '<em>Leg</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Leg</em>'.
+	 * @generated
+	 */
+	Leg createLeg();
+
+	/**
 	 * Returns a new object of class '<em>Resistor</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -16,5 +16,5 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Sketch' kind='elementOnly'"
  * @generated
  */
-public interface Sketch extends Composite {
+public interface Sketch extends Composite, ILegConnection {
 } // Sketch

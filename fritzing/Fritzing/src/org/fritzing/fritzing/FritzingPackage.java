@@ -170,13 +170,22 @@ public interface FritzingPackage extends EPackage {
 	int TERMINAL__PARENT = ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Leg</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TERMINAL__LEG = ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Terminal</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINAL_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
+	int TERMINAL_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ConnectionImpl <em>Connection</em>}' class.
@@ -1227,6 +1236,81 @@ public interface FritzingPackage extends EPackage {
 
 
 	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.impl.LegImpl <em>Leg</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.impl.LegImpl
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLeg()
+	 * @generated
+	 */
+	int LEG = 15;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEG__NAME = CONNECTION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEG__PARENT = CONNECTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEG__TARGET = CONNECTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Source</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEG__SOURCE = CONNECTION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Leg</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEG_FEATURE_COUNT = CONNECTION_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.ILegConnection <em>ILeg Connection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.ILegConnection
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getILegConnection()
+	 * @generated
+	 */
+	int ILEG_CONNECTION = 16;
+
+	/**
+	 * The number of structural features of the '<em>ILeg Connection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ILEG_CONNECTION_FEATURE_COUNT = 0;
+
+
+	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.DocumentRoot <em>Document Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1322,6 +1406,17 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTerminal_Parent();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.fritzing.fritzing.Terminal#getLeg <em>Leg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Leg</em>'.
+	 * @see org.fritzing.fritzing.Terminal#getLeg()
+	 * @see #getTerminal()
+	 * @generated
+	 */
+	EReference getTerminal_Leg();
 
 	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Element <em>Element</em>}'.
@@ -1427,6 +1522,59 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getITrackConnection();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.Leg <em>Leg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Leg</em>'.
+	 * @see org.fritzing.fritzing.Leg
+	 * @generated
+	 */
+	EClass getLeg();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.fritzing.fritzing.Leg#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.fritzing.fritzing.Leg#getParent()
+	 * @see #getLeg()
+	 * @generated
+	 */
+	EReference getLeg_Parent();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.fritzing.fritzing.Leg#getTarget <em>Target</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target</em>'.
+	 * @see org.fritzing.fritzing.Leg#getTarget()
+	 * @see #getLeg()
+	 * @generated
+	 */
+	EReference getLeg_Target();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.fritzing.fritzing.Leg#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Source</em>'.
+	 * @see org.fritzing.fritzing.Leg#getSource()
+	 * @see #getLeg()
+	 * @generated
+	 */
+	EReference getLeg_Source();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.ILegConnection <em>ILeg Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>ILeg Connection</em>'.
+	 * @see org.fritzing.fritzing.ILegConnection
+	 * @generated
+	 */
+	EClass getILegConnection();
 
 	/**
 	 * Returns the meta object for the reference '{@link org.fritzing.fritzing.Wire#getTarget <em>Target</em>}'.
@@ -1794,6 +1942,14 @@ public interface FritzingPackage extends EPackage {
 		EReference TERMINAL__PARENT = eINSTANCE.getTerminal_Parent();
 
 		/**
+		 * The meta object literal for the '<em><b>Leg</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TERMINAL__LEG = eINSTANCE.getTerminal_Leg();
+
+		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.ElementImpl <em>Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1882,6 +2038,50 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ITRACK_CONNECTION = eINSTANCE.getITrackConnection();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.LegImpl <em>Leg</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.impl.LegImpl
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getLeg()
+		 * @generated
+		 */
+		EClass LEG = eINSTANCE.getLeg();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LEG__PARENT = eINSTANCE.getLeg_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LEG__TARGET = eINSTANCE.getLeg_Target();
+
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LEG__SOURCE = eINSTANCE.getLeg_Source();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.ILegConnection <em>ILeg Connection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.ILegConnection
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getILegConnection()
+		 * @generated
+		 */
+		EClass ILEG_CONNECTION = eINSTANCE.getILegConnection();
 
 		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.

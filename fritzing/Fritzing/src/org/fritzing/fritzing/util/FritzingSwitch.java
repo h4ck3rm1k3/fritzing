@@ -97,6 +97,7 @@ public class FritzingSwitch<T> {
 				T result = caseTerminal(terminal);
 				if (result == null) result = caseElement(terminal);
 				if (result == null) result = caseITrackConnection(terminal);
+				if (result == null) result = caseILegConnection(terminal);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -156,6 +157,7 @@ public class FritzingSwitch<T> {
 				Sketch sketch = (Sketch)theEObject;
 				T result = caseSketch(sketch);
 				if (result == null) result = caseComposite(sketch);
+				if (result == null) result = caseILegConnection(sketch);
 				if (result == null) result = casePart(sketch);
 				if (result == null) result = caseElement(sketch);
 				if (result == null) result = defaultCase(theEObject);
@@ -182,6 +184,7 @@ public class FritzingSwitch<T> {
 				Wire wire = (Wire)theEObject;
 				T result = caseWire(wire);
 				if (result == null) result = caseConnection(wire);
+				if (result == null) result = caseILegConnection(wire);
 				if (result == null) result = caseElement(wire);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -198,6 +201,21 @@ public class FritzingSwitch<T> {
 			case FritzingPackage.ITRACK_CONNECTION: {
 				ITrackConnection iTrackConnection = (ITrackConnection)theEObject;
 				T result = caseITrackConnection(iTrackConnection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.LEG: {
+				Leg leg = (Leg)theEObject;
+				T result = caseLeg(leg);
+				if (result == null) result = caseConnection(leg);
+				if (result == null) result = caseILegConnection(leg);
+				if (result == null) result = caseElement(leg);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.ILEG_CONNECTION: {
+				ILegConnection iLegConnection = (ILegConnection)theEObject;
+				T result = caseILegConnection(iLegConnection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -307,6 +325,36 @@ public class FritzingSwitch<T> {
 	 * @generated
 	 */
 	public T caseITrackConnection(ITrackConnection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Leg</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Leg</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLeg(Leg object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>ILeg Connection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>ILeg Connection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseILegConnection(ILegConnection object) {
 		return null;
 	}
 

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
 
@@ -29,6 +30,7 @@ import org.fritzing.fritzing.Terminal;
  *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getLeg <em>Leg</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,6 +76,16 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getLeg() <em>Leg</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLeg()
+	 * @generated
+	 * @ordered
+	 */
+	protected Leg leg;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -182,6 +194,49 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Leg getLeg() {
+		return leg;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetLeg(Leg newLeg, NotificationChain msgs) {
+		Leg oldLeg = leg;
+		leg = newLeg;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, FritzingPackage.TERMINAL__LEG, oldLeg, newLeg);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLeg(Leg newLeg) {
+		if (newLeg != leg) {
+			NotificationChain msgs = null;
+			if (leg != null)
+				msgs = ((InternalEObject)leg).eInverseRemove(this, FritzingPackage.LEG__PARENT, Leg.class, msgs);
+			if (newLeg != null)
+				msgs = ((InternalEObject)newLeg).eInverseAdd(this, FritzingPackage.LEG__PARENT, Leg.class, msgs);
+			msgs = basicSetLeg(newLeg, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.TERMINAL__LEG, newLeg, newLeg));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -189,6 +244,10 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetParent((Part)otherEnd, msgs);
+			case FritzingPackage.TERMINAL__LEG:
+				if (leg != null)
+					msgs = ((InternalEObject)leg).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - FritzingPackage.TERMINAL__LEG, null, msgs);
+				return basicSetLeg((Leg)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -203,6 +262,8 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 		switch (featureID) {
 			case FritzingPackage.TERMINAL__PARENT:
 				return basicSetParent(null, msgs);
+			case FritzingPackage.TERMINAL__LEG:
+				return basicSetLeg(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -235,6 +296,8 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 				return getName();
 			case FritzingPackage.TERMINAL__PARENT:
 				return getParent();
+			case FritzingPackage.TERMINAL__LEG:
+				return getLeg();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -255,6 +318,9 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 				return;
 			case FritzingPackage.TERMINAL__PARENT:
 				setParent((Part)newValue);
+				return;
+			case FritzingPackage.TERMINAL__LEG:
+				setLeg((Leg)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -277,6 +343,9 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 			case FritzingPackage.TERMINAL__PARENT:
 				setParent((Part)null);
 				return;
+			case FritzingPackage.TERMINAL__LEG:
+				setLeg((Leg)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -295,6 +364,8 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case FritzingPackage.TERMINAL__PARENT:
 				return getParent() != null;
+			case FritzingPackage.TERMINAL__LEG:
+				return leg != null;
 		}
 		return super.eIsSet(featureID);
 	}

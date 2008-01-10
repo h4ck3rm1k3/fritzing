@@ -69,6 +69,7 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 			case FritzingPackage.BREADBOARD: return createBreadboard();
 			case FritzingPackage.WIRE: return createWire();
 			case FritzingPackage.TRACK: return createTrack();
+			case FritzingPackage.LEG: return createLeg();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -112,6 +113,16 @@ public class FritzingFactoryImpl extends EFactoryImpl implements FritzingFactory
 	public Track createTrack() {
 		TrackImpl track = new TrackImpl();
 		return track;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Leg createLeg() {
+		LegImpl leg = new LegImpl();
+		return leg;
 	}
 
 	/**

@@ -24,7 +24,7 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Wire' kind='empty'"
  * @generated
  */
-public interface Wire extends Connection {
+public interface Wire extends Connection, ILegConnection {
 	/**
 	 * Returns the value of the '<em><b>Source</b></em>' reference.
 	 * <!-- begin-user-doc -->

@@ -131,6 +131,14 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 				return createITrackConnectionAdapter();
 			}
 			@Override
+			public Adapter caseLeg(Leg object) {
+				return createLegAdapter();
+			}
+			@Override
+			public Adapter caseILegConnection(ILegConnection object) {
+				return createILegConnectionAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -245,6 +253,34 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createITrackConnectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.Leg <em>Leg</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.Leg
+	 * @generated
+	 */
+	public Adapter createLegAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.ILegConnection <em>ILeg Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.ILegConnection
+	 * @generated
+	 */
+	public Adapter createILegConnectionAdapter() {
 		return null;
 	}
 
