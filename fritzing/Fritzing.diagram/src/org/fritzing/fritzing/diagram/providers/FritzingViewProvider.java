@@ -13,6 +13,8 @@ import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.GenericPartNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LegNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -29,6 +31,8 @@ import org.fritzing.fritzing.diagram.view.factories.GenericPartNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.GenericPartViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.LEDViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.LegNameViewFactory;
+import org.fritzing.fritzing.diagram.view.factories.LegViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorNameViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.ResistorViewFactory;
 import org.fritzing.fritzing.diagram.view.factories.SketchViewFactory;
@@ -171,6 +175,13 @@ public class FritzingViewProvider extends AbstractViewProvider {
 						return null; // wrong container
 					}
 					break;
+				case LegNameEditPart.VISUAL_ID:
+					if (LegEditPart.VISUAL_ID != FritzingVisualIDRegistry
+							.getVisualID(containerView)
+							|| containerView.getElement() != domainElement) {
+						return null; // wrong container
+					}
+					break;
 				default:
 					return null;
 				}
@@ -213,6 +224,8 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return WireNameViewFactory.class;
 		case TrackNameEditPart.VISUAL_ID:
 			return TrackNameViewFactory.class;
+		case LegNameEditPart.VISUAL_ID:
+			return LegNameViewFactory.class;
 		}
 		return null;
 	}
@@ -253,6 +266,8 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return WireViewFactory.class;
 		case TrackEditPart.VISUAL_ID:
 			return TrackViewFactory.class;
+		case LegEditPart.VISUAL_ID:
+			return LegViewFactory.class;
 		}
 		return null;
 	}

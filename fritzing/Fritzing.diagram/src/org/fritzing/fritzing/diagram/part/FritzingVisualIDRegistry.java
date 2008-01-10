@@ -14,6 +14,8 @@ import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.GenericPartNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LegNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
@@ -255,6 +257,11 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			break;
+		case LegEditPart.VISUAL_ID:
+			if (LegNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		}
 		return false;
 	}
@@ -273,6 +280,10 @@ public class FritzingVisualIDRegistry {
 		if (FritzingPackage.eINSTANCE.getTrack().isSuperTypeOf(
 				domainElement.eClass())) {
 			return TrackEditPart.VISUAL_ID;
+		}
+		if (FritzingPackage.eINSTANCE.getLeg().isSuperTypeOf(
+				domainElement.eClass())) {
+			return LegEditPart.VISUAL_ID;
 		}
 		return -1;
 	}

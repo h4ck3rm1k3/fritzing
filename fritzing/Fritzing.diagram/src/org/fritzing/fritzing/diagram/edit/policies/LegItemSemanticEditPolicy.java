@@ -16,7 +16,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 /**
  * @generated
  */
-public class WireItemSemanticEditPolicy extends
+public class LegItemSemanticEditPolicy extends
 		FritzingBaseItemSemanticEditPolicy {
 
 	/**

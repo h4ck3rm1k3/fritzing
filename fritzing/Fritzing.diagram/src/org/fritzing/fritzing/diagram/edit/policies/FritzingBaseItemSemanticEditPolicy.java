@@ -45,6 +45,7 @@ import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.ITrackConnection;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
@@ -377,23 +378,7 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
-		private static final FritzingAbstractExpression Wire_4001_TargetExpression;
-
-		/**
-		 * @generated
-		 */
 		private static final FritzingAbstractExpression Track_4002_SourceExpression;
-
-		/**
-		 * @generated
-		 */
-		static {
-			Map env = new HashMap(3);
-			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE.getTerminal());
-			Wire_4001_TargetExpression = FritzingOCLFactory
-					.getExpression(
-							"not self.parent.oclIsTypeOf(Sketch)", FritzingPackage.eINSTANCE.getTerminal(), env); //$NON-NLS-1$
-		}
 
 		/**
 		 * @generated
@@ -405,6 +390,23 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 			Track_4002_SourceExpression = FritzingOCLFactory
 					.getExpression(
 							"self <> oppositeEnd", FritzingPackage.eINSTANCE.getITrackConnection(), env); //$NON-NLS-1$
+		}
+
+		/**
+		 * @generated
+		 */
+		private static final FritzingAbstractExpression Leg_4003_SourceExpression;
+
+		/**
+		 * @generated
+		 */
+		static {
+			Map env = new HashMap(3);
+			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE
+					.getILegConnection());
+			Leg_4003_SourceExpression = FritzingOCLFactory
+					.getExpression(
+							"self <> oppositeEnd", FritzingPackage.eINSTANCE.getILegConnection(), env); //$NON-NLS-1$
 		}
 
 		/**
@@ -426,12 +428,22 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
+		public static boolean canCreateLeg_4003(Terminal container,
+				ILegConnection source, ILegConnection target) {
+			if (container != null) {
+				if (container.getLeg() != null) {
+					return false;
+				}
+			}
+			return canExistLeg_4003(container, source, target);
+		}
+
+		/**
+		 * @generated
+		 */
 		public static boolean canExistWire_4001(Composite container,
 				Terminal source, Terminal target) {
 			if (!evaluate(Wire_4001_SourceExpression, source, target, false)) {
-				return false;
-			}
-			if (!evaluate(Wire_4001_TargetExpression, target, source, true)) {
 				return false;
 			}
 			return true;
@@ -443,6 +455,17 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		public static boolean canExistTrack_4002(Part container,
 				ITrackConnection source, ITrackConnection target) {
 			if (!evaluate(Track_4002_SourceExpression, source, target, false)) {
+				return false;
+			}
+			return true;
+		}
+
+		/**
+		 * @generated
+		 */
+		public static boolean canExistLeg_4003(Terminal container,
+				ILegConnection source, ILegConnection target) {
+			if (!evaluate(Leg_4003_SourceExpression, source, target, false)) {
 				return false;
 			}
 			return true;

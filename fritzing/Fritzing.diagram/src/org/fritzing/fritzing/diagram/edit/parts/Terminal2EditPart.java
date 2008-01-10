@@ -195,7 +195,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
 		DefaultSizeNodeFigure result = new TerminalDefaultSizeNodeFigure(getMapMode()
@@ -203,7 +203,6 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 		//FIXME: workaround for #154536
 		result.getBounds().setSize(result.getPreferredSize());
-				
 		return result;
 	}
 
@@ -269,9 +268,9 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
 				.getType(TerminalName2EditPart.VISUAL_ID));
 	}
-	
+
 	public class TerminalDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
-		
+
 		public TerminalDefaultSizeNodeFigure(Dimension defSize) {
 			super(defSize);
 		}
@@ -279,40 +278,41 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		public TerminalDefaultSizeNodeFigure(int width, int height) {
 			super(width, height);
 		}
-		
+
 		protected ConnectionAnchor createAnchor(PrecisionPoint p) {
 			return super.createAnchor(null);
 		}
+
 		protected ConnectionAnchor createConnectionAnchor(PrecisionPoint p) {
 			return super.createConnectionAnchor(null);
 		}
+
 		public ConnectionAnchor getConnectionAnchor(String terminal) {
 			return super.getConnectionAnchor(szAnchor);
 		}
-		
-				
+
 		protected ConnectionAnchor createDefaultAnchor() {
 			return new TerminalSlidableAnchor(this);
 		}
 	}
-	
+
 	public class TerminalSlidableAnchor extends SlidableAnchor {
 		public TerminalSlidableAnchor(IFigure f) {
 			super(f);
 		}
-		
+
 		protected Rectangle getBox() {
 			Rectangle rBox = getOwner().getBounds().getCopy();
 			if (getOwner() instanceof HandleBounds)
-				rBox = ((HandleBounds)getOwner()).getHandleBounds().getCopy();
-			
+				rBox = ((HandleBounds) getOwner()).getHandleBounds().getCopy();
+
 			getOwner().translateToAbsolute(rBox);
-			
+
 			rBox.x += rBox.width / 2;
 			rBox.y += rBox.height / 2;
 			rBox.width = 0;
 			rBox.height = 0;
-			
+
 			return rBox;
 		}
 
@@ -324,9 +324,9 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	public class TerminalFigure extends RectangleFigure {
 
 		protected int standardTerminalConverted;
-		
+
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public TerminalFigure() {
 			standardTerminalConverted = getMapMode().DPtoLP(standardTerminalMeasure);
@@ -335,7 +335,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			this.setBackgroundColor(THIS_BACK);
 			this.setPreferredSize(new Dimension(standardTerminalConverted, standardTerminalConverted));
 		}
-		
+
 		/**
 		 * @generated NOT
 		 */
@@ -347,7 +347,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			r.setSize(standardTerminalConverted, standardTerminalConverted);
 			graphics.fillRectangle(r);
 		}
-				
+
 		/**
 		 * @generated
 		 */

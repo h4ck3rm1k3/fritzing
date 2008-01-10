@@ -7,11 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.ConnectionLocator;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RunnableWithResult;
@@ -25,12 +24,10 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.IParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserEditStatus;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserOptions;
 import org.eclipse.gmf.runtime.common.ui.services.parser.ParserService;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.LabelEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.LabelDirectEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
 import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramColorRegistry;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager;
@@ -40,23 +37,14 @@ import org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser;
 import org.eclipse.gmf.runtime.notation.FontStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
 import org.eclipse.jface.viewers.ICellEditorValidator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.accessibility.AccessibleEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.fritzing.fritzing.Part;
-import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.Track;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingTextSelectionEditPolicy;
-import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 import org.fritzing.fritzing.diagram.providers.FritzingParserProvider;
@@ -64,13 +52,13 @@ import org.fritzing.fritzing.diagram.providers.FritzingParserProvider;
 /**
  * @generated
  */
-public class TerminalName2EditPart extends LabelEditPart implements
-		ITextAwareEditPart, IBorderItemEditPart {
+public class LegNameEditPart extends LabelEditPart implements
+		ITextAwareEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5001;
+	public static final int VISUAL_ID = 6003;
 
 	/**
 	 * @generated
@@ -93,87 +81,36 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	private String defaultText;
 
 	/**
-	 * @generated NOT
-	 */
-	private Color fontColor = null;
-
-	/**
-	 * @generated NOT
-	 */
-	private boolean visible = true;
-
-	/**
 	 * @generated
 	 */
 	static {
 		registerSnapBackPosition(
 				FritzingVisualIDRegistry
-						.getType(org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart.VISUAL_ID),
+						.getType(org.fritzing.fritzing.diagram.edit.parts.LegNameEditPart.VISUAL_ID),
 				new Point(0, 0));
 	}
 
 	/**
-	 * @generated NOT
+	 * @generated
 	 */
-	public TerminalName2EditPart(View view) {
+	public LegNameEditPart(View view) {
 		super(view);
-		if (view.eContainer() instanceof NodeImpl) {
-			EObject obj = ((NodeImpl) view.eContainer()).getElement();
-			if (obj instanceof Terminal) {
-				Part parent = ((Terminal) obj).getParent();
-				if (parent != null) {
-					PartLoader partLoader = PartLoaderRegistry.getInstance()
-							.get(parent.getGenus() + parent.getSpecies());
-					if (partLoader != null) {
-						String id = ((Terminal) obj).getId();
-						visible = partLoader.getTerminalLabelVisible(id);
-					}
-				}
-			}
-		}
 	}
 
 	/**
-	 * @generated NOT
+	 * @generated
 	 */
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
-		// don't want delete
-		installEditPolicy(EditPolicy.COMPONENT_ROLE,
-				new NonDeleteComponentEditPolicy());
-
 		installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE,
 				new LabelDirectEditPolicy());
-		removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.POPUPBAR_ROLE);
 	}
 
 	/**
 	 * @generated
 	 */
-	public IBorderItemLocator getBorderItemLocator() {
-		IFigure parentFigure = getFigure().getParent();
-		if (parentFigure != null && parentFigure.getLayoutManager() != null) {
-			Object constraint = parentFigure.getLayoutManager().getConstraint(
-					getFigure());
-			return (IBorderItemLocator) constraint;
-		}
-		return null;
-	}
-
-	/**
-	 * @generated
-	 */
-	public void refreshBounds() {
-		int x = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getLocation_X())).intValue();
-		int y = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getLocation_Y())).intValue();
-		int width = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getSize_Width())).intValue();
-		int height = ((Integer) getStructuralFeatureValue(NotationPackage.eINSTANCE
-				.getSize_Height())).intValue();
-		getBorderItemLocator()
-				.setConstraint(new Rectangle(x, y, width, height));
+	public int getKeyPoint() {
+		return ConnectionLocator.MIDDLE;
 	}
 
 	/**
@@ -223,7 +160,7 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	/**
 	 * @generated
 	 */
-	public void setLabel(IFigure figure) {
+	public void setLabel(WrapLabel figure) {
 		unregisterVisuals();
 		setFigure(figure);
 		defaultText = getLabelTextHelper(figure);
@@ -364,7 +301,7 @@ public class TerminalName2EditPart extends LabelEditPart implements
 		if (parser == null) {
 			String parserHint = ((View) getModel()).getType();
 			IAdaptable hintAdapter = new FritzingParserProvider.HintAdapter(
-					FritzingElementTypes.Terminal_3001, getParserElement(),
+					FritzingElementTypes.Leg_4003, getParserElement(),
 					parserHint);
 			parser = ParserService.getInstance().getParser(hintAdapter);
 		}
@@ -521,23 +458,6 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	}
 
 	/**
-	 * @generated NOT
-	 */
-	protected void setFontColorEx(Color color) {
-		fontColor = color;
-		setFontColor(color);
-	}
-
-	protected void refreshFontColor() {
-		if (fontColor == null) {
-			super.refreshFontColor();
-			return;
-		}
-
-		setFontColor(fontColor);
-	}
-
-	/**
 	 * @generated
 	 */
 	protected void addSemanticListeners() {
@@ -636,86 +556,7 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	 * @generated
 	 */
 	protected IFigure createFigure() {
-		IFigure label = createFigurePrim();
-		defaultText = getLabelTextHelper(label);
-		return label;
+		// Parent should assign one using setLabel() method
+		return null;
 	}
-
-	/**
-	 * @generated NOT
-	 */
-	protected IFigure createFigurePrim() {
-		return new TerminalNameFigure(visible);
-	}
-
-	/**
-	 * @generated
-	 */
-	public class TerminalNameFigure extends WrapLabel {
-
-		/**
-		 * @generated NOT
-		 */
-		public TerminalNameFigure() {
-			this(true);
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		private boolean visible;
-
-		/**
-		 * @generated NOT
-		 */
-		public TerminalNameFigure(boolean visible) {
-			this.setText("..");
-
-			this.setFont(THIS_FONT);
-			this.visible = visible;
-			if (!visible) {
-				this.setVisible(false);
-			}
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		public void paint(Graphics graphics) {
-			if (this.visible) {
-				super.paint(graphics);
-			} else {
-				this.setVisible(false);
-			}
-		}
-
-		/**
-		 * @generated NOT
-		 */
-		public void setText(String text) {
-			if (text == null) {
-				super.setText(text);
-				return;
-			}
-
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < text.length(); i++) {
-				sb.append(text.charAt(i));
-				sb.append('\n');
-			}
-			if (sb.length() > 0) {
-				sb.deleteCharAt(sb.length() - 1);
-			}
-			super.setText(sb.toString());
-		}
-
-	}
-
-	/**
-	 * @generated
-	 */
-	static final Font THIS_FONT = new Font(Display.getCurrent(), Display
-			.getDefault().getSystemFont().getFontData()[0].getName(), 7,
-			SWT.NORMAL);
-
 }

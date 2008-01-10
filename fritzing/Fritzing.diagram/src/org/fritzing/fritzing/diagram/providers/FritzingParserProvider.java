@@ -17,6 +17,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.parts.GenericPartNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDNameEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LegNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorNameEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalNameEditPart;
@@ -209,6 +210,31 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
+	private IParser legName_6003Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getLegName_6003Parser() {
+		if (legName_6003Parser == null) {
+			legName_6003Parser = createLegName_6003Parser();
+		}
+		return legName_6003Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected IParser createLegName_6003Parser() {
+		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
+				.getConnection_Name(), };
+		MessageFormatParser parser = new MessageFormatParser(features);
+		return parser;
+	}
+
+	/**
+	 * @generated
+	 */
 	protected IParser getParser(int visualID) {
 		switch (visualID) {
 		case LEDNameEditPart.VISUAL_ID:
@@ -225,6 +251,8 @@ public class FritzingParserProvider extends AbstractProvider implements
 			return getWireName_6001Parser();
 		case TrackNameEditPart.VISUAL_ID:
 			return getTrackName_6002Parser();
+		case LegNameEditPart.VISUAL_ID:
+			return getLegName_6003Parser();
 		}
 		return null;
 	}

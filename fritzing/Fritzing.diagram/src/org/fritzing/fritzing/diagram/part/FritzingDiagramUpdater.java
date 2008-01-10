@@ -17,7 +17,9 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.GenericPart;
+import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.ITrackConnection;
+import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Resistor;
 import org.fritzing.fritzing.Sketch;
@@ -26,6 +28,7 @@ import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.LEDEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.ResistorEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
@@ -179,6 +182,8 @@ public class FritzingDiagramUpdater {
 			return getWire_4001ContainedLinks(view);
 		case TrackEditPart.VISUAL_ID:
 			return getTrack_4002ContainedLinks(view);
+		case LegEditPart.VISUAL_ID:
+			return getLeg_4003ContainedLinks(view);
 		}
 		return Collections.EMPTY_LIST;
 	}
@@ -202,6 +207,8 @@ public class FritzingDiagramUpdater {
 			return getWire_4001IncomingLinks(view);
 		case TrackEditPart.VISUAL_ID:
 			return getTrack_4002IncomingLinks(view);
+		case LegEditPart.VISUAL_ID:
+			return getLeg_4003IncomingLinks(view);
 		}
 		return Collections.EMPTY_LIST;
 	}
@@ -225,6 +232,8 @@ public class FritzingDiagramUpdater {
 			return getWire_4001OutgoingLinks(view);
 		case TrackEditPart.VISUAL_ID:
 			return getTrack_4002OutgoingLinks(view);
+		case LegEditPart.VISUAL_ID:
+			return getLeg_4003OutgoingLinks(view);
 		}
 		return Collections.EMPTY_LIST;
 	}
@@ -265,7 +274,10 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getTerminal_2003ContainedLinks(View view) {
-		return Collections.EMPTY_LIST;
+		Terminal modelElement = (Terminal) view.getElement();
+		List result = new LinkedList();
+		result.addAll(getContainedTypeModelFacetLinks_Leg_4003(modelElement));
+		return result;
 	}
 
 	/**
@@ -282,7 +294,10 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getTerminal_3001ContainedLinks(View view) {
-		return Collections.EMPTY_LIST;
+		Terminal modelElement = (Terminal) view.getElement();
+		List result = new LinkedList();
+		result.addAll(getContainedTypeModelFacetLinks_Leg_4003(modelElement));
+		return result;
 	}
 
 	/**
@@ -296,6 +311,13 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getTrack_4002ContainedLinks(View view) {
+		return Collections.EMPTY_LIST;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getLeg_4003ContainedLinks(View view) {
 		return Collections.EMPTY_LIST;
 	}
 
@@ -325,6 +347,8 @@ public class FritzingDiagramUpdater {
 				crossReferences));
 		result.addAll(getIncomingTypeModelFacetLinks_Track_4002(modelElement,
 				crossReferences));
+		result.addAll(getIncomingTypeModelFacetLinks_Leg_4003(modelElement,
+				crossReferences));
 		return result;
 	}
 
@@ -347,6 +371,8 @@ public class FritzingDiagramUpdater {
 				crossReferences));
 		result.addAll(getIncomingTypeModelFacetLinks_Track_4002(modelElement,
 				crossReferences));
+		result.addAll(getIncomingTypeModelFacetLinks_Leg_4003(modelElement,
+				crossReferences));
 		return result;
 	}
 
@@ -354,7 +380,13 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getWire_4001IncomingLinks(View view) {
-		return Collections.EMPTY_LIST;
+		Wire modelElement = (Wire) view.getElement();
+		Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
+				.getResourceSet().getResources());
+		List result = new LinkedList();
+		result.addAll(getIncomingTypeModelFacetLinks_Leg_4003(modelElement,
+				crossReferences));
+		return result;
 	}
 
 	/**
@@ -366,6 +398,19 @@ public class FritzingDiagramUpdater {
 				.getResourceSet().getResources());
 		List result = new LinkedList();
 		result.addAll(getIncomingTypeModelFacetLinks_Track_4002(modelElement,
+				crossReferences));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getLeg_4003IncomingLinks(View view) {
+		Leg modelElement = (Leg) view.getElement();
+		Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
+				.getResourceSet().getResources());
+		List result = new LinkedList();
+		result.addAll(getIncomingTypeModelFacetLinks_Leg_4003(modelElement,
 				crossReferences));
 		return result;
 	}
@@ -392,6 +437,7 @@ public class FritzingDiagramUpdater {
 		List result = new LinkedList();
 		result.addAll(getOutgoingTypeModelFacetLinks_Wire_4001(modelElement));
 		result.addAll(getOutgoingTypeModelFacetLinks_Track_4002(modelElement));
+		result.addAll(getOutgoingTypeModelFacetLinks_Leg_4003(modelElement));
 		return result;
 	}
 
@@ -410,6 +456,7 @@ public class FritzingDiagramUpdater {
 		List result = new LinkedList();
 		result.addAll(getOutgoingTypeModelFacetLinks_Wire_4001(modelElement));
 		result.addAll(getOutgoingTypeModelFacetLinks_Track_4002(modelElement));
+		result.addAll(getOutgoingTypeModelFacetLinks_Leg_4003(modelElement));
 		return result;
 	}
 
@@ -417,7 +464,10 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getWire_4001OutgoingLinks(View view) {
-		return Collections.EMPTY_LIST;
+		Wire modelElement = (Wire) view.getElement();
+		List result = new LinkedList();
+		result.addAll(getOutgoingTypeModelFacetLinks_Leg_4003(modelElement));
+		return result;
 	}
 
 	/**
@@ -427,6 +477,16 @@ public class FritzingDiagramUpdater {
 		Track modelElement = (Track) view.getElement();
 		List result = new LinkedList();
 		result.addAll(getOutgoingTypeModelFacetLinks_Track_4002(modelElement));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List getLeg_4003OutgoingLinks(View view) {
+		Leg modelElement = (Leg) view.getElement();
+		List result = new LinkedList();
+		result.addAll(getOutgoingTypeModelFacetLinks_Leg_4003(modelElement));
 		return result;
 	}
 
@@ -481,6 +541,24 @@ public class FritzingDiagramUpdater {
 	/**
 	 * @generated
 	 */
+	private static Collection getContainedTypeModelFacetLinks_Leg_4003(
+			Terminal container) {
+		Collection result = new LinkedList();
+		Leg link = container.getLeg();
+		if (LegEditPart.VISUAL_ID != FritzingVisualIDRegistry
+				.getLinkWithClassVisualID(link)) {
+			return result;
+		}
+		ILegConnection dst = link.getTarget();
+		ILegConnection src = link.getSource();
+		result.add(new FritzingLinkDescriptor(src, dst, link,
+				FritzingElementTypes.Leg_4003, LegEditPart.VISUAL_ID));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	private static Collection getIncomingTypeModelFacetLinks_Wire_4001(
 			Terminal target, Map crossReferences) {
 		Collection result = new LinkedList();
@@ -528,6 +606,33 @@ public class FritzingDiagramUpdater {
 			ITrackConnection src = link.getSource();
 			result.add(new FritzingLinkDescriptor(src, target, link,
 					FritzingElementTypes.Track_4002, TrackEditPart.VISUAL_ID));
+		}
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	private static Collection getIncomingTypeModelFacetLinks_Leg_4003(
+			ILegConnection target, Map crossReferences) {
+		Collection result = new LinkedList();
+		Collection settings = (Collection) crossReferences.get(target);
+		for (Iterator it = settings.iterator(); it.hasNext();) {
+			EStructuralFeature.Setting setting = (EStructuralFeature.Setting) it
+					.next();
+			if (setting.getEStructuralFeature() != FritzingPackage.eINSTANCE
+					.getLeg_Target()
+					|| false == setting.getEObject() instanceof Leg) {
+				continue;
+			}
+			Leg link = (Leg) setting.getEObject();
+			if (LegEditPart.VISUAL_ID != FritzingVisualIDRegistry
+					.getLinkWithClassVisualID(link)) {
+				continue;
+			}
+			ILegConnection src = link.getSource();
+			result.add(new FritzingLinkDescriptor(src, target, link,
+					FritzingElementTypes.Leg_4003, LegEditPart.VISUAL_ID));
 		}
 		return result;
 	}
@@ -609,6 +714,40 @@ public class FritzingDiagramUpdater {
 			result.add(new FritzingLinkDescriptor(src, dst, link,
 					FritzingElementTypes.Track_4002, TrackEditPart.VISUAL_ID));
 		}
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	private static Collection getOutgoingTypeModelFacetLinks_Leg_4003(
+			ILegConnection source) {
+		Terminal container = null;
+		// Find container element for the link.
+		// Climb up by containment hierarchy starting from the source
+		// and return the first element that is instance of the container class.
+		for (EObject element = source; element != null && container == null; element = element
+				.eContainer()) {
+			if (element instanceof Terminal) {
+				container = (Terminal) element;
+			}
+		}
+		if (container == null) {
+			return Collections.EMPTY_LIST;
+		}
+		Collection result = new LinkedList();
+		Leg link = container.getLeg();
+		if (LegEditPart.VISUAL_ID != FritzingVisualIDRegistry
+				.getLinkWithClassVisualID(link)) {
+			return result;
+		}
+		ILegConnection dst = link.getTarget();
+		ILegConnection src = link.getSource();
+		if (src != source) {
+			return result;
+		}
+		result.add(new FritzingLinkDescriptor(src, dst, link,
+				FritzingElementTypes.Leg_4003, LegEditPart.VISUAL_ID));
 		return result;
 	}
 

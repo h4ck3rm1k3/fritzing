@@ -363,7 +363,8 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		public void run(IAction action) {
 			FileDialog fileDialog = new FileDialog(getWindow().getShell(),
 					SWT.OPEN);
-			String fritzingFolder = FritzingDiagramEditorUtil.getFritzingUserFolder().getPath();
+			String fritzingFolder = FritzingDiagramEditorUtil
+					.getFritzingUserFolder().getPath();
 			if (!new File(fritzingFolder).exists())
 				new File(fritzingFolder).mkdir();
 			fileDialog.setFilterPath(fritzingFolder);

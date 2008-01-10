@@ -347,6 +347,11 @@
             <popupPredefinedItem id="deleteFromDiagramAction" remove="true"/>
             <popupPredefinedItem id="deleteFromModelAction" remove="true"/>
          </popupContribution>
+         <popupContribution class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramContextMenuProvider">
+            <popupStructuredContributionCriteria objectClass="org.fritzing.fritzing.diagram.edit.parts.LegNameEditPart"/>
+            <popupPredefinedItem id="deleteFromDiagramAction" remove="true"/>
+            <popupPredefinedItem id="deleteFromModelAction" remove="true"/>
+         </popupContribution>
       </contributionItemProvider>
    </extension>
 
@@ -504,6 +509,16 @@
             <param name="semanticHint" value="4002"/>
          </metamodelType>
       </metamodel>
+      <metamodel nsURI="http://www.fritzing.org">
+         <metamodelType
+               id="Fritzing.diagram.Leg_4003"
+               name="%metatype.name.Leg_4003"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Leg"
+               edithelper="org.fritzing.fritzing.diagram.edit.helpers.LegEditHelper">
+            <param name="semanticHint" value="4003"/>
+         </metamodelType>
+      </metamodel>
    </extension>
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypeBindings">
@@ -524,6 +539,7 @@
          <elementType ref="Fritzing.diagram.Terminal_3001"/>
          <elementType ref="Fritzing.diagram.Wire_4001"/>
          <elementType ref="Fritzing.diagram.Track_4002"/>
+         <elementType ref="Fritzing.diagram.Leg_4003"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
       </binding>
    </extension>
@@ -548,6 +564,59 @@
          <object class="org.eclipse.gmf.runtime.diagram.ui.editparts.IPrimaryEditPart(org.eclipse.gmf.runtime.diagram.ui)" id="PRIMARY_VIEW"/>
          <context decoratorTargets="PRIMARY_VIEW"/>
       </decoratorProvider>
+   </extension>
+<extension point="org.eclipse.ui.bindings">
+      <?gmfgen generated="true"?>
+      <key
+            commandId="Fritzing.diagram.OpenURICommand"
+            sequence="M1+U"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="Fritzing.diagram.OpenCommand"
+            sequence="M1+O"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+   </extension><extension point="org.eclipse.ui.actionSets">
+      <?gmfgen generated="true"?>
+      <actionSet
+            label="%applicationActionSetLabel"
+            visible="true"
+            id="Fritzing.diagram.ActionSet">
+         <action
+               label="%newDiagramActionLabel"
+               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
+               menubarPath="file/new/additions"
+               id="Fritzing.diagram.NewDiagramAction">
+         </action>
+         <action
+               label="%aboutActionLabel"
+               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$AboutAction"
+               menubarPath="help/additions"
+               id="Fritzing.diagram.AboutAction">
+         </action>
+         <action
+               label="%openURIActionLabel"
+               definitionId="Fritzing.diagram.OpenURICommand"
+               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$OpenURIAction"
+               menubarPath="file/additions"
+               id="Fritzing.diagram.OpenURIAction">
+         </action>
+         <action
+               label="%openActionLabel"
+               definitionId="Fritzing.diagram.OpenCommand"
+               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$OpenAction"
+               menubarPath="file/additions"
+               id="Fritzing.diagram.OpenAction">
+         </action>
+      </actionSet>
+   </extension>
+<extension point="org.eclipse.ui.commands">
+      <?gmfgen generated="true"?>
+      <command
+         categoryId="org.eclipse.ui.category.edit"
+         defaultHandler="org.fritzing.fritzing.diagram.part.FritzingDiagramUpdateCommand"
+         description="%update.diagram.description"
+         id="org.fritzing.fritzing.diagram.updateDiagram"
+         name="%update.diagram.name"/>
    </extension>
 <extension point="org.eclipse.ui.bindings">
       <?gmfgen generated="true"?>

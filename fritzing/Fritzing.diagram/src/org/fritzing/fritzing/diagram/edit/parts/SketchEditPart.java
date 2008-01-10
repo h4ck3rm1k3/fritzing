@@ -40,7 +40,7 @@ public class SketchEditPart extends DiagramEditPart {
 	public SketchEditPart(View view) {
 		super(view);
 	}
-	
+
 	/**
 	 * @generated NOT
 	 */
@@ -50,31 +50,30 @@ public class SketchEditPart extends DiagramEditPart {
 				new SketchItemSemanticEditPolicy());
 		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
 				new SketchCanonicalEditPolicy());
-		
-		installEditPolicy(
-				EditPolicy.GRAPHICAL_NODE_ROLE,
+
+		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
 				new NoPopupContainerNodeEditPolicy());
-		
+
 		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in
 		// preferences
 	}
-	
+
 	/**
 	 * @generated NOT
 	 */
-	public class NoPopupContainerNodeEditPolicy  extends ContainerNodeEditPolicy {
+	public class NoPopupContainerNodeEditPolicy extends ContainerNodeEditPolicy {
 		/**
 		 * @generated NOT
 		 */
 		public Command getCommand(Request request) {
 			if (RequestConstants.REQ_CONNECTION_END.equals(request.getType())
-				&& request instanceof CreateConnectionRequest) {
-				 // don't popup a menu if the user drags out a wire from a terminal and drops it on the sketch
+					&& request instanceof CreateConnectionRequest) {
+				// don't popup a menu if the user drags out a wire from a terminal and drops it on the sketch
 				return null;
 			}
-			
+
 			return super.getCommand(request);
 		}
-		
+
 	}
 }

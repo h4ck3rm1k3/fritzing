@@ -190,7 +190,7 @@ public class FritzingPaletteFactory {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	private ToolEntry createWire1CreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
@@ -204,7 +204,7 @@ public class FritzingPaletteFactory {
 				.getBundledImageDescriptor("icons/obj16/wireIconLarge.gif"));
 		return entry;
 	}
-	
+
 	/**
 	 * @generated NOT
 	 */

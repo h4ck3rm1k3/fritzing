@@ -86,6 +86,11 @@ public class FritzingElementTypes extends ElementInitializers {
 	public static final IElementType Track_4002 = getElementType("Fritzing.diagram.Track_4002"); //$NON-NLS-1$
 
 	/**
+	 * @generated
+	 */
+	public static final IElementType Leg_4003 = getElementType("Fritzing.diagram.Leg_4003"); //$NON-NLS-1$
+
+	/**
 	 * @generated NOT
 	 */
 	public static ImageRegistry getImageRegistry() {
@@ -215,6 +220,8 @@ public class FritzingElementTypes extends ElementInitializers {
 			elements.put(Wire_4001, FritzingPackage.eINSTANCE.getWire());
 
 			elements.put(Track_4002, FritzingPackage.eINSTANCE.getTrack());
+
+			elements.put(Leg_4003, FritzingPackage.eINSTANCE.getLeg());
 		}
 		return (ENamedElement) elements.get(type);
 	}
@@ -240,6 +247,7 @@ public class FritzingElementTypes extends ElementInitializers {
 			KNOWN_ELEMENT_TYPES.add(Terminal_3001);
 			KNOWN_ELEMENT_TYPES.add(Wire_4001);
 			KNOWN_ELEMENT_TYPES.add(Track_4002);
+			KNOWN_ELEMENT_TYPES.add(Leg_4003);
 		}
 		return KNOWN_ELEMENT_TYPES.contains(elementType);
 	}

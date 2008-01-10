@@ -66,6 +66,7 @@ import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 
 import com.ice.jni.registry.Registry;
 import com.ice.jni.registry.RegistryKey;
+
 /**
  * @generated
  */
@@ -528,7 +529,8 @@ public class FritzingDiagramEditorUtil {
 	 * @return the install location of Fritzing on the hard drive
 	 */
 	public static String getFritzingLocation() {
-		String fritzingLocation = Platform.getInstallLocation().getURL().getPath();
+		String fritzingLocation = Platform.getInstallLocation().getURL()
+				.getPath();
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
 			fritzingLocation = fritzingLocation.startsWith("/") ? fritzingLocation
 					.substring(1)
@@ -536,80 +538,82 @@ public class FritzingDiagramEditorUtil {
 		}
 		return fritzingLocation;
 	}
-	  
+
 	public static File getFritzingUserFolder() {
 		File location = new File(System.getProperty("user.home") + "/Fritzing"); // fallback location
 
 		// taken from Arduinos Base.getDefaultSketchbookFolder():
-	    if (Platform.getOS().equals(Platform.OS_MACOSX)) {
-	    	try {
-		        Class clazz = Class.forName("com.apple.eio.FileManager");
-		        java.lang.reflect.Method m = clazz.getMethod("findFolder",new Class[]{int.class});
-		        String docPath = (String)m.invoke(null,new Object []{new Integer(kUserDomain)});
-				
-		        location = new File(docPath + "/Fritzing");
+		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
+			try {
+				Class clazz = Class.forName("com.apple.eio.FileManager");
+				java.lang.reflect.Method m = clazz.getMethod("findFolder",
+						new Class[] { int.class });
+				String docPath = (String) m.invoke(null,
+						new Object[] { new Integer(kUserDomain) });
+
+				location = new File(docPath + "/Fritzing");
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-	    	
-	      // carbon folder constants
-	      // http://developer.apple.com/documentation/Carbon/Reference/Folder_Manager/folder_manager_ref/constant_6.html#//apple_ref/doc/uid/TP30000238/C006889
 
-	      // additional information found in the local file:
-	      // /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/CarbonCore.framework/Headers/
-/*
-	      try {
-	        MRJOSType domainDocuments = new MRJOSType("docs");
-	        //File libraryFolder = MRJFileUtils.findFolder(domainDocuments);
+			// carbon folder constants
+			// http://developer.apple.com/documentation/Carbon/Reference/Folder_Manager/folder_manager_ref/constant_6.html#//apple_ref/doc/uid/TP30000238/C006889
 
-	        // for 77, try switching this to the user domain, just to be sure
-	        Method findFolderMethod =
-	          MRJFileUtils.class.getMethod("findFolder",
-	                                       new Class[] { Short.TYPE,
-	                                                     MRJOSType.class });
-	        File documentsFolder = (File)
-	          findFolderMethod.invoke(null, new Object[] { new Short(kUserDomain),
-	                                                       domainDocuments });
-	        location = new File(documentsFolder, "Fritzing");
+			// additional information found in the local file:
+			// /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/CarbonCore.framework/Headers/
+			/*
+			 try {
+			 MRJOSType domainDocuments = new MRJOSType("docs");
+			 //File libraryFolder = MRJFileUtils.findFolder(domainDocuments);
 
-	      } catch (Exception e) {
-	        //showError("Could not find folder",
-	        //          "Could not locate the Documents folder.", e);
-//	        sketchbookFolder = promptSketchbookLocation();
-	      }
-*/
-	    } else if (Platform.getOS().equals(Platform.OS_WIN32)) {
-	      // looking for Documents and Settings/blah/My Documents/Fritzing
-	      // or on Vista Users/blah/Documents/Fritzing
-	      // (though using a reg key since it's different on other platforms)
+			 // for 77, try switching this to the user domain, just to be sure
+			 Method findFolderMethod =
+			 MRJFileUtils.class.getMethod("findFolder",
+			 new Class[] { Short.TYPE,
+			 MRJOSType.class });
+			 File documentsFolder = (File)
+			 findFolderMethod.invoke(null, new Object[] { new Short(kUserDomain),
+			 domainDocuments });
+			 location = new File(documentsFolder, "Fritzing");
 
-	      // http://support.microsoft.com/?kbid=221837&sd=RMVP
-	      // The path to the My Documents folder is stored in the
-	      // following registry key, where path is the complete path
-	      // to your storage location:
-	      // HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
-	      // Value Name: Personal
-	      // Value Type: REG_SZ
-	      // Value Data: path
+			 } catch (Exception e) {
+			 //showError("Could not find folder",
+			 //          "Could not locate the Documents folder.", e);
+			 //	        sketchbookFolder = promptSketchbookLocation();
+			 }
+			 */
+		} else if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			// looking for Documents and Settings/blah/My Documents/Fritzing
+			// or on Vista Users/blah/Documents/Fritzing
+			// (though using a reg key since it's different on other platforms)
 
-	      try {
-	        RegistryKey topKey = Registry.HKEY_CURRENT_USER;
+			// http://support.microsoft.com/?kbid=221837&sd=RMVP
+			// The path to the My Documents folder is stored in the
+			// following registry key, where path is the complete path
+			// to your storage location:
+			// HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders
+			// Value Name: Personal
+			// Value Type: REG_SZ
+			// Value Data: path
 
-	        String localKeyPath =
-	          "Software\\Microsoft\\Windows\\CurrentVersion" +
-	          "\\Explorer\\Shell Folders";
-	        RegistryKey localKey = topKey.openSubKey(localKeyPath);
-	        String personalPath = cleanKey(localKey.getStringValue("Personal"));
-	        //topKey.closeKey();  // necessary?
-	        //localKey.closeKey();
-	        location = new File(personalPath, "Fritzing");
+			try {
+				RegistryKey topKey = Registry.HKEY_CURRENT_USER;
 
-	      } catch (Exception e) {
-	        //showError("Problem getting folder",
-	        //          "Could not locate the Documents folder.", e);
-//	        sketchbookFolder = promptSketchbookLocation();
-	      }
-	    }
+				String localKeyPath = "Software\\Microsoft\\Windows\\CurrentVersion"
+						+ "\\Explorer\\Shell Folders";
+				RegistryKey localKey = topKey.openSubKey(localKeyPath);
+				String personalPath = cleanKey(localKey
+						.getStringValue("Personal"));
+				//topKey.closeKey();  // necessary?
+				//localKey.closeKey();
+				location = new File(personalPath, "Fritzing");
+
+			} catch (Exception e) {
+				//showError("Problem getting folder",
+				//          "Could not locate the Documents folder.", e);
+				//	        sketchbookFolder = promptSketchbookLocation();
+			}
+		}
 		return location;
 	}
 
@@ -632,7 +636,7 @@ public class FritzingDiagramEditorUtil {
 		}
 		return new String(c);
 	}
-	
+
 	static final int kDocumentsFolderType = ('d' << 24) | ('o' << 16)
 			| ('c' << 8) | 's';
 	static final int kPreferencesFolderType = ('p' << 24) | ('r' << 16)

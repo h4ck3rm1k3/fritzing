@@ -46,11 +46,13 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 			Track track = (Track) view.getElement();
 			Part parent = track.getParent();
 			if (parent != null) {
-				PartLoader partLoader = PartLoaderRegistry.getInstance().get(parent.getGenus() + parent.getSpecies());
-				if (partLoader != null) {			
+				PartLoader partLoader = PartLoaderRegistry.getInstance().get(
+						parent.getGenus() + parent.getSpecies());
+				if (partLoader != null) {
 					Terminal source = (Terminal) track.getSource();
 					Terminal target = (Terminal) track.getTarget();
-					visible = partLoader.getTrackVisible(source.getId() + target.getId());
+					visible = partLoader.getTrackVisible(source.getId()
+							+ target.getId());
 				}
 			}
 		}
@@ -120,6 +122,13 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 		/**
 		 * @generated NOT
 		 */
+		public TrackFigure() {
+			this(false);
+		}
+
+		/**
+		 * @generated NOT
+		 */
 		private boolean visible;
 
 		/**
@@ -131,10 +140,9 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		private void createContents() {
-
 
 			fFigureTrackNameFigure = new WrapLabel();
 			fFigureTrackNameFigure.setText("..");
@@ -155,12 +163,10 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 			return fFigureTrackNameFigure;
 		}
 
-		
 		public void paint(Graphics graphics) {
 			if (this.visible) {
 				super.paint(graphics);
-			}
-			else {
+			} else {
 				this.setVisible(false);
 			}
 		}

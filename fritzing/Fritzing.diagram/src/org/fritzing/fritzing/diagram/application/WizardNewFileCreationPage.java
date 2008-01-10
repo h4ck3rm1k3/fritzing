@@ -56,8 +56,8 @@ public class WizardNewFileCreationPage extends WizardPage {
 			IStructuredSelection currentSelection) {
 		super(name);
 		this.currentSelection = currentSelection;
-		String home = 
-			FritzingDiagramEditorUtil.getFritzingUserFolder().getPath();
+		String home = FritzingDiagramEditorUtil.getFritzingUserFolder()
+				.getPath();
 		if (home != null) {
 			initialContainerFullPath = new Path(home);
 		}
