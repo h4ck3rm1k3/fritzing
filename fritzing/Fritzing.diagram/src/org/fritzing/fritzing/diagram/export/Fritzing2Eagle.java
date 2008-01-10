@@ -15,8 +15,6 @@ import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
-import org.fritzing.fritzing.impl.LEDImpl;
-import org.fritzing.fritzing.impl.ResistorImpl;
 
 public class Fritzing2Eagle {	
 	public static String createEagleScript(IDiagramGraphicalViewer viewer) {
@@ -28,22 +26,26 @@ public class Fritzing2Eagle {
 		ArrayList<EagleSCRNet> netList = new ArrayList<EagleSCRNet>();
 	
 		// create a new entry in the ArrayList 'partList' for each component:		
-		for (Part p: sketch.getParts()) {
-			String partClass = "";
-			if (p instanceof ResistorImpl)	
-				partClass = "Resistor";
-			if (p instanceof LEDImpl)
-				partClass = "LED";
+		for (Part p: sketch.getParts()) {	
+			String footprintStrings[] = p.getFootprint().split("/");	
+			String libraryName = footprintStrings[0].split(".lbr")[0];
+			String footprintName = footprintStrings[1];
 			
 			EagleSCRPart part = new EagleSCRPart(
 				p.getName(),			// part name (e.g. 'R1')
-				partClass,			// part type (e.g. 'Resistor')
-				"fritzing",			// library name
+				footprintName,			// part type (e.g. 'RESISTOR')
+				libraryName,			
 				new CoordPair(		// Fritzing coordinates
 					((float)getLayoutInfo(viewer, p).getLocation().x), 
-					(float)getLayoutInfo(viewer, p).getLocation().y)
-				);
-			partList.add(part);			
+					(float)getLayoutInfo(viewer, p).getLocation().y));			
+
+			System.out.println(">>> part " + 
+				part.partName.toUpperCase() + " - " + 
+				part.partType.toUpperCase() + " in " + 
+				part.libraryName + " " + 
+				"(" + part.partPos.xVal + " " + part.partPos.yVal + ")");
+				
+			partList.add(part);	
 		}
 		
 		// fine-tune component placement - scale and convert Fritzing coordinates into
@@ -74,11 +76,13 @@ public class Fritzing2Eagle {
 			EagleSCRNet net = new EagleSCRNet(
 				netName,
 				w.getSource(),
-				w.getTarget()
-				);
-			System.out.println("_____" + netName +"____");			
-			System.out.println("source:" + w.getSource().getParent().getName() + "." + w.getSource().getName());						
-			System.out.println("target:" + w.getTarget().getParent().getName() + "." + w.getTarget().getName());
+				w.getTarget());
+			
+			System.out.println(">>> net " + net.netName +" - " + 
+				net.source.getParent().getName() + "." + 
+				net.source.getName() + " --> " +
+				net.target.getParent().getName() + "." + 
+				net.target.getName());
 			netList.add(net);
 		}
 		

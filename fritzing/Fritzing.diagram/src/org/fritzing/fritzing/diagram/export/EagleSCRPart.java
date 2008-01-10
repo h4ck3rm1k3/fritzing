@@ -19,6 +19,8 @@ public class EagleSCRPart {
 	 * 		found in *.fbb in the layoutConstraint element, as a sibling of "element" which contains the part name in format "href="default.fritzing#R1""
 	 * Semicolon to close it out
 	 */
+	/*TODO - update this to reflect the new way of doing things; creating PCB directly
+	 * instead of making a schematic first.  "partType" should become "footprint", etc. */
 	
 	public String partType = "";
 	public String libraryName = "";

@@ -8,10 +8,7 @@ public class EagleSCRNet {
 	public Terminal source;
 	public Terminal target;
 	
-	public CoordPair sourcePos = new CoordPair();
-	public CoordPair targetPos = new CoordPair();
 	
-
 	public EagleSCRNet(String netName) {
 		super();
 		this.netName = netName;

@@ -41,6 +41,7 @@ public class ScriptExporter {
 //		"CHANGE STYLE 'Continuous' \n" + 
 		// tell the schematic editor to use the Fritzing Eagle library
 		// it is not loaded by default
+	/*TODO update "USE" directive with a list of the actual packages used	 */
 		"USE '" + FritzingDiagramEditorUtil.getFritzingLocation() +
 				"eagle/lbr/fritzing.lbr';\n";
 	
@@ -83,55 +84,14 @@ public class ScriptExporter {
 	}
 	
 	public String getNetEntry(EagleSCRNet net) {
-		// place a net to connect two terminals - we are using simple,
-		// straight line, arbitrary-angle nets
-		// Eagle syntax is "NET '<netName>' (<sourceCoords>) (<targetCoords>)"
-		/*
-		String result = "NET '" + net.netName + "' (" + 
-			net.sourcePos.xVal + " " + net.sourcePos.yVal + ") (" +
-			net.targetPos.xVal + " " + net.targetPos.yVal + "); \n";
-		*/
-		String result = "";
-		/* we have to do this check for "Gnd" with that capitalization to match the proper Arduino
-		  ground pin in Fritzing to the proper pin in Eagle since Fritzing respects different capitalization
-		  and Eagle doesn't */	
-		/* EDIT - not anymore - we updated the pin names in Fritzing */
-		/*
-		if (net.source.getParent().getName().equalsIgnoreCase("arduino") && net.source.getName().equals("Gnd")) {
-			result = "SIGNAL '" + net.netName + "' " + 
-				"'" + net.source.getParent().getName() + "' " + 
-				"'GND_C' " +
-				"'" + net.target.getParent().getName() + "' " + 
-				"'" + net.target.getName() + "'; \n";
-		} else if (net.target.getParent().getName().equalsIgnoreCase("arduino") && net.target.getName().equals("Gnd")) {
-			result = "SIGNAL '" + net.netName + "' " + 
-				"'" + net.source.getParent().getName() + "' " + 
-				"'" + net.source.getName() + "' " +
-				"'" + net.target.getParent().getName() + "' " + 
-				"'GND_C'; \n";			
-		} else {
-		*/
-		result = "SIGNAL '" + net.netName + "' " + 
+		/* place a SIGNAL to create two terminals at a time */
+		String result = "SIGNAL '" + net.netName + "' " + 
 			"'" + net.source.getParent().getName() + "' " + 
 			"'" + net.source.getName() + "' " +
 			"'" + net.target.getParent().getName() + "' " + 
 			"'" + net.target.getName() + "'; \n";
-//		}
 		return result;
 	}
-	
-	/*
-	public String getNetNameEntry(EagleSCRNet net) {
-		// name the net (not strictly required, but it's nice)
-		// Eagle script syntax is "NAME '<netName>' (<xpos> <ypos>)"
-		// where netName unless otherwise specified follows a N$1 format
-		// and xpos and ypos are usually the same as for the start or 
-		// end terminal
-		String result = "NAME '" + net.netName + "' " + 
-			"(" + net.sourcePos.xVal + " " + net.sourcePos.yVal + "); \n";
-		return result;
-	}
-	*/
 	
 	public String export(ArrayList<EagleSCRPart> partList, ArrayList<EagleSCRNet> netList) {
 		// this should take a file handle and the pre-populated part and net listArrays as arguments
