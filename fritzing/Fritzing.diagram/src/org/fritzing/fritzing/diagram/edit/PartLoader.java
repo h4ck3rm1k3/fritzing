@@ -529,8 +529,8 @@ public class PartLoader {
 				else if (nodeName.equals("version")) {
 					version = node.getTextContent();					
 				}
-				else if (nodeName.equals("footprint")) {
-					footprint = node.getTextContent();					
+				else if (nodeName.equals("footprints")) {
+					parseFootprints(node.getChildNodes());					
 				}
 				else if (nodeName.equals("icons")) {
 					parseIcons(node.getChildNodes());		
@@ -871,6 +871,43 @@ public class PartLoader {
 				}
 				else if (size.equalsIgnoreCase("large")) {
 					largeIconFilename = source;
+				}
+			}
+			catch (Exception ex) {
+				// alert the user
+			}
+		}
+	}
+	
+	protected void parseFootprints(NodeList nodeList) {
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			try {
+				Node node = nodeList.item(i);
+				NamedNodeMap map = node.getAttributes();
+				if (map == null) continue;
+				
+				Node typeNode = map.getNamedItem("type");
+				if (typeNode == null) continue;
+				
+				Node sourceNode = map.getNamedItem("source");
+				if (sourceNode == null) continue;
+				
+				Node defaultNode = map.getNamedItem("default");
+				if (defaultNode == null) continue;
+				
+				String typeValue = typeNode.getNodeValue();
+				if (typeValue == null) continue;
+				
+				String sourceValue = sourceNode.getNodeValue();
+				if (sourceValue == null) continue;
+				
+				String defaultValue = defaultNode.getNodeValue();
+				if (defaultValue == null) continue;
+						
+				if (defaultValue.equalsIgnoreCase("true")) {
+					if (typeValue.equalsIgnoreCase("eagle")) {
+						footprint = sourceValue;
+					}
 				}
 			}
 			catch (Exception ex) {
