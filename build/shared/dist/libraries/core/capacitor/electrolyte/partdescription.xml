@@ -15,8 +15,8 @@
 	<gridOffset x="318" y="2216" units="himetric"/> <!-- 50x349 pixels -->
 	<bounds width="1143" height="2235" units="himetric"/> <!-- 45x88 pixels -->
 	<connectors units="tenths">
-		<connector id="gnd" name="-" x="0" y="0" type="leg" />
-		<connector id="pwr" name="+" x="2" y="0" type="leg" />
+		<connector id="-" name="-" x="0" y="0" type="leg" />
+		<connector id="+" name="+" x="2" y="0" type="leg" />
 	</connectors>
 	<layers>
 		<layer type="image">

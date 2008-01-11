@@ -12,11 +12,11 @@
 	<label>L</label>
 	<reference>http://fritzing.org/reference/parts/core/led</reference>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset x="0" y="0" units="himetric"/> <!-- 0x0 pixels -->
-	<bounds width="558.8" height="838.2" units="himetric"/> <!-- 22x33 pixels -->
+	<gridOffset x="127" y="133" units="himetric"/> <!-- 20x21 pixels -->
+	<bounds width="559" height="838" units="himetric"/> <!-- 22x33 pixels -->
 	<connectors units="tenths">
-		<connector id="+" name="+" x="0.3" y="3.3" type="leg" />
-		<connector id="-" name="-" x="1.3" y="3.3" type="leg" />
+		<connector id="+" name="+" x="0" y="4" type="leg" />
+		<connector id="-" name="-" x="1" y="4" type="leg" />
 	</connectors>
 	<layers>
 		<layer type="image">
