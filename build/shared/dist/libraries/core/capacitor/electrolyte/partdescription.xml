@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<version>1.0</version>
+	<species>ElectrolyteCapacitor</species>
+	<genus>Basic</genus>
+	<title>Capacitor (electrolyte)</title>
+	<description>A polarized capacitor with a higher value</description>
+	<icons>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
+	</icons>
+	<label>C</label>
+	<reference>http://fritzing.org/reference/parts/core/capacitor-electrolyte</reference>
+	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset x="318" y="2216" units="himetric"/> <!-- 50x349 pixels -->
+	<bounds width="1143" height="2235" units="himetric"/> <!-- 45x88 pixels -->
+	<connectors units="tenths">
+		<connector id="gnd" name="-" x="0" y="0" type="leg" />
+		<connector id="pwr" name="+" x="2" y="0" type="leg" />
+	</connectors>
+	<layers>
+		<layer type="image">
+				<image type="bitmap" source="part.png" zoom="1"/>
+				<image type="bitmap" source="part200.png" zoom="2"/>
+				<image type="bitmap" source="part400.png" zoom="4"/>
+		</layer>
+	</layers>
+	<footprints>
+		<footprint type="eagle" source="fritzing.lbr/ElectrolyteCapacitor" default="true" />
+	</footprints>
+</part>

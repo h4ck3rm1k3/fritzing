@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<version>1.0</version>
+	<species>CeramicDiskCapacitor</species>
+	<genus>Basic</genus>
+	<title>Capacitor (ceramic disk)</title>
+	<description>A small non-polarized capacitor</description>
+	<icons>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
+	</icons>
+	<label>C</label>
+	<reference>http://fritzing.org/reference/parts/core/capacitor-ceramicdisk</reference>
+	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset x="114" y="381" units="himetric"/> <!-- 18x60 pixels -->
+	<bounds width="483" height="635" units="himetric"/> <!-- 19x25 pixels -->
+	<connectors units="tenths">
+		<connector id="1" name="1" x="0" y="0" type="leg" />
+		<connector id="2" name="2" x="1" y="0" type="leg" />
+	</connectors>
+	<layers>
+		<layer type="image">
+				<image type="bitmap" source="part.png" zoom="1"/>
+				<image type="bitmap" source="part200.png" zoom="2"/>
+				<image type="bitmap" source="part400.png" zoom="4"/>
+		</layer>
+	</layers>
+	<footprints>
+		<footprint type="eagle" source="fritzing.lbr/CeramicDiskCapacitor" default="true" />
+	</footprints>
+</part>
