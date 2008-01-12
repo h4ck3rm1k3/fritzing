@@ -12,7 +12,6 @@
 
 
 /* bug fixes */
-
 .inlineForm .formHelp,
 .inlineForm .fieldRequired,
 .inlineForm label {
@@ -33,7 +32,6 @@ body {
 
 
 /* Column Layout */
-
 #portal-columns {
   margin: 0;
   padding: 0;
@@ -123,8 +121,6 @@ ul#portal-personaltools a {
 
 
 /* Navigation */
-
-
 #portal-column-one ul.portletNavigationTree {
 height: 15px;
 width: 705px;
@@ -180,7 +176,6 @@ padding: 5px 0 5px 0;
 
 
 /* Content */
-
 a {
   color: #94294E;
   border-color: #94294E !important;
@@ -250,14 +245,12 @@ float: right;
 
 
 /* Workflow */
-
 a.state-published {
   color: #94294E;
 }
 
 
 /* TOC */
-
 #document-toc {
   float: right;
   border-left: 1px solid #BBB;
@@ -288,7 +281,6 @@ a.state-published {
 
 
 /* Dashboard */
-
 #dashboard-actions ul {
   float: right;
 }
@@ -303,33 +295,40 @@ a.state-published {
 
 
 /* Portlets */
-
 dl.portlet dd {
-  font-size: 11px !important;
+font-size: 11px !important;
 }
 #portal-column-two dt.portletHeader {
-  margin: 0;
+margin: 0;
 }
 #portal-column-two dt a {
-  font-size: 13px;
-  padding: 5px 15px;
+font-size: 13px;
+padding: 5px 15px;
+}
+#portal-column-two dl.portlet dd {
+margin: 0;
 }
 #portal-column-two dl.portlet dd a {
-  width: 115px;
-  padding: 5px 70px 5px 15px;
+padding: 2px 15px 0px 15px;
+width: 170px;
 }
 #portal-column-two dl.portlet .portletItemDetails {
-  padding-top: 6px;
+position: relative;
+padding-top: 0;
+}
+#portal-column-two dd.portletFooter a {
+margin-bottom: 1em;
+font-size: 79%;
+text-align: right;
 }
 #portal-column-two dl.portletNavigationTree dt.portletHeader {
-  display: block;
+display: block;
 }
 #portal-column-two ul.portletNavigationTree li a {
-  background: none;
+background: none;
 }
 
 /* Footer */
-
 #portal-footer {
   width: 710px;
   background: #380A1A;
