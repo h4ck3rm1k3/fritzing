@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.prefs.Preferences;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
@@ -62,9 +63,6 @@ import org.fritzing.fritzing.DocumentRoot;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
-
-import com.ice.jni.registry.Registry;
-import com.ice.jni.registry.RegistryKey;
 
 /**
  * @generated
@@ -580,17 +578,55 @@ public class FritzingDiagramEditorUtil {
 			// Value Data: path
 
 			try {
-				RegistryKey topKey = Registry.HKEY_CURRENT_USER;
-
 				String localKeyPath = "Software\\Microsoft\\Windows\\CurrentVersion"
 						+ "\\Explorer\\Shell Folders";
-				RegistryKey localKey = topKey.openSubKey(localKeyPath);
-				String personalPath = cleanKey(localKey
-						.getStringValue("Personal"));
-				//topKey.closeKey();  // necessary?
-				//localKey.closeKey();
-				location = new File(personalPath, "Fritzing");
+				final int HKEY_CURRENT_USER = 0x80000001;
+				final int KEY_QUERY_VALUE = 1;
+				final int KEY_SET_VALUE = 2;
+				final int KEY_READ = 0x20019;
 
+				String value = null;
+
+				final Preferences userRoot = Preferences.userRoot();
+				final Class clz = userRoot.getClass();
+
+				Class[] parms1 = {byte[].class, int.class, int.class};
+				final Method mOpenKey = clz.getDeclaredMethod("openKey",
+				parms1);
+				mOpenKey.setAccessible(true);
+
+				Class[] parms2 = {int.class};
+				final Method mCloseKey = clz.getDeclaredMethod("closeKey",
+				parms2);
+				mCloseKey.setAccessible(true);
+
+				Class[] parms3 = {int.class, byte[].class};
+				final Method mWinRegQueryValue = clz.getDeclaredMethod(
+						"WindowsRegQueryValueEx", parms3);
+				mWinRegQueryValue.setAccessible(true);
+
+				Class[] parms4 = {int.class, int.class, int.class};
+				final Method mWinRegEnumValue = clz.getDeclaredMethod(
+						"WindowsRegEnumValue1", parms4);
+				mWinRegEnumValue.setAccessible(true);
+
+				Class[] parms5 = {int.class};
+				final Method mWinRegQueryInfo = clz.getDeclaredMethod(
+						"WindowsRegQueryInfoKey1", parms5);
+				mWinRegQueryInfo.setAccessible(true);
+
+
+				Object[] objects1 = {toByteArray(localKeyPath), new
+						Integer(KEY_READ), new Integer(KEY_READ)};
+				Integer hSettings = (Integer) mOpenKey.invoke(userRoot, objects1);
+
+				Object[] objects2 = {hSettings, toByteArray("Personal")};
+				byte[] b = (byte[]) mWinRegQueryValue.invoke(userRoot, objects2);
+				location = (b != null ? 
+						new File(new String(b).trim(), "Fritzing") : null);
+				
+				Object[] objects3 = {hSettings};
+				mCloseKey.invoke(Preferences.userRoot(), objects3);
 			} catch (Exception e) {
 				//showError("Problem getting folder",
 				//          "Could not locate the Documents folder.", e);
@@ -601,26 +637,6 @@ public class FritzingDiagramEditorUtil {
 		return location;
 	}
 
-	// taken from Arduinos Base.cleanKey():
-	static public String cleanKey(String what) {
-		// jnireg seems to be reading the chars as bytes
-		// so maybe be as simple as & 0xff and then running through decoder
-
-		char c[] = what.toCharArray();
-
-		// if chars are in the tooHigh range, it's prolly because
-		// a byte from the jni registry was turned into a char
-		// and there was a sign extension.
-		// e.g. 0xFC (252, umlaut u) became 0xFFFC (65532).
-		// but on a japanese system, maybe this is two-byte and ok?
-		int tooHigh = 65536 - 128;
-		for (int i = 0; i < c.length; i++) {
-			if (c[i] >= tooHigh)
-				c[i] &= 0xff;
-		}
-		return new String(c);
-	}
-
 	static final int kDocumentsFolderType = ('d' << 24) | ('o' << 16)
 			| ('c' << 8) | 's';
 	static final int kPreferencesFolderType = ('p' << 24) | ('r' << 16)
@@ -628,4 +644,14 @@ public class FritzingDiagramEditorUtil {
 	static final int kDomainLibraryFolderType = ('d' << 24) | ('l' << 16)
 			| ('i' << 8) | 'b';
 	static final short kUserDomain = -32763;
+	
+	private static byte[] toByteArray(String str) {
+		byte[] result = new byte[str.length() + 1];
+		for (int i = 0; i < str.length(); i++) {
+			result[i] = (byte) str.charAt(i);
+		}
+		result[str.length()] = 0;
+		return result;
+	}
+
 }

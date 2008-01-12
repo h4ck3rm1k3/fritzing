@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: Fritzing.diagram; singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-ClassPath: .,lib/mrj.jar,lib/registry.jar
+Bundle-ClassPath: .
 Bundle-Activator: org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
