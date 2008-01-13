@@ -114,5 +114,5 @@ public class SketchGridLayer extends GridLayerEx {
 //		}
 	}
 
-	public static final Color THIS_FORE = new Color(null, 185, 185, 185);
+	public static final Color THIS_FORE = new Color(null, 140, 140, 140);
 }

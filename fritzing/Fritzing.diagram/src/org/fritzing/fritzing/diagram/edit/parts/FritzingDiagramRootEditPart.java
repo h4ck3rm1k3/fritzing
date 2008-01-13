@@ -49,6 +49,6 @@ public class FritzingDiagramRootEditPart extends DiagramRootEditPart {
 	/**
 	 * @generated NOT
 	 */
-	static final Color THIS_BACK = new Color(null, 204, 204, 204);
+	static final Color THIS_BACK = new Color(null, 115, 115, 115);
 
 }

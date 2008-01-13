@@ -17,6 +17,7 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentPro
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorInput;
+import org.fritzing.fritzing.diagram.edit.parts.SketchGridLayer;
 
 /**
  * @generated
@@ -119,9 +120,9 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 			((DiagramGraphicalViewer) getDiagramGraphicalViewer())
 					.hookWorkspacePreferenceStore(getWorkspaceViewerPreferenceStore());
 			// XXX: turns the grid color RED on Mac..
-			//			getWorkspaceViewerPreferenceStore().setValue(
-			//					WorkspaceViewerProperties.GRIDLINECOLOR,
-			//					SketchGridLayer.THIS_FORE.hashCode());
+			getWorkspaceViewerPreferenceStore().setValue(
+					WorkspaceViewerProperties.GRIDLINECOLOR,
+					SketchGridLayer.THIS_FORE.hashCode());
 			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.GRIDLINESTYLE, SWT.LINE_SOLID);
 			getWorkspaceViewerPreferenceStore().setValue(
