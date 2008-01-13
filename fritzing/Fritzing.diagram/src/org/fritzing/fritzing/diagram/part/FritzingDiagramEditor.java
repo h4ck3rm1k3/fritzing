@@ -6,6 +6,8 @@ package org.fritzing.fritzing.diagram.part;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.gef.ui.palette.PaletteViewerPreferences;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.ui.internal.properties.WorkspaceViewerProperties;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramGraphicalViewer;
@@ -15,7 +17,6 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentPro
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorInput;
-import org.fritzing.fritzing.diagram.edit.parts.SketchGridLayer;
 
 /**
  * @generated
@@ -127,6 +128,23 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 					WorkspaceViewerProperties.GRIDORDER, false);
 			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.ZOOM, 1.0);
+		}
+		
+		configurePaletteViewer(); // see note there
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditorWithFlyOutPalette#configurePaletteViewer()
+	 */
+	@Override
+	protected void configurePaletteViewer() {
+//		super.configurePaletteViewer();
+		// XXX: this doesn't get called anywhere, maybe bug in GMF -- 
+		// so we are calling this from createGraphicalViewer()
+		PaletteViewer viewer = getEditDomain().getPaletteViewer();
+		if (viewer != null) {
+			viewer.getPaletteViewerPreferences().
+				setLayoutSetting(PaletteViewerPreferences.LAYOUT_ICONS);
 		}
 	}
 
