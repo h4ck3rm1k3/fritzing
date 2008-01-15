@@ -119,15 +119,20 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 		if (getDiagramGraphicalViewer() instanceof DiagramGraphicalViewer) {
 			((DiagramGraphicalViewer) getDiagramGraphicalViewer())
 					.hookWorkspacePreferenceStore(getWorkspaceViewerPreferenceStore());
-			// XXX: turns the grid color RED on Mac..
-			getWorkspaceViewerPreferenceStore().setValue(
+			getWorkspaceViewerPreferenceStore().setDefault(
 					WorkspaceViewerProperties.GRIDLINECOLOR,
-					SketchGridLayer.THIS_FORE.hashCode());
-			getWorkspaceViewerPreferenceStore().setValue(
+					// SketchGridLayer.THIS_FORE.hashCode()
+					/* XXX: turns the grid color to (140,0,0,0) on Mac, because
+					 * it seems that the hashCode() function is not working properly and
+					 * only uses the R value.
+					 * So we hardcode the hashCode here:
+					 */
+					9211020);
+			getWorkspaceViewerPreferenceStore().setDefault(
 					WorkspaceViewerProperties.GRIDLINESTYLE, SWT.LINE_SOLID);
-			getWorkspaceViewerPreferenceStore().setValue(
+			getWorkspaceViewerPreferenceStore().setDefault(
 					WorkspaceViewerProperties.GRIDORDER, false);
-			getWorkspaceViewerPreferenceStore().setValue(
+			getWorkspaceViewerPreferenceStore().setDefault(
 					WorkspaceViewerProperties.ZOOM, 1.0);
 		}
 		

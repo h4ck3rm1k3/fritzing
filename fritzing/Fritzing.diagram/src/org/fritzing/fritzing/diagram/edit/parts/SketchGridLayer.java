@@ -114,5 +114,8 @@ public class SketchGridLayer extends GridLayerEx {
 //		}
 	}
 
+	/* XXX: this currently needs to be hard-coded in 
+	 * FritzingDiagramEditor.configureGraphicalViewer() due to a bug on Mac
+	 */
 	public static final Color THIS_FORE = new Color(null, 140, 140, 140);
 }
