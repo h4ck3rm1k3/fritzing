@@ -3,6 +3,8 @@
  */
 package org.fritzing.fritzing.diagram.edit.parts;
 
+import java.util.Iterator;
+
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.Graphics;
@@ -95,10 +97,6 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		this.getPrimaryShape().setFemale(female);
 	}
 	
-	public void setLeg(boolean leg) {
-		this.getPrimaryShape().setLeg(leg);
-	}
-	
     public void showTargetFeedback(Request request) {
         super.showTargetFeedback(request);
     }
@@ -182,7 +180,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated
 	 */
 	protected IFigure createNodeShape() {
-		TerminalFigure figure = new TerminalFigure();
+		TerminalFigure figure = new TerminalFigure(this);
 		return primaryShape = figure;
 	}
 
@@ -290,6 +288,15 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	ConnectionAnchor getLegConnectionAnchor() {
 		return legConnectionAnchor;
 	}
+	
+	public boolean hasLeg() {
+		for (Iterator it = this.getSourceConnections().iterator(); it.hasNext(); ) {
+			Object o = it.next();
+			if (o instanceof LegEditPart) return true;			
+		}
+		
+		return false;
+	}
 
 	public class TerminalDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
 
@@ -339,12 +346,13 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 		protected int standardTerminalConverted;
 		protected boolean female = false;
-		protected boolean leg = false;
-
+		Terminal2EditPart terminalPart;
+		
 		/**
 		 * @generated NOT
 		 */
-		public TerminalFigure() {
+		public TerminalFigure(Terminal2EditPart terminalPart) {
+			this.terminalPart = terminalPart;
 			standardTerminalConverted = getMapMode().DPtoLP(standardTerminalMeasure);
 			this.setLineWidth(0);
 			this.setForegroundColor(THIS_FORE);
@@ -352,11 +360,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			this.setPreferredSize(new Dimension(standardTerminalConverted, standardTerminalConverted));
 		}
 		
-		
-		public void setLeg(boolean leg) {
-			this.leg = leg;
-		}
-		
+				
 		public void setFemale(boolean female) {
 			this.female = female;
 			this.setVisible(female);
@@ -372,7 +376,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		}
 		
 		public void paintFigure(Graphics graphics) {
-			if (!this.leg) {
+			if (!terminalPart.hasLeg()) {
 				super.paintFigure(graphics);
 			}
 		}

@@ -41,6 +41,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.LegItemSemanticEditPolicy;
+import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.eclipse.swt.graphics.Color;
 
 
@@ -70,8 +71,8 @@ public class LegEditPart extends ConnectionNodeEditPart {
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new LegItemSemanticEditPolicy());
 		installEditPolicy(EditPolicy.CONNECTION_ROLE, new LegItemConnectionEditPolicy());
 		installEditPolicy(EditPolicy.CONNECTION_ENDPOINTS_ROLE, new LegItemConnectionEndpointEditPolicy());
-		
-		
+		// don't want delete
+		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());		
 	}
 
 	protected void initBend(LegFigure figure, Point p) {
@@ -227,6 +228,11 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	    	// disable delete for legs
 	    	return UnexecutableCommand.INSTANCE;
 	    }
+		 protected Command createDeleteSemanticCommand(GroupRequest deleteRequest)
+		 {
+			// disable delete for legs
+			 return UnexecutableCommand.INSTANCE; 
+		 }
 	}
 	
 	public class LegItemConnectionEndpointEditPolicy extends ConnectionEndpointEditPolicy {

@@ -230,17 +230,14 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 						child.setFemale(true);
 						continue;
 					}
-
 					
 					if (!s.equalsIgnoreCase("leg")) continue;
 					
-					if (child.getLegConnectionAnchor() != null) {
-						// already has a leg
+					if (child.hasLeg()) {
+						// already has a leg part
 						continue;
 					}
-					
-					child.setLeg(true);
-										
+																				
 					FritzingLinkDescriptor fld = new FritzingLinkDescriptor(terminal, 
 							sketch,
 							terminal.getLeg(), FritzingElementTypes.Leg_4003, 4003);
