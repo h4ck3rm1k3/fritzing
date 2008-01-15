@@ -213,6 +213,18 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		super.handleNotificationEvent(notification);
 	}
 	
+	public boolean isTerminalFemale(Terminal2EditPart terminal) {
+		if (partLoader == null) return false;
+		
+		Object o = terminal.getModel();
+		if (!(o instanceof NodeImpl)) return false;
+		
+		EObject e = ((NodeImpl) o).getElement();
+		if (e == null) return false;
+			
+		return partLoader.getTerminalFemale(((Terminal) e).getId());
+	}
+	
 	void initializeLegs() {
 		legsInitialized = true;
 				
@@ -225,12 +237,7 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 					Terminal2EditPart child = (Terminal2EditPart) chldrn.get(i);
 					Terminal terminal = (Terminal) ((NodeImpl) child.getModel()).getElement();
 					String s = partLoader.getTerminalType(terminal.getId());
-					
-					if (s.equalsIgnoreCase("female")) {
-						child.setFemale(true);
-						continue;
-					}
-					
+										
 					if (!s.equalsIgnoreCase("leg")) continue;
 					
 					if (child.hasLeg()) {

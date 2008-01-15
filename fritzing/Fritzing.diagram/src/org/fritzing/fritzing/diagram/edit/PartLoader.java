@@ -231,6 +231,17 @@ public class PartLoader {
 		return pointName.visible;
 	}
 	
+	public boolean getTerminalFemale(String id) {
+		if (terminalHash == null) return false;
+		
+		PointName pointName = terminalHash.get(id);
+		if (pointName == null) return false;
+		
+		if (pointName.type == null) return false;
+		
+		return pointName.type.equalsIgnoreCase("female");		
+	}
+	
 	public String getSvgFilename() {
 		return svgFilename;
 	}

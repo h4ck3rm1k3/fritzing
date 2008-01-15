@@ -160,6 +160,7 @@ public class LegEditPart extends ConnectionNodeEditPart {
 		 */
 		private WrapLabel fFigureLegNameFigure;
 		
+		
 		boolean firstTime;
 		LegEditPart leg;
 		
@@ -168,8 +169,8 @@ public class LegEditPart extends ConnectionNodeEditPart {
 		 * @generated
 		 */
 		public LegFigure(LegEditPart leg) {
-			this.setLineWidth(2);
-			this.setForegroundColor(new Color(null, 150, 150, 150));
+			this.setLineWidth(3);
+			this.setForegroundColor(LEG_FIGURE_COLOR);
 			this.leg = leg;
 			firstTime = true;
 			createContents();
@@ -188,6 +189,25 @@ public class LegEditPart extends ConnectionNodeEditPart {
 			this.add(fFigureLegNameFigure);
 
 		}
+		
+//		public void paintFigure(Graphics g) {
+		
+		
+//		FritzingDiagramEditor editor = FritzingDiagramEditorUtil.getActiveDiagramPart();
+//		IDiagramGraphicalViewer viewer = editor.getDiagramGraphicalViewer();
+//		if (viewer instanceof DiagramGraphicalViewer) {
+//			RootEditPart rootEditPart = ((DiagramGraphicalViewer) viewer).getRootEditPart();
+//			if (rootEditPart instanceof FritzingDiagramRootEditPart) {
+//				//System.out.println("zoom level: " + ((FritzingDiagramRootEditPart) rootEditPart).getZoomManager().getZoom());
+//			} 
+//		}
+		
+		
+//			g.pushState();
+//			g.setAlpha(192);
+//			super.paintFigure(g);
+//			g.popState();
+//		}
 
 	    public void setPoints(PointList points) {
 	    	if (firstTime) {
@@ -252,5 +272,8 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	static final Font FFIGURELEGNAMEFIGURE_FONT = new Font(
 			Display.getCurrent(), Display.getDefault().getSystemFont()
 					.getFontData()[0].getName(), 8, SWT.NORMAL);
+	
+	
+	static final Color LEG_FIGURE_COLOR = new Color(null, 179, 179, 179);
 
 }

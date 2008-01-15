@@ -27,13 +27,17 @@ import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.editpolicies.ResizableEditPolicy;
 import org.eclipse.gef.handles.HandleBounds;
 import org.eclipse.gef.requests.CreateRequest;
+import org.eclipse.gef.requests.DropRequest;
+import org.eclipse.gef.requests.ReconnectRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.BorderedBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateConnectionViewRequest;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateUnspecifiedTypeConnectionRequest;
 import org.eclipse.gmf.runtime.draw2d.ui.internal.figures.TransparentBorder;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
@@ -92,15 +96,12 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		
 		return null;
 	}
-	
-	public void setFemale(boolean female) {
-		this.getPrimaryShape().setFemale(female);
+		
+	public void displayTargetFeedback(boolean display) {
+		((TerminalDefaultSizeNodeFigure) this.getMainFigure()).displayFeedback(display);
 	}
 	
-    public void showTargetFeedback(Request request) {
-        super.showTargetFeedback(request);
-    }
-
+	
 	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
 		return super.getTargetConnectionAnchor(request);
 	}
@@ -118,8 +119,9 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
 
 		// don't want delete
-		installEditPolicy(EditPolicy.COMPONENT_ROLE,
-				new NonDeleteComponentEditPolicy());
+		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
+		
+		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new Terminal2GraphicalNodeEditPolicy());
 
 		// make it non-selectable? (doesn't seem to work)
 		//removeEditPolicy(EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -297,11 +299,47 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		
 		return false;
 	}
+	
+	public boolean isFemale() {
+		if (this.getParent() instanceof PartEditPart) {
+			return ((PartEditPart) this.getParent()).isTerminalFemale(this);
+			
+		}
+		
+		return false;
+	}
+	
+	public class Terminal2GraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
+		protected void showTargetConnectionFeedback(DropRequest request) {
+			xTargetConnectionFeedback(request, true);
+		}	
+		
+		protected void eraseTargetConnectionFeedback(DropRequest request) {
+			xTargetConnectionFeedback(request, false);
+		}
+		
+		protected void xTargetConnectionFeedback(DropRequest request, boolean display) {
+			if (request instanceof ReconnectRequest) {
+				EditPart target = ((ReconnectRequest) request).getTarget();
+				if (target instanceof Terminal2EditPart) {
+					((Terminal2EditPart) target).displayTargetFeedback(display);
+				}
+			}
+			else if (request instanceof CreateUnspecifiedTypeConnectionRequest) {
+				EditPart target = ((CreateUnspecifiedTypeConnectionRequest) request).getTargetEditPart();
+				if (target instanceof Terminal2EditPart) {
+					((Terminal2EditPart) target).displayTargetFeedback(display);
+				}
+			}			
+		}
+	}
 
 	public class TerminalDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
+		protected boolean displayFeedbackFlag;
 
 		public TerminalDefaultSizeNodeFigure(Dimension defSize) {
 			super(defSize);
+			displayFeedbackFlag = false;
 		}
 
 		public TerminalDefaultSizeNodeFigure(int width, int height) {
@@ -315,6 +353,30 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		public ConnectionAnchor getTargetConnectionAnchorAt(Point p) {
 			return createDefaultAnchor();
 		}
+		
+		public void displayFeedback(boolean display) {
+			if (display != displayFeedbackFlag) {
+				displayFeedbackFlag = display;
+				if (display) {
+					this.setBackgroundColor(THIS_FEED);
+				}
+				else {
+					this.setBackgroundColor(THIS_BACK);		
+				}
+				this.invalidate();
+			}
+		}
+		
+		protected void paintFigure(Graphics graphics) {
+			if (displayFeedbackFlag) {
+				Rectangle tempRect = new Rectangle(getBounds());
+				graphics.fillRectangle(tempRect);
+			}
+
+			super.paintFigure(graphics);
+		}
+
+		
 	}
 
 	public class TerminalSlidableAnchor extends SlidableAnchor {
@@ -345,8 +407,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	public class TerminalFigure extends RectangleFigure {
 
 		protected int standardTerminalConverted;
-		protected boolean female = false;
-		Terminal2EditPart terminalPart;
+		protected Terminal2EditPart terminalPart;
 		
 		/**
 		 * @generated NOT
@@ -359,15 +420,9 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			this.setBackgroundColor(THIS_BACK);
 			this.setPreferredSize(new Dimension(standardTerminalConverted, standardTerminalConverted));
 		}
-		
 				
-		public void setFemale(boolean female) {
-			this.female = female;
-			this.setVisible(female);
-		}
-		
 		public void paint(Graphics graphics) {
-			if (this.female) {
+			if (terminalPart.isFemale()) {
 				this.setVisible(false);
 				return;
 			}
@@ -423,5 +478,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated
 	 */
 	static final Color THIS_BACK = new Color(null, 0, 0, 0);
+
+	static final Color THIS_FEED = new Color(null, 255, 0, 0);
 
 }
