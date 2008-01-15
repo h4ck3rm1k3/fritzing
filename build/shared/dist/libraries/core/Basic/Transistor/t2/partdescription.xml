@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part>
+	<version>1.0</version>
+	<species>Transistor</species>
+	<genus>Basic</genus>
+	<title>Transistor</title>
+	<description>A transistor</description>
+	<icons>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
+	</icons>
+	<label>Q</label>
+	<reference>http://fritzing.org/reference/parts/transistor</reference>
+	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset x="67" y="625" units="himetric"/> <!-- approx 3x25 pixels -->
+    <bounds width="610" height="864" units="himetric"/> <!-- 24x34 pixels -->
+	<connectors units="tenths">
+		<connector id="E" name="E" x="0" y="2" type="leg" />
+		<connector id="B" name="B" x="1" y="2" type="leg" />
+		<connector id="C" name="C" x="2" y="2" type="leg" />
+	</connectors>
+	<layers>
+		<layer type="image">
+				<image type="bitmap" source="part.png" zoom="1"/>
+		</layer>
+	</layers>
+	<footprints>
+		<footprint type="eagle" source="fritzing.lbr/Transistor" default="true" />
+	</footprints>
+</part>
