@@ -1,8 +1,8 @@
 package org.fritzing.fritzing.diagram.export;
 
-import java.io.File;
 import java.util.ArrayList;
 
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 
 
@@ -86,9 +86,9 @@ public class ScriptExporter {
 	public String getNetEntry(EagleSCRNet net) {
 		/* place a SIGNAL to create two terminals at a time */
 		String result = "SIGNAL '" + net.netName + "' " + 
-			"'" + net.source.getParent().getName() + "' " + 
+			"'" + ((Terminal)net.source).getParent().getName() + "' " + 
 			"'" + net.source.getName() + "' " +
-			"'" + net.target.getParent().getName() + "' " + 
+			"'" + ((Terminal)net.target).getParent().getName() + "' " + 
 			"'" + net.target.getName() + "'; \n";
 		return result;
 	}

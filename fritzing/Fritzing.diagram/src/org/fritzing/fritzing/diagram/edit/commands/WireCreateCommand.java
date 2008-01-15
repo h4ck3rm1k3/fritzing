@@ -15,6 +15,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.IWireConnection;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingBaseItemSemanticEditPolicy;
@@ -72,10 +73,10 @@ public class WireCreateCommand extends CreateElementCommand {
 		if (source == null && target == null) {
 			return false;
 		}
-		if (source != null && !(source instanceof Terminal)) {
+		if (source != null && !(source instanceof IWireConnection)) {
 			return false;
 		}
-		if (target != null && !(target instanceof Terminal)) {
+		if (target != null && !(target instanceof IWireConnection)) {
 			return false;
 		}
 		if (getSource() == null) {
@@ -140,15 +141,15 @@ public class WireCreateCommand extends CreateElementCommand {
 	/**
 	 * @generated
 	 */
-	protected Terminal getSource() {
-		return (Terminal) source;
+	protected IWireConnection getSource() {
+		return (IWireConnection) source;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected Terminal getTarget() {
-		return (Terminal) target;
+	protected IWireConnection getTarget() {
+		return (IWireConnection) target;
 	}
 
 	/**

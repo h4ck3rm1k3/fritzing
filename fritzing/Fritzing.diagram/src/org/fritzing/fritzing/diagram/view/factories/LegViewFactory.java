@@ -36,7 +36,7 @@ public class LegViewFactory extends ConnectionViewFactory {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void decorateView(View containerView, View view,
 			IAdaptable semanticAdapter, String semanticHint, int index,

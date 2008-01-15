@@ -57,13 +57,13 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 	 * @generated
 	 */
 	public static final int VISUAL_ID = 1000;
-	
+
 	/**
 	 * @generated
 	 */
 	public SketchEditPart(View view) {
 		super(view);
-	}	
+	}
 
 	/**
 	 * @generated NOT
@@ -76,29 +76,31 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 				new SketchCanonicalEditPolicy());
 
 		// kills the drag-wire from terminal to sketch popup
-//		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new NoPopupContainerNodeEditPolicy());
-			
+		//		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new NoPopupContainerNodeEditPolicy());
+
 		// allows a leg to be attached to a sketch
-		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new GraphicalNodeEditPolicy());
+		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
+				new GraphicalNodeEditPolicy());
 
 		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in
 		// preferences
 	}
 
 	// implements INodeEditPart
-	public ConnectionAnchor getSourceConnectionAnchor(ConnectionEditPart connection) {
+	public ConnectionAnchor getSourceConnectionAnchor(
+			ConnectionEditPart connection) {
 		// sketch should never be the source
 		return null;
 	}
 
 	// implements INodeEditPart
-	public ConnectionAnchor getTargetConnectionAnchor(ConnectionEditPart connection) {
+	public ConnectionAnchor getTargetConnectionAnchor(
+			ConnectionEditPart connection) {
 		EditPart part = connection.getSource();
 		if (part instanceof Terminal2EditPart) {
 			// if it's null, create one here
 			return ((Terminal2EditPart) part).getLegConnectionAnchor();
 		}
-		
 		return null;
 	}
 
@@ -111,24 +113,26 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 	// implements INodeEditPart
 	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
 		if (request instanceof CreateConnectionViewRequest) {
-			EditPart part = ((CreateConnectionViewRequest) request).getSourceEditPart();
+			EditPart part = ((CreateConnectionViewRequest) request)
+					.getSourceEditPart();
 			if (part instanceof Terminal2EditPart) {
 				Point p = ((Terminal2EditPart) part).getLegTargetPosition();
-				TerminalAnchor ta = new TerminalAnchor(p, (Terminal2EditPart) part);
+				TerminalAnchor ta = new TerminalAnchor(p,
+						(Terminal2EditPart) part);
 				((Terminal2EditPart) part).setLegConnectionAnchor(ta);
 				return ta;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	// implements INodeEditPart
 	public String mapConnectionAnchorToTerminal(ConnectionAnchor c) {
 		if (c instanceof TerminalAnchor) {
 			return ((TerminalAnchor) c).getTerminal();
 		}
-		
+
 		return "";
 	}
 
@@ -137,12 +141,12 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 		// sketch should never be the source
 		return null;
 	}
-	
+
 	// implements INodeEditPart
 	public boolean canAttachNote() {
 		return false;
 	}
-	
+
 	// need to catch the notification when the model adds a leg
 	protected void handleNotificationEvent(Notification notification) {
 		Object feature = notification.getFeature();
@@ -155,34 +159,35 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 	// the default returns an empty list
 	protected List getModelTargetConnections() {
 		View view = (View) getModel();
-       // if (!view.eIsSet(NotationPackage.Literals.VIEW__TARGET_EDGES))
-        //    return Collections.EMPTY_LIST;
-        List targetConnections = new ArrayList();
-        Iterator iter = view.getTargetEdges().iterator();
-        while (iter.hasNext()) {
-            Edge edge = (Edge)iter.next();
-            View source = edge.getSource();
-//            if (edge.isVisible() && isVisible(source)){
-                targetConnections.add(edge);
- //           }
-        }
-        return targetConnections;
+		// if (!view.eIsSet(NotationPackage.Literals.VIEW__TARGET_EDGES))
+		//    return Collections.EMPTY_LIST;
+		List targetConnections = new ArrayList();
+		Iterator iter = view.getTargetEdges().iterator();
+		while (iter.hasNext()) {
+			Edge edge = (Edge) iter.next();
+			View source = edge.getSource();
+			//            if (edge.isVisible() && isVisible(source)){
+			targetConnections.add(edge);
+			//           }
+		}
+		return targetConnections;
 	}
-	
-	
+
 	public class NoPopupContainerNodeEditPolicy extends ContainerNodeEditPolicy {
 		public Command getCommand(Request request) {
 
-		    if (RequestConstants.REQ_CONNECTION_END.equals(request.getType())
+			if (RequestConstants.REQ_CONNECTION_END.equals(request.getType())
 					&& request instanceof CreateConnectionRequest) {
 				// don't popup a menu if the user drags out a wire from a terminal and drops it on the sketch
 				// but allow the request if it's a leg!
-				
+
 				if (request instanceof CreateConnectionViewRequest) {
-					CreateConnectionViewRequest.ConnectionViewDescriptor cvd = ((CreateConnectionViewRequest) request).getConnectionViewDescriptor();
+					CreateConnectionViewRequest.ConnectionViewDescriptor cvd = ((CreateConnectionViewRequest) request)
+							.getConnectionViewDescriptor();
 					IAdaptable adapter = cvd.getElementAdapter();
 					if (adapter instanceof FritzingLinkDescriptor) {
-						int id = ((FritzingLinkDescriptor) adapter).getVisualID();
+						int id = ((FritzingLinkDescriptor) adapter)
+								.getVisualID();
 					}
 				}
 
@@ -193,15 +198,15 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 		}
 
 	}
-	
+
 	public class TerminalAnchor extends XYAnchor {
 		protected Terminal2EditPart terminal;
-		
+
 		public TerminalAnchor(Point p, Terminal2EditPart terminal) {
 			super(p);
 			this.terminal = terminal;
 		}
-		
+
 		public String getTerminal() {
 			Point p = this.getReferencePoint();
 			return new String("(" + ((float) p.x) + "," + ((float) p.y) + ")");

@@ -542,27 +542,28 @@ public class FritzingDiagramEditorUtil {
 		// taken from Arduinos Base.getDefaultSketchbookFolder() and updated to Java 1.5:
 		if (Platform.getOS().equals(Platform.OS_MACOSX)) {
 			// API http://developer.apple.com/documentation/Java/Reference/1.5.0/appledoc/api/com/apple/eio/FileManager.html
-			
+
 			// carbon folder constants
 			// http://developer.apple.com/documentation/Carbon/Reference/Folder_Manager/folder_manager_ref/constant_6.html#//apple_ref/doc/uid/TP30000238/C006889
 
 			// additional information found in the local file:
 			// /System/Library/Frameworks/CoreServices.framework/Versions/Current/Frameworks/CarbonCore.framework/Headers/
-			
+
 			try {
 				Class clazz = Class.forName("com.apple.eio.FileManager");
-				Method m = clazz.getMethod("findFolder",
-						new Class[] { short.class, int.class });
-				String docPath = (String) m.invoke(null,
-						new Object[] { new Short(kUserDomain), new Integer(kDocumentsFolderType) });
+				Method m = clazz.getMethod("findFolder", new Class[] {
+						short.class, int.class });
+				String docPath = (String) m.invoke(null, new Object[] {
+						new Short(kUserDomain),
+						new Integer(kDocumentsFolderType) });
 
 				location = new File(docPath + "/Fritzing");
-			 } catch (Exception e) {
-			 //showError("Could not find folder",
-			 //          "Could not locate the Documents folder.", e);
-			 //	        sketchbookFolder = promptSketchbookLocation();
-				 e.printStackTrace();
-			 }
+			} catch (Exception e) {
+				//showError("Could not find folder",
+				//          "Could not locate the Documents folder.", e);
+				//	        sketchbookFolder = promptSketchbookLocation();
+				e.printStackTrace();
+			}
 		} else if (Platform.getOS().equals(Platform.OS_WIN32)) {
 			// looking for Documents and Settings/blah/My Documents/Fritzing
 			// or on Vista Users/blah/Documents/Fritzing
@@ -590,42 +591,43 @@ public class FritzingDiagramEditorUtil {
 				final Preferences userRoot = Preferences.userRoot();
 				final Class clz = userRoot.getClass();
 
-				Class[] parms1 = {byte[].class, int.class, int.class};
-				final Method mOpenKey = clz.getDeclaredMethod("openKey",
-				parms1);
+				Class[] parms1 = { byte[].class, int.class, int.class };
+				final Method mOpenKey = clz
+						.getDeclaredMethod("openKey", parms1);
 				mOpenKey.setAccessible(true);
 
-				Class[] parms2 = {int.class};
+				Class[] parms2 = { int.class };
 				final Method mCloseKey = clz.getDeclaredMethod("closeKey",
-				parms2);
+						parms2);
 				mCloseKey.setAccessible(true);
 
-				Class[] parms3 = {int.class, byte[].class};
+				Class[] parms3 = { int.class, byte[].class };
 				final Method mWinRegQueryValue = clz.getDeclaredMethod(
 						"WindowsRegQueryValueEx", parms3);
 				mWinRegQueryValue.setAccessible(true);
 
-				Class[] parms4 = {int.class, int.class, int.class};
+				Class[] parms4 = { int.class, int.class, int.class };
 				final Method mWinRegEnumValue = clz.getDeclaredMethod(
 						"WindowsRegEnumValue1", parms4);
 				mWinRegEnumValue.setAccessible(true);
 
-				Class[] parms5 = {int.class};
+				Class[] parms5 = { int.class };
 				final Method mWinRegQueryInfo = clz.getDeclaredMethod(
 						"WindowsRegQueryInfoKey1", parms5);
 				mWinRegQueryInfo.setAccessible(true);
 
+				Object[] objects1 = { toByteArray(localKeyPath),
+						new Integer(KEY_READ), new Integer(KEY_READ) };
+				Integer hSettings = (Integer) mOpenKey.invoke(userRoot,
+						objects1);
 
-				Object[] objects1 = {toByteArray(localKeyPath), new
-						Integer(KEY_READ), new Integer(KEY_READ)};
-				Integer hSettings = (Integer) mOpenKey.invoke(userRoot, objects1);
+				Object[] objects2 = { hSettings, toByteArray("Personal") };
+				byte[] b = (byte[]) mWinRegQueryValue
+						.invoke(userRoot, objects2);
+				location = (b != null ? new File(new String(b).trim(),
+						"Fritzing") : null);
 
-				Object[] objects2 = {hSettings, toByteArray("Personal")};
-				byte[] b = (byte[]) mWinRegQueryValue.invoke(userRoot, objects2);
-				location = (b != null ? 
-						new File(new String(b).trim(), "Fritzing") : null);
-				
-				Object[] objects3 = {hSettings};
+				Object[] objects3 = { hSettings };
 				mCloseKey.invoke(Preferences.userRoot(), objects3);
 			} catch (Exception e) {
 				//showError("Problem getting folder",
@@ -644,7 +646,7 @@ public class FritzingDiagramEditorUtil {
 	static final int kDomainLibraryFolderType = ('d' << 24) | ('l' << 16)
 			| ('i' << 8) | 'b';
 	static final short kUserDomain = -32763;
-	
+
 	private static byte[] toByteArray(String str) {
 		byte[] result = new byte[str.length() + 1];
 		for (int i = 0; i < str.length(); i++) {

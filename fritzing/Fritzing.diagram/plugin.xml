@@ -578,6 +578,40 @@
    </extension><extension point="org.eclipse.ui.actionSets">
       <?gmfgen generated="true"?>
       <actionSet
+            label="%initDiagramActionLabel"
+            visible="true"
+            id="Fritzing.diagram.InitDiagram">
+         <action
+               label="%initDiagramActionLabel"
+               class="org.fritzing.fritzing.diagram.part.FritzingInitDiagramFileAction"
+               menubarPath="file/additions"
+               id="Fritzing.diagram.InitDiagramAction">
+         </action>
+      </actionSet>
+   </extension>
+<extension point="org.eclipse.ui.commands">
+      <?gmfgen generated="true"?>
+      <command
+            name="%openURIActionLabel"
+            description="%openURIActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="Fritzing.diagram.OpenURICommand"/>  
+      <command
+            name="%openActionLabel"
+            description="%openActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="Fritzing.diagram.OpenCommand"/>  
+   </extension>
+<extension point="org.eclipse.ui.bindings">
+      <?gmfgen generated="true"?>
+      <key 
+         commandId="org.fritzing.fritzing.diagram.updateDiagram"
+         contextId="org.fritzing.fritzing.diagram.ui.diagramContext"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="F5"/>
+   </extension><extension point="org.eclipse.ui.actionSets">
+      <?gmfgen generated="true"?>
+      <actionSet
             label="%applicationActionSetLabel"
             visible="true"
             id="Fritzing.diagram.ActionSet">
@@ -618,14 +652,7 @@
          id="org.fritzing.fritzing.diagram.updateDiagram"
          name="%update.diagram.name"/>
    </extension>
-<extension point="org.eclipse.ui.bindings">
-      <?gmfgen generated="true"?>
-      <key 
-         commandId="org.fritzing.fritzing.diagram.updateDiagram"
-         contextId="org.fritzing.fritzing.diagram.ui.diagramContext"
-         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-         sequence="F5"/>
-   </extension>
+
 
 
    

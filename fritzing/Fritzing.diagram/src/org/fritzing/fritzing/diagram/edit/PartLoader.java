@@ -353,13 +353,13 @@ public class PartLoader {
 				FritzingAbstractExpression expr = FritzingOCLFactory
 						.getExpression("\'" + pointName.name + "\'",
 								FritzingPackage.eINSTANCE.getTerminal());
-				expr.assignTo(FritzingPackage.eINSTANCE.getTerminal_Name(),
+				expr.assignTo(FritzingPackage.eINSTANCE.getIElement_Name(),
 						terminal);
 
 				expr = FritzingOCLFactory
 				.getExpression("\'" + id + "\'",
 						FritzingPackage.eINSTANCE.getTerminal());
-				expr.assignTo(FritzingPackage.eINSTANCE.getTerminal_Id(),
+				expr.assignTo(FritzingPackage.eINSTANCE.getIElement_Id(),
 				terminal);
 				
 				
@@ -424,7 +424,7 @@ public class PartLoader {
 				}
 			}
 			
-			EStructuralFeature feature = FritzingPackage.eINSTANCE.getPart_Name();
+			EStructuralFeature feature = FritzingPackage.eINSTANCE.getIElement_Name();
 			FritzingAbstractExpression expr = FritzingOCLFactory
 					.getExpression("\'" + label + "\'",
 							newElement.eClass());

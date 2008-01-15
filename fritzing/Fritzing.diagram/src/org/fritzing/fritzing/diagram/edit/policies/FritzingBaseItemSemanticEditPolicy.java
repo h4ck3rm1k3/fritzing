@@ -47,6 +47,7 @@ import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.ITrackConnection;
+import org.fritzing.fritzing.IWireConnection;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.helpers.FritzingBaseEditHelper;
@@ -369,10 +370,11 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		 */
 		static {
 			Map env = new HashMap(3);
-			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE.getTerminal());
+			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE
+					.getIWireConnection());
 			Wire_4001_SourceExpression = FritzingOCLFactory
 					.getExpression(
-							"self <> oppositeEnd", FritzingPackage.eINSTANCE.getTerminal(), env); //$NON-NLS-1$
+							"self <> oppositeEnd", FritzingPackage.eINSTANCE.getIWireConnection(), env); //$NON-NLS-1$
 		}
 
 		/**
@@ -413,7 +415,7 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		 * @generated
 		 */
 		public static boolean canCreateWire_4001(Composite container,
-				Terminal source, Terminal target) {
+				IWireConnection source, IWireConnection target) {
 			return canExistWire_4001(container, source, target);
 		}
 
@@ -442,7 +444,7 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		 * @generated
 		 */
 		public static boolean canExistWire_4001(Composite container,
-				Terminal source, Terminal target) {
+				IWireConnection source, IWireConnection target) {
 			if (!evaluate(Wire_4001_SourceExpression, source, target, false)) {
 				return false;
 			}

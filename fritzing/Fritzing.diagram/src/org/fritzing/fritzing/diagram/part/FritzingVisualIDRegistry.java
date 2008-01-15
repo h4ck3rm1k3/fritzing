@@ -257,11 +257,6 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			break;
-		case LegEditPart.VISUAL_ID:
-			if (LegNameEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
 		}
 		return false;
 	}

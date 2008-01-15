@@ -175,13 +175,6 @@ public class FritzingViewProvider extends AbstractViewProvider {
 						return null; // wrong container
 					}
 					break;
-				case LegNameEditPart.VISUAL_ID:
-					if (LegEditPart.VISUAL_ID != FritzingVisualIDRegistry
-							.getVisualID(containerView)
-							|| containerView.getElement() != domainElement) {
-						return null; // wrong container
-					}
-					break;
 				default:
 					return null;
 				}
@@ -224,8 +217,6 @@ public class FritzingViewProvider extends AbstractViewProvider {
 			return WireNameViewFactory.class;
 		case TrackNameEditPart.VISUAL_ID:
 			return TrackNameViewFactory.class;
-		case LegNameEditPart.VISUAL_ID:
-			return LegNameViewFactory.class;
 		}
 		return null;
 	}

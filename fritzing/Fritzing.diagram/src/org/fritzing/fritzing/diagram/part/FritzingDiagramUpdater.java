@@ -19,6 +19,7 @@ import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.GenericPart;
 import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.ITrackConnection;
+import org.fritzing.fritzing.IWireConnection;
 import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Resistor;
@@ -410,6 +411,8 @@ public class FritzingDiagramUpdater {
 		Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
 				.getResourceSet().getResources());
 		List result = new LinkedList();
+		result.addAll(getIncomingTypeModelFacetLinks_Wire_4001(modelElement,
+				crossReferences));
 		result.addAll(getIncomingTypeModelFacetLinks_Leg_4003(modelElement,
 				crossReferences));
 		return result;
@@ -486,6 +489,7 @@ public class FritzingDiagramUpdater {
 	public static List getLeg_4003OutgoingLinks(View view) {
 		Leg modelElement = (Leg) view.getElement();
 		List result = new LinkedList();
+		result.addAll(getOutgoingTypeModelFacetLinks_Wire_4001(modelElement));
 		result.addAll(getOutgoingTypeModelFacetLinks_Leg_4003(modelElement));
 		return result;
 	}
@@ -506,8 +510,8 @@ public class FritzingDiagramUpdater {
 					.getLinkWithClassVisualID(link)) {
 				continue;
 			}
-			Terminal dst = link.getTarget();
-			Terminal src = link.getSource();
+			IWireConnection dst = link.getTarget();
+			IWireConnection src = link.getSource();
 			result.add(new FritzingLinkDescriptor(src, dst, link,
 					FritzingElementTypes.Wire_4001, WireEditPart.VISUAL_ID));
 		}
@@ -560,7 +564,7 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	private static Collection getIncomingTypeModelFacetLinks_Wire_4001(
-			Terminal target, Map crossReferences) {
+			IWireConnection target, Map crossReferences) {
 		Collection result = new LinkedList();
 		Collection settings = (Collection) crossReferences.get(target);
 		for (Iterator it = settings.iterator(); it.hasNext();) {
@@ -576,7 +580,7 @@ public class FritzingDiagramUpdater {
 					.getLinkWithClassVisualID(link)) {
 				continue;
 			}
-			Terminal src = link.getSource();
+			IWireConnection src = link.getSource();
 			result.add(new FritzingLinkDescriptor(src, target, link,
 					FritzingElementTypes.Wire_4001, WireEditPart.VISUAL_ID));
 		}
@@ -641,7 +645,7 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	private static Collection getOutgoingTypeModelFacetLinks_Wire_4001(
-			Terminal source) {
+			IWireConnection source) {
 		Composite container = null;
 		// Find container element for the link.
 		// Climb up by containment hierarchy starting from the source
@@ -666,8 +670,8 @@ public class FritzingDiagramUpdater {
 					.getLinkWithClassVisualID(link)) {
 				continue;
 			}
-			Terminal dst = link.getTarget();
-			Terminal src = link.getSource();
+			IWireConnection dst = link.getTarget();
+			IWireConnection src = link.getSource();
 			if (src != source) {
 				continue;
 			}

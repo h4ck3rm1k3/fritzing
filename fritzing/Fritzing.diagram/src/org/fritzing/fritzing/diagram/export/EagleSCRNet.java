@@ -1,12 +1,12 @@
 package org.fritzing.fritzing.diagram.export;
 
-import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.IWireConnection;
 
 
 public class EagleSCRNet {	
 	public String netName = "";
-	public Terminal source;
-	public Terminal target;
+	public IWireConnection source;
+	public IWireConnection target;
 	
 	
 	public EagleSCRNet(String netName) {
@@ -14,7 +14,7 @@ public class EagleSCRNet {
 		this.netName = netName;
 	}	
 	
-	public EagleSCRNet(String netName, Terminal source, Terminal target) {
+	public EagleSCRNet(String netName, IWireConnection source, IWireConnection target) {
 		this.netName = netName;
 		this.source = source;
 		this.target = target;

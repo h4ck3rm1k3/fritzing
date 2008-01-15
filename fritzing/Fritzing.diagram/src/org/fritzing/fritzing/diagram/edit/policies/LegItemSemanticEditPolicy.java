@@ -10,7 +10,10 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
 import org.fritzing.fritzing.diagram.edit.commands.LegCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.LegReorientCommand;
+import org.fritzing.fritzing.diagram.edit.commands.WireCreateCommand;
+import org.fritzing.fritzing.diagram.edit.commands.WireReorientCommand;
 import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -41,6 +44,10 @@ public class LegItemSemanticEditPolicy extends
 	 */
 	protected Command getStartCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
+		if (FritzingElementTypes.Wire_4001 == req.getElementType()) {
+			return getGEFWrapper(new WireCreateCommand(req, req.getSource(),
+					req.getTarget()));
+		}
 		if (FritzingElementTypes.Leg_4003 == req.getElementType()) {
 			return getGEFWrapper(new LegCreateCommand(req, req.getSource(), req
 					.getTarget()));
@@ -53,6 +60,10 @@ public class LegItemSemanticEditPolicy extends
 	 */
 	protected Command getCompleteCreateRelationshipCommand(
 			CreateRelationshipRequest req) {
+		if (FritzingElementTypes.Wire_4001 == req.getElementType()) {
+			return getGEFWrapper(new WireCreateCommand(req, req.getSource(),
+					req.getTarget()));
+		}
 		if (FritzingElementTypes.Leg_4003 == req.getElementType()) {
 			return getGEFWrapper(new LegCreateCommand(req, req.getSource(), req
 					.getTarget()));
@@ -69,6 +80,8 @@ public class LegItemSemanticEditPolicy extends
 	protected Command getReorientRelationshipCommand(
 			ReorientRelationshipRequest req) {
 		switch (getVisualID(req)) {
+		case WireEditPart.VISUAL_ID:
+			return getGEFWrapper(new WireReorientCommand(req));
 		case LegEditPart.VISUAL_ID:
 			return getGEFWrapper(new LegReorientCommand(req));
 		}

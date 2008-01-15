@@ -78,9 +78,6 @@ public class FritzingEditPartFactory implements EditPartFactory {
 
 			case LegEditPart.VISUAL_ID:
 				return new LegEditPart(view);
-
-			case LegNameEditPart.VISUAL_ID:
-				return new LegNameEditPart(view);
 			}
 		}
 		return createUnrecognizedEditPart(context, model);

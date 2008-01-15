@@ -52,7 +52,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createLEDName_5002Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getPart_Name(), };
+				.getIElement_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -77,7 +77,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createResistorName_5003Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getPart_Name(), };
+				.getIElement_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -102,7 +102,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createTerminalName_5004Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getTerminal_Name(), };
+				.getIElement_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -127,7 +127,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createGenericPartName_5005Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getPart_Name(), };
+				.getIElement_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -152,7 +152,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createTerminalName_5001Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getTerminal_Name(), };
+				.getIElement_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -177,7 +177,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createWireName_6001Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getConnection_Name(), };
+				.getIElement_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -202,32 +202,7 @@ public class FritzingParserProvider extends AbstractProvider implements
 	 */
 	protected IParser createTrackName_6002Parser() {
 		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getConnection_Name(), };
-		MessageFormatParser parser = new MessageFormatParser(features);
-		return parser;
-	}
-
-	/**
-	 * @generated
-	 */
-	private IParser legName_6003Parser;
-
-	/**
-	 * @generated
-	 */
-	private IParser getLegName_6003Parser() {
-		if (legName_6003Parser == null) {
-			legName_6003Parser = createLegName_6003Parser();
-		}
-		return legName_6003Parser;
-	}
-
-	/**
-	 * @generated
-	 */
-	protected IParser createLegName_6003Parser() {
-		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getConnection_Name(), };
+				.getIElement_Name(), };
 		MessageFormatParser parser = new MessageFormatParser(features);
 		return parser;
 	}
@@ -251,8 +226,6 @@ public class FritzingParserProvider extends AbstractProvider implements
 			return getWireName_6001Parser();
 		case TrackNameEditPart.VISUAL_ID:
 			return getTrackName_6002Parser();
-		case LegNameEditPart.VISUAL_ID:
-			return getLegName_6003Parser();
 		}
 		return null;
 	}

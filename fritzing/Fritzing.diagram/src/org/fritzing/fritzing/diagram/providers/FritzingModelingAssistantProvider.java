@@ -76,16 +76,6 @@ public class FritzingModelingAssistantProvider extends
 	public List getRelTypesOnSource(IAdaptable source) {
 		IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
 				.getAdapter(IGraphicalEditPart.class);
-		if (sourceEditPart instanceof TerminalEditPart) {
-			List types = new ArrayList();
-			types.add(FritzingElementTypes.Wire_4001);
-			return types;
-		}
-		if (sourceEditPart instanceof Terminal2EditPart) {
-			List types = new ArrayList();
-			types.add(FritzingElementTypes.Wire_4001);
-			return types;
-		}
 		return Collections.EMPTY_LIST;
 	}
 
@@ -95,16 +85,6 @@ public class FritzingModelingAssistantProvider extends
 	public List getRelTypesOnTarget(IAdaptable target) {
 		IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
-		if (targetEditPart instanceof TerminalEditPart) {
-			List types = new ArrayList();
-			types.add(FritzingElementTypes.Wire_4001);
-			return types;
-		}
-		if (targetEditPart instanceof Terminal2EditPart) {
-			List types = new ArrayList();
-			types.add(FritzingElementTypes.Wire_4001);
-			return types;
-		}
 		return Collections.EMPTY_LIST;
 	}
 
@@ -117,26 +97,6 @@ public class FritzingModelingAssistantProvider extends
 				.getAdapter(IGraphicalEditPart.class);
 		IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
-		if (sourceEditPart instanceof TerminalEditPart) {
-			List types = new ArrayList();
-			if (targetEditPart instanceof TerminalEditPart) {
-				types.add(FritzingElementTypes.Wire_4001);
-			}
-			if (targetEditPart instanceof Terminal2EditPart) {
-				types.add(FritzingElementTypes.Wire_4001);
-			}
-			return types;
-		}
-		if (sourceEditPart instanceof Terminal2EditPart) {
-			List types = new ArrayList();
-			if (targetEditPart instanceof TerminalEditPart) {
-				types.add(FritzingElementTypes.Wire_4001);
-			}
-			if (targetEditPart instanceof Terminal2EditPart) {
-				types.add(FritzingElementTypes.Wire_4001);
-			}
-			return types;
-		}
 		return Collections.EMPTY_LIST;
 	}
 
@@ -147,26 +107,6 @@ public class FritzingModelingAssistantProvider extends
 			IElementType relationshipType) {
 		IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
 				.getAdapter(IGraphicalEditPart.class);
-		if (targetEditPart instanceof TerminalEditPart) {
-			List types = new ArrayList();
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2003);
-			}
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_3001);
-			}
-			return types;
-		}
-		if (targetEditPart instanceof Terminal2EditPart) {
-			List types = new ArrayList();
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2003);
-			}
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_3001);
-			}
-			return types;
-		}
 		return Collections.EMPTY_LIST;
 	}
 
@@ -177,26 +117,6 @@ public class FritzingModelingAssistantProvider extends
 			IElementType relationshipType) {
 		IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
 				.getAdapter(IGraphicalEditPart.class);
-		if (sourceEditPart instanceof TerminalEditPart) {
-			List types = new ArrayList();
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2003);
-			}
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_3001);
-			}
-			return types;
-		}
-		if (sourceEditPart instanceof Terminal2EditPart) {
-			List types = new ArrayList();
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_2003);
-			}
-			if (relationshipType == FritzingElementTypes.Wire_4001) {
-				types.add(FritzingElementTypes.Terminal_3001);
-			}
-			return types;
-		}
 		return Collections.EMPTY_LIST;
 	}
 

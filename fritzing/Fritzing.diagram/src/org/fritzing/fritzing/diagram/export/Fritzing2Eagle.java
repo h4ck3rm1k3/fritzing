@@ -13,6 +13,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 
@@ -79,9 +80,9 @@ public class Fritzing2Eagle {
 				w.getTarget());
 			
 			System.out.println(">>> net " + net.netName +" - " + 
-				net.source.getParent().getName() + "." + 
+				((Terminal)net.source).getParent().getName() + "." + 
 				net.source.getName() + " --> " +
-				net.target.getParent().getName() + "." + 
+				((Terminal)net.target).getParent().getName() + "." + 
 				net.target.getName());
 			netList.add(net);
 		}

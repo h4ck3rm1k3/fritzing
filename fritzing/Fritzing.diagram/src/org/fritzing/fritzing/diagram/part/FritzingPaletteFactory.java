@@ -77,7 +77,6 @@ public class FritzingPaletteFactory {
 				Messages.Default1Group_title);
 		paletteContainer.setDescription(Messages.Default1Group_desc);
 		paletteContainer.add(createWire1CreationTool());
-		//paletteContainer.add(createLegCreationTool());
 		return paletteContainer;
 	}
 
@@ -86,11 +85,11 @@ public class FritzingPaletteFactory {
 		if (drawer == null) {
 			drawer = new SortPaletteDrawer(drawerName);
 			drawerMap.put(drawerName, drawer);
-						
-//			drawer.setSmallIcon(FritzingDiagramEditorPlugin
-//					.getBundledImageDescriptor("full/obj16/dot.gif") );
-//			drawer.setLargeIcon(FritzingDiagramEditorPlugin
-//					.getBundledImageDescriptor("full/obj16/dot.gif") );
+
+			//			drawer.setSmallIcon(FritzingDiagramEditorPlugin
+			//					.getBundledImageDescriptor("full/obj16/dot.gif") );
+			//			drawer.setLargeIcon(FritzingDiagramEditorPlugin
+			//					.getBundledImageDescriptor("full/obj16/dot.gif") );
 		}
 		return drawer;
 	}
@@ -213,8 +212,7 @@ public class FritzingPaletteFactory {
 	private ToolEntry createLegCreationTool() {
 		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
 		types.add(FritzingElementTypes.Leg_4003);
-		LinkToolEntry entry = new LinkToolEntry(
-				"Create Leg",
+		LinkToolEntry entry = new LinkToolEntry("Create Leg",
 				"Leg description", types);
 		entry.setSmallIcon(FritzingDiagramEditorPlugin
 				.getBundledImageDescriptor("icons/obj16/wireIconSmall.gif"));

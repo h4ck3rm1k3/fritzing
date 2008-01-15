@@ -119,7 +119,10 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 		if (getDiagramGraphicalViewer() instanceof DiagramGraphicalViewer) {
 			((DiagramGraphicalViewer) getDiagramGraphicalViewer())
 					.hookWorkspacePreferenceStore(getWorkspaceViewerPreferenceStore());
-			getWorkspaceViewerPreferenceStore().setDefault(
+			/* TODO: This hardcodes the values! It should actually be done using
+			 * setDefault(), but I don't know where -- doing this from here has no effect.
+			 */
+			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.GRIDLINECOLOR,
 					// SketchGridLayer.THIS_FORE.hashCode()
 					/* XXX: turns the grid color to (140,0,0,0) on Mac, because
@@ -128,11 +131,11 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 					 * So we hardcode the hashCode here:
 					 */
 					9211020);
-			getWorkspaceViewerPreferenceStore().setDefault(
+			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.GRIDLINESTYLE, SWT.LINE_SOLID);
-			getWorkspaceViewerPreferenceStore().setDefault(
+			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.GRIDORDER, false);
-			getWorkspaceViewerPreferenceStore().setDefault(
+			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.ZOOM, 1.0);
 		}
 		

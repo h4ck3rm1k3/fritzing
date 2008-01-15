@@ -11,6 +11,7 @@ import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.emf.type.core.commands.EditElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
 import org.fritzing.fritzing.Composite;
+import org.fritzing.fritzing.IWireConnection;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingBaseItemSemanticEditPolicy;
@@ -65,10 +66,10 @@ public class WireReorientCommand extends EditElementCommand {
 	 * @generated
 	 */
 	protected boolean canReorientSource() {
-		if (!(oldEnd instanceof Terminal && newEnd instanceof Terminal)) {
+		if (!(oldEnd instanceof IWireConnection && newEnd instanceof IWireConnection)) {
 			return false;
 		}
-		Terminal target = getLink().getTarget();
+		IWireConnection target = getLink().getTarget();
 		if (!(getLink().eContainer() instanceof Composite)) {
 			return false;
 		}
@@ -81,10 +82,10 @@ public class WireReorientCommand extends EditElementCommand {
 	 * @generated
 	 */
 	protected boolean canReorientTarget() {
-		if (!(oldEnd instanceof Terminal && newEnd instanceof Terminal)) {
+		if (!(oldEnd instanceof IWireConnection && newEnd instanceof IWireConnection)) {
 			return false;
 		}
-		Terminal source = getLink().getSource();
+		IWireConnection source = getLink().getSource();
 		if (!(getLink().eContainer() instanceof Composite)) {
 			return false;
 		}
@@ -137,28 +138,28 @@ public class WireReorientCommand extends EditElementCommand {
 	/**
 	 * @generated
 	 */
-	protected Terminal getOldSource() {
-		return (Terminal) oldEnd;
+	protected IWireConnection getOldSource() {
+		return (IWireConnection) oldEnd;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected Terminal getNewSource() {
-		return (Terminal) newEnd;
+	protected IWireConnection getNewSource() {
+		return (IWireConnection) newEnd;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected Terminal getOldTarget() {
-		return (Terminal) oldEnd;
+	protected IWireConnection getOldTarget() {
+		return (IWireConnection) oldEnd;
 	}
 
 	/**
 	 * @generated
 	 */
-	protected Terminal getNewTarget() {
-		return (Terminal) newEnd;
+	protected IWireConnection getNewTarget() {
+		return (IWireConnection) newEnd;
 	}
 }
