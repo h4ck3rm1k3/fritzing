@@ -65,35 +65,13 @@ public class PartItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
 			addSpeciesPropertyDescriptor(object);
 			addGenusPropertyDescriptor(object);
+			addNotePropertyDescriptor(object);
 			addVersionPropertyDescriptor(object);
 			addFootprintPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Name feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Part_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Part_name_feature", "_UI_Part_type"),
-				 FritzingPackage.Literals.PART__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -134,6 +112,28 @@ public class PartItemProvider
 				 FritzingPackage.Literals.PART__GENUS,
 				 false,
 				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Note feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addNotePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Part_note_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Part_note_feature", "_UI_Part_type"),
+				 FritzingPackage.Literals.PART__NOTE,
+				 true,
+				 true,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
@@ -241,10 +241,9 @@ public class PartItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(Part.class)) {
-			case FritzingPackage.PART__ID:
-			case FritzingPackage.PART__NAME:
 			case FritzingPackage.PART__SPECIES:
 			case FritzingPackage.PART__GENUS:
+			case FritzingPackage.PART__NOTE:
 			case FritzingPackage.PART__VERSION:
 			case FritzingPackage.PART__FOOTPRINT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
