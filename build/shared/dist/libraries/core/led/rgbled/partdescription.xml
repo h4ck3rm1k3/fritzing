@@ -15,11 +15,19 @@
 	<gridOffset x="298" y="133" units="himetric"/> <!-- 47x21 pixels -->
 	<bounds width="838" height="1168" units="himetric"/> <!-- 33x46 pixels -->
 	<connectors units="tenths">
-		<connector id="1" name="1" x="-1" y="5" type="leg" />
-		<connector id="2" name="2" x="0" y="5" type="leg" />
-		<connector id="3" name="3" x="1" y="5" type="leg" />
-		<connector id="4" name="4" x="2" y="5" type="leg" />
-	</connectors>
+    <connector id="1" name="1" x="-1" y="4" type="leg" >
+      <leg dx="0" dy="3" />
+    </connector>
+		<connector id="2" name="2" x="0" y="4" type="leg" >
+      <leg dx="0" dy="3" />
+    </connector>
+    <connector id="3" name="3" x="1" y="4" type="leg" >
+      <leg dx="0" dy="3" />
+    </connector>
+    <connector id="4" name="4" x="2" y="4" type="leg" >
+      <leg dx="0" dy="3" />
+    </connector>
+  </connectors>
 	<layers>
 		<layer type="image">
 				<image type="bitmap" source="part.png" zoom="1"/>
