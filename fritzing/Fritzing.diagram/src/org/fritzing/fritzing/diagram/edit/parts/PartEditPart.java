@@ -239,9 +239,8 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 						continue;
 					}
 					
-						
-					
-					child.getFigure().setVisible(false);
+					child.setLeg(true);
+										
 					FritzingLinkDescriptor fld = new FritzingLinkDescriptor(terminal, 
 							sketch,
 							terminal.getLeg(), FritzingElementTypes.Leg_4003, 4003);
@@ -265,9 +264,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 						DiagramCommandStack commandStack = this.getDiagramEditDomain()
 						.getDiagramCommandStack();
 						commandStack.execute(cmd2);	
-						
-												
-
 					}
 					else {
 						// alert the user?

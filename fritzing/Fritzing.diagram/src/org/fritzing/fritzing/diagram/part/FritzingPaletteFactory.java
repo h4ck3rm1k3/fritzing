@@ -77,7 +77,7 @@ public class FritzingPaletteFactory {
 				Messages.Default1Group_title);
 		paletteContainer.setDescription(Messages.Default1Group_desc);
 		paletteContainer.add(createWire1CreationTool());
-		paletteContainer.add(createLegCreationTool());
+		//paletteContainer.add(createLegCreationTool());
 		return paletteContainer;
 	}
 
@@ -173,7 +173,7 @@ public class FritzingPaletteFactory {
 		paletteRoot.setDefaultEntry(selectionPanTool);
 
 		standard.add(createWire1CreationTool());
-		standard.add(createLegCreationTool());
+		//standard.add(createLegCreationTool());
 	}
 
 	/**

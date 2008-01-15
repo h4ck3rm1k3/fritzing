@@ -95,6 +95,10 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		this.getPrimaryShape().setFemale(female);
 	}
 	
+	public void setLeg(boolean leg) {
+		this.getPrimaryShape().setLeg(leg);
+	}
+	
     public void showTargetFeedback(Request request) {
         super.showTargetFeedback(request);
     }
@@ -335,6 +339,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 		protected int standardTerminalConverted;
 		protected boolean female = false;
+		protected boolean leg = false;
 
 		/**
 		 * @generated NOT
@@ -345,6 +350,11 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
 			this.setPreferredSize(new Dimension(standardTerminalConverted, standardTerminalConverted));
+		}
+		
+		
+		public void setLeg(boolean leg) {
+			this.leg = leg;
 		}
 		
 		public void setFemale(boolean female) {
@@ -359,6 +369,12 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			}
 			
 			super.paint(graphics);
+		}
+		
+		public void paintFigure(Graphics graphics) {
+			if (!this.leg) {
+				super.paintFigure(graphics);
+			}
 		}
 
 		/**
