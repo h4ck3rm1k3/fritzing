@@ -206,13 +206,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 			// what about a signal when the PartFigure is created?
 			if (!legsInitialized) {
 				legsInitialized = true;
-					
-				// a different hack: connecting legs to parts seems to fail unless
-				// the z-order of the children of SketchEditPart are reordered in some way
-				// since this editpart is already at the top of the z-order, this repositionChildAt call should have no real effect on z-order
-				
-				int ix = this.getParent().getChildren().size() - 1;
-    			ViewUtil.repositionChildAt((View) this.getParent().getModel(), (View) this.getModel(), ix);		  	
  				initializeLegs();
 			}
 		}
@@ -246,11 +239,13 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 						continue;
 					}
 					
-											
+						
+					
 					child.getFigure().setVisible(false);
 					FritzingLinkDescriptor fld = new FritzingLinkDescriptor(terminal, 
 							sketch,
-							FritzingElementTypes.Leg_4003, 4003);
+							terminal.getLeg(), FritzingElementTypes.Leg_4003, 4003);
+					
 					
 					CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = new CreateConnectionViewRequest.ConnectionViewDescriptor(
 							fld.getSemanticAdapter(), "4003",
@@ -269,7 +264,7 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 					if (cmd2 != null && cmd2.canExecute()) {
 						DiagramCommandStack commandStack = this.getDiagramEditDomain()
 						.getDiagramCommandStack();
-						commandStack.execute(cmd2);		
+						commandStack.execute(cmd2);	
 						
 												
 
