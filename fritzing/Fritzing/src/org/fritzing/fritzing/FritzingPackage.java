@@ -114,6 +114,43 @@ public interface FritzingPackage extends EPackage {
 	int DOCUMENT_ROOT_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.IElement <em>IElement</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.IElement
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getIElement()
+	 * @generated
+	 */
+	int IELEMENT = 18;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IELEMENT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IELEMENT__ID = 1;
+
+	/**
+	 * The number of structural features of the '<em>IElement</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IELEMENT_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ElementImpl <em>Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -124,13 +161,31 @@ public interface FritzingPackage extends EPackage {
 	int ELEMENT = 2;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__NAME = IELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__ID = IELEMENT__ID;
+
+	/**
 	 * The number of structural features of the '<em>Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_FEATURE_COUNT = 0;
+	int ELEMENT_FEATURE_COUNT = IELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.TerminalImpl <em>Terminal</em>}' class.
@@ -143,22 +198,22 @@ public interface FritzingPackage extends EPackage {
 	int TERMINAL = 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TERMINAL__ID = ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINAL__NAME = ELEMENT_FEATURE_COUNT + 1;
+	int TERMINAL__NAME = ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TERMINAL__ID = ELEMENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -167,7 +222,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINAL__PARENT = ELEMENT_FEATURE_COUNT + 2;
+	int TERMINAL__PARENT = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Leg</b></em>' containment reference.
@@ -176,7 +231,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINAL__LEG = ELEMENT_FEATURE_COUNT + 3;
+	int TERMINAL__LEG = ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Terminal</em>' class.
@@ -185,7 +240,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINAL_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 4;
+	int TERMINAL_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ConnectionImpl <em>Connection</em>}' class.
@@ -204,7 +259,16 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION__NAME = ELEMENT_FEATURE_COUNT + 0;
+	int CONNECTION__NAME = ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTION__ID = ELEMENT__ID;
 
 	/**
 	 * The number of structural features of the '<em>Connection</em>' class.
@@ -213,7 +277,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTION_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 1;
+	int CONNECTION_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.WireImpl <em>Wire</em>}' class.
@@ -256,22 +320,22 @@ public interface FritzingPackage extends EPackage {
 	int PART = 4;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PART__ID = ELEMENT_FEATURE_COUNT + 0;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PART__NAME = ELEMENT_FEATURE_COUNT + 1;
+	int PART__NAME = ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PART__ID = ELEMENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -280,7 +344,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__SPECIES = ELEMENT_FEATURE_COUNT + 2;
+	int PART__SPECIES = ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Genus</b></em>' attribute.
@@ -289,7 +353,16 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__GENUS = ELEMENT_FEATURE_COUNT + 3;
+	int PART__GENUS = ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PART__NOTE = ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -298,7 +371,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__VERSION = ELEMENT_FEATURE_COUNT + 4;
+	int PART__VERSION = ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Footprint</b></em>' attribute.
@@ -307,7 +380,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__FOOTPRINT = ELEMENT_FEATURE_COUNT + 5;
+	int PART__FOOTPRINT = ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Terminals</b></em>' containment reference list.
@@ -316,7 +389,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__TERMINALS = ELEMENT_FEATURE_COUNT + 6;
+	int PART__TERMINALS = ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -325,7 +398,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__PARENT = ELEMENT_FEATURE_COUNT + 7;
+	int PART__PARENT = ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Tracks</b></em>' containment reference list.
@@ -334,7 +407,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART__TRACKS = ELEMENT_FEATURE_COUNT + 8;
+	int PART__TRACKS = ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Part</em>' class.
@@ -343,7 +416,7 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 9;
+	int PART_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.fritzing.fritzing.impl.ResistorImpl <em>Resistor</em>}' class.
@@ -416,15 +489,6 @@ public interface FritzingPackage extends EPackage {
 	int GENERIC_PART = 5;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GENERIC_PART__ID = PART__ID;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -432,6 +496,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int GENERIC_PART__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__ID = PART__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -450,6 +523,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int GENERIC_PART__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GENERIC_PART__NOTE = PART__NOTE;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -506,15 +588,6 @@ public interface FritzingPackage extends EPackage {
 	int GENERIC_PART_FEATURE_COUNT = PART_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RESISTOR__ID = PART__ID;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -522,6 +595,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESISTOR__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESISTOR__ID = PART__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -540,6 +622,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int RESISTOR__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RESISTOR__NOTE = PART__NOTE;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -605,15 +696,6 @@ public interface FritzingPackage extends EPackage {
 	int RESISTOR_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LED__ID = PART__ID;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -621,6 +703,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int LED__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LED__ID = PART__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -639,6 +730,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int LED__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LED__NOTE = PART__NOTE;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -704,15 +804,6 @@ public interface FritzingPackage extends EPackage {
 	int LED_FEATURE_COUNT = PART_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int COMPOSITE__ID = PART__ID;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -720,6 +811,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__ID = PART__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -738,6 +838,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int COMPOSITE__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOSITE__NOTE = PART__NOTE;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -812,15 +921,6 @@ public interface FritzingPackage extends EPackage {
 	int COMPOSITE_FEATURE_COUNT = PART_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SKETCH__ID = COMPOSITE__ID;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -828,6 +928,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int SKETCH__NAME = COMPOSITE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SKETCH__ID = COMPOSITE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -846,6 +955,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int SKETCH__GENUS = COMPOSITE__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SKETCH__NOTE = COMPOSITE__NOTE;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -920,15 +1038,6 @@ public interface FritzingPackage extends EPackage {
 	int SKETCH_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODULE__ID = COMPOSITE__ID;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -936,6 +1045,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE__NAME = COMPOSITE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__ID = COMPOSITE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -954,6 +1072,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODULE__GENUS = COMPOSITE__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODULE__NOTE = COMPOSITE__NOTE;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -1028,15 +1155,6 @@ public interface FritzingPackage extends EPackage {
 	int MODULE_FEATURE_COUNT = COMPOSITE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BREADBOARD__ID = PART__ID;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1044,6 +1162,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int BREADBOARD__NAME = PART__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__ID = PART__ID;
 
 	/**
 	 * The feature id for the '<em><b>Species</b></em>' attribute.
@@ -1062,6 +1189,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int BREADBOARD__GENUS = PART__GENUS;
+
+	/**
+	 * The feature id for the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BREADBOARD__NOTE = PART__NOTE;
 
 	/**
 	 * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -1145,6 +1281,15 @@ public interface FritzingPackage extends EPackage {
 	int WIRE__NAME = CONNECTION__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIRE__ID = CONNECTION__ID;
+
+	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1190,6 +1335,15 @@ public interface FritzingPackage extends EPackage {
 	int TRACK__NAME = CONNECTION__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRACK__ID = CONNECTION__ID;
+
+	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1226,13 +1380,31 @@ public interface FritzingPackage extends EPackage {
 	int TRACK_FEATURE_COUNT = CONNECTION_FEATURE_COUNT + 3;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITRACK_CONNECTION__NAME = IELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ITRACK_CONNECTION__ID = IELEMENT__ID;
+
+	/**
 	 * The number of structural features of the '<em>ITrack Connection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ITRACK_CONNECTION_FEATURE_COUNT = 0;
+	int ITRACK_CONNECTION_FEATURE_COUNT = IELEMENT_FEATURE_COUNT + 0;
 
 
 	/**
@@ -1253,6 +1425,15 @@ public interface FritzingPackage extends EPackage {
 	 * @ordered
 	 */
 	int LEG__NAME = CONNECTION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LEG__ID = CONNECTION__ID;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1301,13 +1482,69 @@ public interface FritzingPackage extends EPackage {
 	int ILEG_CONNECTION = 16;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ILEG_CONNECTION__NAME = IELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ILEG_CONNECTION__ID = IELEMENT__ID;
+
+	/**
 	 * The number of structural features of the '<em>ILeg Connection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ILEG_CONNECTION_FEATURE_COUNT = 0;
+	int ILEG_CONNECTION_FEATURE_COUNT = IELEMENT_FEATURE_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link org.fritzing.fritzing.IWireConnection <em>IWire Connection</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.fritzing.fritzing.IWireConnection
+	 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getIWireConnection()
+	 * @generated
+	 */
+	int IWIRE_CONNECTION = 17;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IWIRE_CONNECTION__NAME = IELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IWIRE_CONNECTION__ID = IELEMENT__ID;
+
+	/**
+	 * The number of structural features of the '<em>IWire Connection</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int IWIRE_CONNECTION_FEATURE_COUNT = IELEMENT_FEATURE_COUNT + 0;
 
 
 	/**
@@ -1375,28 +1612,6 @@ public interface FritzingPackage extends EPackage {
 	EClass getTerminal();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Terminal#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.fritzing.fritzing.Terminal#getId()
-	 * @see #getTerminal()
-	 * @generated
-	 */
-	EAttribute getTerminal_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Terminal#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.fritzing.fritzing.Terminal#getName()
-	 * @see #getTerminal()
-	 * @generated
-	 */
-	EAttribute getTerminal_Name();
-
-	/**
 	 * Returns the meta object for the container reference '{@link org.fritzing.fritzing.Terminal#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1437,17 +1652,6 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getConnection();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Connection#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.fritzing.fritzing.Connection#getName()
-	 * @see #getConnection()
-	 * @generated
-	 */
-	EAttribute getConnection_Name();
 
 	/**
 	 * Returns the meta object for class '{@link org.fritzing.fritzing.Wire <em>Wire</em>}'.
@@ -1577,6 +1781,48 @@ public interface FritzingPackage extends EPackage {
 	EClass getILegConnection();
 
 	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.IWireConnection <em>IWire Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>IWire Connection</em>'.
+	 * @see org.fritzing.fritzing.IWireConnection
+	 * @generated
+	 */
+	EClass getIWireConnection();
+
+	/**
+	 * Returns the meta object for class '{@link org.fritzing.fritzing.IElement <em>IElement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>IElement</em>'.
+	 * @see org.fritzing.fritzing.IElement
+	 * @generated
+	 */
+	EClass getIElement();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.IElement#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.fritzing.fritzing.IElement#getName()
+	 * @see #getIElement()
+	 * @generated
+	 */
+	EAttribute getIElement_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.IElement#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.fritzing.fritzing.IElement#getId()
+	 * @see #getIElement()
+	 * @generated
+	 */
+	EAttribute getIElement_Id();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.fritzing.fritzing.Wire#getTarget <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1609,28 +1855,6 @@ public interface FritzingPackage extends EPackage {
 	EClass getPart();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.fritzing.fritzing.Part#getId()
-	 * @see #getPart()
-	 * @generated
-	 */
-	EAttribute getPart_Id();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.fritzing.fritzing.Part#getName()
-	 * @see #getPart()
-	 * @generated
-	 */
-	EAttribute getPart_Name();
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getSpecies <em>Species</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1651,6 +1875,17 @@ public interface FritzingPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getPart_Genus();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getNote <em>Note</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Note</em>'.
+	 * @see org.fritzing.fritzing.Part#getNote()
+	 * @see #getPart()
+	 * @generated
+	 */
+	EAttribute getPart_Note();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.fritzing.fritzing.Part#getVersion <em>Version</em>}'.
@@ -1918,22 +2153,6 @@ public interface FritzingPackage extends EPackage {
 		EClass TERMINAL = eINSTANCE.getTerminal();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TERMINAL__ID = eINSTANCE.getTerminal_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TERMINAL__NAME = eINSTANCE.getTerminal_Name();
-
-		/**
 		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1968,14 +2187,6 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CONNECTION = eINSTANCE.getConnection();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CONNECTION__NAME = eINSTANCE.getConnection_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.fritzing.fritzing.impl.WireImpl <em>Wire</em>}' class.
@@ -2084,6 +2295,42 @@ public interface FritzingPackage extends EPackage {
 		EClass ILEG_CONNECTION = eINSTANCE.getILegConnection();
 
 		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.IWireConnection <em>IWire Connection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.IWireConnection
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getIWireConnection()
+		 * @generated
+		 */
+		EClass IWIRE_CONNECTION = eINSTANCE.getIWireConnection();
+
+		/**
+		 * The meta object literal for the '{@link org.fritzing.fritzing.IElement <em>IElement</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.fritzing.fritzing.IElement
+		 * @see org.fritzing.fritzing.impl.FritzingPackageImpl#getIElement()
+		 * @generated
+		 */
+		EClass IELEMENT = eINSTANCE.getIElement();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IELEMENT__NAME = eINSTANCE.getIElement_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute IELEMENT__ID = eINSTANCE.getIElement_Id();
+
+		/**
 		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2110,22 +2357,6 @@ public interface FritzingPackage extends EPackage {
 		EClass PART = eINSTANCE.getPart();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PART__ID = eINSTANCE.getPart_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PART__NAME = eINSTANCE.getPart_Name();
-
-		/**
 		 * The meta object literal for the '<em><b>Species</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2140,6 +2371,14 @@ public interface FritzingPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PART__GENUS = eINSTANCE.getPart_Genus();
+
+		/**
+		 * The meta object literal for the '<em><b>Note</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PART__NOTE = eINSTANCE.getPart_Note();
 
 		/**
 		 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.

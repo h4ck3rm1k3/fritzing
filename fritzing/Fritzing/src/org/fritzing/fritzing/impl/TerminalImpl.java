@@ -27,8 +27,6 @@ import org.fritzing.fritzing.Terminal;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.fritzing.fritzing.impl.TerminalImpl#getLeg <em>Leg</em>}</li>
  * </ul>
@@ -37,46 +35,6 @@ import org.fritzing.fritzing.Terminal;
  * @generated
  */
 public class TerminalImpl extends ElementImpl implements Terminal {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
 	/**
 	 * The cached value of the '{@link #getLeg() <em>Leg</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -104,48 +62,6 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 	@Override
 	protected EClass eStaticClass() {
 		return FritzingPackage.Literals.TERMINAL;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.TERMINAL__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.TERMINAL__NAME, oldName, name));
 	}
 
 	/**
@@ -290,10 +206,6 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case FritzingPackage.TERMINAL__ID:
-				return getId();
-			case FritzingPackage.TERMINAL__NAME:
-				return getName();
 			case FritzingPackage.TERMINAL__PARENT:
 				return getParent();
 			case FritzingPackage.TERMINAL__LEG:
@@ -310,12 +222,6 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case FritzingPackage.TERMINAL__ID:
-				setId((String)newValue);
-				return;
-			case FritzingPackage.TERMINAL__NAME:
-				setName((String)newValue);
-				return;
 			case FritzingPackage.TERMINAL__PARENT:
 				setParent((Part)newValue);
 				return;
@@ -334,12 +240,6 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case FritzingPackage.TERMINAL__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case FritzingPackage.TERMINAL__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 			case FritzingPackage.TERMINAL__PARENT:
 				setParent((Part)null);
 				return;
@@ -358,34 +258,12 @@ public class TerminalImpl extends ElementImpl implements Terminal {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case FritzingPackage.TERMINAL__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case FritzingPackage.TERMINAL__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case FritzingPackage.TERMINAL__PARENT:
 				return getParent() != null;
 			case FritzingPackage.TERMINAL__LEG:
 				return leg != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
 	}
 
 } //TerminalImpl

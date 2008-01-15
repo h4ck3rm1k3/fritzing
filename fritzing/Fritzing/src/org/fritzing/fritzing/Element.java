@@ -18,5 +18,5 @@ import org.eclipse.emf.ecore.EObject;
  *        extendedMetaData="name='Element' kind='elementOnly'"
  * @generated
  */
-public interface Element extends EObject {
+public interface Element extends IElement {
 } // Element

@@ -17,5 +17,5 @@ import org.eclipse.emf.ecore.EObject;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface ITrackConnection extends EObject {
+public interface ITrackConnection extends IElement {
 } // ITrackConnection

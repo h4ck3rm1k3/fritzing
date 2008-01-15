@@ -38,7 +38,7 @@ public interface Track extends Connection, ITrackConnection {
 	 * @see #setParent(Part)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTrack_Parent()
 	 * @see org.fritzing.fritzing.Part#getTracks
-	 * @model opposite="tracks" keys="id"
+	 * @model opposite="tracks"
 	 * @generated
 	 */
 	Part getParent();
@@ -64,7 +64,7 @@ public interface Track extends Connection, ITrackConnection {
 	 * @return the value of the '<em>Target</em>' reference.
 	 * @see #setTarget(ITrackConnection)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTrack_Target()
-	 * @model required="true"
+	 * @model keys="id" required="true"
 	 *        extendedMetaData="kind='attribute' name='target'"
 	 * @generated
 	 */
@@ -91,7 +91,7 @@ public interface Track extends Connection, ITrackConnection {
 	 * @return the value of the '<em>Source</em>' reference.
 	 * @see #setSource(ITrackConnection)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTrack_Source()
-	 * @model required="true"
+	 * @model keys="id" required="true"
 	 *        extendedMetaData="kind='attribute' name='source'"
 	 * @generated
 	 */

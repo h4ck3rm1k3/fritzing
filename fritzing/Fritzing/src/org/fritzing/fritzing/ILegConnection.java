@@ -17,5 +17,5 @@ import org.eclipse.emf.ecore.EObject;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface ILegConnection extends EObject {
+public interface ILegConnection extends IElement {
 } // ILegConnection

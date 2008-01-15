@@ -24,7 +24,7 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Leg' kind='empty'"
  * @generated
  */
-public interface Leg extends Connection, ILegConnection {
+public interface Leg extends Connection, ILegConnection, IWireConnection {
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.fritzing.fritzing.Terminal#getLeg <em>Leg</em>}'.
@@ -64,7 +64,8 @@ public interface Leg extends Connection, ILegConnection {
 	 * @return the value of the '<em>Target</em>' reference.
 	 * @see #setTarget(ILegConnection)
 	 * @see org.fritzing.fritzing.FritzingPackage#getLeg_Target()
-	 * @model extendedMetaData="kind='attribute' name='target'"
+	 * @model keys="id"
+	 *        extendedMetaData="kind='attribute' name='target'"
 	 * @generated
 	 */
 	ILegConnection getTarget();
@@ -90,7 +91,7 @@ public interface Leg extends Connection, ILegConnection {
 	 * @return the value of the '<em>Source</em>' reference.
 	 * @see #setSource(ILegConnection)
 	 * @see org.fritzing.fritzing.FritzingPackage#getLeg_Source()
-	 * @model required="true"
+	 * @model keys="id" required="true"
 	 *        extendedMetaData="kind='attribute' name='source'"
 	 * @generated
 	 */

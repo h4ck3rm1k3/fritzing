@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.IWireConnection;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 
@@ -44,7 +45,7 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * @generated
 	 * @ordered
 	 */
-	protected Terminal target;
+	protected IWireConnection target;
 
 	/**
 	 * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
@@ -54,7 +55,7 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * @generated
 	 * @ordered
 	 */
-	protected Terminal source;
+	protected IWireConnection source;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -80,10 +81,10 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Terminal getSource() {
+	public IWireConnection getSource() {
 		if (source != null && source.eIsProxy()) {
 			InternalEObject oldSource = (InternalEObject)source;
-			source = (Terminal)eResolveProxy(oldSource);
+			source = (IWireConnection)eResolveProxy(oldSource);
 			if (source != oldSource) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FritzingPackage.WIRE__SOURCE, oldSource, source));
@@ -97,7 +98,7 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Terminal basicGetSource() {
+	public IWireConnection basicGetSource() {
 		return source;
 	}
 
@@ -106,8 +107,8 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setSource(Terminal newSource) {
-		Terminal oldSource = source;
+	public void setSource(IWireConnection newSource) {
+		IWireConnection oldSource = source;
 		source = newSource;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.WIRE__SOURCE, oldSource, source));
@@ -118,10 +119,10 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Terminal getTarget() {
+	public IWireConnection getTarget() {
 		if (target != null && target.eIsProxy()) {
 			InternalEObject oldTarget = (InternalEObject)target;
-			target = (Terminal)eResolveProxy(oldTarget);
+			target = (IWireConnection)eResolveProxy(oldTarget);
 			if (target != oldTarget) {
 				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FritzingPackage.WIRE__TARGET, oldTarget, target));
@@ -135,7 +136,7 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Terminal basicGetTarget() {
+	public IWireConnection basicGetTarget() {
 		return target;
 	}
 
@@ -144,8 +145,8 @@ public class WireImpl extends ConnectionImpl implements Wire {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTarget(Terminal newTarget) {
-		Terminal oldTarget = target;
+	public void setTarget(IWireConnection newTarget) {
+		IWireConnection oldTarget = target;
 		target = newTarget;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, FritzingPackage.WIRE__TARGET, oldTarget, target));
@@ -268,10 +269,10 @@ public class WireImpl extends ConnectionImpl implements Wire {
 				setParent((Composite)newValue);
 				return;
 			case FritzingPackage.WIRE__TARGET:
-				setTarget((Terminal)newValue);
+				setTarget((IWireConnection)newValue);
 				return;
 			case FritzingPackage.WIRE__SOURCE:
-				setSource((Terminal)newValue);
+				setSource((IWireConnection)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -289,10 +290,10 @@ public class WireImpl extends ConnectionImpl implements Wire {
 				setParent((Composite)null);
 				return;
 			case FritzingPackage.WIRE__TARGET:
-				setTarget((Terminal)null);
+				setTarget((IWireConnection)null);
 				return;
 			case FritzingPackage.WIRE__SOURCE:
-				setSource((Terminal)null);
+				setSource((IWireConnection)null);
 				return;
 		}
 		super.eUnset(featureID);

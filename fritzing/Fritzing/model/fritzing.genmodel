@@ -16,21 +16,16 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//DocumentRoot/sketch"/>
     </genClasses>
     <genClasses ecoreClass="fritzing.ecore#//Terminal">
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Terminal/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Terminal/name"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Terminal/parent"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Terminal/leg"/>
     </genClasses>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Element"/>
-    <genClasses image="false" ecoreClass="fritzing.ecore#//Connection">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Connection/name"/>
-    </genClasses>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//Connection"/>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Part">
-      <genFeatures property="None" createChild="false" propertyDescription="" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/name"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/species"/>
       <genFeatures property="Readonly" createChild="false" propertyDescription=""
           ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/genus"/>
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/note"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/footprint"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/terminals"/>
@@ -71,5 +66,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference fritzing.ecore#//Leg/source"/>
     </genClasses>
     <genClasses image="false" ecoreClass="fritzing.ecore#//ILegConnection"/>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//IWireConnection"/>
+    <genClasses image="false" ecoreClass="fritzing.ecore#//IElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//IElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//IElement/id"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

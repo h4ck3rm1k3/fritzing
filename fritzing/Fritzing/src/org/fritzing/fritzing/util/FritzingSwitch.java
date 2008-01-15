@@ -98,12 +98,15 @@ public class FritzingSwitch<T> {
 				if (result == null) result = caseElement(terminal);
 				if (result == null) result = caseITrackConnection(terminal);
 				if (result == null) result = caseILegConnection(terminal);
+				if (result == null) result = caseIWireConnection(terminal);
+				if (result == null) result = caseIElement(terminal);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case FritzingPackage.ELEMENT: {
 				Element element = (Element)theEObject;
 				T result = caseElement(element);
+				if (result == null) result = caseIElement(element);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -111,6 +114,7 @@ public class FritzingSwitch<T> {
 				Connection connection = (Connection)theEObject;
 				T result = caseConnection(connection);
 				if (result == null) result = caseElement(connection);
+				if (result == null) result = caseIElement(connection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -118,6 +122,7 @@ public class FritzingSwitch<T> {
 				Part part = (Part)theEObject;
 				T result = casePart(part);
 				if (result == null) result = caseElement(part);
+				if (result == null) result = caseIElement(part);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -126,6 +131,7 @@ public class FritzingSwitch<T> {
 				T result = caseGenericPart(genericPart);
 				if (result == null) result = casePart(genericPart);
 				if (result == null) result = caseElement(genericPart);
+				if (result == null) result = caseIElement(genericPart);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -134,6 +140,7 @@ public class FritzingSwitch<T> {
 				T result = caseResistor(resistor);
 				if (result == null) result = casePart(resistor);
 				if (result == null) result = caseElement(resistor);
+				if (result == null) result = caseIElement(resistor);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -142,6 +149,7 @@ public class FritzingSwitch<T> {
 				T result = caseLED(led);
 				if (result == null) result = casePart(led);
 				if (result == null) result = caseElement(led);
+				if (result == null) result = caseIElement(led);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -150,6 +158,7 @@ public class FritzingSwitch<T> {
 				T result = caseComposite(composite);
 				if (result == null) result = casePart(composite);
 				if (result == null) result = caseElement(composite);
+				if (result == null) result = caseIElement(composite);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -159,6 +168,7 @@ public class FritzingSwitch<T> {
 				if (result == null) result = caseComposite(sketch);
 				if (result == null) result = caseILegConnection(sketch);
 				if (result == null) result = casePart(sketch);
+				if (result == null) result = caseIElement(sketch);
 				if (result == null) result = caseElement(sketch);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -169,6 +179,7 @@ public class FritzingSwitch<T> {
 				if (result == null) result = caseComposite(module);
 				if (result == null) result = casePart(module);
 				if (result == null) result = caseElement(module);
+				if (result == null) result = caseIElement(module);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -177,6 +188,7 @@ public class FritzingSwitch<T> {
 				T result = caseBreadboard(breadboard);
 				if (result == null) result = casePart(breadboard);
 				if (result == null) result = caseElement(breadboard);
+				if (result == null) result = caseIElement(breadboard);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -186,6 +198,7 @@ public class FritzingSwitch<T> {
 				if (result == null) result = caseConnection(wire);
 				if (result == null) result = caseILegConnection(wire);
 				if (result == null) result = caseElement(wire);
+				if (result == null) result = caseIElement(wire);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -195,12 +208,14 @@ public class FritzingSwitch<T> {
 				if (result == null) result = caseConnection(track);
 				if (result == null) result = caseITrackConnection(track);
 				if (result == null) result = caseElement(track);
+				if (result == null) result = caseIElement(track);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case FritzingPackage.ITRACK_CONNECTION: {
 				ITrackConnection iTrackConnection = (ITrackConnection)theEObject;
 				T result = caseITrackConnection(iTrackConnection);
+				if (result == null) result = caseIElement(iTrackConnection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -209,13 +224,29 @@ public class FritzingSwitch<T> {
 				T result = caseLeg(leg);
 				if (result == null) result = caseConnection(leg);
 				if (result == null) result = caseILegConnection(leg);
+				if (result == null) result = caseIWireConnection(leg);
 				if (result == null) result = caseElement(leg);
+				if (result == null) result = caseIElement(leg);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case FritzingPackage.ILEG_CONNECTION: {
 				ILegConnection iLegConnection = (ILegConnection)theEObject;
 				T result = caseILegConnection(iLegConnection);
+				if (result == null) result = caseIElement(iLegConnection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.IWIRE_CONNECTION: {
+				IWireConnection iWireConnection = (IWireConnection)theEObject;
+				T result = caseIWireConnection(iWireConnection);
+				if (result == null) result = caseIElement(iWireConnection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case FritzingPackage.IELEMENT: {
+				IElement iElement = (IElement)theEObject;
+				T result = caseIElement(iElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -355,6 +386,36 @@ public class FritzingSwitch<T> {
 	 * @generated
 	 */
 	public T caseILegConnection(ILegConnection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IWire Connection</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IWire Connection</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIWireConnection(IWireConnection object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IElement</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IElement</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIElement(IElement object) {
 		return null;
 	}
 

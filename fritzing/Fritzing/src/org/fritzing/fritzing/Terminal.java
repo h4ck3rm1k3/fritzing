@@ -14,8 +14,6 @@ package org.fritzing.fritzing;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.fritzing.fritzing.Terminal#getId <em>Id</em>}</li>
- *   <li>{@link org.fritzing.fritzing.Terminal#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Terminal#getParent <em>Parent</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Terminal#getLeg <em>Leg</em>}</li>
  * </ul>
@@ -25,61 +23,7 @@ package org.fritzing.fritzing;
  * @model extendedMetaData="name='Terminal' kind='empty'"
  * @generated
  */
-public interface Terminal extends Element, ITrackConnection, ILegConnection {
-	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see org.fritzing.fritzing.FritzingPackage#getTerminal_Id()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name='id' kind='attribute'"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link org.fritzing.fritzing.Terminal#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.fritzing.fritzing.FritzingPackage#getTerminal_Name()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name='name' kind='attribute'"
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link org.fritzing.fritzing.Terminal#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
-
+public interface Terminal extends Element, ITrackConnection, ILegConnection, IWireConnection {
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.fritzing.fritzing.Part#getTerminals <em>Terminals</em>}'.
@@ -93,7 +37,7 @@ public interface Terminal extends Element, ITrackConnection, ILegConnection {
 	 * @see #setParent(Part)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTerminal_Parent()
 	 * @see org.fritzing.fritzing.Part#getTerminals
-	 * @model opposite="terminals" keys="id"
+	 * @model opposite="terminals"
 	 * @generated
 	 */
 	Part getParent();
@@ -121,7 +65,7 @@ public interface Terminal extends Element, ITrackConnection, ILegConnection {
 	 * @see #setLeg(Leg)
 	 * @see org.fritzing.fritzing.FritzingPackage#getTerminal_Leg()
 	 * @see org.fritzing.fritzing.Leg#getParent
-	 * @model opposite="parent" containment="true" keys="name"
+	 * @model opposite="parent" containment="true" keys="id"
 	 * @generated
 	 */
 	Leg getLeg();

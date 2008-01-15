@@ -139,6 +139,14 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 				return createILegConnectionAdapter();
 			}
 			@Override
+			public Adapter caseIWireConnection(IWireConnection object) {
+				return createIWireConnectionAdapter();
+			}
+			@Override
+			public Adapter caseIElement(IElement object) {
+				return createIElementAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -281,6 +289,34 @@ public class FritzingAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createILegConnectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.IWireConnection <em>IWire Connection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.IWireConnection
+	 * @generated
+	 */
+	public Adapter createIWireConnectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.fritzing.fritzing.IElement <em>IElement</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.fritzing.fritzing.IElement
+	 * @generated
+	 */
+	public Adapter createIElementAdapter() {
 		return null;
 	}
 

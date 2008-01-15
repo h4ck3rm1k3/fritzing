@@ -15,10 +15,9 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.fritzing.fritzing.Part#getId <em>Id</em>}</li>
- *   <li>{@link org.fritzing.fritzing.Part#getName <em>Name</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getSpecies <em>Species</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getGenus <em>Genus</em>}</li>
+ *   <li>{@link org.fritzing.fritzing.Part#getNote <em>Note</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getFootprint <em>Footprint</em>}</li>
  *   <li>{@link org.fritzing.fritzing.Part#getTerminals <em>Terminals</em>}</li>
@@ -33,60 +32,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Part extends Element {
-	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Id()
-	 * @model id="true" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name='id' kind='attribute'"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link org.fritzing.fritzing.Part#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Name()
-	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
-	 *        extendedMetaData="name='name' kind='attribute'"
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link org.fritzing.fritzing.Part#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
-
 	/**
 	 * Returns the value of the '<em><b>Species</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -140,6 +85,33 @@ public interface Part extends Element {
 	 * @generated
 	 */
 	void setGenus(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Note</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Note</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Note</em>' attribute.
+	 * @see #setNote(String)
+	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Note()
+	 * @model unique="false" dataType="org.eclipse.emf.ecore.xml.type.String"
+	 *        extendedMetaData="name='note' kind='attribute'"
+	 * @generated
+	 */
+	String getNote();
+
+	/**
+	 * Sets the value of the '{@link org.fritzing.fritzing.Part#getNote <em>Note</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Note</em>' attribute.
+	 * @see #getNote()
+	 * @generated
+	 */
+	void setNote(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Version</b></em>' attribute.
@@ -227,7 +199,7 @@ public interface Part extends Element {
 	 * @see #setParent(Composite)
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Parent()
 	 * @see org.fritzing.fritzing.Composite#getParts
-	 * @model opposite="parts" keys="id"
+	 * @model opposite="parts"
 	 * @generated
 	 */
 	Composite getParent();
@@ -255,7 +227,7 @@ public interface Part extends Element {
 	 * @return the value of the '<em>Tracks</em>' containment reference list.
 	 * @see org.fritzing.fritzing.FritzingPackage#getPart_Tracks()
 	 * @see org.fritzing.fritzing.Track#getParent
-	 * @model opposite="parent" containment="true"
+	 * @model opposite="parent" containment="true" keys="id"
 	 * @generated
 	 */
 	EList<Track> getTracks();

@@ -34,13 +34,13 @@ public interface Wire extends Connection, ILegConnection {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Source</em>' reference.
-	 * @see #setSource(Terminal)
+	 * @see #setSource(IWireConnection)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Source()
 	 * @model keys="id" required="true"
 	 *        extendedMetaData="kind='attribute' name='source'"
 	 * @generated
 	 */
-	Terminal getSource();
+	IWireConnection getSource();
 
 	/**
 	 * Sets the value of the '{@link org.fritzing.fritzing.Wire#getSource <em>Source</em>}' reference.
@@ -50,7 +50,7 @@ public interface Wire extends Connection, ILegConnection {
 	 * @see #getSource()
 	 * @generated
 	 */
-	void setSource(Terminal value);
+	void setSource(IWireConnection value);
 
 	/**
 	 * Returns the value of the '<em><b>Target</b></em>' reference.
@@ -61,13 +61,13 @@ public interface Wire extends Connection, ILegConnection {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Target</em>' reference.
-	 * @see #setTarget(Terminal)
+	 * @see #setTarget(IWireConnection)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Target()
 	 * @model keys="id" required="true"
 	 *        extendedMetaData="kind='attribute' name='target'"
 	 * @generated
 	 */
-	Terminal getTarget();
+	IWireConnection getTarget();
 
 	/**
 	 * Sets the value of the '{@link org.fritzing.fritzing.Wire#getTarget <em>Target</em>}' reference.
@@ -77,7 +77,7 @@ public interface Wire extends Connection, ILegConnection {
 	 * @see #getTarget()
 	 * @generated
 	 */
-	void setTarget(Terminal value);
+	void setTarget(IWireConnection value);
 
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
@@ -92,7 +92,7 @@ public interface Wire extends Connection, ILegConnection {
 	 * @see #setParent(Composite)
 	 * @see org.fritzing.fritzing.FritzingPackage#getWire_Parent()
 	 * @see org.fritzing.fritzing.Composite#getWires
-	 * @model opposite="wires" keys="id"
+	 * @model opposite="wires"
 	 * @generated
 	 */
 	Composite getParent();

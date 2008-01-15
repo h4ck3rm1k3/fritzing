@@ -19,7 +19,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#LEDName"/>
         <features
-            href="fritzing.ecore#//Part/name"/>
+            href="fritzing.ecore#//IElement/name"/>
       </labelMappings>
       <diagramNode
           href="fritzing.gmfgraph#LED"/>
@@ -44,7 +44,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#ResistorName"/>
         <features
-            href="fritzing.ecore#//Part/name"/>
+            href="fritzing.ecore#//IElement/name"/>
       </labelMappings>
       <diagramNode
           href="fritzing.gmfgraph#Resistor"/>
@@ -66,7 +66,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#TerminalName"/>
         <features
-            href="fritzing.ecore#//Terminal/name"/>
+            href="fritzing.ecore#//IElement/name"/>
       </labelMappings>
       <diagramNode
           href="fritzing.gmfgraph#Terminal"/>
@@ -86,7 +86,7 @@
         <diagramLabel
             href="fritzing.gmfgraph#GenericPartName"/>
         <features
-            href="fritzing.ecore#//Part/name"/>
+            href="fritzing.ecore#//IElement/name"/>
       </labelMappings>
       <diagramNode
           href="fritzing.gmfgraph#GenericPart"/>
@@ -105,7 +105,7 @@
       <diagramLabel
           href="fritzing.gmfgraph#WireName"/>
       <features
-          href="fritzing.ecore#//Connection/name"/>
+          href="fritzing.ecore#//IElement/name"/>
     </labelMappings>
     <containmentFeature
         href="fritzing.ecore#//Composite/wires"/>
@@ -133,7 +133,7 @@
       <diagramLabel
           href="fritzing.gmfgraph#TrackName"/>
       <features
-          href="fritzing.ecore#//Connection/name"/>
+          href="fritzing.ecore#//IElement/name"/>
     </labelMappings>
     <containmentFeature
         href="fritzing.ecore#//Part/tracks"/>
@@ -153,13 +153,6 @@
   <links>
     <domainMetaElement
         href="fritzing.ecore#//Leg"/>
-    <labelMappings
-        xsi:type="gmfmap:FeatureLabelMapping">
-      <diagramLabel
-          href="fritzing.gmfgraph#LegName"/>
-      <features
-          href="fritzing.ecore#//Connection/name"/>
-    </labelMappings>
     <containmentFeature
         href="fritzing.ecore#//Terminal/leg"/>
     <diagramLink

@@ -44,19 +44,8 @@
         name="LegFigure">
       <actualFigure
           xsi:type="gmfgraph:PolylineConnection"
-          name="LegFigure">
-        <children
-            xsi:type="gmfgraph:Label"
-            name="LegNameFigure"
-            text="..">
-          <font
-              xsi:type="gmfgraph:BasicFont"
-              height="8"/>
-        </children>
-      </actualFigure>
-      <accessors
-          accessor="getFigureLegNameFigure"
-          figure="//@figures.0/@descriptors.2/@actualFigure/@children.0"/>
+          name="LegFigure"
+          lineWidth="2"/>
     </descriptors>
     <descriptors
         name="ResistorFigure">
@@ -266,17 +255,6 @@
       figure="TrackFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.1/@accessors.0">
-    <facets
-        xsi:type="gmfgraph:AlignmentFacet"
-        alignment="CENTER"/>
-    <facets
-        xsi:type="gmfgraph:LabelOffsetFacet"/>
-  </labels>
-  <labels
-      name="LegName"
-      figure="LegFigure"
-      elementIcon="false"
-      accessor="//@figures.0/@descriptors.2/@accessors.0">
     <facets
         xsi:type="gmfgraph:AlignmentFacet"
         alignment="CENTER"/>

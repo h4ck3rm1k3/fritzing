@@ -58,7 +58,7 @@ public interface Composite extends Part {
 	 * @return the value of the '<em>Wires</em>' containment reference list.
 	 * @see org.fritzing.fritzing.FritzingPackage#getComposite_Wires()
 	 * @see org.fritzing.fritzing.Wire#getParent
-	 * @model opposite="parent" containment="true" keys="name"
+	 * @model opposite="parent" containment="true" keys="id"
 	 *        extendedMetaData="kind='element' name='wire'"
 	 * @generated
 	 */
