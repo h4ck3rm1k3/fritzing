@@ -13,6 +13,7 @@ import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Insets;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PrecisionPoint;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
@@ -30,12 +31,14 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPo
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateConnectionViewRequest;
 import org.eclipse.gmf.runtime.draw2d.ui.internal.figures.TransparentBorder;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.SlidableAnchor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
+import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart.TerminalAnchor;
 import org.fritzing.fritzing.diagram.edit.policies.Terminal2ItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
@@ -70,6 +73,8 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated
 	 */
 	protected IFigure primaryShape;
+	
+	protected ConnectionAnchor legConnectionAnchor;
 
 	/**
 	 * @generated
@@ -77,13 +82,25 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	public Terminal2EditPart(View view) {
 		super(view);
 	}
+	
+	public Point getLegTargetPosition() {
+		if (this.getParent() instanceof PartEditPart) {
+			return ((PartEditPart) this.getParent()).getLegTargetPosition(this);
+		}
+		
+		return null;
+	}
+	
+	public void setFemale(boolean female) {
+		this.getPrimaryShape().setFemale(female);
+	}
+	
+    public void showTargetFeedback(Request request) {
+        super.showTargetFeedback(request);
+    }
 
-	/**
-	 * @generated NOT
-	 */
-	public void refreshAll() {
-		this.refreshSourceConnections();
-		this.refreshTargetConnections();
+	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
+		return super.getTargetConnectionAnchor(request);
 	}
 
 	/**
@@ -178,15 +195,8 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	protected void addBorderItem(IFigure borderItemContainer,
 			IBorderItemEditPart borderItemEditPart) {
 		if (borderItemEditPart instanceof TerminalName2EditPart) {
-			int positionConstants = PositionConstants.SOUTH_WEST;
-			if (this.getParent() instanceof PartEditPart) {
-				positionConstants = ((PartEditPart) this.getParent())
-						.getTerminalNamePosition(this,
-								(TerminalName2EditPart) borderItemEditPart,
-								PositionConstants.SOUTH_WEST);
-			}
 			BorderItemLocator locator = new BorderItemLocator(getMainFigure(),
-					positionConstants);
+					PositionConstants.SOUTH_WEST);
 			locator.setBorderItemOffset(new Dimension(0, 0));
 			borderItemContainer.add(borderItemEditPart.getFigure(), locator);
 		} else {
@@ -269,6 +279,14 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 				.getType(TerminalName2EditPart.VISUAL_ID));
 	}
 
+	void setLegConnectionAnchor(ConnectionAnchor ca) {
+		legConnectionAnchor = ca;
+	}
+	
+	ConnectionAnchor getLegConnectionAnchor() {
+		return legConnectionAnchor;
+	}
+
 	public class TerminalDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
 
 		public TerminalDefaultSizeNodeFigure(Dimension defSize) {
@@ -279,20 +297,12 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			super(width, height);
 		}
 
-		protected ConnectionAnchor createAnchor(PrecisionPoint p) {
-			return super.createAnchor(null);
-		}
-
-		protected ConnectionAnchor createConnectionAnchor(PrecisionPoint p) {
-			return super.createConnectionAnchor(null);
-		}
-
-		public ConnectionAnchor getConnectionAnchor(String terminal) {
-			return super.getConnectionAnchor(szAnchor);
-		}
-
 		protected ConnectionAnchor createDefaultAnchor() {
 			return new TerminalSlidableAnchor(this);
+		}
+		
+		public ConnectionAnchor getTargetConnectionAnchorAt(Point p) {
+			return createDefaultAnchor();
 		}
 	}
 
@@ -317,13 +327,14 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		}
 
 	}
-
+	
 	/**
 	 * @generated
 	 */
 	public class TerminalFigure extends RectangleFigure {
 
 		protected int standardTerminalConverted;
+		protected boolean female = false;
 
 		/**
 		 * @generated NOT
@@ -334,6 +345,20 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
 			this.setPreferredSize(new Dimension(standardTerminalConverted, standardTerminalConverted));
+		}
+		
+		public void setFemale(boolean female) {
+			this.female = female;
+			this.setVisible(female);
+		}
+		
+		public void paint(Graphics graphics) {
+			if (this.female) {
+				this.setVisible(false);
+				return;
+			}
+			
+			super.paint(graphics);
 		}
 
 		/**

@@ -77,6 +77,7 @@ public class FritzingPaletteFactory {
 				Messages.Default1Group_title);
 		paletteContainer.setDescription(Messages.Default1Group_desc);
 		paletteContainer.add(createWire1CreationTool());
+		paletteContainer.add(createLegCreationTool());
 		return paletteContainer;
 	}
 
@@ -172,6 +173,7 @@ public class FritzingPaletteFactory {
 		paletteRoot.setDefaultEntry(selectionPanTool);
 
 		standard.add(createWire1CreationTool());
+		standard.add(createLegCreationTool());
 	}
 
 	/**
@@ -198,6 +200,22 @@ public class FritzingPaletteFactory {
 		LinkToolEntry entry = new LinkToolEntry(
 				Messages.Wire1CreationTool_title,
 				Messages.Wire1CreationTool_desc, types);
+		entry.setSmallIcon(FritzingDiagramEditorPlugin
+				.getBundledImageDescriptor("icons/obj16/wireIconSmall.gif"));
+		entry.setLargeIcon(FritzingDiagramEditorPlugin
+				.getBundledImageDescriptor("icons/obj16/wireIconLarge.gif"));
+		return entry;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	private ToolEntry createLegCreationTool() {
+		List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
+		types.add(FritzingElementTypes.Leg_4003);
+		LinkToolEntry entry = new LinkToolEntry(
+				"Create Leg",
+				"Leg description", types);
 		entry.setSmallIcon(FritzingDiagramEditorPlugin
 				.getBundledImageDescriptor("icons/obj16/wireIconSmall.gif"));
 		entry.setLargeIcon(FritzingDiagramEditorPlugin

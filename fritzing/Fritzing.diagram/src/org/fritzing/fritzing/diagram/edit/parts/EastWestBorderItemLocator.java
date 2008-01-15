@@ -21,28 +21,7 @@ public class EastWestBorderItemLocator extends PartBorderItemLocator {
 	public EastWestBorderItemLocator(IFigure figure, PartEditPart parentEditPart, int positionConstants, Point offset) {
 		super(figure, parentEditPart);
 		this.offset = offset;
-		
-		
-		int d = parentEditPart.DPtoLP(Terminal2EditPart.standardPlateMeasure / 2);
-		this.offset.x -= d;
-		this.offset.y -= d;
-	
-		/*
-		FritzingDiagramEditor diagram = FritzingDiagramEditorUtil.getActiveDiagramPart();
-		if (diagram != null) {
-			DiagramEditPart part = diagram.getDiagramEditPart();
-			
-	        if (part instanceof DiagramRootEditPart) {
-	            DiagramRootEditPart dgrmRoot = (DiagramRootEditPart)part;
-	            return dgrmRoot.getMapMode();
-	        }
-	        
-	        return MapModeUtil.getMapMode();
-
-		}
-		*/
-		
-		
+				
 		this.positionConstants = positionConstants;
 	}
 	

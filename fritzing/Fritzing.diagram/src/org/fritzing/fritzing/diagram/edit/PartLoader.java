@@ -21,9 +21,15 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
+import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
+import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Sketch;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Track;
+import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
@@ -183,6 +189,20 @@ public class PartLoader {
 		
 		return b;
 	}
+		
+	public Point getTerminalLegTargetPosition(String id) {
+		if (terminalHash == null) return null;
+		
+		PointName pointName = terminalHash.get(id);
+		if (pointName == null) return null;
+		
+		Point offset = pointName.legOffset;
+		if (offset == null) {
+			offset = new Point(0, 100);
+		}
+		Point p = new Point(offset);
+		return p;
+	}
 	
 	public Point getTerminalPoint(String id) {
 		if (terminalHash == null) return null;
@@ -191,6 +211,15 @@ public class PartLoader {
 		if (pointName == null) return null;
 		
 		return pointName.point;
+	}
+	
+	public String getTerminalType(String id) {
+		if (terminalHash == null) return null;
+	
+		PointName pointName = terminalHash.get(id);
+		if (pointName == null) return null;
+		
+		return pointName.type;
 	}
 	
 	public boolean getTerminalLabelVisible(String id) {
@@ -332,6 +361,17 @@ public class PartLoader {
 						FritzingPackage.eINSTANCE.getTerminal());
 				expr.assignTo(FritzingPackage.eINSTANCE.getTerminal_Id(),
 				terminal);
+				
+				
+				if (pointName.type.equalsIgnoreCase("leg")) {
+					Leg leg = FritzingFactory.eINSTANCE.createLeg();
+					leg.setSource((Terminal) terminal);
+					leg.setParent((Terminal) terminal);
+					((Terminal) terminal).setLeg(leg);
+
+					Sketch parent = (Sketch) ((Part) newElement).getParent();
+					leg.setTarget(((Sketch) parent));				
+				}
 
 			}
 			
@@ -564,11 +604,42 @@ public class PartLoader {
 							}
 						}
 						
+						String type = "";
+						attr = ((Element) connector).getAttributeNode("type");
+						if (attr != null) {						
+							String s = attr.getNodeValue();
+							if (s != null) {
+								type = s;
+							}
+						}
+			
+						
 						Point p = parseLocation(connector, defaultUnits, "x", "y" );
 						p.x += gridOffset.x;
 						p.y += gridOffset.y;
+								
+						// treat the terminal's location as the center rather than the top left
+						// by offsetting the value from the xml;
+						int d = MapModeUtil.getMapMode().DPtoLP(Terminal2EditPart.standardPlateMeasure / 2);
+						p.x -= d;
+						p.y -= d;
+												
 						boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, connector);
-						terminalHash.put(id, new PointName(p, name, visible));
+						PointName pn = new PointName(p, name, visible, type);
+						terminalHash.put(id, pn);
+						
+						if (type.equals("leg")) {
+							NodeList nl = connector.getChildNodes();
+							for (int k = 0; k < nl.getLength(); k++) {
+								Node leg = nl.item(k);
+								if (leg.getNodeName().equals("leg")) {
+									pn.legOffset = parseLocation(leg, defaultUnits, "dx", "dy");
+									pn.legOffset.x = MapModeUtil.getMapMode().LPtoDP(pn.legOffset.x);
+									pn.legOffset.y = MapModeUtil.getMapMode().LPtoDP(pn.legOffset.y);									
+									break;
+								}
+							}							
+						}				
 					}
 				}
 				else if (nodeName.equals("nets")) {
@@ -597,7 +668,7 @@ public class PartLoader {
 							boolean visible = parseTrackLayout(netDefaultTrackVisible, connector);
 							
 							// stick the ID into the name field
-							PointName pn = new PointName(null, id, visible);
+							PointName pn = new PointName(null, id, visible, null);
 							names.add(pn);						
 						}
 						
@@ -617,41 +688,6 @@ public class PartLoader {
 				}
 			}
 					
-/*			
-								
-			
-			nodes = (NodeList) xp.evaluate("/part/nets/net", document, XPathConstants.NODESET);
-			for (int i = 0; i < nodes.getLength(); i++) {
-				Node child = nodes.item(i);
-				XPath xpath = XPathFactory.newInstance().newXPath();
-				
-				boolean netDefaultTrackVisible = parseTrackLayout(defaultTrackVisible, child);
-				
-				NodeList connectors = (NodeList) xp.evaluate("connector", child, XPathConstants.NODESET);
-				ArrayList<PointName> names = new ArrayList<PointName>();
-				for (int j = 0; j < connectors.getLength(); j++) {
-					String id = (String) xpath.evaluate("@id", connectors.item(j), XPathConstants.STRING);
-					if (id == null || id == "") continue;
-					
-					boolean visible = parseTrackLayout(netDefaultTrackVisible, connectors.item(j));
-					
-					// stick the ID into the name field
-					PointName pn = new PointName(null, id, visible);
-					names.add(pn);
-				}
-				if (names.size() > 0) {
-					for (int j = 0; j < names.size() - 1; j++) {
-						PointName source = names.get(j);
-						PointName target = names.get(j + 1);
-						// the name field has the ID 
-						trackHash.put(source.name + target.name, source.visible && target.visible);
-
-					}
-					nets.add(names);
-				}
-			}
-			
-			*/
 						
 			return;
 		}
@@ -660,104 +696,7 @@ public class PartLoader {
 			return;
 		}		
 	}
-	
-	/*
-	protected void parseXML(Document document) {
-		XPath xp = XPathFactory.newInstance().newXPath();
-		try {
-			String gString = (String) xp.evaluate("/part/@generic", document, XPathConstants.STRING);
-			generic = !gString.equalsIgnoreCase("false");
-			
-			species = (String) xp.evaluate("/part/species", document, XPathConstants.STRING);
-			genus = (String) xp.evaluate("/part/genus", document, XPathConstants.STRING);
-			description = (String) xp.evaluate("/part/description", document, XPathConstants.STRING);
-			title = (String) xp.evaluate("/part/title", document, XPathConstants.STRING);
-			label = (String) xp.evaluate("/part/label", document, XPathConstants.STRING);
-			version = (String) xp.evaluate("/part/version", document, XPathConstants.STRING);
-			footprint = (String) xp.evaluate("/part/footprints/footprint/@source", document, XPathConstants.STRING);
-			
-			parseIcons((NodeList) xp.evaluate("/part/icons/icon", document, XPathConstants.NODESET));
-			parseImages((NodeList) xp.evaluate("/part/layers/layer", document, XPathConstants.NODESET));
-			
-			String defaultUnits = (String) xp.evaluate("/part/defaultUnits", document, XPathConstants.STRING);
-			if (defaultUnits == null || defaultUnits == "") {
-				defaultUnits = "pixels";
-			}
-			
-			Node gridOffsetNode = (Node) xp.evaluate("/part/gridOffset", document, XPathConstants.NODE);			
-			gridOffset = parseLocation(gridOffsetNode, defaultUnits, "x", "y");
-			
-			Node boundsNode = (Node) xp.evaluate("/part/bounds", document, XPathConstants.NODE);			
-			Point sz = parseLocation(boundsNode, defaultUnits, "width", "height");
-			
-			size = new Dimension(sz.x, sz.y);
-			
-			Node defaultNameLayoutNode = (Node) xp.evaluate("/part/connectors", document, XPathConstants.NODE);
-			boolean defaultTerminalLabelVisible = parseTerminalLabelLayout(true, defaultNameLayoutNode);
-			
-
-			NodeList nodes = (NodeList) xp.evaluate("/part/connectors/connector", document, XPathConstants.NODESET);
-			for (int i = 0; i < nodes.getLength(); i++) {
-				Node child = nodes.item(i);
-				XPath xpath = XPathFactory.newInstance().newXPath();
-				String id = (String) xpath.evaluate("@id", child, XPathConstants.STRING);
-				if (id == null || id == "") continue;
-											
-				String name = (String) xpath.evaluate("@name", child, XPathConstants.STRING);
-				if (name == null || name == "") {
-					name = id;
-				}
-
-				Point p = parseLocation(child, defaultUnits, "x", "y" );
-				p.x += gridOffset.x;
-				p.y += gridOffset.y;
-				boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, child);
-				terminalHash.put(id, new PointName(p, name, visible));
-			}
-			
-			
-			Node defaultTrackLayoutNode = (Node) xp.evaluate("/part/nets", document, XPathConstants.NODE);
-			boolean defaultTrackVisible = parseTrackLayout(false, defaultTrackLayoutNode);
-			nodes = (NodeList) xp.evaluate("/part/nets/net", document, XPathConstants.NODESET);
-			for (int i = 0; i < nodes.getLength(); i++) {
-				Node child = nodes.item(i);
-				XPath xpath = XPathFactory.newInstance().newXPath();
-				
-				boolean netDefaultTrackVisible = parseTrackLayout(defaultTrackVisible, child);
-				
-				NodeList connectors = (NodeList) xp.evaluate("connector", child, XPathConstants.NODESET);
-				ArrayList<PointName> names = new ArrayList<PointName>();
-				for (int j = 0; j < connectors.getLength(); j++) {
-					String id = (String) xpath.evaluate("@id", connectors.item(j), XPathConstants.STRING);
-					if (id == null || id == "") continue;
-					
-					boolean visible = parseTrackLayout(netDefaultTrackVisible, connectors.item(j));
-					
-					// stick the ID into the name field
-					PointName pn = new PointName(null, id, visible);
-					names.add(pn);
-				}
-				if (names.size() > 0) {
-					for (int j = 0; j < names.size() - 1; j++) {
-						PointName source = names.get(j);
-						PointName target = names.get(j + 1);
-						// the name field has the ID 
-						trackHash.put(source.name + target.name, source.visible && target.visible);
-
-					}
-					nets.add(names);
-				}
-			}
-						
-			return;
-		}
-		catch (XPathExpressionException xpee) {
-			// alert the user
-			return;
-		}		
-	}
-*/
-	
+		
 	protected boolean parseTerminalLabelLayout(boolean defaultValue, Node node) {
 		return parseXLayout(defaultValue, node, "nameLayout");
 	}
@@ -987,12 +926,15 @@ public class PartLoader {
 		public String name;
 		public boolean visible;
 		public EObject terminal;
+		public String type;
+		public Point legOffset;
 		
-		public PointName(Point point, String name, boolean visible) {
+		public PointName(Point point, String name, boolean visible, String type) {
 			this.point = point;
 			this.name = name;
 			this.visible = visible;
 			this.terminal = null;
+			this.type = type;
 		}
 	}
 

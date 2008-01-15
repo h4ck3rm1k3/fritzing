@@ -57,49 +57,7 @@ public class LEDCreateCommand extends PartCreateCommand {
 	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
-		EObject newElement = super.doDefaultElementCreation();
-		EList<Terminal> trmnls = ((Part) newElement).getTerminals();
-		return newElement;
-
-		/*
-
-		// attempt to create a wire
-		// it doesn't appear on the diagram
-		// but if you save and reload, it shows up
-		
-		EObject wire = FritzingPackage.eINSTANCE.getWire()
-		.getEPackage().getEFactoryInstance().create(
-				FritzingPackage.eINSTANCE.getWire());
-				
-		EList<Terminal> trmnls = newElement.getTerminals();
-
-		if (trmnls.size() > 1) {
-			((Wire) wire).setSource(trmnls.get(0));
-			((Wire) wire).setTarget(trmnls.get(1));
-			newElement.getParent().getWires().add((Wire) wire);
-			 
-			
-		//			//((SketchImpl) newElement.getParent()).
-		//			
-		//			FritzingDiagramEditor diagram = FritzingDiagramEditorUtil.getActiveDiagramPart();
-		//			if (diagram != null) {
-		//				DiagramEditPart part = diagram.getDiagramEditPart();
-		//				//((SketchEditPart) part).refresh();
-		//				
-		//				for (Iterator it = part.getChildren().iterator(); it.hasNext(); ) {
-		//					EditPart editPart = (EditPart) it.next();
-		//					if (editPart.getModel() == newElement) {
-		//						System.out.println("got part");
-		//					}
-		//				}
-		//				
-		//				//refreshSourceConnections()
-		//				//refreshTargetConnections()
-		//			}
-		
-		}
-		
-		 */
+		return super.doDefaultElementCreation();
 	}
 
 }

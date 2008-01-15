@@ -52,7 +52,6 @@ public class PartFigure extends RectangleFigure {
 	 */
 	protected String  contentsPath;
 	
-	
 	public PartFigure(PartLoader partLoader) {
 		this.partLoader = partLoader;
 		createContents();
