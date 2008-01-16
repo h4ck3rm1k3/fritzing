@@ -98,8 +98,11 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 			ConnectionEditPart connection) {
 		EditPart part = connection.getSource();
 		if (part instanceof Terminal2EditPart) {
-			// if it's null, create one here
-			return ((Terminal2EditPart) part).getLegConnectionAnchor();
+			ConnectionAnchor ca = ((Terminal2EditPart) part).getLegConnectionAnchor();
+			if (ca == null) {
+				ca = makeLegConnectionAnchor((Terminal2EditPart) part);
+			}
+			return ca;
 		}
 		return null;
 	}
@@ -116,15 +119,18 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 			EditPart part = ((CreateConnectionViewRequest) request)
 					.getSourceEditPart();
 			if (part instanceof Terminal2EditPart) {
-				Point p = ((Terminal2EditPart) part).getLegTargetPosition();
-				TerminalAnchor ta = new TerminalAnchor(p,
-						(Terminal2EditPart) part);
-				((Terminal2EditPart) part).setLegConnectionAnchor(ta);
-				return ta;
+				return makeLegConnectionAnchor((Terminal2EditPart) part);
 			}
 		}
 
 		return null;
+	}
+	
+	protected ConnectionAnchor makeLegConnectionAnchor(Terminal2EditPart part) {
+		Point p = part.getLegTargetPosition();
+		TerminalAnchor ta = new TerminalAnchor(p, part);
+		part.setLegConnectionAnchor(ta);
+		return ta;
 	}
 
 	// implements INodeEditPart

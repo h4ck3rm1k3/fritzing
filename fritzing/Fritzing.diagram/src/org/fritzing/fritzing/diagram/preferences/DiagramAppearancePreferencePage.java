@@ -46,7 +46,8 @@ public class DiagramAppearancePreferencePage extends AppearancePreferencePage {
 				IPreferenceConstants.PREF_FILL_COLOR, fillColor.getRGB());
 
 		//		Color lineColor = DiagramColorConstants.white;
-		Color lineColor = new Color(null, 230, 230, 215);
+		
+		Color lineColor = new Color(null, 0x71, 0xa4, 0xd6);
 		PreferenceConverter.setDefault(store,
 				IPreferenceConstants.PREF_LINE_COLOR, lineColor.getRGB());
 

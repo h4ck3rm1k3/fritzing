@@ -74,6 +74,9 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated NOT
 	 */
 	public static final int standardTerminalMeasure = 5;
+	
+	public static final int standardFeedbackInset = -1;
+
 
 	/**
 	 * @generated
@@ -342,6 +345,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 	public class TerminalDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
 		protected boolean displayFeedbackFlag;
+		protected int standardFeedbackInsetConverted = getMapMode().DPtoLP(standardFeedbackInset);
 
 		public TerminalDefaultSizeNodeFigure(Dimension defSize) {
 			super(defSize);
@@ -375,6 +379,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		protected void paintFigure(Graphics graphics) {
 			if (displayFeedbackFlag) {
 				Rectangle tempRect = new Rectangle(getBounds());
+				tempRect.expand(standardFeedbackInsetConverted, standardFeedbackInsetConverted);
 				graphics.fillRectangle(tempRect);
 			}
 

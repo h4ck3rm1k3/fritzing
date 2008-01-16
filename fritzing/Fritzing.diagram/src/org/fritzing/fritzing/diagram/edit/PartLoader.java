@@ -239,7 +239,8 @@ public class PartLoader {
 		
 		if (pointName.type == null) return false;
 		
-		return pointName.type.equalsIgnoreCase("female");		
+		// at the moment, male and female are treated the same
+		return pointName.type.equalsIgnoreCase("female") || pointName.type.equalsIgnoreCase("male");		
 	}
 	
 	public String getSvgFilename() {

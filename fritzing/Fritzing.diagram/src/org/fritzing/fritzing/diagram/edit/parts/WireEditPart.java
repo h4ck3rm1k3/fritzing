@@ -4,6 +4,7 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
@@ -101,7 +102,7 @@ public class WireEditPart extends ConnectionNodeEditPart {
 		 * @generated NOT
 		 */
 		public WireFigure() {
-			this.setLineWidth(3);
+			this.setLineWidth(5);
 
 			createContents();
 			//			setSourceDecoration(createSourceDecoration());
@@ -121,7 +122,7 @@ public class WireEditPart extends ConnectionNodeEditPart {
 			this.add(fFigureWireNameFigure);
 
 		}
-
+		
 		/**
 		 * @generated
 		 */

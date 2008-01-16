@@ -226,6 +226,6 @@ public class LegEditPart extends ConnectionNodeEditPart {
 
 	}
 
-	static final Color LEG_FIGURE_COLOR = new Color(null, 179, 179, 179);
+	public static final Color LEG_FIGURE_COLOR = new Color(null, 0xbf, 0xbf, 0xbf);
 
 }

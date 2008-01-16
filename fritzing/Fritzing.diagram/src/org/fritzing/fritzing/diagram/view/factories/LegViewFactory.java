@@ -11,10 +11,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.view.factories.ConnectionViewFactory;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
+import org.eclipse.gmf.runtime.notation.LineStyle;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.RoutingStyle;
 import org.eclipse.gmf.runtime.notation.Smoothness;
+import org.eclipse.gmf.runtime.notation.Style;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -53,5 +55,7 @@ public class LegViewFactory extends ConnectionViewFactory {
 				.getStyle(NotationPackage.eINSTANCE.getRoutingStyle());
 		rstyle.setSmoothness(Smoothness.NORMAL_LITERAL);
 		//      rstyle.setRouting(Routing.TREE_LITERAL);
+        LineStyle lineStyle = (LineStyle) view.getStyle(NotationPackage.eINSTANCE.getLineStyle());
+        lineStyle.setLineColor(LegEditPart.LEG_FIGURE_COLOR.hashCode());
 	}
 }
