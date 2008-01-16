@@ -32,7 +32,6 @@ import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
-import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -70,6 +69,7 @@ public class PartLoader {
 	protected String footprint;
 	protected ArrayList<ArrayList<PointName>> nets;
 	protected Hashtable<String, Boolean> trackHash = new Hashtable<String, Boolean>();
+	protected Document doc;
 	
 	public PartLoader() {
 		if (bitHash.size() == 0) {
@@ -283,7 +283,7 @@ public class PartLoader {
 		return genus;
 	}
 	
-	public boolean initialize(String path, EObject newElement) {
+	public boolean initialize(String root, String path, EObject newElement) {
 		try {
 			
 //			URL url = FileLocator.find(FritzingDiagramEditorPlugin
@@ -291,7 +291,7 @@ public class PartLoader {
 //			"icons/parts/partdescription.xml"), null);
 //			url = FileLocator.toFileURL(url);
 
-			if (!loadXMLFromLibrary(path)) return false;
+			if (!loadXMLFromLibrary(root, path, false)) return false;
 			
 			return initialize(newElement);
 		}
@@ -454,12 +454,12 @@ public class PartLoader {
 		return false;
 	}
 	
-	public boolean loadXMLFromLibrary(String path) {
+	public boolean loadXMLFromLibrary(String root, String path, boolean documentOnly) {
 		try {
-			URL url = new URL("File://" + FritzingDiagramEditorUtil.getFritzingLocation() + path);
-			File f = new File(FritzingDiagramEditorUtil.getFritzingLocation() + path);
+			URL url = new URL("File://" + root + path);
+			File f = new File(root + path);
 			contentsPath = f.getParent() + File.separator;
-			boolean result = loadXML(url);
+			boolean result = loadXML(url, documentOnly);
 			return result;
 		}
 		catch (Exception ex) {
@@ -469,7 +469,11 @@ public class PartLoader {
 		return false;
 	}
 	
-	public boolean loadXML(URL xml) {
+	public Document getDocument() {
+		return doc;
+	}
+	
+	public boolean loadXML(URL xml, boolean documentOnly) {
 	    Document document;
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -481,7 +485,12 @@ public class PartLoader {
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.parse(new File(xml.getFile()));
-            parseXML(document);
+            if (documentOnly) {
+            	doc = document;
+            }
+            else {
+            	parseXML(document);
+            }
             loaded = true;
             return true;           
         } 
