@@ -132,7 +132,7 @@ public class FritzingPaletteFactory {
 			if (tempType != null) {
 				type = tempType;
 			} else {
-				// alert the user
+				// XXX: alert the user
 			}
 		}
 
@@ -153,7 +153,10 @@ public class FritzingPaletteFactory {
 
 		entry.setLargeIcon(id);
 
-		SortPaletteDrawer drawer = getDrawer(partLoader.getGenus());
+		String drawerTitle = partLoader.getGenus();
+		int dotIndex = drawerTitle.indexOf('.');
+		SortPaletteDrawer drawer = getDrawer(dotIndex > 0 ?
+				drawerTitle.substring(0, dotIndex) : drawerTitle);
 		drawer.preAdd(entry);
 
 	}
