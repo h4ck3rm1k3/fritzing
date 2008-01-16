@@ -17,7 +17,6 @@ import org.eclipse.gmf.runtime.notation.RoutingStyle;
 import org.eclipse.gmf.runtime.notation.Smoothness;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
-import org.fritzing.fritzing.diagram.edit.parts.LegNameEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 
 /**
@@ -54,14 +53,5 @@ public class LegViewFactory extends ConnectionViewFactory {
 				.getStyle(NotationPackage.eINSTANCE.getRoutingStyle());
 		rstyle.setSmoothness(Smoothness.NORMAL_LITERAL);
 		//      rstyle.setRouting(Routing.TREE_LITERAL);
-
-		IAdaptable eObjectAdapter = null;
-		EObject eObject = (EObject) semanticAdapter.getAdapter(EObject.class);
-		if (eObject != null) {
-			eObjectAdapter = new EObjectAdapter(eObject);
-		}
-		getViewService().createNode(eObjectAdapter, view,
-				FritzingVisualIDRegistry.getType(LegNameEditPart.VISUAL_ID),
-				ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }

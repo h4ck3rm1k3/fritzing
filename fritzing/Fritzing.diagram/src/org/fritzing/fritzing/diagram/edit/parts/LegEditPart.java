@@ -113,11 +113,11 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	 * Body of this method does not depend on settings in generation model
 	 * so you may safely remove <i>generated</i> tag and modify it.
 	 * 
-	 * @generated
+	 * @generated NOT
 	 */
 
 	protected Connection createConnectionFigure() {
-		return new LegFigure();
+		return new LegFigure(this);
 	}
 
 	/**
@@ -133,11 +133,21 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	public class LegFigure extends PolylineConnectionEx {
 
 		/**
-		 * @generated
+		 * @generated NOT
 		 */
 		public LegFigure() {
-			this.setLineWidth(2);
+			// XXX: do not use this!
+		}
 
+		/**
+		 * @generated NOT
+		 */
+		public LegFigure(LegEditPart leg) {
+			this.setLineWidth(3);
+			this.setForegroundColor(LEG_FIGURE_COLOR);
+			this.leg = leg;
+			firstTime = true;
+			createContents();
 		}
 
 		boolean firstTime;
