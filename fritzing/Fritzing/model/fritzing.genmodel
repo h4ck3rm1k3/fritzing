@@ -69,7 +69,7 @@
     <genClasses image="false" ecoreClass="fritzing.ecore#//IWireConnection"/>
     <genClasses image="false" ecoreClass="fritzing.ecore#//IElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//IElement/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//IElement/id"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//IElement/id"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -193,7 +193,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Wire" eSuperTypes="#//Connection #//ILegConnection">
+  <eClassifiers xsi:type="ecore:EClass" name="Wire" eSuperTypes="#//Connection">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="Wire"/>
       <details key="kind" value="empty"/>

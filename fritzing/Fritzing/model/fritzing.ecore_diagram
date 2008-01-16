@@ -741,14 +741,6 @@
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_rWvL8L9kEdy-TsXEiztLng" id="(0.73103446,0.03529412)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_rWvL8b9kEdy-TsXEiztLng" id="(0.0,1.0)"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_yDwdkL9kEdy-TsXEiztLng" type="4004" source="_Al2hUL0xEdy3e6J2MTc2SA" target="_JdP-cL9jEdy-TsXEiztLng">
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_yDwdkb9kEdy-TsXEiztLng" routing="Rectilinear"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_yDwdkr9kEdy-TsXEiztLng" fontName="Bitstream Vera Sans"/>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_yDwdk79kEdy-TsXEiztLng" points="[-29, -7, -294, 296]$[-29, -29, -294, 274]$[330, -29, 65, 274]$[330, -303, 65, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yDySwL9kEdy-TsXEiztLng" id="(0.8352941,0.118644066)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_yDySwb9kEdy-TsXEiztLng" id="(0.0,1.0)"/>
-  </edges>
   <edges xmi:type="notation:Edge" xmi:id="_2sIW4L9kEdy-TsXEiztLng" type="4004" source="_u0yM4HsYEdy3N5BxjibVOw" target="_JdP-cL9jEdy-TsXEiztLng">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_2sIW4b9kEdy-TsXEiztLng" routing="Rectilinear"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_2sIW4r9kEdy-TsXEiztLng" fontName="Bitstream Vera Sans"/>

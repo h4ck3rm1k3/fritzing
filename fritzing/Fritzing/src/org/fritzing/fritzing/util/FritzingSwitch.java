@@ -196,7 +196,6 @@ public class FritzingSwitch<T> {
 				Wire wire = (Wire)theEObject;
 				T result = caseWire(wire);
 				if (result == null) result = caseConnection(wire);
-				if (result == null) result = caseILegConnection(wire);
 				if (result == null) result = caseElement(wire);
 				if (result == null) result = caseIElement(wire);
 				if (result == null) result = defaultCase(theEObject);

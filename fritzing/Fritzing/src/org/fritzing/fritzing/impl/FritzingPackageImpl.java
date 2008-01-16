@@ -839,7 +839,6 @@ public class FritzingPackageImpl extends EPackageImpl implements FritzingPackage
 		moduleEClass.getESuperTypes().add(this.getComposite());
 		breadboardEClass.getESuperTypes().add(this.getPart());
 		wireEClass.getESuperTypes().add(this.getConnection());
-		wireEClass.getESuperTypes().add(this.getILegConnection());
 		trackEClass.getESuperTypes().add(this.getConnection());
 		trackEClass.getESuperTypes().add(this.getITrackConnection());
 		iTrackConnectionEClass.getESuperTypes().add(this.getIElement());

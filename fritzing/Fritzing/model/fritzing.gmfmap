@@ -128,13 +128,6 @@
   <links>
     <domainMetaElement
         href="fritzing.ecore#//Track"/>
-    <labelMappings
-        xsi:type="gmfmap:FeatureLabelMapping">
-      <diagramLabel
-          href="fritzing.gmfgraph#TrackName"/>
-      <features
-          href="fritzing.ecore#//IElement/name"/>
-    </labelMappings>
     <containmentFeature
         href="fritzing.ecore#//Part/tracks"/>
     <diagramLink
@@ -145,10 +138,6 @@
     <linkMetaFeature
         xsi:type="ecore:EReference"
         href="fritzing.ecore#//Track/target"/>
-    <creationConstraints>
-      <sourceEnd
-          body="self &lt;> oppositeEnd"/>
-    </creationConstraints>
   </links>
   <links>
     <domainMetaElement

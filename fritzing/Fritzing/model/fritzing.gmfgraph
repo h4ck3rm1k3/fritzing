@@ -10,7 +10,9 @@
       <actualFigure
           xsi:type="gmfgraph:PolylineConnection"
           name="WireFigure"
-          lineWidth="3">
+          lineWidth="3"
+          sourceDecoration="//@figures.0/@descriptors.0/@actualFigure/@children.1"
+          targetDecoration="//@figures.0/@descriptors.0/@actualFigure/@children.1">
         <children
             xsi:type="gmfgraph:Label"
             name="WireNameFigure"
@@ -18,6 +20,22 @@
           <font
               xsi:type="gmfgraph:BasicFont"
               height="8"/>
+        </children>
+        <children
+            xsi:type="gmfgraph:PolygonDecoration"
+            name="WireEndDecoration">
+          <backgroundColor
+              xsi:type="gmfgraph:RGBColor"
+              red="220"
+              green="150"
+              blue="50"/>
+          <template/>
+          <template
+              y="1"/>
+          <template
+              x="1"
+              y="1"/>
+          <template/>
         </children>
       </actualFigure>
       <accessors
@@ -27,18 +45,7 @@
         name="TrackFigure">
       <actualFigure
           xsi:type="gmfgraph:PolylineConnection"
-          name="TrackFigure">
-        <children
-            xsi:type="gmfgraph:Label"
-            name="TrackNameFigure"
-            text="..">
-          <font
-              xsi:type="gmfgraph:BasicFont"
-              height="8"/>
-        </children>
-      </actualFigure>
-      <accessors
-          figure="//@figures.0/@descriptors.1/@actualFigure/@children.0"/>
+          name="TrackFigure"/>
     </descriptors>
     <descriptors
         name="LegFigure">
@@ -253,8 +260,7 @@
   <labels
       name="TrackName"
       figure="TrackFigure"
-      elementIcon="false"
-      accessor="//@figures.0/@descriptors.1/@accessors.0">
+      elementIcon="false">
     <facets
         xsi:type="gmfgraph:AlignmentFacet"
         alignment="CENTER"/>
