@@ -2,9 +2,9 @@
 <part>
 	<version>1.0</version>
 	<species>ArduinoDiecimila</species>
-	<genus>Microcontroller</genus>
+	<genus>Controller.ControllerBoard.Arduino</genus>
 	<title>Arduino Diecimila</title>
-	<description>The famous Arduino microcontroller</description>
+	<description>The famous Arduino microcontroller board</description>
 	<icons>
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />
@@ -12,8 +12,8 @@
 	<label>ARDUINO</label>
 	<reference>http://fritzing.org/reference/parts/core/arduino-diecimila</reference>
 	<defaultUnits>tenths</defaultUnits>   <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset x="863.6" y="127" units="himetric"/><!-- 34x5 pixels -->
-	<bounds width="7493" height="5232.4" units="himetric"/><!-- 295x206 pixels -->
+	<gridOffset x="933" y="197" units="himetric"/> <!-- 147x31 400% view pixels -->
+	<bounds width="7493" height="5232" units="himetric"/> <!-- 295x206 pixels -->
 	<connectors units="tenths" >
     	<nameLayout visible="false" />
     	<connector id="psu" name="Power Select USB" x="1" y="9" type="male" />
@@ -56,7 +56,9 @@
 	</connectors>
 	<layers>
 		<layer type="image">
-			<image type="bitmap" source="part.png" zoom="1"/>
+			<image type="bitmap" source="partHoles.png" zoom="1"/>
+			<image type="bitmap" source="partHoles200.png" zoom="2"/>
+			<image type="bitmap" source="partHoles400.png" zoom="4"/>
 		</layer>
 	</layers>
 	<footprints>
