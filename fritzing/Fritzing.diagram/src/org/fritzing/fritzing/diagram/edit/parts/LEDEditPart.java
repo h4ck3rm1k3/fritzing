@@ -60,16 +60,6 @@ public class LEDEditPart extends PartEditPart {
 	public static final int VISUAL_ID = 2001;
 
 	/**
-	 * @generated
-	 */
-	protected IFigure contentPane;
-
-	/**
-	 * @generated
-	 */
-	protected IFigure primaryShape;
-
-	/**
 	 * @generated NOT
 	 */
 	public LEDEditPart(View view) {
@@ -164,47 +154,6 @@ public class LEDEditPart extends PartEditPart {
 		return super.getPrimaryDragEditPolicy();
 	}
 
-	/**
-	 * Creates figure for this edit part.
-	 * 
-	 * Body of this method does not depend on settings in generation model
-	 * so you may safely remove <i>generated</i> tag and modify it.
-	 * 
-	 * @generated
-	 */
-	protected NodeFigure createMainFigure() {
-		NodeFigure figure = createNodePlate();
-		figure.setLayoutManager(new StackLayout());
-		IFigure shape = createNodeShape();
-		figure.add(shape);
-		contentPane = setupContentPane(shape);
-		return figure;
-	}
-
-	/**
-	 * Default implementation treats passed figure as content pane.
-	 * Respects layout one may have set for generated figure.
-	 * @param nodeShape instance of generated figure class
-	 * @generated
-	 */
-	protected IFigure setupContentPane(IFigure nodeShape) {
-		if (nodeShape.getLayoutManager() == null) {
-			ConstrainedToolbarLayout layout = new ConstrainedToolbarLayout();
-			layout.setSpacing(getMapMode().DPtoLP(5));
-			nodeShape.setLayoutManager(layout);
-		}
-		return nodeShape; // use nodeShape itself as contentPane
-	}
-
-	/**
-	 * @generated
-	 */
-	public IFigure getContentPane() {
-		if (contentPane != null) {
-			return contentPane;
-		}
-		return super.getContentPane();
-	}
 
 	/**
 	 * @generated

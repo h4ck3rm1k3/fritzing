@@ -1,7 +1,10 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -98,7 +101,7 @@ public class PartFigure extends RectangleFigure {
 		});
 
 		try {
-			String filename = partLoader.getBitmapFilename();
+			String filename = partLoader.getBitmapFilenames().get(new Double(1));
 			if (filename != null && filename != "") {
 //				image = FritzingDiagramEditorPlugin.getInstance()
 //						.getBundledImage("icons/parts/" + filename);
@@ -106,9 +109,9 @@ public class PartFigure extends RectangleFigure {
 //				RenderedImage ri = RenderedImageFactory.getInstance(url);
 //				image = ri.getSWTImage();
 									
-				image = new Image(null, partLoader.getContentsPath() + partLoader.getBitmapFilename());
+				image = new Image(null, partLoader.getContentsPath() + filename);
 			
-				// stick image on the registry
+				// TODO: stick image on the registry
 			} 
 			else {
 				filename = partLoader.getSvgFilename();
@@ -125,7 +128,7 @@ public class PartFigure extends RectangleFigure {
 					image = ri.getSWTImage();
 
 			            
-					// stick image on the registry
+					// TODO: stick image on the registry
 				}
 			}
 
@@ -163,7 +166,32 @@ public class PartFigure extends RectangleFigure {
 			// inform the user?
 			ex.printStackTrace();
 		}
-		
+	}
+	
+	/*
+	 * Loads the corresponding image for the current zoom level
+	 */
+	protected void updateImage(double zoom) {
+		// TODO: optimize: only change image if necessary, cache all images
+		Hashtable<Double,String> images = partLoader.getBitmapFilenames();
+		// find the next biggest available image zoom level
+		Vector<Double> levels = new Vector<Double>(images.keySet());
+	    Collections.sort(levels);
+	    double bestLevel = levels.lastElement();
+	    for (Double level: levels) {
+	    	if (level.compareTo(zoom) >= 0) {
+	    		bestLevel = level;
+	    		break;
+	    	}
+	    }
+		try {
+			String imageSrc = images.get(new Double(bestLevel));
+			image = new Image(null, partLoader.getContentsPath() + imageSrc);
+			this.repaint();
+		} catch (Exception ex) {
+			// inform the user?
+			ex.printStackTrace();
+		}
 	}
 	
 	/**

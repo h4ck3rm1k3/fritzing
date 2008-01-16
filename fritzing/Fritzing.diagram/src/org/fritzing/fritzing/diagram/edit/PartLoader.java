@@ -52,7 +52,7 @@ public class PartLoader {
 	
 	protected Hashtable<String, PointName> terminalHash;
 	protected Point gridOffset;
-	protected String bitmapFilename;
+	protected Hashtable<Double, String> bitmapFilenames;
 	protected String svgFilename;
 	protected Dimension size;
 	protected boolean loaded;
@@ -168,7 +168,8 @@ public class PartLoader {
 		terminalHash = new Hashtable<String, PointName>();
 		size = new Dimension(0,0);
 		gridOffset = new Point(0,0);
-		bitmapFilename = svgFilename = null;
+		bitmapFilenames = new Hashtable<Double, String>();
+		svgFilename = null;
 	}
 	
 	public boolean getLoaded() {
@@ -247,8 +248,8 @@ public class PartLoader {
 		return svgFilename;
 	}
 	
-	public String getBitmapFilename() {
-		return bitmapFilename;
+	public Hashtable<Double,String> getBitmapFilenames() {
+		return bitmapFilenames;
 	}
 	
 	public String getIconFilename() {
@@ -597,7 +598,7 @@ public class PartLoader {
 					parseIcons(node.getChildNodes());		
 				}
 				else if (nodeName.equals("layers")) {
-					parseImages(node.getChildNodes());
+					parseLayers(node.getChildNodes());
 				}
 				else if (nodeName.equals("bounds")) {
 					Point sz = parseLocation(node, defaultUnits, "width", "height");					
@@ -754,7 +755,7 @@ public class PartLoader {
 	}
 
 		
-	protected void parseImages(NodeList nodeList) {
+	protected void parseLayers(NodeList nodeList) {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			try {
 				Node node = nodeList.item(i);
@@ -767,14 +768,13 @@ public class PartLoader {
 				String type = typeNode.getNodeValue();
 				if (type == null) continue;
 				
+				// <layer type="image">
 				if (type.equalsIgnoreCase("image")) {
 					NodeList children = node.getChildNodes();
 					for (int j = 0; j < children.getLength(); j++) {
 						Node imageNode = children.item(j);
 						if (!imageNode.getNodeName().equals("image")) continue;
 									
-						// need to add multiple zoom images, etc...
-						
 						map = imageNode.getAttributes();
 						if (map == null) continue;
 						
@@ -790,8 +790,16 @@ public class PartLoader {
 						String source = sourceNode.getNodeValue();
 						if (source == null) continue;						
 
+						Node zoomNode = map.getNamedItem("zoom");
+						if (zoomNode == null) continue;
+						
+						String zoomString = zoomNode.getNodeValue();
+						double zoom = 1;
+						if (zoomString != null) 
+							zoom = Double.parseDouble(zoomString);
+						
 						if (type.equalsIgnoreCase("bitmap")) {
-							bitmapFilename = source;
+							bitmapFilenames.put(zoom, source);
 						}
 						else if (type.equalsIgnoreCase("svg")) {
 							svgFilename = source;

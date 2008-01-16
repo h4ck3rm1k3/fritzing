@@ -4,49 +4,40 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
+import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.EAttributeImpl;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.EditPartListener;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
+import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.commands.Command;
-import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gef.editparts.AbstractEditPart;
+import org.eclipse.gef.editparts.ZoomListener;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
-import org.eclipse.gef.requests.BendpointRequest;
 import org.eclipse.gef.requests.CreateRequest;
-import org.eclipse.gef.requests.ReconnectRequest;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
-import org.eclipse.gmf.runtime.diagram.ui.actions.ActionIds;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.AbstractBorderedShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IRotatableEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.PopupBarEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateConnectionViewRequest;
-import org.eclipse.gmf.runtime.draw2d.ui.mapmode.IMapMode;
+import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
@@ -57,17 +48,10 @@ import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
+import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart.GenericPartFigure;
 import org.fritzing.fritzing.diagram.edit.policies.RotatableNonresizableShapeEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingLinkDescriptor;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.EAttributeImpl;
 
 /**
  * @generated NOT
@@ -75,21 +59,21 @@ import org.eclipse.emf.ecore.impl.EAttributeImpl;
 class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEditPart
 {
 
-	/**
-	 * @generated NOT
-	 */
 	PartLoader partLoader;
 	
-	/**
-	 * @generated NOT
-	 */
 	protected Point gridOffset;
+	
+	protected boolean legsInitialized;
 	
 	/**
 	 * @generated NOT
 	 */
-	protected boolean legsInitialized;
+	protected IFigure contentPane;
 
+	/**
+	 * @generated NOT
+	 */
+	protected IFigure primaryShape;
 	
 	/**
 	 * @generated NOT
@@ -118,7 +102,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 			// if it's null, create one here
 			return ((Terminal2EditPart) part).getLegConnectionAnchor();
 		}
-		
 		return null;
 	}
 	
@@ -166,9 +149,57 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	}
 	
 	
-	
+
+	/**
+	 * Creates figure for this edit part.
+	 * 
+	 * Body of this method does not depend on settings in generation model
+	 * so you may safely remove <i>generated</i> tag and modify it.
+	 * 
+	 * @generated NOT
+	 */
 	protected NodeFigure createMainFigure() {
-		return null;
+		NodeFigure figure = createNodePlate();
+		figure.setLayoutManager(new StackLayout());
+		IFigure shape = createNodeShape();
+		figure.add(shape);
+		contentPane = setupContentPane(shape);
+		addZoomListener(); // needed for zoom-dependent figure
+		return figure;
+	}
+
+
+	/**
+	 * @generated NOT
+	 */
+	protected IFigure createNodeShape() {
+		PartFigure figure = new PartFigure(partLoader);
+		return primaryShape = figure;
+	}
+	
+	/**
+	 * Default implementation treats passed figure as content pane.
+	 * Respects layout one may have set for generated figure.
+	 * @param nodeShape instance of generated figure class
+	 * @generated NOT
+	 */
+	protected IFigure setupContentPane(IFigure nodeShape) {
+		if (nodeShape.getLayoutManager() == null) {
+			ConstrainedToolbarLayout layout = new ConstrainedToolbarLayout();
+			layout.setSpacing(getMapMode().DPtoLP(5));
+			nodeShape.setLayoutManager(layout);
+		}
+		return nodeShape; // use nodeShape itself as contentPane
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public IFigure getContentPane() {
+		if (contentPane != null) {
+			return contentPane;
+		}
+		return super.getContentPane();
 	}
 	
 	/**
@@ -183,6 +214,24 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		return result;
 	}
 
+	/**
+	 * @generated NOT
+	 */
+	public PartFigure getPrimaryShape() {
+		return (PartFigure) primaryShape;
+	}
+
+	protected void addZoomListener() {
+		RootEditPart root = getRoot();
+		if (root instanceof FritzingDiagramRootEditPart) {
+			((FritzingDiagramRootEditPart)root).getZoomManager().addZoomListener(
+				new ZoomListener() {
+					public void zoomChanged(double zoom) {
+						((PartFigure)getPrimaryShape()).updateImage(zoom);
+					}
+				});
+		}
+	}
    
 	protected void handleNotificationEvent(Notification notification) {
 		
@@ -194,7 +243,7 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 //				);
 		        
 		if (feature instanceof EAttributeImpl) {
-			// initializeLegs fails if we trigger it too soon after part creation
+			// XXX: initializeLegs fails if we trigger it too soon after part creation
 			// it seems to work at this point
 			
 			// there is probably a better place to call initializeLegs:
@@ -272,10 +321,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 					else {
 						// alert the user?
 					}
-					
-					
-					
-
 				}
 			}
 		}
