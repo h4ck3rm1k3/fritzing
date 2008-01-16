@@ -48,13 +48,14 @@ public class LegViewFactory extends ConnectionViewFactory {
 		}
 		super.decorateView(containerView, view, semanticAdapter, semanticHint,
 				index, persisted);
-		
+
 		// change default routing style
-		RoutingStyle rstyle = (RoutingStyle) view.getStyle(NotationPackage.eINSTANCE.getRoutingStyle());
-        rstyle.setSmoothness(Smoothness.NORMAL_LITERAL);
-//      rstyle.setRouting(Routing.TREE_LITERAL);
- 
-        IAdaptable eObjectAdapter = null;
+		RoutingStyle rstyle = (RoutingStyle) view
+				.getStyle(NotationPackage.eINSTANCE.getRoutingStyle());
+		rstyle.setSmoothness(Smoothness.NORMAL_LITERAL);
+		//      rstyle.setRouting(Routing.TREE_LITERAL);
+
+		IAdaptable eObjectAdapter = null;
 		EObject eObject = (EObject) semanticAdapter.getAdapter(EObject.class);
 		if (eObject != null) {
 			eObjectAdapter = new EObjectAdapter(eObject);

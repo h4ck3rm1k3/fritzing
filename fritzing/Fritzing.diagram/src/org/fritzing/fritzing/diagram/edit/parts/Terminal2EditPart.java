@@ -79,7 +79,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated
 	 */
 	protected IFigure primaryShape;
-	
+
 	protected ConnectionAnchor legConnectionAnchor;
 
 	/**
@@ -88,20 +88,20 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	public Terminal2EditPart(View view) {
 		super(view);
 	}
-	
+
 	public Point getLegTargetPosition() {
 		if (this.getParent() instanceof PartEditPart) {
 			return ((PartEditPart) this.getParent()).getLegTargetPosition(this);
 		}
-		
+
 		return null;
 	}
-		
+
 	public void displayTargetFeedback(boolean display) {
-		((TerminalDefaultSizeNodeFigure) this.getMainFigure()).displayFeedback(display);
+		((TerminalDefaultSizeNodeFigure) this.getMainFigure())
+				.displayFeedback(display);
 	}
-	
-	
+
 	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
 		return super.getTargetConnectionAnchor(request);
 	}
@@ -119,9 +119,11 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
 
 		// don't want delete
-		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());
-		
-		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new Terminal2GraphicalNodeEditPolicy());
+		installEditPolicy(EditPolicy.COMPONENT_ROLE,
+				new NonDeleteComponentEditPolicy());
+
+		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE,
+				new Terminal2GraphicalNodeEditPolicy());
 
 		// make it non-selectable? (doesn't seem to work)
 		//removeEditPolicy(EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -179,7 +181,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
 		TerminalFigure figure = new TerminalFigure(this);
@@ -212,8 +214,9 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new TerminalDefaultSizeNodeFigure(getMapMode()
-				.DPtoLP(standardPlateMeasure), getMapMode().DPtoLP(standardPlateMeasure));
+		DefaultSizeNodeFigure result = new TerminalDefaultSizeNodeFigure(
+				getMapMode().DPtoLP(standardPlateMeasure), getMapMode().DPtoLP(
+						standardPlateMeasure));
 
 		//FIXME: workaround for #154536
 		result.getBounds().setSize(result.getPreferredSize());
@@ -286,51 +289,54 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	void setLegConnectionAnchor(ConnectionAnchor ca) {
 		legConnectionAnchor = ca;
 	}
-	
+
 	ConnectionAnchor getLegConnectionAnchor() {
 		return legConnectionAnchor;
 	}
-	
+
 	public boolean hasLeg() {
-		for (Iterator it = this.getSourceConnections().iterator(); it.hasNext(); ) {
+		for (Iterator it = this.getSourceConnections().iterator(); it.hasNext();) {
 			Object o = it.next();
-			if (o instanceof LegEditPart) return true;			
+			if (o instanceof LegEditPart)
+				return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean isFemale() {
 		if (this.getParent() instanceof PartEditPart) {
 			return ((PartEditPart) this.getParent()).isTerminalFemale(this);
-			
+
 		}
-		
+
 		return false;
 	}
-	
-	public class Terminal2GraphicalNodeEditPolicy extends GraphicalNodeEditPolicy {
+
+	public class Terminal2GraphicalNodeEditPolicy extends
+			GraphicalNodeEditPolicy {
 		protected void showTargetConnectionFeedback(DropRequest request) {
 			xTargetConnectionFeedback(request, true);
-		}	
-		
+		}
+
 		protected void eraseTargetConnectionFeedback(DropRequest request) {
 			xTargetConnectionFeedback(request, false);
 		}
-		
-		protected void xTargetConnectionFeedback(DropRequest request, boolean display) {
+
+		protected void xTargetConnectionFeedback(DropRequest request,
+				boolean display) {
 			if (request instanceof ReconnectRequest) {
 				EditPart target = ((ReconnectRequest) request).getTarget();
 				if (target instanceof Terminal2EditPart) {
 					((Terminal2EditPart) target).displayTargetFeedback(display);
 				}
-			}
-			else if (request instanceof CreateUnspecifiedTypeConnectionRequest) {
-				EditPart target = ((CreateUnspecifiedTypeConnectionRequest) request).getTargetEditPart();
+			} else if (request instanceof CreateUnspecifiedTypeConnectionRequest) {
+				EditPart target = ((CreateUnspecifiedTypeConnectionRequest) request)
+						.getTargetEditPart();
 				if (target instanceof Terminal2EditPart) {
 					((Terminal2EditPart) target).displayTargetFeedback(display);
 				}
-			}			
+			}
 		}
 	}
 
@@ -349,24 +355,23 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		protected ConnectionAnchor createDefaultAnchor() {
 			return new TerminalSlidableAnchor(this);
 		}
-		
+
 		public ConnectionAnchor getTargetConnectionAnchorAt(Point p) {
 			return createDefaultAnchor();
 		}
-		
+
 		public void displayFeedback(boolean display) {
 			if (display != displayFeedbackFlag) {
 				displayFeedbackFlag = display;
 				if (display) {
 					this.setBackgroundColor(THIS_FEED);
-				}
-				else {
-					this.setBackgroundColor(THIS_BACK);		
+				} else {
+					this.setBackgroundColor(THIS_BACK);
 				}
 				this.invalidate();
 			}
 		}
-		
+
 		protected void paintFigure(Graphics graphics) {
 			if (displayFeedbackFlag) {
 				Rectangle tempRect = new Rectangle(getBounds());
@@ -376,7 +381,6 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			super.paintFigure(graphics);
 		}
 
-		
 	}
 
 	public class TerminalSlidableAnchor extends SlidableAnchor {
@@ -400,36 +404,45 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		}
 
 	}
-	
+
 	/**
 	 * @generated
 	 */
 	public class TerminalFigure extends RectangleFigure {
 
+		/**
+		 * @generated NOT
+		 */
+		public TerminalFigure() {
+			// shouldn't be used!
+		}
+
 		protected int standardTerminalConverted;
 		protected Terminal2EditPart terminalPart;
-		
+
 		/**
 		 * @generated NOT
 		 */
 		public TerminalFigure(Terminal2EditPart terminalPart) {
 			this.terminalPart = terminalPart;
-			standardTerminalConverted = getMapMode().DPtoLP(standardTerminalMeasure);
+			standardTerminalConverted = getMapMode().DPtoLP(
+					standardTerminalMeasure);
 			this.setLineWidth(0);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
-			this.setPreferredSize(new Dimension(standardTerminalConverted, standardTerminalConverted));
+			this.setPreferredSize(new Dimension(standardTerminalConverted,
+					standardTerminalConverted));
 		}
-				
+
 		public void paint(Graphics graphics) {
 			if (terminalPart.isFemale()) {
 				this.setVisible(false);
 				return;
 			}
-			
+
 			super.paint(graphics);
 		}
-		
+
 		public void paintFigure(Graphics graphics) {
 			if (!terminalPart.hasLeg()) {
 				super.paintFigure(graphics);

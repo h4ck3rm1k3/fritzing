@@ -73,9 +73,6 @@ public class FritzingEditPartFactory implements EditPartFactory {
 			case TrackEditPart.VISUAL_ID:
 				return new TrackEditPart(view);
 
-			case TrackNameEditPart.VISUAL_ID:
-				return new TrackNameEditPart(view);
-
 			case LegEditPart.VISUAL_ID:
 				return new LegEditPart(view);
 			}

@@ -68,28 +68,6 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 	}
 
 	/**
-	 * @generated
-	 */
-	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof TrackNameEditPart) {
-			((TrackNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureTrackNameFigure());
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @generated
-	 */
-	protected void addChildVisual(EditPart childEditPart, int index) {
-		if (addFixedChild(childEditPart)) {
-			return;
-		}
-		super.addChildVisual(childEditPart, -1);
-	}
-
-	/**
 	 * Creates figure for this edit part.
 	 * 
 	 * Body of this method does not depend on settings in generation model
@@ -103,21 +81,16 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public TrackFigure getPrimaryShape() {
 		return (TrackFigure) getFigure();
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	public class TrackFigure extends PolylineConnectionEx {
-
-		/**
-		 * @generated
-		 */
-		private WrapLabel fFigureTrackNameFigure;
 
 		/**
 		 * @generated NOT
@@ -143,24 +116,9 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 		 * @generated NOT
 		 */
 		private void createContents() {
-
-			fFigureTrackNameFigure = new WrapLabel();
-			fFigureTrackNameFigure.setText("..");
-
-			fFigureTrackNameFigure.setFont(FFIGURETRACKNAMEFIGURE_FONT);
-
-			this.add(fFigureTrackNameFigure);
-
 			if (!visible) {
 				this.setVisible(false);
 			}
-		}
-
-		/**
-		 * @generated
-		 */
-		public WrapLabel getFigureTrackNameFigure() {
-			return fFigureTrackNameFigure;
 		}
 
 		public void paint(Graphics graphics) {
@@ -171,13 +129,5 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 			}
 		}
 	}
-
-	/**
-	 * @generated
-	 */
-	static final Font FFIGURETRACKNAMEFIGURE_FONT = new Font(Display
-			.getCurrent(),
-			Display.getDefault().getSystemFont().getFontData()[0].getName(), 8,
-			SWT.NORMAL);
 
 }

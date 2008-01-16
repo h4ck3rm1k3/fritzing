@@ -138,22 +138,22 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 			getWorkspaceViewerPreferenceStore().setValue(
 					WorkspaceViewerProperties.ZOOM, 1.0);
 		}
-		
+
 		configurePaletteViewer(); // see note there
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditorWithFlyOutPalette#configurePaletteViewer()
 	 */
 	@Override
 	protected void configurePaletteViewer() {
-//		super.configurePaletteViewer();
+		//		super.configurePaletteViewer();
 		// XXX: this doesn't get called anywhere, maybe bug in GMF -- 
 		// so we are calling this from createGraphicalViewer()
 		PaletteViewer viewer = getEditDomain().getPaletteViewer();
 		if (viewer != null) {
-			viewer.getPaletteViewerPreferences().
-				setLayoutSetting(PaletteViewerPreferences.LAYOUT_ICONS);
+			viewer.getPaletteViewerPreferences().setLayoutSetting(
+					PaletteViewerPreferences.LAYOUT_ICONS);
 		}
 	}
 

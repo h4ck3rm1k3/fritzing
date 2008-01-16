@@ -381,13 +381,7 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getWire_4001IncomingLinks(View view) {
-		Wire modelElement = (Wire) view.getElement();
-		Map crossReferences = EcoreUtil.CrossReferencer.find(view.eResource()
-				.getResourceSet().getResources());
-		List result = new LinkedList();
-		result.addAll(getIncomingTypeModelFacetLinks_Leg_4003(modelElement,
-				crossReferences));
-		return result;
+		return Collections.EMPTY_LIST;
 	}
 
 	/**
@@ -467,10 +461,7 @@ public class FritzingDiagramUpdater {
 	 * @generated
 	 */
 	public static List getWire_4001OutgoingLinks(View view) {
-		Wire modelElement = (Wire) view.getElement();
-		List result = new LinkedList();
-		result.addAll(getOutgoingTypeModelFacetLinks_Leg_4003(modelElement));
-		return result;
+		return Collections.EMPTY_LIST;
 	}
 
 	/**

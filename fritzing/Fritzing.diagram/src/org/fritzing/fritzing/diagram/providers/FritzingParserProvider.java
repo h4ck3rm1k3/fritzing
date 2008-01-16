@@ -185,31 +185,6 @@ public class FritzingParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser trackName_6002Parser;
-
-	/**
-	 * @generated
-	 */
-	private IParser getTrackName_6002Parser() {
-		if (trackName_6002Parser == null) {
-			trackName_6002Parser = createTrackName_6002Parser();
-		}
-		return trackName_6002Parser;
-	}
-
-	/**
-	 * @generated
-	 */
-	protected IParser createTrackName_6002Parser() {
-		EAttribute[] features = new EAttribute[] { FritzingPackage.eINSTANCE
-				.getIElement_Name(), };
-		MessageFormatParser parser = new MessageFormatParser(features);
-		return parser;
-	}
-
-	/**
-	 * @generated
-	 */
 	protected IParser getParser(int visualID) {
 		switch (visualID) {
 		case LEDNameEditPart.VISUAL_ID:
@@ -224,8 +199,6 @@ public class FritzingParserProvider extends AbstractProvider implements
 			return getTerminalName_5001Parser();
 		case WireNameEditPart.VISUAL_ID:
 			return getWireName_6001Parser();
-		case TrackNameEditPart.VISUAL_ID:
-			return getTrackName_6002Parser();
 		}
 		return null;
 	}

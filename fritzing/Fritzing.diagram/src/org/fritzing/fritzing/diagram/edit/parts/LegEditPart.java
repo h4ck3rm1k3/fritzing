@@ -44,7 +44,6 @@ import org.fritzing.fritzing.diagram.edit.policies.LegItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.eclipse.swt.graphics.Color;
 
-
 /**
  * @generated
  */
@@ -60,7 +59,6 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	 */
 	public LegEditPart(View view) {
 		super(view);
-
 	}
 
 	/**
@@ -68,66 +66,45 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	 */
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
-		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new LegItemSemanticEditPolicy());
-		installEditPolicy(EditPolicy.CONNECTION_ROLE, new LegItemConnectionEditPolicy());
-		installEditPolicy(EditPolicy.CONNECTION_ENDPOINTS_ROLE, new LegItemConnectionEndpointEditPolicy());
+		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+				new LegItemSemanticEditPolicy());
+		installEditPolicy(EditPolicy.CONNECTION_ROLE,
+				new LegItemConnectionEditPolicy());
+		installEditPolicy(EditPolicy.CONNECTION_ENDPOINTS_ROLE,
+				new LegItemConnectionEndpointEditPolicy());
 		// don't want delete
-		installEditPolicy(EditPolicy.COMPONENT_ROLE, new NonDeleteComponentEditPolicy());		
+		installEditPolicy(EditPolicy.COMPONENT_ROLE,
+				new NonDeleteComponentEditPolicy());
 	}
 
 	protected void initBend(LegFigure figure, Point p) {
-//			BendpointRequest request = new BendpointRequest();
-//			request.setType(RequestConstants.REQ_CREATE_BENDPOINT);
-//			request.setIndex(0);
-//			request.setSource(this);
-//			request.setLocation(p);
-//			Command cmd = super.getCommand(request);
-//			if (cmd != null && cmd.canExecute()) {
-//				DiagramCommandStack commandStack = this.getDiagramEditDomain()
-//				.getDiagramCommandStack();
-//				commandStack.execute(cmd);		
-//			}
-			
-			
+		//			BendpointRequest request = new BendpointRequest();
+		//			request.setType(RequestConstants.REQ_CREATE_BENDPOINT);
+		//			request.setIndex(0);
+		//			request.setSource(this);
+		//			request.setLocation(p);
+		//			Command cmd = super.getCommand(request);
+		//			if (cmd != null && cmd.canExecute()) {
+		//				DiagramCommandStack commandStack = this.getDiagramEditDomain()
+		//				.getDiagramCommandStack();
+		//				commandStack.execute(cmd);		
+		//			}
+
 	}
-	
+
 	protected boolean connectedToSketch() {
 		return (this.getTarget() instanceof SketchEditPart);
 	}
-	
-	
-    public Command getCommand(Request request) {
-    	if (request.getType() == RequestConstants.REQ_CREATE_BENDPOINT) {
-    		if (this.getTarget() instanceof SketchEditPart) {
-    			return UnexecutableCommand.INSTANCE;
-    		}
-    	}
-    	
-    	return super.getCommand(request);
-    	
-    }
-    
 
-	/**
-	 * @generated
-	 */
-	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof LegNameEditPart) {
-			((LegNameEditPart) childEditPart).setLabel(getPrimaryShape()
-					.getFigureLegNameFigure());
-			return true;
+	public Command getCommand(Request request) {
+		if (request.getType() == RequestConstants.REQ_CREATE_BENDPOINT) {
+			if (this.getTarget() instanceof SketchEditPart) {
+				return UnexecutableCommand.INSTANCE;
+			}
 		}
-		return false;
-	}
 
-	/**
-	 * @generated
-	 */
-	protected void addChildVisual(EditPart childEditPart, int index) {
-		if (addFixedChild(childEditPart)) {
-			return;
-		}
-		super.addChildVisual(childEditPart, -1);
+		return super.getCommand(request);
+
 	}
 
 	/**
@@ -140,7 +117,7 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	 */
 
 	protected Connection createConnectionFigure() {
-		return new LegFigure(this);
+		return new LegFigure();
 	}
 
 	/**
@@ -158,74 +135,47 @@ public class LegEditPart extends ConnectionNodeEditPart {
 		/**
 		 * @generated
 		 */
-		private WrapLabel fFigureLegNameFigure;
-		
-		
+		public LegFigure() {
+			this.setLineWidth(2);
+
+		}
+
 		boolean firstTime;
 		LegEditPart leg;
-		
-
-		/**
-		 * @generated
-		 */
-		public LegFigure(LegEditPart leg) {
-			this.setLineWidth(3);
-			this.setForegroundColor(LEG_FIGURE_COLOR);
-			this.leg = leg;
-			firstTime = true;
-			createContents();
-		}
 
 		/**
 		 * @generated NOT
 		 */
 		private void createContents() {
 
-			fFigureLegNameFigure = new WrapLabel();
-			fFigureLegNameFigure.setText("");			
-
-			fFigureLegNameFigure.setFont(FFIGURELEGNAMEFIGURE_FONT);
-			fFigureLegNameFigure.setVisible(false);
-			this.add(fFigureLegNameFigure);
-
 		}
-		
-//		public void paintFigure(Graphics g) {
-		
-		
-//		FritzingDiagramEditor editor = FritzingDiagramEditorUtil.getActiveDiagramPart();
-//		IDiagramGraphicalViewer viewer = editor.getDiagramGraphicalViewer();
-//		if (viewer instanceof DiagramGraphicalViewer) {
-//			RootEditPart rootEditPart = ((DiagramGraphicalViewer) viewer).getRootEditPart();
-//			if (rootEditPart instanceof FritzingDiagramRootEditPart) {
-//				//System.out.println("zoom level: " + ((FritzingDiagramRootEditPart) rootEditPart).getZoomManager().getZoom());
-//			} 
-//		}
-		
-		
-//			g.pushState();
-//			g.setAlpha(192);
-//			super.paintFigure(g);
-//			g.popState();
-//		}
 
-	    public void setPoints(PointList points) {
-	    	if (firstTime) {
-	    		firstTime = false;
-//	    		if (points.size() == 2 && leg.connectedToSketch()) {
-//	    			Point p = points.getMidpoint();	 
-//	    			leg.initBend(this, p);
-//	    		}
-	    	}
-	        super.setPoints(points);
-	    }
+		//		public void paintFigure(Graphics g) {
 
-	    
-		/**
-		 * @generated
-		 */
-		public WrapLabel getFigureLegNameFigure() {
-			return fFigureLegNameFigure;
+		//		FritzingDiagramEditor editor = FritzingDiagramEditorUtil.getActiveDiagramPart();
+		//		IDiagramGraphicalViewer viewer = editor.getDiagramGraphicalViewer();
+		//		if (viewer instanceof DiagramGraphicalViewer) {
+		//			RootEditPart rootEditPart = ((DiagramGraphicalViewer) viewer).getRootEditPart();
+		//			if (rootEditPart instanceof FritzingDiagramRootEditPart) {
+		//				//System.out.println("zoom level: " + ((FritzingDiagramRootEditPart) rootEditPart).getZoomManager().getZoom());
+		//			} 
+		//		}
+
+		//			g.pushState();
+		//			g.setAlpha(192);
+		//			super.paintFigure(g);
+		//			g.popState();
+		//		}
+
+		public void setPoints(PointList points) {
+			if (firstTime) {
+				firstTime = false;
+				//	    		if (points.size() == 2 && leg.connectedToSketch()) {
+				//	    			Point p = points.getMidpoint();	 
+				//	    			leg.initBend(this, p);
+				//	    		}
+			}
+			super.setPoints(points);
 		}
 
 		public Object getRoutingConstraint() {
@@ -234,46 +184,38 @@ public class LegEditPart extends ConnectionNodeEditPart {
 			// the root problem is that when a leg is connected to the sketch,
 			// adding a bendpoint to the leg results in the leg getting badly screwed up or disappearing completely
 			// this problem would probably fix itself if we were connecting to a terminal on the sketch and not the sketch itself
-			
+
 			if (leg.connectedToSketch()) {
 				return null;
 			}
-			
-			return super.getRoutingConstraint();				
+
+			return super.getRoutingConstraint();
 		}
 	}
-	
+
 	public class LegItemConnectionEditPolicy extends ConnectionEditPolicy {
-	    protected Command createDeleteViewCommand(GroupRequest deleteRequest) {
-	    	// disable delete for legs
-	    	return UnexecutableCommand.INSTANCE;
-	    }
-		 protected Command createDeleteSemanticCommand(GroupRequest deleteRequest)
-		 {
+		protected Command createDeleteViewCommand(GroupRequest deleteRequest) {
 			// disable delete for legs
-			 return UnexecutableCommand.INSTANCE; 
-		 }
+			return UnexecutableCommand.INSTANCE;
+		}
+
+		protected Command createDeleteSemanticCommand(GroupRequest deleteRequest) {
+			// disable delete for legs
+			return UnexecutableCommand.INSTANCE;
+		}
 	}
-	
-	public class LegItemConnectionEndpointEditPolicy extends ConnectionEndpointEditPolicy {
+
+	public class LegItemConnectionEndpointEditPolicy extends
+			ConnectionEndpointEditPolicy {
 		protected List createSelectionHandles() {
 			// only show target handle, not source handle
 			List list = new ArrayList();
-			list.add(new ConnectionEndHandle((ConnectionEditPart)getHost()));
-		 	return list;
+			list.add(new ConnectionEndHandle((ConnectionEditPart) getHost()));
+			return list;
 		}
-		
-	}
-	
 
-	/**
-	 * @generated
-	 */
-	static final Font FFIGURELEGNAMEFIGURE_FONT = new Font(
-			Display.getCurrent(), Display.getDefault().getSystemFont()
-					.getFontData()[0].getName(), 8, SWT.NORMAL);
-	
-	
+	}
+
 	static final Color LEG_FIGURE_COLOR = new Color(null, 179, 179, 179);
 
 }

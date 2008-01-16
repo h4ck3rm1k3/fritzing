@@ -380,28 +380,6 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		/**
 		 * @generated
 		 */
-		private static final FritzingAbstractExpression Track_4002_SourceExpression;
-
-		/**
-		 * @generated
-		 */
-		static {
-			Map env = new HashMap(3);
-			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE
-					.getITrackConnection());
-			Track_4002_SourceExpression = FritzingOCLFactory
-					.getExpression(
-							"self <> oppositeEnd", FritzingPackage.eINSTANCE.getITrackConnection(), env); //$NON-NLS-1$
-		}
-
-		/**
-		 * @generated
-		 */
-		private static final FritzingAbstractExpression Leg_4003_SourceExpression;
-
-		/**
-		 * @generated
-		 */
 		static {
 			Map env = new HashMap(3);
 			env.put(OPPOSITE_END_VAR, FritzingPackage.eINSTANCE
@@ -410,6 +388,11 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 					.getExpression(
 							"self <> oppositeEnd", FritzingPackage.eINSTANCE.getILegConnection(), env); //$NON-NLS-1$
 		}
+
+		/**
+		 * @generated
+		 */
+		private static final FritzingAbstractExpression Leg_4003_SourceExpression;
 
 		/**
 		 * @generated
@@ -456,9 +439,6 @@ public class FritzingBaseItemSemanticEditPolicy extends SemanticEditPolicy {
 		 */
 		public static boolean canExistTrack_4002(Part container,
 				ITrackConnection source, ITrackConnection target) {
-			if (!evaluate(Track_4002_SourceExpression, source, target, false)) {
-				return false;
-			}
 			return true;
 		}
 

@@ -45,13 +45,5 @@ public class TrackViewFactory extends ConnectionViewFactory {
 		}
 		super.decorateView(containerView, view, semanticAdapter, semanticHint,
 				index, persisted);
-		IAdaptable eObjectAdapter = null;
-		EObject eObject = (EObject) semanticAdapter.getAdapter(EObject.class);
-		if (eObject != null) {
-			eObjectAdapter = new EObjectAdapter(eObject);
-		}
-		getViewService().createNode(eObjectAdapter, view,
-				FritzingVisualIDRegistry.getType(TrackNameEditPart.VISUAL_ID),
-				ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }

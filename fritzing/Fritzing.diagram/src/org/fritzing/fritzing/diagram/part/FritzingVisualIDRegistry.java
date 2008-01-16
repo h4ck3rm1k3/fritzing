@@ -252,11 +252,6 @@ public class FritzingVisualIDRegistry {
 				return true;
 			}
 			break;
-		case TrackEditPart.VISUAL_ID:
-			if (TrackNameEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
 		}
 		return false;
 	}
