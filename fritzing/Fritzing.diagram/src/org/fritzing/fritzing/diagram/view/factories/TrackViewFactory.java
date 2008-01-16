@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.diagram.ui.view.factories.ConnectionViewFactory;
-import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.parts.TrackEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -19,14 +18,21 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 public class TrackViewFactory extends ConnectionViewFactory {
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected List createStyles(View view) {
 		List styles = new ArrayList();
-		styles.add(NotationFactory.eINSTANCE.createConnectorStyle());
-		styles.add(NotationFactory.eINSTANCE.createFontStyle());
+//		styles.add(NotationFactory.eINSTANCE.createConnectorStyle());
+//		styles.add(NotationFactory.eINSTANCE.createFontStyle());
 		return styles;
 	}
+	
+	/* FIXME: Tried to remove bendpoints here, because we don't need them for tracks.
+	 * However, it seems that they are necessary.
+	 */
+//	protected Bendpoints createBendpoints() {
+//		return null;
+//	}
 
 	/**
 	 * @generated

@@ -7,10 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.view.factories.ConnectionViewFactory;
-import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.LineStyle;
 import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
@@ -27,12 +24,12 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 public class LegViewFactory extends ConnectionViewFactory {
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected List createStyles(View view) {
 		List styles = new ArrayList();
 		styles.add(NotationFactory.eINSTANCE.createConnectorStyle());
-		styles.add(NotationFactory.eINSTANCE.createFontStyle());
+//		styles.add(NotationFactory.eINSTANCE.createFontStyle());
 		return styles;
 	}
 
@@ -50,11 +47,10 @@ public class LegViewFactory extends ConnectionViewFactory {
 		super.decorateView(containerView, view, semanticAdapter, semanticHint,
 				index, persisted);
 
-		// change default routing style
+		// change default style
 		RoutingStyle rstyle = (RoutingStyle) view
 				.getStyle(NotationPackage.eINSTANCE.getRoutingStyle());
 		rstyle.setSmoothness(Smoothness.NORMAL_LITERAL);
-		//      rstyle.setRouting(Routing.TREE_LITERAL);
         LineStyle lineStyle = (LineStyle) view.getStyle(NotationPackage.eINSTANCE.getLineStyle());
         lineStyle.setLineColor(LegEditPart.LEG_FIGURE_COLOR.hashCode());
 	}

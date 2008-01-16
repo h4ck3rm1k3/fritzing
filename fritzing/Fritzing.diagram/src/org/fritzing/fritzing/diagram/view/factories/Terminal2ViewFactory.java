@@ -11,8 +11,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.view.factories.AbstractShapeViewFactory;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
-import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.View;
+import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -23,16 +26,16 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 public class Terminal2ViewFactory extends AbstractShapeViewFactory {
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected List createStyles(View view) {
 		List styles = new ArrayList();
-		styles.add(NotationFactory.eINSTANCE.createShapeStyle());
+//		styles.add(NotationFactory.eINSTANCE.createShapeStyle());
 		return styles;
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void decorateView(View containerView, View view,
 			IAdaptable semanticAdapter, String semanticHint, int index,
@@ -44,16 +47,28 @@ public class Terminal2ViewFactory extends AbstractShapeViewFactory {
 		}
 		super.decorateView(containerView, view, semanticAdapter, semanticHint,
 				index, persisted);
-		IAdaptable eObjectAdapter = null;
-		EObject eObject = (EObject) semanticAdapter.getAdapter(EObject.class);
-		if (eObject != null) {
-			eObjectAdapter = new EObjectAdapter(eObject);
+		
+		/*
+		 * Don't create the TerminalNameEditPart if the part definiton
+		 * tells us not to: This reduces the .fzb file a lot for cases
+		 * like the Breadboard.
+		 */
+		Terminal terminal = (Terminal)view.getElement();
+		Part part = terminal.getParent();
+		PartLoader partLoader = PartLoaderRegistry.getInstance().get(
+				part.getGenus() + part.getSpecies());
+		if (partLoader.getTerminalLabelVisible(terminal.getId())) {
+			IAdaptable eObjectAdapter = null;
+			EObject eObject = (EObject) semanticAdapter.getAdapter(EObject.class);
+			if (eObject != null) {
+				eObjectAdapter = new EObjectAdapter(eObject);
+			}
+			getViewService().createNode(
+					eObjectAdapter,
+					view,
+					FritzingVisualIDRegistry
+							.getType(TerminalName2EditPart.VISUAL_ID),
+					ViewUtil.APPEND, true, getPreferencesHint());
 		}
-		getViewService().createNode(
-				eObjectAdapter,
-				view,
-				FritzingVisualIDRegistry
-						.getType(TerminalName2EditPart.VISUAL_ID),
-				ViewUtil.APPEND, true, getPreferencesHint());
 	}
 }
