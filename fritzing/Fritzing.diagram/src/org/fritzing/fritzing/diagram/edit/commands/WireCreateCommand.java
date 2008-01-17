@@ -16,9 +16,9 @@ import org.fritzing.fritzing.Composite;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.IWireConnection;
-import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingBaseItemSemanticEditPolicy;
+import org.fritzing.fritzing.diagram.utils.UIDGenerator;
 
 /**
  * @generated
@@ -91,12 +91,13 @@ public class WireCreateCommand extends CreateElementCommand {
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected EObject doDefaultElementCreation() {
 		// org.fritzing.fritzing.Wire newElement = (org.fritzing.fritzing.Wire) super.doDefaultElementCreation();
 		Wire newElement = FritzingFactory.eINSTANCE.createWire();
 		getContainer().getWires().add(newElement);
+		newElement.setId(UIDGenerator.getInstance().genUID());
 		newElement.setSource(getSource());
 		newElement.setTarget(getTarget());
 		return newElement;
