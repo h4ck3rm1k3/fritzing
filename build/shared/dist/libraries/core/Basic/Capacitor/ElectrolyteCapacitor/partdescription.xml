@@ -2,7 +2,7 @@
 <part>
 	<version>1.0</version>
 	<species>ElectrolyteCapacitor</species>
-	<genus>Basic</genus>
+	<genus>Basic.Capacitor</genus>
 	<title>Capacitor (electrolyte)</title>
 	<description>A polarized capacitor with a higher value</description>
 	<icons>
@@ -11,17 +11,19 @@
 	</icons>
 	<label>C</label>
 	<reference>
-		http://fritzing.org/reference/parts/core/capacitor-electrolyte
+		http://fritzing.org/reference/parts/core/electrolytecapacitor
 	</reference>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="318" y="2216" /><!-- 50x349 pixels -->
-	<bounds height="2235" units="himetric" width="1143" /><!-- 45x88 pixels -->
+	<gridOffset x="318" y="2216" units="himetric"/> <!-- 50x349 400% view pixels -->
+	<bounds width="1143" height="2229" units="himetric"/> <!-- 180x351 400% view pixels -->
 	<connectors units="tenths">
 		<connector id="-" name="-" type="leg">
-			<point x="0" y="0" />
+			<point x="0" y="-38" units="himetric"/> <!-- 0x-6 400% view pixels -->
+			<point x="0" y="1" />
 		</connector>
 		<connector id="+" name="+" type="leg">
-			<point x="2" y="0" />
+			<point x="508" y="-38" units="himetric"/> <!-- 80x-6 400% view pixels -->
+			<point x="2" y="1" />
 		</connector>
 	</connectors>
 	<layers>

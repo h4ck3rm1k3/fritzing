@@ -2,7 +2,7 @@
 <part>
 	<version>1.0</version>
 	<species>CeramicDiskCapacitor</species>
-	<genus>Basic</genus>
+	<genus>Basic.Capacitor</genus>
 	<title>Capacitor (ceramic disk)</title>
 	<description>A small non-polarized capacitor</description>
 	<icons>
@@ -11,17 +11,19 @@
 	</icons>
 	<label>C</label>
 	<reference>
-		http://fritzing.org/reference/parts/core/capacitor-ceramicdisk
+		http://fritzing.org/reference/parts/core/ceramicdiskcapacitor
 	</reference>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="114" y="381" /><!-- 18x60 pixels -->
-	<bounds height="635" units="himetric" width="483" /><!-- 19x25 pixels -->
+	<gridOffset x="114" y="381" units="himetric"/> <!-- 18x60 400% view pixels -->
+	<bounds width="483" height="641" units="himetric"/> <!-- 76x101 400% view pixels -->
 	<connectors units="tenths">
 		<connector id="1" name="1" type="leg">
-			<point x="0" y="0" />
+			<point x="0" y="1" />
+			<point x="0" y="2" />
 		</connector>
 		<connector id="2" name="2" type="leg">
-			<point x="1" y="0" />
+			<point x="1" y="1" />
+			<point x="1" y="2" />
 		</connector>
 	</connectors>
 	<layers>
