@@ -6,31 +6,34 @@
 	<title>Power Transistor</title>
 	<description>A transistor higher voltage levels</description>
 	<icons>
-		<icon size="small" source="iconSmall.gif"/>
-		<icon size="large" source="iconLarge.gif"/>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>Q</label>
-	<reference>http://fritzing.org/reference/parts/core/power-transistor</reference>
-	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="0" y="0"/> <!-- 0x0 pixels -->
-	<bounds height="1447.8" units="himetric" width="939.8"/> <!-- 37x57 pixels -->
+	<reference>
+		http://fritzing.org/reference/parts/core/power-transistor
+	</reference>
+	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset units="himetric" x="0" y="0" /><!-- 0x0 pixels -->
+	<bounds height="1447.8" units="himetric" width="939.8" /><!-- 37x57 pixels -->
 	<connectors units="tenths">
 		<connector id="B" name="B" type="leg">
-<point x="0.5" y="5.5"/>
-</connector>
+			<point x="0.5" y="5.5" />
+		</connector>
 		<connector id="C" name="C" type="leg">
-<point x="1.5" y="5.5"/>
-</connector>
+			<point x="1.5" y="5.5" />
+		</connector>
 		<connector id="E" name="E" type="leg">
-<point x="2.5" y="5.5"/>
-</connector>
+			<point x="2.5" y="5.5" />
+		</connector>
 	</connectors>
 	<layers>
 		<layer type="image">
-				<image source="part.png" type="bitmap" zoom="1"/>
+			<image source="part.png" type="bitmap" zoom="1" />
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/PowerTransistor" type="eagle"/>
+		<footprint default="true" source="fritzing.lbr/PowerTransistor"
+			type="eagle" />
 	</footprints>
 </part>

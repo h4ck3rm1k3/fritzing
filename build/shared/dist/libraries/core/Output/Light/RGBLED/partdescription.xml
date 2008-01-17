@@ -4,46 +4,51 @@
 	<species>RGBLED</species>
 	<genus>Actuator</genus>
 	<title>RGB LED</title>
-	<description>A 4-pin full-color (RGB) light-emitting diode</description>
+	<description>
+		A 4-pin full-color (RGB) light-emitting diode
+	</description>
 	<icons>
-		<icon size="small" source="iconSmall.gif"/>
-		<icon size="large" source="iconLarge.gif"/>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>L</label>
-	<reference>http://fritzing.org/reference/parts/core/rgbled</reference>
-	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="298" y="133"/> <!-- 47x21 pixels -->
-	<bounds height="1168" units="himetric" width="838"/> <!-- 33x46 pixels -->
+	<reference>
+		http://fritzing.org/reference/parts/core/rgbled
+	</reference>
+	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset units="himetric" x="298" y="133" /><!-- 47x21 pixels -->
+	<bounds height="1168" units="himetric" width="838" /><!-- 33x46 pixels -->
 	<connectors units="tenths">
 		<connector id="1" name="B" type="leg">
-			
-		<point x="-1" y="5"/>
-<point x="-1" y="8"/>
-</connector>
+
+			<point x="-1" y="5" />
+			<point x="-1" y="8" />
+		</connector>
 		<connector id="2" name="G" type="leg">
-			
-		<point x="0" y="5"/>
-<point x="0" y="8"/>
-</connector>
+
+			<point x="0" y="5" />
+			<point x="0" y="8" />
+		</connector>
 		<connector id="3" name="+" type="leg">
-			
-		<point x="1" y="5"/>
-<point x="1" y="8"/>
-</connector>
+
+			<point x="1" y="5" />
+			<point x="1" y="8" />
+		</connector>
 		<connector id="4" name="R" type="leg">
-			
-		<point x="2" y="5"/>
-<point x="2" y="8"/>
-</connector>
+
+			<point x="2" y="5" />
+			<point x="2" y="8" />
+		</connector>
 	</connectors>
 	<layers>
 		<layer type="image">
-				<image source="part.png" type="bitmap" zoom="1"/>
-				<image source="part200.png" type="bitmap" zoom="2"/>
-				<image source="part400.png" type="bitmap" zoom="4"/>
+			<image source="part.png" type="bitmap" zoom="1" />
+			<image source="part200.png" type="bitmap" zoom="2" />
+			<image source="part400.png" type="bitmap" zoom="4" />
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/RGBLED" type="eagle"/>
+		<footprint default="true" source="fritzing.lbr/RGBLED"
+			type="eagle" />
 	</footprints>
 </part>

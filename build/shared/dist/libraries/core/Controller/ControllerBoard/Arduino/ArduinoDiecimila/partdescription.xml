@@ -6,136 +6,139 @@
 	<title>Arduino Diecimila</title>
 	<description>The famous Arduino microcontroller board</description>
 	<icons>
-		<icon size="small" source="iconSmall.gif"/>
-		<icon size="large" source="iconLarge.gif"/>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>ARDUINO</label>
-	<reference>http://fritzing.org/reference/parts/core/arduino-diecimila</reference>
-	<defaultUnits>tenths</defaultUnits>   <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="933" y="197"/> <!-- 147x31 400% view pixels -->
-	<bounds height="5232" units="himetric" width="7493"/> <!-- 295x206 pixels -->
+	<reference>
+		http://fritzing.org/reference/parts/core/arduino-diecimila
+	</reference>
+	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset units="himetric" x="933" y="197" /><!-- 147x31 400% view pixels -->
+	<bounds height="5232" units="himetric" width="7493" /><!-- 295x206 pixels -->
 	<connectors units="tenths">
-    	<nameLayout visible="false"/>
-    	<connector id="psu" name="Power Select USB" type="male">
-<point x="1" y="9"/>
-</connector>
+		<nameLayout visible="false" />
+		<connector id="psu" name="Power Select USB" type="male">
+			<point x="1" y="9" />
+		</connector>
 		<connector id="psc" name="Power Select Common" type="male">
-<point x="1" y="10"/>
-</connector>
+			<point x="1" y="10" />
+		</connector>
 		<connector id="pse" name="Power Select External" type="male">
-<point x="1" y="11"/>
-</connector>
+			<point x="1" y="11" />
+		</connector>
 		<connector id="icsp1" name="ICSP 1" type="male">
-<point x="24" y="8"/>
-</connector>
+			<point x="24" y="8" />
+		</connector>
 		<connector id="icsp2" name="ICSP 2" type="male">
-<point x="24" y="9"/>
-</connector>
+			<point x="24" y="9" />
+		</connector>
 		<connector id="icsp3" name="ICSP 3" type="male">
-<point x="24" y="10"/>
-</connector>
+			<point x="24" y="10" />
+		</connector>
 		<connector id="icsp4" name="ICSP 4" type="male">
-<point x="25" y="10"/>
-</connector>
+			<point x="25" y="10" />
+		</connector>
 		<connector id="icsp5" name="ICSP 5" type="male">
-<point x="25" y="9"/>
-</connector>
+			<point x="25" y="9" />
+		</connector>
 		<connector id="icsp6" name="ICSP 6" type="male">
-<point x="25" y="8"/>
-</connector>
+			<point x="25" y="8" />
+		</connector>
 		<connector id="AREF" name="AREF" type="female">
-<point x="8" y="0"/>
-</connector>
+			<point x="8" y="0" />
+		</connector>
 		<connector id="GND@3" name="Ground" type="female">
-<point x="9" y="0"/>
-</connector>
+			<point x="9" y="0" />
+		</connector>
 		<connector id="D13" name="Digital 13" type="female">
-<point x="10" y="0"/>
-</connector>
+			<point x="10" y="0" />
+		</connector>
 		<connector id="D12" name="Digital 12" type="female">
-<point x="11" y="0"/>
-</connector>
+			<point x="11" y="0" />
+		</connector>
 		<connector id="D11" name="Digital 11 PWM" type="female">
-<point x="12" y="0"/>
-</connector>
+			<point x="12" y="0" />
+		</connector>
 		<connector id="D10" name="Digital 10 PWM" type="female">
-<point x="13" y="0"/>
-</connector>
+			<point x="13" y="0" />
+		</connector>
 		<connector id="D9" name="Digital 9 PWM" type="female">
-<point x="14" y="0"/>
-</connector>
+			<point x="14" y="0" />
+		</connector>
 		<connector id="D8" name="Digital 8" type="female">
-<point x="15" y="0"/>
-</connector>
+			<point x="15" y="0" />
+		</connector>
 		<connector id="D7" name="Digital 7" type="female">
-<point x="17" y="0"/>
-</connector>
+			<point x="17" y="0" />
+		</connector>
 		<connector id="D6" name="Digital 6 PWM" type="female">
-<point x="18" y="0"/>
-</connector>
+			<point x="18" y="0" />
+		</connector>
 		<connector id="D5" name="Digital 5 PWM" type="female">
-<point x="19" y="0"/>
-</connector>
+			<point x="19" y="0" />
+		</connector>
 		<connector id="D4" name="Digital 4" type="female">
-<point x="20" y="0"/>
-</connector>
+			<point x="20" y="0" />
+		</connector>
 		<connector id="D3" name="Digital 3 PWM" type="female">
-<point x="21" y="0"/>
-</connector>
+			<point x="21" y="0" />
+		</connector>
 		<connector id="D2" name="Digital 2" type="female">
-<point x="22" y="0"/>
-</connector>
+			<point x="22" y="0" />
+		</connector>
 		<connector id="D1" name="Digital 1 TX" type="female">
-<point x="23" y="0"/>
-</connector>
+			<point x="23" y="0" />
+		</connector>
 		<connector id="D0" name="Digital 0 RX" type="female">
-<point x="24" y="0"/>
-</connector>
+			<point x="24" y="0" />
+		</connector>
 		<connector id="RESET" name="Reset" type="female">
-<point x="12" y="19"/>
-</connector>
+			<point x="12" y="19" />
+		</connector>
 		<connector id="3V3" name="3.3V" type="female">
-<point x="13" y="19"/>
-</connector>
+			<point x="13" y="19" />
+		</connector>
 		<connector id="5V" name="5V Power" type="female">
-<point x="14" y="19"/>
-</connector>
+			<point x="14" y="19" />
+		</connector>
 		<connector id="GND@1" name="Ground" type="female">
-<point x="15" y="19"/>
-</connector>
+			<point x="15" y="19" />
+		</connector>
 		<connector id="GND@2" name="Ground" type="female">
-<point x="16" y="19"/>
-</connector>
+			<point x="16" y="19" />
+		</connector>
 		<connector id="9V" name="9V Power" type="female">
-<point x="17" y="19"/>
-</connector>
+			<point x="17" y="19" />
+		</connector>
 		<connector id="A0" name="Analog 0" type="female">
-<point x="19" y="19"/>
-</connector>
+			<point x="19" y="19" />
+		</connector>
 		<connector id="A1" name="Analog 1" type="female">
-<point x="20" y="19"/>
-</connector>
+			<point x="20" y="19" />
+		</connector>
 		<connector id="A2" name="Analog 2" type="female">
-<point x="21" y="19"/>
-</connector>
+			<point x="21" y="19" />
+		</connector>
 		<connector id="A3" name="Analog 3" type="female">
-<point x="22" y="19"/>
-</connector>
+			<point x="22" y="19" />
+		</connector>
 		<connector id="A4" name="Analog 4" type="female">
-<point x="23" y="19"/>
-</connector>
+			<point x="23" y="19" />
+		</connector>
 		<connector id="A5" name="Analog 5" type="female">
-<point x="24" y="19"/>
-</connector>
+			<point x="24" y="19" />
+		</connector>
 	</connectors>
 	<layers>
 		<layer type="image">
-			<image source="partHoles.png" type="bitmap" zoom="1"/>
-			<image source="partHoles200.png" type="bitmap" zoom="2"/>
-			<image source="partHoles400.png" type="bitmap" zoom="4"/>
+			<image source="partHoles.png" type="bitmap" zoom="1" />
+			<image source="partHoles200.png" type="bitmap" zoom="2" />
+			<image source="partHoles400.png" type="bitmap" zoom="4" />
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/Arduino" type="eagle"/>
+		<footprint default="true" source="fritzing.lbr/Arduino"
+			type="eagle" />
 	</footprints>
 </part>

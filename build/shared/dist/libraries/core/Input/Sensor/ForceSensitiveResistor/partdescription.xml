@@ -6,32 +6,33 @@
 	<title>Force Sensor (FSR)</title>
 	<description>A force-sensitive resistor</description>
 	<icons>
-		<icon size="small" source="iconSmall.gif"/>
-		<icon size="large" source="iconLarge.gif"/>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>FS</label>
 	<reference>http://fritzing.org/reference/parts/core/fsr</reference>
-	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="0" y="0"/> <!-- 0x0 pixels -->
-	<bounds height="1803.4" units="himetric" width="5562.6"/> <!-- 219x71 pixels -->
+	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset units="himetric" x="0" y="0" /><!-- 0x0 pixels -->
+	<bounds height="1803.4" units="himetric" width="5562.6" /><!-- 219x71 pixels -->
 	<connectors units="tenths">
 		<connector id="1" name="1" type="leg">
-      
-    <point x="0.5" y="3.0"/>
-<point x="-3.5" y="3"/>
-</connector>
-    <connector id="2" name="2" type="leg">
-      
-    <point x="0.5" y="4.0"/>
-<point x="-3.5" y="4"/>
-</connector>
-  </connectors>
+
+			<point x="0.5" y="3.0" />
+			<point x="-3.5" y="3" />
+		</connector>
+		<connector id="2" name="2" type="leg">
+
+			<point x="0.5" y="4.0" />
+			<point x="-3.5" y="4" />
+		</connector>
+	</connectors>
 	<layers>
 		<layer type="image">
-				<image source="part.png" type="bitmap" zoom="1"/>
+			<image source="part.png" type="bitmap" zoom="1" />
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/FsrSensor" type="eagle"/>
+		<footprint default="true" source="fritzing.lbr/FsrSensor"
+			type="eagle" />
 	</footprints>
 </part>
