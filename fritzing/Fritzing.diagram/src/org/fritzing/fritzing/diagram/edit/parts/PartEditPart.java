@@ -300,11 +300,12 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 																				
 					FritzingLinkDescriptor fld = new FritzingLinkDescriptor(terminal, 
 							sketch,
-							terminal.getLeg(), FritzingElementTypes.Leg_4003, 4003);
+							terminal.getLeg(), FritzingElementTypes.Leg_4003, LegEditPart.VISUAL_ID);
 					
 					
-					CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = new CreateConnectionViewRequest.ConnectionViewDescriptor(
-							fld.getSemanticAdapter(), "4003",
+					CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = 
+						new CreateConnectionViewRequest.ConnectionViewDescriptor(
+							fld.getSemanticAdapter(), String.valueOf(LegEditPart.VISUAL_ID),
 							ViewUtil.APPEND, true, ((IGraphicalEditPart) this.getParent())
 									.getDiagramPreferencesHint());
 					CreateConnectionViewRequest ccr = new CreateConnectionViewRequest(
