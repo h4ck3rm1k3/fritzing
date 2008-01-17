@@ -70,27 +70,28 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 	 * and tries to find a default if zoom=-1 (level=1 or the smallest available)
 	 */
 	protected void setImageByZoomLevel(double zoom) {
+		double bestLevel = zoom;
 		if (Double.compare(zoom, -1) == 0) {
-			zoom = partLoader.getBitmapFilenames().containsKey(1) ? 1 : 
+			bestLevel = partLoader.getBitmapFilenames().containsKey(1) ? 1 : 
 				getSortedImageLevels().firstElement();
 			currentImageZoomLevel = -1.0;
-		} else if (!partLoader.getBitmapFilenames().containsKey(zoom)) {
+		} else if (!partLoader.getBitmapFilenames().containsKey(bestLevel)) {
 			Vector<Double> levels = getSortedImageLevels();
-		    zoom = levels.lastElement();
+			bestLevel = levels.lastElement();
 		    for (Double level: levels) {
 		    	if (level.compareTo(zoom) >= 0) {
-		    		zoom = level;
+		    		bestLevel = level;
 		    		break;
 		    	}
 		    }
 		}
-		if (Double.compare(currentImageZoomLevel, zoom) != 0) {
+		if (Double.compare(currentImageZoomLevel, bestLevel) != 0) {
 			try {
-				String imageSrc = partLoader.getBitmapFilenames().get(new Double(zoom));
+				String imageSrc = partLoader.getBitmapFilenames().get(new Double(bestLevel));
 				image = FritzingElementTypes.getImageRegistry().get(
 					partLoader.getContentsPath() + imageSrc);
-				repaint();
-				currentImageZoomLevel = zoom;
+				// repaint(); // repaints anyway because of zoom
+				currentImageZoomLevel = bestLevel;
 			} catch (Exception ex) {
 				// inform the user?
 				ex.printStackTrace();
@@ -117,6 +118,7 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 					image.getBounds());
 			g.drawImage(image, 0, 0, s.width, s.height, r.x, r.y, r.width,
 					r.height);
+//			g.drawImage(image, 0, 0);
 		}
 	}
 
