@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <part>
 	<version>1.0</version>
 	<species>Potentiometer</species>
@@ -6,31 +6,37 @@
 	<title>Potentiometer</title>
 	<description>A potentiometer (variable resistor)</description>
 	<icons>
-		<icon size="small" source="iconSmall.gif" />
-		<icon size="large" source="iconLarge.gif" />
+		<icon size="small" source="iconSmall.gif"/>
+		<icon size="large" source="iconLarge.gif"/>
 	</icons>
 	<label>POT</label>
 	<reference>http://fritzing.org/reference/parts/core/potentiometer</reference>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset x="92" y="118" units="himetric"/> <!-- approx 4x5 pixels -->
-    <bounds width="660" height="737" units="himetric"/> <!-- 26x29 pixels -->
+	<gridOffset units="himetric" x="92" y="118"/> <!-- approx 4x5 pixels -->
+    <bounds height="737" units="himetric" width="660"/> <!-- 26x29 pixels -->
 	<connectors units="tenths">
-		<connector id="T1" name="T1" x="0" y="2" type="leg" >
-      <leg dx="0" dy="3" />
-    </connector>
-    <connector id="T2" name="T2" x="2" y="2" type="leg" >
-      <leg dx="0" dy="3" />
-    </connector>
-    <connector id="W" name="W" x="1" y="0" type="leg" >
-      <leg dx="0" dy="-3" />
-    </connector>
+		<connector id="T1" name="T1" type="leg">
+      
+    <point x="0" y="2"/>
+<point x="0" y="5"/>
+</connector>
+    <connector id="T2" name="T2" type="leg">
+      
+    <point x="2" y="2"/>
+<point x="2" y="5"/>
+</connector>
+    <connector id="W" name="W" type="leg">
+      
+    <point x="1" y="0"/>
+<point x="1" y="-3"/>
+</connector>
   </connectors>
 	<layers>
 		<layer type="image">
-				<image type="bitmap" source="part.png" zoom="1"/>
+				<image source="part.png" type="bitmap" zoom="1"/>
 		</layer>
 	</layers>
 	<footprints>
-		<footprint type="eagle" source="fritzing.lbr/Potentiometer" default="true" />
+		<footprint default="true" source="fritzing.lbr/Potentiometer" type="eagle"/>
 	</footprints>
 </part>

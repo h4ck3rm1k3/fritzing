@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <part>
 	<version>1.0</version>
 	<species>ElectrolyteCapacitor</species>
@@ -6,26 +6,30 @@
 	<title>Capacitor (electrolyte)</title>
 	<description>A polarized capacitor with a higher value</description>
 	<icons>
-		<icon size="small" source="iconSmall.gif" />
-		<icon size="large" source="iconLarge.gif" />
+		<icon size="small" source="iconSmall.gif"/>
+		<icon size="large" source="iconLarge.gif"/>
 	</icons>
 	<label>C</label>
 	<reference>http://fritzing.org/reference/parts/core/capacitor-electrolyte</reference>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset x="318" y="2216" units="himetric"/> <!-- 50x349 pixels -->
-	<bounds width="1143" height="2235" units="himetric"/> <!-- 45x88 pixels -->
+	<gridOffset units="himetric" x="318" y="2216"/> <!-- 50x349 pixels -->
+	<bounds height="2235" units="himetric" width="1143"/> <!-- 45x88 pixels -->
 	<connectors units="tenths">
-		<connector id="-" name="-" x="0" y="0" type="leg" />
-		<connector id="+" name="+" x="2" y="0" type="leg" />
+		<connector id="-" name="-" type="leg">
+<point x="0" y="0"/>
+</connector>
+		<connector id="+" name="+" type="leg">
+<point x="2" y="0"/>
+</connector>
 	</connectors>
 	<layers>
 		<layer type="image">
-				<image type="bitmap" source="part.png" zoom="1"/>
-				<image type="bitmap" source="part200.png" zoom="2"/>
-				<image type="bitmap" source="part400.png" zoom="4"/>
+				<image source="part.png" type="bitmap" zoom="1"/>
+				<image source="part200.png" type="bitmap" zoom="2"/>
+				<image source="part400.png" type="bitmap" zoom="4"/>
 		</layer>
 	</layers>
 	<footprints>
-		<footprint type="eagle" source="fritzing.lbr/ElectrolyteCapacitor" default="true" />
+		<footprint default="true" source="fritzing.lbr/ElectrolyteCapacitor" type="eagle"/>
 	</footprints>
 </part>
