@@ -18,7 +18,7 @@
 
   <extension point="org.eclipse.emf.ecore.extension_parser">
     <parser 
-       type="fritzing" 
+       type="fz" 
        class="org.fritzing.fritzing.util.FritzingResourceFactoryImpl" />
   </extension>
   <extension
