@@ -105,10 +105,6 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 				.displayFeedback(display);
 	}
 
-	public ConnectionAnchor getTargetConnectionAnchor(Request request) {
-		return super.getTargetConnectionAnchor(request);
-	}
-
 	/**
 	 * @generated NOT
 	 */

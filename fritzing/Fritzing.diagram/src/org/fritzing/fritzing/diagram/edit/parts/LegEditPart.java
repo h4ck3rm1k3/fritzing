@@ -19,6 +19,7 @@ import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
+import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
@@ -32,6 +33,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ConnectionHandleEditPolic
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.internal.editpolicies.ConnectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramGraphicalViewer;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.requests.ZOrderRequest;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
@@ -42,6 +45,8 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.diagram.edit.policies.LegItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditor;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 import org.eclipse.swt.graphics.Color;
 
 /**
@@ -160,12 +165,22 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 
 		}
 
-		//		public void paintFigure(Graphics g) {
-		//			g.pushState();
-		//			g.setAlpha(192);
-		//			super.paintFigure(g);
-		//			g.popState();
-		//		}
+//				public void paintFigure(Graphics g) {
+//
+//				FritzingDiagramEditor editor = FritzingDiagramEditorUtil.getActiveDiagramPart();
+//				IDiagramGraphicalViewer viewer = editor.getDiagramGraphicalViewer();
+//				if (viewer instanceof DiagramGraphicalViewer) {
+//					RootEditPart rootEditPart = ((DiagramGraphicalViewer) viewer).getRootEditPart();
+//					if (rootEditPart instanceof FritzingDiagramRootEditPart) {
+//						System.out.println("zoom level: " + ((FritzingDiagramRootEditPart) rootEditPart).getZoomManager().getZoom());
+//					} 
+//				}
+//
+//				g.pushState();
+//					g.setAlpha(192);
+//					super.paintFigure(g);
+//					g.popState();
+//				}
 
 		public void setPoints(PointList points) {
 			if (firstTime) {

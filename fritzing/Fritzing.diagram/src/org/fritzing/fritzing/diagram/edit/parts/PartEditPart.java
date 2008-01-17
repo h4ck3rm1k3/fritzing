@@ -108,7 +108,10 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	public Point getLegTargetPosition(Terminal2EditPart terminalPart) {
 		try {
 			Terminal terminal = (Terminal) ((NodeImpl) terminalPart.getModel()).getElement();
-			return partLoader.getTerminalLegTargetPosition(terminal.getId());
+			Point p = partLoader.getTerminalLegTargetPosition(terminal.getId());
+			p.x = getMapMode().LPtoDP(p.x);
+			p.y = getMapMode().LPtoDP(p.y);
+			return p;
 		}
 		catch (Exception ex) {
 			

@@ -19,6 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
@@ -68,7 +69,8 @@ public class PartLoader {
 	protected String footprint;
 	protected ArrayList<ArrayList<PointName>> nets;
 	protected Hashtable<String, Boolean> trackHash = new Hashtable<String, Boolean>();
-	protected Document doc;
+	protected Document doc = null;
+	protected File documentFile = null;
 	
 	public PartLoader() {
 		if (bitHash.size() == 0) {
@@ -191,17 +193,17 @@ public class PartLoader {
 	}
 		
 	public Point getTerminalLegTargetPosition(String id) {
-		if (terminalHash == null) return null;
+		if (terminalHash == null) return new Point(0,400);
 		
 		PointName pointName = terminalHash.get(id);
-		if (pointName == null) return null;
+		if (pointName == null) return new Point(0,400);
 		
-		Point offset = pointName.legOffset;
-		if (offset == null) {
-			offset = new Point(0, 100);
-		}
-		Point p = new Point(offset);
-		return p;
+		if (pointName.points.size() < 2) return new Point(0,400);
+				
+		PointPoint pp0 = pointName.points.get(0);		
+		PointPoint pp1 = pointName.points.get(1);
+		
+		return new Point(pp1.modified.x - pp0.modified.x, pp1.modified.y - pp0.modified.y);	
 	}
 	
 	public Point getTerminalPoint(String id) {
@@ -210,7 +212,9 @@ public class PartLoader {
 		PointName pointName = terminalHash.get(id);
 		if (pointName == null) return null;
 		
-		return pointName.point;
+		if (pointName.points.size() < 1) return null;
+		
+		return pointName.points.get(0).modified;
 	}
 	
 	public String getTerminalType(String id) {
@@ -454,12 +458,12 @@ public class PartLoader {
 		return false;
 	}
 	
-	public boolean loadXMLFromLibrary(String root, String path, boolean documentOnly) {
+	public boolean loadXMLFromLibrary(String root, String path, boolean saveDocument) {
 		try {
 			URL url = new URL("File://" + root + path);
 			File f = new File(root + path);
 			contentsPath = f.getParent() + File.separator;
-			boolean result = loadXML(url, documentOnly);
+			boolean result = loadXML(url, saveDocument);
 			return result;
 		}
 		catch (Exception ex) {
@@ -473,25 +477,28 @@ public class PartLoader {
 		return doc;
 	}
 	
-	public boolean loadXML(URL xml, boolean documentOnly) {
+	public File getDocumentFile() {
+		return documentFile;
+	}
+	
+	public boolean loadXML(URL xml, boolean saveDocument) {
 	    Document document;
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-	    factory.setIgnoringComments(true);
-	    factory.setIgnoringElementContentWhitespace(true);
+	    
+	    factory.setIgnoringComments(!saveDocument);
+	    factory.setIgnoringElementContentWhitespace(!saveDocument);
 	    
 	    //factory.setValidating(true);   
 	    //factory.setNamespaceAware(true);
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse(new File(xml.getFile()));
-            if (documentOnly) {
+            documentFile = new File(xml.getFile());
+            document = builder.parse(documentFile);
+            parseXML(document);
+            loaded = true;
+            if (saveDocument) {
             	doc = document;
             }
-            else {
-            	parseXML(document);
-            }
-            loaded = true;
             return true;           
         } 
         catch (SAXParseException spe) {
@@ -562,7 +569,7 @@ public class PartLoader {
 					defaultUnits = node.getTextContent();					
 				}
 				else if (nodeName.equals("gridOffset")) {
-					gridOffset = parseLocation(node, defaultUnits, "x", "y");
+					gridOffset = parseLocation(node, defaultUnits, "x", "y").modified;
 				}
 			}
 			if (defaultUnits == null || defaultUnits == "") {
@@ -600,7 +607,7 @@ public class PartLoader {
 					parseLayers(node.getChildNodes());
 				}
 				else if (nodeName.equals("bounds")) {
-					Point sz = parseLocation(node, defaultUnits, "width", "height");					
+					Point sz = parseLocation(node, defaultUnits, "width", "height").modified;					
 					size = new Dimension(sz.x, sz.y);
 				}
 				else if (nodeName.equals("connectors")) {
@@ -633,34 +640,33 @@ public class PartLoader {
 								type = s;
 							}
 						}
-			
 						
-						Point p = parseLocation(connector, defaultUnits, "x", "y" );
-						p.x += gridOffset.x;
-						p.y += gridOffset.y;
-								
+						boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, connector);
+						PointName pn = new PointName(name, visible, type);
+						terminalHash.put(id, pn);
+
 						// treat the terminal's location as the center rather than the top left
 						// by offsetting the value from the xml;
 						int d = MapModeUtil.getMapMode().DPtoLP(Terminal2EditPart.standardPlateMeasure / 2);
-						p.x -= d;
-						p.y -= d;
-												
-						boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, connector);
-						PointName pn = new PointName(p, name, visible, type);
-						terminalHash.put(id, pn);
 						
-						if (type.equals("leg")) {
-							NodeList nl = connector.getChildNodes();
-							for (int k = 0; k < nl.getLength(); k++) {
-								Node leg = nl.item(k);
-								if (leg.getNodeName().equals("leg")) {
-									pn.legOffset = parseLocation(leg, defaultUnits, "dx", "dy");
-									pn.legOffset.x = MapModeUtil.getMapMode().LPtoDP(pn.legOffset.x);
-									pn.legOffset.y = MapModeUtil.getMapMode().LPtoDP(pn.legOffset.y);									
-									break;
+						NodeList nl = connector.getChildNodes();
+						for (int k = 0; k < nl.getLength(); k++) {
+							Node pointNode = nl.item(k);
+							if (pointNode.getNodeName().equals("point")) {
+								PointPoint pp = parseLocation(pointNode, defaultUnits, "x", "y");
+								if (pp == null) {
+									// alert user
+									continue;
 								}
-							}							
-						}				
+								
+								pp.modified.x += gridOffset.x - d;
+								pp.modified.y += gridOffset.y - d;
+								
+								pn.addPoint(pp);
+							}
+						}							
+																		
+						
 					}
 				}
 				else if (nodeName.equals("nets")) {
@@ -689,7 +695,7 @@ public class PartLoader {
 							boolean visible = parseTrackLayout(netDefaultTrackVisible, connector);
 							
 							// stick the ID into the name field
-							PointName pn = new PointName(null, id, visible, null);
+							PointName pn = new PointName(id, visible, null);
 							names.add(pn);						
 						}
 						
@@ -905,14 +911,16 @@ public class PartLoader {
 		}
 	}
 
-	protected Point parseLocation(Node node, String defaultUnits, String axis1, String axis2) {
-		if (node == null) return new Point(0,0);
+	protected PointPoint parseLocation(Node node, String defaultUnits, String axis1, String axis2) {
+		if (node == null) {
+			return new PointPoint();
+		}
 		
 		try {
 			String units = null;
 			NamedNodeMap map = node.getAttributes();
 			if (map == null) {
-				return new Point(0,0);
+				return new PointPoint();
 			}
 			
 			Node ax1Node = map.getNamedItem(axis1);
@@ -920,6 +928,7 @@ public class PartLoader {
 			Node unitsNode = map.getNamedItem("units");
 			Double x = parseDouble(ax1Node);
 			Double y = parseDouble(ax2Node);
+			Point original = new Point(x, y);
 			if (unitsNode != null) {
 				units = unitsNode.getNodeValue();
 			}
@@ -945,30 +954,49 @@ public class PartLoader {
 				throw new Exception("unknown units " + units);
 			}
 			
-			return new Point(x, y);
+			return new PointPoint(original, new Point(x, y));
 
 		}
 		catch (Exception ex) {
 			// tell the user something's wrong
 		}
 		
-		return new Point();
+		return new PointPoint();
+	}
+	
+	static class PointPoint {
+		
+		public Point original;
+		public Point modified;
+		
+		public PointPoint() {
+			modified = new Point(0,0);
+			original = new Point(0,0);
+		}
+		
+		public PointPoint(Point p1, Point p2) {
+			original = p1;
+			modified = p2;
+		}
 	}
 	
 	static class PointName {
-		public Point point;
+		public ArrayList<PointPoint> points;
 		public String name;
 		public boolean visible;
 		public EObject terminal;
 		public String type;
-		public Point legOffset;
 		
-		public PointName(Point point, String name, boolean visible, String type) {
-			this.point = point;
+		public PointName(String name, boolean visible, String type) {
+			points = new ArrayList<PointPoint>();
 			this.name = name;
 			this.visible = visible;
 			this.terminal = null;
 			this.type = type;
+		}
+		
+		public void addPoint(PointPoint p) {
+			points.add(p);
 		}
 	}
 

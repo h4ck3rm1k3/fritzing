@@ -55,7 +55,7 @@ public class FritzingPaletteFactory {
 		coreMap.put("Resistor", FritzingElementTypes.Resistor_2002);
 
 		customiseStandardGroup(paletteRoot);
-		addParts("libraries");
+		addParts(FritzingDiagramEditorUtil.getFritzingLocation(), "libraries");
 
 		String[] keys = drawerMap.keySet().toArray(new String[1]);
 		Arrays.sort(keys);
@@ -97,10 +97,9 @@ public class FritzingPaletteFactory {
 	/**
 	 * @generated NOT
 	 */
-	protected void addParts(String folder) {
+	protected void addParts(String root, String folder) {
 
-		File file = new File(FritzingDiagramEditorUtil.getFritzingLocation()
-				+ folder);
+		File file = new File(root + folder);
 		if (!file.exists())
 			return;
 		if (!file.isDirectory())
@@ -115,7 +114,7 @@ public class FritzingPaletteFactory {
 		File[] files = file.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			String filename = files[i].getName();
-			addParts(folder + File.separator + filename);
+			addParts(root, folder + File.separator + filename);
 		}
 	}
 
