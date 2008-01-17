@@ -25,6 +25,13 @@
          class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
       </parser>
    </extension>
+   
+  <extension point="org.eclipse.emf.ecore.extension_parser">
+      <?gmfgen generated="false"?>
+    <parser 
+       type="fz" 
+       class="org.fritzing.fritzing.util.FritzingResourceFactoryImpl" />
+  </extension>
 
    <extension point="org.eclipse.ui.editors">
       <?gmfgen generated="true"?>
@@ -654,9 +661,6 @@
          name="%update.diagram.name"/>
    </extension>
 
-
-
-   
 <!--
    <extension point="org.eclipse.emf.validation.constraintProviders">
       <?gmfgen generated="true"?>
