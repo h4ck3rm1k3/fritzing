@@ -14,15 +14,17 @@
 		http://fritzing.org/reference/parts/core/resistor
 	</reference>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="0" y="0" /><!-- 0x0 pixels -->
-	<bounds height="228.6" units="himetric" width="635" /><!-- 25x9 pixels -->
+	<gridOffset x="197" y="222" units="himetric"/> <!-- 31x35 400% view pixels -->
+	<bounds width="648" height="248" units="himetric"/> <!-- 102x39 400% view pixels -->
 	<connectors units="tenths">
 		<nameLayout visible="false" />
 		<connector id="1" name="1" type="leg">
-			<point x="-0.5" y="0.5" />
+			<point x="-197" y="-95" units="himetric"/> <!-- -31x-15 400% view pixels -->
+			<point x="-1" y="0" />
 		</connector>
 		<connector id="2" name="2" type="leg">
-			<point x="2.5" y="0.5" />
+			<point x="108" y="-95" units="himetric"/> <!-- 17x-15 400% view pixels -->
+			<point x="2" y="0" />
 		</connector>
 	</connectors>
 	<layers>

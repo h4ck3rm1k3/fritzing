@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <part>
 	<version>1.0</version>
-	<species>LsrSensor</species>
-	<genus>Sensor</genus>
-	<title>Light Sensor (LSR)</title>
-	<description>A light-sensitive resistor</description>
+	<species>Photocell</species>
+	<genus>Input.Sensor</genus>
+	<title>Photocell (LSR)</title>
+	<description>A light-sensitive resistor, working as a photocell</description>
 	<icons>
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />
@@ -12,19 +12,25 @@
 	<label>LS</label>
 	<reference>http://fritzing.org/reference/parts/core/lsr</reference>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="0" y="0" /><!-- 0x0 pixels -->
-	<bounds height="381" units="himetric" width="508" /><!-- 20x15 pixels -->
+	<gridOffset x="133" y="381" units="himetric"/> <!-- 21x60 400% view pixels -->
+	<bounds width="521" height="394" units="himetric"/> <!-- 82x62 400% view pixels -->
 	<connectors units="tenths">
 		<connector id="1" name="1" type="leg">
-			<point x="-0.5" y="0.5" />
+			<!-- <point x="-76" y="-184" units="himetric"/> -->
+			<point x="-133" y="-184" units="himetric"/>
+			<point x="-1" y="0" />
 		</connector>
 		<connector id="2" name="2" type="leg">
-			<point x="2.0" y="0.5" />
+			<!-- <point x="330" y="-184" units="himetric"/> -->
+			<point x="387" y="-184" units="himetric"/>
+			<point x="2" y="0" />
 		</connector>
 	</connectors>
 	<layers>
 		<layer type="image">
 			<image source="part.png" type="bitmap" zoom="1" />
+			<image source="part200.png" type="bitmap" zoom="2" />
+			<image source="part400.png" type="bitmap" zoom="4" />
 		</layer>
 	</layers>
 	<footprints>

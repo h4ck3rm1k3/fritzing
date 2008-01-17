@@ -12,23 +12,27 @@
 	<label>B</label>
 	<reference>http://fritzing.org/reference/parts/core/button</reference>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="-50" y="-50"/>
-	<bounds height="635" units="himetric" width="635"/> <!-- 25x25 pixels -->
+	<gridOffset x="64" y="-64" units="himetric"/> <!-- 10x-10 400% view pixels -->
+	<bounds width="635" height="635" units="himetric"/> <!-- 100x100 400% view pixels -->
 	<connectors units="tenths">
 		<connector id="1" name="A" type="leg">
-			<point x="0" y="1"/>
+			<!-- <point x="0" y="254" units="himetric"/> -->
+			<point x="0" y="64" units="himetric"/>
 			<point x="0" y="0"/>
 		</connector>
 		<connector id="2" name="B" type="leg">
-			<point x="3" y="1"/>
+			<!-- <point x="508" y="254" units="himetric"/> -->
+			<point x="508" y="64" units="himetric"/>
 			<point x="3" y="0"/>
 		</connector>
 		<connector id="3" name="A" type="leg">
-			<point x="0" y="2"/>
+			<!-- <point x="0" y="508" units="himetric"/> -->
+			<point x="0" y="699" units="himetric"/>
 			<point x="0" y="3"/>
 		</connector>
 		<connector id="4" name="B" type="leg">
-			<point x="3" y="2"/>
+			<!-- <point x="508" y="508" units="himetric"/> -->
+			<point x="508" y="699" units="himetric"/>
 			<point x="3" y="3"/>
 		</connector>
 	</connectors>
