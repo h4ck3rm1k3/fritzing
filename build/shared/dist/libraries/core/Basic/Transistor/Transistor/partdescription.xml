@@ -26,7 +26,7 @@
 			<point x="1" y="3" />
 		</connector>
 		<connector id="C" name="C" type="leg">
-			<point x="208" y="254" units="himetric"/> <!-- 80x40 400% view pixels -->
+			<point x="805" y="254" units="himetric"/> <!-- 80x40 400% view pixels -->
 			<point x="2" y="3" />
 		</connector>
 	</connectors>

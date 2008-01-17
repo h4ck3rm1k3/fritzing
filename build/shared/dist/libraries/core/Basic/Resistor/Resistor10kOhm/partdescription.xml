@@ -20,11 +20,11 @@
 		<nameLayout visible="false" />
 		<connector id="1" name="1" type="leg">
 			<point x="-197" y="-95" units="himetric"/> <!-- -31x-15 400% view pixels -->
-			<point x="-1" y="0" />
+			<point x="-1" y="1" />
 		</connector>
 		<connector id="2" name="2" type="leg">
 			<point x="451" y="-95" units="himetric"/> <!-- 71x-15 400% view pixels -->
-			<point x="2" y="0" />
+			<point x="2" y="1" />
 		</connector>
 	</connectors>
 	<layers>
