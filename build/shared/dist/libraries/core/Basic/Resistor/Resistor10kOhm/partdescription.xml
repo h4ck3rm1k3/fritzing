@@ -2,7 +2,7 @@
 <part generic="false">
 	<version>1.0</version>
 	<species>Resistor</species>
-	<genus>Basic</genus>
+	<genus>Basic.Resistor</genus>
 	<title>Resistor</title>
 	<description>A general-purpose Resistor</description>
 	<icons>
@@ -28,6 +28,8 @@
 	<layers>
 		<layer type="image">
 			<image source="part.png" type="bitmap" zoom="1" />
+			<image source="part200.png" type="bitmap" zoom="2" />
+			<image source="part400.png" type="bitmap" zoom="4" />
 		</layer>
 	</layers>
 	<footprints>
