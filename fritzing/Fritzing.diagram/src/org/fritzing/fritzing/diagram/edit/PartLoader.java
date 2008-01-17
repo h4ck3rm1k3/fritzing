@@ -10,28 +10,29 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
+import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
+import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -40,8 +41,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import java.util.UUID;
 
 
 public class PartLoader {
@@ -800,6 +799,12 @@ public class PartLoader {
 						
 						if (type.equalsIgnoreCase("bitmap")) {
 							bitmapFilenames.put(zoom, source);
+							
+							ImageDescriptor desc = ImageDescriptor.createFromURL(
+									FileLocator.toFileURL(
+											new URL("file", null, getContentsPath() + source)));
+							FritzingElementTypes.getImageRegistry().put(
+									getContentsPath() + source, desc);
 						}
 						else if (type.equalsIgnoreCase("svg")) {
 							svgFilename = source;
