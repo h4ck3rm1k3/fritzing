@@ -143,7 +143,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 		 * @generated NOT
 		 */
 		public LegFigure(LegEditPart leg) {
-			setLineWidth(connectionWidth = 2);
+			setLineWidth(connectionWidth = 3);
 			setForegroundColor(LEG_FIGURE_COLOR);
 			this.leg = leg;
 			firstTime = true;

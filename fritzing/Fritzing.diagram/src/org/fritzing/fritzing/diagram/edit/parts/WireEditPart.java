@@ -104,7 +104,7 @@ public class WireEditPart extends ConnectionFritzingEditPart {
 		 * @generated NOT
 		 */
 		public WireFigure() {
-			setLineWidth(connectionWidth = 4);
+			setLineWidth(connectionWidth = 5);
 			
 			createContents();
 			//			setSourceDecoration(createSourceDecoration());
