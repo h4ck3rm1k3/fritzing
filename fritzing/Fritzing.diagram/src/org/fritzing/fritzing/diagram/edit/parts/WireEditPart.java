@@ -9,6 +9,8 @@ import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.RootEditPart;
+import org.eclipse.gef.editparts.ZoomListener;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
@@ -23,7 +25,7 @@ import org.fritzing.fritzing.diagram.edit.policies.WireItemSemanticEditPolicy;
 /**
  * @generated
  */
-public class WireEditPart extends ConnectionNodeEditPart {
+public class WireEditPart extends ConnectionFritzingEditPart {
 
 	/**
 	 * @generated
@@ -91,8 +93,8 @@ public class WireEditPart extends ConnectionNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class WireFigure extends PolylineConnectionEx {
-
+	public class WireFigure extends ConnectionFritzingFigure {
+		
 		/**
 		 * @generated
 		 */
@@ -102,8 +104,8 @@ public class WireEditPart extends ConnectionNodeEditPart {
 		 * @generated NOT
 		 */
 		public WireFigure() {
-			this.setLineWidth(5);
-
+			setLineWidth(connectionWidth = 4);
+			
 			createContents();
 			//			setSourceDecoration(createSourceDecoration());
 			//			setTargetDecoration(createTargetDecoration());

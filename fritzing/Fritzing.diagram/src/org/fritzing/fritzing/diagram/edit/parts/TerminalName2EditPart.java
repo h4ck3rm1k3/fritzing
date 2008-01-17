@@ -52,7 +52,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingTextSelectionEditPolicy;
@@ -672,6 +671,7 @@ public class TerminalName2EditPart extends LabelEditPart implements
 			this.setText("..");
 
 			this.setFont(THIS_FONT);
+			this.setForegroundColor(THIS_FORE);
 			this.visible = visible;
 			if (!visible) {
 				this.setVisible(false);
@@ -712,10 +712,12 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	static final Font THIS_FONT = new Font(Display.getCurrent(), Display
-			.getDefault().getSystemFont().getFontData()[0].getName(), 7,
+			.getDefault().getSystemFont().getFontData()[0].getName(), 6,
 			SWT.NORMAL);
+	
+	public static final Color THIS_FORE = new Color(null, 200, 200, 200);
 
 }

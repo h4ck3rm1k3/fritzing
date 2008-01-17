@@ -47,7 +47,7 @@ import org.eclipse.swt.graphics.Color;
 /**
  * @generated
  */
-public class LegEditPart extends ConnectionNodeEditPart {
+public class LegEditPart extends ConnectionFritzingEditPart {
 
 	/**
 	 * @generated
@@ -130,7 +130,7 @@ public class LegEditPart extends ConnectionNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class LegFigure extends PolylineConnectionEx {
+	public class LegFigure extends ConnectionFritzingFigure {
 
 		/**
 		 * @generated NOT
@@ -143,8 +143,8 @@ public class LegEditPart extends ConnectionNodeEditPart {
 		 * @generated NOT
 		 */
 		public LegFigure(LegEditPart leg) {
-			this.setLineWidth(3);
-			this.setForegroundColor(LEG_FIGURE_COLOR);
+			setLineWidth(connectionWidth = 2);
+			setForegroundColor(LEG_FIGURE_COLOR);
 			this.leg = leg;
 			firstTime = true;
 			createContents();
@@ -161,16 +161,6 @@ public class LegEditPart extends ConnectionNodeEditPart {
 		}
 
 		//		public void paintFigure(Graphics g) {
-
-		//		FritzingDiagramEditor editor = FritzingDiagramEditorUtil.getActiveDiagramPart();
-		//		IDiagramGraphicalViewer viewer = editor.getDiagramGraphicalViewer();
-		//		if (viewer instanceof DiagramGraphicalViewer) {
-		//			RootEditPart rootEditPart = ((DiagramGraphicalViewer) viewer).getRootEditPart();
-		//			if (rootEditPart instanceof FritzingDiagramRootEditPart) {
-		//				//System.out.println("zoom level: " + ((FritzingDiagramRootEditPart) rootEditPart).getZoomManager().getZoom());
-		//			} 
-		//		}
-
 		//			g.pushState();
 		//			g.setAlpha(192);
 		//			super.paintFigure(g);

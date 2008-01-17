@@ -131,6 +131,8 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
 
+		addZoomListener(); // needed for zoom-dependent figure
+		
 		// place to add or remove policies
 		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in preferences
 	}
@@ -164,7 +166,6 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		IFigure shape = createNodeShape();
 		figure.add(shape);
 		contentPane = setupContentPane(shape);
-		addZoomListener(); // needed for zoom-dependent figure
 		return figure;
 	}
 
@@ -227,7 +228,7 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 			((FritzingDiagramRootEditPart)root).getZoomManager().addZoomListener(
 				new ZoomListener() {
 					public void zoomChanged(double zoom) {
-						((PartFigure)getPrimaryShape()).updateImage(zoom);
+						((PartFigure)getPrimaryShape()).zoomFigure(zoom);
 					}
 				});
 		}

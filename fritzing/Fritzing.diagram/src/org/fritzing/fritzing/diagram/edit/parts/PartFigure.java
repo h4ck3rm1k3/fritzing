@@ -26,7 +26,7 @@ import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 /**
  * @generated NOT
  */
-public class PartFigure extends RectangleFigure {
+public class PartFigure extends RectangleFigure implements IZoomableFigure {
 	/**
 	 * @generated NOT
 	 */
@@ -171,7 +171,7 @@ public class PartFigure extends RectangleFigure {
 	/*
 	 * Loads the corresponding image for the current zoom level
 	 */
-	protected void updateImage(double zoom) {
+	public void zoomFigure(double zoom) {
 		// TODO: optimize: only change image if necessary, cache all images
 		Hashtable<Double,String> images = partLoader.getBitmapFilenames();
 		// find the next biggest available image zoom level

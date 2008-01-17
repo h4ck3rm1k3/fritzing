@@ -25,7 +25,7 @@ import org.fritzing.fritzing.diagram.edit.policies.TrackItemSemanticEditPolicy;
 /**
  * @generated
  */
-public class TrackEditPart extends ConnectionNodeEditPart {
+public class TrackEditPart extends ConnectionFritzingEditPart {
 
 	/**
 	 * @generated
@@ -90,7 +90,7 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 	/**
 	 * @generated NOT
 	 */
-	public class TrackFigure extends PolylineConnectionEx {
+	public class TrackFigure extends ConnectionFritzingFigure {
 
 		/**
 		 * @generated NOT
@@ -109,6 +109,7 @@ public class TrackEditPart extends ConnectionNodeEditPart {
 		 */
 		public TrackFigure(boolean visible) {
 			this.visible = visible;
+			setLineWidth(connectionWidth = 1);
 			createContents();
 		}
 
