@@ -6,6 +6,7 @@ package org.fritzing.fritzing.diagram.application;
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
+import org.eclipse.ui.console.IConsoleConstants;
 
 /**
  * @generated
@@ -24,5 +25,6 @@ public class DiagramEditorPerspective implements IPerspectiveFactory {
 		IFolderLayout bottomRight = layout.createFolder(
 				"bottomRight", IPageLayout.RIGHT, 0.7f, "bottom"); //$NON-NLS-1$	//$NON-NLS-2$
 		bottomRight.addView(IPageLayout.ID_OUTLINE);
+		bottomRight.addView("fritzing.diagram.views.PartPropertyView");
 	}
 }

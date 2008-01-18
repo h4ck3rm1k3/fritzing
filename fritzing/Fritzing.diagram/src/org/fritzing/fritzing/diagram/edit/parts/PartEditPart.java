@@ -56,7 +56,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 /**
  * @generated NOT
  */
-class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEditPart
+public class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEditPart
 {
 
 	PartLoader partLoader;
@@ -94,6 +94,10 @@ class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEd
 		
 	public int DPtoLP(int deviceUnit) {
 		return getMapMode().DPtoLP(deviceUnit);		
+	}
+	
+	public PartLoader getPartLoader() {
+		return partLoader;
 	}
 	
 	public ConnectionAnchor getTargetConnectionAnchor(ConnectionEditPart connection) {

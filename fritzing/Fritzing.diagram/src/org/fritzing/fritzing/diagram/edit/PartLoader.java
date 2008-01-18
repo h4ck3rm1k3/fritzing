@@ -123,6 +123,10 @@ public class PartLoader {
 		return pointName.points.get(0).modified;
 	}
 	
+	public String getVersion() {
+		return version;
+	}
+	
 	public String getTerminalType(String id) {
 		if (terminalHash == null) return null;
 	

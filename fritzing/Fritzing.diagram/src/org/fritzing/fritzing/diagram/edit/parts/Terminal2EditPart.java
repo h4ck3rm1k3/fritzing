@@ -44,7 +44,6 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.SlidableAnchor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
-import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart.TerminalAnchor;
 import org.fritzing.fritzing.diagram.edit.policies.Terminal2ItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
@@ -103,6 +102,11 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	public void displayTargetFeedback(boolean display) {
 		((TerminalDefaultSizeNodeFigure) this.getMainFigure())
 				.displayFeedback(display);
+	}
+	
+	public Rectangle getAnchorBox() {
+		return ((TerminalDefaultSizeNodeFigure) this.getMainFigure()).getAnchorBox();
+		
 	}
 
 	/**
@@ -341,6 +345,8 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 	public class TerminalDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
 		protected boolean displayFeedbackFlag;
+		TerminalAnchor lastAnchor;
+		
 		protected int standardFeedbackInsetConverted = getMapMode().DPtoLP(standardFeedbackInset);
 
 		public TerminalDefaultSizeNodeFigure(Dimension defSize) {
@@ -351,9 +357,16 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		public TerminalDefaultSizeNodeFigure(int width, int height) {
 			super(width, height);
 		}
+		
+		public Rectangle getAnchorBox() {
+			if (lastAnchor == null) return null;
+			
+			return lastAnchor.getBox();
+		}
 
 		protected ConnectionAnchor createDefaultAnchor() {
-			return new TerminalSlidableAnchor(this);
+			lastAnchor = new TerminalAnchor(this);
+			return lastAnchor;
 		}
 
 		public ConnectionAnchor getTargetConnectionAnchorAt(Point p) {
@@ -384,8 +397,8 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 	}
 
-	public class TerminalSlidableAnchor extends SlidableAnchor {
-		public TerminalSlidableAnchor(IFigure f) {
+	public class TerminalAnchor extends SlidableAnchor {
+		public TerminalAnchor(IFigure f) {
 			super(f);
 		}
 

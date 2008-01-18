@@ -660,6 +660,32 @@
          id="org.fritzing.fritzing.diagram.updateDiagram"
          name="%update.diagram.name"/>
    </extension>
+<extension
+      point="org.eclipse.ui.views">
+   <category
+         id="Fritzing.diagram"
+         name="Sample Category">
+   </category>
+   <view
+         category="Fritzing.diagram"
+         class="fritzing.diagram.views.PartPropertyView"
+         icon="icons/sample.gif"
+         id="fritzing.diagram.views.PartPropertyView"
+         name="Part Property View">
+   </view>
+</extension>
+<extension
+      point="org.eclipse.ui.perspectiveExtensions">
+   <perspectiveExtension
+         targetID="org.eclipse.ui.resourcePerspective">
+      <view
+            id="fritzing.diagram.views.PartPropertyView"
+            ratio="0.5"
+            relationship="right"
+            relative="org.eclipse.ui.views.TaskList">
+      </view>
+   </perspectiveExtension>
+</extension>
 
 <!--
    <extension point="org.eclipse.emf.validation.constraintProviders">

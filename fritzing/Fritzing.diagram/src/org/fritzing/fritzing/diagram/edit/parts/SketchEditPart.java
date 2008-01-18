@@ -15,6 +15,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.XYAnchor;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PrecisionPoint;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
@@ -24,6 +25,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gef.editparts.GridLayer;
+import org.eclipse.gef.handles.HandleBounds;
 import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
@@ -127,16 +129,15 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 	}
 	
 	protected ConnectionAnchor makeLegConnectionAnchor(Terminal2EditPart part) {
-		Point p = part.getLegTargetPosition();
-		TerminalAnchor ta = new TerminalAnchor(p, part);
+		SketchLegAnchor ta = new SketchLegAnchor(((FritzingDiagramRootEditPart) getRoot()).getFigure(), part);
 		part.setLegConnectionAnchor(ta);
 		return ta;
 	}
 
 	// implements INodeEditPart
 	public String mapConnectionAnchorToTerminal(ConnectionAnchor c) {
-		if (c instanceof TerminalAnchor) {
-			return ((TerminalAnchor) c).getTerminal();
+		if (c instanceof SketchLegAnchor) {
+			return ((SketchLegAnchor) c).getTerminal();
 		}
 
 		return "";
@@ -204,24 +205,48 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 		}
 
 	}
-
-	public class TerminalAnchor extends XYAnchor {
-		protected Terminal2EditPart terminal;
-
-		public TerminalAnchor(Point p, Terminal2EditPart terminal) {
-			super(p);
-			this.terminal = terminal;
+	
+	public class SketchLegAnchor extends SlidableAnchor {
+		Terminal2EditPart part;
+	
+		public SketchLegAnchor(IFigure figure, Terminal2EditPart part) {
+			super(figure);
+			this.part = part;
 		}
 
-		public String getTerminal() {
-			Point p = this.getReferencePoint();
-			return new String("(" + ((float) p.x) + "," + ((float) p.y) + ")");
-		}
+		protected Rectangle getBox() {
+			Point p = part.getLegTargetPosition();
+			Rectangle rBox = part.getAnchorBox();
+			if (rBox == null) {
+				rBox = new Rectangle(0,0,0,0);
+			}
+						
+			rBox.x += p.x;
+			rBox.y += p.y;
 
-		public Point getLocation(Point reference) {
-			Point p = this.getReferencePoint();
-			return new Point(reference.x + p.x, reference.y + p.y);
+			return rBox;
 		}
 
 	}
+	
+
+//	public class TerminalAnchor extends XYAnchor {
+//		protected Terminal2EditPart terminal;
+//
+//		public TerminalAnchor(Point p, Terminal2EditPart terminal) {
+//			super(p);
+//			this.terminal = terminal;
+//		}
+//
+//		public String getTerminal() {
+//			Point p = this.getReferencePoint();
+//			return new String("(" + ((float) p.x) + "," + ((float) p.y) + ")");
+//		}
+//
+//		public Point getLocation(Point reference) {
+//			Point p = this.getReferencePoint();
+//			return new Point(reference.x + p.x, reference.y + p.y);
+//		}
+//
+//	}
 }

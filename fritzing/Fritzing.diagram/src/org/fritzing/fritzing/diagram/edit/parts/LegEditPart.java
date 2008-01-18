@@ -137,6 +137,8 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 	 */
 	public class LegFigure extends ConnectionFritzingFigure {
 
+		LegEditPart leg;
+		
 		/**
 		 * @generated NOT
 		 */
@@ -151,46 +153,20 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 			setLineWidth(connectionWidth = 3);
 			setForegroundColor(LEG_FIGURE_COLOR);
 			this.leg = leg;
-			firstTime = true;
 			createContents();
 		}
+		
+		public void paintFigure(Graphics g) {
+			this.setSmoothness(0);
+			super.paintFigure(g);
+		}
 
-		boolean firstTime;
-		LegEditPart leg;
 
 		/**
 		 * @generated NOT
 		 */
 		private void createContents() {
 
-		}
-
-//				public void paintFigure(Graphics g) {
-//
-//				FritzingDiagramEditor editor = FritzingDiagramEditorUtil.getActiveDiagramPart();
-//				IDiagramGraphicalViewer viewer = editor.getDiagramGraphicalViewer();
-//				if (viewer instanceof DiagramGraphicalViewer) {
-//					RootEditPart rootEditPart = ((DiagramGraphicalViewer) viewer).getRootEditPart();
-//					if (rootEditPart instanceof FritzingDiagramRootEditPart) {
-//						System.out.println("zoom level: " + ((FritzingDiagramRootEditPart) rootEditPart).getZoomManager().getZoom());
-//					} 
-//				}
-//
-//				g.pushState();
-//					g.setAlpha(192);
-//					super.paintFigure(g);
-//					g.popState();
-//				}
-
-		public void setPoints(PointList points) {
-			if (firstTime) {
-				firstTime = false;
-				//	    		if (points.size() == 2 && leg.connectedToSketch()) {
-				//	    			Point p = points.getMidpoint();	 
-				//	    			leg.initBend(this, p);
-				//	    		}
-			}
-			super.setPoints(points);
 		}
 
 		public Object getRoutingConstraint() {
