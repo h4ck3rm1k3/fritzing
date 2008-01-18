@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <part>
 	<version>1.0</version>
-	<species>FsrSensor</species>
-	<genus>Sensor</genus>
+	<species>ForceSensitiveResistor</species>
+	<genus>Input.Sensor</genus>
 	<title>Force Sensor (FSR)</title>
-	<description>A force-sensitive resistor</description>
+	<description>A force-sensitive resistor, can be used a pressure sensor</description>
 	<icons>
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>FS</label>
-	<reference>http://fritzing.org/reference/parts/core/fsr</reference>
+	<reference>http://fritzing.org/reference/parts/core/forcesensitiveresistor</reference>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="0" y="0" /><!-- 0x0 pixels -->
-	<bounds height="1803.4" units="himetric" width="5562.6" /><!-- 219x71 pixels -->
+	<gridOffset x="114" y="768" units="himetric"/> <!-- 18x121 400% view pixels -->
+	<bounds width="5556" height="1784" units="himetric"/> <!-- 875x281 400% view pixels -->
 	<connectors units="tenths">
-		<connector id="1" name="1" type="leg">
-
-			<point x="0.5" y="3.0" />
-			<point x="-3.5" y="3" />
+		<connector id="1" name="1" type="male"><!-- Should be a type="pad" -->
+			<point x="0" y="0" />
 		</connector>
-		<connector id="2" name="2" type="leg">
-
-			<point x="0.5" y="4.0" />
-			<point x="-3.5" y="4" />
+		<connector id="2" name="2" type="male"><!-- Should be a type="pad" -->
+			<point x="0" y="1" />
 		</connector>
 	</connectors>
 	<layers>
 		<layer type="image">
 			<image source="part.png" type="bitmap" zoom="1" />
+			<image source="part200.png" type="bitmap" zoom="2" />
+			<image source="part400.png" type="bitmap" zoom="4" />
 		</layer>
 	</layers>
 	<footprints>
