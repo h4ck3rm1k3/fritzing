@@ -2,11 +2,9 @@
 <part generic="false">
 	<version>1.0</version>
 	<species>RGBLED</species>
-	<genus>Actuator</genus>
+	<genus>Output.Light</genus>
 	<title>RGB LED</title>
-	<description>
-		A 4-pin full-color (RGB) light-emitting diode
-	</description>
+	<description>A 4-pin full-color (RGB) light-emitting diode</description>
 	<icons>
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />
@@ -16,28 +14,24 @@
 		http://fritzing.org/reference/parts/core/rgbled
 	</reference>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
-	<gridOffset units="himetric" x="298" y="133" /><!-- 47x21 pixels -->
-	<bounds height="1168" units="himetric" width="838" /><!-- 33x46 pixels -->
+	<gridOffset x="298" y="133" units="himetric"/> <!-- 47x21 400% view pixels -->
+	<bounds width="845" height="1156" units="himetric"/> <!-- 133x182 400% view pixels -->
 	<connectors units="tenths">
 		<connector id="1" name="B" type="leg">
-
-			<point x="-1" y="5" />
-			<point x="-1" y="8" />
+			<point x="-254" y="1016" units="himetric"/> <!-- -40x160 400% view pixels -->
+			<point x="-1" y="6" />
 		</connector>
 		<connector id="2" name="G" type="leg">
-
-			<point x="0" y="5" />
-			<point x="0" y="8" />
+			<point x="0" y="1016" units="himetric"/> <!-- 0x160 400% view pixels -->
+			<point x="0" y="6" />
 		</connector>
 		<connector id="3" name="+" type="leg">
-
-			<point x="1" y="5" />
-			<point x="1" y="8" />
+			<point x="254" y="1016" units="himetric"/> <!-- 40x160 400% view pixels -->
+			<point x="1" y="6" />
 		</connector>
 		<connector id="4" name="R" type="leg">
-
-			<point x="2" y="5" />
-			<point x="2" y="8" />
+			<point x="508" y="1016" units="himetric"/> <!-- 80x160 400% view pixels -->
+			<point x="2" y="6" />
 		</connector>
 	</connectors>
 	<layers>
