@@ -6,17 +6,13 @@ package org.fritzing.fritzing.diagram.edit.parts;
 import java.util.Iterator;
 
 import org.eclipse.draw2d.ConnectionAnchor;
-import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
-import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.PrecisionPoint;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
@@ -32,22 +28,18 @@ import org.eclipse.gef.requests.ReconnectRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.BorderedBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.GraphicalNodeEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
-import org.eclipse.gmf.runtime.diagram.ui.requests.CreateConnectionViewRequest;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateUnspecifiedTypeConnectionRequest;
-import org.eclipse.gmf.runtime.draw2d.ui.internal.figures.TransparentBorder;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.SlidableAnchor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
+import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.Terminal2ItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
-import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
-import org.eclipse.swt.graphics.Color;
 
 /**
  * @generated
@@ -506,6 +498,6 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 */
 	static final Color THIS_BACK = new Color(null, 0, 0, 0);
 
-	static final Color THIS_FEED = new Color(null, 255, 0, 0);
+	static final Color THIS_FEED = new Color(null, 100, 162, 132);
 
 }
