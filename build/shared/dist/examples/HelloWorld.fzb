@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:fritzing="http://www.fritzing.org" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_gtIhEMaYEdyfsdXhqXI5vw" type="FritzingPhysical" name="HelloWorld.fzb" measurementUnit="Himetric">
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fritzing="http://www.fritzing.org" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_gtIhEMaYEdyfsdXhqXI5vw" type="FritzingPhysical" name="HelloWorld.fzb" measurementUnit="Himetric">
   <children xmi:type="notation:Node" xmi:id="__TXqkMaYEdyfsdXhqXI5vw" type="2004">
     <children xmi:type="notation:Node" xmi:id="__TY4sMaYEdyfsdXhqXI5vw" type="5005">
       <layoutConstraint xmi:type="notation:Location" xmi:id="__TY4scaYEdyfsdXhqXI5vw" y="132"/>
@@ -3598,6 +3598,28 @@
     <element xmi:type="fritzing:Resistor" href="HelloWorld.fz#//@sketch/@parts[id='cfHUr05jgtqxqaAKztRD43']"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DSn48saaEdycstGYnTzEyQ" x="8184" y="8448"/>
   </children>
+  <children xmi:type="notation:Node" xmi:id="_wplZ4MacEdy0xrecKfpjSw" type="Text">
+    <children xmi:type="notation:Node" xmi:id="_wpodMMacEdy0xrecKfpjSw" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_wpodMcacEdy0xrecKfpjSw" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_wplZ4cacEdy0xrecKfpjSw" fontColor="1973790" fontName="Bitstream Vera Sans" bold="true" description="Click the button to light up the LED" lineColor="14066801"/>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wplZ4sacEdy0xrecKfpjSw" x="10032" y="3432" width="3675" height="792"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_Ju5RcMadEdy0xrecKfpjSw" type="Text">
+    <children xmi:type="notation:Node" xmi:id="_Ju5Rc8adEdy0xrecKfpjSw" type="DiagramName">
+      <element xsi:nil="true"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_Ju54gMadEdy0xrecKfpjSw" type="Description">
+      <element xsi:nil="true"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_Ju5RccadEdy0xrecKfpjSw" fontColor="1973790" fontName="Bitstream Vera Sans" description="http://arduino.cc/en/Tutorial/Button" lineColor="14066801"/>
+    <element xsi:nil="true"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ju5RcsadEdy0xrecKfpjSw" x="10027" y="4471" width="6058" height="528"/>
+  </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_gtJIIMaYEdyfsdXhqXI5vw"/>
   <element xmi:type="fritzing:Sketch" href="HelloWorld.fz#//@sketch"/>
   <edges xmi:type="notation:Edge" xmi:id="_wbNjgMaYEdyfsdXhqXI5vw" type="4003" source="_wbCkYMaYEdyfsdXhqXI5vw" target="__VyFYsaYEdyfsdXhqXI5vw">
@@ -3634,7 +3656,7 @@
     <children xmi:type="notation:Node" xmi:id="_TjhxEMaZEdyfsdXhqXI5vw" visible="false" type="6001">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_TjhxEcaZEdyfsdXhqXI5vw"/>
     </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_TjhKAcaZEdyfsdXhqXI5vw" smoothness="Normal" lineColor="10265827"/>
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_TjhKAcaZEdyfsdXhqXI5vw" smoothness="Normal" lineColor="255"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_TjhKAsaZEdyfsdXhqXI5vw" fontColor="1973790" fontName="Bitstream Vera Sans"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[id='Dxp8aD_7i-2IFrd-UfGZ52']"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TjhKA8aZEdyfsdXhqXI5vw" points="[0, 0, 2, -74]$[-2, 74, 0, 0]"/>
