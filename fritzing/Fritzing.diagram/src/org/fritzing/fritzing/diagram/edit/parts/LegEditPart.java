@@ -6,48 +6,24 @@ package org.fritzing.fritzing.diagram.edit.parts;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.draw2d.AbsoluteBendpoint;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.RelativeBendpoint;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.PointList;
-import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.impl.EAttributeImpl;
 import org.eclipse.gef.ConnectionEditPart;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
-import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
 import org.eclipse.gef.handles.ConnectionEndHandle;
-import org.eclipse.gef.handles.ConnectionStartHandle;
-import org.eclipse.gef.requests.BendpointRequest;
 import org.eclipse.gef.requests.GroupRequest;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ConnectionBendpointEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ConnectionHandleEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.internal.editpolicies.ConnectionEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramCommandStack;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramGraphicalViewer;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
-import org.eclipse.gmf.runtime.diagram.ui.requests.ZOrderRequest;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.graphics.Color;
 import org.fritzing.fritzing.diagram.edit.policies.LegItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
-import org.fritzing.fritzing.diagram.part.FritzingDiagramEditor;
-import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
-import org.eclipse.swt.graphics.Color;
 
 /**
  * @generated
@@ -81,6 +57,29 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 		installEditPolicy(EditPolicy.COMPONENT_ROLE,
 				new NonDeleteComponentEditPolicy());
 	}
+	
+	public class LegItemConnectionEditPolicy extends ConnectionEditPolicy {
+		protected Command createDeleteViewCommand(GroupRequest deleteRequest) {
+			// disable delete for legs
+			return UnexecutableCommand.INSTANCE;
+		}
+
+		protected Command createDeleteSemanticCommand(GroupRequest deleteRequest) {
+			// disable delete for legs
+			return UnexecutableCommand.INSTANCE;
+		}
+	}
+
+	public class LegItemConnectionEndpointEditPolicy extends
+			ConnectionEndpointEditPolicy {
+		protected List createSelectionHandles() {
+			// only show target handle, not source handle
+			List list = new ArrayList();
+			list.add(new ConnectionEndHandle((ConnectionEditPart) getHost()));
+			return list;
+		}
+
+	}
 
 	protected void initBend(LegFigure figure, Point p) {
 		//			BendpointRequest request = new BendpointRequest();
@@ -107,9 +106,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 				return UnexecutableCommand.INSTANCE;
 			}
 		}
-
 		return super.getCommand(request);
-
 	}
 
 	/**
@@ -157,7 +154,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 		}
 		
 		public void paintFigure(Graphics g) {
-			this.setSmoothness(0);
+//			this.setSmoothness(0);
 			super.paintFigure(g);
 		}
 
@@ -182,29 +179,6 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 
 			return super.getRoutingConstraint();
 		}
-	}
-
-	public class LegItemConnectionEditPolicy extends ConnectionEditPolicy {
-		protected Command createDeleteViewCommand(GroupRequest deleteRequest) {
-			// disable delete for legs
-			return UnexecutableCommand.INSTANCE;
-		}
-
-		protected Command createDeleteSemanticCommand(GroupRequest deleteRequest) {
-			// disable delete for legs
-			return UnexecutableCommand.INSTANCE;
-		}
-	}
-
-	public class LegItemConnectionEndpointEditPolicy extends
-			ConnectionEndpointEditPolicy {
-		protected List createSelectionHandles() {
-			// only show target handle, not source handle
-			List list = new ArrayList();
-			list.add(new ConnectionEndHandle((ConnectionEditPart) getHost()));
-			return list;
-		}
-
 	}
 
 	public static final Color LEG_FIGURE_COLOR = new Color(null, 178, 179, 180);
