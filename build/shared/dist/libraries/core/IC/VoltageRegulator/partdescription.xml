@@ -9,7 +9,7 @@
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
-	<label>Q</label>
+	<label>VR</label>
 	<reference>
 		http://fritzing.org/reference/parts/core/voltageregulator
 	</reference>
