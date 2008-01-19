@@ -6,7 +6,6 @@ import org.eclipse.gef.editparts.ZoomListener;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.notation.View;
-import org.fritzing.fritzing.diagram.edit.parts.WireEditPart.WireFigure;
 import org.fritzing.fritzing.diagram.edit.policies.WireItemSemanticEditPolicy;
 
 public class ConnectionFritzingEditPart extends ConnectionNodeEditPart {
@@ -33,10 +32,12 @@ public class ConnectionFritzingEditPart extends ConnectionNodeEditPart {
 			((FritzingDiagramRootEditPart)root).getZoomManager().addZoomListener(
 				new ZoomListener() {
 					public void zoomChanged(double zoom) {
-						((IZoomableFigure)getPrimaryShape()).zoomFigure(zoom);
+						((IZoomableFigure)getPrimaryShape()).setZoom(zoom);
 					}
 				});
 		}
+		getPrimaryShape().setZoom(
+				((FritzingDiagramRootEditPart)getRoot()).getZoomManager().getZoom());
 	}
 
 	public ConnectionFritzingFigure getPrimaryShape() {

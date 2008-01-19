@@ -6,7 +6,7 @@ public class ConnectionFritzingFigure extends PolylineConnectionEx implements IZ
 
 	protected int connectionWidth = 3; // zoom-dependent connection thickness
 	
-	public void zoomFigure(double zoom) {
+	public void setZoom(double zoom) {
 		setLineWidth(new Long(Math.round(connectionWidth * zoom)).intValue());
 	}
 

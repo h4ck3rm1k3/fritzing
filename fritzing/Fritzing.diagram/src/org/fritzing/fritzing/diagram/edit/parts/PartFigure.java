@@ -8,6 +8,7 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
 import org.eclipse.swt.graphics.Image;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
@@ -18,7 +19,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 public class PartFigure extends RectangleFigure implements IZoomableFigure {
 
 	protected Image image;
-	protected Double currentImageZoomLevel;
+	private double zoom = -1;
 	protected PartLoader partLoader;
 	protected String  contentsPath;
 
@@ -27,17 +28,18 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 	 */
 	public PartFigure(PartLoader partLoader) {
 		this.partLoader = partLoader;
-		createContents();	
+		this.setSize(partLoader.getSize());
 		this.setPreferredSize(new Dimension(partLoader.getSize()));
 		this.setMaximumSize(new Dimension(partLoader.getSize()));
 		this.setMinimumSize(new Dimension(partLoader.getSize()));
+		createContents();
 	}
 
 	/**
 	 * @generated NOT
 	 */
 	protected void createContents() {
-		setImageByZoomLevel(-1); // set to default
+		setOutline(false);
 
 		// TODO: SVGs
 		/*
@@ -60,42 +62,54 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 		 */
 	}
 	
-	public void zoomFigure(double zoom) {
-		// TODO: optimize: only change image if necessary
-		setImageByZoomLevel(zoom);
+	public void setZoom(double newZoom) {
+		zoom = newZoom;
+		updateImage();
 	}
 	
 	/*
-	 * Loads the best image for the given zoom level
-	 * and tries to find a default if zoom=-1 (level=1 or the smallest available)
+	 * Loads the best image for the current zoom level
 	 */
-	protected void setImageByZoomLevel(double zoom) {
-		double bestLevel = zoom;
-		if (Double.compare(zoom, -1) == 0) {
-			bestLevel = partLoader.getBitmapFilenames().containsKey(1) ? 1 : 
-				getSortedImageLevels().firstElement();
-			currentImageZoomLevel = -1.0;
-		} else if (!partLoader.getBitmapFilenames().containsKey(bestLevel)) {
+	private void updateImage() {
+		double bestAvailableLevel = zoom;
+		if (!partLoader.getBitmapFilenames().containsKey(bestAvailableLevel)) {
 			Vector<Double> levels = getSortedImageLevels();
-			bestLevel = levels.lastElement();
+			bestAvailableLevel = levels.lastElement();
 		    for (Double level: levels) {
 		    	if (level.compareTo(zoom) >= 0) {
-		    		bestLevel = level;
+		    		bestAvailableLevel = level;
 		    		break;
 		    	}
 		    }
 		}
-		if (Double.compare(currentImageZoomLevel, bestLevel) != 0) {
-			try {
-				String imageSrc = partLoader.getBitmapFilenames().get(new Double(bestLevel));
-				image = FritzingElementTypes.getImageRegistry().get(
-					partLoader.getContentsPath() + imageSrc);
-				// repaint(); // repaints anyway because of zoom
-				currentImageZoomLevel = bestLevel;
-			} catch (Exception ex) {
-				// inform the user?
-				ex.printStackTrace();
+		try {
+			String imageSrc = partLoader.getBitmapFilenames().get(
+				new Double(bestAvailableLevel));
+			image = FritzingElementTypes.getImageRegistry().get(
+				partLoader.getContentsPath() + imageSrc);
+			
+			// buffer the scaled image
+			Dimension figureSize = getSize();
+			if (figureSize.width > 0) {
+			    figureSize.width = MapModeUtil.getMapMode().LPtoDP((int)Math.round(figureSize.width * zoom));
+			    figureSize.height = MapModeUtil.getMapMode().LPtoDP((int)Math.round(figureSize.height * zoom));
+			    
+			    /* 'normal' GC scaling doesn't preserve transparency, 
+			     * so we use ImageData.scaledTo():
+			     */
+//				    Image scaledImage = new Image(null, figureSize.width, figureSize.height);
+//				    GC gc = new GC(scaledImage);
+//					org.eclipse.swt.graphics.Rectangle imageSize = image.getBounds();
+//				    gc.drawImage(image, 0, 0, imageSize.width, imageSize.height, 
+//				    		0, 0, figureSize.width, figureSize.height);
+//				    gc.dispose();
+			    Image scaledImage = new Image(null,
+			    		image.getImageData().scaledTo(figureSize.width, figureSize.height));
+			    image = scaledImage;
 			}
+		} catch (Exception ex) {
+			// inform the user?
+			ex.printStackTrace();
 		}
 	}
 	
@@ -111,14 +125,14 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 	 * @generated NOT
 	 */
 	public void paintFigure(Graphics g) {
-		// super.paintFigure(g);
+//		 super.paintFigure(g);
 		if (image != null) {
-			Rectangle r = getBounds().getCopy();
-			Rectangle s = new org.eclipse.draw2d.geometry.Rectangle(
-					image.getBounds());
-			g.drawImage(image, 0, 0, s.width, s.height, r.x, r.y, r.width,
-					r.height);
-//			g.drawImage(image, 0, 0);
+			Rectangle r = getBounds();
+			g.pushState();
+			g.translate(r.x, r.y);
+			g.scale(1/zoom); // to compensate for image scaling
+			g.drawImage(image, 0, 0);
+			g.popState();
 		}
 	}
 

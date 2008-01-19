@@ -20,7 +20,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.RequestConstants;
-import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editparts.AbstractEditPart;
 import org.eclipse.gef.editparts.ZoomListener;
@@ -48,7 +47,6 @@ import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
 import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
-import org.fritzing.fritzing.diagram.edit.parts.GenericPartEditPart.GenericPartFigure;
 import org.fritzing.fritzing.diagram.edit.policies.RotatableNonresizableShapeEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingLinkDescriptor;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
@@ -230,26 +228,19 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	}
 
 	protected void addZoomListener() {
-		RootEditPart root = getRoot();
-		if (root instanceof FritzingDiagramRootEditPart) {
-			((FritzingDiagramRootEditPart)root).getZoomManager().addZoomListener(
-				new ZoomListener() {
-					public void zoomChanged(double zoom) {
-						((PartFigure)getPrimaryShape()).zoomFigure(zoom);
-					}
-				});
-		}
+		((FritzingDiagramRootEditPart)getRoot()).getZoomManager().addZoomListener(
+			new ZoomListener() {
+				public void zoomChanged(double zoom) {
+					((PartFigure)getPrimaryShape()).setZoom(zoom);
+				}
+			});
+		
+		getPrimaryShape().setZoom(
+				((FritzingDiagramRootEditPart)getRoot()).getZoomManager().getZoom());
 	}
    
 	protected void handleNotificationEvent(Notification notification) {
-		
-		Object feature = notification.getFeature();
-//		System.out.println("got a notification " + 
-//				notification.getEventType() + " " + 
-//				notification.getNotifier().getClass().getName()  + " " +
-//				feature
-//				);
-		        
+		Object feature = notification.getFeature();		        
 		if (feature instanceof EAttributeImpl) {
 			// XXX: initializeLegs fails if we trigger it too soon after part creation
 			// it seems to work at this point
@@ -266,7 +257,6 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
  				initializeLegs();
 			}
 		}
-		
 		super.handleNotificationEvent(notification);
 	}
 	
