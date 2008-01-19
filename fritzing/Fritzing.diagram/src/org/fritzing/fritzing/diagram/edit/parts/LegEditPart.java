@@ -207,6 +207,6 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 
 	}
 
-	public static final Color LEG_FIGURE_COLOR = new Color(null, 0xbf, 0xbf, 0xbf);
+	public static final Color LEG_FIGURE_COLOR = new Color(null, 178, 179, 180);
 
 }
