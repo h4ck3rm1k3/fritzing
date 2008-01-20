@@ -1,10 +1,7 @@
 package org.fritzing.fritzing.diagram.export;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
@@ -15,87 +12,191 @@ import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
+import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 
-public class Fritzing2Eagle {	
+public class Fritzing2Eagle {		
 	public static String createEagleScript(IDiagramGraphicalViewer viewer) {
 		String result = "";
 		SketchEditPart sketchEP = (SketchEditPart) viewer.getContents();
 		Sketch sketch = (Sketch) ((View) sketchEP.getModel()).getElement();
 		
-		ArrayList<EagleSCRPart> partList = new ArrayList<EagleSCRPart>();
-		ArrayList<EagleSCRNet> netList = new ArrayList<EagleSCRNet>();
-	
-		// create a new entry in the ArrayList 'partList' for each component:		
+		/* array lists partList and netList hold entries for parts and connections
+		 * respectively and together fully describe the Fritzing sketch */
+		ArrayList<EagleBRDPart> partList = new ArrayList<EagleBRDPart>();
+		ArrayList<EagleBRDNet> netList = new ArrayList<EagleBRDNet>(); 
+		
+		/* we begin the conversion process by first creating an entry in partList for
+		 * each part in the Fritzing sketch.  pass the Fritzing part coordinates here
+		 * since we need the viewer to grab layout information about the model. 
+		 */
+		int genericPart = 1;
 		for (Part p: sketch.getParts()) {	
-			String footprintStrings[] = p.getFootprint().split("/");	
-			String libraryName = footprintStrings[0].split(".lbr")[0];
-			String footprintName = footprintStrings[1];
-			
-			EagleSCRPart part = new EagleSCRPart(
-				p.getName(),			// part name (e.g. 'R1')
-				footprintName,			// part type (e.g. 'RESISTOR')
-				libraryName,			
-				new CoordPair(		// Fritzing coordinates
+			EagleBRDPart part = new EagleBRDPart(p);
+			part.setFritzingPartPos(new CoordPair(		// Fritzing coordinates
 					((float)getLayoutInfo(viewer, p).getLocation().x), 
-					(float)getLayoutInfo(viewer, p).getLocation().y));			
+					(float)getLayoutInfo(viewer, p).getLocation().y));
+			if (p.getName() == null) {
+				part.setEagleLabelPrefix("part" + genericPart);
+				genericPart++;
+			} else {
+				part.setEagleLabelPrefix(p.getName());
+			}
+			partList.add(part);
+		}
+		
 
-			System.out.println(">>> part " + 
-				part.partName.toUpperCase() + " - " + 
-				part.partType.toUpperCase() + " in " + 
-				part.libraryName + " " + 
-				"(" + part.partPos.xVal + " " + part.partPos.yVal + ")");
-				
-			partList.add(part);	
-		}
+		/* once the partlist is fully populated, we check for duplicate names of parts in Fritzing
+		 * and correct by adding an integer suffix (form is: "R_3").  */
 		
-		// fine-tune component placement - scale and convert Fritzing coordinates into
-		// coordinates appropriate for Eagle components
-		// first reflect component positions around the X-axis to account for Fritzing 
-		// assuming an origin in the top left and Eagle assuming an origin in the bottom 
-		// left
 		for (int i=0; i<partList.size(); i++) {
-			float xPos = partList.get(i).partPos.xVal;
-			float yPos = partList.get(i).partPos.yVal;
-			float yLimit = (float)3.2;
-			
-			partList.get(i).setPosition(new CoordPair(xPos, (float)(yLimit - yPos)));
-			if (partList.get(i).partType.equalsIgnoreCase("Arduino"))  {
-				partList.get(i).setPosition(new CoordPair((float)0, (float)0));
-				partList.get(i).lockPos();
+			if (dupeNamesExistForPart((EagleBRDPart)partList.get(i), partList)) {
+				enumerateDupeParts((EagleBRDPart)partList.get(i), partList);
 			}
 		}
 		
-		// create a new entry in the ArrayList 'netList' for each component:
-		int genericNet = 1;
-		for (Wire w: sketch.getWires()) {
-			String netName = w.getName();
-			if (netName == null) {
-				netName = "N$" + genericNet;
-				genericNet++;
-			}
-			EagleSCRNet net = new EagleSCRNet(
-				netName,
-				w.getSource(),
-				w.getTarget());
+		/* convert Fritzing part coordinates to Eagle part coordinates and do any 
+		 * necessary adjustments
+		 */		
+		for (int i=0; i<partList.size(); i++) {
+			EagleBRDPart part = partList.get(i);
+			CoordPair fritzingPartPos = part.getFritzingPartPos();
+			CoordPair eaglePartPos = new CoordPair(
+					(float)((fritzingPartPos.xVal/1000) / 2.54), 
+					(float)((fritzingPartPos.yVal/1000) / 2.54));
+			part.setEaglePartPos(eaglePartPos);
 			
-			System.out.println(">>> net " + net.netName +" - " + 
-				((Terminal)net.source).getParent().getName() + "." + 
-				net.source.getName() + " --> " +
-				((Terminal)net.target).getParent().getName() + "." + 
-				net.target.getName());
+			float xPos = part.getEaglePartPos().xVal;
+			float yPos = part.getEaglePartPos().yVal;
+			float yLimit = (float)3.2;			
+			part.setEaglePartPos(new CoordPair(xPos, (float)(yLimit - yPos)));
+			
+			if (part.getFritzingSpecies().equalsIgnoreCase("ArduinoDiecimila"))  {
+				part.setEaglePartPos(new CoordPair((float)0, (float)0));
+				part.setPartPosLock(true);
+			}
+		}
+		
+		/* print the part information for debugging purposes */
+		for (int i=0; i<partList.size(); i++) {
+			EagleBRDPart part = partList.get(i);
+			if (part.getExportToPcb()) {
+				System.out.println(">>> (" + 
+					part.getFritzingId() + ") " +
+					part.getEaglePartLabel() + " - " + 
+					part.getEagleFootprint() + " in " + 
+					part.getEagleLibraryName() + " " + 
+					"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + ")");
+			} else {
+				System.out.println(">>> (" +
+					part.getFritzingId() + ") " + 
+					part.getEaglePartLabel() + " - " + 
+					"NOT EXPORTED TO PCB");
+			}
+		}
+		
+		/* moving on to wires and nets: 
+		 * basic approach is to first create a new entry in the array list "netList" for each
+		 * wire in the object model.
+		 */
+		for (Wire w: sketch.getWires()) {
+			if ((w.getSource() == null) && (w.getTarget() == null)) {
+				continue;
+			}
+			// have to pass the partList to the EagleBRDNet constructor so there is a reference
+			// to parts named differently between Fritzing and Eagle (with same-named Fritzing
+			// parts that have been enumerated, for instance
+			EagleBRDNet net = new EagleBRDNet(w, partList);
 			netList.add(net);
 		}
 		
-		ScriptExporter exporter = new ScriptExporter();
-
+		/* add in the breadboard tracks */
+		for (int i=0; i<partList.size(); i++) {
+			EagleBRDPart part = partList.get(i);
+			if (part.getFritzingSpecies().equalsIgnoreCase("breadboardstandard")) {
+				String partLabel = part.getEaglePartLabel();
+				for (int j=0; j<netList.size(); j++) {
+					
+				}
+			}
+		}
+		
+		/* now enumerate the new net names.  we are ignoring names provided by Fritzing
+		 * for the moment as an experiment to see which method causes less confusion for users
+		 */
+		int genericNet = 1;
+		for (int i=0; i<netList.size(); i++) {
+			netList.get(i).setNetName("N$" + genericNet);
+			genericNet++;
+		}
+		
+		/* combine the entries for those nets which are meant to be connected */
+		for (int i=0; i<netList.size(); i++) {
+			EagleBRDNet net = netList.get(i);
+			for (int j=0; j<net.getPinList().size(); j++) {
+				PartPinPair pin = net.getPin(j);
+				for (int k=i+1; k<netList.size(); k++) {
+					if (netList.get(k).pinIsPresent(pin)) {
+						System.out.println("===== connected wires exist ======");
+//						add all pins from the second net entry to the first entry
+//						add the wire from the second net entry to the first entry
+//						remove the second net entry from netList
+					}
+				}
+			}
+		}
+		
+		/*
+		for (int i=0; i<netList.size(); i++) {
+			EagleBRDNet netOne = netList.get(i);
+			String netNameOne = netOne.getNetName();
+			ArrayList<PartPinPair> pinListOne = netOne.getPinList();
+			for (int j=0; j<pinListOne.size(); j++) {
+				PartPinPair pinOne = pinListOne.get(j);
+				for (int k=0; k<netList.size(); k++) {
+					EagleBRDNet netTwo = netList.get(k);
+					String netNameTwo = netTwo.getNetName();
+					ArrayList<PartPinPair> pinListTwo = netTwo.getPinList();
+					if (netNameOne.equals(netNameTwo)) {
+						continue;
+					}
+					for (int l=0; l<pinListTwo.size(); l++) {
+						PartPinPair pinTwo = pinListTwo.get(l);
+						if (pinOne.equals(pinTwo)) {
+							netOne.addPinList(netTwo.getPinList());
+							netList.remove(k);
+						}
+					}
+				}
+			}
+		}
+		*/
+		
+		/* scrub each net entry for duplicate pin entries */
+		
+		
+		
+		/* print the net information for debugging purposes */
+		for (int i=0; i<netList.size(); i++) {
+			Wire w = netList.get(i).getWire(0);
+			String blah = w.toString();
+			System.out.println(blah);
+			System.out.println(netList.get(i).getPinListAsString());
+			System.out.println("-----------");
+		}
+		
+		for (int i=0; i<netList.size(); i++) {
+			EagleBRDNet net = netList.get(i);
+			
+		}
+		
+		BRDScriptExporter exporter = new BRDScriptExporter();
 		result = exporter.export(partList, netList);
 		System.out.println(result);
 		
 		return result;
 	}
 	
-
 	@SuppressWarnings("unchecked")
 	private static ShapeEditPart getLayoutInfo(IDiagramGraphicalViewer viewer, Element e) {
 		List<EditPart> editParts = viewer.findEditPartsForElement(
@@ -103,5 +204,34 @@ public class Fritzing2Eagle {
 		return (ShapeEditPart) editParts.get(0);
 	}
 	
+	public static boolean dupeNamesExistForPart(EagleBRDPart part, ArrayList<EagleBRDPart> partList) {
+		boolean result = false;
+		String id = part.getFritzingId();
+		String label = part.getFritzingLabel();
+		int labelSuffix = part.getEagleLabelSuffix();
+		for (int i=0; i<partList.size(); i++) {
+			String tempId = ((EagleBRDPart)partList.get(i)).getFritzingId();
+			if (id.equals(tempId)) {
+				continue;
+			}
+			String tempLabel = ((EagleBRDPart)partList.get(i)).getFritzingLabel();
 
+			if (label.equals(tempLabel) && labelSuffix == 0) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public static void enumerateDupeParts(EagleBRDPart part, ArrayList<EagleBRDPart> partList) {
+		int n = 1;
+		String label = part.getFritzingLabel();
+		for (int i=0; i<partList.size(); i++) {
+			String tempLabel = ((EagleBRDPart)partList.get(i)).getFritzingLabel();
+			if (label.equals(tempLabel)) {
+				((EagleBRDPart)partList.get(i)).setEagleLabelSuffix(n);
+				n++;
+			}
+		}
+	}
 }

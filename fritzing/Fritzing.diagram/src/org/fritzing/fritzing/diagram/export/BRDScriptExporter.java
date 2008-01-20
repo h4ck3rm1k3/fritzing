@@ -6,7 +6,7 @@ import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 
 
-public class ScriptExporter {	
+public class BRDScriptExporter {	
 	// the following header text string is prepended to all schematic-
 	// generating script files we produce - it sets up the schematic 
 	// editing environment, opens a schematic sheet, and generally gets
@@ -62,49 +62,45 @@ public class ScriptExporter {
 		return footerText;
 	}
 	
-	public String getPartEntry(EagleSCRPart part) {
+	public String getPartEntry(EagleBRDPart part) {
+		String result = "";
 		// place a schematic symbol 
 		// Eagle syntax is "ADD <libraryPart>@<libraryName> 'partName' 'gateName' R<rotationAngle> (<componentCoords>)"
-		/*
-		String result = "ADD " + 
-			part.partType.toUpperCase() + 
-			"@" + part.libraryName + " " + 
-			"'" + part.partName.toUpperCase() + "' " + 
-			"'" + part.gateNumber + "' " + 
-			part.rotationPrefix + part.rotationVal + " " +  
-			"(" + part.partPos.xVal + " " + part.partPos.yVal + "); \n";
-		*/
-		String result = "ADD " + 
-			part.partType.toUpperCase() + 
-			"@" + part.libraryName + " " + 
-			"'" + part.partName.toUpperCase() + "' " + 
-			part.rotationPrefix + part.rotationVal + " " + 
-			"(" + part.partPos.xVal + " " + part.partPos.yVal + "); \n";
+		result = "ADD " +
+			part.getEagleFootprint() + 
+			"@" + part.getEagleLibraryName() + " " +
+			"'" + part.getEaglePartLabel() + "' " +
+			part.getEagleRotationPrefix() + part.getEagleRotationVal() + " " + 
+			"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + "); \n";
 		return result;
 	}
 	
-	public String getNetEntry(EagleSCRNet net) {
+	public String getNetEntry(EagleBRDNet net) {
 		/* place a SIGNAL to create two terminals at a time */
-		String result = "SIGNAL '" + net.netName + "' " + 
-			"'" + ((Terminal)net.source).getParent().getName() + "' " + 
-			"'" + net.source.getName() + "' " +
-			"'" + ((Terminal)net.target).getParent().getName() + "' " + 
-			"'" + net.target.getName() + "'; \n";
+		String result = "";
+//		String result = "SIGNAL '" + net.netName + "' " + 
+//			"'" + ((Terminal)net.source).getParent().getName() + "' " + 
+//			"'" + net.source.getName() + "' " +
+//			"'" + ((Terminal)net.target).getParent().getName() + "' " + 
+//			"'" + net.target.getName() + "'; \n";
+//			"...;";
 		return result;
 	}
 	
-	public String export(ArrayList<EagleSCRPart> partList, ArrayList<EagleSCRNet> netList) {
+	public String export(ArrayList<EagleBRDPart> partList, ArrayList<EagleBRDNet> netList) {
 		// this should take a file handle and the pre-populated part and net listArrays as arguments
 		// iterate through each entry, printing corresponding lines plus header and footer text
 		String result = "";
 		result = result.concat(getHeaderText());
 		
 		for (int i=0; i<partList.size(); i++) {
-			result = result.concat(getPartEntry((EagleSCRPart)partList.get(i)));
+			if (partList.get(i).getExportToPcb() == true) {
+				result = result.concat(getPartEntry((EagleBRDPart)partList.get(i)));
+			}			
 		}
 		
 		for (int i=0; i<netList.size(); i++) {
-			result = result.concat(getNetEntry((EagleSCRNet)netList.get(i)));
+			result = result.concat(getNetEntry((EagleBRDNet)netList.get(i)));
 		}
 		
 		result = result.concat(getFooterText());
