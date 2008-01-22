@@ -17,7 +17,8 @@
 	<gridOffset x="133" y="-19" units="himetric"/> <!-- 21x-3 400% view pixels -->
 	<bounds width="1022" height="724" units="himetric"/> <!-- 161x114 400% view pixels -->
 	<connectors units="tenths">
-		<connector id="1" name="Ground" type="leg">
+    <nameLayout visible="false" />
+    <connector id="1" name="Ground" type="leg">
 			<point x="0" y="743" units="himetric"/>
 			<point x="0" y="3" />
 		</connector>

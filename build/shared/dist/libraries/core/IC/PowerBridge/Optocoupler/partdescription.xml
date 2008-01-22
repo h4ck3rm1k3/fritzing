@@ -17,6 +17,7 @@
 	<gridOffset x="133" y="-19" units="himetric"/> <!-- 21x-3 400% view pixels -->
 	<bounds width="768" height="724" units="himetric"/> <!-- 121x114 400% view pixels -->
 	<connectors units="tenths">
+    <nameLayout visible="false" />
 		<connector id="1" name="Anode" type="leg">
 			<point x="0" y="743" units="himetric"/>
 			<point x="0" y="3" />
