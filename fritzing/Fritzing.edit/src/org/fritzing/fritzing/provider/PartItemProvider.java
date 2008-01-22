@@ -65,57 +65,10 @@ public class PartItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addSpeciesPropertyDescriptor(object);
-			addGenusPropertyDescriptor(object);
 			addNotePropertyDescriptor(object);
-			addVersionPropertyDescriptor(object);
 			addFootprintPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Species feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addSpeciesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Part_species_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Part_species_feature", "_UI_Part_type"),
-				 FritzingPackage.Literals.PART__SPECIES,
-				 false,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Genus feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addGenusPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Part_genus_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Part_genus_feature", "_UI_Part_type"),
-				 FritzingPackage.Literals.PART__GENUS,
-				 false,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -134,28 +87,6 @@ public class PartItemProvider
 				 FritzingPackage.Literals.PART__NOTE,
 				 true,
 				 true,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Version feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addVersionPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Part_version_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Part_version_feature", "_UI_Part_type"),
-				 FritzingPackage.Literals.PART__VERSION,
-				 false,
-				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				 null,
