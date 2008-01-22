@@ -111,8 +111,9 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 		try {
 			Terminal terminal = (Terminal) ((NodeImpl) terminalPart.getModel()).getElement();
 			Point p = partLoader.getTerminalLegTargetPosition(terminal.getId());
-			p.x = getMapMode().LPtoDP(p.x);
-			p.y = getMapMode().LPtoDP(p.y);
+			double zoom = ((FritzingDiagramRootEditPart)getRoot()).getZoomManager().getZoom();
+			p.x = (int)(getMapMode().LPtoDP(p.x)*zoom);
+			p.y = (int)(getMapMode().LPtoDP(p.y)*zoom);
 			return p;
 		}
 		catch (Exception ex) {
