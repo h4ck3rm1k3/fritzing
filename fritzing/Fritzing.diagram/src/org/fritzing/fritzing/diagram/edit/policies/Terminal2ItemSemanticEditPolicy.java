@@ -3,12 +3,26 @@
  */
 package org.fritzing.fritzing.diagram.edit.policies;
 
+import java.util.Iterator;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
+import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.requests.EditCommandRequestWrapper;
 import org.eclipse.gmf.runtime.emf.type.core.commands.DestroyElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
+import org.eclipse.gmf.runtime.notation.Edge;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.impl.EdgeImpl;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
+import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.commands.LegCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.LegReorientCommand;
 import org.fritzing.fritzing.diagram.edit.commands.TrackCreateCommand;
@@ -16,9 +30,11 @@ import org.fritzing.fritzing.diagram.edit.commands.TrackReorientCommand;
 import org.fritzing.fritzing.diagram.edit.commands.WireCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.WireReorientCommand;
 import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TrackEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
+import org.fritzing.fritzing.impl.LegImpl;
 
 /**
  * @generated
@@ -35,6 +51,61 @@ public class Terminal2ItemSemanticEditPolicy extends
 		cc.add(getGEFWrapper(new DestroyElementCommand(req)));
 		return cc.unwrap();
 	}
+	
+	
+	public boolean understandsRequest(Request request) {
+		boolean result = super.understandsRequest(request);
+		
+		System.out.println("understands " + request.getType());
+		
+		if ((result == true) && 
+			(REQ_CONNECTION_START.equals(request.getType())
+					|| REQ_CONNECTION_END.equals(request.getType())
+					|| REQ_RECONNECT_SOURCE.equals(request.getType())
+					|| REQ_RECONNECT_TARGET.equals(request.getType()))
+			) {
+						
+			// don't allow connections to a terminal that has a leg
+			EditPart editPart = this.getHost();
+			if (editPart instanceof Terminal2EditPart) {
+				Terminal terminal = (Terminal) ((NodeImpl) editPart.getModel()).getElement();
+				if (terminal.getLeg() != null) 
+				{
+					System.out.println("understands false");
+					return false;
+				}
+			}			
+		}
+		
+		return result;
+	}
+
+	protected CompoundCommand getDestroyEdgesCommand() {
+		CompoundCommand cmd = new CompoundCommand();
+		View view = (View) getHost().getModel();
+		for (Iterator it = view.getSourceEdges().iterator(); it.hasNext();) {				
+			Object obj = it.next();
+			if (obj instanceof EdgeImpl) {				
+				if (((EdgeImpl) obj).getElement() instanceof LegImpl) {
+					continue;    // don't destroy connected legs		
+				}
+			}
+			
+			cmd.add(getDestroyElementCommand((Edge) obj));
+		}
+		for (Iterator it = view.getTargetEdges().iterator(); it.hasNext();) {
+			Object obj = it.next();
+			if (obj instanceof EdgeImpl) {				
+				if (((EdgeImpl) obj).getElement() instanceof LegImpl) {
+					continue;    // don't destroy connected legs		
+				}
+			}
+
+			cmd.add(getDestroyElementCommand((Edge) obj));
+		}
+		return cmd;
+	}
+
 
 	/**
 	 * @generated

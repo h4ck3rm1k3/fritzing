@@ -36,7 +36,9 @@ import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.SlidableAnchor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.swt.graphics.Color;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.Terminal2ItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -89,6 +91,11 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		}
 
 		return null;
+	}
+	
+	
+	public EditPart getTargetEditPart(Request request) {
+		return super.getTargetEditPart(request);
 	}
 
 	public void displayTargetFeedback(boolean display) {
@@ -310,6 +317,28 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 	public class Terminal2GraphicalNodeEditPolicy extends
 			GraphicalNodeEditPolicy {
+		
+		
+		public EditPart getTargetEditPart(Request request) {
+			if (REQ_CONNECTION_START.equals(request.getType())
+				|| REQ_CONNECTION_END.equals(request.getType())
+				|| REQ_RECONNECT_SOURCE.equals(request.getType())
+				|| REQ_RECONNECT_TARGET.equals(request.getType())) {
+								
+				EditPart editPart = this.getHost();
+				if (editPart instanceof Terminal2EditPart) {
+					Terminal terminal = (Terminal) ((NodeImpl) editPart.getModel()).getElement();
+					if (terminal.getLeg() != null) 
+					{
+						return null;
+					}
+				}			
+
+				return getHost();
+			}
+			return null;
+		}
+		
 		protected void showTargetConnectionFeedback(DropRequest request) {
 			xTargetConnectionFeedback(request, true);
 		}
