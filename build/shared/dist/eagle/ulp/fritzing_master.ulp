@@ -11,9 +11,9 @@ if (strchr(boardFile, '\\') > -1) {
   int n = strsplit(s, boardFile, '\\');
   boardFileMsg = strjoin(s, '/');
 }
-if (dlgMessageBox(";<html>Fritzing will now create your board in Eagle as:<br> " + boardFileMsg + "<br>Use the <i>Fritzing menu</i> tools on the right to complete your design.  If you have any questions, please see the <a href=\"http://www.fritzing.org/learning/eagle\">Eagle help page</a>.</html>") == 0) {
+//if (dlgMessageBox(";<html>Fritzing will now create your board in Eagle as:<br> " + boardFileMsg + "<br>Use the <i>Fritzing menu</i> tools on the right to complete your design.  If you have any questions, please see the <a href=\"http://www.fritzing.org/learning/eagle\">Eagle help page</a>.</html>") == 0) {
 
-}
+//}
 
 cmd += "script '" + recreateScript + "'; \n";
 cmd += "script '" + fileLocation + "scr/fritzing_setup-arduino_shield'; \n";
