@@ -295,8 +295,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 					FritzingLinkDescriptor fld = new FritzingLinkDescriptor(terminal, 
 							sketch,
 							terminal.getLeg(), FritzingElementTypes.Leg_4003, LegEditPart.VISUAL_ID);
-					
-					
+									
 					CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = 
 						new CreateConnectionViewRequest.ConnectionViewDescriptor(
 							fld.getSemanticAdapter(), String.valueOf(LegEditPart.VISUAL_ID),
@@ -316,6 +315,9 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 						DiagramCommandStack commandStack = this.getDiagramEditDomain()
 						.getDiagramCommandStack();
 						commandStack.execute(cmd2);	
+						
+						// the new LegEditPart isn't actually created yet, even though the execute method has returned.
+						// so there's no way to access the new LegEditPart from here
 					}
 					else {
 						// alert the user?

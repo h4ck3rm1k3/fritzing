@@ -6,17 +6,21 @@ package org.fritzing.fritzing.diagram.edit.parts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.ConnectionEditPart;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.UnexecutableCommand;
+import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
 import org.eclipse.gef.handles.ConnectionEndHandle;
 import org.eclipse.gef.requests.GroupRequest;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.internal.editpolicies.ConnectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
@@ -40,6 +44,22 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 	 */
 	public LegEditPart(View view) {
 		super(view);
+	}
+	
+	
+	public void setParent(EditPart parent) {		
+		// AbstractConnectionEditPart.setSource() sets the parent very strangely so just take it over
+
+		EditPart s = getSource();
+		if (s instanceof SketchEditPart) {
+			super.setParent(s);
+		}
+		else if (s instanceof Terminal2EditPart) {
+			super.setParent(s.getParent());
+		}
+		else {
+			super.setParent(parent);
+		}
 	}
 
 	/**
@@ -68,6 +88,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 			// disable delete for legs
 			return UnexecutableCommand.INSTANCE;
 		}
+		
 	}
 
 	public class LegItemConnectionEndpointEditPolicy extends
