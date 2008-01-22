@@ -81,7 +81,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 
 	}
 
-	protected void initBend(LegFigure figure, Point p) {
+//	protected void initBend(LegFigure figure, Point p) {
 		//			BendpointRequest request = new BendpointRequest();
 		//			request.setType(RequestConstants.REQ_CREATE_BENDPOINT);
 		//			request.setIndex(0);
@@ -93,8 +93,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 		//				.getDiagramCommandStack();
 		//				commandStack.execute(cmd);		
 		//			}
-
-	}
+//	}
 
 	protected boolean connectedToSketch() {
 		return (this.getTarget() instanceof SketchEditPart);
@@ -148,17 +147,10 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 		 */
 		public LegFigure(LegEditPart leg) {
 			setLineWidth(connectionWidth = 3);
-			setForegroundColor(LEG_FIGURE_COLOR);
 			this.leg = leg;
 			createContents();
 		}
 		
-		public void paintFigure(Graphics g) {
-//			this.setSmoothness(0);
-			super.paintFigure(g);
-		}
-
-
 		/**
 		 * @generated NOT
 		 */
@@ -181,6 +173,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 		}
 	}
 
-	public static final Color LEG_FIGURE_COLOR = new Color(null, 178, 179, 180);
+	// XXX: this is hard-coded in LegViewFactory.decorateView() because of a Mac bug
+	public static final Color LEG_FIGURE_COLOR = new Color(null, 178, 178, 178);
 
 }
