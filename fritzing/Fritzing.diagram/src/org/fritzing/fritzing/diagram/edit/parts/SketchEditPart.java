@@ -27,6 +27,7 @@ import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gef.editparts.GridLayer;
 import org.eclipse.gef.handles.HandleBounds;
 import org.eclipse.gef.requests.CreateConnectionRequest;
+import org.eclipse.gef.requests.ReconnectRequest;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.INodeEditPart;
@@ -124,7 +125,7 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 				return makeLegConnectionAnchor((Terminal2EditPart) part);
 			}
 		}
-
+		
 		return null;
 	}
 	
@@ -229,11 +230,10 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 
 	}
 	
-
-//	public class TerminalAnchor extends XYAnchor {
+//	public class SketchLegAnchor extends XYAnchor {
 //		protected Terminal2EditPart terminal;
 //
-//		public TerminalAnchor(Point p, Terminal2EditPart terminal) {
+//		public SketchLegAnchor(Point p, Terminal2EditPart terminal) {
 //			super(p);
 //			this.terminal = terminal;
 //		}
@@ -249,4 +249,6 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 //		}
 //
 //	}
+	
+	
 }

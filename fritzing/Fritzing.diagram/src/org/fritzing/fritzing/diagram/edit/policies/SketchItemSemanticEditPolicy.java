@@ -5,15 +5,21 @@ package org.fritzing.fritzing.diagram.edit.policies;
 
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.emf.commands.core.commands.DuplicateEObjectsCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DuplicateElementsRequest;
+import org.eclipse.gmf.runtime.emf.type.core.requests.ReorientRelationshipRequest;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.diagram.edit.commands.GenericPartCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.LEDCreateCommand;
+import org.fritzing.fritzing.diagram.edit.commands.LegReorientCommand;
 import org.fritzing.fritzing.diagram.edit.commands.ResistorCreateCommand;
 import org.fritzing.fritzing.diagram.edit.commands.TerminalCreateCommand;
+import org.fritzing.fritzing.diagram.edit.commands.WireReorientCommand;
+import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -84,5 +90,17 @@ public class SketchItemSemanticEditPolicy extends
 		}
 
 	}
+	
+	// this override allows the leg to be reconnected to the sketch	
+	protected Command getReorientRelationshipCommand(
+			ReorientRelationshipRequest req) {
+		switch (getVisualID(req)) {
+			case LegEditPart.VISUAL_ID:
+				return getGEFWrapper(new LegReorientCommand(req));
+		}
+	
+		return super.getReorientRelationshipCommand(req);
+	}
+
 
 }
