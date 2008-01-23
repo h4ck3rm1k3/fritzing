@@ -114,6 +114,8 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 			double zoom = ((FritzingDiagramRootEditPart)getRoot()).getZoomManager().getZoom();
 			p.x = (int)(getMapMode().LPtoDP(p.x)*zoom);
 			p.y = (int)(getMapMode().LPtoDP(p.y)*zoom);
+			p.x = p.x > 0 ? p.x : 1;
+			p.y = p.y > 0 ? p.y : 1;
 			return p;
 		}
 		catch (Exception ex) {

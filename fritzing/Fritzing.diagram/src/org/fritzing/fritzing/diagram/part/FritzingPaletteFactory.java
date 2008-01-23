@@ -181,7 +181,7 @@ public class FritzingPaletteFactory {
 	 * @generated NOT
 	 */
 	private ToolEntry createPanningSelectionTool() {
-		PanningSelectionToolEntry entry = new PanningSelectionToolEntry();
+		PanningSelectionToolEntry entry = new FritzingPanningSelectionToolEntry();
 		return entry;
 	}
 
@@ -404,7 +404,8 @@ public class FritzingPaletteFactory {
 		 * @generated
 		 */
 		public Tool createTool() {
-			Tool tool = new UnspecifiedTypeConnectionTool(relationshipTypes);
+			UnspecifiedTypeConnectionTool tool = new UnspecifiedTypeConnectionTool(relationshipTypes);
+			tool.setUnloadWhenFinished(false);
 			tool.setProperties(getToolProperties());
 			return tool;
 		}

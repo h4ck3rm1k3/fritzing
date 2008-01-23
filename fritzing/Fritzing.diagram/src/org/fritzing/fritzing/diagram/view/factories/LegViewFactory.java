@@ -54,5 +54,6 @@ public class LegViewFactory extends ConnectionViewFactory {
         LineStyle lineStyle = (LineStyle) view.getStyle(NotationPackage.eINSTANCE.getLineStyle());
         // XXX: bug in Color.hashCode() on Mac: have to hard-code it..
         lineStyle.setLineColor(11711154); // LegEditPart.LEG_FIGURE_COLOR.hashCode());
+        lineStyle.setLineColor(0xff0000); // LegEditPart.LEG_FIGURE_COLOR.hashCode());
 	}
 }

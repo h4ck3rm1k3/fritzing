@@ -13,6 +13,7 @@ import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.requests.EditCommandRequestWrapper;
+import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.emf.type.core.commands.DestroyElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateRelationshipRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
@@ -55,23 +56,22 @@ public class Terminal2ItemSemanticEditPolicy extends
 	
 	public boolean understandsRequest(Request request) {
 		boolean result = super.understandsRequest(request);
-		
-		System.out.println("understands " + request.getType());
-		
+												
 		if ((result == true) && 
 			(REQ_CONNECTION_START.equals(request.getType())
 					|| REQ_CONNECTION_END.equals(request.getType())
 					|| REQ_RECONNECT_SOURCE.equals(request.getType())
-					|| REQ_RECONNECT_TARGET.equals(request.getType()))
+					|| REQ_RECONNECT_TARGET.equals(request.getType())
+					|| REQ_SELECTION.equals(request.getType())
+					|| REQ_MOVE.equals(request.getType())
+				)
 			) {
 						
 			// don't allow connections to a terminal that has a leg
 			EditPart editPart = this.getHost();
 			if (editPart instanceof Terminal2EditPart) {
-				Terminal terminal = (Terminal) ((NodeImpl) editPart.getModel()).getElement();
-				if (terminal.getLeg() != null) 
+				if (((Terminal2EditPart) editPart).hasLeg())
 				{
-					System.out.println("understands false");
 					return false;
 				}
 			}			

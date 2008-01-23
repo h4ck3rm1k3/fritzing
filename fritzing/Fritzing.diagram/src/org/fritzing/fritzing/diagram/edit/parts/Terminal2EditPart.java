@@ -320,16 +320,23 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		
 		
 		public EditPart getTargetEditPart(Request request) {
+			System.out.println("request " + request.getType());
+
 			if (REQ_CONNECTION_START.equals(request.getType())
 				|| REQ_CONNECTION_END.equals(request.getType())
 				|| REQ_RECONNECT_SOURCE.equals(request.getType())
-				|| REQ_RECONNECT_TARGET.equals(request.getType())) {
-								
+				|| REQ_RECONNECT_TARGET.equals(request.getType())
+				|| REQ_SELECTION.equals(request.getType())
+				|| REQ_MOVE.equals(request.getType())
+
+				) {
+				
 				EditPart editPart = this.getHost();
 				if (editPart instanceof Terminal2EditPart) {
-					Terminal terminal = (Terminal) ((NodeImpl) editPart.getModel()).getElement();
-					if (terminal.getLeg() != null) 
+					if (((Terminal2EditPart) editPart).hasLeg()) 
 					{
+						// don't allow connections to a terminal that has a leg
+						System.out.println("null");
 						return null;
 					}
 				}			
