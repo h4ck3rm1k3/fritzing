@@ -11,30 +11,32 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.tools.PanningSelectionTool;
+import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
+import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
+import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
 
 public class FritzingPanningSelectionTool extends PanningSelectionTool {
 
 	protected Collection getExclusionSet() {
-		ArrayList<IFigure> terminals = new ArrayList<IFigure>();
+		ArrayList<IFigure> exclude = new ArrayList<IFigure>();
 		EditPartViewer viewer = getCurrentViewer();
-		RootEditPart rootEditPart = viewer.getRootEditPart();
-		List children = rootEditPart.getContents().getChildren();
-		for (Iterator it = children.iterator(); it.hasNext(); ) {
-			Object obj = it.next();
-			if (obj instanceof EditPart) {
-				for (Iterator it2 = ((EditPart) obj).getChildren().iterator(); it2.hasNext(); ) {
-					Object obj2 = it2.next();
-					if (obj2 instanceof Terminal2EditPart) {
-						if (((Terminal2EditPart) obj2).hasLeg()) {
-							terminals.add(((Terminal2EditPart) obj2).getMainFigure());
-						}
-					}
+		RootEditPart rootEditPart = viewer.getRootEditPart();		
+		for (Object obj: ((SketchEditPart) rootEditPart.getContents()).getConnections() ) {
+			if (obj instanceof LegEditPart) {
+				EditPart part = ((LegEditPart) obj).getSource();
+				if (part instanceof Terminal2EditPart) {
+					IFigure figure = ((Terminal2EditPart) part).getMainFigure();
+					exclude.add(figure);
 				}
 			}
+			else if (obj instanceof WireEditPart) {
+				IFigure figure = ((WireEditPart) obj).getFigure();
+				exclude.add(figure);
+			}
 		}
-			
-		return terminals;
+					
+		return exclude;
 	}
 
 }
