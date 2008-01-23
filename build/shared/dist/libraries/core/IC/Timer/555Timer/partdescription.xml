@@ -19,35 +19,35 @@
 	<connectors units="tenths">
     <nameLayout visible="false" />
     <connector id="1" name="Ground" type="leg">
-			<point x="0" y="743" units="himetric"/>
+			<point x="0" y="683" units="himetric"/>
 			<point x="0" y="3" />
 		</connector>
 		<connector id="2" name="Trigger" type="leg">
-			<point x="254" y="743" units="himetric"/>
+			<point x="254" y="683" units="himetric"/>
 			<point x="1" y="3" />
 		</connector>
 		<connector id="3" name="Output" type="leg">
-			<point x="508" y="743" units="himetric"/>
+			<point x="508" y="683" units="himetric"/>
 			<point x="2" y="3" />
 		</connector>
 		<connector id="4" name="Reset" type="leg">
-			<point x="762" y="743" units="himetric"/>
+			<point x="762" y="683" units="himetric"/>
 			<point x="3" y="3" />
 		</connector>
 		<connector id="5" name="Control Voltage" type="leg">
-			<point x="762" y="-19" units="himetric"/>
+			<point x="762" y="69" units="himetric"/>
 			<point x="3" y="0" />
 		</connector>
 		<connector id="6" name="Threshold" type="leg">
-			<point x="508" y="-19" units="himetric"/>
+			<point x="508" y="69" units="himetric"/>
 			<point x="2" y="0" />
 		</connector>
 		<connector id="7" name="Discharge" type="leg">
-			<point x="254" y="-19" units="himetric"/>
+			<point x="254" y="69" units="himetric"/>
 			<point x="1" y="0" />
 		</connector>
 		<connector id="8" name="VCC" type="leg">
-			<point x="0" y="-19" units="himetric"/>
+			<point x="0" y="69" units="himetric"/>
 			<point x="0" y="0" />
 		</connector>
 	</connectors>
