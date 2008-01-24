@@ -30,10 +30,6 @@ public class FritzingPanningSelectionTool extends PanningSelectionTool {
 					exclude.add(figure);
 				}
 			}
-			else if (obj instanceof WireEditPart) {
-				IFigure figure = ((WireEditPart) obj).getFigure();
-				exclude.add(figure);
-			}
 		}
 					
 		return exclude;

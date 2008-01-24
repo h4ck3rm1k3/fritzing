@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.draw2d.AutomaticRouter;
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.ConnectionRouter;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.gef.ConnectionEditPart;
@@ -26,6 +29,8 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.internal.editpolicies.ConnectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
+import org.eclipse.gmf.runtime.draw2d.ui.internal.routers.FanRouter;
+import org.eclipse.gmf.runtime.draw2d.ui.internal.routers.ObliqueRouter;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
@@ -175,13 +180,28 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 			createContents();
 		}
 		
+		// useful for debugging purposes
+//		public void paintFigure(Graphics graphics) {
+//			//setRoutingStyles(true, false);
+//			//this.setSmoothness(0);  // for debugging only; delete this  
+//			super.paintFigure(graphics);
+//		}
+		
+		
+		public void setPoints(PointList points) {
+			if (points.size() > 2) {
+				System.out.println("got points " + points.size());
+			}
+			super.setPoints(points);
+		}
+		
 		/**
 		 * @generated NOT
 		 */
 		private void createContents() {
 
 		}
-
+		
 		public Object getRoutingConstraint() {
 			// this isn't a clean fix, but it will do for now
 			// basically, returning a null at this point stops any new bendpoint being created
@@ -196,7 +216,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 			return super.getRoutingConstraint();
 		}
 	}
-
+	
 	// XXX: this is hard-coded in LegViewFactory.decorateView() because of a Mac bug
 	public static final Color LEG_FIGURE_COLOR = new Color(null, 178, 178, 178);
 
