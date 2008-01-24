@@ -25,57 +25,30 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
- * @generated
+ * @generated NOT
  */
 public class ResistorItemSemanticEditPolicy extends
-		FritzingBaseItemSemanticEditPolicy {
+		PartItemSemanticEditPolicy {
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected Command getCreateCommand(CreateElementRequest req) {
-		if (FritzingElementTypes.Terminal_3001 == req.getElementType()) {
-			if (req.getContainmentFeature() == null) {
-				req.setContainmentFeature(FritzingPackage.eINSTANCE
-						.getPart_Terminals());
-			}
-			return getGEFWrapper(new Terminal2CreateCommand(req));
-		}
 		return super.getCreateCommand(req);
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected Command getDestroyElementCommand(DestroyElementRequest req) {
-		CompoundCommand cc = getDestroyEdgesCommand();
-		addDestroyChildNodesCommand(cc);
-		addDestroyShortcutsCommand(cc);
-		View view = (View) getHost().getModel();
-		if (view.getEAnnotation("Shortcut") != null) { //$NON-NLS-1$
-			req.setElementToDestroy(view);
-		}
-		cc.add(getGEFWrapper(new DestroyElementCommand(req)));
-		return cc.unwrap();
+		return super.getDestroyElementCommand(req);	
 	}
 
 	/**
-	 * @generated
+	 * @generated NOT
 	 */
 	protected void addDestroyChildNodesCommand(CompoundCommand cmd) {
-		View view = (View) getHost().getModel();
-		EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
-		if (annotation != null) {
-			return;
-		}
-		for (Iterator it = view.getChildren().iterator(); it.hasNext();) {
-			Node node = (Node) it.next();
-			switch (FritzingVisualIDRegistry.getVisualID(node)) {
-			case Terminal2EditPart.VISUAL_ID:
-				cmd.add(getDestroyElementCommand(node));
-				break;
-			}
-		}
+		super.addDestroyChildNodesCommand(cmd);
 	}
 
 }

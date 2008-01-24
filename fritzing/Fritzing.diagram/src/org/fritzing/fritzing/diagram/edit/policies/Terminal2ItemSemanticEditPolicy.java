@@ -80,32 +80,6 @@ public class Terminal2ItemSemanticEditPolicy extends
 		return result;
 	}
 
-	protected CompoundCommand getDestroyEdgesCommand() {
-		CompoundCommand cmd = new CompoundCommand();
-		View view = (View) getHost().getModel();
-		for (Iterator it = view.getSourceEdges().iterator(); it.hasNext();) {				
-			Object obj = it.next();
-			if (obj instanceof EdgeImpl) {				
-				if (((EdgeImpl) obj).getElement() instanceof LegImpl) {
-					continue;    // don't destroy connected legs		
-				}
-			}
-			
-			cmd.add(getDestroyElementCommand((Edge) obj));
-		}
-		for (Iterator it = view.getTargetEdges().iterator(); it.hasNext();) {
-			Object obj = it.next();
-			if (obj instanceof EdgeImpl) {				
-				if (((EdgeImpl) obj).getElement() instanceof LegImpl) {
-					continue;    // don't destroy connected legs		
-				}
-			}
-
-			cmd.add(getDestroyElementCommand((Edge) obj));
-		}
-		return cmd;
-	}
-
 
 	/**
 	 * @generated

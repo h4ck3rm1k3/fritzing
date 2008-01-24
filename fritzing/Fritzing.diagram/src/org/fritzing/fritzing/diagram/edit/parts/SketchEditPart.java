@@ -155,7 +155,7 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 		return false;
 	}
 
-	// need to catch the notification when the model adds a leg
+	// need to catch the notification when the model adds a leg, otherwise the legs don't get drawn
 	protected void handleNotificationEvent(Notification notification) {
 		Object feature = notification.getFeature();
 		if (NotationPackage.eINSTANCE.getView_TargetEdges().equals(feature))
