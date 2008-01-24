@@ -9,6 +9,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -280,7 +281,7 @@ public class LegImpl extends ConnectionImpl implements Leg {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void eUnset(int featureID) {
@@ -289,7 +290,13 @@ public class LegImpl extends ConnectionImpl implements Leg {
 				setParent((Terminal)null);
 				return;
 			case FritzingPackage.LEG__TARGET:
-				setTarget((ILegConnection)null);
+				EObject eo = null;
+				try {
+					// the unset state for the target is the sketch
+					eo = this.eContainer().eContainer().eContainer();
+				}
+				catch (Exception ex) {}
+				setTarget((ILegConnection)eo);
 				return;
 			case FritzingPackage.LEG__SOURCE:
 				setSource((ILegConnection)null);
