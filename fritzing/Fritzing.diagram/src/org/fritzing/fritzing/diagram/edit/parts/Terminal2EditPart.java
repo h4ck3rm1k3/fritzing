@@ -315,6 +315,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	}
 
 	public boolean hasLeg() {
+		if (!this.hasConnections()) return false;
 		for (Iterator it = this.getSourceConnections().iterator(); it.hasNext();) {
 			Object o = it.next();
 			if (o instanceof LegEditPart)
@@ -425,30 +426,30 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		}
 
 		public void displayFeedback(boolean display) {
-			if (display != displayFeedbackFlag) {
-				displayFeedbackFlag = display;
-				if (display) {
-					this.setBackgroundColor(THIS_FEED);
-				} else {
-					this.setBackgroundColor(THIS_CONNECTED);
-				}
-				this.invalidate();
-			}
+			displayFeedbackFlag = display;
+			repaint();
 		}
 
-		protected void paintFigure(Graphics graphics) {
-			if (displayFeedbackFlag) {
-				Rectangle tempRect = new Rectangle(getBounds());
-				tempRect.expand(standardFeedbackInsetConverted, standardFeedbackInsetConverted);
-				graphics.fillRectangle(tempRect);
+		protected void paintFigure(Graphics g) {
+			// show its state
+			Rectangle tempRect = new Rectangle(getBounds());
+			tempRect.expand(standardFeedbackInsetConverted, standardFeedbackInsetConverted);
+			if (displayFeedbackFlag) { 
+				// hover state
+				g.pushState();
+				g.setBackgroundColor(THIS_FEED);
+				g.setAlpha(200);
+				g.fillRectangle(tempRect);
+				g.popState();
+			} else if (!terminalPart.hasLeg() && terminalPart.hasConnections()) {
+				// connected state
+				g.pushState();
+				g.setBackgroundColor(THIS_CONNECTED);
+				g.setAlpha(150);
+				g.fillRectangle(tempRect);
+				g.popState();
 			}
-			else if (terminalPart.isFemale() && terminalPart.hasConnections()) {
-				Rectangle tempRect = new Rectangle(getBounds());
-				tempRect.expand(standardFeedbackInsetConverted, standardFeedbackInsetConverted);
-				graphics.fillRectangle(tempRect);
-			}
-
-			super.paintFigure(graphics);
+			super.paintFigure(g);
 		}
 
 	}
@@ -497,7 +498,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			this.terminalPart = terminalPart;
 			standardTerminalConverted = getMapMode().DPtoLP(
 					standardTerminalMeasure);
-			this.setLineWidth(0);
+			this.setOutline(false);
 			this.setForegroundColor(THIS_FORE);
 			this.setBackgroundColor(THIS_BACK);
 			this.setPreferredSize(new Dimension(standardTerminalConverted,
@@ -562,8 +563,8 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 */
 	static final Color THIS_BACK = new Color(null, 0, 0, 0);
 
-	static final Color THIS_FEED = new Color(null, 100, 162, 132);
+	static final Color THIS_FEED = new Color(null, 0, 158, 79);
 
-	static final Color THIS_CONNECTED = new Color(null, 255, 0, 0);
+	static final Color THIS_CONNECTED = new Color(null, 100, 162, 132);
 
 }
