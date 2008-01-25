@@ -66,10 +66,9 @@ public class PartLoader {
 	protected Hashtable<String, Boolean> trackHash = new Hashtable<String, Boolean>();
 	protected Document doc = null;
 	protected File documentFile = null;
+	protected String zorder = null;
 	
-	public PartLoader() {
-		
-		
+	public PartLoader() {				
 		nets = new ArrayList<ArrayList<PointName>>();
 		contentsPath = "";
 		terminalHash = new Hashtable<String, PointName>();
@@ -155,6 +154,11 @@ public class PartLoader {
 		
 		// at the moment, male and female are treated the same
 		return pointName.type.equalsIgnoreCase("female") || pointName.type.equalsIgnoreCase("male");		
+	}
+	
+	
+	public String getZOrder() {
+		return zorder;
 	}
 	
 	public String getSvgFilename() {
@@ -487,6 +491,10 @@ public class PartLoader {
 					parseIcons(node.getChildNodes());		
 				}
 				else if (nodeName.equals("layers")) {
+					String s = ((Element) node).getAttribute("zorder");
+					if (s != null && s.length() > 0) {
+						zorder = s;
+					}					
 					parseLayers(node.getChildNodes());
 				}
 				else if (nodeName.equals("bounds")) {

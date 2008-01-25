@@ -15,6 +15,7 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.impl.EAttributeImpl;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
@@ -55,8 +56,8 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 	public LegEditPart(View view) {
 		super(view);
 	}
+
 	
-		
 	public void setParent(EditPart parent) {		
 		// AbstractConnectionEditPart.setSource() sets the parent very strangely so just take it over
 

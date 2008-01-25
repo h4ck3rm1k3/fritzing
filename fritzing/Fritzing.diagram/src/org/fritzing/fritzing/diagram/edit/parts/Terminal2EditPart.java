@@ -105,8 +105,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			if (name.equals("targetEdges") || name.equals("sourceEdges")) {
 				// clean up "connected" highlighting				
 				this.getParent().refresh();
-				getMainFigure().invalidate();
-				System.out.println("hello");									
+				getMainFigure().invalidate();								
 			}
 		}
 		super.handleNotificationEvent(notification);

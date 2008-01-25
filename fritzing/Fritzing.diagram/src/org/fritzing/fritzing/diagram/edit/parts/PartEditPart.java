@@ -258,6 +258,19 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 			if (!legsInitialized) {
 				legsInitialized = true;
  				initializeLegs();
+ 				String zorder = partLoader.getZOrder();
+ 				int newIndex = -1;
+ 				if (zorder != null) {
+ 					if (zorder.equalsIgnoreCase("front")) {
+ 						newIndex = this.getParent().getChildren().size() - 1;
+ 					}
+ 					else if (zorder.equalsIgnoreCase("back")) {
+ 						newIndex = 0;
+ 					}
+ 				}
+ 				if (newIndex >= 0) {
+ 					ViewUtil.repositionChildAt((View) this.getParent().getModel(), (View) this.getModel(), newIndex);
+ 				}
 			}
 		}
 		super.handleNotificationEvent(notification);
