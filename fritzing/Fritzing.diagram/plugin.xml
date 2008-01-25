@@ -664,14 +664,14 @@
       point="org.eclipse.ui.views">
    <category
          id="Fritzing.diagram"
-         name="Sample Category">
+         name="Fritzing">
    </category>
    <view
          category="Fritzing.diagram"
-         class="fritzing.diagram.views.PartPropertyView"
+         class="org.fritzing.fritzing.diagram.views.ElementInfoView"
          icon="icons/sample.gif"
-         id="fritzing.diagram.views.PartPropertyView"
-         name="Part Property View">
+         id="fritzing.diagram.views.ElementInfoView"
+         name="Info">
    </view>
 </extension>
 <extension

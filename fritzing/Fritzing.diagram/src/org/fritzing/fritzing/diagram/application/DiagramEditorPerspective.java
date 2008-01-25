@@ -25,6 +25,6 @@ public class DiagramEditorPerspective implements IPerspectiveFactory {
 		IFolderLayout bottomRight = layout.createFolder(
 				"bottomRight", IPageLayout.RIGHT, 0.7f, "bottom"); //$NON-NLS-1$	//$NON-NLS-2$
 		bottomRight.addView(IPageLayout.ID_OUTLINE);
-		bottomRight.addView("fritzing.diagram.views.PartPropertyView");
+		bottomRight.addView("fritzing.diagram.views.ElementInfoView");
 	}
 }
