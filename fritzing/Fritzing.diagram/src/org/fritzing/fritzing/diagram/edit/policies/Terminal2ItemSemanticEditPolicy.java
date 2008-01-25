@@ -6,6 +6,7 @@ package org.fritzing.fritzing.diagram.edit.policies;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
@@ -53,6 +54,28 @@ public class Terminal2ItemSemanticEditPolicy extends
 		return cc.unwrap();
 	}
 	
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.fritzing.fritzing.diagram.edit.policies.FritzingBaseItemSemanticEditPolicy#getDestroyEdgesCommand()
+	 */
+	protected CompoundCommand getDestroyEdgesCommand() {				
+		CompoundCommand cmd = new CompoundCommand();
+		View view = (View) getHost().getModel();
+		for (Iterator it = view.getSourceEdges().iterator(); it.hasNext();) {
+			cmd.add(getDestroyElementCommand((Edge) it.next()));
+		}
+		for (Iterator it = view.getTargetEdges().iterator(); it.hasNext();) {
+			Object obj = it.next();
+			if ((obj instanceof EdgeImpl) && (((EdgeImpl) obj).getElement() instanceof LegImpl)) {
+				// don't delete a leg connected to this terminal that actually belongs to another editpart
+				continue;
+			}
+			
+			cmd.add(getDestroyElementCommand((Edge) obj));
+		}
+		return cmd;
+	}
 	
 	public boolean understandsRequest(Request request) {
 		boolean result = super.understandsRequest(request);

@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.draw2d.AutomaticRouter;
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.ConnectionRouter;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;
@@ -34,6 +35,7 @@ import org.eclipse.gmf.runtime.draw2d.ui.internal.routers.ObliqueRouter;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
+import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart.TerminalAnchor;
 import org.fritzing.fritzing.diagram.edit.policies.LegItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 
@@ -54,7 +56,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 		super(view);
 	}
 	
-	
+		
 	public void setParent(EditPart parent) {		
 		// AbstractConnectionEditPart.setSource() sets the parent very strangely so just take it over
 
@@ -187,14 +189,7 @@ public class LegEditPart extends ConnectionFritzingEditPart {
 //			super.paintFigure(graphics);
 //		}
 		
-		
-		public void setPoints(PointList points) {
-			if (points.size() > 2) {
-				System.out.println("got points " + points.size());
-			}
-			super.setPoints(points);
-		}
-		
+
 		/**
 		 * @generated NOT
 		 */

@@ -4,6 +4,8 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.Graphics;
@@ -14,6 +16,8 @@ import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -35,6 +39,7 @@ import org.eclipse.gmf.runtime.diagram.ui.requests.CreateUnspecifiedTypeConnecti
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.SlidableAnchor;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.eclipse.swt.graphics.Color;
@@ -93,6 +98,20 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		return null;
 	}
 	
+	protected void handleNotificationEvent(Notification notification) {
+		Object feature = notification.getFeature();
+		if (feature instanceof EReferenceImpl) {
+			String name = ((EReferenceImpl) feature).getName();
+			if (name.equals("targetEdges") || name.equals("sourceEdges")) {
+				// clean up "connected" highlighting				
+				this.getParent().refresh();
+				getMainFigure().invalidate();
+				System.out.println("hello");									
+			}
+		}
+		super.handleNotificationEvent(notification);
+	}
+
 	
 	public EditPart getTargetEditPart(Request request) {
 		return super.getTargetEditPart(request);
@@ -216,7 +235,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new TerminalDefaultSizeNodeFigure(
+		DefaultSizeNodeFigure result = new TerminalDefaultSizeNodeFigure(this, 
 				getMapMode().DPtoLP(standardPlateMeasure), getMapMode().DPtoLP(
 						standardPlateMeasure));
 
@@ -314,6 +333,10 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 		return false;
 	}
+	
+	public boolean hasConnections() {
+		return (this.getTargetConnections().size() > 0 || this.getSourceConnections().size() > 0);
+	}
 
 	public class Terminal2GraphicalNodeEditPolicy extends
 			GraphicalNodeEditPolicy {
@@ -374,13 +397,17 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		
 		protected int standardFeedbackInsetConverted = getMapMode().DPtoLP(standardFeedbackInset);
 
-		public TerminalDefaultSizeNodeFigure(Dimension defSize) {
+		Terminal2EditPart terminalPart;
+		
+		public TerminalDefaultSizeNodeFigure(Terminal2EditPart terminalPart, Dimension defSize) {
 			super(defSize);
 			displayFeedbackFlag = false;
+			this.terminalPart = terminalPart;
 		}
 
-		public TerminalDefaultSizeNodeFigure(int width, int height) {
+		public TerminalDefaultSizeNodeFigure(Terminal2EditPart terminalPart, int width, int height) {
 			super(width, height);
+			this.terminalPart = terminalPart;
 		}
 		
 		public Rectangle getAnchorBox() {
@@ -404,7 +431,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 				if (display) {
 					this.setBackgroundColor(THIS_FEED);
 				} else {
-					this.setBackgroundColor(THIS_BACK);
+					this.setBackgroundColor(THIS_CONNECTED);
 				}
 				this.invalidate();
 			}
@@ -412,6 +439,11 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 
 		protected void paintFigure(Graphics graphics) {
 			if (displayFeedbackFlag) {
+				Rectangle tempRect = new Rectangle(getBounds());
+				tempRect.expand(standardFeedbackInsetConverted, standardFeedbackInsetConverted);
+				graphics.fillRectangle(tempRect);
+			}
+			else if (terminalPart.isFemale() && terminalPart.hasConnections()) {
 				Rectangle tempRect = new Rectangle(getBounds());
 				tempRect.expand(standardFeedbackInsetConverted, standardFeedbackInsetConverted);
 				graphics.fillRectangle(tempRect);
@@ -474,7 +506,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 		}
 
 		public void paint(Graphics graphics) {
-			if (terminalPart.isFemale()) {
+			if (terminalPart.isFemale()) {				
 				this.setVisible(false);
 				return;
 			}
@@ -532,5 +564,7 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 	static final Color THIS_BACK = new Color(null, 0, 0, 0);
 
 	static final Color THIS_FEED = new Color(null, 100, 162, 132);
+
+	static final Color THIS_CONNECTED = new Color(null, 255, 0, 0);
 
 }
