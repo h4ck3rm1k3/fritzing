@@ -7,7 +7,7 @@
       <image path="/Fritzing/icons/fritzingbanner.gif"/>
       <text>
          Fritzing - From Prototype to Product
-Release 0003 ALPHA, Dec 29th 2007
+Release 0004 ALPHA, Jan 28th 2007
 
 Contributors: Reto Wettach, André Knörig, Zach Eveland, Dirk van Oosterbosch, 
 Jonathan Cohen, Myriel Milicevic, Julia Werner, Omer Yosha, Travis Robertson,
@@ -21,7 +21,7 @@ Visit http://fritzing.org
       </text>
    </aboutInfo>
 
-   <configIni use="default"/>
+   <configIni use="custom" path="/Fritzing/config.ini"/>
 
    <launcherArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
@@ -156,8 +156,6 @@ Visit http://fritzing.org
       <plugin id="org.eclipse.ui.console"/>
       <plugin id="org.eclipse.ui.forms"/>
       <plugin id="org.eclipse.ui.ide"/>
-      <plugin id="org.eclipse.ui.navigator"/>
-      <plugin id="org.eclipse.ui.navigator.resources"/>
       <plugin id="org.eclipse.ui.views"/>
       <plugin id="org.eclipse.ui.views.properties.tabbed"/>
       <plugin id="org.eclipse.ui.win32" fragment="true"/>

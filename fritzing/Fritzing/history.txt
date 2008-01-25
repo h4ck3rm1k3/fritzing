@@ -5,6 +5,12 @@ between versions!
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
+0004 ALPHA - Jan 28th 2008
+
+Open part library; Legs & pins; Breadboard
+
+< > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
+
 0003 ALPHA - Dec 29th 2007
 
 Started work on getting a decent part library.

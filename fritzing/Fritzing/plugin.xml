@@ -37,7 +37,7 @@
         </property>
         <property
               name="aboutText"
-              value="Fritzing - From Prototype to Product&#x0A;Release 0003 ALPHA, Dec 29th 2007&#x0A;&#x0A;Contributors: Reto Wettach, André Knörig, Zach Eveland, Dirk van Oosterbosch, &#x0A;Jonathan Cohen, Myriel Milicevic, Julia Werner, Omer Yosha, Travis Robertson,&#x0A;Fabian Brunsing, Marcus Paeschke, Klaus Zimmermann, Elisabeth Eichhorn,&#x0A;Stefan Hermann, Hendrik Gäbler, Haik Dettmann, Alex Grunsteidl, Christian Engler, &#x0A;David Mellis, James Haliburton, Jan Sieber, Lutz Dickmann, Massimo Banzi, &#x0A;Matt Karau, Michael Zöllner, Olaf Val, Tom Hulbert, and Tom Igoe&#x0A;&#x0A;(c) 2007 Fachhochschule Potsdam&#x0A;Visit http://fritzing.org">
+              value="Fritzing - From Prototype to Product&#x0A;Release 0004 ALPHA, Jan 28th 2007&#x0A;&#x0A;Contributors: Reto Wettach, André Knörig, Zach Eveland, Dirk van Oosterbosch, &#x0A;Jonathan Cohen, Myriel Milicevic, Julia Werner, Omer Yosha, Travis Robertson,&#x0A;Fabian Brunsing, Marcus Paeschke, Klaus Zimmermann, Elisabeth Eichhorn,&#x0A;Stefan Hermann, Hendrik Gäbler, Haik Dettmann, Alex Grunsteidl, Christian Engler, &#x0A;David Mellis, James Haliburton, Jan Sieber, Lutz Dickmann, Massimo Banzi, &#x0A;Matt Karau, Michael Zöllner, Olaf Val, Tom Hulbert, and Tom Igoe&#x0A;&#x0A;(c) 2007 Fachhochschule Potsdam&#x0A;Visit http://fritzing.org">
         </property>
         <property
               name="windowImages"

@@ -22,11 +22,10 @@
     <genClasses image="false" ecoreClass="fritzing.ecore#//Element"/>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Connection"/>
     <genClasses image="false" ecoreClass="fritzing.ecore#//Part">
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/species"/>
-      <genFeatures property="Readonly" createChild="false" propertyDescription=""
-          ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/genus"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/species"/>
+      <genFeatures property="None" createChild="false" propertyDescription="" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/genus"/>
       <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/note"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/version"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute fritzing.ecore#//Part/footprint"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference fritzing.ecore#//Part/terminals"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference fritzing.ecore#//Part/parent"/>
