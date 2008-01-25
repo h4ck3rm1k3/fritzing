@@ -130,7 +130,7 @@
 			<point x="24" y="19" />
 		</connector>
 	</connectors>
-	<layers>
+	<layers zorder="back">
 		<layer type="image">
 			<image source="partHoles.png" type="bitmap" zoom="1" />
 			<image source="partHoles200.png" type="bitmap" zoom="2" />

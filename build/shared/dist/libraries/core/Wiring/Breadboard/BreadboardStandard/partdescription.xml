@@ -3657,7 +3657,7 @@
 			<connector id="z60" />
 		</net>
 	</nets>
-	<layers>
+	<layers zorder="back">
 		<layer type="image">
 			<image source="partHoles100.png" type="bitmap" zoom="1" />
 			<image source="partHoles200.png" type="bitmap" zoom="2" />
