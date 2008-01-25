@@ -25,13 +25,6 @@
          class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
       </parser>
    </extension>
-   
-  <extension point="org.eclipse.emf.ecore.extension_parser">
-      <?gmfgen generated="false"?>
-    <parser 
-       type="fz" 
-       class="org.fritzing.fritzing.util.FritzingResourceFactoryImpl" />
-  </extension>
 
    <extension point="org.eclipse.ui.editors">
       <?gmfgen generated="true"?>
@@ -67,6 +60,13 @@
   	     id="org.fritzing.fritzing.diagram.part.FritzingCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
+     <category
+           id="org.fritzing"
+           name="Fritzing">
+     </category>
+     <primaryWizard
+           id="org.fritzing.fritzing.diagram.part.FritzingCreationWizardID">
+     </primaryWizard>
    </extension>
 	
    <extension point="org.eclipse.ui.actionSets">
@@ -573,93 +573,6 @@
 
 
 
-<extension point="org.eclipse.ui.bindings">
-      <?gmfgen generated="true"?>
-      <key
-            commandId="Fritzing.diagram.OpenURICommand"
-            sequence="M1+U"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-      <key
-            commandId="Fritzing.diagram.OpenCommand"
-            sequence="M1+O"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
-   </extension><extension point="org.eclipse.ui.actionSets">
-      <?gmfgen generated="true"?>
-      <actionSet
-            label="%initDiagramActionLabel"
-            visible="true"
-            id="Fritzing.diagram.InitDiagram">
-         <action
-               label="%initDiagramActionLabel"
-               class="org.fritzing.fritzing.diagram.part.FritzingInitDiagramFileAction"
-               menubarPath="file/additions"
-               id="Fritzing.diagram.InitDiagramAction">
-         </action>
-      </actionSet>
-   </extension>
-<extension point="org.eclipse.ui.commands">
-      <?gmfgen generated="true"?>
-      <command
-            name="%openURIActionLabel"
-            description="%openURIActionDescription"
-            categoryId="org.eclipse.ui.category.file"
-            id="Fritzing.diagram.OpenURICommand"/>  
-      <command
-            name="%openActionLabel"
-            description="%openActionDescription"
-            categoryId="org.eclipse.ui.category.file"
-            id="Fritzing.diagram.OpenCommand"/>  
-   </extension>
-<extension point="org.eclipse.ui.bindings">
-      <?gmfgen generated="true"?>
-      <key 
-         commandId="org.fritzing.fritzing.diagram.updateDiagram"
-         contextId="org.fritzing.fritzing.diagram.ui.diagramContext"
-         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-         sequence="F5"/>
-   </extension><extension point="org.eclipse.ui.actionSets">
-      <?gmfgen generated="true"?>
-      <actionSet
-            label="%applicationActionSetLabel"
-            visible="true"
-            id="Fritzing.diagram.ActionSet">
-         <action
-               label="%newDiagramActionLabel"
-               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
-               menubarPath="file/new/additions"
-               id="Fritzing.diagram.NewDiagramAction">
-         </action>
-         <action
-               label="%aboutActionLabel"
-               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$AboutAction"
-               menubarPath="help/additions"
-               id="Fritzing.diagram.AboutAction">
-         </action>
-         <action
-               label="%openURIActionLabel"
-               definitionId="Fritzing.diagram.OpenURICommand"
-               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$OpenURIAction"
-               menubarPath="file/additions"
-               id="Fritzing.diagram.OpenURIAction">
-         </action>
-         <action
-               label="%openActionLabel"
-               definitionId="Fritzing.diagram.OpenCommand"
-               class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$OpenAction"
-               menubarPath="file/additions"
-               id="Fritzing.diagram.OpenAction">
-         </action>
-      </actionSet>
-   </extension>
-<extension point="org.eclipse.ui.commands">
-      <?gmfgen generated="true"?>
-      <command
-         categoryId="org.eclipse.ui.category.edit"
-         defaultHandler="org.fritzing.fritzing.diagram.part.FritzingDiagramUpdateCommand"
-         description="%update.diagram.description"
-         id="org.fritzing.fritzing.diagram.updateDiagram"
-         name="%update.diagram.name"/>
-   </extension>
 <extension
       point="org.eclipse.ui.views">
    <category
@@ -669,22 +582,9 @@
    <view
          category="Fritzing.diagram"
          class="org.fritzing.fritzing.diagram.views.ElementInfoView"
-         icon="icons/sample.gif"
          id="fritzing.diagram.views.ElementInfoView"
          name="Info">
    </view>
-</extension>
-<extension
-      point="org.eclipse.ui.perspectiveExtensions">
-   <perspectiveExtension
-         targetID="org.eclipse.ui.resourcePerspective">
-      <view
-            id="fritzing.diagram.views.PartPropertyView"
-            ratio="0.5"
-            relationship="right"
-            relative="org.eclipse.ui.views.TaskList">
-      </view>
-   </perspectiveExtension>
 </extension>
 
 <!--

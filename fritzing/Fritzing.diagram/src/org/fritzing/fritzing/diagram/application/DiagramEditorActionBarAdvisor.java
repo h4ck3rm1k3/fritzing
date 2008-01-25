@@ -132,7 +132,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		{
 			IMenuManager menuX = new MenuManager(
 					Messages.ApplicationMenuName_File, "file1");
-			//								IWorkbenchActionConstants.M_FILE);
+//											IWorkbenchActionConstants.M_FILE);
 			// changed to custom, because otherwise the "Open File.." action is forced in
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
@@ -144,7 +144,8 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 				menuXX.add(new GroupMarker(
 						IWorkbenchActionConstants.MB_ADDITIONS));
 
-				//				menuXX.add(getAction(ActionFactory.NEW.getId()));
+//				menuXX.add(getAction(ActionFactory.NEW.getId()));
+				// shows "Other.."
 
 				menuX.add(menuXX);
 			}
