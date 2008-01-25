@@ -692,22 +692,22 @@ public class TerminalName2EditPart extends LabelEditPart implements
 		/**
 		 * @generated NOT
 		 */
-		public void setText(String text) {
-			if (text == null) {
-				super.setText(text);
-				return;
-			}
-
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < text.length(); i++) {
-				sb.append(text.charAt(i));
-				sb.append('\n');
-			}
-			if (sb.length() > 0) {
-				sb.deleteCharAt(sb.length() - 1);
-			}
-			super.setText(sb.toString());
-		}
+//		public void setText(String text) {
+//			if (text == null) {
+//				super.setText(text);
+//				return;
+//			}
+//
+//			StringBuffer sb = new StringBuffer();
+//			for (int i = 0; i < text.length(); i++) {
+//				sb.append(text.charAt(i));
+//				sb.append('\n');
+//			}
+//			if (sb.length() > 0) {
+//				sb.deleteCharAt(sb.length() - 1);
+//			}
+//			super.setText(sb.toString());
+//		}
 
 	}
 
@@ -715,9 +715,9 @@ public class TerminalName2EditPart extends LabelEditPart implements
 	 * @generated NOT
 	 */
 	static final Font THIS_FONT = new Font(Display.getCurrent(), Display
-			.getDefault().getSystemFont().getFontData()[0].getName(), 6,
+			.getDefault().getSystemFont().getFontData()[0].getName(), 7,
 			SWT.NORMAL);
 	
-	public static final Color THIS_FORE = new Color(null, 200, 200, 200);
+	public static final Color THIS_FORE = new Color(null, 70, 70, 70);
 
 }
