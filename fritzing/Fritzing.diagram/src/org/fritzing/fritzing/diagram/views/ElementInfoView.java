@@ -136,7 +136,7 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 		
 		protected void appendSourceTargetNames(StringBuffer sb, IElement source, IElement target) {
 			appendName(sb, "from", source);
-			appendName(sb, "to", target);
+			appendName(sb, " to", target);
 		}
 		
 		protected void appendName(StringBuffer sb, String prefix, IElement il) {
