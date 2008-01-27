@@ -5,6 +5,13 @@
 -->
 <plugin>
 
+   <extension id="FritzingPhysicalApplication" point="org.eclipse.core.runtime.applications">
+      <?gmfgen generated="true"?>
+      <application>
+         <run class="org.fritzing.fritzing.diagram.application.FritzingApplication"/>
+      </application>
+   </extension>
+
    <extension point="org.eclipse.core.runtime.preferences">
       <?gmfgen generated="true"?>
       <initializer class="org.fritzing.fritzing.diagram.preferences.DiagramPreferenceInitializer"/>
@@ -56,8 +63,8 @@
   	     name="%newWizardName"
   	     icon="icons/obj16/FritzingDiagramFile.gif"
   	     category="org.fritzing"
-  	     class="org.fritzing.fritzing.diagram.part.FritzingCreationWizard"
-  	     id="org.fritzing.fritzing.diagram.part.FritzingCreationWizardID">
+  	     class="org.fritzing.fritzing.diagram.part.FritzingSketchCreationWizard"
+  	     id="org.fritzing.fritzing.diagram.part.FritzingSketchCreationWizardID">
   	  	 <description>%newWizardDesc</description>  
       </wizard>
      <category
@@ -65,7 +72,7 @@
            name="Fritzing">
      </category>
      <primaryWizard
-           id="org.fritzing.fritzing.diagram.part.FritzingCreationWizardID">
+           id="org.fritzing.fritzing.diagram.part.FritzingSketchCreationWizardID">
      </primaryWizard>
    </extension>
 	
@@ -76,10 +83,11 @@
             visible="true"
             id="Fritzing.diagram.ActionSet">
          <action
-               label="%newDiagramActionLabel"
                class="org.fritzing.fritzing.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
-               menubarPath="file1/new/additions"
-               id="Fritzing.diagram.NewDiagramAction">
+               definitionId="Fritzing.diagram.NewCommand"
+               id="Fritzing.diagram.NewDiagramAction"
+               label="%newDiagramActionLabel"
+               menubarPath="file1/new/additions">
          </action>
          <action
                label="%openURIActionLabel"
@@ -125,6 +133,12 @@
    <extension point="org.eclipse.ui.commands">
       <?gmfgen generated="false"?>
       <command
+            categoryId="org.eclipse.ui.category.file"
+            description="%newActionDescription"
+            id="Fritzing.diagram.NewCommand"
+            name="%newDiagramActionLabel">
+      </command>
+      <command
             name="%openURIActionLabel"
             description="%openURIActionDescription"
             categoryId="org.eclipse.ui.category.file"
@@ -144,18 +158,29 @@
 
    <extension point="org.eclipse.ui.bindings">
       <?gmfgen generated="false"?>
+      <scheme
+            description="Key bindings for Fritzing"
+            id="org.fritzing.keybindings"
+            name="Fritzing"
+            parentId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </scheme>
+      <key
+            commandId="Fritzing.diagram.NewCommand"
+            schemeId="org.fritzing.keybindings"
+            sequence="M1+N">
+      </key>
       <key
             commandId="Fritzing.diagram.OpenURICommand"
             sequence="M1+U"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+            schemeId="org.fritzing.keybindings"/>
       <key
             commandId="Fritzing.diagram.OpenCommand"
             sequence="M1+O"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+            schemeId="org.fritzing.keybindings"/>
       <key 
          commandId="org.fritzing.fritzing.diagram.updateDiagram"
          contextId="org.fritzing.fritzing.diagram.ui.diagramContext"
-         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         schemeId="org.fritzing.keybindings"
          sequence="F5"/>
    </extension>
    
@@ -233,6 +258,23 @@
       </page>
    </extension>
 
+
+
+
+<extension
+      point="org.eclipse.ui.views">
+   <category
+         id="Fritzing.diagram"
+         name="Fritzing">
+   </category>
+   <view
+         category="Fritzing.diagram"
+         class="org.fritzing.fritzing.diagram.views.ElementInfoView"
+         id="fritzing.diagram.views.ElementInfoView"
+         name="Info">
+   </view>
+</extension>
+
    <extension point="org.eclipse.ui.views.properties.tabbed.propertySections">
       <?gmfgen generated="true"?>   
       <propertySections contributorId="Fritzing.diagram">
@@ -264,6 +306,24 @@
             <input type="org.eclipse.gef.EditPart"/>
          </propertySection>
       </propertySections>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <?gmfgen generated="true"?>   
+      <propertyTabs contributorId="Fritzing.diagram">
+         <propertyTab
+             category="visual"
+             id="property.tab.AppearancePropertySection"
+             label="%tab.appearance"/>
+          <propertyTab
+             category="visual"
+             id="property.tab.DiagramPropertySection"
+             label="%tab.diagram"/>
+          <propertyTab
+             category="domain"
+             id="property.tab.domain"
+             label="%tab.domain"/>
+      </propertyTabs>
    </extension>
    
    <extension point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders">
@@ -379,41 +439,6 @@
             <popupPredefinedItem id="deleteFromModelAction" remove="false"/>
          </popupContribution>
       </contributionItemProvider>
-   </extension>
-
-   <extension id="FritzingPhysicalApplication" point="org.eclipse.core.runtime.applications">
-      <?gmfgen generated="true"?>
-      <application>
-         <run class="org.fritzing.fritzing.diagram.application.FritzingApplication"/>
-      </application>
-   </extension>
-
-   <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <?gmfgen generated="true"?>   
-      <propertyTabs contributorId="Fritzing.diagram">
-         <propertyTab
-             category="visual"
-             id="property.tab.AppearancePropertySection"
-             label="%tab.appearance"/>
-          <propertyTab
-             category="visual"
-             id="property.tab.DiagramPropertySection"
-             label="%tab.diagram"/>
-          <propertyTab
-             category="domain"
-             id="property.tab.domain"
-             label="%tab.domain"/>
-      </propertyTabs>
-   </extension>
-     
-   <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
-      <?gmfgen generated="true"?>
-      <propertyContributor
-            contributorId="Fritzing.diagram">
-         <propertyCategory category="domain"/>
-         <propertyCategory category="visual"/>
-         <propertyCategory category="extra"/>
-      </propertyContributor>
    </extension>
 
    <extension point="org.eclipse.gmf.runtime.diagram.core.viewProviders">
@@ -569,23 +594,23 @@
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
       </binding>
    </extension>
-
-
-
-
-<extension
-      point="org.eclipse.ui.views">
-   <category
-         id="Fritzing.diagram"
-         name="Fritzing">
-   </category>
-   <view
-         category="Fritzing.diagram"
-         class="org.fritzing.fritzing.diagram.views.ElementInfoView"
-         id="fritzing.diagram.views.ElementInfoView"
-         name="Info">
-   </view>
-</extension>
+     
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <?gmfgen generated="true"?>
+      <propertyContributor
+            contributorId="Fritzing.diagram">
+         <propertyCategory category="domain"/>
+         <propertyCategory category="visual"/>
+         <propertyCategory category="extra"/>
+      </propertyContributor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.themes">
+      <theme
+            id="org.fritzing.theme"
+            name="Fritzing">
+      </theme>
+   </extension>
 
 <!--
    <extension point="org.eclipse.emf.validation.constraintProviders">

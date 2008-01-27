@@ -36,8 +36,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
-import org.fritzing.fritzing.diagram.part.FritzingCreationWizard;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
+import org.fritzing.fritzing.diagram.part.FritzingSketchCreationWizard;
 import org.fritzing.fritzing.diagram.part.Messages;
 
 /**
@@ -137,6 +137,10 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 
 			menuX.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
 
+
+			// New..
+//			menuX.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+			
 			{
 				IMenuManager menuXX = new MenuManager(
 						Messages.ApplicationMenuName_New, "new");
@@ -345,7 +349,7 @@ public class DiagramEditorActionBarAdvisor extends ActionBarAdvisor {
 		 * @generated
 		 */
 		public void run(IAction action) {
-			FritzingCreationWizard wizard = new FritzingCreationWizard();
+			FritzingSketchCreationWizard wizard = new FritzingSketchCreationWizard();
 			wizard.init(getWindow().getWorkbench(), StructuredSelection.EMPTY);
 			WizardDialog wizardDialog = new WizardDialog(
 					getWindow().getShell(), wizard);

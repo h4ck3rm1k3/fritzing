@@ -6,7 +6,10 @@ package org.fritzing.fritzing.diagram.part;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -124,6 +127,24 @@ public class FritzingDiagramEditorUtil {
 		return filePath.lastSegment();
 	}
 
+	public static String getUniqueProjectName(IPath containerFullPath,
+			String projectName) {
+		if (containerFullPath == null) {
+			containerFullPath = new Path(""); //$NON-NLS-1$
+		}
+		if (projectName == null || projectName.trim().length() == 0) {
+			projectName = "sketch"+SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(
+					Calendar.getInstance().getTime()).replace('.', '-');; //$NON-NLS-1$
+		}
+		IPath folderPath = containerFullPath.append(projectName);
+		char i = (char)(((int)'a')-1);
+		while (folderPath.toFile().exists()) {
+			i = (char)(((int)i)+1);
+			folderPath = containerFullPath.append(projectName + i);
+		}
+		return folderPath.lastSegment();
+	}
+	
 	/**
 	 * Allows user to select file and loads it as a model.
 	 * 
