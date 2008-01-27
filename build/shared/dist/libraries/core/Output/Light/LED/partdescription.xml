@@ -15,11 +15,11 @@
 	<gridOffset x="127" y="133" units="himetric"/> <!-- 20x21 400% view pixels -->
 	<bounds width="559" height="902" units="himetric"/> <!-- 88x142 400% view pixels -->
 	<connectors units="tenths">
-		<connector id="+" name="+" type="leg">
+		<connector id="-" name="-" type="leg">
 			<point x="0" y="762" units="himetric"/> <!-- 0x120 400% view pixels -->
 			<point x="0" y="6" />
 		</connector>
-		<connector id="-" name="-" type="leg">
+		<connector id="+" name="+" type="leg">
 			<point x="254" y="762" units="himetric"/> <!-- 40x120 400% view pixels -->
 			<point x="1" y="6" />
 		</connector>
