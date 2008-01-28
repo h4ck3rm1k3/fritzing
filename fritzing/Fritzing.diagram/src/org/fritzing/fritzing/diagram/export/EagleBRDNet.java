@@ -113,6 +113,11 @@ public class EagleBRDNet {
 		addPin(targetPartAndPin);
 	}
 	
+	public EagleBRDNet(PartPinPair source, PartPinPair target) {
+		addPin(source);
+		addPin(target);
+	}
+	
 	public void setNetName(String netName) {
 		this.netName = netName;
 	}

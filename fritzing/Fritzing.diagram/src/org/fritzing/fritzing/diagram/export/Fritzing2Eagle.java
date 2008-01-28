@@ -10,6 +10,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Element;
+import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
@@ -122,11 +123,59 @@ public class Fritzing2Eagle {
 			EList <Terminal> terminals = part.p.getTerminals();			
 			for (int j=0; j<terminals.size(); j++) {				
 				if (terminals.get(j).getLeg() != null) {
+					/*
 					if (terminals.get(j).getLeg().getTarget().getClass().getSimpleName().equals("TerminalImpl")) {
 						EagleBRDNet net = new EagleBRDNet(terminals.get(j).getLeg(), partList);
 						netList.add(net);
 					}
-				}				
+					*/
+					Part targetPart = null;
+					Leg leg = terminals.get(j).getLeg();
+					ILegConnection target = leg.getTarget();
+					System.out.println("target string: " + target.toString());
+					if (target != null) {
+						if (target instanceof Terminal) {
+							targetPart = ((Terminal)target).getParent();
+						} else if (target instanceof Leg) {
+							Terminal targetSource = (Terminal)((Leg)target).getSource();
+							targetPart = targetSource.getParent();
+						} else if (target instanceof Sketch) {
+							System.out.println("!!! sketch part !!!");
+							continue;
+						}
+					} else {
+						System.out.println("!!!! null target !!!!");
+					}
+					
+					EagleBRDPart eagleSourcePart = part;
+					
+					EagleBRDPart eagleTargetPart = null;
+					for (int k=0; k<partList.size(); k++) {
+						if (targetPart.getId().equals(partList.get(k).getFritzingId())) {
+							eagleTargetPart = partList.get(k);
+						}
+					}
+					System.out.println("source: " + eagleSourcePart.getEaglePartLabel() + "." + leg.getSource().getId());
+					System.out.println("target: " + eagleTargetPart.getEaglePartLabel() + "." + leg.getTarget().getId());
+					
+					String eagleSourcePinId = leg.getSource().getId();
+					String eagleTargetPinId = leg.getTarget().getId();
+					
+					if (eagleTargetPinId == null) {
+						// indicates that the leg is probably directly connected to another leg
+						if (leg.getTarget() instanceof Leg) {
+							ILegConnection targetTest = leg.getTarget();
+							System.out.println("source part pin id: " + ((Terminal)((Leg)targetTest).getSource()).getId());
+//							System.out.println("target part pin id: " + ((Terminal)((Leg)targetTest).getTarget()).getId());
+							eagleTargetPinId = ((Terminal)((Leg)targetTest).getSource()).getId();
+						}
+					}
+					
+					PartPinPair sourcePartPin = new PartPinPair(eagleSourcePart, eagleSourcePinId);
+					PartPinPair targetPartPin = new PartPinPair(eagleTargetPart, eagleTargetPinId);
+					EagleBRDNet net = new EagleBRDNet(sourcePartPin, targetPartPin);
+					netList.add(net);
+ 				}				
 			}			
 		}
 		
@@ -182,7 +231,7 @@ public class Fritzing2Eagle {
 		
 		/* print the net information for debugging purposes */
 		for (int i=0; i<netList.size(); i++) {
-			System.out.println("&&& " + netList.get(i).getNetName() + " " + netList.get(i).getPinListAsString());
+//			System.out.println("&&& " + netList.get(i).getNetName() + " " + netList.get(i).getPinListAsString());
 		}
 		
 		BRDScriptExporter exporter = new BRDScriptExporter();
