@@ -3,18 +3,11 @@
  */
 package org.fritzing.fritzing.diagram.application;
 
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
-import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
-import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 
 /**
  * @generated
@@ -75,26 +68,26 @@ public class FritzingApplication implements IApplication {
 	}
 
 	
-	 public static void setWorkbenchDataLocation(URL url) {
-		 /*
-		 * Ascertain the existing location. If it is null, we can set it.
-		 * When run from the Eclipse IDE, setting the workspace location in the launch configuration
-		 * to "@noDefault" will set it as null.
-		 */
-		 Location instanceLocation = Platform.getInstanceLocation();
-		 if(instanceLocation == null) {
-			 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, 
-					 "Instance Location is null, cannot set it in setWorkbenchDataLocation(URL)");
-		 } else if (!instanceLocation.isSet()) {
-			 instanceLocation.release();
-			 /*
-			 * If this is set to true, you can't run another instance
-			 * of the app with this workspace open
-			 */
-			 instanceLocation.setURL(url, false);
-		 } else {
-			 Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING, 
-			 	"Instance Location has already been set and cannot be changed");
-		 }
-	}
+//	 public static void setWorkbenchDataLocation(URL url) {
+//		 /*
+//		 * Ascertain the existing location. If it is null, we can set it.
+//		 * When run from the Eclipse IDE, setting the workspace location in the launch configuration
+//		 * to "@noDefault" will set it as null.
+//		 */
+//		 Location instanceLocation = Platform.getInstanceLocation();
+//		 if(instanceLocation == null) {
+//			 Logger.getLogger().log(Level.WARNING, 
+//					 "Instance Location is null, cannot set it in setWorkbenchDataLocation(URL)");
+//		 } else if (!instanceLocation.isSet()) {
+//			 instanceLocation.release();
+//			 /*
+//			 * If this is set to true, you can't run another instance
+//			 * of the app with this workspace open
+//			 */
+//			 instanceLocation.setURL(url, false);
+//		 } else {
+//			 Logger.getLogger().log(Level.WARNING, 
+//			 	"Instance Location has already been set and cannot be changed");
+//		 }
+//	}
 }
