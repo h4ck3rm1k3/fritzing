@@ -36,6 +36,7 @@
 			<point x="3" y="3"/>
 		</connector>
 	</connectors>
+	<!-- 
 	<nets>
 		<trackLayout visible="false"/>
 		<net>
@@ -47,6 +48,7 @@
 			<connector id="4"/>
 		</net>
 	</nets>
+	-->
 	<layers>
 		<layer type="image">
 			<image source="part.png" type="bitmap" zoom="1"/>
