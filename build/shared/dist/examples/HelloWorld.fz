@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fritzing:sketch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fritzing="http://www.fritzing.org">
-  <part xsi:type="fritzing:GenericPart" name="ARDUINO" id="fLNSBBTph-_FZDBifQozN0" species="ArduinoDiecimila" genus="Controller.ControllerBoard.Arduino" version="1.0" footprint="fritzing.lbr/Arduino">
+  <part xsi:type="fritzing:GenericPart" name="" id="fLNSBBTph-_FZDBifQozN0" species="ArduinoDiecimila" genus="Controller.ControllerBoard.Arduino" version="1.0" footprint="fritzing.lbr/Arduino">
     <terminal name="Digital 9 PWM" id="D9"/>
     <terminal name="Digital 8" id="D8"/>
     <terminal name="Analog 5" id="A5"/>
@@ -47,7 +47,7 @@
       <leg target="#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@3']" source="#//@sketch/@parts[id='PPaPzxXHjm6v5yJ3e2p602']/@terminals[id='-']"/>
     </terminal>
   </part>
-  <part xsi:type="fritzing:GenericPart" name="BB" id="Cqqlojh7g2an-YfV70XMv0" species="BreadboardStandard" genus="Wiring.Breadboard" version="1.0">
+  <part xsi:type="fritzing:GenericPart" name="" id="Cqqlojh7g2an-YfV70XMv0" species="BreadboardStandard" genus="Wiring.Breadboard" version="1.0">
     <tracks target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='b-1']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='a-1']"/>
     <tracks target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='c-1']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='b-1']"/>
     <tracks target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='d-1']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='c-1']"/>
@@ -1594,34 +1594,30 @@
     <terminal name="c10" id="c10"/>
   </part>
   <part xsi:type="fritzing:GenericPart" name="B" id="1jpTbkfxinGdJiCeYRpxb1" species="PushButton" genus="Input.Switch" version="1.0" footprint="fritzing.lbr/Button">
-    <tracks target="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='3']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='1']"/>
-    <tracks target="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='4']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='2']"/>
     <terminal name="B" id="4">
-      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='e26']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='4']"/>
+      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='f21']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='4']"/>
     </terminal>
     <terminal name="A" id="3">
-      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='e22']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='3']"/>
+      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='f19']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='3']"/>
     </terminal>
     <terminal name="B" id="2">
-      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='c26']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='2']"/>
+      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='e21']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='2']"/>
     </terminal>
     <terminal name="A" id="1">
-      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='c22']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='1']"/>
+      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='e19']" source="#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='1']"/>
     </terminal>
   </part>
   <part xsi:type="fritzing:Resistor" name="R" id="7gwu_L86jEigxTwG_0Zkw3" species="Resistor" genus="Basic.Resistor" version="1.0" footprint="fritzing.lbr/Resistor">
     <terminal name="2" id="2">
-      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='b32']" source="#//@sketch/@parts[id='7gwu_L86jEigxTwG_0Zkw3']/@terminals[id='2']"/>
+      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='b25']" source="#//@sketch/@parts[id='7gwu_L86jEigxTwG_0Zkw3']/@terminals[id='2']"/>
     </terminal>
     <terminal name="1" id="1">
-      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='b26']" source="#//@sketch/@parts[id='7gwu_L86jEigxTwG_0Zkw3']/@terminals[id='1']"/>
+      <leg target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='b21']" source="#//@sketch/@parts[id='7gwu_L86jEigxTwG_0Zkw3']/@terminals[id='1']"/>
     </terminal>
   </part>
   <wire id="Rw8KTMGNivumjRXenv7Xr1" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='x17']" source="#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@1']"/>
   <wire id="sNCJlRYXgRe8XEeLS8foc1" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='w16']" source="#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='5V']"/>
-  <wire id="4Xta5_jRjjG8l7AC7XmgX3" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='a22']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='x21']"/>
-  <wire id="C4xmIT2cgBe81-HnDNZrx1" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='w32']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='w28']"/>
-  <wire id="7aty2y1XgmmjkMYdFDi9v0" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='x32']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='x29']"/>
-  <wire id="6ia8otTPgxSagVZzFvewq2" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='w36']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='a32']"/>
-  <wire id="Mpx-avSXiKXFjoqEATc_d0" target="#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D2']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='a26']"/>
+  <wire id="4Xta5_jRjjG8l7AC7XmgX3" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='a19']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='x19']"/>
+  <wire id="6ia8otTPgxSagVZzFvewq2" target="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='w25']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='a25']"/>
+  <wire id="Mpx-avSXiKXFjoqEATc_d0" target="#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D2']" source="#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']/@terminals[id='a21']"/>
 </fritzing:sketch>

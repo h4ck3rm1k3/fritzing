@@ -1,5 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:fritzing="http://www.fritzing.org" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.1/notation" xmi:id="_7FZREM2lEdyCRanXktyMmA" type="FritzingPhysical" name="HelloWorld.fzb" measurementUnit="Himetric">
+  <children xmi:type="notation:Node" xmi:id="_7yY58M2lEdyCRanXktyMmA" type="2004">
+    <children xmi:type="notation:Node" xmi:id="_7yZhAM2lEdyCRanXktyMmA" type="5005">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_7yZhAc2lEdyCRanXktyMmA" y="176"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ydLYM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D9']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydLYc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ydLYs2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D8']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydLY82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ydLZM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A5']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydLZc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ydycM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D7']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydycc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ydycs2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A4']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydyc82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ydydM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D6']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydydc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yeZgM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yeZgc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yeZgs2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D5']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yeZg82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yfAkM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A2']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yfAkc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yfnoM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D4']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yfnoc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yfnos2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='psu']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yfno82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ygOsM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ygOsc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yg1wM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yg1wc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yg1ws2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A0']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yg1w82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yg1xM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D2']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yg1xc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yhc0M2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yhc0c2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yhc0s2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yhc082lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yhc1M2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@2']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yhc1c2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yiD4M2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D0']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiD4c2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yiD4s2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiD482lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yiq8M2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='pse']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiq8c2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yiq8s2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='psc']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiq882lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yiq9M2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp6']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiq9c2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yjSAM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp5']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yjSAc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yjSAs2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='9V']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yjSA82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yjSBM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='3V3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yjSBc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ylHMM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp4']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ylHMc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ylHMs2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp3']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ylHM82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yluQM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp2']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yluQc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yluQs2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp1']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yluQ82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ymVUM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D13']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ymVUc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ymVUs2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D12']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ymVU82lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ym8YM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D11']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ym8Yc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7ym8Ys2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D10']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ynjcM2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yoKgM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='5V']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yoKgc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yoxkM2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='RESET']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yoxkc2lEdyCRanXktyMmA"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_7yoxks2lEdyCRanXktyMmA" type="3001">
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='AREF']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yoxk82lEdyCRanXktyMmA"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_7yY58c2lEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande" lineColor="14066801"/>
+    <element xmi:type="fritzing:GenericPart" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yY58s2lEdyCRanXktyMmA" x="2610" y="2716"/>
+  </children>
   <children xmi:type="notation:Node" xmi:id="_LgoUcM2mEdyCRanXktyMmA" type="2004">
     <children xmi:type="notation:Node" xmi:id="_LgoUc82mEdyCRanXktyMmA" type="5005">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_LgoUdM2mEdyCRanXktyMmA" y="176"/>
@@ -3366,163 +3522,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_LgoUcc2mEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande" lineColor="14066801"/>
     <element xmi:type="fritzing:GenericPart" href="HelloWorld.fz#//@sketch/@parts[id='Cqqlojh7g2an-YfV70XMv0']"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LgoUcs2mEdyCRanXktyMmA" x="2460" y="8364"/>
-  </children>
-  <children xmi:type="notation:Node" xmi:id="_7yY58M2lEdyCRanXktyMmA" type="2004">
-    <children xmi:type="notation:Node" xmi:id="_7yZhAM2lEdyCRanXktyMmA" type="5005">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_7yZhAc2lEdyCRanXktyMmA" y="176"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ydLYM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D9']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydLYc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ydLYs2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D8']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydLY82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ydLZM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A5']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydLZc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ydycM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D7']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydycc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ydycs2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A4']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydyc82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ydydM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D6']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ydydc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yeZgM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A3']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yeZgc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yeZgs2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D5']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yeZg82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yfAkM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A2']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yfAkc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yfnoM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D4']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yfnoc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yfnos2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='psu']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yfno82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ygOsM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A1']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ygOsc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yg1wM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D3']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yg1wc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yg1ws2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='A0']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yg1w82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yg1xM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D2']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yg1xc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yhc0M2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@3']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yhc0c2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yhc0s2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D1']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yhc082lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yhc1M2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@2']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yhc1c2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yiD4M2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D0']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiD4c2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yiD4s2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='GND@1']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiD482lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yiq8M2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='pse']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiq8c2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yiq8s2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='psc']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiq882lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yiq9M2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp6']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yiq9c2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yjSAM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp5']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yjSAc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yjSAs2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='9V']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yjSA82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yjSBM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='3V3']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yjSBc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ylHMM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp4']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ylHMc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ylHMs2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp3']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ylHM82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yluQM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp2']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yluQc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yluQs2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='icsp1']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yluQ82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ymVUM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D13']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ymVUc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ymVUs2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D12']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ymVU82lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ym8YM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D11']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ym8Yc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7ym8Ys2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='D10']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7ynjcM2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yoKgM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='5V']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yoKgc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yoxkM2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='RESET']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yoxkc2lEdyCRanXktyMmA"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_7yoxks2lEdyCRanXktyMmA" type="3001">
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']/@terminals[id='AREF']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yoxk82lEdyCRanXktyMmA"/>
-    </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_7yY58c2lEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande" lineColor="14066801"/>
-    <element xmi:type="fritzing:GenericPart" href="HelloWorld.fz#//@sketch/@parts[id='fLNSBBTph-_FZDBifQozN0']"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7yY58s2lEdyCRanXktyMmA" x="2610" y="2716"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_LgoUcs2mEdyCRanXktyMmA" x="2376" y="8448"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_8-HtQM2lEdyCRanXktyMmA" type="2001">
     <children xmi:type="notation:Node" xmi:id="_8-HtQ82lEdyCRanXktyMmA" type="5002">
@@ -3580,7 +3580,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_lHRXcc2mEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande" lineColor="14066801"/>
     <element xmi:type="fritzing:GenericPart" href="HelloWorld.fz#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lHRXcs2mEdyCRanXktyMmA" x="8856" y="10086"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lHRXcs2mEdyCRanXktyMmA" x="7827" y="10804"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_Lfi54M2nEdyCRanXktyMmA" type="2002">
     <children xmi:type="notation:Node" xmi:id="_Lfjg8M2nEdyCRanXktyMmA" type="5003">
@@ -3596,18 +3596,18 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_Lfi54c2nEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande" lineColor="14066801"/>
     <element xmi:type="fritzing:Resistor" href="HelloWorld.fz#//@sketch/@parts[id='7gwu_L86jEigxTwG_0Zkw3']"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Lfi54s2nEdyCRanXktyMmA" x="10086" y="9840"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Lfi54s2nEdyCRanXktyMmA" x="8585" y="9874"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_IK2ZgM2oEdyCRanXktyMmA" type="Note">
-    <children xmi:type="notation:Node" xmi:id="_IK3noM2oEdyCRanXktyMmA" type="DiagramName">
+  <children xmi:type="notation:Node" xmi:id="_4THvAM2rEdybEPJ3vC8bzg" type="Text">
+    <children xmi:type="notation:Node" xmi:id="_4TQR4M2rEdybEPJ3vC8bzg" type="DiagramName">
       <element xsi:nil="true"/>
     </children>
-    <children xmi:type="notation:Node" xmi:id="_IK3noc2oEdyCRanXktyMmA" type="Description">
+    <children xmi:type="notation:Node" xmi:id="_4TQR4c2rEdybEPJ3vC8bzg" type="Description">
       <element xsi:nil="true"/>
     </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_IK2Zgc2oEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande" description="http://arduino.cc/en/Tutorial/Button" fillColor="13369343" lineColor="6737151"/>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_4THvAc2rEdybEPJ3vC8bzg" fontColor="1973790" fontName="Bitstream Vera Sans" bold="true" description="http://arduino.cc/en/Tutorial/Button" lineColor="14066801"/>
     <element xsi:nil="true"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IK2Zgs2oEdyCRanXktyMmA" x="12276" y="4903" width="7148" height="750"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_4THvAs2rEdybEPJ3vC8bzg" x="11614" y="7129" width="7408" height="1058"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_7FZREc2lEdyCRanXktyMmA"/>
   <element xmi:type="fritzing:Sketch" href="HelloWorld.fz#//@sketch"/>
@@ -3622,7 +3622,7 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_8-QQIs2lEdyCRanXktyMmA" points="[0, 0, -1, -21]$[1, 21, 0, 0]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_Rh56YM2mEdyCRanXktyMmA" type="4001" source="_7yiD4s2lEdyCRanXktyMmA" target="_LkrG9M2mEdyCRanXktyMmA">
-    <children xmi:type="notation:Node" xmi:id="_Rh56ZM2mEdyCRanXktyMmA" type="6001">
+    <children xmi:type="notation:Node" xmi:id="_Rh56ZM2mEdyCRanXktyMmA" visible="false" type="6001">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_Rh56Zc2mEdyCRanXktyMmA"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_Rh56Yc2mEdyCRanXktyMmA" smoothness="Normal" lineColor="0"/>
@@ -3631,7 +3631,7 @@
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Rh56Y82mEdyCRanXktyMmA" points="[0, 0, -3, -40]$[3, 40, 0, 0]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_Sur2kM2mEdyCRanXktyMmA" type="4001" source="_7yoKgM2lEdyCRanXktyMmA" target="_Lj2nkM2mEdyCRanXktyMmA">
-    <children xmi:type="notation:Node" xmi:id="_Sur2lM2mEdyCRanXktyMmA" type="6001">
+    <children xmi:type="notation:Node" xmi:id="_Sur2lM2mEdyCRanXktyMmA" visible="false" type="6001">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_Sur2lc2mEdyCRanXktyMmA"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_Sur2kc2mEdyCRanXktyMmA" smoothness="Normal" lineColor="393471"/>
@@ -3639,81 +3639,61 @@
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[id='sNCJlRYXgRe8XEeLS8foc1']"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Sur2k82mEdyCRanXktyMmA" points="[0, 0, -3, -31]$[3, 31, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_lHjEQM2mEdyCRanXktyMmA" type="4003" source="_lHYsMM2mEdyCRanXktyMmA" target="_LkaBNM2mEdyCRanXktyMmA">
+  <edges xmi:type="notation:Edge" xmi:id="_lHjEQM2mEdyCRanXktyMmA" type="4003" source="_lHYsMM2mEdyCRanXktyMmA" target="_LhOKWM2mEdyCRanXktyMmA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_lHjEQc2mEdyCRanXktyMmA" smoothness="Normal" lineColor="11711154"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='4']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_lHjEQs2mEdyCRanXktyMmA" points="[0, 0, -8, -1]$[8, 1, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_lHn8wM2mEdyCRanXktyMmA" type="4003" source="_lHYsNM2mEdyCRanXktyMmA" target="_LkaoRM2mEdyCRanXktyMmA">
+  <edges xmi:type="notation:Edge" xmi:id="_lHn8wM2mEdyCRanXktyMmA" type="4003" source="_lHYsNM2mEdyCRanXktyMmA" target="_LhOxYs2mEdyCRanXktyMmA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_lHn8wc2mEdyCRanXktyMmA" smoothness="Normal" lineColor="11711154"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='3']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_lHn8ws2mEdyCRanXktyMmA" points="[0, 0, -1, -1]$[1, 1, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_lHs1QM2mEdyCRanXktyMmA" type="4003" source="_lHZTQs2mEdyCRanXktyMmA" target="_LlAeIs2mEdyCRanXktyMmA">
+  <edges xmi:type="notation:Edge" xmi:id="_lHs1QM2mEdyCRanXktyMmA" type="4003" source="_lHZTQs2mEdyCRanXktyMmA" target="_LkaoRs2mEdyCRanXktyMmA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_lHs1Qc2mEdyCRanXktyMmA" smoothness="Normal" lineColor="11711154"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='2']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_lHs1Qs2mEdyCRanXktyMmA" points="[0, 0, -8, -1]$[8, 1, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_lHy74M2mEdyCRanXktyMmA" type="4003" source="_lHZTRs2mEdyCRanXktyMmA" target="_LlBFMc2mEdyCRanXktyMmA">
+  <edges xmi:type="notation:Edge" xmi:id="_lHy74M2mEdyCRanXktyMmA" type="4003" source="_lHZTRs2mEdyCRanXktyMmA" target="_LkbPUM2mEdyCRanXktyMmA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_lHy74c2mEdyCRanXktyMmA" smoothness="Normal" lineColor="11711154"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='1jpTbkfxinGdJiCeYRpxb1']/@terminals[id='1']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_lHy74s2mEdyCRanXktyMmA" points="[0, 0, -1, -1]$[1, 1, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_HivtIM2nEdyCRanXktyMmA" type="4001" source="_LkoqtM2mEdyCRanXktyMmA" target="_LheB9s2mEdyCRanXktyMmA">
-    <children xmi:type="notation:Node" xmi:id="_HivtJM2nEdyCRanXktyMmA" type="6001">
+  <edges xmi:type="notation:Edge" xmi:id="_HivtIM2nEdyCRanXktyMmA" type="4001" source="_Lkqf4s2mEdyCRanXktyMmA" target="_Ljk6xs2mEdyCRanXktyMmA">
+    <children xmi:type="notation:Node" xmi:id="_HivtJM2nEdyCRanXktyMmA" visible="false" type="6001">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_HivtJc2nEdyCRanXktyMmA"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_HivtIc2nEdyCRanXktyMmA" smoothness="Normal" lineColor="0"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_HivtIs2nEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[id='4Xta5_jRjjG8l7AC7XmgX3']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_HivtI82nEdyCRanXktyMmA" points="[-6, 10, -8, -25]$[2, 35, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_HixiUM2nEdyCRanXktyMmA" id="(0.9886364,0.3494318)"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_HivtI82nEdyCRanXktyMmA" points="[0, 0, 0, -768]$[0, 768, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_LfqOoM2nEdyCRanXktyMmA" type="4003" source="_LfkvEM2nEdyCRanXktyMmA" target="_LkKwpM2mEdyCRanXktyMmA">
+  <edges xmi:type="notation:Edge" xmi:id="_LfqOoM2nEdyCRanXktyMmA" type="4003" source="_LfkvEM2nEdyCRanXktyMmA" target="_LkReVM2mEdyCRanXktyMmA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_LfqOoc2nEdyCRanXktyMmA" smoothness="Normal" lineColor="11711154"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='7gwu_L86jEigxTwG_0Zkw3']/@terminals[id='2']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_LfqOos2nEdyCRanXktyMmA" points="[0, 0, -1, -13]$[1, 13, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_LfwVQM2nEdyCRanXktyMmA" type="4003" source="_LfkvEs2nEdyCRanXktyMmA" target="_LkReUs2mEdyCRanXktyMmA">
+  <edges xmi:type="notation:Edge" xmi:id="_LfwVQM2nEdyCRanXktyMmA" type="4003" source="_LfkvEs2nEdyCRanXktyMmA" target="_LkSFZM2mEdyCRanXktyMmA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_LfwVQc2nEdyCRanXktyMmA" smoothness="Normal" lineColor="11711154"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='7gwu_L86jEigxTwG_0Zkw3']/@terminals[id='1']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_LfwVQs2nEdyCRanXktyMmA" points="[0, 0, -1, -13]$[1, 13, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_c86IoM2nEdyCRanXktyMmA" type="4001" source="_LjzkRM2mEdyCRanXktyMmA" target="_LjyWKM2mEdyCRanXktyMmA">
-    <children xmi:type="notation:Node" xmi:id="_c86IpM2nEdyCRanXktyMmA" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_c86Ipc2nEdyCRanXktyMmA"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_c86Ioc2nEdyCRanXktyMmA" smoothness="Normal" lineColor="255"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_c86Ios2nEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande"/>
-    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[id='C4xmIT2cgBe81-HnDNZrx1']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_c86Io82nEdyCRanXktyMmA" points="[1, 3, -35, -1]$[36, 4, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_c8790M2nEdyCRanXktyMmA" id="(0.9488636,0.26988637)"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_eX3qwM2nEdyCRanXktyMmA" type="4001" source="_LkmOdM2mEdyCRanXktyMmA" target="_LkkZRs2mEdyCRanXktyMmA">
-    <children xmi:type="notation:Node" xmi:id="_eX3qxM2nEdyCRanXktyMmA" type="6001">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_eX3qxc2nEdyCRanXktyMmA"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_eX3qwc2nEdyCRanXktyMmA" smoothness="Normal" lineColor="0"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_eX3qws2nEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande"/>
-    <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[id='7aty2y1XgmmjkMYdFDi9v0']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_eX3qw82nEdyCRanXktyMmA" points="[0, 0, -32, 0]$[32, 0, 0, 0]"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_gqOu8M2nEdyCRanXktyMmA" type="4001" source="_Lha-os2mEdyCRanXktyMmA" target="_LjxvFM2mEdyCRanXktyMmA">
-    <children xmi:type="notation:Node" xmi:id="_gqOu9M2nEdyCRanXktyMmA" type="6001">
+  <edges xmi:type="notation:Edge" xmi:id="_gqOu8M2nEdyCRanXktyMmA" type="4001" source="_LheB8M2mEdyCRanXktyMmA" target="_Lj0LWM2mEdyCRanXktyMmA">
+    <children xmi:type="notation:Node" xmi:id="_gqOu9M2nEdyCRanXktyMmA" visible="false" type="6001">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_gqOu9c2nEdyCRanXktyMmA"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_gqOu8c2nEdyCRanXktyMmA" smoothness="Normal" lineColor="255"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_gqOu8s2nEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[id='6ia8otTPgxSagVZzFvewq2']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_gqOu882nEdyCRanXktyMmA" points="[0, 0, -1023, 1023]$[988, -35, -35, 988]$[1023, -1023, 0, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_gqOu882nEdyCRanXktyMmA" points="[0, 0, 0, 1032]$[0, -1032, 0, 0]"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_ldtFAM2nEdyCRanXktyMmA" type="4001" source="_Lhda6M2mEdyCRanXktyMmA" target="_7yg1xM2lEdyCRanXktyMmA">
-    <children xmi:type="notation:Node" xmi:id="_ldtFBM2nEdyCRanXktyMmA" type="6001">
+  <edges xmi:type="notation:Edge" xmi:id="_ldtFAM2nEdyCRanXktyMmA" type="4001" source="_LheB-M2mEdyCRanXktyMmA" target="_7yg1xM2lEdyCRanXktyMmA">
+    <children xmi:type="notation:Node" xmi:id="_ldtFBM2nEdyCRanXktyMmA" visible="false" type="6001">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_ldtFBc2nEdyCRanXktyMmA"/>
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_ldtFAc2nEdyCRanXktyMmA" smoothness="Normal" lineColor="14066801"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_ldtFAs2nEdyCRanXktyMmA" fontColor="1973790" fontName="Lucida Grande"/>
     <element xmi:type="fritzing:Wire" href="HelloWorld.fz#//@sketch/@wires[id='Mpx-avSXiKXFjoqEATc_d0']"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ldtFA82nEdyCRanXktyMmA" points="[0, 0, 600, 6738]$[847, -3845, 1447, 2893]$[-600, -6738, 0, 0]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ldtFA82nEdyCRanXktyMmA" points="[0, 0, -794, 6800]$[1111, -3943, 317, 2857]$[794, -6800, 0, 0]"/>
   </edges>
 </notation:Diagram>
