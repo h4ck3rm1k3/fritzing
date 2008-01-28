@@ -2,17 +2,20 @@ package org.fritzing.fritzing.diagram.export;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Element;
+import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.Wire;
-import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 
 public class Fritzing2Eagle {		
@@ -110,18 +113,40 @@ public class Fritzing2Eagle {
 			netList.add(net);
 		}
 		
+		/* add a netlist entry for any leg in any part that is directly connected to a terminal.
+		 * this would be a leg that has been dragged to another terminal without an intervening 
+		 * wire or track.  
+		 */
+		for (int i=0; i<partList.size(); i++) {			
+			EagleBRDPart part = partList.get(i);			
+			EList <Terminal> terminals = part.p.getTerminals();			
+			for (int j=0; j<terminals.size(); j++) {				
+				if (terminals.get(j).getLeg() != null) {
+					if (terminals.get(j).getLeg().getTarget().getClass().getSimpleName().equals("TerminalImpl")) {
+						EagleBRDNet net = new EagleBRDNet(terminals.get(j).getLeg(), partList);
+						netList.add(net);
+					}
+				}				
+			}			
+		}
+		
 		/* add in the breadboard tracks */
 		for (int i=0; i<partList.size(); i++) {
 			EagleBRDPart part = partList.get(i);
 			if (part.getFritzingSpecies().equalsIgnoreCase("breadboardstandard")) {
-				String partLabel = part.getEaglePartLabel();
-				for (int j=0; j<netList.size(); j++) {
-					
+				EList <Track> tracks = part.getFritzingTracks();
+				for (int j=0; j<tracks.size(); j++) {
+					Track t = tracks.get(j);
+					if ((t.getSource() == null) && (t.getTarget() == null)) {
+						continue;
+					}
+					EagleBRDNet net = new EagleBRDNet(t, partList);
+					netList.add(net);
 				}
-			}
+			}			
 		}
 		
-		/* now enumerate the new net names.  we are ignoring names provided by Fritzing
+		/* now enumerate the new net names.  we are ignoring the names provided by Fritzing
 		 * for the moment as an experiment to see which method causes less confusion for users
 		 */
 		int genericNet = 1;
@@ -132,62 +157,32 @@ public class Fritzing2Eagle {
 		
 		/* combine the entries for those nets which are meant to be connected */
 		for (int i=0; i<netList.size(); i++) {
-			EagleBRDNet net = netList.get(i);
-			for (int j=0; j<net.getPinList().size(); j++) {
-				PartPinPair pin = net.getPin(j);
+			EagleBRDNet netOne = netList.get(i);
+			for (int j=0; j<netOne.getPinList().size(); j++) {
+				PartPinPair pin = netOne.getPin(j);
 				for (int k=i+1; k<netList.size(); k++) {
+					EagleBRDNet netTwo = netList.get(k);
 					if (netList.get(k).pinIsPresent(pin)) {
-						System.out.println("===== connected wires exist ======");
 //						add all pins from the second net entry to the first entry
 //						add the wire from the second net entry to the first entry
+						netOne.addPinList(netTwo.getPinList());						
 //						remove the second net entry from netList
-					}
-				}
-			}
-		}
-		
-		/*
-		for (int i=0; i<netList.size(); i++) {
-			EagleBRDNet netOne = netList.get(i);
-			String netNameOne = netOne.getNetName();
-			ArrayList<PartPinPair> pinListOne = netOne.getPinList();
-			for (int j=0; j<pinListOne.size(); j++) {
-				PartPinPair pinOne = pinListOne.get(j);
-				for (int k=0; k<netList.size(); k++) {
-					EagleBRDNet netTwo = netList.get(k);
-					String netNameTwo = netTwo.getNetName();
-					ArrayList<PartPinPair> pinListTwo = netTwo.getPinList();
-					if (netNameOne.equals(netNameTwo)) {
+						netList.remove(k);
 						continue;
 					}
-					for (int l=0; l<pinListTwo.size(); l++) {
-						PartPinPair pinTwo = pinListTwo.get(l);
-						if (pinOne.equals(pinTwo)) {
-							netOne.addPinList(netTwo.getPinList());
-							netList.remove(k);
-						}
-					}
 				}
 			}
 		}
-		*/
-		
+			
 		/* scrub each net entry for duplicate pin entries */
-		
+		for (int i=0; i<netList.size(); i++) {
+			netList.get(i).removeDuplicatePinEntries();
+		}
 		
 		
 		/* print the net information for debugging purposes */
 		for (int i=0; i<netList.size(); i++) {
-			Wire w = netList.get(i).getWire(0);
-			String blah = w.toString();
-			System.out.println(blah);
-			System.out.println(netList.get(i).getPinListAsString());
-			System.out.println("-----------");
-		}
-		
-		for (int i=0; i<netList.size(); i++) {
-			EagleBRDNet net = netList.get(i);
-			
+			System.out.println("&&& " + netList.get(i).getNetName() + " " + netList.get(i).getPinListAsString());
 		}
 		
 		BRDScriptExporter exporter = new BRDScriptExporter();

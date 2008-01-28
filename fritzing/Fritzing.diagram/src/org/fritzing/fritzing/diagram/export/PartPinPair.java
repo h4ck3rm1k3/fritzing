@@ -1,26 +1,30 @@
 package org.fritzing.fritzing.diagram.export;
 
 public class PartPinPair {
-	private String partName = "";
+	private EagleBRDPart part;
 	private String pinName = "";
 	
-	public PartPinPair(String partName, String pinName) {
-		this.partName = partName;
+	public PartPinPair(EagleBRDPart part, String pinName) {
+		this.part = part;
 		this.pinName = pinName;
 	}
 	
 	public boolean equals(PartPinPair pin) {
 		boolean result = false;
-		if (pin.getPartName().equals(this.partName) && pin.getPinName().equals(this.pinName)) {
-			result = true;
-		} else {
-			result = false;
+		if (pin.getEagleBRDPart().getFritzingId().equals(this.getEagleBRDPart().getFritzingId())) {
+			if (pin.getPinName().equals(this.getPinName())) {
+				result = true;
+			}
 		}
 		return result;
 	}
 	
-	public String getPartName() {
-		return this.partName;
+	public EagleBRDPart getEagleBRDPart() {
+		return part;
+	}
+	
+	public String getPartPinPairEaglePartLabel() {
+		return this.part.getEaglePartLabel();
 	}
 	
 	public String getPinName() {

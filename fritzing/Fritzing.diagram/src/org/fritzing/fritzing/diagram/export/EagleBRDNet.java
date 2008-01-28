@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.Wire;
 
 public class EagleBRDNet {
@@ -11,58 +12,102 @@ public class EagleBRDNet {
 	ArrayList<Wire> wireList = new ArrayList<Wire>();
 	ArrayList<PartPinPair> pinList = new ArrayList<PartPinPair>();
 	
+	public EagleBRDNet(Leg l, ArrayList<EagleBRDPart> partList) {
+		System.out.println("leg parent name: " + l.getParent().getName());
+		
+		System.out.println("leg source: " + l.getSource());
+		System.out.println("leg source name: " + l.getSource().getName());
+		System.out.println("leg target: " + l.getTarget());
+		System.out.println("leg target name: " + l.getTarget().getName());
+		
+		/*
+		EagleBRDPart sourcePart = new EagleBRDPart();
+		EagleBRDPart targetPart = new EagleBRDPart();		
+		
+		String sourcePartId = l.getParent().getId();
+		String targetPartId = l.getTarget().getId();
+		
+		sourcePart = (EagleBRDPart)l.getSource();
+		targetPart = (EagleBRDPart)l.getTarget();
+		
+		if (sourcePart.equals(targetPart)) {
+			return;
+		}
+		String sourcePinId = l.getSource().getId();
+		String targetPinId = l.getTarget().getId();
+		
+		addPin(new PartPinPair(sourcePart, sourcePinId));
+		addPin(new PartPinPair(targetPart, targetPinId));		
+		*/
+	}
+	
+	public EagleBRDNet(Track t, ArrayList<EagleBRDPart> partList) {
+		String parentPartId = t.getParent().getId();
+		EagleBRDPart parentPart = new EagleBRDPart();
+		for (int i=0; i<partList.size(); i++) {
+			if (partList.get(i).getFritzingId().equals(parentPartId)) {
+				parentPart = partList.get(i);
+			}
+		}
+		
+		String sourcePinName = t.getSource().getId();
+		String targetPinName = t.getTarget().getId();
+		
+		PartPinPair sourcePartAndPin = new PartPinPair(parentPart, sourcePinName);
+		PartPinPair targetPartAndPin = new PartPinPair(parentPart, targetPinName);
+		
+		addPin(sourcePartAndPin);
+		addPin(targetPartAndPin);
+	}
+	
 	public EagleBRDNet(Wire w, ArrayList<EagleBRDPart> partList) {
 		wireList.add(w);
 		String sourceClass = w.getSource().getClass().getSimpleName();
 		String targetClass = w.getTarget().getClass().getSimpleName();
-		String sourcePartName = "";
 		String sourcePinName = "";
-		String targetPartName = "";
 		String targetPinName = "";
+		EagleBRDPart sourcePart = new EagleBRDPart();
+		EagleBRDPart targetPart = new EagleBRDPart();
 		
 		if (sourceClass.equals("LegImpl")) {					
-//			sourcePartName = ((Leg)w.getSource()).getParent().getParent().getName();
 			String sourcePartId = ((Leg)w.getSource()).getParent().getParent().getId();
 			for (int i=0; i<partList.size(); i++) {
 				if (partList.get(i).getFritzingId().equals(sourcePartId)) {
-					sourcePartName = partList.get(i).getEaglePartLabel();
+					sourcePart = partList.get(i);
 				}
 			}
-			sourcePinName = ((Leg)w.getSource()).getParent().getName();
+			sourcePinName = ((Leg)w.getSource()).getParent().getId();
 		}
 		if (sourceClass.equals("TerminalImpl")) {
-//			sourcePartName = ((Terminal)w.getSource()).getParent().getName();
 			String sourcePartId = ((Terminal)w.getSource()).getParent().getId();
 			for (int i=0; i<partList.size(); i++) {
 				if (partList.get(i).getFritzingId().equals(sourcePartId)) {
-					sourcePartName = partList.get(i).getEaglePartLabel();
+					sourcePart = partList.get(i);
 				}
 			}
-			sourcePinName = w.getSource().getName();
+			sourcePinName = w.getSource().getId();
 		}
 		if (targetClass.equals("LegImpl")) {
-//			targetPartName = ((Leg)w.getTarget()).getParent().getParent().getName();
 			String targetPartId = ((Leg)w.getTarget()).getParent().getParent().getId();
 			for (int i=0; i<partList.size(); i++) {
 				if (partList.get(i).getFritzingId().equals(targetPartId)) {
-					targetPartName = partList.get(i).getEaglePartLabel();
+					targetPart = partList.get(i);
 				}
 			}
-			targetPinName = ((Leg)w.getTarget()).getParent().getName();
+			targetPinName = ((Leg)w.getTarget()).getParent().getId();
 		}
 		if (targetClass.equals("TerminalImpl")) {
-//			targetPartName = ((Terminal)w.getTarget()).getParent().getName();
 			String targetPartId = ((Terminal)w.getTarget()).getParent().getId();
 			for (int i=0; i<partList.size(); i++) {
 				if (partList.get(i).getFritzingId().equals(targetPartId)) {
-					targetPartName = partList.get(i).getEaglePartLabel();
+					targetPart = partList.get(i);
 				}
 			}
-			targetPinName = w.getTarget().getName();
+			targetPinName = w.getTarget().getId();
 		}
 		
-		PartPinPair sourcePartAndPin = new PartPinPair(sourcePartName, sourcePinName);
-		PartPinPair targetPartAndPin = new PartPinPair(targetPartName, targetPinName);
+		PartPinPair sourcePartAndPin = new PartPinPair(sourcePart, sourcePinName);
+		PartPinPair targetPartAndPin = new PartPinPair(targetPart, targetPinName);
 		
 		addPin(sourcePartAndPin);
 		addPin(targetPartAndPin);
@@ -97,7 +142,7 @@ public class EagleBRDNet {
 	public String getPinListAsString() {
 		String result = "";
 		for (int i=0; i<pinList.size(); i++) {
-			result = result.concat(" " + pinList.get(i).getPartName() + "." + pinList.get(i).getPinName());
+			result = result.concat(" " + pinList.get(i).getEagleBRDPart().getEaglePartLabel() + "." + pinList.get(i).getPinName());
 		}
 		return result;
 	}
@@ -119,4 +164,19 @@ public class EagleBRDNet {
 		}
 		return result;
 	}
+	
+	public void removeDuplicatePinEntries() {
+		for (int i=0; i<pinList.size(); i++) {
+			PartPinPair pinOne = pinList.get(i);
+			for (int j=i+1; j<pinList.size(); j++) {
+				PartPinPair pinTwo = pinList.get(j);
+				if (pinOne.equals(pinTwo)) {
+					pinList.remove(j);
+					continue;
+				}
+			}
+		}
+	}
+	
+
 }

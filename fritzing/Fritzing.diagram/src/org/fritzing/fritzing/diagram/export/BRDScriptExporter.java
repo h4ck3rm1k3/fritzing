@@ -76,8 +76,21 @@ public class BRDScriptExporter {
 	}
 	
 	public String getNetEntry(EagleBRDNet net) {
-		/* place a SIGNAL to create two terminals at a time */
+		/* place a SIGNAL to connect terminals*/
 		String result = "";
+		String netName = net.getNetName();
+		String pinListing = "";
+		for (int i=0; i<net.getPinList().size(); i++) {
+			if (net.getPin(i).getEagleBRDPart().getExportToPcb() == true) {
+				pinListing = pinListing.concat(
+					"'" + net.getPin(i).getEagleBRDPart().getEaglePartLabel() + "' " +
+					"'" + net.getPin(i).getPinName() + "' ");
+			}
+		}
+		
+		if (pinListing.equals("") == false) {
+			result = "SIGNAL '" + netName + "' " + pinListing + "; \n";
+		}
 //		String result = "SIGNAL '" + net.netName + "' " + 
 //			"'" + ((Terminal)net.source).getParent().getName() + "' " + 
 //			"'" + net.source.getName() + "' " +

@@ -1,7 +1,11 @@
 package org.fritzing.fritzing.diagram.export;
 
+import java.util.ArrayList;
+
 import org.eclipse.emf.common.util.EList;
+import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Track;
 
 
@@ -35,6 +39,10 @@ public class EagleBRDPart {
 		}
 	}
 	
+	public EagleBRDPart() {
+		
+	}
+	
 	public String getFritzingId() {
 		return(p.getId());
 	}
@@ -54,6 +62,26 @@ public class EagleBRDPart {
 	public EList<Track> getFritzingTracks() {
 		return(p.getTracks());
 	}
+
+	/*
+	public EList<Leg> getLegs() {
+		EList <Terminal> terminals = p.getTerminals();
+		EList <Leg> result = new EList() <Leg>;
+//		System.out.println(p.getName() + ":");
+		for (int i=0; i<terminals.size(); i++) {
+			System.out.println("terminal class: " + terminals.get(i).getClass().getSimpleName());
+			if (terminals.get(i).getLeg() != null) {
+				System.out.println("leg source " + terminals.get(i).getLeg().getSource());
+				System.out.println("leg target " + terminals.get(i).getLeg().getTarget());
+				System.out.println("leg class " + terminals.get(i).getLeg().getClass());
+				System.out.println("leg source name " + terminals.get(i).getLeg().getSource().getName());
+				System.out.println("leg target name " + terminals.get(i).getLeg().getTarget().getName());
+				
+			}			
+		}		
+		return result;
+	}
+	*/
 	
 	public String getEagleFootprint() {
 		return(this.eagleFootprint);
