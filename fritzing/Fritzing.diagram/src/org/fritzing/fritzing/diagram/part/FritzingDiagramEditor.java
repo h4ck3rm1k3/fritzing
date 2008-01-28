@@ -4,6 +4,7 @@
 package org.fritzing.fritzing.diagram.part;
 
 import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewer;
@@ -17,7 +18,6 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentPro
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorInput;
-import org.fritzing.fritzing.diagram.edit.parts.SketchGridLayer;
 
 /**
  * @generated
@@ -106,6 +106,24 @@ public class FritzingDiagramEditor extends DiagramDocumentEditor {
 		}
 	}
 
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.ui.part.EditorPart#setPartName(java.lang.String)
+	 * 
+	 * Set the editor tab tile to just the project name instead of the full URI.
+	 * NOTE: The proper way is to write your own URIEditorInput and do it in its getName()
+	 * However, it's an incredible pain to register it..
+	 */
+	protected void setPartName(String partName) {
+		try {
+			partName = URI.createURI(partName).trimFileExtension().lastSegment().toString();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
+		super.setPartName(partName);
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
