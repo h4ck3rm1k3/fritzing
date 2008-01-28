@@ -107,7 +107,7 @@ public class FritzingImageExportAction extends WorkbenchWindowActionDelegate {
 					// We can't necessarily assume that the editor input is a
 					// file.
 					if (uri != null) {
-						path = new Path(uri.trimSegments(1).devicePath());
+						path = new Path(uri.trimSegments(1).toFileString());
 						fileName = uri.trimFileExtension().lastSegment();
 					}
 				}
