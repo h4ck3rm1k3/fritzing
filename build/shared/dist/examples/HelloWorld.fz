@@ -1601,20 +1601,20 @@
     <terminal name="c11" id="c11"/>
     <terminal name="c10" id="c10"/>
   </part>
-  <part xsi:type="fritzing:LED" name="L" id="ExNEOqodiACjw1NnD8i9P1" species="LED" genus="Output.Light" version="1.0" footprint="fritzing.lbr/LED">
-    <terminal name="+" id="+">
-      <leg target="#//@sketch/@parts[id='LOC1CHPAig6AiL-zABGh_3']/@terminals[id='GND@3']" source="#//@sketch/@parts[id='ExNEOqodiACjw1NnD8i9P1']/@terminals[id='+']"/>
-    </terminal>
-    <terminal name="-" id="-">
-      <leg target="#//@sketch/@parts[id='LOC1CHPAig6AiL-zABGh_3']/@terminals[id='D13']" source="#//@sketch/@parts[id='ExNEOqodiACjw1NnD8i9P1']/@terminals[id='-']"/>
-    </terminal>
-  </part>
   <part xsi:type="fritzing:Resistor" name="R" id="cfHUr05jgtqxqaAKztRD43" species="Resistor" genus="Basic.Resistor" version="1.0" footprint="fritzing.lbr/Resistor">
     <terminal name="2" id="2">
       <leg target="#//@sketch/@parts[id='Op5bbI0hiAuthfGeuGkc_2']/@terminals[id='x29']" source="#//@sketch/@parts[id='cfHUr05jgtqxqaAKztRD43']/@terminals[id='2']"/>
     </terminal>
     <terminal name="1" id="1">
       <leg target="#//@sketch/@parts[id='Op5bbI0hiAuthfGeuGkc_2']/@terminals[id='c24']" source="#//@sketch/@parts[id='cfHUr05jgtqxqaAKztRD43']/@terminals[id='1']"/>
+    </terminal>
+  </part>
+  <part xsi:type="fritzing:LED" name="LED" id="frdCHi26hnuClUS-tfoUT1" species="LED" genus="Output.Light" version="1.0" footprint="fritzing.lbr/LED">
+    <terminal name="+" id="+">
+      <leg target="#//@sketch/@parts[id='LOC1CHPAig6AiL-zABGh_3']/@terminals[id='D13']" source="#//@sketch/@parts[id='frdCHi26hnuClUS-tfoUT1']/@terminals[id='+']"/>
+    </terminal>
+    <terminal name="-" id="-">
+      <leg target="#//@sketch/@parts[id='LOC1CHPAig6AiL-zABGh_3']/@terminals[id='GND@3']" source="#//@sketch/@parts[id='frdCHi26hnuClUS-tfoUT1']/@terminals[id='-']"/>
     </terminal>
   </part>
   <wire id="sJiLM_z8iGX0zZmSu7vru0" target="#//@sketch/@parts[id='LOC1CHPAig6AiL-zABGh_3']/@terminals[id='D11']"/>

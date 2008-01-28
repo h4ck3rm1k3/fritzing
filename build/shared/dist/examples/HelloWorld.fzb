@@ -3560,28 +3560,6 @@
     <element xmi:type="fritzing:GenericPart" href="HelloWorld.fz#//@sketch/@parts[id='LOC1CHPAig6AiL-zABGh_3']"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3wOpQsaYEdyfsdXhqXI5vw" x="1056" y="1848"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_INtvYMaZEdyfsdXhqXI5vw" type="2001">
-    <children xmi:type="notation:Node" xmi:id="_INu9gMaZEdyfsdXhqXI5vw" type="5002">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_INu9gcaZEdyfsdXhqXI5vw" y="132"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_IOCfgMaZEdyfsdXhqXI5vw" type="3001">
-      <children xmi:type="notation:Node" xmi:id="_IOCfgsaZEdyfsdXhqXI5vw" type="5001">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_IOCfg8aZEdyfsdXhqXI5vw" y="132"/>
-      </children>
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='ExNEOqodiACjw1NnD8i9P1']/@terminals[id='+']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IOCfgcaZEdyfsdXhqXI5vw"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_IODGkMaZEdyfsdXhqXI5vw" type="3001">
-      <children xmi:type="notation:Node" xmi:id="_IODtoMaZEdyfsdXhqXI5vw" type="5001">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_IODtocaZEdyfsdXhqXI5vw" y="132"/>
-      </children>
-      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='ExNEOqodiACjw1NnD8i9P1']/@terminals[id='-']"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IODGkcaZEdyfsdXhqXI5vw"/>
-    </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_INtvYcaZEdyfsdXhqXI5vw" fontColor="1973790" fontName="Bitstream Vera Sans" lineColor="14066801"/>
-    <element xmi:type="fritzing:LED" href="HelloWorld.fz#//@sketch/@parts[id='ExNEOqodiACjw1NnD8i9P1']"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_INtvYsaZEdyfsdXhqXI5vw" x="4224" y="792"/>
-  </children>
   <children xmi:type="notation:Node" xmi:id="_DSn48MaaEdycstGYnTzEyQ" type="2002">
     <children xmi:type="notation:Node" xmi:id="_DSogAMaaEdycstGYnTzEyQ" type="5003">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_DSogAcaaEdycstGYnTzEyQ" y="132"/>
@@ -3598,17 +3576,6 @@
     <element xmi:type="fritzing:Resistor" href="HelloWorld.fz#//@sketch/@parts[id='cfHUr05jgtqxqaAKztRD43']"/>
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_DSn48saaEdycstGYnTzEyQ" x="8184" y="8448"/>
   </children>
-  <children xmi:type="notation:Node" xmi:id="_wplZ4MacEdy0xrecKfpjSw" type="Text">
-    <children xmi:type="notation:Node" xmi:id="_wpodMMacEdy0xrecKfpjSw" type="DiagramName">
-      <element xsi:nil="true"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_wpodMcacEdy0xrecKfpjSw" type="Description">
-      <element xsi:nil="true"/>
-    </children>
-    <styles xmi:type="notation:ShapeStyle" xmi:id="_wplZ4cacEdy0xrecKfpjSw" fontColor="1973790" fontName="Bitstream Vera Sans" bold="true" description="Click the button to light up the LED" lineColor="14066801"/>
-    <element xsi:nil="true"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_wplZ4sacEdy0xrecKfpjSw" x="10032" y="3432" width="3675" height="792"/>
-  </children>
   <children xmi:type="notation:Node" xmi:id="_Ju5RcMadEdy0xrecKfpjSw" type="Text">
     <children xmi:type="notation:Node" xmi:id="_Ju5Rc8adEdy0xrecKfpjSw" type="DiagramName">
       <element xsi:nil="true"/>
@@ -3618,7 +3585,29 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_Ju5RccadEdy0xrecKfpjSw" fontColor="1973790" fontName="Bitstream Vera Sans" description="http://arduino.cc/en/Tutorial/Button" lineColor="14066801"/>
     <element xsi:nil="true"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ju5RcsadEdy0xrecKfpjSw" x="10027" y="4471" width="6058" height="528"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ju5RcsadEdy0xrecKfpjSw" x="9348" y="4428" width="8174" height="528"/>
+  </children>
+  <children xmi:type="notation:Node" xmi:id="_SrlpEc0TEdyRWL31opzFqw" type="2001">
+    <children xmi:type="notation:Node" xmi:id="_Srm3MM0TEdyRWL31opzFqw" type="5002">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_Srm3Mc0TEdyRWL31opzFqw" y="176"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_SrwoMM0TEdyRWL31opzFqw" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_Srx2UM0TEdyRWL31opzFqw" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Srx2Uc0TEdyRWL31opzFqw" y="176"/>
+      </children>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='frdCHi26hnuClUS-tfoUT1']/@terminals[id='+']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SrwoMc0TEdyRWL31opzFqw"/>
+    </children>
+    <children xmi:type="notation:Node" xmi:id="_Srx2Us0TEdyRWL31opzFqw" type="3001">
+      <children xmi:type="notation:Node" xmi:id="_SrydYM0TEdyRWL31opzFqw" type="5001">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_SrydYc0TEdyRWL31opzFqw" y="176"/>
+      </children>
+      <element xmi:type="fritzing:Terminal" href="HelloWorld.fz#//@sketch/@parts[id='frdCHi26hnuClUS-tfoUT1']/@terminals[id='-']"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Srx2U80TEdyRWL31opzFqw"/>
+    </children>
+    <styles xmi:type="notation:ShapeStyle" xmi:id="_SrlpEs0TEdyRWL31opzFqw" fontColor="1973790" fontName="Lucida Grande" lineColor="14066801"/>
+    <element xmi:type="fritzing:LED" href="HelloWorld.fz#//@sketch/@parts[id='frdCHi26hnuClUS-tfoUT1']"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SrlpE80TEdyRWL31opzFqw" x="4182" y="492"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_gtJIIMaYEdyfsdXhqXI5vw"/>
   <element xmi:type="fritzing:Sketch" href="HelloWorld.fz#//@sketch"/>
@@ -3641,16 +3630,6 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_wbnMIcaYEdyfsdXhqXI5vw" smoothness="Normal" lineColor="11842482"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='kFcXSmXkgXK5jOoSX8vBj2']/@terminals[id='1']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wbnMIsaYEdyfsdXhqXI5vw" points="[0, 0, 0, 3]$[0, -3, 0, 0]"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_IOM3kMaZEdyfsdXhqXI5vw" type="4003" source="_IOCfgMaZEdyfsdXhqXI5vw" target="_3wzRAMaYEdyfsdXhqXI5vw">
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_IOM3kcaZEdyfsdXhqXI5vw" smoothness="Normal" lineColor="11842482"/>
-    <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='ExNEOqodiACjw1NnD8i9P1']/@terminals[id='+']/@leg"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IOM3ksaZEdyfsdXhqXI5vw" points="[0, 0, 0, -28]$[0, 28, 0, 0]"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_IOvDEMaZEdyfsdXhqXI5vw" type="4003" source="_IODGkMaZEdyfsdXhqXI5vw" target="_3w27ZMaYEdyfsdXhqXI5vw">
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_IOvDEcaZEdyfsdXhqXI5vw" smoothness="Normal" lineColor="11842482"/>
-    <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='ExNEOqodiACjw1NnD8i9P1']/@terminals[id='-']/@leg"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IOvDEsaZEdyfsdXhqXI5vw" points="[0, 0, 0, -28]$[0, 28, 0, 0]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_TjhKAMaZEdyfsdXhqXI5vw" type="4001" source="_3w4JgsaYEdyfsdXhqXI5vw" target="__WGOcMaYEdyfsdXhqXI5vw">
     <children xmi:type="notation:Node" xmi:id="_TjhxEMaZEdyfsdXhqXI5vw" visible="false" type="6001">
@@ -3697,5 +3676,15 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_DTNu0caaEdycstGYnTzEyQ" smoothness="Normal" lineColor="11842482"/>
     <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='cfHUr05jgtqxqaAKztRD43']/@terminals[id='1']/@leg"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_DTNu0saaEdycstGYnTzEyQ" points="[0, 0, 3, -13]$[-3, 13, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_SsExQM0TEdyRWL31opzFqw" type="4003" source="_SrwoMM0TEdyRWL31opzFqw" target="_3w27ZMaYEdyfsdXhqXI5vw">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_SsExQc0TEdyRWL31opzFqw" smoothness="Normal" lineColor="11711154"/>
+    <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='frdCHi26hnuClUS-tfoUT1']/@terminals[id='+']/@leg"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SsExQs0TEdyRWL31opzFqw" points="[0, 0, -1, -36]$[1, 36, 0, 0]"/>
+  </edges>
+  <edges xmi:type="notation:Edge" xmi:id="_SsNUIM0TEdyRWL31opzFqw" type="4003" source="_Srx2Us0TEdyRWL31opzFqw" target="_3wzRAMaYEdyfsdXhqXI5vw">
+    <styles xmi:type="notation:ConnectorStyle" xmi:id="_SsNUIc0TEdyRWL31opzFqw" smoothness="Normal" lineColor="11711154"/>
+    <element xmi:type="fritzing:Leg" href="HelloWorld.fz#//@sketch/@parts[id='frdCHi26hnuClUS-tfoUT1']/@terminals[id='-']/@leg"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SsNUIs0TEdyRWL31opzFqw" points="[0, 0, -1, -36]$[1, 36, 0, 0]"/>
   </edges>
 </notation:Diagram>
