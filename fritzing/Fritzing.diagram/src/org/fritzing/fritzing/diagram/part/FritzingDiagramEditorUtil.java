@@ -133,8 +133,11 @@ public class FritzingDiagramEditorUtil {
 			containerFullPath = new Path(""); //$NON-NLS-1$
 		}
 		if (projectName == null || projectName.trim().length() == 0) {
-			projectName = "sketch"+SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(
-					Calendar.getInstance().getTime()).replace('.', '-');; //$NON-NLS-1$
+			projectName = "sketch" + 
+				SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(
+					Calendar.getInstance().getTime()); //$NON-NLS-1$
+			projectName = projectName.replace(".", "");
+			projectName = projectName.replace("/", "");
 		}
 		IPath folderPath = containerFullPath.append(projectName);
 		char i = (char)(((int)'a')-1);
