@@ -156,23 +156,13 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 						"Fritzing ULP not found.", null));
 			return;
 		} 
-		// EAGLE .sch and .brd files
-		String eagleSCH = diagramUri.trimFileExtension()
-				.appendFileExtension("sch").toFileString();
+		// EAGLE .brd file
 		String eagleBRD = diagramUri.trimFileExtension()
 				.appendFileExtension("brd").toFileString();
-		// Delete existing ones so that EAGLE will create new ones
-		File eagleSchFile = new File(eagleSCH);
-		if (eagleSchFile.exists()) {
-			eagleSchFile.delete(); 
-		}
+		// Delete existing one so that EAGLE will create new one
 		File eagleBrdFile = new File(eagleBRD);
 		if (eagleBrdFile.exists()) {
 			eagleBrdFile.delete();
-		}
-		if (Platform.getOS().equals(Platform.OS_WIN32)) {
-			eagleSCH = "\"" + eagleSCH + "\"";
-			eagleBRD = "\"" + eagleBRD + "\"";
 		}
 		// EAGLE parameters
 		String eagleParams = "RUN " 
@@ -180,6 +170,9 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				+ "'" + fritzing2eagleSCR + "' "	
 				+ "'" + scriptsLocation + "' " 
 				+ "'" + eagleBRD + "'";
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			eagleBRD = "\"" + eagleBRD + "\"";
+		}
 		// Run!
 		try {
 			ProcessBuilder runEagle = new ProcessBuilder(
@@ -190,7 +183,7 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 					"Could not launch EAGLE PCB export.\n"+
 					"Please check that all of the following files exist:\n\n"+
-					String.format("%s, %s, %s, %s", eagleExec, eagleULP, fritzing2eagleSCR, eagleSCH),
+					String.format("%s, %s, %s", eagleExec, eagleULP, fritzing2eagleSCR),
 					new Status(Status.ERROR, FritzingDiagramEditorPlugin.ID,
 							"EAGLE PCB export failed.", ioe1));
 				return;
