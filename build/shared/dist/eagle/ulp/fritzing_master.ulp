@@ -69,7 +69,7 @@ cmd += "MENU " +
 			"Both : display none dimension pads top tdocu tplace tvalues tnames bottom bdocu bplace bvalues bnames vias; print 3 -mirror -black file both.pdf; display all; | " +
 			"DIY Board : display none dimension pads top vias; print 1 mirror black; display none dimension pads bottom vias; print 1 -mirror black; display all;} | " +
 		"Manuf. files : run ''" + fileLocation + "ulp/fritzing_cam_export.ulp'';}';";
-cmd += "Grid 50 mil;";
+cmd += "Grid 10 mil;";
 cmd += "Move";
 	
 exit(cmd);
