@@ -82,22 +82,22 @@ public class Fritzing2Eagle {
 		}
 		
 		/* print the part information for debugging purposes */
-		for (int i=0; i<partList.size(); i++) {
-			EagleBRDPart part = partList.get(i);
-			if (part.getExportToPcb()) {
-				System.out.println(">>> (" + 
-					part.getFritzingId() + ") " +
-					part.getEaglePartLabel() + " - " + 
-					part.getEagleFootprint() + " in " + 
-					part.getEagleLibraryName() + " " + 
-					"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + ")");
-			} else {
-				System.out.println(">>> (" +
-					part.getFritzingId() + ") " + 
-					part.getEaglePartLabel() + " - " + 
-					"NOT EXPORTED TO PCB");
-			}
-		}
+//		for (int i=0; i<partList.size(); i++) {
+//			EagleBRDPart part = partList.get(i);
+//			if (part.getExportToPcb()) {
+//				System.out.println(">>> (" + 
+//					part.getFritzingId() + ") " +
+//					part.getEaglePartLabel() + " - " + 
+//					part.getEagleFootprint() + " in " + 
+//					part.getEagleLibraryName() + " " + 
+//					"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + ")");
+//			} else {
+//				System.out.println(">>> (" +
+//					part.getFritzingId() + ") " + 
+//					part.getEaglePartLabel() + " - " + 
+//					"NOT EXPORTED TO PCB");
+//			}
+//		}
 		
 		/* moving on to wires and nets: 
 		 * basic approach is to first create a new entry in the array list "netList" for each
