@@ -5,9 +5,85 @@ between versions!
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
-0004 ALPHA - Jan 28th 2008
+0004 ALPHA - Jan 29th 2008
 
-Open part library; Legs & pins; Breadboard
+Big release with a lot of enhancements! Everything behaves and looks much
+more realistic, with legs/pins and high-res images. Breadboard has finally
+arrived. Parts can now easily be created by yourself, see the libraries
+folder and the upcoming tutorial.
+
+< ENHANCEMENTS >
+
+Part Library
+- Parts can now be defined externally, by you: All you need is a little
+  partdescription.xml and a few images. Tutorial coming soon. [#56]
+- Script for quickly creating your desired IC, available as a separate
+  download, see http://fritzing.org/learning/parts
+- New part hierarchy scheme. It's already partly reflected in the palette, 
+  the full scheme will be in the new online reference.
+- Part library was restructured on the file system: Official parts are 
+  in libraries/core, user's parts are supposed to be in libraries/user.
+  The hierarchical folder structure which you can find in the core library
+  is not necessary, it just helps finding things on the file system. 
+- New parts: Breadboard, Ceramic disk Capacitor, Electrolyte Capacitor,
+  Optocoupler, 555 Timer, RGB LED, Voltage Regulator
+
+Realism
+- Parts can now have bendable legs/pins [#51]
+- Parts can now have internal wires connecting their terminals (they're 
+  actually nets). Currently, this is only used by the Breadboard in order 
+  to simulate its connections. [#40]
+
+Beautification
+- Revised artwork and icons, check out the transparency on the LEDs!
+- High-resolution images [#41]
+- Small and large icons for every part [#53]
+- Palette shows large icons by default
+- Better background and grid color, terminal label color
+  
+Wiring
+- Wire tool now stays selected
+- Wires snap more easily into place
+- Visual indication on terminals if they are connected to
+- Easier to connect multiple wires to one terminal
+- Wires are curvy by default
+- Wires can connect to legs
+
+Usability
+- Improved 'New' wizard: One step, better auto-generated name, Ctrl+N shortcut [#33]
+- Sketch folder for each new sketch and associated files [#69]
+- Sketchbook location defaults to the OS-dependent user's documents location [#45]
+- New 'Info' view that provides information on the selection
+- Editor tab shows project name instead of full file path [#29]
+- Large parts can be defined to automatically order to the background
+- Slightly improved XML of the .fz file
+
+Eagle
+- Individual footprints can be set for your parts within Fritzing in the
+  Properties section
+- Handles same-named parts
+- Joins wirings into proper nets
+- Removed info pop-up on the start of the export
+
+< BUG FIXES >
+
+- All elements can now have any name, even none. [#4]
+- No longer possible to connect a wire to the background and produce
+  ghost terminals. [#67, #70]
+- Short wires don't freak out any more [#89]
+- Wire thickness zooms properly
+- Image export works with all file formats on Windows, 
+  also no path problems anymore [#48]
+
+< OUTSTANDING ISSUES >
+
+Some things that are known to be not-so-nice:
+- Performance: If you have performance problems (especially when you use 
+  the breadboard), you can disable animation and anti-aliasing in the preferences.
+  It also helps to stay at 100% zoom because it means lower-res images.
+- Rotation is not properly working yet
+- Copy & Paste is not properly working, even if it seems to be.. don't use it yet!
+
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
