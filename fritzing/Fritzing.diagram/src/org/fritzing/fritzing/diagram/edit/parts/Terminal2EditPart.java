@@ -425,6 +425,10 @@ public class Terminal2EditPart extends BorderedBorderItemEditPart {
 			return createDefaultAnchor();
 		}
 
+		public ConnectionAnchor getSourceConnectionAnchorAt(Point p) {
+			return createDefaultAnchor();
+		}
+
 		public void displayFeedback(boolean display) {
 			displayFeedbackFlag = display;
 			repaint();
