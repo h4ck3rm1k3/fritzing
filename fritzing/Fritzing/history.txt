@@ -79,7 +79,8 @@ Eagle
 
 Some things that are known to be not-so-nice:
 - Performance: If you have performance problems (especially when you use 
-  the breadboard), you can disable animation and anti-aliasing in the preferences.
+  the breadboard), you can disable animation and anti-aliasing in the preferences,
+  and close the outline view in the bottom right corner.
   It also helps to stay at 100% zoom because it means lower-res images.
 - Rotation is not properly working yet
 - Copy & Paste is not properly working, even if it seems to be.. don't use it yet!

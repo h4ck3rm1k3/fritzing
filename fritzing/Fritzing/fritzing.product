@@ -7,7 +7,7 @@
       <image path="/Fritzing/icons/fritzingbanner.gif"/>
       <text>
          Fritzing - From Prototype to Product
-Release 0004 ALPHA, Jan 28th 2007
+Release 0004 ALPHA, Jan 29th 2007
 
 Contributors: Reto Wettach, André Knörig, Zach Eveland, Dirk van Oosterbosch, 
 Jonathan Cohen, Myriel Milicevic, Julia Werner, Omer Yosha, Travis Robertson,
@@ -16,7 +16,7 @@ Stefan Hermann, Hendrik Gäbler, Haik Dettmann, Alex Grunsteidl, Christian Engle
 David Mellis, James Haliburton, Jan Sieber, Lutz Dickmann, Massimo Banzi, 
 Matt Karau, Michael Zöllner, Olaf Val, Tom Hulbert, and Tom Igoe
 
-(c) 2007 Fachhochschule Potsdam
+(c) 2007-2008 Fachhochschule Potsdam
 Visit http://fritzing.org
       </text>
    </aboutInfo>
