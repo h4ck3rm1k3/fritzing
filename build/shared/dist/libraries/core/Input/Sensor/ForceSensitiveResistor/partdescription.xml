@@ -9,7 +9,7 @@
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
-	<label>FS</label>
+	<label>FSR</label>
 	<reference>http://fritzing.org/reference/parts/core/forcesensitiveresistor</reference>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="114" y="768" units="himetric"/> <!-- 18x121 400% view pixels -->
