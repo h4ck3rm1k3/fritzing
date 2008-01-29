@@ -2,7 +2,6 @@ package org.fritzing.fritzing.diagram.export;
 
 import java.util.ArrayList;
 
-import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 
 

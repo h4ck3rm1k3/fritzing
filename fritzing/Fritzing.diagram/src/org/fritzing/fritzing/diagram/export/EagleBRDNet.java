@@ -13,12 +13,12 @@ public class EagleBRDNet {
 	ArrayList<PartPinPair> pinList = new ArrayList<PartPinPair>();
 	
 	public EagleBRDNet(Leg l, ArrayList<EagleBRDPart> partList) {
-		System.out.println("leg parent name: " + l.getParent().getName());
-		
-		System.out.println("leg source: " + l.getSource());
-		System.out.println("leg source name: " + l.getSource().getName());
-		System.out.println("leg target: " + l.getTarget());
-		System.out.println("leg target name: " + l.getTarget().getName());
+//		System.out.println("leg parent name: " + l.getParent().getName());
+//		
+//		System.out.println("leg source: " + l.getSource());
+//		System.out.println("leg source name: " + l.getSource().getName());
+//		System.out.println("leg target: " + l.getTarget());
+//		System.out.println("leg target name: " + l.getTarget().getName());
 		
 		/*
 		EagleBRDPart sourcePart = new EagleBRDPart();

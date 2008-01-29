@@ -1,11 +1,7 @@
 package org.fritzing.fritzing.diagram.export;
 
-import java.util.ArrayList;
-
 import org.eclipse.emf.common.util.EList;
-import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
-import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Track;
 
 

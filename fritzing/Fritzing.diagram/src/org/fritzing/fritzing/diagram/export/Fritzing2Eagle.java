@@ -182,7 +182,7 @@ public class Fritzing2Eagle {
 		/* add in the breadboard tracks */
 		for (int i=0; i<partList.size(); i++) {
 			EagleBRDPart part = partList.get(i);
-			if (part.getFritzingSpecies().equalsIgnoreCase("breadboardstandard")) {
+//			if (part.getFritzingSpecies().equalsIgnoreCase("breadboardstandard")) {
 				EList <Track> tracks = part.getFritzingTracks();
 				for (int j=0; j<tracks.size(); j++) {
 					Track t = tracks.get(j);
@@ -192,7 +192,7 @@ public class Fritzing2Eagle {
 					EagleBRDNet net = new EagleBRDNet(t, partList);
 					netList.add(net);
 				}
-			}			
+//			}			
 		}
 		
 		/* now enumerate the new net names.  we are ignoring the names provided by Fritzing
@@ -236,7 +236,7 @@ public class Fritzing2Eagle {
 		
 		BRDScriptExporter exporter = new BRDScriptExporter();
 		result = exporter.export(partList, netList);
-		System.out.println(result);
+//		System.out.println(result);
 		
 		return result;
 	}
