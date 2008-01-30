@@ -79,9 +79,6 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 							"No sketch currently opened.", npe));
 			return;
 		}
-		// validate
-		ValidateAction.runValidation(editor.getDiagramEditPart(), editor.getDiagram());
-		// TODO: warn if validation shows errors
 		
 		// Specify paths to scripts and ULPs needed by Eagle
 		// these include fritzing_master.ulp, auto_place.ulp, fritzing_setup-arduino_shield.scr,
