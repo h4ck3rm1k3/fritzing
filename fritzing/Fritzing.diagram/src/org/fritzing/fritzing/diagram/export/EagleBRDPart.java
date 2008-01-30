@@ -3,10 +3,12 @@ package org.fritzing.fritzing.diagram.export;
 import org.eclipse.emf.common.util.EList;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Track;
+import org.fritzing.fritzing.diagram.edit.parts.PartEditPart;
 
 
 public class EagleBRDPart {
 	Part p;
+	PartEditPart ep;
 	private String eagleFootprint = "";
 	private String eagleLibraryName = "";
 	private String eaglePartLabelPrefix = "";
@@ -18,10 +20,18 @@ public class EagleBRDPart {
 	private boolean locked = false;					// should the part's position be locked?
 	private boolean exportToPcb = true;
 	
-	public EagleBRDPart(Part p) {
+	public EagleBRDPart(Part p, PartEditPart ep) {
 		this.p = p;
+		this.ep = ep;
+		
+		// Fritzing coordinates
+		setFritzingPartPos(new CoordPair(
+				((float)ep.getLocation().x), 
+				(float)ep.getLocation().y));
 		
 		if (p.getFootprint() != null) {
+			// TODO: libraryLocation is the absolute path to the partdescription.xml
+			String libraryLocation = ep.getPartLoader().getContentsPath();
 			String footprintStrings[] = p.getFootprint().split("/");	
 			String libraryName = footprintStrings[0].split(".lbr")[0];
 			String footprintName = footprintStrings[1];
@@ -34,7 +44,7 @@ public class EagleBRDPart {
 			setExportToPcb(false);
 		}
 	}
-	
+		
 	public EagleBRDPart() {
 		
 	}

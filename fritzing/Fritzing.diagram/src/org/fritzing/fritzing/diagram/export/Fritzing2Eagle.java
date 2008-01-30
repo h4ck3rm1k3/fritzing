@@ -5,11 +5,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.emf.core.util.EMFCoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
-import org.fritzing.fritzing.Element;
 import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
@@ -17,6 +15,7 @@ import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Track;
 import org.fritzing.fritzing.Wire;
+import org.fritzing.fritzing.diagram.edit.parts.PartEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 
 public class Fritzing2Eagle {		
@@ -31,15 +30,12 @@ public class Fritzing2Eagle {
 		ArrayList<EagleBRDNet> netList = new ArrayList<EagleBRDNet>(); 
 		
 		/* we begin the conversion process by first creating an entry in partList for
-		 * each part in the Fritzing sketch.  pass the Fritzing part coordinates here
-		 * since we need the viewer to grab layout information about the model. 
+		 * each part in the Fritzing sketch.   
 		 */
 		int genericPart = 1;
 		for (Part p: sketch.getParts()) {	
-			EagleBRDPart part = new EagleBRDPart(p);
-			part.setFritzingPartPos(new CoordPair(		// Fritzing coordinates
-					((float)getLayoutInfo(viewer, p).getLocation().x), 
-					(float)getLayoutInfo(viewer, p).getLocation().y));
+			PartEditPart ep = getEditPart(viewer, p);
+			EagleBRDPart part = new EagleBRDPart(p, ep);
 			if (p.getName() == null) {
 				part.setEagleLabelPrefix("part" + genericPart);
 				genericPart++;
@@ -132,7 +128,7 @@ public class Fritzing2Eagle {
 					Part targetPart = null;
 					Leg leg = terminals.get(j).getLeg();
 					ILegConnection target = leg.getTarget();
-					System.out.println("target string: " + target.toString());
+//					System.out.println("target string: " + target.toString());
 					if (target != null) {
 						if (target instanceof Terminal) {
 							targetPart = ((Terminal)target).getParent();
@@ -140,11 +136,11 @@ public class Fritzing2Eagle {
 							Terminal targetSource = (Terminal)((Leg)target).getSource();
 							targetPart = targetSource.getParent();
 						} else if (target instanceof Sketch) {
-							System.out.println("!!! sketch part !!!");
+//							System.out.println("!!! sketch part !!!");
 							continue;
 						}
 					} else {
-						System.out.println("!!!! null target !!!!");
+//						System.out.println("!!!! null target !!!!");
 					}
 					
 					EagleBRDPart eagleSourcePart = part;
@@ -155,8 +151,8 @@ public class Fritzing2Eagle {
 							eagleTargetPart = partList.get(k);
 						}
 					}
-					System.out.println("source: " + eagleSourcePart.getEaglePartLabel() + "." + leg.getSource().getId());
-					System.out.println("target: " + eagleTargetPart.getEaglePartLabel() + "." + leg.getTarget().getId());
+//					System.out.println("source: " + eagleSourcePart.getEaglePartLabel() + "." + leg.getSource().getId());
+//					System.out.println("target: " + eagleTargetPart.getEaglePartLabel() + "." + leg.getTarget().getId());
 					
 					String eagleSourcePinId = leg.getSource().getId();
 					String eagleTargetPinId = leg.getTarget().getId();
@@ -165,7 +161,7 @@ public class Fritzing2Eagle {
 						// indicates that the leg is probably directly connected to another leg
 						if (leg.getTarget() instanceof Leg) {
 							ILegConnection targetTest = leg.getTarget();
-							System.out.println("source part pin id: " + ((Terminal)((Leg)targetTest).getSource()).getId());
+//							System.out.println("source part pin id: " + ((Terminal)((Leg)targetTest).getSource()).getId());
 //							System.out.println("target part pin id: " + ((Terminal)((Leg)targetTest).getTarget()).getId());
 							eagleTargetPinId = ((Terminal)((Leg)targetTest).getSource()).getId();
 						}
@@ -230,9 +226,9 @@ public class Fritzing2Eagle {
 		
 		
 		/* print the net information for debugging purposes */
-		for (int i=0; i<netList.size(); i++) {
+//		for (int i=0; i<netList.size(); i++) {
 //			System.out.println("&&& " + netList.get(i).getNetName() + " " + netList.get(i).getPinListAsString());
-		}
+//		}
 		
 		BRDScriptExporter exporter = new BRDScriptExporter();
 		result = exporter.export(partList, netList);
@@ -242,10 +238,17 @@ public class Fritzing2Eagle {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static ShapeEditPart getLayoutInfo(IDiagramGraphicalViewer viewer, Element e) {
+	/*
+	 * Returns the EditPart for a part, from which one can extract additional
+	 * information about this element, e.g. the layout and its defining XML (via 
+	 * the PartLoader)
+	 * @param viewer The viewer of the editor, something like a manager of the view
+	 * @param p A part's model
+	 */
+	protected static PartEditPart getEditPart(IDiagramGraphicalViewer viewer, Part p) {
 		List<EditPart> editParts = viewer.findEditPartsForElement(
-				EMFCoreUtil.getProxyID(e), ShapeEditPart.class);
-		return (ShapeEditPart) editParts.get(0);
+				EMFCoreUtil.getProxyID(p), PartEditPart.class);
+		return (PartEditPart) editParts.get(0);
 	}
 	
 	public static boolean dupeNamesExistForPart(EagleBRDPart part, ArrayList<EagleBRDPart> partList) {
