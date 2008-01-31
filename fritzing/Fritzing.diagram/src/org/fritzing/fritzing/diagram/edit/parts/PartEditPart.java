@@ -45,8 +45,8 @@ import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
+import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.RotatableNonresizableShapeEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingLinkDescriptor;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
@@ -57,7 +57,7 @@ import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 public class PartEditPart extends AbstractBorderedShapeEditPart implements IRotatableEditPart
 {
 
-	PartLoader partLoader;
+	PartDefinition partDefinition;
 	
 	protected Point gridOffset;
 	
@@ -84,7 +84,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 			String genus = ((Part) element).getGenus();
 			String species = ((Part) element).getSpecies();
 			if (genus != null && species != null) {
-				partLoader = PartLoaderRegistry.getInstance().get(
+				partDefinition = PartDefinitionRegistry.getInstance().get(
 						genus + species);
 			}
 		}
@@ -94,8 +94,8 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 		return getMapMode().DPtoLP(deviceUnit);		
 	}
 	
-	public PartLoader getPartLoader() {
-		return partLoader;
+	public PartDefinition getPartDefinition() {
+		return partDefinition;
 	}
 	
 	public ConnectionAnchor getTargetConnectionAnchor(ConnectionEditPart connection) {
@@ -110,7 +110,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	public Point getLegTargetPosition(Terminal2EditPart terminalPart) {
 		try {
 			Terminal terminal = (Terminal) ((NodeImpl) terminalPart.getModel()).getElement();
-			Point p = partLoader.getTerminalLegTargetPosition(terminal.getId());
+			Point p = partDefinition.getTerminalLegTargetPosition(terminal.getId());
 			double zoom = ((FritzingDiagramRootEditPart)getRoot()).getZoomManager().getZoom();
 			p.x = (int)(getMapMode().LPtoDP(p.x)*zoom);
 			p.y = (int)(getMapMode().LPtoDP(p.y)*zoom);
@@ -182,7 +182,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		PartFigure figure = new PartFigure(partLoader);
+		PartFigure figure = new PartFigure(partDefinition);
 		return primaryShape = figure;
 	}
 	
@@ -215,7 +215,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	 * @generated NOT
 	 */
 	protected NodeFigure createNodePlate() {
-		Dimension size = partLoader.getSize();
+		Dimension size = partDefinition.getSize();
 //		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
 //				.DPtoLP((int) (size.width / multiplier)), getMapMode().DPtoLP(
 //				(int) (size.height / multiplier)));
@@ -258,7 +258,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 			if (!legsInitialized) {
 				legsInitialized = true;
  				initializeLegs();
- 				String zorder = partLoader.getZOrder();
+ 				String zorder = partDefinition.getZOrder();
  				int newIndex = -1;
  				if (zorder != null) {
  					if (zorder.equalsIgnoreCase("front")) {
@@ -277,7 +277,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	}
 	
 	public boolean isTerminalFemale(Terminal2EditPart terminal) {
-		if (partLoader == null) return false;
+		if (partDefinition == null) return false;
 		
 		Object o = terminal.getModel();
 		if (!(o instanceof NodeImpl)) return false;
@@ -285,7 +285,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 		EObject e = ((NodeImpl) o).getElement();
 		if (e == null) return false;
 			
-		return partLoader.getTerminalFemale(((Terminal) e).getId());
+		return partDefinition.getTerminalFemale(((Terminal) e).getId());
 	}
 	
 	void initializeLegs() {
@@ -299,7 +299,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 				if (chldrn.get(i) instanceof Terminal2EditPart) {
 					Terminal2EditPart child = (Terminal2EditPart) chldrn.get(i);
 					Terminal terminal = (Terminal) ((NodeImpl) child.getModel()).getElement();
-					String s = partLoader.getTerminalType(terminal.getId());
+					String s = partDefinition.getTerminalType(terminal.getId());
 										
 					if (!s.equalsIgnoreCase("leg")) continue;
 					
@@ -416,7 +416,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 			if (eobject instanceof Terminal) {
 				String name = ((Terminal) eobject).getId();
 				if (name != null) {
-					Point q = partLoader.getTerminalPoint(name);
+					Point q = partDefinition.getTerminalPoint(name);
 					if (q != null) {
 						return q;
 					}

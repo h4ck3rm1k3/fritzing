@@ -4,15 +4,11 @@
 package org.fritzing.fritzing.diagram.part;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.Tool;
 import org.eclipse.gef.palette.PaletteContainer;
@@ -25,13 +21,12 @@ import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateUnspecifiedTypeRequest;
-import org.eclipse.gmf.runtime.diagram.ui.services.palette.PaletteService;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
+import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
 /**
@@ -119,15 +114,15 @@ public class FritzingPaletteFactory {
 	}
 
 	protected void addPart(String prefix) {
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get(
+		PartDefinition partDefinition = PartDefinitionRegistry.getInstance().get(
 				prefix + File.separator + "partdescription.xml");
-		if (partLoader == null)
+		if (partDefinition == null)
 			return;
 
 		IElementType type = FritzingElementTypes.GenericPart_2004;
 
-		if (!partLoader.isGeneric()) {
-			IElementType tempType = coreMap.get(partLoader.getSpecies());
+		if (!partDefinition.isGeneric()) {
+			IElementType tempType = coreMap.get(partDefinition.getSpecies());
 			if (tempType != null) {
 				type = tempType;
 			} else {
@@ -137,22 +132,22 @@ public class FritzingPaletteFactory {
 
 		List<IElementType> types = new ArrayList<IElementType>(1);
 		types.add(type);
-		NodeToolEntry entry = new NodeToolEntry(partLoader.getTitle(),
-				partLoader.getDescription(), types, partLoader, prefix
+		NodeToolEntry entry = new NodeToolEntry(partDefinition.getTitle(),
+				partDefinition.getDescription(), types, partDefinition, prefix
 						.startsWith("libraries" + File.separator + "core"));
 
 		ImageDescriptor id = ImageDescriptor.createFromFile(null,
 				FritzingDiagramEditorUtil.getFritzingLocation() + prefix
-						+ File.separator + partLoader.getIconFilename());
+						+ File.separator + partDefinition.getIconFilename());
 		entry.setSmallIcon(id);
 
 		id = ImageDescriptor.createFromFile(null, FritzingDiagramEditorUtil
 				.getFritzingLocation()
-				+ prefix + File.separator + partLoader.getLargeIconFilename());
+				+ prefix + File.separator + partDefinition.getLargeIconFilename());
 
 		entry.setLargeIcon(id);
 
-		String drawerTitle = partLoader.getGenus();
+		String drawerTitle = partDefinition.getGenus();
 		int dotIndex = drawerTitle.indexOf('.');
 		SortPaletteDrawer drawer = getDrawer(dotIndex > 0 ?
 				drawerTitle.substring(0, dotIndex) : drawerTitle);
@@ -223,9 +218,7 @@ public class FritzingPaletteFactory {
 		return entry;
 	}
 
-	/**
-	 * @generated NOT
-	 */
+	
 	private static class GenericUnspecifiedTypeCreationTool extends
 			UnspecifiedTypeCreationTool {
 		/**
@@ -233,70 +226,49 @@ public class FritzingPaletteFactory {
 		 */
 		private List et;
 
-		/**
-		 * @generated NOT
-		 */
-		private final PartLoader partLoader;
+		private final PartDefinition partDefinition;
 
-		/**
-		 * @generated NOT
-		 */
 		public GenericUnspecifiedTypeCreationTool(List elementTypes,
-				PartLoader partLoader) {
+				PartDefinition partDefinition) {
 			super(elementTypes);
-			// eventually passes the partloader along to GenericPartCreateCommand
-			this.partLoader = partLoader;
+			// eventually passes the partDefinition along to GenericPartCreateCommand
+			this.partDefinition = partDefinition;
 			et = elementTypes;
 		}
 
 		protected Request createTargetRequest() {
-			// eventually passes the partloader along to GenericPartCreateCommand
+			// eventually passes the partDefinition along to GenericPartCreateCommand
 			return new GenericCreateUnspecifiedTypeRequest(et,
-					getPreferencesHint(), partLoader);
+					getPreferencesHint(), partDefinition);
 		}
 	}
 
-	/**
-	 * @generated NOT
-	 */
+
 	private static class GenericCreateUnspecifiedTypeRequest extends
 			CreateUnspecifiedTypeRequest {
-		/**
-		 * @generated NOT
-		 */
-		private final PartLoader partLoader;
 
-		/**
-		 * @generated NOT
-		 */
+		private final PartDefinition partDefinition;
+
 		public GenericCreateUnspecifiedTypeRequest(List elementTypes,
-				PreferencesHint preferencesHint, PartLoader partLoader) {
+				PreferencesHint preferencesHint, PartDefinition partDefinition) {
 			super(elementTypes, preferencesHint);
-			// eventually passes the partloader along to GenericPartCreateCommand
-			this.partLoader = partLoader;
+			// eventually passes the partDefinition along to GenericPartCreateCommand
+			this.partDefinition = partDefinition;
 		}
 
-		/**
-		 * @generated NOT
-		 */
 		public CreateRequest getRequestForType(IElementType creationHint) {
 			CreateRequest cr = super.getRequestForType(creationHint);
 
-			// eventually passes the partloader along to GenericPartCreateCommand
-			cr.getExtendedData().put("partLoader", partLoader);
+			// eventually passes the partDefinition along to GenericPartCreateCommand
+			cr.getExtendedData().put(PartDefinition.REQUEST_PARAM, partDefinition);
 			return cr;
 		}
 	}
 
-	/**
-	 * @generated NOT
-	 */
+
 	private static class SortPaletteDrawer extends PaletteDrawer {
 		protected ArrayList<NodeToolEntry> entries;
 
-		/**
-		 * @generated NOT
-		 */
 		public SortPaletteDrawer(String drawerName) {
 			super(drawerName);
 			entries = new ArrayList<NodeToolEntry>();
@@ -321,62 +293,40 @@ public class FritzingPaletteFactory {
 		}
 	}
 
-	/**
-	 * @generated NOT
-	 */
 	private static class NodeToolEntry extends ToolEntry implements
 			Comparable<NodeToolEntry> {
-		/**
-		 * @generated NOT
-		 */
-		private final PartLoader partLoader;
-
-		/**
-		 * @generated NOT
-		 */
+		
+		private final PartDefinition partDefinition;
 		private final boolean core;
-
-		/**
-		 * @generated NOT
-		 */
 		protected final List elementTypes;
 
-		/**
-		 * @generated NOT
-		 */
 		private NodeToolEntry(String title, String description,
-				List elementTypes, PartLoader partLoader, boolean core) {
-			super(partLoader.getTitle(), partLoader.getDescription(), null,
+				List elementTypes, PartDefinition partDefinition, boolean core) {
+			super(partDefinition.getTitle(), partDefinition.getDescription(), null,
 					null);
 
 			// eventually passes the partloader along to PartCreateCommand
-			this.partLoader = partLoader;
+			this.partDefinition = partDefinition;
 			this.elementTypes = elementTypes;
 			this.core = core;
 		}
 
-		/**
-		 * @generated NOT
-		 */
 		public Tool createTool() {
-			// eventually passes the partloader along to PartCreateCommand
+			// eventually passes the partDefinition along to PartCreateCommand
 			Tool tool = new GenericUnspecifiedTypeCreationTool(elementTypes,
-					partLoader);
+					partDefinition);
 			tool.setProperties(getToolProperties());
 			return tool;
 		}
 
-		/**
-		 * @generated NOT
-		 */
 		public int compareTo(NodeToolEntry other) {
 			if (this.core && !other.core)
 				return -1;
 			if (other.core && !this.core)
 				return 1;
 
-			return this.partLoader.getTitle().compareTo(
-					other.partLoader.getTitle());
+			return this.partDefinition.getTitle().compareTo(
+					other.partDefinition.getTitle());
 		}
 
 	}

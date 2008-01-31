@@ -31,7 +31,7 @@ public class EagleBRDPart {
 		
 		if (p.getFootprint() != null) {
 			// TODO: libraryLocation is the absolute path to the partdescription.xml
-			String libraryLocation = ep.getPartLoader().getContentsPath();
+			String libraryLocation = ep.getPartDefinition().getContentsPath();
 			String footprintStrings[] = p.getFootprint().split("/");	
 			String libraryName = footprintStrings[0].split(".lbr")[0];
 			String footprintName = footprintStrings[1];

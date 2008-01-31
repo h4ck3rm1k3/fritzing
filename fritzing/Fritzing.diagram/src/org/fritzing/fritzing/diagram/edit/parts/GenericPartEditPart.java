@@ -4,19 +4,15 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.StackLayout;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
-import org.eclipse.gef.RootEditPart;
-import org.eclipse.gef.editparts.ZoomListener;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
 import org.fritzing.fritzing.diagram.edit.policies.GenericPartCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.GenericPartItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -68,7 +64,7 @@ public class GenericPartEditPart extends PartEditPart {
 	 * @generated NOT
 	 */
 	protected IFigure createNodeShape() {
-		GenericPartFigure figure = new GenericPartFigure(partLoader);
+		GenericPartFigure figure = new GenericPartFigure(partDefinition);
 		return primaryShape = figure;
 	}
 
@@ -138,8 +134,8 @@ public class GenericPartEditPart extends PartEditPart {
 		/**
 		 * @generated NOT
 		 */
-		public GenericPartFigure(PartLoader partLoader) {
-			super(partLoader);
+		public GenericPartFigure(PartDefinition partDefinition) {
+			super(partDefinition);
 		}
 
 		/**

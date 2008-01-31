@@ -20,7 +20,7 @@ import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Wire;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
+import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditor;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;

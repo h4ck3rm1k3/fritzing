@@ -5,21 +5,13 @@ package org.fritzing.fritzing.diagram.edit.parts;
 
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.WrapLabel;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.Display;
-import org.fritzing.fritzing.ITrackConnection;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.Track;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
+import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.TrackItemSemanticEditPolicy;
 
 /**
@@ -46,12 +38,12 @@ public class TrackEditPart extends ConnectionFritzingEditPart {
 			Track track = (Track) view.getElement();
 			Part parent = track.getParent();
 			if (parent != null) {
-				PartLoader partLoader = PartLoaderRegistry.getInstance().get(
+				PartDefinition partDefinition = PartDefinitionRegistry.getInstance().get(
 						parent.getGenus() + parent.getSpecies());
-				if (partLoader != null) {
+				if (partDefinition != null) {
 					Terminal source = (Terminal) track.getSource();
 					Terminal target = (Terminal) track.getTarget();
-					visible = partLoader.getTrackVisible(source.getId()
+					visible = partDefinition.getTrackVisible(source.getId()
 							+ target.getId());
 				}
 			}

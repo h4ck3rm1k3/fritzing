@@ -10,34 +10,25 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
 import org.eclipse.swt.graphics.Image;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
-/**
- * @generated NOT
- */
 public class PartFigure extends RectangleFigure implements IZoomableFigure {
 
 	protected Image image;
 	private double zoom = -1;
-	protected PartLoader partLoader;
+	protected PartDefinition partDefinition;
 	protected String  contentsPath;
 
-	/**
-	 * @generated NOT
-	 */
-	public PartFigure(PartLoader partLoader) {
-		this.partLoader = partLoader;
-		this.setSize(partLoader.getSize());
-		this.setPreferredSize(new Dimension(partLoader.getSize()));
-		this.setMaximumSize(new Dimension(partLoader.getSize()));
-		this.setMinimumSize(new Dimension(partLoader.getSize()));
+	public PartFigure(PartDefinition partDefinition) {
+		this.partDefinition = partDefinition;
+		this.setSize(partDefinition.getSize());
+		this.setPreferredSize(new Dimension(partDefinition.getSize()));
+		this.setMaximumSize(new Dimension(partDefinition.getSize()));
+		this.setMinimumSize(new Dimension(partDefinition.getSize()));
 		createContents();
 	}
 
-	/**
-	 * @generated NOT
-	 */
 	protected void createContents() {
 		setOutline(false);
 
@@ -72,7 +63,7 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 	 */
 	private void updateImage() {
 		double bestAvailableLevel = zoom;
-		if (!partLoader.getBitmapFilenames().containsKey(bestAvailableLevel)) {
+		if (!partDefinition.getBitmapFilenames().containsKey(bestAvailableLevel)) {
 			Vector<Double> levels = getSortedImageLevels();
 			bestAvailableLevel = levels.lastElement();
 		    for (Double level: levels) {
@@ -83,10 +74,10 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 		    }
 		}
 		try {
-			String imageSrc = partLoader.getBitmapFilenames().get(
+			String imageSrc = partDefinition.getBitmapFilenames().get(
 				new Double(bestAvailableLevel));
 			image = FritzingElementTypes.getImageRegistry().get(
-				partLoader.getContentsPath() + imageSrc);
+					partDefinition.getContentsPath() + imageSrc);
 			
 			// buffer the scaled image
 			Dimension figureSize = getSize();
@@ -114,7 +105,7 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 	}
 	
 	protected Vector<Double> getSortedImageLevels() {
-		Hashtable<Double,String> images = partLoader.getBitmapFilenames();
+		Hashtable<Double,String> images = partDefinition.getBitmapFilenames();
 		// find the next biggest available image zoom level
 		Vector<Double> levels = new Vector<Double>(images.keySet());
 	    Collections.sort(levels);

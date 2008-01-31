@@ -6,32 +6,19 @@ import org.eclipse.gmf.runtime.emf.type.core.commands.CreateElementCommand;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.FritzingPackage;
-import org.fritzing.fritzing.GenericPart;
 import org.fritzing.fritzing.Part;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
 import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 
-/**
- * @generated NOT
- */
 public class PartCreateCommand extends CreateElementCommand {
 	
-	/**
-	 * @generated NOT
-	 */	
-	PartLoader partLoader;
+	PartDefinition partDefinition;
 
-	/**
-	 * @generated NOT
-	 */
 	public PartCreateCommand(CreateElementRequest request) {
 		super(request);
-		partLoader = (PartLoader) request.getParameter("partLoader");		
+		partDefinition = (PartDefinition) request.getParameter(PartDefinition.REQUEST_PARAM);		
 	}
 	
-	/**
-	 * @generated NOT
-	 */
 	protected EObject getElementToEdit() {
 		EObject container = ((CreateElementRequest) getRequest())
 				.getContainer();
@@ -41,16 +28,10 @@ public class PartCreateCommand extends CreateElementCommand {
 		return container;
 	}
 
-	/**
-	 * @generated NOT
-	 */
 	protected EClass getEClassToEdit() {
 		return FritzingPackage.eINSTANCE.getComposite();
 	}
 
-	/**
-	 * @generated NOT
-	 */
 	protected EObject doDefaultElementCreation() {
 		try {
 			Part newElement = (Part) super.doDefaultElementCreation();
@@ -59,13 +40,13 @@ public class PartCreateCommand extends CreateElementCommand {
 				return null;
 			}
 			
-			if (partLoader == null) {
+			if (partDefinition == null) {
 				// TODO: signal the user that something is wrong
 				return newElement;		
 			}
 			
 			// use "our" initializers instead		
-			partLoader.initialize(newElement);	
+			PartLoader.initialize(partDefinition, newElement);	
 	
 			return newElement;
 		}

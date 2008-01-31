@@ -14,8 +14,8 @@ import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
+import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.edit.parts.TerminalName2EditPart;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -55,9 +55,9 @@ public class Terminal2ViewFactory extends AbstractShapeViewFactory {
 		 */
 		Terminal terminal = (Terminal)view.getElement();
 		Part part = terminal.getParent();
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get(
+		PartDefinition partDefinition = PartDefinitionRegistry.getInstance().get(
 				part.getGenus() + part.getSpecies());
-		if (partLoader.getTerminalLabelVisible(terminal.getId())) {
+		if (partDefinition.getTerminalLabelVisible(terminal.getId())) {
 			IAdaptable eObjectAdapter = null;
 			EObject eObject = (EObject) semanticAdapter.getAdapter(EObject.class);
 			if (eObject != null) {

@@ -1,8 +1,6 @@
 package org.fritzing.fritzing.diagram.edit;
 
 import java.io.File;
-import java.io.StringWriter;
-import java.util.ArrayList;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -10,12 +8,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
-import org.fritzing.fritzing.diagram.edit.PartLoader.PointName;
-import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
-import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,7 +15,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class PartLoaderUpdater {
+public class PartDefinitionUpdater {
 
 	static int filesLoaded;
 
@@ -74,21 +66,21 @@ public class PartLoaderUpdater {
 	}
 
 	public static void changeXML(String root, String prefix) {
-		PartLoader partLoader = PartLoaderRegistry.getInstance().get(root,
+		PartDefinition partDefinition = PartDefinitionRegistry.getInstance().get(root,
 				prefix + File.separator + "partdescription.xml", true);
-		if (partLoader == null) {
+		if (partDefinition == null) {
 			return;
 		}
 
 		try {
 			// load doc
-			Document doc = partLoader.getDocument();
+			Document doc = partDefinition.getDocument();
 
 			// change the xml
 			update(doc);
 
-			File docFile = partLoader.getDocumentFile();
-			partLoader.getDocumentFile().renameTo(new File(docFile.getParent() + File.separator + "old" + docFile.getName()));
+			File docFile = partDefinition.getDocumentFile();
+			partDefinition.getDocumentFile().renameTo(new File(docFile.getParent() + File.separator + "old" + docFile.getName()));
 
 			// save doc
 			Transformer transformer = TransformerFactory.newInstance()

@@ -9,20 +9,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Iterator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.fritzing.fritzing.FritzingFactory;
 import org.fritzing.fritzing.FritzingPackage;
 import org.fritzing.fritzing.Leg;
@@ -32,7 +29,6 @@ import org.fritzing.fritzing.Terminal;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
-import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 import org.fritzing.fritzing.diagram.utils.UIDGenerator;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -43,204 +39,69 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-
+/*
+ * Loads a part definition from a specified XML, and initializes an element
+ * (usually of type Part) with this definition.
+ */
 public class PartLoader {
-	protected Hashtable<String, PointName> terminalHash;
-	protected Point gridOffset;
-	protected Hashtable<Double, String> bitmapFilenames;
-	protected String svgFilename;
-	protected Dimension size;
-	protected boolean loaded;
-	protected String iconFilename;
-	protected String largeIconFilename;
-	protected String description;
-	protected String species;
-	protected String genus;
-	protected String contentsPath;
-	protected String label;
-	protected String title;
-	protected boolean generic;
-	protected String version;
-	protected String footprint;
-	protected ArrayList<ArrayList<PointName>> nets;
-	protected Hashtable<String, Boolean> trackHash = new Hashtable<String, Boolean>();
-	protected Document doc = null;
-	protected File documentFile = null;
-	protected String zorder = null;
+
 	
-	public PartLoader() {				
-		nets = new ArrayList<ArrayList<PointName>>();
-		contentsPath = "";
-		terminalHash = new Hashtable<String, PointName>();
-		size = new Dimension(0,0);
-		gridOffset = new Point(0,0);
-		bitmapFilenames = new Hashtable<Double, String>();
-		svgFilename = null;
-	}
-	
-	public boolean getLoaded() {
-		return loaded;
-	}
-		
-	public boolean isGeneric() {
-		return generic;
-	}
-		
-	public Dimension getSize() {
-		return size;
-	}
-	
-	public boolean getTrackVisible(String trackString) {
-		Boolean b = trackHash.get(trackString);
-		if (b == null) return false;
-		
-		return b;
-	}
-		
-	public Point getTerminalLegTargetPosition(String id) {
-		if (terminalHash == null) return new Point(0,400);
-		
-		PointName pointName = terminalHash.get(id);
-		if (pointName == null) return new Point(0,400);
-		
-		if (pointName.points.size() < 2) return new Point(0,400);
-				
-		PointPoint pp0 = pointName.points.get(0);		
-		PointPoint pp1 = pointName.points.get(1);
-		
-		return new Point(pp1.modified.x - pp0.modified.x, pp1.modified.y - pp0.modified.y);	
-	}
-	
-	public Point getTerminalPoint(String id) {
-		if (terminalHash == null) return null;
-	
-		PointName pointName = terminalHash.get(id);
-		if (pointName == null) return null;
-		
-		if (pointName.points.size() < 1) return null;
-		
-		return pointName.points.get(0).modified;
-	}
-	
-	public String getVersion() {
-		return version;
-	}
-	
-	public String getTerminalType(String id) {
-		if (terminalHash == null) return null;
-	
-		PointName pointName = terminalHash.get(id);
-		if (pointName == null) return null;
-		
-		return pointName.type;
-	}
-	
-	public boolean getTerminalLabelVisible(String id) {
-		if (terminalHash == null) return false;
-	
-		PointName pointName = terminalHash.get(id);
-		if (pointName == null) return false;
-		
-		return pointName.visible;
-	}
-	
-	public boolean getTerminalFemale(String id) {
-		if (terminalHash == null) return false;
-		
-		PointName pointName = terminalHash.get(id);
-		if (pointName == null) return false;
-		
-		if (pointName.type == null) return false;
-		
-		// at the moment, male and female are treated the same
-		return pointName.type.equalsIgnoreCase("female") || pointName.type.equalsIgnoreCase("male");		
-	}
-	
-	
-	public String getZOrder() {
-		return zorder;
-	}
-	
-	public String getSvgFilename() {
-		return svgFilename;
-	}
-	
-	public Hashtable<Double,String> getBitmapFilenames() {
-		return bitmapFilenames;
-	}
-	
-	public String getIconFilename() {
-		return iconFilename;
-	}
-	
-	public String getLargeIconFilename() {
-		return largeIconFilename;
-	}
-	
-	public String getLabel() {
-		return label;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public String getContentsPath() {
-		return contentsPath;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public String getSpecies() {
-		return species;
-	}
-	
-	public String getGenus() {
-		return genus;
-	}
-	
-	public boolean initialize(String root, String path, EObject newElement) {
+	public static PartDefinition loadXMLFromLibrary(String root, String path, boolean saveDocument) {
 		try {
-			
+			URL url = new URL("file", null, root + path);
+			File f = new File(root + path);
+			PartDefinition pd = new PartDefinition();
+			pd.setContentsPath(f.getParent() + File.separator);
+			loadXML(pd, url, saveDocument);
+			return pd;
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+	
+	protected static boolean initialize(String root, String path, EObject newElement) {
+		try {
 //			URL url = FileLocator.find(FritzingDiagramEditorPlugin
 //			.getInstance().getBundle(), new Path(
 //			"icons/parts/partdescription.xml"), null);
 //			url = FileLocator.toFileURL(url);
-
-			if (!loadXMLFromLibrary(root, path, false)) return false;
 			
-			return initialize(newElement);
+			PartDefinition pd = loadXMLFromLibrary(root, path, false);
+			if (pd == null) return false;
+			
+			return initialize(pd, newElement);
 		}
 		catch (Exception ex) {
-			
+			ex.printStackTrace();
 		}
-		
 		return false;
 	}
 	
 				
-	public boolean initialize(EObject newElement) {
-		if (!this.loaded) return false;
+	public static boolean initialize(PartDefinition pd, EObject newElement) {
+		if (!pd.isLoaded()) return false;
 		
 		//System.out.println("initialize " + newElement + " " + System.currentTimeMillis());
 		
+		// Metadata
 		if (newElement instanceof Part) {
 			((Part) newElement).setId(UIDGenerator.getInstance().genUID());
-			((Part) newElement).setSpecies(species);
-			((Part) newElement).setGenus(genus);
-			((Part) newElement).setVersion(version);
-			((Part) newElement).setFootprint(footprint);
+			((Part) newElement).setSpecies(pd.getSpecies());
+			((Part) newElement).setGenus(pd.getGenus());
+			((Part) newElement).setVersion(pd.getVersion());
+			((Part) newElement).setFootprint(pd.getFootprint());
 		}
-			
+		
+		// Terminals
 		try {
 			
-			for (Enumeration<String> e = terminalHash.keys(); e.hasMoreElements();) {
+			for (Enumeration<String> e = pd.getTerminalIds(); e.hasMoreElements();) {
 				String id = e.nextElement();
 				if (id == null || id == "") continue;
 								
-				PointName pointName = terminalHash.get(id);
+				PointName pointName = pd.getTerminalData(id);
 				if (pointName == null) continue;
 
 				EObject terminal = FritzingPackage.eINSTANCE.getTerminal()
@@ -278,9 +139,11 @@ public class PartLoader {
 
 			}
 			
-			if (nets.size() > 0) {
-				for (int i = 0; i < nets.size(); i++) {
-					ArrayList<PointName> net = nets.get(i);
+			// Nets/Tracks
+			if (pd.hasNets()) {
+				Iterator<ArrayList<PointName>> i = pd.getNets();
+				while (i.hasNext()) {
+					ArrayList<PointName> net = i.next();
 					for (int j = 0; j < net.size() - 1; j++) {
 						
 						PointName source = net.get(j);
@@ -295,13 +158,13 @@ public class PartLoader {
 							continue;														
 						}
 						
-						PointName spn = terminalHash.get(source.name);
+						PointName spn = pd.getTerminalData(source.name);
 						if (spn == null) {
 							// alert user
 							continue;							
 						}
 
-						PointName tpn = terminalHash.get(target.name);
+						PointName tpn = pd.getTerminalData(target.name);
 						if (tpn == null) {
 							// alert user
 							continue;							
@@ -320,8 +183,7 @@ public class PartLoader {
 						feature = FritzingPackage.eINSTANCE.getTrack_Parent();
 						track.eSet(feature, newElement);
 						
-						feature = FritzingPackage.eINSTANCE
-														.getPart_Tracks();
+						feature = FritzingPackage.eINSTANCE.getPart_Tracks();
 						((Collection) newElement.eGet(feature)).add(track);											
 					}
 				}
@@ -329,46 +191,20 @@ public class PartLoader {
 			
 			EStructuralFeature feature = FritzingPackage.eINSTANCE.getIElement_Name();
 			FritzingAbstractExpression expr = FritzingOCLFactory
-					.getExpression("\'" + label + "\'",
+					.getExpression("\'" + pd.getLabel() + "\'",
 							newElement.eClass());
 			expr.assignTo(feature, newElement);
 
 			//System.out.println("done initialize " + newElement + " " + System.currentTimeMillis());
-
 			return true;
-	
 		}
 		catch (Exception ex) {
-		
+			ex.printStackTrace();
 		}
-		
 		return false;
 	}
 	
-	public boolean loadXMLFromLibrary(String root, String path, boolean saveDocument) {
-		try {
-			URL url = new URL("File://" + root + path);
-			File f = new File(root + path);
-			contentsPath = f.getParent() + File.separator;
-			boolean result = loadXML(url, saveDocument);
-			return result;
-		}
-		catch (Exception ex) {
-			
-		}
-		
-		return false;
-	}
-	
-	public Document getDocument() {
-		return doc;
-	}
-	
-	public File getDocumentFile() {
-		return documentFile;
-	}
-	
-	public boolean loadXML(URL xml, boolean saveDocument) {
+	protected static boolean loadXML(PartDefinition pd, URL xml, boolean saveDocument) {
 	    Document document;
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    
@@ -379,12 +215,12 @@ public class PartLoader {
 	    //factory.setNamespaceAware(true);
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            documentFile = new File(xml.getFile());
-            document = builder.parse(documentFile);
-            parseXML(document);
-            loaded = true;
+            pd.setDocumentFile(new File(xml.getFile()));
+            document = builder.parse(pd.getDocumentFile());
+            parseXML(pd, document);
+            pd.setLoaded(true);
             if (saveDocument) {
-            	doc = document;
+            	pd.setDocument(document);
             }
             return true;           
         } 
@@ -428,7 +264,7 @@ public class PartLoader {
 	}
 	
 	
-	protected void parseXML(Document document) {
+	protected static void parseXML(PartDefinition pd, Document document) {
 
 		try {
 			Element partNode = document.getDocumentElement();
@@ -437,12 +273,12 @@ public class PartLoader {
 				return;								
 			}
 			
-			generic = true;
+			pd.setGeneric(true);
 			Attr attr = partNode.getAttributeNode("generic");
 			if (attr != null) {
 				String s = attr.getNodeValue();
 				if (s != null) {
-					generic = !s.equalsIgnoreCase("false");
+					pd.setGeneric(!s.equalsIgnoreCase("false"));
 				}
 			}
 						
@@ -456,7 +292,7 @@ public class PartLoader {
 					defaultUnits = node.getTextContent();					
 				}
 				else if (nodeName.equals("gridOffset")) {
-					gridOffset = parseLocation(node, defaultUnits, "x", "y").modified;
+					pd.setGridOffset(parseLocation(node, defaultUnits, "x", "y").modified);
 				}
 			}
 			if (defaultUnits == null || defaultUnits == "") {
@@ -467,39 +303,39 @@ public class PartLoader {
 				Node node = nodes.item(i);
 				String nodeName = node.getNodeName();
 				if (nodeName.equals("species")) {
-					species = node.getTextContent();
+					pd.setSpecies(node.getTextContent());
 				}
 				else if (nodeName.equals("genus")) {
-					genus = node.getTextContent();				
+					pd.setGenus(node.getTextContent());				
 				}
 				else if (nodeName.equals("description")) {
-					description = node.getTextContent();				
+					pd.setDescription(node.getTextContent());				
 				}
 				else if (nodeName.equals("title")) {
-					title = node.getTextContent();					
+					pd.setTitle(node.getTextContent());					
 				}
 				else if (nodeName.equals("label")) {
-					label = node.getTextContent();					
+					pd.setLabel(node.getTextContent());					
 				}
 				else if (nodeName.equals("version")) {
-					version = node.getTextContent();					
+					pd.setVersion(node.getTextContent());					
 				}
 				else if (nodeName.equals("footprints")) {
-					parseFootprints(node.getChildNodes());					
+					parseFootprints(pd, node.getChildNodes());					
 				}
 				else if (nodeName.equals("icons")) {
-					parseIcons(node.getChildNodes());		
+					parseIcons(pd, node.getChildNodes());		
 				}
 				else if (nodeName.equals("layers")) {
 					String s = ((Element) node).getAttribute("zorder");
 					if (s != null && s.length() > 0) {
-						zorder = s;
+						pd.setZOrder(s);
 					}					
-					parseLayers(node.getChildNodes());
+					parseLayers(pd, node.getChildNodes());
 				}
 				else if (nodeName.equals("bounds")) {
 					Point sz = parseLocation(node, defaultUnits, "width", "height").modified;					
-					size = new Dimension(sz.x, sz.y);
+					pd.setSize(new Dimension(sz.x, sz.y));
 				}
 				else if (nodeName.equals("connectors")) {
 					boolean defaultTerminalLabelVisible = parseTerminalLabelLayout(true, node);
@@ -534,7 +370,7 @@ public class PartLoader {
 						
 						boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, connector);
 						PointName pn = new PointName(name, visible, type);
-						terminalHash.put(id, pn);
+						pd.addTerminal(id, pn);
 
 						// treat the terminal's location as the center rather than the top left
 						// by offsetting the value from the xml;
@@ -550,8 +386,8 @@ public class PartLoader {
 									continue;
 								}
 								
-								pp.modified.x += gridOffset.x - d;
-								pp.modified.y += gridOffset.y - d;
+								pp.modified.x += pd.getGridOffset().x - d;
+								pp.modified.y += pd.getGridOffset().y - d;
 								
 								pn.addPoint(pp);
 							}
@@ -595,11 +431,11 @@ public class PartLoader {
 								PointName source = names.get(k);
 								PointName target = names.get(k + 1);
 								// the name field has the ID 
-								trackHash.put(source.name + target.name, source.visible && target.visible);
+								pd.setTrackVisible(source.name + target.name, source.visible && target.visible);
 
 							}
 							
-							nets.add(names);
+							pd.addNet(names);
 						}
 
 					}
@@ -615,15 +451,15 @@ public class PartLoader {
 		}		
 	}
 		
-	protected boolean parseTerminalLabelLayout(boolean defaultValue, Node node) {
+	protected static boolean parseTerminalLabelLayout(boolean defaultValue, Node node) {
 		return parseXLayout(defaultValue, node, "nameLayout");
 	}
 	
-	protected boolean parseTrackLayout(boolean defaultValue, Node node) {
+	protected static boolean parseTrackLayout(boolean defaultValue, Node node) {
 		return parseXLayout(defaultValue, node, "trackLayout");
 	}
 
-	protected boolean parseXLayout(boolean defaultValue, Node node, String nodeName) {
+	protected static boolean parseXLayout(boolean defaultValue, Node node, String nodeName) {
 		try {
 			NodeList children = node.getChildNodes();
 			if (children == null) return defaultValue;
@@ -651,7 +487,7 @@ public class PartLoader {
 	}
 
 		
-	protected void parseLayers(NodeList nodeList) {
+	protected static void parseLayers(PartDefinition pd, NodeList nodeList) {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			try {
 				Node node = nodeList.item(i);
@@ -695,16 +531,10 @@ public class PartLoader {
 							zoom = Double.parseDouble(zoomString);
 						
 						if (type.equalsIgnoreCase("bitmap")) {
-							bitmapFilenames.put(zoom, source);
-							
-							ImageDescriptor desc = ImageDescriptor.createFromURL(
-									FileLocator.toFileURL(
-											new URL("file", null, getContentsPath() + source)));
-							FritzingElementTypes.getImageRegistry().put(
-									getContentsPath() + source, desc);
+							pd.addBitmapFilename(zoom, source);
 						}
 						else if (type.equalsIgnoreCase("svg")) {
-							svgFilename = source;
+							pd.setSvgFilename(source);
 						}
 					}
 					
@@ -717,7 +547,7 @@ public class PartLoader {
 		}
 	}
 	
-	protected void parseIcons(NodeList nodeList) {
+	protected static void parseIcons(PartDefinition pd, NodeList nodeList) {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			try {
 				Node node = nodeList.item(i);
@@ -737,10 +567,10 @@ public class PartLoader {
 				if (source == null) continue;
 								
 				if (size.equalsIgnoreCase("small")) {
-					iconFilename = source;
+					pd.setIconFilename(source);
 				}
 				else if (size.equalsIgnoreCase("large")) {
-					largeIconFilename = source;
+					pd.setLargeIconFilename(source);
 				}
 			}
 			catch (Exception ex) {
@@ -749,7 +579,7 @@ public class PartLoader {
 		}
 	}
 	
-	protected void parseFootprints(NodeList nodeList) {
+	protected static void parseFootprints(PartDefinition pd, NodeList nodeList) {
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			try {
 				Node node = nodeList.item(i);
@@ -776,7 +606,7 @@ public class PartLoader {
 						
 				if (defaultValue.equalsIgnoreCase("true")) {
 					if (typeValue.equalsIgnoreCase("eagle")) {
-						footprint = sourceValue;
+						pd.setFootprint(sourceValue);
 					}
 				}
 			}
@@ -786,7 +616,7 @@ public class PartLoader {
 		}
 	}
 	
-	protected Double parseDouble(Node node) {
+	protected static Double parseDouble(Node node) {
 		if (node == null) return 0.0;
 		
 		String s = node.getNodeValue();
@@ -802,7 +632,7 @@ public class PartLoader {
 		}
 	}
 
-	protected PointPoint parseLocation(Node node, String defaultUnits, String axis1, String axis2) {
+	protected static PointPoint parseLocation(Node node, String defaultUnits, String axis1, String axis2) {
 		if (node == null) {
 			return new PointPoint();
 		}

@@ -3,8 +3,6 @@ package org.fritzing.fritzing.diagram.utils;
 import java.util.Hashtable;
 import java.util.UUID;
 
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
-
 public class UIDGenerator {
 	
 	static protected Hashtable<Character, String> bitHash = new Hashtable<Character, String>();

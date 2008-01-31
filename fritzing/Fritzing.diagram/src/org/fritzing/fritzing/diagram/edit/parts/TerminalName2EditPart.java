@@ -52,8 +52,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Terminal;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartLoaderRegistry;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
+import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.FritzingTextSelectionEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.NonDeleteComponentEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
@@ -121,11 +121,11 @@ public class TerminalName2EditPart extends LabelEditPart implements
 			if (obj instanceof Terminal) {
 				Part parent = ((Terminal) obj).getParent();
 				if (parent != null) {
-					PartLoader partLoader = PartLoaderRegistry.getInstance()
+					PartDefinition partDefinition = PartDefinitionRegistry.getInstance()
 							.get(parent.getGenus() + parent.getSpecies());
-					if (partLoader != null) {
+					if (partDefinition != null) {
 						String id = ((Terminal) obj).getId();
-						visible = partLoader.getTerminalLabelVisible(id);
+						visible = partDefinition.getTerminalLabelVisible(id);
 					}
 				}
 			}
