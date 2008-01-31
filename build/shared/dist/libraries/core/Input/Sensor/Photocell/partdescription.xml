@@ -11,6 +11,9 @@
 	</icons>
 	<label>LS</label>
 	<reference>http://fritzing.org/reference/parts/core/lsr</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="133" y="381" units="himetric"/> <!-- 21x60 400% view pixels -->
 	<bounds width="521" height="394" units="himetric"/> <!-- 82x62 400% view pixels -->

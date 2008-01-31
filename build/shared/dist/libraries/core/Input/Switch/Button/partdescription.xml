@@ -11,6 +11,9 @@
 	</icons>
 	<label>B</label>
 	<reference>http://fritzing.org/reference/parts/core/button</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits> <!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="64" y="-64" units="himetric"/> <!-- 10x-10 400% view pixels -->
 	<bounds width="635" height="635" units="himetric"/> <!-- 100x100 400% view pixels -->

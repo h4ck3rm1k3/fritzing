@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>C</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/ceramicdiskcapacitor
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/ceramicdiskcapacitor</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="114" y="381" units="himetric"/> <!-- 18x60 400% view pixels -->
 	<bounds width="483" height="641" units="himetric"/> <!-- 76x101 400% view pixels -->

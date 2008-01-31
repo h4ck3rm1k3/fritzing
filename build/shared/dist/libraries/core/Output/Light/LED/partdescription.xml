@@ -11,6 +11,9 @@
 	</icons>
 	<label>L</label>
 	<reference>http://fritzing.org/reference/parts/core/led</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="127" y="133" units="himetric"/> <!-- 20x21 400% view pixels -->
 	<bounds width="559" height="902" units="himetric"/> <!-- 88x142 400% view pixels -->

@@ -13,9 +13,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>BB</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/breadboard
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/breadboard</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset units="himetric" x="387" y="254" /><!-- 61x40 400% view pixels -->
 	<bounds height="5334" units="himetric" width="16764" /><!-- 660x210 pixels -->

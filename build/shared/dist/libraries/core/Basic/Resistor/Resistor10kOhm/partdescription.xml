@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>R</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/resistor
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/resistor</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="197" y="222" units="himetric"/> <!-- 31x35 400% view pixels -->
 	<bounds width="648" height="248" units="himetric"/> <!-- 102x39 400% view pixels -->

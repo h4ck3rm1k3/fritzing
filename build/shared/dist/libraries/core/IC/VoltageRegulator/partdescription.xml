@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>VR</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/voltageregulator
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/voltageregulator</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="216" y="235" units="himetric"/> <!-- 34x37 400% view pixels -->
 	<bounds width="940" height="1461" units="himetric"/> <!-- 148x230 400% view pixels -->

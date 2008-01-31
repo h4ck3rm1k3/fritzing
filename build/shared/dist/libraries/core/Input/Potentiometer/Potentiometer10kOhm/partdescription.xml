@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>POT</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/potentiometer
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/potentiometer</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="76" y="102" units="himetric"/> <!-- 12x16 400% view pixels -->
 	<bounds width="660" height="724" units="himetric"/> <!-- 104x114 400% view pixels -->

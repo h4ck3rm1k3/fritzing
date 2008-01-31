@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>Q</label>
-	<reference>
-		http://fritzing.org/reference/parts/transistor
-	</reference>
+	<reference>http://fritzing.org/reference/parts/transistor</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="38" y="597" units="himetric"/> <!-- 6x94 400% view pixels -->
 	<bounds width="584" height="851" units="himetric"/> <!-- 92x134 400% view pixels -->

@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>555</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/555timer
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/555timer</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="133" y="-19" units="himetric"/> <!-- 21x-3 400% view pixels -->
 	<bounds width="1022" height="724" units="himetric"/> <!-- 161x114 400% view pixels -->

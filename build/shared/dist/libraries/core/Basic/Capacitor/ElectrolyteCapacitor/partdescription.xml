@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>C</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/electrolytecapacitor
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/electrolytecapacitor</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="318" y="2216" units="himetric"/> <!-- 50x349 400% view pixels -->
 	<bounds width="1143" height="2229" units="himetric"/> <!-- 180x351 400% view pixels -->

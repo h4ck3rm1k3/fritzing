@@ -11,6 +11,9 @@
 	</icons>
 	<label>FSR</label>
 	<reference>http://fritzing.org/reference/parts/core/forcesensitiveresistor</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="114" y="768" units="himetric"/> <!-- 18x121 400% view pixels -->
 	<bounds width="5556" height="1784" units="himetric"/> <!-- 875x281 400% view pixels -->

@@ -10,9 +10,10 @@
 		<icon size="large" source="iconLarge.gif" />
 	</icons>
 	<label>L</label>
-	<reference>
-		http://fritzing.org/reference/parts/core/rgbled
-	</reference>
+	<reference>http://fritzing.org/reference/parts/core/rgbled</reference>
+	<authors>
+		<author url="http://fritzing.org/author/dirk">Dirk van Oosterbosch</author>
+	</authors>
 	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
 	<gridOffset x="298" y="133" units="himetric"/> <!-- 47x21 400% view pixels -->
 	<bounds width="845" height="1156" units="himetric"/> <!-- 133x182 400% view pixels -->
