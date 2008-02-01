@@ -49,17 +49,18 @@ public class PartDefinitionRegistry {
 	 * Returns the PartDefinition based on the path. If the PartDefinition does not exist in the
 	 * cache, creates a new one and caches.
 	 * 
-	 * @param path -
-	 *            a string, either genus.species or the relative path (e.g. libraries/core/arduino/partDescription.xml)
+	 * @param root File location of the libraries folder 
+	 * @param path Either genus.species or the relative path (e.g. libraries/core/arduino/partDescription.xml)
+	 * @param saveDocument Flag for the PartDefinitionUpdater to save the changes
 	 * @return PartDefinition
 	 */
-	public PartDefinition get(String root, String path, boolean getDocument) {
+	public PartDefinition get(String root, String path, boolean saveDocument) {
 		PartDefinition pd = partDefinitionRegistry.get(path);
 		if (pd != null) {
 			return pd;
 		}
 						
-		pd = PartLoader.loadXMLFromLibrary(root, path, getDocument);
+		pd = PartLoader.loadXMLFromLibrary(root, path, saveDocument);
 		
 		partDefinitionRegistry.put(path, pd);
 		if (pd.genus != null && pd.species != null) {

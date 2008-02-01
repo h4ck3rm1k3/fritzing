@@ -12,42 +12,57 @@ import java.util.Iterator;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.fritzing.fritzing.diagram.edit.PartLoader.PointName;
-import org.fritzing.fritzing.diagram.edit.PartLoader.PointPoint;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
 import org.w3c.dom.Document;
 
 public class PartDefinition {
-	protected Hashtable<String, PointName> terminals;
-	protected Point gridOffset;
-	protected Hashtable<Double, String> bitmapFilenames;
-	protected String svgFilename;
-	protected Dimension size;
+	/*
+	 * Absolute path to the folder of partdescription.xml
+	 */
+	protected String contentsPath;
+	/*
+	 * The partdescription.xml file
+	 */
+	protected File documentFile = null;
+	/*
+	 * Flag if the definition was loaded
+	 */
 	protected boolean loaded;
-	protected String iconFilename;
-	protected String largeIconFilename;
-	protected String description;
+	/*
+	 * The XML document, needed by the PartDefinitionUpdater
+	 */
+	protected Document doc = null;
+
+	protected boolean generic;
 	protected String species;
 	protected String genus;
-	protected String contentsPath;
-	protected String label;
 	protected String title;
-	protected boolean generic;
+	protected String description;
 	protected String version;
-	protected String footprint;
-	protected ArrayList<ArrayList<PointName>> nets;
+	protected String label;
+	protected URL reference;
+	protected ArrayList<Author> authors;
+	protected String iconSmallFilename;
+	protected String iconLargeFilename;
+	protected Dimension size;
+	protected Point gridOffset;
+	protected Hashtable<String, TerminalDefinition> terminals;
+	protected ArrayList<ArrayList<TerminalDefinition>> nets;
 	protected Hashtable<String, Boolean> tracksVisible = new Hashtable<String, Boolean>();
-	protected Document doc = null;
-	protected File documentFile = null;
 	protected String zorder = null;
+	protected Hashtable<Double, String> bitmapFilenames;
+	protected String svgFilename;
+	protected String footprint;
 	
 	public final static String REQUEST_PARAM = "partDefinition";
 
 	public PartDefinition() {				
-		nets = new ArrayList<ArrayList<PointName>>();
+		nets = new ArrayList<ArrayList<TerminalDefinition>>();
+		authors = new ArrayList<Author>();
 		contentsPath = "";
-		terminals = new Hashtable<String, PointName>();
+		terminals = new Hashtable<String, TerminalDefinition>();
 		size = new Dimension(0,0);
 		gridOffset = new Point(0,0);
 		bitmapFilenames = new Hashtable<Double, String>();
@@ -80,18 +95,18 @@ public class PartDefinition {
 	public Point getTerminalLegTargetPosition(String id) {
 		if (terminals == null) return new Point(0,400);
 		
-		PointName pointName = terminals.get(id);
-		if (pointName == null) return new Point(0,400);
+		TerminalDefinition terminal = terminals.get(id);
+		if (terminal == null) return new Point(0,400);
 		
-		if (pointName.points.size() < 2) return new Point(0,400);
+		if (terminal.points.size() < 2) return new Point(0,400);
 				
-		PointPoint pp0 = pointName.points.get(0);		
-		PointPoint pp1 = pointName.points.get(1);
+		PointPoint pp0 = terminal.points.get(0);		
+		PointPoint pp1 = terminal.points.get(1);
 		
 		return new Point(pp1.modified.x - pp0.modified.x, pp1.modified.y - pp0.modified.y);	
 	}
 	
-	public void addTerminal(String id, PointName pn) {
+	public void addTerminal(String id, TerminalDefinition pn) {
 		terminals.put(id, pn);
 	}
 
@@ -103,19 +118,19 @@ public class PartDefinition {
 		return terminals.keys();
 	}
 	
-	public PointName getTerminalData(String id) {
+	public TerminalDefinition getTerminalDefinition(String id) {
 		return terminals.get(id);
 	}
 	
 	public Point getTerminalPoint(String id) {
 		if (terminals == null) return null;
 	
-		PointName pointName = terminals.get(id);
-		if (pointName == null) return null;
+		TerminalDefinition terminal = terminals.get(id);
+		if (terminal == null) return null;
 		
-		if (pointName.points.size() < 1) return null;
+		if (terminal.points.size() < 1) return null;
 		
-		return pointName.points.get(0).modified;
+		return terminal.points.get(0).modified;
 	}
 	
 	public String getVersion() {
@@ -125,31 +140,31 @@ public class PartDefinition {
 	public String getTerminalType(String id) {
 		if (terminals == null) return null;
 	
-		PointName pointName = terminals.get(id);
-		if (pointName == null) return null;
+		TerminalDefinition terminal = terminals.get(id);
+		if (terminal == null) return null;
 		
-		return pointName.type;
+		return terminal.type;
 	}
 	
 	public boolean getTerminalLabelVisible(String id) {
 		if (terminals == null) return false;
 	
-		PointName pointName = terminals.get(id);
-		if (pointName == null) return false;
+		TerminalDefinition terminal = terminals.get(id);
+		if (terminal == null) return false;
 		
-		return pointName.visible;
+		return terminal.visible;
 	}
 	
 	public boolean getTerminalFemale(String id) {
 		if (terminals == null) return false;
 		
-		PointName pointName = terminals.get(id);
-		if (pointName == null) return false;
+		TerminalDefinition terminal = terminals.get(id);
+		if (terminal == null) return false;
 		
-		if (pointName.type == null) return false;
+		if (terminal.type == null) return false;
 		
 		// at the moment, male and female are treated the same
-		return pointName.type.equalsIgnoreCase("female") || pointName.type.equalsIgnoreCase("male");		
+		return terminal.type.equalsIgnoreCase("female") || terminal.type.equalsIgnoreCase("male");		
 	}
 	
 		
@@ -161,12 +176,12 @@ public class PartDefinition {
 		return bitmapFilenames;
 	}
 	
-	public String getIconFilename() {
-		return iconFilename;
+	public String getIconSmallFilename() {
+		return iconSmallFilename;
 	}
 	
-	public String getLargeIconFilename() {
-		return largeIconFilename;
+	public String getIconLargeFilename() {
+		return iconLargeFilename;
 	}
 	
 	public String getLabel() {
@@ -224,7 +239,7 @@ public class PartDefinition {
 	/**
 	 * @return the nets
 	 */
-	public Iterator<ArrayList<PointName>> getNets() {
+	public Iterator<ArrayList<TerminalDefinition>> getNets() {
 		return nets.iterator();
 	}
 
@@ -238,7 +253,7 @@ public class PartDefinition {
 	/**
 	 * @param nets the nets to set
 	 */
-	public void addNet(ArrayList<PointName> net) {
+	public void addNet(ArrayList<TerminalDefinition> net) {
 		nets.add(net);
 	}
 
@@ -326,17 +341,17 @@ public class PartDefinition {
 	}
 
 	/**
-	 * @param iconFilename the iconFilename to set
+	 * @param iconSmallFilename the iconFilename to set
 	 */
-	public void setIconFilename(String iconFilename) {
-		this.iconFilename = iconFilename;
+	public void setIconSmallFilename(String iconSmallFilename) {
+		this.iconSmallFilename = iconSmallFilename;
 	}
 
 	/**
 	 * @param largeIconFilename the largeIconFilename to set
 	 */
-	public void setLargeIconFilename(String largeIconFilename) {
-		this.largeIconFilename = largeIconFilename;
+	public void setIconLargeFilename(String iconLargeFilename) {
+		this.iconLargeFilename = iconLargeFilename;
 	}
 
 	/**
@@ -394,6 +409,87 @@ public class PartDefinition {
 	public void setVersion(String version) {
 		this.version = version;
 	}
+
+	/**
+	 * @return the reference
+	 */
+	public URL getReference() {
+		return reference;
+	}
+
+	/**
+	 * @param reference the reference to set
+	 */
+	public void setReference(URL reference) {
+		this.reference = reference;
+	}
+
+	/**
+	 * @return the authors
+	 */
+	public Iterator<Author> getAuthors() {
+		return authors.iterator();
+	}
+
+	/**
+	 * @param author the author to add
+	 */
+	public void addAuthor(Author author) {
+		authors.add(author);
+	}
+
+	/*
+	 * Original point location and the translated one, including
+	 * unit conversion and grid offset
+	 */
+	static class PointPoint {
+		
+		public Point original;
+		public Point modified;
+		
+		public PointPoint() {
+			modified = new Point(0,0);
+			original = new Point(0,0);
+		}
+		
+		public PointPoint(Point p1, Point p2) {
+			original = p1;
+			modified = p2;
+		}
+	}
 	
+	static class TerminalDefinition {
+		public ArrayList<PointPoint> points;
+		public String name;
+		public boolean visible;
+		public EObject terminal;
+		public String type;
+		
+		public TerminalDefinition(String name, boolean visible, String type) {
+			points = new ArrayList<PointPoint>();
+			this.name = name;
+			this.visible = visible;
+			this.terminal = null;
+			this.type = type;
+		}
+		
+		public void addPoint(PointPoint p) {
+			points.add(p);
+		}
+	}
+	
+	public static class Author {
+		public String name;
+		public URL url;
+
+		public Author(String name) {
+			this.name = name;
+		}
+		
+		public Author(String name, URL url) {
+			this.name = name;
+			this.url = url;
+		}
+	}
 	
 }

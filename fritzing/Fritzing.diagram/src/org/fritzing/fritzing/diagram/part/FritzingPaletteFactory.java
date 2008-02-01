@@ -138,12 +138,12 @@ public class FritzingPaletteFactory {
 
 		ImageDescriptor id = ImageDescriptor.createFromFile(null,
 				FritzingDiagramEditorUtil.getFritzingLocation() + prefix
-						+ File.separator + partDefinition.getIconFilename());
+						+ File.separator + partDefinition.getIconSmallFilename());
 		entry.setSmallIcon(id);
 
 		id = ImageDescriptor.createFromFile(null, FritzingDiagramEditorUtil
 				.getFritzingLocation()
-				+ prefix + File.separator + partDefinition.getLargeIconFilename());
+				+ prefix + File.separator + partDefinition.getIconLargeFilename());
 
 		entry.setLargeIcon(id);
 

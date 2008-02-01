@@ -4,32 +4,45 @@ package org.fritzing.fritzing.diagram.views;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.*;
-import org.eclipse.ui.views.contentoutline.ContentOutline;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.impl.DiagramImpl;
 import org.eclipse.gmf.runtime.notation.impl.EdgeImpl;
 import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.jface.action.*;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.fritzing.fritzing.IElement;
 import org.fritzing.fritzing.ILegConnection;
 import org.fritzing.fritzing.IWireConnection;
 import org.fritzing.fritzing.Part;
-import org.fritzing.fritzing.diagram.part.FritzingDiagramEditor;
-import org.fritzing.fritzing.diagram.part.ModelElementSelectionPage;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
+import org.fritzing.fritzing.diagram.edit.PartDefinition;
 import org.fritzing.fritzing.diagram.edit.parts.LegEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.PartEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.SketchEditPart;
 import org.fritzing.fritzing.diagram.edit.parts.WireEditPart;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditor;
 import org.fritzing.fritzing.impl.LegImpl;
 import org.fritzing.fritzing.impl.SketchImpl;
 import org.fritzing.fritzing.impl.TerminalImpl;
@@ -85,12 +98,29 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 			if (len == 1) {
 				EditPart part = parts.get(0);
 				if (part instanceof PartEditPart) {
-					String[] strings = new String[3];
+					String[] strings = new String[6];
 					int index = 0;
-					Part notation = (Part) ((NodeImpl) ((EditPart) part).getModel()).getElement();
-					strings[index++] = "Genus:" + notation.getGenus();
-					strings[index++] = "Species: " + notation.getSpecies();
-					strings[index++] = "Version: " + notation.getVersion();	
+					Part notation = (Part) ((NodeImpl) ((PartEditPart) part).getModel()).getElement();
+					PartDefinition pd = ((PartEditPart)part).getPartDefinition();
+					strings[index++] = pd.getTitle().toUpperCase();	
+					strings[index++] = pd.getDescription();
+					strings[index++] = pd.getReference().toString();
+					strings[index++] = notation.getGenus() + "." +
+						notation.getSpecies();
+					strings[index++] = "Version " + notation.getVersion();
+					Iterator<PartDefinition.Author> iAuthors = pd.getAuthors();
+					if (iAuthors.hasNext()) {
+						StringBuffer sbAuthors = new StringBuffer();
+						sbAuthors.append("Authors: ");
+						while (iAuthors.hasNext()) {
+							PartDefinition.Author a = iAuthors.next();
+							sbAuthors.append(a.name);
+							if (iAuthors.hasNext())
+								sbAuthors.append(", ");
+						}
+						strings[index++] = sbAuthors.toString();
+					}
+//					pd.getIconLargeFilename();
 					return strings;
 				}
 				else if (part instanceof LegEditPart) {
@@ -311,7 +341,7 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
-			"Part Property View",
+			"Info View",
 			message);
 	}
 

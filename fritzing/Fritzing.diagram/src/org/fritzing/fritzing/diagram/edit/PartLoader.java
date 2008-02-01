@@ -26,6 +26,9 @@ import org.fritzing.fritzing.Leg;
 import org.fritzing.fritzing.Part;
 import org.fritzing.fritzing.Sketch;
 import org.fritzing.fritzing.Terminal;
+import org.fritzing.fritzing.diagram.edit.PartDefinition.Author;
+import org.fritzing.fritzing.diagram.edit.PartDefinition.PointPoint;
+import org.fritzing.fritzing.diagram.edit.PartDefinition.TerminalDefinition;
 import org.fritzing.fritzing.diagram.edit.parts.Terminal2EditPart;
 import org.fritzing.fritzing.diagram.expressions.FritzingAbstractExpression;
 import org.fritzing.fritzing.diagram.expressions.FritzingOCLFactory;
@@ -45,7 +48,9 @@ import org.xml.sax.SAXParseException;
  */
 public class PartLoader {
 
-	
+	/*
+	 * @param saveDocument Flag for the PartDefinitionUpdater to save the changes
+	 */
 	public static PartDefinition loadXMLFromLibrary(String root, String path, boolean saveDocument) {
 		try {
 			URL url = new URL("file", null, root + path);
@@ -101,7 +106,7 @@ public class PartLoader {
 				String id = e.nextElement();
 				if (id == null || id == "") continue;
 								
-				PointName pointName = pd.getTerminalData(id);
+				TerminalDefinition pointName = pd.getTerminalDefinition(id);
 				if (pointName == null) continue;
 
 				EObject terminal = FritzingPackage.eINSTANCE.getTerminal()
@@ -141,30 +146,30 @@ public class PartLoader {
 			
 			// Nets/Tracks
 			if (pd.hasNets()) {
-				Iterator<ArrayList<PointName>> i = pd.getNets();
+				Iterator<ArrayList<TerminalDefinition>> i = pd.getNets();
 				while (i.hasNext()) {
-					ArrayList<PointName> net = i.next();
+					ArrayList<TerminalDefinition> net = i.next();
 					for (int j = 0; j < net.size() - 1; j++) {
 						
-						PointName source = net.get(j);
+						TerminalDefinition source = net.get(j);
 						if (source == null) {
 							// alert user
 							continue;														
 						}
 						
-						PointName target = net.get(j + 1);
+						TerminalDefinition target = net.get(j + 1);
 						if (target == null) {
 							// alert user
 							continue;														
 						}
 						
-						PointName spn = pd.getTerminalData(source.name);
+						TerminalDefinition spn = pd.getTerminalDefinition(source.name);
 						if (spn == null) {
 							// alert user
 							continue;							
 						}
 
-						PointName tpn = pd.getTerminalData(target.name);
+						TerminalDefinition tpn = pd.getTerminalDefinition(target.name);
 						if (tpn == null) {
 							// alert user
 							continue;							
@@ -217,8 +222,10 @@ public class PartLoader {
             DocumentBuilder builder = factory.newDocumentBuilder();
             pd.setDocumentFile(new File(xml.getFile()));
             document = builder.parse(pd.getDocumentFile());
+            
             parseXML(pd, document);
             pd.setLoaded(true);
+            
             if (saveDocument) {
             	pd.setDocument(document);
             }
@@ -267,12 +274,14 @@ public class PartLoader {
 	protected static void parseXML(PartDefinition pd, Document document) {
 
 		try {
+			// root
 			Element partNode = document.getDocumentElement();
 			if (!partNode.getNodeName().equals("part")) {
 				// alert user
 				return;								
 			}
 			
+			// generic part?
 			pd.setGeneric(true);
 			Attr attr = partNode.getAttributeNode("generic");
 			if (attr != null) {
@@ -320,8 +329,14 @@ public class PartLoader {
 				else if (nodeName.equals("version")) {
 					pd.setVersion(node.getTextContent());					
 				}
+				else if (nodeName.equals("reference")) {
+					pd.setReference(new URL(node.getTextContent()));					
+				}
 				else if (nodeName.equals("footprints")) {
 					parseFootprints(pd, node.getChildNodes());					
+				}
+				else if (nodeName.equals("authors")) {
+					parseAuthors(pd, node.getChildNodes());					
 				}
 				else if (nodeName.equals("icons")) {
 					parseIcons(pd, node.getChildNodes());		
@@ -369,7 +384,7 @@ public class PartLoader {
 						}
 						
 						boolean visible = parseTerminalLabelLayout(defaultTerminalLabelVisible, connector);
-						PointName pn = new PointName(name, visible, type);
+						TerminalDefinition pn = new TerminalDefinition(name, visible, type);
 						pd.addTerminal(id, pn);
 
 						// treat the terminal's location as the center rather than the top left
@@ -405,7 +420,7 @@ public class PartLoader {
 						
 						boolean netDefaultTrackVisible = parseTrackLayout(defaultTrackVisible, net);
 						NodeList connectors = net.getChildNodes();
-						ArrayList<PointName> names = new ArrayList<PointName>();
+						ArrayList<TerminalDefinition> names = new ArrayList<TerminalDefinition>();
 						for (int k = 0; k < connectors.getLength(); k++) {
 							Node connector = connectors.item(k);
 							if (!connector.getNodeName().equals("connector")) continue;
@@ -422,14 +437,14 @@ public class PartLoader {
 							boolean visible = parseTrackLayout(netDefaultTrackVisible, connector);
 							
 							// stick the ID into the name field
-							PointName pn = new PointName(id, visible, null);
+							TerminalDefinition pn = new TerminalDefinition(id, visible, null);
 							names.add(pn);						
 						}
 						
 						if (names.size() > 0) {
 							for (int k = 0; k < names.size() - 1; k++) {
-								PointName source = names.get(k);
-								PointName target = names.get(k + 1);
+								TerminalDefinition source = names.get(k);
+								TerminalDefinition target = names.get(k + 1);
 								// the name field has the ID 
 								pd.setTrackVisible(source.name + target.name, source.visible && target.visible);
 
@@ -567,11 +582,31 @@ public class PartLoader {
 				if (source == null) continue;
 								
 				if (size.equalsIgnoreCase("small")) {
-					pd.setIconFilename(source);
+					pd.setIconSmallFilename(source);
 				}
 				else if (size.equalsIgnoreCase("large")) {
-					pd.setLargeIconFilename(source);
+					pd.setIconLargeFilename(source);
 				}
+			}
+			catch (Exception ex) {
+				// alert the user
+			}
+		}
+	}
+
+	protected static void parseAuthors(PartDefinition pd, NodeList nodeList) {
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			try {
+				Node node = nodeList.item(i);
+				NamedNodeMap map = node.getAttributes();
+				if (map == null) continue;
+				
+				Author author = new Author(node.getTextContent());
+				pd.addAuthor(author);
+				
+				Node urlNode = map.getNamedItem("url");
+				if (urlNode == null) continue;
+				author.url = new URL(urlNode.getNodeValue());
 			}
 			catch (Exception ex) {
 				// alert the user
@@ -685,40 +720,5 @@ public class PartLoader {
 		return new PointPoint();
 	}
 	
-	static class PointPoint {
-		
-		public Point original;
-		public Point modified;
-		
-		public PointPoint() {
-			modified = new Point(0,0);
-			original = new Point(0,0);
-		}
-		
-		public PointPoint(Point p1, Point p2) {
-			original = p1;
-			modified = p2;
-		}
-	}
-	
-	static class PointName {
-		public ArrayList<PointPoint> points;
-		public String name;
-		public boolean visible;
-		public EObject terminal;
-		public String type;
-		
-		public PointName(String name, boolean visible, String type) {
-			points = new ArrayList<PointPoint>();
-			this.name = name;
-			this.visible = visible;
-			this.terminal = null;
-			this.type = type;
-		}
-		
-		public void addPoint(PointPoint p) {
-			points.add(p);
-		}
-	}
 
 }
