@@ -57,6 +57,12 @@ public class BRDScriptExporter {
 		return headerText;		
 	}
 	
+	public String getLibraryEntries(ArrayList <String> eagleLibs) {
+		String result = "";
+		
+		return result;
+	}
+	
 	public String getFooterText() {
 		return footerText;
 	}
@@ -65,12 +71,21 @@ public class BRDScriptExporter {
 		String result = "";
 		// place a schematic symbol 
 		// Eagle syntax is "ADD <libraryPart>@<libraryName> 'partName' 'gateName' R<rotationAngle> (<componentCoords>)"
-		result = "ADD " +
-			part.getEagleFootprint() + 
-			"@" + part.getEagleLibraryName() + " " +
-			"'" + part.getEaglePartLabel() + "' " +
-			part.getEagleRotationPrefix() + part.getEagleRotationVal() + " " + 
-			"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + "); \n";
+		if (part.getEagleLibraryName().equals("fritzing")) {
+			result = "ADD " +
+				part.getEagleFootprint() + 
+				"@" + part.getEagleLibraryName() + " " +
+				"'" + part.getEaglePartLabel() + "' " +
+				part.getEagleRotationPrefix() + part.getEagleRotationVal() + " " + 
+				"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + "); \n";
+		} else {
+			result = "ADD '" + 
+				part.getEagleFootprint() + 
+				"@" + part.getLibraryLocation() + "footprint.lbr' " +
+				"'" + part.getEaglePartLabel() + "' " +
+				part.getEagleRotationPrefix() + part.getEagleRotationVal() + " " + 
+				"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + "); \n";
+		}
 		return result;
 	}
 	
@@ -104,6 +119,23 @@ public class BRDScriptExporter {
 		// iterate through each entry, printing corresponding lines plus header and footer text
 		String result = "";
 		result = result.concat(getHeaderText());
+		
+		/*
+		ArrayList <String> eagleLibsList = new ArrayList();
+		for (int i=0; i<partList.size(); i++) {
+			String libName = ((EagleBRDPart)partList.get(i)).getEagleLibraryName();
+			String libLocation = ((EagleBRDPart)partList.get(i)).getLibraryLocation();
+			if (libName.equals("fritzing") == false) {
+				for (int j=0; j<eagleLibsList.size(); j++) {
+					if (libLocation.equals((String)eagleLibsList.get(j)) == false) {
+						eagleLibsList.add(libLocation + ".lbr");
+					}
+				}
+			}
+		}
+		for (int i=0; i<eagleLibsList.size(); i++) {
+			result = result.concat("USE '" + (String)eagleLibsList.get(i) + "'; \n");
+		}*/
 		
 		for (int i=0; i<partList.size(); i++) {
 			if (partList.get(i).getExportToPcb() == true) {

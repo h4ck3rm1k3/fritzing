@@ -9,6 +9,7 @@ import org.fritzing.fritzing.diagram.edit.parts.PartEditPart;
 public class EagleBRDPart {
 	Part p;
 	PartEditPart ep;
+	private String libraryLocation = "";
 	private String eagleFootprint = "";
 	private String eagleLibraryName = "";
 	private String eaglePartLabelPrefix = "";
@@ -31,14 +32,19 @@ public class EagleBRDPart {
 		
 		if (p.getFootprint() != null) {
 			// TODO: libraryLocation is the absolute path to the partdescription.xml
-			String libraryLocation = ep.getPartDefinition().getContentsPath();
+			
 			String footprintStrings[] = p.getFootprint().split("/");	
 			String libraryName = footprintStrings[0].split(".lbr")[0];
 			String footprintName = footprintStrings[1];
-			
+						
+			this.libraryLocation = ep.getPartDefinition().getContentsPath();
 			this.eagleFootprint = footprintName.toUpperCase();
 			this.eagleLibraryName = libraryName;
 			
+			System.out.println("location: " + libraryLocation);
+			System.out.println("lib name: " + libraryName);
+			System.out.println("footprint: " + footprintName);
+						
 			setExportToPcb(true);
 		} else {
 			setExportToPcb(false);
@@ -47,6 +53,10 @@ public class EagleBRDPart {
 		
 	public EagleBRDPart() {
 		
+	}
+	
+	public String getLibraryLocation() {
+		return(this.libraryLocation);
 	}
 	
 	public String getFritzingId() {
