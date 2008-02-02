@@ -15,9 +15,6 @@ import org.eclipse.draw2d.PositionConstants;
 
 public class PartBorderItemLocator implements IBorderItemLocator {
 	
-	public static int[] rotations = { PositionConstants.NORTH, PositionConstants.EAST, PositionConstants.SOUTH, PositionConstants.WEST,
-										PositionConstants.NORTH, PositionConstants.EAST, PositionConstants.SOUTH };
-
 	protected IFigure parentFigure;
 	protected Rectangle constraint = new Rectangle(0, 0, 0, 0);
 	protected Dimension borderItemOffset = new Dimension(1, 1);
