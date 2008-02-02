@@ -2,172 +2,33 @@ package org.fritzing.fritzing.diagram.edit.parts;
 
 import java.util.Collections;
 import java.util.Hashtable;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.Vector;
 
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.PrecisionRectangle;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gmf.runtime.diagram.ui.figures.IBorderItemLocator;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageLoader;
 import org.fritzing.fritzing.diagram.edit.PartDefinition;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.PaletteData;
-import org.eclipse.swt.graphics.RGB;
-import org.fritzing.fritzing.diagram.edit.PartLoader;
-import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
-import org.fritzing.fritzing.diagram.edit.policies.RotatableNonresizableShapeEditPolicy;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
-import org.fritzing.fritzing.diagram.utils.RotateDing;
-import org.eclipse.swt.graphics.Transform;
 
 public class PartFigure extends RectangleFigure implements IZoomableFigure {
 
 	protected Image image;
-	protected Image rotatedImage;
 	private double zoom = -1;
 	protected PartDefinition partDefinition;
 	protected String  contentsPath;
-	protected int rotation;
 
-	
-	/*
-	 * @generated NOT
-	 */
 	public PartFigure(PartDefinition partDefinition) {
 		this.partDefinition = partDefinition;
-		this.rotation = 0;
-		this.rotatedImage = null;
 		this.setSize(partDefinition.getSize());
-		Dimension d = partDefinition.getSize();
-		this.setPreferredSize(d);
-		
-		// set the min and max to accomodate rotation
-		int maxD = Math.max(d.width, d.height);
-		this.setMaximumSize(new Dimension(maxD, maxD));
-		int minD = Math.min(d.width, d.height);
-		this.setMinimumSize(new Dimension(minD, minD));
+		this.setPreferredSize(new Dimension(partDefinition.getSize()));
+		this.setMaximumSize(new Dimension(partDefinition.getSize()));
+		this.setMinimumSize(new Dimension(partDefinition.getSize()));
 		createContents();
 	}
-	
-	public void setRotation(int degrees) {
-		if (degrees != rotation) {
-			rotation = degrees;
-			setRotationAux();
-		}
-	}
-	
-	protected void setRotationAux() {	
-		org.eclipse.swt.graphics.Rectangle bounds = image.getBounds();
-		org.eclipse.draw2d.geometry.Rectangle r = new org.eclipse.draw2d.geometry.Rectangle(bounds);
-		PrecisionRectangle pr = new PrecisionRectangle(r);
-		RotateDing rotateDing = RotateDing.rotatePrecisionRect(rotation, pr);
 
-		double minx = Math.min(rotateDing.p1x, Math.min(rotateDing.p2x, Math.min(rotateDing.p3x, rotateDing.p4x)));
-		double maxx = Math.max(rotateDing.p1x, Math.max(rotateDing.p2x, Math.max(rotateDing.p3x, rotateDing.p4x)));
-		double miny = Math.min(rotateDing.p1y, Math.min(rotateDing.p2y, Math.min(rotateDing.p3y, rotateDing.p4y)));
-		double maxy = Math.max(rotateDing.p1y, Math.max(rotateDing.p2y, Math.max(rotateDing.p3y, rotateDing.p4y)));	
-		double dw = maxx - minx;
-		double dh = maxy - miny;	
-		
-		try {
-			ImageData targetImageData = new ImageData((int) dw, (int) dh, 24, image.getImageData().palette);
-															
-		    Transform transform = new Transform(null);
-		    transform.translate((float) -minx, (float) -miny);
-		    transform.rotate(360 - rotation);
-							
-		    Image targetImage = new Image(null, targetImageData);	
-		    GC gc = new GC(targetImage);
-		    
-		    // in theory, the only thing we should have needed to do here 
-		    // is set the transform and draw the source into the target
-		    			    
-		    gc.setTransform(transform);
-		    gc.drawImage(image, 0, 0);
-		    gc.dispose();
-		    
-		    // unfortunately, SWT doesn't seem to copy the alpha channel
-		    // so the rest of this is a hack in order to copy the alpha channel
-		    			    			    
-		    // make a target alpha channel image
-			ImageData targetAlphaImageData = new ImageData((int) dw, (int) dh, 8, AlphaPaletteData.getPaletteData());
-			Image targetAlphaImage = new Image(null, targetAlphaImageData);
-							
-			// get the alpha from the original source image and create a source alpha image
-			// note that the alpha from the image is packed (i.e. the lines aren't padded with bytes)
-			// but when you use this data as an image, you have to pad the data
-			ImageData sourceAlphaImageData = new ImageData(r.width, r.height, 8, AlphaPaletteData.getPaletteData());
-			byte[] sourceData = sourceAlphaImageData.data;
-			byte[] data = image.getImageData().alphaData;
-			int lx = 0;
-			int ix = 0;
-			for (int y = 0; y < r.height; y++) {
-				for (int x = 0; x < r.width; x++) {
-					sourceData[lx + x] = data[ix++];
-				}
-				lx += sourceAlphaImageData.bytesPerLine;
-			}
-			sourceAlphaImageData.data = sourceData;
-			Image sourceAlphaImage = new Image(null, sourceAlphaImageData);
-			GC agc = new GC(targetAlphaImage);
-			
-			
-			// now blt the source alpha to the target alpha
-			agc.setTransform(transform);
-		    agc.drawImage(sourceAlphaImage, 0, 0);			
-			agc.dispose();
-				
-			// now to use the resulting alpha image as alpha data
-			// remove the line padding (i.e. pack it)
-			data = targetAlphaImage.getImageData().data;
-			byte[] neoData = new byte[(int) dw * (int) dh];
-			lx = 0;
-			ix = 0;
-			for (int y = 0; y < (int) dh; y++) {
-				for (int x = 0; x < (int) dw; x++) {
-					neoData[ix++] = data[lx + x];
-				}
-				lx += targetAlphaImage.getImageData().bytesPerLine;
-			}
-				
-			// you can't modify the imageData of a pre-existing image
-			// so make a new image using the copied rgb and the copied alpha
-			// and use the new image to draw on screen
-			ImageData newTargetImageData = targetImage.getImageData();
-			newTargetImageData.alphaData = neoData;
-			Image neoTargetImage = new Image(null, newTargetImageData);			
-			
-			targetAlphaImage.dispose();
-			sourceAlphaImage.dispose();
-			targetImage.dispose();
-						
-		    transform.dispose();
-		    
-		    if (rotatedImage != null) {
-		    	rotatedImage.dispose();
-		    }
-		    
-		    rotatedImage = neoTargetImage;	    
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-		}
-			
-	}
-
-	/**
-	 * @generated NOT
-	 */
 	protected void createContents() {
 		setOutline(false);
 
@@ -197,10 +58,6 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 		updateImage();
 	}
 	
-	public double getZoom() {
-		return zoom;
-	}
-	
 	/*
 	 * Loads the best image for the current zoom level
 	 */
@@ -223,7 +80,7 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 					partDefinition.getContentsPath() + imageSrc);
 			
 			// buffer the scaled image
-			Dimension figureSize = partDefinition.getSize().getCopy();			
+			Dimension figureSize = getSize();
 			if (figureSize.width > 0) {
 			    figureSize.width = MapModeUtil.getMapMode().LPtoDP((int)Math.round(figureSize.width * zoom));
 			    figureSize.height = MapModeUtil.getMapMode().LPtoDP((int)Math.round(figureSize.height * zoom));
@@ -240,13 +97,6 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 			    Image scaledImage = new Image(null,
 			    		image.getImageData().scaledTo(figureSize.width, figureSize.height));
 			    image = scaledImage;
-		    
-			    if (rotation != 0) {
-//				    ImageLoader imageLoader = new ImageLoader();
-//				    imageLoader.data = new ImageData[] { image.getImageData() };
-//				    imageLoader.save("image.jpg",SWT.IMAGE_JPEG);
-				    setRotationAux();
-			    }		    	
 			}
 		} catch (Exception ex) {
 			// inform the user?
@@ -272,40 +122,9 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 			g.pushState();
 			g.translate(r.x, r.y);
 			g.scale(1/zoom); // to compensate for image scaling
-			g.drawImage((rotatedImage != null) ? rotatedImage : image, 0, 0);
+			g.drawImage(image, 0, 0);
 			g.popState();
 		}
 	}
-	
-	public static class AlphaPaletteData {
-		
-		static PaletteData paletteData;
-		
-		/**
-		 * Singleton instance.
-		 */
-		private static AlphaPaletteData singletonInstance = new AlphaPaletteData();
-		
-		private AlphaPaletteData() {
-			RGB[] rgb = new RGB[256];
-			for (int i = 0; i < 256; i++) {
-				rgb[i] = new RGB(i, i, i);
-			}	
-		    paletteData = new PaletteData(rgb);
-		}
-
-		/**
-		 * Return singleton instance.
-		 * 
-		 */
-		public static PaletteData getPaletteData() {
-			return singletonInstance.paletteData;
-		}
-				
-	}
-	
-	
-	
-
 
 }

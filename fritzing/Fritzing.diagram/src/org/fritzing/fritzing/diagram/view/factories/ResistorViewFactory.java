@@ -23,13 +23,15 @@ import org.fritzing.fritzing.diagram.part.FritzingVisualIDRegistry;
 /**
  * @generated
  */
-public class ResistorViewFactory extends PartShapeViewFactory {
+public class ResistorViewFactory extends AbstractShapeViewFactory {
 
 	/**
-	 * @generated NOT
+	 * @generated
 	 */
 	protected List createStyles(View view) {
-		return super.createStyles(view);
+		List styles = new ArrayList();
+		styles.add(NotationFactory.eINSTANCE.createShapeStyle());
+		return styles;
 	}
 
 	/**

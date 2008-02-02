@@ -4,7 +4,6 @@
 package org.fritzing.fritzing.diagram.edit.parts;
 
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.ConnectionAnchor;
@@ -13,7 +12,6 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.EAttributeImpl;
@@ -41,8 +39,6 @@ import org.eclipse.gmf.runtime.diagram.ui.requests.CreateConnectionViewRequest;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
-import org.eclipse.gmf.runtime.notation.NotationPackage;
-import org.eclipse.gmf.runtime.notation.PropertiesSetStyle;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.impl.DiagramImpl;
 import org.eclipse.gmf.runtime.notation.impl.NodeImpl;
@@ -54,7 +50,6 @@ import org.fritzing.fritzing.diagram.edit.PartDefinitionRegistry;
 import org.fritzing.fritzing.diagram.edit.policies.RotatableNonresizableShapeEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingLinkDescriptor;
 import org.fritzing.fritzing.diagram.providers.FritzingElementTypes;
-import org.fritzing.fritzing.diagram.view.factories.PartShapeViewFactory;
 
 /**
  * @generated NOT
@@ -64,9 +59,9 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 
 	PartDefinition partDefinition;
 	
-	protected boolean legsInitialized;
+	protected Point gridOffset;
 	
-	protected boolean addedZoomListener;
+	protected boolean legsInitialized;
 	
 	/**
 	 * @generated NOT
@@ -83,7 +78,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	 */
 	public PartEditPart(View view) {
 		super(view);
-		addedZoomListener = legsInitialized = false;
+		legsInitialized = false;
 		EObject element = view.getElement();
 		if (element instanceof Part) {
 			String genus = ((Part) element).getGenus();
@@ -117,22 +112,10 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 			Terminal terminal = (Terminal) ((NodeImpl) terminalPart.getModel()).getElement();
 			Point p = partDefinition.getTerminalLegTargetPosition(terminal.getId());
 			double zoom = ((FritzingDiagramRootEditPart)getRoot()).getZoomManager().getZoom();
-			int degrees = this.getRotation();
-			if (degrees == 0) { 			
-				p.x = (int)(getMapMode().LPtoDP(p.x)*zoom);
-				p.y = (int)(getMapMode().LPtoDP(p.y)*zoom);
-				//p.x = p.x > 0 ? p.x : 1;
-				//p.y = p.y > 0 ? p.y : 1;
-			}
-			else { 
-				double rad = Math.toRadians(degrees);
-				double dx = p.x * Math.cos(rad) + p.y * Math.sin(rad);
-				double dy = -p.x * Math.sin(rad) + p.y * Math.cos(rad);
-				
-				p.x = (int)(getMapMode().LPtoDP((int) dx)*zoom);
-				p.y = (int)(getMapMode().LPtoDP((int) dy)*zoom);
-			}
-										
+			p.x = (int)(getMapMode().LPtoDP(p.x)*zoom);
+			p.y = (int)(getMapMode().LPtoDP(p.y)*zoom);
+			p.x = p.x > 0 ? p.x : 1;
+			p.y = p.y > 0 ? p.y : 1;
 			return p;
 		}
 		catch (Exception ex) {
@@ -150,36 +133,6 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 		return true;
 	}
 	
-	public int getRotation() {
-		View view = getNotationView();
-		if (view == null) 
-			return 0;
-		
-		PropertiesSetStyle propertiesStyle = (PropertiesSetStyle) view
-				.getNamedStyle(NotationPackage.eINSTANCE
-						.getPropertiesSetStyle(),
-						PartShapeViewFactory.PARTS_PROPERTIES_STYLE_NAME);
-		if (propertiesStyle == null) 
-			return 0;
-		
-		if (!propertiesStyle.hasProperty(PartShapeViewFactory.PARTS_ROTATION_PROPERTY_NAME))
-				return 0;
-		
-		Integer value = null;
-		try {
-			value = (Integer) propertiesStyle
-					.getProperty(PartShapeViewFactory.PARTS_ROTATION_PROPERTY_NAME);
-		} 
-		catch (Exception e) {}
-		
-		if (value != null) {
-			return value.intValue();				
-		}
-								
-		return 0;
-		
-	}
-
 	/**
 	 * @generated NOT
 	 */
@@ -266,7 +219,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 //		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(getMapMode()
 //				.DPtoLP((int) (size.width / multiplier)), getMapMode().DPtoLP(
 //				(int) (size.height / multiplier)));
-		PartDefaultSizeNodeFigure result = new PartDefaultSizeNodeFigure(size.width, size.height);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(size.width, size.height);
 		return result;
 	}
 
@@ -278,11 +231,6 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	}
 
 	protected void addZoomListener() {
-		if (addedZoomListener) {
-			return;
-		}
-		
-		addedZoomListener = true;
 		((FritzingDiagramRootEditPart)getRoot()).getZoomManager().addZoomListener(
 			new ZoomListener() {
 				public void zoomChanged(double zoom) {
@@ -293,22 +241,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 		getPrimaryShape().setZoom(
 				((FritzingDiagramRootEditPart)getRoot()).getZoomManager().getZoom());
 	}
- 		
-	protected void rotatePart(int degrees) {
-		
-		this.getPrimaryShape().setRotation(degrees);
-		
-		// trigger relocate in the border items
-		
-		for (Iterator itr = getChildren().iterator(); itr.hasNext();) {
-			Object obj = itr.next();
-			if (obj instanceof Terminal2EditPart) {
-				//((Terminal2EditPart) obj).refreshBounds();
-			}
-		}
-
-	}
-
+   
 	protected void handleNotificationEvent(Notification notification) {
 		Object feature = notification.getFeature();		        
 		if (feature instanceof EAttributeImpl) {
@@ -340,33 +273,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
  				}
 			}
 		}
-		
-		if (NotationPackage.eINSTANCE.getPropertyValue_RawValue().equals(notification.getFeature())) {
-			View viewContainer = ViewUtil.getViewContainer((EObject) notification .getNotifier());
-			if (viewContainer != null
-					&& viewContainer.equals(getNotationView())) 
-			{
-				PropertiesSetStyle style = (PropertiesSetStyle) getNotationView()
-						.getNamedStyle(
-								NotationPackage.eINSTANCE
-										.getPropertiesSetStyle(),
-										PartShapeViewFactory.PARTS_PROPERTIES_STYLE_NAME);
-				if (style != null
-						&& style.getPropertiesMap().get(
-								PartShapeViewFactory.PARTS_ROTATION_PROPERTY_NAME)
-								.equals(notification.getNotifier())) 
-				{
-					
-					Integer value = (Integer) style.getProperty(PartShapeViewFactory.PARTS_ROTATION_PROPERTY_NAME);
-					if (value != null) {
-						rotatePart(value.intValue());
-					}
-				}
-			}
-		} 
-
 		super.handleNotificationEvent(notification);
-		
 	}
 	
 	public boolean isTerminalFemale(Terminal2EditPart terminal) {
@@ -441,6 +348,7 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	
 	protected boolean addEastWestFixedChild(EditPart childEditPart) {
 		if (childEditPart instanceof Terminal2EditPart) {
+			int terminalPosition = PositionConstants.NONE;
 			Point p = null;
 			Object model = childEditPart.getModel();		
 			if (model instanceof NodeImpl) {
@@ -448,15 +356,18 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 				if (eobject instanceof Terminal) {
 					String name = ((Terminal) eobject).getId();
 					p = findTerminal(childEditPart);
+					if (p == null) {
+						terminalPosition = EastWestBorderItemLocator.parseTerminalName(name);
+					}
 				}
 			}
 			
 			IBorderItemLocator locator = null;			
-			if (p != null) {
-				locator = new EastWestBorderItemLocator(getMainFigure(), this, p, partDefinition.getSize().getCopy());
+			if ((p != null) || (terminalPosition != PositionConstants.NONE)) {
+				locator = new EastWestBorderItemLocator(getMainFigure(), this, terminalPosition, p);
 			}
 			else {
-				locator =  new BorderItemLocator( getMainFigure(), PositionConstants.NONE);
+				locator =  new BorderItemLocator( getMainFigure(), terminalPosition);
 			}
 			getBorderedFigure().getBorderItemContainer().add(
 				((Terminal2EditPart) childEditPart).getFigure(), locator);
@@ -515,20 +426,5 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 		
 		return null;
 	}
-	
-	
-	public class PartDefaultSizeNodeFigure extends DefaultSizeNodeFigure {
-		public PartDefaultSizeNodeFigure(int w, int h) {
-			super(w, h);
-		}
-		
-//		public Rectangle getHandleBounds() {
-//			Rectangle handleBounds = super.getHandleBounds();
-//			System.out.println("handl bounds " + bounds.width + " " + bounds.height);
-//			return handleBounds;
-//		}
-		
-	}
-	
-	
+
 }

@@ -42,7 +42,6 @@ import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
-import org.fritzing.fritzing.diagram.edit.policies.FritzingXYLayoutEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.SketchCanonicalEditPolicy;
 import org.fritzing.fritzing.diagram.edit.policies.SketchItemSemanticEditPolicy;
 import org.fritzing.fritzing.diagram.part.FritzingLinkDescriptor;
@@ -78,7 +77,6 @@ public class SketchEditPart extends DiagramEditPart implements INodeEditPart {
 				new SketchItemSemanticEditPolicy());
 		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
 				new SketchCanonicalEditPolicy());
-		installEditPolicy(EditPolicy.LAYOUT_ROLE, new FritzingXYLayoutEditPolicy());
 
 		// kills the drag-wire from terminal to sketch popup
 		//		installEditPolicy(EditPolicy.GRAPHICAL_NODE_ROLE, new NoPopupContainerNodeEditPolicy());

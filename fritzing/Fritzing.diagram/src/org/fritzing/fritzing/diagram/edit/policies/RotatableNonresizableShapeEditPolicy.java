@@ -10,45 +10,28 @@ import java.util.List;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.draw2d.Border;
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LineBorder;
-import org.eclipse.draw2d.Polygon;
 import org.eclipse.draw2d.PositionConstants;
-import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.draw2d.geometry.PointList;
-import org.eclipse.draw2d.geometry.PrecisionRectangle;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Handle;
-import org.eclipse.gef.Request;
 import org.eclipse.gef.handles.AbstractHandle;
-import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.RotatableShapeEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.internal.handles.RotateHandle;
 import org.eclipse.gmf.runtime.diagram.ui.internal.tools.RotateTracker;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.FigureUtilities;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.RGB;
-import org.fritzing.fritzing.diagram.edit.commands.SetRotationCommand;
-import org.fritzing.fritzing.diagram.edit.parts.PartEditPart;
-import org.fritzing.fritzing.diagram.edit.requests.FritzingRotateShapeRequestEx;
-import org.fritzing.fritzing.diagram.edit.requests.RotateShapeRequestEx;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
-import org.fritzing.fritzing.diagram.utils.RotateDing;
-import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
  * @generated NOT
  */
-public class RotatableNonresizableShapeEditPolicy extends RotatableShapeEditPolicyEx {
+public class RotatableNonresizableShapeEditPolicy extends RotatableShapeEditPolicy {
 	public static HashMap<Integer, Cursor> rotateCursors = new HashMap<Integer, Cursor>();
 	static RGB handleRGB = new RGB(0x51, 0x8a, 0x5b);
 	static Color fillColor = new Color(null, handleRGB);
 	static String cursorImageFileSuffix = ".gif";
-	static Color rotateGhostFillColor = new Color(null, 63, 63, 63);	
 	
 	/**
 	 * @generated NOT
@@ -58,15 +41,7 @@ public class RotatableNonresizableShapeEditPolicy extends RotatableShapeEditPoli
 		// so get rid of them here
 		super.setResizeDirections(0);
 	}
-
-	protected RotateShapeRequestEx getRequest(ChangeBoundsRequest request) {
-		FritzingRotateShapeRequestEx req = new FritzingRotateShapeRequestEx(REQ_RESIZE_CHILDREN);
-		if (request instanceof FritzingRotateShapeRequestEx) {
-			req.setNewBounds(((FritzingRotateShapeRequestEx) request).getNewBounds());
-		}
-		return req;
-	}
-
+		
 	/**
 	 * @generated NOT
 	 */
@@ -164,123 +139,73 @@ public class RotatableNonresizableShapeEditPolicy extends RotatableShapeEditPoli
 				
 	}
 	
-	protected IFigure createDragSourceFeedbackFigure() {
-		// Use a ghost rectangle for feedback
-		Polygon p = new Polygon();
-		p.setFill(true);
-		p.setOutline(true);
-		
-		setInitialPoints(p);
-
-		//FigureUtilities.makeGhostShape(p);
-		p.setBackgroundColor(rotateGhostFillColor);
-		p.setFillXOR(true);
-		p.setOutlineXOR(true);
-
-		p.setLineStyle(Graphics.LINE_DOT);
-		p.setForegroundColor(ColorConstants.white);
-		//p.setBounds(r);
-		addFeedback(p);
-		return p;
-	}
 	
-	/**
-	 * @generated NOT
-	 */	
-	protected void setInitialPoints(Polygon p) {
-		setPoints(p, 0, 0);
+
+	/*
+	private boolean isRotationRequired(ChangeBoundsRequest request) {
+		return request instanceof RotateShapeRequest ?  ((RotateShapeRequest) request).shouldRotate() : false; 
 	}
 	
 	protected void showChangeBoundsFeedback(ChangeBoundsRequest request) {
-		// If the figure is being rotated draw the rotation feedback
-		if (request instanceof FritzingRotateShapeRequestEx) {
-			// Get current feedback
-			IFigure feedbackFigure = getDragSourceFeedbackFigure();
-			int rotationDirection = getRotationDirection(request);
-			((FritzingRotateShapeRequestEx) request).setRotationDirection(rotationDirection);
-			if (doRotation(request)) {
-				int fromAngle = SetRotationCommand.getAngle(request.getResizeDirection());
-				int toAngle = SetRotationCommand.getAngle(rotationDirection);
-				
-				//System.out.println("from:" + request.getResizeDirection() + " to:" + rotationDirection);
-																
-				((FritzingRotateShapeRequestEx) request).setNewBounds(setPoints((Polygon) feedbackFigure, fromAngle, toAngle));
-				
-
-			}
-			else {
-				setInitialPoints((Polygon) feedbackFigure);
-			}
-		}
-		else {
-			// otherwise the figure is being resized
-			super.showChangeBoundsFeedback(request);
-		}
-	}
-	
-	Rectangle setPoints(Polygon p, int fromAngle, int toAngle) {
-        GraphicalEditPart part = (GraphicalEditPart) getHost();
-        if (!(part instanceof PartEditPart)) return null;
-
- 		PrecisionRectangle r = new PrecisionRectangle(getInitialFeedbackBounds());
-		getHostFigure().translateToAbsolute(r);
-
-		int diff = toAngle - fromAngle;
-		if (diff < 0) diff += 360;
-		        
-        int rot = ((PartEditPart) part).getRotation();  
-		diff += rot;
-					
-		RotateDing rotateDing = RotateDing.rotatePrecisionRect(diff, r);
-		rotateDing.adjustCenter();
-				
-		PointList pl = new PointList();
-		pl.addPoint((int) rotateDing.p1x, (int) rotateDing.p1y);
-		pl.addPoint((int) rotateDing.p2x, (int) rotateDing.p2y);
-		pl.addPoint((int) rotateDing.p3x, (int) rotateDing.p3y);
-		pl.addPoint((int) rotateDing.p4x, (int) rotateDing.p4y);
-		pl.addPoint((int) rotateDing.p1x, (int) rotateDing.p1y);
-		p.setPoints(pl);
-		
-		
-        double zoom = ((PartEditPart) part).getPrimaryShape().getZoom();
- 		
-		Rectangle result = new Rectangle(p.getBounds());
-		result.width = ((PartEditPart) part).DPtoLP((int) (result.width / zoom));
-		result.height = ((PartEditPart) part).DPtoLP((int) (result.height / zoom));
-		result.x = ((PartEditPart) part).DPtoLP((int) (result.x / zoom));
-		result.y = ((PartEditPart) part).DPtoLP((int) (result.y / zoom));
-		return result;
+		super.showChangeBoundsFeedback(request);
+		System.out.println("show change " + request.getClass().getName());	
 	}
 	
 	
 	protected Rectangle getInitialFeedbackBounds() {
-		 Rectangle r = super.getInitialFeedbackBounds();	
-		 // now use the part's actual size and center it in the current bounding area
-	     Dimension dim = ((PartEditPart) getHost()).getPartDefinition().getSize();
-	     r.x += (r.width - dim.width) / 2;
-	     r.y += (r.height - dim.height) / 2;
-	     r.height = dim.height;
-	     r.width = dim.width;
-	     return r;
+		System.out.println("get initial bounds ");	
+
+		return super.getInitialFeedbackBounds();	
 	}
+
+	protected void showChangeBoundsFeedback(ChangeBoundsRequest request) {
+		ChangeBoundsRequest cbr = (ChangeBoundsRequest) request;
+		if (isRotationRequired(cbr)) {
+			Control control = Display.getCurrent().getCursorControl();
+			savedCursor = control.getCursor();
+			control.setCursor(new Cursor(Display.getCurrent(), SWT.CURSOR_WAIT));
+			System.out.println("setting cursor? " + control.getToolTipText() + " " + request.getClass().getName());	
+		}
+	}
+	
+	public void eraseTargetFeedback(Request request) {
+		if (request instanceof ChangeBoundsRequest) {
+			ChangeBoundsRequest cbr = (ChangeBoundsRequest) request;
+			if (isRotationRequired(cbr)) {
+				Control control = Display.getCurrent().getCursorControl();
+				control.setCursor(savedCursor);
+			}
+		}
+	}
+	
+	*/
 }
 
-class CustomCursorRotateTracker extends RotateTrackerEx
+/**
+ * @generated NOT
+ */
+class CustomCursorRotateTracker extends RotateTracker
 {
 	int direction;
 	Cursor cursor;
 		
+	/**
+	 * @generated NOT
+	 */
 	public CustomCursorRotateTracker(GraphicalEditPart owner, int direction, Cursor cursor) {
 		super(owner, direction);
 		this.direction = direction;
 		this.cursor = cursor;
 	}
 	
+	/**
+	 * @generated NOT
+	 */
 	protected Cursor getDefaultCursor() {
 		return cursor;
 	}
-		
+	
+
 	protected boolean  handleButtonDown(int button) {
 		// 
 		boolean result = super.handleButtonDown(button);
@@ -297,14 +222,6 @@ class CustomCursorRotateTracker extends RotateTrackerEx
 		}
 		return result;
 	}
-	
-	protected Request createSourceRequest() {
-		// have to pass the info from a previous request to the next request
-		FritzingRotateShapeRequestEx request = new FritzingRotateShapeRequestEx(REQ_RESIZE);
-		request.setResizeDirection(getResizeDirection());
-		return request;
-	}
-	
 }
 
 
