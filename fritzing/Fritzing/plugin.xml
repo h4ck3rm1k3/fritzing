@@ -61,7 +61,7 @@
         </property>
         <property
               name="startupVersionRect"
-              value="520,185,35,11">
+              value="500,185,45,11">
         </property>
         <property
               name="startupVersionForegroundColor"
