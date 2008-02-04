@@ -90,7 +90,7 @@ public class ExtensibleSplashHandler extends EclipseSplashHandler {
 			versionFontSizeInteger = Integer
 					.parseInt(versionFontSizeString);
 		} catch (Exception ex) {
-			versionFontSizeInteger = 14; 
+			versionFontSizeInteger = 8; 
 		}
 
 		Shell splash = getSplash();
@@ -118,7 +118,8 @@ public class ExtensibleSplashHandler extends EclipseSplashHandler {
 				(versionBackgroundColorInteger & 0xFF0000) >> 16,
 				(versionBackgroundColorInteger & 0xFF00) >> 8,
 				versionBackgroundColorInteger & 0xFF));
-        label.setBounds(new Rectangle(0,0,versionRect.width,versionRect.height));			
+        label.setBounds(new Rectangle(0,0,versionRect.width,versionRect.height));	
+        label.setAlignment(SWT.RIGHT);
         label.setText(versionString);
 	        		
 	    return super.getContent();
