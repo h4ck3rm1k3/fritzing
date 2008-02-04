@@ -4,6 +4,7 @@
 (c) Fachhochschule Potsdam
 -->
 <plugin>
+   <extension-point id="splashExtension" name="Splash Extensions" schema="schema/splashExtension.exsd"/>
 
    <extension id="FritzingPhysicalApplication" point="org.eclipse.core.runtime.applications">
       <?gmfgen generated="true"?>
@@ -611,6 +612,18 @@
             name="Fritzing">
       </theme>
    </extension>
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="fritzing.diagram.splashHandlers.ExtensibleSplashHandler"
+            id="fritzing.diagram.splashHandlers.extensible">
+      </splashHandler>
+      <splashHandlerProductBinding
+            productId="Fritzing.product"
+            splashId="fritzing.diagram.splashHandlers.extensible">
+      </splashHandlerProductBinding>
+   </extension>
+
 
 <!--
    <extension point="org.eclipse.emf.validation.constraintProviders">
