@@ -188,6 +188,10 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 
 		addZoomListener(); // needed for zoom-dependent figure
 		
+		((PartFigure) primaryShape).setRotation(getRotation());
+
+		
+		
 		// place to add or remove policies
 		// POPUP_BAR and CONNECTOR_HANDLES are disabled by default in preferences
 	}
@@ -297,16 +301,6 @@ public class PartEditPart extends AbstractBorderedShapeEditPart implements IRota
 	protected void rotatePart(int degrees) {
 		
 		this.getPrimaryShape().setRotation(degrees);
-		
-		// trigger relocate in the border items
-		
-		for (Iterator itr = getChildren().iterator(); itr.hasNext();) {
-			Object obj = itr.next();
-			if (obj instanceof Terminal2EditPart) {
-				//((Terminal2EditPart) obj).refreshBounds();
-			}
-		}
-
 	}
 
 	protected void handleNotificationEvent(Notification notification) {
