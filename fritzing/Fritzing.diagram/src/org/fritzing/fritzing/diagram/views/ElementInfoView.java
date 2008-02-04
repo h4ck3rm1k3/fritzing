@@ -101,6 +101,7 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 		 // clear styles
 		StyleRange[] noStyles = {};
 		text.getTextWidget().setStyleRanges(noStyles);
+		text.setText("");
 		
 		int len = parts.size();
 		if (len == 0) {
@@ -125,7 +126,7 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 				}
 			}
 			else {
-				text.setText("You have " + parts.size() + " items selected");
+				showMultipleInfo(parts);				
 			}
 		}
 		// apply styles
@@ -161,7 +162,11 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 		text.append("Version " + part.getVersion());		
 		Iterator<PartDefinition.Author> iAuthors = pd.getAuthors();
 		if (iAuthors.hasNext()) {
-			text.append("\nAuthors: ");
+			text.append("\nAuthor");
+			if (pd.getAuthorsNum() > 1) {
+				text.append("s");
+			}
+			text.append(": ");
 			while (iAuthors.hasNext()) {
 				final PartDefinition.Author a = iAuthors.next();
 				if (a.url != null) {
@@ -238,6 +243,15 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 		sb.append("\n" + sketch.getParts().size() + " parts");
 		sb.append("\n" + sketch.getWires().size() + " wires");
 		text.setText(sb.toString());
+	}
+
+	protected void showMultipleInfo(ArrayList<EditPart> parts) {
+		// multiple parts selected
+		imageStyle.start = 0;
+		imageStyle.length = 0;
+		titleStyle.start = 0;
+		titleStyle.length = 0;
+		text.setText("");
 	}
 	
 	
