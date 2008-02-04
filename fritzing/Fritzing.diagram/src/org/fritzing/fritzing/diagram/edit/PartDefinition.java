@@ -432,6 +432,13 @@ public class PartDefinition {
 	}
 
 	/**
+	 * @return the number of authors
+	 */
+	public int getAuthorsNum() {
+		return authors.size();
+	}
+	
+	/**
 	 * @param author the author to add
 	 */
 	public void addAuthor(Author author) {
