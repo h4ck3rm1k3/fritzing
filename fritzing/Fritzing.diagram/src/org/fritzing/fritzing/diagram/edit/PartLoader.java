@@ -66,23 +66,24 @@ public class PartLoader {
 		return null;
 	}
 	
-	protected static boolean initialize(String root, String path, EObject newElement) {
-		try {
-//			URL url = FileLocator.find(FritzingDiagramEditorPlugin
-//			.getInstance().getBundle(), new Path(
-//			"icons/parts/partdescription.xml"), null);
-//			url = FileLocator.toFileURL(url);
-			
-			PartDefinition pd = loadXMLFromLibrary(root, path, false);
-			if (pd == null) return false;
-			
-			return initialize(pd, newElement);
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return false;
-	}
+	// jrc feb 1 2008: this version of initialize is obsolete
+//	protected static boolean initialize(String root, String path, EObject newElement) {
+//		try {
+////			URL url = FileLocator.find(FritzingDiagramEditorPlugin
+////			.getInstance().getBundle(), new Path(
+////			"icons/parts/partdescription.xml"), null);
+////			url = FileLocator.toFileURL(url);
+//			
+//			PartDefinition pd = loadXMLFromLibrary(root, path, false);
+//			if (pd == null) return false;
+//			
+//			return initialize(pd, newElement);
+//		}
+//		catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
+//		return false;
+//	}
 	
 				
 	public static boolean initialize(PartDefinition pd, EObject newElement) {

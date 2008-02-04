@@ -78,7 +78,7 @@ public class PartDefinition {
 	}
 		
 	public Dimension getSize() {
-		return size;
+		return size.getCopy();
 	}
 	
 	public boolean getTrackVisible(String trackString) {
@@ -99,7 +99,7 @@ public class PartDefinition {
 		if (terminal == null) return new Point(0,400);
 		
 		if (terminal.points.size() < 2) return new Point(0,400);
-				
+			
 		PointPoint pp0 = terminal.points.get(0);		
 		PointPoint pp1 = terminal.points.get(1);
 		

@@ -1,0 +1,106 @@
+/******************************************************************************
+ * Copyright (c) 2002, 2004 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    IBM Corporation - initial API and implementation 
+ ****************************************************************************/
+
+package org.fritzing.fritzing.diagram.edit.policies;
+
+//RotateTrackerEx class originally attached to https://bugs.eclipse.org/bugs/show_bug.cgi?id=167316
+
+
+import java.util.List;
+
+import org.eclipse.draw2d.Cursors;
+import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gef.Request;
+import org.eclipse.gef.tools.ResizeTracker;
+import org.eclipse.swt.graphics.Cursor;
+
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IRotatableEditPart;
+import org.fritzing.fritzing.diagram.edit.requests.RotateShapeRequestEx;
+
+/**
+ * Rotate tracker provides support for figure rotations.
+ * Creates and passes off RotateShapeRequests to the EditPolicies
+ * The request specifies whether the EditPart can be rotated
+ * 
+ * @author oboyko
+ * 
+ */
+public class RotateTrackerEx extends ResizeTracker {
+	
+	// We need to remember which of the handles has been used for rotations
+	private int direction;
+
+	/**
+	 * Constructs a resize tracker that resizes in the specified direction.  The direction is
+	 * specified using {@link PositionConstants#NORTH}, {@link PositionConstants#NORTH_EAST},
+	 * etc.
+	 * 
+	 * @param direction the direction of the resize gesture
+	 * @param owner of the resize handle which returned this tracker
+	 */
+	public RotateTrackerEx(GraphicalEditPart owner, int direction) {
+		super(owner, direction);
+		this.direction = direction;
+	}
+	
+	/*
+	 * Determines whether the selected EditPart can be rotated
+	 */
+	private boolean isRotationRequired() {
+		boolean result = true;
+		// check if the selected edit parts implement rotatable interface and 
+		// if they are check if they are rotatable
+		List operationSet = getOperationSet();
+		for (int i = 0; i < operationSet.size() && result; i++) {
+			Object editPart = operationSet.get(i);
+			result = editPart instanceof IRotatableEditPart ?  
+			((IRotatableEditPart)editPart).isRotatable() : false; 
+		}
+		return result;
+	}
+
+	private int rotationDirection = -1; 
+	
+	/**
+	 * This method must be overriden to give the RotateShapeRequest information on
+	 * whether the rotation is for the EditPart is permited or not   
+	 */
+	protected void updateSourceRequest() {
+		super.updateSourceRequest();
+		RotateShapeRequestEx request = (RotateShapeRequestEx)getSourceRequest();
+		request.setRotate(isRotationRequired());
+		rotationDirection = request.getRotationDirection();
+	}
+	
+	/**
+	 * Creates the new RotateShapeRequest for which the rotation permission is
+	 * evaluated later on
+	 */
+	protected Request createSourceRequest() {
+		RotateShapeRequestEx request;
+		request = new RotateShapeRequestEx(REQ_RESIZE);
+		request.setResizeDirection(getResizeDirection());
+		return request;
+	}
+
+	/**
+	 * If rotation is not permited for the selected EditParts then by dragging a rotate
+	 * handle the rotate tracker becomes resize tracker and the selected figures are being
+	 * resized, hence the cursor dispalyed will be an arrow corresponding to the dragging 
+	 * direction. Otherwise, the cursor returned is "hand"
+	 */
+	protected Cursor getDefaultCursor() {
+		if (! isRotationRequired()) {
+			return Cursors.getDirectionalCursor(direction); 
+		}
+		return (rotationDirection == direction ? Cursors.HAND : Cursors.getDirectionalCursor(rotationDirection));
+	}
+}
