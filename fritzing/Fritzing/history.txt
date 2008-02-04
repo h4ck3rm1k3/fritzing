@@ -5,6 +5,12 @@ between versions!
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
+0005 ALPHA - Feb 4th 2008
+
+Maintenance release
+
+< > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
+
 0004 ALPHA - Jan 29th 2008
 
 Big release with a lot of enhancements! Everything behaves and looks much
