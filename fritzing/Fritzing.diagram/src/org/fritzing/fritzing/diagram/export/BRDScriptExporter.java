@@ -1,8 +1,12 @@
 package org.fritzing.fritzing.diagram.export;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import org.eclipse.core.runtime.Preferences;
+import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
+import org.fritzing.fritzing.diagram.preferences.EaglePreferencePage;
 
 
 public class BRDScriptExporter {	
@@ -41,8 +45,9 @@ public class BRDScriptExporter {
 		// tell the schematic editor to use the Fritzing Eagle library
 		// it is not loaded by default
 	/*TODO update "USE" directive with a list of the actual packages used	 */
-		"USE '" + FritzingDiagramEditorUtil.getFritzingLocation() +
-				"eagle/lbr/fritzing.lbr';\n";
+//		"USE '" + FritzingDiagramEditorUtil.getFritzingLocation() +
+//				"eagle/lbr/fritzing.lbr';" + 
+		"\n";
 	
 	// the following footer text is appended to all schematic-generating
 	// script files we produce.  these commands are used primarily to return
@@ -71,21 +76,30 @@ public class BRDScriptExporter {
 		String result = "";
 		// place a schematic symbol 
 		// Eagle syntax is "ADD <libraryPart>@<libraryName> 'partName' 'gateName' R<rotationAngle> (<componentCoords>)"
-		if (part.getEagleLibraryName().equals("fritzing")) {
-			result = "ADD " +
-				part.getEagleFootprint() + 
-				"@" + part.getEagleLibraryName() + " " +
-				"'" + part.getEaglePartLabel() + "' " +
-				part.getEagleRotationPrefix() + part.getEagleRotationVal() + " " + 
-				"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + "); \n";
-		} else {
-			result = "ADD '" + 
-				part.getEagleFootprint() + 
-				"@" + part.getLibraryLocation() + "footprint.lbr' " +
-				"'" + part.getEaglePartLabel() + "' " +
-				part.getEagleRotationPrefix() + part.getEagleRotationVal() + " " + 
-				"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + "); \n";
+		/* Look for the specified part library in three different places:
+		 * 1. in the part's folder
+		 * 2. in fritzing/eagle/lbr
+		 * 3. in the eagle libraries folder
+		 */
+		String library = part.getPartLocation() + part.getEagleLibraryName() + ".lbr";
+		if (! new File(library).exists()) {
+			library = FritzingDiagramEditorUtil.getFritzingLocation()
+				+ "eagle" + File.separator + "lbr" +  File.separator + part.getEagleLibraryName() + ".lbr"; 
+			if (! new File(library).exists()) {
+				library = FritzingDiagramEditorPlugin.getInstance()
+					.getPluginPreferences().getString(EaglePreferencePage.EAGLE_LOCATION)
+					+ File.separator + "lbr" + File.separator + part.getEagleLibraryName() + ".lbr";
+				if (! new File(library).exists()) {
+					System.out.println("Could not find library " + part.getEagleLibraryName());
+				}
+			}
 		}
+		result = "ADD '" + 
+			part.getEagleFootprint() + 
+			"@" + library + "' " +
+			"'" + part.getEaglePartLabel() + "' " +
+			part.getEagleRotationPrefix() + part.getEagleRotationVal() + " " + 
+			"(" + part.getEaglePartPos().xVal + " " + part.getEaglePartPos().yVal + "); \n";
 		return result;
 	}
 	

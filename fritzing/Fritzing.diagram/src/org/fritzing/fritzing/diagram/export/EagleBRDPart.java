@@ -9,7 +9,7 @@ import org.fritzing.fritzing.diagram.edit.parts.PartEditPart;
 public class EagleBRDPart {
 	Part p;
 	PartEditPart ep;
-	private String libraryLocation = "";
+	private String partLocation = "";
 	private String eagleFootprint = "";
 	private String eagleLibraryName = "";
 	private String eaglePartLabelPrefix = "";
@@ -31,19 +31,17 @@ public class EagleBRDPart {
 				(float)ep.getLocation().y));
 		
 		if (p.getFootprint() != null) {
-			// TODO: libraryLocation is the absolute path to the partdescription.xml
-			
 			String footprintStrings[] = p.getFootprint().split("/");	
 			String libraryName = footprintStrings[0].split(".lbr")[0];
 			String footprintName = footprintStrings[1];
 						
-			this.libraryLocation = ep.getPartDefinition().getContentsPath();
+			this.partLocation = ep.getPartDefinition().getContentsPath();
 			this.eagleFootprint = footprintName.toUpperCase();
 			this.eagleLibraryName = libraryName;
 			
-			System.out.println("location: " + libraryLocation);
-			System.out.println("lib name: " + libraryName);
-			System.out.println("footprint: " + footprintName);
+//			System.out.println("location: " + libraryLocation);
+//			System.out.println("lib name: " + libraryName);
+//			System.out.println("footprint: " + footprintName);
 						
 			setExportToPcb(true);
 		} else {
@@ -55,8 +53,8 @@ public class EagleBRDPart {
 		
 	}
 	
-	public String getLibraryLocation() {
-		return(this.libraryLocation);
+	public String getPartLocation() {
+		return(this.partLocation);
 	}
 	
 	public String getFritzingId() {
