@@ -59,7 +59,23 @@
               name="preferenceCustomization"
               value="plugin_customization.ini">
         </property>
-     </product>
+        <property
+              name="startupVersionRect"
+              value="520,185,35,11">
+        </property>
+        <property
+              name="startupVersionForegroundColor"
+              value="ffffff">
+        </property>
+        <property
+              name="startupVersionBackgroundColor"
+              value="3e151f">
+        </property>
+        <property
+              name="startupVersionFontSize"
+              value="8">
+        </property>
+      </product>
   </extension>
 
 </plugin>
