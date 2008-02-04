@@ -1,38 +1,19 @@
 
 package org.fritzing.fritzing.diagram.splashHandlers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IProduct;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.StringConverter;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.branding.IProductConstants;
 import org.eclipse.ui.internal.splash.EclipseSplashHandler;
-import org.eclipse.ui.internal.util.PrefUtil;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.ui.splash.AbstractSplashHandler;
-import org.eclipse.ui.splash.BasicSplashHandler;
 import org.osgi.framework.Bundle;
 
 /**
@@ -118,7 +99,8 @@ public class ExtensibleSplashHandler extends EclipseSplashHandler {
 				(versionBackgroundColorInteger & 0xFF0000) >> 16,
 				(versionBackgroundColorInteger & 0xFF00) >> 8,
 				versionBackgroundColorInteger & 0xFF));
-        label.setBounds(new Rectangle(0,0,versionRect.width,versionRect.height));			
+        label.setBounds(new Rectangle(0,0,versionRect.width,versionRect.height));
+        label.setAlignment(SWT.RIGHT);
         label.setText(versionString);
 	        		
 	    return super.getContent();
