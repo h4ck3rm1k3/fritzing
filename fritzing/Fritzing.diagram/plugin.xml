@@ -615,12 +615,12 @@
    <extension
          point="org.eclipse.ui.splashHandlers">
       <splashHandler
-            class="fritzing.diagram.splashHandlers.ExtensibleSplashHandler"
-            id="fritzing.diagram.splashHandlers.extensible">
+            class="org.fritzing.fritzing.diagram.splashHandlers.ExtensibleSplashHandler"
+            id="org.fritzing.fritzing.diagram.splashHandlers.extensible">
       </splashHandler>
       <splashHandlerProductBinding
             productId="Fritzing.product"
-            splashId="fritzing.diagram.splashHandlers.extensible">
+            splashId="org.fritzing.fritzing.diagram.splashHandlers.extensible">
       </splashHandlerProductBinding>
    </extension>
 
