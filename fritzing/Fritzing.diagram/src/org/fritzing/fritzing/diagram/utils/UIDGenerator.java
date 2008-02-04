@@ -3,6 +3,10 @@ package org.fritzing.fritzing.diagram.utils;
 import java.util.Hashtable;
 import java.util.UUID;
 
+/*
+ * There's also one at org.eclipse.emf.ecore.util.EcoreUtil.generateUUID() ..
+ */
+
 public class UIDGenerator {
 	
 	static protected Hashtable<Character, String> bitHash = new Hashtable<Character, String>();
