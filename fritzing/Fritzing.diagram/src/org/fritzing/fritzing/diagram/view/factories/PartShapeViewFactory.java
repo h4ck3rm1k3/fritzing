@@ -19,13 +19,17 @@ public class PartShapeViewFactory extends AbstractShapeViewFactory {
 	public static final String PARTS_ROTATION_PROPERTY_NAME = "parts_rotation_property";
 	
 	protected List createStyles(View view) {
-		List styles = new ArrayList();
-		styles.add(NotationFactory.eINSTANCE.createShapeStyle());
+		List styles = super.createStyles(view);
+		
+		// save the rotation
+		// TODO: this creates quite a big chunk of xml, we should try to
+		// optimize this - maybe with our own notation?
 		PropertiesSetStyle properties = NotationFactory.eINSTANCE.createPropertiesSetStyle();
 		properties.setName(PARTS_PROPERTIES_STYLE_NAME);
 		properties.createProperty(PARTS_ROTATION_PROPERTY_NAME,
 								EcorePackage.eINSTANCE.getEIntegerObject(), null);
 		styles.add(properties);
+		
 		return styles;
 	}
 
