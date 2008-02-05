@@ -1,0 +1,175 @@
+/*
+ * (c) Fachhochschule Potsdam
+ */
+package org.fritzing.pcb.edit.parts;
+
+import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.editpolicies.LayoutEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
+import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.notation.View;
+import org.fritzing.pcb.edit.PartDefinition;
+import org.fritzing.pcb.edit.policies.ResistorCanonicalEditPolicy;
+import org.fritzing.pcb.edit.policies.ResistorItemSemanticEditPolicy;
+import org.fritzing.pcb.part.FritzingVisualIDRegistry;
+
+/**
+ * @generated NOT
+ */
+public class ResistorEditPart extends PartEditPart {
+
+	/**
+	 * @generated
+	 */
+	public static final int VISUAL_ID = 2002;
+
+	/**
+	 * @generated NOT
+	 */
+	public ResistorEditPart(View view) {
+		super(view);
+	}
+
+	/**
+	 * @generated
+	 */
+	protected void createDefaultEditPolicies() {
+		installEditPolicy(EditPolicyRoles.CREATION_ROLE,
+				new CreationEditPolicy());
+
+		super.createDefaultEditPolicies();
+		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+				new ResistorItemSemanticEditPolicy());
+		installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
+				new DragDropEditPolicy());
+		installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
+				new ResistorCanonicalEditPolicy());
+		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
+		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
+		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected LayoutEditPolicy createLayoutEditPolicy() {
+		return super.createLayoutEditPolicy();
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected IFigure createNodeShape() {
+		ResistorFigure figure = new ResistorFigure(partDefinition);
+		return primaryShape = figure;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected void addChildVisual(EditPart childEditPart, int index) {
+		if (addFixedChild(childEditPart)) {
+			return;
+		}
+		super.addChildVisual(childEditPart, -1);
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected boolean addFixedChild(EditPart childEditPart) {
+		return addEastWestFixedChild(childEditPart);
+	}
+
+	/**
+	 * @generated
+	 */
+	public ResistorFigure getPrimaryShape() {
+		return (ResistorFigure) primaryShape;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	protected NodeFigure createNodePlate() {
+		return super.createNodePlate();
+	}
+
+	/**
+
+	/**
+	 * @generated
+	 */
+	protected boolean removeFixedChild(EditPart childEditPart) {
+
+		if (childEditPart instanceof Terminal2EditPart) {
+			getBorderedFigure().getBorderItemContainer().remove(
+					((Terminal2EditPart) childEditPart).getFigure());
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @generated
+	 */
+	protected void removeChildVisual(EditPart childEditPart) {
+		if (removeFixedChild(childEditPart)) {
+			return;
+		}
+		super.removeChildVisual(childEditPart);
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public EditPolicy getPrimaryDragEditPolicy() {
+		return super.getPrimaryDragEditPolicy();
+	}
+
+	/**
+	 * @generated
+	 */
+	public EditPart getPrimaryChildEditPart() {
+		return getChildBySemanticHint(FritzingVisualIDRegistry
+				.getType(ResistorNameEditPart.VISUAL_ID));
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	public class ResistorFigure extends PartFigure {
+
+		/**
+		 * @generated NOT
+		 */
+		public ResistorFigure(PartDefinition partDefinition) {
+			super(partDefinition);
+		}
+
+		/**
+		 * @generated
+		 */
+		private boolean myUseLocalCoordinates = false;
+
+		/**
+		 * @generated
+		 */
+		protected boolean useLocalCoordinates() {
+			return myUseLocalCoordinates;
+		}
+
+		/**
+		 * @generated
+		 */
+		protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
+			myUseLocalCoordinates = useLocalCoordinates;
+		}
+
+	}
+
+}
