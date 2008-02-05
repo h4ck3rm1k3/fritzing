@@ -152,7 +152,7 @@ public class FritzingEditPartFactory implements EditPartFactory {
 				}
 			}
 			catch (Exception ex) {
-				System.out.println("hello");
+				// don't do anything
 			}
 		}
 
