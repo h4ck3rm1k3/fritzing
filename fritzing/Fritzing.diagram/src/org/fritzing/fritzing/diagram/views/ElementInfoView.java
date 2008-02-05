@@ -105,14 +105,14 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 		
 		int len = parts.size();
 		if (len == 0) {
-			text.setText("");
+			showNothing();
 		} else {
 			if (len == 1) {
 				EditPart part = parts.get(0);
 				if (part instanceof PartEditPart) {
 					showPartInfo((PartEditPart)part);
-				}
-				if (part instanceof Terminal2EditPart) {
+				} 
+				else if (part instanceof Terminal2EditPart) {
 					showTerminalInfo((Terminal2EditPart)part);
 				}
 				else if (part instanceof LegEditPart) {
@@ -124,6 +124,8 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 				else if (part instanceof SketchEditPart) {
 					showSketchInfo((SketchEditPart)part);
 				}
+				else 
+					showNothing();
 			}
 			else {
 				showMultipleInfo(parts);				
@@ -247,13 +249,17 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 
 	protected void showMultipleInfo(ArrayList<EditPart> parts) {
 		// multiple parts selected
+		showNothing();
+	}
+
+	protected void showNothing() {
+		image = null;
 		imageStyle.start = 0;
 		imageStyle.length = 0;
 		titleStyle.start = 0;
 		titleStyle.length = 0;
 		text.setText("");
 	}
-	
 	
 	protected int appendName(StringBuffer sb, IElement il) {
 		if (il instanceof SketchImpl) {	
@@ -322,6 +328,7 @@ public class ElementInfoView extends ViewPart implements ISelectionListener {
 		parts.clear();
 		for (Iterator it = ((StructuredSelection) newInput).iterator(); it.hasNext(); ) {
 			Object editPart = it.next();
+			// only allow EditParts
 			if (editPart instanceof EditPart) {
 				parts.add((EditPart) editPart);					
 			}
