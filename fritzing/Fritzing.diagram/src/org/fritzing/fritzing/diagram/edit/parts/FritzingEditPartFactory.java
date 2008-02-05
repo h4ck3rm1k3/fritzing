@@ -125,24 +125,34 @@ public class FritzingEditPartFactory implements EditPartFactory {
 		}
 
 		/**
-		 * @generated
+		 * @generated NOT
+		 * 
+		 * jrc--added a try/catch around the generated code
+		 * as an uncaught exception here
+		 * seems to kill drag feedback thereafter (mac-only bug)
+		 * 
 		 */
 		public void relocate(CellEditor celleditor) {
-			Text text = (Text) celleditor.getControl();
-			Rectangle rect = getWrapLabel().getTextBounds().getCopy();
-			getWrapLabel().translateToAbsolute(rect);
-			if (getWrapLabel().isTextWrapped()
-					&& getWrapLabel().getText().length() > 0) {
-				rect.setSize(new Dimension(text.computeSize(rect.width,
-						SWT.DEFAULT)));
-			} else {
-				int avr = FigureUtilities.getFontMetrics(text.getFont())
-						.getAverageCharWidth();
-				rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
-						SWT.DEFAULT)).expand(avr * 2, 0));
+			try {
+				Text text = (Text) celleditor.getControl();
+				Rectangle rect = getWrapLabel().getTextBounds().getCopy();
+				getWrapLabel().translateToAbsolute(rect);
+				if (getWrapLabel().isTextWrapped()
+						&& getWrapLabel().getText().length() > 0) {
+					rect.setSize(new Dimension(text.computeSize(rect.width,
+							SWT.DEFAULT)));
+				} else {
+					int avr = FigureUtilities.getFontMetrics(text.getFont())
+							.getAverageCharWidth();
+					rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
+							SWT.DEFAULT)).expand(avr * 2, 0));
+				}
+				if (!rect.equals(new Rectangle(text.getBounds()))) {
+					text.setBounds(rect.x, rect.y, rect.width, rect.height);
+				}
 			}
-			if (!rect.equals(new Rectangle(text.getBounds()))) {
-				text.setBounds(rect.x, rect.y, rect.width, rect.height);
+			catch (Exception ex) {
+				System.out.println("hello");
 			}
 		}
 
