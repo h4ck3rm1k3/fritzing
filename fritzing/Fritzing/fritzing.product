@@ -44,7 +44,6 @@ Visit http://fritzing.org
       </win>
    </launcher>
 
-
    <vm>
    </vm>
 
@@ -52,6 +51,7 @@ Visit http://fritzing.org
       <plugin id="Fritzing"/>
       <plugin id="Fritzing.diagram"/>
       <plugin id="Fritzing.edit"/>
+      <plugin id="Fritzing.pcb"/>
       <plugin id="com.ibm.icu"/>
       <plugin id="net.sourceforge.lpg.lpgjavaruntime"/>
       <plugin id="org.apache.batik.bridge"/>
