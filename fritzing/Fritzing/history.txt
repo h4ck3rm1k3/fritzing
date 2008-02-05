@@ -2,12 +2,38 @@ Notes on the Fritzing releases. Related issue numbers in brackets.
 As this is early alpha work, do not expect anything to be compatible
 between versions!
 
+< OUTSTANDING ISSUES >
+
+Some things that are known to be not-so-nice:
+- Performance: If you have performance problems (especially when you use 
+  the breadboard), you can disable animation and anti-aliasing in the preferences,
+  and close the outline view in the bottom right corner.
+  It also helps to stay at 100% zoom because it means lower-res images.
+- Live feedback for dragging things is sometimes missing on the Mac
+- Copy & Paste is not properly working, even if it seems to be.. don't use it yet!
+
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
 0005 ALPHA - Feb 4th 2008
 
-Maintenance release
+Maintenance release: We missed some Eagle footprints last time, and
+also use the chance to add a few new features
+
+< ENHANCEMENTS >
+
+- Rotation of parts, in steps of 45 degrees
+- Info box got a little face-lift and provides links to the web
+  reference and the author(s) - Note that the web reference is not
+  finished yet, though.
+- Part footprints (for use with Eagle) can now be stored in the part's
+  folder, in Fritzing's eagle/lbr/ folder, or in Eagle's lbr folder.
+  Fritzing will look for your specified footprint in these locations
+  in this order. This makes it easier to share your parts.
+
+< BUG FIXES >
+
+- Supplying missing footprints for the new parts from release 0004 
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
@@ -68,7 +94,7 @@ Eagle
 - Individual footprints can be set for your parts within Fritzing in the
   Properties section
 - Handles same-named parts
-- Joins wirings into proper nets
+- Joins wirings into proper nets [#11]
 - Removed info pop-up on the start of the export
 
 < BUG FIXES >
@@ -80,17 +106,6 @@ Eagle
 - Wire thickness zooms properly
 - Image export works with all file formats on Windows, 
   also no path problems anymore [#48]
-
-< OUTSTANDING ISSUES >
-
-Some things that are known to be not-so-nice:
-- Performance: If you have performance problems (especially when you use 
-  the breadboard), you can disable animation and anti-aliasing in the preferences,
-  and close the outline view in the bottom right corner.
-  It also helps to stay at 100% zoom because it means lower-res images.
-- Rotation is not properly working yet
-- Copy & Paste is not properly working, even if it seems to be.. don't use it yet!
-
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
@@ -136,7 +151,6 @@ Eagle
   white backgrounds in exported images
 - Terminals are now really fixed
 
-
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
 0002 ALPHA - Dec 6th 2007
@@ -173,7 +187,6 @@ Installation
 - "Export to PCB" now works reliably
   - no path problems anymore [#20]
   - no place.scr file anymore [#30]
-
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
