@@ -91,10 +91,10 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 		    
 		    // in theory, the only thing we should have needed to do here 
 		    // is set the transform and draw the source into the target
-		    			    
+		    
 		    gc.setTransform(transform);
 		    gc.drawImage(image, 0, 0);
-		    gc.dispose();
+		    gc.dispose();		    
 		    
 		    // unfortunately, SWT doesn't seem to copy the alpha channel
 		    // so the rest of this is a hack in order to copy the alpha channel
@@ -102,7 +102,7 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 		    // make a target alpha channel image
 			ImageData targetAlphaImageData = new ImageData((int) dw, (int) dh, 8, AlphaPaletteData.getPaletteData());
 			Image targetAlphaImage = new Image(null, targetAlphaImageData);
-							
+										
 			// get the alpha from the original source image and create a source alpha image
 			// note that the alpha from the image is packed (i.e. the lines aren't padded with bytes)
 			// but when you use this data as an image, you have to pad the data
@@ -120,8 +120,7 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 			sourceAlphaImageData.data = sourceData;
 			Image sourceAlphaImage = new Image(null, sourceAlphaImageData);
 			GC agc = new GC(targetAlphaImage);
-			
-			
+									
 			// now blt the source alpha to the target alpha
 			agc.setTransform(transform);
 		    agc.drawImage(sourceAlphaImage, 0, 0);			
@@ -129,15 +128,30 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 				
 			// now to use the resulting alpha image as alpha data
 			// remove the line padding (i.e. pack it)
+			
+			// trueDepth is needed because the mac makes a 32-bit image instead of an 8-bit image
+			int trueDepth = targetAlphaImage.getImageData().depth;
+			
 			data = targetAlphaImage.getImageData().data;
 			byte[] neoData = new byte[(int) dw * (int) dh];
 			lx = 0;
 			ix = 0;
-			for (int y = 0; y < (int) dh; y++) {
-				for (int x = 0; x < (int) dw; x++) {
-					neoData[ix++] = data[lx + x];
+			
+			if (trueDepth == 8) {
+				for (int y = 0; y < (int) dh; y++) {
+					for (int x = 0; x < (int) dw; x++) {
+						neoData[ix++] = data[lx + x];
+					}
+					lx += targetAlphaImage.getImageData().bytesPerLine;
 				}
-				lx += targetAlphaImage.getImageData().bytesPerLine;
+			}
+			else if (trueDepth == 32) {
+				for (int y = 0; y < (int) dh; y++) {
+					for (int x = 0; x < (int) dw; x++) {
+						neoData[ix++] = data[lx + (x << 2) + 1];
+					}
+					lx += targetAlphaImage.getImageData().bytesPerLine;
+				}				
 			}
 				
 			// you can't modify the imageData of a pre-existing image
@@ -152,7 +166,7 @@ public class PartFigure extends RectangleFigure implements IZoomableFigure {
 			targetImage.dispose();
 						
 		    transform.dispose();
-		    
+		    		    
 		    if (rotatedImage != null) {
 		    	rotatedImage.dispose();
 		    }
