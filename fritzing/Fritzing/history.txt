@@ -9,9 +9,7 @@ Some things that are known to be not-so-nice:
   the breadboard), you can disable animation and anti-aliasing in the preferences,
   and close the outline view in the bottom right corner.
   It also helps to stay at 100% zoom because it means lower-res images.
-- Live feedback for dragging things is sometimes missing on the Mac
 - Copy & Paste is not properly working, even if it seems to be.. don't use it yet!
-
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
@@ -34,6 +32,7 @@ also use the chance to add a few new features
 < BUG FIXES >
 
 - Supplying missing footprints for the new parts from release 0004 
+- Live feedback for dragging things was sometimes missing on the Mac
 
 < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < > < >
 
