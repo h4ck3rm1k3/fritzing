@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<kupu-settings>
+  <config captioning="True" userefbrowser="True"
+          linkbyuid="True" filtersourceedit="True">
+    <style>Literal|pre</style>
+    <style>Strikethrough|del</style>
+    <filter attributes="lang valign halign border frame rules cellspacing cellpadding"
+            tags=""/>
+    <filter attributes=""
+            tags="bdo button dfn fieldset form input label legend link noscript object optgroup option param samp script select textarea var"/>
+  </config>
+</kupu-settings>

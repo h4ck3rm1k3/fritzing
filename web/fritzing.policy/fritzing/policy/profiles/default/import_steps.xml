@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="fritzing-various" version="20080214-01"
+    handler="fritzing.policy.setuphandlers.importVarious"
+	title="Additional Fritzing site policy setup">
+	  <dependency step="rolemap"/>
+  </import-step>
+</import-steps>

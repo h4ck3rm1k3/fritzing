@@ -1,0 +1,19 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="fritzing.policy">
+
+    <five:registerPackage package="." initialize=".initialize" />
+
+    <!-- include direct package dependencies -->
+    <!-- <include package="fritzing.theme" /> -->
+
+    <genericsetup:registerProfile
+	name="default"
+	title="Fritzing Site Policy"
+	directory="profiles/default"
+	description="Turn a Plone Site into the Fritzing Site"
+	provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+</configure>
