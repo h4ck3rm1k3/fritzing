@@ -1,0 +1,376 @@
+/* bug fixes */
+.inlineForm .formHelp,
+.inlineForm .fieldRequired,
+.inlineForm label {
+  display: inline;
+}
+html.kupu-html {
+  font-size: 100%;
+}
+
+
+/* General */
+body {
+    font: 69% Verdana, sans-serif;
+    background-image: none;
+    background-color: #E8E3E3;
+    color: #303030;
+    margin: 0;
+    padding: 0;
+}
+img {
+  border: none;
+}
+
+
+/* Column Layout */
+/* 760px wide + column two */
+#portal-columns {
+  margin: 0;
+  padding: 0;
+  /* background-color: #F0F0F0; */
+}
+#portal-column-one {
+  background-color: white;
+  width: 760px;
+}
+#portal-column-one .visualPadding {
+  /* The mythical, infamous visualPadding */
+  /*height: 0;*/
+}
+#portal-column-one .managePortletsLink {
+  display: none;
+}
+#portal-column-one dl.portlet {
+  margin: 0 0 0.8em 0;
+}
+#portal-column-content {
+  position: static;
+  left: 0;
+  float: left;
+  padding: 15px 15px 10px 50px;
+  margin: 0;
+  width: 695px;
+  border: none;
+}
+#portal-column-two {
+  position: absolute;
+  left: 760px;
+  top: 55px;
+  width: 150px;
+  margin: 0;
+}
+
+
+/* Header */
+#portal-header {
+  background: #380A1A;
+  padding: 25px 10px 0px 50px;
+  width: 700px;
+  height: 30px;
+}
+#portal-searchbox {
+  display: inline;
+  left: 565px;
+  top: 10px;
+}
+input#searchGadget, 
+input#searchGadget:focus {
+  background-color: white;
+  width: 180px;
+  font-size: 11px;
+  padding: 1px;
+}
+div.searchSection {
+  margin-top: 1px;
+}
+div.searchSection label {
+  font-weight: normal;
+  color: #666;
+  font-size: 89%;
+}
+#LSResult {
+  background-color: white;
+}
+ul#portal-siteactions {
+  left: 400px;
+  top: 8px;
+  width: 150px;
+  line-height: 15px;
+}
+ul#portal-siteactions a {
+  color: white;
+  font-size: 9px !important;
+}
+#portal-personaltools-wrapper {
+  left: 250px;
+  top: 17px;
+  width: 300px;
+  z-index: 10;
+}
+ul#portal-personaltools a {
+  color: #fff;
+  font-size: 84%;
+}
+
+
+/* Navigation */
+#portal-column-one dl.portletNavigationTree {
+width: 0 !important;
+}
+#portal-column-one ul.portletNavigationTree {
+position: relative;
+height: 15px;
+width: 705px;
+padding: 5px 10px 5px 45px;
+background: #64A284;
+z-index: -1;
+}
+#portal-column-one ul.portletNavigationTree li {
+float: left; 
+}
+#portal-column-one ul.portletNavigationTree li a {
+background: transparent url(++resource++fritzing.theme.images/seperator.gif) no-repeat right center;
+padding: 0 1em 0 0.3em;
+color: #4D3333;
+}
+#portal-column-one ul.portletNavigationTree a:hover {
+background-color: transparent !important;
+color: black !important;
+text-decoration: underline;
+}
+#portal-column-one ul.portletNavigationTree li:last-child > div > a {
+background-image: none;
+}
+#portal-column-one ul.portletNavigationTree li a:hover {
+color: #4D1D1D !important;
+}
+#portal-column-one ul.portletNavigationTree li a.navTreeCurrentItem {
+background: transparent url(++resource++fritzing.theme.images/seperator.gif) no-repeat right center;
+font-weight: bold;
+color: #4D1D1D !important;
+}
+#portal-column-one ul.portletNavigationTree li.navTreeItemInPath,
+#portal-column-one ul.portletNavigationTree li.navTreeCurrentNode {
+background-color: transparent;
+float: left;
+margin-bottom: 2em;
+}
+#portal-column-one ul.portletNavigationTree li.navTreeItemInPath > div > a {
+font-weight: bold;
+color: #4D1D1D;
+}
+#portal-column-one dl.portletNavigationTree dd a {
+display: inline;
+float: left;
+}
+#portal-column-one ul.portletNavigationTree ul.navTreeLevel1 {
+position:absolute;
+top: 18px;
+border-left: none;
+margin: 0;
+height: 30px;
+overflow: hidden;
+}
+#portal-column-one ul.portletNavigationTree ul.navTreeLevel1 li {
+background-color: #9BCCC1;
+margin: 7px 0 0 0;
+padding: 5px 0 5px 0;
+  /* width: 100%; */
+}
+
+
+/* Content */
+#region-content a {
+  color: #94294E;
+  border-bottom-color: #94294E;
+}
+#region-content a:visited {
+  color: #777;
+  border-bottom-color: #777;
+}
+#region-content a:hover {
+  color: black;
+  border-bottom-color: black;
+}
+#content h1 {
+  margin-bottom: 0.25em;
+}
+#content h3 {
+  font-size: 1.1em;
+  margin-bottom: 0.1em;
+}
+#content p, 
+#content li, 
+#content dt, 
+#content dd {
+  max-width: 500px;
+}
+#content p, 
+#content table, 
+#content dl, 
+#content ul, 
+#content ol {
+  font-size: 11px;
+  line-height: 1.6em;
+}
+#content ul {
+  list-style-type: square;
+}
+#content ol {
+  list-style-type: decimal;
+}
+#content ol ol{
+  list-style-type: lower-alpha;
+}
+#content ol ol ol{
+  list-style-type: lower-roman;
+}
+#content table.listing a {
+  border-width: 1px;
+}
+#content table a:visited {
+  color: black !important;
+}
+#content table.plain td {
+  vertical-align: top;
+  padding: 0 15px 15px 0;
+}
+#content pre {
+/*
+  background-color: #F0F0F0;
+  color: #BF641B; 
+*/
+}
+#content div.comment div.documentByLine {
+  margin-top: 0;
+}
+#content .documentByLine {
+  font-size: 10px;
+  font-weight: normal;
+  color: #999;
+}
+
+div.listingBar .listingPrevious {
+float: left;
+}
+div.listingBar .listingNext {
+float: right;
+}
+
+
+/* Workflow */
+a.state-published {
+  color: #94294E;
+}
+
+
+/* TOC */
+#document-toc {
+  float: right;
+  border-left: 1px solid #BBB;
+  padding-left: 1em;
+  margin-left: 1em;
+}
+#document-toc dd.portletItem {
+  margin-left: 0;
+}
+#document-toc dd > ol {
+  margin-left: 0;
+}
+#document-toc dd > ol > ol {
+  margin-left: 0;
+  list-style-type: none;
+}
+#document-toc dd > ol > ol > li {
+  font-weight: bold;
+}
+#document-toc dd > ol > ol > ol {
+  margin-left: 1.0em;
+  list-style-type: none;
+}
+#document-toc dd a {
+  float: none;
+  padding: 0 0 1px 0;
+}
+
+
+/* Dashboard */
+#dashboard-actions ul {
+  float: right;
+}
+#dashboard-actions li {
+  display: inline;
+  margin-left: 1em;
+}
+#dashboard dl {
+  width: 235px;
+  float: left;
+}
+
+
+/* Portlets */
+dl.portlet dd {
+font-size: 11px !important;
+}
+#portal-column-two dt.portletHeader {
+margin: 0 0 0.4em 0;
+}
+#portal-column-two dt a {
+font-size: 13px;
+padding: 4px 15px 5px 15px;
+}
+#portal-column-two dl.portlet dd {
+margin: 5px 15px 0 15px;
+line-height: 12px;
+}
+#portal-column-two dl.portlet dd a {
+padding: 2px 0px 0px 0px;
+}
+#portal-column-two dd a {
+color: #94294E;
+}
+#portal-column-two dd a:visited {
+color: #777;
+}
+#portal-column-two dd a:hover {
+color: black;
+}
+#portal-column-two dl.portlet .portletItemDetails {
+position: relative;
+width: 150px;
+padding: 0 15px;
+}
+#portal-column-two dd.portletFooter a {
+margin-bottom: 1em;
+font-size: 79%;
+text-align: right;
+}
+#portal-column-two dl.portletNavigationTree dt.portletHeader {
+display: block;
+}
+#portal-column-two ul.portletNavigationTree li a {
+background: none;
+}
+
+/* Footer */
+#portal-footer {
+  width: 710px;
+  background: #380A1A;
+  padding: 3px 0 3px 50px;
+}
+#portal-colophon {
+  width: 710px;
+  background: black;
+  padding: 3px 0 3px 50px;
+}
+#portal-footer,
+#portal-footer a,
+#portal-colophon,
+#portal-colophon a {
+  color: white;
+}
+#portal-footer a:hover,
+#portal-colophon a:hover {
+  text-decoration: underline;
+}

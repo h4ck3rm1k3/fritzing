@@ -1,0 +1,45 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="fritzing.theme">
+
+    <!-- 'Fritzing Theme' Zope 3 browser layer -->
+    <interface
+        interface=".interfaces.IThemeSpecific"
+        type="zope.publisher.interfaces.browser.IBrowserSkinType"
+        name="Fritzing Theme"
+        />
+
+    <!-- Viewlets registration -->
+    <browser:viewlet
+        name="plone.footer"
+        manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+        class=".viewlets.FooterViewlet"
+        layer=".interfaces.IThemeSpecific"
+        permission="zope.Public"
+        />
+    <browser:viewlet
+        name="plone.colophon"
+        manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+        class=".viewlets.ColophonViewlet"
+        layer=".interfaces.IThemeSpecific"
+        permission="zope.Public"
+        />
+		
+    <!-- Zope 3 browser resources -->
+
+    <!-- Resource directory for images -->
+    <browser:resourceDirectory
+        name="fritzing.theme.images"
+        directory="images"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+    <!-- Resource directory for stylesheets -->
+    <browser:resourceDirectory
+        name="fritzing.theme.stylesheets"
+        directory="stylesheets"
+        layer=".interfaces.IThemeSpecific"
+        />
+
+</configure>

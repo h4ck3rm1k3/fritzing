@@ -1,0 +1,16 @@
+<div id="portal-colophon"
+     i18n:domain="fritzing">
+
+    <span i18n:translate="description_copyright" tal:omit-tag="">
+    <acronym title="Copyright" i18n:name="copyright" i18n:attributes="title title_copyright;">&copy;</acronym>
+    2007-
+    <span i18n:name="current_year"
+               tal:omit-tag=""
+               tal:define="now modules/DateTime/DateTime"
+               tal:content="now/year" />
+    <a href="http://design.fh-potsdam.de">University of Applied Sciences Potsdam</a>
+    </span>
+    \
+    <a href="http://plone.org">Powered by Plone</a>
+
+</div>

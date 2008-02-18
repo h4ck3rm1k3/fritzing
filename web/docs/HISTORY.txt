@@ -1,0 +1,9 @@
+Changelog for fritzing.theme
+
+    (name of developer listed in brackets)
+
+fritzing.theme - 0.1 Unreleased
+
+    - Initial package structure.
+      [zopeskel]
+

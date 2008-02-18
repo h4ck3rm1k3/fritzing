@@ -1,0 +1,12 @@
+<div id="portal-footer"
+     i18n:domain="fritzing">
+    
+    <a href="http://fritzing.org/contact-info">
+    Contact
+    </a>
+    \
+    <a href="http://design.fh-potsdam.de/forschung/interaction-design-lab.html">
+    An initiative of the Interaction Design Lab Potsdam
+    </a>
+
+</div>
