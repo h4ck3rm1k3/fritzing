@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Part Development Kit Installation and Usage Guide</title>
+	<style type="text/css" media="all">
+		@import "doc/resources/guide_style.css";
+	</style>
+</head>
+<body>
+<div id="content">
+<h1 id="fritzing_pdk_part_development_kit">Fritzing PDK (Part Development Kit)</h1>
+<p>version 1.0</p>
+
+<h2 id="what8217s_in_the_pdk">What&#8217;s in the PDK</h2>
+<h3 id="tools">Tools</h3>
+<p>The PDK contains some useful tools when creating your own parts. These tools are all little python scripts, so they can be easily adapted and modified to your use.</p>
+<ul>
+	<li>
+		<dl><dt><a href="doc/dilpackage_generator.html">DilPackageGenerator</a></dt>
+		<dd>
+		a script that generates a whole part folder with images and<br />
+		partdescription.xml for DIL-Package IC chips.
+		</dd></dl>
+	</li>
+	<li>
+		<dl><dt><a href="doc/breadboard_generator.html">BreadboardGenerator</a></dt>
+		<dd>
+		a script to create the complex partdescription.xml file for breadboards
+		</dd></dl>
+	</li>
+	<li>
+		<dl><dt><a href="doc/conversion_to_himetric.html">convertToHimetric</a></dt>
+		<dd>
+		a simple script to calculate the himetric units from pixels
+		</dd></dl>
+	</li>
+</ul>
+
+<h3 id="artwork">Artwork</h3>
+<p>All the design as vector art (.svg files) for the current basic set of parts. These files can be found in the <code>Artwork</code> folder. The <a href="http://creativecommons.org/licenses/by/2.0/">Creative Commons BY: licence</a> applies.</p>
+
+<h3 id="guideline_document">Guideline Document</h3>
+<p>(still to come)</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>All the PDK tools are python scripts, so you need at least python. To use the more complex generator scripts, you&#8217;ll need some extra python packages and things as well.</p>
+
+<h3 id="dependencies_of_the_converttohimetricpy_script">Dependencies of the convertToHimetric.py script</h3>
+
+<ul>
+<li>python 2.3 or later</li>
+</ul>
+
+<h3 id="dependencies_of_the_breadboardgenerator">Dependencies of the BreadboardGenerator</h3>
+
+<ul>
+<li>python 2.3 or later</li>
+<li>Cheetah (template language)
+<ul>
+<li>download it from <a href="http://www.cheetahtemplate.org/" title="Cheetah Template Language">http://www.cheetahtemplate.org/</a>,<br />
+follow the instructions and install it through <code>python setup.py install</code></li>
+<li>or (if you have <a href="http://peak.telecommunity.com/DevCenter/EasyInstall" title="EasyInstall">PEAK&#8217;s EasyInstall</a> ) simply use easyinstall: <br>
+<code>easy_install cheetah</code></li>
+</ul></li>
+</ul>
+
+<h3 id="dependencies_of_the_dilpackagegenerator">Dependencies of the DILPackageGenerator</h3>
+
+<ul>
+<li>python 2.3 or later</li>
+<li>Cheetah (template language)
+<ul>
+<li>read above where to get this from and how to install it</li>
+</ul></li>
+<li>ZLIB 1.1.4 or later. (ZLIB is needed for PIL to support PNG)
+<ul>
+<li>ZLIB is already installed on Mac OS X and comes standard with python for Windows,<br />
+so you might not have to install this yourself.</li>
+<li>But if PIL runs into troubles generating .png images, get it from <a href="http://www.zlib.net/" title="ZLIB">http://www.zlib.net/</a></li>
+</ul></li>
+<li>PIL (Python Image Library)
+<ul>
+<li>download it from <a href="http://www.pythonware.com/products/pil/" title="Python Image Library">http://www.pythonware.com/products/pil/</a> <br>
+Windows users download the installer executable, <br>
+Mac OS X and UNIX users download the source and install it through <br>
+<code>python setup.py install</code>.</li>
+</ul></li>
+<li>the 04b_11 Font
+<ul>
+<li>We ship this font in the PDK as a TrueType font <code>04B_11__.TTF</code> in <br>
+the <code>fonts/04b_11</code> folder. You need to install this font on your <br>
+operating system using your standard method.</li>
+</ul></li>
+<li>Java Runtime Environment
+<ul>
+<li>We ship the Batik Rasterizer with our code (<code>batik-rasterizer.jar</code>). <br>
+This is an archived java binary that you can run when you have the <br>
+Java Runtime Environment. Since you&#8217;re probably running Fritzing, we <br>
+assume you already have Java.</li>
+</ul></li>
+</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<part>
+	<!-- This xml file is generated through a template. Please don't edit it directly -->
+	<version>1.0</version>
+	<species>$species</species>
+	<genus>$genus</genus>
+	<title>$title</title>
+	<description>$description</description>
+	<icons>
+		<icon size="small" source="iconSmall.gif" />
+		<icon size="large" source="iconLarge.gif" />
+	</icons>
+	<label>$label</label>
+	<reference>$reference</reference>
+	<authors>
+		<author url="$author_url">$author</author>
+	</authors>
+	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 -->
+	<gridOffset x="133" y="-19" units="himetric"/><!-- 21x-3 400% view pixels -->
+	<bounds width="$hiwidth" height="$hiheight" units="himetric"/>
+	<connectors units="tenths">
+    <nameLayout visible="false" />
+## Set the legs in the partdescription
+#for $leg in $legs
+		<connector id="$leg.id" name="$leg.name" type="leg">
+			<point x="$leg.startxhi" y="$leg.startyhi" units="himetric"/>
+			<point x="$leg.endx" y="$leg.endy" />
+		</connector>
+#end for
+	</connectors>
+	<layers>
+		<layer type="image">
+			<image source="part.png" type="bitmap" zoom="1" />
+			<image source="part200.png" type="bitmap" zoom="2" />
+			<image source="part400.png" type="bitmap" zoom="4" />
+		</layer>
+	</layers>
+	<footprints>
+		<footprint default="true" source="$footprint" type="eagle" />
+	</footprints>
+</part>

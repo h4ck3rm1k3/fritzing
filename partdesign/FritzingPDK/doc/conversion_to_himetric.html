@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>convertToHimetric</title>
+	<style type="text/css" media="all">
+		@import "resources/guide_style.css";
+	</style>
+</head>
+<body>
+	
+<h1 id="converttohimetric">convertToHimetric</h1>
+version 1.0
+<h2 id="usage">Usage</h2>
+
+<p>Simply go to the folder where the script is located and run the <code>convertToHimetric.py</code> script in your command line from there. <br>
+In the following code <code>FrizingPDK/Tools</code> is our sample directory we change directory (<code>cd</code> command) to; in your case change directory to wherever you downloaded the PDK to.</p>
+<pre class="commandline">
+    % cd FrizingPDK/Tools
+    % python convertToHimetrics.py KIND PIXELS
+</pre>
+
+<p><em>KIND</em> and <em>PIXELS</em> are the arguments of this script: <br>
+<strong>KIND</strong> defines what kind of conversion you want calculated (<code>bounds</code>, <code>offset</code> or <code>leg</code>) <br>
+<strong>PIXELS</strong> is the <em>x by y</em> measurement, written <code>n x n</code> where n is a number in pixels </p>
+
+<h3 id="simple_example">Simple Example</h3>
+
+<p>We measure 100 x 40 pixels in our drawing application</p>
+<pre class="commandline">
+    % python convertToHimetrics.py bounds 100 x 40
+</pre><p>converts it to himetric and returns a bounds tag which you can just copy into the partdescription.xml file.</p>
+
+<hr />
+<h2 id="full_reference">Full Reference</h2>
+<p>
+The <code>convertToHimetric.py</code> is a simple script to convert pixel measurements into highmetric. For use in the Fritzing partdescription.xml files. It takes a pixel vector e.g. 5x12 and converts this into a <code>&lt;tag&gt;</code> which can be placed in your <code>partdescription.xml</code> file directly.
+</p>
+<h3>Usage:</h3>
+<pre class="commandline">
+	python convertToHimetrics.py <em>KIND</em> <em>PIXELS</em>
+</pre>
+
+<h3>Arguments:</h3>
+
+<dl><dt><strong>KIND</strong></dt>
+<dd>the kind of conversion which is performed and the kind of tag which is returned. Possible kinds are:</dd>
+<dd><dl>
+	<dt><code><strong>bounds</strong></code></dt>
+		<dd>creates <code>&lt;bounds&gt;</code> tag.</dd>
+		<dd>Use 100% view pixels as measurement</dd>
+	</dl>
+	<dl>
+	<dt><code><strong>offset</strong></code></dt>
+		<dd>creates <code>&lt;gridOffset&gt;</code> tag.</dd>
+		<dd>Use 400% view pixels as measurement</dd>
+	</dl>
+	<dl>
+	<dt><code><strong>leg</strong></code></dt>
+		<dd>creates <code>&lt;point&gt;</code> tag which can be used as a child of <code>&lt;connector&gt;</code>.</dd>
+		<dd>Use 400% view pixels as measurement</dd>
+	</dl>
+	<dl>
+	<dt><code><strong>hibounds</strong></code></dt>
+		<dd>creates <code>&lt;bounds&gt;</code> tag.</dd>
+		<dd>Use 400% view pixels as measurement</dd>
+	</dl>
+	<dl>
+	<dt><code><strong>pixeloffset</strong></code></dt>
+		<dd>creates <code>&lt;gridOffset&gt;</code> tag.</dd>
+		<dd>Use 100% view pixels as measurement</dd>
+	</dl>
+	<dl>
+	<dt><code><strong>pixelleg</strong></code></dt>
+		<dd>creates <code>&lt;point&gt;</code> tag which can be used as a child of <code>&lt;connector&gt;</code>.</dd>
+		<dd>Use 100% view pixels as measurement</dd>
+	</dl>
+	<dl>
+	<dt><code><strong>hioffset</strong></code></dt>
+		<dd>equal to 'offset'</dd>
+	</dl>
+	<dl>
+	<dt><code><strong>hileg</strong></code></dt>
+		<dd>equal to 'leg'</dd>
+	</dl>
+</dd>
+</dl>
+<dl><dt><strong>PIXELS</strong></dt>
+<dd>the size or offset measured in pixels.</dd>
+<dd>The pattern for this must follow: '<code><em>n</em> x <em>n</em></code>', where
+<dl>
+	<dt><strong>n</strong></dt>
+		<dd>is the number in pixels.<br>
+		It should be an integer, but can also be negative (e.g. -40)</dd>
+</dl>
+</dd></dl>
+<h3>Example:</h3>
+<p>You want to create a <code>&lt;gridOffset&gt;</code> tag. In the 400% view of your drawing application you are measuring a 50 x 349 square between the top-left corner of your 400% part and the grid point that should be the grid origin (where x="0" and y="0"). Then use the following command:</p>
+<pre class="commandline">
+	python convertToHimetrics.py offset 50 x 349
+</pre>
+<p>it returns</p>
+<pre class="commandline">
+	&lt;gridOffset x=&quot;318&quot; y=&quot;2216&quot; units=&quot;himetric&quot;/&gt; &lt;!-- 50x349 400%% view pixels --&gt;
+</pre>	
+<p>which you can paste into your partdescription.xml file.</p>
+
+<hr />
+<p>
+For more information on how to create parts and how to use them in Fritzing,<br>
+please read the online documentation:<br>
+<a href="http://fritzing.org/learning/parts">http://fritzing.org/learning/parts</a>
+</p>
+</body>
+</html>
