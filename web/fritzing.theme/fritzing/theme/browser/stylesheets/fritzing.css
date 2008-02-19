@@ -352,6 +352,12 @@ display: block;
 #portal-column-two ul.portletNavigationTree li a {
 background: none;
 }
+#portlet-prefs {
+  position: absolute;
+  left: 760px;
+  background-color: grey;
+  padding: 1em;
+}
 
 /* Footer */
 #portal-footer {
