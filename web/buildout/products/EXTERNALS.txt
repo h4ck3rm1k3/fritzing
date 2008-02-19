@@ -5,6 +5,3 @@
 # discussion board
 Ploneboard http://svn.plone.org/svn/collective/Products.Ploneboard/trunk/Products/Ploneboard
 SimpleAttachment http://svn.plone.org/svn/collective/Products.SimpleAttachment/trunk/Products/SimpleAttachment
-
-# deprecated
-FritzingTheme http://fritzing.googlecode.com/svn/trunk/web/FritzingTheme
