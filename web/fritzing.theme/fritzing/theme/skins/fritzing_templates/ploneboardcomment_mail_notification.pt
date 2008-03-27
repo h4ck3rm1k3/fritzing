@@ -9,7 +9,7 @@
 	define="creator here/Creator;
 				creator_info python: mtool.getMemberInfo(creator);
 				creation_date here/creation_date;">
-Subject: [<span tal:replace="portal/title"/>] New reply for "<span tal:replace="here/getConversation/title"/>"
+Subject: [<span tal:replace="portal/title"/>] New reply "<span tal:replace="here/title"/>"
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
