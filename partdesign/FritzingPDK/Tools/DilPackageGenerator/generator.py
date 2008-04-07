@@ -44,9 +44,11 @@ where
 import sys
 import os
 import re
+from distutils.file_util import copy_file
 from Cheetah.Template import Template
 import Image
 
+ARGUMENT_DEBUG = False
 sL = {}
 DEFAULT_N_PINS = 6
 DEFAULT_NAME_OF_PIN = "Name This Pin"
@@ -57,6 +59,8 @@ SVG_ICON_TEMPLATE_FILE = 'dilpackage_with_pins_svg.tmpl'
 PARTDESC_TEMPLATE_FILE = 'dilpackagedescription.tmpl'
 temporarySvgFileName = 'dilpackage_temp.svg'
 temporaryPngIconFileName = 'fullicon.png'
+availableNarrowPackages = [6, 8, 14, 16, 18, 20, 22, 24, 28, 32]
+NARROW_FOOTPRINTS = "narrowFootprints.lbr"
 
 def setup():
 	# sL['species'] = packageName
@@ -64,9 +68,9 @@ def setup():
 	# sL['title'] = packageName
 	sL['description'] = "Please describe your part here"
 	sL['label'] = "IC"
-	sL['reference'] = "add a url here pointing to your reference"
+	sL['reference'] = "http://www.example.com/url_to_online_reference"
 	sL['author'] = "Add Your Name Here"
-	sL['author_url'] = "add a url to your fritzing page"
+	sL['author_url'] = "http://fritzing.org/author/yourname"
 	return
 
 def displayUsage():
@@ -124,6 +128,15 @@ def getBatikRasterizer():
 		return expectedJar
 	else:
 		print "\nError: Couldn't find a Batik Rasterizer .jar file in the Batik folder"
+		sys.exit()
+
+def getFootprintFile(fileName):
+	thisScriptFolder = sys.path[0]
+	expectedFootprint = os.path.join(thisScriptFolder, fileName)
+	if os.path.exists(expectedFootprint):
+		return expectedFootprint
+	else:
+		print "\nError: Script Package Incomplete: Couldn't find the footprint file."
 		sys.exit()
 
 def getTemplatefile(fileName):
@@ -187,8 +200,15 @@ def main():
 		print "textOnChip  : %s" % textOnChip
 		print "wideOrNarrow: %s" % wideOrNarrow
 		
-		# Exit For test
-		sys.exit()
+		# Test if the number of pins is an existing DIL Package
+		if (wideOrNarrow == 'narrow'):
+			if not numberOfPins in availableNarrowPackages:
+				print "\nWarning: Number of pins is wrong for DIL Package:\n\tDIL packages with %d pins do not exits in the %s package.\n\tThe script will continue, but the resulting part might not be able to create a PCB with." % (numberOfPins, wideOrNarrow)
+	
+		
+		if (ARGUMENT_DEBUG):
+			# Exit For debugging:
+			sys.exit()
 		
 		# Check if the directory did not already exist
 		try:
@@ -263,7 +283,20 @@ def main():
 					sL['hiheight'] = 724
 				else:
 					sL['hiheight'] = 724
-				sL['footprint'] = "fritzing.lbr/IC%dpins" % numberOfPins
+				# Pick the right footprint
+				theFootprintFile = ""
+				if (wideOrNarrow == 'narrow'):
+					if numberOfPins in availableNarrowPackages:
+						sL['footprint'] = "%s/DIL%02d" % (NARROW_FOOTPRINTS, numberOfPins)
+						theFootprintFile = NARROW_FOOTPRINTS
+					else:
+						sL['footprint'] = "NO_FOOTPRINT_AVAILALBLE.lbr"
+				else:
+					sL['footprint'] = "WIDE_DIL_PACKAGE_NOT_IMPLEMENTED_YET.lbr"
+				# Copy the footprint file into the designated part folder
+				if getFootprintFile(theFootprintFile):
+					print "Copying the correct footprint in the part folder ..."
+					copy_file(getFootprintFile(theFootprintFile), theFootprintFile)
 				# Make the legs
 				legList = []
 				for num in range(numberOfPins):

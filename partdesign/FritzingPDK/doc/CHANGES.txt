@@ -1,0 +1,9 @@
+Fritzing PDK (Part Development Kit)
+===================================
+
+CHANGES.txt
+
+
+version 1.0             -               Apr 7, 2008
+===================================================
+Initial release. Current PDK contains 3 tools and some artwork. All tools are python scripts. All artwork are .svg files. Documentation included.
