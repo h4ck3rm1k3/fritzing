@@ -6,4 +6,6 @@ CHANGES.txt
 
 version 1.0             -               Apr 7, 2008
 ===================================================
-Initial release. Current PDK contains 3 tools and some artwork. All tools are python scripts. All artwork are .svg files. Documentation included.
+Initial release. Current PDK contains 3 tools and some artwork.
+All tools are python scripts. The tools are tested to work in Fritzing 0005
+All artwork are .svg files. Documentation included.
