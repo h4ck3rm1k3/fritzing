@@ -10,12 +10,15 @@
 	</style>
 </head>
 <body>
+
+<div id="content">
+<p><a href="../README.html">Fritzing PDK</a></p>
 	
 <h1 id="converttohimetric">convertToHimetric</h1>
-version 1.0
+<p>version 1.0</p>
 <h2 id="usage">Usage</h2>
 
-<p>Simply go to the folder where the script is located and run the <code>convertToHimetric.py</code> script in your command line from there. <br>
+<p>This script converts all kinds of sizes on your part into the Himetric unit that is recommended for Fritzing. Simply go to the folder where the script is located and run the <code>convertToHimetric.py</code> script in your command line from there. <br>
 In the following code <code>FrizingPDK/Tools</code> is our sample directory we change directory (<code>cd</code> command) to; in your case change directory to wherever you downloaded the PDK to.</p>
 <pre class="commandline">
     % cd FrizingPDK/Tools
@@ -28,11 +31,13 @@ In the following code <code>FrizingPDK/Tools</code> is our sample directory we c
 
 <h3 id="simple_example">Simple Example</h3>
 
-<p>We measure 100 x 40 pixels in our drawing application</p>
+<p>We measure 100 x 40 pixels in our drawing application. Simply supply these values to the script..</p>
 <pre class="commandline">
     % python convertToHimetrics.py bounds 100 x 40
-</pre><p>converts it to himetric and returns a bounds tag which you can just copy into the partdescription.xml file.</p>
-
+</pre>
+<p>.. and it converts it to himetric and returns a bounds tag which you can just copy into the partdescription.xml file:</p>
+<pre class="commandline">
+   &lt;bounds width=&quot;2540&quot; height=&quot;1016&quot; units=&quot;himetric&quot;/&gt; &lt;!-- 100x40 pixels --&gt;</pre>
 <hr />
 <h2 id="full_reference">Full Reference</h2>
 <p>
@@ -113,5 +118,6 @@ For more information on how to create parts and how to use them in Fritzing,<br>
 please read the online documentation:<br>
 <a href="http://fritzing.org/learning/parts">http://fritzing.org/learning/parts</a>
 </p>
+</div>
 </body>
 </html>
