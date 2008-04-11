@@ -243,7 +243,7 @@ def main():
 					print "Rasterizing image for zoom-level %d00%% ..." % (level)
 					outputFile = "part%d.png" % (level * 100)
 					outputWidth = (10 * (numberOfPins / 2)) * level
-					os.system("java -jar '%s' -dpi 72 -w %d -d '%s' '%s'" % (getBatikRasterizer(), outputWidth, outputFile, temporarySvgFileName))
+					os.system("java -jar \"%s\" -dpi 72 -w %d -d \"%s\" \"%s\"" % (getBatikRasterizer(), outputWidth, outputFile, temporarySvgFileName))
 				# 
 				# Create an extra image on 100% with pins
 				t = Template(file=getTemplatefile(SVG_ICON_TEMPLATE_FILE), searchList = [sL])
@@ -257,7 +257,7 @@ def main():
 				outputFile = temporaryPngIconFileName
 				# outputWidth = 10 * (numberOfPins / 2)
 				# The use of the -h 35 is a hack, because the svg is not perfect ...
-				os.system("java -jar '%s' -dpi 72 -h 35 -d '%s' '%s'" % (getBatikRasterizer(), outputFile, temporarySvgFileName))
+				os.system("java -jar \"%s\" -dpi 72 -h 35 -d \"%s\" \"%s\"" % (getBatikRasterizer(), outputFile, temporarySvgFileName))
 				# Create the 32x32 and the 16x16 pixel icon through PIL
 				try:
 					orgImg = Image.open(outputFile)
