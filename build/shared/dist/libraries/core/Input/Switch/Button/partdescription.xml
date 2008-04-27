@@ -60,6 +60,6 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/Button" type="eagle"/>
+		<footprint default="true" source="Button.lbr/Button" type="eagle"/>
 	</footprints>
 </part>

@@ -36,6 +36,6 @@
 	</layers>
 	<footprints>
 		<footprint default="true"
-			source="fritzing.lbr/ElectrolyteCapacitor" type="eagle" />
+			source="ElectrolyteCapacitor.lbr/ElectrolyteCapacitor" type="eagle" />
 	</footprints>
 </part>

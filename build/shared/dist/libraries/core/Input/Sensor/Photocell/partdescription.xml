@@ -37,7 +37,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/LightSensor"
+		<footprint default="true" source="LightSensor.lbr/LightSensor"
 			type="eagle" />
 	</footprints>
 </part>

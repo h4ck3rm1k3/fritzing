@@ -36,6 +36,6 @@
 	</layers>
 	<footprints>
 		<footprint default="true"
-			source="fritzing.lbr/CeramicDiskCapacitor" type="eagle" />
+			source="CeramicDiskCapacitor.lbr/CeramicDiskCapacitor" type="eagle" />
 	</footprints>
 </part>

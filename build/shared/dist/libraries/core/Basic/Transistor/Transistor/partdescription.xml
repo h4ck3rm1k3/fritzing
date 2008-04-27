@@ -39,7 +39,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/Transistor"
+		<footprint default="true" source="Transistor.lbr/Transistor"
 			type="eagle" />
 	</footprints>
 </part>

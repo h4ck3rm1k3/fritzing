@@ -40,7 +40,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/VoltageRegulator"
+		<footprint default="true" source="VoltageRegulator.lbr/VoltageRegulator"
 			type="eagle" />
 	</footprints>
 </part>

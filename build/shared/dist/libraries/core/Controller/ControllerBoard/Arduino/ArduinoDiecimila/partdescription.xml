@@ -139,7 +139,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/Arduino"
+		<footprint default="true" source="Arduino.lbr/Arduino"
 			type="eagle" />
 	</footprints>
 </part>

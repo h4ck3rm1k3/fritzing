@@ -33,7 +33,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/FsrSensor"
+		<footprint default="true" source="FsrSensor.lbr/FsrSensor"
 			type="eagle" />
 	</footprints>
 </part>

@@ -39,7 +39,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/Potentiometer"
+		<footprint default="true" source="Potentiometer.lbr/Potentiometer"
 			type="eagle" />
 	</footprints>
 </part>

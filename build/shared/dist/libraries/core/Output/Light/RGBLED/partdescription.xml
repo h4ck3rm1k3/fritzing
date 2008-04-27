@@ -43,7 +43,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/RGBLED"
+		<footprint default="true" source="RGBLED.lbr/RGBLED"
 			type="eagle" />
 	</footprints>
 </part>

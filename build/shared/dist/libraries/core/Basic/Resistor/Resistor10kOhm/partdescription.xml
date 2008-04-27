@@ -36,7 +36,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/Resistor"
+		<footprint default="true" source="Resistor.lbr/Resistor"
 			type="eagle" />
 	</footprints>
 </part>

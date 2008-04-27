@@ -52,7 +52,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/IC6pins"
+		<footprint default="true" source="Optocoupler.lbr/IC6pins"
 			type="eagle" />
 	</footprints>
 </part>

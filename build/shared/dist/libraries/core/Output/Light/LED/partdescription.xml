@@ -35,7 +35,7 @@
 		</layer>
 	</layers>
 	<footprints>
-		<footprint default="true" source="fritzing.lbr/LED"
+		<footprint default="true" source="LED.lbr/LED"
 			type="eagle" />
 	</footprints>
 </part>
