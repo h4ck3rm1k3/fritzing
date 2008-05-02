@@ -159,6 +159,9 @@ background: transparent url(++resource++fritzing.theme.images/seperator.gif) no-
 font-weight: bold;
 color: #4D1D1D !important;
 }
+#portal-column-one ul.portletNavigationTree li a.navTreeCurrentItem span {
+background-image: none !important;
+}
 #portal-column-one ul.portletNavigationTree li.navTreeItemInPath,
 #portal-column-one ul.portletNavigationTree li.navTreeCurrentNode {
 background-color: transparent;
@@ -317,6 +320,13 @@ a.state-published {
   float: left;
 }
 
+/* History */
+div#review-history dl {
+background-color: #DDD !important;
+}
+div#review-history dl dt {
+padding: 0px 5px 5px 25px !important;
+}
 
 /* Portlets */
 dl.portlet dd {
