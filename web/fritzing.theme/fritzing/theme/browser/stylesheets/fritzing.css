@@ -97,10 +97,11 @@ div.searchSection label {
   background-color: white;
 }
 ul#portal-siteactions {
-  left: 400px;
+  left: 350px;
   top: 8px;
-  width: 150px;
+  width: 200px;
   line-height: 15px;
+  position: absolute;
 }
 ul#portal-siteactions a {
   color: white;
