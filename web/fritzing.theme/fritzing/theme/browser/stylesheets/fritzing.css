@@ -65,9 +65,13 @@ img {
 /* Header */
 #portal-header {
   background: #380A1A;
-  padding: 25px 10px 0px 50px;
+  padding: 12px 10px 0px 50px;
   width: 700px;
+  height: 43px;
+}
+a#portal-logo {
   height: 30px;
+  width: 290px;
 }
 #portal-searchbox {
   display: inline;
@@ -104,9 +108,10 @@ ul#portal-siteactions a {
 }
 #portal-personaltools-wrapper {
   left: 250px;
-  top: 17px;
+  top: 25px;
   width: 300px;
-  z-index: 10;
+  text-align: right;
+  position: absolute;
 }
 ul#portal-personaltools a {
   color: #fff;
@@ -131,8 +136,12 @@ float: left;
 }
 #portal-column-one ul.portletNavigationTree li a {
 background: transparent url(++resource++fritzing.theme.images/seperator.gif) no-repeat right center;
-padding: 0 1em 0 0.3em;
+padding: 0 1em 0 0.3em !important;
 color: #4D3333;
+}
+#portal-column-one ul.portletNavigationTree li a span {
+background: none;
+padding: 0;
 }
 #portal-column-one ul.portletNavigationTree a:hover {
 background-color: transparent !important;
@@ -319,6 +328,7 @@ margin: 0 0 0.4em 0;
 #portal-column-two dt a {
 font-size: 13px;
 padding: 4px 15px 5px 15px;
+background-color: #888;
 }
 #portal-column-two dl.portlet dd {
 margin: 5px 15px 0 15px;
