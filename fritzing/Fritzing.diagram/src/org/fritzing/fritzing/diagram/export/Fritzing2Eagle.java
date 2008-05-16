@@ -36,6 +36,11 @@ public class Fritzing2Eagle {
 		for (Part p: sketch.getParts()) {	
 			PartEditPart ep = getEditPart(viewer, p);
 			EagleBRDPart part = new EagleBRDPart(p, ep);
+//			System.out.println(p.getId() + " " + p.getName());
+			if (p.getName().equals("")) {
+				part.setEagleLabelPrefix("part" + genericPart);
+				genericPart++;
+			}
 			if (p.getName() == null) {
 				part.setEagleLabelPrefix("part" + genericPart);
 				genericPart++;
@@ -45,6 +50,11 @@ public class Fritzing2Eagle {
 			partList.add(part);
 		}
 		
+		/* we have to check for unnamed parts in the sketch.  Eagle can't handle
+		 * nets connected to unnamed parts.	 */
+		if (unnamedPartsExist(partList)) {
+			nameUnnamedParts(partList);
+		}
 
 		/* once the partlist is fully populated, we check for duplicate names of parts in Fritzing
 		 * and correct by adding an integer suffix (form is: "R_3").  */
@@ -270,12 +280,35 @@ public class Fritzing2Eagle {
 		return result;
 	}
 	
+	public static boolean unnamedPartsExist(ArrayList<EagleBRDPart> partList) {
+		boolean result = false;
+		for (int i=0; i<partList.size(); i++) {
+			String tempLabel = ((EagleBRDPart)partList.get(i)).getFritzingLabel();
+			if (tempLabel.equals("")) {
+				result = true;
+			}
+		}
+		return result;
+	}
+	
 	public static void enumerateDupeParts(EagleBRDPart part, ArrayList<EagleBRDPart> partList) {
 		int n = 1;
 		String label = part.getFritzingLabel();
 		for (int i=0; i<partList.size(); i++) {
 			String tempLabel = ((EagleBRDPart)partList.get(i)).getFritzingLabel();
 			if (label.equals(tempLabel)) {
+				((EagleBRDPart)partList.get(i)).setEagleLabelSuffix(n);
+				n++;
+			}
+		}
+	}
+	
+	public static void nameUnnamedParts(ArrayList<EagleBRDPart> partList) {
+		int n=1;
+		for (int i=0; i<partList.size(); i++) {
+			String tempLabel = ((EagleBRDPart)partList.get(i)).getFritzingLabel();
+			if (tempLabel.equals("")) {
+				((EagleBRDPart)partList.get(i)).setEagleLabelPrefix("part");
 				((EagleBRDPart)partList.get(i)).setEagleLabelSuffix(n);
 				n++;
 			}

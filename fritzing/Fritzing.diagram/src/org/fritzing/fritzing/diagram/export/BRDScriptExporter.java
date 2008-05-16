@@ -3,7 +3,6 @@ package org.fritzing.fritzing.diagram.export;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.eclipse.core.runtime.Preferences;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorPlugin;
 import org.fritzing.fritzing.diagram.part.FritzingDiagramEditorUtil;
 import org.fritzing.fritzing.diagram.preferences.EaglePreferencePage;
