@@ -124,14 +124,27 @@ public class FritzingPCBExportAction implements IWorkbenchWindowActionDelegate {
 				.getString(EaglePreferencePage.EAGLE_LOCATION) + File.separator;
 		
 		// EAGLE executable
-		String eagleExec = "";
+		String eagleExec = eagleLocation;
 		if (Platform.getOS().equals(Platform.OS_WIN32)) {
-			eagleExec = eagleLocation + "bin\\eagle.exe";
+			eagleExec = eagleExec + "bin\\eagle.exe";
 		} else if (Platform.getOS().equals(Platform.OS_MACOSX)) {
-			eagleExec = eagleLocation + "EAGLE.app/Contents/MacOS/eagle";
+			// the command-line executable for OSX is stored in the app bundle 
+			// calling the app bundle directly does not support passing in command line statements 
+			// from release 5.0 on,ÊEagle's executable is called "EAGLE" inside the app bundle
+			// we also support the earlier naming convention under the beta of "eagle"
+			// TODO - should we just read in the version information from the info.plist file in Contents?  info contains version number, so we could additionally alert users if their eagle install is out-of-date.
+			if (new File(eagleExec + "EAGLE.app/Contents/MacOS/EAGLE").exists()) {
+				// appears to be a version after 5.0
+				eagleExec = eagleExec + "EAGLE.app/Contents/MacOS/EAGLE";
+			}
+			if (new File(eagleExec + "EAGLE.app/Contents/MacOS/eagle").exists()) {
+				// appears to be one of the 5.0 betas
+				eagleExec = eagleExec + "EAGLE.app/Contents/MacOS/eagle";
+			}				
 		} else if (Platform.getOS().equals(Platform.OS_LINUX)) {
-			eagleExec = eagleLocation + "bin/eagle";
+			eagleExec = eagleExec + "bin/eagle";
 		}
+		
 		if (! new File(eagleExec).exists()) {
 			ErrorDialog.openError(getShell(), "PCB Export Error",
 				"Could not find EAGLE installation at " + eagleLocation + ".\n"+
