@@ -28,12 +28,12 @@
 			<point x="508" y="64" units="himetric"/>
 			<point x="3" y="0"/>
 		</connector>
-		<connector id="3" name="A" type="leg">
+		<connector id="3" name="A'" type="leg">
 			<!-- <point x="0" y="508" units="himetric"/> -->
 			<point x="0" y="699" units="himetric"/>
 			<point x="0" y="3"/>
 		</connector>
-		<connector id="4" name="B" type="leg">
+		<connector id="4" name="B'" type="leg">
 			<!-- <point x="508" y="508" units="himetric"/> -->
 			<point x="508" y="699" units="himetric"/>
 			<point x="3" y="3"/>
