@@ -4,7 +4,7 @@
 	<species>Transistor</species>
 	<genus>Basic.Transistor</genus>
 	<title>npn-Transistor</title>
-	<description>A standard npn-transistor (connect collector to ground)</description>
+	<description>A standard npn-transistor.</description>
 	<icons>
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />

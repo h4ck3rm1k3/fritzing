@@ -4,7 +4,7 @@
 	<species>PowerTransistor</species>
 	<genus>Basic.Transistor</genus>
 	<title>Power Transistor</title>
-	<description>A npn transistor with a higher sinking current</description>
+	<description>A npn transistor with a higher operating current</description>
 	<icons>
 		<icon size="small" source="iconSmall.gif" />
 		<icon size="large" source="iconLarge.gif" />
