@@ -62,8 +62,26 @@ public class EagleBRDNet {
 	
 	public EagleBRDNet(Wire w, ArrayList<EagleBRDPart> partList) {
 		wireList.add(w);
-		String sourceClass = w.getSource().getClass().getSimpleName();
-		String targetClass = w.getTarget().getClass().getSimpleName();
+		String sourceClass = "";
+		String targetClass = "";
+		try {
+			sourceClass = w.getSource().getClass().getSimpleName();
+		} catch (Exception e) {
+			/* a wire entry exists without a source.  we see this problem
+			 * sometimes when a user places a part, connects a wire to
+			 * the part and then deletes the part.  in some cases, the wire
+			 * remains in the sketch but not visible.  we can safely ignore these wires.
+			 */
+			System.out.println("Wire lacks a source.  Wire ID: " + w.getId());
+			return;
+		}
+		
+		try {
+			targetClass = w.getTarget().getClass().getSimpleName();
+		} catch (Exception e) {
+			System.out.println("Wire lacks a target.  Wire ID: " + w.getId());
+			return;
+		}
 		String sourcePinName = "";
 		String targetPinName = "";
 		EagleBRDPart sourcePart = new EagleBRDPart();
@@ -77,7 +95,7 @@ public class EagleBRDNet {
 				}
 			}
 			sourcePinName = ((Leg)w.getSource()).getParent().getId();
-		}
+		} 
 		if (sourceClass.equals("TerminalImpl")) {
 			String sourcePartId = ((Terminal)w.getSource()).getParent().getId();
 			for (int i=0; i<partList.size(); i++) {
@@ -86,7 +104,8 @@ public class EagleBRDNet {
 				}
 			}
 			sourcePinName = w.getSource().getId();
-		}
+		} 
+		
 		if (targetClass.equals("LegImpl")) {
 			String targetPartId = ((Leg)w.getTarget()).getParent().getParent().getId();
 			for (int i=0; i<partList.size(); i++) {

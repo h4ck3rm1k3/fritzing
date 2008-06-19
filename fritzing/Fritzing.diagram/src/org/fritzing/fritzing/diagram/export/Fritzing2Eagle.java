@@ -35,19 +35,23 @@ public class Fritzing2Eagle {
 		int genericPart = 1;
 		for (Part p: sketch.getParts()) {	
 			PartEditPart ep = getEditPart(viewer, p);
-			EagleBRDPart part = new EagleBRDPart(p, ep);
-//			System.out.println(p.getId() + " " + p.getName());
-			if (p.getName().equals("")) {
-				part.setEagleLabelPrefix("part" + genericPart);
-				genericPart++;
+			try {
+				EagleBRDPart part = new EagleBRDPart(p, ep);
+				if (p.getName().equals("")) {
+					part.setEagleLabelPrefix("part" + genericPart);
+					genericPart++;
+				}
+				if (p.getName() == null) {
+					part.setEagleLabelPrefix("part" + genericPart);
+					genericPart++;
+				} else {
+					part.setEagleLabelPrefix(p.getName());
+				}
+				partList.add(part);
+			} catch (Exception e) {
+				System.out.println("Problem with part entry.  Part will not be exported.  Part ID: " + p.getId());
+				e.printStackTrace();
 			}
-			if (p.getName() == null) {
-				part.setEagleLabelPrefix("part" + genericPart);
-				genericPart++;
-			} else {
-				part.setEagleLabelPrefix(p.getName());
-			}
-			partList.add(part);
 		}
 		
 		/* we have to check for unnamed parts in the sketch.  Eagle can't handle
@@ -116,8 +120,14 @@ public class Fritzing2Eagle {
 			// have to pass the partList to the EagleBRDNet constructor so there is a reference
 			// to parts named differently between Fritzing and Eagle (with same-named Fritzing
 			// parts that have been enumerated, for instance
-			EagleBRDNet net = new EagleBRDNet(w, partList);
-			netList.add(net);
+			try {
+				EagleBRDNet net = new EagleBRDNet(w, partList);
+				netList.add(net);
+			}
+			catch (Exception ex) {
+				System.out.println("Problem with wire entry.  Wire will not be exported.  Wire ID: " + w.getId());
+				ex.printStackTrace();
+			}
 		}
 		
 		/* add a netlist entry for any leg in any part that is directly connected to a terminal.
@@ -129,12 +139,6 @@ public class Fritzing2Eagle {
 			EList <Terminal> terminals = part.p.getTerminals();			
 			for (int j=0; j<terminals.size(); j++) {				
 				if (terminals.get(j).getLeg() != null) {
-					/*
-					if (terminals.get(j).getLeg().getTarget().getClass().getSimpleName().equals("TerminalImpl")) {
-						EagleBRDNet net = new EagleBRDNet(terminals.get(j).getLeg(), partList);
-						netList.add(net);
-					}
-					*/
 					Part targetPart = null;
 					Leg leg = terminals.get(j).getLeg();
 					ILegConnection target = leg.getTarget();
@@ -146,7 +150,6 @@ public class Fritzing2Eagle {
 							Terminal targetSource = (Terminal)((Leg)target).getSource();
 							targetPart = targetSource.getParent();
 						} else if (target instanceof Sketch) {
-//							System.out.println("!!! sketch part !!!");
 							continue;
 						}
 					} else {
