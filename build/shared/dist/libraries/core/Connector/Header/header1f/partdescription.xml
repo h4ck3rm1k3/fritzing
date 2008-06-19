@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<part>
+	<version>1.0</version>
+	<species>HeaderFemale1</species>
+	<genus>Wiring.Header.Female</genus>
+	<title>Header Female 1</title>
+	<description>A connection header with 1 female port.</description>
+	<icons>
+		<icon size="small" source="icon16.gif" />
+		<icon size="large" source="icon32.gif" />
+	</icons>
+	<label>Header 1-F</label>
+	<reference>http://fritzing.org/reference/not-yet-provided</reference>
+	<authors>
+		<author url="http://physical-computing.de">Marcus Paeschke</author>
+	</authors>
+	<defaultUnits>tenths</defaultUnits><!-- pixels, inches, tenths=inches/10, himetric=cm/1000 :::: Factor Pixels - Himetric ~6,35125 -->
+	<gridOffset x="124" y="241" units="himetric"/> <!-- 400% view pixels -->
+	<bounds width="248" height="241" units="himetric"/> <!-- 400% view pixels -->
+	<connectors units="tenths">
+	    <nameLayout visible="false" />
+	    <connector id="1" name="Connector" type="leg">
+			<point x="0" y="0" units="himetric"/> <!-- 400% view pixels -->
+			<point x="0" y="1" />
+		</connector>
+	</connectors>
+	<layers>
+		<layer type="image">
+			<image source="part.png" type="bitmap" zoom="1" />
+			<image source="part200.png" type="bitmap" zoom="2" />
+			<image source="part400.png" type="bitmap" zoom="4" />
+		</layer>
+	</layers>
+	<footprints>
+		<footprint default="true" source="female_header_1x1.lbr/FEMALE_HEADER_1X1"
+			type="eagle" />
+	</footprints>
+</part>
