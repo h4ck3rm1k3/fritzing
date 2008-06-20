@@ -253,7 +253,7 @@ def main():
 				finally:
 					temporarySvgFile.close()
 				# create 100% image from this svg
-				print "Rasterizing image for icon (100%% with legs) ..."
+				print "Rasterizing image for icon (100% with legs) ..."
 				outputFile = temporaryPngIconFileName
 				# outputWidth = 10 * (numberOfPins / 2)
 				# The use of the -h 35 is a hack, because the svg is not perfect ...
