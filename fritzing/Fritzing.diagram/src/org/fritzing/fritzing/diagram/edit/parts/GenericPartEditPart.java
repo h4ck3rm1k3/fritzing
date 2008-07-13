@@ -6,10 +6,12 @@ package org.fritzing.fritzing.diagram.edit.parts;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
+import org.eclipse.gef.Request;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
+import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.fritzing.fritzing.diagram.edit.PartDefinition;
@@ -126,6 +128,20 @@ public class GenericPartEditPart extends PartEditPart {
 				.getType(GenericPartNameEditPart.VISUAL_ID));
 	}
 
+	public EditPart getTargetEditPart(Request request) {
+		EditPart ep = super.getTargetEditPart(request);
+		
+		if (RequestConstants.REQ_CREATE.equals(request.getType()) && ep instanceof GenericPartEditPart) {
+			// this is a  hack to allow dropping of objects onto a breadboard
+			// it should probably be handled with a subclass of CreationEditPolicy
+			if (((GenericPartEditPart) ep).getPartDefinition().getGenus().contains("Breadboard")) {
+				return ep.getParent();
+			}
+		}
+		return ep;
+	}
+	
+	
 	/**
 	 * @generated NOT
 	 */

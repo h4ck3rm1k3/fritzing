@@ -21,6 +21,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.IBorderItemEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.BorderItemSelectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
+import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
@@ -191,6 +192,17 @@ public class TerminalEditPart extends AbstractBorderedShapeEditPart {
 	public EditPart getPrimaryChildEditPart() {
 		return getChildBySemanticHint(FritzingVisualIDRegistry
 				.getType(TerminalNameEditPart.VISUAL_ID));
+	}
+
+	public EditPart getTargetEditPart(Request request) {
+		EditPart ep = super.getTargetEditPart(request);
+		
+		if (RequestConstants.REQ_CREATE.equals(request.getType()) && ep.getParent() instanceof SketchEditPart) {
+			// this is a hack to allow dropping of objects onto a breadboard
+			// it should probably be handled with a subclass of CreationEditPolicy
+			return ep.getParent();
+		}
+		return ep;
 	}
 
 	/**

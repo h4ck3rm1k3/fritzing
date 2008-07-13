@@ -20,6 +20,7 @@ import org.eclipse.gef.palette.PanningSelectionToolEntry;
 import org.eclipse.gef.palette.ToolEntry;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
+import org.eclipse.gmf.runtime.diagram.ui.internal.services.palette.PaletteToolEntry;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateUnspecifiedTypeRequest;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeConnectionTool;
 import org.eclipse.gmf.runtime.diagram.ui.tools.UnspecifiedTypeCreationTool;
@@ -293,7 +294,8 @@ public class FritzingPaletteFactory {
 		}
 	}
 
-	private static class NodeToolEntry extends ToolEntry implements
+	// jrc PaletteToolEntry enables drag-and-drop
+	private static class NodeToolEntry extends /* ToolEntry */ PaletteToolEntry implements
 			Comparable<NodeToolEntry> {
 		
 		private final PartDefinition partDefinition;
@@ -302,8 +304,7 @@ public class FritzingPaletteFactory {
 
 		private NodeToolEntry(String title, String description,
 				List elementTypes, PartDefinition partDefinition, boolean core) {
-			super(partDefinition.getTitle(), partDefinition.getDescription(), null,
-					null);
+			super(partDefinition.getTitle(), partDefinition.getDescription(), null /*, null */ );   // jrc 4th param not needed for PaletteToolEntry
 
 			// eventually passes the partloader along to PartCreateCommand
 			this.partDefinition = partDefinition;
