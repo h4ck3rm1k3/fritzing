@@ -1,4 +1,7 @@
 /* bug fixes */
+div.comment h3 {
+  padding-bottom: 0.5em;
+}
 .inlineForm .formHelp,
 .inlineForm .fieldRequired,
 .inlineForm label {
@@ -6,6 +9,12 @@
 }
 html.kupu-html {
   font-size: 100%;
+}
+#kupu-editor-iframe-text {
+  border: 1px solid grey;
+}
+body.kupu p {
+margin-bottom: 1em;
 }
 
 
@@ -194,17 +203,18 @@ padding: 5px 0 5px 0;
 
 
 /* Content */
-#region-content a {
+#content a {
   color: #94294E;
+  border-bottom: 1px solid;
   border-bottom-color: #94294E;
 }
-#region-content a:visited {
+#content a:visited {
   color: #777;
   border-bottom-color: #777;
 }
-#region-content a:hover {
-  color: black;
-  border-bottom-color: black;
+#content a:hover {
+  text-decoration: none;
+  border-bottom-width: 2px;
 }
 #content h1 {
   margin-bottom: 0.25em;
@@ -238,12 +248,6 @@ padding: 5px 0 5px 0;
 }
 #content ol ol ol{
   list-style-type: lower-roman;
-}
-#content table.listing a {
-  border-width: 1px;
-}
-#content table a:visited {
-  color: black !important;
 }
 #content table.plain td {
   vertical-align: top;
