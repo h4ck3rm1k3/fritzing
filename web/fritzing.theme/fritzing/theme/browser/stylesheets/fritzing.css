@@ -124,7 +124,7 @@ ul#portal-personaltools a {
 #portal-column-one dl.portletNavigationTree {
 width: 0 !important;
 }
-#portal-column-one ul.portletNavigationTree {
+#portal-column-one ul.navTree {
 position: relative;
 height: 15px;
 width: 705px;
@@ -132,44 +132,44 @@ padding: 5px 10px 5px 45px;
 background: #64A284;
 z-index: -1;
 }
-#portal-column-one ul.portletNavigationTree li {
+#portal-column-one ul.navTree li {
 float: left; 
 }
-#portal-column-one ul.portletNavigationTree li a {
+#portal-column-one ul.navTree li a {
 background: transparent url(++resource++fritzing.theme.images/seperator.gif) no-repeat right center;
 padding: 0 1em 0 0.3em !important;
 color: #4D3333;
 }
-#portal-column-one ul.portletNavigationTree li a span {
+#portal-column-one ul.navTree li a span {
 background: none;
 padding: 0;
 }
-#portal-column-one ul.portletNavigationTree a:hover {
+#portal-column-one ul.navTree a:hover {
 background-color: transparent !important;
 color: black !important;
 text-decoration: underline;
 }
-#portal-column-one ul.portletNavigationTree li:last-child > div > a {
+#portal-column-one ul.navTree li:last-child > div > a {
 background-image: none;
 }
-#portal-column-one ul.portletNavigationTree li a:hover {
+#portal-column-one ul.navTree li a:hover {
 color: #4D1D1D !important;
 }
-#portal-column-one ul.portletNavigationTree li a.navTreeCurrentItem {
+#portal-column-one ul.navTree li a.navTreeCurrentItem {
 background: transparent url(++resource++fritzing.theme.images/seperator.gif) no-repeat right center;
 font-weight: bold;
 color: #4D1D1D !important;
 }
-#portal-column-one ul.portletNavigationTree li a.navTreeCurrentItem span {
+#portal-column-one ul.navTree li a.navTreeCurrentItem span {
 background-image: none !important;
 }
-#portal-column-one ul.portletNavigationTree li.navTreeItemInPath,
-#portal-column-one ul.portletNavigationTree li.navTreeCurrentNode {
+#portal-column-one ul.navTree li.navTreeItemInPath,
+#portal-column-one ul.navTree li.navTreeCurrentNode {
 background-color: transparent;
 float: left;
 margin-bottom: 2em;
 }
-#portal-column-one ul.portletNavigationTree li.navTreeItemInPath > div > a {
+#portal-column-one ul.navTree li.navTreeItemInPath > div > a {
 font-weight: bold;
 color: #4D1D1D;
 }
@@ -177,7 +177,7 @@ color: #4D1D1D;
 display: inline;
 float: left;
 }
-#portal-column-one ul.portletNavigationTree ul.navTreeLevel1 {
+#portal-column-one ul.navTree ul.navTreeLevel1 {
 position:absolute;
 top: 18px;
 border-left: none;
@@ -185,7 +185,7 @@ margin: 0;
 height: 30px;
 overflow: hidden;
 }
-#portal-column-one ul.portletNavigationTree ul.navTreeLevel1 li {
+#portal-column-one ul.navTree ul.navTreeLevel1 li {
 background-color: #9BCCC1;
 margin: 7px 0 0 0;
 padding: 5px 0 5px 0;
@@ -370,7 +370,7 @@ text-align: right;
 #portal-column-two dl.portletNavigationTree dt.portletHeader {
 display: block;
 }
-#portal-column-two ul.portletNavigationTree li a {
+#portal-column-two ul.navTree li a {
 background: none;
 }
 #portlet-prefs {
