@@ -133,7 +133,7 @@ ul#portal-personaltools a {
 #portal-column-one dl.portletNavigationTree {
 width: 0 !important;
 }
-#portal-column-one ul.navTree {
+#portal-column-one ul.navTree.navTreeLevel0 {
 position: relative;
 height: 15px;
 width: 705px;
