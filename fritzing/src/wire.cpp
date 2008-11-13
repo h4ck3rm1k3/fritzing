@@ -44,7 +44,7 @@ $Date$
 
 QString Wire::moduleIDName = "WireModuleID";
 QHash<QString, QString> Wire::colors;
-QHash<QString, QString> Wire::secondaryColors;
+QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QList<QString> Wire::colorNames;
 
@@ -149,9 +149,11 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 	this->setPen(pen);
 
 	m_pen.setCapStyle(Qt::RoundCap);
+	m_shadowPen.setCapStyle(Qt::RoundCap);
 	switch (m_viewIdentifier) {
 		case ItemBase::BreadboardView:
 			m_pen.setWidth(penWidth - 2);
+			m_shadowPen.setWidth(penWidth);
 			setColorString("red");
 			break;
 		case ItemBase::SchematicView:
@@ -173,13 +175,13 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 	switch (m_viewIdentifier) {
 		case ItemBase::BreadboardView:
 			{
-			ItemBase::paint(painter, option, widget);
 			painter->save();
-			painter->setPen(m_pen);
+			painter->setPen(m_shadowPen);
 			QLineF line = this->line();
-			line.translate(1,1);
+			//line.translate(1,1);
 			painter->drawLine(line);
 			painter->restore();
+			ItemBase::paint(painter, option, widget);
 			}
 			break;
 		case ItemBase::PCBView:
@@ -679,10 +681,8 @@ void Wire::setColor(QColor & color) {
 	this->update();
 }
 
-void Wire::setSecondaryColor(QColor & color) {
-	QPen pen = this->pen();
-	pen.setBrush(QBrush(color));
-	this->setPen(pen);
+void Wire::setShadowColor(QColor & color) {
+	m_shadowPen.setBrush(QBrush(color));
 	this->update();
 }
 
@@ -692,6 +692,7 @@ const QColor & Wire::color() {
 
 void Wire::setWidth(int width) {
 	m_pen.setWidth(width);
+	m_shadowPen.setWidth(width + 2);
 }
 
 int Wire::width() {
@@ -710,11 +711,11 @@ void Wire::setColorString(QString colorName) {
 	c.setNamedColor(colorString);
 	setColor(c);
 
-	colorString = secondaryColors.value(colorName);
+	colorString = shadowColors.value(colorName);
 	if (colorString.isEmpty() || colorString.isNull()) return;
 
 	c.setNamedColor(colorString);
-	setSecondaryColor(c);
+	setShadowColor(c);
 }
 
 QString Wire::colorString() {
@@ -751,16 +752,16 @@ void Wire::initNames() {
 	colors.insert("unrouted", "#000000");
 	colors.insert("routed", "#7d7d7d");
 	
-	secondaryColors.insert("red",	"#990000");
-	secondaryColors.insert("black",	"#363636");
-	secondaryColors.insert("blue",	"#357dcc");
-	secondaryColors.insert("yellow", "#d9ad20");
-	secondaryColors.insert("green", "#00b342");
-	secondaryColors.insert("white",	"#b3b3b3");
-	secondaryColors.insert("jumper", "#ff0000");
-	secondaryColors.insert("trace", "#ffbf00");
-	secondaryColors.insert("unrouted", "#000000");
-	secondaryColors.insert("routed", "#7d7d7d");
+	shadowColors.insert("red",	"#990000");
+	shadowColors.insert("black",	"#363636");
+	shadowColors.insert("blue",	"#357dcc");
+	shadowColors.insert("yellow", "#d9ad20");
+	shadowColors.insert("green", "#00b342");
+	shadowColors.insert("white",	"#b3b3b3");
+	shadowColors.insert("jumper", "#ff0000");
+	shadowColors.insert("trace", "#ffbf00");
+	shadowColors.insert("unrouted", "#000000");
+	shadowColors.insert("routed", "#7d7d7d");
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)

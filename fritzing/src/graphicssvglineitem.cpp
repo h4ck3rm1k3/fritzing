@@ -170,12 +170,13 @@ QPainterPath GraphicsSvgLineItem::shape() const
 void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	if (m_hasLine) {
+	    if (option->state & QStyle::State_Selected) {	
+			// draw this first because otherwise it seems to draw a dashed line down the middle
+	        qt_graphicsItem_highlightSelected(this, painter, option);
+        }
 	    painter->setPen(m_pen);
 	    painter->drawLine(m_line);
 	
-	    if (option->state & QStyle::State_Selected) {	    	
-	        qt_graphicsItem_highlightSelected(this, painter, option);
-        }
     }
     else {
     	QGraphicsSvgItem::paint(painter, option, widget);
@@ -270,7 +271,7 @@ static void qt_graphicsItem_highlightSelected(
     //painter->drawRect(item->boundingRect().adjusted(pad, pad, -pad, -pad));
 	painter->drawPath(path);
 
-    painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
+	painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
     painter->setBrush(Qt::NoBrush);
     //painter->drawRect(item->boundingRect().adjusted(pad, pad, -pad, -pad));
 	painter->drawPath(path);

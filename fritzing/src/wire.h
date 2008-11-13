@@ -126,7 +126,7 @@ protected:
 	void setConnector0Rect();
 	void setConnector1Rect();
 	void collectWiresAux(QList<Wire *> & wires, ConnectorItem * start, bool includeBusConnections);
-	void setSecondaryColor(QColor &);
+	void setShadowColor(QColor &);
 
 protected:
 	QPointF m_wireDragOrigin;
@@ -138,13 +138,14 @@ protected:
 	bool m_grabbedMouse;
 	QString m_colorName;
 	bool m_autoroutable;
+	QPen m_shadowPen;
 
 public:
 	static QList<QString> colorNames;
 	static QHash<QString, QString> colorTrans;
 
 protected:
-	static QHash<QString, QString> secondaryColors;
+	static QHash<QString, QString> shadowColors;
 	static QHash<QString, QString> colors;
 
 signals:
