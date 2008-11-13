@@ -1,9 +1,0 @@
-// fritzing_cam_export.ulp for release with Fritzing v 0002
-// simple ULP - just points user to more information on how to carry out an export of CAM files and exits
-
-// (c) Fritzing, 2007
-
-
-	if (dlgMessageBox(";Oh, snap.  You want to make CAM files, but Fritzing doesn't do that automatically (yet).  The <a href=\"http://www.fritzing.org/learning/eagle/cam-export\">CAM export help page</a> has instructions for doing it manually.</html>") == 0) {
-
-	}
