@@ -577,6 +577,9 @@ void BusConnectorItem::setOwner(ItemBase * owner) {
 	m_owner = owner;
 }
 
+bool BusConnectorItem::isBusConnector() {
+	return true;
+}
 
 /////////////////////////////////////////
 
@@ -600,4 +603,5 @@ bool BusConnectorTimer::hookTokenHolder() {
 ItemBase::ViewIdentifier BusConnectorTimer::viewIdentifier() {
 	return m_viewIdentifier;
 }
+
 

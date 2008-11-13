@@ -57,6 +57,7 @@ public:
 	const QList<BusConnectorItem *> & merged();
 	class Bus * bus();
 	const QString & connectorStuffID();
+	bool isBusConnector();
 	void mergeGraphics(BusConnectorItem * child, bool hookTokenHolder);
 	void unmergeGraphics(BusConnectorItem * child, bool hookTokenHolder, ItemBase::ViewIdentifier, QPointF childPos);
 	void mergeGraphicsDelay(BusConnectorItem * child, bool hookTokenHolder, ItemBase::ViewIdentifier);

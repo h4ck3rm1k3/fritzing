@@ -66,6 +66,7 @@ public:
 	int attachedToItemType();
 	const QString & attachedToTitle();
 	virtual const QString & connectorStuffID();
+	virtual bool isBusConnector();
 	const QString & busID();
 	ModelPartStuff * modelPartStuff();
 	ModelPart * modelPart();

@@ -113,32 +113,6 @@ void Connector::disconnectFrom(Connector * connector) {
 	connector->m_toConnectors.removeOne(this);
 }
 
-/*
-void Connector::saveInstances(QXmlStreamWriter & writer) {
-	if (m_toConnectors.count() <= 0) {
-		// no need to save if there's no connection
-		return;
-	}
-
-	writer.writeStartElement("connector");
-	writer.writeAttribute("connectorId", connectorStuffID());
-	writer.writeStartElement("views");
-	foreach (ConnectorItem * connectorItem, m_connectorItems) {
-		connectorItem->saveInstance(writer);
-	}
-	writer.writeEndElement();
-	foreach (Connector * connector, this->m_toConnectors) {
-		writer.writeStartElement("connect");
-		writer.writeAttribute("connectorId", connector->connectorStuffID());
-		writer.writeAttribute("busId", connector->busID());
-		writer.writeAttribute("modelIndex", QString::number(connector->modelIndex()));
-		writer.writeEndElement();
-	}
-
-	writer.writeEndElement();
-}
-*/
-
 void Connector::saveAsPart(QXmlStreamWriter & writer) {
 	writer.writeStartElement("connector");
 	writer.writeAttribute("id", connectorStuff()->id());

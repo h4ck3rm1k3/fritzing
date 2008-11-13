@@ -209,24 +209,6 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			itemBase->saveInstance(streamWriter);
 		}
 		streamWriter.writeEndElement();
-
-		/*
-		streamWriter.writeStartElement("connectors");
-		foreach (Connector * connector, m_connectorHash.values()) {
-			connector->saveInstances(streamWriter);
-		}
-		streamWriter.writeEndElement();
-		
-
-
-		streamWriter.writeStartElement("buses");
-		foreach (Bus * bus, buses().values()) {
-			bus->saveInstances(streamWriter);
-		}
-
-		streamWriter.writeEndElement();
-		*/
-
 	}
 
 	QList<QObject *>::const_iterator i;

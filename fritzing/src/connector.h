@@ -56,7 +56,6 @@ public:
 	class ConnectorStuff * connectorStuff();
 	void connectTo(Connector *);
 	void disconnectFrom(Connector *);
-	//void saveInstances(QXmlStreamWriter & writer);
 	void saveAsPart(QXmlStreamWriter & writer);
 	const QList<Connector *> & toConnectors();
 	ConnectorItem * connectorItem(QGraphicsScene *);

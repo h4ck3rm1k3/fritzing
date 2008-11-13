@@ -728,6 +728,7 @@ void ItemBase::restoreConnections(QDomElement & instance, QHash<long, ItemBase *
 		}
 	}
 	
+	// merge buses
 	QDomElement busesElement = instance.firstChildElement("buses");
 	if (!busesElement.isNull()) {	
 		QDomElement connectorElement = busesElement.firstChildElement("connector");

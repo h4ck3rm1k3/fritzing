@@ -274,9 +274,9 @@ void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemB
 			if (toBase != NULL) {	
 				ConnectorItem * connectorItem = NULL;
 				QString toConnectorID = connectToElement.attribute("connectorId");
-				QString toBusID = connectToElement.attribute("busId");		
-				if (toBusID.length() > 0) {
-					connectorItem = toBase->busConnectorItemCast(toBusID);
+				QString isBusConnectorItem = connectToElement.attribute("bus");		
+				if (isBusConnectorItem.compare("true") == 0) {
+					connectorItem = toBase->busConnectorItemCast(toConnectorID);
 				}
 				else if (toConnectorID.length() > 0) {
 					connectorItem = toBase->findConnectorItemNamed(toConnectorID);
@@ -429,7 +429,7 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
 		writer.writeStartElement("connect");
 		writer.writeAttribute("connectorId", connectorItem->connectorStuffID());
-		writer.writeAttribute("busId", connectorItem->busID());
+		writer.writeAttribute("bus", connectorItem->isBusConnector() ? "true" : "false");
 		writer.writeAttribute("modelIndex", QString::number(connectorItem->connector()->modelIndex()));
 		writer.writeEndElement();
 	}
@@ -504,3 +504,6 @@ bool ConnectorItem::isDirty() {
 	return m_dirty;
 }
 
+bool ConnectorItem::isBusConnector() {
+	return false;
+}
