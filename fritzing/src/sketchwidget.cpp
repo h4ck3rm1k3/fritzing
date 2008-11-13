@@ -200,35 +200,12 @@ void SketchWidget::loadFromModel() {
 			itemDoms.insert(item, new QDomElement(view));
 		}
 	}
-
 	
-	/*
-	// now make the bus connectors
-	QList<BusMergeThing *> merged;
-    foreach (QObject * object, root->children()) {
-		ModelPart* mp = qobject_cast<ModelPart *>(object);
-		if (mp == NULL) continue;
-
-		QDomElement instance = mp->instanceDomElement();
-		if (instance.isNull()) continue;
-
-		QDomElement buses = instance.firstChildElement("buses");
-		if (buses.isNull()) continue;
-
-		QDomElement bus = buses.firstChildElement("bus");
-		while (!bus.isNull()) {
-			loadOneBusConnector(mp, bus, newItems, viewName, merged);
-			bus = bus.nextSiblingElement("bus");
-		}
-	}
-	*/ 
-			
 	foreach (ItemBase * itemBase, itemDoms.keys()) {
 		QDomElement * dom = itemDoms.value(itemBase);
 		itemBase->restoreConnections(*dom,  newItems);
 		delete dom;
-	}
-			
+	}			
 
 	// redraw the ratsnest
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
@@ -290,6 +267,8 @@ void SketchWidget::loadFromModel() {
 
 
 		if (autorouted) {
+			// TODO need to figure out which net each wire belongs to
+			// or save the ratsnest wires so they can simply be reloaded
 			DebugDialog::debug("autorouted");
 			foreach (QGraphicsItem * item, scene()->items()) {
 				Wire * wire = dynamic_cast<Wire *>(item);
@@ -297,7 +276,7 @@ void SketchWidget::loadFromModel() {
 
 				if (wire->getRatsnest()) {
 					wire->setRouted(true);
-					wire->setColorString("routed");
+					wire->setColorString("unrouted", 0.35);
 				}
 			}
 		}
@@ -2800,6 +2779,9 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::NoFlag);
 		BusConnectorItem::collectParts(connectorItems, partsConnectorItems);
 
+		QList <Wire *> ratsnestWires;
+		Wire * modelWire = NULL;
+
 		int count = partsConnectorItems.count();
 		for (int i = 0; i < count - 1; i++) {
 			ConnectorItem * source = partsConnectorItems[i];
@@ -2807,7 +2789,8 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 				ConnectorItem * dest = partsConnectorItems[j];
 				
 				// if you can't get from i to j via wires, then add a virtual ratsnest wire
-				if (!source->wiredTo(dest, ViewGeometry::RatsnestFlag)) {
+				Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
+				if (tempWire == NULL) {
 					long newID = ItemBase::getNextID();
 					ViewGeometry viewGeometry;
 					QPointF fromPos = source->sceneAdjustedTerminalPoint();
@@ -2830,14 +2813,31 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 
 					ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
 					tempConnectWire(newItemBase, source, dest);
-					if ((m_viewIdentifier == ItemBase::PCBView) && source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
-						Wire * newWire = dynamic_cast<Wire *>(newItemBase);
-						newWire->setColorString("routed");
+					Wire * newWire = dynamic_cast<Wire *>(newItemBase);
+					ratsnestWires.append(newWire);
+					if ((m_viewIdentifier == ItemBase::PCBView) && source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {						
 						newWire->setRouted(true);
 					}
+											
+
+				}
+				else {
+					modelWire = tempWire;
 				}
 			}
 		}
+
+		QString colorString;
+		if (modelWire) {
+			colorString = modelWire->colorString();
+		}
+		else {
+			colorString = Wire::randomColorString();
+		}
+		foreach (Wire * wire, ratsnestWires) {
+			wire->setColorString(colorString, wire->getRouted() ? 0.35 : 1.0);
+		}
+
 		return;
 	}
 
@@ -3043,7 +3043,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * par
 	if (itemBase->itemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(itemBase);
 		new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), parentCommand);
+		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	}
 	new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), parentCommand);
 }
@@ -3222,7 +3222,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	vg.setLine(newLine2);
 
 	new AddItemCommand(this, BaseCommand::SingleView, Wire::moduleIDName, vg, newID, parentCommand);
-	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), parentCommand);
+	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
 
 	// disconnect from original wire and reconnect to new wire
@@ -3578,7 +3578,9 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 	}
 }
 
-void SketchWidget::changeWireColor(const QString &wireTitle, long wireId, const QString& oldColor, const QString newColor) {
+void SketchWidget::changeWireColor(const QString &wireTitle, long wireId, 
+								   const QString& oldColor, const QString newColor,
+								   qreal oldOpacity, qreal newOpacity) {
 	QUndoCommand* parentCommand = new QUndoCommand(
 		tr("Wire %1 color changed from %2 to %3")
 			.arg(wireTitle)
@@ -3590,14 +3592,16 @@ void SketchWidget::changeWireColor(const QString &wireTitle, long wireId, const 
 			wireId,
 			oldColor,
 			newColor,
+			oldOpacity,
+			newOpacity,
 			parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
-void SketchWidget::changeWireColor(long wireId, const QString& color) {
+void SketchWidget::changeWireColor(long wireId, const QString& color, qreal opacity) {
 	ItemBase *item = findItem(wireId);
 	if(Wire* wire = dynamic_cast<Wire*>(item)) {
-		wire->setColorString(color);
+		wire->setColorString(color, opacity);
 	}
 }
 
@@ -3691,13 +3695,13 @@ void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeomet
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);
 	if (jumperOrTrace != NULL) {
 		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), "routed", parentCommand);
+		new WireColorChangeCommand(this, wire->id(), wire->colorString(), "unrouted", wire->opacity(), .35, parentCommand);
 	}
 	else {
 		long newID = createWire(ends[0], ends[1], false, flag, false, BaseCommand::SingleView, parentCommand);
-		new WireColorChangeCommand(this, newID, colorString, colorString, parentCommand);
+		new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
 		new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), "routed", parentCommand);
+		new WireColorChangeCommand(this, wire->id(), wire->colorString(), "unrouted", 0.35, .35, parentCommand);
 		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
 	}
 	m_undoStack->push(parentCommand);

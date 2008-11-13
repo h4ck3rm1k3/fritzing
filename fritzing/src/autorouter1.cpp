@@ -316,7 +316,6 @@ void Autorouter1::clearTraces() {
 
 void Autorouter1::updateRatsnest(bool routed) {
 
-	QString colorString = routed ? "routed" : "unrouted";
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
@@ -324,11 +323,11 @@ void Autorouter1::updateRatsnest(bool routed) {
 		
 		QList<ConnectorItem *>  ends;
 		if (wire->findJumperOrTraced(ViewGeometry::TraceFlag | ViewGeometry::JumperFlag, ends)) {
-			wire->setColorString("routed");
+			wire->setColorString(wire->colorString(), 0.35);
 			wire->setRouted(true);
 		}
 		else {		
-			wire->setColorString(colorString);	
+			wire->setColorString(wire->colorString(), routed ? 0.35 : 1.0);	
 			wire->setRouted(routed);
 		}
 	}
@@ -487,7 +486,7 @@ void Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPol
 		}
 
 		Wire * jumperWire = dynamic_cast<Wire *>(jumper);
-		jumperWire->setColorString("jumper");
+		jumperWire->setColorString("jumper", 1.0);
 		jumperWire->setWidth(3);
 		jumperWire->setSelected(false);
 
@@ -543,7 +542,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	trace->setSelected(false);
 
 	Wire * traceWire = dynamic_cast<Wire *>(trace);
-	traceWire->setColorString("trace");
+	traceWire->setColorString("trace", 1.0);
 	traceWire->setWidth(3);
 
 	QGraphicsItem * nearestObstacle = NULL;

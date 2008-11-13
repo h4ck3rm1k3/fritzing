@@ -480,20 +480,22 @@ void SwapCommand::redo() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-WireColorChangeCommand::WireColorChangeCommand(SketchWidget* sketchWidget, long wireId, const QString &oldColor, const QString &newColor, QUndoCommand *parent)
+WireColorChangeCommand::WireColorChangeCommand(SketchWidget* sketchWidget, long wireId, const QString &oldColor, const QString &newColor, qreal oldOpacity, qreal newOpacity, QUndoCommand *parent)
 : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
 	m_wireId = wireId;
 	m_oldColor = oldColor;
 	m_newColor = newColor;
+	m_oldOpacity = oldOpacity;
+	m_newOpacity = newOpacity;
 }
 
 void WireColorChangeCommand::undo() {
-	m_sketchWidget->changeWireColor(m_wireId, m_oldColor);
+	m_sketchWidget->changeWireColor(m_wireId, m_oldColor, m_oldOpacity);
 }
 
 void WireColorChangeCommand::redo() {
-	m_sketchWidget->changeWireColor(m_wireId, m_newColor);
+	m_sketchWidget->changeWireColor(m_wireId, m_newColor, m_newOpacity);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

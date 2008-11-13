@@ -42,6 +42,8 @@ $Date$
 #include "layerattributes.h"
 #include "busconnectoritem.h"
 
+#include <stdlib.h>
+
 QString Wire::moduleIDName = "WireModuleID";
 QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
@@ -55,6 +57,7 @@ Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_grabbedMouse = false;
 	m_connectorHover = NULL;
 	m_autoroutable = true;
+	m_opacity = 1.0;
 
 	//DebugDialog::debug(QObject::tr("aix line %1 %2 %3 %4").arg(this->viewGeometry().line().x1())
 													//.arg(this->viewGeometry().line().y1())
@@ -154,14 +157,14 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 		case ItemBase::BreadboardView:
 			m_pen.setWidth(penWidth - 2);
 			m_shadowPen.setWidth(penWidth);
-			setColorString("red");
+			setColorString("red", 1.0);
 			break;
 		case ItemBase::SchematicView:
-			setColorString("routed");
+			setColorString("routed", 1.0);
 			m_pen.setWidth(2);
 			break;
 		case ItemBase::PCBView:
-			setColorString("unrouted");
+			setColorString("unrouted", 1.0);
 			m_pen.setWidth(1);
 			break;
 		default:
@@ -172,6 +175,7 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
 	if (m_hidden) return;
 
+	painter->setOpacity(m_opacity);
 	switch (m_viewIdentifier) {
 		case ItemBase::BreadboardView:
 			{
@@ -186,11 +190,9 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 			break;
 		case ItemBase::PCBView:
 		case ItemBase::SchematicView:
+		default:
 			// assumes all wires in these views are selectable: jumper, ratsnest, trace
 			ItemBase::paint(painter, option, widget);	
-			break;
-		default:
-			ItemBase::paint(painter, option, widget);
 			break;
 	}
 
@@ -340,6 +342,7 @@ void Wire::writeGeometry(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeStartElement("wireExtras");
 	streamWriter.writeAttribute("width", QString::number(m_pen.width()));
 	streamWriter.writeAttribute("color", m_pen.brush().color().name());
+	streamWriter.writeAttribute("opacity", QString::number(m_opacity));
 	streamWriter.writeEndElement();
 }
 
@@ -360,16 +363,22 @@ void Wire::setColor(QDomElement & element) {
 	QString colorString = element.attribute("color");
 	if (colorString.isNull() || colorString.isEmpty()) return;
 
+	bool ok;
+	qreal op = element.attribute("opacity").toDouble(&ok);
+	if (!ok) {
+		op = 1.0;
+	}
+
 	foreach (QString colorName, colors.keys()) {
 		if (colors.value(colorName).compare(colorString) == 0) {
-			setColorString(colorName);
+			setColorString(colorName, op);
 			return;
 		}
 	}
 
 	QColor c;
 	c.setNamedColor(colorString);
-	setColor(c);
+	setColor(c, op);
 	m_colorName = "";
 }
 
@@ -676,8 +685,9 @@ bool Wire::connectedToBreadboard() {
 	return false;
 }
 
-void Wire::setColor(QColor & color) {
+void Wire::setColor(QColor & color, qreal op) {
 	m_pen.setBrush(QBrush(color));
+	m_opacity = op;
 	this->update();
 }
 
@@ -699,7 +709,7 @@ int Wire::width() {
 	return m_pen.width();
 }
 
-void Wire::setColorString(QString colorName) {
+void Wire::setColorString(QString colorName, qreal op) {
 	// sets a color using the name (.e. "red") 
 	// note: colorName is associated with a Fritzing color, not a Qt color
 
@@ -709,7 +719,7 @@ void Wire::setColorString(QString colorName) {
 
 	QColor c;
 	c.setNamedColor(colorString);
-	setColor(c);
+	setColor(c, op);
 
 	colorString = shadowColors.value(colorName);
 	if (colorString.isEmpty() || colorString.isNull()) return;
@@ -799,4 +809,13 @@ ViewGeometry::WireFlags Wire::wireFlags() {
 
 void Wire::setWireFlags(ViewGeometry::WireFlags wireFlags) {
 	m_viewGeometry.setWireFlags(wireFlags);
+}
+
+qreal Wire::opacity() {
+	return m_opacity;
+}
+
+QString Wire::randomColorString() {
+	int ix = rand() % colorNames.size();
+	return colorTrans.value(colorNames[ix]);
 }

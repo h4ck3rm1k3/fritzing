@@ -160,7 +160,7 @@ public:
 	void addSchematicViewLayers();
 	void addPcbViewLayers();
 
-	void changeWireColor(long wireId, const QString& color);
+	void changeWireColor(long wireId, const QString& color, qreal opacity);
 	void changeWireWidth(long wireId, int width);
 	void changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlags);
 	void setIgnoreSelectionChangeEvents(bool);
@@ -317,7 +317,9 @@ public slots:
 	void swap(PaletteItem* from, ModelPart *to);
 	void swap(long itemId, const QString &moduleID, bool doEmit=false);
 	void swap(long itemId, ModelPart *modelPart, bool doEmit=false);
-	void changeWireColor(const QString &wireTitle, long wireId, const QString& oldColor, const QString newColor);
+	void changeWireColor(const QString &wireTitle, long wireId, 
+		const QString& oldColor, const QString newColor,
+		qreal oldOpacity, qreal newOpacity);
 
 protected:
 	qreal m_scaleValue;

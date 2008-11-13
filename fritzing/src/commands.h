@@ -318,6 +318,7 @@ public:
 	WireColorChangeCommand(
 		SketchWidget* sketchWidget,
 		long wireId, const QString &oldColor, const QString &newColor,
+		qreal oldOpacity, qreal newOpacity,
 		QUndoCommand *parent=0);
     void undo();
     void redo();
@@ -326,6 +327,8 @@ protected:
 	long m_wireId;
 	QString m_oldColor;
 	QString m_newColor;
+	qreal m_oldOpacity;
+	qreal m_newOpacity;
 };
 
 

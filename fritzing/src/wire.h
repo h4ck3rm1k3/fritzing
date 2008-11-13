@@ -99,8 +99,9 @@ public:
 	bool connectedToBreadboard();
 
 	QString colorString();
-	void setColorString(QString);
-	void setColor(QColor &);
+	void setColorString(QString, qreal opacity);
+	void setColor(QColor &, qreal opacity);
+	qreal opacity();
 	const QColor & color();
 	void setWidth(int);
 	int width();
@@ -112,6 +113,7 @@ public:
 	static QString moduleIDName;
 	static void initNames();
 	static QRgb getRgb(const QString & name);
+	static QString randomColorString();
 
 protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -139,6 +141,7 @@ protected:
 	QString m_colorName;
 	bool m_autoroutable;
 	QPen m_shadowPen;
+	qreal m_opacity;
 
 public:
 	static QList<QString> colorNames;
