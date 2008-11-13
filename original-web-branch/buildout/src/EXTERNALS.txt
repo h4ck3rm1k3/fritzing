@@ -1,7 +1,0 @@
-#
-# created by: svn propset svn:externals -F ./EXTERNALS.TXT .
-#
-
-# fritzing packages
-fritzing.policy https://fritzing.googlecode.com/svn/trunk/web/fritzing.policy
-fritzing.theme https://fritzing.googlecode.com/svn/trunk/web/fritzing.theme

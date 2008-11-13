@@ -1,9 +1,0 @@
-Changelog for fritzing.policy
-
-    (name of developer listed in brackets)
-
-fritzing.policy - 0.1 Unreleased
-
-    - Initial package structure.
-      [zopeskel]
-

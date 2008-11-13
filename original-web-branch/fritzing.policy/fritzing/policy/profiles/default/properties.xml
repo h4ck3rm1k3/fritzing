@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<site>
-  <property name="title">Fritzing</property>
-  <property
-    name="description">The Fritzing project helps designers and artists to move their electronic sketches from prototype to product.</property>
-  <property name="email_from_address"
-    type="string">info@fritzing.org</property>
-  <property name="email_from_name" type="string">Fritzing Website</property>
-</site>

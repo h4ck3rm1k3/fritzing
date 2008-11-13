@@ -1,8 +1,0 @@
-Changelog for FritzingTheme
-
-    (name of developer listed in brackets)
-
-FritzingTheme 0.1 - Unreleased
-
-    - Generated skeleton product from DIYPloneStyle 3.0.
-      [generator]

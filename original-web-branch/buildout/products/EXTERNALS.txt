@@ -1,8 +1,0 @@
-#
-# created by: svn propset svn:externals -F ./EXTERNALS.TXT .
-#
-
-# discussion board
-Ploneboard http://svn.plone.org/svn/collective/Products.Ploneboard/trunk/Products/Ploneboard
-SimpleAttachment http://svn.plone.org/svn/collective/Products.SimpleAttachment/trunk/Products/SimpleAttachment
-CMFNotification http://svn.plone.org/svn/collective/CMFNotification/trunk
