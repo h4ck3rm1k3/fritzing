@@ -1,0 +1,30 @@
+#header {
+    background: #360919;
+    color: #fff;
+}
+
+#branding h1 {
+    color: #fff;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    background: #63a183;
+}
+
+a:link, a:visited {
+    color: #93284d;
+	font-weight: normal;    
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a.section:link, a.section:visited {
+	font-weight: bold;    
+}
+
+.object-tools a {
+    font-weight: bold;
+    text-decoration: none;
+}

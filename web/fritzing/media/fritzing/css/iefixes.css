@@ -1,0 +1,21 @@
+#portal-column-two dt.portletHeader { height: 1%;}
+#portal-column-two dt.portletHeader a {position:relative;}
+#portal-column-two dl.portletCalendar dt a.calendarNext {
+    margin-left:56px;
+    top:-5px;
+    padding-top:30px;
+}
+#portal-column-two dl.portletCalendar dt a.calendarPrevious {
+    top:-5px;
+    padding-top:30px;    
+}
+/* avoid peekaboo bug on the stat pulldown */
+ul#contentActionMenus li dt a {
+    position:  relative;
+}
+#region-content ul.formTabs li a {padding: 0;}
+#region-content ul.formTabs li.lastFormTab {padding:0px;}
+#region-content ul.formTabs li.lastFormTab a {padding:0px}
+#region-content ul.formTabs li.firstFormTab {padding:0px}
+#region-content ul.formTabs li.firstFormTab a {padding:0px}
+.livesearchContainer  {padding-top:0; margin-top:1em}

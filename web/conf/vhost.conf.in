@@ -1,0 +1,10 @@
+AddHandler      fcgid-script .fcgi
+
+Alias /media "$basedir/$project/media"
+Alias /admin_media "$basedir/parts/django/django/contrib/admin/media"
+
+RewriteEngine On
+RewriteRule ^/(media.*)$$ /$$1 [QSA,L,PT]
+RewriteRule ^/(admin_media.*)$$ /$$1 [QSA,L,PT]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^/(.*)$$ /django.fcgi/$$1 [QSA,L]

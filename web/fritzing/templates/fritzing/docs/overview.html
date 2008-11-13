@@ -1,0 +1,20 @@
+{% extends "fritzing/base_site.html" %}
+{% load pages_tags %}
+
+{% block page_title %}
+    {% if current_page %}
+        {% show_content current_page "title" %}
+    {% endif %}
+{% endblock page_title %}
+
+{% block teaser %}
+    {% placeholder teaser current_page %}
+{% endblock %}
+
+{% block left_column %}
+    {% placeholder left_column current_page WYMEditor %}
+{% endblock %}
+
+{% block right_column %}
+    {% placeholder right_column current_page WYMEditor %}
+{% endblock %}

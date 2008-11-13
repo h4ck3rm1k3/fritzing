@@ -1,0 +1,118 @@
+{% load pages_tags %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery-cachekey.js"></script>
+        <style type="text/css">
+        /*<![CDATA[*/
+        <!-- @import url({{ MEDIA_URL }}fritzing/css/base-cachekey.css); -->
+        /*]]>*/
+        </style>
+        <link rel="kinetic-stylesheet" type="text/css" href="{{ MEDIA_URL }}fritzing/css/at-cachekey.kss" />
+        <title>
+            {% if current_page %}{% show_content current_page "title" %}{% endif %} — Fritzing
+        </title>
+        <meta content="Learn from circuit examples how to use parts. From &quot;Hello World&quot; to complex hacks. Please note: this page is under heavy development!" name="description" />
+        <!-- Internet Explorer CSS Fixes -->
+        <!--[if IE]>
+        <style type="text/css" media="all">@import url({{ MEDIA_URL }}fritzing/css/IEFixes.css);</style>
+    <![endif]-->
+        <link rel="shortcut icon" type="image/x-icon" href="http://fritzing.org/favicon.ico" />
+        <link rel="home" href="http://fritzing.org" title="Front page" />
+        <link rel="contents" href="http://fritzing.org/sitemap" title="Site Map" />
+        <link rel="search" href="http://fritzing.org/search_form" title="Search this site" /><!-- Disable IE6 image toolbar -->
+        <meta http-equiv="imagetoolbar" content="no" />
+    </head>
+    <body class="section-learning template-folder_listing" dir="ltr">
+        <div id="visual-portal-wrapper">
+            <div id="portal-top">
+                <div id="portal-header">
+                    <p class="hiddenStructure">
+                        <a accesskey="2" href="#documentContent">Skip to content.</a> | <a accesskey="6" href="#portlet-navigation-tree">Skip to navigation</a>
+                    </p>
+                    <a id="portal-logo" accesskey="1" href="/" name="portal-logo"><img src="{{ MEDIA_URL }}fritzing/img/logo.gif" alt="" title="" height="29" width="289" /></a>
+                </div>
+            </div>
+            <div class="visualClear" id="clear-space-before-wrapper-table">
+                <!-- -->
+            </div>
+            <div id="portal-columns">
+                {% block navigation %}
+                <div id="portal-column-one">
+                    <div class="visualPadding">
+                    <dl class="portlet portletNavigationTree">
+                    <dd class="portletItem">
+                    <ul class="navTree navTreeLevel0">
+                    {% for page in pages %}
+                        {% show_menu page %}
+                    {% endfor %}
+                    </ul>
+                    </dd>
+                    </dl>
+                </div>
+                {% endblock navigation %}
+                
+                <div id="portal-column-content">
+                    <div class="">
+                        <div id="region-content" class="documentContent">
+                            <span id="contentTopLeft"></span> <span id="contentTopRight"></span> <a name="documentContent" id="documentContent"></a>
+                            <div id="content">
+                                <h1 class="documentFirstHeading">
+                                    <span class="" id="parent-fieldname-title">
+                                        {% block page_title %}{% endblock %}
+                                    </span>
+                                </h1>
+                                <p class="documentDescription">
+                                    <span class="" id="parent-fieldname-description">
+                                        {% block teaser %}{% endblock %}
+                                    </span>
+                                </p>
+                                <div class="" id="parent-fieldname-text">
+                                    {% block left_column %}{% endblock %}
+                                    {% block right_column %}{% endblock %}
+                                </div>
+                                <div class="relatedItems"></div>
+                                <div class="visualClear">
+                                    <!-- -->
+                                </div>
+                                <div class="documentActions">
+                                    <h5 class="hiddenStructure">
+                                        Document Actions
+                                    </h5>
+                                    <ul>
+                                        <li id="document-action-sendto">
+                                            <a href="#" title="">Send this</a>
+                                        </li>
+                                        <li id="document-action-print">
+                                            <a href="javascript:this.print();" title="">Print this</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="reviewHistory" id="review-history"></div>
+                            </div>
+                            <div class="discussion">
+
+                            </div><span id="contentBottomLeft"></span> <span id="contentBottomRight"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                {% block sidebar %}
+                {% endblock sidebar %}
+            </div>
+            <div class="visualClear" id="clear-space-before-footer">
+                <!-- -->
+            </div>
+            <div id="portal-footer">
+                <a href="http://fritzing.org/contact-info">Contact</a> \ <a href="http://design.fh-potsdam.de/forschung/interaction-design-lab.html">An initiative of the Interaction Design Lab Potsdam</a>
+            </div>
+            <div id="portal-colophon">
+                <acronym title="Copyright">©</acronym> 2007- 2008 <a href="http://design.fh-potsdam.de">University of Applied Sciences Potsdam</a>
+            </div>
+            <div class="visualClear">
+                <!-- -->
+            </div>
+        </div>
+    </body>
+</html>

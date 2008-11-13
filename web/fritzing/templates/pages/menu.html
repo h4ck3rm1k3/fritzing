@@ -1,0 +1,24 @@
+{% load pages_tags cache %}
+
+{% if page.status %}
+<li class="navTreeItem visualNoMarker navTreeFolderish">
+    <div>
+    <a href="{{ page.get_absolute_url }}" class="state-published navTreeFolderish {% ifequal page current_page.parent %}navTreeCurrentItem navTreeCurrentNode{% endifequal %}{% ifequal current_page page %}navTreeCurrentItem navTreeCurrentNode{% endifequal %}" title="">
+        <span>{% show_content page "title" %}</span>
+    </a></div>
+    {% ifequal page current_page %}
+    <ul class="navTree navTreeLevel{{ page.level|add:"1" }}">
+        {% for child in children %}
+            {% show_menu child %}
+        {% endfor %}
+    </ul>
+    {% endifequal %}
+    {% ifequal page current_page.parent %}
+    <ul class="navTree navTreeLevel{{ page.level|add:"1" }}">
+        {% for child in children %}
+            {% show_menu child %}
+        {% endfor %}
+    </ul>
+    {% endifequal %}
+</li>
+{% endif %}

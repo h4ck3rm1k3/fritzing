@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/admin.css" type="text/css" media="screen" charset="utf-8">
+{% endblock %}
+
+{% block title %}{{ title }} | {% trans 'Fritzing.org admin' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'Fritzing.org admin' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
