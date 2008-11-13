@@ -6,17 +6,23 @@
    width=".28in" height=".37in" 
 	  xml:space="preserve">
 
-<rect id="connector0pin" x="0.744" y="-0.001" fill="#B3B3B3" width="2.998" height="3.14"/>
-<rect id="connector1pin" x="20.773" y="-0.002" fill="#B3B3B3" width="2.999" height="3.14"/>
-<rect id="connector2pin" x="0.786" y="29.841" fill="#B3B3B3" width="2.998" height="3.139"/>
-<rect id="connector3pin" x="20.814" y="29.839" fill="#B3B3B3" width="2.999" height="3.139"/>
+<rect id="connector0pin" x="20.6" y="0.0" fill="none" width="3" height="4.25"/>
+<rect id="connector1pin" x="20.6" y="28.75" fill="none" width="3" height="4.25"/>
+<rect id="connector2pin" x="0.6" y="0.0" fill="none" width="3" height="4.25"/>
+<rect id="connector3pin" x="0.6" y="28.75" fill="none" width="3" height="4.25"/>
+
+<rect id="connector0terminal" x="20.6" y="0.0" fill="none" width="3" height="3"/>
+<rect id="connector1terminal" x="20.6" y="30" fill="none" width="3" height="3"/>
+<rect id="connector2terminal" x="0.6" y="0.0" fill="none" width="3" height="3"/>
+<rect id="connector3terminal" x="0.6" y="30" fill="none" width="3" height="3"/>
+
 
 <g id="breadboard" style="display:inline">
 	<g>
-	<polygon fill="#B3B3B3" points="20.651,32.978 20.651,21.485 23.867,21.485 23.867,32.978 	"/>
-	<polygon fill="#B3B3B3" points="0.661,11.491 0.661,-0.001 3.877,-0.001 3.877,11.491 	"/>
-	<polygon fill="#B3B3B3" points="20.651,11.492 20.651,-0.002 23.867,-0.002 23.867,11.492 	"/>
-	<polygon fill="#B3B3B3" points="0.662,32.979 0.662,21.486 3.879,21.486 3.879,32.979 	"/>
+	<polygon fill="#8C8C8C" points="20.58,32.978 20.58,21.485 23.58,21.485 23.58,32.978 		"/>
+	<polygon fill="#8C8C8C" points="0.58,11.491 0.58,-0.001 3.578,-0.001 3.578,11.491 		"/>
+	<polygon fill="#8C8C8C" points="20.58,11.492 20.58,-0.002 23.58,-0.002 23.58,11.492 		"/>
+	<polygon fill="#8C8C8C" points="0.581,32.979 0.581,21.486 3.58,21.486 3.58,32.979 		"/>
 	<rect x="0.006" y="4.23" width="24.518" height="24.519"/>
 	<path fill="#999999" d="M24.523,26.75c0,1.1-0.898,1.999-1.999,1.999H2.005c-1.1,0-1.999-0.899-1.999-1.999V6.228
 		c0-1.099,0.899-1.998,1.999-1.998h20.52c1.101,0,1.999,0.899,1.999,1.998V26.75z"/>

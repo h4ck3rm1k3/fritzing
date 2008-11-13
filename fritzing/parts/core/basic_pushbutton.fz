@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.1201" moduleId="1099ABDE24_ST">
+<module fritzingVersion="0.1.b.1486" moduleId="1099ABDE24_ST">
     <version>1.0</version>
     <title>Pushbutton</title>
-    <date>2008-09-16</date>
     <label>S</label>
+    <date>2008-09-16</date>
     <tags>
         <tag>Pushbutton</tag>
         <tag>button</tag>
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="Default State">Normally Open</property>
         <property name="family">Switch</property>
-        <property name="Stateful?">Momentary</property>
-        <property name="Switching Circuit">SPST</property>
+        <property name="stateful?">Momentary</property>
+        <property name="switching circuit">SPST</property>
+        <property name="default state">Normally Open</property>
     </properties>
-    <taxonomy>discreteParts.switches.pushbutton</taxonomy>
     <description>A generic pushbutton.</description>
     <views>
         <iconView>
@@ -30,18 +29,22 @@
         </breadboardView>
         <schematicView>
             <layers>
-                <layer layerId="schematic" image="schematic/pushbutton.svg"></layer>
+                <layer layerId="schematic" image="schematic/pushbutton4lead.svg"></layer>
             </layers>
         </schematicView>
         <pcbView>
             <layers>
-                <layer layerId="copper0" image="pcb/LED-red-5mmpcb_gen.svg"></layer>
+                <layer layerId="copper0" image="pcb/switch-4lead.svg"></layer>
+                <layer layerId="keepout" image="pcb/switch-4lead.svg"></layer>
+                <layer layerId="soldermask" image="pcb/switch-4lead.svg"></layer>
+                <layer layerId="silkscreen" image="pcb/switch-4lead.svg"></layer>
+                <layer layerId="outline" image="pcb/switch-4lead.svg"></layer>
             </layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="leg3">
-            <description>leg</description>
+        <connector id="connector3" type="male" name="Pin 4">
+            <description>pin 4 is always connected with pin 3</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector3pin"></pin>
@@ -54,8 +57,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="leg0">
-            <description>leg</description>
+        <connector id="connector0" type="male" name="Pin 1">
+            <description>pin 1 is always connected with pin 2</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector0pin"></pin>
@@ -68,8 +71,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="leg1">
-            <description>leg</description>
+        <connector id="connector1" type="male" name="Pin 2">
+            <description>pin 2 is always connected with pin 1</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector1pin"></pin>
@@ -82,8 +85,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="leg2">
-            <description>leg</description>
+        <connector id="connector2" type="male" name="Pin 3">
+            <description>pin 3 is always connected with pin 4</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector2pin"></pin>
@@ -97,4 +100,14 @@
             </views>
         </connector>
     </connectors>
+   	<buses>
+    	<bus id="bus0">
+        	<nodeMember connectorId="connector0" />
+        	<nodeMember connectorId="connector1" />
+		</bus>
+    	<bus id="bus1">
+        	<nodeMember connectorId="connector2" />
+        	<nodeMember connectorId="connector3" />
+		</bus>
+	</buses>
 </module>

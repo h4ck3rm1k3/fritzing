@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.b.1444" moduleId="1001AAACOptocoupler">
+<module fritzingVersion="0.1.b.1486" moduleId="1001AAACOptocoupler">
     <author>Dirk van Oosterbosch</author>
     <title>Optocoupler</title>
     <label>IC</label>
@@ -40,7 +40,7 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector3" type="female" name="Pin 4">
+        <connector id="connector3" type="male" name="Pin 4">
             <description>Emitter</description>
             <views>
                 <breadboardView>
@@ -54,7 +54,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="female" name="Pin 5">
+        <connector id="connector4" type="male" name="Pin 5">
             <description>Collector</description>
             <views>
                 <breadboardView>
@@ -68,7 +68,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector5" type="female" name="Pin 6">
+        <connector id="connector5" type="male" name="Pin 6">
             <description>Base</description>
             <views>
                 <breadboardView>
@@ -82,7 +82,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="female" name="Pin 1">
+        <connector id="connector0" type="male" name="Pin 1">
             <description>Anode</description>
             <views>
                 <breadboardView>
@@ -96,7 +96,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="female" name="Pin 2">
+        <connector id="connector1" type="male" name="Pin 2">
             <description>Cathode</description>
             <views>
                 <breadboardView>
@@ -110,7 +110,7 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="female" name="Pin 3">
+        <connector id="connector2" type="male" name="Pin 3">
             <description>Not Connected</description>
             <views>
                 <breadboardView>
