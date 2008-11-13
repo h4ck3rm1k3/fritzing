@@ -1,7 +1,0 @@
-# Tracing options for the Fritzing.diagram plug-in
-
-# Common issues
-Fritzing.diagram/debug=false
-
-# Visual IDs
-Fritzing.diagram/debug/visualID=false
