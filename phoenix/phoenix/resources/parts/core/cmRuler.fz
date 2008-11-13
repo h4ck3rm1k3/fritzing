@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module uri="http://fritzing.org/modules/npn-Transistor" moduleId="RulerModuleID">
+    <version>1.1</version>
+    <author>Mariano Crowe</author>
+    <title>10 cm Ruler</title>
+    <date>2008-08-21</date>
+    <tags>
+    	<tag>ruler</tag>
+    	<tag>cm</tag>
+    </tags>
+    <properties>
+    	<property name="family">Ruler</property>
+    </properties>
+    <description>A 10cm ruler</description>
+    <views>
+        <defaultUnits>cmil</defaultUnits>
+        <iconView>
+            <layers>
+                <layer layerId="icon" image="icon/rulericon.svg" />
+            </layers>
+        </iconView>
+        <breadboardView>
+            <layers>
+                <layer layerId="breadboardRuler" image="breadboard/ruler.svg" />
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers>
+                <layer layerId="schematicRuler" image="breadboard/ruler.svg"/>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers>
+                <layer layerId="pcbRuler" image="breadboard/ruler.svg" />
+            </layers>
+        </pcbView>
+    </views>
+</module>

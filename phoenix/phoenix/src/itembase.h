@@ -1,0 +1,169 @@
+/*
+ * (c) Fachhochschule Potsdam
+ */
+
+#ifndef ITEMBASE_H
+#define ITEMBASE_H
+
+
+#include <QHash>
+#include <QXmlStreamWriter>
+#include <QPointF>
+#include <QSize>
+#include <QHash>
+#include <QGraphicsSceneHoverEvent>
+#include <QGraphicsItem>
+
+#include "viewgeometry.h"
+#include "viewlayer.h"
+#include "misc.h"
+#include "graphicssvglineitem.h"
+#include "partinstancestuff.h"
+
+class ItemBase : public GraphicsSvgLineItem
+{
+Q_OBJECT
+
+public:
+   enum ViewIdentifier {
+    	IconView,
+    	BreadboardView,
+    	SchematicView,
+    	PCBView,
+    	ViewCount
+   	};
+
+	static QString rulerModuleIDName;
+	static QString breadboardModuleIDName;
+	static QString & viewIdentifierName(ViewIdentifier);
+	static QString & viewIdentifierXmlName(ViewIdentifier);
+	static QString & viewIdentifierNaturalName(ViewIdentifier);
+	static void initNames();
+	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
+	static ItemBase * extractItemBase(QGraphicsItem * item);
+	static ViewLayer::ViewLayerID defaultConnectorLayer(ItemBase::ViewIdentifier viewId);
+
+
+public:
+	ItemBase(class ModelPart*, ItemBase::ViewIdentifier, const ViewGeometry &, long id, bool topLevel, QMenu * itemMenu);
+	virtual ~ItemBase();
+
+	qreal z();
+	virtual void saveGeometry() = 0;
+	ViewGeometry & getViewGeometry();
+	virtual bool itemMoved() = 0;
+	void setSize(QSize size);
+	QSize size();
+	qint64 id();
+	class ModelPart * modelPart();
+	void setModelPart(class ModelPart *);
+	class ModelPartStuff * modelPartStuff();
+	virtual void writeXml(QXmlStreamWriter &) {}
+	virtual void saveInstance(QXmlStreamWriter &);
+	virtual void saveInstanceLocation(QXmlStreamWriter &) = 0;
+	virtual void writeGeometry(QXmlStreamWriter &);
+	virtual void moveItem(ViewGeometry &) = 0;
+	virtual void setItemPos(QPointF & pos);
+	virtual void rotateItem(qreal degrees) = 0;
+	virtual void removeLayerKin();
+	ItemBase::ViewIdentifier viewIdentifier();
+	QString & viewIdentifierName();
+	ViewLayer::ViewLayerID viewLayerID();
+	void setViewLayerID(ViewLayer::ViewLayerID, const LayerHash & viewLayers);
+	void setViewLayerID(const QString & layerName, const LayerHash & viewLayers);
+	bool topLevel();
+	virtual void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
+	void collectConnectors(QMultiHash<class ConnectorItem *, class ConnectorItem *> & connectorHash, QGraphicsScene * scene);
+	virtual void setHidden(bool hidden);
+	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
+	virtual void updateConnections(ConnectorItem *);
+	virtual void updateConnections();
+	const QString & title();
+	bool getVirtual();
+	const QHash<QString, class Bus *> & buses();
+	void addBusConnectorItem(class Bus *, class BusConnectorItem *);
+	void removeBusConnectorItem(class Bus * bus);
+	class BusConnectorItem * busConnectorItem(Bus *);
+	class BusConnectorItem * busConnectorItem(const QString & busID);
+	ConnectorItem * busConnectorItemCast(const QString & busID);
+	int itemType();					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
+	bool sticky();
+	void addSticky(ItemBase *, bool stickem);
+	ItemBase * stuckTo();
+	QHash<ItemBase *, QPointF> & sticking();
+	bool alreadySticking(ItemBase * itemBase);
+	ConnectorItem * anyConnectorItem();
+	bool isConnectedTo(ItemBase * other);
+	virtual bool stickyEnabled(ItemBase * stickTo);
+
+	virtual void setChained(ConnectorItem * item, bool chained);
+	virtual void setChained(const QString & connectorItemName, bool chained);
+	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
+	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
+	virtual void connectorHover(class ConnectorItem *, ItemBase *, bool hovering);
+	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	virtual void connectionChange(ConnectorItem *);
+	virtual void connectedMoved(ConnectorItem * from, ConnectorItem * to);
+	virtual ItemBase * layerKinChief() = 0;
+	virtual void sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
+	virtual void findConnectorsUnder() = 0;
+	virtual ConnectorItem* newConnectorItem(class Connector *connector);
+
+	virtual void setInstanceTitleAndTooltip(const QString& text);
+	QString instanceTitle();
+	QString label();
+	virtual void updateTooltip();
+
+	void setTooltip();
+	void removeTooltip();
+
+public slots:
+	void setInstanceTitle(const QString &title);
+
+signals:
+	void posChangedSignal();
+
+public:
+	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
+	static qint64 getNextID();
+
+
+protected:
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event );
+	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
+	ConnectorItem * findConnectorUnder(ConnectorItem* , ConnectorItem * lastUnderConnector, bool useTerminalPoint);
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+
+	void setInstanceTitleTooltip(const QString& text);
+	void setDefaultTooltip();
+
+protected slots:
+	void autoScrollTimeout();
+
+protected:
+ 	QSize m_size;
+	qint64 m_id;
+	ViewGeometry m_viewGeometry;
+	class ModelPart* m_modelPart;
+	ViewIdentifier m_viewIdentifier;
+	ViewLayer::ViewLayerID m_viewLayerID;
+	int m_connectorHoverCount;
+	bool m_topLevel;
+	bool m_hidden;
+	QHash<class Bus *, class BusConnectorItem *> m_busConnectorItems;
+	bool m_sticky;
+	QHash<ItemBase *, QPointF> m_stickyList;
+	QMenu *m_itemMenu;
+
+
+protected:
+	static long nextID;
+	static QHash <ViewIdentifier, StringTriple * > names;
+
+};
+#endif

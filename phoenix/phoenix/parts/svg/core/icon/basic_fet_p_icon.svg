@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   baseProfile="tiny"
+   width="32"
+   height="32"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="basic_fet_p_icon.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <metadata
+     id="metadata2980">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2978">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 26.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 26.5 : 1"
+       inkscape:persp3d-origin="16 : 17.666667 : 1"
+       id="perspective2982" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-height="726"
+     inkscape:window-width="1007"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showgrid="false"
+     inkscape:zoom="9.3207547"
+     inkscape:cx="16"
+     inkscape:cy="9.3340081"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:current-layer="svg2" />
+  <g
+     id="icon"
+     style="display:inline"
+     transform="matrix(0.4892698,0,0,0.4892698,8.3,-6.9430421e-4)">
+    <g
+       id="g2913">
+      <g
+         id="g10012">
+        <rect
+           x="6.164"
+           y="39.192001"
+           width="2.145"
+           height="26.212999"
+           id="rect2916"
+           style="fill:#b3b3b3" />
+        <rect
+           x="14.677"
+           y="39.192001"
+           width="2.145"
+           height="26.212999"
+           id="rect2918"
+           style="fill:#b3b3b3" />
+        <rect
+           x="23.191"
+           y="39.192001"
+           width="2.145"
+           height="26.212999"
+           id="rect2920"
+           style="fill:#b3b3b3" />
+        <polygon
+           points="0,3.427 0,14.785 2.98,14.785 2.98,0 0,3.427 "
+           id="polygon2922"
+           style="fill:#cccccc" />
+        <polygon
+           points="31.5,3.427 28.52,0 28.52,14.785 31.5,14.785 31.5,3.427 "
+           id="polygon2924"
+           style="fill:#999999" />
+        <linearGradient
+           id="SVGID_1_"
+           gradientUnits="userSpaceOnUse"
+           x1="28.3813"
+           y1="43.0439"
+           x2="2.8413"
+           y2="43.0439"
+           gradientTransform="matrix(1,0,0,-1,0.1377,52.2441)">
+          <stop
+             offset="0"
+             style="stop-color:#FFFFFF"
+             id="stop2927" />
+          <stop
+             offset="1"
+             style="stop-color:#000000"
+             id="stop2929" />
+        </linearGradient>
+        <path
+           d="M 2.98,0 L 2.98,18.403 L 28.52,18.403 L 28.52,0 L 2.98,0 z M 15.75,11.517 C 12.047,11.517 9.046,9.416 9.046,6.824 C 9.046,4.232 12.047,2.131 15.75,2.131 C 19.453,2.131 22.454,4.233 22.454,6.824 C 22.454,9.415 19.453,11.517 15.75,11.517 z"
+           id="path2931"
+           style="fill:url(#SVGID_1_)" />
+        <polygon
+           points="10.216,47.829 8.309,48.68 6.165,48.68 4.257,47.829 4.257,37.459 10.216,37.459 10.216,47.829 "
+           id="polygon2933"
+           style="fill:#b3b3b3" />
+        <polygon
+           points="18.729,47.829 16.822,48.68 14.679,48.68 12.77,47.829 12.77,37.459 18.729,37.459 18.729,47.829 "
+           id="polygon2935"
+           style="fill:#b3b3b3" />
+        <polygon
+           points="27.243,47.829 25.335,48.68 23.192,48.68 21.284,47.829 21.284,37.459 27.243,37.459 27.243,47.829 "
+           id="polygon2937"
+           style="fill:#b3b3b3" />
+        <rect
+           y="26.413"
+           width="31.5"
+           height="18.921"
+           id="rect2939"
+           x="0"
+           style="fill:#1a1a1a" />
+        <linearGradient
+           id="SVGID_2_"
+           gradientUnits="userSpaceOnUse"
+           x1="4.2251"
+           y1="14.3589"
+           x2="-0.1382"
+           y2="14.3589"
+           gradientTransform="matrix(1,0,0,-1,0.1377,52.2441)">
+          <stop
+             offset="0"
+             style="stop-color:#4D4D4D"
+             id="stop2942" />
+          <stop
+             offset="0.0238"
+             style="stop-color:#4B4B4B"
+             id="stop2944" />
+          <stop
+             offset="0.3557"
+             style="stop-color:#373737"
+             id="stop2946" />
+          <stop
+             offset="0.6835"
+             style="stop-color:#2A2A2A"
+             id="stop2948" />
+          <stop
+             offset="1"
+             style="stop-color:#262626"
+             id="stop2950" />
+        </linearGradient>
+        <path
+           d="M 0,34.831 L 0,40.94 C 2.409,40.94 4.363,39.573 4.363,37.885 C 4.363,36.199 2.409,34.831 0,34.831 z"
+           id="path2952"
+           style="fill:url(#SVGID_2_)" />
+        <linearGradient
+           id="SVGID_3_"
+           gradientUnits="userSpaceOnUse"
+           x1="26.998501"
+           y1="14.3584"
+           x2="31.361799"
+           y2="14.3584"
+           gradientTransform="matrix(1,0,0,-1,0.1377,52.2441)">
+          <stop
+             offset="0"
+             style="stop-color:#333333"
+             id="stop2955" />
+          <stop
+             offset="1"
+             style="stop-color:#000000"
+             id="stop2957" />
+        </linearGradient>
+        <path
+           d="M 31.5,34.831 C 29.091,34.831 27.137,36.199 27.137,37.886 C 27.137,39.572 29.091,40.941 31.5,40.941 L 31.5,34.831 z"
+           id="path2959"
+           style="fill:url(#SVGID_3_)" />
+        <rect
+           y="22.454"
+           width="31.5"
+           height="3.9590001"
+           id="rect2961"
+           x="0" />
+        <rect
+           y="17.559999"
+           width="31.5"
+           height="4.895"
+           id="rect2963"
+           x="0"
+           style="fill:#333333" />
+        <rect
+           x="2.98"
+           width="25.540001"
+           height="3.618"
+           id="rect2965"
+           y="0"
+           style="fill:#b2b2b2" />
+        <path
+           d="M 28.52,2.774 L 2.98,2.774 L 0,6.202 L 0,17.56 L 31.5,17.56 L 31.5,6.202 L 28.52,2.774 z M 15.75,14.293 C 12.047,14.293 9.046,12.191 9.046,9.599 C 9.046,7.007 12.047,4.907 15.75,4.907 C 19.453,4.907 22.454,7.008 22.454,9.599 C 22.454,12.19 19.453,14.293 15.75,14.293 z"
+           id="path2967"
+           style="fill:#8c8c8c" />
+        <path
+           d="M 9.628,28.02 L 9.628,28.659 L 7.074,28.659 L 7.074,29.298 L 8.99,29.298 L 8.99,29.937 L 7.074,29.937 L 7.074,31.214 L 5.797,31.214 L 5.797,28.02 L 9.628,28.02 z"
+           id="path2969"
+           style="fill:#6d6d6d" />
+        <path
+           d="M 14.097,28.02 L 14.097,28.659 L 11.543,28.659 L 11.543,29.298 L 13.459,29.298 L 13.459,29.937 L 11.543,29.937 L 11.543,30.576 L 14.097,30.576 L 14.097,31.215 L 10.266,31.215 L 10.266,28.02 L 14.097,28.02 z"
+           id="path2971"
+           style="fill:#6d6d6d" />
+        <path
+           d="M 14.736,28.658 L 14.736,28.02 L 18.566,28.02 L 18.566,28.659 L 17.29,28.659 L 17.29,31.214 L 16.014,31.214 L 16.014,28.659 L 14.736,28.659 L 14.736,28.658 z"
+           id="path2973"
+           style="fill:#6d6d6d" />
+        <path
+           d="M 24.505,28.664 L 25.139,28.664 L 25.139,29.932 L 24.505,29.932 L 24.505,30.567 L 22.605,30.567 L 22.605,31.202 L 21.336,31.202 L 21.336,28.032 L 24.505,28.032 L 24.505,28.664 L 24.505,28.664 z M 23.872,28.664 L 22.605,28.664 L 22.605,29.932 L 23.872,29.932 L 23.872,28.664 z"
+           id="path2975"
+           style="fill:#6d6d6d" />
+      </g>
+    </g>
+  </g>
+</svg>

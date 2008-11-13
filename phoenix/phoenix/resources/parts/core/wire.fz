@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module uri="http://fritzing.org/modules/wire" moduleId="WireModuleID">
+	<version>1.1</version> 
+	<author>Brendan Howell</author>
+	<title>Wire</title>
+	<date>2008-07-28</date>
+	<tags>
+		<tag>wire</tag>
+		<tag>fritzing core</tag>
+	</tags>
+	<properties>
+		<property name="family">wire</property>
+	</properties>
+	<taxonomy>discreteParts.wire.wire.wire</taxonomy>
+	<description>A generic wire</description>
+	<views>
+	    <defaultUnits>cmil</defaultUnits>
+	    <iconView>
+			<layers>
+				<layer layerId="icon" image="icon/wireicon.svg"/>
+			</layers>
+		</iconView>
+    	<breadboardView>
+			<layers>
+				<layer layerId="breadboardWire" image="breadboard/wire.svg"/>
+			</layers>
+    	</breadboardView>
+    	<schematicView>
+			<layers>
+				<layer layerId="schematicWire" image="breadboard/wire.svg"/>
+			</layers>
+    	</schematicView>
+    	<pcbView>
+			<layers>
+				<layer layerId="ratsnest" image="breadboard/wire.svg"/>
+				<layer layerId="copper0" image="breadboard/wire.svg"/>
+				<layer layerId="jumperwires" image="breadboard/wire.svg"/>
+			</layers>
+    	</pcbView>
+    </views>
+	
+	<connectors>
+    	<connector id="connector0" name="wireConnector0" type="wire">
+    	    <description>wire end</description>
+    	    <views>
+        	    <breadboardView>
+			<pin layer="breadboardWire" svgId="connector0pin" />
+        	    </breadboardView>
+        	    <schematicView>
+			<pin layer="schematicWire" svgId="connector0pin" />
+        	    </schematicView>
+        	    <pcbView>
+			<pin layer="ratsnest" svgId="connector0pin" />
+			<pin layer="copper0" svgId="connector0pin" />
+			<pin layer="jumperwires" svgId="connector0pin" />
+        	    </pcbView>
+    	    </views>
+    	</connector>
+    	<connector id="connector1" name="wireConnector1" type="wire">
+    	    <description>the other end of the wire</description>
+    	    <views>
+        	    <breadboardView>
+			<pin layer="breadboardWire" svgId="connector1pin" />
+        	    </breadboardView>
+        	    <schematicView>
+			<pin layer="schematicWire" svgId="connector1pin" />
+        	    </schematicView>
+        	    <pcbView>
+			<pin layer="ratsnest" svgId="connector1pin" />
+			<pin layer="copper0" svgId="connector1pin" />
+			<pin layer="jumperwires" svgId="connector1pin" />
+        	    </pcbView>
+    	    </views>
+    	</connector>
+	</connectors>
+	
+	<!-- <buses>
+	    <bus id="bus0">
+	        <nodeMember connectorId="connector0" />
+	        <nodeMember connectorId="connector1" />
+	    </bus>
+	</buses> -->
+</module>

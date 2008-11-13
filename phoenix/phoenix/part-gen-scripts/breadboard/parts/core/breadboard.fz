@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module uri="http://fritzing.org/modules/breadboard" moduleId="1234ABFC23">
+    <version>1.0</version>
+    <author>Brendan Howell and Jonathan Cohen</author>
+    <title>Generic Bajillion Hole Breadboard</title>
+    <date>2008-09-02</date>
+    <tags>
+    	<tag>breadboard</tag>
+		<tag>fritzing core</tag>
+	</tags>
+    <properties>
+    	<property name="p1">Breadboard</property>
+    	<property name="p2">Breadboard-nxn</property>
+    </properties>
+    <taxonomy>prototyping.breadboard.breadboard.breadboard0</taxonomy>
+    <description>A standard n-hole breadboard</description>
+    <views>
+        <image composited="false" file="breadboard/part/breadboard.svg" />
+        <defaultUnits>cmil</defaultUnits>
+        <iconView>
+            <layers>
+                <layer layerId="icon" image="icon/breadboardicon.svg"/>
+            </layers>
+        </iconView>
+        <breadboardView>
+            <layers>
+                <layer layerId="breadboardbreadboard" image="breadboard/breadboard.svg"/>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers>
+                <layer layerId="unknown" image="breadboard/breadboard.svg"/>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers>
+                <layer layerId="unknown" image="breadboard/breadboard.svg"/>
+            </layers>
+        </pcbView>
+    </views>
+
+    <connectors>
+    </connectors>
+
+    <buses>
+    </buses>
+</module>

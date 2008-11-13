@@ -1,0 +1,14 @@
+<Element units="mils">
+  <Pin units="mils" Name="In" Thickness="72" NFlags="0x101" Drill="42" aY="200" aX="50">
+  </Pin>
+  <Pin units="mils" Name="Com" Thickness="72" NFlags="0x01" Drill="42" aY="200" aX="150">
+  </Pin>
+  <Pin units="mils" Name="Out" Thickness="72" NFlags="0x01" Drill="42" aY="200" aX="250">
+  </Pin>
+  <ElementArc units="mils" Height="100" Width="100" DeltaAngle="270" StartAngle="315" Y="200" X="150" Thickness="10">
+  </ElementArc>
+  <ElementLine units="mils" Y1="130" X2="220" X1="80" Thickness="10" Y2="130">
+  </ElementLine>
+  <Mark units="mils" Y="50" X="200">
+  </Mark>
+</Element>

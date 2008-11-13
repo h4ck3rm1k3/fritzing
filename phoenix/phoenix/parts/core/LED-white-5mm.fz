@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.1.beta.1407" moduleId="1902whiteABDC24">
+    <version>1.1</version>
+    <author>Stefan Hermann</author>
+    <title>white LED - 5mm</title>
+    <label>LED</label>
+    <date>2008-10-10</date>
+    <tags>
+        <tag>LED</tag>
+        <tag>white LED</tag>
+        <tag>indicator</tag>
+        <tag>fritzing core</tag>
+    </tags>
+    <properties>
+        <property name="package">T1.75 (5mm)</property>
+        <property name="family">LED</property>
+        <property name="p3">diode 1.8V</property>
+        <property name="color">white</property>
+    </properties>
+    <description>A generic white LED (~1.8V)</description>
+    <views>
+        <iconView>
+            <layers>
+                <layer layerId="icon" image="icon/LED-white-5mmicon.svg"></layer>
+            </layers>
+        </iconView>
+        <breadboardView>
+            <layers>
+                <layer layerId="breadboard" image="breadboard/LED-5mm-white.svg"></layer>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers>
+                <layer layerId="schematic" image="schematic/led.svg"></layer>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers>
+                <layer layerId="copper0" image="pcb/T1.75_LED.svg"></layer>
+                <layer layerId="keepout" image="pcb/T1.75_LED.svg"></layer>
+                <layer layerId="soldermask" image="pcb/T1.75_LED.svg"></layer>
+                <layer layerId="silkscreen" image="pcb/T1.75_LED.svg"></layer>
+                <layer layerId="outline" image="pcb/T1.75_LED.svg"></layer>
+            </layers>
+        </pcbView>
+    </views>
+    <connectors>
+        <connector id="connector0" type="male" name="cathode">
+            <description>cathode pin</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></pin>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></pin>
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector0pad"></pin>
+                    <pin layer="copper0" svgId="connector0pad"></pin>
+                </pcbView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector0pad"></pin>
+                    <pin layer="copper0" svgId="connector0pad"></pin>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector1" type="male" name="anode">
+            <description>anode pin</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></pin>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></pin>
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector1pad"></pin>
+                    <pin layer="copper0" svgId="connector1pad"></pin>
+                </pcbView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector1pad"></pin>
+                    <pin layer="copper0" svgId="connector1pad"></pin>
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>

@@ -1,0 +1,30 @@
+<Element units="mils">
+  <Pin units="mils" Name="Com" Thickness="90" NFlags="0x101" Drill="60" aY="200" aX="100">
+  </Pin>
+  <Pin units="mils" Name="In" Thickness="90" NFlags="0x01" Drill="60" aY="200" aX="200">
+  </Pin>
+  <Pin units="mils" Name="Out" Thickness="90" NFlags="0x01" Drill="60" aY="200" aX="300">
+  </Pin>
+  <ElementLine units="mils" Y1="80" X2="400" X1="0" Thickness="20" Y2="80">
+  </ElementLine>
+  <ElementLine units="mils" Y1="80" X2="400" X1="400" Thickness="20" Y2="260">
+  </ElementLine>
+  <ElementLine units="mils" Y1="260" X2="0" X1="400" Thickness="20" Y2="260">
+  </ElementLine>
+  <ElementLine units="mils" Y1="260" X2="0" X1="0" Thickness="20" Y2="80">
+  </ElementLine>
+  <ElementLine units="mils" Y1="80" X2="400" X1="0" Thickness="20" Y2="80">
+  </ElementLine>
+  <ElementLine units="mils" Y1="80" X2="400" X1="400" Thickness="20" Y2="140">
+  </ElementLine>
+  <ElementLine units="mils" Y1="140" X2="0" X1="400" Thickness="20" Y2="140">
+  </ElementLine>
+  <ElementLine units="mils" Y1="140" X2="0" X1="0" Thickness="20" Y2="80">
+  </ElementLine>
+  <ElementLine units="mils" Y1="80" X2="130" X1="130" Thickness="10" Y2="140">
+  </ElementLine>
+  <ElementLine units="mils" Y1="80" X2="270" X1="270" Thickness="10" Y2="140">
+  </ElementLine>
+  <Mark units="mils" Y="100" X="200">
+  </Mark>
+</Element>

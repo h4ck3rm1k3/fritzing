@@ -1,0 +1,101 @@
+/*
+ * (c) Fachhochschule Potsdam
+ */
+
+#include "../debugdialog.h"
+#include "../htmlinfoview.h"
+#include "../paletteitembase.h"
+#include "../layerattributes.h"
+
+#include "partsbinlistview.h"
+
+PartsBinListView::PartsBinListView( QWidget * parent ) : QListWidget( parent ) {
+	m_infoView = NULL;
+	m_hoverItem = NULL;
+	m_pixmap = NULL;
+	setMouseTracking( true );
+	setSpacing(2);
+	setIconSize(QSize(16,16));
+}
+PartsBinListView::~PartsBinListView() {
+	delete m_pixmap;
+}
+
+void PartsBinListView::doClear() {
+	clear();
+}
+
+void PartsBinListView::setItemAux(ModelPart * modelPart) {
+	if (modelPart->modelPartStuff() == NULL) return;
+	if (modelPart->itemType() == ModelPart::Module) {
+		// don't want the empty root to appear in the view
+		return;
+	}
+
+	QListWidgetItem * lwi = new QListWidgetItem ( modelPart->modelPartStuff()->title(), this );
+	lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
+
+	LayerAttributes layerAttributes;
+	QSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::IconView, ViewLayer::Icon, layerAttributes);
+	if (renderer != NULL) {
+		QPixmap pixmap(iconSize());   // eventually shrink this down to something or other reasonable
+		pixmap.fill(Qt::transparent);
+		QPainter painter(&pixmap);
+		renderer->render(&painter);
+		painter.end();
+		lwi->setIcon(QIcon(pixmap));
+		lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
+	}
+
+	this->addItem(lwi);
+}
+
+void PartsBinListView::mouseMoveEvent ( QMouseEvent * event ) {
+	if (m_infoView == NULL) return;
+
+	QListWidgetItem * item = itemAt(event->pos());
+	if (item == m_hoverItem) {
+		// no change
+		return;
+	}
+
+	if (m_hoverItem != NULL) {
+		ModelPart * modelPart = m_hoverItem->data(Qt::UserRole).value<ModelPart *>();
+		if (modelPart != NULL) {
+			m_infoView->hoverLeaveItem(modelPart);
+		}
+	}
+
+	m_hoverItem = item;
+	if (item == NULL) {
+		return;
+	}
+
+	ModelPart * modelPart = item->data(Qt::UserRole).value<ModelPart *>();
+	if (modelPart == NULL) return;
+
+	delete m_pixmap;
+	m_pixmap = new QPixmap(m_hoverItem->icon().pixmap(16));
+	m_infoView->hoverEnterItem(modelPart, swappingEnabled(), m_pixmap);
+}
+
+
+void PartsBinListView::mousePressEvent(QMouseEvent *event) {
+	QListWidget::mousePressEvent(event);
+
+	QListWidgetItem * current = currentItem ();
+	if (current == NULL) return;
+
+	ModelPart * modelPart = current->data(Qt::UserRole).value<ModelPart *>();
+	if (modelPart == NULL) return;
+
+	mousePressOnItem(modelPart->moduleID(), iconSize());
+}
+
+void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
+	m_infoView = infoView;
+}
+
+void PartsBinListView::setModel(PaletteModel *model) {
+	m_model = model;
+}

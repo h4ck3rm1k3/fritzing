@@ -1,0 +1,94 @@
+body {
+	margin: 0px;
+	padding: 0px 3px;
+	font-size: 10px;
+}
+
+h1 {
+	margin: 0px 3px 2px 3px;
+
+	font-size: 16px;
+	font-weight: bold;
+	color: rgb(87,87,87);
+}
+
+.parttitle {
+	position: relative;
+	margin: 2px 3px;
+}
+
+.parttitle img {
+	background-color: rgb(205,205,210);
+}
+
+.parttitle h2 {
+	display: inline;
+	position: relative;
+	top: -0.4em;
+	margin-left: 1em;
+
+	font-size: 10px;
+	font-weight: normal;
+	color: rgb(87,87,87);
+}
+
+.parttitle p {
+	margin-top: -1.7em;
+	text-align: right;
+
+	font-size: 10px;
+	font-weight: normal;
+	color: rgb(87,87,87);
+}
+
+table {
+	width: 100%;
+	margin: 3px 0px;
+	/* padding: 0px; */
+	border-spacing: 0px;
+	/* border-collapse: collapse; */
+
+	border: 1px solid rgb(217,217,217);
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+
+	font-size: 11px;
+}
+
+tr {
+}
+
+td {
+	margin: 0px;
+	padding: 1px 2px 1px 4px;
+	overflow: hidden;
+
+	border-bottom: 1px solid rgb(167,167,167);
+
+	/* applies to the values mainly
+	   labels get different styles below */
+	font-weight: normal;
+	color: rgb(0,0,0);
+}
+
+.subhead {
+	padding: 1px 4px;
+	border: 0px;
+	font-weight: bold;
+	color: rgb(84,24,44);
+}
+
+.label {
+	width: 6em;
+	overflow: hidden;
+
+	color: rgb(87,87,87);
+}
+
+h1:hover {
+	background-color: rgb(200,200,200);
+}
+tr:hover .subhead, tr:hover td {
+	background-color: transparent;
+}
+

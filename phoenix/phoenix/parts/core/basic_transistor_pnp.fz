@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.1.1255" moduleId="1234DBDC11">
+    <version>1.1</version>
+    <author>Stefan Hermann</author>
+    <title>pnp-Transistor</title>
+    <label>Q</label>
+    <date>2008-10-10</date>
+    <tags>
+        <tag>pnp</tag>
+        <tag>transistor</tag>
+        <tag>signal transistor</tag>
+        <tag>aplifier</tag>
+        <tag>fritzing core</tag>
+    </tags>
+    <properties>
+        <property name="package">TO92</property>
+        <property name="bjt type">Small Signal Transistor</property>
+        <property name="family">Bipolar Transistor</property>
+        <property name="doping">pnp</property>
+    </properties>
+    <description>A standard pnp-transistor</description>
+    <views>
+        <iconView>
+            <layers>
+                <layer layerId="icon" image="icon/basic_transistor_pnpicon.svg"></layer>
+            </layers>
+        </iconView>
+        <breadboardView>
+            <layers>
+                <layer layerId="breadboard" image="breadboard/basic_transistor_pnp.svg"></layer>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers>
+                <layer layerId="schematic" image="schematic/basic_transistor_pnp.svg"></layer>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers>
+                <layer layerId="copper0" image="pcb/to92.svg"></layer>
+                <layer layerId="silkscreen" image="pcb/to92.svg"></layer>
+            </layers>
+        </pcbView>
+    </views>
+    <connectors>
+        <connector id="connector0" type="male" name="emmitter">
+            <description>emitter</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></pin>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></pin>
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector0pad"></pin>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector1" type="male" name="base">
+            <description>base</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></pin>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></pin>
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector1pad"></pin>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector2" type="male" name="collector">
+            <description>collector</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"></pin>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector2pin" terminalId="connector2terminal"></pin>
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector2pad"></pin>
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>

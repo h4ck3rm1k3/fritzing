@@ -1,0 +1,109 @@
+/*
+ * (c) Fachhochschule Potsdam
+ */
+
+#ifndef MODELPART_H
+#define MODELPART_H
+
+#include <QString>
+#include <QPointF>
+#include <QSize>
+#include <QGraphicsItem>
+#include <QDomDocument>
+#include <QTextStream>
+#include <QXmlStreamWriter>
+#include <QHash>
+#include <QList>
+
+#include "itembase.h"
+#include "modelpartstuff.h"
+#include "connector.h"
+
+class ModelPart : public QObject
+{
+	Q_OBJECT
+
+public:
+	enum ItemType {
+		 Part,
+		 Wire,
+		 Breadboard,
+		 Module,
+		 Unknown
+	};
+
+public:
+	ModelPart(QDomDocument *, const QString& path, ItemType type);
+	ModelPart(ItemType type = ModelPart::Module);
+	~ModelPart();
+
+	ItemType itemType() const { return m_type; };
+	void setItemType(ItemType);
+	const QString & moduleID();
+	void copy(ModelPart *, bool doConns=false);
+	void copyNew(ModelPart *);
+	void copyStuff(ModelPart * modelPart);
+	ModelPartStuff * modelPartStuff();
+	void setModelPartStuff(ModelPartStuff *modelPartStuff);
+	PartInstanceStuff *partInstanceStuff();
+	void setPartInstanceStuff(PartInstanceStuff *partInstanceStuff);
+	void saveParts(QTextStream & textStream, QHash<QString, ModelPartStuff *> & mpsList);
+	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition);
+	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition);
+	void addViewItem(ItemBase *);
+	void removeViewItem(ItemBase *);
+	ItemBase * viewItem(QGraphicsScene * scene);
+	void initConnectors(bool force=false);
+	const QHash<QString, Connector *> & connectors();
+	long modelIndex();
+	void setModelIndex(long index);
+	void initConnections(QHash<long, ModelPart *> &);
+	void setInstanceDomElement(const QDomElement &);
+	const QDomElement & instanceDomElement();
+	Connector * getConnector(const QString & id);
+
+	static const QString & itemTypeName(ModelPart::ItemType);
+	static const QString & itemTypeName(int);
+	static void initNames();
+	const QString & title();
+	const QStringList & tags();
+	const QHash<QString,QString> & properties();
+	const QHash<QString, class Bus *> & buses();
+
+	class Bus * bus(const QString & busID);
+	bool ignoreTerminalPoints();
+
+	bool isCore();
+	void setCore(bool core);
+
+	bool isValid();
+
+	QList<ModelPart*> getAllNonCoreParts();
+
+protected:
+	void writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue);
+	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QStringList &values, QString childTag);
+	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QHash<QString,QString> &values, QString childTag, QString attrName);
+
+	QList<ItemBase *> m_viewItems;
+
+	ItemType m_type;
+	ModelPartStuff *m_modelPartStuff;
+	PartInstanceStuff *m_partInstanceStuff;
+	QHash<QString, Connector *> m_connectorHash;
+	QHash<QString, class Bus *> m_busHash;
+	long m_index;						// only used at save time to identify model parts in the xml
+	QDomElement m_instanceDomElement;	// only used at load time (so far)
+
+	bool m_core;
+	bool m_valid;
+
+	static QHash<ItemType, QString> itemTypeNames;
+	static long nextIndex;
+
+
+};
+
+Q_DECLARE_METATYPE( ModelPart * );			// so we can stash them in a QVariant
+
+#endif

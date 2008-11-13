@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module uri="http://fritzing.org/modules/potentiometer" moduleId="3234DBDC00">
+    <version>1.1</version>
+    <author>Stefan Hermann</author>
+    <title>Basic Potentiometer</title>
+    <date>2008-10-10</date>
+    <tags>
+    	<tag>potentiometer</tag>
+    	<tag>poti</tag>
+    	<tag>adjustable</tag>
+    	<tag>resistor</tag>
+    	<tag>fritzing core</tag>
+    </tags>
+    <properties>
+    	<property name="family">Potentiometer</property>
+    	<property name="p2">Resistor</property>
+    </properties>
+    <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
+    <description>A standard adjustable resistor (potentiometer).</description>
+    <views>
+        <image composited="false" file="basic_poti.svg" />
+        <defaultUnits>cmil</defaultUnits>
+        <iconView>
+            <layers>
+                <layer layerId="icon" image="icon/basic_poti_icon.svg"/>
+            </layers>
+        </iconView>
+        <breadboardView>
+            <layers>
+                <layer layerId="breadboard" image="breadboard/basic_poti_sm.svg"/>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers>
+                <layer layerId="schematic" image="schematic/basic_poti.svg"/>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers>
+                <layer layerId="silkscreen" image="pcb/to92.svg"/>
+                <layer layerId="copper0" image="pcb/to92.svg"/>
+                <layer layerId="soldermask" image="pcb/to92.svg"/>
+                <layer layerId="outline" image="pcb/to92.svg"/>
+            </layers>
+        </pcbView>
+    </views>
+    <connectors>
+        <connector type="male" id="connector0" name="leg1" >
+            <description>emitter</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector0pin"/>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector0pin" terminalId="connector0terminal" />
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector0pin" />
+                </pcbView>
+            </views>
+        </connector>
+        <connector type="male" id="connector1" name="leg2" >
+            <description>base</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector1pin"/>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector1pin" terminalId="connector1terminal" />
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector1pin" />
+                </pcbView>
+            </views>
+        </connector>
+        <connector type="male" id="connector2" name="leg3" >
+            <description>collector</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector2pin"/>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector2pin" terminalId="connector2terminal" />
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector2pin" />
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>

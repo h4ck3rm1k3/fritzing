@@ -1,0 +1,356 @@
+/*
+
+??? = unsolved problems
+
+lightest red:	rgb(126,54,77);
+medium red_l:	rgb(108,36,60); (little lighter for hover)
+medium red:		rgb(84,24,44);
+darkest red_l:  rgb(81,0,27); (little lighter for hover)
+darkest red:	rgb(51,0,17);
+
+light grey:		rgb(217,217,217);
+medium grey_l:	rgb(190,190,190); (lighter grey for hovers)
+medium grey:	rgb(179,179,179);
+medium grey_d:	rgb(117,117,117); (shadowish border around widgets)
+dark grey:		rgb(126,126,126);
+darker grey		rgb(87,87,87); (used as font color only so far)
+
+*/
+
+
+/* ########### the main window and general things ############## */
+
+MainWindow {
+	/* layout here */
+
+	/* styling there */
+	background-color: #666666;
+	font-family: LucidaGrande, LucidaSans, Tahoma, Arial, sans-serif;
+	font-size: 10px;
+	color: rgb(255,255,255);
+}
+
+QStatusBar {
+	background-color: rgb(84,24,44);
+}
+
+/* this separates palettes from each other and is movable */
+MainWindow::separator {
+	background-color: #666666;
+	width: 25px; /* has no effect also the QT example says it should ??? */
+	height: 25px; /* has no effect ??? */
+}
+
+MainWindow QLabel {
+	color: rgb(0,0,0);
+}
+
+QStatusBar {
+	left: 6px;
+
+	color: rgb(255,255,255);
+	font-weight: bold;
+	font-size: 10px;
+}
+
+
+
+/* ################### the toolbar #################### */
+QToolBar {
+	border: 0px;
+	/* spacing: 10px; spacing of items in the toolbar */
+
+	background-color: rgb(51,0,17);
+	color: rgb(126,54,77);
+}
+
+#fileToolBar QToolButton,
+#editToolBar QToolButton {
+	border: 1px solid rgb(126,54,77);
+	margin: 5px 5px;
+	color: rgb(126,54,77);
+	background-color: rgb(51,0,17);
+}
+#fileToolBar QToolButton:hover,
+#editToolBar QToolButton:hover {
+	background-color: rgb(81,0,27);
+	color: rgb(255,255,255); /* doesnt work, why ??? */
+}
+#fileToolBar QToolButton:pressed,
+#editToolBar QToolButton:pressed {
+	border-color: rgb(126,54,77);
+	background-color: rgb(126,54,77);
+	color: rgb(51,0,17); /* doesnt work, why ??? */
+}
+
+
+ZoomComboBox {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	margin: 5px 5px;
+	min-width: 5em;
+	border: 1px solid #888;
+
+	color: #CCC;
+	background-color: #888;
+}
+
+/* this is the drop-down button only */
+ZoomComboBox::drop-down  {
+	width: 14px;
+	border-left: 1px solid #CCC;
+
+	color: #CCC;
+	background-color: #888;
+}
+
+ZoomComboBox:focus {
+	color: rgb(255,255,255); /* ??? doesnt work so far */
+}
+
+/* this is the unfolded list */
+ZoomComboBox QAbstractItemView  {
+	width: 11px;
+	border: 1px solid black;
+
+	color: #CCC;
+	background-color: #888;
+	selection-background-color: #CCC;
+	selection-color: black;
+}
+
+ZoomComboBox QScrollBar:vertical {
+	border: 1px solid #CCC;
+	width: 15px;
+	margin: 15px 0 15px 0;
+
+	background-color: black;
+}
+ZoomComboBox QScrollBar::handle:vertical {
+	border: 0px;
+	min-height: 20px;
+
+	background-color: #CCC;
+}
+ZoomComboBox QScrollBar::add-line:vertical {
+	border: 1px solid #CCC;
+	height: 13px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+ZoomComboBox QScrollBar::sub-line:vertical {
+	border: 1px solid #CCC;
+	height: 13px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+
+	background: none;
+}
+ZoomComboBox QScrollBar::up-arrow:vertical,
+ZoomComboBox QScrollBar::down-arrow:vertical {
+	background: none;
+}
+ZoomComboBox QScrollBar::add-page:vertical,
+ZoomComboBox QScrollBar::sub-page:vertical {
+	background: none;
+}
+
+
+
+
+/* ################### the sketch #################### */
+
+QToolBar QTabBar::tab {
+	margin-top: 10px;
+	padding: 4px 10px 6px 3px;
+	min-width: 5em;
+	text-align: left;
+
+	background-color: rgb(84,24,44);
+	border: 1px solid rgb(126,54,77);
+	border-bottom: 0px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	font-size: 12px;
+	color: rgb(255,255,255);
+}
+QToolBar QTabBar::tab:hover {
+	background-color: rgb(108,36,60);
+}
+QToolBar QTabBar::tab:selected {
+	background-color: rgb(126,54,77);
+	color: rgb(0,0,0);
+}
+
+#sketch_tabs::pane {
+	top: -2.1em;
+}
+
+#sketch_tabs::tab-bar {
+	left: 5px;
+}
+
+
+
+
+/* ################### the palettes #################### */
+
+RightDockWidgetArea {
+	/* no effect */
+	border: 30px solid white;
+	padding-left: 20px;
+}
+
+QDockWidget {
+	/* no effect ??? */
+	position: absolute;
+	top: 30px;
+
+	/* no effect on WIN and MAC, but works on Linux ???
+	   for undocked palettes
+	padding: 10px;
+	margin: 20px;
+	border: 8px solid red;
+	*/
+
+	/* only relevant if palette is floating
+	   and only visible with tabs inside the widget
+	   such as Parts Library */
+	background-color: rgb(179,179,179);
+
+	/* this defines the title text! */
+	font-weight: bold;
+	color: rgb(84,24,44);
+}
+
+QDockWidget::title {
+	/* no effects
+	position: absolute;
+	top: 25px; left: 25px;
+	*/
+
+	margin-top: 0px;
+
+    padding-top: 5px;
+    padding-left: 5px;
+
+	min-height: 10px;
+
+	/*border: 1px solid rgb(117,117,117);*/
+	border-bottom: 0px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background-color: rgb(179,179,179);
+}
+
+/* doesn't work, needs to be set in QDockWidget
+QDockWidget::title,
+QDockWidget::title QAbstractItemView,
+QDockWidget QAbstractItemView,
+InfoView::title,
+InfoView::title QLabel,
+InfoView QLabel::title {
+	font-weight: bold;
+	color: rgb(84,24,44);
+}
+*/
+
+HtmlInfoView {
+	border: 1px solid rgb(117,117,117);
+	border-top: 0px;
+	background-color: rgb(179,179,179);
+	color: rgb(0,0,0,);
+}
+
+HtmlInfoView {
+	/* all rich text contents get set in a sparate infoview.css */
+}
+
+
+PartsLibrary {
+	/* general settings at QDockWidget */
+}
+
+QTabWidget#palette_tabs QTabBar::tab {
+	padding: 2px;
+	min-width: 4em;
+	text-align: left;
+
+	border: 1px solid rgb(217,217,217);
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background-color: rgb(179,179,179);
+
+	font-size: 10px;
+	font-weight: bold;
+	color: rgb(84,24,44);
+}
+QTabWidget#palette_tabs QTabBar::tab:hover {
+	background-color: rgb(190,190,190);
+}
+QTabWidget#palette_tabs QTabBar::tab:selected {
+	background-color: rgb(217,217,217);
+}
+
+QTabWidget#palette_tabs QTabBar::pane {
+	background-color: rgb(217,217,217);
+}
+
+/*
+light grey:		rgb(217,217,217);
+medium grey_l:	rgb(190,190,190); (lighter grey for hovers)
+medium grey:	rgb(179,179,179);
+medium grey_d:	rgb(117,117,117); (shadowish border around widgets)
+dark grey:		rgb(126,126,126);
+*/
+
+PartsBinIconView, PartsBinListView {
+	background-color: #B2B2B2;
+	border: 1px solid #CECECE;
+}
+
+PartsBinIconView {
+	padding: 2px;
+}
+
+#partsBinTitle {
+	border: 1px solid #CECECE;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+#partsBinTitle QLabel {
+	margin: 2px 2px 0px 2px;
+	font-weight: bold;
+	color: #575757;
+}
+
+PartsBinListView {
+	selection-background-color: #BEBEBE;
+}
+
+#partsBinFooter,
+#partsBinContainer,
+PartsBinPaletteWidget SimpleEditableLabelWidget,
+PartsBinPaletteWidget InfoGraphicsView {
+	background-color: rgb(179,179,179);
+}
+
+Console {
+	background-color: black;
+	color: white;
+}
+
+SketchArea QToolButton {
+	background-color: transparent;
+}
+
+#sketchAreaToolbar {
+	background-color: rgb(204,204,204);
+}
+
+#sketchAreaToolbar QLabel {
+	font-weight: bold;
+	color: #444;
+}

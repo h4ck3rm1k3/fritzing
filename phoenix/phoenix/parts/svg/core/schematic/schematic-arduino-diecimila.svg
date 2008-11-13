@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.2" baseProfile="tiny"
+	 x="0px" y="0px" width="2.96in" height="2.15in"
+	 id="svg2">
+<rect id="connector0pin" x="104.436" y="1.574" width="1.576" height="1.575"/>
+<rect id="connector1pin" x="113.436" y="1.574" width="1.576" height="1.575"/>
+<rect id="connector2pin" x="122.436" y="1.574" width="1.576" height="1.575"/>
+<rect id="connector3pin" x="131.436" y="1.574" width="1.576" height="1.575"/>
+<rect id="connector4pin" x="140.211" y="1.574" width="1.576" height="1.575"/>
+<rect id="connector5pin" x="149.211" y="1.574" width="1.575" height="1.575"/>
+<rect id="connector6pin" x="158.211" y="1.574" width="1.575" height="1.575"/>
+<rect id="connector7pin" x="167.211" y="1.574" width="1.575" height="1.575"/>
+<rect id="connector8pin" x="185.586" y="1.574" width="1.574" height="1.575"/>
+<rect id="connector9pin" x="194.586" y="1.574" width="1.574" height="1.575"/>
+<rect id="connector10pin" x="203.586" y="1.574" width="1.574" height="1.575"/>
+<rect id="connector11pin" x="212.586" y="1.574" width="1.574" height="1.575"/>
+<rect id="connector12pin" x="221.36" y="1.574" width="1.575" height="1.575"/>
+<rect id="connector13pin" x="230.36" y="1.574" width="1.575" height="1.575"/>
+<rect id="connector14pin" x="239.36" y="1.574" width="1.575" height="1.575"/>
+<rect id="connector15pin" x="248.36" y="1.574" width="1.575" height="1.575"/>
+<rect id="connector16pin" x="140.512" y="192.035" width="1.574" height="1.576"/>
+<rect id="connector17pin" x="149.512" y="192.035" width="1.574" height="1.576"/>
+<rect id="connector18pin" x="158.287" y="192.035" width="1.574" height="1.576"/>
+<rect id="connector19pin" x="167.287" y="192.035" width="1.574" height="1.576"/>
+<rect id="connector20pin" x="176.287" y="192.035" width="1.574" height="1.576"/>
+<rect id="connector21pin" x="185.287" y="192.035" width="1.574" height="1.576"/>
+<rect id="connector22pin" x="203.36" y="192.035" width="1.575" height="1.576"/>
+<rect id="connector23pin" x="212.36" y="192.035" width="1.575" height="1.576"/>
+<rect id="connector24pin" x="221.135" y="192.035" width="1.576" height="1.576"/>
+<rect id="connector25pin" x="230.135" y="192.035" width="1.576" height="1.576"/>
+<rect id="connector26pin" x="239.135" y="192.035" width="1.576" height="1.576"/>
+<rect id="connector27pin" x="248.135" y="192.035" width="1.576" height="1.576"/>
+<g id="schematic">
+	<g>
+		<path fill="none" stroke="#000000" d="M256.728,50.135V9.847l-4.985-4.618H27.595V36.97H0.136v42.384h27.762l-0.179,68.563h-9.119
+			v32.733h9.011v9.668l229.115-0.021v-6.293l8.654-8.919V58.371L256.728,50.135z"/>
+		<text transform="matrix(1 0 0 1 142.123 75.7725)" font-family="'OCRAStd'" font-size="10.886">Diecimila</text>
+		<text transform="matrix(1 0 0 1 145.2725 62.9316)" font-family="'OCRAStd'" font-size="10.886">Arduino</text>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="114.224" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="114.224" y1="9.165" x2="114.224" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="105.224" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="105.224" y1="9.165" x2="105.224" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="123.224" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="123.224" y1="9.165" x2="123.224" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="132.224" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="132.224" y1="9.165" x2="132.224" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="149.998" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="149.998" y1="9.165" x2="149.998" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="140.998" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="140.998" y1="9.165" x2="140.998" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="158.998" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="158.998" y1="9.165" x2="158.998" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="167.998" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="167.998" y1="9.165" x2="167.998" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="195.373" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="195.373" y1="9.165" x2="195.373" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="186.373" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="186.373" y1="9.165" x2="186.373" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="204.373" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="204.373" y1="9.165" x2="204.373" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="213.373" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="213.373" y1="9.165" x2="213.373" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="231.148" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="231.148" y1="9.165" x2="231.148" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="222.148" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="222.148" y1="9.165" x2="222.148" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="240.148" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="240.148" y1="9.165" x2="240.148" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="249.148" cy="12.091" r="2.926"/>
+		<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="249.148" y1="9.165" x2="249.148" y2="1.892"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="177.074" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="177.074" y1="186.092" x2="177.074" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="186.074" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="186.074" y1="186.092" x2="186.074" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="168.074" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="168.074" y1="186.092" x2="168.074" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="159.074" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="159.074" y1="186.092" x2="159.074" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="141.299" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="141.299" y1="186.092" x2="141.299" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="150.299" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="150.299" y1="186.092" x2="150.299" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="239.922" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="239.922" y1="186.092" x2="239.922" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="248.922" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="248.922" y1="186.092" x2="248.922" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="230.922" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="230.922" y1="186.092" x2="230.922" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="221.922" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="221.922" y1="186.092" x2="221.922" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="204.148" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="204.148" y1="186.092" x2="204.148" y2="193.365"/>
+		<circle fill="none" stroke="#000000" stroke-width="2" cx="213.148" cy="183.167" r="2.926"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="213.148" y1="186.092" x2="213.148" y2="193.365"/>
+		<polyline fill="none" stroke="#000000" points="28.948,36.971 46.124,36.971 46.124,79.354 28.948,79.354 		"/>
+		<polyline fill="none" stroke="#000000" points="28.499,149.592 65.601,149.592 65.601,179.387 28.499,179.387 		"/>
+	</g>
+</g>
+</svg>

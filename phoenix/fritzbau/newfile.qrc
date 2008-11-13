@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+     <file>images/document-print.png</file>
+     <file>images/applications-accessories.png</file>
+ </qresource>
+ </RCC>

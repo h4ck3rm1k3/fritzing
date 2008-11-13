@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg width="0.2in" version="1.2" xmlns="http://www.w3.org/2000/svg" height="0.2in" baseProfile="tiny" >
+ <desc>Fritzing footprint SVG</desc>
+ <g id="silkscreen" transform="matrix(0.1036,0,0,0.1036,0,0)" >
+  <line stroke="gray" y1="0" x1="0" y2="10" stroke-width="1" x2="10" />
+  <line stroke="gray" y1="169" x1="165" y2="169" stroke-width="10" x2="20" />
+  <line stroke="gray" y1="159" x1="174" y2="169" stroke-width="10" x2="164" />
+  <line stroke="gray" y1="159" x1="10" y2="168" stroke-width="10" x2="19" />
+ </g>
+ <g id="copper0" transform="matrix(0.1036,0,0,0.1036,0,0)" >
+  <circle fill="none" cx="93" cy="34" stroke="black" r="24" id="connector0pin" stroke-width="21" />
+  <circle fill="none" cx="93" cy="134" stroke="black" r="24" id="connector1pin" stroke-width="21" />
+ </g>
+ <g id="keepout" />
+ <g id="soldermask" />
+</svg>

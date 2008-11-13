@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<svg version="1.2" baseProfile="tiny" id="Ebene_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="18px" height="60.037px"
+	 viewBox="-198.5 81.2 18 60.037" xml:space="preserve">
+<rect id="connector0pin" x="-194.603" y="130.61" fill="#B3B3B3" width="2.992" height="9.321"/>
+<rect id="connector1pin" x="-184.641" y="130.61" fill="#B3B3B3" width="3" height="9.415"/>
+<rect id="connector0terminal" x="-194.603" y="139.496" fill="#B3B3B3" width="2.962" height="0.558"/>
+<rect id="connector1terminal" x="-184.641" y="139.496" fill="#B3B3B3" width="3" height="0.558"/>
+<g id="breadboard">
+	<g id="g9504">
+		<rect id="rect9506" x="-194.603" y="105.413" fill="#B3B3B3" width="2.992" height="12.986"/>
+	</g>
+	<g id="g9512">
+		<path id="path9514" fill="#B3B3B3" d="M-186.209,105.413v4.604c0,0.589,1.086,1.47,1.666,1.979c1.426,1.237,2.9,2.527,2.9,4.156
+			v2.248h-2.992c0,0,0-1.389,0-1.679c0-0.718-1.256-1.929-1.874-2.458c-1.386-1.208-2.702-2.347-2.702-3.816v-5.035H-186.209
+			L-186.209,105.413z"/>
+	</g>
+	<g>
+		
+			<image width="17" height="26" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAaCAYAAABRqrc5AAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFNJREFUeNpiZMABnjEw+CPzpRgY
+NuJSy4hPIy6AbiAjqQZgM4iRHAPQDWJioAJgJNcVyK6hiktGDRk1hC4pdjRgR4QhLJQaACrZqFJQ
+U6XeAQgwAMnBEC8On6BMAAAAAElFTkSuQmCC" transform="matrix(1 0 0 1 -198.5 81.219)">
+		</image>
+		
+			<image width="17" height="26" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAaCAYAAABRqrc5AAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFNJREFUeNpiZMABnj171oDMl5KS
+asCllhGfRlwA3UBGUg3AZhAjOQagG8TEQAXASK4rkF1DFZeMGjJqCF1S7GjAjghDWCg1AFSyUaWg
+pkq9AxBgAMzyIC9JHU1xAAAAAElFTkSuQmCC" transform="matrix(1 0 0 1 -198.5 81.219)">
+		</image>
+		
+			<image width="17" height="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAMCAYAAACEJVa/AAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFVJREFUeNpiYKAAXLx48SmIZmKg
+EIAMotgQsEtgTqLIEKq4BDmAyAlUqrmEBd1kfX19aWJdgGEINkUwAwl5l5HS2AFZxEhuwCK7lJGQ
+f/FphgGAAAMA54IrgK8uwQAAAAAASUVORK5CYII=" transform="matrix(1 0 0 1 -198.5 95.219)">
+		</image>
+		
+			<image width="17" height="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAMCAYAAACEJVa/AAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFBJREFUeNpiYKAAPGNg2ASiGalh
+CBMDFQATzDSKDKGKS5D9Rk54UM0ljOiukGJg8CPWBTgNwWYgIe8yUho7IIsYyQ1YZJcyEvIvPs0w
+ABBgAI1nFTlfS7w3AAAAAElFTkSuQmCC" transform="matrix(1 0 0 1 -198.5 95.219)">
+		</image>
+		
+			<image width="17" height="11" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAALCAYAAACZIGYHAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEFJREFUeNpiYKAM2IIIxkFjCBOM
+QQlgYqACYERyyWFyvEITlzAQ6SIM9Yw4JNANxCvPSMAWBgKGMxBKJ0R7EyDAANtTCD9udKXGAAAA
+AElFTkSuQmCC" transform="matrix(1 0 0 1 -198.5 95.219)">
+		</image>
+		
+			<image width="16" height="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEhJREFUeNpiZMACnj175oBNXEpK
+6gC6GCMhTbgAzDBGcjQjG8JIrmYYYGKgEAwDAyiOBeq4gNTEhJwiGXEpQjcMWzIGAYAAAwAcWBsE
+xrvMzwAAAABJRU5ErkJggg==" transform="matrix(1 0 0 1 -198.5 93.219)">
+		</image>
+		
+			<image width="16" height="12" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAMCAYAAABr5z2BAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEdJREFUeNpiZMACnjEwOGATl2Jg
+OIAuxkhIEy4AM4yRHM3IhjCSqxkGmBgoBMPAAIpjgTouIDUxIadIRlyK0A3DloxBACDAAJMCDTgF
+EJFnAAAAAElFTkSuQmCC" transform="matrix(1 0 0 1 -198.5 93.219)">
+		</image>
+		<polygon fill="#666666" points="-195.685,92.234 -195.685,99.084 -194.632,99.084 -194.632,95.888 -191.642,95.888 
+			-187.403,91.34 -194.408,91.34 		"/>
+		<polygon fill="#666666" points="-186.592,91.043 -186.13,91.583 -190.162,95.888 -186.293,95.888 -186.293,99.084 
+			-185.325,99.084 -185.325,91.043 		"/>
+		
+			<image width="17" height="26" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAaCAYAAABRqrc5AAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFNJREFUeNpiZMABnjEwLEPmSzEw
+ROFSy4hPIy6AbiAjqQZgM4iRHAPQDWJioAJgJNcVyK6hiktGDRk1hC4pdjRgR4QhLJQaACrZqFJQ
+U6XeAQgwAAf3EC8+CcBwAAAAAElFTkSuQmCC" transform="matrix(1 0 0 1 -198.5 81.219)">
+		</image>
+		
+			<image width="5" height="3" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAADCAYAAABbNsX4AAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACFJREFUeNpi/P//fwMDFDAyMoLZ
+TAxIAKaAEZkDAwABBgCA0Qr/SEKhpQAAAABJRU5ErkJggg==" transform="matrix(1 0 0 1 -189.5 83.219)">
+		</image>
+		
+			<image width="3" height="4" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAECAYAAABLLYUHAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAB5JREFUeNpi+P//fwMDFDAic5gY
+kAATIyMjXAYgwAAy1AeDTQNcdwAAAABJRU5ErkJggg==" transform="matrix(1 0 0 1 -197.5 102.219)">
+		</image>
+		
+			<image width="12" height="21" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAVCAYAAAByrA+0AAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAElJREFUeNpiZICC////N8DYjIyM
+cDY6YERXTEgTE1ZT8NjARIpisAZszsGrgYFEwESKcyi3YVTDqAYSchy6HCMyh1DeABkCEGAAbTYY
+qonJW5gAAAAASUVORK5CYII=" transform="matrix(1 0 0 1 -197.5 84.219)">
+		</image>
+	</g>
+	<rect id="rect9479" x="-194.603" y="118.4" fill="#B3B3B3" width="2.992" height="21.531"/>
+	<rect id="rect9483" x="-184.632" y="118.4" fill="#B3B3B3" width="2.991" height="21.531"/>
+</g>
+</svg>

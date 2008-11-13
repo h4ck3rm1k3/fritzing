@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   baseProfile="tiny"
+   id="svg2"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:version="0.32"
+   sodipodi:docname="basic_transistor_pnpicon.svg"
+   inkscape:version="0.46"
+   x="0px"
+   y="0px"
+   width="32"
+   height="32"
+   viewBox="1 0 39.375 41.5"
+   xml:space="preserve"><metadata
+   id="metadata3294"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs3292"><inkscape:perspective
+     sodipodi:type="inkscape:persp3d"
+     inkscape:vp_x="0 : 20.75 : 1"
+     inkscape:vp_y="0 : 1000 : 0"
+     inkscape:vp_z="39.375 : 20.75 : 1"
+     inkscape:persp3d-origin="19.6875 : 13.833333 : 1"
+     id="perspective3296" /></defs><sodipodi:namedview
+   inkscape:window-height="726"
+   inkscape:window-width="896"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   guidetolerance="10.0"
+   gridtolerance="10.0"
+   objecttolerance="10.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   id="base"
+   showgrid="false"
+   inkscape:zoom="11.903614"
+   inkscape:cx="19.6875"
+   inkscape:cy="17.389676"
+   inkscape:window-x="238"
+   inkscape:window-y="25"
+   inkscape:current-layer="svg2" />
+<g
+   id="icon"
+   transform="matrix(2.3972928,0,0,2.4022782,-966.56317,-155.90572)">
+	<g
+   id="g11">
+		<g
+   id="Transistor_pins_1_">
+			<g
+   id="g9504">
+				<rect
+   id="rect9506"
+   x="411.082"
+   y="75.330002"
+   width="1.429"
+   height="6.1880002"
+   style="fill:#b3b3b3" />
+			</g>
+			<g
+   id="g9508">
+				<path
+   id="path9510"
+   d="M 408.502,75.33 L 408.502,77.524 C 408.502,77.804 407.983,78.224 407.707,78.467 C 407.027,79.056 406.322,79.671 406.322,80.447 L 406.322,81.518 L 407.751,81.518 C 407.751,81.518 407.751,80.857 407.751,80.718 C 407.751,80.376 408.351,79.799 408.646,79.547 C 409.308,78.971 409.936,78.429 409.936,77.728 L 409.936,75.33 L 408.502,75.33 L 408.502,75.33 z"
+   style="fill:#b3b3b3" />
+			</g>
+			<g
+   id="g9512">
+				<path
+   id="path9514"
+   d="M 415.09,75.33 L 415.09,77.524 C 415.09,77.804 415.609,78.224 415.885,78.467 C 416.566,79.056 417.27,79.671 417.27,80.447 L 417.27,81.518 L 415.841,81.518 C 415.841,81.518 415.841,80.857 415.841,80.718 C 415.841,80.376 415.241,79.799 414.946,79.547 C 414.284,78.971 413.656,78.429 413.656,77.728 L 413.656,75.33 L 415.09,75.33 L 415.09,75.33 z"
+   style="fill:#b3b3b3" />
+			</g>
+		</g>
+		<rect
+   id="rect9553"
+   x="407.39301"
+   y="68.666"
+   width="8.8059998"
+   height="6.664"
+   style="fill:#1a1a1a" />
+		<path
+   id="path9555"
+   d="M 415.532,68.666 L 415.532,70.289 L 415.532,75.734 L 415.532,76.953 C 415.951,76.481 416.198,75.925 416.198,75.33 L 416.198,75.33 L 416.198,68.666 L 415.532,68.666 z"
+   style="fill:#141414" />
+		<path
+   id="path9557"
+   d="M 408.06,68.666 L 407.394,68.666 L 407.394,75.33 L 407.394,75.33 C 407.394,75.925 407.641,76.48 408.06,76.953 L 408.06,75.734 L 408.06,70.289 L 408.06,68.666 z"
+   style="fill:#242424" />
+		<path
+   id="path9559"
+   d="M 407.393,68.666 L 407.393,68.666 C 407.393,69.261 407.641,69.817 408.059,70.289 L 415.537,70.289 C 415.956,69.817 416.203,69.261 416.203,68.666 L 416.203,68.666 L 407.393,68.666 z"
+   style="fill:#1f1f1f" />
+		<path
+   id="path9561"
+   d="M 411.796,65.582 C 409.364,65.582 407.393,66.963 407.393,68.667 L 416.198,68.667 C 416.198,66.963 414.229,65.582 411.796,65.582 z"
+   style="fill:#141414" />
+		<rect
+   id="rect9563"
+   x="408.06"
+   y="70.289001"
+   width="7.4780002"
+   height="6.664" />
+	</g>
+	<path
+   d="M 413.005,71.582 L 413.631,71.582 L 413.631,72.831 L 413.005,72.831 L 413.005,73.455 L 411.128,73.455 L 411.128,74.079 L 409.877,74.079 L 409.877,70.957 L 413.006,70.957 L 413.006,71.582 L 413.005,71.582 z M 412.379,71.582 L 411.127,71.582 L 411.127,72.831 L 412.379,72.831 L 412.379,71.582 z"
+   id="path3289"
+   style="fill:#999999" />
+</g>
+</svg>

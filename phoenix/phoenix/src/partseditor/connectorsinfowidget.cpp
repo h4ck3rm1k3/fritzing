@@ -1,0 +1,388 @@
+/*
+ * (c) Fachhochschule Potsdam
+ */
+
+#include <QScrollArea>
+#include <QKeyEvent>
+#include <QProgressDialog>
+#include <QApplication>
+
+#include "connectorsinfowidget.h"
+#include "../debugdialog.h"
+
+#define MISMATCH_CONNS_HEADER tr("Mismatching Connector IDs")
+#define MISMATCH_CONNS_FOOTER tr("These problems need to be fixed in the svg-files directly")
+
+ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent) : QFrame(parent) {
+	m_selected = NULL;
+	m_undoStack = undoStack;
+
+	m_scrollContent = new QFrame();
+	m_scrollContent->setObjectName("connInfoContent");
+	m_scrollContent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+	m_mismatchersFrameParent = new QFrame(this);
+	m_mismatchersFrameParent->setObjectName("mismatchConns");
+	//m_mismatchersFrameParent->setFixedWidth(500);
+	m_mismatchersFrameParent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+	QGridLayout *parentLo = new QGridLayout();
+	parentLo->setMargin(1);
+	m_mismatchersFrameParent->setLayout(parentLo);
+
+	m_mismatchersFrame = new QFrame(m_mismatchersFrameParent);
+	//m_mismatchersFrame->resize(this->width(),m_mismatchersFrame->height());
+	QGridLayout *mismatchLayout = new QGridLayout();
+	mismatchLayout->setMargin(0);
+	mismatchLayout->setSpacing(0);
+	m_mismatchersFrame->setLayout(mismatchLayout);
+	m_mismatchersFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+	QLabel *mismatchConnHeader = new QLabel(MISMATCH_CONNS_HEADER);
+	mismatchConnHeader->setObjectName("mismatchConnsHeader");
+	parentLo->addWidget(mismatchConnHeader,0,0);
+
+	parentLo->addWidget(m_mismatchersFrame,1,0);
+
+	QLabel *mismatchConnFooter = new QLabel(MISMATCH_CONNS_FOOTER);
+	mismatchConnFooter->setObjectName("mismatchConnsFooter");
+	parentLo->addWidget(mismatchConnFooter,2,0);
+
+	m_mismatchersFrameParent->hide();
+
+
+	QGridLayout *scrollLayout = new QGridLayout();
+	scrollLayout->setMargin(0);
+	scrollLayout->setSpacing(0);
+	m_scrollContent->setLayout(scrollLayout);
+	scrollContentLayout()->addWidget(m_mismatchersFrameParent,0,0);
+
+	QScrollArea *scrollArea = new QScrollArea();
+	scrollArea->setWidget(m_scrollContent);
+
+	QLabel *title = new QLabel("  "+tr("List of Connectors"));
+	title->setObjectName("title");
+
+	QGridLayout *layout = new QGridLayout();
+	layout->addWidget(title,0,0);
+	layout->addWidget(scrollArea,1,0);
+	layout->setContentsMargins(3, 10, 3, 10);
+	setLayout(layout);
+
+	setFocusPolicy(Qt::StrongFocus);
+
+	installEventFilter(this);
+}
+
+void ConnectorsInfoWidget::selectionChanged(AbstractConnectorInfoWidget* selected) {
+	if(m_selected) {
+		m_selected->setSelected(false);
+	}
+	m_selected = selected;
+}
+
+void ConnectorsInfoWidget::setSelected(AbstractConnectorInfoWidget * newSelected) {
+	newSelected->setSelected(true,false);
+	selectionChanged(newSelected);
+}
+
+bool ConnectorsInfoWidget::eventFilter(QObject *obj, QEvent *event) {
+	if(obj == this) {
+		if(event->type() == QEvent::KeyPress || event->type() == QEvent::ShortcutOverride) {
+			QKeyEvent *keyEvent = (QKeyEvent*)event;
+			if(keyEvent->key() == Qt::Key_Up) {
+				selectPrev();
+				return true;
+			} else if(keyEvent->key() == Qt::Key_Down) {
+				selectNext();
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+/*void ConnectorsInfoWidget::ensureSelection(int i) {
+	// TODO Mariano: Strange bug (if this is set, each up or dow key pressed event triggers twice)
+	if(i==1) { // 1 == the fixed idx of the tab
+		bool found = false;
+		if(!m_selected) {
+			if(m_connsInfo.size() > 0) {
+				setSelected(m_connsInfo[0]);
+				found = true;
+			} else if(m_mismatchConnsInfo.size() > 0) {
+				setSelected(m_mismatchConnsInfo[0]);
+				found = true;
+			}
+			if(found) {
+				this->setFocus();
+			}
+		}
+	}
+}*/
+
+void ConnectorsInfoWidget::selectNext() {
+	if(m_selected) {
+		int selIdx = m_connsInfo.indexOf((SingleConnectorInfoWidget*)m_selected);
+		if(selIdx > -1 && selIdx < m_connsInfo.size()-1) { // It's a single connector
+			setSelected(m_connsInfo[selIdx+1]);
+		} else {
+			selIdx = m_mismatchConnsInfo.indexOf((MismatchingConnectorWidget*)m_selected);
+			if(selIdx > -1) {
+				if(selIdx < m_mismatchConnsInfo.size()-1) {
+					setSelected(m_mismatchConnsInfo[selIdx+1]);
+				} else if(m_connsInfo.size() > 0) {
+					setSelected(m_connsInfo[0]);
+				}
+			}
+		}
+	}
+}
+
+void ConnectorsInfoWidget::selectPrev() {
+	if(m_selected) {
+		int selIdx = m_connsInfo.indexOf((SingleConnectorInfoWidget*)m_selected);
+		if(selIdx > -1 ) { // It's a single connector and not the first
+			if(selIdx > 0) {
+				setSelected(m_connsInfo[selIdx-1]);
+			} else if(m_mismatchConnsInfo.size()>0) {
+				setSelected(m_mismatchConnsInfo[m_mismatchConnsInfo.size()-1]);
+			}
+		} else {
+			selIdx = m_mismatchConnsInfo.indexOf((MismatchingConnectorWidget*)m_selected);
+			if(selIdx > 0) { // it's a mismatch
+				setSelected(m_mismatchConnsInfo[selIdx-1]);
+			}
+		}
+	}
+}
+
+void ConnectorsInfoWidget::updateLayout() {
+	m_mismatchersFrame->updateGeometry();
+	m_mismatchersFrame->adjustSize();
+	m_mismatchersFrameParent->updateGeometry();
+	m_mismatchersFrameParent->adjustSize();
+	m_scrollContent->adjustSize();
+}
+
+void ConnectorsInfoWidget::addConnectorInfo(MismatchingConnectorWidget* mcw) {
+	if(mcw->prevConn()) {
+		addConnectorInfo(mcw->prevConn());
+	} else {
+		addConnectorInfo(mcw->connId());
+	}
+}
+
+void ConnectorsInfoWidget::addConnectorInfo(QString id) {
+	ConnectorStuff *connStuff = new ConnectorStuff();
+	connStuff->setId(id);
+	Connector *conn = new Connector(connStuff,0); // modelPart =? null
+	addConnectorInfo(conn);
+}
+
+void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
+	int connCount = m_connsInfo.size();
+	SingleConnectorInfoWidget *sci = new SingleConnectorInfoWidget(m_undoStack,conn,m_scrollContent);
+	scrollContentLayout()->addWidget(sci,connCount+1,0);
+	m_connsInfo << sci;
+	connect(sci,SIGNAL(editionStarted()),this,SLOT(updateLayout()));
+	connect(sci,SIGNAL(editionFinished()),this,SLOT(updateLayout()));
+	connect(sci,SIGNAL(tellSistersImNewSelected(AbstractConnectorInfoWidget*)),this,SLOT(selectionChanged(AbstractConnectorInfoWidget*)));
+	connect(sci,SIGNAL(tellViewsMyConnectorIsNewSelected(const QString&)),this,SLOT(informConnectorSelection(const QString &)));
+	connect(this,SIGNAL(editionCompleted()),sci,SLOT(editionCompleted()));
+}
+
+void ConnectorsInfoWidget::addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewId, QString connId) {
+	addMismatchingConnectorInfo(new MismatchingConnectorWidget(viewId,connId,m_mismatchersFrame));
+}
+
+void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidget *mcw) {
+	int connCount = m_mismatchConnsInfo.size();
+
+	((QGridLayout*)m_mismatchersFrame->layout())->addWidget(mcw,connCount,0);
+	m_mismatchConnsInfo << mcw;
+	connect(mcw,SIGNAL(tellSistersImNewSelected(AbstractConnectorInfoWidget*)),this,SLOT(selectionChanged(AbstractConnectorInfoWidget*)));
+	connect(mcw,SIGNAL(tellViewsMyConnectorIsNewSelected(const QString &)),this,SLOT(informConnectorSelection(const QString &)));
+	if(m_mismatchConnsInfo.size()==1) {
+		m_mismatchersFrameParent->show();
+	}
+
+	/*if(!m_selected && connCount == 0) {
+		setSelected(mcw);
+	}*/
+
+	foreach(ItemBase::ViewIdentifier viewId, mcw->views()) {
+		emit setMismatching(viewId, mcw->connId(), true);
+	}
+}
+
+QGridLayout *ConnectorsInfoWidget::scrollContentLayout() {
+	return (QGridLayout*)m_scrollContent->layout();
+}
+
+void ConnectorsInfoWidget::connectorsFound(QList<Connector *> conns) {
+	qSort(conns);
+
+	QProgressDialog progress(tr("Loading connectors..."), 0, 0, conns.size(), this);
+	progress.show();
+	for(int i=0; i < conns.size(); i++) {
+		progress.setValue(i);
+		qApp->processEvents(); // to keep the app away from freezing
+		addConnectorInfo(conns[i]);
+	}
+	progress.setValue(conns.size());
+
+	updateLayout();
+}
+
+void ConnectorsInfoWidget::informConnectorSelection(const QString &connId) {
+	emit connectorSelected(connId);
+}
+
+void ConnectorsInfoWidget::informEditionCompleted() {
+	emit editionCompleted();
+}
+
+const QList<ConnectorStuff *> ConnectorsInfoWidget::connectorsStuffs() {
+	QList<ConnectorStuff *> connectorsStuff;
+	for(int i=0; i<m_connsInfo.size(); i++) {
+		SingleConnectorInfoWidget *sci = m_connsInfo[i];
+		QString id = sci->id();
+		Connector *conn = sci->connector();
+		ConnectorStuff* cs = conn->connectorStuff();
+		cs->setId(id);
+		cs->setName(sci->name());
+		cs->setDescription(sci->description());
+		cs->setConnectorType(sci->type());
+
+		foreach(ItemBase::ViewIdentifier viewId, m_connectorsPins[id].keys()) {
+			cs->removePins(viewId);
+			foreach(SvgIdLayer *pin, m_connectorsPins[id].values(viewId)) { // Multihash
+				// TODO Mariano: change this layer if the connectors aren't in the default layer
+				ViewLayer::ViewLayerID viewLayerId = pin->m_viewLayerID == ViewLayer::UnknownLayer
+					? ItemBase::defaultConnectorLayer(viewId)
+					: pin->m_viewLayerID;
+				cs->addPin(viewId, pin->m_svgId, viewLayerId, pin->m_terminalId);
+			}
+		}
+
+		connectorsStuff << cs;
+	}
+	return connectorsStuff;
+}
+
+// If we're reloading an image, clear mismatching connectors related exclusively to that view
+void ConnectorsInfoWidget::clearMismatchingForView(ItemBase::ViewIdentifier viewId) {
+	foreach(MismatchingConnectorWidget* mcw, m_mismatchConnsInfo) {
+		if(mcw->views().size()==1 &&  mcw->views()[0] == viewId) {
+			removeMismatchingConnectorInfo(mcw);
+		}
+	}
+}
+
+// Updates previous connector to mismatching if they are not in the list
+void ConnectorsInfoWidget::singleToMismatchingNotInView(ItemBase::ViewIdentifier viewId, const QStringList &connIds) {
+	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
+		if(connIds.indexOf(sci->connector()->connectorStuffID()) == -1) {
+			addMismatchingConnectorInfo(sci->toMismatching(viewId));
+			removeConnectorInfo(sci);
+		}
+	}
+	m_mismatchersFrame->adjustSize();
+	scrollContentLayout()->update();
+	m_mismatchersFrameParent->adjustSize();
+	m_mismatchersFrameParent->layout()->update();
+	updateLayout();
+}
+
+void ConnectorsInfoWidget::syncNewConnectors(ItemBase::ViewIdentifier viewId, const QList<Connector*> &conns) {
+	clearMismatchingForView(viewId);
+
+	// clean the old pins for this view
+	foreach(QString oldId, m_connectorsPins.keys()) {
+		m_connectorsPins[oldId].remove(viewId);
+	}
+
+	QStringList connIds;
+	foreach(Connector *conn, conns) {
+		QString connId = conn->connectorStuffID();
+		connIds << connId;
+
+		foreach(SvgIdLayer* pin, conn->connectorStuff()->pins().values(viewId)) {
+			m_connectorsPins[connId].insert(viewId,pin);
+		}
+
+		if(existingConnId(connId)) {
+			emit existingConnector(viewId, connId, findConnector(connId));
+		} else {
+			MismatchingConnectorWidget *mcw;
+			if(( mcw = existingMismatchingConnector(connId) )) {
+				if(mcw->onlyMissingThisView(viewId)) {
+					removeMismatchingConnectorInfo(mcw);
+					addConnectorInfo(mcw);
+					emit existingConnector(viewId, connId, findConnector(connId));
+				} else {
+					mcw->addViewPresence(viewId);
+					emit setMismatching(viewId, mcw->connId(), true);
+				}
+			} else {
+				addMismatchingConnectorInfo(viewId, connId);
+			}
+		}
+	}
+
+	//clearMismatchingForView(viewId);
+	singleToMismatchingNotInView(viewId,connIds);
+}
+
+bool ConnectorsInfoWidget::existingConnId(const QString &id) {
+	return findConnector(id) != NULL;
+}
+
+MismatchingConnectorWidget* ConnectorsInfoWidget::existingMismatchingConnector(const QString &id) {
+	foreach(MismatchingConnectorWidget *mci, m_mismatchConnsInfo) {
+		if(mci->connId() == id) {
+			return mci;
+		}
+	}
+	return NULL;
+}
+
+void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw) {
+	m_mismatchersFrame->layout()->removeWidget(mcw);
+	m_mismatchConnsInfo.removeOne(mcw);
+	if(m_mismatchConnsInfo.size()==0) {
+		m_mismatchersFrameParent->hide();
+		updateLayout();
+	}
+
+	foreach(ItemBase::ViewIdentifier viewId, mcw->views()) {
+		emit setMismatching(viewId, mcw->connId(), false);
+	}
+
+	if(m_selected == mcw) {
+		m_selected = NULL;
+	}
+
+	delete mcw;
+}
+
+void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci) {
+	scrollContentLayout()->removeWidget(sci);
+	m_connsInfo.removeOne(sci);
+
+	if(m_selected == sci) {
+		m_selected = NULL;
+	}
+
+	delete sci;
+}
+
+Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
+	foreach(SingleConnectorInfoWidget *sci, m_connsInfo) {
+		if(sci->id() == id) {
+			return sci->connector();
+		}
+	}
+	return NULL;
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.1.beta.1396" moduleId="1234ABDC24diode">
+    <version>1.1</version>
+    <author>JennyLC</author>
+    <title>Recifier Diode</title>
+    <label>D</label>
+    <date>2008-11-11</date>
+    <tags>
+        <tag>Diode</tag>
+        <tag>Recifider Diode</tag>
+        <tag>fritzing core</tag>
+    </tags>
+    <properties>
+        <property name="family">Diode</property>
+        <property name="part">1N4001</property>     
+    </properties>    
+    <description>A generic rectifier diode</description>
+    <views>
+        <iconView>
+            <layers>
+                <layer layerId="icon" image="icon/basic-diode.svg"></layer>
+            </layers>
+        </iconView>
+        <breadboardView>
+            <layers>
+                <layer layerId="breadboard" image="breadboard/basic-diode.svg"></layer>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers>
+                <layer layerId="schematic" image="schematic/diode.svg"></layer>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers>
+            	<layer layerId="copper0" image="pcb/axial_lay_300mil.svg"></layer>
+            	<layer layerId="silkscreen" image="pcb/axial_lay_300mil.svg"></layer>
+            </layers>
+        </pcbView>
+    </views>
+    <connectors>
+        <connector id="connector0" type="male" name="cathode">
+            <description>cathode pin</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector0pin" ></pin>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></pin>
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector0pad"></pin>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector1" type="male" name="anode">
+            <description>anode pin</description>
+            <views>
+                <breadboardView>
+                    <pin layer="breadboard" svgId="connector1pin" ></pin>
+                </breadboardView>
+                <schematicView>
+                    <pin layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></pin>
+                </schematicView>
+                <pcbView>
+                    <pin layer="copper0" svgId="connector1pad"></pin>
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>

@@ -1,0 +1,452 @@
+/*
+ * (c) Fachhochschule Potsdam
+ */
+
+#include "modelpart.h"
+#include "debugdialog.h"
+#include "connectorstuff.h"
+#include "busstuff.h"
+#include "bus.h"
+#include "version.h"
+
+#include <QDomElement>
+
+QHash<ModelPart::ItemType, QString> ModelPart::itemTypeNames;
+long ModelPart::nextIndex = 0;
+
+
+ModelPart::ModelPart(ItemType type)
+	: QObject()
+{
+	m_type = type;
+	m_modelPartStuff = NULL;
+	m_partInstanceStuff = NULL;
+	m_index = nextIndex++;
+	m_core = false;
+}
+
+ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)
+	: QObject()
+{
+	m_type = type;
+	m_modelPartStuff = new ModelPartStuff(domDocument, path);
+	m_partInstanceStuff = new PartInstanceStuff(domDocument, path);
+	m_core = false;
+	//TODO Mariano: enough for now
+	QDomElement viewsElems = domDocument->documentElement().firstChildElement("views");
+	if(!viewsElems.isNull()) {
+		m_valid = !viewsElems.firstChildElement(ItemBase::viewIdentifierXmlName(ItemBase::IconView)).isNull();
+	} else {
+		m_valid = false;
+	}
+}
+
+ModelPart::~ModelPart() {
+}
+
+const QString & ModelPart::moduleID() {
+	if (m_modelPartStuff != NULL) return m_modelPartStuff->moduleID();
+
+	return ___emptyString___;
+}
+
+
+const QString & ModelPart::itemTypeName(ModelPart::ItemType itemType) {
+	return itemTypeNames[itemType];
+}
+
+const QString & ModelPart::itemTypeName(int itemType) {
+	return itemTypeNames[(ModelPart::ItemType) itemType];
+}
+
+void ModelPart::initNames() {
+	if (itemTypeNames.count() == 0) {
+		itemTypeNames.insert(ModelPart::Part, QObject::tr("part"));
+		itemTypeNames.insert(ModelPart::Wire, QObject::tr("wire"));
+		itemTypeNames.insert(ModelPart::Breadboard, QObject::tr("breadboard"));
+		itemTypeNames.insert(ModelPart::Module, QObject::tr("module"));
+	}
+}
+
+void ModelPart::setItemType(ItemType t) {
+	m_type = t;
+}
+
+
+void ModelPart::copy(ModelPart * modelPart, bool doConns) {
+	m_type = modelPart->itemType();
+	m_modelPartStuff = modelPart->modelPartStuff();
+	m_core = modelPart->isCore();
+	if(doConns) {
+		m_connectorHash.clear();
+		m_connectorHash = modelPart->connectors();
+	}
+}
+
+void ModelPart::copyNew(ModelPart * modelPart) {
+	copy(modelPart);
+}
+
+void ModelPart::copyStuff(ModelPart * modelPart) {
+	modelPartStuff()->copy(modelPart->modelPartStuff());
+}
+
+ModelPartStuff * ModelPart::modelPartStuff() {
+	if(!m_modelPartStuff) {
+		m_modelPartStuff = new ModelPartStuff();
+	}
+	return m_modelPartStuff;
+}
+void ModelPart::setModelPartStuff(ModelPartStuff * modelPartStuff) {
+	m_modelPartStuff = modelPartStuff;
+}
+
+PartInstanceStuff * ModelPart::partInstanceStuff() {
+	if(!m_partInstanceStuff) {
+		m_partInstanceStuff = new PartInstanceStuff();
+	}
+	return m_partInstanceStuff;
+}
+void ModelPart::setPartInstanceStuff(PartInstanceStuff * partInstanceStuff) {
+	m_partInstanceStuff = partInstanceStuff;
+}
+
+void ModelPart::addViewItem(ItemBase * item) {
+	m_viewItems.append(item);
+}
+
+void ModelPart::removeViewItem(ItemBase * item) {
+	m_viewItems.removeOne(item);
+}
+
+ItemBase * ModelPart::viewItem(QGraphicsScene * scene) {
+	foreach (ItemBase * itemBase, m_viewItems) {
+		if (itemBase->scene() == scene) return itemBase;
+	}
+
+	return NULL;
+}
+
+void ModelPart::saveParts(QTextStream & textStream, QHash<QString, ModelPartStuff *> & mpsList) {
+	//DebugDialog::debug(QObject::tr("type:%1 id:%2 stuff:%3").arg(m_type).arg(m_id).arg(m_modelPartStuff != NULL) );
+	if (m_type == ModelPart::Part || m_type == ModelPart::Wire || m_type == ModelPart::Breadboard) {
+		if ((m_modelPartStuff != NULL) && (m_modelPartStuff->domDocument() != NULL)) {
+			ModelPartStuff * mps = mpsList[m_modelPartStuff->moduleID()];
+			if (mps == NULL) {
+				mpsList.insert(m_modelPartStuff->moduleID(), m_modelPartStuff);
+				QDomElement root = m_modelPartStuff->domDocument()->documentElement();
+				root.save(textStream, 4);
+			}
+		}
+	}
+
+	QList<QObject *>::const_iterator i;
+    for (i = children().constBegin(); i != children().constEnd(); ++i) {
+		ModelPart* mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+
+		mp->saveParts(textStream, mpsList);
+	}
+}
+
+void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition) {
+	if (startDocument) {
+		streamWriter.writeStartDocument();
+    	streamWriter.writeStartElement("module");
+		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
+		//streamWriter.writeCharacters("\n\n");
+		//partsInsertPosition = streamWriter.device()->pos();
+		//streamWriter.writeCharacters("\n\n");
+		QString title = this->modelPartStuff()->title();
+		if(!title.isNull() && !title.isEmpty()) {
+			streamWriter.writeTextElement("title",title);
+		}
+		streamWriter.writeStartElement("instances");
+	}
+
+	if (m_viewItems.size() > 0) {
+		streamWriter.writeStartElement("instance");
+		if (m_modelPartStuff != NULL) {
+			const QString & moduleIdRef = m_modelPartStuff->moduleID();
+			streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
+			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
+			streamWriter.writeAttribute("path", m_modelPartStuff->path());
+		}
+		if (m_partInstanceStuff != NULL) {
+			QString title = m_partInstanceStuff->title();
+			if(!title.isNull() && !title.isEmpty()) {
+				writeTag(streamWriter,"title",m_partInstanceStuff->title());
+			}
+		}
+
+		// tell the views to write themselves out
+		streamWriter.writeStartElement("views");
+		foreach (ItemBase * itemBase, m_viewItems) {
+			itemBase->saveInstance(streamWriter);
+		}
+		streamWriter.writeEndElement();
+
+		/*
+		streamWriter.writeStartElement("connectors");
+		foreach (Connector * connector, m_connectorHash.values()) {
+			connector->saveInstances(streamWriter);
+		}
+		streamWriter.writeEndElement();
+		
+
+
+		streamWriter.writeStartElement("buses");
+		foreach (Bus * bus, buses().values()) {
+			bus->saveInstances(streamWriter);
+		}
+
+		streamWriter.writeEndElement();
+		*/
+
+	}
+
+	QList<QObject *>::const_iterator i;
+    for (i = children().constBegin(); i != children().constEnd(); ++i) {
+		ModelPart* mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+
+		mp->saveInstances(streamWriter, false, partsInsertPosition);
+	}
+
+	streamWriter.writeEndElement();
+	if (startDocument) {
+		streamWriter.writeEndElement();
+		streamWriter.writeEndDocument();
+	}
+}
+
+void ModelPart::writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue) {
+	if(!tagValue.isEmpty()) {
+		streamWriter.writeTextElement(tagName,tagValue);
+	}
+}
+
+void ModelPart::writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QStringList &values, QString childTag) {
+	if(values.count() > 0) {
+		streamWriter.writeStartElement(tagName);
+		for(int i=0; i<values.count(); i++) {
+			writeTag(streamWriter, childTag, values[i]);
+		}
+		streamWriter.writeEndElement();
+	}
+}
+
+void ModelPart::writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QHash<QString,QString> &values, QString childTag, QString attrName) {
+	streamWriter.writeStartElement(tagName);
+	for(int i=0; i<values.keys().count(); i++) {
+		streamWriter.writeStartElement(childTag);
+		QString key = values.keys()[i];
+		streamWriter.writeAttribute(attrName,key);
+		streamWriter.writeCharacters(values[key]);
+		streamWriter.writeEndElement();
+	}
+	streamWriter.writeEndElement();
+}
+
+void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition) {
+	if (startDocument) {
+		streamWriter.writeStartDocument();
+    	streamWriter.writeStartElement("module");
+		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
+		streamWriter.writeAttribute("moduleId", m_modelPartStuff->moduleID());
+    	writeTag(streamWriter,"version",m_modelPartStuff->version());
+    	writeTag(streamWriter,"author",m_modelPartStuff->author());
+    	writeTag(streamWriter,"title",m_modelPartStuff->title());
+    	writeTag(streamWriter,"label",m_modelPartStuff->label());
+    	writeTag(streamWriter,"date",m_modelPartStuff->dateAsStr());
+
+    	writeNestedTag(streamWriter,"tags",m_modelPartStuff->tags(),"tag");
+    	writeNestedTag(streamWriter,"properties",m_modelPartStuff->properties(),"property","name");
+
+    	writeTag(streamWriter,"taxonomy",m_modelPartStuff->taxonomy());
+    	writeTag(streamWriter,"description",m_modelPartStuff->description());
+	}
+
+	if (m_viewItems.size() > 0) {
+		if (startDocument) {
+			streamWriter.writeStartElement("views");
+		}
+		for (int i = 0; i < m_viewItems.size(); i++) {
+				ItemBase * item = m_viewItems[i];
+				item->writeXml(streamWriter);
+		}
+
+		if(startDocument) {
+			streamWriter.writeEndElement();
+		}
+
+		streamWriter.writeStartElement("connectors");
+		const QList<ConnectorStuff *> connectors = m_modelPartStuff->connectors();
+		for (int i = 0; i < connectors.count(); i++) {
+			Connector * connector = new Connector(connectors[i], this);
+			connector->saveAsPart(streamWriter);
+			delete connector;
+		}
+		streamWriter.writeEndElement();
+	}
+
+	QList<QObject *>::const_iterator i;
+    for (i = children().constBegin(); i != children().constEnd(); ++i) {
+		ModelPart * mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+
+		mp->saveAsPart(streamWriter, false, partsInsertPosition);
+	}
+
+	if (startDocument) {
+		streamWriter.writeEndElement();
+		streamWriter.writeEndElement();
+		streamWriter.writeEndDocument();
+	}
+}
+
+void ModelPart::initConnectors(bool force) {
+	if(m_modelPartStuff == NULL) return;
+	if(force) {
+		m_connectorHash.clear();
+		m_modelPartStuff->resetConnectorsInitialization();
+	}
+	if(m_connectorHash.count() > 0) return;		// already done
+
+	m_modelPartStuff->initConnectors();
+	foreach (ConnectorStuff * connectorStuff, m_modelPartStuff->connectors()) {
+		Connector * connector = new Connector(connectorStuff, this);
+		m_connectorHash.insert(connectorStuff->id(), connector);
+		BusStuff * busStuff = connectorStuff->bus();
+		if (busStuff != NULL) {
+			Bus * bus = m_busHash.value(busStuff->id());
+			if (bus == NULL) {
+				bus = new Bus(busStuff, this);
+				m_busHash.insert(busStuff->id(), bus);
+			}
+			connector->setBus(bus);
+			bus->addConnector(connector);
+		}
+	}
+}
+
+const QHash<QString, Connector *> & ModelPart::connectors() {
+	return m_connectorHash;
+}
+
+long ModelPart::modelIndex() {
+	return m_index;
+}
+
+void ModelPart::setModelIndex(long index) {
+	m_index = index;
+}
+
+void ModelPart::initConnections(QHash<long, ModelPart *> & partHash) {
+	if (m_instanceDomElement.isNull()) return;
+
+	QDomElement connectors = m_instanceDomElement.firstChildElement("connectors");
+	if (connectors.isNull()) return;
+
+	QDomElement connectorElement = connectors.firstChildElement("connector");
+	while (!connectorElement.isNull()) {
+		Connector * connector = m_connectorHash.value(connectorElement.attribute("connectorId"));
+		if (connector != NULL){
+			QDomElement connectElement = connectorElement.firstChildElement("connect");
+			while (!connectElement.isNull()) {
+				QString connectorID = connectElement.attribute("connectorId");
+				bool ok;
+				int modelIndex = connectElement.attribute("modelIndex").toLong(&ok);
+				if (ok){
+					ModelPart * modelPart = partHash.value(modelIndex);
+					if (modelPart != NULL) {
+						Connector * otherConnector = modelPart->connectors().value(connectorID);
+						if (otherConnector != NULL) {
+							connector->connectTo(otherConnector);
+						}
+						else {
+							QString busID = connectElement.attribute("busId");
+							Bus * theBus = modelPart->bus(busID);
+							if (theBus != NULL) {
+								Connector * busConnector = theBus->busConnector();
+								if (busConnector != NULL) {
+									connector->connectTo(busConnector);
+								}
+							}
+						}
+					}
+				}
+				connectElement = connectElement.nextSiblingElement("connect");
+			}
+		}
+		connectorElement = connectorElement.nextSiblingElement("connector");
+	}
+
+}
+
+void ModelPart::setInstanceDomElement(const QDomElement & domElement) {
+	m_instanceDomElement = domElement;
+}
+
+const QDomElement & ModelPart::instanceDomElement() {
+	return m_instanceDomElement;
+}
+
+const QString & ModelPart::title() {
+	if (m_modelPartStuff != NULL) return m_modelPartStuff->title();
+
+	return ___emptyString___;
+}
+
+const QStringList & ModelPart::tags() {
+	if (m_modelPartStuff != NULL) return m_modelPartStuff->tags();
+
+	return ___emptyStringList___;
+}
+
+const QHash<QString,QString> & ModelPart::properties() {
+	if (m_modelPartStuff != NULL) return m_modelPartStuff->properties();
+
+	return ___emptyStringHash___;
+}
+
+Connector * ModelPart::getConnector(const QString & id) {
+	return m_connectorHash.value(id);
+}
+
+const QHash<QString, Bus *> & ModelPart::buses() {
+	return  m_busHash;
+}
+
+Bus * ModelPart::bus(const QString & busID) {
+	return m_busHash.value(busID);
+}
+
+bool ModelPart::ignoreTerminalPoints() {
+	if (m_modelPartStuff != NULL) return m_modelPartStuff->ignoreTerminalPoints();
+
+	return true;
+}
+
+bool ModelPart::isCore() {
+	return m_core;
+}
+
+void ModelPart::setCore(bool core) {
+	m_core = core;
+}
+
+bool ModelPart::isValid() {
+	return m_valid;
+}
+
+QList<ModelPart*> ModelPart::getAllNonCoreParts() {
+	QList<ModelPart*> retval;
+	foreach (ItemBase * itemBase, m_viewItems) {
+		ModelPart *mp = dynamic_cast<ModelPart*>(itemBase);
+		if(mp && !mp->isCore()) {
+			retval << mp;
+		}
+	}
+	return retval;
+}
