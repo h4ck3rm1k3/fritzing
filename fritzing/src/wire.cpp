@@ -50,6 +50,8 @@ QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QList<QString> Wire::colorNames;
 
+static int colorStringIndex = 0;
+
 Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, true, itemMenu)
 {
@@ -182,7 +184,6 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 			painter->save();
 			painter->setPen(m_shadowPen);
 			QLineF line = this->line();
-			//line.translate(1,1);
 			painter->drawLine(line);
 			painter->restore();
 			ItemBase::paint(painter, option, widget);
@@ -722,7 +723,9 @@ void Wire::setColorString(QString colorName, qreal op) {
 	setColor(c, op);
 
 	colorString = shadowColors.value(colorName);
-	if (colorString.isEmpty() || colorString.isNull()) return;
+	if (colorString.isEmpty() || colorString.isNull()) {
+		return;
+	}
 
 	c.setNamedColor(colorString);
 	setShadowColor(c);
@@ -816,6 +819,7 @@ qreal Wire::opacity() {
 }
 
 QString Wire::randomColorString() {
-	int ix = rand() % colorNames.size();
-	return colorTrans.value(colorNames[ix]);
+	QString colorString = colorTrans.value(colorNames[colorStringIndex]);
+	colorStringIndex = (colorStringIndex + 1) % colorNames.size();
+	return colorString;
 }
