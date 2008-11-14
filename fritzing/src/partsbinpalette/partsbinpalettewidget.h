@@ -66,12 +66,17 @@ class PartsBinPaletteWidget : public FDockWidget {
 
 		void loadFromModel(PaletteModel *model);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
-		void addPart(ModelPart *modelPart);
+		void addPart(ModelPart *modelPart, bool isFromBundled=false);
+		void removePart(const QString& moduleID);
 
 		bool currentBinIsCore();
 		bool beforeClosing();
 
 		PaletteItem * selected();
+		bool hasPartsFromBundled();
+
+	public slots:
+		void removePartsFromBundled();
 
 	protected slots:
 		void toIconView();
@@ -81,6 +86,9 @@ class PartsBinPaletteWidget : public FDockWidget {
 		void open();
 		void openCore();
 		void undoStackCleanChanged(bool isClean);
+
+	signals:
+		void saved(bool hasPartsFromBundled);
 
 	protected:
 		void closeEvent(QCloseEvent* event);
@@ -130,6 +138,8 @@ class PartsBinPaletteWidget : public FDockWidget {
 		QPixmap *m_saveButtonDisabled;
 
 		QUndoStack *m_undoStack;
+
+		QStringList m_partsFromBundled;
 };
 
 #endif /* PARTSBINPALETTEWIDGET_H_ */

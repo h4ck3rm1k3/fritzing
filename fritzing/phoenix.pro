@@ -27,6 +27,14 @@
 CONFIG += debug_and_release
 win32::CONFIG -= embed_manifest_exe
 HEADERS += \
+	src/lib/quazip/crypt.h \
+	src/lib/quazip/ioapi.h \
+	src/lib/quazip/quazip.h \
+	src/lib/quazip/quazipfile.h \
+	src/lib/quazip/quazipfileinfo.h \
+	src/lib/quazip/quazipnewinfo.h \
+	src/lib/quazip/unzip.h \
+	src/lib/quazip/zip.h \
     src/referencemodel/sqlitereferencemodel.h \
     src/referencemodel/referencemodel.h \
     src/referencemodel/daos.h \
@@ -128,6 +136,12 @@ QT += core \
 RC_FILE = fritzing.rc
 RESOURCES += phoenixresources.qrc
 SOURCES += \
+	src/lib/quazip/ioapi.c \
+	src/lib/quazip/quazip.cpp \
+	src/lib/quazip/quazipfile.cpp \
+	src/lib/quazip/quazipnewinfo.cpp \
+	src/lib/quazip/unzip.c \
+	src/lib/quazip/zip.c \
     src/referencemodel/sqlitereferencemodel.cpp \
     src/partsbinpalette/simpleeditablelabelwidget.cpp \
     src/partsbinpalette/partsbinpalettewidget.cpp \

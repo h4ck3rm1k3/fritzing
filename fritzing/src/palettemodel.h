@@ -51,6 +51,7 @@ public:
 	QString loadedFrom();
 	bool load(const QString & fileName, ModelBase* refModel, bool doConnections);
 	ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists=false);
+	void removePart(const QString &moduleID);
 
 signals:
 	void newPartLoaded(ModelPart *);

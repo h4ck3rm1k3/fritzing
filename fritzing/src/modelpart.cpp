@@ -56,6 +56,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	m_modelPartStuff = new ModelPartStuff(domDocument, path);
 	m_partInstanceStuff = new PartInstanceStuff(domDocument, path);
 	m_core = false;
+
 	//TODO Mariano: enough for now
 	QDomElement viewsElems = domDocument->documentElement().firstChildElement("views");
 	if(!viewsElems.isNull()) {
@@ -97,14 +98,10 @@ void ModelPart::setItemType(ItemType t) {
 }
 
 
-void ModelPart::copy(ModelPart * modelPart, bool doConns) {
+void ModelPart::copy(ModelPart * modelPart) {
 	m_type = modelPart->itemType();
 	m_modelPartStuff = modelPart->modelPartStuff();
 	m_core = modelPart->isCore();
-	if(doConns) {
-		m_connectorHash.clear();
-		m_connectorHash = modelPart->connectors();
-	}
 }
 
 void ModelPart::copyNew(ModelPart * modelPart) {
@@ -448,11 +445,55 @@ bool ModelPart::isValid() {
 
 QList<ModelPart*> ModelPart::getAllNonCoreParts() {
 	QList<ModelPart*> retval;
-	foreach (ItemBase * itemBase, m_viewItems) {
-		ModelPart *mp = dynamic_cast<ModelPart*>(itemBase);
-		if(mp && !mp->isCore()) {
+	QList<QObject *>::const_iterator i;
+	for (i = children().constBegin(); i != children().constEnd(); ++i) {
+		ModelPart* mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+
+		if(!mp->isCore()) {
 			retval << mp;
 		}
 	}
+
 	return retval;
+}
+
+QList<StringTriple> ModelPart::getAvailableViewFiles() {
+	QDomElement viewsElems = modelPartStuff()->domDocument()->documentElement().firstChildElement("views");
+	QHash<ItemBase::ViewIdentifier, StringTriple> viewImages;
+
+	grabImagePath(viewImages, viewsElems, ItemBase::IconView);
+	grabImagePath(viewImages, viewsElems, ItemBase::BreadboardView);
+	grabImagePath(viewImages, viewsElems, ItemBase::SchematicView);
+	grabImagePath(viewImages, viewsElems, ItemBase::PCBView);
+
+	return viewImages.values();
+}
+
+void ModelPart::grabImagePath(QHash<ItemBase::ViewIdentifier, StringTriple> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId) {
+	QDomElement viewElem = viewsElems.firstChildElement(ItemBase::viewIdentifierXmlName(viewId));
+	if(!viewElem.isNull()) {
+		QString partspath = getApplicationSubFolderPath("parts")+"/svg";
+		QDomElement layerElem = viewElem.firstChildElement("layers").firstChildElement("layer");
+		while (!layerElem.isNull()) {
+			QString imagepath = layerElem.attribute("image");
+			QString folderinparts = inWhichFolder(partspath, imagepath);
+			if(folderinparts != ___emptyString___) {
+				StringTriple st(partspath,folderinparts,imagepath);
+				viewImages[viewId] = st;
+			}
+			layerElem = layerElem.nextSibling().toElement();
+		}
+	}
+}
+
+QString ModelPart::inWhichFolder(const QString &partspath, const QString &imagepath) {
+	QStringList possibleFolders;
+	possibleFolders << "core" << "contrib" << "user";
+	for(int i=0; i < possibleFolders.size(); i++) {
+		if (QFileInfo( partspath+"/"+possibleFolders[i]+"/"+imagepath ).exists()) {
+			return possibleFolders[i];
+		}
+	}
+	return ___emptyString___;
 }

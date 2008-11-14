@@ -63,7 +63,7 @@ public:
 	ItemType itemType() const { return m_type; };
 	void setItemType(ItemType);
 	const QString & moduleID();
-	void copy(ModelPart *, bool doConns=false);
+	void copy(ModelPart *);
 	void copyNew(ModelPart *);
 	void copyStuff(ModelPart * modelPart);
 	ModelPartStuff * modelPartStuff();
@@ -102,11 +102,15 @@ public:
 	bool isValid();
 
 	QList<ModelPart*> getAllNonCoreParts();
+	QList<StringTriple> getAvailableViewFiles();
 
 protected:
 	void writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue);
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QStringList &values, QString childTag);
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QHash<QString,QString> &values, QString childTag, QString attrName);
+
+	void grabImagePath(QHash<ItemBase::ViewIdentifier, StringTriple> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId);
+	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 
 	QList<ItemBase *> m_viewItems;
 

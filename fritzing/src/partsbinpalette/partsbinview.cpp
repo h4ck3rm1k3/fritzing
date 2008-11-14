@@ -62,6 +62,10 @@ void PartsBinView::addPart(ModelPart * model) {
 	setItemAux(model);
 }
 
+void PartsBinView::removePart(const QString &moduleID) {
+	//TODO Mariano:; remove IT!
+}
+
 void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, const QPointF &dataPoint, const QPoint &hotspot) {
 	QByteArray itemData;
 	QDataStream dataStream(&itemData, QIODevice::WriteOnly);

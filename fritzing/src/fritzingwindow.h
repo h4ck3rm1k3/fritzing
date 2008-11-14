@@ -34,6 +34,9 @@ $Date$
 
 #include "waitpushundostack.h"
 
+#include "lib/quazip/quazip.h"
+#include "lib/quazip/quazipfile.h"
+
 class FritzingWindow : public QMainWindow {
 	Q_OBJECT
 	public:
@@ -57,7 +60,8 @@ class FritzingWindow : public QMainWindow {
 		bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 		void rmdir(const QString &dirPath);
 		void rmdir(QDir & dir);
-		bool createZipAndSave(const QDir &dirToCompress, const QString &filename);
+		bool createZipAndSaveTo(const QDir &dirToCompress, const QString &filename);
+		bool unzipTo(const QString &filepath, const QString &dirToDecompress);
 
 	protected:
 		class WaitPushUndoStack * m_undoStack;

@@ -61,11 +61,14 @@ class MainWindow : public FritzingWindow
 public:
     MainWindow(PaletteModel *, ReferenceModel *refModel);
     MainWindow(QFile & fileToLoad);
-    void load(const QString & fileName);
+    void load(const QString & fileName, bool setAsLastOpened = true);
 	void doOnce();
 
 public:
 	static void initExportConstants();
+
+signals:
+	void partsFromBundledDiscarded();
 
 protected slots:
 	void load();
@@ -154,6 +157,8 @@ protected slots:
 	void saveBundledSketch();
 	void loadBundledSketch();
 
+	void binSaved(bool hasPartsFromBundled);
+
 protected:
     void createActions();
     void createFileMenuActions();
@@ -201,6 +206,13 @@ protected:
 
 	void createTraceMenuActions();
 	void hideShowTraceMenu();
+
+	void moveToPartsFolderAndLoad(const QString &unzipDir);
+	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
+	void copyToPartsFolder(const QFileInfo& file, const QString &destFolder = "contrib");
+
+	void closeIfEmptySketch();
+	bool whatToDoWithFilesAddedFromBundled();
 
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
@@ -266,9 +278,10 @@ protected:
 	QAction *m_closeAct;
 	QAction *m_saveAct;
 	QAction *m_saveAsAct;
-	QAction *m_saveAsBundledAct;
 	QAction *m_pageSetupAct;
 	QAction *m_printAct;
+	QAction *m_saveAsBundledAct;
+	QAction *m_loadBundledAct;
 
 	// Export Menu
 	QMenu *m_exportMenu;
@@ -362,6 +375,8 @@ protected:
 
     ZoomComboBox * m_zoomOptsComboBox;
     bool m_comboboxChanged;
+
+    QStringList m_filesAddedFromBundled;
 
 public:
 	static const int PartsBinDefaultHeight = 220;

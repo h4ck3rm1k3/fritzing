@@ -132,6 +132,16 @@ int main(int argc, char *argv[])
 		for(int i=1; i < argc; i++) {
 			mainWindow->load(argv[i]);
 		}
+	} else {
+		QSettings settings("Fritzing","Fritzing");
+		if(!settings.value("lastOpenSketch").isNull()) {
+			QString lastSketchPath = settings.value("lastOpenSketch").toString();
+			if(QFileInfo(lastSketchPath).exists()) {
+				mainWindow->load(lastSketchPath);
+			} else {
+				settings.remove("lastOpenSketch");
+			}
+		}
 	}
 	mainWindow->show();
 	splash.finish(mainWindow);

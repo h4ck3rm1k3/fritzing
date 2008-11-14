@@ -359,7 +359,7 @@ void MainWindow::setCurrentFile(const QString &fileName) {
 	m_fileName = fileName;
 	setTitle();
 
-    QSettings settings("Fritzing");
+    QSettings settings("Fritzing","Fritzing");
     QStringList files = settings.value("recentFileList").toStringList();
     files.removeAll(fileName);
     files.prepend(fileName);
@@ -530,7 +530,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		return;
 	}
 
-	if(!beforeClosing() || !m_paletteWidget->beforeClosing()) {
+	if(!beforeClosing() || !whatToDoWithFilesAddedFromBundled() ||!m_paletteWidget->beforeClosing()) {
 		event->ignore();
 		return;
 	}
@@ -557,6 +557,31 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	settings.setValue("main/geometry",saveGeometry());
 
 	QMainWindow::closeEvent(event);
+}
+
+bool MainWindow::whatToDoWithFilesAddedFromBundled() {
+	if (m_filesAddedFromBundled.size() > 0) {
+		QMessageBox::StandardButton reply;
+		reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fileName).baseName()),
+									 tr("Do you want to keep the parts that were loaded with this bundled sketch %1?")
+									 .arg(QFileInfo(m_fileName).baseName()),
+									 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		if (reply == QMessageBox::Yes) {
+			return true;
+		} else if (reply == QMessageBox::No) {
+			foreach(QString pathToRemove, m_filesAddedFromBundled) {
+				QFile::remove(pathToRemove);
+			}
+			m_filesAddedFromBundled.clear();
+			emit partsFromBundledDiscarded();
+			return true;
+		}
+		else {
+			return false;
+		}
+	} else {
+		return true;
+	}
 }
 
 
@@ -626,6 +651,7 @@ void MainWindow::createDockWindows()
 	m_infoView = new HtmlInfoView(m_refModel);
 
 	m_paletteWidget = new PartsBinPaletteWidget(m_infoView, this);
+	connect(m_paletteWidget, SIGNAL(saved(bool)), this, SLOT(binSaved(bool)));
 	if (m_paletteModel->loadedFromFile()) {
 		m_paletteWidget->loadFromModel(m_paletteModel);
 	}
@@ -761,37 +787,138 @@ void MainWindow::swapSelected() {
 	if(selInParts) m_currentWidget->swapSelected(selInParts);
 }
 
+#define ZIP_PART QString("part.")
+#define ZIP_SVG  QString("svg.")
+
 void MainWindow::saveBundledSketch() {
 	if(save()) {
 		QDir destFolder = QDir::temp();
-		createFolderAnCdIntoIt(destFolder, QFileInfo(m_fileName).fileName().remove(FritzingExtension));
 
+		createFolderAnCdIntoIt(destFolder, getRandText());
 		QString dirToRemove = destFolder.path();
 
 		QFile file(m_fileName);
 		file.copy(destFolder.path()+"/"+QFileInfo(m_fileName).fileName());
-		DebugDialog::debug("<< copying sketch to "+destFolder.path()+"/"+QFileInfo(m_fileName).fileName());
 
-		createFolderAnCdIntoIt(destFolder, "parts");
-		createFolderAnCdIntoIt(destFolder, "svg");
-		createFolderAnCdIntoIt(destFolder, "contrib");
-		destFolder.cdUp(); destFolder.cdUp(); // now we are at the parts folder again
-		createFolderAnCdIntoIt(destFolder, "contrib");
 		QList<ModelPart*> partsToSave = m_sketchModel->root()->getAllNonCoreParts();
 		foreach(ModelPart* mp, partsToSave) {
 			QString partPath = mp->modelPartStuff()->path();
 			QFile file(partPath);
-			file.copy(destFolder.path()+"/"+QFileInfo(partPath).fileName());
-			// TODO: copy non core part svg files
+			file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
+			QList<StringTriple> views = mp->getAvailableViewFiles();
+			foreach(StringTriple view, views) {
+				if(view.second != "core") {
+					QFile file(view.concat());
+					file.copy(destFolder.path()+"/"+ZIP_SVG+view.third.replace("/","."));
+				}
+			}
 		}
 
-		destFolder.cdUp(); destFolder.cdUp();
-		createZipAndSave(destFolder, m_fileName+".zip");
+		if(!createZipAndSaveTo(destFolder, m_fileName+"z")) {
+			QMessageBox::warning(
+				this,
+				tr("fritzing"),
+				tr("Unable to export %1 to bundled").arg(m_fileName)
+			);
+		}
 
 		rmdir(dirToRemove);
 	}
 }
 
 void MainWindow::loadBundledSketch() {
+	QString path;
+	// if it's the first time load is called use Documents folder
+	if(m_firstOpen){
+		path = defaultSaveFolder();
+		m_firstOpen = false;
+	}
+	else {
+		path = "";
+	}
+	QString fileName = QFileDialog::getOpenFileName( this, "Select a bundled sketch to Open", path, tr("Fritzing (*%1)").arg(FritzingExtension+"z") );
+	if (fileName.isNull()) return;
 
+	QDir destFolder = QDir::temp();
+
+	createFolderAnCdIntoIt(destFolder, getRandText());
+	QString unzipDir = destFolder.path();
+
+	if(!unzipTo(fileName, unzipDir)) {
+		QMessageBox::warning(
+			this,
+			tr("fritzing"),
+			tr("Unable to open bundled file %1").arg(fileName)
+		);
+	}
+
+	moveToPartsFolderAndLoad(unzipDir);
+
+	rmdir(unzipDir);
 }
+
+void MainWindow::moveToPartsFolderAndLoad(const QString &unzipDirPath) {
+	QDir unzipDir(unzipDirPath);
+	QStringList namefilters;
+
+	MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
+
+	namefilters << ZIP_SVG+"*";
+	foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // svg files
+		mw->copyToSvgFolder(file);
+	}
+
+	namefilters.clear();
+	namefilters << ZIP_PART+"*";
+	foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // part files
+		mw->copyToPartsFolder(file);
+	}
+
+	namefilters.clear();
+	namefilters << "*"+FritzingExtension;
+
+	// the sketch itself
+	mw->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false);
+	mw->show();
+	mw->setWindowModified(true);
+
+	closeIfEmptySketch();
+}
+
+void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolder) {
+	QFile svgfile(file.filePath());
+	// let's make sure that we remove just the suffix
+	QString fileName = file.fileName().remove(QRegExp("^"+ZIP_SVG));
+	QString viewFolder = fileName.left(fileName.indexOf("."));
+	fileName.remove(viewFolder+".");
+
+	QString destFilePath = getApplicationSubFolderPath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
+	if(svgfile.copy(destFilePath)) {
+		// TODO Mariano: make a backup if it already exists
+		m_filesAddedFromBundled << destFilePath;
+	}
+}
+
+void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFolder) {
+	QFile partfile(file.filePath());
+	// let's make sure that we remove just the suffix
+	QString destFilePath = getApplicationSubFolderPath("parts")+"/"+destFolder+"/"+file.fileName().remove(QRegExp("^"+ZIP_PART));
+
+	if(partfile.copy(destFilePath)) {
+		// TODO Mariano: make a backup if it already exists
+		m_filesAddedFromBundled << destFilePath;
+	}
+	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
+	m_paletteWidget->addPart(mp, true);
+}
+
+void MainWindow::binSaved(bool hasPartsFromBundled) {
+	if(hasPartsFromBundled) {
+		// the bin will need those parts, so just keep them
+		m_filesAddedFromBundled.clear();
+	}
+}
+
+#undef ZIP_PART
+#undef ZIP_SVG
+

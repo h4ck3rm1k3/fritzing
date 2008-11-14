@@ -287,7 +287,8 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
 	bool sameFamily = family() == newModelPart->modelPartStuff()->family();
 	if(sameFamily) {
 		invalidateConnectors();
-		m_modelPart->copy(newModelPart, true);
+		m_modelPart->copy(newModelPart);
+		m_modelPart->initConnectors(true);
 		renderImage(m_modelPart,m_viewIdentifier,layerHash,m_viewLayerID,false,true);
 		cleanupConnectors();
 		updateTooltip();

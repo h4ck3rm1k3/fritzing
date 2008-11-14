@@ -38,9 +38,6 @@ $Date$
 #include "debugdialog.h"
 #include "misc.h"
 
-//#include "lib/quazip/quazip.h"
-//#include "lib/quazip/quazipfile.h"
-
 const QString FritzingWindow::FritzingExtension = ".fz";
 QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
 const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin.fz";
@@ -183,7 +180,6 @@ bool FritzingWindow::beforeClosing() {
 }
 
 bool FritzingWindow::createFolderAnCdIntoIt(QDir &dir, QString newFolder) {
-	DebugDialog::debug("<<< creating folder "+newFolder+" into "+dir.path());
 	if(!dir.mkdir(newFolder)) return false;
 	if(!dir.cd(newFolder)) return false;
 
@@ -201,7 +197,7 @@ void FritzingWindow::rmdir(QDir & dir) {
 	QStringList files = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
 	for(int i=0; i < files.size(); i++) {
 		QFile tempFile(dir.path() + "/" +files.at(i));
-		DebugDialog::debug(tr("removing folder inside original: %1").arg(tempFile.fileName()));
+		DebugDialog::debug(tr("removing from original folder: %1").arg(tempFile.fileName()));
 		if(QFileInfo(tempFile.fileName()).isDir()) {
 			QDir dir = QDir(tempFile.fileName());
 			rmdir(dir);
@@ -212,47 +208,125 @@ void FritzingWindow::rmdir(QDir & dir) {
 	dir.rmdir(dir.path());
 }
 
-bool FritzingWindow::createZipAndSave(const QDir &dirToCompress, const QString &filename) {
-	/*
-	DebugDialog::debug("<<< zipping "+dirToCompress.path()+" into "+filename);
-	  QuaZip zip(filename);
-	  if(!zip.open(QuaZip::mdCreate)) {
-	    qWarning("testCreate(): zip.open(): %d", zip.getZipError());
-	    return false;
-	  }
-	  QFileInfoList files=dirToCompress.entryInfoList();
-	  QFile inFile;
-	  QuaZipFile outFile(&zip);
-	  char c;
-	  foreach(QFileInfo file, files) {
-	    if(!file.isFile()||file.fileName()==filename) continue;
-	    inFile.setFileName(file.fileName());
-	    if(!inFile.open(QIODevice::ReadOnly)) {
-	    	DebugDialog::debug("<<< "+file.fileName());
-	      qWarning("testCreate(): inFile.open(): %s", inFile.errorString().toLocal8Bit().constData());
-	      return false;
-	    }
-	    if(!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(inFile.fileName(), inFile.fileName()))) {
-	      qWarning("testCreate(): outFile.open(): %d", outFile.getZipError());
-	      return false;
-	    }
-	    while(inFile.getChar(&c)&&outFile.putChar(c)){}
-	    if(outFile.getZipError()!=UNZ_OK) {
-	      qWarning("testCreate(): outFile.putChar(): %d", outFile.getZipError());
-	      return false;
-	    }
-	    outFile.close();
-	    if(outFile.getZipError()!=UNZ_OK) {
-	      qWarning("testCreate(): outFile.close(): %d", outFile.getZipError());
-	      return false;
-	    }
-	    inFile.close();
-	  }
-	  zip.close();
-	  if(zip.getZipError()!=0) {
-	    qWarning("testCreate(): zip.close(): %d", zip.getZipError());
-	    return false;
-	  }
-	  */
-	  return true;
+bool FritzingWindow::createZipAndSaveTo(const QDir &dirToCompress, const QString &filepath) {
+	DebugDialog::debug("zipping "+dirToCompress.path()+" into "+filepath);
+
+	QString tempZipFile = QDir::temp().path()+"/"+getRandText()+".zip";
+	DebugDialog::debug("temp file: "+tempZipFile);
+	QuaZip zip(tempZipFile);
+	if(!zip.open(QuaZip::mdCreate)) {
+		qWarning("zip.open(): %d", zip.getZipError());
+		return false;
+	}
+
+	QFileInfoList files=dirToCompress.entryInfoList();
+	QFile inFile;
+	QuaZipFile outFile(&zip);
+	char c;
+
+	QString currFolderBU = QDir::currentPath();
+	QDir::setCurrent(dirToCompress.path());
+	foreach(QFileInfo file, files) {
+		if(!file.isFile()||file.fileName()==filepath) continue;
+
+		inFile.setFileName(file.fileName());
+
+		if(!inFile.open(QIODevice::ReadOnly)) {
+			qWarning("inFile.open(): %s", inFile.errorString().toLocal8Bit().constData());
+			return false;
+		}
+		if(!outFile.open(QIODevice::WriteOnly, QuaZipNewInfo(inFile.fileName(), inFile.fileName()))) {
+			qWarning("outFile.open(): %d", outFile.getZipError());
+			return false;
+		}
+
+		while(inFile.getChar(&c)&&outFile.putChar(c)){}
+
+		if(outFile.getZipError()!=UNZ_OK) {
+			qWarning("outFile.putChar(): %d", outFile.getZipError());
+			return false;
+		}
+		outFile.close();
+		if(outFile.getZipError()!=UNZ_OK) {
+			qWarning("outFile.close(): %d", outFile.getZipError());
+			return false;
+		}
+		inFile.close();
+	}
+	zip.close();
+	QDir::setCurrent(currFolderBU);
+
+	QFile file(tempZipFile);
+	file.copy(filepath);
+	file.remove();
+
+	if(zip.getZipError()!=0) {
+		qWarning("zip.close(): %d", zip.getZipError());
+		return false;
+	}
+	return true;
+}
+
+
+bool FritzingWindow::unzipTo(const QString &filepath, const QString &dirToDecompress) {
+	QuaZip zip(filepath);
+	if(!zip.open(QuaZip::mdUnzip)) {
+		qWarning("zip.open(): %d", zip.getZipError());
+		return false;
+	}
+	zip.setFileNameCodec("IBM866");
+	DebugDialog::debug(QString("unzipping %1 entries from %2").arg(zip.getEntriesCount()).arg(filepath));
+	QuaZipFileInfo info;
+	QuaZipFile file(&zip);
+	QFile out;
+	QString name;
+	char c;
+	for(bool more=zip.goToFirstFile(); more; more=zip.goToNextFile()) {
+		if(!zip.getCurrentFileInfo(&info)) {
+			qWarning("getCurrentFileInfo(): %d\n", zip.getZipError());
+			return false;
+		}
+
+		if(!file.open(QIODevice::ReadOnly)) {
+			qWarning("file.open(): %d", file.getZipError());
+			return false;
+		}
+		name=file.getActualFileName();
+		if(file.getZipError()!=UNZ_OK) {
+			qWarning("file.getFileName(): %d", file.getZipError());
+			return false;
+		}
+
+		out.setFileName(dirToDecompress+"/"+name);
+		// this will fail if "name" contains subdirectories, but we don't mind that
+		if(!out.open(QIODevice::WriteOnly)) {
+			qWarning("out.open(): %s", out.errorString().toLocal8Bit().constData());
+			return false;
+		}
+		// Slow like hell (on GNU/Linux at least), but it is not my fault.
+		// Not ZIP/UNZIP package's fault either.
+		// The slowest thing here is out.putChar(c).
+		while(file.getChar(&c)) out.putChar(c);
+
+		out.close();
+		if(file.getZipError()!=UNZ_OK) {
+			qWarning("file.getFileName(): %d", file.getZipError());
+			return false;
+		}
+		if(!file.atEnd()) {
+			qWarning("read all but not EOF");
+			return false;
+		}
+		file.close();
+		if(file.getZipError()!=UNZ_OK) {
+			qWarning("file.close(): %d", file.getZipError());
+			return false;
+		}
+	}
+	zip.close();
+	if(zip.getZipError()!=UNZ_OK) {
+		qWarning("zip.close(): %d", zip.getZipError());
+		return false;
+	}
+	return true;
 }

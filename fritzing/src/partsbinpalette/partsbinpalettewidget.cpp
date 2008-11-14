@@ -147,6 +147,8 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	}
 	m_model->save(filename);
 	m_undoStack->setClean();
+
+	emit saved(hasPartsFromBundled());
 }
 
 void PartsBinPaletteWidget::loadFromModel(PaletteModel *model) {
@@ -175,7 +177,7 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_binTitle->setText(model->root()->modelPartStuff()->title(), false);
 }
 
-void PartsBinPaletteWidget::addPart(ModelPart *modelPart) {
+void PartsBinPaletteWidget::addPart(ModelPart *modelPart, bool isFromBundled) {
 	ModelPart *mp = m_model->addModelPart(m_model->root(),modelPart);
 
 	bool updating = alreadyIn(mp->moduleID());
@@ -183,6 +185,10 @@ void PartsBinPaletteWidget::addPart(ModelPart *modelPart) {
 	m_listView->addPart(mp);
 	if(!updating) {
 		m_undoStack->push(new QUndoCommand("Parts Bin: new part added"));
+	}
+
+	if(isFromBundled) {
+		m_partsFromBundled << mp->moduleID();
 	}
 }
 
@@ -360,4 +366,22 @@ PaletteItem * PartsBinPaletteWidget::selected() {
 
 bool PartsBinPaletteWidget::alreadyIn(QString moduleID) {
 	return m_iconView->alreadyIn(moduleID);
+}
+
+bool PartsBinPaletteWidget::hasPartsFromBundled() {
+	return m_partsFromBundled.size() > 0;
+}
+
+void PartsBinPaletteWidget::removePart(const QString& moduleID) {
+	m_model->removePart(moduleID);
+
+	m_iconView->removePart(moduleID);
+	m_listView->removePart(moduleID);
+}
+
+void PartsBinPaletteWidget::removePartsFromBundled() {
+	foreach(QString moduleID, m_partsFromBundled) {
+		removePart(moduleID);
+	}
+	m_partsFromBundled.clear();
 }

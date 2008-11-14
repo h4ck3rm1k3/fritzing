@@ -223,7 +223,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 
 	modelPart->setCore(m_loadingCore);
 
-	if (partHash.contains(moduleID)) {
+	if (partHash.contains(moduleID) && partHash[moduleID]) {
 		if(!update) {
 			QMessageBox::warning(NULL, QObject::tr("Fritzing"),
 							 QObject::tr("The part '%1' at '%2' does not have a unique module id '%3'.")
@@ -288,4 +288,8 @@ ModelPart * PaletteModel::addPart(QString newPartPath, bool addToReference, bool
 	}
 
 	return modelPart;
+}
+
+void PaletteModel::removePart(const QString &moduleID) {
+	//TODO Mariano:; remove IT!
 }

@@ -410,9 +410,13 @@ void MainWindow::load() {
     file.close();
 
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
-    mw->load(fileName);
-    mw->show();
+	mw->load(fileName);
+	mw->show();
 
+	closeIfEmptySketch();
+}
+
+void MainWindow::closeIfEmptySketch() {
 	// close empty sketch window if user opens from a file
 	if (isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty())
 	{
@@ -420,13 +424,18 @@ void MainWindow::load() {
 	}
 }
 
-void MainWindow::load(const QString & fileName) {
+void MainWindow::load(const QString & fileName, bool setAsLastOpened) {
 	m_sketchModel->load(fileName, m_paletteModel, true);
 	//m_sketchModel->load(fileName, m_refModel, true);
 
 	m_breadboardGraphicsView->loadFromModel();
 	m_pcbGraphicsView->loadFromModel();
 	m_schematicGraphicsView->loadFromModel();
+
+	if(setAsLastOpened) {
+		QSettings settings("Fritzing","Fritzing");
+		settings.setValue("lastOpenSketch",fileName);
+	}
 
 	setCurrentFile(fileName);
 	UntitledSketchIndex--;
@@ -529,6 +538,9 @@ void MainWindow::createFileMenuActions() {
 	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and it's non-core part"));
 	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
 
+	m_loadBundledAct = new QAction(tr("Load &Bundled sketch"), this);
+	m_loadBundledAct->setStatusTip(tr("Load bundled sketch and it's non-core part"));
+	connect(m_loadBundledAct, SIGNAL(triggered()), this, SLOT(loadBundledSketch()));
 
 	m_exportJpgAct = new BetterTriggerAction(tr("to &JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
@@ -864,13 +876,14 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_newAct);
     m_fileMenu->addAction(m_newFromTemplateAct);
     m_fileMenu->addAction(m_openAct);
+    m_fileMenu->addAction(m_loadBundledAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
     m_fileMenu->addSeparator();
     m_fileMenu->addAction(m_closeAct);
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);
-    //m_fileMenu->addAction(m_saveAsBundledAct);
+    m_fileMenu->addAction(m_saveAsBundledAct);
     m_fileMenu->addSeparator();
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));
     m_fileMenu->addAction(m_pageSetupAct);
@@ -1285,6 +1298,9 @@ void MainWindow::openInPartsEditor() {
 void MainWindow::createNewSketch() {
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
     mw->show();
+
+    QSettings settings("Fritzing","Fritzing");
+    settings.remove("lastOpenSketch");
 }
 
 void MainWindow::createNewSketchFromTemplate() {
@@ -1296,7 +1312,7 @@ void MainWindow::minimize() {
 }
 
 void MainWindow::toggleToolbar(bool toggle) {
-        Q_UNUSED(toggle);
+	Q_UNUSED(toggle);
 	/*if(toggle) {
 		this->m_fileToolBar->show();
 		this->m_editToolBar->show();
