@@ -280,7 +280,11 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 
 	s += 		 "<table>\n";
 	s += QString("<tr><td class='subhead' colspan='2'>Properties</td></tr>\n");
+#ifndef QT_NO_DEBUG
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
+#else
+	Q_UNUSED(id);
+#endif
 	QHash<QString,QString> properties = modelPart->modelPartStuff()->properties();
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("family").arg(properties["family"]);
 	QString select = wireColorsSelect(wire);
@@ -373,7 +377,11 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 
 	s += 		 "<table>\n";
 	s += QString("<tr><td class='subhead' colspan='2'>Properties</td></tr>\n");
+#ifndef QT_NO_DEBUG
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
+#else
+	Q_UNUSED(id)
+#endif
 	QHash<QString,QString> properties = modelPart->modelPartStuff()->properties();
 	QString family = properties["family"].toLower();
 	for(int i=0; i < properties.keys().size(); i++) {
