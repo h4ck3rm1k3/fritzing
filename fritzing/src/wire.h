@@ -150,6 +150,7 @@ public:
 protected:
 	static QHash<QString, QString> shadowColors;
 	static QHash<QString, QString> colors;
+	static QList<QString> ratsnestColors;
 
 signals:
 	void wireChangedSignal(Wire* me, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);

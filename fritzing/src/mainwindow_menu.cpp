@@ -27,6 +27,7 @@ $Date$
 
 
 #include <QtGui>
+#include <QSvgGenerator>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -154,6 +155,15 @@ void MainWindow::exportDiy(QAction * action) {
 	painter.begin(&image);
 	m_pcbGraphicsView->render(&painter);
 	painter.end();
+
+	/*
+	QSvgGenerator svgGenerator;
+	svgGenerator.setFileName("c:/fritzing2/testsvggenerator.svg");
+    svgGenerator.setSize(QSize(width, height));
+	QPainter svgPainter(&svgGenerator);
+	m_pcbGraphicsView->render(&svgPainter);
+	svgPainter.end();
+	*/
 		
 	m_pcbGraphicsView->hideConnectors(false);
 	m_pcbGraphicsView->setBackground(color);

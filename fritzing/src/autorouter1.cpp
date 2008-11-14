@@ -338,8 +338,6 @@ void Autorouter1::updateRatsnest(bool routed) {
 void Autorouter1::dykstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency) {
 	// TODO: this is the most straightforward dykstra, but there are more efficient implementations
 
-	// TODO: if there are any vertices connected by "do not autoroute" then set their adjacency distance to zero		
-
 	int count = vertices.count();
 
 	int leastDistanceStartIndex = 0;
@@ -358,6 +356,10 @@ void Autorouter1::dykstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem
 				double d = 0;
 				Wire * wire = ci->wiredTo(cj, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
 				if (wire && !wire->getAutoroutable()) {
+					// do not autoroute--user says leave it alone
+				}
+				else if (ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
+					// if connections are on the same bus on a given part
 				}
 				else {
 					QPointF pi = ci->sceneAdjustedTerminalPoint();

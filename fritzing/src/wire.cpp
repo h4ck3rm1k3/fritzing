@@ -49,6 +49,7 @@ QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QList<QString> Wire::colorNames;
+QList<QString> Wire::ratsnestColors;
 
 static QHash<ItemBase::ViewIdentifier, int> colorStringIndex;
 
@@ -764,6 +765,9 @@ void Wire::initNames() {
 	colors.insert("trace",  "#ffbf00");
 	colors.insert("unrouted", "#000000");
 	colors.insert("routed", "#7d7d7d");
+	colors.insert("purple", "#b673e6");
+	colors.insert("orange", "#ff7033");
+	colors.insert("brown", "#8c3b00");
 	
 	shadowColors.insert("red",	"#990000");
 	shadowColors.insert("black",	"#363636");
@@ -780,6 +784,13 @@ void Wire::initNames() {
 	colorStringIndex.insert(ItemBase::SchematicView, 0);
 	colorStringIndex.insert(ItemBase::PCBView, 0);
 
+	ratsnestColors.append("black");
+	ratsnestColors.append("blue");
+	ratsnestColors.append("green");
+	ratsnestColors.append("white");
+	ratsnestColors.append("purple");
+	ratsnestColors.append("orange");
+	ratsnestColors.append("brown");
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)
@@ -825,8 +836,8 @@ qreal Wire::opacity() {
 
 QString Wire::randomColorString(ItemBase::ViewIdentifier viewIdentifier) {
 	int csi = colorStringIndex.value(viewIdentifier);
-	QString colorString = colorTrans.value(colorNames[csi]);
-	csi = (csi + 1) % colorNames.size();
+	QString colorString = ratsnestColors[csi];
+	csi = (csi + 1) % ratsnestColors.count();
 	colorStringIndex.insert(viewIdentifier, csi);
 	return colorString;
 }
