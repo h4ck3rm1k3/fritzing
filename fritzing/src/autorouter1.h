@@ -43,9 +43,11 @@ public:
 	~Autorouter1(void);
 
 	void start(QProgressDialog *);
+	
+public:
+	static void dykstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency);
 
 protected:
-	void dykstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency);
 	void drawTrace(class ConnectorItem * from, class ConnectorItem * to, const QPolygonF & boundingPoly);
 	bool drawTrace(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, const QPolygonF & boundingPoly);
 	bool tryLeftAndRight(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QPointF right, QPointF left, QList<class Wire *> & wires, const QPolygonF & boundingPoly);

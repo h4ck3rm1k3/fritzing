@@ -228,10 +228,6 @@ protected:
 	void killDroppingItem();
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
 	ItemBase * overSticky(ItemBase *);
-	//BusConnectorItem * loadOneBusConnector(ModelPart * mp, QDomElement & bus,
-	//								   QHash<long, ItemBase *> & newItems,
-	//								   const QString & viewName,
-	//								   QList<BusMergeThing *> & merged);
 	void cleanUpWiresAux();
 	void tempDisconnectWire(ConnectorItem * fromConnectorItem, QMultiHash<ConnectorItem *, ConnectorItem *> & connectionState);
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
@@ -242,6 +238,7 @@ protected:
 
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
 	void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
+	class Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 

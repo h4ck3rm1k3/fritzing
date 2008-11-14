@@ -189,12 +189,11 @@ void ModelBase::save(const QString & fileName, bool asPart) {
 
     QXmlStreamWriter streamWriter(&file1);
     streamWriter.setAutoFormatting(true);
-    qint64 partsInsertPosition = 0;
 
     if(asPart) {
-    	m_root->saveAsPart(streamWriter, true, partsInsertPosition);
+    	m_root->saveAsPart(streamWriter, true);
     } else {
-    	m_root->saveInstances(streamWriter, true, partsInsertPosition);
+    	m_root->saveInstances(streamWriter, true);
     }
 
 	file1.close();

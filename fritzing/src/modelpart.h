@@ -71,8 +71,8 @@ public:
 	PartInstanceStuff *partInstanceStuff();
 	void setPartInstanceStuff(PartInstanceStuff *partInstanceStuff);
 	void saveParts(QTextStream & textStream, QHash<QString, ModelPartStuff *> & mpsList);
-	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition);
-	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition);
+	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument);
+	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
 	void addViewItem(ItemBase *);
 	void removeViewItem(ItemBase *);
 	ItemBase * viewItem(QGraphicsScene * scene);

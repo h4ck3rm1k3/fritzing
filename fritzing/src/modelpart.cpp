@@ -170,14 +170,11 @@ void ModelPart::saveParts(QTextStream & textStream, QHash<QString, ModelPartStuf
 	}
 }
 
-void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition) {
+void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocument) {
 	if (startDocument) {
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
 		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
-		//streamWriter.writeCharacters("\n\n");
-		//partsInsertPosition = streamWriter.device()->pos();
-		//streamWriter.writeCharacters("\n\n");
 		QString title = this->modelPartStuff()->title();
 		if(!title.isNull() && !title.isEmpty()) {
 			streamWriter.writeTextElement("title",title);
@@ -213,7 +210,7 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		ModelPart* mp = qobject_cast<ModelPart *>(*i);
 		if (mp == NULL) continue;
 
-		mp->saveInstances(streamWriter, false, partsInsertPosition);
+		mp->saveInstances(streamWriter, false);
 	}
 
 	streamWriter.writeEndElement();
@@ -251,7 +248,7 @@ void ModelPart::writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName,
 	streamWriter.writeEndElement();
 }
 
-void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument, qint64 & partsInsertPosition) {
+void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) {
 	if (startDocument) {
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
@@ -298,7 +295,7 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument, 
 		ModelPart * mp = qobject_cast<ModelPart *>(*i);
 		if (mp == NULL) continue;
 
-		mp->saveAsPart(streamWriter, false, partsInsertPosition);
+		mp->saveAsPart(streamWriter, false);
 	}
 
 	if (startDocument) {

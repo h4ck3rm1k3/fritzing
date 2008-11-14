@@ -57,7 +57,7 @@ $Date$
 #include "layerattributes.h"
 #include "waitpushundostack.h"
 #include "zoomcombobox.h"
-
+#include "autorouter1.h"
 
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -175,7 +175,7 @@ void SketchWidget::loadFromModel() {
 
 		QDomElement view = views.firstChildElement(viewName);
 		if (view.isNull()) continue;
-
+		
 		QDomElement geometry = view.firstChildElement("geometry");
 		if (geometry.isNull()) continue;
 
@@ -201,12 +201,12 @@ void SketchWidget::loadFromModel() {
 			itemDoms.insert(item, new QDomElement(view));
 		}
 	}
-
+	
 	foreach (ItemBase * itemBase, itemDoms.keys()) {
 		QDomElement * dom = itemDoms.value(itemBase);
 		itemBase->restoreConnections(*dom,  newItems);
 		delete dom;
-	}
+	}	
 
 
 	// redraw the ratsnest
@@ -215,14 +215,16 @@ void SketchWidget::loadFromModel() {
 			foreach (QGraphicsItem * childItem, newItem->childItems()) {
 				ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
 				if (fromConnectorItem == NULL) continue;
-
+				
 				foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+					/*
 					DebugDialog::debug(QString("restoring ratsnest: %1 %2, %3 %4")
 						.arg(fromConnectorItem->attachedToTitle())
 						.arg(fromConnectorItem->connectorStuffID())
 						.arg(toConnectorItem->attachedToTitle())
 						.arg(toConnectorItem->connectorStuffID())
 						);
+					*/
 					dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
 				}
 			}
@@ -247,7 +249,7 @@ void SketchWidget::loadFromModel() {
 			connectorItems.append(allConnectorItems[0]);
 			BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::RatsnestFlag);
 			BusConnectorItem::collectParts(connectorItems, ratPartsConnectorItems);
-
+			
 			connectorItems.clear();
 			busConnectorItems.clear();
 			connectorItems.append(allConnectorItems[0]);
@@ -785,7 +787,7 @@ Bus * SketchWidget::hookToBus(ConnectorItem * from, ConnectorItem * busTo, QUndo
 	return bus;
 }
 
-long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, bool toIsBus, ViewGeometry::WireFlags wireFlags,
+long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, bool toIsBus, ViewGeometry::WireFlags wireFlags, 
 							  bool addItNow, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID();
@@ -2720,51 +2722,76 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 
 		QList <Wire *> ratsnestWires;
 		Wire * modelWire = NULL;
+		
+		if (m_viewIdentifier == ItemBase::PCBView) {
+			int count = partsConnectorItems.count();
+			for (int i = 0; i < count - 1; i++) {
+				ConnectorItem * source = partsConnectorItems[i];
+				for (int j = i + 1; j < count; j++) {
+					ConnectorItem * dest = partsConnectorItems[j];
+					// if you can't get from i to j via wires, then add a virtual ratsnest wire
+					Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
+					if (tempWire == NULL) {
+						Wire * newWire = makeOneRatsnestWire(source, dest);
+						ratsnestWires.append(newWire);
+						if (source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {						
+							newWire->setRouted(true);
+						}
 
-		int count = partsConnectorItems.count();
-		for (int i = 0; i < count - 1; i++) {
-			ConnectorItem * source = partsConnectorItems[i];
-			for (int j = i + 1; j < count; j++) {
-				ConnectorItem * dest = partsConnectorItems[j];
-
-				// if you can't get from i to j via wires, then add a virtual ratsnest wire
-				Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
-				if (tempWire == NULL) {
-					long newID = ItemBase::getNextID();
-					ViewGeometry viewGeometry;
-					QPointF fromPos = source->sceneAdjustedTerminalPoint();
-					viewGeometry.setLoc(fromPos);
-					QPointF toPos = dest->sceneAdjustedTerminalPoint();
-					QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-					viewGeometry.setLine(line);
-					viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);
-
-					/*
-					DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
-						.arg(newID)
-						.arg(fromPos.x()).arg(fromPos.y())
-						.arg(toPos.x()).arg(toPos.y())
-						.arg(source->attachedToTitle()).arg(source->connectorStuffID())
-						.arg(dest->attachedToTitle()).arg(dest->connectorStuffID())
-						.arg(m_viewIdentifier)
-						);
-					*/
-
-					ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
-					tempConnectWire(newItemBase, source, dest);
-					Wire * newWire = dynamic_cast<Wire *>(newItemBase);
-					ratsnestWires.append(newWire);
-					if ((m_viewIdentifier == ItemBase::PCBView) && source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
-						newWire->setRouted(true);
 					}
-
-
-				}
-				else {
-					modelWire = tempWire;
+					else {
+						modelWire = tempWire;
+					}
 				}
 			}
 		}
+		else /* if (m_viewIdentifier == ItemBase::SchematicView) */
+		{
+			// TODO:  add the bus connector items, if they have multiple connections
+			// TODO: set all the bus connectors at the average location of the connected items
+			// TODO: if drag one bus connector, move all merged
+			
+			// delete all the ratsnest wires before running dykstra
+			int count = partsConnectorItems.count();
+			for (int i = 0; i < count - 1; i++) {
+				ConnectorItem * source = partsConnectorItems[i];
+				for (int j = i + 1; j < count; j++) {
+					ConnectorItem * dest = partsConnectorItems[j];
+					// if you can't get from i to j via wires, then add a virtual ratsnest wire
+					Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
+					if (tempWire != NULL) {
+						deleteItem(tempWire, false, false);
+					}
+				}
+			}			
+						
+			QHash<ConnectorItem *, int> indexer;
+			int ix = 0;
+			foreach (ConnectorItem * connectorItem, partsConnectorItems) {
+				indexer.insert(connectorItem, ix++);
+			}
+			
+			QVector< QVector<double> *> adjacency(count);
+			for (int i = 0; i < count; i++) {
+				QVector<double> * row = new QVector<double>(count);
+				adjacency[i] = row;
+			}
+			
+			Autorouter1::dykstra(partsConnectorItems, indexer, adjacency);
+			
+			foreach (QVector<double> * row, adjacency) {
+				delete row;
+			}			
+
+			count = partsConnectorItems.count();
+			for (int i = 0; i < count - 1; i++) {
+				ConnectorItem * source = partsConnectorItems[i];
+				ConnectorItem * dest = partsConnectorItems[i + 1];
+				Wire * newWire = makeOneRatsnestWire(source, dest);
+				ratsnestWires.append(newWire);						
+			}
+		}
+		
 
 		QString colorString;
 		if (modelWire) {
@@ -2776,7 +2803,8 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 		foreach (Wire * wire, ratsnestWires) {
 			wire->setColorString(colorString, wire->getRouted() ? 0.35 : 1.0);
 		}
-
+				
+		
 		return;
 	}
 
@@ -2803,6 +2831,33 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 		}
 	}
 }
+
+Wire * SketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest) {
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	QPointF fromPos = source->sceneAdjustedTerminalPoint();
+	viewGeometry.setLoc(fromPos);
+	QPointF toPos = dest->sceneAdjustedTerminalPoint();
+	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
+	viewGeometry.setLine(line);
+	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);
+	
+	/*
+	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
+	 .arg(newID)
+	 .arg(fromPos.x()).arg(fromPos.y())
+	 .arg(toPos.x()).arg(toPos.y())
+	 .arg(source->attachedToTitle()).arg(source->connectorStuffID())
+	 .arg(dest->attachedToTitle()).arg(dest->connectorStuffID())
+	 .arg(m_viewIdentifier)
+	 );
+	 */
+	
+	ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
+	tempConnectWire(newItemBase, source, dest);
+	return  dynamic_cast<Wire *>(newItemBase);
+}
+
 
 void SketchWidget::tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to) {
 	Wire * wire = dynamic_cast<Wire *>(itemBase);
@@ -3516,7 +3571,7 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 	}
 }
 
-void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
+void SketchWidget::changeWireColor(const QString &wireTitle, long wireId, 
 								   const QString& oldColor, const QString newColor,
 								   qreal oldOpacity, qreal newOpacity) {
 	QUndoCommand* parentCommand = new QUndoCommand(
@@ -3618,7 +3673,7 @@ void SketchWidget::createTrace() {
 	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, colorString);
 }
 
-void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag, const QString & colorString)
+void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag, const QString & colorString) 
 {
 	QList<QGraphicsItem *> items = scene()->selectedItems();
 	if (items.count() != 1) return;
@@ -3627,7 +3682,7 @@ void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeomet
 	if (wire == NULL) return;
 
 	if (!wire->getRatsnest()) return;
-
+	
 	QList<ConnectorItem *> ends;
 	Wire * jumperOrTrace = wire->findJumperOrTraced(flag, ends);
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);

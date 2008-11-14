@@ -339,6 +339,7 @@ void Autorouter1::dykstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem
 	// TODO: this is the most straightforward dykstra, but there are more efficient implementations
 
 	int count = vertices.count();
+	if (count < 2) return;
 
 	int leastDistanceStartIndex = 0;
 	double leastDistance = 0;
