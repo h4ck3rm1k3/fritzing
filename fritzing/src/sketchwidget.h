@@ -38,7 +38,6 @@ $Date$
 #include <QHash>
 
 #include "paletteitem.h"
-#include "wire.h"
 #include "palettemodel.h"
 #include "sketchmodel.h"
 #include "viewgeometry.h"
@@ -225,7 +224,7 @@ protected:
 	void keyPressEvent ( QKeyEvent * event );
 	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
 	void clearTemporaries();
-	void dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorItem * to);
+	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	void killDroppingItem();
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
 	ItemBase * overSticky(ItemBase *);
@@ -288,9 +287,9 @@ protected slots:
 	void sketchWidget_allItemsSelected(bool state);
 	void sketchWidget_tooltipAppliedToItem(long id, const QString& text);
 	void scene_selectionChanged();
-	void wire_wireChanged(Wire*, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
-	void wire_wireSplit(Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
-	void wire_wireJoin(Wire*, ConnectorItem * clickedConnectorItem);
+	void wire_wireChanged(class Wire*, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
+	void wire_wireSplit(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
+	void wire_wireJoin(class Wire*, ConnectorItem * clickedConnectorItem);
 	void toggleLayerVisibility(QAction *);
 	void sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID);
 	void sketchWidget_wireDisconnected(long fromID, QString fromConnectorID);

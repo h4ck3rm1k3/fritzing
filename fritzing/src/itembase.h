@@ -150,6 +150,7 @@ signals:
 public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
+	static qint64 getNextID(qint64 fromIndex);
 
 
 protected:

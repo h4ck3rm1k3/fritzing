@@ -113,7 +113,7 @@ public:
 	static QString moduleIDName;
 	static void initNames();
 	static QRgb getRgb(const QString & name);
-	static QString randomColorString();
+	static QString randomColorString(ItemBase::ViewIdentifier);
 
 protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);

@@ -113,6 +113,15 @@ qint64 ItemBase::getNextID() {
 	return temp;
 }
 
+qint64 ItemBase::getNextID(qint64 index) {
+	qint64 temp = index * 10;						// make sure we leave room for layerkin inbetween
+	if (nextID <= temp) {
+		nextID = temp + 10;
+	}
+	return temp;
+}
+
+
 QSize ItemBase::size() {
 	return m_size;
 }

@@ -498,14 +498,14 @@ void BusConnectorItem::initialize(ItemBase::ViewIdentifier viewIdentifier, Conne
 			break;
 		case ItemBase::PCBView:
 			// hide busConnectors in PCB view, but...
-			mergeGraphicsDelay(NULL, true, viewIdentifier);
-			setVisible(true);
+			//mergeGraphicsDelay(NULL, true, viewIdentifier);
+			setVisible(false);
 			break;
 		case ItemBase::SchematicView:
 			//mergeGraphicsDelay(NULL, false, viewIdentifier);
 			// make it the same for now
-			mergeGraphicsDelay(NULL, true, viewIdentifier);
-			setVisible(true);
+			//mergeGraphicsDelay(NULL, true, viewIdentifier);
+			setVisible(false);
 			break;
 		default:
 			m_initialized = false;

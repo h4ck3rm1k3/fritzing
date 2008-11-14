@@ -180,7 +180,8 @@ void SketchWidget::loadFromModel() {
 		if (geometry.isNull()) continue;
 
 		ViewGeometry viewGeometry(geometry);
-		ItemBase * item = addItemAux(mp, viewGeometry, ItemBase::getNextID(), NULL, true);
+		// use a function of the model index to ensure the same parts have the same ID across views
+		ItemBase * item = addItemAux(mp, viewGeometry, ItemBase::getNextID(mp->modelIndex()), NULL, true);
 		if (item != NULL) {
 			PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
 			if (paletteItem) {
@@ -205,7 +206,8 @@ void SketchWidget::loadFromModel() {
 		QDomElement * dom = itemDoms.value(itemBase);
 		itemBase->restoreConnections(*dom,  newItems);
 		delete dom;
-	}			
+	}	
+
 
 	// redraw the ratsnest
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
@@ -251,7 +253,6 @@ void SketchWidget::loadFromModel() {
 			connectorItems.append(allConnectorItems[0]);
 			BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
 			BusConnectorItem::collectParts(connectorItems, tracePartsConnectorItems);
-			DebugDialog::debug(QString("tp count %1; rp count %2").arg(tracePartsConnectorItems.count()).arg(ratPartsConnectorItems.count()) );
 			if (tracePartsConnectorItems.count() != ratPartsConnectorItems.count()) {
 				autorouted = false;
 				allConnectorItems.clear();
@@ -285,68 +286,6 @@ void SketchWidget::loadFromModel() {
 	this->scene()->clearSelection();
 	cleanUpWires(false);
 }
-
-/*
-BusConnectorItem * SketchWidget::loadOneBusConnector(ModelPart * mp, QDomElement & bus,
-									   QHash<long, ItemBase *> & newItems,
-									   const QString & viewName,
-									   QList<BusMergeThing *> & merged)
-{
-	QString busID = bus.attribute("id");
-
-	QDomElement views = bus.firstChildElement("views");
-	if (views.isNull()) return NULL;
-
-	QDomElement view = views.firstChildElement(viewName);
-	if (view.isNull()) return NULL;
-
-	QString tokenHolderConnectorID = view.attribute("tokenHolderConnectorID");
-	bool ok;
-	long modelIndex = view.attribute("tokenHolderModelIndex").toLong(&ok);
-	if (!ok) return NULL;
-
-	ItemBase * tokenHolder = newItems.value(modelIndex);
-	if (tokenHolder == NULL) return NULL;
-
-	ItemBase * attachedTo = newItems.value(mp->modelIndex());
-	if (attachedTo == NULL) return NULL;
-
-	QDomElement geometry = view.firstChildElement("geometry");
-	if (geometry.isNull()) return NULL;
-
-	ViewGeometry viewGeometry(geometry);
-	BusConnectorItem * bci = this->initializeBusConnectorItem(attachedTo->id(), busID, tokenHolder->id(), tokenHolderConnectorID, false);
-	if (bci == NULL) return NULL;
-
-	QRectF r = bci->rect();
-	r.moveTo(viewGeometry.loc());
-	bci->setRect(r);
-
-	QString mergeParentBusID = view.attribute("mergeParentBusID");
-	if (!mergeParentBusID.isNull()) {
-		long ix = view.attribute("mergeParentModelIndex").toLong(&ok);
-		if (ok) {
-			ItemBase * mergeParent = newItems.value(ix);
-			if (mergeParent != NULL) {
-				BusMergeThing * bmt = new BusMergeThing();
-				bmt->bci = bci;
-				bmt->busID = mergeParentBusID;
-				bmt->itemBase = mergeParent;
-				merged.append(bmt);
-			}
-		}
-	}
-
-
-	QRectF rect = bci->rect();
-	DebugDialog::debug(QString("bci id:%1 z:%2, rect: %3 %4 %5 %6, v: %7")
-						.arg(bci->attachedToID()).arg(bci->zValue())
-						.arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height()).arg(bci->isVisible()) );
-
-	return bci;
-
-}
-*/
 
 ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id) {
 	if (m_paletteModel == NULL) return NULL;
@@ -2832,7 +2771,7 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 			colorString = modelWire->colorString();
 		}
 		else {
-			colorString = Wire::randomColorString();
+			colorString = Wire::randomColorString(m_viewIdentifier);
 		}
 		foreach (Wire * wire, ratsnestWires) {
 			wire->setColorString(colorString, wire->getRouted() ? 0.35 : 1.0);
@@ -2988,10 +2927,10 @@ void SketchWidget::mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF 
 		if (m_viewIdentifier == ItemBase::SchematicView) {
 			//item1->mergeGraphicsDelay(item2, false, m_viewIdentifier);
 			// make them the same for now
-			item1->mergeGraphicsDelay(item2, true, m_viewIdentifier);
+			//item1->mergeGraphicsDelay(item2, true, m_viewIdentifier);
 		}
 		else if (m_viewIdentifier == ItemBase::PCBView) {
-			item1->mergeGraphicsDelay(item2, true, m_viewIdentifier);
+			//item1->mergeGraphicsDelay(item2, true, m_viewIdentifier);
 		}
 	}
 	else {
@@ -3003,10 +2942,10 @@ void SketchWidget::mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF 
 		if (m_viewIdentifier == ItemBase::SchematicView) {
 			//item1->unmergeGraphics(item2, false, m_viewIdentifier, bus2Pos);
 			// make them the same for now
-			item1->unmergeGraphics(item2, true, m_viewIdentifier, bus2Pos);
+			//item1->unmergeGraphics(item2, true, m_viewIdentifier, bus2Pos);
 		}
 		else if (m_viewIdentifier == ItemBase::PCBView) {
-			item1->unmergeGraphics(item2, true, m_viewIdentifier, bus2Pos);
+			//item1->unmergeGraphics(item2, true, m_viewIdentifier, bus2Pos);
 		}
 	}
 
