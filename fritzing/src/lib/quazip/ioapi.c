@@ -70,8 +70,11 @@ voidpf ZCALLBACK fopen_file_func (opaque, filename, mode)
    const char* filename;
    int mode;
 {
+	#ifndef _WINDOWS 
     (void) opaque; /* avoid "unused parameter" warning */
-    FILE* file = NULL;
+	#endif
+
+	FILE* file = NULL;
     const char* mode_fopen = NULL;
     if ((mode & ZLIB_FILEFUNC_MODE_READWRITEFILTER)==ZLIB_FILEFUNC_MODE_READ)
         mode_fopen = "rb";
@@ -94,7 +97,10 @@ uLong ZCALLBACK fread_file_func (opaque, stream, buf, size)
    void* buf;
    uLong size;
 {
+	#ifndef _WINDOWS 
     (void) opaque; /* avoid "unused parameter" warning */
+	#endif
+
     uLong ret;
     ret = (uLong)fread(buf, 1, (size_t)size, (FILE *)stream);
     return ret;
@@ -107,7 +113,10 @@ uLong ZCALLBACK fwrite_file_func (opaque, stream, buf, size)
    const void* buf;
    uLong size;
 {
+	#ifndef _WINDOWS 
     (void) opaque; /* avoid "unused parameter" warning */
+	#endif
+
     uLong ret;
     ret = (uLong)fwrite(buf, 1, (size_t)size, (FILE *)stream);
     return ret;
@@ -117,7 +126,9 @@ long ZCALLBACK ftell_file_func (opaque, stream)
    voidpf opaque;
    voidpf stream;
 {
+	#ifndef _WINDOWS 
     (void) opaque; /* avoid "unused parameter" warning */
+	#endif
     long ret;
     ret = ftell((FILE *)stream);
     return ret;
@@ -129,8 +140,11 @@ long ZCALLBACK fseek_file_func (opaque, stream, offset, origin)
    uLong offset;
    int origin;
 {
+	#ifndef _WINDOWS 
     (void) opaque; /* avoid "unused parameter" warning */
-    int fseek_origin=0;
+	#endif
+
+	int fseek_origin=0;
     long ret;
     switch (origin)
     {
@@ -154,7 +168,10 @@ int ZCALLBACK fclose_file_func (opaque, stream)
    voidpf opaque;
    voidpf stream;
 {
-    (void) opaque; /* avoid "unused parameter" warning */
+	#ifndef _WINDOWS 
+	(void) opaque; /* avoid "unused parameter" warning */
+	#endif
+
     int ret;
     ret = fclose((FILE *)stream);
     return ret;
@@ -164,8 +181,11 @@ int ZCALLBACK ferror_file_func (opaque, stream)
    voidpf opaque;
    voidpf stream;
 {
+	#ifndef _WINDOWS 
     (void) opaque; /* avoid "unused parameter" warning */
-    int ret;
+	#endif
+
+	int ret;
     ret = ferror((FILE *)stream);
     return ret;
 }

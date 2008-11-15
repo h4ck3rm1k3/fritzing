@@ -34,9 +34,6 @@ $Date$
 
 #include "waitpushundostack.h"
 
-#include "lib/quazip/quazip.h"
-#include "lib/quazip/quazipfile.h"
-
 class FritzingWindow : public QMainWindow {
 	Q_OBJECT
 	public:

@@ -38,6 +38,9 @@ $Date$
 #include "debugdialog.h"
 #include "misc.h"
 
+#include "lib/quazip/quazip.h"
+#include "lib/quazip/quazipfile.h"
+
 const QString FritzingWindow::FritzingExtension = ".fz";
 QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
 const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin.fz";
