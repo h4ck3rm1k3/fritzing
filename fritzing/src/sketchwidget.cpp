@@ -552,18 +552,8 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	QSet <VirtualWire *> virtualWires;
 	QList<ItemBase *> deletedItems;
-
-	// collect all the bus connectors in the scene, so we can figure out which ones
-	// will need to be deleted or split up
-	// this seems like the quickest approach since we may be deleting many items
 	QList<BusConnectorItem *> busConnectorItems;
-
-	// TODO replace scene()->items()
-	QList<QGraphicsItem *> items = scene()->items();
-	for (int i = 0; i < items.count(); i++) {
-		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(items[i]);
-		if (busConnectorItem != NULL) busConnectorItems.append(busConnectorItem);
-	}
+	collectBusConnectorItems(busConnectorItems);
 
 	// the theory is that we only need to disconnect virtual wires at this point
 	// and not regular connectors
@@ -601,10 +591,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		}
    	}
 
-	disconnectVirtualWires(virtualWires, parentCommand);
-	reorgBuses(busConnectorItems, parentCommand);
-	deleteVirtualWires(virtualWires, parentCommand);
-	//deleteOrphanBuses(busConnectorItems, parentCommand, false);
+	cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
 
 	for (int i = 0; i < deletedItems.count(); i++) {
 		ItemBase * itemBase = deletedItems[i];
@@ -1541,17 +1528,8 @@ void SketchWidget::checkMoved()
 	}
 
 	QSet <VirtualWire *> virtualWires;
-	// collect all the bus connectors in the scene, so we can figure out which ones
-	// will need to be deleted or split up
-	// this seems like the quickest approach since we may be moving many items
-
-	// TODO: replace scene()->items()
 	QList<BusConnectorItem *> busConnectorItems;
-	QList<QGraphicsItem *> items = scene()->items();
-	for (int i = 0; i < items.count(); i++) {
-		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(items[i]);
-		if (busConnectorItem != NULL) busConnectorItems.append(busConnectorItem);
-	}
+	collectBusConnectorItems(busConnectorItems);
 
 	QUndoCommand * parentCommand = new QUndoCommand(moveString);
 	new CleanUpWiresCommand(this, false, parentCommand);
@@ -1571,43 +1549,7 @@ void SketchWidget::checkMoved()
 
 		if (item->itemType() == ModelPart::Wire) continue;
 
-		if (m_viewIdentifier == ItemBase::BreadboardView) {
-			// if item is attached to a virtual wire or a female connector in breadboard view
-			// then disconnect it
-			// at the moment, I think this doesn't apply to other views
-
-			foreach (QGraphicsItem * childItem, item->childItems()) {
-				ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-				if (fromConnectorItem == NULL) continue;
-
-				foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
-					if (toConnectorItem->connectorType() == Connector::Female) {
-						if (m_savedItems.contains(toConnectorItem->attachedTo())) {
-							// the thing we're connected to is also moving, so don't disconnect
-							continue;
-						}
-						extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
-						fromConnectorItem->tempRemove(toConnectorItem);
-						toConnectorItem->tempRemove(fromConnectorItem);
-					}
-					else if (toConnectorItem->attachedTo()->getVirtual()) {
-						VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
-						ConnectorItem * realci = virtualWire->otherConnector(toConnectorItem)->firstConnectedToIsh();
-						if (realci != NULL) {
-							ItemBase * otherEnd = realci->attachedTo();
-							if (m_savedItems.contains(otherEnd)) {
-								// the thing we're connected to is also moving, so don't disconnect
-								continue;
-							}
-						}
-						else {
-							DebugDialog::debug("why is this only connected to a virtual item?");
-						}
-						virtualWires.insert(virtualWire);
-					}
-				}
-			}
-		}
+		disconnectFromFemale(item, m_savedItems, virtualWires, parentCommand);
 	}
 
 	QList<ConnectorItem *> keys = m_needToConnectItems.keys();
@@ -1621,12 +1563,7 @@ void SketchWidget::checkMoved()
 		extendChangeConnectionCommand(from, to, true, false, parentCommand);
 	}
 
-	disconnectVirtualWires(virtualWires, parentCommand);
-	reorgBuses(busConnectorItems, parentCommand);
-	deleteVirtualWires(virtualWires, parentCommand);
-	//deleteOrphanBuses(busConnectorItems, parentCommand, true);
-
-
+	cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
 	clearTemporaries();
 
 	m_needToConnectItems.clear();
@@ -1909,10 +1846,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 			}
 
-			disconnectVirtualWires(virtualWires, parentCommand);
-			reorgBuses(busConnectorItems, parentCommand);
-			deleteVirtualWires(virtualWires, parentCommand);
-			//deleteOrphanBuses(busConnectorItems, parentCommand, true);
+			cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
 		}
 		if (to != NULL) {
 			extendChangeConnectionCommand(from, to, true, false, parentCommand);
@@ -2405,96 +2339,71 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 
 
 void SketchWidget::rotateX(qreal degrees) {
-	DebugDialog::debug(tr("rotate is visible %1").arg(this->isVisible()) );
-
-
-	if (!this->isVisible()) return;
-
-	clearHoldingSelectItem();
-
-	int rotateCount = 0;
-	QList <QGraphicsItem *> items = scene()->selectedItems();
-
-	ItemBase * saveBase = NULL;
-	for (int i = 0; i < items.size(); i++) {
-		// can't rotate wires or layerkin (layerkin rotated indirectly)
-		PaletteItem *item = dynamic_cast<PaletteItem *>(items[i]);
-		if (item == NULL) continue;
-
-		saveBase = ItemBase::extractItemBase(items[i]);
-		rotateCount++;
-	}
-
-	if (rotateCount <= 0) {
-		return;
-	}
-
-	QString string;
-	QString viewName = ItemBase::viewIdentifierName(m_viewIdentifier);
-
-	if (rotateCount == 1) {
-		string = tr("Rotate %2 (%1)").arg(viewName).arg(saveBase->modelPart()->title());
-	}
-	else {
-		string = tr("Rotate %2 items (%1)").arg(viewName).arg(QString::number(rotateCount));
-	}
-
-	m_undoStack->beginMacro(string);
-	for (int i = 0; i < items.size(); i++) {
-		PaletteItem *item = dynamic_cast<PaletteItem *>(items[i]);
-		if (item == NULL) continue;
-
-		RotateItemCommand *rotateItemCommand = new RotateItemCommand(this, item->id(), degrees);
-		m_undoStack->push(rotateItemCommand);
-	}
-	m_undoStack->endMacro();
-
+	rotateFlip(degrees, 0);
 }
 
+
 void SketchWidget::flip(Qt::Orientations orientation) {
-	DebugDialog::debug(tr("flip is visible %1").arg(this->isVisible()) );
+	rotateFlip(0, orientation);
+}
 
-
+void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation) 
+{
 	if (!this->isVisible()) return;
 
 	clearHoldingSelectItem();
 
-	int flipCount = 0;
 	QList <QGraphicsItem *> items = scene()->selectedItems();
+	QList <PaletteItem *> targets;
 
-	ItemBase * saveBase = NULL;
 	for (int i = 0; i < items.size(); i++) {
 		// can't rotate wires or layerkin (layerkin rotated indirectly)
 		PaletteItem *item = dynamic_cast<PaletteItem *>(items[i]);
 		if (item == NULL) continue;
 
-		saveBase = ItemBase::extractItemBase(items[i]);
-		flipCount++;
+		targets.append(item);
 	}
 
-	if (flipCount <= 0) {
+	if (targets.count() <= 0) {
 		return;
 	}
 
-	QString string;
-	QString viewName = ItemBase::viewIdentifierName(m_viewIdentifier);
 
-	if (flipCount == 1) {
-		string = tr("Flip %2 (%1)").arg(viewName).arg(saveBase->modelPart()->title());
-	}
-	else {
-		string = tr("Flip %2 items (%1)").arg(viewName).arg(QString::number(flipCount));
+	QSet <VirtualWire *> virtualWires;
+	QList<BusConnectorItem *> busConnectorItems;
+	collectBusConnectorItems(busConnectorItems);
+
+	QString string = tr("%3 %2 (%1)")
+			.arg(ItemBase::viewIdentifierName(m_viewIdentifier))
+			.arg((targets.count() == 1) ? targets[0]->modelPart()->title() : QString::number(targets.count()) + " items" )
+			.arg((degrees != 0) ? tr("Rotate") : tr("Flip"));
+
+	QUndoCommand * parentCommand = new QUndoCommand(string);
+	new CleanUpWiresCommand(this, false, parentCommand);
+
+	QList<ItemBase *> emptyList;			// used for a move command
+	foreach (PaletteItem * item, targets) {
+		disconnectFromFemale(item, emptyList, virtualWires, parentCommand);
+
+		if (item->sticky()) {
+			//TODO: apply transformation to stuck items
+		}
+		// TODO: if item has female connectors, then apply transform to connected items
+
+		if (degrees != 0) {
+			new RotateItemCommand(this, item->id(), degrees, parentCommand);
+		}
+		else {
+			new FlipItemCommand(this, item->id(), orientation, parentCommand);
+		}
+		
 	}
 
-	m_undoStack->beginMacro(string);
-	for (int i = 0; i < items.size(); i++) {
-		PaletteItem *item = dynamic_cast<PaletteItem *>(items[i]);
-		if (item == NULL) continue;
+	cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
+	clearTemporaries();
 
-		FlipItemCommand *flipItemCommand = new FlipItemCommand(this, item->id(), orientation);
-		m_undoStack->push(flipItemCommand);
-	}
-	m_undoStack->endMacro();
+	new CleanUpWiresCommand(this, true, parentCommand);
+	m_undoStack->push(parentCommand);
 
 }
 
@@ -3751,4 +3660,70 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	if(Wire* wire = dynamic_cast<Wire*>(item)) {
 		wire->setWireFlags(wireFlags);
 	}
+}
+
+void SketchWidget::collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems) {
+	// collect all the bus connectors in the scene, so we can figure out which ones
+	// will need to be split up
+	// this seems like the quickest approach since we may be moving/rotating/flipping/deleting many items
+
+	// TODO: replace scene()->items()
+
+	foreach (QGraphicsItem * item,  scene()->items()) {
+		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(item);
+		if (busConnectorItem != NULL && busConnectorItem->connectionsCount() > 0) {
+			busConnectorItems.append(busConnectorItem);
+		}
+	}
+}
+
+void SketchWidget::disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <VirtualWire *> & virtualWires, QUndoCommand * parentCommand) 
+{
+	// TODO: if pcbview, clear autorouting
+
+	if (m_viewIdentifier != ItemBase::BreadboardView) {
+		return;
+	}
+
+	// if item is attached to a virtual wire or a female connector in breadboard view
+	// then disconnect it
+	// at the moment, I think this doesn't apply to other views
+
+	foreach (QGraphicsItem * childItem, item->childItems()) {
+		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (fromConnectorItem == NULL) continue;
+
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
+			if (toConnectorItem->connectorType() == Connector::Female) {
+				if (savedItems.contains(toConnectorItem->attachedTo())) {
+					// the thing we're connected to is also moving, so don't disconnect
+					continue;
+				}
+				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
+				fromConnectorItem->tempRemove(toConnectorItem);
+				toConnectorItem->tempRemove(fromConnectorItem);
+			}
+			else if (toConnectorItem->attachedTo()->getVirtual()) {
+				VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
+				ConnectorItem * realci = virtualWire->otherConnector(toConnectorItem)->firstConnectedToIsh();
+				if (realci != NULL) {
+					ItemBase * otherEnd = realci->attachedTo();
+					if (savedItems.contains(otherEnd)) {
+						// the thing we're connected to is also moving, so don't disconnect
+						continue;
+					}
+				}
+				else {
+					DebugDialog::debug("why is this only connected to a virtual item?");
+				}
+				virtualWires.insert(virtualWire);
+			}
+		}
+	}
+}
+
+void SketchWidget::cleanUpVirtualWires(QSet<VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand) {
+	disconnectVirtualWires(virtualWires, parentCommand);
+	reorgBuses(busConnectorItems, parentCommand);
+	deleteVirtualWires(virtualWires, parentCommand);
 }

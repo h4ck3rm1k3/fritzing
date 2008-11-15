@@ -156,14 +156,14 @@ void MainWindow::exportDiy(QAction * action) {
 	m_pcbGraphicsView->render(&painter);
 	painter.end();
 
-	/*
+	
 	QSvgGenerator svgGenerator;
 	svgGenerator.setFileName("c:/fritzing2/testsvggenerator.svg");
-    svgGenerator.setSize(QSize(width, height));
+    svgGenerator.setSize(QSize(width * 8, height * 8));
 	QPainter svgPainter(&svgGenerator);
 	m_pcbGraphicsView->render(&svgPainter);
 	svgPainter.end();
-	*/
+	
 		
 	m_pcbGraphicsView->hideConnectors(false);
 	m_pcbGraphicsView->setBackground(color);
@@ -1160,7 +1160,8 @@ void MainWindow::updateTraceMenu() {
 void MainWindow::group() {
 	if (m_currentWidget == NULL) return;
 
-	m_currentWidget->group();
+	notYetImplemented("Group");
+	//m_currentWidget->group();
 }
 
 void MainWindow::zoomIn() {

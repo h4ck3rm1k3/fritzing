@@ -241,7 +241,11 @@ protected:
 	class Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
-
+	void rotateFlip(qreal degrees, Qt::Orientations orientation);
+	void collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems);
+	void disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
+	void cleanUpVirtualWires(QSet<class VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
+	
 protected:
 	static bool lessThan(int a, int b);
 	static bool greaterThan(int a, int b);
