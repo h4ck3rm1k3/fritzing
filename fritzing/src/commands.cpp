@@ -337,53 +337,26 @@ qreal ChangeZCommand::second(RealPair * pair) {
 	return pair->second;
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-AddBusConnectorItemCommand::AddBusConnectorItemCommand(SketchWidget* sketchWidget, long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID, bool add, QUndoCommand *parent)
-: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
-{
-	// TODO: sketch widget should pass in a ViewGeometry
-	m_add = add;
-	m_busOwnerID = busOwnerID;
-	m_busID = busID;
-	m_tokenHolderID = tokenHolderID;
-	m_tokenHolderConnectorID = tokenHolderConnectorID;
-}
 
-void AddBusConnectorItemCommand::undo()
-{
-	m_sketchWidget->addBusConnectorItem(m_busOwnerID, m_busID, m_tokenHolderID, m_tokenHolderConnectorID, !m_add, true);
-}
-
-void AddBusConnectorItemCommand::redo()
-{
-	m_sketchWidget->addBusConnectorItem(m_busOwnerID, m_busID, m_tokenHolderID, m_tokenHolderConnectorID, m_add, true);
-}
-*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 InitializeBusConnectorItemCommand::InitializeBusConnectorItemCommand(SketchWidget* sketchWidget, long busOwnerID, const QString & busID,
-																	 long oldTokenHolderID, const QString & oldTokenHolderConnectorID,
-																	 long newTokenHolderID, const QString & newTokenHolderConnectorID, QUndoCommand *parent)
+																	 QUndoCommand *parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
 	// TODO: sketch widget should pass in a ViewGeometry
 	m_busOwnerID = busOwnerID;
 	m_busID = busID;
-	m_newTokenHolderID = newTokenHolderID;
-	m_newTokenHolderConnectorID = newTokenHolderConnectorID;
-	m_oldTokenHolderID = oldTokenHolderID;
-	m_oldTokenHolderConnectorID = oldTokenHolderConnectorID;
 }
 
 void InitializeBusConnectorItemCommand::undo()
 {
-	m_sketchWidget->initializeBusConnectorItem(m_busOwnerID, m_busID, m_oldTokenHolderID, m_oldTokenHolderConnectorID, true);
+	m_sketchWidget->initializeBusConnectorItem(m_busOwnerID, m_busID, true);
 }
 
 void InitializeBusConnectorItemCommand::redo()
 {
-	m_sketchWidget->initializeBusConnectorItem(m_busOwnerID, m_busID, m_newTokenHolderID, m_newTokenHolderConnectorID, true);
+	m_sketchWidget->initializeBusConnectorItem(m_busOwnerID, m_busID, true);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

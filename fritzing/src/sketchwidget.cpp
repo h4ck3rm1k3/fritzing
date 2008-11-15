@@ -762,11 +762,10 @@ Bus * SketchWidget::hookToBus(ConnectorItem * from, ConnectorItem * busTo, QUndo
 	}
 	else {
 		if (!busConnectorItem->initialized()) {
-			new InitializeBusConnectorItemCommand(this, busConnectorItem->attachedToID(), busConnectorItem->busID(),
-						busConnectorItem->tokenHolder()->attachedToID(), busConnectorItem->tokenHolder()->connectorStuffID(),
-						from->attachedToID(), from->connectorStuffID(), parentCommand);
+			new InitializeBusConnectorItemCommand(this, busConnectorItem->attachedToID(), busConnectorItem->busID(),						
+												  parentCommand);
 			// do it now anyway
-			busConnectorItem->initialize(m_viewIdentifier, from);
+			busConnectorItem->initialize(m_viewIdentifier);
 		}
 
 	}
@@ -1029,23 +1028,6 @@ void SketchWidget::copy() {
 			}
 		}
     }
-
-	/*
-	// copy bus connectors
-	dataStream << busConnectors.count();
-	QSet<BusConnectorItem *>::const_iterator bcit = busConnectors.constBegin();
-	while (bcit != busConnectors.constEnd()) {
-		BusConnectorItem* bci = *bcit;
-		DebugDialog::debug(QString("copy bus %1 %2 %3 %4")
-						   .arg( bci->attachedToID() )
-						   .arg( bci->busID())
-						   .arg( bci->tokenHolder()->attachedToID() )
-						   .arg(bci->tokenHolder()->connectorStuffID()) );
-
-		dataStream << (qint64) bci->attachedToID() << bci->busID() << (qint64) bci->tokenHolder()->attachedToID() << bci->tokenHolder()->connectorStuffID();
-		++bcit;
-	}
-	*/
 
 	// copy virtual wires
 	dataStream << virtualWires.count();
@@ -2817,9 +2799,9 @@ void SketchWidget::item_connectionChanged(ConnectorItem * from, ConnectorItem * 
 	}
 }
 
-BusConnectorItem * SketchWidget::initializeBusConnectorItem(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID, bool doEmit)
+BusConnectorItem * SketchWidget::initializeBusConnectorItem(long busOwnerID, const QString & busID, bool doEmit)
 {
-	DebugDialog::debug(QString("initializing bus %1 %2, %3 %4, %5 v:%6").arg(busOwnerID).arg(busID).arg(tokenHolderID).arg(tokenHolderConnectorID).arg(m_viewIdentifier) );
+	DebugDialog::debug(QString("initializing bus %1 %2, %3 ").arg(busOwnerID).arg(busID).arg(m_viewIdentifier) );
 
 	ItemBase * busItemBase = findItem(busOwnerID);
 	if (busItemBase == NULL) return NULL;
@@ -2827,27 +2809,21 @@ BusConnectorItem * SketchWidget::initializeBusConnectorItem(long busOwnerID, con
 	Bus * bus = busItemBase->buses().value(busID);
 	if (bus == NULL) return NULL;
 
-	ItemBase * tokenHolderBase = findItem(tokenHolderID);
-	if (tokenHolderBase == NULL) return NULL;
-
-	ConnectorItem * tokenHolder = findConnectorItem(tokenHolderBase, tokenHolderConnectorID, true);
-	if (tokenHolder == NULL) return NULL;
-
 	BusConnectorItem * busConnectorItem = busItemBase->busConnectorItem(busID);
 	if (busConnectorItem != NULL) {
-		busConnectorItem->initialize(m_viewIdentifier, tokenHolder);
+		busConnectorItem->initialize(m_viewIdentifier);
 	}
 
 	if (doEmit) {
-		emit initializeBusConnectorItemSignal(busOwnerID, busID, tokenHolderID, tokenHolderConnectorID);
+		emit initializeBusConnectorItemSignal(busOwnerID, busID);
 	}
 
 	return busConnectorItem;
 }
 
 
-void SketchWidget::sketchWidget_initializeBusConnectorItem(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID) {
-	initializeBusConnectorItem(busOwnerID, busID, tokenHolderID, tokenHolderConnectorID, false);
+void SketchWidget::sketchWidget_initializeBusConnectorItem(long busOwnerID, const QString & busID) {
+	initializeBusConnectorItem(busOwnerID, busID, false);
 }
 
 void SketchWidget::keyPressEvent ( QKeyEvent * event ) {

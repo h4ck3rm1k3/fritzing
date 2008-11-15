@@ -432,7 +432,7 @@ void PaletteItemBase::setUpConnectors(QSvgRenderer * renderer, bool ignoreTermin
 		if (bus != NULL) {
 			BusConnectorItem * busConnectorItem = m_busConnectorItems.value(bus);
 			if (busConnectorItem == NULL) {
-				busConnectorItem = new BusConnectorItem(this, bus, connectorItem);
+				busConnectorItem = new BusConnectorItem(this, bus);
 				addBusConnectorItem(bus, busConnectorItem);
 				busConnectorItem->setVisible(false);
 			}

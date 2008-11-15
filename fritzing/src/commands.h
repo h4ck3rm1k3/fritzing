@@ -214,30 +214,11 @@ protected:
     QHash<long, RealPair *> m_triplets;
 };
 
-/*
-class AddBusConnectorItemCommand : public BaseCommand
-{
-public:
-	AddBusConnectorItemCommand(class SketchWidget *sketchWidget, long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID,  bool add, QUndoCommand *parent = 0);
-    void undo();
-    void redo();
-
-protected:
-	long m_busOwnerID;
-	QString m_busID;
-	long m_tokenHolderID;
-	QString m_tokenHolderConnectorID;
-	bool m_add;
-	ViewGeometry m_viewGeometry;
-};
-*/
 
 class InitializeBusConnectorItemCommand : public BaseCommand
 {
 public:
 	InitializeBusConnectorItemCommand(class SketchWidget *sketchWidget, long busOwnerID, const QString & busID,
-										long oldTokenHolderID, const QString & oldTokenHolderConnectorID,
-										long newTokenHolderID, const QString & newTokenHolderConnectorID,
 										QUndoCommand *parent = 0);
     void undo();
     void redo();
@@ -245,10 +226,6 @@ public:
 protected:
 	long m_busOwnerID;
 	QString m_busID;
-	long m_oldTokenHolderID;
-	QString m_oldTokenHolderConnectorID;
-	long m_newTokenHolderID;
-	QString m_newTokenHolderConnectorID;
 	ViewGeometry m_viewGeometry;
 };
 

@@ -54,7 +54,7 @@ static QBrush _connectedBrush(QColor(0,0,0));
 
 static int size = 12;
 
-BusConnectorItem::BusConnectorItem( ItemBase * busOwner, Bus * bus, ConnectorItem * tokenHolder ) :
+BusConnectorItem::BusConnectorItem( ItemBase * busOwner, Bus * bus) :
 	ConnectorItem(NULL, NULL)
 {
 	m_connector = bus->busConnector();
@@ -64,7 +64,6 @@ BusConnectorItem::BusConnectorItem( ItemBase * busOwner, Bus * bus, ConnectorIte
 	if (bus != NULL) {
 		bus->addViewItem(this);
 	}
-	m_tokenHolder = tokenHolder;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setRect(QRectF(0, 0, size, size));
 	m_terminalPoint.setX(size / 2);
@@ -172,11 +171,6 @@ void BusConnectorItem::adjustConnectedItems() {
 	}
 }
 
-ConnectorItem * BusConnectorItem::tokenHolder() {
-	return m_tokenHolder;
-}
-
-
 const QList<BusConnectorItem *> & BusConnectorItem::merged() {
 	return m_merged;
 }
@@ -193,23 +187,8 @@ const QString & BusConnectorItem::connectorStuffID() {
 void BusConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
 	ConnectorItem::writeTopLevelAttributes(writer);
 
-	if (m_tokenHolder == NULL) {
-		// this shouldn't happen
-		return;
-	}
-
 	// do not write anything other than attributes in this routine.
 	writer.writeAttribute("busId", connectorStuffID());
-	
-	// probably most of this will become obsolete
-	writer.writeAttribute("tokenHolderConnectorID", m_tokenHolder->connectorStuffID());
-	writer.writeAttribute("tokenHolderModelIndex", QString::number(m_tokenHolder->connector()->modelIndex()));
-	BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(this->parentItem());
-	if (bci != NULL) {
-		writer.writeAttribute("mergeParentBusID", bci->busID());
-		writer.writeAttribute("mergeParentModelIndex", QString::number(bci->connector()->modelIndex()) );
-	}
-
 }
 
 
@@ -325,160 +304,17 @@ void BusConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QLi
 }
 
 
-void BusConnectorItem::mergeGraphics(BusConnectorItem * child, bool hookTokenHolder) {
-	BusConnectorItemGroup * group = dynamic_cast<BusConnectorItemGroup *>(this->parentItem());
-	if (group == NULL) {
-		group = new BusConnectorItemGroup(NULL);
-		group->setFlag(QGraphicsItem::ItemIsMovable, true);
-		scene()->addItem(group);
-		group->addToGroup(this);
-		group->setPos(this->pos());
-		this->setPos(QPointF(0,0));
-		if (hookTokenHolder) {
-			bool success = QObject::connect(m_tokenHolder->attachedTo(), SIGNAL(posChangedSignal()), 
-											group, SLOT(posChangedSlot()) );
-
-			DebugDialog::debug(QString("merge connect result %1 %2 %3 %4").arg(m_tokenHolder->attachedToTitle())
-				.arg(m_tokenHolder->attachedToID())
-				.arg(m_tokenHolder->connectorStuffID())
-				.arg(success) );
-		}
-	}
-
-	if (child != NULL) {
-		if (child->parentItem() != group) {
-			QGraphicsItemGroup * oldGroup = dynamic_cast<QGraphicsItemGroup *>(child->parentItem());
-			if (oldGroup != NULL) {
-				foreach (QGraphicsItem * childItem, oldGroup->childItems()) {
-					group->addToGroup(childItem);
-					childItem->setPos(0,0);
-					dynamic_cast<BusConnectorItem *>(childItem)->adjustConnectedItems();
-				}
-				scene()->removeItem(oldGroup);
-				delete oldGroup;
-			}
-			else {
-				group->addToGroup(child);
-				child->setPos(QPointF(0, 0));
-				child->adjustConnectedItems();
-			}
-		}
-	}
-	
-}
-
-void BusConnectorItem::unmergeGraphics(BusConnectorItem * child, bool hookTokenHolder, ItemBase::ViewIdentifier viewIdentifier, QPointF childPos) {
-	BusConnectorItemGroup * group = dynamic_cast<BusConnectorItemGroup *>(this->parentItem());
-	if (group == NULL) return;
-
-	if (child->parentItem() == group) {
-		group->removeFromGroup(child);
-		child->setPos(childPos);
-		child->mergeGraphicsDelay(NULL, hookTokenHolder, viewIdentifier);
-	}
-}
-
-void BusConnectorItem::mergeGraphicsDelay(BusConnectorItem * child, bool hookTokenHolder, ItemBase::ViewIdentifier viewIdentifier)
-{
-	BusConnectorTimer * timer = new BusConnectorTimer(child, hookTokenHolder, viewIdentifier);
-	timer->setSingleShot(true);
-	timer->setInterval(10);
-	connect(timer, SIGNAL(betterTimeout(BetterTimer *)), this, SLOT(mergeGraphicsSlot(BetterTimer *)) );
-	timer->start();
-}
-
-void BusConnectorItem::mergeGraphicsSlot(BetterTimer * betterTimer) {
-	BusConnectorTimer * busConnectorTimer = dynamic_cast<BusConnectorTimer *>(betterTimer);
-	if (busConnectorTimer != NULL) {
-		if (busConnectorTimer->busConnectorItem() == NULL) {
-			initGraphics(busConnectorTimer->viewIdentifier());
-		}
-		mergeGraphics(busConnectorTimer->busConnectorItem(), busConnectorTimer->hookTokenHolder());
-		/*
-		DebugDialog::debug(QString("bc post get pos %1 %2 %3 %4 %5")
-				.arg(this->mapToScene(this->pos()).x())
-				.arg(this->mapToScene(this->pos()).y())
-				.arg(this->m_tokenHolder->attachedToID())
-				.arg(this->m_tokenHolder->attachedToTitle())
-				.arg(this->m_tokenHolder->connectorStuffID()) );
-		*/
-	}
-}
-
-void BusConnectorItem::initGraphics(ItemBase::ViewIdentifier viewIdentifier) 
-{
-	switch (viewIdentifier) {
-	case ItemBase::PCBView:
-	case ItemBase::SchematicView:				// make it the same for now
-		{
-			QRectF rect = this->rect();
-			rect.moveTo(0,0);
-			QPointF p = m_tokenHolder->sceneAdjustedTerminalPoint() - rect.center();
-			this->setPos(p);
-			
-			DebugDialog::debug(QString("bc pre  get pos %1 %2 %3 %4 %5 %6")
-					.arg(p.x())
-					.arg(p.y())
-					.arg(viewIdentifier)
-					.arg(m_tokenHolder->attachedToID())
-					.arg(m_tokenHolder->attachedToTitle())
-					.arg(m_tokenHolder->connectorStuffID()) );
-			setVisible(false);
-		}			
-		break;
-	/*
-	case ItemBase::SchematicView:
-		{
-			// find a reasonable place to stick a bus connector near one of the borders of the part attached to the bus
-			// based on shortest distance to one of the borders
-			QPointF pos = m_tokenHolder->adjustedTerminalPoint();
-			QRectF rect = m_tokenHolder->attachedTo()->boundingRect();
-			static QPoint points[] = {QPoint(-20, 0), QPoint(0, -20), QPoint(20, 0), QPoint(0, 20) };
-			qreal dt = qAbs(pos.y() - rect.top());
-			qreal db =  qAbs(pos.y() - rect.bottom());
-			qreal dl = qAbs(pos.x() - rect.left());
-			qreal dr = qAbs(pos.x() - rect.right());
-			int x, y, yix, xix;
-			if (dt <= db) {
-				yix = 1;
-				y = dt;
-			}
-			else {
-				yix = 3;
-				y = db;
-			}
-			if (dl <= dr) {
-				xix = 0;
-				x = dl;
-			}
-			else {
-				xix = 2;
-				x = dr;
-			}
-			int ix = (x <= y) ? xix : yix;
-
-			QPointF bpos = m_tokenHolder->mapToScene(pos + points[ix] - this->rect().center());
-			DebugDialog::debug(QString("bpos %1 %2").arg(bpos.x()).arg(bpos.y()) );
-			QRectF r = this->rect();
-			r.moveTo(bpos);
-			//setRect(r);
-			setPos(bpos);
-			setVisible(true);
-		}
-		break;
-	*/
-	default:
-		break;
-	}
-}
-
 bool BusConnectorItem::initialized() {
 	return m_initialized;
 }
 
-void BusConnectorItem::initialize(ItemBase::ViewIdentifier viewIdentifier, ConnectorItem * tokenHolder) {
+bool BusConnectorItem::isBusConnector() {
+	return true;
+}
 
-	if (m_initialized && (tokenHolder == m_tokenHolder)) return;
+void BusConnectorItem::initialize(ItemBase::ViewIdentifier viewIdentifier) {
+
+	if (m_initialized) return;
 
 	// not sure why, but when calling mergeGraphics directly from here
 	// the resulting busConnectorItem wasn't located correctly
@@ -487,7 +323,6 @@ void BusConnectorItem::initialize(ItemBase::ViewIdentifier viewIdentifier, Conne
 	// TODO: QApplication::processEvents might have the same effect
 
 	m_initialized = true;
-	m_tokenHolder = tokenHolder;
 	if (this->scene() == NULL) {
 		m_attachedTo->scene()->addItem(this);
 	}
@@ -498,13 +333,10 @@ void BusConnectorItem::initialize(ItemBase::ViewIdentifier viewIdentifier, Conne
 			break;
 		case ItemBase::PCBView:
 			// hide busConnectors in PCB view, but...
-			//mergeGraphicsDelay(NULL, true, viewIdentifier);
 			setVisible(false);
 			break;
 		case ItemBase::SchematicView:
-			//mergeGraphicsDelay(NULL, false, viewIdentifier);
 			// make it the same for now
-			//mergeGraphicsDelay(NULL, true, viewIdentifier);
 			setVisible(false);
 			break;
 		default:
@@ -524,84 +356,4 @@ void BusConnectorItem::updateVisibility(ItemBase::ViewIdentifier viewIdentifier)
 		}
 	}
 }
-
-//////////////////////////////////
-
-BusConnectorItemGroup::BusConnectorItemGroup(QGraphicsItem * parent) : QGraphicsItemGroup(parent) 
-{
-}
-
-void BusConnectorItemGroup::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	BusConnectorItem::saveSelection(scene());
-	QGraphicsItemGroup::mousePressEvent(event);
-}
-
-void BusConnectorItemGroup::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	QGraphicsItemGroup::mouseMoveEvent(event);
-	adjustConnectorsConnectedItems();
-}
-
-void BusConnectorItemGroup::adjustConnectorsConnectedItems() 
-{
-	foreach (QGraphicsItem * childItem, childItems()) {
-		BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(childItem);
-		if (bci == NULL) continue;
-
-		bci->adjustConnectedItems();
-	}
-}
-
-void BusConnectorItemGroup::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	QGraphicsItemGroup::mouseReleaseEvent(event);
-	BusConnectorItem::restoreSelection();
-}
-
-
-void BusConnectorItemGroup::posChangedSlot() {
-	//DebugDialog::debug("got signal from item");
-
-	foreach (QGraphicsItem * childItem, childItems()) {
-		BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(childItem);
-		if (bci == NULL) continue;
-
-		QRectF rect = bci->rect();
-		QPointF p = bci->tokenHolder()->sceneAdjustedTerminalPoint() - rect.center();
-		this->setPos(p);   //  
-		break;
-	}
-
-	adjustConnectorsConnectedItems();
-}
-
-void BusConnectorItem::setOwner(ItemBase * owner) {
-	m_owner = owner;
-}
-
-bool BusConnectorItem::isBusConnector() {
-	return true;
-}
-
-/////////////////////////////////////////
-
-BusConnectorTimer::BusConnectorTimer(BusConnectorItem *busConnectorItem, bool hookTokenHolder, ItemBase::ViewIdentifier viewIdentifier) 
-: BetterTimer(NULL) 
-{
-	m_busConnectorItem = busConnectorItem;
-	m_hookTokenHolder = hookTokenHolder;
-	m_viewIdentifier = viewIdentifier;
-}
-
-BusConnectorItem * BusConnectorTimer::busConnectorItem() {
-	return m_busConnectorItem;
-}
-
-
-bool BusConnectorTimer::hookTokenHolder() {
-	return m_hookTokenHolder;
-}
-
-ItemBase::ViewIdentifier BusConnectorTimer::viewIdentifier() {
-	return m_viewIdentifier;
-}
-
 

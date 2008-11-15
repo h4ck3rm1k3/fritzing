@@ -125,8 +125,7 @@ public:
 						  bool fromBusConnector, bool chain);
 
  	ItemCount calcItemCount();
-	//class BusConnectorItem * addBusConnectorItem(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID, bool addIt, bool doEmit);
-	class BusConnectorItem * initializeBusConnectorItem(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID, bool doEmit);
+	class BusConnectorItem * initializeBusConnectorItem(long busOwnerID, const QString & busID, bool doEmit);
 	void mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
 					long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos,
 					bool merge, bool doEmit);
@@ -267,8 +266,7 @@ signals:
 	void zoomOutOfRange(qreal zoom);
 	void zoomIn(int amountSteps);
 	void zoomOut(int amountSteps);
-	//void addBusConnectorItemSignal(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID, bool addIt);
-	void initializeBusConnectorItemSignal(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID);
+	void initializeBusConnectorItemSignal(long busOwnerID, const QString & busID);
 	void mergeBusesSignal(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
 					long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos, bool merge);
 	void copyItemSignal(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
@@ -298,8 +296,7 @@ protected slots:
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
 	void item_connectionChanged(ConnectorItem * from, ConnectorItem * to, bool connect);
-	//void sketchWidget_addBusConnectorItem(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID, bool addIt);
-	void sketchWidget_initializeBusConnectorItem(long busOwnerID, const QString & busID, long tokenHolderID, const QString & tokenHolderConnectorID);
+	void sketchWidget_initializeBusConnectorItem(long busOwnerID, const QString & busID);
 	void sketchWidget_mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
 					long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos, bool merge);
 	void sketchWidget_copyItem(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
