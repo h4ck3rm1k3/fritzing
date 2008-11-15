@@ -125,6 +125,7 @@ HEADERS += \
     src/waitpushundostack.h \
     src/wire.h \
     src/zoomcombobox.h
+win32:INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
 ICON = resources/images/fritzing_icon.icns
 QT += core \
     gui \
