@@ -99,6 +99,7 @@ public:
 	virtual void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
 	void collectConnectors(QMultiHash<class ConnectorItem *, class ConnectorItem *> & connectorHash, QGraphicsScene * scene);
 	virtual void setHidden(bool hidden);
+	bool hidden();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
 	virtual void updateConnections(ConnectorItem *);
 	virtual void updateConnections();
@@ -118,8 +119,15 @@ public:
 	bool alreadySticking(ItemBase * itemBase);
 	ConnectorItem * anyConnectorItem();
 	bool isConnectedTo(ItemBase * other);
-	virtual bool stickyEnabled(ItemBase * stickTo);
+	QString instanceTitle();
+	QString label();
+	virtual void updateTooltip();
+	void setTooltip();
+	void removeTooltip();
+	bool hasConnectors();
 
+public:
+	virtual bool stickyEnabled(ItemBase * stickTo);
 	virtual void setChained(ConnectorItem * item, bool chained);
 	virtual void setChained(const QString & connectorItemName, bool chained);
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
@@ -132,14 +140,8 @@ public:
 	virtual void sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
-
 	virtual void setInstanceTitleAndTooltip(const QString& text);
-	QString instanceTitle();
-	QString label();
-	virtual void updateTooltip();
 
-	void setTooltip();
-	void removeTooltip();
 
 public slots:
 	void setInstanceTitle(const QString &title);

@@ -371,3 +371,34 @@ void PaletteItem::cleanupConnectors() {
 		}
 	}
 }
+
+void PaletteItem::setHidden(bool hide) {
+	ItemBase::setHidden(hide);
+	figureHover();
+}
+
+void PaletteItem::figureHover() {
+	QList<PaletteItemBase *> allKin;
+	allKin.append(this);
+	foreach(LayerKinPaletteItem * lkpi, m_layerKin) {
+		allKin.append(lkpi);
+	}
+
+	foreach (PaletteItemBase * base, allKin) {
+		base->setAcceptHoverEvents(false);
+	}
+
+	foreach (PaletteItemBase * base, allKin) {
+		if (!base->hidden() && base->hasConnectors()) {
+			base->setAcceptHoverEvents(true);
+			return;
+		}
+	}
+
+	foreach (PaletteItemBase * base, allKin) {
+		if (!base->hidden()) {
+			base->setAcceptHoverEvents(true);
+			return;
+		}
+	}
+}

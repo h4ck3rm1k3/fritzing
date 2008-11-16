@@ -40,13 +40,13 @@ public:
 	void setOffset(qreal x, qreal y);
 	ItemBase * layerKinChief();
 	bool ok();
+	void setHidden(bool hidden);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
+	void figureHover();
 
 
 protected:

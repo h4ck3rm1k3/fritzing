@@ -85,16 +85,10 @@ void LayerKinPaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	m_layerKinChief->mousePressEvent(event);
 }
 
-void LayerKinPaletteItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverEnterItem(event, m_layerKinChief);
-	}
+void LayerKinPaletteItem::setHidden(bool hide) {
+	ItemBase::setHidden(hide);
+	m_layerKinChief->figureHover();
 }
 
-void LayerKinPaletteItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverLeaveItem(event, m_layerKinChief);
-	}
+void LayerKinPaletteItem::figureHover() {
 }

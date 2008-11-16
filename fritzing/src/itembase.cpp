@@ -68,6 +68,8 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	setCursor(Qt::ArrowCursor);
 
    	m_viewGeometry.set(viewGeometry);
+	setAcceptHoverEvents ( true );
+
 }
 
 ItemBase::~ItemBase() {
@@ -320,21 +322,22 @@ ItemBase * ItemBase::extractItemBase(QGraphicsItem * item) {
 	return dynamic_cast<ItemBase *>(item);
 }
 
-void ItemBase::setHidden(bool hidden) {
+void ItemBase::setHidden(bool hide) {
 
-	//item->setEnabled(!hidden);
-
-	//item->setFlag(QGraphicsItem::ItemIsSelectable, !hidden);
-	//item->setFlag(QGraphicsItem::ItemIsMovable, !hidden);
-	m_hidden = hidden;
-	setAcceptedMouseButtons(hidden ? Qt::NoButton : Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2);
+	m_hidden = hide;
+	setAcceptedMouseButtons(hide ? Qt::NoButton : Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2);
+	setAcceptHoverEvents(!hide);
 	update();
 	for (int i = 0; i < childItems().count(); i++) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
 		if (connectorItem == NULL) continue;
 
-		connectorItem->setHidden(hidden);
+		connectorItem->setHidden(hide);
 	}
+}
+
+bool ItemBase::hidden() {
+	return m_hidden;
 }
 
 void ItemBase::collectConnectors(QMultiHash<ConnectorItem *, ConnectorItem *> & connectorHash, QGraphicsScene * scene) {
@@ -877,4 +880,12 @@ ViewLayer::ViewLayerID ItemBase::defaultConnectorLayer(ItemBase::ViewIdentifier 
 		case ItemBase::PCBView: return ViewLayer::Copper0;
 		default: return ViewLayer::UnknownLayer;
 	}
+}
+
+bool ItemBase::hasConnectors() {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		if (dynamic_cast<ConnectorItem *>(childItem) != NULL) return true;
+	}
+
+	return false;
 }

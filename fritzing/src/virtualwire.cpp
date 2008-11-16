@@ -64,10 +64,10 @@ void VirtualWire::hideConnectors() {
 	}
 }
 
-void VirtualWire::setHidden(bool hidden) {
-	ItemBase::setHidden(hidden);
+void VirtualWire::setHidden(bool hide) {
+	ItemBase::setHidden(hide);
 	
-	if (!hidden) {
+	if (!hide) {
 		hideConnectors();
 	}
 }

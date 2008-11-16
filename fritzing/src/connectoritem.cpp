@@ -59,6 +59,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	restoreColor();
     setAcceptsHoverEvents(true);
     this->setCursor(Qt::CrossCursor);
+
 	//DebugDialog::debug(QObject::tr("%1 attached to %2")
 			//.arg(this->connector()->connectorStuff()->id())
 			//.arg(attachedTo->modelPart()->modelPartStuff()->title()) );
@@ -301,15 +302,17 @@ const QList<ConnectorItem *> & ConnectorItem::connectedToItems() {
 	return m_connectedTo;
 }
 
-void ConnectorItem::setHidden(bool hidden) {
-	m_hidden = hidden;
-	if (hidden) {
+void ConnectorItem::setHidden(bool hide) {
+	m_hidden = hide;
+	if (hide) {
 		this->setAcceptedMouseButtons(Qt::NoButton);
 		this->unsetCursor();
+		setAcceptHoverEvents(false);
 	}
 	else {
 		this->setAcceptedMouseButtons(Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2);
 		this->setCursor(Qt::CrossCursor);
+		setAcceptHoverEvents(true);
 	}
 	this->update();
 

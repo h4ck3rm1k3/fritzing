@@ -193,7 +193,6 @@ void BusConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
 
 
 void BusConnectorItem::writeOtherElements(QXmlStreamWriter & writer) {
-	Q_UNUSED(writer);
 	if (m_merged.count() <= 0) return;
 	
 	writer.writeStartElement("merged");

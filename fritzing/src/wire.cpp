@@ -72,7 +72,6 @@ Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	setPos(m_viewGeometry.loc());
 
 	m_dragEnd = false;
-	setAcceptHoverEvents ( true );
 }
 
 Wire::~Wire() {

@@ -63,6 +63,7 @@ public:
 	virtual void updateConnections() = 0;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
+	virtual void figureHover() = 0;
 	
 	/*
 	// for debugging

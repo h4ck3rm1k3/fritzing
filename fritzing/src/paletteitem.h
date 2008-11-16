@@ -65,6 +65,7 @@ public:
 	bool swap(PaletteItem* other, const LayerHash &layerHash);
 	bool swap(ModelPart* newModelPart, const LayerHash &layerHash);
 	QString family();
+	void setHidden(bool hidden);
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -74,6 +75,7 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void invalidateConnectors();
 	void cleanupConnectors();
+	void figureHover();
 
  protected:
  	QPixmap *m_pixmap;
