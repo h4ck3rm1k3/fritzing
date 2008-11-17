@@ -2603,6 +2603,23 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 }
 
 void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
+
+	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
+		if (wire->getRatsnest()) {
+			// don't make further ratsnest's from ratsnest
+			return;
+		}
+	}
+
+	if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		if (wire->getRatsnest()) {
+			// don't make further ratsnest's from ratsnest
+			return;
+		}
+	}
+	
 	if (connect) {
 		QList<ConnectorItem *> connectorItems;
 		QList<ConnectorItem *> partsConnectorItems;
@@ -2683,16 +2700,15 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 			}
 		}
 
-
-		QString colorString;
+		const QColor * color = NULL;
 		if (modelWire) {
-			colorString = modelWire->colorString();
+			color = modelWire->color();
 		}
 		else {
-			colorString = Wire::randomColorString(m_viewIdentifier);
+			color = Wire::netColor(m_viewIdentifier);
 		}
 		foreach (Wire * wire, ratsnestWires) {
-			wire->setColorString(colorString, wire->getRouted() ? 0.35 : 1.0);
+			wire->setColor((QColor) *color, wire->getRouted() ? 0.35 : 1.0);
 		}
 
 

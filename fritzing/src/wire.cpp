@@ -49,9 +49,18 @@ QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QList<QString> Wire::colorNames;
-QList<QString> Wire::ratsnestColors;
+QList<QColor *> ratsnestColors;
+
+////////////////////////////////////////////////////////////
 
 static QHash<ItemBase::ViewIdentifier, int> colorStringIndex;
+
+bool alphaLessThan(QColor * c1, QColor * c2)
+{
+	return c1->alpha() < c2->alpha();
+}
+
+/////////////////////////////////////////////////////////////
 
 Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, true, itemMenu)
@@ -697,8 +706,8 @@ void Wire::setShadowColor(QColor & color) {
 	this->update();
 }
 
-const QColor & Wire::color() {
-	return m_pen.brush().color();
+const QColor * Wire::color() {
+	return &m_pen.brush().color();
 }
 
 void Wire::setWidth(int width) {
@@ -782,14 +791,30 @@ void Wire::initNames() {
 	colorStringIndex.insert(ItemBase::BreadboardView, 0);
 	colorStringIndex.insert(ItemBase::SchematicView, 0);
 	colorStringIndex.insert(ItemBase::PCBView, 0);
+	makeHues(80, 340, 5, 0, ratsnestColors);
+	qSort(ratsnestColors.begin(), ratsnestColors.end(), alphaLessThan);
+	foreach (QColor * c, ratsnestColors) {
+		c->setAlpha(255);
+	}
+	DebugDialog::debug(QString("hues total %1").arg(ratsnestColors.count()) );
 
-	ratsnestColors.append("black");
-	ratsnestColors.append("blue");
-	ratsnestColors.append("green");
-	ratsnestColors.append("white");
-	ratsnestColors.append("purple");
-	ratsnestColors.append("orange");
-	ratsnestColors.append("brown");
+}
+
+void Wire::makeHues(int hue1, int hue2, int maxCount, int currentCount, QList<QColor *> & hues) {
+	if (currentCount >= maxCount) return;
+
+	int avg = (hue1 + hue2) / 2;
+	//DebugDialog::debug(QString("making hue %1 from %2 %3").arg(avg).arg(hue1).arg(hue2) );
+	makeHue(avg, hues, currentCount);
+	makeHues(hue1, avg, maxCount, currentCount + 1, hues);
+	makeHues(avg, hue2, maxCount, currentCount + 1, hues);
+}
+
+void Wire::makeHue(int hue, QList<QColor *> & hues, int currentCount) {
+	QColor * c = new QColor();
+	c->setHsv(hue, 40 * 255 / 100, 90 * 255 / 100);
+	c->setAlpha(currentCount);							// this is a hack so we can sort them later
+	hues.append(c);
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)
@@ -833,10 +858,13 @@ qreal Wire::opacity() {
 	return m_opacity;
 }
 
-QString Wire::randomColorString(ItemBase::ViewIdentifier viewIdentifier) {
+const QColor * Wire::netColor(ItemBase::ViewIdentifier viewIdentifier) {
 	int csi = colorStringIndex.value(viewIdentifier);
-	QString colorString = ratsnestColors[csi];
+	QColor * c = ratsnestColors[csi];
 	csi = (csi + 1) % ratsnestColors.count();
 	colorStringIndex.insert(viewIdentifier, csi);
-	return colorString;
+	if (viewIdentifier == ItemBase::PCBView) {
+		DebugDialog::debug(QString("wire hue %1").arg(c->hue()) );
+	}
+	return c;
 }

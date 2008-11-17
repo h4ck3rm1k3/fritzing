@@ -102,7 +102,7 @@ public:
 	void setColorString(QString, qreal opacity);
 	void setColor(QColor &, qreal opacity);
 	qreal opacity();
-	const QColor & color();
+	const QColor * color();
 	void setWidth(int);
 	int width();
 	void setExtras(QDomElement &);
@@ -113,7 +113,7 @@ public:
 	static QString moduleIDName;
 	static void initNames();
 	static QRgb getRgb(const QString & name);
-	static QString randomColorString(ItemBase::ViewIdentifier);
+	static const QColor * netColor(ItemBase::ViewIdentifier);
 
 protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -129,6 +129,11 @@ protected:
 	void setConnector1Rect();
 	void collectWiresAux(QList<Wire *> & wires, ConnectorItem * start, bool includeBusConnections);
 	void setShadowColor(QColor &);
+
+protected:
+	static void makeHues(int hue1, int hue2, int maxCount, int currentCount, QList<QColor *> & hues);
+	static void makeHue(int hue, QList<QColor *> & hues, int currentCount);
+
 
 protected:
 	QPointF m_wireDragOrigin;
@@ -150,7 +155,6 @@ public:
 protected:
 	static QHash<QString, QString> shadowColors;
 	static QHash<QString, QString> colors;
-	static QList<QString> ratsnestColors;
 
 signals:
 	void wireChangedSignal(Wire* me, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);

@@ -479,6 +479,12 @@ Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags fl
 				return wire;
 			}
 		}
+
+		if (otherEnd->chained()) {
+			if (otherEnd->wiredTo(target, flags)) {
+				return wire;
+			}
+		}
 	}
 
 	return NULL;
