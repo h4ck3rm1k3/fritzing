@@ -113,6 +113,7 @@ protected slots:
 	void toggleDebuggerOutput(bool toggle);
 	void openHelp();
 	void openExamples();
+	void openPartsReference();
 	void visitFritzingDotOrg();
 	void updateWindowMenu();
 	void preferences();
@@ -359,6 +360,7 @@ protected:
     QMenu *m_helpMenu;
     QAction *m_openHelpAct;
     QAction *m_examplesAct;
+    QAction *m_partsRefAct;
     QAction *m_visitFritzingDotOrgAct;
 
 	QMenu *m_itemMenu;

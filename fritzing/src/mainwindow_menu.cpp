@@ -503,10 +503,11 @@ void MainWindow::createFileMenuActions() {
 	m_newAct->setStatusTip(tr("Create a new sketch"));
 	connect(m_newAct, SIGNAL(triggered()), this, SLOT(createNewSketch()));
 
-	m_newFromTemplateAct = new QAction(tr("&New from Template..."), this);
+	/*m_newFromTemplateAct = new QAction(tr("&New from Template..."), this);
 	m_newFromTemplateAct->setShortcut(tr("Shift+Ctrl+N"));
 	m_newFromTemplateAct->setStatusTip(tr("Create a new sketch from template"));
 	connect(m_newFromTemplateAct, SIGNAL(triggered()), this, SLOT(createNewSketchFromTemplate()));
+	*/
 
 	m_openAct = new QAction(tr("&Open..."), this);
 	m_openAct->setShortcut(tr("Ctrl+O"));
@@ -531,11 +532,12 @@ void MainWindow::createFileMenuActions() {
 	m_saveAsAct->setStatusTip(tr("Save the current sketch"));
 	connect(m_saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
 
-	m_saveAsBundledAct = new QAction(tr("Save As &Bundled sketch"), this);
+	m_saveAsBundledAct = new QAction(tr("Save As Shareable..."), this);
+	m_saveAsBundledAct->setShortcut(tr("Alt+Ctrl+S"));
 	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and it's non-core part"));
 	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
 
-	m_loadBundledAct = new QAction(tr("Load &Bundled sketch"), this);
+	m_loadBundledAct = new QAction(tr("Load Shareable sketch..."), this);
 	m_loadBundledAct->setStatusTip(tr("Load bundled sketch and it's non-core part"));
 	connect(m_loadBundledAct, SIGNAL(triggered()), this, SLOT(loadBundledSketch()));
 
@@ -568,10 +570,10 @@ void MainWindow::createFileMenuActions() {
 	m_exportDiyAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
 	connect(m_exportDiyAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiy(QAction *)));
 
-	m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
+	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
 	m_pageSetupAct->setShortcut(tr("Shift+Ctrl+P"));
 	m_pageSetupAct->setStatusTip(tr("Setup the current sketch page"));
-	connect(m_pageSetupAct, SIGNAL(triggered()), this, SLOT(pageSetup()));
+	connect(m_pageSetupAct, SIGNAL(triggered()), this, SLOT(pageSetup()));*/
 
 	m_printAct = new QAction(tr("&Print..."), this);
 	m_printAct->setShortcut(tr("Ctrl+P"));
@@ -698,8 +700,8 @@ void MainWindow::createEditMenuActions() {
 
 void MainWindow::createPartMenuActions() {
 	// TODO PARTS EDITOR REMOVE
-    m_createNewPartActInOldEditor = new QAction(tr("&Create New Part in Old Editor..."), this);
-	connect(m_createNewPartActInOldEditor, SIGNAL(triggered()), this, SLOT(createNewPartInOldEditor()));
+    /*m_createNewPartActInOldEditor = new QAction(tr("&Create New Part in Old Editor..."), this);
+	connect(m_createNewPartActInOldEditor, SIGNAL(triggered()), this, SLOT(createNewPartInOldEditor()));*/
 
 	m_createNewPart = new QAction(tr("&Create New Part..."), this);
 	m_createNewPart->setShortcut(tr("Alt+Ctrl+N"));
@@ -712,16 +714,16 @@ void MainWindow::createPartMenuActions() {
 	connect(m_openInPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInPartsEditor()));
 
 	// TODO PARTS EDITOR REMOVE
-	m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
-	connect(m_openInOldPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInOldPartsEditor()));
+	/*m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
+	connect(m_openInOldPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInOldPartsEditor()));*/
 
 	// TODO Mariano: DEBUG ACTION
-	m_infoViewOnHoverAction = new QAction(tr("Update InfoView on hover"), this);
+	/*m_infoViewOnHoverAction = new QAction(tr("Update InfoView on hover"), this);
 	m_infoViewOnHoverAction->setCheckable(true);
 	bool infoViewOnHover = false;
 	m_infoViewOnHoverAction->setChecked(infoViewOnHover);
 	setInfoViewOnHover(infoViewOnHover);
-	connect(m_infoViewOnHoverAction, SIGNAL(toggled(bool)), this, SLOT(setInfoViewOnHover(bool)));
+	connect(m_infoViewOnHoverAction, SIGNAL(toggled(bool)), this, SLOT(setInfoViewOnHover(bool)));*/
 
 	// TODO Mariano: DEBUG ACTION
 	/*m_swapPartAction = new QAction(tr("Swap part!"), this);
@@ -849,14 +851,18 @@ void MainWindow::createWindowMenuActions() {
 }
 
 void MainWindow::createHelpMenuActions() {
-	m_openHelpAct = new QAction(tr("Fritzing Help"), this);
+	m_openHelpAct = new QAction(tr("Learning Fritzing"), this);
 	m_openHelpAct->setShortcut(tr("Ctrl+?"));
 	m_openHelpAct->setStatusTip(tr("Open Fritzing help"));
 	connect(m_openHelpAct, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
 
-	m_examplesAct = new QAction(tr("Examples"), this);
+	m_examplesAct = new QAction(tr("Example Projects"), this);
 	m_examplesAct->setStatusTip(tr("Open Fritzing examples"));
 	connect(m_examplesAct, SIGNAL(triggered(bool)), this, SLOT(openExamples()));
+
+	m_partsRefAct = new QAction(tr("Parts Reference"), this);
+	m_partsRefAct->setStatusTip(tr("Open Parts Reference"));
+	connect(m_partsRefAct, SIGNAL(triggered(bool)), this, SLOT(openPartsReference()));
 
 	m_visitFritzingDotOrgAct = new QAction(tr("Visit fritzing.org"), this);
 	m_visitFritzingDotOrgAct->setStatusTip(tr("www.fritzing.org"));
@@ -871,7 +877,7 @@ void MainWindow::createMenus()
 {
     m_fileMenu = menuBar()->addMenu(tr("&File"));
     m_fileMenu->addAction(m_newAct);
-    m_fileMenu->addAction(m_newFromTemplateAct);
+    //m_fileMenu->addAction(m_newFromTemplateAct);
     m_fileMenu->addAction(m_openAct);
     m_fileMenu->addAction(m_loadBundledAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
@@ -883,7 +889,7 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_saveAsBundledAct);
     m_fileMenu->addSeparator();
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));
-    m_fileMenu->addAction(m_pageSetupAct);
+    //m_fileMenu->addAction(m_pageSetupAct);
     m_fileMenu->addAction(m_printAct);
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
@@ -892,9 +898,9 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportPsAct);
 	m_exportMenu->addAction(m_exportPngAct);
 	m_exportMenu->addAction(m_exportJpgAct);
-	m_exportMenu->addAction(m_exportEagleAct);
 	m_exportMenu->addSeparator();
 	m_exportMenu->addAction(m_exportDiyAct);
+	m_exportMenu->addAction(m_exportEagleAct);
 
     m_editMenu = menuBar()->addMenu(tr("&Edit"));
     m_editMenu->addAction(m_undoAct);
@@ -916,12 +922,12 @@ void MainWindow::createMenus()
 
     m_partMenu = menuBar()->addMenu(tr("&Part"));
     // TODO PARTS EDITOR REMOVE
-    m_partMenu->addAction(m_createNewPartActInOldEditor);
+    //m_partMenu->addAction(m_createNewPartActInOldEditor);
     m_partMenu->addAction(m_createNewPart);
 
     connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updatePartMenu()));
     // TODO PARTS EDITOR REMOVE
-	m_partMenu->addAction(m_openInOldPartsEditorAct);
+	//m_partMenu->addAction(m_openInOldPartsEditorAct);
 	m_partMenu->addAction(m_openInPartsEditorAct);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_rotate90cwAct);
@@ -969,6 +975,7 @@ void MainWindow::createMenus()
     m_helpMenu = menuBar()->addMenu(tr("&Help"));
     m_helpMenu->addAction(m_openHelpAct);
     m_helpMenu->addAction(m_examplesAct);
+    m_helpMenu->addAction(m_partsRefAct);
     m_helpMenu->addAction(m_visitFritzingDotOrgAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
@@ -1083,9 +1090,9 @@ void MainWindow::updateItemMenu() {
 
 	bool enabled = (selCount == 1) && (dynamic_cast<PaletteItem *>(itemBase) != NULL);
 
-	// can't open wire in parts editor
-	m_openInOldPartsEditorAct->setEnabled(enabled);
 	//TODO PARTS EDITOR REMOVE
+	//m_openInOldPartsEditorAct->setEnabled(enabled);
+	// can't open wire in parts editor
 	m_openInPartsEditorAct->setEnabled(enabled);
 
 }
@@ -1213,15 +1220,19 @@ void MainWindow::showPCBView() {
 }
 
 void MainWindow::openHelp() {
-	notYetImplemented("Help");
+	QDesktopServices::openUrl(QString("http://new.fritzing.org/learning"));
 }
 
 void MainWindow::openExamples() {
-	notYetImplemented("Open Examples");
+	QDesktopServices::openUrl(QString("http://new.fritzing.org/projects"));
+}
+
+void MainWindow::openPartsReference() {
+	QDesktopServices::openUrl(QString("http://new.fritzing.org/parts"));
 }
 
 void MainWindow::visitFritzingDotOrg() {
-	 QDesktopServices::openUrl(tr("www.fritzing.org"));
+	 QDesktopServices::openUrl(QString("http://www.fritzing.org"));
 }
 
 void MainWindow::createNewPartInOldEditor() {
@@ -1377,7 +1388,11 @@ void MainWindow::pageSetup() {
 }
 
 void MainWindow::preferences() {
-	notYetImplemented("Preferences");
+	QString text =
+		tr("This will soon provide the ability to set some preferences. "
+		"such as your default sketch folder, your fritzing.org login name, etc.\n"
+		"Please stay tuned.");
+	QMessageBox::information(this, tr("Fritzing"), text);
 }
 
 void MainWindow::notYetImplemented(QString action) {
@@ -1471,7 +1486,11 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 
 
 void MainWindow::exportToEagle() {
-	QMessageBox::information(this, tr("Fritzing"), "Zach, your code goes here");
+	QString text =
+		tr("This will soon provide an export of your Fritzing sketch to the EAGLE layout "
+		"software. If you'd like to have more exports to your favourite EDA tool, please let "
+		"us know, or contribute.");
+	QMessageBox::information(this, tr("Fritzing"), text);
 }
 
 void MainWindow::hideShowTraceMenu() {

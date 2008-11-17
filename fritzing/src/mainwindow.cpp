@@ -142,7 +142,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_itemMenu = new QMenu(QObject::tr("Part"), this);
 	m_itemMenu->addAction(m_openInPartsEditorAct);
-	m_itemMenu->addAction(m_infoViewOnHoverAction);
+	//m_itemMenu->addAction(m_infoViewOnHoverAction);
 	//m_itemMenu->addAction(m_swapPartAction);
 
     connect(
