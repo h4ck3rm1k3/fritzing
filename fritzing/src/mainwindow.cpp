@@ -143,6 +143,15 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_itemMenu = new QMenu(QObject::tr("Part"), this);
 	m_itemMenu->addAction(m_openInPartsEditorAct);
+	m_itemMenu->addSeparator();
+	m_itemMenu->addAction(m_deleteAct);
+	m_itemMenu->addSeparator();
+	m_itemMenu->addAction(m_rotate90cwAct);
+	m_itemMenu->addAction(m_rotate180Act);
+	m_itemMenu->addAction(m_rotate90ccwAct);
+	m_itemMenu->addAction(m_flipHorizontalAct);
+	m_itemMenu->addAction(m_flipVerticalAct);
+
 	//m_itemMenu->addAction(m_infoViewOnHoverAction);
 	//m_itemMenu->addAction(m_swapPartAction);
 
@@ -150,7 +159,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     	m_itemMenu,
     	SIGNAL(aboutToShow()),
     	this,
-    	SLOT(updateItemMenu())
+    	SLOT(updatePartMenu())
     );
 
     m_breadboardGraphicsView->setItemMenu(m_itemMenu);
@@ -728,7 +737,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 	{
 		//DebugDialog::debug(QString("event filter %1").arg(event->type()) );
 		updatePartMenu();
-		updateEditMenu();
 		updateTraceMenu();
 
 		// On the mac, the first time the delete key is pressed, to be used as a shortcut for QAction m_deleteAct,

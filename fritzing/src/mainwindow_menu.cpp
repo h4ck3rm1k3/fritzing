@@ -1028,6 +1028,7 @@ void MainWindow::updatePartMenu() {
 	m_flipVerticalAct->setEnabled(enable && (m_currentWidget != m_pcbGraphicsView));
 
 	updateItemMenu();
+	updateEditMenu();
 }
 
 void MainWindow::updateItemMenu() {
@@ -1041,6 +1042,8 @@ void MainWindow::updateItemMenu() {
 
 	if (m_currentWidget == m_pcbGraphicsView) {
 		if (!m_itemMenu->actions().contains(m_createJumperAct)) {
+			QAction * sep = m_itemMenu->addSeparator();
+			sep->setObjectName("trace");
 			m_itemMenu->addAction(m_createJumperAct);
 		}
 		if (!m_itemMenu->actions().contains(m_createTraceAct)) {
@@ -1071,6 +1074,12 @@ void MainWindow::updateItemMenu() {
 	else {
 		if (m_itemMenu->actions().contains(m_createJumperAct)) {
 			m_itemMenu->removeAction(m_createJumperAct);
+			foreach (QAction * action, m_itemMenu->actions()) {
+				if (action->objectName().compare("trace") == 0) {
+					m_itemMenu->removeAction(action);
+					break;
+				}
+			}
 		}
 		if (m_itemMenu->actions().contains(m_createTraceAct)) {
 			m_itemMenu->removeAction(m_createTraceAct);
@@ -1156,8 +1165,6 @@ void MainWindow::updateTraceMenu() {
 
 	m_exportDiyAct->setEnabled(enabled);
 	m_exportDiyButton->setEnabled(enabled);
-
-	updateItemMenu();
 }
 
 
