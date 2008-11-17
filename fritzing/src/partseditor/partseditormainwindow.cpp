@@ -127,6 +127,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 	}
 
 	createCloseAction();
+	addAction(m_closeAct);
 }
 
 void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {

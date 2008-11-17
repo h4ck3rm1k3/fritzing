@@ -1276,6 +1276,8 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	if(paletteItem != NULL) {
 		modelPart = paletteItem->modelPart();
 	}
+
+	// no parent set, leak for sure
 	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(0,NULL,0,modelPart,modelPart!=NULL);
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));

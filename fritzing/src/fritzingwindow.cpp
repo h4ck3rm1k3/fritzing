@@ -67,7 +67,7 @@ FritzingWindow::FritzingWindow(const QString &untitledFileName, int &untitledFil
 }
 
 void FritzingWindow::createCloseAction() {
-	m_closeAct = new QAction(tr("&Close"), this);
+	m_closeAct = new QAction(tr("&Close Window"), this);
 	m_closeAct->setShortcut(tr("Ctrl+W"));
 	m_closeAct->setStatusTip(tr("Close the current sketch"));
 	connect(m_closeAct, SIGNAL(triggered()), this, SLOT(close()));
