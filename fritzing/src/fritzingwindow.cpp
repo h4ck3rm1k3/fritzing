@@ -151,7 +151,12 @@ void FritzingWindow::replicateDir(QDir srcDir, QDir targDir) {
 
 bool FritzingWindow::alreadyHasExtension(const QString &fileName) {
 	// TODO: Make something preattier to manage all the supported formats at once
-	return fileName.indexOf(FritzingExtension)  != -1 || fileName.indexOf(".pdf")  != -1 || fileName.indexOf(".ps")  != -1 || fileName.indexOf(".png")  != -1 || fileName.indexOf(".jpg")  != -1;
+	return fileName.indexOf(FritzingExtension)  != -1
+		|| fileName.indexOf(FritzingExtension+"z")  != -1
+		|| fileName.indexOf(".pdf")  != -1
+		|| fileName.indexOf(".ps")  != -1
+		|| fileName.indexOf(".png")  != -1
+		|| fileName.indexOf(".jpg")  != -1;
 }
 
 QString FritzingWindow::getRandText() {
@@ -267,6 +272,10 @@ bool FritzingWindow::createZipAndSaveTo(const QDir &dirToCompress, const QString
 	zip.close();
 	QDir::setCurrent(currFolderBU);
 
+	if(QFileInfo(filepath).exists()) {
+		// if we're here the usr has already accepted to overwrite
+		QFile::remove(filepath);
+	}
 	QFile file(tempZipFile);
 	file.copy(filepath);
 	file.remove();

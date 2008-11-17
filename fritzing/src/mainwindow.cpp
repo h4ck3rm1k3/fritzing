@@ -664,7 +664,7 @@ void MainWindow::createDockWindows()
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_miniViewContainer = new MiniViewContainer(this);
-    	makeDock(tr("Navigator"), m_miniViewContainer, NavigatorMinHeight, NavigatorDefaultHeight);
+    makeDock(tr("Navigator"), m_miniViewContainer, NavigatorMinHeight, NavigatorDefaultHeight);
 
     makeDock(tr("Undo History"), m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
     m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
@@ -791,39 +791,63 @@ void MainWindow::swapSelected() {
 #define ZIP_SVG  QString("svg.")
 
 void MainWindow::saveBundledSketch() {
-	if(save()) {
-		QDir destFolder = QDir::temp();
+	QString fileExt;
+	QString path;
 
-		createFolderAnCdIntoIt(destFolder, getRandText());
-		QString dirToRemove = destFolder.path();
+	path = defaultSaveFolder() + "/" + m_fileName+"z";
 
-		QFile file(m_fileName);
-		file.copy(destFolder.path()+"/"+QFileInfo(m_fileName).fileName());
+	QString bundledFileName = QFileDialog::getSaveFileName(
+			this,
+			tr("Choose a file name"),
+			path,
+			tr("Fritzing (*%1)").arg(FritzingExtension+"z"),
+			&fileExt
+		  );
 
-		QList<ModelPart*> partsToSave = m_sketchModel->root()->getAllNonCoreParts();
-		foreach(ModelPart* mp, partsToSave) {
-			QString partPath = mp->modelPartStuff()->path();
-			QFile file(partPath);
-			file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
-			QList<StringTriple> views = mp->getAvailableViewFiles();
-			foreach(StringTriple view, views) {
-				if(view.second != "core") {
-					QFile file(view.concat());
-					file.copy(destFolder.path()+"/"+ZIP_SVG+view.third.replace("/","."));
-				}
+	if (bundledFileName.isEmpty()) return; // Cancel pressed
+
+	if(!alreadyHasExtension(bundledFileName)) {
+		fileExt = getExtFromFileDialog(fileExt);
+		bundledFileName += fileExt;
+	}
+
+	QDir destFolder = QDir::temp();
+
+	createFolderAnCdIntoIt(destFolder, getRandText());
+	QString dirToRemove = destFolder.path();
+
+	QString aux = QFileInfo(bundledFileName).fileName();
+	QString destSketchPath = // remove the last "z" from the extension
+			destFolder.path()+"/"+aux.left(aux.size()-1);
+	DebugDialog::debug("saving sketch temporarily to "+destSketchPath);
+
+	bool wasModified = isWindowModified();
+	saveAsAux(destSketchPath);
+	setWindowModified(wasModified);
+
+	QList<ModelPart*> partsToSave = m_sketchModel->root()->getAllNonCoreParts();
+	foreach(ModelPart* mp, partsToSave) {
+		QString partPath = mp->modelPartStuff()->path();
+		QFile file(partPath);
+		file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
+		QList<StringTriple> views = mp->getAvailableViewFiles();
+		foreach(StringTriple view, views) {
+			if(view.second != "core") {
+				QFile file(view.concat());
+				file.copy(destFolder.path()+"/"+ZIP_SVG+view.third.replace("/","."));
 			}
 		}
-
-		if(!createZipAndSaveTo(destFolder, m_fileName+"z")) {
-			QMessageBox::warning(
-				this,
-				tr("fritzing"),
-				tr("Unable to export %1 to bundled").arg(m_fileName)
-			);
-		}
-
-		rmdir(dirToRemove);
 	}
+
+	if(!createZipAndSaveTo(destFolder, bundledFileName)) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Unable to export %1 to bundled").arg(bundledFileName)
+		);
+	}
+
+	rmdir(dirToRemove);
 }
 
 void MainWindow::loadBundledSketch() {
