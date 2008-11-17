@@ -76,6 +76,9 @@ signals:
 	void partUpdated(QString);
 	void closed(long id);
 
+public slots:
+	void parentAboutToClose();
+
 protected slots:
 	void loadPcbFootprint();
 	void updateDateAndAuthor();
@@ -101,6 +104,9 @@ protected:
 
 	void updateSaveButton();
 
+	void cleanUp();
+
+protected:
 	long m_id;
 	//QString m_pcbSvgFile;
 	QDir m_tempDir;

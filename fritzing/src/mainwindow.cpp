@@ -536,6 +536,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	}
 
 	m_closing = true;
+	emit aboutToClose();
 
 	int count = 0;
 	foreach (QWidget *widget, QApplication::topLevelWidgets()) {
@@ -948,4 +949,3 @@ void MainWindow::binSaved(bool hasPartsFromBundled) {
 
 #undef ZIP_PART
 #undef ZIP_SVG
-

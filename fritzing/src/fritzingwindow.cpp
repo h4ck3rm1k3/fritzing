@@ -175,13 +175,16 @@ QString FritzingWindow::getExtFromFileDialog(const QString &extOpt) {
 			extOpt.indexOf(")")-extOpt.indexOf("(")-2);
 }
 
-bool FritzingWindow::beforeClosing() {
+bool FritzingWindow::beforeClosing(bool showCancel) {
+	QFlags<QMessageBox::StandardButton> buttons = QMessageBox::Yes | QMessageBox::No;
+	if(showCancel) buttons = buttons | QMessageBox::Cancel;
+
 	if (this->isWindowModified()) {
      	QMessageBox::StandardButton reply;
      	reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fileName).baseName()),
                                      tr("Do you want to save the changes you made in the document %1? Your changes will be lost if you don't save them")
                                      .arg(QFileInfo(m_fileName).baseName()),
-                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+                                     buttons);
      	if (reply == QMessageBox::Yes) {
      		return save();
     	} else if (reply == QMessageBox::No) {

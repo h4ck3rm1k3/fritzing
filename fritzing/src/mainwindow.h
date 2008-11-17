@@ -69,6 +69,7 @@ public:
 
 signals:
 	void partsFromBundledDiscarded();
+	void aboutToClose();
 
 protected slots:
 	void load();

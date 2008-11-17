@@ -2711,7 +2711,6 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 			wire->setColor(colorAsQColor, wire->getRouted() ? 0.35 : 1.0);
 		}
 
-
 		return;
 	}
 

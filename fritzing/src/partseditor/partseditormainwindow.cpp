@@ -467,22 +467,32 @@ ModelPartStuff* PartsEditorMainWindow::modelPartStuff() {
 	return stuff;
 }
 
-void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
+void PartsEditorMainWindow::cleanUp() {
 	bool decUntitled = m_fileName.startsWith(untitledFileName());
+	if(decUntitled) {
+		if(m_lastOpened == this) {
+			UntitledPartIndex -= m_closedBeforeCount;
+			UntitledPartIndex--;
+			m_closedBeforeCount = 0;
+		} else {
+			m_closedBeforeCount++;
+		}
+	}
+	if(m_tempDir.path() != ".") {
+		rmdir(m_tempDir);
+		m_tempDir = QDir();
+	}
+}
+
+void PartsEditorMainWindow::parentAboutToClose() {
+	if(beforeClosing(false)) {
+		cleanUp();
+	}
+}
+
+void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
 	if(beforeClosing()) {
-		if(decUntitled) {
-			if(m_lastOpened == this) {
-				UntitledPartIndex -= m_closedBeforeCount;
-				UntitledPartIndex--;
-				m_closedBeforeCount = 0;
-			} else {
-				m_closedBeforeCount++;
-			}
-		}
-		if(m_tempDir.path() != ".") {
-			rmdir(m_tempDir);
-			m_tempDir = QDir();
-		}
+		cleanUp();
 		QMainWindow::closeEvent(event);
 		emit closed(m_id);
 	} else {
