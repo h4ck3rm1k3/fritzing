@@ -125,6 +125,8 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 		restoreState(settings.value("peditor/state").toByteArray());
 		restoreGeometry(settings.value("peditor/geometry").toByteArray());
 	}
+
+	createCloseAction();
 }
 
 void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {

@@ -33,6 +33,7 @@ $Date$
 #include <QUuid>
 #include <QCryptographicHash>
 #include <QIcon>
+#include <QAction>
 
 #include "fritzingwindow.h"
 #include "debugdialog.h"
@@ -63,6 +64,13 @@ FritzingWindow::FritzingWindow(const QString &untitledFileName, int &untitledFil
 
 	m_undoStack = new WaitPushUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
+}
+
+void FritzingWindow::createCloseAction() {
+	m_closeAct = new QAction(tr("&Close"), this);
+	m_closeAct->setShortcut(tr("Ctrl+W"));
+	m_closeAct->setStatusTip(tr("Close the current sketch"));
+	connect(m_closeAct, SIGNAL(triggered()), this, SLOT(close()));
 }
 
 void FritzingWindow::setTitle() {

@@ -60,9 +60,12 @@ class FritzingWindow : public QMainWindow {
 		bool createZipAndSaveTo(const QDir &dirToCompress, const QString &filename);
 		bool unzipTo(const QString &filepath, const QString &dirToDecompress);
 
+		void createCloseAction();
+
 	protected:
 		class WaitPushUndoStack * m_undoStack;
 		QString m_fileName;
+		QAction *m_closeAct;
 
 	public:
 		static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);

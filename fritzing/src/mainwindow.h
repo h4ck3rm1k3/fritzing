@@ -247,7 +247,7 @@ protected:
     SketchModel *m_sketchModel;
     HtmlInfoView * m_infoView;
 
-    QHash <long,class MainPartsEditorWindow *> m_partsEditorWindows;
+    QHash <long,class PartsEditorMainWindow*> m_partsEditorWindows;
 
     Console * m_consoleView;
     SavedState m_savedState;
@@ -275,7 +275,6 @@ protected:
 	QMenu *m_openRecentFileMenu;
     QAction *m_openRecentFileActs[MaxRecentFiles];
 	QMenu *m_openExampleMenu;
-	QAction *m_closeAct;
 	QAction *m_saveAct;
 	QAction *m_saveAsAct;
 	QAction *m_pageSetupAct;

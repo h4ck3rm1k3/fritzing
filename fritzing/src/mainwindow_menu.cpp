@@ -156,15 +156,15 @@ void MainWindow::exportDiy(QAction * action) {
 	m_pcbGraphicsView->render(&painter);
 	painter.end();
 
-	
+
 	QSvgGenerator svgGenerator;
 	svgGenerator.setFileName("c:/fritzing2/testsvggenerator.svg");
     svgGenerator.setSize(QSize(width * 8, height * 8));
 	QPainter svgPainter(&svgGenerator);
 	m_pcbGraphicsView->render(&svgPainter);
 	svgPainter.end();
-	
-		
+
+
 	m_pcbGraphicsView->hideConnectors(false);
 	m_pcbGraphicsView->setBackground(color);
 	m_pcbGraphicsView->restoreLayerVisibility();
@@ -519,10 +519,7 @@ void MainWindow::createFileMenuActions() {
 	m_openExampleMenu = new QMenu(tr("&Open Example"), this);
 	createOpenExampleMenu(m_openExampleMenu,getApplicationSubFolderPath("examples"));
 
-	m_closeAct = new QAction(tr("&Close"), this);
-	m_closeAct->setShortcut(tr("Ctrl+W"));
-	m_closeAct->setStatusTip(tr("Close the current sketch"));
-	connect(m_closeAct, SIGNAL(triggered()), this, SLOT(close()));
+	createCloseAction();
 
 	m_saveAct = new QAction(tr("&Save"), this);
 	m_saveAct->setShortcut(tr("Ctrl+S"));
@@ -1250,22 +1247,29 @@ void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
 
-	m_partsEditorWindows.insert(id, mainPartsEditorWindow);
 	mainPartsEditorWindow->show();
 	mainPartsEditorWindow->raise();
 }
 
 // TODO PARTS EDITOR REMOVE
 void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
+	static long nextId = -1;
 	ModelPart *modelPart = NULL;
+	long id = nextId--;
+
+	if(paletteItem != NULL) {
+		modelPart = paletteItem->modelPart();
+		id = paletteItem->id();
+	}
 
 	if(paletteItem != NULL) {
 		modelPart = paletteItem->modelPart();
 	}
-	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(0,this,0,modelPart,modelPart!=NULL);
+	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(0,NULL,0,modelPart,modelPart!=NULL);
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
 
+	m_partsEditorWindows.insert(id, mainPartsEditorWindow);
 	mainPartsEditorWindow->show();
 	mainPartsEditorWindow->raise();
 }
@@ -1278,22 +1282,23 @@ void MainWindow::openInOldPartsEditor() {
 	// TODO: check to see if part is already open in a part editor window
 	if (m_currentWidget == NULL) return;
 	PaletteItem *selectedPart = m_currentWidget->getSelectedPart();
-	MainPartsEditorWindow * window = m_partsEditorWindows.value(selectedPart->id());
 
-	if(window != NULL) {
-		window->raise();
-	}
-	else {
-		openOldPartsEditor(selectedPart);
-	}
+	openOldPartsEditor(selectedPart);
 }
 
 // TODO PARTS EDITOR REMOVE
 void MainWindow::openInPartsEditor() {
 	if (m_currentWidget == NULL) return;
-	PaletteItem *selectedPart = m_currentWidget->getSelectedPart();
 
-	openPartsEditor(selectedPart);
+	PaletteItem *selectedPart = m_currentWidget->getSelectedPart();
+	PartsEditorMainWindow * window = m_partsEditorWindows.value(selectedPart->id());
+
+	if(window != NULL) {
+		window->raise();
+	}
+	else {
+		openPartsEditor(selectedPart);
+	}
 }
 
 void MainWindow::createNewSketch() {
