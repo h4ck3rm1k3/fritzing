@@ -305,6 +305,7 @@ protected slots:
 	void statusMessage(QString message, int timeout = 0);
 	void sketchWidget_cleanUpWires();
 	void updateInfoViewSlot();
+	void spaceBarIsPressedSlot(bool);
 
 
 public slots:
@@ -344,7 +345,6 @@ protected:
 	ViewLayer::ViewLayerID m_connectorViewLayerID;
 	QList<QGraphicsItem *> m_temporaries;
 	bool m_chainDrag;
-	bool m_chainDragging;
 
 	PaletteItem *m_lastPaletteItemSelected;
 

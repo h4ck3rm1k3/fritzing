@@ -64,7 +64,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 {
 	m_ignoreSelectionChangeEvents = false;
 	m_droppingItem = NULL;
-	m_chainDrag = m_chainDragging = false;
+	m_chainDrag = false;
 	m_connectorDragWire = NULL;
 	m_holdingSelectItemCommand = NULL;
 	m_viewIdentifier = viewIdentifier;
@@ -1421,10 +1421,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 	//setRenderHint(QPainter::Antialiasing, false);
 
-	if (m_chainDragging) {
-		// set a timer, if it expires, then create another link in the chain
-	}
-
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_needToConnectItems.clear();
@@ -1438,7 +1434,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		return;
 	}
 
-	// to do: combine this with stack selection state so it doesn't have to happen twice
+	// TODO: combine this with stack selection state so it doesn't have to happen twice
 	QList<QGraphicsItem *> items = this->scene()->selectedItems ();
 	for (int i = 0; i < items.size(); i++) {
 		ItemBase *item = ItemBase::extractTopLevelItemBase(items[i]);
@@ -1459,7 +1455,6 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
 	QGraphicsView::mouseReleaseEvent(event);
-	//setDragMode(QGraphicsView::RubberBandDrag);
 
 	if (m_connectorDragWire != NULL) {
 		m_connectorDragWire->ungrabMouse();
@@ -2288,8 +2283,6 @@ ViewLayer::ViewLayerID SketchWidget::getConnectorViewLayerID() {
 
 
 void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	if (m_chainDragging) {
-	}
 
 	ModelPart * wireModel = m_paletteModel->retrieveModelPart(Wire::moduleIDName);
 	if (wireModel == NULL) return;
@@ -2315,7 +2308,6 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	// give connector item the mouse, so wire doesn't get mouse moved events
 	m_connectorDragWire->grabMouse();
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
-	//m_chainDragging = true;
 }
 
 
@@ -2842,17 +2834,6 @@ void SketchWidget::sketchWidget_initializeBusConnectorItem(long busOwnerID, cons
 }
 
 void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
-	if(event->key() == Qt::Key_Space) {
-		if (dragMode() == QGraphicsView::RubberBandDrag) {
-			setDragMode(QGraphicsView::ScrollHandDrag);
-			setCursor(Qt::OpenHandCursor);
-		}
-		else {
-			setDragMode(QGraphicsView::RubberBandDrag);
-			setCursor(Qt::ArrowCursor);
-		}
-	}
-
 	QGraphicsView::keyPressEvent(event);
 }
 
@@ -3723,3 +3704,16 @@ void SketchWidget::cleanUpVirtualWires(QSet<VirtualWire *> & virtualWires, QList
 	reorgBuses(busConnectorItems, parentCommand);
 	deleteVirtualWires(virtualWires, parentCommand);
 }
+
+
+void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
+	if (isPressed) {
+		setDragMode(QGraphicsView::ScrollHandDrag);
+		setCursor(Qt::OpenHandCursor);
+	}
+	else {
+		setDragMode(QGraphicsView::RubberBandDrag);
+		setCursor(Qt::ArrowCursor);
+	}
+}
+

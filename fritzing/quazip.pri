@@ -18,29 +18,27 @@
 #
 # ********************************************************************
 #
-# $Revision$:
-# $Author$:
-# $Date$
+# $Revision: 1509 $:
+# $Author: andre.knoerig $:
+# $Date: 2008-11-15 16:16:14 +0100 (Sat, 15 Nov 2008) $
 #
 #********************************************************************/
 
-CONFIG += debug_and_release
-win32::CONFIG -= embed_manifest_exe
-win32:INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
-ICON = resources/images/fritzing_icon.icns
-QT += core \
-    gui \
-    svg \
-    xml \
-    network \
-    webkit \
-    sql
-RC_FILE = fritzing.rc
-RESOURCES += phoenixresources.qrc
-include(kitchensink.pri)
-include(quazip.pri)
-include(partsbinpalette.pri)
-include(partseditor.pri)
-include(referencemodel.pri)
-TARGET = Fritzing
-TEMPLATE = app
+HEADERS += \
+	src/lib/quazip/crypt.h \
+	src/lib/quazip/ioapi.h \
+	src/lib/quazip/quazip.h \
+	src/lib/quazip/quazipfile.h \
+	src/lib/quazip/quazipfileinfo.h \
+	src/lib/quazip/quazipnewinfo.h \
+	src/lib/quazip/unzip.h \
+	src/lib/quazip/zip.h
+
+SOURCES += \
+	src/lib/quazip/ioapi.c \
+	src/lib/quazip/quazip.cpp \
+	src/lib/quazip/quazipfile.cpp \
+	src/lib/quazip/quazipnewinfo.cpp \
+	src/lib/quazip/unzip.c \
+	src/lib/quazip/zip.c 
+

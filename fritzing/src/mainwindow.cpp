@@ -52,6 +52,7 @@ $Date$
 #include "fdockwidget.h"
 #include "htmlinfoview.h"
 #include "waitpushundostack.h"
+#include "fapplication.h"
 
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
@@ -307,6 +308,13 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &)),
 							 this, SLOT(findSketchWidgetSlot(ItemBase::ViewIdentifier, SketchWidget * &)),
 							 Qt::DirectConnection);
+
+	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
+	if (fapp != NULL) {
+		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_schematicGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_pcbGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
+	}
 }
 
 void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)

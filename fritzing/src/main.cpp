@@ -37,6 +37,7 @@ $Date$
 #include "debugdialog.h"
 #include "version.h"
 #include "fsplashscreen.h"
+#include "fapplication.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -46,7 +47,7 @@ $Date$
 
 int main(int argc, char *argv[])
 {
-	QApplication app(argc, argv);
+	FApplication app(argc, argv);
 
 	#ifdef Q_WS_MAC
 		QString lib = "/../lib";
