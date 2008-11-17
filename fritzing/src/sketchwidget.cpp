@@ -2618,7 +2618,7 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 			return;
 		}
 	}
-	
+
 	if (connect) {
 		QList<ConnectorItem *> connectorItems;
 		QList<ConnectorItem *> partsConnectorItems;
@@ -2707,7 +2707,8 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 			color = Wire::netColor(m_viewIdentifier);
 		}
 		foreach (Wire * wire, ratsnestWires) {
-			wire->setColor((QColor) *color, wire->getRouted() ? 0.35 : 1.0);
+			QColor colorAsQColor = (QColor) *color;
+			wire->setColor(colorAsQColor, wire->getRouted() ? 0.35 : 1.0);
 		}
 
 
