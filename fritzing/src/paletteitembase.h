@@ -55,6 +55,7 @@ public:
  	bool syncSelected();
  	QPointF syncMoved();
 	void mousePressConnectorEvent(class ConnectorItem *, QGraphicsSceneMouseEvent *);
+	bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	virtual bool setUpImage(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 	const QString & filename();
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);

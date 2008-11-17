@@ -194,6 +194,19 @@ void PaletteItemBase::mousePressConnectorEvent(ConnectorItem * connectorItem, QG
 	}
 }
 
+bool PaletteItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent * event) {
+	if (m_viewIdentifier != ItemBase::PCBView) {
+		return true;
+	}
+
+	if ((event->modifiers() & Qt::ShiftModifier) == 0) {
+		// force a shift-click to drag out a wire in pcb view
+		return false;
+	}
+
+	return true;
+}
+
 
 void PaletteItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {

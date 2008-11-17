@@ -134,6 +134,7 @@ public:
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	virtual void connectorHover(class ConnectorItem *, ItemBase *, bool hovering);
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
+	virtual bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void connectionChange(ConnectorItem *);
 	virtual void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	virtual ItemBase * layerKinChief() = 0;

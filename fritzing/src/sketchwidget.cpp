@@ -2289,7 +2289,6 @@ ViewLayer::ViewLayerID SketchWidget::getConnectorViewLayerID() {
 
 void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
 	if (m_chainDragging) {
-
 	}
 
 	ModelPart * wireModel = m_paletteModel->retrieveModelPart(Wire::moduleIDName);
@@ -2606,7 +2605,7 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
-		if (wire->getRatsnest()) {
+		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
 			// don't make further ratsnest's from ratsnest
 			return;
 		}
@@ -2614,7 +2613,7 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 
 	if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-		if (wire->getRatsnest()) {
+		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
 			// don't make further ratsnest's from ratsnest
 			return;
 		}

@@ -166,9 +166,12 @@ void ConnectorItem::setColorAux(const QColor &color, bool paint) {
 }
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if (this->m_attachedTo != NULL) {
+	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMousePressConnectorEvent(this, event)) {
 		m_attachedTo->mousePressConnectorEvent(this, event);
+		return;
 	}
+
+	QGraphicsRectItem::mousePressEvent(event);
 }
 
 int ConnectorItem::connectionsCount() {

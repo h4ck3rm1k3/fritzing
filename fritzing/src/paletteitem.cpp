@@ -238,7 +238,7 @@ void PaletteItem::updateConnections() {
 void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	DebugDialog::debug("layerkinchief got mouse press event");
-	if (isBuriedConnectorHit(event)) return;
+	if (acceptsMousePressConnectorEvent(NULL, event) && isBuriedConnectorHit(event)) return;
 
 	foreach(LayerKinPaletteItem * lkpi, m_layerKin) {
 		if (lkpi->isBuriedConnectorHit(event)) return;
