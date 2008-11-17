@@ -822,8 +822,11 @@ void MainWindow::saveBundledSketch() {
 	DebugDialog::debug("saving sketch temporarily to "+destSketchPath);
 
 	bool wasModified = isWindowModified();
+	QString prevFileName = m_fileName;
 	saveAsAux(destSketchPath);
+	m_fileName = prevFileName;
 	setWindowModified(wasModified);
+	setTitle();
 
 	QList<ModelPart*> partsToSave = m_sketchModel->root()->getAllNonCoreParts();
 	foreach(ModelPart* mp, partsToSave) {
