@@ -419,11 +419,11 @@ QString HtmlInfoView::wireColorsSelect(Wire *wire) {
 }
 
 QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic) {
-	if(!dynamic || name.toLower() == "id" || name.toLower() == "family") {
+	QStringList values = m_refModel->values(family,name);
+
+	if(!dynamic || name.toLower() == "id" || name.toLower() == "family" || values.size() == 1) {
 		return QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(name).arg(value);
 	} else {
-		QStringList values = m_refModel->values(family,name);
-
 		QString options = "";
 		QString jsCode = "<script language='JavaScript'>\n";
 		jsCode += QString("currProps['%1'] = '%2'; \n").arg(name).arg(value);
