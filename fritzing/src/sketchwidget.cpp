@@ -3427,15 +3427,25 @@ void SketchWidget::swapSelected(ModelPart* other) {
 }
 
 void SketchWidget::swapSelected(const QString &moduleID) {
-	if(m_lastPaletteItemSelected) {
-		QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(m_lastPaletteItemSelected->instanceTitle()).arg(moduleID));
-		new SwapCommand(
-				this,
-				m_lastPaletteItemSelected->id(),
-				m_lastPaletteItemSelected->modelPart()->moduleID(),
-				moduleID,
-				parentCommand);
-		m_undoStack->push(parentCommand);
+	if(moduleID != ___emptyString___) {
+		if(m_lastPaletteItemSelected) {
+			QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(m_lastPaletteItemSelected->instanceTitle()).arg(moduleID));
+			new SwapCommand(
+					this,
+					m_lastPaletteItemSelected->id(),
+					m_lastPaletteItemSelected->modelPart()->moduleID(),
+					moduleID,
+					parentCommand);
+			m_undoStack->push(parentCommand);
+		}
+	} else {
+		QMessageBox::information(
+			this,
+			tr("Sorry!"),
+			tr(
+			 "No part with those characteristics\n."
+			 "Where're working to avoid this message, and only let you choose between properties that do exist")
+		);
 	}
 }
 
