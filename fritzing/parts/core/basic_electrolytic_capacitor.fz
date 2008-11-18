@@ -4,6 +4,7 @@
     <author>Stefan Hermann</author>
     <title>Basic Electrolytic Capacitor</title>
     <label>C</label>
+    <flip vertical="true" horizontal="true"/>
     <date>2008-09-24</date>
     <tags>
         <tag>Electrolytic</tag>

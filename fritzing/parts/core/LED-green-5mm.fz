@@ -4,6 +4,7 @@
     <author>Stefan Hermann</author>
     <title>green LED - 5mm</title>
     <label>LED</label>
+    <flip vertical="true" horizontal="true"/>
     <date>2008-10-10</date>
     <tags>
         <tag>LED</tag>

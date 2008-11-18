@@ -3,6 +3,7 @@
     <version>1.0</version>
     <title>Basic Force Sensing Resistor (FSR)</title>
     <label>J</label>
+    <flip vertical="true"/>
     <date>2008-09-25</date>
     <tags>
         <tag>FSR</tag>

@@ -3,6 +3,8 @@
     <version>1.1</version>
     <author>Stefan Hermann</author>
     <title>Basic Potentiometer</title>
+    <label>R</label>
+    <flip vertical="true"/>
     <date>2008-10-10</date>
     <tags>
     	<tag>potentiometer</tag>

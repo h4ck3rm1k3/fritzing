@@ -4,6 +4,7 @@
     <author>Stefan Hermann</author>
     <title>Ceramic Capacitor Round</title>
     <label>C</label>
+    <flip vertical="true" horizontal="true"/>
     <date>2008-09-24</date>
     <tags>
         <tag>Capacitor</tag>

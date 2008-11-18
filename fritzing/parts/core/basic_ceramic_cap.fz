@@ -4,6 +4,7 @@
     <author>Stefan Hermann</author>
     <title>Basic Ceramic Capacitor</title>
     <label>C</label>
+    <flip vertical="true" horizontal="true"/>
     <date>2008-09-23</date>
     <tags>
         <tag>Ceramic</tag>

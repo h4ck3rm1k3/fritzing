@@ -4,6 +4,7 @@
     <author>Brendan Howell</author>
     <title>Basic Electrolytic Capacitor</title>
     <label>C</label>
+    <flip vertical="true" horizontal="true"/>
     <date>2008-11-04</date>
     <tags>
         <tag>Electrolytic</tag>

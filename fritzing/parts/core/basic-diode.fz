@@ -4,6 +4,7 @@
     <author>JennyLC</author>
     <title>Recifier Diode</title>
     <label>D</label>
+    <flip vertical="true" horizontal="true"/>
     <date>2008-11-11</date>
     <tags>
         <tag>Diode</tag>
