@@ -160,7 +160,7 @@ void PaletteModel::loadPartsAux(QDir & dir, QStringList & nameFilters) {
     for (int i = 0; i < dirs.size(); ++i) {
     	QString temp2 = dirs[i];
        	dir.cd(temp2);
-       	m_loadingCore = temp2=="core"; //TODO Mariano: not the best way to find it out
+       	m_loadingCore = temp2=="core";
     	loadPartsAux(dir, nameFilters);
     	dir.cdUp();
     }
@@ -291,6 +291,19 @@ ModelPart * PaletteModel::addPart(QString newPartPath, bool addToReference, bool
 }
 
 void PaletteModel::removePart(const QString &moduleID) {
-	Q_UNUSED(moduleID);
-	//TODO Mariano:; remove IT!
+	ModelPart *mpToRemove = NULL;
+	QList<QObject *>::const_iterator i;
+    for (i = m_root->children().constBegin(); i != m_root->children().constEnd(); ++i) {
+		ModelPart* mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+
+		if(mp->moduleID() == moduleID) {
+			mpToRemove = mp;
+			break;
+		}
+	}
+	if(mpToRemove) {
+		mpToRemove->setParent(NULL);
+		delete mpToRemove;
+	}
 }

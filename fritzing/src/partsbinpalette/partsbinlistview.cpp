@@ -55,7 +55,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart) {
 		return;
 	}
 
-	QListWidgetItem * lwi = new QListWidgetItem ( modelPart->modelPartStuff()->title(), this );
+	QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartStuff()->title(), this);
 	lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
 
 	LayerAttributes layerAttributes;
@@ -119,6 +119,29 @@ void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
 	m_infoView = infoView;
 }
 
-void PartsBinListView::setModel(PaletteModel *model) {
-	m_model = model;
+void PartsBinListView::removePart(const QString &moduleID) {
+	int idxToRemove = -1;
+	for(int i=0; i < count(); i++) {
+		if(itemModuleID(item(i)) == moduleID) {
+			idxToRemove = i;
+			break;
+		}
+	}
+	if(idxToRemove > -1) {
+		delete takeItem(idxToRemove);
+	}
+}
+
+const QString &PartsBinListView::itemModuleID(const QListWidgetItem *item) {
+	//DebugDialog::debug("<<<< found this moduleID for item: "+item->data(Qt::UserRole).value<ModelPart *>()->moduleID());
+	return item->data(Qt::UserRole).value<ModelPart *>()->moduleID();
+}
+
+PaletteItem *PartsBinListView::selected() {
+	// TODO Mariano
+	return NULL;
+}
+
+bool PartsBinListView::swappingEnabled() {
+	return false;
 }

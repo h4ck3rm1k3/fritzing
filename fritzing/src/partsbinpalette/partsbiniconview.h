@@ -52,6 +52,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void loadFromModel(PaletteModel *);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
 		void addPart(ModelPart * model);
+		void removePart(const QString &moduleID);
 
 		void createItemMenu(QList<QAction*> &actions){
 			m_itemMenu = new QMenu(QObject::tr("Icon"), this);
@@ -67,7 +68,6 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 
 		PaletteItem *selected();
 	protected:
-		void setModel(PaletteModel *model);
 		void doClear();
 		void mousePressEvent(QMouseEvent *event);
 		void setItemAux(ModelPart *);
@@ -80,7 +80,6 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 
 	protected:
 		LayerHash m_viewLayers;
-		PaletteModel * m_model;
 
 		QGraphicsWidget *m_layouter;
 		GraphicsFlowLayout *m_layout;

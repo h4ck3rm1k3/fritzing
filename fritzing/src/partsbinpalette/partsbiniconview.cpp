@@ -118,6 +118,24 @@ void PartsBinIconView::addPart(ModelPart * model) {
 	updateSize();
 }
 
+void PartsBinIconView::removePart(const QString &moduleID) {
+	SvgIconWidget *itemToRemove;
+	foreach(QGraphicsItem *gIt, m_layouter->childItems()) {
+		SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(gIt);
+		if(it && it->paletteItem()->modelPart()->moduleID() == moduleID) {
+			itemToRemove = it;
+			break;
+		}
+	}
+	if(itemToRemove) {
+		m_iconHash.remove(moduleID);
+		itemToRemove->setParentItem(NULL);
+		m_layout->removeItem(itemToRemove);
+		delete itemToRemove;
+	}
+	m_layout->updateGeometry();
+}
+
 void PartsBinIconView::setItemAux(ModelPart * modelPart) {
 	if (!modelPart || modelPart->itemType() == ModelPart::Module) {
 		// don't want the empty root item to appear in the view
@@ -125,7 +143,6 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart) {
 	}
 
 	QString moduleID = modelPart->moduleID();
-	m_model->updateOrAddModelPart(moduleID,modelPart);
 
 	if(!alreadyIn(moduleID)) {
 		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ItemBase::IconView, m_viewLayers, ItemBase::getNextID(), NULL);
@@ -142,8 +159,6 @@ void PartsBinIconView::setPaletteModel(PaletteModel *model, bool clear) {
 }
 
 void PartsBinIconView::loadFromModel(PaletteModel * model) {
-	m_model = model;
-
 	ModelPart* root = model->root();
 	QList<QObject *>::const_iterator i;
     for (i = root->children().constBegin(); i != root->children().constEnd(); ++i) {
@@ -165,10 +180,6 @@ void PartsBinIconView::loadFromModel(PaletteModel * model) {
 
 		setItemAux(mp);
 	}
-}
-
-void PartsBinIconView::setModel(PaletteModel *model) {
-	m_model = model;
 }
 
 PaletteItem *PartsBinIconView::selected() {

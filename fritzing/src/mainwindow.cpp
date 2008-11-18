@@ -674,6 +674,8 @@ void MainWindow::createDockWindows()
 
 	m_paletteWidget = new PartsBinPaletteWidget(m_infoView, this);
 	connect(m_paletteWidget, SIGNAL(saved(bool)), this, SLOT(binSaved(bool)));
+	connect(this, SIGNAL(partsFromBundledDiscarded()), m_paletteWidget, SLOT(removePartsFromBundled()));
+
 	if (m_paletteModel->loadedFromFile()) {
 		m_paletteWidget->loadFromModel(m_paletteModel);
 	}

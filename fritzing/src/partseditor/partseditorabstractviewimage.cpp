@@ -119,7 +119,6 @@ void PartsEditorAbstractViewImage::removeConnectors() {
 }
 
 ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QString &svgpath, const QString &relativepath) {
-	// TODO Mariano: Merge this two methods
 	const QHash<QString,StringPair*> connIds = getConnectorIds(svgpath);
 	const QStringList layers = getLayers(svgpath);
 
@@ -164,7 +163,7 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString
 }
 
 const QHash<QString,StringPair*> PartsEditorAbstractViewImage::getConnectorIds(const QString &path) {
-	// TODO: papi does the same
+	// TODO Mariano: papi does the same
 	QDomDocument *dom = new QDomDocument();
 	QFile file(path);
 	dom->setContent(&file);

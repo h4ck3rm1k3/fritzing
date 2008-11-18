@@ -35,19 +35,7 @@ PartInstanceStuff::PartInstanceStuff() {
 
 PartInstanceStuff::PartInstanceStuff(QDomDocument * domDocument, const QString & path) {
 	m_domDocument = domDocument;
-
-        Q_UNUSED(path);
-	//TODO Mariano: perhaps we should grab the instance title right here
-	/*QDomElement root = domDocument->documentElement();
-	if (root.isNull()) {
-		return;
-	}
-
-	if (root.tagName() != "module") {
-		return;
-	}
-
-	loadText(root, "title", m_title);*/
+	Q_UNUSED(path);
 }
 
 void PartInstanceStuff::loadText(QDomElement parent, QString tagName, QString &field) {

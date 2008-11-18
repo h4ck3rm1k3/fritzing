@@ -196,29 +196,29 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 	this->saveGeometry();
 	writeGeometry(streamWriter);
-	
+
 	bool saveConnectorItems = false;
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
-		
+
 		if (connectorItem->connectionsCount() > 0) {
 			saveConnectorItems = true;
 			break;
 		}
 	}
-	
+
 	if (saveConnectorItems) {
 		streamWriter.writeStartElement("connectors");
 		foreach (QGraphicsItem * childItem, childItems()) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 			if (connectorItem == NULL) continue;
-			
+
 			connectorItem->saveInstance(streamWriter);
 		}
 		streamWriter.writeEndElement();
 	}
-	
+
 	bool saveBuses = false;
 	foreach (BusConnectorItem * busConnectorItem, m_busConnectorItems) {
 		if (busConnectorItem->connectionsCount() > 0) {
@@ -226,17 +226,17 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 			break;
 		}
 	}
-	
+
 	if (saveBuses) {
 		streamWriter.writeStartElement("buses");
 		foreach (BusConnectorItem * busConnectorItem, m_busConnectorItems) {
 			if (busConnectorItem->connectionsCount() <= 0) continue;
-			
+
 			busConnectorItem->saveInstance(streamWriter);
 		}
 		streamWriter.writeEndElement();
 	}
-	
+
 	streamWriter.writeEndElement();
 }
 
@@ -504,12 +504,12 @@ void ItemBase::removeBusConnectorItem(Bus * bus) {
 BusConnectorItem * ItemBase::busConnectorItem(const QString & busID) {
 	Bus * bus = m_modelPart->bus(busID);
 	if (bus == NULL) return NULL;
-	
+
 	return m_busConnectorItems.value(bus);
 }
 
 ConnectorItem * ItemBase::busConnectorItemCast(const QString & busID) {
-	
+
 	return busConnectorItem(busID);
 }
 
@@ -741,24 +741,24 @@ ConnectorItem* ItemBase::newConnectorItem(Connector *connector) {
 }
 
 void ItemBase::restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems) {
-	
+
 	QDomElement connectorsElement = instance.firstChildElement("connectors");
-	if (!connectorsElement.isNull()) {	
+	if (!connectorsElement.isNull()) {
 		QDomElement connectorElement = connectorsElement.firstChildElement("connector");
 		while (!connectorElement.isNull()) {
 			ConnectorItem * connectorItem = findConnectorItemNamed(connectorElement.attribute("connectorId"));
-			if (connectorItem != NULL) {		
+			if (connectorItem != NULL) {
 				connectorItem->restoreConnections(connectorElement, newItems);
 			}
 			connectorElement = connectorElement.nextSiblingElement("connector");
 		}
 	}
-	
+
 	// merge buses
 	QDomElement busesElement = instance.firstChildElement("buses");
-	if (!busesElement.isNull()) {	
+	if (!busesElement.isNull()) {
 		QDomElement connectorElement = busesElement.firstChildElement("connector");
-		while (!connectorElement.isNull()) {			
+		while (!connectorElement.isNull()) {
 			QString busID = connectorElement.attribute("busId");
 			BusConnectorItem * bci = busConnectorItem(busID);
 			if (bci != NULL) {
@@ -779,16 +779,16 @@ void ItemBase::restoreConnections(QDomElement & instance, QHash<long, ItemBase *
 								}
 							}
 						}
-						
+
 						busElement = busElement.nextSiblingElement("bus");
 					}
 				}
 			}
-			
-			
+
+
 			connectorElement = connectorElement.nextSiblingElement("connector");
 		}
-	}	
+	}
 }
 
 ConnectorItem * ItemBase::anyConnectorItem() {
@@ -905,7 +905,7 @@ bool ItemBase::hasConnectors() {
 }
 
 
-const bool ItemBase::canFlipHorizontal() {
+bool ItemBase::canFlipHorizontal() {
 	return m_canFlipHorizontal;
 }
 
@@ -913,7 +913,7 @@ void ItemBase::setCanFlipHorizontal(bool cf) {
 	m_canFlipHorizontal = cf;
 }
 
-const bool ItemBase::canFlipVertical() {
+bool ItemBase::canFlipVertical() {
 	return m_canFlipVertical;
 }
 

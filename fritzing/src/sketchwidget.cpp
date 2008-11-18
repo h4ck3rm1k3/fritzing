@@ -1482,7 +1482,6 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		// remove again (may not have been removed earlier)
 		if (m_connectorDragWire->scene() != NULL) {
 			this->scene()->removeItem(m_connectorDragWire);
-			// TODO Mariano: perhaps we could ask for the attachedTo
 			m_infoView->unregisterCurrentItem();
 
 		}
@@ -3768,10 +3767,10 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 void SketchWidget::updateRatsnestStatus() {
 
 	int ratsnestWireCount = 0;
+	int netCount = 0;
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
 	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
-	int netCount = allPartConnectorItems.count();
 	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
 		delete list;
 	}

@@ -36,8 +36,6 @@ void PartsBinView::setPaletteModel(PaletteModel * model, bool clear) {
 		doClear();
 	}
 
-	setModel(model);
-
 	if (model->root() == NULL) return;
 
 	setItemAux(model->root());
@@ -60,11 +58,6 @@ void PartsBinView::setItem(ModelPart * modelPart) {
 
 void PartsBinView::addPart(ModelPart * model) {
 	setItemAux(model);
-}
-
-void PartsBinView::removePart(const QString &moduleID) {
-	Q_UNUSED(moduleID);
-	//TODO Mariano:; remove IT!
 }
 
 void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, const QPointF &dataPoint, const QPoint &hotspot) {

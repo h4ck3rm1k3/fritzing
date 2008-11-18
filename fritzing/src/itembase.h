@@ -125,9 +125,9 @@ public:
 	void setTooltip();
 	void removeTooltip();
 	bool hasConnectors();
-	const bool canFlipHorizontal();
+	bool canFlipHorizontal();
 	void setCanFlipHorizontal(bool);
-	const bool canFlipVertical();
+	bool canFlipVertical();
 	void setCanFlipVertical(bool);
 
 public:

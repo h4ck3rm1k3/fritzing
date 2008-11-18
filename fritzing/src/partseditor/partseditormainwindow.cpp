@@ -320,10 +320,6 @@ bool PartsEditorMainWindow::createTemplate(){
 
 const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
 	if(m_tempDir.path() == ".") {
-		// generate unique temp dir
-		// TODO Mariano: use this later
-		//if(!createFolderAnCdIntoIt(m_tempDir, getRandText())) return ___emptyString___;
-
 		QString randext = getRandText();
 		m_tempDir = QDir(QDir::tempPath());
 		if(!m_tempDir.mkdir(randext)) return ___emptyDir___;

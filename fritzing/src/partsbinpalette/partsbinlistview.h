@@ -39,15 +39,10 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		PartsBinListView(QWidget * parent = 0);
 		~PartsBinListView();
 		void setInfoView(class HtmlInfoView *);
+		void removePart(const QString &moduleID);
 
-		PaletteItem *selected() {
-			// TODO Mariano
-			return NULL;
-		}
-
-		bool swappingEnabled() {
-			return false;
-		}
+		PaletteItem *selected();
+		bool swappingEnabled();
 
 	protected:
 		void setModel(PaletteModel *model);
@@ -55,11 +50,11 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		void setItemAux(ModelPart * modelPart);
 		void mousePressEvent(QMouseEvent * event);
 		void mouseMoveEvent(QMouseEvent * event);
+		const QString& itemModuleID(const QListWidgetItem *item);
 
 	protected:
 		class HtmlInfoView * m_infoView;
 		QListWidgetItem * m_hoverItem;
-		PaletteModel *m_model;
 
 		QPixmap *m_pixmap;
 };

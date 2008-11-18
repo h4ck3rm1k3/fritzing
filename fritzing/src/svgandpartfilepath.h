@@ -2,8 +2,8 @@
  * (c) Fachhochschule Potsdam
  */
 
-#ifndef FRITZINGSVGPATH_H_
-#define FRITZINGSVGPATH_H_
+#ifndef SVGANDPARTFILEPATH_H_
+#define SVGANDPARTFILEPATH_H_
 
 #include "misc.h"
 
@@ -45,9 +45,10 @@ public:
 		third = fileRelativePath;
 	}
 
-	QString absolutePath(const QString &sep = "/") {
+	QString absolutePath() {
+		QString sep = "/";
 		return first+sep+second+sep+third;
 	}
 };
 
-#endif /* FRITZINGSVGPATH_H_ */
+#endif /* SVGANDPARTFILEPATH_H_ */

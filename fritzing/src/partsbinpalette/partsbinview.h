@@ -39,7 +39,7 @@ class PartsBinView {
 		virtual void setPaletteModel(PaletteModel * model, bool clear = false);
 		void reloadParts(PaletteModel * model);
 		void addPart(ModelPart * model);
-		void removePart(const QString &moduleID);
+		virtual void removePart(const QString &moduleID) = 0;
 
 		virtual PaletteItem *selected() = 0;
 
@@ -50,7 +50,6 @@ class PartsBinView {
 				const QPointF &dataPoint = QPointF(0,0), const QPoint &hotspot = QPoint(0,0));
 
 		virtual void doClear() = 0;
-		virtual void setModel(PaletteModel * model) = 0;
 		virtual void setItemAux(ModelPart * modelPart) = 0;
 };
 

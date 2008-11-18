@@ -55,7 +55,6 @@ class ImageButton : public QLabel {
 		}
 };
 
-// TODO Mariano post alpha: create a real Bin entity and make this widget wrap it
 class PartsBinPaletteWidget : public FDockWidget {
 	Q_OBJECT
 	public:

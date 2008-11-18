@@ -323,7 +323,7 @@ void HtmlInfoView::ensureUniqueTitle(ItemBase* item, QString &title) {
 		int count;
 
 		QList<QGraphicsItem*> items = item->scene()->items();
-		// TODO Mariano: If someone end up with 1000 parts in the sketchs, this for sure is not the best solution
+		// If someone ends up with 1000 parts in the sketch, this for sure is not the best solution
 		count = getNextTitle(items,title);
 
 		title = QString(title+"%1").arg(count);
@@ -469,7 +469,6 @@ void HtmlInfoView::registerCurrentAgain() {
 bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 	if(item) {
 		m_currentItem = item;
-		//TODO Mariano: don't like this
 		if(m_currentItem->itemType() != ModelPart::Wire) {
 			registerJsObjects("swapper");
 		} else {
