@@ -56,10 +56,10 @@ AboutBox::AboutBox(QWidget *parent)
 	// To make the application not quit when the window closes
 	this->setAttribute(Qt::WA_QuitOnClose, FALSE);
 
-	setFixedSize(340, 358);
+	setFixedSize(390, 430);
 
 	// the background color
-	//setStyleSheet("background-color: #F0F0F0");
+	setStyleSheet("background-color: #E8E8E8");
 
 	// the new Default Font
 	QFont smallFont;
@@ -71,7 +71,7 @@ AboutBox::AboutBox(QWidget *parent)
 	// Big Icon
 	QLabel *logoShield = new QLabel(this);
 	logoShield->setPixmap(QPixmap(":/resources/images/AboutBoxLogoShield.png"));
-	logoShield->setGeometry(106, 8, 128, 128);
+	logoShield->setGeometry(131, 8, 128, 128);
 
 	// Version String
 	QLabel *versionMain = new QLabel(this);
@@ -81,7 +81,7 @@ AboutBox::AboutBox(QWidget *parent)
 						 .arg(Version::modifier())
 						 .arg(Version::revision()));
 	versionMain->setFont(smallFont);
-	versionMain->setGeometry(20, 150, 300, 20);
+	versionMain->setGeometry(45, 150, 300, 20);
 	versionMain->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
 
 	// Link to website
@@ -89,7 +89,7 @@ AboutBox::AboutBox(QWidget *parent)
 	linkToFritzing->setText(tr("<a href=\"http://www.fritzing.org\">www.fritzing.org</a>"));
 	linkToFritzing->setOpenExternalLinks(TRUE);
 	linkToFritzing->setFont(smallFont);
-	linkToFritzing->setGeometry(20, 168, 300, 18);
+	linkToFritzing->setGeometry(45, 168, 300, 18);
 	linkToFritzing->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
 	linkToFritzing->setOpenExternalLinks(TRUE);
 
@@ -97,22 +97,8 @@ AboutBox::AboutBox(QWidget *parent)
 	
 	QLabel *copyrightNotice = new QLabel(this);
 	copyrightNotice->setPixmap(QPixmap(":/resources/images/aboutbox_copyright_notice2008.png"));
-	copyrightNotice->setGeometry(5, 326, 330, 32);
+	copyrightNotice->setGeometry(30, 398, 330, 32);
 	
-	/* Copyright notice is now an image, no text.
-	QLabel *copyrightFHPText = new QLabel(this);
-	copyrightFHPText->setText(tr("Open Source %1 2007-2008 University of Applied Sciences Potsdam FHP :-)").arg(QChar::QChar(169)));
-	copyrightFHPText->setFont(extraSmallFont);
-	copyrightFHPText->setGeometry(10, 322, 320, 16);
-	copyrightFHPText->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-
-	QLabel *licenceText = new QLabel(this);
-	licenceText->setText(tr("GNU GPL v2 on code and CreativeCommons:BY on the rest"));
-	licenceText->setFont(extraSmallFont);
-	licenceText->setGeometry(10, 336, 320, 16);
-	licenceText->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-	 */
-	 
 	// Scrolling Credits Text
 
 	// creditsScroll as QLabel
@@ -124,21 +110,28 @@ AboutBox::AboutBox(QWidget *parent)
 	}
 
 	creditsScroll->setFont(smallFont);
-	creditsScroll->setGeometry(0, 0, 340, 900);
+	creditsScroll->setGeometry(0, 0, 390, 800);
 	creditsScroll->setWordWrap(false);
 	creditsScroll->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 
 	int max = creditsScroll->sizeHint().height();
-	creditsScroll->setGeometry(0, 0, 340, max);
+	creditsScroll->setGeometry(0, 0, 390, max);
 
 	// set the creditsScroll inside our QScrollArea
 	m_scrollArea = new QScrollArea(this);
 	m_scrollArea->setWidget(creditsScroll);
-	m_scrollArea->setGeometry(0, 208, 340, 100);
+	m_scrollArea->setGeometry(0, 210, 390, 160);
 	m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_scrollArea->setFrameStyle(QFrame::NoFrame);
 	m_scrollArea->ensureVisible(0, 0);
+	
+	// Add a fade out and a fade in the scrollArea
+	/*
+	QLabel *scrollFade = new QLabel(this);
+	scrollFade->setPixmap(QPixmap(":/resources/images/aboutbox_scrollfade.png"));
+	scrollFade->setGeometry(0, 210, 390, 160);
+	*/
 
 	// auto scroll timer initialization
 	m_restartAtTop = FALSE;

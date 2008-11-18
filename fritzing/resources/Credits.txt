@@ -1,24 +1,24 @@
-<p>Fritzing is made by:<br />
+<p><br>
+Fritzing is made by:<br />
 Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic,<br>
-Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, <br />
-Marcus Paeschke, Omer Yosha, Travis Robertson,<br>
-Stefan Hermann, Brendan Howell, Mariano Crowe, <br />
-Johannes Landstorfer, Jenny Chowdhury<br>
-and Jannis Leidel.</p>
+Zach Eveland, Dirk van Oosterbosch,<br>
+Jonathan Cohen, Marcus Paeschke, Omer Yosha,<br>
+Travis Robertson, Stefan Hermann, Brendan Howell,<br>
+Mariano Crowe, Johannes Landstorfer,<br>
+Jenny Chowdhury and Jannis Leidel.</p>
 
 <p>Special thanks goes out to:<br />
 Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir,<br>
-Durrell Bishop, David Cuartielles, Fabian Hemmert, <br />
-Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, <br />
-Hans-Peter Kadel, Till Savelkoul, Jan Sieber,<br>
-Yaniv Steiner, Olaf Val, Michaela Vieser <br />
-and Julia Werner.
-</p>
+Durrell Bishop, David Cuartielles, Fabian Hemmert,<br />
+Gero Herkenrath, Jeff Hoefs, Tom Hulbert,<br>
+Tom Igoe, Hans-Peter Kadel, Till Savelkoul,<br>
+Jan Sieber, Yaniv Steiner, Olaf Val,<br>
+Michaela Vieser and Julia Werner.</p>
 
 <p>Fritzing is made possible with funding from the<br>
-MWFK Brandenburg and the sponsorship of the<br>
-Design Department of Bauhaus-University Weimar<br>
-and IxDS.</p>
+MWFK Brandenburg, the sponsorship of the Design<br>
+Department of Bauhaus-University Weimar and<br>
+IxDS.</p>
 
 <p>Special thanks goes out as well to all the students<br>
 and alpha testers who were brave enough to give<br>
