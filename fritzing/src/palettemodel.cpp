@@ -134,7 +134,7 @@ void PaletteModel::writeInstanceInAllPartsBin(const QString &moduleID, const QSt
 
 void PaletteModel::writeToAllPartsBinAux(const QString &textToWrite, QIODevice::OpenMode openMode) {
 	if(AllPartsBinFilePath == ___emptyString___) {
-		AllPartsBinFilePath = getApplicationSubFolderPath("bins")+"/allParts.fz";
+		AllPartsBinFilePath = getApplicationSubFolderPath("bins")+"/allParts.dbg.fz";
 	}
 	QFile file(AllPartsBinFilePath);
 	if (!file.open(openMode | QFile::Text)) {

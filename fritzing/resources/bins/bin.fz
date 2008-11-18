@@ -2,95 +2,89 @@
 <module>
 	<title>Fritzing Core</title>
     <instances>
-        <instance moduleIdRef="1234ABDC24" modelIndex="6" path="parts/core/LED-red-5mm.fz">
+        <instance moduleIdRef="1234ABDC24" path="parts/core/LED-red-5mm.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="150" y="0"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
         <instance moduleIdRef="29496e0b-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-220.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="0" y="50"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
-        <instance moduleIdRef="1000AAAA01" modelIndex="10298864" path="parts/core/basic_ceramic_cap_round.fz">
+        <instance moduleIdRef="1000AAAA01" path="parts/core/basic_ceramic_cap_round.fz">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
-        <instance moduleIdRef="1001ABDC03" modelIndex="12" path="parts/core/basic_electrolytic_capacitor.fz">
+        <instance moduleIdRef="1001ABDC03" path="parts/core/basic_electrolytic_capacitor.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="200" y="50"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
              </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
-        <instance moduleIdRef="1234DBDC00" modelIndex="11005472" path="parts/core/basic_transistor_npn.fz">
+        <instance moduleIdRef="1234DBDC00" path="parts/core/basic_transistor_npn.fz">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
-        <instance moduleIdRef="1001ABDC27" modelIndex="11" path="parts/core/basic_fet_p.fz">
+        <instance moduleIdRef="1001ABDC27" path="parts/core/basic_fet_p.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="150" y="50"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
              </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
-        <instance moduleIdRef="1238DBDC00" modelIndex="10747904" path="parts/core/basic_power_transistor_npn.fz">
+        <instance moduleIdRef="1238DBDC00" path="parts/core/basic_power_transistor_npn.fz">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
-        <instance moduleIdRef="3234DBDC00" modelIndex="14" path="parts/core/basic_poti.fz">
+        <instance moduleIdRef="3234DBDC00" path="parts/core/basic_poti.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="50" y="100"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
              </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
         <instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" path="parts/core/basic_pbutton_2leg_horizon.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="50" y="50"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
             </views>
-            <connectors></connectors>
-            <buses></buses>
-        </instance>        
-        <instance moduleIdRef="1000ABDD10012" modelIndex="10" path="parts/core/basic_ldr.fz">
+        </instance>
+        <instance moduleIdRef="1234ABDC24diode" path="parts/core/basic-diode.fz">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+		<instance moduleIdRef="1238DBDC00-voltage-reg" path="parts/core/basic-voltage-regulator.fz">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+        <instance moduleIdRef="1000ABDD10012" path="parts/core/basic_ldr.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="100" y="50"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
              </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
         <instance moduleIdRef="3234DBDC80" path="parts/core/basic_servo.fz">
             <views>
@@ -98,44 +92,34 @@
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
-        <instance moduleIdRef="1000ABDD10011" modelIndex="10636448" path="parts/core/basic_fsr.fz">
+        <instance moduleIdRef="1000ABDD10011" path="parts/core/basic_fsr.fz">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
         <instance moduleIdRef="BreadboardModuleID" modelIndex="5" path=":/resources/parts/core/breadboard.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="100" y="0"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
         <instance moduleIdRef="1234ABDE24_ST" modelIndex="7" path="parts/core/controller_arduino_diecimila.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="200" y="0"></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
              </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="3" path=":/resources/parts/core/wire.fz">
             <views>
                 <iconView layer="icon">
-                    <geometry z="3.5" x="0" y="0" ></geometry>
+                    <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView >
             </views>
-            <connectors></connectors>
-            <buses></buses>
         </instance>
     </instances>
 </module>
