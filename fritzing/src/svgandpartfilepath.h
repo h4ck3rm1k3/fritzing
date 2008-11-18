@@ -11,7 +11,11 @@
 /*
  * While the svg and parts files, are loaded dynamically from different folders
  * (core, contrib and user), this structure let us keep truck of this structure,
- * without the need to deal with substrings creation
+ * without the need to deal with substrings creation.
+ * So, for example, if an svg file is in "/fritzing/parts/svg/core/breadboard/svg_file.svg" then
+ * partFolderPath == "/fritzing/parts/svg"
+ * coreContribOrUser == "core"
+ * fileRelativePath == "breadboard/svg_file.svg"
  */
 class SvgAndPartFilePath : public StringTriple {
 public:
