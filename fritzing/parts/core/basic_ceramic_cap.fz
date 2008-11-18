@@ -4,7 +4,6 @@
     <author>Stefan Hermann</author>
     <title>Basic Ceramic Capacitor</title>
     <label>C</label>
-    <flip vertical="true" horizontal="true"/>
     <date>2008-09-23</date>
     <tags>
         <tag>Ceramic</tag>
@@ -25,7 +24,7 @@
                 <layer layerId="icon" image="icon/basic_ceramic_cap_icon.svg"></layer>
             </layers>
         </iconView>
-        <breadboardView>
+        <breadboardView flipvertical="true" fliphorizontal="true">
             <layers>
                 <layer layerId="breadboard" image="breadboard/basic_ceramic_cap.svg"></layer>
             </layers>

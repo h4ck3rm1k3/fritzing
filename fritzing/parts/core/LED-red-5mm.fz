@@ -4,7 +4,6 @@
     <author>Brendan Howell</author>
     <title>Red LED - 5mm</title>
     <label>LED</label>
-    <flip vertical="true" horizontal="true"/>
     <date>2008-07-25</date>
     <tags>
         <tag>LED</tag>
@@ -25,7 +24,7 @@
                 <layer layerId="icon" image="icon/LED-red-5mmicon.svg"></layer>
             </layers>
         </iconView>
-        <breadboardView>
+        <breadboardView flipvertical="true" fliphorizontal="true">
             <layers>
                 <layer layerId="breadboard" image="breadboard/LED-5mm-red.svg"></layer>
             </layers>

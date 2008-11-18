@@ -3,7 +3,6 @@
     <version>1.0</version>
     <title>Basic Resistor</title>
     <label>R</label>
-    <flip vertical="true" horizontal="true"/>
     <date>2008-11-04</date>
     <author>Brendan Howell</author>
     <tags>
@@ -24,7 +23,7 @@
                 <layer layerId="icon" image="icon/basic-resistor-220.svg"></layer>
             </layers>
         </iconView>
-        <breadboardView>
+        <breadboardView flipvertical="true" fliphorizontal="true">
             <layers>
                 <layer layerId="breadboard" image="breadboard/basic-resistor-220.svg"></layer>
             </layers>

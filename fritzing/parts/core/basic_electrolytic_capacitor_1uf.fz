@@ -4,7 +4,6 @@
     <author>Brendan Howell</author>
     <title>Basic Electrolytic Capacitor</title>
     <label>C</label>
-    <flip vertical="true" horizontal="true"/>
     <date>2008-11-04</date>
     <tags>
         <tag>Electrolytic</tag>
@@ -25,7 +24,7 @@
                 <layer layerId="icon" image="icon/basic_elec_cap_5_icon.svg"></layer>
             </layers>
         </iconView>
-        <breadboardView>
+        <breadboardView flipvertical="true" fliphorizontal="true">
             <layers>
                 <layer layerId="breadboard" image="breadboard/basic_elec_cap_5.svg"></layer>
             </layers>

@@ -3,7 +3,6 @@
     <version>1.1</version>
     <title>Basic Photo-Resistor (Photocell)</title>
     <label>R</label>
-    <flip vertical="true" horizontal="true"/>
     <date>2008-09-25</date>
     <tags>
         <tag>LDR</tag>
@@ -26,7 +25,7 @@
                 <layer layerId="icon" image="icon/basic_ldr.svg"></layer>
             </layers>
         </iconView>
-        <breadboardView>
+        <breadboardView flipvertical="true" fliphorizontal="true">
             <layers>
                 <layer layerId="breadboard" image="breadboard/basic_ldr.svg"></layer>
             </layers>

@@ -4,7 +4,6 @@
     <author>Stefan Hermann</author>
     <title>Basic Potentiometer</title>
     <label>R</label>
-    <flip vertical="true"/>
     <date>2008-10-10</date>
     <tags>
     	<tag>potentiometer</tag>
@@ -27,7 +26,7 @@
                 <layer layerId="icon" image="icon/basic_poti_icon.svg"/>
             </layers>
         </iconView>
-        <breadboardView>
+        <breadboardView flipvertical="true">
             <layers>
                 <layer layerId="breadboard" image="breadboard/basic_poti_sm.svg"/>
             </layers>
