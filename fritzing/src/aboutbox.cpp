@@ -94,6 +94,12 @@ AboutBox::AboutBox(QWidget *parent)
 	linkToFritzing->setOpenExternalLinks(TRUE);
 
 	// Copyright messages
+	
+	QLabel *copyrightNotice = new QLabel(this);
+	copyrightNotice->setPixmap(QPixmap(":/resources/images/aboutbox_copyright_notice2008.png"));
+	copyrightNotice->setGeometry(5, 326, 330, 32);
+	
+	/* Copyright notice is now an image, no text.
 	QLabel *copyrightFHPText = new QLabel(this);
 	copyrightFHPText->setText(tr("Open Source %1 2007-2008 University of Applied Sciences Potsdam FHP :-)").arg(QChar::QChar(169)));
 	copyrightFHPText->setFont(extraSmallFont);
@@ -105,7 +111,8 @@ AboutBox::AboutBox(QWidget *parent)
 	licenceText->setFont(extraSmallFont);
 	licenceText->setGeometry(10, 336, 320, 16);
 	licenceText->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-
+	 */
+	 
 	// Scrolling Credits Text
 
 	// creditsScroll as QLabel
@@ -117,17 +124,17 @@ AboutBox::AboutBox(QWidget *parent)
 	}
 
 	creditsScroll->setFont(smallFont);
-	creditsScroll->setGeometry(0, 0, 264, 900);
+	creditsScroll->setGeometry(0, 0, 340, 900);
 	creditsScroll->setWordWrap(false);
 	creditsScroll->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 
 	int max = creditsScroll->sizeHint().height();
-	creditsScroll->setGeometry(0, 0, 264, max);
+	creditsScroll->setGeometry(0, 0, 340, max);
 
 	// set the creditsScroll inside our QScrollArea
 	m_scrollArea = new QScrollArea(this);
 	m_scrollArea->setWidget(creditsScroll);
-	m_scrollArea->setGeometry(38, 208, 264, 100);
+	m_scrollArea->setGeometry(0, 208, 340, 100);
 	m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_scrollArea->setFrameStyle(QFrame::NoFrame);
@@ -159,7 +166,7 @@ void AboutBox::scrollCredits() {
 		}
 		if (m_scrollArea->verticalScrollBar()->value() >= m_scrollArea->verticalScrollBar()->maximum()) {
 			// go and reset
-			m_startTime.start();
+			// m_startTime.start();
 			m_restartAtTop = TRUE;
 		} else {
 			m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->value() + 1);

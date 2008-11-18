@@ -1,38 +1,29 @@
 <p>Fritzing is made by:<br />
-Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig,<br />
-Myriel Milicevic, Zach Eveland, <br />
-Dirk van Oosterbosch, Jonathan Cohen, <br />
-Marcus Paeschke, Omer Yosha, <br />
-Travis Robertson, Stefan Hermann, <br />
-Brendan Howell, Mariano Crowe, <br />
-Johannes Landstorfer, Jenny Chowdhury <br />
+Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic,<br>
+Zach Eveland, Dirk van Oosterbosch, Jonathan Cohen, <br />
+Marcus Paeschke, Omer Yosha, Travis Robertson,<br>
+Stefan Hermann, Brendan Howell, Mariano Crowe, <br />
+Johannes Landstorfer, Jenny Chowdhury<br>
 and Jannis Leidel.</p>
 
 <p>Special thanks goes out to:<br />
-Jussi &Auml;ngeslev&auml;, Massimo Banzi, <br />
-Ayah Bdeir, Durrell Bishop, <br />
-David Cuartielles, Fabian Hemmert, <br />
-Gero Herkenrath, Jeff Hoefs, <br />
-Tom Hulbert, Tom Igoe, <br />
-Hans-Peter Kadel, Till Savelkoul, <br />
-Jan Sieber, Yaniv Steiner, <br />
-Olaf Val, Michaela Vieser <br />
+Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir,<br>
+Durrell Bishop, David Cuartielles, Fabian Hemmert, <br />
+Gero Herkenrath, Jeff Hoefs, Tom Hulbert, Tom Igoe, <br />
+Hans-Peter Kadel, Till Savelkoul, Jan Sieber,<br>
+Yaniv Steiner, Olaf Val, Michaela Vieser <br />
 and Julia Werner.
 </p>
 
-<p>Fritzing is made possible with <br />
-funding from the MWFK Brandenburg <br />
-and the sponsorship of <br />
-the Design Department of <br />
-Bauhaus-University Weimar <br />
+<p>Fritzing is made possible with funding from the<br>
+MWFK Brandenburg and the sponsorship of the<br>
+Design Department of Bauhaus-University Weimar<br>
 and IxDS.</p>
 
-<p>Special thanks goes out as well <br />
-to all the students and alpha testers <br />
-who were brave enough to give <br />
-Fritzing a test spin and who <br />
-stayed with us, throughout our <br />
-rewrite of the app.</p>
+<p>Special thanks goes out as well to all the students<br>
+and alpha testers who were brave enough to give<br>
+Fritzing a test spin and who stayed with us,<br>
+throughout our rewrite of the app.</p>
 <br />
 <br />
 <br />
@@ -41,4 +32,4 @@ rewrite of the app.</p>
 <br />
 <br />
 <br />
-
+<br />
