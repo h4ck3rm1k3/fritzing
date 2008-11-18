@@ -858,6 +858,12 @@ qreal Wire::opacity() {
 	return m_opacity;
 }
 
+
+void Wire::setOpacity(qreal opacity) {
+	m_opacity = opacity;
+	this->update();
+}
+
 const QColor * Wire::netColor(ItemBase::ViewIdentifier viewIdentifier) {
 	int csi = colorStringIndex.value(viewIdentifier);
 	QColor * c = ratsnestColors[csi];

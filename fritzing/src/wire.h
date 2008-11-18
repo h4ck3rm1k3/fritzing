@@ -102,6 +102,7 @@ public:
 	void setColorString(QString, qreal opacity);
 	void setColor(QColor &, qreal opacity);
 	qreal opacity();
+	void setOpacity(qreal opacity);
 	const QColor * color();
 	void setWidth(int);
 	int width();

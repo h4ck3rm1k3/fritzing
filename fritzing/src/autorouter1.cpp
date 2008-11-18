@@ -290,11 +290,11 @@ void Autorouter1::updateRatsnest(bool routed) {
 		
 		QList<ConnectorItem *>  ends;
 		if (wire->findJumperOrTraced(ViewGeometry::TraceFlag | ViewGeometry::JumperFlag, ends)) {
-			wire->setColorString(wire->colorString(), 0.35);
+			wire->setOpacity(0.35);
 			wire->setRouted(true);
 		}
 		else {		
-			wire->setColorString(wire->colorString(), routed ? 0.35 : 1.0);	
+			wire->setOpacity(routed ? 0.35 : 1.0);	
 			wire->setRouted(routed);
 		}
 	}
