@@ -67,6 +67,7 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'tools.middleware.RequireLoginMiddleware',
 )
 
 ROOT_URLCONF = 'fritzing.urls'
@@ -107,7 +108,7 @@ INSTALLED_APPS = (
     'mptt',
     'mptt_comments',
     'filebrowser',
-    'wsgi',
+    'tools',
     'partslib',
 )
 
@@ -151,6 +152,9 @@ PAGE_TEMPLATES = (
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 PAGE_PERMISSION = False
 PAGE_UNIQUE_SLUG_REQUIRED = True
+
+LOGIN_REDIRECT_URL = '/login/'
+REQUIRE_LOGIN_PATH = LOGIN_REDIRECT_URL
 
 try:
     from local_settings import *
