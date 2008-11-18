@@ -469,6 +469,9 @@ void MainWindow::createSketchButtons() {
 	m_autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
 	connect(m_autorouteButton, SIGNAL(clicked()), this, SLOT(autoroute()));
 
+	m_routingStatusLabel = new QLabel(this);
+	m_routingStatusLabel->setText("routing status:  this is a test");
+
 	m_exportDiyButton = new QPushButton(this);
 	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_diy_icon.png"));
 	connect(m_exportDiyButton, SIGNAL(clicked()), this, SLOT(exportDiy()));
@@ -478,7 +481,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
 	retval << m_exportToPdfButton;
 	if(viewId == ItemBase::PCBView) {
-		retval << m_autorouteButton << m_exportDiyButton;
+		retval << m_autorouteButton << m_exportDiyButton << m_routingStatusLabel;
 	}
 	return retval;
 }

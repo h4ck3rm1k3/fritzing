@@ -572,6 +572,8 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	// since in figuring out how to manage busConnections
 	// all parts are connected to busConnections only by virtual wires
 
+	bool saveAutorouteState = true;
+
     for (int i = 0; i < sitems.count(); i++) {
     	ItemBase * itemBase = ItemBase::extractTopLevelItemBase(sitems[i]);
     	if (itemBase == NULL) continue;
@@ -579,10 +581,15 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		ModelPart * modelPart = itemBase->modelPart();
 		if (modelPart == NULL) continue;
 
-		QMultiHash<ConnectorItem *, ConnectorItem *>  connectorHash;
-
-		itemBase->collectConnectors(connectorHash, this->scene());
 		deletedItems.append(itemBase);
+		if (itemBase->itemType() == ModelPart::Wire) {
+			Wire * wire = dynamic_cast<Wire *>(itemBase);
+		}
+	}
+
+	foreach (ItemBase * itemBase, deletedItems) {
+		QMultiHash<ConnectorItem *, ConnectorItem *>  connectorHash;
+		itemBase->collectConnectors(connectorHash, this->scene());
 
 		// now prepare to disconnect all the deleted item's connectors
 		foreach (ConnectorItem * fromConnectorItem,  connectorHash.uniqueKeys()) {

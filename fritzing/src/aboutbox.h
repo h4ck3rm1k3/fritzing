@@ -50,7 +50,6 @@ private:
 	AboutBox(QWidget *parent = 0);
 
 	QScrollArea *m_scrollArea;
-	int m_currentPosition;
 	bool m_restartAtTop;
 	QTime m_startTime;
 	QTimer *m_autoScrollTimer;

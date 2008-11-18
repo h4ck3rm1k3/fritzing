@@ -378,6 +378,8 @@ protected:
 	QPushButton *m_autorouteButton;
 	QPushButton *m_exportDiyButton;
 
+	QLabel *m_routingStatusLabel;
+
     ZoomComboBox * m_zoomOptsComboBox;
     bool m_comboboxChanged;
 

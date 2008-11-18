@@ -41,6 +41,7 @@ $Date$
 #include <QTimer>
 #include <QKeyEvent>
 #include <QCloseEvent>
+#include <QScrollbar>
 
 #include "aboutbox.h"
 #include "debugdialog.h"
@@ -114,10 +115,14 @@ AboutBox::AboutBox(QWidget *parent)
 		QString data(creditsFile.readAll());
 		creditsScroll->setText(data);
 	}
+
 	creditsScroll->setFont(smallFont);
 	creditsScroll->setGeometry(0, 0, 264, 900);
-	creditsScroll->setWordWrap(TRUE);
+	creditsScroll->setWordWrap(false);
 	creditsScroll->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+
+	int max = creditsScroll->sizeHint().height();
+	creditsScroll->setGeometry(0, 0, 264, max);
 
 	// set the creditsScroll inside our QScrollArea
 	m_scrollArea = new QScrollArea(this);
@@ -129,7 +134,6 @@ AboutBox::AboutBox(QWidget *parent)
 	m_scrollArea->ensureVisible(0, 0);
 
 	// auto scroll timer initialization
-	m_currentPosition = 0;
 	m_restartAtTop = FALSE;
 	m_startTime = QTime::currentTime();
 	m_autoScrollTimer = new QTimer(this);
@@ -144,21 +148,21 @@ void AboutBox::resetScrollAnimation() {
 
 void AboutBox::scrollCredits() {
 	if (m_startTime.elapsed() >= 3000 ) {
+		int max = m_scrollArea->verticalScrollBar()->maximum();
+		int v = m_scrollArea->widget()->sizeHint().height();
 		if (m_restartAtTop) {
 			// Reset at the top
 			m_startTime.start();
 			m_restartAtTop = FALSE;
-			m_scrollArea->ensureVisible(0,0);
+			m_scrollArea->verticalScrollBar()->setValue(0);
 			return;
 		}
-		if (m_currentPosition >= 400) {
+		if (m_scrollArea->verticalScrollBar()->value() >= m_scrollArea->verticalScrollBar()->maximum()) {
 			// go and reset
 			m_startTime.start();
-			m_currentPosition = 0;
 			m_restartAtTop = TRUE;
 		} else {
-			m_scrollArea->ensureVisible(0, m_currentPosition);
-			m_currentPosition += 1;
+			m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->value() + 1);
 		}
 	}
 }
