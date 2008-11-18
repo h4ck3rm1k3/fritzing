@@ -209,8 +209,10 @@ void SketchWidget::loadFromModel() {
 	}
 
 
+
 	// redraw the ratsnest
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
+		QMultiHash<ConnectorItem *, ConnectorItem *> allConnectors;
 		foreach (ItemBase * newItem, newItems.values()) {
 			foreach (QGraphicsItem * childItem, newItem->childItems()) {
 				ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
@@ -225,11 +227,21 @@ void SketchWidget::loadFromModel() {
 						.arg(toConnectorItem->connectorStuffID())
 						);
 					*/
-					dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
+					allConnectors.insert(fromConnectorItem, toConnectorItem);
 				}
 			}
 		}
+
+		// have to store these all up in a table and deal with separarately
+		// if you deal with them in the loop above, then connectors are being added/destroyed
+		// while looping and that causes crashes.
+		foreach (ConnectorItem * fromConnectorItem, allConnectors.keys()) {
+			foreach (ConnectorItem * toConnectorItem, allConnectors.values(fromConnectorItem)) {
+				dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
+			}
+		}
 	}
+
 
 	if (m_viewIdentifier == ItemBase::PCBView) {
 		bool autorouted = true;

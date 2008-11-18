@@ -73,6 +73,15 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 }
 
 ItemBase::~ItemBase() {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (connectorItem == NULL) continue;
+
+		foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+			toConnectorItem->tempRemove(connectorItem);
+		}
+	}
+
 	foreach (ItemBase * itemBase, m_stickyList.keys()) {
 		itemBase->addSticky(this, false);
 	}
