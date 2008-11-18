@@ -472,12 +472,12 @@ void MainWindow::createSketchButtons() {
 	m_autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
 	connect(m_autorouteButton, SIGNAL(clicked()), this, SLOT(autoroute()));
 
-	m_routingStatusLabel = new QLabel(this);
-	routingStatusSlot(0,0,0);
-
 	m_exportDiyButton = new QPushButton(this);
 	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_diy_icon.png"));
 	connect(m_exportDiyButton, SIGNAL(clicked()), this, SLOT(exportDiy()));
+
+	m_routingStatusLabel = new QLabel(this);
+	routingStatusSlot(0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
 }
 
 QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
@@ -1030,4 +1030,6 @@ void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connect
 	else {
 		m_routingStatusLabel->setText(tr("%1 of %2 nets routed; %3 connectors not yet routed").arg(netRoutedCount).arg(netCount).arg(connectorsLeftToRoute) );
 	}
+
+	updateTraceMenu();
 }

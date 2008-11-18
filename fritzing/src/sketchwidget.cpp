@@ -315,6 +315,8 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 		QApplication::restoreOverrideCursor();
 	}
 
+	emit addItemSignal();
+
 	return itemBase;
 }
 
@@ -496,6 +498,8 @@ void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit) {
 	if (pitem != NULL) {
 		deleteItem(pitem, deleteModelPart, doEmit);
 	}
+
+	emit deleteItemSignal();
 
 }
 

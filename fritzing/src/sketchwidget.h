@@ -282,6 +282,8 @@ signals:
 	void swapped(long itemId, ModelPart *with);
 	void resizeSignal();
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute);
+	void addItemSignal();
+	void deleteItemSignal();
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
