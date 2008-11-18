@@ -41,7 +41,7 @@ $Date$
 #include <QTimer>
 #include <QKeyEvent>
 #include <QCloseEvent>
-#include <QScrollbar>
+#include <QScrollBar>
 
 #include "aboutbox.h"
 #include "debugdialog.h"

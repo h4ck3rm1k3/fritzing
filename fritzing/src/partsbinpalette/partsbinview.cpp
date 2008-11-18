@@ -63,6 +63,7 @@ void PartsBinView::addPart(ModelPart * model) {
 }
 
 void PartsBinView::removePart(const QString &moduleID) {
+	Q_UNUSED(moduleID);
 	//TODO Mariano:; remove IT!
 }
 

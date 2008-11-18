@@ -854,11 +854,12 @@ void MainWindow::saveBundledSketch() {
 		QString partPath = mp->modelPartStuff()->path();
 		QFile file(partPath);
 		file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
-		QList<StringTriple> views = mp->getAvailableViewFiles();
-		foreach(StringTriple view, views) {
-			if(view.second != "core") {
+		QList<SvgAndPartFilePath> views = mp->getAvailableViewFiles();
+		foreach(SvgAndPartFilePath view, views) {
+			if(view.coreContribOrUser() != "core") {
 				QFile file(view.concat());
-				file.copy(destFolder.path()+"/"+ZIP_SVG+view.third.replace("/","."));
+				QString svgRelativePath = view.fileRelativePath();
+				file.copy(destFolder.path()+"/"+ZIP_SVG+svgRelativePath.replace("/","."));
 			}
 		}
 	}

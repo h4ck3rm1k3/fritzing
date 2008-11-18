@@ -40,11 +40,11 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	createSvgFile(path->first+"/"+path->second);
-	m_svgStrings = new StringTriple();
+	m_svgStrings = new SvgAndPartFilePath();
 
-	m_svgStrings->first = layer;
-	m_svgStrings->second = path->first;
-	m_svgStrings->third = path->second;
+	m_svgStrings->setPartFolderPath(layer);
+	m_svgStrings->setCoreContribOrUser(path->first);
+	m_svgStrings->setFileRelativePath(path->second);
 
 	m_connectors = NULL;
 
@@ -56,11 +56,11 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocume
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_svgfile = svgFile;
-	m_svgStrings = new StringTriple();
+	m_svgStrings = new SvgAndPartFilePath();
 
-	m_svgStrings->first = layer;
-	m_svgStrings->second = path->first;
-	m_svgStrings->third = path->second;
+	m_svgStrings->setPartFolderPath(layer);
+	m_svgStrings->setCoreContribOrUser(path->first);
+	m_svgStrings->setFileRelativePath(path->second);
 
 	m_connectors = NULL;
 
@@ -97,12 +97,12 @@ void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
-		streamWriter.writeAttribute("image",m_svgStrings->third);
+		streamWriter.writeAttribute("image",m_svgStrings->fileRelativePath());
 		streamWriter.writeEndElement();
 	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(lkpi->viewLayerID()));
-		streamWriter.writeAttribute("image",m_svgStrings->third);
+		streamWriter.writeAttribute("image",m_svgStrings->fileRelativePath());
 		streamWriter.writeEndElement();
 	}
 
@@ -185,10 +185,10 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 			bool gotOne = false;
 			for(int i=0; i < possibleFolders.size(); i++) {
 				if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
-					m_svgStrings = new StringTriple();
-					m_svgStrings->first = layerAttributes.layerName();
-					m_svgStrings->second = tempPath.first;
-					m_svgStrings->third = tempPath.second.arg(possibleFolders[i]);
+					m_svgStrings = new SvgAndPartFilePath();
+					m_svgStrings->setPartFolderPath(layerAttributes.layerName());
+					m_svgStrings->setCoreContribOrUser(tempPath.first);
+					m_svgStrings->setFileRelativePath(tempPath.second.arg(possibleFolders[i]));
 					gotOne = true;
 					break;
 				}
@@ -201,13 +201,13 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 				return false;
 			}
     	}
-		if (!renderer->load(m_svgStrings->second+(!m_svgStrings->third.isEmpty()?"/"+m_svgStrings->third:""))) {
+		if (!renderer->load(m_svgStrings->coreContribOrUser()+(!m_svgStrings->fileRelativePath().isEmpty()?"/"+m_svgStrings->fileRelativePath():""))) {
 			QMessageBox::information( NULL, QObject::tr("Fritzing"),
-					QObject::tr("The file %1 is not a Fritzing file (6).").arg(m_svgStrings->second+"/"+m_svgStrings->third));
+					QObject::tr("The file %1 is not a Fritzing file (6).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath()));
 			delete renderer;
 			return false;
 		} else {
-			createSvgFile(m_svgStrings->second+"/"+m_svgStrings->third);
+			createSvgFile(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath());
 		}
 
 		viewThing->set(m_viewLayerID, renderer);
@@ -230,12 +230,12 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 }
 
 StringPair* PartsEditorPaletteItem::svgFilePath() {
-	return new StringPair(m_svgStrings->second, m_svgStrings->third);
+	return new StringPair(m_svgStrings->coreContribOrUser(), m_svgStrings->fileRelativePath());
 }
 
 void PartsEditorPaletteItem::setSvgFilePath(StringPair *sp) {
-	m_svgStrings->second = sp->first;
-	m_svgStrings->third = sp->second;
+	m_svgStrings->setCoreContribOrUser(sp->first);
+	m_svgStrings->setFileRelativePath(sp->second);
 }
 
 ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {

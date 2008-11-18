@@ -31,6 +31,7 @@ $Date$
 
 #include "../paletteitem.h"
 #include "../misc.h"
+#include "../svgandpartfilepath.h"
 
 class PartsEditorPaletteItem : public PaletteItem {
 	Q_OBJECT
@@ -57,11 +58,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 
 		QDomDocument *m_svgfile;
 
-		/* TODO Mariano: Make this a QString + new class extend StringPair to share the
-		 * same reference from the paletteItem and the ViewImage, and to be able to get the file name
-		 * without knowing how are this two properties populated
-		 */
-		StringTriple *m_svgStrings;
+		SvgAndPartFilePath *m_svgStrings;
 		QList<Connector *> *m_connectors;
 };
 

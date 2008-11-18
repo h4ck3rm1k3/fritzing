@@ -455,9 +455,9 @@ QList<ModelPart*> ModelPart::getAllNonCoreParts() {
 	return retval;
 }
 
-QList<StringTriple> ModelPart::getAvailableViewFiles() {
+QList<SvgAndPartFilePath> ModelPart::getAvailableViewFiles() {
 	QDomElement viewsElems = modelPartStuff()->domDocument()->documentElement().firstChildElement("views");
-	QHash<ItemBase::ViewIdentifier, StringTriple> viewImages;
+	QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath> viewImages;
 
 	grabImagePath(viewImages, viewsElems, ItemBase::IconView);
 	grabImagePath(viewImages, viewsElems, ItemBase::BreadboardView);
@@ -467,7 +467,7 @@ QList<StringTriple> ModelPart::getAvailableViewFiles() {
 	return viewImages.values();
 }
 
-void ModelPart::grabImagePath(QHash<ItemBase::ViewIdentifier, StringTriple> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId) {
+void ModelPart::grabImagePath(QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId) {
 	QDomElement viewElem = viewsElems.firstChildElement(ItemBase::viewIdentifierXmlName(viewId));
 	if(!viewElem.isNull()) {
 		QString partspath = getApplicationSubFolderPath("parts")+"/svg";
@@ -476,7 +476,7 @@ void ModelPart::grabImagePath(QHash<ItemBase::ViewIdentifier, StringTriple> &vie
 			QString imagepath = layerElem.attribute("image");
 			QString folderinparts = inWhichFolder(partspath, imagepath);
 			if(folderinparts != ___emptyString___) {
-				StringTriple st(partspath,folderinparts,imagepath);
+				SvgAndPartFilePath st(partspath,folderinparts,imagepath);
 				viewImages[viewId] = st;
 			}
 			layerElem = layerElem.nextSibling().toElement();

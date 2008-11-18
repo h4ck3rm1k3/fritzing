@@ -291,5 +291,6 @@ ModelPart * PaletteModel::addPart(QString newPartPath, bool addToReference, bool
 }
 
 void PaletteModel::removePart(const QString &moduleID) {
+	Q_UNUSED(moduleID);
 	//TODO Mariano:; remove IT!
 }

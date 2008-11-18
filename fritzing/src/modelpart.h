@@ -41,6 +41,7 @@ $Date$
 #include "itembase.h"
 #include "modelpartstuff.h"
 #include "connector.h"
+#include "svgandpartfilepath.h"
 
 class ModelPart : public QObject
 {
@@ -102,14 +103,14 @@ public:
 	bool isValid();
 
 	QList<ModelPart*> getAllNonCoreParts();
-	QList<StringTriple> getAvailableViewFiles();
+	QList<SvgAndPartFilePath> getAvailableViewFiles();
 
 protected:
 	void writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue);
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QStringList &values, QString childTag);
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QHash<QString,QString> &values, QString childTag, QString attrName);
 
-	void grabImagePath(QHash<ItemBase::ViewIdentifier, StringTriple> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId);
+	void grabImagePath(QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId);
 	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 
 	QList<ItemBase *> m_viewItems;
