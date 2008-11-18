@@ -215,6 +215,9 @@ protected:
 
 	void closeIfEmptySketch();
 	bool whatToDoWithFilesAddedFromBundled();
+	void backupExistingFileIfExists(const QString &destFilePath);
+	void recoverBackupedFiles();
+	void resetTempFolder();
 
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
@@ -379,6 +382,7 @@ protected:
     bool m_comboboxChanged;
 
     QStringList m_filesAddedFromBundled;
+    QStringList m_filesReplacedByBundleds;
 
 public:
 	static const int PartsBinDefaultHeight = 220;

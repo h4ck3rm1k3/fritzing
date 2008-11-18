@@ -108,8 +108,6 @@ protected:
 
 protected:
 	long m_id;
-	//QString m_pcbSvgFile;
-	QDir m_tempDir;
 
 	PaletteModel *m_paletteModel;
 	SketchModel *m_sketchModel;

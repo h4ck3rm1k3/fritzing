@@ -66,6 +66,7 @@ class FritzingWindow : public QMainWindow {
 		class WaitPushUndoStack * m_undoStack;
 		QString m_fileName;
 		QAction *m_closeAct;
+		QDir m_tempDir;
 
 	public:
 		static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);

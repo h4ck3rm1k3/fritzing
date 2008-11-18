@@ -72,7 +72,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	resize(740,500);
 
-
 	// Create dot icons
 	m_dotIcon = QIcon(":/resources/images/dot.png");
 	m_emptyIcon = QIcon();
@@ -591,6 +590,8 @@ bool MainWindow::whatToDoWithFilesAddedFromBundled() {
 				QFile::remove(pathToRemove);
 			}
 			m_filesAddedFromBundled.clear();
+			recoverBackupedFiles();
+
 			emit partsFromBundledDiscarded();
 			return true;
 		}
@@ -936,9 +937,11 @@ void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolde
 	QString viewFolder = fileName.left(fileName.indexOf("."));
 	fileName.remove(viewFolder+".");
 
-	QString destFilePath = getApplicationSubFolderPath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
+	QString destFilePath =
+		getApplicationSubFolderPath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
+
+	backupExistingFileIfExists(destFilePath);
 	if(svgfile.copy(destFilePath)) {
-		// TODO Mariano: make a backup if it already exists
 		m_filesAddedFromBundled << destFilePath;
 	}
 }
@@ -946,10 +949,11 @@ void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolde
 void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFolder) {
 	QFile partfile(file.filePath());
 	// let's make sure that we remove just the suffix
-	QString destFilePath = getApplicationSubFolderPath("parts")+"/"+destFolder+"/"+file.fileName().remove(QRegExp("^"+ZIP_PART));
+	QString destFilePath =
+		getApplicationSubFolderPath("parts")+"/"+destFolder+"/"+file.fileName().remove(QRegExp("^"+ZIP_PART));
 
+	backupExistingFileIfExists(destFilePath);
 	if(partfile.copy(destFilePath)) {
-		// TODO Mariano: make a backup if it already exists
 		m_filesAddedFromBundled << destFilePath;
 	}
 	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
@@ -960,8 +964,49 @@ void MainWindow::binSaved(bool hasPartsFromBundled) {
 	if(hasPartsFromBundled) {
 		// the bin will need those parts, so just keep them
 		m_filesAddedFromBundled.clear();
+		resetTempFolder();
 	}
 }
 
 #undef ZIP_PART
 #undef ZIP_SVG
+
+
+void MainWindow::backupExistingFileIfExists(const QString &destFilePath) {
+	if(QFileInfo(destFilePath).exists()) {
+		if(m_tempDir.path() == ".") {
+			m_tempDir = QDir::temp();
+			createFolderAnCdIntoIt(m_tempDir, getRandText());
+			DebugDialog::debug("debug folder for overwritten files: "+m_tempDir.path());
+		}
+
+		QString fileBackupName = QFileInfo(destFilePath).fileName();
+		m_filesReplacedByBundleds << destFilePath;
+		QFile file(destFilePath);
+		bool alreadyExists = file.exists();
+		file.copy(m_tempDir.path()+"/"+fileBackupName);
+
+		if(alreadyExists) {
+			file.remove(destFilePath);
+		}
+	}
+}
+
+void MainWindow::recoverBackupedFiles() {
+	foreach(QString originalFilePath, m_filesReplacedByBundleds) {
+		QFile file(m_tempDir.path()+"/"+QFileInfo(originalFilePath).fileName());
+		if(file.exists(originalFilePath)) {
+			file.remove();
+		}
+		file.copy(originalFilePath);
+	}
+	resetTempFolder();
+}
+
+void MainWindow::resetTempFolder() {
+	if(m_tempDir.path() != ".") {
+		rmdir(m_tempDir);
+		m_tempDir = QDir::temp();
+	}
+	m_filesReplacedByBundleds.clear();
+}
