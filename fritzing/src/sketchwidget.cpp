@@ -3443,7 +3443,7 @@ void SketchWidget::swapSelected(const QString &moduleID) {
 			this,
 			tr("Sorry!"),
 			tr(
-			 "No part with those characteristics\n."
+			 "No part with those characteristics.\n"
 			 "Where're working to avoid this message, and only let you choose between properties that do exist")
 		);
 	}
