@@ -125,6 +125,10 @@ public:
 	void setTooltip();
 	void removeTooltip();
 	bool hasConnectors();
+	const bool canFlipHorizontal();
+	void setCanFlipHorizontal(bool);
+	const bool canFlipVertical();
+	void setCanFlipVertical(bool);
 
 public:
 	virtual bool stickyEnabled(ItemBase * stickTo);
@@ -187,7 +191,8 @@ protected:
 	bool m_sticky;
 	QHash<ItemBase *, QPointF> m_stickyList;
 	QMenu *m_itemMenu;
-
+	bool m_canFlipHorizontal;
+	bool m_canFlipVertical;
 
 protected:
 	static long nextID;

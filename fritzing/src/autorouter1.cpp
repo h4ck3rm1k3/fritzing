@@ -124,54 +124,14 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	// TODO: put this in a command object
 	// TODO: tighten path between connectors once trace has succeeded
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
-	// TODO: instead of heading to intersection of tangents, head to first tangent, then keep going from there
 	
 	m_progressDialog = progressDialog;
 
 	clearTraces();
 	updateRatsnest(false);
-
-	// get the set of all connectors in the sketch
-	QList<ConnectorItem *> allConnectors;
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
-
-		allConnectors.append(connectorItem);
-	}
-		// associate ConnectorItem with index
+	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
-
-	// find all the nets and make a list of nodes (i.e. part ConnectorItems) for each net
-	QList<ConnectorItem *> allConnectors2;
-	foreach (ConnectorItem * connectorItem, allConnectors) {
-		if (allConnectors2.contains(connectorItem)) continue;
-
-		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
-		QList<BusConnectorItem *> busConnectorItems;
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(connectorItem);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::NoFlag);
-		foreach (ConnectorItem * equalConnectorItem, connectorItems) {
-			if (!allConnectors2.contains(equalConnectorItem)) {
-				allConnectors2.append(equalConnectorItem);
-			}
-
-			if (dynamic_cast<BusConnectorItem *>(equalConnectorItem) != NULL) continue;
-
-			ItemBase * attachedTo = equalConnectorItem->attachedTo();
-			if (attachedTo->itemType() == ModelPart::Part) {
-				if (!partConnectorItems->contains(equalConnectorItem)) {
-					partConnectorItems->append(equalConnectorItem);
-					indexer.insert(equalConnectorItem, indexer.count());
-				}
-			}
-		}
-
-		if (partConnectorItems->count() > 0) {
-			m_allPartConnectorItems.append(partConnectorItems);
-		}
-	}
+	collectAllNets(m_sketchWidget, indexer, m_allPartConnectorItems);
 
 	if (m_allPartConnectorItems.count() == 0) {
 		return;
@@ -945,3 +905,45 @@ double Autorouter1::distanceToLine(QPointF p0, QPointF p1, QPointF p2) {
 	return qAbs((x2 - x1) * (y1 - y0) - (x1 - x0) * (y2 - y1)) / sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
+void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems) 
+{
+	// get the set of all connectors in the sketch
+	QList<ConnectorItem *> allConnectors;
+	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+
+		allConnectors.append(connectorItem);
+	}
+
+	// find all the nets and make a list of nodes (i.e. part ConnectorItems) for each net
+	QList<ConnectorItem *> allConnectors2;
+	foreach (ConnectorItem * connectorItem, allConnectors) {
+		if (allConnectors2.contains(connectorItem)) continue;
+
+		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
+		QList<BusConnectorItem *> busConnectorItems;
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(connectorItem);
+		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::NoFlag);
+		foreach (ConnectorItem * equalConnectorItem, connectorItems) {
+			if (!allConnectors2.contains(equalConnectorItem)) {
+				allConnectors2.append(equalConnectorItem);
+			}
+
+			if (dynamic_cast<BusConnectorItem *>(equalConnectorItem) != NULL) continue;
+
+			ItemBase * attachedTo = equalConnectorItem->attachedTo();
+			if (attachedTo->itemType() == ModelPart::Part) {
+				if (!partConnectorItems->contains(equalConnectorItem)) {
+					partConnectorItems->append(equalConnectorItem);
+					indexer.insert(equalConnectorItem, indexer.count());
+				}
+			}
+		}
+
+		if (partConnectorItems->count() > 0) {
+			allPartConnectorItems.append(partConnectorItems);
+		}
+	}
+}

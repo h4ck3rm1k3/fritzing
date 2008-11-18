@@ -209,7 +209,6 @@ void SketchWidget::loadFromModel() {
 	}
 
 
-
 	// redraw the ratsnest
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
 		QMultiHash<ConnectorItem *, ConnectorItem *> allConnectors;
@@ -240,6 +239,8 @@ void SketchWidget::loadFromModel() {
 				dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
 			}
 		}
+
+		updateRatsnestStatus();
 	}
 
 
@@ -1998,17 +1999,34 @@ ItemCount SketchWidget::calcItemCount() {
 	QList<QGraphicsItem *> selItems = scene()->selectedItems();
 
 	itemCount.selCount = 0;
-	itemCount.selRotatable = 0;
+	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable = 0;
 	itemCount.itemsCount = 0;
 
 	for (int i = 0; i < selItems.count(); i++) {
-		if (ItemBase::extractTopLevelItemBase(selItems[i]) != NULL) {
+		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(selItems[i]);
+		if (itemBase != NULL) {
 			itemCount.selCount++;
-			// can't rotate a wire or a layerKin
+			// can't rotate a wire 
 			if (dynamic_cast<PaletteItemBase *>(selItems[i]) != NULL) {
 				itemCount.selRotatable++;
+				if (itemBase->canFlipHorizontal()) {
+					itemCount.selHFlipable++;
+				}
+				if (itemBase->canFlipVertical()) {
+					itemCount.selVFlipable++;
+				}
 			}
 		}
+	}
+
+	if (itemCount.selCount != itemCount.selRotatable) {
+		itemCount.selRotatable = 0;
+	}
+	if (itemCount.selCount != itemCount.selVFlipable) {
+		itemCount.selVFlipable = 0;
+	}
+	if (itemCount.selCount != itemCount.selHFlipable) {
+		itemCount.selHFlipable = 0;
 	}
 	if (itemCount.selCount > 0) {
 		for (int i = 0; i < items.count(); i++) {
@@ -2609,6 +2627,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	// for now treat them the same
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
 		dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
+		updateRatsnestStatus();
 	}
 }
 
@@ -3746,3 +3765,14 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	}
 }
 
+void SketchWidget::updateRatsnestStatus() {
+
+	int ratsnestWireCount = 0;
+	int netCount = 0;
+	QHash<ConnectorItem *, int> indexer;
+	QList< QList<ConnectorItem *>* > allPartConnectorItems;
+	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
+	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+		delete list;
+	}
+}

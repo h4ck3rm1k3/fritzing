@@ -122,7 +122,6 @@ protected:
 
 	bool m_connectorsInitialized;
 	bool m_ignoreTerminalPoints;
-
 };
 
 

@@ -69,6 +69,8 @@ bool FApplication::eventFilter(QObject *obj, QEvent *event)
 				}
 			}
 			break;
+		default:
+			break;
 	}
 
 	return false;

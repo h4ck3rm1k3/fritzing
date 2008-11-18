@@ -55,6 +55,8 @@ struct ItemCount {
 	int selCount;
 	int itemsCount;
 	int selRotatable;
+	int selHFlipable;
+	int selVFlipable;
 };
 
 struct BusMergeThing {
@@ -244,7 +246,8 @@ protected:
 	void collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems);
 	void disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
 	void cleanUpVirtualWires(QSet<class VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
-	
+	void updateRatsnestStatus();
+
 protected:
 	static bool lessThan(int a, int b);
 	static bool greaterThan(int a, int b);

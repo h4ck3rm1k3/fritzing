@@ -1024,8 +1024,9 @@ void MainWindow::updatePartMenu() {
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
-	m_flipHorizontalAct->setEnabled(enable && (m_currentWidget != m_pcbGraphicsView));
-	m_flipVerticalAct->setEnabled(enable && (m_currentWidget != m_pcbGraphicsView));
+
+	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
+	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
 
 	updateItemMenu();
 	updateEditMenu();

@@ -155,8 +155,8 @@ void AboutBox::resetScrollAnimation() {
 
 void AboutBox::scrollCredits() {
 	if (m_startTime.elapsed() >= 3000 ) {
-		int max = m_scrollArea->verticalScrollBar()->maximum();
-		int v = m_scrollArea->widget()->sizeHint().height();
+		//int max = m_scrollArea->verticalScrollBar()->maximum();
+		//int v = m_scrollArea->widget()->sizeHint().height();
 		if (m_restartAtTop) {
 			// Reset at the top
 			m_startTime.start();

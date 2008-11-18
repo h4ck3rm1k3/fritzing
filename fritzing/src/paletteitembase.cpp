@@ -313,6 +313,8 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 		return false;
 	}
 
+	m_canFlipVertical = layerAttributes.canFlipVertical();
+	m_canFlipHorizontal = layerAttributes.canFlipHorizontal();
 	m_filename = layerAttributes.filename();
 	//DebugDialog::debug(QString("filename %1").arg(m_filename) );
 	m_sticky = layerAttributes.sticky();

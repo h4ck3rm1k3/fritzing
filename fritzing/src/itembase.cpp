@@ -64,6 +64,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	m_id = id;
 	m_hidden = false;
 	m_sticky = false;
+	m_canFlipHorizontal = m_canFlipVertical = false;
 
 	setCursor(Qt::ArrowCursor);
 
@@ -901,4 +902,21 @@ bool ItemBase::hasConnectors() {
 	}
 
 	return false;
+}
+
+
+const bool ItemBase::canFlipHorizontal() {
+	return m_canFlipHorizontal;
+}
+
+void ItemBase::setCanFlipHorizontal(bool cf) {
+	m_canFlipHorizontal = cf;
+}
+
+const bool ItemBase::canFlipVertical() {
+	return m_canFlipVertical;
+}
+
+void ItemBase::setCanFlipVertical(bool cf) {
+	m_canFlipVertical = cf;
 }
