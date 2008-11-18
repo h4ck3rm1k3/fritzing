@@ -17,6 +17,7 @@
  * coreContribOrUser == "core"
  * fileRelativePath == "breadboard/svg_file.svg"
  */
+
 class SvgAndPartFilePath : public StringTriple {
 public:
 	SvgAndPartFilePath() : StringTriple() {}
@@ -42,6 +43,10 @@ public:
 	}
 	void setFileRelativePath(const QString &fileRelativePath) {
 		third = fileRelativePath;
+	}
+
+	QString absolutePath(const QString &sep = "/") {
+		return first+sep+second+sep+third;
 	}
 };
 

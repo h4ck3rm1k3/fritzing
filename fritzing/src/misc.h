@@ -56,9 +56,6 @@ struct StringTriple : public Triple<QString, QString, QString> {
 	StringTriple() : Triple<QString, QString, QString>() {}
 	StringTriple(QString _first, QString _second, QString _third)
 		: Triple<QString, QString, QString>(_first, _second, _third) {}
-	QString concat(const QString &sep = "/") {
-		return first+sep+second+sep+third;
-	}
 };
 
 QString getUserPartsFolder();
