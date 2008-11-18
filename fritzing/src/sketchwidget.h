@@ -170,6 +170,8 @@ public:
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
 	bool ratsAllRouted();
+	void updateRatsnestStatus();
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -246,7 +248,6 @@ protected:
 	void collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems);
 	void disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
 	void cleanUpVirtualWires(QSet<class VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
-	void updateRatsnestStatus();
 
 protected:
 	static bool lessThan(int a, int b);
@@ -280,6 +281,7 @@ signals:
 
 	void swapped(long itemId, ModelPart *with);
 	void resizeSignal();
+	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);

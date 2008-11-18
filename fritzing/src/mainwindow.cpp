@@ -317,6 +317,9 @@ void MainWindow::connectPairs() {
 							 this, SLOT(findSketchWidgetSlot(ItemBase::ViewIdentifier, SketchWidget * &)),
 							 Qt::DirectConnection);
 
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(int, int, int)),
+						this, SLOT(routingStatusSlot(int, int, int)));
+
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
 	if (fapp != NULL) {
 		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
@@ -470,7 +473,7 @@ void MainWindow::createSketchButtons() {
 	connect(m_autorouteButton, SIGNAL(clicked()), this, SLOT(autoroute()));
 
 	m_routingStatusLabel = new QLabel(this);
-	m_routingStatusLabel->setText("routing status:  this is a test");
+	routingStatusSlot(0,0,0);
 
 	m_exportDiyButton = new QPushButton(this);
 	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_diy_icon.png"));
@@ -1015,4 +1018,16 @@ void MainWindow::resetTempFolder() {
 		m_tempDir = QDir::temp();
 	}
 	m_filesReplacedByBundleds.clear();
+}
+
+void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute) {
+	if (netCount == 0) {
+		m_routingStatusLabel->setText(tr("nothing to route"));
+	}
+	else if (netCount == netRoutedCount) {
+		m_routingStatusLabel->setText(tr("fully routed"));
+	}
+	else {
+		m_routingStatusLabel->setText(tr("%1 of %2 nets routed; %3 connectors not yet routed").arg(netRoutedCount).arg(netCount).arg(connectorsLeftToRoute) );
+	}
 }

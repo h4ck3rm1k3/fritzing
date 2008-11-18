@@ -1538,6 +1538,8 @@ void MainWindow::autoroute() {
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
 	qApp->removeEventFilter(&eater);
 	m_dontClose = false;
+
+	m_pcbGraphicsView->updateRatsnestStatus();
 }
 
 void MainWindow::createTrace() {

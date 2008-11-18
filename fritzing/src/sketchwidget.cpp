@@ -239,12 +239,12 @@ void SketchWidget::loadFromModel() {
 				dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
 			}
 		}
-
-		updateRatsnestStatus();
 	}
 
 
 	if (m_viewIdentifier == ItemBase::PCBView) {
+		updateRatsnestStatus();
+
 		bool autorouted = true;
 		QList<ConnectorItem *> allConnectorItems;
 		foreach (QGraphicsItem * item, scene()->items()) {
@@ -2626,7 +2626,9 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	// for now treat them the same
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
 		dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
-		updateRatsnestStatus();
+		if (m_viewIdentifier == ItemBase::PCBView) {
+			updateRatsnestStatus();
+		}
 	}
 }
 
@@ -3766,12 +3768,40 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 
 void SketchWidget::updateRatsnestStatus() {
 
-	int ratsnestWireCount = 0;
-	int netCount = 0;
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
 	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
+	int netCount = 0;
+	int netRoutedCount = 0;
+	int connectorsLeftToRoute = 0;
+	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+		if (list->count() <= 1) continue;			// nets with a single part are not worth counting 
+
+		netCount++;
+		ConnectorItem * connectorItem = list->at(0);
+
+		// figure out how many parts are connected via jumpers or traces
+		QList<ConnectorItem *> partConnectorItems;
+		QList<BusConnectorItem *> busConnectorItems;
+		QList<ConnectorItem *> connectorItems;
+		connectorItems.append(connectorItem);
+		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
+		
+		BusConnectorItem::collectParts(connectorItems, partConnectorItems);
+		int todo = list->count() - partConnectorItems.count();
+		if (todo == 0) {
+			netRoutedCount++;
+		}
+		else {
+			connectorsLeftToRoute += todo;
+		}
+	}
+	
+
 	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
 		delete list;
 	}
+
+	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute);
 }
+
