@@ -67,8 +67,8 @@ bool LayerAttributes::getSvgElementID(QDomDocument * doc, ItemBase::ViewIdentifi
 	if (layer.isNull()) return false;
 	if (layerCount == 0) return false;
 
-	m_canFlipVertical = layer.parentNode().toElement().attribute("flipvertical").compare("true") == 0;
-	m_canFlipHorizontal = layer.parentNode().toElement().attribute("fliphorizontal").compare("true") == 0;
+	m_canFlipVertical = layer.parentNode().parentNode().toElement().attribute("flipvertical").compare("true") == 0;
+	m_canFlipHorizontal = layer.parentNode().parentNode().toElement().attribute("fliphorizontal").compare("true") == 0;
 
 	m_layerName = layer.attribute("layerId");
 	if (m_layerName.isNull()) return false;
