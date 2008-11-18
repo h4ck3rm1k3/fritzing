@@ -2,7 +2,8 @@
 <module fritzingVersion="0.1.1201" moduleId="29496dfe-aa71-11dd-9a14-00c0a8a9e65d">
     <version>1.0</version>
     <title>Basic Resistor</title>
-    <defaultLabel>R</defaultLabel>
+    <label>R</label>
+    <flip vertical="true" horizontal="true"/>
     <date>2008-11-04</date>
     <author>Brendan Howell</author>
     <tags>
