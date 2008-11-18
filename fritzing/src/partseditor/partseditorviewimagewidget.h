@@ -40,6 +40,7 @@ public:
 	PartsEditorViewImageWidget(ItemBase::ViewIdentifier, QDir tempDir, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void loadSvgFile(ModelPart * modelPart);
+	void loadSvgFile(const QString& origPath);
 	void loadFile();
 	void copySvgFileToDestiny();
 

@@ -77,14 +77,18 @@ void PartsEditorViewImageWidget::loadFile() {
 	if(origPath.isEmpty()) {
 		return; // Cancel pressed
 	} else {
-		m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
-		ModelPart * mp = static_cast<ModelPart *>(m_sketchModel->root());
-
-		setSvgFilePath(origPath);
-
-		mp = createFakeModelPart(origPath, m_svgFilePath->second);
-		loadSvgFile(mp);
+		loadSvgFile(origPath);
 	}
+}
+
+void PartsEditorViewImageWidget::loadSvgFile(const QString& origPath) {
+	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
+	ModelPart * mp = static_cast<ModelPart *>(m_sketchModel->root());
+
+	setSvgFilePath(origPath);
+
+	mp = createFakeModelPart(origPath, m_svgFilePath->second);
+	loadSvgFile(mp);
 }
 
 void PartsEditorViewImageWidget::loadSvgFile(ModelPart * modelPart) {
