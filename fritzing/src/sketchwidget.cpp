@@ -1719,12 +1719,14 @@ void SketchWidget::scene_selectionChanged() {
 		ItemBase* saveBase = NULL;
 		QString selString;
 		const QList<QGraphicsItem *> sitems = scene()->selectedItems();
-	 	for (int i = 0; i < sitems.size(); ++i) {
-	 		ItemBase * base = ItemBase::extractItemBase(sitems.at(i));
+		foreach (QGraphicsItem * item, scene()->selectedItems()) {
+	 		ItemBase * base = ItemBase::extractItemBase(item);
 	 		if (base == NULL) continue;
 
+			
+
 	 		saveBase = base;
-	 		m_holdingSelectItemCommand->addRedo(base->id());
+	 		m_holdingSelectItemCommand->addRedo(base->layerKinChief()->id());
 	 		selCount++;
 	    }
 
