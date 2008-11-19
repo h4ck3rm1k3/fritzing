@@ -805,17 +805,25 @@ void Wire::initNames() {
 	netColorIndex.insert(ItemBase::BreadboardView, 0);
 	netColorIndex.insert(ItemBase::SchematicView, 0);
 	netColorIndex.insert(ItemBase::PCBView, 0);
-	
 
-	// TODO: put these colors in a text file in resources so they're easy to change
-	QList<QString> ratsnestStrings;
-	ratsnestStrings << "#40044D" << "#000000" << "#142F4D" << "#735700" << "#004D1C" << "#997D7D" << "#662A00" << "#640066" << "#1A004D" << "#004D4D" << "#4D4D4D" << "#3F4D00";
-	foreach (QString string, ratsnestStrings) {
-		QColor * c = new QColor;
-		c->setNamedColor(string);
-		ratsnestColors.append(c);
+
+	QFile file(":/resources/ratsnestcolors.txt");
+	file.open(QFile::ReadOnly);
+	QTextStream stream( &file );
+	while(!stream.atEnd()) {
+		QString line = stream.readLine();
+		if (line.contains(",")) {
+			QStringList strings = line.split(",");
+			if (strings.count() == 2) {
+				QColor * c = new QColor;
+				c->setNamedColor(strings[1]);
+				ratsnestColors.append(c);
+			}
+		}
 	}
+	file.close();
 
+	
 	/*
 	makeHues(80, 340, 5, 0, ratsnestColors);
 	qSort(ratsnestColors.begin(), ratsnestColors.end(), alphaLessThan);
