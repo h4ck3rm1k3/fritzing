@@ -67,6 +67,9 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 }
 
 ModelPart::~ModelPart() {
+	foreach (ItemBase * itemBase, m_viewItems) {
+		itemBase->setModelPart(NULL);
+	}
 }
 
 const QString & ModelPart::moduleID() {
@@ -89,6 +92,7 @@ void ModelPart::initNames() {
 		itemTypeNames.insert(ModelPart::Part, QObject::tr("part"));
 		itemTypeNames.insert(ModelPart::Wire, QObject::tr("wire"));
 		itemTypeNames.insert(ModelPart::Breadboard, QObject::tr("breadboard"));
+		itemTypeNames.insert(ModelPart::Board, QObject::tr("board"));
 		itemTypeNames.insert(ModelPart::Module, QObject::tr("module"));
 	}
 }
@@ -146,28 +150,6 @@ ItemBase * ModelPart::viewItem(QGraphicsScene * scene) {
 	}
 
 	return NULL;
-}
-
-void ModelPart::saveParts(QTextStream & textStream, QHash<QString, ModelPartStuff *> & mpsList) {
-	//DebugDialog::debug(QObject::tr("type:%1 id:%2 stuff:%3").arg(m_type).arg(m_id).arg(m_modelPartStuff != NULL) );
-	if (m_type == ModelPart::Part || m_type == ModelPart::Wire || m_type == ModelPart::Breadboard) {
-		if ((m_modelPartStuff != NULL) && (m_modelPartStuff->domDocument() != NULL)) {
-			ModelPartStuff * mps = mpsList[m_modelPartStuff->moduleID()];
-			if (mps == NULL) {
-				mpsList.insert(m_modelPartStuff->moduleID(), m_modelPartStuff);
-				QDomElement root = m_modelPartStuff->domDocument()->documentElement();
-				root.save(textStream, 4);
-			}
-		}
-	}
-
-	QList<QObject *>::const_iterator i;
-    for (i = children().constBegin(); i != children().constEnd(); ++i) {
-		ModelPart* mp = qobject_cast<ModelPart *>(*i);
-		if (mp == NULL) continue;
-
-		mp->saveParts(textStream, mpsList);
-	}
 }
 
 void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocument) {

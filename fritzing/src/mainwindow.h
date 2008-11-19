@@ -161,6 +161,7 @@ protected slots:
 
 	void binSaved(bool hasPartsFromBundled);
 	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
+	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
 protected:
     void createActions();

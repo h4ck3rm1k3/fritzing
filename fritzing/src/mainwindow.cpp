@@ -320,6 +320,33 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(int, int, int, int)),
 						this, SLOT(routingStatusSlot(int, int, int, int)));
 
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(deletingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(deletingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(deletingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(addingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(addingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(addingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(changingConnectionSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(changingConnectionSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+	succeeded = connect(m_breadboardGraphicsView, SIGNAL(changingConnectionSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(rotatingFlippingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(movingSignal(SketchWidget *, QUndoCommand *)),
+						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
 	if (fapp != NULL) {
 		succeeded = connect(fapp, SIGNAL(spaceBarIsPressedSignal(bool)), m_breadboardGraphicsView, SLOT(spaceBarIsPressedSlot(bool)));
@@ -1042,4 +1069,11 @@ void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connect
 	}
 
 	updateTraceMenu();
+}
+
+
+void MainWindow::clearRoutingSlot(SketchWidget * sketchWidget, QUndoCommand * parentCommand) {
+	Q_UNUSED(sketchWidget);
+
+	m_pcbGraphicsView->clearRouting(parentCommand);
 }

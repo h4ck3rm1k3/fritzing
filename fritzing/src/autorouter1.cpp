@@ -129,7 +129,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0);
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Jumperwires);
 
-	clearTraces();
+	clearTraces(m_sketchWidget, false);
 	updateRatsnest(false);
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
@@ -237,7 +237,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 		QApplication::processEvents();
 
 		if (m_progressDialog && m_progressDialog->wasCanceled()) {
-			clearTraces();
+			clearTraces(m_sketchWidget, false);
 			cleanUp();
 			return;
 		}
@@ -265,21 +265,21 @@ void Autorouter1::cleanUp() {
 
 }
 
-void Autorouter1::clearTraces() {
+void Autorouter1::clearTraces(SketchWidget * sketchWidget, bool deleteAll) {
 	QList<Wire *> oldTraces;
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
+	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
 		
 		if (wire->getTrace() || wire->getJumper()) {
-			if (wire->getAutoroutable()) {
+			if (deleteAll || wire->getAutoroutable()) {
 				oldTraces.append(wire);
 			}
 		}
 	}
 	
 	foreach (Wire * wire, oldTraces) {
-		m_sketchWidget->deleteItem(wire, true, false);
+		sketchWidget->deleteItem(wire, true, false);
 	}
 }
 
@@ -944,7 +944,7 @@ void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorIte
 			if (dynamic_cast<BusConnectorItem *>(equalConnectorItem) != NULL) continue;
 
 			ItemBase * attachedTo = equalConnectorItem->attachedTo();
-			if (attachedTo->itemType() == ModelPart::Part) {
+			if (attachedTo->itemType() == ModelPart::Part || attachedTo->itemType() == ModelPart::Board) {
 				if (!partConnectorItems->contains(equalConnectorItem)) {
 					partConnectorItems->append(equalConnectorItem);
 					indexer.insert(equalConnectorItem, indexer.count());

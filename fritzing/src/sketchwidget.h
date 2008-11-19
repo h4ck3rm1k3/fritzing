@@ -172,7 +172,7 @@ public:
 	bool ratsAllRouted();
 	void updateRatsnestStatus();
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
-
+	void clearRouting(QUndoCommand * parentCommand);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -283,8 +283,11 @@ signals:
 	void swapped(long itemId, ModelPart *with);
 	void resizeSignal();
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
-	void addItemSignal();
-	void deleteItemSignal();
+	void deletingSignal(SketchWidget *, QUndoCommand * parentCommand);
+	void addingSignal(SketchWidget *, QUndoCommand * parentCommand);
+	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
+	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
+	void changingConnectionSignal(SketchWidget *, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);

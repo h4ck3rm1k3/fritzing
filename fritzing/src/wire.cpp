@@ -693,19 +693,6 @@ bool Wire::getAutoroutable() {
 	return m_viewGeometry.getAutoroutable();
 }
 
-bool Wire::connectedToBreadboard() {
-	foreach (ConnectorItem * connectorItem, connector0()->connectedToItems()) {
-		if (connectorItem->attachedToItemType() == ModelPart::Breadboard) return true;
-	}
-	foreach (ConnectorItem * connectorItem, connector1()->connectedToItems()) {
-		if (connectorItem->attachedToItemType() == ModelPart::Breadboard) return true;
-	}
-
-	// TODO: check chains?
-
-	return false;
-}
-
 void Wire::setColor(QColor & color, qreal op) {
 	m_pen.setBrush(QBrush(color));
 	m_opacity = op;

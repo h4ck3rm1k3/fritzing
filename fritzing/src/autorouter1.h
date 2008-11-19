@@ -56,7 +56,6 @@ protected:
 	bool tryWithWires(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, class ConnectorItem * end, QList<class Wire *> & chainedWires, const QPolygonF & boundingPoly);
 	bool tryWithWire(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, QPointF midpoint, QList<class Wire *> & chainedWires, const QPolygonF & boundingPoly);
 	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint);
-	void clearTraces();
 	void cleanUp();
 	void updateRatsnest(bool routed);
 
@@ -64,6 +63,7 @@ public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
 	static double calcDistance(QPointF fromPos, QGraphicsItem *);
 	static double distanceToLine(QPointF fromPos, QPointF p1, QPointF p2);
+	static void clearTraces(SketchWidget * sketchWidget, bool deleteAll);
 
 protected:
 	class SketchWidget * m_sketchWidget;

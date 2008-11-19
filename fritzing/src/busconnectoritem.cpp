@@ -293,7 +293,7 @@ void BusConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QLi
 		if (dynamic_cast<BusConnectorItem *>(connectorItem) != NULL) continue;
 
 		ItemBase * candidate = connectorItem->attachedTo();
-		if (candidate->itemType() == ModelPart::Part) {
+		if (candidate->itemType() == ModelPart::Part || candidate->itemType() == ModelPart::Board) {
 			if (!partsConnectors.contains(connectorItem)) {
 				//DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorStuffID()) );
 				partsConnectors.append(connectorItem);

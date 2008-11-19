@@ -96,7 +96,6 @@ public:
 	bool hasAnyFlag(ViewGeometry::WireFlags);
 	ViewGeometry::WireFlags wireFlags();
 	void setWireFlags(ViewGeometry::WireFlags);
-	bool connectedToBreadboard();
 
 	QString colorString();
 	void setColorString(QString, qreal opacity);

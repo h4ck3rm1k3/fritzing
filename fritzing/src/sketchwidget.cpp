@@ -252,7 +252,8 @@ void SketchWidget::loadFromModel() {
 		foreach (QGraphicsItem * item, scene()->items()) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 			if (connectorItem == NULL) continue;
-			if (connectorItem->attachedToItemType() != ModelPart::Part) continue;
+
+			if (connectorItem->attachedToItemType() != ModelPart::Part && connectorItem->attachedToItemType() != ModelPart::Board) continue;
 			allConnectorItems.append(connectorItem);
 		}
 
@@ -317,8 +318,6 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 		QApplication::restoreOverrideCursor();
 	}
 
-	emit addItemSignal();
-
 	return itemBase;
 }
 
@@ -371,7 +370,11 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		}
 
 		addToScene(wire, wire->viewLayerID());
-		DebugDialog::debug(QString("adding wire %1 %2").arg(wire->id()).arg(m_viewIdentifier) );
+		DebugDialog::debug(QString("adding wire %1 %2 %3")
+			.arg(wire->id())
+			.arg(m_viewIdentifier)
+			.arg(viewGeometry.flagsAsInt()) 
+			);
 
 		checkNewSticky(wire);
 		return wire;
@@ -500,9 +503,6 @@ void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit) {
 	if (pitem != NULL) {
 		deleteItem(pitem, deleteModelPart, doEmit);
 	}
-
-	emit deleteItemSignal();
-
 }
 
 void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit)
@@ -517,17 +517,18 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	this->scene()->removeItem(itemBase);
 	DebugDialog::debug(tr("delete item %1 %2").arg(id).arg(itemBase->title()) );
 
-	ModelPart * modelPart = itemBase->modelPart();
-	m_sketchModel->removeModelPart(modelPart);
+	if (deleteModelPart) {
+		ModelPart * modelPart = itemBase->modelPart();
+		m_sketchModel->removeModelPart(modelPart);
+		delete modelPart;
+	}
+
 	delete itemBase;
 
 	if (doEmit) {
 		emit itemDeletedSignal(id);
 	}
 
-	if (deleteModelPart) {
-		delete modelPart;
-	}
 }
 
 void SketchWidget::deleteItem() {
@@ -567,6 +568,8 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	new CleanUpWiresCommand(this, false, parentCommand);
 	parentCommand->setText(string);
 
+	emit deletingSignal(this, parentCommand);
+
     stackSelectionState(false, parentCommand);
 
 	QSet <VirtualWire *> virtualWires;
@@ -579,8 +582,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	// since in figuring out how to manage busConnections
 	// all parts are connected to busConnections only by virtual wires
 
-	bool saveAutorouteState = true;
-
     for (int i = 0; i < sitems.count(); i++) {
     	ItemBase * itemBase = ItemBase::extractTopLevelItemBase(sitems[i]);
     	if (itemBase == NULL) continue;
@@ -589,9 +590,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		if (modelPart == NULL) continue;
 
 		deletedItems.append(itemBase);
-		if (itemBase->itemType() == ModelPart::Wire) {
-			Wire * wire = dynamic_cast<Wire *>(itemBase);
-		}
 	}
 
 	foreach (ItemBase * itemBase, deletedItems) {
@@ -663,6 +661,8 @@ void SketchWidget::deleteVirtualWires(QSet<VirtualWire *> & virtualWires, QUndoC
 	QSetIterator<VirtualWire *> it(virtualWires);
     while (it.hasNext()) {
 		VirtualWire * wire = it.next();
+		if (wire->getRatsnest()) continue;
+
 		wire->saveGeometry();
 		new DeleteItemCommand(this, BaseCommand::CrossView, wire->modelPart()->moduleID(), wire->getViewGeometry(), wire->id(), parentCommand);
 	}
@@ -673,12 +673,16 @@ void SketchWidget::disconnectVirtualWires(QSet<VirtualWire *> & virtualWires, QU
 	QSetIterator<VirtualWire *> it(virtualWires);
     while (it.hasNext()) {
 		VirtualWire * wire = it.next();
+		if (wire->getRatsnest()) continue;
+
 		disconnectVirtualWire(wire->connector0(), parentCommand);
 		disconnectVirtualWire(wire->connector1(), parentCommand);
 	}
 	it.toFront();
     while (it.hasNext()) {
 		VirtualWire * wire = it.next();
+		if (wire->getRatsnest()) continue;
+
 		// now really disconnect the virtual wires to get ready to clean up busConnectorItems
 		wire->tempRemoveAllConnections();
 	}
@@ -743,6 +747,8 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 	if (toItem == NULL) {
 		return;		// for now
 	}
+
+	emit changingConnectionSignal(this, parentCommand);
 
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								fromItem->id(), fromConnectorItem->connectorStuffID(),
@@ -1021,14 +1027,18 @@ void SketchWidget::copy() {
 					if (toBase->getVirtual()) {
 						// deal with inter-connected virtual wires
 						VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toBase);
-						ItemBase * itemBase = virtualWire->otherConnector(toConnectorItem)->firstConnectedToIsh()->attachedTo();
-						if (bases.contains(itemBase)) {
-							virtualWires.insert(virtualWire);
-							BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(fromConnectorItem);
-							if (bci != NULL) {
-								busConnectors.insert(bci);
+						if (virtualWire->getRatsnest()) {
+						}
+						else {
+							ItemBase * itemBase = virtualWire->otherConnector(toConnectorItem)->firstConnectedToIsh()->attachedTo();
+							if (bases.contains(itemBase)) {
+								virtualWires.insert(virtualWire);
+								BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(fromConnectorItem);
+								if (bci != NULL) {
+									busConnectors.insert(bci);
+								}
+								doDelete = false;
 							}
-							doDelete = false;
 						}
 					}
 
@@ -1152,6 +1162,8 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 	new CleanUpWiresCommand(this, false, parentCommand);
 
     stackSelectionState(false, parentCommand);
+
+	emit addingSignal(this, parentCommand);
 
 	QHash<long, long> mapIDs;
     for (int i = 0; i < size; i++) {
@@ -1370,6 +1382,8 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		new CleanUpWiresCommand(this, false, parentCommand);
     	stackSelectionState(false, parentCommand);
 
+		emit addingSignal(this, parentCommand);
+
 		m_droppingItem->saveGeometry();
     	ViewGeometry viewGeometry = m_droppingItem->getViewGeometry();
 
@@ -1532,6 +1546,9 @@ void SketchWidget::checkMoved()
 
 	QUndoCommand * parentCommand = new QUndoCommand(moveString);
 	new CleanUpWiresCommand(this, false, parentCommand);
+
+	bool hasBoard = false;
+
 	for (int i = 0; i < m_savedItems.size(); i++) {
 		// already know it's a topLevel item
 		ItemBase *item = m_savedItems[i];
@@ -1542,7 +1559,15 @@ void SketchWidget::checkMoved()
 
 		new MoveItemCommand(this, item->id(), viewGeometry, item->getViewGeometry(), parentCommand);
 
-		if (item->itemType() == ModelPart::Breadboard) continue;
+		if (item->itemType() == ModelPart::Breadboard) {
+			hasBoard = true;
+			continue;
+		}
+
+		// TODO: boardtypes and breadboard types are always sticky
+		if (item->itemType() == ModelPart::Board) {
+			hasBoard = true;
+		}
 
 		checkSticky(item, parentCommand);
 
@@ -1550,6 +1575,9 @@ void SketchWidget::checkMoved()
 
 		disconnectFromFemale(item, m_savedItems, virtualWires, parentCommand);
 	}
+
+	// TODO: make a cleaner distinction if moving muliple parts (remember, this is for removing routing)
+	emit movingSignal(this, parentCommand);
 
 	QList<ConnectorItem *> keys = m_needToConnectItems.keys();
 	for (int i = 0; i < keys.count(); i++) {
@@ -2013,10 +2041,7 @@ ItemCount SketchWidget::calcItemCount() {
 
 				// TODO: allow breadboard and ardiuno to rotate
 				bool rotatable = true;
-				if (itemBase->itemType() == ModelPart::Breadboard) {
-					rotatable = false;
-				}
-				else if (itemBase->modelPart()->tags().join("").contains("arduino",Qt::CaseInsensitive)) {
+				if (itemBase->itemType() == ModelPart::Breadboard || itemBase->itemType() == ModelPart::Board) {
 					rotatable = false;
 				}
 
@@ -2392,7 +2417,6 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		return;
 	}
 
-
 	QSet <VirtualWire *> virtualWires;
 	QList<BusConnectorItem *> busConnectorItems;
 	collectBusConnectorItems(busConnectorItems);
@@ -2405,7 +2429,9 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 	new CleanUpWiresCommand(this, false, parentCommand);
 
-	QList<ItemBase *> emptyList;			// used for a move command
+	emit rotatingFlippingSignal(this, parentCommand);		// eventually, don't send signal when rotating board
+
+	QList<ItemBase *> emptyList;			// emptylist is only used for a move command
 	foreach (PaletteItem * item, targets) {
 		disconnectFromFemale(item, emptyList, virtualWires, parentCommand);
 
@@ -2420,7 +2446,6 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		else {
 			new FlipItemCommand(this, item->id(), orientation, parentCommand);
 		}
-
 	}
 
 	cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
@@ -3406,7 +3431,7 @@ void SketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
 		QList<ConnectorItem *> partsConnectors2;
 		foreach (ConnectorItem * connectorItem, connectorItems2) {
 			ItemBase * candidate = connectorItem->attachedTo();
-			if (candidate->itemType() == ModelPart::Part) {
+			if (candidate->itemType() == ModelPart::Part || candidate->itemType() == ModelPart::Board) {
 				if (!partsConnectors2.contains(connectorItem)) {
 					partsConnectors2.append(connectorItem);
 					//DebugDialog::debug(QString("recollecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorStuffID()) );
@@ -3723,8 +3748,6 @@ void SketchWidget::collectBusConnectorItems(QList<BusConnectorItem *> & busConne
 
 void SketchWidget::disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <VirtualWire *> & virtualWires, QUndoCommand * parentCommand)
 {
-	// TODO: if pcbview, clear autorouting
-
 	if (m_viewIdentifier != ItemBase::BreadboardView) {
 		return;
 	}
@@ -3840,4 +3863,10 @@ void SketchWidget::ensureLayerVisible(ViewLayer::ViewLayerID viewLayerID)
 	if (!viewLayer->visible()) {
 		setLayerVisible(viewLayer, true);
 	}
+}
+
+void SketchWidget::clearRouting(QUndoCommand * parentCommand) {
+	Q_UNUSED(parentCommand);
+	Autorouter1::clearTraces(this, true);
+	updateRatsnestStatus();
 }

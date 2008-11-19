@@ -52,6 +52,7 @@ public:
 		 Part,
 		 Wire,
 		 Breadboard,
+		 Board,
 		 Module,
 		 Unknown
 	};
@@ -71,7 +72,6 @@ public:
 	void setModelPartStuff(ModelPartStuff *modelPartStuff);
 	PartInstanceStuff *partInstanceStuff();
 	void setPartInstanceStuff(PartInstanceStuff *partInstanceStuff);
-	void saveParts(QTextStream & textStream, QHash<QString, ModelPartStuff *> & mpsList);
 	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument);
 	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
 	void addViewItem(ItemBase *);
