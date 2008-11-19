@@ -2009,8 +2009,20 @@ ItemCount SketchWidget::calcItemCount() {
 		if (itemBase != NULL) {
 			itemCount.selCount++;
 			// can't rotate a wire 
-			if (dynamic_cast<PaletteItemBase *>(selItems[i]) != NULL) {
-				itemCount.selRotatable++;
+			if (dynamic_cast<PaletteItemBase *>(itemBase) != NULL) {
+
+				// TODO: allow breadboard and ardiuno to rotate
+				bool rotatable = true;
+				if (itemBase->itemType() == ModelPart::Breadboard) {
+					rotatable = false;
+				}
+				else if (itemBase->modelPart()->tags().join("").contains("arduino",Qt::CaseInsensitive)) {
+					rotatable = false;
+				}
+
+				if (rotatable) {
+					itemCount.selRotatable++;
+				}
 				if (itemBase->canFlipHorizontal()) {
 					itemCount.selHFlipable++;
 				}
