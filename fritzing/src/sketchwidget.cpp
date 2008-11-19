@@ -40,6 +40,7 @@ $Date$
 #include <QBrush>
 #include <QGraphicsItem>
 #include <QMainWindow>
+#include <QApplication>
 
 #include "paletteitem.h"
 #include "wire.h"
@@ -1508,22 +1509,27 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		return;
 	}
 
-	if (m_savedItems.size() <= 0) return;
-
-	checkMoved();
+	if ((m_savedItems.size() <= 0) || !checkMoved()) {
+		if (this->m_holdingSelectItemCommand != NULL) {
+			SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
+			m_holdingSelectItemCommand = NULL;
+			//DebugDialog::debug("scene changed push select");
+			m_undoStack->push(tempCommand);
+		}
+	}
 	m_savedItems.clear();
 }
 
-void SketchWidget::checkMoved()
+bool SketchWidget::checkMoved()
 {
 	if (m_moveEventCount == 0) {
-		return;
+		return false;
 	}
 
 	ItemBase * saveBase = m_savedItems[0];
 	int moveCount = m_savedItems.count();
 	if (moveCount <= 0) {
-		return;
+		return false;
 	}
 
 	clearHoldingSelectItem();
@@ -1596,6 +1602,8 @@ void SketchWidget::checkMoved()
 	m_needToConnectItems.clear();
 	new CleanUpWiresCommand(this, true, parentCommand);
 	m_undoStack->push(parentCommand);
+
+	return true;
 }
 
 void SketchWidget::relativeZoom(qreal step) {
@@ -1717,32 +1725,23 @@ void SketchWidget::scene_selectionChanged() {
 		int selCount = 0;
 		ItemBase* saveBase = NULL;
 		QString selString;
+		m_holdingSelectItemCommand->clearRedo();
 		const QList<QGraphicsItem *> sitems = scene()->selectedItems();
 		foreach (QGraphicsItem * item, scene()->selectedItems()) {
 	 		ItemBase * base = ItemBase::extractItemBase(item);
 	 		if (base == NULL) continue;
 
-			
-
-	 		saveBase = base;
+			saveBase = base;
 	 		m_holdingSelectItemCommand->addRedo(base->layerKinChief()->id());
 	 		selCount++;
 	    }
-
-	    SelectItemCommand* temp = m_holdingSelectItemCommand;
-	    m_holdingSelectItemCommand = NULL;
 		if (selCount == 1) {
 			selString = tr("Select %1").arg(saveBase->modelPart()->title());
 		}
 		else {
 			selString = tr("Select %1 items").arg(QString::number(selCount));
 		}
-
-		temp->setText(selString);
-
-
-	    //DebugDialog::debug("scene changed push select");
-	    m_undoStack->push(temp);
+		m_holdingSelectItemCommand->setText(selString);
 	}
 }
 

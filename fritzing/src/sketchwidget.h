@@ -199,7 +199,7 @@ protected:
 	void addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerID);
 	ConnectorItem * findConnectorItem(ItemBase * item, const QString & connectorID, bool seekLayerKin);
 	void updateAllLayersActions(QAction * showAllAction, QAction * hideAllAction);
-	void checkMoved();
+	bool checkMoved();
 
 	long createWire(ConnectorItem * from, ConnectorItem * to, bool toIsBus, ViewGeometry::WireFlags, bool addItNow, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	class Bus * hookToBus(ConnectorItem * from, ConnectorItem * busTo, QUndoCommand * parentCommand);

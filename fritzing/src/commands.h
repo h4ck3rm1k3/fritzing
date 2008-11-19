@@ -184,6 +184,7 @@ public:
     void redo();
     void addUndo(long id);
     void addRedo(long id);
+	void clearRedo();
     int id() const;
 	bool mergeWith(const QUndoCommand *other);
 	void copyUndo(SelectItemCommand * sother);

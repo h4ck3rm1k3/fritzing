@@ -234,6 +234,10 @@ void SelectItemCommand::copyUndo(SelectItemCommand * sother) {
   	}
 }
 
+void SelectItemCommand::clearRedo() {
+	m_redoIDs.clear();
+}
+
 bool SelectItemCommand::mergeWith(const QUndoCommand *other)
 {
 	// "this" is earlier; "other" is later
