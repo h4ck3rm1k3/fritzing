@@ -32,7 +32,7 @@ $Date$
 #include <QDir>
 
 
-QString & makeGrammaticalNumber(int count, QString & singular, QString & plural) {
+const QString& makeGrammaticalNumber(int count, const QString& singular, const QString& plural) {
 	if (count == 1) return singular;
 
 	return plural;
