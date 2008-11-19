@@ -735,8 +735,8 @@ void Wire::setColorString(QString colorName, qreal op) {
 	// sets a color using the name (.e. "red") 
 	// note: colorName is associated with a Fritzing color, not a Qt color
 
-	QString colorString = colors.value(colorName);
-	if (colorString.isEmpty() || colorString.isNull()) {
+	QString colorString = colors.value(colorName, "");
+	if (colorString.isEmpty()) {
 		colorString = colorName;
 	}
 
@@ -745,8 +745,8 @@ void Wire::setColorString(QString colorName, qreal op) {
 	setColor(c, op);
 	m_colorName = colorName;
 
-	colorString = shadowColors.value(colorName);
-	if (colorString.isEmpty() || colorString.isNull()) {
+	colorString = shadowColors.value(colorName, "");
+	if (colorString.isEmpty()) {
 		colorString = colorName;
 	}
 

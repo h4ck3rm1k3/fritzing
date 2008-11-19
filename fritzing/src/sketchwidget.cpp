@@ -3629,13 +3629,13 @@ void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeomet
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);
 	if (jumperOrTrace != NULL) {
 		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), "unrouted", wire->opacity(), .35, parentCommand);
+		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), .35, parentCommand);
 	}
 	else {
 		long newID = createWire(ends[0], ends[1], false, flag, false, BaseCommand::SingleView, parentCommand);
 		new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
 		new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), "unrouted", 0.35, .35, parentCommand);
+		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), 0.35, parentCommand);
 		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
 	}
 	m_undoStack->push(parentCommand);
