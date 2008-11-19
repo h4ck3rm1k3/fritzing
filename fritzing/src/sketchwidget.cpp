@@ -1580,8 +1580,10 @@ void SketchWidget::checkMoved()
 		disconnectFromFemale(item, m_savedItems, virtualWires, parentCommand);
 	}
 
-	// TODO: make a cleaner distinction if moving muliple parts (remember, this is for removing routing)
-	emit movingSignal(this, parentCommand);
+	if (!hasBoard) {
+		// TODO: make a cleaner distinction if moving muliple parts (remember, this is for removing routing)
+		emit movingSignal(this, parentCommand);
+	}
 
 	QList<ConnectorItem *> keys = m_needToConnectItems.keys();
 	for (int i = 0; i < keys.count(); i++) {

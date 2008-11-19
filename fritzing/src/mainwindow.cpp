@@ -152,6 +152,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_itemMenu->addAction(m_flipVerticalAct);
 
 #ifndef QT_NO_DEBUG
+	m_itemMenu->addSeparator();
 	m_itemMenu->addAction(m_infoViewOnHoverAction);
 	//m_itemMenu->addAction(m_swapPartAction);
 #endif
