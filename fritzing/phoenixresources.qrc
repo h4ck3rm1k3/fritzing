@@ -72,11 +72,6 @@ $Date$
     <file>resources/parts/svg/core/breadboard/ruler.svg</file>
     <file>resources/parts/svg/core/breadboard/breadboard.svg</file>
     <file>resources/parts/svg/core/breadboard/wire.svg</file>
-    <file>resources/styles/partseditor.qss</file>
-    <file>resources/styles/fritzing.qss</file>
-    <file>resources/styles/infoview.css</file>
-    <file>resources/js/infoview.js</file>
-    <file>resources/bins/bin.fz</file>
     <file>resources/images/icons/partsBinOpen_icon.png</file>
     <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>
     <file>resources/images/icons/partsBinSaveDisabled_icon.png</file>
@@ -94,5 +89,12 @@ $Date$
     <file>resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarOrder_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarExport_diy_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarDiyEnabled.png</file>
+    <file>resources/images/toolbar_icons/toolbarDiyDisabled.png</file>
+    <file>resources/styles/partseditor.qss</file>
+    <file>resources/styles/fritzing.qss</file>
+    <file>resources/styles/infoview.css</file>
+    <file>resources/js/infoview.js</file>
+    <file>resources/bins/bin.fz</file>
 </qresource>
 </RCC>

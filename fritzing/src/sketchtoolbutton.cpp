@@ -18,33 +18,31 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 1558 $:
+$Author: cohen@irascible.com $:
+$Date: 2008-11-19 12:11:07 +0100 (Wed, 19 Nov 2008) $
 
 ********************************************************************/
 
 
-#ifndef SVGFILESPLITTER_H_
-#define SVGFILESPLITTER_H_
-
-#include <QString>
-#include <QByteArray>
-#include <QDomElement>
-
-class SvgFileSplitter {
-
-public:
-	SvgFileSplitter();
-	bool split(const QString & filename, const QString & elementID);
-	const QByteArray & byteArray();
-
-protected:
-	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 
 
-protected:
-	QByteArray m_byteArray;
-};
+#include "sketchtoolbutton.h"
 
-#endif
+#include <QAction>
+#include <QActionEvent>
+
+SketchToolButton::SketchToolButton(QWidget *parent)
+	: QToolButton(parent) {}
+
+void SketchToolButton::actionEvent(QActionEvent *event) {
+	switch (event->type()) {
+		case QEvent::ActionChanged:
+			if (event->action() == defaultAction()) {
+				setEnabled(defaultAction()->isEnabled()); // update button state
+			}
+			break;
+		default:
+			QToolButton::actionEvent(event);
+	}
+}

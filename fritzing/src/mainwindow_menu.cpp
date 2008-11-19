@@ -717,13 +717,14 @@ void MainWindow::createPartMenuActions() {
 	/*m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
 	connect(m_openInOldPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInOldPartsEditor()));*/
 
-	// TODO Mariano: DEBUG ACTION
-	/*m_infoViewOnHoverAction = new QAction(tr("Update InfoView on hover"), this);
+#ifndef QT_NO_DEBUG
+	m_infoViewOnHoverAction = new QAction(tr("Update InfoView on hover"), this);
 	m_infoViewOnHoverAction->setCheckable(true);
 	bool infoViewOnHover = false;
 	m_infoViewOnHoverAction->setChecked(infoViewOnHover);
 	setInfoViewOnHover(infoViewOnHover);
-	connect(m_infoViewOnHoverAction, SIGNAL(toggled(bool)), this, SLOT(setInfoViewOnHover(bool)));*/
+	connect(m_infoViewOnHoverAction, SIGNAL(toggled(bool)), this, SLOT(setInfoViewOnHover(bool)));
+#endif
 
 	// TODO Mariano: DEBUG ACTION
 	/*m_swapPartAction = new QAction(tr("Swap part!"), this);
@@ -1143,10 +1144,7 @@ void MainWindow::updateTraceMenu() {
 	bool enabled = false;
 
 	m_autorouteAct->setEnabled(false);
-	m_autorouteButton->setEnabled(false);
-
 	m_exportDiyAct->setEnabled(false);
-	m_exportDiyButton->setEnabled(false);
 
 	if (m_currentWidget != NULL) {
 		if (m_currentWidget == this->m_pcbGraphicsView) {
@@ -1162,10 +1160,7 @@ void MainWindow::updateTraceMenu() {
 	}
 
 	m_autorouteAct->setEnabled(enabled);
-	m_autorouteButton->setEnabled(enabled);
-
 	m_exportDiyAct->setEnabled(enabled);
-	m_exportDiyButton->setEnabled(enabled);
 }
 
 

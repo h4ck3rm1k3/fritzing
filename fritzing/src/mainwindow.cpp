@@ -151,8 +151,10 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_itemMenu->addAction(m_flipHorizontalAct);
 	m_itemMenu->addAction(m_flipVerticalAct);
 
-	//m_itemMenu->addAction(m_infoViewOnHoverAction);
+#ifndef QT_NO_DEBUG
+	m_itemMenu->addAction(m_infoViewOnHoverAction);
 	//m_itemMenu->addAction(m_swapPartAction);
+#endif
 
     connect(
     	m_itemMenu,
@@ -485,23 +487,26 @@ void MainWindow::createToolBars() {
 }
 
 void MainWindow::createSketchButtons() {
-	m_exportToPdfButton = new QToolButton(this);
+	m_exportToPdfButton = new SketchToolButton(this);
 	m_exportToPdfButton->setDefaultAction(m_exportPdfAct);
 	m_exportToPdfButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_pdf_icon.png"));
+	m_exportToPdfButton->setIconSize(QSize(32,32));
+	m_exportToPdfButton->setText(tr("Export"));
+	m_exportToPdfButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
-	/*QMenu *exportMenu = new QMenu(m_exportToPdfButton);
-	exportMenu->addAction(QIcon(":/resources/images/toolbar_icons/toolbarExport_ps_icon.png"),"");
-	m_exportToPdf
-
-	Button->setMenu(exportMenu);*/
-
-	m_autorouteButton = new QPushButton(this);
+	m_autorouteButton = new SketchToolButton(this);
+	m_autorouteButton->setDefaultAction(m_autorouteAct);
 	m_autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
-	connect(m_autorouteButton, SIGNAL(clicked()), this, SLOT(autoroute()));
+	m_autorouteButton->setIconSize(QSize(32,32));
+	m_autorouteButton->setText(tr("Autoroute"));
+	m_autorouteButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
-	m_exportDiyButton = new QPushButton(this);
-	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_diy_icon.png"));
-	connect(m_exportDiyButton, SIGNAL(clicked()), this, SLOT(exportDiy()));
+	m_exportDiyButton = new SketchToolButton(this);
+	m_exportDiyButton->setDefaultAction(m_exportDiyAct);
+	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarDiyEnabled.png"));
+	m_exportDiyButton->setIconSize(QSize(32,32));
+	m_exportDiyButton->setText(tr("DIY Etching"));
+	m_exportDiyButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
 	m_routingStatusLabel = new QLabel(this);
 	routingStatusSlot(0,0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
@@ -511,7 +516,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
 	retval << m_exportToPdfButton;
 	if(viewId == ItemBase::PCBView) {
-		retval << m_autorouteButton << m_exportDiyButton << m_routingStatusLabel;
+		retval << m_exportDiyButton << m_autorouteButton << m_routingStatusLabel;
 	}
 	return retval;
 }

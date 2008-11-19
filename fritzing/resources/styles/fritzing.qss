@@ -25,7 +25,7 @@ MainWindow {
 
 	/* styling there */
 	background-color: #666666;
-	font-family: LucidaGrande, LucidaSans, Tahoma, Arial, sans-serif;
+	font-family: "Lucida Grande", LucidaSans, Tahoma, Arial, sans-serif;
 	font-size: 10px;
 	color: rgb(255,255,255);
 }
@@ -347,10 +347,19 @@ SketchArea QToolButton {
 }
 
 #sketchAreaToolbar {
-	background-color: rgb(204,204,204);
+	background-image: url(resources/images/toolbar_icons/BottomToolbarBackground.png);
+	border: none;
+	padding: 0;
 }
 
 #sketchAreaToolbar QLabel {
-	font-weight: bold;
+	font-weight: normal;
 	color: #444;
+}
+
+#sketchAreaToolbar QToolButton,
+#sketchAreaToolbar QPushButton {
+	background: none;
+	border: none;
+	margin: 0;
 }

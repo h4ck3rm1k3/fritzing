@@ -135,6 +135,10 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     //group->addToGroup(item);
 
     m_lastPaletteItemSelected = NULL;
+
+#ifdef QT_NO_DEBUG
+    m_infoViewOnHover = false;
+#endif
 }
 
 void SketchWidget::restartPasteCount() {
@@ -373,7 +377,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		DebugDialog::debug(QString("adding wire %1 %2 %3")
 			.arg(wire->id())
 			.arg(m_viewIdentifier)
-			.arg(viewGeometry.flagsAsInt()) 
+			.arg(viewGeometry.flagsAsInt())
 			);
 
 		checkNewSticky(wire);
@@ -2036,7 +2040,7 @@ ItemCount SketchWidget::calcItemCount() {
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(selItems[i]);
 		if (itemBase != NULL) {
 			itemCount.selCount++;
-			// can't rotate a wire 
+			// can't rotate a wire
 			if (dynamic_cast<PaletteItemBase *>(itemBase) != NULL) {
 
 				// TODO: allow breadboard and ardiuno to rotate
@@ -3817,7 +3821,7 @@ void SketchWidget::updateRatsnestStatus() {
 	int connectorsLeftToRoute = 0;
 	int jumperCount = 0;
 	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-		if (list->count() <= 1) continue;			// nets with a single part are not worth counting 
+		if (list->count() <= 1) continue;			// nets with a single part are not worth counting
 
 		netCount++;
 		ConnectorItem * connectorItem = list->at(0);
@@ -3845,7 +3849,7 @@ void SketchWidget::updateRatsnestStatus() {
 			connectorsLeftToRoute += (todo + 1);
 		}
 	}
-	
+
 
 	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
 		delete list;
@@ -3859,7 +3863,7 @@ void SketchWidget::ensureLayerVisible(ViewLayer::ViewLayerID viewLayerID)
 {
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID, NULL);
 	if (viewLayer == NULL) return;
-	
+
 	if (!viewLayer->visible()) {
 		setLayerVisible(viewLayer, true);
 	}

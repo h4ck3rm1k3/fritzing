@@ -16,7 +16,8 @@
 # $Author: andre.knoerig $:
 # $Date: 2008-11-15 16:16:14 +0100 (Sat, 15 Nov 2008) $
 # ********************************************************************/
-HEADERS += src/svgandpartfilepath.h \
+HEADERS += src/sketchtoolbutton.h \
+    src/svgandpartfilepath.h \
     src/aboutbox.h \
     src/autorouter1.h \
     src/bettertimer.h \
@@ -70,7 +71,8 @@ HEADERS += src/svgandpartfilepath.h \
     src/waitpushundostack.h \
     src/wire.h \
     src/zoomcombobox.h
-SOURCES += src/aboutbox.cpp \
+SOURCES += src/sketchtoolbutton.cpp \
+    src/aboutbox.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
     src/bettertimer.cpp \

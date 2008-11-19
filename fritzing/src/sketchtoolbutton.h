@@ -18,33 +18,26 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 1558 $:
+$Author: cohen@irascible.com $:
+$Date: 2008-11-19 12:11:07 +0100 (Wed, 19 Nov 2008) $
 
 ********************************************************************/
 
 
-#ifndef SVGFILESPLITTER_H_
-#define SVGFILESPLITTER_H_
 
-#include <QString>
-#include <QByteArray>
-#include <QDomElement>
 
-class SvgFileSplitter {
+#ifndef SKETCHTOOLBUTTON_H_
+#define SKETCHTOOLBUTTON_H_
 
+#include <QToolButton>
+
+class SketchToolButton : public QToolButton {
 public:
-	SvgFileSplitter();
-	bool split(const QString & filename, const QString & elementID);
-	const QByteArray & byteArray();
+	SketchToolButton(QWidget *parent=0);
 
 protected:
-	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
-
-
-protected:
-	QByteArray m_byteArray;
+	void actionEvent(QActionEvent *event);
 };
 
-#endif
+#endif /* SKETCHTOOLBUTTON_H_ */

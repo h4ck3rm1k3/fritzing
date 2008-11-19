@@ -59,6 +59,7 @@ SketchWidget *SketchAreaWidget::graphicsView() {
 void SketchAreaWidget::createLayout() {
 	m_toolbar = new QFrame(this);
 	m_toolbar->setObjectName("sketchAreaToolbar");
+	m_toolbar->setFixedHeight(60);
 
 	QFrame *leftButtons = new QFrame(m_toolbar);
 	m_buttonsContainer = new QHBoxLayout(leftButtons);

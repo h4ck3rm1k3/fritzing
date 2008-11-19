@@ -45,6 +45,7 @@ $Date$
 #include "console.h"
 #include "zoomcombobox.h"
 #include "ftabwidget.h"
+#include "sketchtoolbutton.h"
 
 #include "partsbinpalette/partsbinpalettewidget.h"
 
@@ -376,9 +377,9 @@ protected:
     QIcon m_emptyIcon;
 
     // Sketch toolbar buttons
-	QToolButton *m_exportToPdfButton;
-	QPushButton *m_autorouteButton;
-	QPushButton *m_exportDiyButton;
+	SketchToolButton *m_exportToPdfButton;
+	SketchToolButton *m_autorouteButton;
+	SketchToolButton *m_exportDiyButton;
 
 	QLabel *m_routingStatusLabel;
 

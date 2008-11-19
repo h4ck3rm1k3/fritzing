@@ -35,7 +35,7 @@ SvgFileSplitter::SvgFileSplitter()
 {
 }
 
-const bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
+bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 {
 	m_byteArray.clear();
 
