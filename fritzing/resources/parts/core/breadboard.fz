@@ -9,7 +9,6 @@
   </tags>
   <properties>
     <property name="family">Breadboard</property>
-    <property name="p2">Breadboard-nxn</property>
   </properties>
   <taxonomy>prototyping.breadboard.breadboard.breadboard0</taxonomy>
   <description>A standard n-hole breadboard</description>

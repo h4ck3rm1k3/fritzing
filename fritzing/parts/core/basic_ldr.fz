@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.1201" moduleId="1000ABDD10012">
+<module fritzingVersion="0.1.b.1559" moduleId="1000ABDD10012">
     <version>1.1</version>
     <title>Basic Photo-Resistor (Photocell)</title>
     <label>R</label>
@@ -13,11 +13,10 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="family">LDR</property>
-        <property name="Cell Resistance @ Luminance">a value</property>
-        <property name="Cell Resistance (Min) @ Dark">a value</property>
+        <property name="resistance@ dark">300 kOhms@ 10 seconds</property>
+        <property name="family">Photo-Resistor</property>
+        <property name="resistance@ luminance">16 kOhms@ 10 lux</property>
     </properties>
-    <taxonomy>discreteParts.resistor.ldr</taxonomy>
     <description>A generic light dependent resistor</description>
     <views>
         <iconView>
@@ -25,7 +24,7 @@
                 <layer layerId="icon" image="icon/basic_ldr.svg"></layer>
             </layers>
         </iconView>
-        <breadboardView flipvertical="true" fliphorizontal="true">
+        <breadboardView>
             <layers>
                 <layer layerId="breadboard" image="breadboard/basic_ldr.svg"></layer>
             </layers>

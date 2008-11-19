@@ -14,7 +14,7 @@
     <properties>
         <property name="package">T1.75 (5mm)</property>
         <property name="family">LED</property>
-        <property name="p3">diode 1.8V</property>
+        <property name="forward voltage">1.8V</property>
         <property name="color">blue</property>
     </properties>
     <description>A generic blue LED (~1.8V)</description>

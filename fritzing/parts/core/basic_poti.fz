@@ -14,7 +14,6 @@
     </tags>
     <properties>
     	<property name="family">Potentiometer</property>
-    	<property name="p2">Resistor</property>
     </properties>
     <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
     <description>A standard adjustable resistor (potentiometer).</description>
