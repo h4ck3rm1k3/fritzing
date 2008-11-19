@@ -66,6 +66,11 @@ void SketchAreaWidget::createLayout() {
 	m_buttonsContainer->setMargin(0);
 	m_buttonsContainer->setSpacing(3);
 
+	QFrame *middleButtons = new QFrame(m_toolbar);
+	m_labelContainer = new QHBoxLayout(middleButtons);
+	m_labelContainer->setMargin(2);
+	m_labelContainer->setSpacing(0);
+
 	QFrame *rightButtons = new QFrame(m_toolbar);
 	m_zoomContainer = new QHBoxLayout(rightButtons);
 	m_zoomContainer->setMargin(0);
@@ -76,13 +81,19 @@ void SketchAreaWidget::createLayout() {
 	toolbarLayout->setMargin(2);
 	toolbarLayout->setSpacing(0);
 	toolbarLayout->addWidget(leftButtons);
+	toolbarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding));
+	toolbarLayout->addWidget(middleButtons);
 	toolbarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	toolbarLayout->addWidget(rightButtons);
 }
 
 void SketchAreaWidget::setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox) {
 	foreach(QWidget* button, buttons) {
-		m_buttonsContainer->addWidget(button);
+		if(!dynamic_cast<QLabel*>(button)) {
+			m_buttonsContainer->addWidget(button);
+		} else {
+			m_labelContainer->addWidget(button);
+		}
 	}
 	m_zoomContainer->addWidget(zoomComboBox);
 }

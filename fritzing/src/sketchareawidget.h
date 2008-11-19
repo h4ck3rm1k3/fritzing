@@ -54,6 +54,7 @@ protected:
 
 	QFrame *m_toolbar;
 	QHBoxLayout *m_buttonsContainer;
+	QHBoxLayout *m_labelContainer;
 	QHBoxLayout *m_zoomContainer;
 };
 
