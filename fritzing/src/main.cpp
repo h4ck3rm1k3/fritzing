@@ -43,7 +43,7 @@ $Date$
 #include "referencemodel/sqlitereferencemodel.h"
 #define CurrentReferenceModel SqliteReferenceModel
 
-#define kBottomOfAlpha 186
+#define kBottomOfAlpha 206
 
 int main(int argc, char *argv[])
 {
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/resources/images/splash.png");
     FSplashScreen splash(pixmap);
 	splash.setTextPosition(0, kBottomOfAlpha);
-	splash.showMessage(QObject::tr("<font face='Lucida Grand, Tahoma, Sans Serif' size='2' color='white'>version %1.%2 %3 (r%4)</font></div>")
+	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='white'>version %1.%2 %3 (r%4)&nbsp;</font>")
 									.arg(Version::majorVersion())
 									.arg(Version::minorVersion())
 									.arg(Version::modifier())

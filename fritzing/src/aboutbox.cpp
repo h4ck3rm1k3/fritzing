@@ -127,11 +127,11 @@ AboutBox::AboutBox(QWidget *parent)
 	m_scrollArea->ensureVisible(0, 0);
 	
 	// Add a fade out and a fade in the scrollArea
-	/*
 	QLabel *scrollFade = new QLabel(this);
 	scrollFade->setPixmap(QPixmap(":/resources/images/aboutbox_scrollfade.png"));
 	scrollFade->setGeometry(0, 210, 390, 160);
-	*/
+	scrollFade->setStyleSheet("background-color: none");
+	
 
 	// auto scroll timer initialization
 	m_restartAtTop = FALSE;
