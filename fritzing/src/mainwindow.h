@@ -160,7 +160,7 @@ protected slots:
 	void loadBundledSketch();
 
 	void binSaved(bool hasPartsFromBundled);
-	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute);
+	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 
 protected:
     void createActions();

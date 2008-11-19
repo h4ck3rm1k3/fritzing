@@ -62,6 +62,8 @@ QString getUserPartsFolder();
 QDir *getApplicationSubFolder(QString);
 QString getApplicationSubFolderPath(QString);
 
+QString & makeGrammaticalNumber(int count, QString & singular, QString & plural);
+
 static QString ___emptyString___;
 static QDomElement ___emptyElement___;
 static QStringList ___emptyStringList___;

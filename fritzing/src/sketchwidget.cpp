@@ -3780,6 +3780,7 @@ void SketchWidget::updateRatsnestStatus() {
 	int netCount = 0;
 	int netRoutedCount = 0;
 	int connectorsLeftToRoute = 0;
+	int jumperCount = 0;
 	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
 		if (list->count() <= 1) continue;			// nets with a single part are not worth counting 
 
@@ -3792,14 +3793,21 @@ void SketchWidget::updateRatsnestStatus() {
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
 		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
-		
+		foreach (ConnectorItem * jConnectorItem, connectorItems) {
+			if (jConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				Wire * wire = dynamic_cast<Wire *>(jConnectorItem->attachedTo());
+				if (wire->getJumper()) {
+					jumperCount++;
+				}
+			}
+		}
 		BusConnectorItem::collectParts(connectorItems, partConnectorItems);
 		int todo = list->count() - partConnectorItems.count();
 		if (todo == 0) {
 			netRoutedCount++;
 		}
 		else {
-			connectorsLeftToRoute += todo;
+			connectorsLeftToRoute += (todo + 1);
 		}
 	}
 	
@@ -3808,6 +3816,7 @@ void SketchWidget::updateRatsnestStatus() {
 		delete list;
 	}
 
-	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute);
+	// divide jumpercount by two since we counted both ends of each wire
+	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount / 2);
 }
 

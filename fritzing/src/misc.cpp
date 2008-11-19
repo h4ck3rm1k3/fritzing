@@ -32,6 +32,11 @@ $Date$
 #include <QDir>
 
 
+QString & makeGrammaticalNumber(int count, QString & singular, QString & plural) {
+	if (count == 1) return singular;
+
+	return plural;
+}
 
 // finds the user parts folder based on local desktop (OS) defaults
 QString getUserPartsFolder(){

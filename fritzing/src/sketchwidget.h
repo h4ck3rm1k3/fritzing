@@ -281,7 +281,7 @@ signals:
 
 	void swapped(long itemId, ModelPart *with);
 	void resizeSignal();
-	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute);
+	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void addItemSignal();
 	void deleteItemSignal();
 

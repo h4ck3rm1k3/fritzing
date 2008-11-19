@@ -317,8 +317,8 @@ void MainWindow::connectPairs() {
 							 this, SLOT(findSketchWidgetSlot(ItemBase::ViewIdentifier, SketchWidget * &)),
 							 Qt::DirectConnection);
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(int, int, int)),
-						this, SLOT(routingStatusSlot(int, int, int)));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(int, int, int, int)),
+						this, SLOT(routingStatusSlot(int, int, int, int)));
 
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
 	if (fapp != NULL) {
@@ -477,7 +477,7 @@ void MainWindow::createSketchButtons() {
 	connect(m_exportDiyButton, SIGNAL(clicked()), this, SLOT(exportDiy()));
 
 	m_routingStatusLabel = new QLabel(this);
-	routingStatusSlot(0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
+	routingStatusSlot(0,0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
 }
 
 QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
@@ -1020,15 +1020,25 @@ void MainWindow::resetTempFolder() {
 	m_filesReplacedByBundleds.clear();
 }
 
-void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute) {
+void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers) {
 	if (netCount == 0) {
-		m_routingStatusLabel->setText(tr("nothing to route"));
+		m_routingStatusLabel->setText(tr("there are no connections to route"));
 	}
 	else if (netCount == netRoutedCount) {
-		m_routingStatusLabel->setText(tr("fully routed"));
+		m_routingStatusLabel->setText(tr("the sketch is fully routed with %1 %2")
+			.arg(jumpers)
+			.arg(makeGrammaticalNumber(jumpers, tr("jumper"), tr("jumpers")))
+			);
 	}
 	else {
-		m_routingStatusLabel->setText(tr("%1 of %2 nets routed; %3 connectors not yet routed").arg(netRoutedCount).arg(netCount).arg(connectorsLeftToRoute) );
+		m_routingStatusLabel->setText(tr("%1 of %2 nets routed (with %5 %6); %3 %4 not yet routed")
+			.arg(netRoutedCount)
+			.arg(netCount)
+			.arg(connectorsLeftToRoute)
+			.arg(makeGrammaticalNumber(connectorsLeftToRoute, tr("connector"), tr("connectors")))
+			.arg(jumpers)
+			.arg(makeGrammaticalNumber(jumpers, tr("jumper"), tr("jumpers")))
+			);
 	}
 
 	updateTraceMenu();
