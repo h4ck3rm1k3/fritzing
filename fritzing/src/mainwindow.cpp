@@ -373,6 +373,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(itemSelectedSignal(long, bool)),
 									 slotter, SLOT(sketchWidget_itemSelected(long, bool)));
+	succeeded = succeeded && connect(signaller, SIGNAL(selectAllItemsSignal(bool, bool)),
+									 slotter, SLOT(selectAllItems(bool, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(tooltipAppliedToItem(long, const QString&)),
 										 slotter, SLOT(sketchWidget_tooltipAppliedToItem(long, const QString&)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireDisconnectedSignal(long, QString)),

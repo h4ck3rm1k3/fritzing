@@ -941,25 +941,21 @@ void SketchWidget::selectItem(long id, bool state, bool updateInfoView) {
 void SketchWidget::selectDeselectAllCommand(bool state) {
 	this->clearHoldingSelectItem();
 
-	QString stackString = state ? "Select All" : "Deselect";
-	m_undoStack->beginMacro(stackString);
-
-	SelectItemCommand* cmd = stackSelectionState(true, NULL);
+	SelectItemCommand * cmd = stackSelectionState(false, NULL);
+	cmd->setText(state ? tr("Select All") : tr("Deselect"));
 	cmd->setSelectItemType( state ? SelectItemCommand::SelectAll : SelectItemCommand::DeselectAll );
-	selectAllItems(state);
 
-	m_undoStack->endMacro();
+	m_undoStack->push(cmd);
 
-	emit allItemsSelectedSignal(state);
 }
 
-void SketchWidget::selectAllItems(bool state) {
-	QList<QGraphicsItem *> items = this->scene()->items();
-	for(int i=0; i < items.size(); i++) {
-		QGraphicsItem* pitem = items.at(i);
-		if (pitem != NULL) {
-			pitem->setSelected(state);
-		}
+void SketchWidget::selectAllItems(bool state, bool doEmit) {
+	foreach (QGraphicsItem * item, this->scene()->items()) {
+		item->setSelected(state);
+	}
+
+	if (doEmit) {
+		emit selectAllItemsSignal(state, false);
 	}
 }
 
@@ -1699,6 +1695,7 @@ void SketchWidget::scene_selectionChanged() {
 		return;
 	}
 
+	DebugDialog::debug("selection changed");
 	// TODO: this can be dangerous if an item is on m_lastSelected and the item is deleted without being deselected first.
 
 	// hack to make up for missing selection state updates
@@ -1715,6 +1712,8 @@ void SketchWidget::scene_selectionChanged() {
 	}
 
 	if (m_holdingSelectItemCommand != NULL) {
+		DebugDialog::debug("got holding command");
+
 		int selCount = 0;
 		ItemBase* saveBase = NULL;
 		QString selString;
@@ -1748,8 +1747,8 @@ void SketchWidget::scene_selectionChanged() {
 }
 
 void SketchWidget::clearHoldingSelectItem() {
+	DebugDialog::debug("clear holding");
 	if (m_holdingSelectItemCommand != NULL) {
-		//DebugDialog::debug("clear holding");
 		delete m_holdingSelectItemCommand;
 		m_holdingSelectItemCommand = NULL;
 	}
@@ -1781,9 +1780,6 @@ void SketchWidget::sketchWidget_tooltipAppliedToItem(long id, const QString& tex
 	}
 }
 
-void SketchWidget::sketchWidget_allItemsSelected(bool state) {
-	selectAllItems(state);
-}
 
 void SketchWidget::group() {
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
@@ -2379,6 +2375,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 
 	m_tempDragWireCommand = m_holdingSelectItemCommand;
 	m_holdingSelectItemCommand = NULL;
+	clearHoldingSelectItem();
 
 	// make sure wire layer is visible
 	ViewLayer::ViewLayerID viewLayerID = getWireViewLayerID(connectorItem->attachedTo()->getViewGeometry());

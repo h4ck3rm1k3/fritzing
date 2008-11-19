@@ -289,11 +289,15 @@ void SelectItemCommand::undo()
 void SelectItemCommand::redo()
 {
 	switch( m_type ){
-		case NormalSelect :
+		case NormalSelect:
 			selectAllFromStack(m_redoIDs);
 			break;
-		case SelectAll: m_sketchWidget->selectAllItems(true); break;
-		case DeselectAll: m_sketchWidget->selectAllItems(false); break;
+		case SelectAll: 
+			m_sketchWidget->selectAllItems(true, true); 
+			break;
+		case DeselectAll: 
+			m_sketchWidget->selectAllItems(false, true); 
+			break;
 	}
 }
 

@@ -133,7 +133,6 @@ public:
 					bool merge, bool doEmit);
 
  	qreal currentZoom();
- 	void selectAllItems(bool state);
 	ItemBase::ViewIdentifier viewIdentifier();
 	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
@@ -262,7 +261,6 @@ signals:
 	void clearSelectionSignal();
 	void itemSelectedSignal(long id, bool state);
 	void tooltipAppliedToItem(long id, const QString &text);
-	void allItemsSelectedSignal(bool state);
 	void wireDisconnectedSignal(long fromID, QString fromConnectorID);
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
@@ -289,13 +287,13 @@ signals:
 	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void changingConnectionSignal(SketchWidget *, QUndoCommand * parentCommand);
+	void selectAllItemsSignal(bool state, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
 	void sketchWidget_itemDeleted(long id);
 	void sketchWidget_clearSelection();
 	void sketchWidget_itemSelected(long id, bool state);
-	void sketchWidget_allItemsSelected(bool state);
 	void sketchWidget_tooltipAppliedToItem(long id, const QString& text);
 	void scene_selectionChanged();
 	void wire_wireChanged(class Wire*, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
@@ -330,6 +328,7 @@ public slots:
 	void changeWireColor(const QString &wireTitle, long wireId, 
 		const QString& oldColor, const QString newColor,
 		qreal oldOpacity, qreal newOpacity);
+ 	void selectAllItems(bool state, bool doEmit);
 
 protected:
 	qreal m_scaleValue;
