@@ -544,28 +544,36 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
     // because selectedItems will return an empty list
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
 
-	int delCount = 0;
-	ItemBase * saveBase = NULL;
+	QList<ItemBase *> deletedItems;
+
 	for (int i = 0; i < sitems.size(); i++) {
 
 		ItemBase *itemBase = ItemBase::extractTopLevelItemBase(sitems[i]);
 		if (itemBase == NULL) continue;
+		if (itemBase->modelPart() == NULL) continue;
 
-		saveBase = itemBase;
-		delCount++;
+		if (itemBase->itemType() == ModelPart::Wire) {
+			Wire * wire = dynamic_cast<Wire *>(itemBase);
+			if (wire->getRatsnest()) {
+				// shouldn't be here, but check anyway
+				continue;
+			}
+		}
+
+		deletedItems.append(itemBase);
 	}
 
-	if (delCount <= 0) {
+	if (deletedItems.count() <= 0) {
 		return;
 	}
 
 	QString string;
 
-	if (delCount == 1) {
-		string = tr("%1 %2").arg(undoStackMessage).arg(saveBase->modelPart()->title());
+	if (deletedItems.count() == 1) {
+		string = tr("%1 %2").arg(undoStackMessage).arg(deletedItems[0]->modelPart()->title());
 	}
 	else {
-		string = tr("%1 %2 items").arg(undoStackMessage).arg(QString::number(delCount));
+		string = tr("%1 %2 items").arg(undoStackMessage).arg(QString::number(deletedItems.count()));
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(string);
@@ -577,7 +585,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
     stackSelectionState(false, parentCommand);
 
 	QSet <VirtualWire *> virtualWires;
-	QList<ItemBase *> deletedItems;
 	QList<BusConnectorItem *> busConnectorItems;
 	collectBusConnectorItems(busConnectorItems);
 
@@ -585,16 +592,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	// and not regular connectors
 	// since in figuring out how to manage busConnections
 	// all parts are connected to busConnections only by virtual wires
-
-    for (int i = 0; i < sitems.count(); i++) {
-    	ItemBase * itemBase = ItemBase::extractTopLevelItemBase(sitems[i]);
-    	if (itemBase == NULL) continue;
-
-		ModelPart * modelPart = itemBase->modelPart();
-		if (modelPart == NULL) continue;
-
-		deletedItems.append(itemBase);
-	}
 
 	foreach (ItemBase * itemBase, deletedItems) {
 		QMultiHash<ConnectorItem *, ConnectorItem *>  connectorHash;
@@ -1442,6 +1439,7 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 
 	// if pushIt assumes m_undoStack->beginMacro has previously been called
 
+	DebugDialog::debug(QString("stack selection state %1 %2").arg(pushIt).arg((long) parentCommand));
 	SelectItemCommand* selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
  	for (int i = 0; i < sitems.size(); ++i) {
@@ -1796,12 +1794,12 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	// TODO: make sure all these pointers to pointers to pointers aren't null...
 
-
 	if (wire == this->m_connectorDragWire) {
 		dragWireChanged(wire, from, to);
 		return;
 	}
 
+	clearDragWireTempCommand();
 	QUndoCommand * parentCommand = new QUndoCommand();
 	new CleanUpWiresCommand(this, false, parentCommand);
 
@@ -1896,6 +1894,13 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorItem * to)
 {
 	QUndoCommand * parentCommand = new QUndoCommand();
+	
+	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+	if (m_tempDragWireCommand != NULL) {
+		selectItemCommand->copyUndo(m_tempDragWireCommand);
+		clearDragWireTempCommand();
+	}
+
 	new CleanUpWiresCommand(this, false, parentCommand);
 
 	m_connectorDragWire->saveGeometry();
@@ -1911,6 +1916,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 
 	// create a new wire with the same id as the temporary wire
 	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, parentCommand);
+	
 
 	ConnectorItem * anchor = wire->otherConnector(from);
 	if (anchor != NULL) {
@@ -2369,6 +2375,9 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	ModelPart * wireModel = m_paletteModel->retrieveModelPart(Wire::moduleIDName);
 	if (wireModel == NULL) return;
 
+	m_tempDragWireCommand = m_holdingSelectItemCommand;
+	m_holdingSelectItemCommand = NULL;
+
 	// make sure wire layer is visible
 	ViewLayer::ViewLayerID viewLayerID = getWireViewLayerID(connectorItem->attachedTo()->getViewGeometry());
 	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
@@ -2385,7 +2394,10 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	m_connectorDragConnector = connectorItem;
 	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), NULL, true));
 	DebugDialog::debug("creating connector drag wire");
-	if (m_connectorDragWire == NULL) return;
+	if (m_connectorDragWire == NULL) {
+		clearDragWireTempCommand();
+		return;
+	}
 
 	// give connector item the mouse, so wire doesn't get mouse moved events
 	m_connectorDragWire->grabMouse();
@@ -3875,4 +3887,12 @@ void SketchWidget::clearRouting(QUndoCommand * parentCommand) {
 	Q_UNUSED(parentCommand);
 	Autorouter1::clearTraces(this, true);
 	updateRatsnestStatus();
+}
+
+void SketchWidget::clearDragWireTempCommand()
+{
+	if (m_tempDragWireCommand) {
+		delete m_tempDragWireCommand;
+		m_tempDragWireCommand = NULL;
+	}
 }

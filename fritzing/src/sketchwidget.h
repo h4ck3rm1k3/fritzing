@@ -249,6 +249,7 @@ protected:
 	void collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems);
 	void disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
 	void cleanUpVirtualWires(QSet<class VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
+	void clearDragWireTempCommand();
 
 protected:
 	static bool lessThan(int a, int b);
@@ -340,6 +341,7 @@ protected:
 	ItemBase::ViewIdentifier m_viewIdentifier;
 	class WaitPushUndoStack * m_undoStack;
 	class SelectItemCommand * m_holdingSelectItemCommand;
+	class SelectItemCommand * m_tempDragWireCommand;
 	LayerHash m_viewLayers;
 	QHash<ViewLayer::ViewLayerID, bool> m_viewLayerVisibility;
 	Wire * m_connectorDragWire;

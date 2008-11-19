@@ -186,6 +186,7 @@ public:
     void addRedo(long id);
     int id() const;
 	bool mergeWith(const QUndoCommand *other);
+	void copyUndo(SelectItemCommand * sother);
 	void setSelectItemType(SelectItemType);
 
 protected:
