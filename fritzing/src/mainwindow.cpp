@@ -1025,19 +1025,19 @@ void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connect
 		m_routingStatusLabel->setText(tr("there are no connections to route"));
 	}
 	else if (netCount == netRoutedCount) {
-		m_routingStatusLabel->setText(tr("the sketch is fully routed with %1 %2")
+		m_routingStatusLabel->setText(tr("the sketch is fully routed with %1 jumper %2")
 			.arg(jumpers)
-			.arg(makeGrammaticalNumber(jumpers, tr("jumper"), tr("jumpers")))
+			.arg(makeGrammaticalNumber(jumpers, tr("wire"), tr("wires")))
 			);
 	}
 	else {
-		m_routingStatusLabel->setText(tr("%1 of %2 nets routed (with %5 %6); %3 %4 not yet routed")
+		m_routingStatusLabel->setText(tr("%1 of %2 nets routed (with %5 jumper %6); %3 %4 not yet routed")
 			.arg(netRoutedCount)
 			.arg(netCount)
 			.arg(connectorsLeftToRoute)
 			.arg(makeGrammaticalNumber(connectorsLeftToRoute, tr("connector"), tr("connectors")))
 			.arg(jumpers)
-			.arg(makeGrammaticalNumber(jumpers, tr("jumper"), tr("jumpers")))
+			.arg(makeGrammaticalNumber(jumpers, tr("wire"), tr("wires")))
 			);
 	}
 

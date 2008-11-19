@@ -245,6 +245,8 @@ void SketchWidget::loadFromModel() {
 	if (m_viewIdentifier == ItemBase::PCBView) {
 		updateRatsnestStatus();
 
+		// TODO: the code below is mostly redundant to the code in updateRatsnestStatus
+
 		bool autorouted = true;
 		QList<ConnectorItem *> allConnectorItems;
 		foreach (QGraphicsItem * item, scene()->items()) {
@@ -1307,10 +1309,7 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 				viewLayerID = getPartViewLayerID();
 			}
 
-			ViewLayer * viewLayer = m_viewLayers.value(viewLayerID);
-			if (viewLayer != NULL && !viewLayer->visible()) {
-				setLayerVisible(viewLayer, true);
-			}
+			ensureLayerVisible(viewLayerID);
 		}
 
         event->acceptProposedAction();
@@ -3605,13 +3604,14 @@ void SketchWidget::createJumper() {
 	QString commandString = "Create jumper wire";
 	QString colorString = "jumper";
 	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, colorString);
+	ensureLayerVisible(ViewLayer::Jumperwires);
 }
-
 
 void SketchWidget::createTrace() {
 	QString commandString = tr("Create trace wire");
 	QString colorString = "trace";
 	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, colorString);
+	ensureLayerVisible(ViewLayer::Copper0);
 }
 
 void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag, const QString & colorString)
@@ -3820,3 +3820,12 @@ void SketchWidget::updateRatsnestStatus() {
 	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount / 2);
 }
 
+void SketchWidget::ensureLayerVisible(ViewLayer::ViewLayerID viewLayerID)
+{
+	ViewLayer * viewLayer = m_viewLayers.value(viewLayerID, NULL);
+	if (viewLayer == NULL) return;
+	
+	if (!viewLayer->visible()) {
+		setLayerVisible(viewLayer, true);
+	}
+}

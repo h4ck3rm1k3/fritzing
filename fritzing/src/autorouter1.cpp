@@ -126,6 +126,8 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
 	
 	m_progressDialog = progressDialog;
+	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0);
+	m_sketchWidget->ensureLayerVisible(ViewLayer::Jumperwires);
 
 	clearTraces();
 	updateRatsnest(false);

@@ -171,6 +171,7 @@ public:
 	void restoreLayerVisibility();
 	bool ratsAllRouted();
 	void updateRatsnestStatus();
+	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
 
 protected:
