@@ -488,26 +488,36 @@ void MainWindow::createToolBars() {
 }
 
 void MainWindow::createSketchButtons() {
-	m_exportToPdfButton = new SketchToolButton(this);
-	m_exportToPdfButton->setDefaultAction(m_exportPdfAct);
+	m_exportToPdfButton = new SketchToolButton(this, m_exportPdfAct);
 	m_exportToPdfButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_pdf_icon.png"));
-	m_exportToPdfButton->setIconSize(QSize(32,32));
 	m_exportToPdfButton->setText(tr("Export"));
-	m_exportToPdfButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
-	m_autorouteButton = new SketchToolButton(this);
-	m_autorouteButton->setDefaultAction(m_autorouteAct);
+	QList<QAction*> rotateMenuActions;
+	rotateMenuActions << m_rotate90cwAct << m_rotate180Act << m_rotate90ccwAct;
+	m_rotateButton = new SketchToolButton(this, rotateMenuActions);
+	m_rotateButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarRotateEnabled_icon.png"));
+	m_rotateButton->setText(tr("Rotate"));
+	connect(m_rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updatePartMenuAux()));
+
+	QList<QAction*> flipMenuActions;
+	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
+	m_flipButton = new SketchToolButton(this, flipMenuActions);
+	m_flipButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarFlipEnabled_icon.png"));
+	m_flipButton->setText(tr("Flip"));
+	connect(m_flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updatePartMenuAux()));
+
+	//m_rotate180Button;
+	//m_rotate90ccwButton;
+	//	SketchToolButton *m_flipHorizontalButton;
+	//	SketchToolButton *m_flipVerticalButton;
+
+	m_autorouteButton = new SketchToolButton(this, m_autorouteAct);
 	m_autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
-	m_autorouteButton->setIconSize(QSize(32,32));
 	m_autorouteButton->setText(tr("Autoroute"));
-	m_autorouteButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
-	m_exportDiyButton = new SketchToolButton(this);
-	m_exportDiyButton->setDefaultAction(m_exportDiyAct);
+	m_exportDiyButton = new SketchToolButton(this, m_exportDiyAct);
 	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarDiyEnabled.png"));
-	m_exportDiyButton->setIconSize(QSize(32,32));
 	m_exportDiyButton->setText(tr("DIY Etching"));
-	m_exportDiyButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
 	m_routingStatusLabel = new QLabel(this);
 	routingStatusSlot(0,0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
@@ -515,9 +525,11 @@ void MainWindow::createSketchButtons() {
 
 QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
-	retval << m_exportToPdfButton;
-	if(viewId == ItemBase::PCBView) {
-		retval << m_exportDiyButton << m_autorouteButton << m_routingStatusLabel;
+	retval << m_exportToPdfButton << m_rotateButton;
+	if(viewId == ItemBase::BreadboardView) {
+		retval << m_flipButton;
+	} else if(viewId == ItemBase::PCBView) {
+		retval << m_autorouteButton << m_exportDiyButton << m_routingStatusLabel;
 	}
 	return retval;
 }

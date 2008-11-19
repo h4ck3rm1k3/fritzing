@@ -31,9 +31,33 @@ $Date$
 
 #include <QAction>
 #include <QActionEvent>
+#include <QMenu>
 
-SketchToolButton::SketchToolButton(QWidget *parent)
-	: QToolButton(parent) {}
+SketchToolButton::SketchToolButton(QWidget *parent, QAction* defaultAction)
+	: QToolButton(parent)
+{
+	setIconSize(QSize(32,32));
+	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+	if(defaultAction) {
+		setDefaultAction(defaultAction);
+		setText(defaultAction->text());
+	}
+}
+
+SketchToolButton::SketchToolButton(QWidget *parent, QList<QAction*> menuActions)
+	: QToolButton(parent)
+{
+	setIconSize(QSize(32,32));
+	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+	QMenu *menu = new QMenu(this);
+	foreach(QAction* act, menuActions) {
+		menu->addAction(act);
+	}
+	setMenu(menu);
+	setPopupMode(QToolButton::MenuButtonPopup);
+}
 
 void SketchToolButton::actionEvent(QActionEvent *event) {
 	switch (event->type()) {
@@ -45,4 +69,10 @@ void SketchToolButton::actionEvent(QActionEvent *event) {
 		default:
 			QToolButton::actionEvent(event);
 	}
+}
+
+void SketchToolButton::mousePressEvent(QMouseEvent *event) {
+	emit menuUpdateNeeded();
+	QToolButton::mousePressEvent(event);
+
 }

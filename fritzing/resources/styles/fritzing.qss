@@ -347,7 +347,12 @@ SketchArea QToolButton {
 }
 
 #sketchAreaToolbar {
-	background-image: url(resources/images/toolbar_icons/BottomToolbarBackground.png);
+	/*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #b8b8b8, stop: 0.4 #f4f4f4,
+                                 stop: 0.5 #e7e7e7, stop: 1.0 #e5e5e5);*/
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #e5e5e5, stop: 1.0 #b8b8b8);
+
 	border: none;
 	padding: 0;
 }
@@ -357,9 +362,15 @@ SketchArea QToolButton {
 	color: #444;
 }
 
-#sketchAreaToolbar QToolButton,
-#sketchAreaToolbar QPushButton {
+#sketchAreaToolbar QToolButton {
 	background: none;
 	border: none;
 	margin: 0;
 }
+
+#sketchAreaToolbar QToolButton::menu-button {
+     border: none;
+	 background-color: none;
+	 padding-left: 5px;
+}
+

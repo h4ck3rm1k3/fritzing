@@ -33,11 +33,17 @@ $Date$
 #include <QToolButton>
 
 class SketchToolButton : public QToolButton {
-public:
-	SketchToolButton(QWidget *parent=0);
+	Q_OBJECT
+	public:
+		SketchToolButton(QWidget *parent, QAction* defaultAction);
+		SketchToolButton(QWidget *parent, QList<QAction*> menuActions);
 
-protected:
-	void actionEvent(QActionEvent *event);
+	signals:
+		void menuUpdateNeeded();
+
+	protected:
+		void actionEvent(QActionEvent *event);
+		void mousePressEvent(QMouseEvent *event);
 };
 
 #endif /* SKETCHTOOLBUTTON_H_ */

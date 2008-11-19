@@ -1033,6 +1033,21 @@ void MainWindow::updatePartMenu() {
 	updateEditMenu();
 }
 
+void MainWindow::updatePartMenuAux() {
+	if (m_currentWidget == NULL) return;
+
+	ItemCount itemCount = m_currentWidget->calcItemCount();
+	bool enable = (itemCount.selRotatable > 0);
+
+	DebugDialog::debug(tr("enable rotate %1").arg(enable));
+	m_rotate90cwAct->setEnabled(enable);
+	m_rotate180Act->setEnabled(enable);
+	m_rotate90ccwAct->setEnabled(enable);
+
+	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
+	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
+}
+
 void MainWindow::updateItemMenu() {
 	/*PaletteItem *selInParts = m_paletteWidget->selected();
 	PaletteItem *selInSketch = m_currentWidget->selected();

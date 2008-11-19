@@ -91,6 +91,10 @@ $Date$
     <file>resources/images/toolbar_icons/toolbarExport_diy_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarDiyEnabled.png</file>
     <file>resources/images/toolbar_icons/toolbarDiyDisabled.png</file>
+    <file>resources/images/toolbar_icons/toolbarRotateEnabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarRotateDisabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarFlipEnabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarFlipDisabled_icon.png</file>
     <file>resources/styles/partseditor.qss</file>
     <file>resources/styles/fritzing.qss</file>
     <file>resources/styles/infoview.css</file>

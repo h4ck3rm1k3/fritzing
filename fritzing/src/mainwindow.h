@@ -99,6 +99,7 @@ protected slots:
     void updateEditMenu();
     void updateLayerMenu();
     void updatePartMenu();
+    void updatePartMenuAux();
 	void updateTraceMenu();
     void tabWidget_currentChanged(int index);
     // TODO PARTS EDITOR REMOVE
@@ -378,8 +379,10 @@ protected:
 
     // Sketch toolbar buttons
 	SketchToolButton *m_exportToPdfButton;
-	SketchToolButton *m_autorouteButton;
+	SketchToolButton *m_rotateButton;
+	SketchToolButton *m_flipButton;
 	SketchToolButton *m_exportDiyButton;
+	SketchToolButton *m_autorouteButton;
 
 	QLabel *m_routingStatusLabel;
 
