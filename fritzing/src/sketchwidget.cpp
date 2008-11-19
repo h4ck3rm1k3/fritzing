@@ -2734,16 +2734,18 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 			}
 		}
 
-		const QColor * color = NULL;
-		if (modelWire) {
-			color = modelWire->color();
-		}
-		else {
-			color = Wire::netColor(m_viewIdentifier);
-		}
-		foreach (Wire * wire, ratsnestWires) {
-			QColor colorAsQColor = (QColor) *color;
-			wire->setColor(colorAsQColor, wire->getRouted() ? 0.35 : 1.0);
+		if (ratsnestWires.count() > 0) {
+			const QColor * color = NULL;
+			if (modelWire) {
+				color = modelWire->color();
+			}
+			else {
+				color = Wire::netColor(m_viewIdentifier);
+			}
+			foreach (Wire * wire, ratsnestWires) {
+				QColor colorAsQColor = (QColor) *color;
+				wire->setColor(colorAsQColor, wire->getRouted() ? 0.35 : 1.0);
+			}
 		}
 
 		return;

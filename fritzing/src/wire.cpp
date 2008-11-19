@@ -53,7 +53,7 @@ QList<QColor *> ratsnestColors;
 
 ////////////////////////////////////////////////////////////
 
-static QHash<ItemBase::ViewIdentifier, int> colorStringIndex;
+static QHash<ItemBase::ViewIdentifier, int> netColorIndex;
 
 bool alphaLessThan(QColor * c1, QColor * c2)
 {
@@ -386,10 +386,7 @@ void Wire::setColor(QDomElement & element) {
 		}
 	}
 
-	QColor c;
-	c.setNamedColor(colorString);
-	setColor(c, op);
-	m_colorName = "";
+	setColorString(colorString, op);
 }
 
 void Wire::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event , ConnectorItem * item) {
@@ -444,21 +441,30 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	// "from" is the connector on the part
 	// "to" is the connector on the wire
 
+	/*
+	DebugDialog::debug(QObject::tr("connected moved %1 %2, %3 %4")
+		.arg(from->attachedToID())
+		.arg(from->attachedToTitle())
+		.arg(to->attachedToID())
+		.arg(to->attachedToTitle())
+		);
+	*/
 
-	//DebugDialog::debug(QObject::tr("connected moved %1 %2 ")
-	//.arg(m_connector0->connectionsCount())
-	//.arg(m_connector1->connectionsCount()));
+	ConnectorItem * otherEnd = otherConnector(to);
 
-
-	if (false && ((m_connector1->connectionsCount() == 0) || (m_connector0->connectionsCount() == 0))) {
-		// if only one connector is attached move the wire
-		QPointF p1 = from->sceneAdjustedTerminalPoint();
-		QPointF p2 = to->sceneAdjustedTerminalPoint();
-
-		this->moveBy(p1.x() - p2.x(), p1.y() - p2.y());
+	QPointF p1, p2;
+	if (otherEnd->chained()) {
+		// move both ends
+		if (to == m_connector0) {
+			p1 = from->sceneAdjustedTerminalPoint();
+			p2 = this->line().p2() + p1;
+		}
+		else {
+			p2 = from->sceneAdjustedTerminalPoint();
+			p1 = p2 - this->line().p2();
+		}
 	}
 	else {
-		QPointF p1, p2;
 		if (to == m_connector0) {
 			p1 = from->sceneAdjustedTerminalPoint();
 			ConnectorItem * otherFrom = m_connector1->firstConnectedToIsh();
@@ -483,13 +489,18 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 			}
 
 		}
-		this->setPos(p1);
-		this->setLine(0,0, p2.x() - p1.x(), p2.y() - p1.y() );
-		//DebugDialog::debug(QString("set line %5: %1 %2, %3 %4, vis:%6 lyr:%7").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()).arg(id()).arg(isVisible()).arg(m_viewIdentifier) );
-		setConnector1Rect();
 	}
-
-
+	this->setPos(p1);
+	this->setLine(0,0, p2.x() - p1.x(), p2.y() - p1.y() );
+	//DebugDialog::debug(QString("set line %5: %1 %2, %3 %4, vis:%6 lyr:%7").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()).arg(id()).arg(isVisible()).arg(m_viewIdentifier) );
+	setConnector1Rect();
+	if (otherEnd->chained()) {
+		foreach (ConnectorItem * otherEndTo, otherEnd->connectedToItems()) {
+			if (otherEndTo->chained()) {
+				otherEndTo->attachedTo()->connectedMoved(otherEnd, otherEndTo);
+			}
+		}
+	}
 }
 
 
@@ -698,6 +709,7 @@ bool Wire::connectedToBreadboard() {
 void Wire::setColor(QColor & color, qreal op) {
 	m_pen.setBrush(QBrush(color));
 	m_opacity = op;
+	m_colorName = color.name();
 	this->update();
 }
 
@@ -723,17 +735,19 @@ void Wire::setColorString(QString colorName, qreal op) {
 	// sets a color using the name (.e. "red") 
 	// note: colorName is associated with a Fritzing color, not a Qt color
 
-	m_colorName = colorName;
 	QString colorString = colors.value(colorName);
-	if (colorString.isEmpty() || colorString.isNull()) return;
+	if (colorString.isEmpty() || colorString.isNull()) {
+		colorString = colorName;
+	}
 
 	QColor c;
 	c.setNamedColor(colorString);
 	setColor(c, op);
+	m_colorName = colorName;
 
 	colorString = shadowColors.value(colorName);
 	if (colorString.isEmpty() || colorString.isNull()) {
-		return;
+		colorString = colorName;
 	}
 
 	c.setNamedColor(colorString);
@@ -788,15 +802,27 @@ void Wire::initNames() {
 	shadowColors.insert("unrouted", "#000000");
 	shadowColors.insert("routed", "#7d7d7d");
 
-	colorStringIndex.insert(ItemBase::BreadboardView, 0);
-	colorStringIndex.insert(ItemBase::SchematicView, 0);
-	colorStringIndex.insert(ItemBase::PCBView, 0);
+	netColorIndex.insert(ItemBase::BreadboardView, 0);
+	netColorIndex.insert(ItemBase::SchematicView, 0);
+	netColorIndex.insert(ItemBase::PCBView, 0);
+	
+
+	// TODO: put these colors in a text file in resources so they're easy to change
+	QList<QString> ratsnestStrings;
+	ratsnestStrings << "#40044D" << "#000000" << "#142F4D" << "#735700" << "#004D1C" << "#997D7D" << "#662A00" << "#640066" << "#1A004D" << "#004D4D" << "#4D4D4D" << "#3F4D00";
+	foreach (QString string, ratsnestStrings) {
+		QColor * c = new QColor;
+		c->setNamedColor(string);
+		ratsnestColors.append(c);
+	}
+
+	/*
 	makeHues(80, 340, 5, 0, ratsnestColors);
 	qSort(ratsnestColors.begin(), ratsnestColors.end(), alphaLessThan);
 	foreach (QColor * c, ratsnestColors) {
 		c->setAlpha(255);
 	}
-	DebugDialog::debug(QString("hues total %1").arg(ratsnestColors.count()) );
+	*/
 
 }
 
@@ -865,12 +891,9 @@ void Wire::setOpacity(qreal opacity) {
 }
 
 const QColor * Wire::netColor(ItemBase::ViewIdentifier viewIdentifier) {
-	int csi = colorStringIndex.value(viewIdentifier);
+	int csi = netColorIndex.value(viewIdentifier);
 	QColor * c = ratsnestColors[csi];
 	csi = (csi + 1) % ratsnestColors.count();
-	colorStringIndex.insert(viewIdentifier, csi);
-	if (viewIdentifier == ItemBase::PCBView) {
-		DebugDialog::debug(QString("wire hue %1").arg(c->hue()) );
-	}
+	netColorIndex.insert(viewIdentifier, csi);
 	return c;
 }
