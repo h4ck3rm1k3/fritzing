@@ -3625,7 +3625,7 @@ void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeomet
 	if (!wire->getRatsnest()) return;
 
 	QList<ConnectorItem *> ends;
-	Wire * jumperOrTrace = wire->findJumperOrTraced(flag, ends);
+	Wire * jumperOrTrace = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);
 	if (jumperOrTrace != NULL) {
 		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
