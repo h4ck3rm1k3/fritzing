@@ -106,7 +106,8 @@ void MainWindow::exportDiy(QAction * action) {
 	QString extFmt = fileExtFormats.value(pngActionType);
 	DebugDialog::debug(QString("file export string %1").arg(extFmt));
 	QString fileName = QFileDialog::getSaveFileName(this,
-		tr("Export for DIY..."), path,
+		tr("Export for DIY..."),
+		path+"/"+m_fileName.remove(FritzingExtension)+getExtFromFileDialog(extFmt),
 		extFmt,
 		&fileExt
 	);
@@ -200,7 +201,7 @@ void MainWindow::doExport(QAction * action) {
 		QString extFmt = fileExtFormats.value(actionType);
 		DebugDialog::debug(QString("file export string %1").arg(extFmt));
 		QString fileName = QFileDialog::getSaveFileName(this,
-			tr("Export..."), path,
+			tr("Export..."), path+"/"+m_fileName.remove(FritzingExtension)+getExtFromFileDialog(extFmt),
 			extFmt,
 			&fileExt
 		);
