@@ -1115,7 +1115,11 @@ QMenu *MainWindow::pcbItemMenu() {
 	menu->addAction(m_rotate90cwAct);
 	menu->addAction(m_rotate180Act);
 	menu->addAction(m_rotate90ccwAct);
-	return viewItemMenuAux(menu);
+	menu = viewItemMenuAux(menu);
+	menu->addSeparator();
+	menu->addAction(m_createTraceAct);
+	menu->addAction(m_createJumperAct);
+	return menu;
 }
 
 QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
