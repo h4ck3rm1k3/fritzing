@@ -38,6 +38,9 @@ public:
 	FApplication(int & argc, char ** argv);
 	~FApplication(void);
 
+	static void setOpenSaveFolder(const QString& path);
+	static const QString openSaveFolder();
+
 	static bool spaceBarIsPressed();
 
 signals:
@@ -48,6 +51,7 @@ protected:
 
 protected:
 	static bool m_spaceBarIsPressed;
+	static QString m_openSaveFolder;
 };
 
 

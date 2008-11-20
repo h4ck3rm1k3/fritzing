@@ -54,7 +54,7 @@ class FritzingWindow : public QMainWindow {
 		virtual int &untitledFileCount() = 0;
 		virtual const QString defaultSaveFolder() = 0;
 
-		virtual void saveAsAux(const QString & fileName) = 0;
+		virtual void saveAsAux(const QString & fileName);
 		bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 
 		bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);

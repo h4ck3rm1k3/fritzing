@@ -38,6 +38,7 @@ $Date$
 #include "fritzingwindow.h"
 #include "debugdialog.h"
 #include "misc.h"
+#include "fapplication.h"
 
 #include "lib/quazip/quazip.h"
 #include "lib/quazip/quazipfile.h"
@@ -127,6 +128,10 @@ bool FritzingWindow::saveAs() {
 	}
     saveAsAux(fileName);
     return true;
+}
+
+void FritzingWindow::saveAsAux(const QString & fileName) {
+	FApplication::setOpenSaveFolder(fileName);
 }
 
 void FritzingWindow::undoStackCleanChanged(bool isClean) {

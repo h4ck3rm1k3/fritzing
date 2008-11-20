@@ -42,7 +42,6 @@ $Date$
 #include <QRegExp>
 #include <QPaintDevice>
 #include <QPixmap>
-#include <QDesktopServices>
 
 #include "paletteitem.h"
 #include "mainwindow.h"
@@ -846,8 +845,7 @@ const QString MainWindow::fileExtension() {
 }
 
 const QString MainWindow::defaultSaveFolder() {
-	DebugDialog::debug(tr("default save location: %1").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)));
-	return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+	return FApplication::openSaveFolder();
 }
 
 const QString & MainWindow::fileName() {

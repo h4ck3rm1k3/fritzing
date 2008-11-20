@@ -352,6 +352,8 @@ void MainWindow::saveAsAux(const QString & fileName) {
 
     file.close();
 
+    FritzingWindow::saveAsAux(fileName);
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
 	m_sketchModel->save(fileName);
     QApplication::restoreOverrideCursor();
@@ -373,6 +375,8 @@ void MainWindow::load() {
 	else {
 		path = "";
 	}
+
+	DebugDialog::debug("<<<< path: "+path);
 
 	QString fileName = QFileDialog::getOpenFileName(
 			this,

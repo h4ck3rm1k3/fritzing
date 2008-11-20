@@ -26,10 +26,14 @@ $Date$
 
 #include "fapplication.h"
 #include "debugdialog.h"
+#include "misc.h"
 
 #include <QKeyEvent>
+#include <QFileInfo>
+#include <QDesktopServices>
 
 bool FApplication::m_spaceBarIsPressed = false;
+QString FApplication::m_openSaveFolder = ___emptyString___;
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
@@ -42,6 +46,24 @@ FApplication::~FApplication(void)
 
 bool FApplication::spaceBarIsPressed() {
 	return m_spaceBarIsPressed;
+}
+
+void FApplication::setOpenSaveFolder(const QString& path) {
+	QFileInfo fileInfo(path);
+	if(fileInfo.isFile()) {
+		m_openSaveFolder = path;
+	} else {
+		m_openSaveFolder = fileInfo.path().remove(fileInfo.fileName());
+	}
+}
+
+const QString FApplication::openSaveFolder() {
+	if(m_openSaveFolder == ___emptyString___) {
+		DebugDialog::debug(tr("default save location: %1").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)));
+		return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+	} else {
+		return m_openSaveFolder;
+	}
 }
 
 bool FApplication::eventFilter(QObject *obj, QEvent *event)
@@ -60,7 +82,7 @@ bool FApplication::eventFilter(QObject *obj, QEvent *event)
 				}
 			}
 			break;
-		case QEvent::KeyRelease:	
+		case QEvent::KeyRelease:
 			{
 				QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
 				if (!kevent->isAutoRepeat() && (kevent->key() == Qt::Key_Space)) {
