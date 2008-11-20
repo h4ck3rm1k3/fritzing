@@ -439,8 +439,6 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 }
 
 void Wire::simpleConnectedMoved(ConnectorItem * to) {
-	ConnectorItem * otherEnd = otherConnector(to);
-
 	ConnectorItem * from = to->firstConnectedToIsh();
 
 	QPointF p1, p2;
@@ -936,23 +934,25 @@ void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> 
 		return;
 	}
 
-	bool isIn = true;
-	for (int i = 1; i < wires.count(); i++) {
-		Wire * wire = wires[i];
-		if (!wire->connectsWithin(wire->connector0(), in, wires)) {
-			isIn = false;
-			break;
+	if (c0 && c1) {
+		bool isIn = true;
+		for (int i = 1; i < wires.count(); i++) {
+			Wire * wire = wires[i];
+			if (!wire->connectsWithin(wire->connector0(), in, wires)) {
+				isIn = false;
+				break;
+			}
+			if (!wire->connectsWithin(wire->connector1(), in, wires)) {
+				isIn = false;
+				break;
+			}
 		}
-		if (!wire->connectsWithin(wire->connector1(), in, wires)) {
-			isIn = false;
-			break;
+		if (isIn) {
+			foreach (Wire * wire, wires) {
+				in.insert(wire);
+			}
+			return;
 		}
-	}
-	if (isIn) {
-		foreach (Wire * wire, wires) {
-			in.insert(wire);
-		}
-		return;
 	}
 		
 	if (c0) out.insert(this, m_connector0);

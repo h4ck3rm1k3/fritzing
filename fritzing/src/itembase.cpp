@@ -42,15 +42,6 @@ QHash <ItemBase::ViewIdentifier, StringTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 
-// for autoscroll  TODO:  clean up these statics and put them somewhere clean
-static QMap<QGraphicsItem *, QPointF> movingItemsInitialPositions;
-static QTimer autoScrollTimer;
-static volatile int autoScrollX = 0;
-static volatile int autoScrollY = 0;
-static QGraphicsView * autoScrollView = NULL;
-bool _qt_movableAncestorIsSelected(const QGraphicsItem *item);
-bool _qt_ancestorIgnoresTransformations(const QGraphicsItem *item);
-
 ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
@@ -540,159 +531,24 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void ItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	//scene()->setItemIndexMethod(QGraphicsScene::NoIndex);
-	setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+	//setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 	GraphicsSvgLineItem::mousePressEvent(event);
 }
 
 void ItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-	if (scene() && !event->buttons()) {
-		autoScrollTimer.stop();
-        movingItemsInitialPositions.clear();
-		autoScrollView = NULL;
-		disconnect(&autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
-	}
-
 	// calling parent class so that multiple selection will work
 	// haven't yet discovered any nasty side-effect
 	GraphicsSvgLineItem::mouseReleaseEvent(event);
 	//scene()->setItemIndexMethod(QGraphicsScene::BspTreeIndex);
-	setCacheMode(QGraphicsItem::NoCache);
+	// setCacheMode(QGraphicsItem::NoCache);
 
 }
 
 void ItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+	Q_UNUSED(event);
 	return;
-
-
-
-	//GraphicsSvgLineItem::mouseMoveEvent(event);
-	//return;
-
-	//	code mostly borrowed from QGraphicsItem::mouseMoveEvent,
-//	but (soon) modified to add autoscroll
-
-	bool doMove = (event->buttons() & Qt::LeftButton) && (flags() & ItemIsMovable);
-	if (!doMove) {
-		event->ignore();
-		return;
-	}
-
-	    // Find the active view.
-    QGraphicsView *view = 0;
-	if (event->widget()) {
-        view = qobject_cast<QGraphicsView *>(event->widget()->parentWidget());
-	}
-
-	autoScrollView = view;
-
-	if (view == NULL) {
-		event->ignore();
-		return;
-	}
-
-	QGraphicsScene * _scene = scene();
-    // Determine the list of items that need to be moved.
-    QList<QGraphicsItem *> selectedItems;
-    if (_scene) {
-        selectedItems = _scene->selectedItems();
-        if (movingItemsInitialPositions.isEmpty()) {
-			foreach (QGraphicsItem *item, selectedItems) {
-                movingItemsInitialPositions[item] = item->pos();
-			}
-
-			autoScrollX = autoScrollY = 0;
-			connect(&autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
-        }
-    }
-
-
-	QPointF p = this->mapToScene(event->pos());
-	QPoint q = view->mapFromScene(p);
-	QRect r = view->viewport()->rect();
-	if (!r.contains(q)) {
-		autoScrollX = autoScrollY = 0;
-		return;
-	}
-
-	r.adjust(16,16,-16,-16);						// these should be set someplace
-	bool autoScroll = !r.contains(q);
-	if (!autoScroll) {
-		autoScrollX = autoScrollY = 0;
-	}
-
-    // Move all selected items
-    int i = 0;
-    while (i < selectedItems.size()) {
-        QGraphicsItem *item = selectedItems.at(i);
-        if ((item->flags() & ItemIsMovable) && !_qt_movableAncestorIsSelected(item)) {
-            QPointF currentParentPos;
-            QPointF buttonDownParentPos;
-            if (_qt_ancestorIgnoresTransformations(item)) {
-                // Items whose ancestors ignore transformations need to
-                // map screen coordinates to local coordinates, then map
-                // those to the parent.
-                QTransform viewToItemTransform = (item->deviceTransform(view->viewportTransform())).inverted();
-                currentParentPos = mapToParent(viewToItemTransform.map(QPointF(view->mapFromGlobal(event->screenPos()))));
-                buttonDownParentPos = mapToParent(viewToItemTransform.map(QPointF(view->mapFromGlobal(event->buttonDownScreenPos(Qt::LeftButton)))));
-            } else if (item->flags() & ItemIgnoresTransformations) {
-                // Root items that ignore transformations need to
-                // calculate their diff by mapping viewport coordinates
-                // directly to parent coordinates.
-                QTransform viewToParentTransform = (item->transform().translate(item->pos().x(), item->pos().y()))
-                                                   * (item->sceneTransform() * view->viewportTransform()).inverted();
-                currentParentPos = viewToParentTransform.map(QPointF(view->mapFromGlobal(event->screenPos())));
-                buttonDownParentPos = viewToParentTransform.map(QPointF(view->mapFromGlobal(event->buttonDownScreenPos(Qt::LeftButton))));
-            } else {
-                // All other items simply map from the scene.
-                currentParentPos = item->mapToParent(item->mapFromScene(event->scenePos()));
-                buttonDownParentPos = item->mapToParent(item->mapFromScene(event->buttonDownScenePos(Qt::LeftButton)));
-            }
-
-            item->setPos(movingItemsInitialPositions.value(item) + currentParentPos - buttonDownParentPos);
-        }
-        ++i;
-    }
-
-	if (autoScroll) {
-		int dx = 0, dy = 0;
-		if (q.x() > r.right()) {
-			dx = q.x() - r.right();
-		}
-		else if (q.x() < r.left()) {
-			dx = q.x() - r.left();
-		}
-		if (q.y() > r.bottom()) {
-			dy = q.y() - r.bottom();
-		}
-		else if (q.y() < r.top()) {
-			dy = q.y() - r.top();
-		}
-		autoScrollX = dx;
-		autoScrollY = dy;
-		if (!autoScrollTimer.isActive()) {
-			autoScrollTimer.start(10);
-		}
-	}
-
-}
-
-void ItemBase::autoScrollTimeout()
-{
-	if ((autoScrollX == 0 && autoScrollY == 0) || autoScrollView == NULL) return;
-
-	QScrollBar * h = autoScrollView->horizontalScrollBar();
-	QScrollBar * v = autoScrollView->verticalScrollBar();
-
-	//DebugDialog::debug(QString("scroll dx:%1 dy%2 hval%3 vval:%4").arg(autoScrollX).arg(autoScrollY).arg(h->value()).arg(v->value()) );
-
-	if (autoScrollX != 0) {
-		h->setValue(((autoScrollX > 0) ? 1 : -1) + h->value());
-	}
-	if (autoScrollY != 0) {
-		v->setValue(((autoScrollY > 0) ? 1 : -1) + v->value());
-	}
 }
 
 void ItemBase::setItemPos(QPointF & loc) {
@@ -805,20 +661,6 @@ ConnectorItem * ItemBase::anyConnectorItem() {
 	return NULL;
 }
 
-////////////////////////////////////////
-
-bool _qt_movableAncestorIsSelected(const QGraphicsItem *item)
-{
-    const QGraphicsItem *parent = item->parentItem();
-    return parent && (((parent->flags() & QGraphicsItem::ItemIsMovable) && parent->isSelected()) || _qt_movableAncestorIsSelected(parent));
-}
-
-
-bool _qt_ancestorIgnoresTransformations(const QGraphicsItem *item)
-{
-    const QGraphicsItem *parent = item->parentItem();
-	return parent && ((parent->flags() & QGraphicsItem::ItemIgnoresTransformations) || _qt_ancestorIgnoresTransformations(parent));
-}
 
 QString ItemBase::instanceTitle() {
 	if(m_modelPart->partInstanceStuff()) {

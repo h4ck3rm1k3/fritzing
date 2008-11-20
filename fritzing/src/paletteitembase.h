@@ -85,7 +85,6 @@ protected:
 	QPainterPath shape() const;
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void setUpConnectors(QSvgRenderer *, bool ignoreTerminalPoints);
 	void transformItem(QTransform currTransf);

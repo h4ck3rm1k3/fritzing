@@ -174,9 +174,6 @@ protected:
 	void setInstanceTitleTooltip(const QString& text);
 	void setDefaultTooltip();
 
-protected slots:
-	void autoScrollTimeout();
-
 protected:
  	QSize m_size;
 	qint64 m_id;

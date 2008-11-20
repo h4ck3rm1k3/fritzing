@@ -1301,7 +1301,7 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 				m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, modelPart->itemType() != ModelPart::Breadboard);
 
 				ItemDrag::_cache().insert(this, m_droppingItem);
-				m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+				//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 				connect(ItemDrag::_itemDrag(), SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
 			}
 			//ItemDrag::_setPixmapVisible(false);
@@ -1488,14 +1488,14 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		paletteItem->collectWireConnectees(wires);
 	}
 
-	foreach (ItemBase * itemBase, m_savedItems) {
-		itemBase->saveGeometry();
-	}
-
 	foreach (Wire * wire, wires) {
 		if (m_savedItems.contains(wire)) continue;
 
 		wire->connectsWithin(m_savedItems, m_savedWires);
+	}
+
+	foreach (ItemBase * itemBase, m_savedItems) {
+		itemBase->saveGeometry();
 	}
 
 	foreach (Wire * wire, wires) {
@@ -1599,7 +1599,11 @@ void SketchWidget::moveItems(QPoint globalPos) {
        QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
        QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
        item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
-	   item->findConnectorsUnder();
+
+	   if (m_viewIdentifier == ItemBase::BreadboardView) {
+			// not necessary in other views?
+			item->findConnectorsUnder();
+	   }
 
 /*
 	   DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8") 
