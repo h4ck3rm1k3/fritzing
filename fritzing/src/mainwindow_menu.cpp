@@ -941,8 +941,8 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_bringForwardAct);
 	m_partMenu->addAction(m_sendBackwardAct);
 	m_partMenu->addAction(m_sendToBackAct);
-	m_partMenu->addSeparator();
-	m_partMenu->addAction(m_groupAct);
+	//m_partMenu->addSeparator();
+	//m_partMenu->addAction(m_groupAct);
 
     m_viewMenu = menuBar()->addMenu(tr("&View"));
     m_viewMenu->addAction(m_zoomInAct);

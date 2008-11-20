@@ -372,7 +372,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		s += QString("<img src='%1' width='16' height='16' />\n").arg(toHtmlImage(pixmap));
 	}
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartStuff()->title())
-											   .arg(modelPart->modelPartStuff()->version());
+											   .arg("&nbsp;"+modelPart->modelPartStuff()->version());
 	s += 		"</div>\n";
 
 	s += 		 "<table>\n";

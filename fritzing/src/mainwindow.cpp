@@ -141,32 +141,21 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     createDockWindows();
 
 	m_itemMenu = new QMenu(QObject::tr("Part"), this);
-	m_itemMenu->addAction(m_openInPartsEditorAct);
-	m_itemMenu->addSeparator();
-	m_itemMenu->addAction(m_deleteAct);
-	m_itemMenu->addSeparator();
 	m_itemMenu->addAction(m_rotate90cwAct);
 	m_itemMenu->addAction(m_rotate180Act);
 	m_itemMenu->addAction(m_rotate90ccwAct);
 	m_itemMenu->addAction(m_flipHorizontalAct);
 	m_itemMenu->addAction(m_flipVerticalAct);
+	m_itemMenu->addAction(m_bringToFrontAct);
+	m_itemMenu->addAction(m_bringForwardAct);
+	m_itemMenu->addAction(m_sendBackwardAct);
+	m_itemMenu->addAction(m_sendToBackAct);
+	m_itemMenu->addAction(m_openInPartsEditorAct);
+	m_itemMenu->addAction(m_deleteAct);
 
-#ifndef QT_NO_DEBUG
-	m_itemMenu->addSeparator();
-	m_itemMenu->addAction(m_infoViewOnHoverAction);
-	//m_itemMenu->addAction(m_swapPartAction);
-#endif
-
-    connect(
-    	m_itemMenu,
-    	SIGNAL(aboutToShow()),
-    	this,
-    	SLOT(updatePartMenu())
-    );
-
-    m_breadboardGraphicsView->setItemMenu(m_itemMenu);
-    m_pcbGraphicsView->setItemMenu(m_itemMenu);
-    m_schematicGraphicsView->setItemMenu(m_itemMenu);
+    m_breadboardGraphicsView->setItemMenu(breadboardItemMenu());
+    m_pcbGraphicsView->setItemMenu(pcbItemMenu());
+    m_schematicGraphicsView->setItemMenu(schematicItemMenu());
 
     m_breadboardGraphicsView->setInfoView(m_infoView);
     m_pcbGraphicsView->setInfoView(m_infoView);
@@ -1096,4 +1085,64 @@ void MainWindow::clearRoutingSlot(SketchWidget * sketchWidget, QUndoCommand * pa
 	Q_UNUSED(sketchWidget);
 
 	m_pcbGraphicsView->clearRouting(parentCommand);
+}
+
+QMenu *MainWindow::breadboardItemMenu() {
+	QMenu *menu = new QMenu(m_breadboardGraphicsView);
+	menu = new QMenu(QObject::tr("Part"), this);
+	menu->addAction(m_rotate90cwAct);
+	menu->addAction(m_rotate180Act);
+	menu->addAction(m_rotate90ccwAct);
+	menu->addAction(m_flipHorizontalAct);
+	menu->addAction(m_flipVerticalAct);
+	return viewItemMenuAux(menu);
+}
+
+QMenu *MainWindow::schematicItemMenu() {
+	QMenu *menu = new QMenu(m_schematicGraphicsView);
+	menu = new QMenu(QObject::tr("Part"), this);
+	menu->addAction(m_rotate90cwAct);
+	menu->addAction(m_rotate180Act);
+	menu->addAction(m_rotate90ccwAct);
+	menu->addAction(m_flipHorizontalAct);
+	menu->addAction(m_flipVerticalAct);
+	return viewItemMenuAux(menu);
+}
+
+QMenu *MainWindow::pcbItemMenu() {
+	QMenu *menu = new QMenu(m_pcbGraphicsView);
+	menu = new QMenu(QObject::tr("Part"), this);
+	menu->addAction(m_rotate90cwAct);
+	menu->addAction(m_rotate180Act);
+	menu->addAction(m_rotate90ccwAct);
+	return viewItemMenuAux(menu);
+}
+
+QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
+	menu->addSeparator();
+	menu->addAction(m_bringToFrontAct);
+	menu->addAction(m_bringForwardAct);
+	menu->addAction(m_sendBackwardAct);
+	menu->addAction(m_sendToBackAct);
+	menu->addSeparator();
+	menu->addAction(m_copyAct);
+	menu->addAction(m_duplicateAct);
+	menu->addAction(m_deleteAct);
+	menu->addSeparator();
+	menu->addAction(m_openInPartsEditorAct);
+
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_infoViewOnHoverAction);
+	//m_itemMenu->addAction(m_swapPartAction);
+#endif
+
+    connect(
+    	menu,
+    	SIGNAL(aboutToShow()),
+    	this,
+    	SLOT(updatePartMenu())
+    );
+
+    return menu;
 }

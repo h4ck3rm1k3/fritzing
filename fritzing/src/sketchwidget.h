@@ -325,7 +325,7 @@ public slots:
 	void swap(PaletteItem* from, ModelPart *to);
 	void swap(long itemId, const QString &moduleID, bool doEmit=false);
 	void swap(long itemId, ModelPart *modelPart, bool doEmit=false);
-	void changeWireColor(const QString &wireTitle, long wireId, 
+	void changeWireColor(const QString &wireTitle, long wireId,
 		const QString& oldColor, const QString newColor,
 		qreal oldOpacity, qreal newOpacity);
  	void selectAllItems(bool state, bool doEmit);

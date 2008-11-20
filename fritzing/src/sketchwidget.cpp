@@ -1891,7 +1891,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorItem * to)
 {
 	QUndoCommand * parentCommand = new QUndoCommand();
-	
+
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	if (m_tempDragWireCommand != NULL) {
 		selectItemCommand->copyUndo(m_tempDragWireCommand);
@@ -1913,7 +1913,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 
 	// create a new wire with the same id as the temporary wire
 	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, parentCommand);
-	
+
 
 	ConnectorItem * anchor = wire->otherConnector(from);
 	if (anchor != NULL) {

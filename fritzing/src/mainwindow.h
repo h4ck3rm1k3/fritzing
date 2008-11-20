@@ -223,6 +223,12 @@ protected:
 	void recoverBackupedFiles();
 	void resetTempFolder();
 
+	QMenu *breadboardItemMenu();
+	QMenu *schematicItemMenu();
+	QMenu *pcbItemMenu();
+
+	QMenu *viewItemMenuAux(QMenu* menu);
+
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
 	static qreal getSvgWidthInInches(QFile & file);
