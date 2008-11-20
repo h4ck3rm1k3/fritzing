@@ -14,7 +14,6 @@
     </tags>
     <properties>
         <property name="package">TO220</property>
-        <property name="bjt type">Powertransistor</property>
         <property name="family">Bipolar Transistor</property>
         <property name="doping">npn</property>
     </properties>

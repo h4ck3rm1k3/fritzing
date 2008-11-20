@@ -14,7 +14,6 @@
     </tags>
     <properties>
         <property name="package">TO92</property>
-        <property name="bjt type">Small Signal Transistor</property>
         <property name="family">Bipolar Transistor</property>
         <property name="doping">npn</property>
     </properties>
