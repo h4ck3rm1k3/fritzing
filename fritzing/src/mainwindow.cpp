@@ -172,6 +172,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	connectPairs();
 
 	// do this the first time, since the current_changed signal wasn't sent
+	m_currentWidget = NULL;
 	tabWidget_currentChanged(0);
 
 	this->installEventFilter(this);
@@ -488,14 +489,14 @@ void MainWindow::createSketchButtons() {
 	m_rotateButton = new SketchToolButton(this, rotateMenuActions);
 	m_rotateButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarRotateEnabled_icon.png"));
 	m_rotateButton->setText(tr("Rotate"));
-	connect(m_rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updatePartMenuAux()));
+	connect(m_rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
 	QList<QAction*> flipMenuActions;
 	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
 	m_flipButton = new SketchToolButton(this, flipMenuActions);
 	m_flipButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarFlipEnabled_icon.png"));
 	m_flipButton->setText(tr("Flip"));
-	connect(m_flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updatePartMenuAux()));
+	connect(m_flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
 	//m_rotate180Button;
 	//m_rotate90ccwButton;
@@ -555,8 +556,23 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	SketchWidget *widget = widgetParent->graphicsView();
 
+	if(m_currentWidget) {
+		disconnect(
+			m_currentWidget->scene(),
+			SIGNAL(selectionChanged()),
+			this,
+			SLOT(updateTransformationActions())
+		);
+	}
 	m_currentWidget = widget;
 	if (widget == NULL) return;
+
+	connect(
+		m_currentWidget->scene(),
+		SIGNAL(selectionChanged()),
+		this,
+		SLOT(updateTransformationActions())
+	);
 
 	m_miniViewContainer->setView(widget);
 

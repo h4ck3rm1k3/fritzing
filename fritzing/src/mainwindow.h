@@ -99,7 +99,7 @@ protected slots:
     void updateEditMenu();
     void updateLayerMenu();
     void updatePartMenu();
-    void updatePartMenuAux();
+    void updateTransformationActions();
 	void updateTraceMenu();
     void tabWidget_currentChanged(int index);
     // TODO PARTS EDITOR REMOVE

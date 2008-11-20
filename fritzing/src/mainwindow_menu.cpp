@@ -1037,7 +1037,7 @@ void MainWindow::updatePartMenu() {
 	updateEditMenu();
 }
 
-void MainWindow::updatePartMenuAux() {
+void MainWindow::updateTransformationActions() {
 	if (m_currentWidget == NULL) return;
 
 	ItemCount itemCount = m_currentWidget->calcItemCount();
@@ -1047,9 +1047,13 @@ void MainWindow::updatePartMenuAux() {
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
+	m_rotateButton->setEnabled(enable);
 
 	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
 	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
+
+	enable = m_flipHorizontalAct->isEnabled() || m_flipVerticalAct->isEnabled();
+	m_flipButton->setEnabled(enable);
 }
 
 void MainWindow::updateItemMenu() {

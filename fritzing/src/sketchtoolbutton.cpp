@@ -52,11 +52,23 @@ SketchToolButton::SketchToolButton(QWidget *parent, QList<QAction*> menuActions)
 	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 
 	QMenu *menu = new QMenu(this);
-	foreach(QAction* act, menuActions) {
+	for(int i=0; i < menuActions.size(); i++) {
+		QAction* act = menuActions[i];
 		menu->addAction(act);
 	}
 	setMenu(menu);
-	setPopupMode(QToolButton::MenuButtonPopup);
+	setPopupMode(QToolButton::InstantPopup);
+}
+
+void SketchToolButton::updateEnabledState() {
+	bool enabled = false;
+	foreach(QAction *act, actions()) {
+		if(act->isEnabled()) {
+			enabled = true;
+			break;
+		}
+	}
+	setEnabled(enabled);
 }
 
 void SketchToolButton::actionEvent(QActionEvent *event) {
@@ -71,8 +83,8 @@ void SketchToolButton::actionEvent(QActionEvent *event) {
 	}
 }
 
-void SketchToolButton::mousePressEvent(QMouseEvent *event) {
+/*void SketchToolButton::mousePressEvent(QMouseEvent *event) {
 	emit menuUpdateNeeded();
 	QToolButton::mousePressEvent(event);
 
-}
+}*/

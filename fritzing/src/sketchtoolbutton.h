@@ -38,12 +38,14 @@ class SketchToolButton : public QToolButton {
 		SketchToolButton(QWidget *parent, QAction* defaultAction);
 		SketchToolButton(QWidget *parent, QList<QAction*> menuActions);
 
+		void updateEnabledState();
+
 	signals:
 		void menuUpdateNeeded();
 
 	protected:
 		void actionEvent(QActionEvent *event);
-		void mousePressEvent(QMouseEvent *event);
+		//void mousePressEvent(QMouseEvent *event);
 };
 
 #endif /* SKETCHTOOLBUTTON_H_ */
