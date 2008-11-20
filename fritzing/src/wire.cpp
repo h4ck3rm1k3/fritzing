@@ -168,7 +168,7 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 		case ItemBase::BreadboardView:
 			m_pen.setWidth(penWidth - 2);
 			m_shadowPen.setWidth(penWidth);
-			setColorString("red", 1.0);
+                        setColorString("blue", 1.0);
 			break;
 		case ItemBase::SchematicView:
 			setColorString("routed", 1.0);
@@ -748,43 +748,43 @@ QString Wire::colorString() {
 void Wire::initNames() {
 	if (colors.count() > 0) return;
 
-	// need a list because a hash table doesn't guarantee order
+        // need a list because a hash table doesn't guarantee order
+        colorNames.append(tr("blue"));
 	colorNames.append(tr("red"));
-	colorNames.append(tr("black"));
-	colorNames.append(tr("blue"));
+        colorNames.append(tr("black"));
 	colorNames.append(tr("yellow"));
 	colorNames.append(tr("green"));
 	colorNames.append(tr("white"));
 
-	// need this hash table to translate from user's language to internal color name
+        // need this hash table to translate from user's language to internal color name
+        colorTrans.insert(tr("blue"), "blue");
 	colorTrans.insert(tr("red"), "red");
-	colorTrans.insert(tr("black"), "black");
-	colorTrans.insert(tr("blue"), "blue");
+        colorTrans.insert(tr("black"), "black");
 	colorTrans.insert(tr("yellow"), "yellow");
 	colorTrans.insert(tr("green"), "green");
 	colorTrans.insert(tr("white"), "white");
 
+        colors.insert("blue",	"#71a4d6");
 	colors.insert("red",	"#cc1f1f");
-	colors.insert("black",	"#4d4d4d");
-	colors.insert("blue",	"#71a4d6");
+        colors.insert("black",	"#4d4d4d");
 	colors.insert("yellow", "#ffe666");
 	colors.insert("green",	"#52cc80");
 	colors.insert("white",	"#e6e6e6");
-	colors.insert("jumper", "#ff0000");
+        colors.insert("jumper", "#71a4d6");
 	colors.insert("trace",  "#ffbf00");
 	colors.insert("unrouted", "#000000");
 	colors.insert("routed", "#7d7d7d");
 	colors.insert("purple", "#b673e6");
 	colors.insert("orange", "#ff7033");
 	colors.insert("brown", "#8c3b00");
-	
+
+        shadowColors.insert("blue",	"#357dcc");
 	shadowColors.insert("red",	"#990000");
-	shadowColors.insert("black",	"#363636");
-	shadowColors.insert("blue",	"#357dcc");
+        shadowColors.insert("black",	"#363636");
 	shadowColors.insert("yellow", "#d9ad20");
 	shadowColors.insert("green", "#00b342");
 	shadowColors.insert("white",	"#b3b3b3");
-	shadowColors.insert("jumper", "#ff0000");
+        shadowColors.insert("jumper", "#357dcc");
 	shadowColors.insert("trace", "#ffbf00");
 	shadowColors.insert("unrouted", "#000000");
 	shadowColors.insert("routed", "#7d7d7d");
