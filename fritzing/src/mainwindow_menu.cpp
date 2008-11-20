@@ -434,7 +434,7 @@ void MainWindow::closeIfEmptySketch() {
 	}
 }
 
-void MainWindow::load(const QString & fileName, bool setAsLastOpened) {
+void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
 	m_sketchModel->load(fileName, m_paletteModel, true);
 	//m_sketchModel->load(fileName, m_refModel, true);
 
@@ -447,7 +447,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened) {
 		settings.setValue("lastOpenSketch",fileName);
 	}
 
-	setCurrentFile(fileName);
+	setCurrentFile(fileName, addToRecent);
 	UntitledSketchIndex--;
 }
 
@@ -604,7 +604,9 @@ void MainWindow::createOpenExampleMenu(QMenu * parentMenu, QString path) {
 				parentMenu->addMenu(currMenu);
 				createOpenExampleMenu(currMenu, currFilePath);
 			} else {
-				QAction * currAction = new QAction(currFile.remove(FritzingExtension), this);
+				QString actionText = currFile.remove(FritzingExtension);
+				m_openExampleActions << actionText;
+				QAction * currAction = new QAction(actionText, this);
 				currAction->setData(currFilePath);
 				connect(currAction,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
 				parentMenu->addAction(currAction);
@@ -631,7 +633,7 @@ void MainWindow::createOpenRecentMenu() {
 }
 
 void MainWindow::updateRecentFileActions() {
-	QSettings settings("Fritzing");
+	QSettings settings("Fritzing","Fritzing");
 	QStringList files = settings.value("recentFileList").toStringList();
 	if(files.size() > 0) {
 		m_openRecentFileMenu->setEnabled(true);
@@ -1496,7 +1498,9 @@ void MainWindow::openRecentOrExampleFile() {
 	QAction *action = qobject_cast<QAction *>(sender());
 	if (action) {
 		MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
-		mw->load(action->data().toString());
+		bool readOnly = m_openExampleActions.contains(action->text());
+		mw->setReadOnly(readOnly);
+		mw->load(action->data().toString(),!readOnly,!readOnly);
 		mw->show();
 	}
 }

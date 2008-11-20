@@ -44,11 +44,14 @@ $Date$
 
 const QString FritzingWindow::FritzingExtension = ".fz";
 QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
+QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");
 const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin.fz";
 
 FritzingWindow::FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent, Qt::WFlags f)
 	: QMainWindow(parent, f)
 {
+	m_readOnly = false;
+
 	// Let's set the icon
 	this->setWindowIcon(QIcon(QPixmap(":resources/images/fritzing_icon.png")));
 
@@ -75,7 +78,7 @@ void FritzingWindow::createCloseAction() {
 
 void FritzingWindow::setTitle() {
 	setWindowTitle(tr("%1 - %2")
-		.arg(QFileInfo(m_fileName).fileName() + QtFunkyPlaceholder)
+		.arg(QFileInfo(m_fileName).fileName()+(m_readOnly?ReadOnlyPlaceholder:"")+QtFunkyPlaceholder)
 		.arg(tr("Fritzing")));
 }
 
@@ -98,13 +101,13 @@ bool FritzingWindow::saveAs() {
 	QString fileExt;
 	QString path;
 
-	if(m_fileName == tr("Untitled Sketch.fz")){
+	if(m_readOnly) {
+		path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName();
+	} else if(m_fileName == tr("Untitled Sketch.fz")){
 		path = defaultSaveFolder() + "/" + m_fileName;
-	}
-	else if(m_fileName.isNull() || m_fileName.isEmpty()){
+	} else if(m_fileName.isNull() || m_fileName.isEmpty()){
 		path = defaultSaveFolder();
-	}
-	else {
+	} else {
 		path = m_fileName;
 	}
 	DebugDialog::debug(tr("current file: %1").arg(m_fileName));
@@ -352,4 +355,12 @@ bool FritzingWindow::unzipTo(const QString &filepath, const QString &dirToDecomp
 		return false;
 	}
 	return true;
+}
+
+void FritzingWindow::setReadOnly(bool readOnly) {
+	bool hasChanged = m_readOnly != readOnly;
+	m_readOnly = readOnly;
+	if(hasChanged) {
+		emit readOnlyChanged(readOnly);
+	}
 }

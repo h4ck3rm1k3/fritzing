@@ -39,6 +39,9 @@ class FritzingWindow : public QMainWindow {
 	public:
 		FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent = 0, Qt::WFlags f = 0);
 
+	signals:
+		void readOnlyChanged(bool isReadOnly);
+
 	protected slots:
 		bool save();
 		virtual bool saveAs();
@@ -62,9 +65,12 @@ class FritzingWindow : public QMainWindow {
 
 		void createCloseAction();
 
+		void setReadOnly(bool readOnly);
+
 	protected:
 		class WaitPushUndoStack * m_undoStack;
 		QString m_fileName;
+		bool m_readOnly;
 		QAction *m_closeAct;
 		QDir m_tempDir;
 
@@ -75,6 +81,7 @@ class FritzingWindow : public QMainWindow {
 
 	public:
 		static QString QtFunkyPlaceholder;  // this is some weird hack Qt uses in window titles as a placeholder to set the modified state
+		static QString ReadOnlyPlaceholder;
 		static const QString FritzingExtension;
 		static const QString CoreBinLocation;
 		static void replicateDir(QDir srcDir, QDir targDir);

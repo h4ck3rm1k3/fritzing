@@ -62,7 +62,7 @@ class MainWindow : public FritzingWindow
 public:
     MainWindow(PaletteModel *, ReferenceModel *refModel);
     MainWindow(QFile & fileToLoad);
-    void load(const QString & fileName, bool setAsLastOpened = true);
+    void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void doOnce();
 
 public:
@@ -165,6 +165,8 @@ protected slots:
 	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
+	void applyReadOnlyChange(bool isReadOnly);
+
 protected:
     void createActions();
     void createFileMenuActions();
@@ -196,7 +198,7 @@ protected:
 	void calcPrinterScale();
 	void preloadSlowParts();
 	void setZoomComboBoxValue(qreal value);
-	void setCurrentFile(const QString &fileName);
+	void setCurrentFile(const QString &fileName, bool addToRecent=true);
 	bool eventFilter(QObject *obj, QEvent *event);
 	void setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2);
 	void exportToEagle();
@@ -396,6 +398,8 @@ protected:
 
     QStringList m_filesAddedFromBundled;
     QStringList m_filesReplacedByBundleds;
+
+    QStringList m_openExampleActions;
 
 public:
 	static const int PartsBinDefaultHeight = 220;

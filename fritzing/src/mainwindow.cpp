@@ -188,6 +188,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	setMinimumSize(0,0);
 	m_tabWidget->setMinimumWidth(500);
 	m_tabWidget->setMinimumWidth(0);
+
+	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 }
 
 void MainWindow::doOnce() {
@@ -396,18 +398,20 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 }
 
-void MainWindow::setCurrentFile(const QString &fileName) {
+void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent) {
 	m_fileName = fileName;
 	setTitle();
 
-    QSettings settings("Fritzing","Fritzing");
-    QStringList files = settings.value("recentFileList").toStringList();
-    files.removeAll(fileName);
-    files.prepend(fileName);
-    while (files.size() > MaxRecentFiles)
-        files.removeLast();
+	if(addToRecent) {
+		QSettings settings("Fritzing","Fritzing");
+		QStringList files = settings.value("recentFileList").toStringList();
+		files.removeAll(fileName);
+		files.prepend(fileName);
+		while (files.size() > MaxRecentFiles)
+			files.removeLast();
 
-    settings.setValue("recentFileList", files);
+		settings.setValue("recentFileList", files);
+	}
 
     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
         MainWindow *mainWin = qobject_cast<MainWindow *>(widget);
@@ -1153,4 +1157,8 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
     );
 
     return menu;
+}
+
+void MainWindow::applyReadOnlyChange(bool isReadOnly) {
+	m_saveAct->setDisabled(isReadOnly);
 }
