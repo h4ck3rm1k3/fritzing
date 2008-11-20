@@ -916,19 +916,7 @@ void MainWindow::saveBundledSketch() {
 	rmdir(dirToRemove);
 }
 
-void MainWindow::loadBundledSketch() {
-	QString path;
-	// if it's the first time load is called use Documents folder
-	if(m_firstOpen){
-		path = defaultSaveFolder();
-		m_firstOpen = false;
-	}
-	else {
-		path = "";
-	}
-	QString fileName = QFileDialog::getOpenFileName( this, "Select a bundled sketch to Open", path, tr("Fritzing (*%1)").arg(FritzingExtension+"z") );
-	if (fileName.isNull()) return;
-
+void MainWindow::loadBundledSketch(QString &fileName) {
 	QDir destFolder = QDir::temp();
 
 	createFolderAnCdIntoIt(destFolder, getRandText());
@@ -1138,7 +1126,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
-	//m_itemMenu->addAction(m_swapPartAction);
+	//menu->addAction(m_swapPartAction);
 #endif
 
     connect(

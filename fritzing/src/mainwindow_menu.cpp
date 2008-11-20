@@ -373,7 +373,12 @@ void MainWindow::load() {
 		path = "";
 	}
 
-	QString fileName = QFileDialog::getOpenFileName( this, "Select a Fritzing File to Open", path, tr("Fritzing (*%1)").arg(FritzingExtension) );
+	QString fileName = QFileDialog::getOpenFileName(
+			this,
+			"Select a Fritzing File to Open",
+			path,
+			tr("Fritzing (*%1);;Fritzing Shareable (*%1z)").arg(FritzingExtension)
+		);
 	if (fileName.isNull()) return;
 
     foreach (QWidget * widget, QApplication::topLevelWidgets()) {
@@ -410,7 +415,11 @@ void MainWindow::load() {
     file.close();
 
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
-	mw->load(fileName);
+    if(fileName.endsWith(FritzingExtension)) {
+    	mw->load(fileName);
+    } else if(fileName.endsWith(FritzingExtension+"z")) {
+    	mw->loadBundledSketch(fileName);
+    }
 	mw->show();
 
 	closeIfEmptySketch();
@@ -536,10 +545,6 @@ void MainWindow::createFileMenuActions() {
 	m_saveAsBundledAct->setShortcut(tr("Alt+Ctrl+S"));
 	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and it's non-core part"));
 	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
-
-	m_loadBundledAct = new QAction(tr("Load Shareable sketch..."), this);
-	m_loadBundledAct->setStatusTip(tr("Load bundled sketch and it's non-core part"));
-	connect(m_loadBundledAct, SIGNAL(triggered()), this, SLOT(loadBundledSketch()));
 
 	m_exportJpgAct = new BetterTriggerAction(tr("to &JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
@@ -880,7 +885,6 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_newAct);
     //m_fileMenu->addAction(m_newFromTemplateAct);
     m_fileMenu->addAction(m_openAct);
-    m_fileMenu->addAction(m_loadBundledAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
     m_fileMenu->addSeparator();
