@@ -15,7 +15,6 @@
     <taxonomy>discreteParts.servo</taxonomy>
     <description>A generic servo.</description>
     <views>
-        <image composited="false" file="basic_poti.svg" />
         <defaultUnits>cmil</defaultUnits>
         <iconView>
             <layers>
@@ -29,7 +28,7 @@
         </breadboardView>
         <schematicView>
             <layers>
-                <layer layerId="schematic" image="schematic/basic_poti.svg"/>
+                <layer layerId="schematic" image="schematic/servo_schematic.svg"/>
             </layers>
         </schematicView>
         <pcbView>
