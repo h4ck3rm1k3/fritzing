@@ -408,8 +408,6 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
     }
     file.close();
 
-    FritzingWindow::saveAsAux(fileName);
-
     updateDateAndAuthor();
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
