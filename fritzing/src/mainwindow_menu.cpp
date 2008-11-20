@@ -352,6 +352,7 @@ void MainWindow::saveAsAux(const QString & fileName) {
 
     file.close();
 
+    setReadOnly(false);
     FritzingWindow::saveAsAux(fileName);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
