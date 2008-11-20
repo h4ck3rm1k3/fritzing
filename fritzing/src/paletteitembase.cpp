@@ -229,6 +229,8 @@ void PaletteItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 
 void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+	return;
+
 	QPointF oldPos = pos();
 	ItemBase::mouseMoveEvent(event);
 	QPointF newPos = pos();
@@ -304,7 +306,7 @@ void PaletteItemBase::collectFemaleConnecteesAux(QSet<ItemBase *> & items) {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
 		if (item == NULL) continue;
-		if (!item->type() == Connector::Female) continue;
+		if (!item->type() != Connector::Female) continue;
 
 		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
 			if (toConnectorItem->isBusConnector()) continue;
@@ -312,6 +314,18 @@ void PaletteItemBase::collectFemaleConnecteesAux(QSet<ItemBase *> & items) {
 			items.insert(toConnectorItem->attachedTo());
 		}
 
+	}
+}
+void PaletteItemBase::collectWireConnecteesAux(QSet<Wire *> & wires) {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
+		if (item == NULL) continue;
+
+		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				wires.insert(dynamic_cast<Wire *>(toConnectorItem->attachedTo()));
+			}
+		}
 	}
 }
 

@@ -1452,6 +1452,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 	clearHoldingSelectItem();
 	m_savedItems.clear();
+	m_savedWires.clear();
 	m_needToConnectItems.clear();
 	m_moveEventCount = 0;
 	m_holdingSelectItemCommand = stackSelectionState(false, NULL);
@@ -1464,31 +1465,44 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		return;
 	}
 
+	QSet<Wire *> wires;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems ()) {
 		ItemBase *itemBase = ItemBase::extractItemBase(gitem);
 		if (itemBase == NULL) continue;
 
-		ItemBase * chief = itemBase->layerKinChief();
+		if (itemBase->itemType() == ModelPart::Wire) {
+			wires.insert(dynamic_cast<Wire *>(itemBase));
+			continue;
+		}
 
+		ItemBase * chief = itemBase->layerKinChief();	
 		m_savedItems.insert(chief);
-
 		if (chief->sticky()) {
 			foreach(ItemBase * sitemBase, chief->sticking().keys()) {
 				m_savedItems.insert(sitemBase);
 			}
 		}
-		if (chief->itemType() != ModelPart::Wire) {
-			PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(chief);
-			paletteItem->collectFemaleConnectees(m_savedItems);
-		}
+
+		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(chief);
+		paletteItem->collectFemaleConnectees(m_savedItems);
+		paletteItem->collectWireConnectees(wires);
 	}
 
 	foreach (ItemBase * itemBase, m_savedItems) {
 		itemBase->saveGeometry();
 	}
 
-	connect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
+	foreach (Wire * wire, wires) {
+		if (m_savedItems.contains(wire)) continue;
 
+		wire->connectsWithin(m_savedItems, m_savedWires);
+	}
+
+	foreach (Wire * wire, wires) {
+		wire->saveGeometry();
+	}
+
+	connect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
 
 	// do something with wires--chained, wires within, wires without
 	// don't forget about checking connections-to-be
@@ -1585,6 +1599,8 @@ void SketchWidget::moveItems(QPoint globalPos) {
        QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
        QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
        item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
+	   item->findConnectorsUnder();
+
 /*
 	   DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8") 
 		.arg(item->getViewGeometry().loc().x()).arg(item->getViewGeometry().loc().y())
@@ -1594,6 +1610,10 @@ void SketchWidget::moveItems(QPoint globalPos) {
 		);
 */
 
+	}
+
+	foreach (Wire * wire, m_savedWires.keys()) {
+		wire->simpleConnectedMoved(m_savedWires.value(wire));
 	}
 }
 

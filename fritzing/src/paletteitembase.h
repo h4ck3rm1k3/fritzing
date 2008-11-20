@@ -62,6 +62,7 @@ public:
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void updateConnectionsAux();
 	void collectFemaleConnecteesAux(QSet<ItemBase *> & items);
+	void collectWireConnecteesAux(QSet<class Wire *> & wires);
 	virtual void updateConnections() = 0;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);

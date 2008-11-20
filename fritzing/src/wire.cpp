@@ -438,6 +438,48 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 	this->grabMouse();
 }
 
+void Wire::simpleConnectedMoved(ConnectorItem * to) {
+	ConnectorItem * otherEnd = otherConnector(to);
+
+	ConnectorItem * from = to->firstConnectedToIsh();
+
+	QPointF p1, p2;
+	calcNewLine(from, to, p1, p2);
+
+	this->setPos(p1);
+	this->setLine(0,0, p2.x() - p1.x(), p2.y() - p1.y() );
+	//DebugDialog::debug(QString("set line %5: %1 %2, %3 %4, vis:%6 lyr:%7").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()).arg(id()).arg(isVisible()).arg(m_viewIdentifier) );
+	setConnector1Rect();
+	
+}
+
+void Wire::calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2) {
+	if (to == m_connector0) {
+		p1 = from->sceneAdjustedTerminalPoint();
+		ConnectorItem * otherFrom = m_connector1->firstConnectedToIsh();
+		if (otherFrom == NULL) {
+			p2 = m_connector1->mapToScene(m_connector1->rect().center());
+		}
+		else {
+			p2 = otherFrom->sceneAdjustedTerminalPoint();
+		}
+	}
+	else {
+		p2 = from->sceneAdjustedTerminalPoint();
+		QPointF temp = from->adjustedTerminalPoint();
+		//DebugDialog::debug(QString("from tp %1 %2, %3 %4").arg(p2.x()).arg(p2.y()).arg(temp.x()).arg(temp.y()) );
+
+		ConnectorItem * otherFrom = m_connector0->firstConnectedToIsh();
+		if (otherFrom == NULL) {
+			p1 = m_connector0->mapToScene(m_connector0->rect().center());
+		}
+		else {
+			p1 = otherFrom->sceneAdjustedTerminalPoint();
+		}
+
+	}
+}
+
 void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	// "from" is the connector on the part
 	// "to" is the connector on the wire
@@ -466,30 +508,7 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 		}
 	}
 	else {
-		if (to == m_connector0) {
-			p1 = from->sceneAdjustedTerminalPoint();
-			ConnectorItem * otherFrom = m_connector1->firstConnectedToIsh();
-			if (otherFrom == NULL) {
-				p2 = m_connector1->mapToScene(m_connector1->rect().center());
-			}
-			else {
-				p2 = otherFrom->sceneAdjustedTerminalPoint();
-			}
-		}
-		else {
-			p2 = from->sceneAdjustedTerminalPoint();
-			QPointF temp = from->adjustedTerminalPoint();
-			//DebugDialog::debug(QString("from tp %1 %2, %3 %4").arg(p2.x()).arg(p2.y()).arg(temp.x()).arg(temp.y()) );
-
-			ConnectorItem * otherFrom = m_connector0->firstConnectedToIsh();
-			if (otherFrom == NULL) {
-				p1 = m_connector0->mapToScene(m_connector0->rect().center());
-			}
-			else {
-				p1 = otherFrom->sceneAdjustedTerminalPoint();
-			}
-
-		}
+		calcNewLine(from, to, p1, p2);
 	}
 	this->setPos(p1);
 	this->setLine(0,0, p2.x() - p1.x(), p2.y() - p1.y() );
@@ -893,4 +912,61 @@ const QColor * Wire::netColor(ItemBase::ViewIdentifier viewIdentifier) {
 
 bool Wire::draggingEnd() {
 	return m_dragEnd;
+}
+
+void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> & out) {
+	QList<Wire *> wires;
+	collectWires(wires, false);
+
+	// if neither end connects, return true, because it's just floating
+	bool c0 = connectsWithin(m_connector0, in, wires);
+	bool c1 = connectsWithin(m_connector1, in, wires);
+	if (wires.count() == 1) {
+		if (c0 == false && c1 == false) {
+			in.insert(this);
+			return;
+		}
+
+		if (c0) {
+			out.insert(this, m_connector0);
+			return;
+		}
+		
+		out.insert(this, m_connector1);
+		return;
+	}
+
+	bool isIn = true;
+	for (int i = 1; i < wires.count(); i++) {
+		Wire * wire = wires[i];
+		if (!wire->connectsWithin(wire->connector0(), in, wires)) {
+			isIn = false;
+			break;
+		}
+		if (!wire->connectsWithin(wire->connector1(), in, wires)) {
+			isIn = false;
+			break;
+		}
+	}
+	if (isIn) {
+		foreach (Wire * wire, wires) {
+			in.insert(wire);
+		}
+		return;
+	}
+		
+	if (c0) out.insert(this, m_connector0);
+	out.insert(this, m_connector1);
+}
+
+bool Wire::connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires) {
+	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+		ItemBase * attachedTo = toConnectorItem->attachedTo();
+		if (in.contains(attachedTo)) return true;
+		if (attachedTo->itemType() != ModelPart::Wire) continue;
+
+		if (wires.contains(dynamic_cast<Wire *>(attachedTo))) return true;
+	}
+
+	return false;
 }

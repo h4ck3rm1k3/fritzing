@@ -77,12 +77,12 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, bool doConn
 
     QDomElement root = domDocument->documentElement();
    	if (root.isNull()) {
-        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (2)."));
+        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file (2).").arg(fileName));
    		return false;
 	}
 
     if (root.tagName() != "module") {
-        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file."));
+        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file.").arg(fileName));
         return false;
     }
 
@@ -93,7 +93,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, bool doConn
 
 	QDomElement instances = root.firstChildElement("instances");
 	if (instances.isNull()) {
-        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (3)."));
+        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file (3).").arg(fileName));
         return false;
 	}
 

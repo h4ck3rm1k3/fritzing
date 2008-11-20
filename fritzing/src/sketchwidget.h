@@ -375,7 +375,8 @@ protected:
 
 	bool m_infoViewOnHover;
 
-	QSet<ItemBase *> m_savedItems;
+	QSet<ItemBase *> m_savedItems;	
+	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;
 };

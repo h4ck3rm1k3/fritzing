@@ -21,7 +21,7 @@
                 <layer layerId="icon" image="icon/basic_fsr.svg"></layer>
             </layers>
         </iconView>
-        <breadboardView flipvertical="true">
+        <breadboardView flipvertical="true" fliphorizontal="true" >
             <layers>
                 <layer layerId="breadboard" image="breadboard/basic_fsr.svg"></layer>
             </layers>

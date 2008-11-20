@@ -127,12 +127,12 @@ void SVGView::importPCBXML(){
 
     QDomElement root = m_domDocument->documentElement();
    	if (root.isNull()) {
-        QMessageBox::critical(NULL, QObject::tr("FritzBau"), QObject::tr("The file is not a Fritzing file (2)."));
+        QMessageBox::critical(NULL, QObject::tr("FritzBau"), QObject::tr("The file %1 is not a Fritzing file (6).").arg(path));
    		return;
 	}
 
     if (root.tagName().toLower() != "element") {
-        QMessageBox::critical(NULL, QObject::tr("FritzBau"), QObject::tr("The file is not a Fritzing Footprint XML file."));
+        QMessageBox::critical(NULL, QObject::tr("FritzBau"), QObject::tr("The file %1 is not a Fritzing Footprint XML file.").arg(path));
         return;
     }
 

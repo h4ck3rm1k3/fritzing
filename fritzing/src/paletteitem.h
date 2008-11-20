@@ -67,6 +67,7 @@ public:
 	QString family();
 	void setHidden(bool hidden);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
+	void collectWireConnectees(QSet<class Wire *> & wires);
 
 
 protected:

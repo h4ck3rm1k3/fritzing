@@ -242,6 +242,13 @@ void PaletteItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	}
 }
 
+void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {
+	collectWireConnecteesAux(wires);
+	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+		lkpi->collectWireConnecteesAux(wires);
+	}
+}
+
 void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	DebugDialog::debug("layerkinchief got mouse press event");

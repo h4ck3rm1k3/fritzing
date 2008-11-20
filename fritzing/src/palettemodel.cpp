@@ -193,18 +193,18 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 
     QDomElement root = domDocument->documentElement();
    	if (root.isNull()) {
-        //QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (2)."));
+        //QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (8)."));
    		return NULL;
 	}
 
     if (root.tagName() != "module") {
-        //QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file."));
+        //QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (9)."));
         return NULL;
     }
 
 	QString moduleID = root.attribute("moduleId");
 	if (moduleID.isNull() || moduleID.isEmpty()) {
-		//QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (7)."));
+		//QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file is not a Fritzing file (10)."));
 		return NULL;
 	}
 
