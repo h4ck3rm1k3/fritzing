@@ -181,14 +181,11 @@ int ConnectorItem::connectionsCount() {
 
 void ConnectorItem::attachedMoved() {
 	//DebugDialog::debug("attached moved");
-	for (int i = 0; i < m_connectedTo.count(); i++) {
-		ItemBase * a = m_connectedTo[i]->attachedTo();
-		if (a == NULL) {
-			continue;
-		}
+	foreach (ConnectorItem * toConnector, m_connectedTo) {
+		ItemBase * itemBase = toConnector->attachedTo();
+		if (itemBase == NULL) continue;
 
-		//DebugDialog::debug(QObject::tr("moved attached to %1 %2 %3").arg(this->connectorStuffID()).arg(this->attachedToID()).arg(this->attachedToTitle()) );
-		a->connectedMoved(this, m_connectedTo[i]);
+		itemBase->connectedMoved(this, toConnector);
 	}
 }
 
@@ -368,15 +365,6 @@ Bus * ConnectorItem::bus() {
 	if (m_connector == NULL) return NULL;
 
 	return m_connector->bus();
-}
-
-void ConnectorItem::adjustConnectedItems() {
-	foreach (ConnectorItem * toConnector, m_connectedTo) {
-		ItemBase * itemBase = toConnector->attachedTo();
-		if (itemBase == NULL) continue;
-
-		itemBase->connectedMoved(this, toConnector);
-	}
 }
 
 void ConnectorItem::setCircular(bool circular) {

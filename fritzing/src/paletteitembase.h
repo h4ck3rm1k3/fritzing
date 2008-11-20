@@ -29,6 +29,7 @@ $Date$
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsSceneMouseEvent>
+#include <QSet>
 
 #include "modelpart.h"
 #include "itembase.h"
@@ -59,8 +60,8 @@ public:
  	virtual bool setUpImage(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 	const QString & filename();
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
-	void updateConnections(ConnectorItem *);
 	void updateConnectionsAux();
+	void collectFemaleConnecteesAux(QSet<ItemBase *> & items);
 	virtual void updateConnections() = 0;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);

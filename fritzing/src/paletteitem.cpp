@@ -235,6 +235,13 @@ void PaletteItem::updateConnections() {
 	}
 }
 
+void PaletteItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
+	collectFemaleConnecteesAux(items);
+	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+		lkpi->collectFemaleConnecteesAux(items);
+	}
+}
+
 void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	DebugDialog::debug("layerkinchief got mouse press event");
@@ -306,28 +313,6 @@ void PaletteItem::invalidateConnectors() {
 }
 
 void PaletteItem::cleanupConnectors() {
-//	RendererViewThing * viewThing = dynamic_cast<RendererViewThing *>(modelPart()->modelPartStuff()->viewThing());
-//	QSvgRenderer * renderer = NULL;
-//	if (viewThing != NULL) {
-//		renderer = viewThing->get((long)  /*m_viewIdentifier*/  m_viewLayerID);
-//	} else {
-//		return;
-//	}
-//	foreach(QGraphicsItem* child, childItems()) {
-//		ConnectorItem *connIt = dynamic_cast<ConnectorItem*>(child);
-//		if(connIt) {
-//			QRectF connectorRect;
-//			QPointF terminalPoint;
-//
-//			connIt->connector()->setUpConnector(renderer, m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, false);
-//			connIt->setRect(connectorRect);
-//			connIt->setTerminalPoint(terminalPoint);
-//
-//			connIt->adjustConnectedItems();
-//		}
-//	}
-
-
 	QList<ConnectorItem*> newOnes;
 	QHash<QString /*name*/, ConnectorItem*> oldOnes;
 
@@ -352,7 +337,7 @@ void PaletteItem::cleanupConnectors() {
 				newOne->tempConnectTo(oldConnectedTo);
 				oldConnectedTo->tempConnectTo(newOne);
 
-				newOne->adjustConnectedItems();
+				newOne->attachedMoved();
 			}
 			oldOnes.remove(name);
 			scene()->removeItem(oldOne);

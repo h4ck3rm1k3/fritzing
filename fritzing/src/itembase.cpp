@@ -471,10 +471,11 @@ void ItemBase::sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem *
 	Q_UNUSED(to);
 }
 
-void ItemBase::	updateConnections() {
+void ItemBase::updateConnections() {
 }
 
-void ItemBase::	updateConnections(ConnectorItem *) {
+void ItemBase::updateConnections(ConnectorItem * item) {
+	item->attachedMoved();
 }
 
 const QString & ItemBase::title() {
@@ -562,6 +563,10 @@ void ItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void ItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+	return;
+
+
+
 	//GraphicsSvgLineItem::mouseMoveEvent(event);
 	//return;
 

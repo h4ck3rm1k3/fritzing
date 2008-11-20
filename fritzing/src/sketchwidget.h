@@ -36,6 +36,7 @@ $Date$
 #include <QGraphicsEllipseItem>
 #include <QSet>
 #include <QHash>
+#include <QTimer>
 
 #include "paletteitem.h"
 #include "palettemodel.h"
@@ -246,9 +247,11 @@ protected:
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	void collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems);
-	void disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
+	void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
 	void cleanUpVirtualWires(QSet<class VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
+	bool draggingWireEnd();
+	void moveItems(QPoint globalPos);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -316,7 +319,7 @@ protected slots:
 	void sketchWidget_cleanUpWires();
 	void updateInfoViewSlot();
 	void spaceBarIsPressedSlot(bool);
-
+	void autoScrollTimeout();
 
 public slots:
 	void swapSelected(const QString &moduleId);
@@ -325,7 +328,7 @@ public slots:
 	void swap(PaletteItem* from, ModelPart *to);
 	void swap(long itemId, const QString &moduleID, bool doEmit=false);
 	void swap(long itemId, ModelPart *modelPart, bool doEmit=false);
-	void changeWireColor(const QString &wireTitle, long wireId,
+	void changeWireColor(const QString &wireTitle, long wireId, 
 		const QString& oldColor, const QString newColor,
 		qreal oldOpacity, qreal newOpacity);
  	void selectAllItems(bool state, bool doEmit);
@@ -357,6 +360,11 @@ protected:
 	ViewLayer::ViewLayerID m_connectorViewLayerID;
 	QList<QGraphicsItem *> m_temporaries;
 	bool m_chainDrag;
+	QPointF m_mousePressScenePos;
+	QTimer m_autoScrollTimer;
+	volatile int m_autoScrollX;
+	volatile int m_autoScrollY;
+	QPoint m_globalPos;
 
 	PaletteItem *m_lastPaletteItemSelected;
 
@@ -367,7 +375,7 @@ protected:
 
 	bool m_infoViewOnHover;
 
-	QList<ItemBase *> m_savedItems;
+	QSet<ItemBase *> m_savedItems;
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;
 };

@@ -73,7 +73,6 @@ public:
 	virtual class Bus * bus();
 	void tempConnectTo(ConnectorItem * item);
 	void tempRemove(ConnectorItem * item);
-	virtual void adjustConnectedItems();
 	void setCircular(bool);
 	void setOpacity(qreal);
 	Connector::ConnectorType connectorType();

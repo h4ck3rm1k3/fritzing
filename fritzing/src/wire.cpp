@@ -246,6 +246,7 @@ void Wire::initDragEnd(ConnectorItem * connectorItem) {
 void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if (m_dragEnd == false) {
 		if (event->modifiers() & Qt::ShiftModifier) {
+			// bendpoint
 			return;
 		}
 
@@ -494,6 +495,7 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	this->setLine(0,0, p2.x() - p1.x(), p2.y() - p1.y() );
 	//DebugDialog::debug(QString("set line %5: %1 %2, %3 %4, vis:%6 lyr:%7").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()).arg(id()).arg(isVisible()).arg(m_viewIdentifier) );
 	setConnector1Rect();
+
 	if (otherEnd->chained()) {
 		foreach (ConnectorItem * otherEndTo, otherEnd->connectedToItems()) {
 			if (otherEndTo->chained()) {
@@ -581,10 +583,6 @@ void Wire::findConnectorsUnder() {
 		connectorItem->setOverConnectorItem(
 				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true));
 	}
-}
-
-void Wire::updateConnections(ConnectorItem * item) {
-	item->attachedMoved();
 }
 
 void Wire::collectChained(QList<Wire *> & chained, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds ) {
@@ -891,4 +889,8 @@ const QColor * Wire::netColor(ItemBase::ViewIdentifier viewIdentifier) {
 	csi = (csi + 1) % ratsnestColors.count();
 	netColorIndex.insert(viewIdentifier, csi);
 	return c;
+}
+
+bool Wire::draggingEnd() {
+	return m_dragEnd;
 }

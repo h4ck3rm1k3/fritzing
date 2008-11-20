@@ -66,6 +66,8 @@ public:
 	bool swap(ModelPart* newModelPart, const LayerHash &layerHash);
 	QString family();
 	void setHidden(bool hidden);
+	void collectFemaleConnectees(QSet<ItemBase *> & items);
+
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

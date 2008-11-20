@@ -49,7 +49,6 @@ public:
 	void merge(BusConnectorItem *);
 	bool isMergedWith(BusConnectorItem *);
 	const QString & busID();
-	void adjustConnectedItems();
 	bool isMerged();
 	void unmerge(BusConnectorItem *);
 	const QList<BusConnectorItem *> & merged();

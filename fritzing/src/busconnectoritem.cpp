@@ -114,7 +114,7 @@ void BusConnectorItem::saveSelection(QGraphicsScene * scene) {
 
 void BusConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	ConnectorItem::mouseMoveEvent(event);
-	adjustConnectedItems();
+	attachedMoved();
 }
 
 void BusConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
@@ -159,16 +159,6 @@ const QString & BusConnectorItem::busID() {
 	if (m_bus == NULL) return ___emptyString___;
 	
 	return m_bus->id();
-}
-
-void BusConnectorItem::adjustConnectedItems() {
-	ConnectorItem::adjustConnectedItems();
-	for (int i = 0; i < childItems().count(); i++) {
-		BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(childItems()[i]);
-		if (bci == NULL) continue;
-
-		bci->adjustConnectedItems();
-	}
 }
 
 const QList<BusConnectorItem *> & BusConnectorItem::merged() {

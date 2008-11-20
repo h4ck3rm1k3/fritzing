@@ -67,7 +67,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 	m_droppingItem = NULL;
 	m_chainDrag = false;
 	m_connectorDragWire = NULL;
-	m_holdingSelectItemCommand = NULL;
+	m_tempDragWireCommand = m_holdingSelectItemCommand = NULL;
 	m_viewIdentifier = viewIdentifier;
 	m_scaleValue = 100;
 	m_maxScaleValue = 2000;
@@ -1340,9 +1340,6 @@ void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
 void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 {
     if (event->mimeData()->hasFormat("application/x-dnditemdata") && event->source() != this) {
-
-
-
     	dragMoveHighlightConnector(event);
 
         event->acceptProposedAction();
@@ -1353,13 +1350,9 @@ void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 }
 
 void SketchWidget::dragMoveHighlightConnector(QDragMoveEvent *event) {
-
 	if (m_droppingItem == NULL) return;
-
 	QPointF loc = this->mapToScene(event->pos()) - m_droppingOffset;
-
 	m_droppingItem->setItemPos(loc);
-
 	m_droppingItem->findConnectorsUnder();
 }
 
@@ -1462,6 +1455,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	m_needToConnectItems.clear();
 	m_moveEventCount = 0;
 	m_holdingSelectItemCommand = stackSelectionState(false, NULL);
+	m_mousePressScenePos = mapToScene(event->pos());
 
 	QGraphicsItem* item = this->itemAt(event->pos());
 
@@ -1470,26 +1464,144 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		return;
 	}
 
-	// TODO: combine this with stack selection state so it doesn't have to happen twice
-	QList<QGraphicsItem *> items = this->scene()->selectedItems ();
-	for (int i = 0; i < items.size(); i++) {
-		ItemBase *item = ItemBase::extractTopLevelItemBase(items[i]);
-		if (item == NULL) continue;
+	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems ()) {
+		ItemBase *itemBase = ItemBase::extractItemBase(gitem);
+		if (itemBase == NULL) continue;
 
-		item->saveGeometry();
-		m_savedItems.append(item);
+		ItemBase * chief = itemBase->layerKinChief();
+
+		m_savedItems.insert(chief);
+
+		if (chief->sticky()) {
+			foreach(ItemBase * sitemBase, chief->sticking().keys()) {
+				m_savedItems.insert(sitemBase);
+			}
+		}
+		if (chief->itemType() != ModelPart::Wire) {
+			PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(chief);
+			paletteItem->collectFemaleConnectees(m_savedItems);
+		}
 	}
+
+	foreach (ItemBase * itemBase, m_savedItems) {
+		itemBase->saveGeometry();
+	}
+
+	connect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
+
+
+	// do something with wires--chained, wires within, wires without
+	// don't forget about checking connections-to-be
 
 }
 
+bool SketchWidget::draggingWireEnd() {
+	if (m_connectorDragWire != NULL) return true;
+
+	Wire * wire = dynamic_cast<Wire *>( scene()->mouseGrabberItem());
+	if (wire == NULL) return false;
+
+	return wire->draggingEnd();
+}
+
 void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
+	// if its just dragging a wire end do default
+	// otherwise handle all move action here
+
+	if (m_savedItems.count() > 0) {
+		if ((event->buttons() & Qt::LeftButton) && !draggingWireEnd()) {
+			m_globalPos = event->globalPos();
+			moveItems(event->globalPos());
+		}
+	}
+
 	m_moveEventCount++;
 	QGraphicsView::mouseMoveEvent(event);
+}
+
+void SketchWidget::moveItems(QPoint globalPos) {
+	//DebugDialog::debug(QString("move items %1").arg(QTime::currentTime().msec()) );
+
+	QRect r = rect();
+	QPoint q = mapFromGlobal(globalPos);
+
+	if (verticalScrollBar()->isVisible()) {
+		r.setWidth(width() - verticalScrollBar()->width());
+	}
+
+	if (horizontalScrollBar()->isVisible()) {
+		r.setHeight(height() - horizontalScrollBar()->height());
+	}
+
+	if (!r.contains(q)) {
+		m_autoScrollX = m_autoScrollY = 0;
+		return;
+	}
+
+	r.adjust(16,16,-16,-16);						// these should be set someplace
+	bool autoScroll = !r.contains(q);
+	if (autoScroll) {
+		int dx = 0, dy = 0;
+		if (q.x() > r.right()) {
+			dx = q.x() - r.right();
+		}
+		else if (q.x() < r.left()) {
+			dx = q.x() - r.left();
+		}
+		if (q.y() > r.bottom()) {
+			dy = q.y() - r.bottom();
+		}
+		else if (q.y() < r.top()) {
+			dy = q.y() - r.top();
+		}
+
+		int div = 3;
+		if (dx != 0) {
+			m_autoScrollX = (dx + ((dx > 0) ? div : -div)) / (div + 1);		// ((m_autoScrollX > 0) ? 1 : -1)
+		}
+		if (dy != 0) {
+			m_autoScrollY = (dy + ((dy > 0) ? div : -div)) / (div + 1);		// ((m_autoScrollY > 0) ? 1 : -1)
+		}
+
+		if (!m_autoScrollTimer.isActive()) {
+			m_autoScrollTimer.start(10);
+		}
+
+	}
+	else {
+		m_autoScrollX = m_autoScrollY = 0;
+	}
+
+	QPointF scenePos = mapToScene(q);
+
+/*
+	DebugDialog::debug(QString("scroll 1 sx:%1 sy:%2 sbx:%3 sby:%4 qx:%5 qy:%6") 
+		.arg(scenePos.x()).arg(scenePos.y())
+		.arg(m_mousePressScenePos.x()).arg(m_mousePressScenePos.y())
+		.arg(q.x()).arg(q.y()) 
+		);
+*/
+	foreach (ItemBase * item, m_savedItems) {
+       QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
+       QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
+       item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
+/*
+	   DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8") 
+		.arg(item->getViewGeometry().loc().x()).arg(item->getViewGeometry().loc().y())
+		.arg(currentParentPos.x()).arg(currentParentPos.y())
+		.arg(buttonDownParentPos.x()).arg(buttonDownParentPos.y()) 
+		.arg(item->pos().x()).arg(item->pos().y()) 
+		);
+*/
+
+	}
 }
 
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
+	m_autoScrollTimer.stop();
+	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
 	QGraphicsView::mouseReleaseEvent(event);
 
 	if (m_connectorDragWire != NULL) {
@@ -1526,10 +1638,15 @@ bool SketchWidget::checkMoved()
 		return false;
 	}
 
-	ItemBase * saveBase = m_savedItems[0];
 	int moveCount = m_savedItems.count();
 	if (moveCount <= 0) {
 		return false;
+	}
+
+	ItemBase * saveBase = NULL;
+	foreach (ItemBase * item, m_savedItems) {
+		saveBase = item;
+		break;
 	}
 
 	clearHoldingSelectItem();
@@ -1553,9 +1670,7 @@ bool SketchWidget::checkMoved()
 
 	bool hasBoard = false;
 
-	for (int i = 0; i < m_savedItems.size(); i++) {
-		// already know it's a topLevel item
-		ItemBase *item = m_savedItems[i];
+	foreach (ItemBase * item, m_savedItems) {
 		if (item == NULL) continue;
 
 		ViewGeometry viewGeometry(item->getViewGeometry());
@@ -2447,7 +2562,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	emit rotatingFlippingSignal(this, parentCommand);		// eventually, don't send signal when rotating board
 
-	QList<ItemBase *> emptyList;			// emptylist is only used for a move command
+	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 	foreach (PaletteItem * item, targets) {
 		disconnectFromFemale(item, emptyList, virtualWires, parentCommand);
 
@@ -2671,7 +2786,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	fromConnectorItem->attachedTo()->updateConnections(fromConnectorItem);
 	toConnectorItem->attachedTo()->updateConnections(toConnectorItem);
 	if (fromBusConnector) {
-		fromConnectorItem->adjustConnectedItems();
+		fromConnectorItem->attachedMoved();
 		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(fromConnectorItem);
 		if (busConnectorItem != NULL) {
 			busConnectorItem->updateVisibility(m_viewIdentifier);
@@ -3762,7 +3877,7 @@ void SketchWidget::collectBusConnectorItems(QList<BusConnectorItem *> & busConne
 	}
 }
 
-void SketchWidget::disconnectFromFemale(ItemBase * item, QList<ItemBase *> & savedItems, QSet <VirtualWire *> & virtualWires, QUndoCommand * parentCommand)
+void SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <VirtualWire *> & virtualWires, QUndoCommand * parentCommand)
 {
 	if (m_viewIdentifier != ItemBase::BreadboardView) {
 		return;
@@ -3893,4 +4008,22 @@ void SketchWidget::clearDragWireTempCommand()
 		delete m_tempDragWireCommand;
 		m_tempDragWireCommand = NULL;
 	}
+}
+
+void SketchWidget::autoScrollTimeout()
+{
+	if (m_autoScrollX == 0 && m_autoScrollY == 0 ) return;
+
+	//DebugDialog::debug(QString("scrolling dx:%1 dy%2").arg(m_autoScrollX).arg(m_autoScrollY) );
+
+	if (m_autoScrollX != 0) {
+		QScrollBar * h = horizontalScrollBar();
+		h->setValue(m_autoScrollX + h->value());
+	}
+	if (m_autoScrollY != 0) {
+		QScrollBar * v = verticalScrollBar();
+		v->setValue(m_autoScrollY + v->value());
+	}
+
+	moveItems(m_globalPos);
 }

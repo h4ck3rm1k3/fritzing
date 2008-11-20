@@ -74,7 +74,6 @@ public:
 	ItemBase * layerKinChief();
 	void setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers);
 	void findConnectorsUnder();
-	void updateConnections(ConnectorItem *);
 	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds);
 	void collectWires(QList<Wire *> & wires, bool includeBusConnections);
 	bool stickyEnabled(ItemBase * stickTo);
@@ -108,6 +107,7 @@ public:
 	void setExtras(QDomElement &);
 	void setColor(QDomElement & element);
 	Wire * findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
+	bool draggingEnd();
 
 public:
 	static QString moduleIDName;

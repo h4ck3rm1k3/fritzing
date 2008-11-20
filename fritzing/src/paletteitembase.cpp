@@ -296,14 +296,24 @@ void PaletteItemBase::updateConnectionsAux() {
 		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
 		if (item == NULL) continue;
 
-		updateConnections(item);
+		ItemBase::updateConnections(item);
 	}
 }
 
-void PaletteItemBase::updateConnections(ConnectorItem * item) {
-	item->attachedMoved();
-}
+void PaletteItemBase::collectFemaleConnecteesAux(QSet<ItemBase *> & items) {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
+		if (item == NULL) continue;
+		if (!item->type() == Connector::Female) continue;
 
+		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
+			if (toConnectorItem->isBusConnector()) continue;
+
+			items.insert(toConnectorItem->attachedTo());
+		}
+
+	}
+}
 
 bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
 {
@@ -463,6 +473,8 @@ const QString & PaletteItemBase::filename() {
 void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	if (from->connectorType() != Connector::Female) return;
 	if (m_viewIdentifier != ItemBase::BreadboardView) return;			// these only really exist in breadboard view
+
+	// female connectors are equivalent to sticky
 
 	QPointF fromTerminalPoint = from->sceneAdjustedTerminalPoint();
 	QPointF toTerminalPoint = to->sceneAdjustedTerminalPoint();

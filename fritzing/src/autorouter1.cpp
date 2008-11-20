@@ -224,10 +224,10 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 			QRectF boundingRect = partForBounds->boundingRect();
 			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
 			drawTrace(edge->from, edge->to, partForBounds->mapToScene(boundingRect), wires);
-			foreach (Wire * wire, wires) {
-				wire->addSticky(partForBounds, true);
-				partForBounds->addSticky(wire, true);
-			}
+			//foreach (Wire * wire, wires) {
+				//wire->addSticky(partForBounds, true);
+				//partForBounds->addSticky(wire, true);
+			//}
 		}
 
 
