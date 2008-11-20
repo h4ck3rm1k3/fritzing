@@ -485,7 +485,7 @@ void MainWindow::createSketchButtons() {
 	m_exportToPdfButton->setText(tr("Export"));
 
 	QList<QAction*> rotateMenuActions;
-	rotateMenuActions << m_rotate90cwAct << m_rotate180Act << m_rotate90ccwAct;
+	rotateMenuActions << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct;
 	m_rotateButton = new SketchToolButton(this, rotateMenuActions);
 	m_rotateButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarRotateEnabled_icon.png"));
 	m_rotateButton->setText(tr("Rotate"));

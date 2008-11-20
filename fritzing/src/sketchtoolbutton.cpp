@@ -55,9 +55,12 @@ SketchToolButton::SketchToolButton(QWidget *parent, QList<QAction*> menuActions)
 	for(int i=0; i < menuActions.size(); i++) {
 		QAction* act = menuActions[i];
 		menu->addAction(act);
+		if(i==0) {
+			setDefaultAction(act);
+		}
 	}
 	setMenu(menu);
-	setPopupMode(QToolButton::InstantPopup);
+	setPopupMode(QToolButton::MenuButtonPopup);
 }
 
 void SketchToolButton::updateEnabledState() {
