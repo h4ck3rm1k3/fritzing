@@ -27,6 +27,7 @@ $Date$
 
 
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QtAlgorithms>
 
@@ -44,14 +45,23 @@ PartSymbolsWidget::PartSymbolsWidget(SketchModel *sketchModel, WaitPushUndoStack
 	createViewImageWidget(sketchModel, undoStack, m_schemView, ItemBase::SchematicView, "schematic_icon.png", EMPTY_SCHEM_VIEW_TEXT);
 	createViewImageWidget(sketchModel, undoStack, m_pcbView, ItemBase::PCBView, "pcb_icon.png", EMPTY_PCB_VIEW_TEXT);
 
+	m_guidelines = new QLabel(tr("Please refer to the <a style='color: #52182C' href='http://new.fritzing.org/learning/tutorials/making-parts/'>guidelines</a> before modifying or creating parts"), this);
+	m_guidelines->setOpenExternalLinks(true);
+
+	QHBoxLayout *labelLayout = new QHBoxLayout();
+	labelLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+	labelLayout->addWidget(m_guidelines);
+	labelLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding,QSizePolicy::Fixed));
+
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(new QLabel(tr("Symbols")),0,0);
 	layout->addWidget(m_breadView,1,0);
 	layout->addWidget(m_schemView,1,1);
 	layout->addWidget(m_pcbView,1,2);
+	layout->addLayout(labelLayout,3,0,1,3);
 	this->setLayout(layout);
 
-	this->setFixedHeight(200);
+	this->setFixedHeight(225);
 }
 
 void PartSymbolsWidget::createViewImageWidget(

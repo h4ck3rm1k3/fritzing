@@ -55,6 +55,8 @@ Q_OBJECT
 		PartsEditorViewImageWidget *m_breadView;
 		PartsEditorViewImageWidget *m_schemView;
 		PartsEditorViewImageWidget *m_pcbView;
+
+		QLabel *m_guidelines;
 };
 
 #endif /* PARTSYMBOLSWIDGET_H_ */
