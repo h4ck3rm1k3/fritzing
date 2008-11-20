@@ -299,6 +299,7 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
 		renderImage(m_modelPart,m_viewIdentifier,layerHash,m_viewLayerID,false,true);
 		cleanupConnectors();
 		updateTooltip();
+		scene()->update();
 	}
 	return sameFamily;
 }
