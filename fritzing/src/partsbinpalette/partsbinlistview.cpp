@@ -133,7 +133,6 @@ void PartsBinListView::removePart(const QString &moduleID) {
 }
 
 const QString &PartsBinListView::itemModuleID(const QListWidgetItem *item) {
-	//DebugDialog::debug("<<<< found this moduleID for item: "+item->data(Qt::UserRole).value<ModelPart *>()->moduleID());
 	return item->data(Qt::UserRole).value<ModelPart *>()->moduleID();
 }
 

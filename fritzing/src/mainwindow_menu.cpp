@@ -376,8 +376,6 @@ void MainWindow::load() {
 		path = "";
 	}
 
-	DebugDialog::debug("<<<< path: "+path);
-
 	QString fileName = QFileDialog::getOpenFileName(
 			this,
 			"Select a Fritzing File to Open",
