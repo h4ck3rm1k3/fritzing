@@ -311,6 +311,7 @@ void PaletteItemBase::collectFemaleConnecteesAux(QSet<ItemBase *> & items) {
 		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
 			if (toConnectorItem->isBusConnector()) continue;
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
+			if (!toConnectorItem->attachedTo()->isVisible()) continue;
 
 			items.insert(toConnectorItem->attachedTo());
 		}
@@ -324,7 +325,9 @@ void PaletteItemBase::collectWireConnecteesAux(QSet<Wire *> & wires) {
 
 		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				wires.insert(dynamic_cast<Wire *>(toConnectorItem->attachedTo()));
+				if (toConnectorItem->attachedTo()->isVisible()) {
+					wires.insert(dynamic_cast<Wire *>(toConnectorItem->attachedTo()));
+				}
 			}
 		}
 	}

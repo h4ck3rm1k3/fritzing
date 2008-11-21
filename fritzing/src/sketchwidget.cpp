@@ -1471,7 +1471,9 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		if (itemBase == NULL) continue;
 
 		if (itemBase->itemType() == ModelPart::Wire) {
-			wires.insert(dynamic_cast<Wire *>(itemBase));
+			if (itemBase->isVisible()) {
+				wires.insert(dynamic_cast<Wire *>(itemBase));
+			}
 			continue;
 		}
 
@@ -1479,12 +1481,21 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		m_savedItems.insert(chief);
 		if (chief->sticky()) {
 			foreach(ItemBase * sitemBase, chief->sticking().keys()) {
-				m_savedItems.insert(sitemBase);
+				if (sitemBase->isVisible()) {
+					if (sitemBase->itemType() == ModelPart::Wire) {
+						wires.insert(dynamic_cast<Wire *>(sitemBase));
+					}
+					else {
+						m_savedItems.insert(sitemBase);
+					}
+				}
 			}
 		}
 
 		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(chief);
-		paletteItem->collectFemaleConnectees(m_savedItems);
+		if (m_viewIdentifier == ItemBase::BreadboardView) {
+			paletteItem->collectFemaleConnectees(m_savedItems);
+		}
 		paletteItem->collectWireConnectees(wires);
 	}
 
