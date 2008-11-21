@@ -189,13 +189,14 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 
 	int edgesDone = 0;
 	foreach (Edge * edge, edges) {
+		/*
 		DebugDialog::debug(QString("edge from %1 %2 to %3 %4, %5")
 			.arg(edge->from->attachedToTitle())
 			.arg(edge->from->connectorStuffID())
 			.arg(edge->to->attachedToTitle())
 			.arg(edge->to->connectorStuffID())
 			.arg(edge->distance) );
-
+	*/
 		// if both connections are stuck to or attached to the same part
 		// then use that part's boundary to constrain the path
 		ItemBase * partForBounds = NULL;
@@ -386,14 +387,16 @@ void Autorouter1::dykstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem
 
 	// should now have shortest path through vertices, so replace original list
 	vertices.clear();
-	DebugDialog::debug("shortest path:");
+	//DebugDialog::debug("shortest path:");
 	foreach (ConnectorItem * connectorItem, path) {
 		vertices.append(connectorItem);
+		/*
 		DebugDialog::debug(QString("\t%1 %2 %3 %4")
 				.arg(connectorItem->attachedToTitle())
 				.arg(connectorItem->connectorStuffID())
 				.arg(connectorItem->sceneAdjustedTerminalPoint().x())
 				.arg(connectorItem->sceneAdjustedTerminalPoint().y()) );
+		*/
 	}
 
 }
@@ -555,6 +558,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 				// it's the same potential, so it's safe to cross
 				continue;
 			}
+			/*
 
 			DebugDialog::debug(QString("candidate wire %1, trace:%2, %3 %4, %5 %6")
 				.arg(candidateWire->id())
@@ -563,6 +567,8 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 				.arg(candidateWire->pos().y())
 				.arg(candidateWire->line().p2().x())
 				.arg(candidateWire->line().p2().y()) );
+
+				*/
 		}
 		else {
 			candidateConnectorItem = dynamic_cast<ConnectorItem *>(item);
@@ -592,11 +598,13 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 			foreach (QPointF p, poly) {
 				temp += QString("(%1,%2) ").arg(p.x()).arg(p.y());
 			}
+			/*
 			DebugDialog::debug(QString("candidate connectoritem %1 %2 %3\n\t%4")
 								.arg(candidateConnectorItem->connectorStuffID())
 								.arg(candidateConnectorItem->attachedToTitle())
 								.arg(candidateConnectorItem->attachedToID())
 								.arg(temp) );
+								*/
 		}
 
 
@@ -651,26 +659,30 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	bool prePolyResult = false;
 	if (wireObstacle == NULL) {
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(nearestObstacle);
+		/*
 		DebugDialog::debug(QString("nearest obstacle connectoritem %1 %2 %3")
 					.arg(ci->connectorStuffID())
 					.arg(ci->attachedToTitle())
 					.arg(ci->attachedToID()) );
+					*/
 
 		prePolyResult = prePoly(nearestObstacle, fromPos, toPos, leftPoint, rightPoint);
 		if (!prePolyResult) return false;
 
+		/*
 		DebugDialog::debug(QString("tryleft and right from %1 %2, to %3 %4, left %5 %6, right %7 %8")
 			.arg(fromPos.x()).arg(fromPos.y())
 			.arg(toPos.x()).arg(toPos.y())
 			.arg(leftPoint.x()).arg(leftPoint.y())
 			.arg(rightPoint.x()).arg(rightPoint.y()) );
+			*/
 
 		return tryLeftAndRight(fromPos, toPos, from, to, leftPoint, rightPoint, wires, boundingPoly);
 	}
 	else {
 		// if the obstacle is a wire, then it's a trace, so find tangents to the objects the obstacle wire is connected to
 
-		DebugDialog::debug(QString("nearest obstacle: wire %1").arg(wireObstacle->id()));
+		//DebugDialog::debug(QString("nearest obstacle: wire %1").arg(wireObstacle->id()));
 
 		QList<Wire *> chainedWires;
 		QList<ConnectorItem *> ends;
@@ -753,7 +765,7 @@ bool Autorouter1::prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPoi
 	int leftIndex, rightIndex;
 	tangent_PointPoly(fromPos, poly, leftIndex, rightIndex);
 	if (leftIndex == rightIndex) {
-		DebugDialog::debug("degenerate 1");
+		//DebugDialog::debug("degenerate 1");
 	}
 	QPointF l0 = poly.at(leftIndex);
 	QPointF r0 = poly.at(rightIndex);

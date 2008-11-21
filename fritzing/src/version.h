@@ -37,6 +37,8 @@ public:
 	static const QString & modifier();
 	static const QString & revision();
 	static const QString & versionString();
+	static const QString & date();
+	static const QString & shortDate();
 
 protected:
 	Version();
@@ -49,6 +51,9 @@ protected:
 	static QString m_revision;
 	static QString m_modifier;
 	static QString m_versionString;
+	static QString m_svnDate;
+	static QString m_date;
+	static QString m_shortDate;
 	static Version * m_singleton;
 
 };

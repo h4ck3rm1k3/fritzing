@@ -64,11 +64,11 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/resources/images/splash.png");
     FSplashScreen splash(pixmap);
 	splash.setTextPosition(0, kBottomOfAlpha);
-	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='white'>version %1.%2 %3 (r%4)&nbsp;</font>")
+	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='white'>version %1.%2 (%3%4)&nbsp;</font>")
 									.arg(Version::majorVersion())
 									.arg(Version::minorVersion())
 									.arg(Version::modifier())
-									.arg(Version::revision()),
+									.arg(Version::shortDate()),
 		Qt::AlignRight | Qt::AlignTop, Qt::white);
     splash.show();
 	QApplication::processEvents();			// seems to need this (sometimes?) to display the splash screen

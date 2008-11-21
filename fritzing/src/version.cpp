@@ -33,10 +33,13 @@ QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("1");
 QString Version::m_modifier("b");
 QString Version::m_svnRevision("$Revision$:");
+QString Version::m_svnDate("$Date$");
 QString Version::m_revision;
+QString Version::m_date;
+QString Version::m_shortDate;
 QString Version::m_versionString;
 Version * Version::m_singleton = new Version();
-							
+														
 Version::Version() {
 	m_revision = "";
 	QStringList strings = m_svnRevision.split(" ", QString::SkipEmptyParts);
@@ -44,7 +47,16 @@ Version::Version() {
 		m_revision = strings[1];
 	}
 
-	m_versionString = QString("%1.%2.%3.%4").arg(m_majorVersion).arg(m_minorVersion).arg(m_modifier).arg(m_revision);
+	strings = m_svnDate.split(" ", QString::SkipEmptyParts);
+	if (strings.size() >= 2) {
+		m_date = strings[1];
+		strings = m_date.split("-", QString::SkipEmptyParts);
+		if (strings.size() >= 3) {
+			m_shortDate = strings[1] + "." + strings[2];
+		}
+	}
+
+	m_versionString = QString("%1.%2.%3.%4.%5").arg(m_majorVersion).arg(m_minorVersion).arg(m_modifier).arg(m_shortDate).arg(m_revision);
 }
 
 const QString & Version::majorVersion() {
@@ -67,3 +79,10 @@ const QString & Version::versionString() {
 	return m_versionString;
 }
 
+const QString & Version::date() {
+	return m_date;
+}
+
+const QString & Version::shortDate() {
+	return m_shortDate;
+}
