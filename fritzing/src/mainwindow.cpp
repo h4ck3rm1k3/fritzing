@@ -514,17 +514,24 @@ void MainWindow::createSketchButtons() {
 	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarDiyEnabled.png"));
 	m_exportDiyButton->setText(tr("DIY Etching"));
 
+	m_sketchToolbarSeparator = SketchAreaWidget::separator(this);
+
 	m_routingStatusLabel = new QLabel(this);
+	m_routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
+
 	routingStatusSlot(0,0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
 }
 
 QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
-	retval << m_exportToPdfButton << m_rotateButton;
+	if(viewId != ItemBase::PCBView) {
+		retval << m_exportToPdfButton;
+	}
+	retval << m_rotateButton;
 	if(viewId == ItemBase::BreadboardView) {
 		retval << m_flipButton;
 	} else if(viewId == ItemBase::PCBView) {
-		retval << m_autorouteButton << m_exportDiyButton << m_routingStatusLabel;
+		retval << m_sketchToolbarSeparator << m_autorouteButton << m_exportDiyButton << m_routingStatusLabel;
 	}
 	return retval;
 }

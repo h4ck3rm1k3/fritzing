@@ -391,6 +391,7 @@ protected:
 	SketchToolButton *m_exportDiyButton;
 	SketchToolButton *m_autorouteButton;
 
+	QWidget *m_sketchToolbarSeparator;
 	QLabel *m_routingStatusLabel;
 
     ZoomComboBox * m_zoomOptsComboBox;

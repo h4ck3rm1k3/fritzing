@@ -30,6 +30,9 @@ $Date$
 
 #include "sketchareawidget.h"
 
+
+const QString SketchAreaWidget::RoutingStateLabelName = "routingStateLabel";
+
 SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QWidget *parent)
 	: QFrame(parent)
 {
@@ -75,6 +78,9 @@ void SketchAreaWidget::createLayout() {
 	m_zoomContainer = new QHBoxLayout(rightButtons);
 	m_zoomContainer->setMargin(0);
 	m_zoomContainer->setSpacing(3);
+	if(viewIdentifier() == ItemBase::PCBView) {
+		m_zoomContainer->addWidget(separator(this->parentWidget()));
+	}
 	m_zoomContainer->addWidget(new QLabel(tr("Zoom"),this));
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout(m_toolbar);
@@ -89,11 +95,20 @@ void SketchAreaWidget::createLayout() {
 
 void SketchAreaWidget::setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox) {
 	foreach(QWidget* button, buttons) {
-		if(!dynamic_cast<QLabel*>(button)) {
+		if(button->objectName() != RoutingStateLabelName) {
 			m_buttonsContainer->addWidget(button);
 		} else {
 			m_labelContainer->addWidget(button);
 		}
 	}
+
 	m_zoomContainer->addWidget(zoomComboBox);
+
+}
+
+QWidget *SketchAreaWidget::separator(QWidget* parent) {
+	QLabel *separator = new QLabel(parent);
+	separator->setPixmap(QPixmap(":/resources/images/toolbar_icons/toolbar_separator.png"));
+	separator->setStyleSheet("margin-left: 10px; margin-right: 10px;");
+	return separator;
 }

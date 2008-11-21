@@ -45,9 +45,13 @@ public:
 	SketchWidget* graphicsView();
 
 	void setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox);
+	static QWidget *separator(QWidget* parent);
 
 protected:
 	void createLayout();
+
+public:
+	static const QString RoutingStateLabelName;
 
 protected:
 	SketchWidget *m_graphicsView;
