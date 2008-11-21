@@ -3971,11 +3971,38 @@ void SketchWidget::updateRatsnestStatus() {
 	int netRoutedCount = 0;
 	int connectorsLeftToRoute = 0;
 	int jumperCount = 0;
-	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-		if (list->count() <= 1) continue;			// nets with a single part are not worth counting
+	foreach (QList<ConnectorItem *>* netList, allPartConnectorItems) {
+		if (netList->count() <= 1) continue;			// nets with a single part are not worth counting
+
+		int selfConnections = 0;
+		QVector<bool> self(netList->count(), true);
+		for (int i = 0; i < netList->count() - 1; i++) {
+			for (int j = i + 1; j < netList->count(); j++) {
+				ConnectorItem * ci = netList->at(i);
+				ConnectorItem * cj = netList->at(j);
+				if (ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
+					// if connections are on the same bus on a given part
+					self[i] = false;
+					self[j] = false;
+					selfConnections++;
+				}
+			}
+		}
+
+		int useIndex = 0;
+		bool bail = true;
+		foreach (bool v, self) {
+			if (v) {
+				bail = false;
+				break;
+			}
+			useIndex++;
+		}
+
+		if (bail) continue;			// only have a net on the same part on the same bus
 
 		netCount++;
-		ConnectorItem * connectorItem = list->at(0);
+		ConnectorItem * connectorItem = netList->at(useIndex);
 
 		// figure out how many parts are connected via jumpers or traces
 		QList<ConnectorItem *> partConnectorItems;
@@ -3992,8 +4019,8 @@ void SketchWidget::updateRatsnestStatus() {
 			}
 		}
 		BusConnectorItem::collectParts(connectorItems, partConnectorItems);
-		int todo = list->count() - partConnectorItems.count();
-		if (todo == 0) {
+		int todo = netList->count() - partConnectorItems.count() - selfConnections;
+		if (todo <= 0) {
 			netRoutedCount++;
 		}
 		else {

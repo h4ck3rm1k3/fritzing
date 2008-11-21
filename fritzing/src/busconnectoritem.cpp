@@ -229,7 +229,7 @@ void BusConnectorItem::setVisible(bool visible) {
 */
 
 
-void BusConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, QList<BusConnectorItem *> & busConnectorItems, bool addMerged, ViewGeometry::WireFlags skipWires) {
+void BusConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, QList<BusConnectorItem *> & busConnectorItems, bool addMerged, ViewGeometry::WireFlags keepWires) {
 	// collects all the connectors at the same potential
 	// assumes first connector item does not belong to the skipWires category
 
@@ -241,15 +241,22 @@ void BusConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorI
 			busConnectorItems.append(busConnectorItem);
 		}
 
+		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		foreach (ConnectorItem * cto, connectorItem->connectedToItems()) {
 			if (connectorItems.contains(cto)) continue;
 
 			bool append = true;
-			if (skipWires != ViewGeometry::NoFlag) {
-				if (cto->attachedToItemType() == ModelPart::Wire) {
-					Wire * wire = dynamic_cast<Wire *>(cto->attachedTo());
-					if (!wire->hasAnyFlag(skipWires)) {
-						append = false;
+			if (keepWires != ViewGeometry::NoFlag) {
+				append = false;
+				if ((fromWire != NULL) && fromWire->hasAnyFlag(keepWires)) {
+					// since we're coming from the right kind of wire, append the target
+					append = true;
+				}
+				else if (cto->attachedToItemType() == ModelPart::Wire) {
+					Wire * toWire = dynamic_cast<Wire *>(cto->attachedTo());
+					if (toWire->hasAnyFlag(keepWires)) {
+						// since we're going to the right kind of wire, append the target
+						append = true;
 					}
 				}
 			}
@@ -259,8 +266,8 @@ void BusConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorI
 			}
 		}
 
-		if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-			ConnectorItem * otherEnd = dynamic_cast<Wire *>(connectorItem->attachedTo())->otherConnector(connectorItem);
+		if (fromWire != NULL) {
+			ConnectorItem * otherEnd = fromWire->otherConnector(connectorItem);
 			if (!connectorItems.contains(otherEnd)) {
 				//DebugDialog::debug(QString("adding %1 %2 %3").arg(otherEnd->attachedToID()).arg(otherEnd->attachedToTitle()).arg(otherEnd->connectorStuffID()) );
 				connectorItems.append(otherEnd);

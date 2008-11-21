@@ -70,7 +70,7 @@ public:
 	*/
 
 public:
-	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, QList<BusConnectorItem *> & busConnectorItems, bool addMerged, ViewGeometry::WireFlags skipWires);
+	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, QList<BusConnectorItem *> & busConnectorItems, bool addMerged, ViewGeometry::WireFlags keepWires);
 	static void saveSelection(QGraphicsScene *);
 	static void restoreSelection();
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
