@@ -4,6 +4,7 @@
 	<creator>Stefan Hermann</creator>
 	<title>Arduino Diecimila</title>
 	<date>2008-09-16</date>
+	<label>Arduino</label>
 	<tags>
 		<tag>Arduino Diecimila</tag>
 		<tag>controller</tag>
@@ -11,8 +12,8 @@
 		<tag>fritzing core</tag>
 	</tags>
 	<properties>
-		<property name="p1">Arduino Diecimila</property>
-		<property name="family">controller</property>
+		<property name="type">Arduino Diecimila</property>
+		<property name="family">Microcontroller</property>
 	</properties>
 	<taxonomy>discreteParts.controller</taxonomy>
 	<description>The awesome Arduino Diecimila microcontroller</description>

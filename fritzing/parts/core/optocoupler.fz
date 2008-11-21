@@ -2,7 +2,7 @@
 <module fritzingVersion="0.1.b.1486" moduleId="1001AAACOptocoupler">
     <author>Dirk van Oosterbosch</author>
     <title>Optocoupler</title>
-    <label>IC</label>
+    <label>U</label>
     <date>2008-11-12</date>
     <tags>
         <tag>IC</tag>
