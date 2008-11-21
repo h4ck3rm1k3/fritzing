@@ -926,7 +926,12 @@ void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> 
 	bool c1 = connectsWithin(m_connector1, in, wires);
 	if (wires.count() == 1) {
 		if (c0 == false && c1 == false) {
-			in.insert(this);
+			if (m_connector0->connectionsCount() == 0 && m_connector1->connectionsCount() == 0) {
+				in.insert(this);
+				return;
+			}
+
+			// wire is connected, but not within so don't drag it
 			return;
 		}
 
@@ -961,7 +966,9 @@ void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> 
 	}
 		
 	if (c0) out.insert(this, m_connector0);
-	out.insert(this, m_connector1);
+	else if (c1) out.insert(this, m_connector1);
+
+	// connected but not within, so no dragging
 }
 
 bool Wire::connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires) {

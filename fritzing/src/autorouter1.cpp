@@ -658,8 +658,8 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	Wire * wireObstacle = dynamic_cast<Wire *>(nearestObstacle);
 	bool prePolyResult = false;
 	if (wireObstacle == NULL) {
-		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(nearestObstacle);
 		/*
+		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(nearestObstacle);
 		DebugDialog::debug(QString("nearest obstacle connectoritem %1 %2 %3")
 					.arg(ci->connectorStuffID())
 					.arg(ci->attachedToTitle())
