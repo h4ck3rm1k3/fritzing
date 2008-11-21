@@ -1,12 +1,10 @@
-red,#40044D
 black,#000000
-blue,#142F4D
-yellow,#735700
-green,#004D1C
-white,#997D7D
-brown,#662A00
-purple,#640066
-violet,#1A004D
 teal,#004D4D
-grey,#4D4D4D
-olive,#3F4D00
+pink #990066
+green,#1C8C44
+white,#C2A5A5
+brown,#803400
+purple,#4A1380
+red,#800700
+olive,#768000
+grey,#665252
