@@ -145,8 +145,15 @@ void PartsEditorViewImageWidget::setSvgFilePath(QString filePath) {
 
 	QString first;
 	QString second;
-	if(filePath.contains(folder)) {
-		QString svgFile = filePath.remove(folder+"/");
+
+	Qt::CaseSensitivity cs = Qt::CaseSensitive;
+#ifdef Q_WS_WIN
+	// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
+	// but the file dialog returns a string beginning with "C:"
+	cs = Qt::CaseInsensitive;
+#endif
+	if(filePath.contains(folder, cs)) {
+		QString svgFile = filePath.remove(folder+"/", cs);
 		first = folder;
 		second = svgFile;
 	} else {

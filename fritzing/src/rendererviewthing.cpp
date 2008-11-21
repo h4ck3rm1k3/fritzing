@@ -25,8 +25,25 @@ $Date$
 ********************************************************************/
 
 #include "rendererviewthing.h"
-#include <QSvgRenderer>
 #include <QPainter>
+
+
+FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
+{
+}
+
+bool FSvgRenderer::load ( const QString & filename ) {
+	bool result = QSvgRenderer::load(filename);
+	if (result) {
+		m_filename = filename;
+	}
+	return result;
+}
+
+const QString & FSvgRenderer::filename() {
+	return m_filename;
+}
+
 
 RendererViewThing::RendererViewThing(  )
 	: ViewThing()
@@ -43,6 +60,8 @@ QSvgRenderer * RendererViewThing::get(long /* ViewLayer::ViewLayerID */ layerID)
 }
 
 QPixmap *RendererViewThing::getPixmap(ViewLayer::ViewLayerID viewLayerId, QSize size) {
+	// TODO: cache pixmap
+
 	QPixmap *pixmap = NULL;
 	QSvgRenderer * renderer = get((long)viewLayerId);
 	if (renderer) {

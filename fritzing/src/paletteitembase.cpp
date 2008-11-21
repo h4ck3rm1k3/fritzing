@@ -375,7 +375,7 @@ QSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 			tempPath = getApplicationSubFolderPath("parts") +"/"+ PaletteItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
 		}
 
-    	renderer = new QSvgRenderer();
+    	renderer = new FSvgRenderer();
     	QStringList possibleFolders;
     	possibleFolders << "core" << "contrib" << "user";
 		bool gotOne = false;

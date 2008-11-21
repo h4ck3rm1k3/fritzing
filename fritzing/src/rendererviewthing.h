@@ -33,6 +33,19 @@ $Date$
 #include "viewthing.h"
 #include "viewlayer.h"
 
+
+class FSvgRenderer : public QSvgRenderer
+{
+public:
+	FSvgRenderer(QObject * parent = 0);
+
+	bool load(const QString & filename);
+	const QString & filename();
+
+protected:
+	QString m_filename;
+};
+
 class RendererViewThing : public ViewThing
 {
 

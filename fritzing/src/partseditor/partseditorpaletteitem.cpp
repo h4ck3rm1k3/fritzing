@@ -165,7 +165,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 	setViewLayerID(viewLayerID, viewLayers);
 	QSvgRenderer * renderer = viewThing->get((long)m_viewIdentifier);
 	if (renderer == NULL) {
-    	renderer = new QSvgRenderer();
+    	renderer = new FSvgRenderer();
     	if (m_svgStrings == NULL) {
     		// TODO Mariano: Copied from paletteitembase::setUpImage (extract what's in common)
 			LayerAttributes layerAttributes;

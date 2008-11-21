@@ -2840,6 +2840,14 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 
 void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
 
+	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
+		.arg(fromConnectorItem->attachedToTitle())
+		.arg(fromConnectorItem->attachedToID())
+		.arg(fromConnectorItem->connectorStuffID())
+		.arg(toConnectorItem->attachedToTitle())
+		.arg(toConnectorItem->attachedToID())
+		.arg(toConnectorItem->connectorStuffID())
+	);
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
 		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {

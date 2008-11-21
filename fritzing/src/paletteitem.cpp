@@ -56,15 +56,10 @@ bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier vi
 
 	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
     if (result && renderPixmap) {
-		RendererViewThing * viewThing = dynamic_cast<RendererViewThing *>(modelPart->modelPartStuff()->viewThing());
-		if (viewThing != NULL) {
-			QSvgRenderer * renderer = viewThing->get((long)  /*m_viewIdentifier*/  m_viewLayerID);
-			if (renderer != NULL) {
-				m_pixmap = new QPixmap(m_size);
-				m_pixmap->fill(Qt::transparent);
-				QPainter painter(m_pixmap);
-				renderer->render(&painter);
-				painter.end();
+		if (m_pixmap == NULL) {
+			RendererViewThing * viewThing = dynamic_cast<RendererViewThing *>(modelPart->modelPartStuff()->viewThing());
+			if (viewThing != NULL) {
+				m_pixmap = viewThing->getPixmap(m_viewLayerID, m_size);
 			}
 		}
    	}
