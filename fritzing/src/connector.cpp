@@ -250,7 +250,7 @@ bool Connector::setUpConnector(QSvgRenderer * renderer, ItemBase::ViewIdentifier
 		QMatrix matrix0 = renderer->matrixForElement(connectorID);
 
 		// TODO: all parts should either have connectors with or without a matrix
-		if (matrix0.isIdentity() && viewIdentifier == ItemBase::PCBView) {
+		if (matrix0.isIdentity()) {
 			QRectF viewBox = renderer->viewBoxF();
 			QSize defaultSize = renderer->defaultSize();
 			/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorStuffID())

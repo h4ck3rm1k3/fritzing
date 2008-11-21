@@ -228,32 +228,6 @@ void PaletteItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	}
 }
 
-/*
-void PaletteItemBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	QPointF oldPos = pos();
-	ItemBase::mouseMoveEvent(event);
-	QPointF newPos = pos();
-
-
-	if (newPos != oldPos) {
-		// newPos == oldPos occurs when the mouse is out of the sketch view
-
-		updateConnections();
-		findConnectorsUnder();
-		if (m_sticky) {
-			QPointF d = event->scenePos() - m_stickyPos;
-			foreach (ItemBase * itemBase, m_stickyList.keys()) {
-				if (!itemBase->stickyEnabled(this)) continue;
-
-				QPointF p = m_stickyList.value(itemBase) + d ;
-				itemBase->setItemPos(p);
-				itemBase->updateConnections();
-			}
-		}
-	}
-}
-*/
-
 void PaletteItemBase::findConnectorsUnder() {
 	if (itemType() == ModelPart::Breadboard || itemType() == ModelPart::Board) {
 		// don't try to map connectors when we drag a breadboard: it's too damn slow
