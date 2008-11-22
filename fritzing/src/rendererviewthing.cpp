@@ -40,6 +40,10 @@ bool FSvgRenderer::load ( const QString & filename ) {
 	return result;
 }
 
+bool FSvgRenderer::load ( const QByteArray & contents ) {    
+	return QSvgRenderer::load(contents);
+}
+
 const QString & FSvgRenderer::filename() {
 	return m_filename;
 }
