@@ -416,10 +416,10 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 		if (connectorItemUnder->connector() == NULL) continue;			// for now; this is probably a busConnectorItem
 		if (childItems().contains(connectorItemUnder)) continue;
 		if (!connectorItemOver->connector()->connectionIsAllowed(connectorItemUnder->connector())) {
-			break;
+			continue;
 		}
 		if (connectorItemUnder->connectedToItems().contains(connectorItemOver)) {
-			break;		// already connected
+			continue;		// already connected
 		}
 
 		//if (connector->attachedToItemType() == ModelPart::Wire) {
