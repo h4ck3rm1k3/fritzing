@@ -322,6 +322,9 @@ long ModelPart::modelIndex() {
 
 void ModelPart::setModelIndex(long index) {
 	m_index = index;
+	if (index >= nextIndex) {
+		nextIndex = index + 1;
+	}
 }
 
 void ModelPart::initConnections(QHash<long, ModelPart *> & partHash) {
