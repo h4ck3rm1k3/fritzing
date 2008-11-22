@@ -40,7 +40,7 @@ public:
 	FSvgRenderer(QObject * parent = 0);
 
 	bool load(const QString & filename);
-	bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename );     // for SvgSplitter loads
+	bool load ( const QByteArray & contents, const QString & filename );     // for SvgSplitter loads
 	const QString & filename();
 
 public:
