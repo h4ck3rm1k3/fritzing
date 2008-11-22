@@ -253,6 +253,9 @@ protected:
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
 	void testForReturningVirtuals(ConnectorItem * fromConnectorItem, ItemBase * target, QSet <VirtualWire *> & virtualWires);
+	//void restoreDisconnectors();
+	//void collectDisconnectors(ItemBase * item);
+	//void dealWithVirtualDisconnections(ConnectorItem * src, ConnectorItem * dest);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -381,6 +384,7 @@ protected:
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;
 	bool m_dealWithRatsNestEnabled;
+	QHash<ConnectorItem *, ConnectorItem *> m_disconnectors;
 };
 
 #endif

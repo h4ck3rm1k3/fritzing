@@ -1506,6 +1506,20 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		paletteItem->collectWireConnectees(wires);
 	}
 
+	/*
+	m_disconnectors.clear();
+	if (m_viewIdentifier == ItemBase::BreadboardView) {
+		foreach (ItemBase * item, m_savedItems) {
+			collectDisconnectors(item);
+		}
+
+		foreach (ConnectorItem * connectorItem, m_disconnectors.keys()) {
+			connectorItem->connectorHover(NULL, true);
+			m_disconnectors.value(connectorItem)->connectorHover(NULL, true);
+		}
+	}
+*/
+
 	foreach (Wire * wire, wires) {
 		if (m_savedItems.contains(wire)) continue;
 
@@ -1520,6 +1534,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		wire->saveGeometry();
 	}
 
+	m_autoScrollX = m_autoScrollY = 0;
 	connect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
 
 	// do something with wires--chained, wires within, wires without
@@ -1644,6 +1659,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 
 	m_autoScrollTimer.stop();
 	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
+	//restoreDisconnectors();
 	QGraphicsView::mouseReleaseEvent(event);
 
 	if (m_connectorDragWire != NULL) {
@@ -4138,3 +4154,64 @@ void SketchWidget::autoScrollTimeout()
 
 	moveItems(m_globalPos);
 }
+
+/* 
+
+void SketchWidget::collectDisconnectors(ItemBase * item) {
+	if (item->itemType() == ModelPart::Breadboard || item->itemType() == ModelPart::Board) return;
+
+	foreach (QGraphicsItem * childItem, item->childItems()) {
+		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (fromConnectorItem == NULL) return;
+		if (fromConnectorItem->connectorType() != Connector::Male) continue;
+
+		ConnectorItem * disconnectee = NULL;
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			if (toConnectorItem->connectorType() == Connector::Female && !m_savedItems.contains(toConnectorItem->attachedTo())) {
+				m_disconnectors.insert(fromConnectorItem, toConnectorItem);
+				fromConnectorItem->tempConnectTo(toConnectorItem);
+				toConnectorItem->tempConnectTo(fromConnectorItem);
+				disconnectee = toConnectorItem;
+				break;
+			}
+		}
+
+		if (disconnectee) {
+			// deal with bus connections
+			dealWithVirtualDisconnections(disconnectee, fromConnectorItem);
+			dealWithVirtualDisconnections(fromConnectorItem, disconnectee);
+		}
+	}
+}
+
+void SketchWidget::dealWithVirtualDisconnections(ConnectorItem * source, ConnectorItem * dest) 
+{
+	Bus* bus = source->bus();
+	if (bus == NULL) return;
+
+	foreach (ConnectorItem * toConnectorItem, dest->connectedToItems()) {
+		if (toConnectorItem->attachedTo()->getVirtual()) {
+			Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+			ConnectorItem * otherEnd = wire->otherConnector(toConnectorItem);
+			foreach (ConnectorItem * otherConnectorToItem, otherEnd->connectedToItems()) {
+				if (otherConnectorToItem->bus() == bus) {
+					m_disconnectors.insert(dest, source);
+					dest->tempConnectTo(toConnectorItem);
+					source->tempConnectTo(dest);
+					break;
+				}
+			}
+		}
+	}
+}
+
+void SketchWidget::restoreDisconnectors() {
+	foreach (ConnectorItem * from, m_disconnectors.keys()) {
+		ConnectorItem * to = m_disconnectors.value(from);
+		from->tempConnectTo(to);
+		to->tempConnectTo(from);
+	}
+	m_disconnectors.clear();
+}
+
+*/
