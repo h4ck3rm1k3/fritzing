@@ -379,6 +379,7 @@ protected:
 	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;
+	bool m_dealWithRatsNestEnabled;
 };
 
 #endif

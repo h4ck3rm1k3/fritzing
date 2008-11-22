@@ -63,6 +63,7 @@ $Date$
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_dealWithRatsNestEnabled = true;
 	m_ignoreSelectionChangeEvents = false;
 	m_droppingItem = NULL;
 	m_chainDrag = false;
@@ -164,6 +165,8 @@ void SketchWidget::loadFromModel() {
 	ModelPart* root = m_sketchModel->root();
 	QHash<long, ItemBase *> newItems;
 	QHash<ItemBase *, QDomElement *> itemDoms;
+	m_dealWithRatsNestEnabled = false;
+	m_ignoreSelectionChangeEvents = true;
 
 	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
 
@@ -213,6 +216,7 @@ void SketchWidget::loadFromModel() {
 		delete dom;
 	}
 
+	m_dealWithRatsNestEnabled = true;
 
 	// redraw the ratsnest
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
@@ -308,6 +312,7 @@ void SketchWidget::loadFromModel() {
 
 	this->scene()->clearSelection();
 	cleanUpWires(false);
+	m_ignoreSelectionChangeEvents = false;
 }
 
 ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id) {
@@ -2829,11 +2834,13 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	}
 
 
-	// for now treat them the same
-	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
-		dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
-		if (m_viewIdentifier == ItemBase::PCBView) {
-			updateRatsnestStatus();
+	if (m_dealWithRatsNestEnabled) {
+		// for now treat them the same
+		if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
+			dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
+			if (m_viewIdentifier == ItemBase::PCBView) {
+				updateRatsnestStatus();
+			}
 		}
 	}
 }

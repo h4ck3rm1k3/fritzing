@@ -568,8 +568,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	if(m_currentWidget) {
 		disconnect(
-			m_currentWidget->scene(),
-			SIGNAL(selectionChanged()),
+			m_currentWidget,
+			SIGNAL(selectionChangedSignal()),
 			this,
 			SLOT(updateTransformationActions())
 		);
@@ -578,8 +578,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	if (widget == NULL) return;
 
 	connect(
-		m_currentWidget->scene(),
-		SIGNAL(selectionChanged()),
+		m_currentWidget,					// don't connect directly to the scene here, connect to the widget's signal
+		SIGNAL(selectionChangedSignal()),
 		this,
 		SLOT(updateTransformationActions())
 	);
