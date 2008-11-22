@@ -42,7 +42,7 @@ public:
 protected:
 	void paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );	
 	void connectionChange(ConnectorItem *);
- 	QSvgRenderer * setUpConnectors(class ModelPart *, ItemBase::ViewIdentifier);
+ 	class FSvgRenderer * setUpConnectors(class ModelPart *, ItemBase::ViewIdentifier);
 	void hideConnectors();	
 };
 

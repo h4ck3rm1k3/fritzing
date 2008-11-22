@@ -159,58 +159,69 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
     if (modelPartStuff == NULL) return false;
     if (modelPartStuff->domDocument() == NULL) return false;
 
-	modelPartStuff->setViewThing(new RendererViewThing());
-
-	RendererViewThing * viewThing = dynamic_cast<RendererViewThing *>(modelPartStuff->viewThing());
 	setViewLayerID(viewLayerID, viewLayers);
-	QSvgRenderer * renderer = viewThing->get((long)m_viewIdentifier);
+
+	if (m_svgStrings == NULL) {
+		// TODO Mariano: Copied from paletteitembase::setUpImage (extract what's in common)
+		LayerAttributes layerAttributes;
+		if (modelPartStuff->domDocument() ) {
+			bool result = layerAttributes.getSvgElementID(modelPartStuff->domDocument(), viewIdentifier, viewLayerID);
+			if (!result) return false;
+		}
+		QDir dir(modelPartStuff->path());			// is a path to a filename
+		dir.cdUp();									// lop off the filename
+		dir.cdUp();									// parts root
+		StringPair tempPath;
+		tempPath.first = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir;
+		tempPath.second = "%1/" + layerAttributes.filename();
+
+		QStringList possibleFolders;
+		possibleFolders << "core" << "contrib" << "user";
+		bool gotOne = false;
+		for(int i=0; i < possibleFolders.size(); i++) {
+			if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
+				m_svgStrings = new SvgAndPartFilePath();
+				m_svgStrings->setPartFolderPath(layerAttributes.layerName());
+				m_svgStrings->setCoreContribOrUser(tempPath.first);
+				m_svgStrings->setFileRelativePath(tempPath.second.arg(possibleFolders[i]));
+				gotOne = true;
+				break;
+			}
+		}
+
+		if(!gotOne) {
+			//QMessageBox::information( NULL, QObject::tr("Fritzing"),
+				//					 QObject::tr("The file %1 is not a Fritzing file (6).").arg(tempPath.arg(possibleFolders[0])));
+			return false;
+		}
+	}
+
+
+	// disable image caching because otherwise when the user wants to set up the part with a new image
+	// the old image is reloaded from the cache, based on the moduleID
+	// make sure not to save the changed image in the cache because it will affect the original part
+
+	// eventually, perhaps, restore the cache when the original part is loaded
+	// and disable it when the user is changing images
+
+	//FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartStuff->moduleID(), viewLayerID);
+	FSvgRenderer * renderer = NULL;
 	if (renderer == NULL) {
-    	renderer = new FSvgRenderer();
-    	if (m_svgStrings == NULL) {
-    		// TODO Mariano: Copied from paletteitembase::setUpImage (extract what's in common)
-			LayerAttributes layerAttributes;
-			if (modelPartStuff->domDocument() ) {
-				bool result = layerAttributes.getSvgElementID(modelPartStuff->domDocument(), viewIdentifier, viewLayerID);
-				if (!result) return false;
-			}
-    		QDir dir(modelPartStuff->path());			// is a path to a filename
-			dir.cdUp();									// lop off the filename
-			dir.cdUp();									// parts root
-			StringPair tempPath;
-			tempPath.first = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir;
-			tempPath.second = "%1/" + layerAttributes.filename();
-
-			QStringList possibleFolders;
-			possibleFolders << "core" << "contrib" << "user";
-			bool gotOne = false;
-			for(int i=0; i < possibleFolders.size(); i++) {
-				if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
-					m_svgStrings = new SvgAndPartFilePath();
-					m_svgStrings->setPartFolderPath(layerAttributes.layerName());
-					m_svgStrings->setCoreContribOrUser(tempPath.first);
-					m_svgStrings->setFileRelativePath(tempPath.second.arg(possibleFolders[i]));
-					gotOne = true;
-					break;
-				}
-			}
-
-			if(!gotOne) {
-				//QMessageBox::information( NULL, QObject::tr("Fritzing"),
-					//					 QObject::tr("The file %1 is not a Fritzing file (6).").arg(tempPath.arg(possibleFolders[0])));
+		QString fn = m_svgStrings->coreContribOrUser()+(!m_svgStrings->fileRelativePath().isEmpty()?"/"+m_svgStrings->fileRelativePath():"");
+		renderer = FSvgRenderer::getByFilename(fn, viewLayerID);
+		if (renderer == NULL) {
+			renderer = new FSvgRenderer();
+			if (!renderer->load(fn)) {
+				QMessageBox::information( NULL, QObject::tr("Fritzing"),
+						QObject::tr("The file %1 is not a Fritzing file (6).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath()));
 				delete renderer;
 				return false;
 			}
-    	}
-		if (!renderer->load(m_svgStrings->coreContribOrUser()+(!m_svgStrings->fileRelativePath().isEmpty()?"/"+m_svgStrings->fileRelativePath():""))) {
-			QMessageBox::information( NULL, QObject::tr("Fritzing"),
-					QObject::tr("The file %1 is not a Fritzing file (6).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath()));
-			delete renderer;
-			return false;
-		} else {
-			createSvgFile(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath());
 		}
+		
+		createSvgFile(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath());
+		//FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
 
-		viewThing->set(m_viewLayerID, renderer);
 	}
 
 	this->setZValue(this->z());

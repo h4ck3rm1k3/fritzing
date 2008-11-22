@@ -33,7 +33,6 @@ $Date$
 
 ModelPartStuff::ModelPartStuff() {
 	m_moduleID = "";
-	m_viewThing = NULL;
 	m_domDocument = NULL;
 	m_path = "";
 	m_connectorsInitialized = false;
@@ -42,7 +41,6 @@ ModelPartStuff::ModelPartStuff() {
 
 ModelPartStuff::ModelPartStuff(QDomDocument * domDocument, const QString & path) {
 	m_moduleID = "";
-	m_viewThing = NULL;
 	m_domDocument = domDocument;
 	m_path = path;
 	m_connectorsInitialized = false;
@@ -104,14 +102,6 @@ void ModelPartStuff::populateTagCollection(QDomElement parent, QMultiHash<QStrin
 			}
 		}
 	}
-}
-
-void ModelPartStuff::setViewThing(ViewThing * viewThing) {
-	m_viewThing = viewThing;
-}
-
-ViewThing * ModelPartStuff::viewThing() {
-	return m_viewThing;
 }
 
 void ModelPartStuff::setDomDocument(QDomDocument * domDocument) {

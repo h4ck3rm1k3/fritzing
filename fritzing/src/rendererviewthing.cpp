@@ -27,6 +27,9 @@ $Date$
 #include "rendererviewthing.h"
 #include <QPainter>
 
+QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
+QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
+
 
 FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
 {
@@ -40,34 +43,37 @@ bool FSvgRenderer::load ( const QString & filename ) {
 	return result;
 }
 
-bool FSvgRenderer::load ( const QByteArray & contents ) {    
-	return QSvgRenderer::load(contents);
+bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename) {
+	bool result = QSvgRenderer::load(contents);
+	if (result) {
+		m_filename = filename;
+	}
+	return result;
 }
 
 const QString & FSvgRenderer::filename() {
 	return m_filename;
 }
 
+FSvgRenderer * FSvgRenderer::getByFilename(const QString & filename, ViewLayer::ViewLayerID viewLayerID) {
+	RendererHash * rendererHash = m_filenameRendererHash.value(filename);
+	if (rendererHash == NULL) return NULL;
 
-RendererViewThing::RendererViewThing(  )
-	: ViewThing()
-{
-
+	return rendererHash->value(viewLayerID, NULL);
 }
 
-void RendererViewThing::set(long /* ViewLayer::ViewLayerID */ layerID, QSvgRenderer * renderer) {
-	m_hash.insert(layerID, renderer);
+FSvgRenderer * FSvgRenderer::getByModuleID(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID) {
+	RendererHash * rendererHash = m_moduleIDRendererHash.value(moduleID);
+	if (rendererHash == NULL) return NULL;
+
+	return rendererHash->value(viewLayerID, NULL);
 }
 
-QSvgRenderer * RendererViewThing::get(long /* ViewLayer::ViewLayerID */ layerID) {
-	return m_hash.value(layerID);
-}
-
-QPixmap *RendererViewThing::getPixmap(ViewLayer::ViewLayerID viewLayerId, QSize size) {
-	// TODO: cache pixmap
+QPixmap * FSvgRenderer::getPixmap(const QString & moduleID, ViewLayer::ViewLayerID viewLayerId, QSize size) {
+	// TODO: cache pixmap by size?
 
 	QPixmap *pixmap = NULL;
-	QSvgRenderer * renderer = get((long)viewLayerId);
+	QSvgRenderer * renderer = getByModuleID(moduleID, viewLayerId);
 	if (renderer) {
 		pixmap = new QPixmap(size);
 		pixmap->fill(Qt::transparent);
@@ -77,3 +83,19 @@ QPixmap *RendererViewThing::getPixmap(ViewLayer::ViewLayerID viewLayerId, QSize 
 	}
 	return pixmap;
 }
+
+void FSvgRenderer::set(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID, FSvgRenderer * renderer) {
+	RendererHash * rendererHash = m_filenameRendererHash.value(renderer->filename());
+	if (rendererHash == NULL) {
+		rendererHash = new RendererHash();
+		m_filenameRendererHash.insert(renderer->filename(), rendererHash);
+	}
+	rendererHash->insert(viewLayerID, renderer);
+	rendererHash = m_moduleIDRendererHash.value(moduleID);
+	if (rendererHash == NULL) {
+		rendererHash = new RendererHash();
+		m_moduleIDRendererHash.insert(moduleID, rendererHash);
+	}
+	rendererHash->insert(viewLayerID, renderer);
+}
+

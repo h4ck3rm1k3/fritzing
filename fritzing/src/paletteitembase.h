@@ -75,7 +75,7 @@ public:
 	 */
 
 public:
-	static QSvgRenderer * setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
+	static class FSvgRenderer * setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
 
 signals:
 	void connectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
@@ -86,7 +86,7 @@ protected:
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void setUpConnectors(QSvgRenderer *, bool ignoreTerminalPoints);
+    void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void transformItem(QTransform currTransf);
 	void findConnectorsUnder();
 

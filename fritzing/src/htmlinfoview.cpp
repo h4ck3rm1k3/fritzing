@@ -224,10 +224,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnab
 	QPixmap *pixmap = NULL;
 	PaletteItem *pitem = dynamic_cast<PaletteItem *>(base);
 	if(pitem) {
-		RendererViewThing * viewThing = dynamic_cast<RendererViewThing*>(pitem->modelPart()->modelPartStuff()->viewThing());
-		if (viewThing) {
-			pixmap = viewThing->getPixmap(ViewLayer::Icon, pitem->size());
-		}
+		pixmap = FSvgRenderer::getPixmap(base->modelPart()->moduleID(), ViewLayer::Icon, pitem->size());
 	}
 
 	QString retval = appendItemStuff(base->modelPart(), id, swappingEnabled, pixmap, title);

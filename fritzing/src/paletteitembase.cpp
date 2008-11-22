@@ -310,7 +310,7 @@ void PaletteItemBase::collectWireConnecteesAux(QSet<Wire *> & wires) {
 bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
 {
 	LayerAttributes layerAttributes;
-	QSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
+	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
 	if (renderer == NULL) {
 		return false;
 	}
@@ -343,7 +343,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 	return true;
 }
 
-QSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
+FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
 {
     ModelPartStuff * modelPartStuff = modelPart->modelPartStuff();
 
@@ -357,14 +357,9 @@ QSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 		//.arg(this->z())
 		//.arg(ViewLayer::viewLayerNameFromID(viewLayerID))  );
 
-	if (modelPartStuff->viewThing() == NULL) {
-		modelPartStuff->setViewThing(new RendererViewThing());
-	}
 
-	RendererViewThing * viewThing = dynamic_cast<RendererViewThing *>(modelPartStuff->viewThing());
-	QSvgRenderer * renderer = viewThing->get(viewLayerID /* viewIdentifier */);			// all view layers now share the same renderer
+	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartStuff->moduleID(), viewLayerID);
 	if (renderer == NULL) {
-
 		QString tempPath;
 		if(modelPartStuff->path() != ___emptyString___) {
 			QDir dir(modelPartStuff->path());			// is a path to a filename
@@ -375,46 +370,55 @@ QSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 			tempPath = getApplicationSubFolderPath("parts") +"/"+ PaletteItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
 		}
 
-    	renderer = new FSvgRenderer();
     	QStringList possibleFolders;
     	possibleFolders << "core" << "contrib" << "user";
 		bool gotOne = false;
-    	for(int i=0; i < possibleFolders.size(); i++) {
-			QString filename = tempPath.arg(possibleFolders[i]);
-
-			if (layerAttributes.multiLayer()) {
-				// need to treat create "virtual" svg file for each layer
-				SvgFileSplitter svgFileSplitter;
-				if (svgFileSplitter.split(filename, layerAttributes.layerName())) {
-					if (renderer->load(svgFileSplitter.byteArray())) {
-						gotOne = true;
-						break;
+		QString filename;
+		foreach (QString possibleFolder, possibleFolders) {
+			filename = tempPath.arg(possibleFolder);
+			if (QFileInfo( filename ).exists()) {
+				gotOne = true;
+				break;
+			}
+		}
+		if (gotOne) {
+			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
+			if (renderer == NULL) {
+				gotOne = false;
+				renderer = new FSvgRenderer();
+				if (layerAttributes.multiLayer()) {
+					// need to treat create "virtual" svg file for each layer
+					SvgFileSplitter svgFileSplitter;
+					if (svgFileSplitter.split(filename, layerAttributes.layerName())) {
+						if (renderer->load(svgFileSplitter.byteArray(), filename)) {
+							gotOne = true;
+						}
 					}
 				}
-			}
-			else {
-				// only one layer, just load it directly
-				if (renderer->load(filename)) {
-					layerAttributes.setFilename(filename);
-					gotOne = true;
-					break;
+				else {
+					// only one layer, just load it directly
+					if (renderer->load(filename)) {
+						layerAttributes.setFilename(filename);
+						gotOne = true;
+					}
 				}
+				if (!gotOne) {
+					delete renderer;
+					renderer = NULL;
+				}
+			}
+			if (renderer) {
+				FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
 			}
     	}
 
-		if(!gotOne) {
-			delete renderer;
-			return NULL;
-		}
-
-
-		viewThing->set(viewLayerID /* viewIdentifier */  , renderer);
+		//viewThing->set(viewLayerID, renderer);
 	}
 
 	return renderer;
 }
 
-void PaletteItemBase::setUpConnectors(QSvgRenderer * renderer, bool ignoreTerminalPoints) {
+void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
 	if (m_modelPart->connectors().count() <= 0) return;
 
 	foreach (Connector * connector, m_modelPart->connectors().values()) {

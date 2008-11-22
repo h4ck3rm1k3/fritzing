@@ -30,9 +30,9 @@ $Date$
 #include <QHash>
 #include <QSvgRenderer>
 
-#include "viewthing.h"
 #include "viewlayer.h"
 
+typedef QHash<ViewLayer::ViewLayerID, class FSvgRenderer *> RendererHash;
 
 class FSvgRenderer : public QSvgRenderer
 {
@@ -40,27 +40,21 @@ public:
 	FSvgRenderer(QObject * parent = 0);
 
 	bool load(const QString & filename);
-	bool load ( const QByteArray & contents);     // for SvgSplitter loads
+	bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename );     // for SvgSplitter loads
 	const QString & filename();
+
+public:
+	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);
+	static FSvgRenderer * getByModuleID(const QString & moduleID, ViewLayer::ViewLayerID);
+	static FSvgRenderer * getByFilename(const QString & filename, ViewLayer::ViewLayerID);
+	static QPixmap * getPixmap(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID, QSize size);
 
 protected:
 	QString m_filename;
+
+	static QHash<QString, RendererHash * > m_filenameRendererHash;
+	static QHash<QString, RendererHash * > m_moduleIDRendererHash;
 };
 
-class RendererViewThing : public ViewThing
-{
-
-public:
-	RendererViewThing();
-
-	QSvgRenderer * get(long /* ViewLayer::ViewLayerID */);
-	void set(long /* ViewLayer::ViewLayerID */, QSvgRenderer *);
-
-	QPixmap *getPixmap(ViewLayer::ViewLayerID viewLayerId, QSize size);
-
-protected:
-	QHash<long /* ViewLayer::ViewLayerID */, QSvgRenderer *> m_hash;
-
-};
 
 #endif

@@ -48,8 +48,8 @@ void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * op
 void VirtualWire::connectionChange(ConnectorItem * ) {
 }
 
-QSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) {
-	QSvgRenderer * renderer = Wire::setUpConnectors(modelPart, viewIdentifier);
+FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) {
+	FSvgRenderer * renderer = Wire::setUpConnectors(modelPart, viewIdentifier);
 	hideConnectors();
 	return renderer;
 }

@@ -41,6 +41,7 @@ $Date$
 #include "connectorstuff.h"
 #include "layerattributes.h"
 #include "busconnectoritem.h"
+#include "rendererviewthing.h"
 
 #include <stdlib.h>
 
@@ -90,7 +91,7 @@ Wire::~Wire() {
 
 void Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers ) {
 	ItemBase::setViewLayerID(viewLayerID, viewLayers);
-	QSvgRenderer * svgRenderer = setUpConnectors(m_modelPart, m_viewIdentifier);
+	FSvgRenderer * svgRenderer = setUpConnectors(m_modelPart, m_viewIdentifier);
 	if (svgRenderer != NULL) {
 		initEnds(m_viewGeometry, svgRenderer->viewBox());
 	}
@@ -524,10 +525,10 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 }
 
 
-QSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) {
+FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) {
 
 	LayerAttributes layerAttributes;
-	QSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, layerAttributes);
+	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, layerAttributes);
 	if (renderer == NULL) {
 		return NULL;
 	}

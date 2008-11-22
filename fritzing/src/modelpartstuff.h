@@ -34,7 +34,6 @@ $Date$
 #include <QStringList>
 #include <QHash>
 #include <QDate>
-#include "viewthing.h"
 
 
 class ModelPartStuff
@@ -43,8 +42,6 @@ class ModelPartStuff
 public:
 	ModelPartStuff();
 	ModelPartStuff(QDomDocument *, const QString & path);
-	void setViewThing(ViewThing * );
-	ViewThing * viewThing();
 	void setDomDocument(QDomDocument *);
 	QDomDocument * domDocument();
 
@@ -100,7 +97,6 @@ protected:
 	void populateTagCollection(QDomElement parent, QMultiHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
 
 	QDomDocument* m_domDocument;
-	ViewThing * m_viewThing;				// a place for view item info that is shared across views
 
 	QString m_uri;
 	QString m_moduleID;

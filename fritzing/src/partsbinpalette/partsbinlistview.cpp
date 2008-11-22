@@ -29,6 +29,7 @@ $Date$
 #include "../htmlinfoview.h"
 #include "../paletteitembase.h"
 #include "../layerattributes.h"
+#include "../rendererviewthing.h"
 
 #include "partsbinlistview.h"
 
@@ -59,7 +60,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart) {
 	lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
 
 	LayerAttributes layerAttributes;
-	QSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::IconView, ViewLayer::Icon, layerAttributes);
+	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::IconView, ViewLayer::Icon, layerAttributes);
 	if (renderer != NULL) {
 		QPixmap pixmap(iconSize());   // eventually shrink this down to something or other reasonable
 		pixmap.fill(Qt::transparent);

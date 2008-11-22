@@ -31,6 +31,7 @@ $Date$
 #include "modelpart.h"
 #include "bus.h"
 #include "connectorviewthing.h"
+#include "rendererviewthing.h"
 
 
 QHash <Connector::ConnectorType, QString > Connector::names;
@@ -208,7 +209,7 @@ void Connector::setBus(Bus * bus) {
 	m_bus = bus;
 }
 
-bool Connector::setUpConnector(QSvgRenderer * renderer, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint) {
+bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint) {
 	// this code is a bit more viewish than modelish...
 
 	if (m_connectorStuff == NULL) return false;

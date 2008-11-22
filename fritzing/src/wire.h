@@ -125,7 +125,7 @@ protected:
 	void initEnds(const ViewGeometry &, QRectF defaultRect);
 	void connectionChange(ConnectorItem *);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
- 	virtual QSvgRenderer * setUpConnectors(class ModelPart *, ItemBase::ViewIdentifier);
+ 	virtual class FSvgRenderer * setUpConnectors(class ModelPart *, ItemBase::ViewIdentifier);
 	void collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained, QList<ConnectorItem *> & ends);
 	void setConnector0Rect();
 	void setConnector1Rect();

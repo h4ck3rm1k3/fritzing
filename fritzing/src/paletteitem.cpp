@@ -57,10 +57,7 @@ bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier vi
 	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
     if (result && renderPixmap) {
 		if (m_pixmap == NULL) {
-			RendererViewThing * viewThing = dynamic_cast<RendererViewThing *>(modelPart->modelPartStuff()->viewThing());
-			if (viewThing != NULL) {
-				m_pixmap = viewThing->getPixmap(m_viewLayerID, m_size);
-			}
+			m_pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), m_viewLayerID, m_size);
 		}
    	}
 
