@@ -216,9 +216,12 @@ void SketchWidget::loadFromModel() {
 		delete dom;
 	}
 
-	m_dealWithRatsNestEnabled = true;
+	if (m_viewIdentifier == ItemBase::PCBView ) {
+		updateRatsnestStatus();
+	}
 
 	// redraw the ratsnest
+	m_dealWithRatsNestEnabled = true;
 	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
 		QMultiHash<ConnectorItem *, ConnectorItem *> allConnectors;
 		foreach (ItemBase * newItem, newItems.values()) {
@@ -250,10 +253,7 @@ void SketchWidget::loadFromModel() {
 		}
 	}
 
-
-	if (m_viewIdentifier == ItemBase::PCBView) {
-		updateRatsnestStatus();
-
+	if (m_viewIdentifier == ItemBase::PCBView ) {
 		// TODO: the code below is mostly redundant to the code in updateRatsnestStatus
 
 		bool autorouted = true;
@@ -356,10 +356,11 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			wire = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
              			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 
-//			if (m_viewIdentifier == ItemBase::BreadboardView) {
-//				// hide all virtual wires in breadboard view
-//				wire->setVisible(false);
-//			}
+			// prevents virtual wires from flashing up on screen
+			if (m_viewIdentifier == ItemBase::BreadboardView) {
+				// hide all virtual wires in breadboard view
+				wire->setVisible(false);
+			}
 
 
 		}
@@ -770,7 +771,8 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 			bus = hookToBus(toConnectorItem, fromConnectorItem, parentCommand);
 			busOwner = fromConnectorItem->attachedTo();
 		}
-		else if (toConnectorItem->bus() != NULL) {
+		// both sides can have buses
+		if (toConnectorItem->bus() != NULL) {
 			bus = hookToBus(fromConnectorItem, toConnectorItem, parentCommand);
 			busOwner = toConnectorItem->attachedTo();
 		}
@@ -2838,9 +2840,6 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		// for now treat them the same
 		if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
 			dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
-			if (m_viewIdentifier == ItemBase::PCBView) {
-				updateRatsnestStatus();
-			}
 		}
 	}
 }
@@ -2968,28 +2967,6 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 		return;
 	}
 
-	QList<ConnectorItem *> fromConnectorItems;
-	QList<ConnectorItem *> fromPartsConnectorItems;
-	QList<BusConnectorItem *> fromBusConnectorItems;
-	fromConnectorItems.append(fromConnectorItem);
-	BusConnectorItem::collectEqualPotential(fromConnectorItems, fromBusConnectorItems, true, ViewGeometry::NoFlag);
-	BusConnectorItem::collectParts(fromConnectorItems, fromPartsConnectorItems);
-
-	QList<ConnectorItem *> toConnectorItems;
-	QList<ConnectorItem *> toPartsConnectorItems;
-	QList<BusConnectorItem *> toBusConnectorItems;
-	toConnectorItems.append(toConnectorItem);
-	BusConnectorItem::collectEqualPotential(toConnectorItems, toBusConnectorItems, true, ViewGeometry::NoFlag);
-	BusConnectorItem::collectParts(toConnectorItems, toPartsConnectorItems);
-
-	foreach (ConnectorItem * from, fromPartsConnectorItems) {
-		foreach (ConnectorItem * to, toPartsConnectorItems) {
-			Wire * wire = from->wiredTo(to, ViewGeometry::RatsnestFlag);
-			if (wire != NULL) {
-				deleteItem(wire, false, false);
-			}
-		}
-	}
 }
 
 Wire * SketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest) {
@@ -3545,6 +3522,10 @@ void SketchWidget::cleanUpWiresAux() {
 
 		cleanUpWire(wire, wires);
 	}
+
+	if (m_viewIdentifier == ItemBase::SchematicView || m_viewIdentifier == ItemBase::PCBView) {
+		updateRatsnestStatus();
+	}
 }
 
 void SketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
@@ -3552,7 +3533,8 @@ void SketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
 	DebugDialog::debug(QString("clean up wire %1 %2").arg(wire->id()).arg(m_viewIdentifier) );
 	switch (m_viewIdentifier) {
 		case ItemBase::BreadboardView:
-			wire->setVisible(!wire->getVirtual());
+			//wire->setVisible(!wire->getVirtual());
+			wire->setVisible(true);					// for debugging
 			return;
 		case ItemBase::SchematicView:
 			wire->setVisible(wire->getRatsnest() || wire->getTrace() || wire->getJumper());
@@ -3804,6 +3786,14 @@ void SketchWidget::addPcbViewLayers() {
 		<< ViewLayer::Jumperwires << ViewLayer::Ratsnest << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);
+
+	// disable these for now
+	ViewLayer * viewLayer = m_viewLayers.value(ViewLayer::Vias);
+	viewLayer->action()->setEnabled(false);
+	viewLayer = m_viewLayers.value(ViewLayer::Copper1);
+	viewLayer->action()->setEnabled(false);
+	viewLayer = m_viewLayers.value(ViewLayer::Keepout);
+	viewLayer->action()->setEnabled(false);
 }
 
 void SketchWidget::addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ) {
@@ -3947,9 +3937,13 @@ void SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & save
 					// the thing we're connected to is also moving, so don't disconnect
 					continue;
 				}
+
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem);
 				toConnectorItem->tempRemove(fromConnectorItem);
+
+				// if the female connector has any virtual wires pointing back to me get rid of them
+				testForReturningVirtuals(toConnectorItem, item, virtualWires);
 			}
 			else if (toConnectorItem->attachedTo()->getVirtual()) {
 				VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
@@ -3969,6 +3963,25 @@ void SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & save
 		}
 	}
 }
+
+void SketchWidget::testForReturningVirtuals(ConnectorItem * fromConnectorItem, ItemBase * target, QSet <VirtualWire *> & virtualWires) {
+	if (target->buses().count() <= 0) return;
+
+	foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
+		if (toConnectorItem->attachedTo()->getVirtual()) {
+			VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
+			ConnectorItem * other = virtualWire->otherConnector(toConnectorItem);
+			foreach (ConnectorItem * otherToConnectorItem, other->connectedToItems()) {
+				if (otherToConnectorItem->attachedTo() == target) {
+					virtualWires.insert(virtualWire);
+					return;
+				}
+			}
+		}
+	}
+
+}
+
 
 void SketchWidget::cleanUpVirtualWires(QSet<VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand) {
 	disconnectVirtualWires(virtualWires, parentCommand);
@@ -4006,7 +4019,7 @@ void SketchWidget::updateRatsnestStatus() {
 			for (int j = i + 1; j < netList->count(); j++) {
 				ConnectorItem * ci = netList->at(i);
 				ConnectorItem * cj = netList->at(j);
-				if (ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
+				if (ci->bus() && ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
 					// if connections are on the same bus on a given part
 					self[i] = false;
 					self[j] = false;
@@ -4052,6 +4065,27 @@ void SketchWidget::updateRatsnestStatus() {
 		else {
 			connectorsLeftToRoute += (todo + 1);
 		}
+	}
+
+	QSet<Wire *> deleteWires;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+
+		if (!wire->getRatsnest()) continue;
+		ConnectorItem * c0 = wire->connector0();
+		ConnectorItem * c1 = wire->connector1();
+		ConnectorItem * c0to = c0->firstConnectedToIsh();
+		ConnectorItem * c1to = c1->firstConnectedToIsh();
+		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+			if ((list->contains(c0to) && !list->contains(c1to)) || (list->contains(c1to) && !list->contains(c0to))) {
+				deleteWires.insert(wire);
+			}
+		}
+	}
+
+	foreach (Wire * wire, deleteWires) {
+		deleteItem(wire, false, false);
 	}
 
 

@@ -245,9 +245,8 @@ void BusConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorI
 		foreach (ConnectorItem * cto, connectorItem->connectedToItems()) {
 			if (connectorItems.contains(cto)) continue;
 
-			bool append = true;
+			bool append = false;
 			if (keepWires != ViewGeometry::NoFlag) {
-				append = false;
 				if ((fromWire != NULL) && fromWire->hasAnyFlag(keepWires)) {
 					// since we're coming from the right kind of wire, append the target
 					append = true;
@@ -257,6 +256,20 @@ void BusConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorI
 					if (toWire->hasAnyFlag(keepWires)) {
 						// since we're going to the right kind of wire, append the target
 						append = true;
+					}
+				}
+			}
+			else {
+				append = true;
+				if ((fromWire != NULL) && fromWire->hasAnyFlag(ViewGeometry::NotTraceJumperRatsnestFlags)) {
+					// since we're coming from the right kind of wire, append the target
+					append = false;
+				}
+				else if (cto->attachedToItemType() == ModelPart::Wire) {
+					Wire * toWire = dynamic_cast<Wire *>(cto->attachedTo());
+					if (toWire->hasAnyFlag(ViewGeometry::NotTraceJumperRatsnestFlags)) {
+						// since we're going to the right kind of wire, append the target
+						append = false;
 					}
 				}
 			}
