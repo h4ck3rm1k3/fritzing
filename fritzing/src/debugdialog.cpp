@@ -101,6 +101,10 @@ void DebugDialog::resizeEvent(QResizeEvent *e) {
 
 
 void DebugDialog::debug(QString message, QObject * ancestor) {
+#ifdef QT_NO_DEBUG
+	return;
+#endif
+
 	if (singleton == NULL) {
 		new DebugDialog();
 		//singleton->show();

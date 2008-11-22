@@ -3533,8 +3533,8 @@ void SketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
 	DebugDialog::debug(QString("clean up wire %1 %2").arg(wire->id()).arg(m_viewIdentifier) );
 	switch (m_viewIdentifier) {
 		case ItemBase::BreadboardView:
-			//wire->setVisible(!wire->getVirtual());
-			wire->setVisible(true);					// for debugging
+			wire->setVisible(!wire->getVirtual());
+			//wire->setVisible(true);					// for debugging
 			return;
 		case ItemBase::SchematicView:
 			wire->setVisible(wire->getRatsnest() || wire->getTrace() || wire->getJumper());
