@@ -162,7 +162,7 @@ ZoomComboBox QScrollBar::sub-page:vertical {
 /* ################### the sketch #################### */
 
 QToolBar QTabBar::tab {
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 	padding: 4px 10px 6px 3px;
 	min-width: 5em;
 	text-align: left;
@@ -184,7 +184,7 @@ QToolBar QTabBar::tab:selected {
 }
 
 #sketch_tabs::pane {
-	top: -2.1em;
+	top: -2.3em;
 }
 
 #sketch_tabs::tab-bar {

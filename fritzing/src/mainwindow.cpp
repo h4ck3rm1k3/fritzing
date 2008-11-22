@@ -63,12 +63,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 {
 	QFile styleSheet(":/resources/styles/fritzing.qss");
 
-	if (!styleSheet.open(QIODevice::ReadOnly)) {
-		qWarning("Unable to open :/resources/styles/fritzing.qss");
-	} else {
-		setStyleSheet(styleSheet.readAll()+___MacStyle___);
-	}
-
 	resize(740,500);
 
 	// Create dot icons
@@ -93,6 +87,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_tabWidget = new FTabWidget(this);
 	m_tabWidget->setObjectName("sketch_tabs");
 	setCentralWidget(m_tabWidget);
+
 
 	// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new SketchWidget(ItemBase::BreadboardView, this);
@@ -138,6 +133,13 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     createToolBars();
     createStatusBar();
     createDockWindows();
+
+    if (!styleSheet.open(QIODevice::ReadOnly)) {
+		qWarning("Unable to open :/resources/styles/fritzing.qss");
+	} else {
+		QString tabbarStyle = QString("QToolBar QTabBar::tab {margin-top: %1px;}").arg(m_toolbar->height()-m_tabWidget->tabBar()->height()+2);
+		setStyleSheet(styleSheet.readAll()+___MacStyle___+tabbarStyle);
+	}
 
 	m_itemMenu = new QMenu(QObject::tr("Part"), this);
 	m_itemMenu->addAction(m_rotate90cwAct);
@@ -446,17 +448,17 @@ void MainWindow::createToolBars() {
 	/* TODO: Mariano this is too hacky and requires some styling
 	 * around here and some else in the qss file
 	 */
-	QToolBar *tb = new QToolBar(this);
-	tb->setObjectName("fake_tabbar");
-	tb->setFloatable(false);
-	tb->setMovable(false);
+	m_toolbar = new QToolBar(this);
+	m_toolbar->setObjectName("fake_tabbar");
+	m_toolbar->setFloatable(false);
+	m_toolbar->setMovable(false);
 	int height = m_tabWidget->tabBar()->height();
-	tb->layout()->setMargin(0);
-	tb->setFixedHeight(height+10);
-	tb->setMinimumWidth(400); // connect to tabwidget resize event
-	tb->toggleViewAction()->setVisible(false);
-	m_tabWidget->tabBar()->setParent(tb);
-	addToolBar(tb);
+	m_toolbar->layout()->setMargin(0);
+	m_toolbar->setFixedHeight(height+10);
+	m_toolbar->setMinimumWidth(400); // connect to tabwidget resize event
+	m_toolbar->toggleViewAction()->setVisible(false);
+	m_tabWidget->tabBar()->setParent(m_toolbar);
+	addToolBar(m_toolbar);
 
 	/*	QToolBar *tb2 = new QToolBar(this);
 	tb2->setFloatable(false);

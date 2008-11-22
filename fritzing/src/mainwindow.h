@@ -263,6 +263,7 @@ protected:
     ReferenceModel *m_refModel;
     SketchModel *m_sketchModel;
     HtmlInfoView * m_infoView;
+    QToolBar *m_toolbar;
 
     QHash <long,class PartsEditorMainWindow*> m_partsEditorWindows;
 
