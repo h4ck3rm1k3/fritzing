@@ -378,7 +378,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		delete pixmap2;
 	}
 	if(pixmap3 != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3).arg(STANDARD_IMG_WIDTH).arg(STANDARD_IMG_HEIGHT));
+		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3)).arg(STANDARD_IMG_WIDTH).arg(STANDARD_IMG_HEIGHT);
 		delete pixmap3;
 	}
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartStuff()->title())
