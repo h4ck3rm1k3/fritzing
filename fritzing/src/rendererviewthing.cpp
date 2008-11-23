@@ -78,7 +78,16 @@ QPixmap * FSvgRenderer::getPixmap(const QString & moduleID, ViewLayer::ViewLayer
 		pixmap = new QPixmap(size);
 		pixmap->fill(Qt::transparent);
 		QPainter painter(pixmap);
-		renderer->render(&painter);
+		// preserve aspect ratio
+		QSize def = renderer->defaultSize();
+		qreal newW = size.width();
+		qreal newH = newW * def.height() / def.width();
+		if (newH > size.height()) {
+			newH = size.height();
+			newW = newH * def.width() / def.height();
+		}
+		QRectF bounds((size.width() - newW) / 2, (size.height() - newH) / 2, newW, newH);
+		renderer->render(&painter, bounds);
 		painter.end();
 	}
 	return pixmap;

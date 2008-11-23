@@ -71,7 +71,7 @@ protected:
 	QString appendCurrentGeometry(ItemBase *, bool doLine);
 	QString appendWireStuff(Wire* wire, long itemID);
 	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
-	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, QPixmap *pixmap = NULL, const QString title = "");
+	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, QPixmap *pixmap1 = NULL, const QString title = "");
 
 	void prepareTitleStuff(ItemBase *base, QString &title, QString &instanceTitle, QString &defaultTitle);
 	void ensureUniqueTitle(ItemBase* item, QString &title);
