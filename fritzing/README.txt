@@ -16,20 +16,21 @@ sketch files will open in future releases.
 
 
 ABOUT FRITZING
-Fritzing is an open-source initiative to support designers and artists to
-take the step from physical prototyping to actual product. We are
-creating this software in the spirit of Processing and Arduino, that
-allows the designer / artist / researcher / hobbyist to document their
-Arduino-based prototype and create a PCB layout for manufacturing.
-The complimenting website helps to share and discuss drafts and
-experiences as well as to reduce manufacturing costs.
+Fritzing is an open-source initiative to support designers and artists in
+taking the step from physical prototyping to actual product. We are
+creating this software in the spirit of Processing and Arduino. Fritzing's 
+goal is to allow the designer / artist / researcher / hobbyist to document 
+their breadboard-based prototype and create a PCB layout for 
+manufacturing.
+We hope our website will be a place for people to share and discuss 
+their projects and experiences.
 
-Fritzing is essentially an Electronic Design Automation software with a
-low entry barrier, suited for the needs of designers and artists. It uses
-the metaphor of the breadboard, so that it is easy to transfer your
-hardware sketch to the software. From there it is possible to create PCB
-layouts for turning it into a robust PCB yourself or by help of a
-manufacturer.
+Fritzing is essentially Electronic Design Automation software suited to the 
+needs of designers and artists. It uses the metaphor of the breadboard, 
+so that it is easy to transfer a hardware sketch to the software by using a 
+drag-and-drop-based GUI to copy your sketch. From there it is possible 
+to create PCB layouts for turning your prototype into a robust PCB, 
+either on your own, or with the help of a manufacturer.
 
 
 GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest
