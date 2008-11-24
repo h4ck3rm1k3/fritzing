@@ -387,7 +387,7 @@ protected:
     QIcon m_emptyIcon;
 
     // Sketch toolbar buttons
-	SketchToolButton *m_exportToPdfButton;
+	//SketchToolButton *m_exportToPdfButton;
 	SketchToolButton *m_rotateButton;
 	SketchToolButton *m_flipButton;
 	SketchToolButton *m_exportDiyButton;

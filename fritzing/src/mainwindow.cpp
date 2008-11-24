@@ -492,9 +492,9 @@ void MainWindow::createToolBars() {
 }
 
 void MainWindow::createSketchButtons() {
-	m_exportToPdfButton = new SketchToolButton(this, m_exportPdfAct);
+	/*m_exportToPdfButton = new SketchToolButton(this, m_exportPdfAct);
 	m_exportToPdfButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_pdf_icon.png"));
-	m_exportToPdfButton->setText(tr("Export"));
+	m_exportToPdfButton->setText(tr("Export"));*/
 
 	QList<QAction*> rotateMenuActions;
 	rotateMenuActions << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct;

@@ -126,8 +126,6 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 		restoreGeometry(settings.value("peditor/geometry").toByteArray());
 	}
 
-	//createCloseAction();
-	//addAction(m_closeAct);
 	installEventFilter(this);
 }
 
@@ -529,6 +527,7 @@ bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
 	if (object == this && event->type() == QEvent::ShortcutOverride) {
 		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
 		if(keyEvent && keyEvent->matches(QKeySequence::Close)) {
+			QCoreApplication::processEvents();
 			return this->close();
 		}
 	}
