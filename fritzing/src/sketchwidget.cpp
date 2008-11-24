@@ -215,6 +215,12 @@ void SketchWidget::loadFromModel() {
 		itemBase->restoreConnections(*dom,  newItems);
 		delete dom;
 	}
+	
+	foreach (ItemBase * item, newItems) {
+		if (item->sticky()) {
+			stickyScoop(item, NULL);
+		}
+	}
 
 	if (m_viewIdentifier == ItemBase::PCBView ) {
 		updateRatsnestStatus();
