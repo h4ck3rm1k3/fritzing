@@ -39,8 +39,7 @@ $Date$
 
 #define HTML_EOF "</body>\n</html>"
 #define PART_INSTANCE_DEFAULT_TITLE "Part"
-static const int STANDARD_IMG_WIDTH = 20;
-static const int STANDARD_IMG_HEIGHT = 20;
+
 
 HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QWebView(parent) {
 	setContextMenuPolicy(Qt::PreventContextMenu);
@@ -226,7 +225,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnab
 	QPixmap *pixmap1 = NULL;
 	PaletteItem *pitem = dynamic_cast<PaletteItem *>(base);
 	if(pitem) {
-		QSize size(STANDARD_IMG_WIDTH, STANDARD_IMG_HEIGHT);
+		QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
 		pixmap1 = FSvgRenderer::getPixmap(base->modelPart()->moduleID(), ViewLayer::Icon, size);
 	}
 
@@ -254,7 +253,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	prepareTitleStuff(wire, title, instanceTitle, defaultTitle);
 
 
-	QSize size(STANDARD_IMG_WIDTH, STANDARD_IMG_HEIGHT);
+	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
 	QPixmap *pixmap = FSvgRenderer::getPixmap(wire->modelPart()->moduleID(), ViewLayer::Icon, size);
 
 	ModelPart *modelPart = wire->modelPart();
@@ -268,7 +267,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	s += 		 "<div class='parttitle'>\n";
 
 	if(pixmap != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap)).arg(STANDARD_IMG_WIDTH).arg(STANDARD_IMG_HEIGHT);
+		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 	}
 
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
@@ -356,12 +355,14 @@ int HtmlInfoView::getNextTitle(QList<QGraphicsItem*> items, const QString &title
 	return max;
 }
 
-QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, QPixmap *pixmap1, const QString title) {
+QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, QPixmap *ignorePixmap, const QString title) {
 	if (modelPart == NULL) return "missing modelpart";
 	if (modelPart->modelPartStuff() == NULL) return "missing modelpart stuff";
 
 
-	QSize size(STANDARD_IMG_WIDTH, STANDARD_IMG_HEIGHT);
+	Q_UNUSED(ignorePixmap);
+	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
+	QPixmap *pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
 	QPixmap *pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
 	QPixmap *pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 
@@ -371,14 +372,14 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	}
 	s += 		 "<div class='parttitle'>\n";
 	if(pixmap1 != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap1)).arg(STANDARD_IMG_WIDTH).arg(STANDARD_IMG_HEIGHT);
+		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap1)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 	}
 	if(pixmap2 != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap2)).arg(STANDARD_IMG_WIDTH).arg(STANDARD_IMG_HEIGHT);
+		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap2)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 		delete pixmap2;
 	}
 	if(pixmap3 != NULL) {
-		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3)).arg(STANDARD_IMG_WIDTH).arg(STANDARD_IMG_HEIGHT);
+		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 		delete pixmap3;
 	}
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartStuff()->title())

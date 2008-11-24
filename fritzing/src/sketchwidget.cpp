@@ -1573,7 +1573,6 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void SketchWidget::moveItems(QPoint globalPos) {
-	//DebugDialog::debug(QString("move items %1").arg(QTime::currentTime().msec()) );
 
 	QRect r = rect();
 	QPoint q = mapFromGlobal(globalPos);
@@ -1590,6 +1589,8 @@ void SketchWidget::moveItems(QPoint globalPos) {
 		m_autoScrollX = m_autoScrollY = 0;
 		return;
 	}
+
+	//DebugDialog::debug(QString("move items %1").arg(QTime::currentTime().msec()) );
 
 	r.adjust(16,16,-16,-16);						// these should be set someplace
 	bool autoScroll = !r.contains(q);
@@ -1658,6 +1659,9 @@ void SketchWidget::moveItems(QPoint globalPos) {
 	foreach (Wire * wire, m_savedWires.keys()) {
 		wire->simpleConnectedMoved(m_savedWires.value(wire));
 	}
+	
+	//DebugDialog::debug(QString("done move items %1").arg(QTime::currentTime().msec()) );
+
 }
 
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {

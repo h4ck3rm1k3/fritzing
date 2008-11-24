@@ -70,6 +70,9 @@ static QStringList ___emptyStringList___;
 static QHash<QString, QString> ___emptyStringHash___;
 static QDir ___emptyDir___;
 
+static const int STANDARD_ICON_IMG_WIDTH = 32;
+static const int STANDARD_ICON_IMG_HEIGHT = 32;
+
 #ifdef Q_WS_MAC
 static const QString ___MacStyle___ = " QTabBar::tab {margin-bottom: 10px; min-width: 15ex;} ";
 #else

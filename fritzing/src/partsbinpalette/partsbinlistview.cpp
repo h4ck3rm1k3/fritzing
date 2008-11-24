@@ -36,13 +36,11 @@ $Date$
 PartsBinListView::PartsBinListView( QWidget * parent ) : QListWidget( parent ) {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
-	m_pixmap = NULL;
 	setMouseTracking( true );
 	setSpacing(2);
 	setIconSize(QSize(16,16));
 }
 PartsBinListView::~PartsBinListView() {
-	delete m_pixmap;
 }
 
 void PartsBinListView::doClear() {
@@ -62,12 +60,10 @@ void PartsBinListView::setItemAux(ModelPart * modelPart) {
 	LayerAttributes layerAttributes;
 	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::IconView, ViewLayer::Icon, layerAttributes);
 	if (renderer != NULL) {
-		QPixmap pixmap(iconSize());   // eventually shrink this down to something or other reasonable
-		pixmap.fill(Qt::transparent);
-		QPainter painter(&pixmap);
-		renderer->render(&painter);
-		painter.end();
-		lwi->setIcon(QIcon(pixmap));
+		QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
+		QPixmap * pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+		lwi->setIcon(QIcon(*pixmap));
+		delete pixmap;
 		lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
 	}
 
@@ -98,9 +94,7 @@ void PartsBinListView::mouseMoveEvent ( QMouseEvent * event ) {
 	ModelPart * modelPart = item->data(Qt::UserRole).value<ModelPart *>();
 	if (modelPart == NULL) return;
 
-	delete m_pixmap;
-	m_pixmap = new QPixmap(m_hoverItem->icon().pixmap(16));
-	m_infoView->hoverEnterItem(modelPart, swappingEnabled(), m_pixmap);
+	m_infoView->hoverEnterItem(modelPart, swappingEnabled(), NULL);
 }
 
 

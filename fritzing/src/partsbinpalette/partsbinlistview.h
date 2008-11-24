@@ -56,6 +56,5 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		class HtmlInfoView * m_infoView;
 		QListWidgetItem * m_hoverItem;
 
-		QPixmap *m_pixmap;
 };
 #endif /* LISTVIEW_H_ */
