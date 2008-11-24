@@ -2,7 +2,7 @@
 <module fritzingVersion="0.1.1255" moduleId="1238DBDC00-voltage-reg">
     <version>1.1</version>
     <author>Jenny</author>
-    <title>npn-Powertransistor</title>
+    <title>Voltage Regulator - 5V</title>
     <label>U</label>
     <date>2008-11-12</date>
     <tags>
@@ -12,11 +12,11 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="package">TO220</property>
-        <property name="voltage">5V</property>
+        <property name="Package">TO220</property>
+        <property name="Rated Voltage">5V</property>
         <property name="family">Voltage Regulator</property>
     </properties>
-    <description>A standard pnp-powertransistor</description>
+    <description>5V DC Voltage Regulator</description>
     <views>
         <iconView>
             <layers>
@@ -36,6 +36,7 @@
         <pcbView>
             <layers>
                 <layer layerId="copper0" image="pcb/TO-220.svg"></layer>
+		<layer layerId="silkscreen" image="pcb/TO-220.svg"></layer>
             </layers>
         </pcbView>
     </views>
