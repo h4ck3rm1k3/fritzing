@@ -156,9 +156,10 @@ public:
     void viewItemInfo(long id);
     bool swappingEnabled();
 
-	void addBreadboardViewLayers();
-	void addSchematicViewLayers();
+	virtual void addViewLayers();
 	void addPcbViewLayers();
+	void addSchematicViewLayers();
+	void addBreadboardViewLayers();
 
 	void changeWireColor(long wireId, const QString& color, qreal opacity);
 	void changeWireWidth(long wireId, int width);
@@ -170,12 +171,15 @@ public:
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
 	bool ratsAllRouted();
-	void updateRatsnestStatus();
+	virtual void updateRatsnestStatus();
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 	void clearRouting(QUndoCommand * parentCommand);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
+	bool dragEnterEventAux(QDragEnterEvent *event);
+	virtual bool canDropModelPart(ModelPart * modelPart);
+
     void dragLeaveEvent(QDragLeaveEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void dropEvent(QDropEvent *event);
@@ -234,25 +238,30 @@ protected:
 	ItemBase * overSticky(ItemBase *);
 	void cleanUpWiresAux();
 	void tempDisconnectWire(ConnectorItem * fromConnectorItem, QMultiHash<ConnectorItem *, ConnectorItem *> & connectionState);
-	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
+	virtual void cleanUpWire(Wire * wire, QList<Wire *> & wires);
+	virtual void setNewPartVisible(ItemBase *);
+	virtual void collectFemaleConnectees(PaletteItem *);
+	virtual void findConnectorsUnder(ItemBase * item);
 
 	bool currentlyInfoviewed(ItemBase *item);
 	void updateInfoView();
 	void resizeEvent(QResizeEvent *);
 
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
-	void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
+	virtual void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
+	virtual void checkAutorouted();
 	class Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	void collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems);
-	void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
+	virtual void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
 	void cleanUpVirtualWires(QSet<class VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
-	void testForReturningVirtuals(ConnectorItem * fromConnectorItem, ItemBase * target, QSet <VirtualWire *> & virtualWires);
+	virtual void redrawRatsnest(QHash<long, ItemBase *> & newItems);
+	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	//void restoreDisconnectors();
 	//void collectDisconnectors(ItemBase * item);
 	//void dealWithVirtualDisconnections(ConnectorItem * src, ConnectorItem * dest);

@@ -17,12 +17,11 @@
 # $Date: 2008-11-15 16:16:14 +0100 (Sat, 15 Nov 2008) $
 # ********************************************************************/
 HEADERS += \
-    src/sketchtoolbutton.h \
-    src/svgandpartfilepath.h \
     src/aboutbox.h \
     src/autorouter1.h \
     src/bettertimer.h \
     src/bettertriggeraction.h \
+    src/breadboardsketchwidget.h \
     src/bus.h \
     src/busstuff.h \
     src/busconnectoritem.h \
@@ -60,11 +59,16 @@ HEADERS += \
     src/paletteitembase.h \
     src/palettemodel.h \
     src/partinstancestuff.h \
+    src/pcbsketchwidget.h \
+    src/pcbschematicsketchwidget.h \
     src/rendererviewthing.h \
+    src/schematicsketchwidget.h \
     src/sketchareawidget.h \
     src/sketchmodel.h \
+    src/sketchtoolbutton.h \
     src/sketchwidget.h \
     src/svgfilesplitter.h \
+    src/svgandpartfilepath.h \
     src/version.h \
     src/viewgeometry.h \
     src/viewlayer.h \
@@ -73,11 +77,12 @@ HEADERS += \
     src/waitpushundostack.h \
     src/wire.h \
     src/zoomcombobox.h
-SOURCES += src/sketchtoolbutton.cpp \
+SOURCES += \
     src/aboutbox.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
     src/bettertimer.cpp \
+    src/breadboardsketchwidget.cpp \
     src/bus.cpp \
     src/busstuff.cpp \
     src/busconnectoritem.cpp \
@@ -116,9 +121,13 @@ SOURCES += src/sketchtoolbutton.cpp \
     src/paletteitembase.cpp \
     src/palettemodel.cpp \
     src/partinstancestuff.cpp \
+    src/pcbsketchwidget.cpp \
+    src/pcbschematicsketchwidget.cpp \
     src/rendererviewthing.cpp \
+    src/schematicsketchwidget.cpp \
     src/sketchareawidget.cpp \
     src/sketchmodel.cpp \
+    src/sketchtoolbutton.cpp \
     src/sketchwidget.cpp \
     src/svgfilesplitter.cpp \
     src/version.cpp \

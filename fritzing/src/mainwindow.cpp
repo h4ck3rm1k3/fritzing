@@ -90,35 +90,20 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 
 	// all this belongs in viewLayer.xml
-	m_breadboardGraphicsView = new SketchWidget(ItemBase::BreadboardView, this);
+	m_breadboardGraphicsView = new BreadboardSketchWidget(ItemBase::BreadboardView, this);
+	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
-	m_breadboardGraphicsView->setPaletteModel(m_paletteModel);
-	m_breadboardGraphicsView->setSketchModel(m_sketchModel);
-	m_breadboardGraphicsView->setRefModel(m_refModel);
-	m_breadboardGraphicsView->setUndoStack(m_undoStack);
-	m_breadboardGraphicsView->setChainDrag(true);			// enable bend points
-	m_breadboardGraphicsView->addBreadboardViewLayers();
 	m_tabWidget->addTab(m_breadboardWidget, tr("breadboard"));
 
 
-	m_schematicGraphicsView = new SketchWidget(ItemBase::SchematicView, this);
+	m_schematicGraphicsView = new SchematicSketchWidget(ItemBase::SchematicView, this);
+	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
-	m_schematicGraphicsView->setPaletteModel(m_paletteModel);
-	m_schematicGraphicsView->setRefModel(m_refModel);
-	m_schematicGraphicsView->setSketchModel(m_sketchModel);
-	m_schematicGraphicsView->setUndoStack(m_undoStack);
-	m_schematicGraphicsView->setChainDrag(true);			// enable bend points
-	m_schematicGraphicsView->addSchematicViewLayers();
 	m_tabWidget->addTab(m_schematicWidget, tr("schematic"));
 
-	m_pcbGraphicsView = new SketchWidget(ItemBase::PCBView, this);
+	m_pcbGraphicsView = new PCBSketchWidget(ItemBase::PCBView, this);
+	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
-	m_pcbGraphicsView->setPaletteModel(m_paletteModel);
-	m_pcbGraphicsView->setRefModel(m_refModel);
-	m_pcbGraphicsView->setSketchModel(m_sketchModel);
-	m_pcbGraphicsView->setUndoStack(m_undoStack);
-	m_pcbGraphicsView->setChainDrag(true);				// enable bend points
-	m_pcbGraphicsView->addPcbViewLayers();
 	m_tabWidget->addTab(m_pcbWidget, tr("pcb"));
 
     m_undoView = new QUndoView();
@@ -198,6 +183,15 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_tabWidget->setMinimumWidth(0);
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
+}
+
+void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
+	sketchWidget->setPaletteModel(m_paletteModel);
+	sketchWidget->setSketchModel(m_sketchModel);
+	sketchWidget->setRefModel(m_refModel);
+	sketchWidget->setUndoStack(m_undoStack);
+	sketchWidget->setChainDrag(true);			// enable bend points
+	sketchWidget->addViewLayers();
 }
 
 void MainWindow::doOnce() {

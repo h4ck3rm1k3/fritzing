@@ -222,103 +222,21 @@ void SketchWidget::loadFromModel() {
 		}
 	}
 
-	if (m_viewIdentifier == ItemBase::PCBView ) {
-		updateRatsnestStatus();
-	}
+	updateRatsnestStatus();
 
-	// redraw the ratsnest
 	m_dealWithRatsNestEnabled = true;
-	if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
-		QMultiHash<ConnectorItem *, ConnectorItem *> allConnectors;
-		foreach (ItemBase * newItem, newItems.values()) {
-			foreach (QGraphicsItem * childItem, newItem->childItems()) {
-				ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-				if (fromConnectorItem == NULL) continue;
-
-				foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-					/*
-					DebugDialog::debug(QString("restoring ratsnest: %1 %2, %3 %4")
-						.arg(fromConnectorItem->attachedToTitle())
-						.arg(fromConnectorItem->connectorStuffID())
-						.arg(toConnectorItem->attachedToTitle())
-						.arg(toConnectorItem->connectorStuffID())
-						);
-					*/
-					allConnectors.insert(fromConnectorItem, toConnectorItem);
-				}
-			}
-		}
-
-		// have to store these all up in a table and deal with separarately
-		// if you deal with them in the loop above, then connectors are being added/destroyed
-		// while looping and that causes crashes.
-		foreach (ConnectorItem * fromConnectorItem, allConnectors.keys()) {
-			foreach (ConnectorItem * toConnectorItem, allConnectors.values(fromConnectorItem)) {
-				dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
-			}
-		}
-	}
-
-	if (m_viewIdentifier == ItemBase::PCBView ) {
-		// TODO: the code below is mostly redundant to the code in updateRatsnestStatus
-
-		bool autorouted = true;
-		QList<ConnectorItem *> allConnectorItems;
-		foreach (QGraphicsItem * item, scene()->items()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (connectorItem == NULL) continue;
-
-			if (connectorItem->attachedToItemType() != ModelPart::Part && connectorItem->attachedToItemType() != ModelPart::Board) continue;
-			allConnectorItems.append(connectorItem);
-		}
-
-		while (allConnectorItems.count() > 0) {
-			QList<ConnectorItem *> connectorItems;
-			QList<ConnectorItem *> ratPartsConnectorItems;
-			QList<ConnectorItem *> tracePartsConnectorItems;
-			QList<BusConnectorItem *> busConnectorItems;
-			connectorItems.append(allConnectorItems[0]);
-			BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::RatsnestFlag);
-			BusConnectorItem::collectParts(connectorItems, ratPartsConnectorItems);
-
-			connectorItems.clear();
-			busConnectorItems.clear();
-			connectorItems.append(allConnectorItems[0]);
-			BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
-			BusConnectorItem::collectParts(connectorItems, tracePartsConnectorItems);
-			if (tracePartsConnectorItems.count() != ratPartsConnectorItems.count()) {
-				autorouted = false;
-				allConnectorItems.clear();
-				break;
-			}
-
-			foreach (ConnectorItem * ci, ratPartsConnectorItems) {
-				// don't check these parts again
-				allConnectorItems.removeOne(ci);
-				DebugDialog::debug(QString("allparts count %1").arg(allConnectorItems.count()) );
-			}
-		}
-
-
-		if (autorouted) {
-			// TODO need to figure out which net each wire belongs to
-			// or save the ratsnest wires so they can simply be reloaded
-			DebugDialog::debug("autorouted");
-			foreach (QGraphicsItem * item, scene()->items()) {
-				Wire * wire = dynamic_cast<Wire *>(item);
-				if (wire == NULL) continue;
-
-				if (wire->getRatsnest()) {
-					wire->setRouted(true);
-					wire->setColorString("unrouted", 0.35);
-				}
-			}
-		}
-	}
-
+	redrawRatsnest(newItems);
+	checkAutorouted();
 	this->scene()->clearSelection();
 	cleanUpWires(false);
 	m_ignoreSelectionChangeEvents = false;
+}
+
+void SketchWidget::checkAutorouted() {
+}
+
+void SketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems) {
+	Q_UNUSED(newItems);
 }
 
 ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id) {
@@ -363,12 +281,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
              			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 
 			// prevents virtual wires from flashing up on screen
-			if (m_viewIdentifier == ItemBase::BreadboardView) {
-				// hide all virtual wires in breadboard view
-				wire->setVisible(false);
-			}
-
-
+			wire->setVisible(false);
 		}
 		else {
 			wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
@@ -400,16 +313,20 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
     	PaletteItem* paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
 		DebugDialog::debug(QString("adding part %1 %2 %3").arg(id).arg(paletteItem->title()).arg(m_viewIdentifier) );
     	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors);
-		if (itemBase->itemType() == ModelPart::Breadboard) {
-			if (m_viewIdentifier != ItemBase::BreadboardView) {
-				// don't need to see the breadboard in the other views
-				// but it's there so connections can be more easily synched between views
-				itemBase->setVisible(false);
-			}
-		}
+		setNewPartVisible(itemBase);
 		return itemBase;
 	}
 
+}
+
+void SketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires) {
+	Q_UNUSED(wire);
+	Q_UNUSED(wires);
+}
+
+void SketchWidget::setNewPartVisible(ItemBase * itemBase) {
+	Q_UNUSED(itemBase);
+	// defaults to visible, so do nothing
 }
 
 void SketchWidget::checkSticky(ItemBase * item, QUndoCommand * parentCommand) {
@@ -1270,75 +1187,77 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 
 void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-	if (event->mimeData()->hasFormat("application/x-dnditemdata") && event->source() != this) {
+	if (dragEnterEventAux(event)) {
+		event->acceptProposedAction();
+	}
+	else {
+		// subclass seems to call acceptProposedAction so don't invoke it
+		//QGraphicsView::dragEnterEvent(event);
+	}
+}
 
-    	m_droppingWire = false;
-        QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
-        QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
+	if (!event->mimeData()->hasFormat("application/x-dnditemdata")) return false;
+	if (event->source() == this) return false;
 
-        QString moduleID;
-        QPointF offset;
-        dataStream >> moduleID >> offset;
+	m_droppingWire = false;
+    QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
+    QDataStream dataStream(&itemData, QIODevice::ReadOnly);
 
-    	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
-    	if (modelPart !=  NULL) {
-			switch (m_viewIdentifier) {
-				case ItemBase::PCBView:
-				case ItemBase::SchematicView:
-					if (modelPart->itemType() == ModelPart::Wire || modelPart->itemType() == ModelPart::Breadboard) {
-						// can't drag and drop these parts in these views
-						return;
-					}
-					break;
-				default:
-					break;
-			}
+    QString moduleID;
+    QPointF offset;
+    dataStream >> moduleID >> offset;
 
-    		m_droppingWire = (modelPart->itemType() == ModelPart::Wire);
-			m_droppingOffset = offset;
+	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
+	if (modelPart ==  NULL) return false;
 
-			if (ItemDrag::_cache().contains(this)) {
-				m_droppingItem->setVisible(true);
-			}
-			else {
-    			ViewGeometry viewGeometry;
-    			QPointF p = QPointF(this->mapToScene(event->pos())) - offset;
-    			viewGeometry.setLoc(p);
+	if (!canDropModelPart(modelPart)) return false;
 
-				long fromID = ItemBase::getNextID();
+	m_droppingWire = (modelPart->itemType() == ModelPart::Wire);
+	m_droppingOffset = offset;
 
-				// create temporary item
-				// don't need connectors for breadboard
-				// could live without them for arduino as well
-				// TODO: how to specify which parts don't need connectors during drag and drop from palette?
-				m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, modelPart->itemType() != ModelPart::Breadboard);
+	if (ItemDrag::_cache().contains(this)) {
+		m_droppingItem->setVisible(true);
+	}
+	else {
+		ViewGeometry viewGeometry;
+		QPointF p = QPointF(this->mapToScene(event->pos())) - offset;
+		viewGeometry.setLoc(p);
 
-				ItemDrag::_cache().insert(this, m_droppingItem);
-				//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
-				connect(ItemDrag::_itemDrag(), SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
-			}
-			//ItemDrag::_setPixmapVisible(false);
+		long fromID = ItemBase::getNextID();
+
+		// create temporary item
+		// don't need connectors for breadboard
+		// could live without them for arduino as well
+		// TODO: how to specify which parts don't need connectors during drag and drop from palette?
+		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, modelPart->itemType() != ModelPart::Breadboard);
+
+		ItemDrag::_cache().insert(this, m_droppingItem);
+		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+		connect(ItemDrag::_itemDrag(), SIGNAL(dragIsDoneSignal(ItemDrag *)), this, SLOT(dragIsDoneSlot(ItemDrag *)));
+	}
+	//ItemDrag::_setPixmapVisible(false);
 
 
-		// make sure relevant layer is visible
-			ViewLayer::ViewLayerID viewLayerID;
-			if (m_droppingWire) {
-				viewLayerID = getWireViewLayerID(m_droppingItem->getViewGeometry());
-			}
-			else if(modelPart->tags().contains("ruler",Qt::CaseInsensitive)) {
-				viewLayerID = getRulerViewLayerID();
-			}
-			else {
-				viewLayerID = getPartViewLayerID();
-			}
+// make sure relevant layer is visible
+	ViewLayer::ViewLayerID viewLayerID;
+	if (m_droppingWire) {
+		viewLayerID = getWireViewLayerID(m_droppingItem->getViewGeometry());
+	}
+	else if(modelPart->tags().contains("ruler",Qt::CaseInsensitive)) {
+		viewLayerID = getRulerViewLayerID();
+	}
+	else {
+		viewLayerID = getPartViewLayerID();
+	}
 
-			ensureLayerVisible(viewLayerID);
-		}
+	ensureLayerVisible(viewLayerID);
+	return true;
+}
 
-        event->acceptProposedAction();
-    } else {
-		QGraphicsView::dragEnterEvent(event);
-    }
+bool SketchWidget::canDropModelPart(ModelPart * modelPart) {
+	Q_UNUSED(modelPart);
+	return true;
 }
 
 void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
@@ -1506,9 +1425,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		}
 
 		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(chief);
-		if (m_viewIdentifier == ItemBase::BreadboardView) {
-			paletteItem->collectFemaleConnectees(m_savedItems);
-		}
+		collectFemaleConnectees(paletteItem);
 		paletteItem->collectWireConnectees(wires);
 	}
 
@@ -1546,6 +1463,10 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	// do something with wires--chained, wires within, wires without
 	// don't forget about checking connections-to-be
 
+}
+
+void SketchWidget::collectFemaleConnectees(PaletteItem * paletteItem) {
+	Q_UNUSED(paletteItem);
 }
 
 bool SketchWidget::draggingWireEnd() {
@@ -1640,10 +1561,7 @@ void SketchWidget::moveItems(QPoint globalPos) {
        QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
        item->setPos(item->getViewGeometry().loc() + currentParentPos - buttonDownParentPos);
 
-	   if (m_viewIdentifier == ItemBase::BreadboardView) {
-			// not necessary in other views?
-			item->findConnectorsUnder();
-	   }
+	   findConnectorsUnder(item);
 
 /*
 	   DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8") 
@@ -1662,6 +1580,11 @@ void SketchWidget::moveItems(QPoint globalPos) {
 	
 	//DebugDialog::debug(QString("done move items %1").arg(QTime::currentTime().msec()) );
 
+}
+
+
+void SketchWidget::findConnectorsUnder(ItemBase * item) {
+	Q_UNUSED(item);
 }
 
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
@@ -2863,136 +2786,14 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 
 
 	if (m_dealWithRatsNestEnabled) {
-		// for now treat them the same
-		if ((m_viewIdentifier == ItemBase::PCBView) || (m_viewIdentifier == ItemBase::SchematicView)) {
-			dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
-		}
+		dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
 	}
 }
 
 void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
-
-	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
-		.arg(fromConnectorItem->attachedToTitle())
-		.arg(fromConnectorItem->attachedToID())
-		.arg(fromConnectorItem->connectorStuffID())
-		.arg(toConnectorItem->attachedToTitle())
-		.arg(toConnectorItem->attachedToID())
-		.arg(toConnectorItem->connectorStuffID())
-	);
-	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
-		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
-			// don't make further ratsnest's from ratsnest
-			return;
-		}
-	}
-
-	if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
-			// don't make further ratsnest's from ratsnest
-			return;
-		}
-	}
-
-	if (connect) {
-		QList<ConnectorItem *> connectorItems;
-		QList<ConnectorItem *> partsConnectorItems;
-		QList<BusConnectorItem *> busConnectorItems;
-		connectorItems.append(fromConnectorItem);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::NoFlag);
-		BusConnectorItem::collectParts(connectorItems, partsConnectorItems);
-
-		QList <Wire *> ratsnestWires;
-		Wire * modelWire = NULL;
-
-		if (m_viewIdentifier == ItemBase::PCBView) {
-			int count = partsConnectorItems.count();
-			for (int i = 0; i < count - 1; i++) {
-				ConnectorItem * source = partsConnectorItems[i];
-				for (int j = i + 1; j < count; j++) {
-					ConnectorItem * dest = partsConnectorItems[j];
-					// if you can't get from i to j via wires, then add a virtual ratsnest wire
-					Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
-					if (tempWire == NULL) {
-						Wire * newWire = makeOneRatsnestWire(source, dest);
-						ratsnestWires.append(newWire);
-						if (source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
-							newWire->setRouted(true);
-						}
-
-					}
-					else {
-						modelWire = tempWire;
-					}
-				}
-			}
-		}
-		else /* if (m_viewIdentifier == ItemBase::SchematicView) */
-		{
-			// TODO:  add the bus connector items, if they have multiple connections
-			// TODO: set all the bus connectors at the average location of the connected items
-			// TODO: if drag one bus connector, move all merged
-
-			// delete all the ratsnest wires before running dijkstra
-			int count = partsConnectorItems.count();
-			for (int i = 0; i < count - 1; i++) {
-				ConnectorItem * source = partsConnectorItems[i];
-				for (int j = i + 1; j < count; j++) {
-					ConnectorItem * dest = partsConnectorItems[j];
-					// if you can't get from i to j via wires, then add a virtual ratsnest wire
-					Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
-					if (tempWire != NULL) {
-						deleteItem(tempWire, false, false);
-					}
-				}
-			}
-
-			QHash<ConnectorItem *, int> indexer;
-			int ix = 0;
-			foreach (ConnectorItem * connectorItem, partsConnectorItems) {
-				indexer.insert(connectorItem, ix++);
-			}
-
-			QVector< QVector<double> *> adjacency(count);
-			for (int i = 0; i < count; i++) {
-				QVector<double> * row = new QVector<double>(count);
-				adjacency[i] = row;
-			}
-
-			Autorouter1::dijkstra(partsConnectorItems, indexer, adjacency);
-
-			foreach (QVector<double> * row, adjacency) {
-				delete row;
-			}
-
-			count = partsConnectorItems.count();
-			for (int i = 0; i < count - 1; i++) {
-				ConnectorItem * source = partsConnectorItems[i];
-				ConnectorItem * dest = partsConnectorItems[i + 1];
-				Wire * newWire = makeOneRatsnestWire(source, dest);
-				ratsnestWires.append(newWire);
-			}
-		}
-
-		if (ratsnestWires.count() > 0) {
-			const QColor * color = NULL;
-			if (modelWire) {
-				color = modelWire->color();
-			}
-			else {
-				color = Wire::netColor(m_viewIdentifier);
-			}
-			foreach (Wire * wire, ratsnestWires) {
-				QColor colorAsQColor = (QColor) *color;
-				wire->setColor(colorAsQColor, wire->getRouted() ? 0.35 : 1.0);
-			}
-		}
-
-		return;
-	}
-
+	Q_UNUSED(fromConnectorItem);
+	Q_UNUSED(toConnectorItem);
+	Q_UNUSED(connect);
 }
 
 Wire * SketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest) {
@@ -3124,30 +2925,10 @@ void SketchWidget::mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF 
 	if (merge) {
 		item1->merge(item2);
 		item2->merge(item1);
-
-		if (m_viewIdentifier == ItemBase::SchematicView) {
-			//item1->mergeGraphicsDelay(item2, false, m_viewIdentifier);
-			// make them the same for now
-			//item1->mergeGraphicsDelay(item2, true, m_viewIdentifier);
-		}
-		else if (m_viewIdentifier == ItemBase::PCBView) {
-			//item1->mergeGraphicsDelay(item2, true, m_viewIdentifier);
-		}
 	}
 	else {
 		item1->unmerge(item2);
 		item2->unmerge(item1);
-
-		// TODO: should item1 or item2 keep the group?
-
-		if (m_viewIdentifier == ItemBase::SchematicView) {
-			//item1->unmergeGraphics(item2, false, m_viewIdentifier, bus2Pos);
-			// make them the same for now
-			//item1->unmergeGraphics(item2, true, m_viewIdentifier, bus2Pos);
-		}
-		else if (m_viewIdentifier == ItemBase::PCBView) {
-			//item1->unmergeGraphics(item2, true, m_viewIdentifier, bus2Pos);
-		}
 	}
 
 	if (doEmit) {
@@ -3265,10 +3046,11 @@ ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart) {
 		return ViewLayer::viewLayerIDFromXmlString(layerName);
 	}
 
-	if (m_viewIdentifier == ItemBase::PCBView) {
-		return ViewLayer::Copper0;
-	}
+	return multiLayerGetViewLayerID(modelPart, layerName);
+}
 
+ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName) {
+	Q_UNUSED(modelPart);
 	return ViewLayer::viewLayerIDFromXmlString(layerName);
 }
 
@@ -3549,100 +3331,8 @@ void SketchWidget::cleanUpWiresAux() {
 		cleanUpWire(wire, wires);
 	}
 
-	if (m_viewIdentifier == ItemBase::SchematicView || m_viewIdentifier == ItemBase::PCBView) {
-		updateRatsnestStatus();
-	}
+	updateRatsnestStatus();
 }
-
-void SketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
-{
-	DebugDialog::debug(QString("clean up wire %1 %2").arg(wire->id()).arg(m_viewIdentifier) );
-	switch (m_viewIdentifier) {
-		case ItemBase::BreadboardView:
-			wire->setVisible(!wire->getVirtual());
-			//wire->setVisible(true);					// for debugging
-			return;
-		case ItemBase::SchematicView:
-			wire->setVisible(wire->getRatsnest() || wire->getTrace() || wire->getJumper());
-			//break;
-			return;  // for now make them the same
-		case ItemBase::PCBView:
-			wire->setVisible(wire->getRatsnest() || wire->getTrace() || wire->getJumper());
-			return;
-		default:
-			return;
-	}
-
-
-	QList<ConnectorItem *> connectorItems;
-	QList<BusConnectorItem *> busConnectorItems;
-	connectorItems.append(wire->connector0());
-	BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, false, ViewGeometry::NoFlag);
-
-	QList<ConnectorItem *> partsConnectors;
-	BusConnectorItem::collectParts(connectorItems, partsConnectors);
-
-	QList<Wire *> localWires;
-	wire->collectWires(localWires, false);			// find all the wires connected to this wire
-	foreach (Wire * localWire, localWires) {
-		// don't process these again
-		wires.append(localWire);
-	}
-
-	bool vis = false;
-	if (partsConnectors.count() > 0) {
-		// temporarily disconnect wires, holding onto current connection state
-		QMultiHash<ConnectorItem *, ConnectorItem *> connectionState;
-		foreach (Wire * localWire, localWires) {
-			tempDisconnectWire(localWire->connector0(), connectionState);
-			tempDisconnectWire(localWire->connector1(), connectionState);
-		}
-
-		QList<ConnectorItem *> connectorItems2;
-		QList<BusConnectorItem *> busConnectorItems2;
-		connectorItems2.append(partsConnectors[0]);
-		BusConnectorItem::collectEqualPotential(connectorItems2, busConnectorItems2, true, ViewGeometry::NoFlag);
-
-		// restore connections
-		foreach (ConnectorItem * fromConnectorItem, connectionState.uniqueKeys()) {
-			foreach (ConnectorItem * toConnectorItem, connectionState.values(fromConnectorItem)) {
-				fromConnectorItem->tempConnectTo(toConnectorItem);
-				toConnectorItem->tempConnectTo(fromConnectorItem);
-
-				//DebugDialog::debug(QString("reconnect dis %1 %2 %3 %4")
-				//.arg(fromConnectorItem->attachedToID())
-				//.arg(fromConnectorItem->connectorStuffID())
-				//.arg(toConnectorItem->attachedToID())
-				//.arg(toConnectorItem->connectorStuffID()) );
-			}
-		}
-
-		QList<ConnectorItem *> partsConnectors2;
-		foreach (ConnectorItem * connectorItem, connectorItems2) {
-			ItemBase * candidate = connectorItem->attachedTo();
-			if (candidate->itemType() == ModelPart::Part || candidate->itemType() == ModelPart::Board) {
-				if (!partsConnectors2.contains(connectorItem)) {
-					partsConnectors2.append(connectorItem);
-					//DebugDialog::debug(QString("recollecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorStuffID()) );
-				}
-			}
-		}
-
-		foreach (ConnectorItem * connectorItem, partsConnectors) {
-			if (!partsConnectors2.contains(connectorItem)) {
-				// disconnecting this wire and its connected wires disconnected this part, so show wire
-				vis = true;
-				break;
-			}
-		}
-	}
-
-	foreach (Wire * localWire, localWires) {
-		localWire->setVisible(vis);
-	}
-}
-
-
 
 void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, QMultiHash<ConnectorItem *, ConnectorItem *> & connectionState) {
 	foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
@@ -3812,14 +3502,11 @@ void SketchWidget::addPcbViewLayers() {
 		<< ViewLayer::Jumperwires << ViewLayer::Ratsnest << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);
+}
 
-	// disable these for now
-	ViewLayer * viewLayer = m_viewLayers.value(ViewLayer::Vias);
-	viewLayer->action()->setEnabled(false);
-	viewLayer = m_viewLayers.value(ViewLayer::Copper1);
-	viewLayer->action()->setEnabled(false);
-	viewLayer = m_viewLayers.value(ViewLayer::Keepout);
-	viewLayer->action()->setEnabled(false);
+
+
+void SketchWidget::addViewLayers() {
 }
 
 void SketchWidget::addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ) {
@@ -3945,69 +3632,11 @@ void SketchWidget::collectBusConnectorItems(QList<BusConnectorItem *> & busConne
 
 void SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <VirtualWire *> & virtualWires, QUndoCommand * parentCommand)
 {
-	if (m_viewIdentifier != ItemBase::BreadboardView) {
-		return;
-	}
-
-	// if item is attached to a virtual wire or a female connector in breadboard view
-	// then disconnect it
-	// at the moment, I think this doesn't apply to other views
-
-	foreach (QGraphicsItem * childItem, item->childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (fromConnectorItem == NULL) continue;
-
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
-			if (toConnectorItem->connectorType() == Connector::Female) {
-				if (savedItems.contains(toConnectorItem->attachedTo())) {
-					// the thing we're connected to is also moving, so don't disconnect
-					continue;
-				}
-
-				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
-				fromConnectorItem->tempRemove(toConnectorItem);
-				toConnectorItem->tempRemove(fromConnectorItem);
-
-				// if the female connector has any virtual wires pointing back to me get rid of them
-				testForReturningVirtuals(toConnectorItem, item, virtualWires);
-			}
-			else if (toConnectorItem->attachedTo()->getVirtual()) {
-				VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
-				ConnectorItem * realci = virtualWire->otherConnector(toConnectorItem)->firstConnectedToIsh();
-				if (realci != NULL) {
-					ItemBase * otherEnd = realci->attachedTo();
-					if (savedItems.contains(otherEnd)) {
-						// the thing we're connected to is also moving, so don't disconnect
-						continue;
-					}
-				}
-				else {
-					DebugDialog::debug("why is this only connected to a virtual item?");
-				}
-				virtualWires.insert(virtualWire);
-			}
-		}
-	}
+	Q_UNUSED(item);
+	Q_UNUSED(savedItems);
+	Q_UNUSED(virtualWires);
+	Q_UNUSED(parentCommand);
 }
-
-void SketchWidget::testForReturningVirtuals(ConnectorItem * fromConnectorItem, ItemBase * target, QSet <VirtualWire *> & virtualWires) {
-	if (target->buses().count() <= 0) return;
-
-	foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
-		if (toConnectorItem->attachedTo()->getVirtual()) {
-			VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
-			ConnectorItem * other = virtualWire->otherConnector(toConnectorItem);
-			foreach (ConnectorItem * otherToConnectorItem, other->connectedToItems()) {
-				if (otherToConnectorItem->attachedTo() == target) {
-					virtualWires.insert(virtualWire);
-					return;
-				}
-			}
-		}
-	}
-
-}
-
 
 void SketchWidget::cleanUpVirtualWires(QSet<VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand) {
 	disconnectVirtualWires(virtualWires, parentCommand);
@@ -4028,100 +3657,8 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 }
 
 void SketchWidget::updateRatsnestStatus() {
-
-	QHash<ConnectorItem *, int> indexer;
-	QList< QList<ConnectorItem *>* > allPartConnectorItems;
-	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
-	int netCount = 0;
-	int netRoutedCount = 0;
-	int connectorsLeftToRoute = 0;
-	int jumperCount = 0;
-	foreach (QList<ConnectorItem *>* netList, allPartConnectorItems) {
-		if (netList->count() <= 1) continue;			// nets with a single part are not worth counting
-
-		int selfConnections = 0;
-		QVector<bool> self(netList->count(), true);
-		for (int i = 0; i < netList->count() - 1; i++) {
-			for (int j = i + 1; j < netList->count(); j++) {
-				ConnectorItem * ci = netList->at(i);
-				ConnectorItem * cj = netList->at(j);
-				if (ci->bus() && ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
-					// if connections are on the same bus on a given part
-					self[i] = false;
-					self[j] = false;
-					selfConnections++;
-				}
-			}
-		}
-
-		int useIndex = 0;
-		bool bail = true;
-		foreach (bool v, self) {
-			if (v) {
-				bail = false;
-				break;
-			}
-			useIndex++;
-		}
-
-		if (bail) continue;			// only have a net on the same part on the same bus
-
-		netCount++;
-		ConnectorItem * connectorItem = netList->at(useIndex);
-
-		// figure out how many parts are connected via jumpers or traces
-		QList<ConnectorItem *> partConnectorItems;
-		QList<BusConnectorItem *> busConnectorItems;
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(connectorItem);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
-		foreach (ConnectorItem * jConnectorItem, connectorItems) {
-			if (jConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				Wire * wire = dynamic_cast<Wire *>(jConnectorItem->attachedTo());
-				if (wire->getJumper()) {
-					jumperCount++;
-				}
-			}
-		}
-		BusConnectorItem::collectParts(connectorItems, partConnectorItems);
-		int todo = netList->count() - partConnectorItems.count() - selfConnections;
-		if (todo <= 0) {
-			netRoutedCount++;
-		}
-		else {
-			connectorsLeftToRoute += (todo + 1);
-		}
-	}
-
-	QSet<Wire *> deleteWires;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-
-		if (!wire->getRatsnest()) continue;
-		ConnectorItem * c0 = wire->connector0();
-		ConnectorItem * c1 = wire->connector1();
-		ConnectorItem * c0to = c0->firstConnectedToIsh();
-		ConnectorItem * c1to = c1->firstConnectedToIsh();
-		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-			if ((list->contains(c0to) && !list->contains(c1to)) || (list->contains(c1to) && !list->contains(c0to))) {
-				deleteWires.insert(wire);
-			}
-		}
-	}
-
-	foreach (Wire * wire, deleteWires) {
-		deleteItem(wire, false, false);
-	}
-
-
-	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-		delete list;
-	}
-
-	// divide jumpercount by two since we counted both ends of each wire
-	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount / 2);
 }
+
 
 void SketchWidget::ensureLayerVisible(ViewLayer::ViewLayerID viewLayerID)
 {

@@ -36,7 +36,9 @@ $Date$
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
-#include "sketchwidget.h"
+#include "breadboardsketchwidget.h"
+#include "schematicsketchwidget.h"
+#include "pcbsketchwidget.h"
 #include "miniviewcontainer.h"
 #include "palettemodel.h"
 #include "sketchmodel.h"
@@ -169,6 +171,8 @@ protected slots:
 	void applyReadOnlyChange(bool isReadOnly);
 
 protected:
+	void initSketchWidget(SketchWidget *);
+
     void createActions();
     void createFileMenuActions();
     void createOpenExampleMenu(QMenu * parentMenu, QString directory);
@@ -249,13 +253,13 @@ protected:
 	QUndoView *m_undoView;
 
 	SketchAreaWidget *m_breadboardWidget;
-	SketchWidget *m_breadboardGraphicsView;
+	BreadboardSketchWidget *m_breadboardGraphicsView;
 
 	SketchAreaWidget *m_schematicWidget;
-	SketchWidget *m_schematicGraphicsView;
+	SchematicSketchWidget *m_schematicGraphicsView;
 
 	SketchAreaWidget *m_pcbWidget;
-	SketchWidget *m_pcbGraphicsView;
+	PCBSketchWidget *m_pcbGraphicsView;
 
     PartsBinPaletteWidget *m_paletteWidget;
     MiniViewContainer *m_miniViewContainer;
