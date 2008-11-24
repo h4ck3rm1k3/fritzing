@@ -37,10 +37,8 @@
         </schematicView>
         <pcbView>
             <layers>
-                <layer layerId="silkscreen" image="pcb/to92.svg"/>
-                <layer layerId="copper0" image="pcb/to92.svg"/>
-                <layer layerId="soldermask" image="pcb/to92.svg"/>
-                <layer layerId="outline" image="pcb/to92.svg"/>
+                <layer layerId="silkscreen" image="pcb/trimpot.svg"/>
+                <layer layerId="copper0" image="pcb/trimpot.svg"/>
             </layers>
         </pcbView>
     </views>
