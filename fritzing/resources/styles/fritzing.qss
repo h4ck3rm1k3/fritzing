@@ -183,10 +183,6 @@ QToolBar QTabBar::tab:selected {
 	color: rgb(0,0,0);
 }
 
-#sketch_tabs::pane {
-	top: -2.3em;
-}
-
 #sketch_tabs::tab-bar {
 	left: 5px;
 }
@@ -374,3 +370,6 @@ SketchArea QToolButton {
 	 padding-top: 17px;
 }
 
+SketchWidget {
+	border: 0px;
+}

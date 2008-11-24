@@ -137,7 +137,14 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     if (!styleSheet.open(QIODevice::ReadOnly)) {
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
-		QString tabbarStyle = QString("QToolBar QTabBar::tab {margin-top: %1px;}").arg(m_toolbar->height()-m_tabWidget->tabBar()->height()+2);
+#ifdef Q_WS_X11
+		int marginTop = m_toolbar->height()-m_tabWidget->tabBar()->height()+4;
+#else
+		int marginTop = m_toolbar->height()-m_tabWidget->tabBar()->height()+2;
+#endif
+		QString tabbarStyle =
+			QString("QToolBar QTabBar::tab {margin-top: %1px;}").arg(marginTop)+
+			QString("#sketch_tabs::pane {top: -%2px;}").arg(m_tabWidget->tabBar()->height()+10);
 		setStyleSheet(styleSheet.readAll()+___MacStyle___+tabbarStyle);
 	}
 
