@@ -2925,7 +2925,7 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 			// TODO: set all the bus connectors at the average location of the connected items
 			// TODO: if drag one bus connector, move all merged
 
-			// delete all the ratsnest wires before running dykstra
+			// delete all the ratsnest wires before running dijkstra
 			int count = partsConnectorItems.count();
 			for (int i = 0; i < count - 1; i++) {
 				ConnectorItem * source = partsConnectorItems[i];
@@ -2951,7 +2951,7 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 				adjacency[i] = row;
 			}
 
-			Autorouter1::dykstra(partsConnectorItems, indexer, adjacency);
+			Autorouter1::dijkstra(partsConnectorItems, indexer, adjacency);
 
 			foreach (QVector<double> * row, adjacency) {
 				delete row;
