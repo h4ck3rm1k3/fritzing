@@ -526,9 +526,9 @@ void MainWindow::createSketchButtons() {
 
 QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
-	if(viewId != ItemBase::PCBView) {
+	/*if(viewId != ItemBase::PCBView) {
 		retval << m_exportToPdfButton;
-	}
+	}*/
 	retval << m_rotateButton;
 	if(viewId == ItemBase::BreadboardView) {
 		retval << m_flipButton;
