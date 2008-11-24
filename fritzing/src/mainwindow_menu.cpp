@@ -1548,10 +1548,11 @@ void MainWindow::createTraceMenuActions() {
 }
 
 void MainWindow::autoroute() {
+	m_routingStatusLabel->setText(tr("Autorouting..."));
 	m_dontClose = true;
 	EventEater eater(this);
 	qApp->installEventFilter(&eater);
-	QProgressDialog progress(QObject::tr("autorouting..."), QObject::tr("cancel"), 0, 1, this);
+	QProgressDialog progress(QObject::tr("Autorouting..."), QObject::tr("Cancel"), 0, 1, this);
 	progress.show();
 
 	eater.allowEventsIn(&progress);
