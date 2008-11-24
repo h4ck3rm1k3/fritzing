@@ -126,8 +126,9 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 		restoreGeometry(settings.value("peditor/geometry").toByteArray());
 	}
 
-	createCloseAction();
-	addAction(m_closeAct);
+	//createCloseAction();
+	//addAction(m_closeAct);
+	installEventFilter(this);
 }
 
 void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
@@ -522,4 +523,14 @@ const QString PartsEditorMainWindow::defaultSaveFolder() {
 
 void PartsEditorMainWindow::updateSaveButton() {
 	m_saveButton->setEnabled(m_updateEnabled);
+}
+
+bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
+	if (object == this && event->type() == QEvent::ShortcutOverride) {
+		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
+		if(keyEvent && keyEvent->matches(QKeySequence::Close)) {
+			return this->close();
+		}
+	}
+	return QMainWindow::eventFilter(object, event);
 }

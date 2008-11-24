@@ -89,6 +89,7 @@ protected:
 	void saveAsAux(const QString & fileName);
 	const QDir& createTempFolderIfNecessary();
 	void closeEvent(QCloseEvent *event);
+	bool eventFilter(QObject *object, QEvent *event);
 
 	void createHeader(ModelPart * = 0);
 	void createCenter(ModelPart * = 0);
