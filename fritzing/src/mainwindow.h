@@ -46,6 +46,7 @@ $Date$
 #include "zoomcombobox.h"
 #include "ftabwidget.h"
 #include "sketchtoolbutton.h"
+#include "expandinglabel.h"
 
 #include "partsbinpalette/partsbinpalettewidget.h"
 
@@ -393,7 +394,8 @@ protected:
 	SketchToolButton *m_autorouteButton;
 
 	QWidget *m_sketchToolbarSeparator;
-	QLabel *m_routingStatusLabel;
+	ExpandingLabel *m_routingStatusLabel;
+	QFrame *m_toolbarSpacer;
 
     ZoomComboBox * m_zoomOptsComboBox;
     bool m_comboboxChanged;

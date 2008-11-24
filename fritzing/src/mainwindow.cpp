@@ -525,8 +525,12 @@ void MainWindow::createSketchButtons() {
 
 	m_sketchToolbarSeparator = SketchAreaWidget::separator(this);
 
-	m_routingStatusLabel = new QLabel(this);
+	m_routingStatusLabel = new ExpandingLabel(this);
 	m_routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
+
+	m_toolbarSpacer = new QFrame(this);
+	QHBoxLayout *spacerLayout = new QHBoxLayout(m_toolbarSpacer);
+	spacerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 
 	routingStatusSlot(0,0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
 }
@@ -541,6 +545,10 @@ QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 		retval << m_flipButton;
 	} else if(viewId == ItemBase::PCBView) {
 		retval << m_sketchToolbarSeparator << m_autorouteButton << m_exportDiyButton << m_routingStatusLabel;
+	}
+
+	if(viewId != ItemBase::PCBView) {
+		retval << m_toolbarSpacer;
 	}
 	return retval;
 }
@@ -1079,28 +1087,26 @@ void MainWindow::resetTempFolder() {
 }
 
 void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers) {
+	QString theText;
 	if (netCount == 0) {
-		m_routingStatusLabel->setText(tr("No connections to route"));
-	}
-	else if (netCount == netRoutedCount) {
+		theText = tr("No connections to route");
+	} else if (netCount == netRoutedCount) {
 		if (jumpers == 0) {
-			m_routingStatusLabel->setText(tr("Routing completed"));
+			theText = tr("Routing completed");
 		}
 		else {
-			m_routingStatusLabel->setText(tr("Routing completed using %1 jumper %2")
+			theText = tr("Routing completed using %1 jumper %2")
 				.arg(jumpers)
-				.arg(makeGrammaticalNumber(jumpers, tr("wire"), tr("wires")))
-				);
+				.arg(makeGrammaticalNumber(jumpers, tr("wire"), tr("wires")));
 		}
-	}
-	else {
-		m_routingStatusLabel->setText(tr("%1 of %2 nets routed - %3 %4 still to be routed")
+	} else {
+		theText = tr("%1 of %2 nets routed - %3 %4 still to be routed")
 			.arg(netRoutedCount)
 			.arg(netCount)
 			.arg(connectorsLeftToRoute)
-			.arg(makeGrammaticalNumber(connectorsLeftToRoute, tr("connector"), tr("connectors")))
-			);
+			.arg(makeGrammaticalNumber(connectorsLeftToRoute, tr("connector"), tr("connectors")));
 	}
+	m_routingStatusLabel->setLabelText(theText);
 
 	updateTraceMenu();
 }

@@ -18,48 +18,33 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 1627 $:
+$Author: merunga $:
+$Date: 2008-11-24 12:33:07 +0100 (Mon, 24 Nov 2008) $
 
 ********************************************************************/
 
+#ifndef EXPANDINGLABEL_H_
+#define EXPANDINGLABEL_H_
 
+#include <QTextEdit>
 
-#ifndef SKETCHAREAWIDGET_H_
-#define SKETCHAREAWIDGET_H_
-
-#include <QFrame>
-#include <QHBoxLayout>
-
-#include "itembase.h"
-#include "sketchwidget.h"
-#include "zoomcombobox.h"
-
-class SketchAreaWidget : public QFrame {
+class ExpandingLabel : public QTextEdit {
 public:
-	SketchAreaWidget(SketchWidget *graphicsView, QWidget *parent=0);
-	virtual ~SketchAreaWidget();
+	ExpandingLabel(QWidget *parent) : QTextEdit(parent) {
+		setReadOnly(true);
+		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+		setStyleSheet("border: 0px; background-color: transparent; margin-top: 8px; margin-bottom: 5px;");
+		setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
+	}
 
-	ItemBase::ViewIdentifier viewIdentifier();
-	SketchWidget* graphicsView();
-
-	void setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox);
-	static QWidget *separator(QWidget* parent);
-
-protected:
-	void createLayout();
-
-public:
-	static const QString RoutingStateLabelName;
-
-protected:
-	SketchWidget *m_graphicsView;
-
-	QFrame *m_toolbar;
-	QHBoxLayout *m_buttonsContainer;
-	QVBoxLayout *m_labelContainer;
-	QHBoxLayout *m_zoomContainer;
+	void setLabelText(const QString& theText) {
+		setText(theText);
+		setToolTip(theText);
+		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
+		setAlignment(Qt::AlignCenter);
+		setContextMenuPolicy(Qt::NoContextMenu);
+	}
 };
 
-#endif /* SKETCHAREAWIDGET_H_ */
+#endif /* EXPANDINGLABEL_H_ */

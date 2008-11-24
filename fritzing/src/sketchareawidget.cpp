@@ -70,9 +70,10 @@ void SketchAreaWidget::createLayout() {
 	m_buttonsContainer->setSpacing(3);
 
 	QFrame *middleButtons = new QFrame(m_toolbar);
-	m_labelContainer = new QHBoxLayout(middleButtons);
-	m_labelContainer->setMargin(2);
+	middleButtons->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::MinimumExpanding);
+	m_labelContainer = new QVBoxLayout(middleButtons);
 	m_labelContainer->setSpacing(0);
+	m_labelContainer->setMargin(0);
 
 	QFrame *rightButtons = new QFrame(m_toolbar);
 	m_zoomContainer = new QHBoxLayout(rightButtons);
@@ -81,24 +82,26 @@ void SketchAreaWidget::createLayout() {
 	if(viewIdentifier() == ItemBase::PCBView) {
 		m_zoomContainer->addWidget(separator(this->parentWidget()));
 	}
-	m_zoomContainer->addWidget(new QLabel(tr("Zoom"),this));
+	QLabel *zoomLabel = new QLabel(tr("Zoom"),this);
+	zoomLabel->setStyleSheet("font-size: 12px;");
+	m_zoomContainer->addWidget(zoomLabel);
 
 	QHBoxLayout *toolbarLayout = new QHBoxLayout(m_toolbar);
 	toolbarLayout->setMargin(2);
 	toolbarLayout->setSpacing(0);
 	toolbarLayout->addWidget(leftButtons);
-	toolbarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::MinimumExpanding));
 	toolbarLayout->addWidget(middleButtons);
-	toolbarLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	toolbarLayout->addWidget(rightButtons);
 }
 
-void SketchAreaWidget::setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox) {
-	foreach(QWidget* button, buttons) {
-		if(button->objectName() != RoutingStateLabelName) {
-			m_buttonsContainer->addWidget(button);
+void SketchAreaWidget::setContent(QList<QWidget*> widgets, ZoomComboBox *zoomComboBox) {
+	foreach(QWidget* widget, widgets) {
+		if(widget->objectName() != RoutingStateLabelName) {
+			m_buttonsContainer->addWidget(widget);
 		} else {
-			m_labelContainer->addWidget(button);
+			m_labelContainer->addSpacerItem(new QSpacerItem(0,1,QSizePolicy::Maximum));
+			m_labelContainer->addWidget(widget);
+			m_labelContainer->addSpacerItem(new QSpacerItem(0,1,QSizePolicy::Maximum));
 		}
 	}
 
