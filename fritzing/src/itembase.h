@@ -98,6 +98,7 @@ public:
 	bool topLevel();
 	virtual void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
 	void collectConnectors(QMultiHash<class ConnectorItem *, class ConnectorItem *> & connectorHash, QGraphicsScene * scene);
+	void connectedBusConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
 	bool hidden();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
@@ -106,11 +107,7 @@ public:
 	const QString & title();
 	bool getVirtual();
 	const QHash<QString, class Bus *> & buses();
-	void addBusConnectorItem(class Bus *, class BusConnectorItem *);
-	void removeBusConnectorItem(class Bus * bus);
-	class BusConnectorItem * busConnectorItem(Bus *);
-	class BusConnectorItem * busConnectorItem(const QString & busID);
-	ConnectorItem * busConnectorItemCast(const QString & busID);
+	void addBusConnectorItem(class Bus *, class ConnectorItem *);
 	int itemType();					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
 	bool sticky();
 	void addSticky(ItemBase *, bool stickem);
@@ -184,7 +181,7 @@ protected:
 	int m_connectorHoverCount;
 	bool m_topLevel;
 	bool m_hidden;
-	QHash<class Bus *, class BusConnectorItem *> m_busConnectorItems;
+	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
 	bool m_sticky;
 	QHash<ItemBase *, QPointF> m_stickyList;
 	QMenu *m_itemMenu;

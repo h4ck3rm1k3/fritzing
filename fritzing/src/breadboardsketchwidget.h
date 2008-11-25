@@ -44,8 +44,7 @@ protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	void collectFemaleConnectees(PaletteItem *);
 	void findConnectorsUnder(ItemBase * item);
-	void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
-	void testForReturningVirtuals(ConnectorItem * fromConnectorItem, ItemBase * target, QSet <VirtualWire *> & virtualWires);
+	void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand);
 };
 
 #endif

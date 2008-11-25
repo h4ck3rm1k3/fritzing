@@ -40,7 +40,6 @@ $Date$
 #include "connectoritem.h"
 #include "connectorstuff.h"
 #include "layerattributes.h"
-#include "busconnectoritem.h"
 #include "rendererviewthing.h"
 
 #include <stdlib.h>
@@ -548,6 +547,12 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdenti
 
 		connectorItem->setCircular(true);
 		//DebugDialog::debug(tr("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
+
+
+		Bus * bus = connectorItem->bus();
+		if (bus != NULL) {
+			addBusConnectorItem(bus, connectorItem);
+		}
 	}
 
 	return renderer;
@@ -632,29 +637,19 @@ void Wire::collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained
 	}
 }
 
-void Wire::collectWires(QList<Wire *> & wires, bool includeBusConnections) {
+void Wire::collectWires(QList<Wire *> & wires) {
 	if (wires.contains(this)) return;
 
 	wires.append(this);
 	//DebugDialog::debug(QString("collecting wire %1").arg(this->id()) );
-	collectWiresAux(wires, m_connector0, includeBusConnections);
-	collectWiresAux(wires, m_connector1, includeBusConnections);
+	collectWiresAux(wires, m_connector0);
+	collectWiresAux(wires, m_connector1);
 }
 
-void Wire::collectWiresAux(QList<Wire *> & wires, ConnectorItem * start, bool includeBusConnections) {
+void Wire::collectWiresAux(QList<Wire *> & wires, ConnectorItem * start) {
 	foreach (ConnectorItem * toConnectorItem, start->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			dynamic_cast<Wire *>(toConnectorItem->attachedTo())->collectWires(wires, includeBusConnections);
-		}
-		else if (includeBusConnections) {
-			BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(toConnectorItem);
-			if (bci == NULL) continue;
-
-			foreach(ConnectorItem * bConnectorItem, bci->connectedToItems()) {
-				if (bConnectorItem->attachedToItemType() == ModelPart::Wire) {
-					dynamic_cast<Wire *>(bConnectorItem->attachedTo())->collectWires(wires, includeBusConnections);
-				}
-			}
+			dynamic_cast<Wire *>(toConnectorItem->attachedTo())->collectWires(wires);
 		}
 	}
 
@@ -920,7 +915,7 @@ bool Wire::draggingEnd() {
 
 void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> & out) {
 	QList<Wire *> wires;
-	collectWires(wires, false);
+	collectWires(wires);
 
 	// if neither end connects, return true, because it's just floating
 	bool c0 = connectsWithin(m_connector0, in, wires);

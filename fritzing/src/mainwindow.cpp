@@ -376,12 +376,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_wireDisconnected(long,  QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireConnectedSignal(long,  QString, long,  QString)),
 									 slotter, SLOT(sketchWidget_wireConnected(long, QString, long, QString)));
-	succeeded = succeeded && connect(signaller, SIGNAL(changeConnectionSignal(long,  QString, long,  QString, bool, bool, bool)),
-									 slotter, SLOT(sketchWidget_changeConnection(long, QString, long, QString, bool, bool, bool)));
-	succeeded = succeeded && connect(signaller, SIGNAL(initializeBusConnectorItemSignal(long, const QString &)),
-									 slotter, SLOT(sketchWidget_initializeBusConnectorItem(long, const QString &)));
-	succeeded = succeeded && connect(signaller, SIGNAL(mergeBusesSignal(long, const QString &, QPointF, long, const QString &, QPointF, bool)),
-									 slotter, SLOT(sketchWidget_mergeBuses(long, const QString &, QPointF, long, const QString &, QPointF, bool)));
+	succeeded = succeeded && connect(signaller, SIGNAL(changeConnectionSignal(long,  QString, long,  QString, bool, bool)),
+									 slotter, SLOT(sketchWidget_changeConnection(long, QString, long, QString, bool, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(copyItemSignal(long, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &)),
 													   slotter, SLOT(sketchWidget_copyItem(long, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &)),
 									 Qt::DirectConnection);

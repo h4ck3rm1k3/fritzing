@@ -275,13 +275,7 @@ void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemB
 			if (toBase != NULL) {	
 				ConnectorItem * connectorItem = NULL;
 				QString toConnectorID = connectToElement.attribute("connectorId");
-				QString isBusConnectorItem = connectToElement.attribute("bus");		
-				if (isBusConnectorItem.compare("true") == 0) {
-					connectorItem = toBase->busConnectorItemCast(toConnectorID);
-				}
-				else if (toConnectorID.length() > 0) {
-					connectorItem = toBase->findConnectorItemNamed(toConnectorID);
-				}
+				connectorItem = toBase->findConnectorItemNamed(toConnectorID);
 				if (connectorItem != NULL) {
 					connectTo(connectorItem);
 					connectorItem->connectTo(this);
@@ -430,7 +424,6 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 		}
 		writer.writeStartElement("connect");
 		writer.writeAttribute("connectorId", connectorItem->connectorStuffID());
-		writer.writeAttribute("bus", connectorItem->isBusConnector() ? "true" : "false");
 		writer.writeAttribute("modelIndex", QString::number(connectorItem->connector()->modelIndex()));
 		writer.writeEndElement();
 	}
@@ -511,6 +504,80 @@ bool ConnectorItem::isDirty() {
 	return m_dirty;
 }
 
-bool ConnectorItem::isBusConnector() {
-	return false;
+
+void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems) {
+	// collects all the connectors at the same potential
+	// allows direct connections or wired connections
+	// but not ratsnest, jumpers or trace wire connections
+
+	QList<ConnectorItem *> tempItems = connectorItems;
+	connectorItems.clear();
+
+	for (int i = 0; i < tempItems.count(); i++) {
+		ConnectorItem * connectorItem = tempItems[i];
+		//DebugDialog::debug(QString("testing %1 %2 %3").arg(connectorItem->attachedToID()).arg(connectorItem->attachedToTitle()).arg(connectorItem->connectorStuffID()) );
+
+		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
+		if (fromWire != NULL && fromWire->hasAnyFlag(ViewGeometry::TraceJumperRatsnestFlags)) {
+			// don't add this kind of wire
+			continue;
+		}
+
+		// this one's a keeper
+		connectorItems.append(connectorItem);
+				
+		foreach (ConnectorItem * cto, connectorItem->connectedToItems()) {
+			if (tempItems.contains(cto)) continue;
+
+			tempItems.append(cto);
+		}
+
+		Bus * bus = connectorItem->bus();
+		if (bus != NULL) {
+			QList<ConnectorItem *> busConnectedItems;
+			connectorItem->attachedTo()->connectedBusConnectorItems(bus, busConnectedItems);
+			foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
+				if (!tempItems.contains(busConnectedItem)) {
+					tempItems.append(busConnectedItem);
+				}
+			}
+		}
+	}
+}
+
+void ConnectorItem::collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags) {
+	// collects all the connectors at the same potential
+	// which are directly reached by the given wire type
+
+	collectEqualPotential(connectorItems);
+	QList<ConnectorItem *> partConnectorItems;
+	collectParts(connectorItems, partConnectorItems);
+	connectorItems.clear();
+	for (int i = 0; i < partConnectorItems.count() - 1; i++) {
+		ConnectorItem * ci = partConnectorItems[i];
+		for (int j = i + 1; j < partConnectorItems.count(); j++) {
+			ConnectorItem * cj = partConnectorItems[j];
+			if (ci->wiredTo(cj, flags)) {
+				if (!connectorItems.contains(ci)) {
+					connectorItems.append(ci);
+				}
+				if (!connectorItems.contains(cj)) {
+					connectorItems.append(cj);
+				}
+			}
+		}
+	}
+}
+
+void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors)
+{
+	foreach (ConnectorItem * connectorItem, connectorItems) {
+		ItemBase * candidate = connectorItem->attachedTo();
+		if (candidate->itemType() == ModelPart::Part || candidate->itemType() == ModelPart::Board) {
+			if (!partsConnectors.contains(connectorItem)) {
+				//DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorStuffID()) );
+				partsConnectors.append(connectorItem);
+			}
+		}
+	}
 }

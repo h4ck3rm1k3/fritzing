@@ -131,7 +131,7 @@ public:
 	ChangeConnectionCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType,
 							long fromID, const QString & fromConnectorID,
 							long toID, const QString & toConnectorID,
-							bool connect, bool seekLayerKin, bool fromBusConnector,
+							bool connect, bool seekLayerKin,
 							bool chain, QUndoCommand * parent);
 	void undo();
 	void redo();
@@ -143,7 +143,6 @@ protected:
     QString m_fromConnectorID;
     QString m_toConnectorID;
 	bool m_connect;
-	bool m_fromBusConnector;
 	bool m_chain;
 
 };
@@ -216,40 +215,6 @@ protected:
     QHash<long, RealPair *> m_triplets;
 };
 
-
-class InitializeBusConnectorItemCommand : public BaseCommand
-{
-public:
-	InitializeBusConnectorItemCommand(class SketchWidget *sketchWidget, long busOwnerID, const QString & busID,
-										QUndoCommand *parent = 0);
-    void undo();
-    void redo();
-
-protected:
-	long m_busOwnerID;
-	QString m_busID;
-	ViewGeometry m_viewGeometry;
-};
-
-
-class MergeBusCommand : public BaseCommand
-{
-public:
-	MergeBusCommand(class SketchWidget *sketchWidget, long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
-					long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos,
-					bool merge, QUndoCommand *parent = 0);
-    void undo();
-    void redo();
-
-protected:
-	long m_bus1OwnerID;
-	QString m_bus1ID;
-	QPointF m_bus1Pos;
-	long m_bus2OwnerID;
-	QString m_bus2ID;
-	QPointF m_bus2Pos;
-	bool m_merge;
-};
 
 class StickyCommand : public BaseCommand
 {

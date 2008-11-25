@@ -53,7 +53,6 @@ $Date$
 #include "connectoritem.h"
 #include "bus.h"
 #include "virtualwire.h"
-#include "busconnectoritem.h"
 #include "itemdrag.h"
 #include "layerattributes.h"
 #include "waitpushundostack.h"
@@ -171,6 +170,7 @@ void SketchWidget::loadFromModel() {
 	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
 
 	// first make the parts
+	QList<ModelPart *> badModelParts;
 	foreach (QObject * object, root->children()) {
 		ModelPart* mp = qobject_cast<ModelPart *>(object);
 		if (mp == NULL) continue;
@@ -188,6 +188,13 @@ void SketchWidget::loadFromModel() {
 		if (geometry.isNull()) continue;
 
 		ViewGeometry viewGeometry(geometry);
+
+		// hack 2008/11/25 to deal with earlier versions of saved files
+		if (viewGeometry.getVirtual()) {
+			badModelParts.append(mp);
+			continue;
+		}
+
 		// use a function of the model index to ensure the same parts have the same ID across views
 		ItemBase * item = addItemAux(mp, viewGeometry, ItemBase::getNextID(mp->modelIndex()), NULL, true);
 		if (item != NULL) {
@@ -209,6 +216,11 @@ void SketchWidget::loadFromModel() {
 			itemDoms.insert(item, new QDomElement(view));
 		}
 	}
+
+	foreach (ModelPart * mp, badModelParts) {
+		m_sketchModel->removeModelPart(mp);
+	}
+
 
 	foreach (ItemBase * itemBase, itemDoms.keys()) {
 		QDomElement * dom = itemDoms.value(itemBase);
@@ -514,10 +526,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
     stackSelectionState(false, parentCommand);
 
-	QSet <VirtualWire *> virtualWires;
-	QList<BusConnectorItem *> busConnectorItems;
-	collectBusConnectorItems(busConnectorItems);
-
 	// the theory is that we only need to disconnect virtual wires at this point
 	// and not regular connectors
 	// since in figuring out how to manage busConnections
@@ -529,15 +537,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 		// now prepare to disconnect all the deleted item's connectors
 		foreach (ConnectorItem * fromConnectorItem,  connectorHash.uniqueKeys()) {
-			if (fromConnectorItem->attachedTo()->getVirtual()) {
-				virtualWires.insert(dynamic_cast<VirtualWire *>(fromConnectorItem->attachedTo()));
-				continue;
-			}
 			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-				if (toConnectorItem->attachedTo()->getVirtual()) {
-					virtualWires.insert(dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo()));
-					continue;
-				}
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
 											  false, false, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem);
@@ -545,8 +545,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 			}
 		}
    	}
-
-	cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
 
 	for (int i = 0; i < deletedItems.count(); i++) {
 		ItemBase * itemBase = deletedItems[i];
@@ -559,78 +557,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
    	m_undoStack->push(parentCommand);
 
 
-}
-
-void SketchWidget::reorgBuses(QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand) {
-	foreach (BusConnectorItem * busConnectorItem, busConnectorItems) {
-		// check whether bus needs to be unmerged and/or remerged with a different busConnector
-		QList<ConnectorItem *> connectorItems;
-		QList<BusConnectorItem *> equalBusConnectorItems;
-		connectorItems.append(busConnectorItem);
-		BusConnectorItem::collectEqualPotential(connectorItems, equalBusConnectorItems, false, ViewGeometry::NoFlag);
-		equalBusConnectorItems.removeOne(busConnectorItem);
-		foreach (BusConnectorItem * mergedBusConnectorItem,  busConnectorItem->merged()) {
-			if (!equalBusConnectorItems.contains(mergedBusConnectorItem)) {
-				new MergeBusCommand(this, mergedBusConnectorItem->attachedToID(), mergedBusConnectorItem->busID(), mergedBusConnectorItem->mapToScene(mergedBusConnectorItem->pos()),
-									busConnectorItem->attachedToID(), busConnectorItem->busID(), busConnectorItem->mapToScene(busConnectorItem->pos()),
-									false, parentCommand);
-				busConnectorItem->unmerge(mergedBusConnectorItem);
-			}
-		}
-		if (!busConnectorItem->isMerged() && equalBusConnectorItems.count() > 0) {
-			// remerge
-			BusConnectorItem * other = equalBusConnectorItems[0];
-			new MergeBusCommand(this, other->attachedToID(), other->busID(), other->mapToScene(other->pos()),
-								busConnectorItem->attachedToID(), busConnectorItem->busID(), busConnectorItem->mapToScene(busConnectorItem->pos()),
-								true, parentCommand);
-			busConnectorItem->merge(other);
-		}
-	}
-}
-
-void SketchWidget::deleteVirtualWires(QSet<VirtualWire *> & virtualWires, QUndoCommand * parentCommand) {
-	QSetIterator<VirtualWire *> it(virtualWires);
-    while (it.hasNext()) {
-		VirtualWire * wire = it.next();
-		if (wire->getRatsnest()) continue;
-
-		wire->saveGeometry();
-		new DeleteItemCommand(this, BaseCommand::CrossView, wire->modelPart()->moduleID(), wire->getViewGeometry(), wire->id(), parentCommand);
-	}
-}
-
-void SketchWidget::disconnectVirtualWires(QSet<VirtualWire *> & virtualWires, QUndoCommand * parentCommand) {
-	// set up disconnect and delete for virtual wires
-	QSetIterator<VirtualWire *> it(virtualWires);
-    while (it.hasNext()) {
-		VirtualWire * wire = it.next();
-		if (wire->getRatsnest()) continue;
-
-		disconnectVirtualWire(wire->connector0(), parentCommand);
-		disconnectVirtualWire(wire->connector1(), parentCommand);
-	}
-	it.toFront();
-    while (it.hasNext()) {
-		VirtualWire * wire = it.next();
-		if (wire->getRatsnest()) continue;
-
-		// now really disconnect the virtual wires to get ready to clean up busConnectorItems
-		wire->tempRemoveAllConnections();
-	}
-}
-
-void SketchWidget::disconnectVirtualWire(ConnectorItem * fromConnectorItem, QUndoCommand * parentCommand) {
-	QList<ConnectorItem *> connectedToItems = fromConnectorItem->connectedToItems();
-	for (int i = 0; i < connectedToItems.count(); i++) {
-		ConnectorItem * toConnectorItem = connectedToItems[i];
-		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(toConnectorItem);
-		new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(),
-									(busConnectorItem == NULL) ? toConnectorItem->connectorStuffID() : busConnectorItem->busID(),
-									fromConnectorItem->attachedToID(), fromConnectorItem->connectorStuffID(),
-									false, true,
-									busConnectorItem != NULL, false, parentCommand);
-
-	}
 }
 
 void SketchWidget::extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
@@ -684,60 +610,15 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								fromItem->id(), fromConnectorItem->connectorStuffID(),
 								toItem->id(), toConnectorItem->connectorStuffID(),
-								connect, seekLayerKin, false, false, parentCommand);
+								connect, seekLayerKin, false, parentCommand);
 	if (connect) {
-		fromConnectorItem->tempConnectTo(toConnectorItem);
-		toConnectorItem->tempConnectTo(fromConnectorItem);
-		Bus * bus = NULL;
-		ItemBase * busOwner = NULL;
-		if (fromConnectorItem->bus() != NULL) {
-			bus = hookToBus(toConnectorItem, fromConnectorItem, parentCommand);
-			busOwner = fromConnectorItem->attachedTo();
-		}
-		// both sides can have buses
-		if (toConnectorItem->bus() != NULL) {
-			bus = hookToBus(fromConnectorItem, toConnectorItem, parentCommand);
-			busOwner = toConnectorItem->attachedTo();
-		}
-		prepMergeBuses(fromConnectorItem, parentCommand);
-		fromConnectorItem->tempRemove(toConnectorItem);
-		toConnectorItem->tempRemove(fromConnectorItem);
 	}
 	else {
 	}
 }
 
-Bus * SketchWidget::hookToBus(ConnectorItem * from, ConnectorItem * busTo, QUndoCommand * parentCommand)
-{
-	Bus * bus = busTo->bus();
-	if (bus == NULL) return NULL;
 
-	ItemBase * busBase = busTo->attachedTo();
-	DebugDialog::debug(QString("looking for bus %1 on %2 busTo %3 from %4")
-		.arg(bus->id())
-		.arg(busBase->id())
-		.arg(busTo->attachedToTitle())
-		.arg(from->attachedToTitle()));
-
-	BusConnectorItem * busConnectorItem = busBase->busConnectorItem(bus);
-	if (busConnectorItem == NULL) {
-		// this shouldn't happen
-
-	}
-	else {
-		if (!busConnectorItem->initialized()) {
-			new InitializeBusConnectorItemCommand(this, busConnectorItem->attachedToID(), busConnectorItem->busID(),
-												  parentCommand);
-			// do it now anyway
-			busConnectorItem->initialize(m_viewIdentifier);
-		}
-
-	}
-	createWire(from, busConnectorItem, true,  ViewGeometry::VirtualFlag, true, BaseCommand::CrossView, parentCommand);
-	return bus;
-}
-
-long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, bool toIsBus, ViewGeometry::WireFlags wireFlags,
+long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags wireFlags,
 							  bool addItNow, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID();
@@ -761,9 +642,9 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, bool toI
 
 	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, parentCommand, false);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorStuffID(),
-			newID, "connector0", true, true, false, false, parentCommand);
+			newID, "connector0", true, true, false, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
-			newID, "connector1", true, true, toIsBus, false, parentCommand);
+			newID, "connector1", true, true, false, parentCommand);
 
 	if (addItNow) {
 		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
@@ -776,27 +657,6 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, bool toI
 	return newID;
 }
 
-void SketchWidget::prepMergeBuses(ConnectorItem * connectorItem, QUndoCommand * parentCommand)
-{
-	QList<ConnectorItem *> connectorItems;
-	QList<BusConnectorItem *> busConnectorItems;
-	connectorItems.append(connectorItem);
-	BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, false, ViewGeometry::NoFlag);
-
-	if (busConnectorItems.count() >= 2) {
-		for (int i = 0; i < busConnectorItems.count() - 1; i++) {
-			for (int j = i + 1; j < busConnectorItems.count(); j++) {
-				BusConnectorItem * bci_i = busConnectorItems[i];
-				BusConnectorItem * bci_j = busConnectorItems[j];
-				if (!bci_i->isMergedWith(bci_j)) {
-					new MergeBusCommand(this, bci_i->attachedToID(), bci_i->busID(), bci_i->mapToScene(bci_i->pos()),
-						bci_j->attachedToID(), bci_j->busID(), bci_j->mapToScene(bci_j->pos()),
-						true, parentCommand);
-				}
-			}
-		}
-	}
-}
 
 void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry) {
 	ItemBase * pitem = findItem(id);
@@ -929,8 +789,6 @@ void SketchWidget::copy() {
 		}
 	}
 
-	QSet<VirtualWire *> virtualWires;
-	QSet<BusConnectorItem *> busConnectors;
 	QMultiHash<ConnectorItem *, ConnectorItem *> allConnectorHash;
 
 	// now save the connector info
@@ -950,31 +808,9 @@ void SketchWidget::copy() {
 					.arg(toConnectorItem->connectorStuffID()) );
 				ItemBase * toBase = toConnectorItem->attachedTo()->layerKinChief();
 				if (!bases.contains(toBase)) {
-					bool doDelete = true;
-
-					if (toBase->getVirtual()) {
-						// deal with inter-connected virtual wires
-						VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toBase);
-						if (virtualWire->getRatsnest()) {
-						}
-						else {
-							ItemBase * itemBase = virtualWire->otherConnector(toConnectorItem)->firstConnectedToIsh()->attachedTo();
-							if (bases.contains(itemBase)) {
-								virtualWires.insert(virtualWire);
-								BusConnectorItem * bci = dynamic_cast<BusConnectorItem *>(fromConnectorItem);
-								if (bci != NULL) {
-									busConnectors.insert(bci);
-								}
-								doDelete = false;
-							}
-						}
-					}
-
-					if (doDelete) {
-						// don't copy external connection--but don't delete during walkthrough
-						disconnectorHash.insert(fromConnectorItem, toConnectorItem);
-						DebugDialog::debug("deleting");
-					}
+					// don't copy external connection--but don't delete during walkthrough
+					disconnectorHash.insert(fromConnectorItem, toConnectorItem);
+					DebugDialog::debug("deleting");
 				}
 			}
 		}
@@ -993,41 +829,18 @@ void SketchWidget::copy() {
 		}
     }
 
-	// copy virtual wires
-	dataStream << virtualWires.count();
-	QSet<VirtualWire *>::const_iterator vwit = virtualWires.constBegin();
-	while (vwit != virtualWires.constEnd()) {
-		VirtualWire * vw = *vwit;
-
-		ViewGeometry * viewGeometry = new ViewGeometry(vw->getViewGeometry());
-		dataStream << vw->modelPart()->moduleID() << (qint64) vw->id();
-		dataStream << viewGeometry->loc() << viewGeometry->line();
-		++vwit;
-	}
-
 	// now shove the connection info into the dataStream
 	dataStream << (int) allConnectorHash.count();
 	DebugDialog::debug(QString("copying %1").arg(allConnectorHash.count()) );
 	foreach (ConnectorItem * fromConnectorItem,  allConnectorHash.uniqueKeys()) {
-		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(fromConnectorItem);
 		foreach (ConnectorItem * toConnectorItem, allConnectorHash.values(fromConnectorItem)) {
 			dataStream << (qint64) fromConnectorItem->attachedTo()->layerKinChief()->id();
-			QString thing;
-			if (busConnectorItem != NULL) {
-				dataStream << busConnectorItem->busID();
-				thing = busConnectorItem->busID();
-			}
-			else {
-				dataStream << fromConnectorItem->connectorStuffID();
-				thing = fromConnectorItem->connectorStuffID();
-			}
-			dataStream << (dynamic_cast<BusConnectorItem *>(fromConnectorItem) != NULL);
+			dataStream << fromConnectorItem->connectorStuffID();
 			dataStream << (qint64) toConnectorItem->attachedTo()->layerKinChief()->id();
 			dataStream << toConnectorItem->connectorStuffID();
-			dataStream << (dynamic_cast<BusConnectorItem *>(toConnectorItem) != NULL);
 
 			DebugDialog::debug(QString("copying %1 %2 %3 %4").arg(fromConnectorItem->attachedTo()->layerKinChief()->id())
-			.arg(thing)
+			.arg(fromConnectorItem->connectorStuffID())
 			.arg( toConnectorItem->attachedTo()->layerKinChief()->id())
 			.arg(toConnectorItem->connectorStuffID()) );
 		}
@@ -1126,25 +939,6 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
    	}
     m_pasteCount++;				// used for offsetting paste items, not a count of how many items are pasted
 
-	int virtualWireCount;
-	dataStream >> virtualWireCount;
-	DebugDialog::debug(QString("pasting virtual wires %1").arg(virtualWireCount) );
-	for (int i = 0; i < virtualWireCount; i++) {
-		QString moduleID;
-		qint64 id;
-		QPointF loc;
-		QLineF line;
-
-		dataStream >> moduleID >> id >> loc >> line;
-		long newID = ItemBase::getNextID();
-		mapIDs.insert(id, newID);
-		ViewGeometry viewGeometry;
-		viewGeometry.setLoc(loc);
-		viewGeometry.setLine(line);
-		viewGeometry.setVirtual(true);
-		DebugDialog::debug(tr("pasting %1").arg(newID) );
-		new AddItemCommand(this, BaseCommand::CrossView, moduleID, viewGeometry, newID, parentCommand, false);
-	}
 
 	// now deal with interconnections between the copied parts
 	for (int i = 0; i < size; i++) {
@@ -1154,18 +948,16 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 		for (int j = 0; j < connectionCount; j++) {
 			qint64 fromID;
 			QString fromConnectorID;
-			bool fromIsBus;
 			QString toConnectorID;
-			bool toIsBus;
 			qint64 toID;
-			dataStream >> fromID >> fromConnectorID >> fromIsBus >> toID >> toConnectorID >> toIsBus;
+			dataStream >> fromID >> fromConnectorID  >> toID >> toConnectorID;
 			DebugDialog::debug(tr("pasting %1 %2 %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
 			fromID = mapIDs.value(fromID);
 			toID = mapIDs.value(toID);
 			new ChangeConnectionCommand(this, BaseCommand::CrossView,
 										fromID, fromConnectorID,
 										toID, toConnectorID,
-										true, true, fromIsBus, false, parentCommand);
+										true, true, false, parentCommand);
 
 			//extendChangeConnectionCommand(fromID, fromConnectorID,
 			//							  toID, toConnectorID,
@@ -1652,10 +1444,6 @@ bool SketchWidget::checkMoved()
 		moveString = tr("Move %2 items (%1)").arg(viewName).arg(QString::number(moveCount));
 	}
 
-	QSet <VirtualWire *> virtualWires;
-	QList<BusConnectorItem *> busConnectorItems;
-	collectBusConnectorItems(busConnectorItems);
-
 	QUndoCommand * parentCommand = new QUndoCommand(moveString);
 	new CleanUpWiresCommand(this, false, parentCommand);
 
@@ -1683,7 +1471,7 @@ bool SketchWidget::checkMoved()
 
 		if (item->itemType() == ModelPart::Wire) continue;
 
-		disconnectFromFemale(item, m_savedItems, virtualWires, parentCommand);
+		disconnectFromFemale(item, m_savedItems, parentCommand);
 	}
 
 	if (!hasBoard) {
@@ -1702,7 +1490,6 @@ bool SketchWidget::checkMoved()
 		extendChangeConnectionCommand(from, to, true, false, parentCommand);
 	}
 
-	cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
 	clearTemporaries();
 
 	m_needToConnectItems.clear();
@@ -1962,9 +1749,8 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	else {
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
-			QList<BusConnectorItem *> busConnectorItems;
 			connectorItems.append(from);
-			BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, false, ViewGeometry::NoFlag);
+			ConnectorItem::collectEqualPotential(connectorItems);
 			QSet<VirtualWire *> virtualWires;
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
@@ -1980,7 +1766,6 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 			}
 
-			cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
 		}
 		if (to != NULL) {
 			extendChangeConnectionCommand(from, to, true, false, parentCommand);
@@ -2398,6 +2183,8 @@ void SketchWidget::sortSelectedByZ(QList<ItemBase *> & bases) {
 	QList<QGraphicsItem *> tlBases;
 	for (int i = 0; i < items.count(); i++) {
 		ItemBase * itemBase =  ItemBase::extractTopLevelItemBase(items[i]);
+		if (itemBase->getVirtual()) continue;
+
 		if (itemBase != NULL) {
 			tlBases.append(itemBase);
 		}
@@ -2539,10 +2326,6 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		return;
 	}
 
-	QSet <VirtualWire *> virtualWires;
-	QList<BusConnectorItem *> busConnectorItems;
-	collectBusConnectorItems(busConnectorItems);
-
 	QString string = tr("%3 %2 (%1)")
 			.arg(ItemBase::viewIdentifierName(m_viewIdentifier))
 			.arg((targets.count() == 1) ? targets[0]->modelPart()->title() : QString::number(targets.count()) + " items" )
@@ -2555,7 +2338,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 	foreach (PaletteItem * item, targets) {
-		disconnectFromFemale(item, emptyList, virtualWires, parentCommand);
+		disconnectFromFemale(item, emptyList, parentCommand);
 
 		if (item->sticky()) {
 			//TODO: apply transformation to stuck items
@@ -2570,7 +2353,6 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		}
 	}
 
-	cleanUpVirtualWires(virtualWires, busConnectorItems, parentCommand);
 	clearTemporaries();
 
 	new CleanUpWiresCommand(this, true, parentCommand);
@@ -2710,17 +2492,17 @@ void SketchWidget::sketchWidget_wireDisconnected(long fromID, QString fromConnec
 void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
 									bool connect, bool doEmit, bool seekLayerKin,
-									bool fromBusConnector, bool chain)
+									bool chain)
 {
-	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin, fromBusConnector, chain);
+	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin, chain);
 	if (doEmit) {
-		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect, fromBusConnector, chain);
+		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect, chain);
 	}
 }
 
 void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool seekLayerKin, bool fromBusConnector, bool chain)
+									bool connect, bool seekLayerKin, bool chain)
 {
 	DebugDialog::debug(QObject::tr("changeConnection: from %1 %2; to %3 %4 con:%5 v:%6")
 				.arg(fromID).arg(fromConnectorID)
@@ -2733,13 +2515,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		return;			// for now
 	}
 
-	ConnectorItem * fromConnectorItem = NULL;
-	if (fromBusConnector) {
-		fromConnectorItem = fromItem->busConnectorItem(fromConnectorID);
-	}
-	else {
-		fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, seekLayerKin);
-	}
+	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, seekLayerKin);
 	if (fromConnectorItem == NULL) {
 		// shouldn't be here
 		DebugDialog::debug("change connection exit 2");
@@ -2776,14 +2552,6 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 
 	fromConnectorItem->attachedTo()->updateConnections(fromConnectorItem);
 	toConnectorItem->attachedTo()->updateConnections(toConnectorItem);
-	if (fromBusConnector) {
-		fromConnectorItem->attachedMoved();
-		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(fromConnectorItem);
-		if (busConnectorItem != NULL) {
-			busConnectorItem->updateVisibility(m_viewIdentifier);
-		}
-	}
-
 
 	if (m_dealWithRatsNestEnabled) {
 		dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
@@ -2836,11 +2604,12 @@ void SketchWidget::tempConnectWire(ItemBase * itemBase, ConnectorItem * from, Co
 }
 
 void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
-													   long toID, QString toConnectorID, bool connect,
-													   bool fromBusConnector, bool chain) {
+												 long toID, QString toConnectorID,
+												 bool connect, bool chain) 
+{
 	changeConnection(fromID, fromConnectorID,
 					 toID, toConnectorID,
-					 connect, false, true, fromBusConnector, chain);
+					 connect, false, true, chain);
 }
 
 void SketchWidget::navigatorScrollChange(double x, double y) {
@@ -2872,75 +2641,11 @@ void SketchWidget::item_connectionChanged(ConnectorItem * from, ConnectorItem * 
 	}
 }
 
-BusConnectorItem * SketchWidget::initializeBusConnectorItem(long busOwnerID, const QString & busID, bool doEmit)
-{
-	DebugDialog::debug(QString("initializing bus %1 %2, %3 ").arg(busOwnerID).arg(busID).arg(m_viewIdentifier) );
-
-	ItemBase * busItemBase = findItem(busOwnerID);
-	if (busItemBase == NULL) return NULL;
-
-	Bus * bus = busItemBase->buses().value(busID);
-	if (bus == NULL) return NULL;
-
-	BusConnectorItem * busConnectorItem = busItemBase->busConnectorItem(busID);
-	if (busConnectorItem != NULL) {
-		busConnectorItem->initialize(m_viewIdentifier);
-	}
-
-	if (doEmit) {
-		emit initializeBusConnectorItemSignal(busOwnerID, busID);
-	}
-
-	return busConnectorItem;
-}
-
-
-void SketchWidget::sketchWidget_initializeBusConnectorItem(long busOwnerID, const QString & busID) {
-	initializeBusConnectorItem(busOwnerID, busID, false);
-}
-
 void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
 	QGraphicsView::keyPressEvent(event);
 }
 
-void SketchWidget::mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
-							  long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos,
-							  bool merge, bool doEmit)
-{
 
-	DebugDialog::debug(QString("merge buses %1 %2 %3 %4 %5 %6")
-					   .arg(bus1OwnerID).arg(bus1ID).arg(bus2OwnerID).arg(bus2ID).arg(merge).arg(m_viewIdentifier) );
-	ItemBase * owner1 = findItem(bus1OwnerID);
-	if (owner1 == NULL) return;
-
-	BusConnectorItem * item1 = owner1->busConnectorItem(bus1ID);
-	if (item1 == NULL) return;
-
-	ItemBase * owner2 = findItem(bus2OwnerID);
-	if (owner2 == NULL) return;
-
-	BusConnectorItem * item2 = owner2->busConnectorItem(bus2ID);
-	if (item2 == NULL) return;
-
-	if (merge) {
-		item1->merge(item2);
-		item2->merge(item1);
-	}
-	else {
-		item1->unmerge(item2);
-		item2->unmerge(item1);
-	}
-
-	if (doEmit) {
-		emit mergeBusesSignal(bus1OwnerID, bus1ID, bus1Pos, bus2OwnerID, bus2ID, bus2Pos, merge);
-	}
-}
-
-void SketchWidget::sketchWidget_mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
-								long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos, bool merge)
-{
-	mergeBuses(bus1OwnerID, bus1ID, bus1Pos, bus2OwnerID, bus2ID, bus2Pos, merge, false);
-}
 
 void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> & geometryHash) {
 	ItemBase * itemBase = findItem(itemID);
@@ -2990,25 +2695,6 @@ void SketchWidget::dragIsDoneSlot(ItemDrag * itemDrag) {
 void SketchWidget::clearTemporaries() {
 	for (int i = 0; i < m_temporaries.count(); i++) {
 		QGraphicsItem * item = m_temporaries[i];
-		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(item);
-		if (busConnectorItem != NULL) {
-			for (int j = busConnectorItem->connectedToItems().count() - 1; j >= 0; j--) {
-				busConnectorItem->connectedToItems()[j]->tempRemove(busConnectorItem);
-				busConnectorItem->tempRemove(busConnectorItem->connectedToItems()[j]);
-			}
-			busConnectorItem->attachedTo()->removeBusConnectorItem(busConnectorItem->bus());
-		}
-		else {
-			VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(item);
-			if (virtualWire != NULL) {
-				virtualWire->tempRemoveAllConnections();
-			}
-			else {
-				// this shouldn't happen
-				continue;
-			}
-		}
-
 		scene()->removeItem(item);
 		delete item;
 	}
@@ -3150,18 +2836,17 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	// disconnect from original wire and reconnect to new wire
 	ConnectorItem * connector1 = wire->connector1();
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
-		bool isBusConnector = (dynamic_cast<BusConnectorItem *>(toConnectorItem) != NULL);
 		new ChangeConnectionCommand(this, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 			wire->id(), connector1->connectorStuffID(),
-			false, true, isBusConnector, toConnectorItem->chained(), parentCommand);
+			false, true, toConnectorItem->chained(), parentCommand);
 		new ChangeConnectionCommand(this, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 			newID, connector1->connectorStuffID(),
-			true, true, isBusConnector, toConnectorItem->chained(), parentCommand);
+			true, true, toConnectorItem->chained(), parentCommand);
 	}
 
 	// connect the two wires
 	new ChangeConnectionCommand(this, BaseCommand::SingleView, wire->id(), connector1->connectorStuffID(),
-			newID, "connector0", true, true, false, true, parentCommand);
+			newID, "connector0", true, true, true, parentCommand);
 
 
 	//checkSticky(wire, parentCommand);
@@ -3202,17 +2887,16 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 
 	// disconnect the wires
 	new ChangeConnectionCommand(this, BaseCommand::SingleView, wire->id(), clickedConnectorItem->connectorStuffID(),
-			toWire->id(), toConnectorItem->connectorStuffID(), false, true, false, true, parentCommand);
+			toWire->id(), toConnectorItem->connectorStuffID(), false, true, true, parentCommand);
 
 	// disconnect everyone from the other end of the wire being deleted, and reconnect to the remaining wire
 	foreach (ConnectorItem * otherToConnectorItem, otherConnector->connectedToItems()) {
-		bool isBusConnector = (dynamic_cast<BusConnectorItem *>(otherToConnectorItem) != NULL);
 		new ChangeConnectionCommand(this, BaseCommand::SingleView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
 			toWire->id(), otherConnector->connectorStuffID(),
-			false, true, isBusConnector, otherToConnectorItem->chained(), parentCommand);
+			false, true, otherToConnectorItem->chained(), parentCommand);
 		new ChangeConnectionCommand(this, BaseCommand::SingleView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
 			wire->id(), clickedConnectorItem->connectorStuffID(),
-			true, true, isBusConnector, otherToConnectorItem->chained(), parentCommand);
+			true, true, otherToConnectorItem->chained(), parentCommand);
 	}
 
 	toWire->saveGeometry();
@@ -3553,7 +3237,7 @@ void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeomet
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), .35, parentCommand);
 	}
 	else {
-		long newID = createWire(ends[0], ends[1], false, flag, false, BaseCommand::SingleView, parentCommand);
+		long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
 		new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
 		new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), 0.35, parentCommand);
@@ -3615,35 +3299,12 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	}
 }
 
-void SketchWidget::collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems) {
-	// collect all the bus connectors in the scene, so we can figure out which ones
-	// will need to be split up
-	// this seems like the quickest approach since we may be moving/rotating/flipping/deleting many items
-
-	// TODO: replace scene()->items()
-
-	foreach (QGraphicsItem * item,  scene()->items()) {
-		BusConnectorItem * busConnectorItem = dynamic_cast<BusConnectorItem *>(item);
-		if (busConnectorItem != NULL && busConnectorItem->connectionsCount() > 0) {
-			busConnectorItems.append(busConnectorItem);
-		}
-	}
-}
-
-void SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <VirtualWire *> & virtualWires, QUndoCommand * parentCommand)
+void SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(item);
 	Q_UNUSED(savedItems);
-	Q_UNUSED(virtualWires);
 	Q_UNUSED(parentCommand);
 }
-
-void SketchWidget::cleanUpVirtualWires(QSet<VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand) {
-	disconnectVirtualWires(virtualWires, parentCommand);
-	reorgBuses(busConnectorItems, parentCommand);
-	deleteVirtualWires(virtualWires, parentCommand);
-}
-
 
 void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	if (isPressed) {

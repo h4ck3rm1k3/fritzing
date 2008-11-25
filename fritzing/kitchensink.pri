@@ -24,7 +24,6 @@ HEADERS += \
     src/breadboardsketchwidget.h \
     src/bus.h \
     src/busstuff.h \
-    src/busconnectoritem.h \
     src/commands.h \
     src/connector.h \
     src/connectoritem.h \
@@ -85,7 +84,6 @@ SOURCES += \
     src/breadboardsketchwidget.cpp \
     src/bus.cpp \
     src/busstuff.cpp \
-    src/busconnectoritem.cpp \
     src/commands.cpp \
     src/connector.cpp \
     src/connectoritem.cpp \

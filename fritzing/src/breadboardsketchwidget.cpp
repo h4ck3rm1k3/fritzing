@@ -53,7 +53,7 @@ void BreadboardSketchWidget::addViewLayers() {
 	addBreadboardViewLayers();
 }
 
-void BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <VirtualWire *> & virtualWires, QUndoCommand * parentCommand)
+void BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand)
 {
 	// if item is attached to a virtual wire or a female connector in breadboard view
 	// then disconnect it
@@ -74,42 +74,7 @@ void BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 				fromConnectorItem->tempRemove(toConnectorItem);
 				toConnectorItem->tempRemove(fromConnectorItem);
 
-				// if the female connector has any virtual wires pointing back to me get rid of them
-				testForReturningVirtuals(toConnectorItem, item, virtualWires);
-			}
-			else if (toConnectorItem->attachedTo()->getVirtual()) {
-				VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
-				ConnectorItem * realci = virtualWire->otherConnector(toConnectorItem)->firstConnectedToIsh();
-				if (realci != NULL) {
-					ItemBase * otherEnd = realci->attachedTo();
-					if (savedItems.contains(otherEnd)) {
-						// the thing we're connected to is also moving, so don't disconnect
-						continue;
-					}
-				}
-				else {
-					DebugDialog::debug("why is this only connected to a virtual item?");
-				}
-				virtualWires.insert(virtualWire);
 			}
 		}
 	}
-}
-
-void BreadboardSketchWidget::testForReturningVirtuals(ConnectorItem * fromConnectorItem, ItemBase * target, QSet <VirtualWire *> & virtualWires) {
-	if (target->buses().count() <= 0) return;
-
-	foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
-		if (toConnectorItem->attachedTo()->getVirtual()) {
-			VirtualWire * virtualWire = dynamic_cast<VirtualWire *>(toConnectorItem->attachedTo());
-			ConnectorItem * other = virtualWire->otherConnector(toConnectorItem);
-			foreach (ConnectorItem * otherToConnectorItem, other->connectedToItems()) {
-				if (otherToConnectorItem->attachedTo() == target) {
-					virtualWires.insert(virtualWire);
-					return;
-				}
-			}
-		}
-	}
-
 }

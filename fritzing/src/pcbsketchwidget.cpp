@@ -27,7 +27,6 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 #include "pcbsketchwidget.h"
 #include "debugdialog.h"
-#include "busconnectoritem.h"
 
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
@@ -92,19 +91,14 @@ void PCBSketchWidget::checkAutorouted()
 	}
 
 	while (allConnectorItems.count() > 0) {
-		QList<ConnectorItem *> connectorItems;
+		ConnectorItem * connectorItem = allConnectorItems.takeFirst();
 		QList<ConnectorItem *> ratPartsConnectorItems;
-		QList<ConnectorItem *> tracePartsConnectorItems;
-		QList<BusConnectorItem *> busConnectorItems;
-		connectorItems.append(allConnectorItems[0]);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::RatsnestFlag);
-		BusConnectorItem::collectParts(connectorItems, ratPartsConnectorItems);
+		ratPartsConnectorItems.append(connectorItem);
+		ConnectorItem::collectEqualPotentialParts(ratPartsConnectorItems, ViewGeometry::RatsnestFlag);
 
-		connectorItems.clear();
-		busConnectorItems.clear();
-		connectorItems.append(allConnectorItems[0]);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
-		BusConnectorItem::collectParts(connectorItems, tracePartsConnectorItems);
+		QList<ConnectorItem *> tracePartsConnectorItems;
+		tracePartsConnectorItems.append(connectorItem);
+		ConnectorItem::collectEqualPotentialParts(tracePartsConnectorItems, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
 		if (tracePartsConnectorItems.count() != ratPartsConnectorItems.count()) {
 			autorouted = false;
 			allConnectorItems.clear();

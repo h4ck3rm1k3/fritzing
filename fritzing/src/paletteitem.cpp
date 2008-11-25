@@ -98,11 +98,7 @@ QPixmap * PaletteItem::pixmap() const {
 }
 
 void PaletteItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-	if (itemType() == ModelPart::Breadboard) {
-		DebugDialog::debug("breadboard paint");
-	}
-	
+{	
 	PaletteItemBase::paint(painter, option, widget);
 	if (!m_svg && (m_pixmap != NULL)) {
 		painter->drawPixmap ( 0, 0, *m_pixmap );

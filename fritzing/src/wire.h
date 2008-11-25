@@ -75,7 +75,7 @@ public:
 	void setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers);
 	void findConnectorsUnder();
 	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds);
-	void collectWires(QList<Wire *> & wires, bool includeBusConnections);
+	void collectWires(QList<Wire *> & wires);
 	bool stickyEnabled(ItemBase * stickTo);
 	void setPcbPenBrush(QBrush & brush);
 	bool getTrace();
@@ -129,7 +129,7 @@ protected:
 	void collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained, QList<ConnectorItem *> & ends);
 	void setConnector0Rect();
 	void setConnector1Rect();
-	void collectWiresAux(QList<Wire *> & wires, ConnectorItem * start, bool includeBusConnections);
+	void collectWiresAux(QList<Wire *> & wires, ConnectorItem * start);
 	void setShadowColor(QColor &);
 	bool connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires);
 	void calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2);

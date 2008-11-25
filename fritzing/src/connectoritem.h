@@ -66,7 +66,6 @@ public:
 	int attachedToItemType();
 	const QString & attachedToTitle();
 	virtual const QString & connectorStuffID();
-	virtual bool isBusConnector();
 	const QString & busID();
 	ModelPartStuff * modelPartStuff();
 	ModelPart * modelPart();
@@ -111,6 +110,11 @@ protected:
 	bool m_circular;
 	bool m_chained;
 	bool m_dirty;
+
+public:
+	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems);
+	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags);
+	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
 
 public:
 	static QPen normalPen;

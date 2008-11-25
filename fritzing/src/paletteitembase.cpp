@@ -26,7 +26,6 @@ $Date$
 
 #include "paletteitembase.h"
 #include "infographicsview.h"
-#include "busconnectoritem.h"
 #include "debugdialog.h"
 #include "rendererviewthing.h"
 #include "connectorviewthing.h"
@@ -283,7 +282,6 @@ void PaletteItemBase::collectFemaleConnecteesAux(QSet<ItemBase *> & items) {
 		if (item->connectorType() != Connector::Female) continue;
 
 		foreach (ConnectorItem * toConnectorItem, item->connectedToItems()) {
-			if (toConnectorItem->isBusConnector()) continue;
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) continue;
 			if (!toConnectorItem->attachedTo()->isVisible()) continue;
 
@@ -451,12 +449,7 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 		Bus * bus = connectorItem->bus();
 		if (bus != NULL) {
-			BusConnectorItem * busConnectorItem = m_busConnectorItems.value(bus);
-			if (busConnectorItem == NULL) {
-				busConnectorItem = new BusConnectorItem(this, bus);
-				addBusConnectorItem(bus, busConnectorItem);
-				busConnectorItem->setVisible(false);
-			}
+			addBusConnectorItem(bus, connectorItem);
 		}
 	}
 }

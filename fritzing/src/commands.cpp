@@ -160,7 +160,7 @@ void FlipItemCommand::redo()
 ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType crossView,
 												 long fromID, const QString & fromConnectorID,
 												 long toID, const QString & toConnectorID,
-												 bool connect, bool seekLayerKin, bool fromBusConnector, bool chain,
+												 bool connect, bool seekLayerKin, bool chain,
 												 QUndoCommand * parent)
 : BaseCommand(crossView, sketchWidget, parent)
 {
@@ -171,18 +171,17 @@ ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, Ba
     m_toConnectorID = toConnectorID;
 	m_connect = connect;
 	m_seekLayerKin = seekLayerKin;
-	m_fromBusConnector = fromBusConnector;
 	m_chain = chain;
 }
 
 void ChangeConnectionCommand::undo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, !m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_fromBusConnector, m_chain);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, !m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_chain);
 }
 
 void ChangeConnectionCommand::redo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_fromBusConnector, m_chain);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_chain);
 }
 
 
@@ -350,57 +349,6 @@ qreal ChangeZCommand::first(RealPair * pair) {
 qreal ChangeZCommand::second(RealPair * pair) {
 	return pair->second;
 }
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-InitializeBusConnectorItemCommand::InitializeBusConnectorItemCommand(SketchWidget* sketchWidget, long busOwnerID, const QString & busID,
-																	 QUndoCommand *parent)
-: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
-{
-	// TODO: sketch widget should pass in a ViewGeometry
-	m_busOwnerID = busOwnerID;
-	m_busID = busID;
-}
-
-void InitializeBusConnectorItemCommand::undo()
-{
-	m_sketchWidget->initializeBusConnectorItem(m_busOwnerID, m_busID, true);
-}
-
-void InitializeBusConnectorItemCommand::redo()
-{
-	m_sketchWidget->initializeBusConnectorItem(m_busOwnerID, m_busID, true);
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-MergeBusCommand::MergeBusCommand(SketchWidget* sketchWidget,
-								 long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
-								 long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos,
-								 bool merge, QUndoCommand *parent)
-: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
-{
-	DebugDialog::debug(QString("merge bus command %1 %2, %3 %4: %5 %6").arg(bus1OwnerID).arg(bus1ID).arg(bus2OwnerID).arg(bus2ID).arg(sketchWidget->viewIdentifier()).arg(merge) );
-	m_bus1OwnerID = bus1OwnerID;
-	m_bus1ID = bus1ID;
-	m_bus1Pos = bus1Pos;
-	m_bus2OwnerID = bus2OwnerID;
-	m_bus2ID = bus2ID;
-	m_bus2Pos = bus2Pos;
-	m_merge = merge;
-}
-
-void MergeBusCommand::undo()
-{
-	m_sketchWidget->mergeBuses(m_bus1OwnerID, m_bus1ID, m_bus1Pos, m_bus2OwnerID, m_bus2ID, m_bus2Pos, !m_merge, true);
-}
-
-void MergeBusCommand::redo()
-{
-	m_sketchWidget->mergeBuses(m_bus1OwnerID, m_bus1ID, m_bus1Pos, m_bus2OwnerID, m_bus2ID, m_bus2Pos, m_merge, true);
-}
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -26,7 +26,6 @@ $Date$
 
 #include "autorouter1.h"
 #include "sketchwidget.h"
-#include "busconnectoritem.h"
 #include "debugdialog.h"
 #include "virtualwire.h"
 
@@ -939,33 +938,36 @@ void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorIte
 	}
 
 	// find all the nets and make a list of nodes (i.e. part ConnectorItems) for each net
-	QList<ConnectorItem *> allConnectors2;
-	foreach (ConnectorItem * connectorItem, allConnectors) {
-		if (allConnectors2.contains(connectorItem)) continue;
+	while (allConnectors.count() > 0) {
+		
+		ConnectorItem * connectorItem = allConnectors.takeFirst();
 
-		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
-		QList<BusConnectorItem *> busConnectorItems;
 		QList<ConnectorItem *> connectorItems;
 		connectorItems.append(connectorItem);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::NoFlag);
-		foreach (ConnectorItem * equalConnectorItem, connectorItems) {
-			if (!allConnectors2.contains(equalConnectorItem)) {
-				allConnectors2.append(equalConnectorItem);
-			}
-
-			if (dynamic_cast<BusConnectorItem *>(equalConnectorItem) != NULL) continue;
-
-			ItemBase * attachedTo = equalConnectorItem->attachedTo();
-			if (attachedTo->itemType() == ModelPart::Part || attachedTo->itemType() == ModelPart::Board) {
-				if (!partConnectorItems->contains(equalConnectorItem)) {
-					partConnectorItems->append(equalConnectorItem);
-					indexer.insert(equalConnectorItem, indexer.count());
-				}
-			}
+		ConnectorItem::collectEqualPotential(connectorItems);
+		if (connectorItems.count() <= 0) {
+			continue;
 		}
 
-		if (partConnectorItems->count() > 0) {
-			allPartConnectorItems.append(partConnectorItems);
+		foreach (ConnectorItem * ci, connectorItems) {
+			allConnectors.removeOne(ci);
 		}
+
+		if (connectorItems.count() <= 1) {
+			continue;
+		}
+
+		QList<ConnectorItem *> * partConnectorItems = new QList<ConnectorItem *>;
+		ConnectorItem::collectParts(connectorItems, *partConnectorItems);
+
+		if (partConnectorItems->count() <= 1) {
+			delete partConnectorItems;
+			continue;
+		}
+
+		foreach (ConnectorItem * ci, *partConnectorItems) {
+			indexer.insert(ci, indexer.count());
+		}
+		allPartConnectorItems.append(partConnectorItems);
 	}
 }

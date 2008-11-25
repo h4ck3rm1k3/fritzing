@@ -30,7 +30,6 @@ $Date$
 #include "modelpart.h"
 #include "connectoritem.h"
 #include "infographicsview.h"
-#include "busconnectoritem.h"
 #include "connector.h"
 #include "bus.h"
 
@@ -80,11 +79,10 @@ ItemBase::~ItemBase() {
 	if (m_modelPart != NULL) {
 		m_modelPart->removeViewItem(this);
 	}
-	foreach (BusConnectorItem * busConnectorItem, m_busConnectorItems) {
-		if (busConnectorItem->attachedTo() == this) {
-			delete busConnectorItem;
-		}
+	foreach (QList<ConnectorItem *> * list, m_busConnectorItems) {
+		delete list;
 	}
+
 	m_busConnectorItems.clear();
 }
 
@@ -210,23 +208,6 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 		streamWriter.writeEndElement();
 	}
 
-	bool saveBuses = false;
-	foreach (BusConnectorItem * busConnectorItem, m_busConnectorItems) {
-		if (busConnectorItem->connectionsCount() > 0) {
-			saveBuses = true;
-			break;
-		}
-	}
-
-	if (saveBuses) {
-		streamWriter.writeStartElement("buses");
-		foreach (BusConnectorItem * busConnectorItem, m_busConnectorItems) {
-			if (busConnectorItem->connectionsCount() <= 0) continue;
-
-			busConnectorItem->saveInstance(streamWriter);
-		}
-		streamWriter.writeEndElement();
-	}
 
 	streamWriter.writeEndElement();
 }
@@ -360,15 +341,6 @@ void ItemBase::collectConnectors(QMultiHash<ConnectorItem *, ConnectorItem *> & 
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 			connectorHash.insert(fromConnectorItem, toConnectorItem);
 		}
-
-	}
-
-	// now add any bus items belonging to this part
-
-	foreach (BusConnectorItem * busConnectorItem, m_busConnectorItems.values()) {
-		foreach (ConnectorItem * toConnectorItem, busConnectorItem->connectedToItems()) {
-			connectorHash.insert(busConnectorItem, toConnectorItem);
-		}
 	}
 }
 
@@ -485,31 +457,13 @@ const QHash<QString, Bus *> & ItemBase::buses() {
 	return Bus::___emptyBusList___;
 }
 
-void ItemBase::addBusConnectorItem(Bus * bus, BusConnectorItem * item) {
-	m_busConnectorItems.insert(bus, item);
-}
-
-void ItemBase::removeBusConnectorItem(Bus * bus) {
-	m_busConnectorItems.remove(bus);
-}
-
-BusConnectorItem * ItemBase::busConnectorItem(const QString & busID) {
-	Bus * bus = m_modelPart->bus(busID);
-	if (bus == NULL) return NULL;
-
-	return m_busConnectorItems.value(bus);
-}
-
-ConnectorItem * ItemBase::busConnectorItemCast(const QString & busID) {
-
-	return busConnectorItem(busID);
-}
-
-
-BusConnectorItem * ItemBase::busConnectorItem(Bus * bus) {
-	if (bus == NULL) return NULL;
-
-	return m_busConnectorItems.value(bus);
+void ItemBase::addBusConnectorItem(Bus * bus, ConnectorItem * item) {
+	QList <ConnectorItem *> * busConnectorItems = m_busConnectorItems.value(bus);
+	if (busConnectorItems == NULL) {
+		busConnectorItems = new QList<ConnectorItem *>;
+		m_busConnectorItems.insert(bus, busConnectorItems);
+	}
+	busConnectorItems->append(item);
 }
 
 int ItemBase::itemType() {
@@ -611,42 +565,6 @@ void ItemBase::restoreConnections(QDomElement & instance, QHash<long, ItemBase *
 			if (connectorItem != NULL) {
 				connectorItem->restoreConnections(connectorElement, newItems);
 			}
-			connectorElement = connectorElement.nextSiblingElement("connector");
-		}
-	}
-
-	// merge buses
-	QDomElement busesElement = instance.firstChildElement("buses");
-	if (!busesElement.isNull()) {
-		QDomElement connectorElement = busesElement.firstChildElement("connector");
-		while (!connectorElement.isNull()) {
-			QString busID = connectorElement.attribute("busId");
-			BusConnectorItem * bci = busConnectorItem(busID);
-			if (bci != NULL) {
-				QDomElement mergedElement = connectorElement.firstChildElement("merged");
-				if (!mergedElement.isNull()) {
-					QDomElement busElement = mergedElement.firstChildElement("bus");
-					while (!busElement.isNull()) {
-						bool ok;
-						long modelIndex = busElement.attribute("modelIndex").toLong(&ok);
-						if (ok) {
-							QString otherBusID = busElement.attribute("busId");
-							ItemBase * otherBase = newItems.value(modelIndex);
-							if (otherBase != NULL) {
-								BusConnectorItem* otherBusConnectorItem = otherBase->busConnectorItem(otherBusID);
-								if (otherBusConnectorItem) {
-									otherBusConnectorItem->merge(bci);
-									bci->merge(otherBusConnectorItem);
-								}
-							}
-						}
-
-						busElement = busElement.nextSiblingElement("bus");
-					}
-				}
-			}
-
-
 			connectorElement = connectorElement.nextSiblingElement("connector");
 		}
 	}
@@ -766,4 +684,30 @@ bool ItemBase::canFlipVertical() {
 
 void ItemBase::setCanFlipVertical(bool cf) {
 	m_canFlipVertical = cf;
+}
+
+void ItemBase::connectedBusConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
+	QList<ConnectorItem *> * busConnectorItems = m_busConnectorItems.value(bus);
+	if (busConnectorItems == NULL) return;
+/*
+
+	if (itemType() == ModelPart::Breadboard) {
+		foreach (ConnectorItem * connectorItem, *busConnectorItems) {
+			if (connectorItem->connectionsCount() > 0) {
+				items.append(connectorItem);
+			}
+		}
+	}
+	else {
+		foreach (ConnectorItem * connectorItem, *busConnectorItems) {
+			items.append(connectorItem);
+		}
+	}
+
+	*/
+
+	foreach (ConnectorItem * connectorItem, *busConnectorItems) {
+		items.append(connectorItem);
+	}
+
 }

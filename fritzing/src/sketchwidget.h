@@ -60,12 +60,6 @@ struct ItemCount {
 	int selVFlipable;
 };
 
-struct BusMergeThing {
-	class BusConnectorItem * bci;
-	QString busID;
-	ItemBase * itemBase;
-};
-
 class SketchWidget : public InfoGraphicsView
 {
 	Q_OBJECT
@@ -125,13 +119,9 @@ public:
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
 						  bool connect, bool doEmit, bool seekLayerKin,
-						  bool fromBusConnector, bool chain);
+						  bool chain);
 
  	ItemCount calcItemCount();
-	class BusConnectorItem * initializeBusConnectorItem(long busOwnerID, const QString & busID, bool doEmit);
-	void mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
-					long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos,
-					bool merge, bool doEmit);
 
  	qreal currentZoom();
 	ItemBase::ViewIdentifier viewIdentifier();
@@ -208,13 +198,10 @@ protected:
 	void updateAllLayersActions(QAction * showAllAction, QAction * hideAllAction);
 	bool checkMoved();
 
-	long createWire(ConnectorItem * from, ConnectorItem * to, bool toIsBus, ViewGeometry::WireFlags, bool addItNow, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
-	class Bus * hookToBus(ConnectorItem * from, ConnectorItem * busTo, QUndoCommand * parentCommand);
-	void prepMergeBuses(ConnectorItem * start, QUndoCommand* parentCommand);
+	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	void changeConnectionAux(long fromID, const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
-						  bool connect, bool seekLayerKin,
-						  bool fromBusConnector, bool chain);
+						  bool connect, bool seekLayerKin, bool chain);
 
 
 	void pasteDuplicateAux(QString undoStackMessage);
@@ -224,11 +211,6 @@ protected:
 									   bool connect, bool seekLayerKin, QUndoCommand * parent);
 	void extendChangeConnectionCommand(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem,
 										bool connect, bool seekLayerKin, QUndoCommand * parentCommand);
-
-	void disconnectVirtualWire(ConnectorItem * fromConnectorItem, QUndoCommand * parentCommand);
-	void deleteVirtualWires(QSet<class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
-	void disconnectVirtualWires(QSet<class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
-	void reorgBuses(QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
 
 
 	void keyPressEvent ( QKeyEvent * event );
@@ -256,9 +238,7 @@ protected:
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
-	void collectBusConnectorItems(QList<BusConnectorItem *> & busConnectorItems);
-	virtual void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QSet <class VirtualWire *> & virtualWires, QUndoCommand * parentCommand);
-	void cleanUpVirtualWires(QSet<class VirtualWire *> & virtualWires, QList<BusConnectorItem *> & busConnectorItems, QUndoCommand * parentCommand);
+	virtual void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
@@ -282,15 +262,12 @@ signals:
 	void wireDisconnectedSignal(long fromID, QString fromConnectorID);
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
-								long toID, QString toConnectorID,  bool connect,
-								bool fromBusConnector, bool chain);
+								long toID, QString toConnectorID,  
+								bool connect, bool chain);
 	void zoomChanged(qreal zoom);
 	void zoomOutOfRange(qreal zoom);
 	void zoomIn(int amountSteps);
 	void zoomOut(int amountSteps);
-	void initializeBusConnectorItemSignal(long busOwnerID, const QString & busID);
-	void mergeBusesSignal(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
-					long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos, bool merge);
 	void copyItemSignal(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
 	void deleteItemSignal(long itemID, QUndoCommand * parentCommand);
 	void findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &);
@@ -320,13 +297,10 @@ protected slots:
 	void toggleLayerVisibility(QAction *);
 	void sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID);
 	void sketchWidget_wireDisconnected(long fromID, QString fromConnectorID);
-	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect, bool fromBusConnector, bool chain);
+	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect, bool chain);
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
 	void item_connectionChanged(ConnectorItem * from, ConnectorItem * to, bool connect);
-	void sketchWidget_initializeBusConnectorItem(long busOwnerID, const QString & busID);
-	void sketchWidget_mergeBuses(long bus1OwnerID, const QString & bus1ID, QPointF bus1Pos,
-					long bus2OwnerID, const QString & bus2ID, QPointF bus2Pos, bool merge);
 	void sketchWidget_copyItem(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
 	void sketchWidget_deleteItem(long itemID, QUndoCommand * parentCommand);
 	void dragIsDoneSlot(class ItemDrag *);

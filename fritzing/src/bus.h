@@ -54,8 +54,6 @@ public:
 	void removeViewItem(class ConnectorItem *);
 	void addConnector(class Connector *);
 	class Connector * busConnector();
-	void merge(Bus * that);
-	void unmerge(Bus * that);
 	class ModelPart * modelPart();
 	ConnectorItem * connectorItem(QGraphicsScene * scene);
 	
@@ -70,8 +68,6 @@ protected:
 	BusStuff * m_busStuff;
 	class Connector * m_busConnector;
 	class ModelPart * m_modelPart;
-	QList <Bus *> m_merged;
-
 };
 
 

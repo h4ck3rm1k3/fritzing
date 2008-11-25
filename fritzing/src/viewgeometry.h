@@ -55,7 +55,7 @@ public:
 	};
 	Q_DECLARE_FLAGS(WireFlags, WireFlag)
 
-	static WireFlags NotTraceJumperRatsnestFlags;
+	static WireFlags TraceJumperRatsnestFlags;
 
 protected:
 	void setWireFlag(bool setting, WireFlag flag);

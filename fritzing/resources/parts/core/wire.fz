@@ -75,10 +75,10 @@
     	</connector>
 	</connectors>
 	
-	<!-- <buses>
-	    <bus id="bus0">
+	<buses>
+	    <bus id="wirebus">
 	        <nodeMember connectorId="connector0" />
 	        <nodeMember connectorId="connector1" />
 	    </bus>
-	</buses> -->
+	</buses>
 </module>

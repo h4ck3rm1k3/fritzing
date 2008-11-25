@@ -27,7 +27,6 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 #include "pcbschematicsketchwidget.h"
 #include "debugdialog.h"
-#include "busconnectoritem.h"
 #include "autorouter1.h"
 
 PCBSchematicSketchWidget::PCBSchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
@@ -67,7 +66,7 @@ void PCBSchematicSketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems
 	// have to store these all up in a table and deal with separarately
 	// if you deal with them in the loop above, then connectors are being added/destroyed
 	// while looping and that causes crashes.
-	foreach (ConnectorItem * fromConnectorItem, allConnectors.keys()) {
+	foreach (ConnectorItem * fromConnectorItem, allConnectors.uniqueKeys()) {
 		foreach (ConnectorItem * toConnectorItem, allConnectors.values(fromConnectorItem)) {
 			dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
 		}
@@ -113,10 +112,9 @@ void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorIte
 	if (connect) {
 		QList<ConnectorItem *> connectorItems;
 		QList<ConnectorItem *> partsConnectorItems;
-		QList<BusConnectorItem *> busConnectorItems;
 		connectorItems.append(fromConnectorItem);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::NoFlag);
-		BusConnectorItem::collectParts(connectorItems, partsConnectorItems);
+		ConnectorItem::collectEqualPotential(connectorItems);
+		ConnectorItem::collectParts(connectorItems, partsConnectorItems);
 
 		QList <Wire *> ratsnestWires;
 		Wire * modelWire = NULL;
@@ -179,26 +177,27 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 			useIndex++;
 		}
 
-		if (bail) continue;			// only have a net on the same part on the same bus
+		if (bail) {
+			continue;			// only have a net on the same part on the same bus
+		}
 
 		netCount++;
 		ConnectorItem * connectorItem = netList->at(useIndex);
 
 		// figure out how many parts are connected via jumpers or traces
 		QList<ConnectorItem *> partConnectorItems;
-		QList<BusConnectorItem *> busConnectorItems;
-		QList<ConnectorItem *> connectorItems;
-		connectorItems.append(connectorItem);
-		BusConnectorItem::collectEqualPotential(connectorItems, busConnectorItems, true, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
-		foreach (ConnectorItem * jConnectorItem, connectorItems) {
-			if (jConnectorItem->attachedToItemType() == ModelPart::Wire) {
-				Wire * wire = dynamic_cast<Wire *>(jConnectorItem->attachedTo());
-				if (wire->getJumper()) {
-					jumperCount++;
+		partConnectorItems.append(connectorItem);
+		ConnectorItem::collectEqualPotentialParts(partConnectorItems, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
+		foreach (ConnectorItem * jConnectorItem, partConnectorItems) {
+			foreach (ConnectorItem * kConnectorItem, jConnectorItem->connectedToItems()) {
+				if (kConnectorItem->attachedToItemType() == ModelPart::Wire) {
+					Wire * wire = dynamic_cast<Wire *>(kConnectorItem->attachedTo());
+					if (wire->getJumper()) {
+						jumperCount++;
+					}
 				}
 			}
 		}
-		BusConnectorItem::collectParts(connectorItems, partConnectorItems);
 		int todo = netList->count() - partConnectorItems.count() - selfConnections;
 		if (todo <= 0) {
 			netRoutedCount++;

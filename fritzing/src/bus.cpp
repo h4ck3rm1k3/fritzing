@@ -85,16 +85,6 @@ Connector * Bus::busConnector() {
 	return m_busConnector;
 }
 
-void Bus::merge(Bus * that) {
-	if (!m_merged.contains(that)) {
-		m_merged.append(that);
-	}
-}
-
-void Bus::unmerge(Bus * that) {
-	m_merged.removeOne(that);
-}
-
 ModelPart * Bus::modelPart() {
 	return m_modelPart;
 }
