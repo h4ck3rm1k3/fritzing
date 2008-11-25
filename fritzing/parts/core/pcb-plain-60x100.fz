@@ -25,9 +25,15 @@
 			</layers>
 		</iconView>
     		<breadboardView>
-    		</breadboardView>
+ 			<layers>
+				<layer image="icon/plain_pcb.svg" layerId="unknown" />
+			</layers>
+   		</breadboardView>
     		<schematicView>
-    		</schematicView>
+			<layers>
+				<layer image="icon/plain_pcb.svg" layerId="unknown" />
+			</layers>
+     		</schematicView>
 	    	<pcbView>
 	    	    <label></label>
 	    	    <layers>

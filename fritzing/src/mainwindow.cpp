@@ -1162,7 +1162,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addAction(m_openInPartsEditorAct);
 	menu->addAction(m_addToBinAct);
 
-#ifndef QT_NO_DEBUG
+#ifndef g
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
 	//menu->addAction(m_swapPartAction);

@@ -35,7 +35,12 @@ $Date$
 #include "modelpart.h"
 #include "version.h"
 
+#ifndef QT_NO_DEBUG
+bool PaletteModel::CreateAllPartsBinFile = true;
+#else
 bool PaletteModel::CreateAllPartsBinFile = false;
+#endif
+
 QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
 
 PaletteModel::PaletteModel() : ModelBase(true) {

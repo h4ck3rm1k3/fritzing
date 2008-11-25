@@ -1,365 +1,372 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion='0.1.b.1523'>
+<module fritzingVersion='0.1.b.11.24.1642'>
 	<title>All Parts</title>
 	<instances>
-		<instance moduleIdRef="1001AAAB555Timer" path="parts/core/555timer.fz">
+		<instance moduleIdRef="1001AAAB555Timer" path="/Users/jonathancohen/fritzing/phoenix/parts/core/555timer.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDC24diode" path="parts/core/basic-diode.fz">
+		<instance moduleIdRef="1234ABDC24diode" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-diode.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1099ABDE24_ST_relay" path="parts/core/basic-relay.fz">
+		<instance moduleIdRef="1099ABDE24_ST_relay" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-relay.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e08-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-10.fz">
+		<instance moduleIdRef="29496e08-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-10.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e03-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-100.fz">
+		<instance moduleIdRef="29496e03-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-100.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496dfd-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-100k.fz">
+		<instance moduleIdRef="29496dfd-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-100k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e0d-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-10k.fz">
+		<instance moduleIdRef="29496e0d-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-10k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e09-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-150.fz">
+		<instance moduleIdRef="29496e09-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-150.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e04-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-1_5k.fz">
+		<instance moduleIdRef="29496e04-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-1_5k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496dff-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-1k.fz">
+		<instance moduleIdRef="29496dff-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-1k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e01-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-1M.fz">
+		<instance moduleIdRef="29496e01-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-1M.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e0b-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-220.fz">
+		<instance moduleIdRef="29496e0b-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-220.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e00-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-220k.fz">
+		<instance moduleIdRef="29496e00-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-220k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e07-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-22k.fz">
+		<instance moduleIdRef="29496e07-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-22k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496dfc-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-27k.fz">
+		<instance moduleIdRef="29496dfc-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-27k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e0a-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-2_2k.fz">
+		<instance moduleIdRef="29496e0a-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-2_2k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e0e-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-330.fz">
+		<instance moduleIdRef="29496e0e-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-330.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e05-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-33k.fz">
+		<instance moduleIdRef="29496e05-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-33k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e02-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-47.fz">
+		<instance moduleIdRef="29496e02-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-47.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e0f-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-470.fz">
+		<instance moduleIdRef="29496e0f-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-470.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e0c-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-470k.fz">
+		<instance moduleIdRef="29496e0c-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-470k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496dfe-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-47k.fz">
+		<instance moduleIdRef="29496dfe-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-47k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="29496e06-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-4_7k.fz">
+		<instance moduleIdRef="29496e06-aa71-11dd-9a14-00c0a8a9e65d" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-resistor-4_7k.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1238DBDC00-voltage-reg" path="parts/core/basic-voltage-regulator.fz">
+		<instance moduleIdRef="1238DBDC00-voltage-reg" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-voltage-regulator.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC02" path="parts/core/basic_ceramic_cap.fz">
+		<instance moduleIdRef="1001ABDC02" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_ceramic_cap.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC02A" path="parts/core/basic_ceramic_cap_22pf.fz">
+		<instance moduleIdRef="1001ABDC02A" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_ceramic_cap_22pf.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000AAAA01" path="parts/core/basic_ceramic_cap_round.fz">
+		<instance moduleIdRef="1000AAAA01" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_ceramic_cap_round.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03" path="parts/core/basic_electrolytic_capacitor.fz">
+		<instance moduleIdRef="1001ABDC03" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_electrolytic_capacitor.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03F" path="parts/core/basic_electrolytic_capacitor_100uf.fz">
+		<instance moduleIdRef="1001ABDC03F" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_electrolytic_capacitor_100uf.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03A" path="parts/core/basic_electrolytic_capacitor_1uf.fz">
+		<instance moduleIdRef="1001ABDC03A" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_electrolytic_capacitor_1uf.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03D" path="parts/core/basic_electrolytic_capacitor_220uf.fz">
+		<instance moduleIdRef="1001ABDC03D" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_electrolytic_capacitor_220uf.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03E" path="parts/core/basic_electrolytic_capacitor_470uf.fz">
+		<instance moduleIdRef="1001ABDC03E" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_electrolytic_capacitor_470uf.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03B" path="parts/core/basic_electrolytic_capacitor_47uf.fz">
+		<instance moduleIdRef="1001ABDC03B" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_electrolytic_capacitor_47uf.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC04" path="parts/core/basic_fet_n.fz">
+		<instance moduleIdRef="1001ABDC04" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_fet_n.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC27" path="parts/core/basic_fet_p.fz">
+		<instance moduleIdRef="1001ABDC27" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_fet_p.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000ABDD10011" path="parts/core/basic_fsr.fz">
+		<instance moduleIdRef="1000ABDD10011" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_fsr.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000ABDD10012" path="parts/core/basic_ldr.fz">
+		<instance moduleIdRef="1000ABDD10012" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_ldr.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="3234DBDC00" path="parts/core/basic_poti.fz">
+		<instance moduleIdRef="3234DBDC00" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_poti.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1238DBDC00" path="parts/core/basic_power_transistor_npn.fz">
+		<instance moduleIdRef="1238DBDC00" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_power_transistor_npn.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1237DBDC00" path="parts/core/basic_power_transistor_pnp.fz">
+		<instance moduleIdRef="1237DBDC00" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_power_transistor_pnp.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1099ABDE24_ST" path="parts/core/basic_pushbutton.fz">
+		<instance moduleIdRef="1099ABDE24_ST" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_pushbutton.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" path="parts/core/basic_pushbutton_2lead_horizon.fz">
+		<instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_pushbutton_2lead_horizon.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="3234DBDC80" path="parts/core/basic_servo.fz">
+		<instance moduleIdRef="3234DBDC80" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_servo.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234DBDC00" path="parts/core/basic_transistor_npn.fz">
+		<instance moduleIdRef="1234DBDC00" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_transistor_npn.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234DBDC11" path="parts/core/basic_transistor_pnp.fz">
+		<instance moduleIdRef="1234DBDC11" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_transistor_pnp.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE24_ST" path="parts/core/controller_arduino_diecimila.fz">
+		<instance moduleIdRef="1234ABDE24_ST" path="/Users/jonathancohen/fritzing/phoenix/parts/core/controller_arduino_diecimila.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1900ABDC24" path="parts/core/LED-blue-5mm.fz">
+		<instance moduleIdRef="1900ABDC24" path="/Users/jonathancohen/fritzing/phoenix/parts/core/LED-blue-5mm.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1905ABDC24" path="parts/core/LED-green-5mm.fz">
+		<instance moduleIdRef="1905ABDC24" path="/Users/jonathancohen/fritzing/phoenix/parts/core/LED-green-5mm.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDC24" path="parts/core/LED-red-5mm.fz">
+		<instance moduleIdRef="1234ABDC24" path="/Users/jonathancohen/fritzing/phoenix/parts/core/LED-red-5mm.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1902whiteABDC24" path="parts/core/LED-white-5mm.fz">
+		<instance moduleIdRef="1902whiteABDC24" path="/Users/jonathancohen/fritzing/phoenix/parts/core/LED-white-5mm.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1901ABDC24" path="parts/core/LED-yellow-5mm.fz">
+		<instance moduleIdRef="1901ABDC24" path="/Users/jonathancohen/fritzing/phoenix/parts/core/LED-yellow-5mm.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001AAACOptocoupler" path="parts/core/optocoupler.fz">
+		<instance moduleIdRef="1001AAACOptocoupler" path="/Users/jonathancohen/fritzing/phoenix/parts/core/optocoupler.fz">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+		<instance moduleIdRef="1234ABDE24BH" path="/Users/jonathancohen/fritzing/phoenix/parts/core/pcb-plain-60x100.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
