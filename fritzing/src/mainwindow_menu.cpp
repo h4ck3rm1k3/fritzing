@@ -724,6 +724,10 @@ void MainWindow::createPartMenuActions() {
 	m_openInPartsEditorAct->setStatusTip(tr("Open the old parts editor"));
 	connect(m_openInPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInPartsEditor()));
 
+	m_addToBinAct = new QAction(tr("&Add to bin"), this);
+	m_addToBinAct->setStatusTip(tr("Add selected part to bin"));
+	connect(m_addToBinAct, SIGNAL(triggered()), this, SLOT(addToBin()));
+
 	// TODO PARTS EDITOR REMOVE
 	/*m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
 	connect(m_openInOldPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInOldPartsEditor()));*/
@@ -940,6 +944,7 @@ void MainWindow::createMenus()
     // TODO PARTS EDITOR REMOVE
 	//m_partMenu->addAction(m_openInOldPartsEditorAct);
 	m_partMenu->addAction(m_openInPartsEditorAct);
+	m_partMenu->addAction(m_addToBinAct);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_rotate90cwAct);
 	m_partMenu->addAction(m_rotate180Act);
@@ -1134,6 +1139,7 @@ void MainWindow::updateItemMenu() {
 	//m_openInOldPartsEditorAct->setEnabled(enabled);
 	// can't open wire in parts editor
 	m_openInPartsEditorAct->setEnabled(enabled);
+	m_addToBinAct->setEnabled(enabled);
 
 }
 
@@ -1198,6 +1204,10 @@ void MainWindow::group() {
 
 	notYetImplemented("Group");
 	//m_currentWidget->group();
+}
+
+void MainWindow::addToBin() {
+	m_paletteWidget->addPart(m_currentWidget->selectedModuleID());
 }
 
 void MainWindow::zoomIn() {

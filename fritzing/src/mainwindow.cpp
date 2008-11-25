@@ -145,6 +145,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_itemMenu->addAction(m_sendToBackAct);
 	m_itemMenu->addAction(m_openInPartsEditorAct);
 	m_itemMenu->addAction(m_deleteAct);
+	m_itemMenu->addAction(m_addToBinAct);
 
     m_breadboardGraphicsView->setItemMenu(breadboardItemMenu());
     m_pcbGraphicsView->setItemMenu(pcbItemMenu());
@@ -625,7 +626,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		return;
 	}
 
-	if(!beforeClosing() || !whatToDoWithFilesAddedFromBundled() ||!m_paletteWidget->beforeClosing()) {
+	if(!beforeClosing() || !whatToDoWithAlienFiles() ||!m_paletteWidget->beforeClosing()) {
 		event->ignore();
 		return;
 	}
@@ -655,8 +656,8 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	QMainWindow::closeEvent(event);
 }
 
-bool MainWindow::whatToDoWithFilesAddedFromBundled() {
-	if (m_filesAddedFromBundled.size() > 0) {
+bool MainWindow::whatToDoWithAlienFiles() {
+	if (m_alienFiles.size() > 0) {
 		QMessageBox::StandardButton reply;
 		reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fileName).baseName()),
 									 tr("Do you want to keep the parts that were loaded with this bundled sketch %1?")
@@ -665,13 +666,13 @@ bool MainWindow::whatToDoWithFilesAddedFromBundled() {
 		if (reply == QMessageBox::Yes) {
 			return true;
 		} else if (reply == QMessageBox::No) {
-			foreach(QString pathToRemove, m_filesAddedFromBundled) {
+			foreach(QString pathToRemove, m_alienFiles) {
 				QFile::remove(pathToRemove);
 			}
-			m_filesAddedFromBundled.clear();
+			m_alienFiles.clear();
 			recoverBackupedFiles();
 
-			emit partsFromBundledDiscarded();
+			emit alienPartsDismissed();
 			return true;
 		}
 		else {
@@ -748,9 +749,9 @@ void MainWindow::createDockWindows()
 {
 	m_infoView = new HtmlInfoView(m_refModel);
 
-	m_paletteWidget = new PartsBinPaletteWidget(m_infoView, this);
+	m_paletteWidget = new PartsBinPaletteWidget(m_refModel, m_infoView, this);
 	connect(m_paletteWidget, SIGNAL(saved(bool)), this, SLOT(binSaved(bool)));
-	connect(this, SIGNAL(partsFromBundledDiscarded()), m_paletteWidget, SLOT(removePartsFromBundled()));
+	connect(this, SIGNAL(alienPartsDismissed()), m_paletteWidget, SLOT(removeAlienParts()));
 
 	if (m_paletteModel->loadedFromFile()) {
 		m_paletteWidget->loadFromModel(m_paletteModel);
@@ -881,7 +882,7 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 }
 
 void MainWindow::swapSelected() {
-	PaletteItem *selInParts = m_paletteWidget->selected();
+	ModelPart *selInParts = m_paletteWidget->selected();
 	if(selInParts) m_currentWidget->swapSelected(selInParts);
 }
 
@@ -1011,7 +1012,7 @@ void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolde
 
 	backupExistingFileIfExists(destFilePath);
 	if(svgfile.copy(destFilePath)) {
-		m_filesAddedFromBundled << destFilePath;
+		m_alienFiles << destFilePath;
 	}
 }
 
@@ -1023,16 +1024,16 @@ void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFol
 
 	backupExistingFileIfExists(destFilePath);
 	if(partfile.copy(destFilePath)) {
-		m_filesAddedFromBundled << destFilePath;
+		m_alienFiles << destFilePath;
 	}
 	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
-	m_paletteWidget->addPart(mp, true);
+	m_paletteWidget->addPart(mp);
 }
 
 void MainWindow::binSaved(bool hasPartsFromBundled) {
 	if(hasPartsFromBundled) {
 		// the bin will need those parts, so just keep them
-		m_filesAddedFromBundled.clear();
+		m_alienFiles.clear();
 		resetTempFolder();
 	}
 }
@@ -1050,7 +1051,7 @@ void MainWindow::backupExistingFileIfExists(const QString &destFilePath) {
 		}
 
 		QString fileBackupName = QFileInfo(destFilePath).fileName();
-		m_filesReplacedByBundleds << destFilePath;
+		m_filesReplacedByAlienOnes << destFilePath;
 		QFile file(destFilePath);
 		bool alreadyExists = file.exists();
 		file.copy(m_tempDir.path()+"/"+fileBackupName);
@@ -1062,7 +1063,7 @@ void MainWindow::backupExistingFileIfExists(const QString &destFilePath) {
 }
 
 void MainWindow::recoverBackupedFiles() {
-	foreach(QString originalFilePath, m_filesReplacedByBundleds) {
+	foreach(QString originalFilePath, m_filesReplacedByAlienOnes) {
 		QFile file(m_tempDir.path()+"/"+QFileInfo(originalFilePath).fileName());
 		if(file.exists(originalFilePath)) {
 			file.remove();
@@ -1077,7 +1078,7 @@ void MainWindow::resetTempFolder() {
 		rmdir(m_tempDir);
 		m_tempDir = QDir::temp();
 	}
-	m_filesReplacedByBundleds.clear();
+	m_filesReplacedByAlienOnes.clear();
 }
 
 void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers) {
@@ -1159,6 +1160,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addAction(m_deleteAct);
 	menu->addSeparator();
 	menu->addAction(m_openInPartsEditorAct);
+	menu->addAction(m_addToBinAct);
 
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();

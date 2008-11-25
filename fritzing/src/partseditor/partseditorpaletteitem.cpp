@@ -239,7 +239,6 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 
 	return true;
 }
-
 StringPair* PartsEditorPaletteItem::svgFilePath() {
 	return new StringPair(m_svgStrings->coreContribOrUser(), m_svgStrings->fileRelativePath());
 }

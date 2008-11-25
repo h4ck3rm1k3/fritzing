@@ -215,7 +215,7 @@ void SketchWidget::loadFromModel() {
 		itemBase->restoreConnections(*dom,  newItems);
 		delete dom;
 	}
-	
+
 	foreach (ItemBase * item, newItems) {
 		if (item->sticky()) {
 			stickyScoop(item, NULL);
@@ -1409,7 +1409,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 			continue;
 		}
 
-		ItemBase * chief = itemBase->layerKinChief();	
+		ItemBase * chief = itemBase->layerKinChief();
 		m_savedItems.insert(chief);
 		if (chief->sticky()) {
 			foreach(ItemBase * sitemBase, chief->sticking().keys()) {
@@ -1550,10 +1550,10 @@ void SketchWidget::moveItems(QPoint globalPos) {
 	QPointF scenePos = mapToScene(q);
 
 /*
-	DebugDialog::debug(QString("scroll 1 sx:%1 sy:%2 sbx:%3 sby:%4 qx:%5 qy:%6") 
+	DebugDialog::debug(QString("scroll 1 sx:%1 sy:%2 sbx:%3 sby:%4 qx:%5 qy:%6")
 		.arg(scenePos.x()).arg(scenePos.y())
 		.arg(m_mousePressScenePos.x()).arg(m_mousePressScenePos.y())
-		.arg(q.x()).arg(q.y()) 
+		.arg(q.x()).arg(q.y())
 		);
 */
 	foreach (ItemBase * item, m_savedItems) {
@@ -1564,11 +1564,11 @@ void SketchWidget::moveItems(QPoint globalPos) {
 	   findConnectorsUnder(item);
 
 /*
-	   DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8") 
+	   DebugDialog::debug(QString("scroll 2 lx:%1 ly:%2 cpx:%3 cpy:%4 qx:%5 qy:%6 px:%7 py:%8")
 		.arg(item->getViewGeometry().loc().x()).arg(item->getViewGeometry().loc().y())
 		.arg(currentParentPos.x()).arg(currentParentPos.y())
-		.arg(buttonDownParentPos.x()).arg(buttonDownParentPos.y()) 
-		.arg(item->pos().x()).arg(item->pos().y()) 
+		.arg(buttonDownParentPos.x()).arg(buttonDownParentPos.y())
+		.arg(item->pos().x()).arg(item->pos().y())
 		);
 */
 
@@ -1577,7 +1577,7 @@ void SketchWidget::moveItems(QPoint globalPos) {
 	foreach (Wire * wire, m_savedWires.keys()) {
 		wire->simpleConnectedMoved(m_savedWires.value(wire));
 	}
-	
+
 	//DebugDialog::debug(QString("done move items %1").arg(QTime::currentTime().msec()) );
 
 }
@@ -3702,7 +3702,7 @@ void SketchWidget::autoScrollTimeout()
 	moveItems(m_globalPos);
 }
 
-/* 
+/*
 
 void SketchWidget::collectDisconnectors(ItemBase * item) {
 	if (item->itemType() == ModelPart::Breadboard || item->itemType() == ModelPart::Board) return;
@@ -3731,7 +3731,7 @@ void SketchWidget::collectDisconnectors(ItemBase * item) {
 	}
 }
 
-void SketchWidget::dealWithVirtualDisconnections(ConnectorItem * source, ConnectorItem * dest) 
+void SketchWidget::dealWithVirtualDisconnections(ConnectorItem * source, ConnectorItem * dest)
 {
 	Bus* bus = source->bus();
 	if (bus == NULL) return;
@@ -3762,3 +3762,10 @@ void SketchWidget::restoreDisconnectors() {
 }
 
 */
+
+const QString &SketchWidget::selectedModuleID() {
+	if(m_lastPaletteItemSelected) {
+		return m_lastPaletteItemSelected->modelPart()->moduleID();
+	}
+	return ___emptyString___;
+}

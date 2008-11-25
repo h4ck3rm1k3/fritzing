@@ -163,7 +163,6 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString
 }
 
 const QHash<QString,StringPair*> PartsEditorAbstractViewImage::getConnectorIds(const QString &path) {
-	// TODO Mariano: papi does the same
 	QDomDocument *dom = new QDomDocument();
 	QFile file(path);
 	dom->setContent(&file);

@@ -58,28 +58,31 @@ class ImageButton : public QLabel {
 class PartsBinPaletteWidget : public FDockWidget {
 	Q_OBJECT
 	public:
-		PartsBinPaletteWidget(HtmlInfoView *infoView, QWidget* parent = 0);
+		PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, QWidget* parent = 0);
 		~PartsBinPaletteWidget();
 
 		QSize sizeHint() const;
 
 		void loadFromModel(PaletteModel *model);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
-		void addPart(ModelPart *modelPart, bool isFromBundled=false);
-		void removePart(const QString& moduleID);
+
+		void addPart(ModelPart *modelPart);
 
 		bool currentBinIsCore();
 		bool beforeClosing();
 
-		PaletteItem * selected();
-		bool hasPartsFromBundled();
+		ModelPart * selected();
+		bool hasAlienParts();
 
 	public slots:
-		void removePartsFromBundled();
+		void addPart(const QString& moduleID);
+		void removePart(const QString& moduleID);
+		void removeAlienParts();
 
 	protected slots:
 		void toIconView();
 		void toListView();
+		bool removeSelected();
 		bool save();
 		bool saveAs();
 		void open();
@@ -110,6 +113,8 @@ class PartsBinPaletteWidget : public FDockWidget {
 
 	protected:
 		PaletteModel *m_model;
+		ReferenceModel *m_refModel;
+
 		QString m_fileName;
 		QString m_defaultSaveFolder;
 		QString m_untitledFileName;
@@ -125,6 +130,7 @@ class PartsBinPaletteWidget : public FDockWidget {
 		QFrame *m_footer;
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;
+		ImageButton *m_removeSelected;
 		ImageButton *m_openBinButton;
 		ImageButton *m_saveBinButton;
 		ImageButton *m_coreBinButton;
@@ -138,7 +144,7 @@ class PartsBinPaletteWidget : public FDockWidget {
 
 		QUndoStack *m_undoStack;
 
-		QStringList m_partsFromBundled;
+		QStringList m_alienParts;
 };
 
 #endif /* PARTSBINPALETTEWIDGET_H_ */

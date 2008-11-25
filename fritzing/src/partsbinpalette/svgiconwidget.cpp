@@ -39,6 +39,7 @@ $Date$
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
 	: QGraphicsProxyWidget() {
 	setFlags(QGraphicsItem::ItemIsSelectable);
+	m_moduleId = modelPart->moduleID();
 
 	m_paletteItem = new PaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
 	m_paletteItem->renderImage(modelPart, ItemBase::IconView, viewLayers,ViewLayer::Icon, true, false);
@@ -67,15 +68,19 @@ SvgIconWidget::~SvgIconWidget() {
 	//delete m_container;
 }
 
-PaletteItem *SvgIconWidget::paletteItem() {
-	return m_paletteItem;
+ModelPart *SvgIconWidget::modelPart() const {
+	return m_paletteItem->modelPart();
+}
+
+const QString &SvgIconWidget::moduleID() const {
+	return m_moduleId;
 }
 
 void SvgIconWidget::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	Q_UNUSED(event)
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverEnterItem(m_paletteItem->modelPart(), m_paletteItem->pixmap());
+		infoGraphicsView->hoverEnterItem(modelPart(), m_paletteItem->pixmap());
 	}
 }
 
@@ -83,7 +88,7 @@ void SvgIconWidget::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	Q_UNUSED(event)
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverLeaveItem(m_paletteItem->modelPart());
+		infoGraphicsView->hoverLeaveItem(modelPart());
 	}
 }
 

@@ -41,16 +41,20 @@ class PartsBinView {
 		void addPart(ModelPart * model);
 		virtual void removePart(const QString &moduleID) = 0;
 
-		virtual PaletteItem *selected() = 0;
+		virtual ModelPart *selected() = 0;
+
+		bool alreadyIn(QString moduleID);
 
 	protected:
+		virtual void doClear();
 		void setItem(ModelPart * modelPart);
 		void mousePressOnItem(
 				const QString &moduleId, const QSize &size,
 				const QPointF &dataPoint = QPointF(0,0), const QPoint &hotspot = QPoint(0,0));
 
-		virtual void doClear() = 0;
 		virtual void setItemAux(ModelPart * modelPart) = 0;
+
+		QHash<QString /*moduleId*/,ModelPart*> m_partHash;
 };
 
 #endif /* PARTSBINVIEW_H_ */

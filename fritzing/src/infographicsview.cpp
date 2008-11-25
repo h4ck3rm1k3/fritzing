@@ -104,8 +104,13 @@ void InfoGraphicsView::setItemTooltip(long id, const QString &newTooltip) {
 	Q_UNUSED(newTooltip);
 }
 
-PaletteItem *InfoGraphicsView::selected() {
-	return dynamic_cast<PaletteItem*>(selectedAux());
+ModelPart *InfoGraphicsView::selected() {
+	PaletteItem* pi =  dynamic_cast<PaletteItem*>(selectedAux());
+	if(pi) {
+		return pi->modelPart();
+	} else {
+		return NULL;
+	}
 }
 
 QGraphicsItem *InfoGraphicsView::selectedAux() {

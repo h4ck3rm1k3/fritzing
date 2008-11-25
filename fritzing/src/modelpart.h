@@ -100,6 +100,9 @@ public:
 	bool isCore();
 	void setCore(bool core);
 
+	bool isAlien(); // from "outside" ?
+	void setAlien(bool alien);
+
 	bool isValid();
 
 	QList<ModelPart*> getAllNonCoreParts();
@@ -125,6 +128,7 @@ protected:
 
 	bool m_core;
 	bool m_valid;
+	bool m_alien;
 
 	static QHash<ItemType, QString> itemTypeNames;
 	static long nextIndex;

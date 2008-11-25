@@ -39,9 +39,11 @@ $Date$
 
 #define TITLE tr("Parts")
 
-PartsBinPaletteWidget::PartsBinPaletteWidget(HtmlInfoView *infoView, QWidget* parent) :
+PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, QWidget* parent) :
 	FDockWidget(TITLE,parent)
 {
+	m_refModel = refModel;
+
 	m_undoStack = new QUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
@@ -97,6 +99,7 @@ void PartsBinPaletteWidget::setupFooter() {
 	rightLayout->setDirection(QBoxLayout::RightToLeft);
 	rightLayout->setMargin(0);
 	rightLayout->setSpacing(3);
+	rightLayout->addWidget(m_removeSelected);
 	rightLayout->addWidget(m_coreBinButton);
 	rightLayout->addWidget(m_saveBinButton);
 	rightLayout->addWidget(m_openBinButton);
@@ -148,7 +151,8 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	m_model->save(filename);
 	m_undoStack->setClean();
 
-	emit saved(hasPartsFromBundled());
+	saveAsLastBin();
+	emit saved(hasAlienParts());
 }
 
 void PartsBinPaletteWidget::loadFromModel(PaletteModel *model) {
@@ -177,7 +181,7 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_binTitle->setText(model->root()->modelPartStuff()->title(), false);
 }
 
-void PartsBinPaletteWidget::addPart(ModelPart *modelPart, bool isFromBundled) {
+void PartsBinPaletteWidget::addPart(ModelPart *modelPart) {
 	ModelPart *mp = m_model->addModelPart(m_model->root(),modelPart);
 
 	bool updating = alreadyIn(mp->moduleID());
@@ -187,8 +191,8 @@ void PartsBinPaletteWidget::addPart(ModelPart *modelPart, bool isFromBundled) {
 		m_undoStack->push(new QUndoCommand("Parts Bin: new part added"));
 	}
 
-	if(isFromBundled) {
-		m_partsFromBundled << mp->moduleID();
+	if(modelPart->isAlien()) {
+		m_alienParts << mp->moduleID();
 	}
 }
 
@@ -210,6 +214,10 @@ void PartsBinPaletteWidget::setupButtons() {
 	m_showListViewButton->setToolTip(tr("Show as list"));
 	connect(m_showListViewButton,SIGNAL(clicked()),this,SLOT(toListView()));
 
+	m_removeSelected = new ImageButton(this);
+	m_removeSelected->setPixmap(QPixmap(":/resources/images/icons/partsBinOpen_icon.png"));
+	m_removeSelected->setToolTip(tr("Remove selected part"));
+	connect(m_removeSelected,SIGNAL(clicked()),this,SLOT(removeSelected()));
 
 	m_openBinButton = new ImageButton(this);
 	m_openBinButton->setPixmap(QPixmap(":/resources/images/icons/partsBinOpen_icon.png"));
@@ -234,6 +242,15 @@ void PartsBinPaletteWidget::setupPixmaps() {
 	m_listViewInactive = new QPixmap(":/resources/images/icons/partsBinListViewInactive_icon.png");
 	m_saveButtonEnabled = new QPixmap(":/resources/images/icons/partsBinSaveEnabled_icon.png");
 	m_saveButtonDisabled = new QPixmap(":/resources/images/icons/partsBinSaveDisabled_icon.png");
+}
+
+bool PartsBinPaletteWidget::removeSelected() {
+	if(selected()) {
+		QString modId = selected()->moduleID();
+		removePart(modId);
+		m_undoStack->push(new QUndoCommand(tr("Parts Bin: part %1 remover").arg(modId)));
+		return true;
+	} else return false;
 }
 
 bool PartsBinPaletteWidget::save() {
@@ -293,6 +310,7 @@ void PartsBinPaletteWidget::open() {
 
     load(fileName);
     setSaveButtonEnabled(true);
+    saveAsLastBin();
 }
 
 void PartsBinPaletteWidget::openCore() {
@@ -360,7 +378,7 @@ void PartsBinPaletteWidget::closeEvent(QCloseEvent* event) {
 	FDockWidget::closeEvent(event);
 }
 
-PaletteItem * PartsBinPaletteWidget::selected() {
+ModelPart * PartsBinPaletteWidget::selected() {
 	return m_currentView->selected();
 }
 
@@ -368,8 +386,13 @@ bool PartsBinPaletteWidget::alreadyIn(QString moduleID) {
 	return m_iconView->alreadyIn(moduleID);
 }
 
-bool PartsBinPaletteWidget::hasPartsFromBundled() {
-	return m_partsFromBundled.size() > 0;
+bool PartsBinPaletteWidget::hasAlienParts() {
+	return m_alienParts.size() > 0;
+}
+
+void PartsBinPaletteWidget::addPart(const QString& moduleID) {
+	ModelPart *modelPart = m_refModel->retrieveModelPart(moduleID);
+	addPart(modelPart);
 }
 
 void PartsBinPaletteWidget::removePart(const QString& moduleID) {
@@ -379,9 +402,9 @@ void PartsBinPaletteWidget::removePart(const QString& moduleID) {
 	m_listView->removePart(moduleID);
 }
 
-void PartsBinPaletteWidget::removePartsFromBundled() {
-	foreach(QString moduleID, m_partsFromBundled) {
+void PartsBinPaletteWidget::removeAlienParts() {
+	foreach(QString moduleID, m_alienParts) {
 		removePart(moduleID);
 	}
-	m_partsFromBundled.clear();
+	m_alienParts.clear();
 }

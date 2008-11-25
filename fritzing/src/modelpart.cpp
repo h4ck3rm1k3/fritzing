@@ -47,6 +47,7 @@ ModelPart::ModelPart(ItemType type)
 	m_partInstanceStuff = NULL;
 	m_index = nextIndex++;
 	m_core = false;
+	m_alien = false;
 }
 
 ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)
@@ -56,6 +57,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	m_modelPartStuff = new ModelPartStuff(domDocument, path);
 	m_partInstanceStuff = new PartInstanceStuff(domDocument, path);
 	m_core = false;
+	m_alien = false;
 
 	//TODO Mariano: enough for now
 	QDomElement viewsElems = domDocument->documentElement().firstChildElement("views");
@@ -419,6 +421,14 @@ bool ModelPart::isCore() {
 
 void ModelPart::setCore(bool core) {
 	m_core = core;
+}
+
+bool ModelPart::isAlien() {
+	return m_alien;
+}
+
+void ModelPart::setAlien(bool alien) {
+	m_alien = alien;
 }
 
 bool ModelPart::isValid() {

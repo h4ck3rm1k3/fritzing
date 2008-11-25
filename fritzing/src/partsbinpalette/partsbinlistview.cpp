@@ -44,6 +44,7 @@ PartsBinListView::~PartsBinListView() {
 }
 
 void PartsBinListView::doClear() {
+	PartsBinView::doClear();
 	clear();
 }
 
@@ -54,20 +55,27 @@ void PartsBinListView::setItemAux(ModelPart * modelPart) {
 		return;
 	}
 
-	QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartStuff()->title(), this);
-	lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
+	QString moduleID = modelPart->moduleID();
+	if(!alreadyIn(moduleID)) {
+		QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartStuff()->title(), this);
+		lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
 
-	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::IconView, ViewLayer::Icon, layerAttributes);
-	if (renderer != NULL) {
-		QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
-		QPixmap * pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
-		lwi->setIcon(QIcon(*pixmap));
-		delete pixmap;
-		lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
+		LayerAttributes layerAttributes;
+		FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::IconView, ViewLayer::Icon, layerAttributes);
+		if (renderer != NULL) {
+			QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
+			QPixmap * pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+			lwi->setIcon(QIcon(*pixmap));
+			delete pixmap;
+			lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
+		}
+
+		this->addItem(lwi);
+
+		m_partHash[moduleID] = modelPart;
+	} else {
+		m_partHash[moduleID]->copy(modelPart);
 	}
-
-	this->addItem(lwi);
 }
 
 void PartsBinListView::mouseMoveEvent ( QMouseEvent * event ) {
@@ -123,16 +131,23 @@ void PartsBinListView::removePart(const QString &moduleID) {
 		}
 	}
 	if(idxToRemove > -1) {
+		m_partHash.remove(moduleID);
 		delete takeItem(idxToRemove);
 	}
 }
 
-const QString &PartsBinListView::itemModuleID(const QListWidgetItem *item) {
-	return item->data(Qt::UserRole).value<ModelPart *>()->moduleID();
+ModelPart *PartsBinListView::itemModelPart(const QListWidgetItem *item) {
+	return item->data(Qt::UserRole).value<ModelPart *>();
 }
 
-PaletteItem *PartsBinListView::selected() {
-	// TODO Mariano
+const QString &PartsBinListView::itemModuleID(const QListWidgetItem *item) {
+	return itemModelPart(item)->moduleID();
+}
+
+ModelPart *PartsBinListView::selected() {
+	if(selectedItems().size()==1) {
+		return itemModelPart(selectedItems()[0]);
+	}
 	return NULL;
 }
 

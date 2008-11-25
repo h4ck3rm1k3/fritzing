@@ -44,7 +44,8 @@ class SvgIconWidget : public QGraphicsProxyWidget {
 	public:
 		SvgIconWidget(ModelPart *, ItemBase::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
 		~SvgIconWidget();
-		PaletteItem *paletteItem();
+		ModelPart *modelPart() const;
+		const QString &moduleID() const;
 		QPoint globalPos();
 
 	protected:
@@ -62,6 +63,7 @@ class SvgIconWidget : public QGraphicsProxyWidget {
 		QLabel *m_pixmapContainer;
 		SvgIconWidgetContainer *m_container;
 		StyleSheetType m_styleSheetType;
+		QString m_moduleId;
 };
 
 class SvgIconWidgetContainer : public QFrame {

@@ -72,7 +72,7 @@ public:
 	static void initExportConstants();
 
 signals:
-	void partsFromBundledDiscarded();
+	void alienPartsDismissed();
 	void aboutToClose();
 
 protected slots:
@@ -143,6 +143,7 @@ protected slots:
 	// TODO PARTS EDITOR REMOVE
 	void openOldPartsEditor(PaletteItem *);
 	void openPartsEditor(PaletteItem *);
+	void addToBin();
 
 	void updateZoomOptions(qreal zoom);
 	void updateZoomOptionsNoMatterWhat(qreal zoom);
@@ -164,7 +165,7 @@ protected slots:
 	void saveBundledSketch();
 	void loadBundledSketch(QString &fileName);
 
-	void binSaved(bool hasPartsFromBundled);
+	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
@@ -225,7 +226,7 @@ protected:
 	void copyToPartsFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 
 	void closeIfEmptySketch();
-	bool whatToDoWithFilesAddedFromBundled();
+	bool whatToDoWithAlienFiles();
 	void backupExistingFileIfExists(const QString &destFilePath);
 	void recoverBackupedFiles();
 	void resetTempFolder();
@@ -335,6 +336,7 @@ protected:
 	QAction *m_swapPartAction;
 	// TODO PARTS EDITOR REMOVE
     QAction *m_openInPartsEditorAct;
+    QAction *m_addToBinAct;
 	QAction *m_rotate90cwAct;
 	QAction *m_rotate180Act;
 	QAction *m_rotate90ccwAct;
@@ -404,8 +406,8 @@ protected:
     ZoomComboBox * m_zoomOptsComboBox;
     bool m_comboboxChanged;
 
-    QStringList m_filesAddedFromBundled;
-    QStringList m_filesReplacedByBundleds;
+    QStringList m_alienFiles;
+    QStringList m_filesReplacedByAlienOnes;
 
     QStringList m_openExampleActions;
 

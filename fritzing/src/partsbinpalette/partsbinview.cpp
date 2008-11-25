@@ -46,6 +46,10 @@ void PartsBinView::reloadParts(PaletteModel * model) {
 	setPaletteModel(model, true);
 }
 
+void PartsBinView::doClear() {
+	m_partHash.clear();
+}
+
 void PartsBinView::setItem(ModelPart * modelPart) {
 	QList<QObject *>::const_iterator i;
     for (i = modelPart->children().constBegin(); i != modelPart->children().constEnd(); ++i) {
@@ -106,4 +110,8 @@ void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, 
 	}
 
 	ItemDrag::_dragIsDone();
+}
+
+bool PartsBinView::alreadyIn(QString moduleID) {
+	return m_partHash.contains(moduleID);
 }
