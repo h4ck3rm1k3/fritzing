@@ -48,7 +48,11 @@ int PartsEditorMainWindow::UntitledPartIndex = 1;
 PartsEditorMainWindow *PartsEditorMainWindow::m_lastOpened = NULL;
 int PartsEditorMainWindow::m_closedBeforeCount = 0;
 
-#define CORE_EDITION_ENABLED true
+#ifndef QT_NO_DEBUG
+	#define CORE_EDITION_ENABLED false
+#else
+	#define CORE_EDITION_ENABLED true
+#endif
 
 PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFlags f, ModelPart *modelPart, bool fromTemplate)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent, f)

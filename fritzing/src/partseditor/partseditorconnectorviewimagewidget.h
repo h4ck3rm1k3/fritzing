@@ -47,7 +47,13 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 
 	protected:
 		void mousePressEvent(QMouseEvent *event);
+		void mouseMoveEvent(QMouseEvent *event);
+		void mouseReleaseEvent(QMouseEvent *event);
 		void connectItem();
+		void createConnector(const QRect &rect);
+
+		QRubberBand *m_connRubberBand;
+		QPoint m_connRubberBandOrigin;
 };
 
 #endif /* PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_ */

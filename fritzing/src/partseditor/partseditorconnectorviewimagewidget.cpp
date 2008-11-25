@@ -35,11 +35,42 @@ $Date$
 PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
 	: PartsEditorAbstractViewImage(viewId, parent, size)
 {
+	m_connRubberBandOrigin = QPoint(-1,-1);
+	m_connRubberBand = NULL;
 }
 
 void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
-	Q_UNUSED(event);
+	m_connRubberBandOrigin = event->pos();
+	if (!m_connRubberBand) {
+		m_connRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+	}
+
+	m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, QSize()));
+	m_connRubberBand->show();
+}
+
+void PartsEditorConnectorViewImageWidget::mouseMoveEvent(QMouseEvent *event) {
+	if(m_connRubberBandOrigin != QPoint(-1,-1)) {
+		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, event->pos()).normalized());
+	}
 	return;
+}
+
+void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) {
+	Q_UNUSED(event);
+	m_connRubberBand->hide();
+    createConnector(m_connRubberBand->geometry());
+    m_connRubberBandOrigin = QPoint(-1,-1);
+}
+
+void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect) {
+	QGraphicsRectItem *rect = new QGraphicsRectItem(mapToScene(connRect).boundingRect());
+	QPen pen(QColor::fromRgb(255,0,0));
+	pen.setWidth(2);
+	pen.setJoinStyle(Qt::MiterJoin);
+	pen.setCapStyle(Qt::SquareCap);
+	rect->setPen(pen);
+	scene()->addItem(rect);
 }
 
 void PartsEditorConnectorViewImageWidget::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
