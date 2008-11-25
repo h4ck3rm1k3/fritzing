@@ -135,6 +135,13 @@
                 </iconView >
              </views>
         </instance>
+	<instance moduleIdRef="1234ABDE24BH" path="parts/core/pcb-plain-60x100.fz">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView >
+             </views>
+        </instance>
         <instance moduleIdRef="WireModuleID" path=":/resources/parts/core/wire.fz">
             <views>
                 <iconView layer="icon">
