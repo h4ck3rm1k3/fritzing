@@ -122,7 +122,23 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QString &svgp
 	const QHash<QString,StringPair*> connIds = getConnectorIds(svgpath);
 	const QStringList layers = getLayers(svgpath);
 
+	setSvgFilePath(svgpath);
+
 	return createFakeModelPart(connIds, layers, relativepath);
+}
+
+QDomDocument *PartsEditorAbstractViewImage::createDomDocument(const QString &filename) {
+	DebugDialog::debug("<<< "+filename);
+	QFile file(filename);
+	Q_ASSERT(file.open(QFile::ReadOnly | QFile::Text));
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument* domDocument = new QDomDocument();
+
+	Q_ASSERT(domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn));
+	return domDocument;
 }
 
 ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
@@ -231,4 +247,8 @@ const QStringList PartsEditorAbstractViewImage::getLayers(const QString &path) {
 	}
 
 	return retval;
+}
+
+void PartsEditorAbstractViewImage::setSvgFilePath(const QString &filePath) {
+	m_svgDom = createDomDocument(filePath);
 }

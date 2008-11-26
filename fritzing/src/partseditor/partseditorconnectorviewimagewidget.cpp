@@ -27,6 +27,7 @@ $Date$
 
 
 //#include <QXmlQuery>
+#include <QInputDialog>
 
 #include "partseditorconnectorviewimagewidget.h"
 #include "partseditorconnectoritem.h"
@@ -64,13 +65,53 @@ void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) 
 }
 
 void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect) {
-	QGraphicsRectItem *rect = new QGraphicsRectItem(mapToScene(connRect).boundingRect());
-	QPen pen(QColor::fromRgb(255,0,0));
-	pen.setWidth(2);
-	pen.setJoinStyle(Qt::MiterJoin);
-	pen.setCapStyle(Qt::SquareCap);
-	rect->setPen(pen);
-	scene()->addItem(rect);
+	bool ok;
+	QString connId =
+		QInputDialog::getText(
+			this,
+			tr("Please, give this connector an id"),
+			tr("Connector id:"),
+			QLineEdit::Normal,
+			"connector",
+			&ok);
+
+	if(ok) {
+		QRectF bounds = mapToScene(connRect).boundingRect();
+
+		QGraphicsRectItem *rect = new QGraphicsRectItem(bounds);
+		QPen pen(QColor::fromRgb(255,0,0));
+		int penWidth = 1;
+		pen.setWidth(penWidth);
+		pen.setJoinStyle(Qt::MiterJoin);
+		pen.setCapStyle(Qt::SquareCap);
+		rect->setPen(pen);
+		scene()->addItem(rect);
+
+		QSvgRenderer *renderer = new QSvgRenderer(m_svgPath);
+		QRectF viewBox = renderer->viewBoxF();
+		QSize defaultSize = renderer->defaultSize();
+
+		qreal x = bounds.x() * defaultSize.width() / viewBox.width();
+		qreal y = bounds.y() * defaultSize.height() / viewBox.height();
+		qreal width = bounds.width() * defaultSize.width() / viewBox.width(); width += penWidth; //rect pen width
+		qreal height = bounds.height() * defaultSize.height() / viewBox.height(); height += penWidth; //rect pen width
+
+		QDomElement connElem = m_svgDom->createElement("rect");
+		connElem.setAttribute("id",connId+"pin");
+		connElem.setAttribute("x",x);
+		connElem.setAttribute("y",y);
+		connElem.setAttribute("width",width);
+		connElem.setAttribute("height",height);
+		connElem.setAttribute("style","fill:transparent");
+		Q_ASSERT(!m_svgDom->firstChildElement("svg").isNull());
+		m_svgDom->firstChildElement("svg").appendChild(connElem);
+
+		QFile file("/home/merun/out.svg");
+		Q_ASSERT(file.open(QFile::WriteOnly));
+		QTextStream out(&file);
+		out << m_svgDom->toString();
+		file.close();
+	}
 }
 
 void PartsEditorConnectorViewImageWidget::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
@@ -80,9 +121,9 @@ void PartsEditorConnectorViewImageWidget::loadFromModel(PaletteModel *paletteMod
 }
 
 void PartsEditorConnectorViewImageWidget::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
+	QString imagePath = svgFilePath->first+(svgFilePath->second != ___emptyString___ ? "/" : "")+svgFilePath->second;
 	if(!modelPart) {
-		QString path = svgFilePath->first+(svgFilePath->second != ___emptyString___ ? "/" : "")+svgFilePath->second;
-		modelPart = createFakeModelPart(path, svgFilePath->second);
+		modelPart = createFakeModelPart(imagePath, svgFilePath->second);
 	}
 
 	PartsEditorAbstractViewImage::addItemInPartsEditor(modelPart,svgFilePath);
@@ -110,4 +151,9 @@ void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifie
 			}
 		}
 	}
+}
+
+void PartsEditorConnectorViewImageWidget::setSvgFilePath(const QString &filePath) {
+	m_svgPath = filePath;
+	PartsEditorAbstractViewImage::setSvgFilePath(filePath);
 }

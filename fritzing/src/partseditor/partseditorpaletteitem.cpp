@@ -76,6 +76,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 }
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
+	DebugDialog::debug("<<<<<< "+path);
     m_svgfile = new QDomDocument();
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
@@ -218,7 +219,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 				return false;
 			}
 		}
-		
+
 		createSvgFile(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath());
 		//FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
 

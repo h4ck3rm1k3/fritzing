@@ -139,7 +139,9 @@ void PartsEditorViewImageWidget::copyToTempAndRenameIfNecessary(StringPair *file
 	}
 }
 
-void PartsEditorViewImageWidget::setSvgFilePath(QString filePath) {
+void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
+	PartsEditorAbstractViewImage::setSvgFilePath(filePath);
+
 	m_originalSvgFilePath = filePath;
 	QString folder = getApplicationSubFolderPath("parts")+"/svg";
 
@@ -153,7 +155,8 @@ void PartsEditorViewImageWidget::setSvgFilePath(QString filePath) {
 	cs = Qt::CaseInsensitive;
 #endif
 	if(filePath.contains(folder, cs)) {
-		QString svgFile = filePath.remove(folder+"/", cs);
+		QString filePathAux = filePath;
+		QString svgFile = filePathAux.remove(folder+"/", cs);
 		first = folder;
 		second = svgFile;
 	} else {

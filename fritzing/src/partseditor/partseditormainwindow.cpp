@@ -48,7 +48,7 @@ int PartsEditorMainWindow::UntitledPartIndex = 1;
 PartsEditorMainWindow *PartsEditorMainWindow::m_lastOpened = NULL;
 int PartsEditorMainWindow::m_closedBeforeCount = 0;
 
-#ifndef QT_NO_DEBUG
+#ifdef QT_NO_DEBUG
 	#define CORE_EDITION_ENABLED false
 #else
 	#define CORE_EDITION_ENABLED true

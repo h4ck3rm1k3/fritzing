@@ -57,6 +57,10 @@ class PartsEditorAbstractViewImage : public SketchWidget {
 		void getConnectorIdsAux(QHash<QString,StringPair*> &retval, QDomElement &docElem);
 		const QStringList getLayers(const QString &path);
 
+		QDomDocument *createDomDocument(const QString &filename);
+		virtual void setSvgFilePath(const QString &filePath);
+
+		QDomDocument *m_svgDom;
 		PartsEditorPaletteItem *m_item; // just one item per view
 };
 

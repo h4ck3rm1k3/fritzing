@@ -55,7 +55,7 @@ signals:
 	void itemAddedToSymbols(ModelPart * modelPart, StringPair *svgFilePath);
 
 protected:
-	void setSvgFilePath(QString filePath);
+	void setSvgFilePath(const QString &filePath);
 	void copyToTempAndRenameIfNecessary(StringPair *filePathOrig);
 	void mousePressEvent(QMouseEvent *event);
 
