@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.b.11.21.1595">
+<module fritzingVersion="0.1.b.11.24.1642">
     <instances>
         <instance moduleIdRef="1234ABDE24_ST" modelIndex="473" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/controller_arduino_diecimila.fz">
-            <title>Part1</title>
+            <title>Arduino1</title>
             <views>
                 <breadboardView layer="breadboardBreadboard">
                     <geometry z="1.5" x="88" y="138"></geometry>
@@ -42,8 +42,8 @@
                         <connector connectorId="connector2" layer="copper0">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="474"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="70"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="474"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -87,7 +87,7 @@
             <title>LED1</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.5" x="208.884" y="86.7446"></geometry>
+                    <geometry z="2.5" x="208.661" y="86.7271"></geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
@@ -120,8 +120,8 @@
                         <connector connectorId="connector1" layer="copper0">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector2" bus="false" modelIndex="473"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="70"></connect>
+                                <connect connectorId="connector2" bus="false" modelIndex="473"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -151,7 +151,7 @@
         <instance moduleIdRef="WireModuleID" modelIndex="475" path=":/resources/parts/core/wire.fz">
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50001" x="214.681" y="145.635" x1="0" y1="0" x2="-208.681" y2="-139.635" wireFlags="1"></geometry>
+                    <geometry z="3.50001" x="214.458" y="145.618" x1="0" y1="0" x2="-208.458" y2="-139.618" wireFlags="1"></geometry>
                     <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
