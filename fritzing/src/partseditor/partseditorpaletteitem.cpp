@@ -39,7 +39,12 @@ $Date$
 PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
-	createSvgFile(path->first+"/"+path->second);
+	QString pathAux = path->first;
+	if(path->second != ___emptyString___) {
+		pathAux += "/"+path->second;
+	}
+
+	createSvgFile(pathAux);
 	m_svgStrings = new SvgAndPartFilePath();
 
 	m_svgStrings->setPartFolderPath(layer);
@@ -55,7 +60,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
-	m_svgfile = svgFile;
+	m_svgDom = svgFile;
 	m_svgStrings = new SvgAndPartFilePath();
 
 	m_svgStrings->setPartFolderPath(layer);
@@ -71,20 +76,22 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocume
 PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
+	m_svgDom = NULL;
+
 	m_connectors = NULL;
 	m_svgStrings = NULL;
 }
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
-	DebugDialog::debug("<<<<<< "+path);
-    m_svgfile = new QDomDocument();
+    m_svgDom = new QDomDocument();
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
         return;
-    if (!m_svgfile->setContent(&file)) {
+    if (!m_svgDom->setContent(&file)) {
         file.close();
         return;
     }
+    m_originalSvgPath = path;
     file.close();
 }
 
@@ -220,7 +227,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 			}
 		}
 
-		createSvgFile(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath());
+		createSvgFile(fn);
 		//FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
 
 	}
@@ -247,6 +254,14 @@ StringPair* PartsEditorPaletteItem::svgFilePath() {
 void PartsEditorPaletteItem::setSvgFilePath(StringPair *sp) {
 	m_svgStrings->setCoreContribOrUser(sp->first);
 	m_svgStrings->setFileRelativePath(sp->second);
+}
+
+QDomDocument *PartsEditorPaletteItem::svgDom() {
+	return m_svgDom;
+}
+
+QString PartsEditorPaletteItem::flatSvgFilePath() {
+	return m_originalSvgPath;
 }
 
 ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {

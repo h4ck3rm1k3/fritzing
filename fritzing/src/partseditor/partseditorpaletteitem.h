@@ -45,6 +45,9 @@ class PartsEditorPaletteItem : public PaletteItem {
 		StringPair* svgFilePath();
 		void setSvgFilePath(StringPair *sp);
 
+		QDomDocument *svgDom();
+		QString flatSvgFilePath();
+
 		void removeFromModel(); // To allow info items to be shown, but not to be persisted
 		void setConnector(const QString &id, Connector *conn);
 
@@ -56,7 +59,8 @@ class PartsEditorPaletteItem : public PaletteItem {
 		bool setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 		virtual ConnectorItem* newConnectorItem(Connector *connector);
 
-		QDomDocument *m_svgfile;
+		QDomDocument *m_svgDom;
+		QString m_originalSvgPath;
 
 		SvgAndPartFilePath *m_svgStrings;
 		QList<Connector *> *m_connectors;

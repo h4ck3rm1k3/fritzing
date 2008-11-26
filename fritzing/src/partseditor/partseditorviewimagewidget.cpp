@@ -140,8 +140,6 @@ void PartsEditorViewImageWidget::copyToTempAndRenameIfNecessary(StringPair *file
 }
 
 void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
-	PartsEditorAbstractViewImage::setSvgFilePath(filePath);
-
 	m_originalSvgFilePath = filePath;
 	QString folder = getApplicationSubFolderPath("parts")+"/svg";
 

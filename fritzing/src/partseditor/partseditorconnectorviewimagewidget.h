@@ -51,9 +51,7 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void mouseReleaseEvent(QMouseEvent *event);
 		void connectItem();
 		void createConnector(const QRect &rect);
-		void setSvgFilePath(const QString &filePath);
 
-		QString m_svgPath;
 		QRubberBand *m_connRubberBand;
 		QPoint m_connRubberBandOrigin;
 };

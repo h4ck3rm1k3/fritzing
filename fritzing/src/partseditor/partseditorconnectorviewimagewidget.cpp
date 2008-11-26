@@ -41,30 +41,34 @@ PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBas
 }
 
 void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
-	m_connRubberBandOrigin = event->pos();
-	if (!m_connRubberBand) {
-		m_connRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-	}
+	if(m_item) {
+		m_connRubberBandOrigin = event->pos();
+		if (!m_connRubberBand) {
+			m_connRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+		}
 
-	m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, QSize()));
-	m_connRubberBand->show();
+		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, QSize()));
+		m_connRubberBand->show();
+	}
 }
 
 void PartsEditorConnectorViewImageWidget::mouseMoveEvent(QMouseEvent *event) {
-	if(m_connRubberBandOrigin != QPoint(-1,-1)) {
+	if(m_item && m_connRubberBandOrigin != QPoint(-1,-1)) {
 		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, event->pos()).normalized());
 	}
-	return;
 }
 
 void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) {
 	Q_UNUSED(event);
-	m_connRubberBand->hide();
-    createConnector(m_connRubberBand->geometry());
-    m_connRubberBandOrigin = QPoint(-1,-1);
+	if(m_item) {
+		m_connRubberBand->hide();
+		createConnector(m_connRubberBand->geometry());
+		m_connRubberBandOrigin = QPoint(-1,-1);
+	}
 }
 
 void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect) {
+	Q_ASSERT(m_item);
 	bool ok;
 	QString connId =
 		QInputDialog::getText(
@@ -87,7 +91,7 @@ void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect)
 		rect->setPen(pen);
 		scene()->addItem(rect);
 
-		QSvgRenderer *renderer = new QSvgRenderer(m_svgPath);
+		QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
 		QRectF viewBox = renderer->viewBoxF();
 		QSize defaultSize = renderer->defaultSize();
 
@@ -96,20 +100,21 @@ void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect)
 		qreal width = bounds.width() * defaultSize.width() / viewBox.width(); width += penWidth; //rect pen width
 		qreal height = bounds.height() * defaultSize.height() / viewBox.height(); height += penWidth; //rect pen width
 
-		QDomElement connElem = m_svgDom->createElement("rect");
+		QDomDocument *svgDom = m_item->svgDom();
+		QDomElement connElem = svgDom->createElement("rect");
 		connElem.setAttribute("id",connId+"pin");
 		connElem.setAttribute("x",x);
 		connElem.setAttribute("y",y);
 		connElem.setAttribute("width",width);
 		connElem.setAttribute("height",height);
 		connElem.setAttribute("style","fill:transparent");
-		Q_ASSERT(!m_svgDom->firstChildElement("svg").isNull());
-		m_svgDom->firstChildElement("svg").appendChild(connElem);
+		Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
+		svgDom->firstChildElement("svg").appendChild(connElem);
 
 		QFile file("/home/merun/out.svg");
 		Q_ASSERT(file.open(QFile::WriteOnly));
 		QTextStream out(&file);
-		out << m_svgDom->toString();
+		out << svgDom->toString();
 		file.close();
 	}
 }
@@ -151,9 +156,4 @@ void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifie
 			}
 		}
 	}
-}
-
-void PartsEditorConnectorViewImageWidget::setSvgFilePath(const QString &filePath) {
-	m_svgPath = filePath;
-	PartsEditorAbstractViewImage::setSvgFilePath(filePath);
 }
