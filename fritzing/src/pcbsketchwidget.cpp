@@ -181,6 +181,7 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 			QPointF loc = paletteItem->scenePos();
 			loc.setX(loc.x() * dpi / printerScale);
 			loc.setY(loc.y() * dpi / printerScale);
+			// TODO:  deal with rotations and flips
 			QString shifted = splitter->shift(loc.x(), loc.y(), "copper0");
 			outputSVG.append(shifted);
 			splitter->shift(-loc.x(), -loc.y(), "copper0");
@@ -189,7 +190,19 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 			Wire * wire = dynamic_cast<Wire *>(item);
 			if (wire == NULL) continue;
 
-			// draw a line in svg
+			QPointF p1 = wire->pos();
+			QPointF p2 = wire->line().p2() + p1;
+			p1.setX(p1.x() * dpi / printerScale);
+			p1.setY(p1.y() * dpi / printerScale);
+			p2.setX(p2.x() * dpi / printerScale);
+			p2.setY(p2.y() * dpi / printerScale);
+			QString line = QString("<line stroke=\"black\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
+							.arg(p1.x())
+							.arg(p1.y())
+							.arg(p2.x())
+							.arg(p2.y())
+							.arg(wire->width() * dpi / printerScale);
+			outputSVG.append(line);
 		}
 	}
 
