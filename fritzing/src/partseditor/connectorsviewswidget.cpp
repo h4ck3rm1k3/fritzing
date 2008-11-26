@@ -60,6 +60,10 @@ void ConnectorsViewsWidget::createViewImageWidget(
 		viw, SLOT(addItemInPartsEditor(ModelPart *, StringPair*))
 	);
 	connect(
+		viw, SIGNAL(svgFileLoadNeeded(const QString&)),
+		sister, SLOT(loadSvgFile(const QString&))
+	);
+	connect(
 		info, SIGNAL(connectorSelected(const QString&)),
 		viw, SLOT(informConnectorSelection(const QString&))
 	);

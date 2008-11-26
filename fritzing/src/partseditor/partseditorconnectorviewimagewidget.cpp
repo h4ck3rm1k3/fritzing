@@ -32,6 +32,7 @@ $Date$
 #include "partseditorconnectorviewimagewidget.h"
 #include "partseditorconnectoritem.h"
 #include "../debugdialog.h"
+#include "../fritzingwindow.h"
 
 PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
 	: PartsEditorAbstractViewImage(viewId, parent, size)
@@ -77,19 +78,20 @@ void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect)
 			tr("Connector id:"),
 			QLineEdit::Normal,
 			"connector",
-			&ok);
+			&ok
+		);
 
 	if(ok) {
 		QRectF bounds = mapToScene(connRect).boundingRect();
 
-		QGraphicsRectItem *rect = new QGraphicsRectItem(bounds);
+		/*QGraphicsRectItem *rect = new QGraphicsRectItem(bounds);
 		QPen pen(QColor::fromRgb(255,0,0));
 		int penWidth = 1;
 		pen.setWidth(penWidth);
 		pen.setJoinStyle(Qt::MiterJoin);
 		pen.setCapStyle(Qt::SquareCap);
 		rect->setPen(pen);
-		scene()->addItem(rect);
+		scene()->addItem(rect);*/
 
 		QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
 		QRectF viewBox = renderer->viewBoxF();
@@ -97,8 +99,8 @@ void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect)
 
 		qreal x = bounds.x() * defaultSize.width() / viewBox.width();
 		qreal y = bounds.y() * defaultSize.height() / viewBox.height();
-		qreal width = bounds.width() * defaultSize.width() / viewBox.width(); width += penWidth; //rect pen width
-		qreal height = bounds.height() * defaultSize.height() / viewBox.height(); height += penWidth; //rect pen width
+		qreal width = bounds.width() * defaultSize.width() / viewBox.width();
+		qreal height = bounds.height() * defaultSize.height() / viewBox.height();
 
 		QDomDocument *svgDom = m_item->svgDom();
 		QDomElement connElem = svgDom->createElement("rect");
@@ -111,11 +113,16 @@ void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect)
 		Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
 		svgDom->firstChildElement("svg").appendChild(connElem);
 
-		QFile file("/home/merun/out.svg");
+		QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
+		QFile file(tempFile);
 		Q_ASSERT(file.open(QFile::WriteOnly));
 		QTextStream out(&file);
 		out << svgDom->toString();
 		file.close();
+
+		svgFileLoadNeeded(tempFile);
+
+		QFile::remove(tempFile);
 	}
 }
 

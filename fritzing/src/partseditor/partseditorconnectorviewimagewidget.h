@@ -44,6 +44,7 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 
 	signals:
 		void connectorsFound(ItemBase::ViewIdentifier viewId, const QList<Connector*> &conns);
+		void svgFileLoadNeeded(const QString &filepath);
 
 	protected:
 		void mousePressEvent(QMouseEvent *event);
