@@ -119,6 +119,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     createStatusBar();
     createDockWindows();
 
+
     if (!styleSheet.open(QIODevice::ReadOnly)) {
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
@@ -150,6 +151,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     m_breadboardGraphicsView->setItemMenu(breadboardItemMenu());
     m_pcbGraphicsView->setItemMenu(pcbItemMenu());
     m_schematicGraphicsView->setItemMenu(schematicItemMenu());
+
 
     m_breadboardGraphicsView->setInfoView(m_infoView);
     m_pcbGraphicsView->setInfoView(m_infoView);
@@ -1102,8 +1104,7 @@ void MainWindow::clearRoutingSlot(SketchWidget * sketchWidget, QUndoCommand * pa
 }
 
 QMenu *MainWindow::breadboardItemMenu() {
-	QMenu *menu = new QMenu(m_breadboardGraphicsView);
-	menu = new QMenu(QObject::tr("Part"), this);
+	QMenu *menu = new QMenu(QObject::tr("Part"), this);
 	menu->addAction(m_rotate90cwAct);
 	menu->addAction(m_rotate180Act);
 	menu->addAction(m_rotate90ccwAct);
@@ -1113,8 +1114,7 @@ QMenu *MainWindow::breadboardItemMenu() {
 }
 
 QMenu *MainWindow::schematicItemMenu() {
-	QMenu *menu = new QMenu(m_schematicGraphicsView);
-	menu = new QMenu(QObject::tr("Part"), this);
+	QMenu *menu = new QMenu(QObject::tr("Part"), this);
 	menu->addAction(m_rotate90cwAct);
 	menu->addAction(m_rotate180Act);
 	menu->addAction(m_rotate90ccwAct);
@@ -1124,8 +1124,7 @@ QMenu *MainWindow::schematicItemMenu() {
 }
 
 QMenu *MainWindow::pcbItemMenu() {
-	QMenu *menu = new QMenu(m_pcbGraphicsView);
-	menu = new QMenu(QObject::tr("Part"), this);
+	QMenu *menu = new QMenu(QObject::tr("Part"), this);
 	menu->addAction(m_rotate90cwAct);
 	menu->addAction(m_rotate180Act);
 	menu->addAction(m_rotate90ccwAct);
@@ -1150,7 +1149,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addAction(m_openInPartsEditorAct);
 	menu->addAction(m_addToBinAct);
 
-#ifndef g
+#ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
 	//menu->addAction(m_swapPartAction);

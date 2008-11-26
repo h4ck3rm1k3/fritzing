@@ -47,6 +47,7 @@ $Date$
 
 int main(int argc, char *argv[])
 {
+
 	FApplication app(argc, argv);
 
 	#ifdef Q_WS_MAC
@@ -72,6 +73,14 @@ int main(int argc, char *argv[])
 		Qt::AlignRight | Qt::AlignTop, Qt::white);
     splash.show();
 	QApplication::processEvents();			// seems to need this (sometimes?) to display the splash screen
+
+	QCoreApplication::setOrganizationName("Fritzing");
+	QCoreApplication::setOrganizationDomain("fritzing.org");
+	QCoreApplication::setApplicationName("Fritzing");
+	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+
+	// so we can use ViewGeometry in a Qt::QueueConnection signal
+	qRegisterMetaType<ViewGeometry>("ViewGeometry");
 
 	MainWindow::initExportConstants();
 	Wire::initNames();
@@ -116,13 +125,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-    QCoreApplication::setOrganizationName("Fritzing");
-	QCoreApplication::setOrganizationDomain("fritzing.org");
-	QCoreApplication::setApplicationName("Fritzing");
-	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-
-	// so we can use ViewGeometry in a Qt::QueueConnection signal
-	qRegisterMetaType<ViewGeometry>("ViewGeometry");
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = new MainWindow(paletteBinModel, referenceModel);
@@ -132,6 +134,7 @@ int main(int argc, char *argv[])
 	if(argc > 1) {
 		for(int i=1; i < argc; i++) {
 			mainWindow->load(argv[i]);
+
 		}
 	} else {
 		QSettings settings("Fritzing","Fritzing");
@@ -144,6 +147,7 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
+
 	mainWindow->show();
 	splash.finish(mainWindow);
 
