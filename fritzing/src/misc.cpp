@@ -67,3 +67,34 @@ QString getApplicationSubFolderPath(QString search) {
 	delete dir;
 	return result;
 }
+
+qreal convertToInches(const QString & s, bool * ok) {
+	QString string = s;
+	qreal divisor = 1.0;
+	if (string.endsWith("cm", Qt::CaseInsensitive)) {
+		divisor = 2.54;
+		string.chop(2);
+	}
+	else if (string.endsWith("mm", Qt::CaseInsensitive)) {
+		divisor = 25.4;
+		string.chop(2);
+	}
+	else if (string.endsWith("in", Qt::CaseInsensitive)) {
+		divisor = 1.0;
+		string.chop(2);
+	}
+	else {
+		if (ok) *ok = false;
+		return 0;
+	}
+
+	bool fine;
+	qreal result = string.toDouble(&fine);
+	if (!fine) {
+		if (ok) *ok = false;
+		return 0;
+	}
+
+	if (ok) *ok = true;
+	return result / divisor;
+}

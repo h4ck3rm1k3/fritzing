@@ -183,6 +183,10 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_tabWidget->setMinimumWidth(500);
 	m_tabWidget->setMinimumWidth(0);
 
+	m_miniViewContainer0->setView(m_breadboardGraphicsView);
+	m_miniViewContainer1->setView(m_schematicGraphicsView);
+	m_miniViewContainer2->setView(m_pcbGraphicsView);
+
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 }
 
@@ -269,29 +273,11 @@ qreal MainWindow::getSvgWidthInInches(QFile & file)
 		return 0;
 	}
 
-	qreal divisor = 1.0;
-	if (stringWidth.endsWith("cm", Qt::CaseInsensitive)) {
-		divisor = 2.54;
-		stringWidth.chop(2);
-	}
-	else if (stringWidth.endsWith("mm", Qt::CaseInsensitive)) {
-		divisor = 25.4;
-		stringWidth.chop(2);
-	}
-	else if (stringWidth.endsWith("in", Qt::CaseInsensitive)) {
-		divisor = 1.0;
-		stringWidth.chop(2);
-	}
-	else {
-		// units not understood
-		return 0;
-	}
-
 	bool ok;
-	qreal result = stringWidth.toDouble(&ok);
+	qreal result = convertToInches(stringWidth, &ok);
 	if (!ok) return 0;
 
-	return result / divisor;
+	return result;
 }
 
 
@@ -592,7 +578,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		SLOT(updateTransformationActions())
 	);
 
-	m_miniViewContainer->setView(widget);
+	//m_miniViewContainer0->setView(widget);
 
 	//  TODO:  should be a cleaner way to do this
 	switch( index ) {
@@ -760,8 +746,14 @@ void MainWindow::createDockWindows()
 
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
-    m_miniViewContainer = new MiniViewContainer(this);
-    makeDock(tr("Navigator"), m_miniViewContainer, NavigatorMinHeight, NavigatorDefaultHeight);
+    m_miniViewContainer0 = new MiniViewContainer(this);
+    makeDock(tr("Breadboard"), m_miniViewContainer0, NavigatorMinHeight, NavigatorDefaultHeight);
+
+    m_miniViewContainer1 = new MiniViewContainer(this);
+    makeDock(tr("Schematic"), m_miniViewContainer1, NavigatorMinHeight, NavigatorDefaultHeight);
+
+    m_miniViewContainer2 = new MiniViewContainer(this);
+    makeDock(tr("PCB"), m_miniViewContainer2, NavigatorMinHeight, NavigatorDefaultHeight);
 
     makeDock(tr("Undo History"), m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
     m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);

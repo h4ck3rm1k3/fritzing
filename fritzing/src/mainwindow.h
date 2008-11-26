@@ -208,6 +208,7 @@ protected:
 	bool eventFilter(QObject *obj, QEvent *event);
 	void setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2);
 	void exportToEagle();
+	void exportToGerber();
 
 	QList<QWidget*> getButtonsForView(ItemBase::ViewIdentifier viewId);
 
@@ -263,7 +264,9 @@ protected:
 	PCBSketchWidget *m_pcbGraphicsView;
 
     PartsBinPaletteWidget *m_paletteWidget;
-    MiniViewContainer *m_miniViewContainer;
+    MiniViewContainer *m_miniViewContainer0;
+    MiniViewContainer *m_miniViewContainer1;
+    MiniViewContainer *m_miniViewContainer2;
     FTabWidget * m_tabWidget;
     PaletteModel *m_paletteModel;
     ReferenceModel *m_refModel;
@@ -312,6 +315,7 @@ protected:
 	QAction *m_exportPngAct;
 	QAction *m_exportPdfAct;
 	QAction *m_exportEagleAct;
+	QAction *m_exportGerberAct;
 	QAction *m_exportDiyAct;
 
     // Edit Menu

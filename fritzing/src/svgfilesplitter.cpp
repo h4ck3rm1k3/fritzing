@@ -47,13 +47,12 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
-	QDomDocument domDocument;
 
-	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+	if (!m_domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
 		return false;
 	}
 
-	QDomElement root = domDocument.documentElement();
+	QDomElement root = m_domDocument.documentElement();
 	if (root.isNull()) {
 		return false;
 	}
@@ -70,7 +69,7 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 	}
 
 	root.appendChild(element);
-	m_byteArray = domDocument.toByteArray();
+	m_byteArray = m_domDocument.toByteArray();
 
 	return true;
 }
@@ -91,4 +90,155 @@ QDomElement SvgFileSplitter::findElementWithAttribute(QDomElement element, const
 
 const QByteArray & SvgFileSplitter::byteArray() {
 	return m_byteArray;
+}
+
+const QDomDocument & SvgFileSplitter::domDocument() {
+	return m_domDocument;
+}
+
+bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID) 
+{
+	// get the viewbox and the width and height
+	// then normalize them
+	// then normalize all the internal stuff
+	// if there are transitions, we're fucked
+	
+	QDomElement root = m_domDocument.documentElement();
+	QString swidthStr = root.attribute("width");
+	if (swidthStr.isEmpty()) return false;
+
+	QString sheightStr = root.attribute("height");
+	if (sheightStr.isEmpty()) return false;
+
+	QString sviewboxStr = root.attribute("viewBox");
+	if (sviewboxStr.isEmpty()) return false;
+
+	bool ok;
+	qreal sWidth = convertToInches(swidthStr, &ok);
+	if (!ok) return false;
+
+	qreal sHeight = convertToInches(sheightStr, &ok);
+	if (!ok) return false;
+
+	root.setAttribute("width", QString::number(sWidth));
+	root.setAttribute("height", QString::number(sHeight));
+
+	QStringList strings = sviewboxStr.split(" ");
+	if (strings.size() != 4) return false;
+
+	qreal vbWidth = strings[2].toDouble(&ok);
+	if (!ok) return false;
+
+	qreal vbHeight= strings[3].toDouble(&ok);
+	if (!ok) return false;
+
+	root.setAttribute("viewBox", QString("%1 %2 %3 %4").arg(0).arg(0).arg(vbWidth).arg(vbHeight) );
+
+	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	if (mainElement.isNull()) return false;
+
+	QDomElement childElement = mainElement.firstChildElement();
+	while (!childElement.isNull()) {
+		normalizeChild(childElement, sWidth * dpi, sHeight * dpi, vbWidth, vbHeight);
+		childElement = childElement.nextSiblingElement();
+	}
+
+	return true;
+}
+
+void SvgFileSplitter::normalizeChild(QDomElement & element, 
+									 qreal sNewWidth, qreal sNewHeight,
+									 qreal vbWidth, qreal vbHeight)
+{
+	
+	if (element.nodeName().compare("circle") == 0) {
+		normalizeAttribute(element, "cx", sNewWidth, vbWidth);
+		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
+		normalizeAttribute(element, "r", sNewWidth, vbWidth);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
+		element.setAttribute("stroke", "black");
+	}
+	else if (element.nodeName().compare("line") == 0) {
+		normalizeAttribute(element, "x1", sNewWidth, vbWidth);
+		normalizeAttribute(element, "y1", sNewHeight, vbHeight);
+		normalizeAttribute(element, "x2", sNewWidth, vbWidth);
+		normalizeAttribute(element, "y2", sNewHeight, vbHeight);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
+		element.setAttribute("stroke", "black");
+	}
+	else if (element.nodeName().compare("rect") == 0) {
+		normalizeAttribute(element, "width", sNewWidth, vbWidth);
+		normalizeAttribute(element, "height", sNewHeight, vbHeight);
+		normalizeAttribute(element, "x", sNewWidth, vbWidth);
+		normalizeAttribute(element, "y", sNewHeight, vbHeight);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
+		element.setAttribute("stroke", "black");
+	}
+	else {
+		QDomElement childElement = element.firstChildElement();
+		while (!childElement.isNull()) {
+			normalizeChild(childElement, sNewWidth, sNewHeight, vbWidth, vbHeight);
+			childElement = childElement.nextSiblingElement();
+		}
+	}
+}
+
+bool SvgFileSplitter::normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom) 
+{
+	qreal n = element.attribute(attributeName).toDouble() * num / denom;
+	element.setAttribute(attributeName, QString::number(n)); 
+	return true;
+}
+
+QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID) 
+{
+	QDomElement root = m_domDocument.documentElement();
+
+	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	if (mainElement.isNull()) return false;
+
+	QDomElement childElement = mainElement.firstChildElement();
+	while (!childElement.isNull()) {
+		shiftChild(childElement, x, y);
+		childElement = childElement.nextSiblingElement();
+	}
+
+	QDomDocument document;
+	QDomNode node = document.importNode(mainElement, true);
+	document.appendChild(node);
+
+	return document.toString();
+
+}
+
+void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
+{	
+	if (element.nodeName().compare("circle") == 0) {
+		shiftAttribute(element, "cx", x);
+		shiftAttribute(element, "cy", y);
+	}
+	else if (element.nodeName().compare("line") == 0) {
+		shiftAttribute(element, "x1", x);
+		shiftAttribute(element, "y1", y);
+		shiftAttribute(element, "x2", x);
+		shiftAttribute(element, "y2", y);
+	}
+	else if (element.nodeName().compare("rect") == 0) {
+		shiftAttribute(element, "x", x);
+		shiftAttribute(element, "y", y);
+	}
+	else {
+		QDomElement childElement = element.firstChildElement();
+		while (!childElement.isNull()) {
+			shiftChild(childElement, x, y);
+			childElement = childElement.nextSiblingElement();
+		}
+	}
+}
+
+bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attributeName, qreal d) 
+{
+	qreal n = element.attribute(attributeName).toDouble() + d;
+	element.setAttribute(attributeName, QString::number(n)); 
+	return true;
 }

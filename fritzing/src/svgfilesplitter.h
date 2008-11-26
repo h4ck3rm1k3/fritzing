@@ -38,13 +38,23 @@ public:
 	SvgFileSplitter();
 	bool split(const QString & filename, const QString & elementID);
 	const QByteArray & byteArray();
+	const QDomDocument & domDocument();
+	bool normalize(qreal dpi, const QString & elementID);
+	QString shift(qreal x, qreal y, const QString & elementID);
 
 protected:
 	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
-
+	void normalizeChild(QDomElement & childElement, 
+						qreal sNewWidth, qreal sNewHeight,
+						qreal vbWidth, qreal vbHeight);
+	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
+	void shiftChild(QDomElement & element, qreal x, qreal y);
+	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 
 protected:
 	QByteArray m_byteArray;
+	QDomDocument m_domDocument;
+
 };
 
 #endif

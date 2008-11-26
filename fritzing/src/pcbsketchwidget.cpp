@@ -27,6 +27,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 #include "pcbsketchwidget.h"
 #include "debugdialog.h"
+#include "svgfilesplitter.h"
 
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
@@ -135,3 +136,70 @@ ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * mod
 	return ViewLayer::Copper0;
 }
 
+QString PCBSketchWidget::renderToSVG(qreal printerScale) {
+
+	int width = scene()->width();
+	int height = scene()->height();
+	qreal trueWidth = width / printerScale;
+	qreal trueHeight = height / printerScale;
+	static qreal dpi = 1000;
+
+	QString outputSVG;
+	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> " 
+							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
+							 "version=\"1.2\" baseProfile=\"tiny\" "
+							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
+							 "viewBox=\"0 0 %3 %4\" >")
+						.arg(trueWidth)
+						.arg(trueHeight)
+						.arg(trueWidth * dpi)
+						.arg(trueHeight * dpi);
+	outputSVG += header;
+
+	QHash<QString, SvgFileSplitter *> svgHash;
+
+	foreach (QGraphicsItem * item, scene()->items()) {
+		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
+		if (paletteItem != NULL) {
+			QString path = paletteItem->filename();
+			DebugDialog::debug(QString("path: %1").arg(path));
+			SvgFileSplitter * splitter = svgHash.value(path, NULL);
+			if (splitter == NULL) {
+				splitter = new SvgFileSplitter();
+				bool result = splitter->split(path, "copper0");
+				if (!result) {
+					delete splitter;
+					continue;
+				}
+				result = splitter->normalize(dpi, "copper0");
+				if (!result) {
+					delete splitter;
+					continue;
+				}
+				svgHash.insert(path, splitter);
+			}
+			QPointF loc = paletteItem->scenePos();
+			loc.setX(loc.x() * dpi / printerScale);
+			loc.setY(loc.y() * dpi / printerScale);
+			QString shifted = splitter->shift(loc.x(), loc.y(), "copper0");
+			outputSVG.append(shifted);
+			splitter->shift(-loc.x(), -loc.y(), "copper0");
+		}
+		else {
+			Wire * wire = dynamic_cast<Wire *>(item);
+			if (wire == NULL) continue;
+
+			// draw a line in svg
+		}
+	}
+
+	outputSVG += "</svg>";
+
+
+	foreach (SvgFileSplitter * splitter, svgHash.values()) {
+		delete splitter;
+	}
+
+	return outputSVG;
+
+}

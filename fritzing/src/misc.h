@@ -63,6 +63,7 @@ QDir *getApplicationSubFolder(QString);
 QString getApplicationSubFolderPath(QString);
 
 const QString& makeGrammaticalNumber(int count, const QString& singular, const QString& plural);
+qreal convertToInches(const QString & string, bool * ok);
 
 static QString ___emptyString___;
 static QDomElement ___emptyElement___;

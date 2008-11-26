@@ -42,10 +42,12 @@ $Date$
 #include "virtualwire.h"
 
 static QString eagleActionType = ".eagle";
+static QString gerberActionType = ".gerber";
 static QString jpgActionType = ".jpg";
 static QString psActionType = ".ps";
 static QString pdfActionType = ".pdf";
 static QString pngActionType = ".png";
+static QString svgActionType = ".svg";
 
 static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
@@ -71,6 +73,7 @@ void MainWindow::initExportConstants()
 	fileExtFormats[psActionType] = tr("PostScript (*.ps)")+colons;
 	fileExtFormats[pngActionType] = tr("PNG Image (*.png)")+colons;
 	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)")+colons;
+	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)")+colons;
 }
 
 void MainWindow::print() {
@@ -103,7 +106,7 @@ void MainWindow::exportDiy(QAction * action) {
 	QString path = defaultSaveFolder();
 
 	QString fileExt;
-	QString extFmt = fileExtFormats.value(pngActionType);
+	QString extFmt = fileExtFormats.value(svgActionType);
 	DebugDialog::debug(QString("file export string %1").arg(extFmt));
 	QString fileName = QFileDialog::getSaveFileName(this,
 		tr("Export for DIY..."),
@@ -123,6 +126,16 @@ void MainWindow::exportDiy(QAction * action) {
 			fileName += fileExt;
 		}
 	#endif
+
+	QString svg = m_pcbGraphicsView->renderToSVG(m_printerScale);
+	QFile file(fileName);
+    file.open(QIODevice::WriteOnly);
+
+    QTextStream out(&file);
+    out << svg;    
+	file.close();
+
+/*
 
 	int width = m_pcbGraphicsView->width();
 	if (m_pcbGraphicsView->verticalScrollBar()->isVisible()) {
@@ -185,6 +198,10 @@ void MainWindow::exportDiy(QAction * action) {
 	if (!result) {
 		QMessageBox::warning(this, tr("fritzing"), tr("Unable to save %1").arg(fileName) );
 	}
+
+*/
+
+
 }
 
 void MainWindow::doExport(QAction * action) {
@@ -193,6 +210,11 @@ void MainWindow::doExport(QAction * action) {
 
 	if (actionType.compare(eagleActionType) == 0) {
 		exportToEagle();
+		return;
+	}
+
+	if (actionType.compare(gerberActionType) == 0) {
+		exportToGerber();
 		return;
 	}
 
@@ -575,6 +597,11 @@ void MainWindow::createFileMenuActions() {
 	m_exportEagleAct->setStatusTip(tr("Export the current sketch to Eagle CAD"));
 	connect(m_exportEagleAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
+	m_exportGerberAct = new BetterTriggerAction(tr("to &Gerber..."), this);
+	m_exportGerberAct->setData(gerberActionType);
+	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber"));
+	connect(m_exportGerberAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+
 	m_exportDiyAct = new BetterTriggerAction(tr("for &DIY production..."), this);
 	m_exportDiyAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
 	connect(m_exportDiyAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiy(QAction *)));
@@ -916,6 +943,7 @@ void MainWindow::createMenus()
 	m_exportMenu->addSeparator();
 	m_exportMenu->addAction(m_exportDiyAct);
 	m_exportMenu->addAction(m_exportEagleAct);
+	m_exportMenu->addAction(m_exportGerberAct);
 
     m_editMenu = menuBar()->addMenu(tr("&Edit"));
     m_editMenu->addAction(m_undoAct);
@@ -1401,9 +1429,13 @@ void MainWindow::toggleInfo(bool toggle) {
 
 void MainWindow::toggleNavigator(bool toggle) {
 	if(toggle) {
-		((QDockWidget*)m_miniViewContainer->parent())->show();
+		((QDockWidget*)m_miniViewContainer0->parent())->show();
+		((QDockWidget*)m_miniViewContainer1->parent())->show();
+		((QDockWidget*)m_miniViewContainer2->parent())->show();
 	} else {
-		((QDockWidget*)m_miniViewContainer->parent())->hide();
+		((QDockWidget*)m_miniViewContainer0->parent())->hide();
+		((QDockWidget*)m_miniViewContainer1->parent())->hide();
+		((QDockWidget*)m_miniViewContainer2->parent())->hide();
 	}
 }
 
@@ -1530,6 +1562,26 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 	}
 }
 
+void MainWindow::exportToGerber() {
+	QString svg = m_pcbGraphicsView->renderToSVG(m_printerScale);
+	if (svg.isEmpty()) {
+		// tell the user something reasonable
+		return;
+	}
+
+	QDomDocument domDocument;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	bool result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		// tell the user something reasonable
+		return;
+	}
+
+	// Brendan's work starts here
+
+}
 
 void MainWindow::exportToEagle() {
 	QString text =

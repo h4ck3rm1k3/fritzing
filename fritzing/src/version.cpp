@@ -39,7 +39,7 @@ QString Version::m_date;
 QString Version::m_shortDate;
 QString Version::m_versionString;
 Version * Version::m_singleton = new Version();
-
+									
 Version::Version() {
 	m_revision = "";
 	QStringList strings = m_svnRevision.split(" ", QString::SkipEmptyParts);

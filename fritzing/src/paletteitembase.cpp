@@ -396,7 +396,6 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 				else {
 					// only one layer, just load it directly
 					if (renderer->load(filename)) {
-						layerAttributes.setFilename(filename);
 						gotOne = true;
 					}
 				}
@@ -411,6 +410,10 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
     	}
 
 		//viewThing->set(viewLayerID, renderer);
+	}
+
+	if (renderer) {
+		layerAttributes.setFilename(renderer->filename());
 	}
 
 	return renderer;
