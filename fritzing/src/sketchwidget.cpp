@@ -3117,7 +3117,8 @@ void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
 	Wire * wire = dynamic_cast<Wire *>(findItem(wireId));
 	if (wire == NULL) return;
 	
-	
+	QList<Wire *> wires;
+	wire->collectWires(wires);
 	
 	QUndoCommand* parentCommand = new QUndoCommand(
 		tr("Wire %1 color changed from %2 to %3")
@@ -3126,15 +3127,16 @@ void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
 			.arg(newColor)
 	);
 	
-	
-	new WireColorChangeCommand(
-			this,
-			wireId,
-			oldColor,
-			newColor,
-			oldOpacity,
-			newOpacity,
-			parentCommand);
+	foreach (Wire * wire, wires) {	
+		new WireColorChangeCommand(
+				this,
+				wire->id(),
+				wire->colorString(),
+				newColor,
+				wire->opacity(),
+				wire->opacity(),
+				parentCommand);
+	}
 	m_undoStack->push(parentCommand);
 }
 
