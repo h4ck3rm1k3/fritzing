@@ -40,7 +40,7 @@ public:
 	MiniViewContainer(QWidget * parent = 0);
 	void setView(QGraphicsView *);	
 	void resizeEvent ( QResizeEvent * event ); 
-	void filterIt();
+	void filterMousePress();
 	
 protected:
 	bool eventFilter(QObject *obj, QEvent *event);

@@ -110,6 +110,7 @@ public:
 	bool draggingEnd();
 	void connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> & out);
 	void simpleConnectedMoved(ConnectorItem * to);
+	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);
 
 public:
 	static QString moduleIDName;

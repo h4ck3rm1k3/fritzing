@@ -188,7 +188,7 @@ bool MiniViewContainer::eventFilter(QObject *obj, QEvent *event)
 	return QObject::eventFilter(obj, event);
 }
 
-void MiniViewContainer::filterIt() 
+void MiniViewContainer::filterMousePress() 
 {
 	parent()->installEventFilter(this);
 	installEventFilter(this);

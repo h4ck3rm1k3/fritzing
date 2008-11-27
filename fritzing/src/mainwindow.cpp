@@ -787,29 +787,29 @@ void MainWindow::createDockWindows()
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_navigators[0] = m_miniViewContainerBreadboard = new MiniViewContainer(this);
-    FDockWidget * dock = makeDock(tr("Breadboard"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
+    FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
 	dock->setObjectName("dock_Breadboard");
 	setDockColor(m_miniViewContainerBreadboard, dockSelectedColor);
  	dock->setFeatures (QDockWidget::DockWidgetMovable);
-	m_miniViewContainerBreadboard->filterIt();
+	m_miniViewContainerBreadboard->filterMousePress();
 	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators[1] = m_miniViewContainerSchematic = new MiniViewContainer(this);
-    dock = makeDock(tr("Schematic"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
+    dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
 	dock->setObjectName("dock_Schematic");
 	setDockColor(m_miniViewContainerSchematic, dockUnselectedColor);
  	dock->setFeatures (QDockWidget::DockWidgetMovable);
-	m_miniViewContainerSchematic->filterIt();
+	m_miniViewContainerSchematic->filterMousePress();
 	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators[2] = m_miniViewContainerPCB = new MiniViewContainer(this);
-    dock = makeDock(tr("PCB"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
+    dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
 	dock->setObjectName("dock_PCB");
 	setDockColor(m_miniViewContainerPCB, dockUnselectedColor);
 	dock->setFeatures (QDockWidget::DockWidgetMovable);
-	m_miniViewContainerPCB->filterIt();
+	m_miniViewContainerPCB->filterMousePress();
 	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 

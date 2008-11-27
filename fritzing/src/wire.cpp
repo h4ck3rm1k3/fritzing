@@ -278,7 +278,12 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	setConnector1Rect();
 
 	if (whichConnectorItem->chained()) {
-		updateConnections(whichConnectorItem);
+		foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
+			if (toConnectorItem->chained()) {
+				Wire * chainedWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+				chainedWire->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
+			}
+		}
 	}
 	else {
 		whichConnectorItem->setOverConnectorItem(
@@ -440,8 +445,15 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 }
 
 void Wire::simpleConnectedMoved(ConnectorItem * to) {
-	ConnectorItem * from = to->firstConnectedToIsh();
+	// to is this wire, from is something else
+	simpleConnectedMoved(to->firstConnectedToIsh(), to);
+}
 
+void Wire::simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to)
+{
+	if (from == NULL) return;
+
+	// to is this wire, from is something else
 	QPointF p1, p2;
 	calcNewLine(from, to, p1, p2);
 
@@ -449,10 +461,10 @@ void Wire::simpleConnectedMoved(ConnectorItem * to) {
 	this->setLine(0,0, p2.x() - p1.x(), p2.y() - p1.y() );
 	//DebugDialog::debug(QString("set line %5: %1 %2, %3 %4, vis:%6 lyr:%7").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()).arg(id()).arg(isVisible()).arg(m_viewIdentifier) );
 	setConnector1Rect();
-	
 }
 
 void Wire::calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2) {
+	// to is this wire, from is something else
 	if (to == m_connector0) {
 		p1 = from->sceneAdjustedTerminalPoint();
 		ConnectorItem * otherFrom = m_connector1->firstConnectedToIsh();
@@ -482,6 +494,9 @@ void Wire::calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, Q
 void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	// "from" is the connector on the part
 	// "to" is the connector on the wire
+
+	simpleConnectedMoved(from, to);
+	return;
 
 	/*
 	DebugDialog::debug(QObject::tr("connected moved %1 %2, %3 %4")

@@ -699,6 +699,15 @@ void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
 
 void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLine)
 {
+	DebugDialog::debug(QString("change wire %1; %2,%3,%4,%5; %6,%7; %8")
+			.arg(fromID)
+			.arg(line.x1())
+			.arg(line.y1())
+			.arg(line.x2())
+			.arg(line.y2())
+			.arg(pos.x())
+			.arg(pos.y())
+			.arg(useLine) );
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
 
@@ -1285,8 +1294,8 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	QGraphicsView::mouseMoveEvent(event);
 }
 
-void SketchWidget::moveItems(QPoint globalPos) {
-
+void SketchWidget::moveItems(QPoint globalPos) 
+{
 	QRect r = rect();
 	QPoint q = mapFromGlobal(globalPos);
 
@@ -1708,6 +1717,17 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	}
 
 	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
+	if (from->chained()) {
+		foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
+			Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+			if (toWire == NULL) continue;
+
+			ViewGeometry vg = toWire->getViewGeometry();
+			QLineF nl = toWire->line();
+			QPointF np = toWire->pos();
+			new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, parentCommand);
+		}
+	}
 
 	checkSticky(wire, parentCommand);
 
@@ -1735,35 +1755,16 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	parentCommand->setText(QObject::tr("%1 %2 %3").arg(prefix).arg(wire->modelPart()->title()).arg(suffix) );
 
-	if (from->chained()) {
-		foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
-			Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-			if (toWire == NULL) continue;
-
-			ViewGeometry vg = toWire->getViewGeometry();
-			QLineF nl = toWire->line();
-			QPointF np = toWire->pos();
-			new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, parentCommand);
-		}
-	}
-	else {
+	if (!from->chained()) {
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(from);
 			ConnectorItem::collectEqualPotential(connectorItems);
-			QSet<VirtualWire *> virtualWires;
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
-				if (formerConnectorItem->attachedTo()->getVirtual()) {
-					virtualWires.insert(dynamic_cast<VirtualWire *>(formerConnectorItem->attachedTo()));
-				}
-				else {
-					// temp remove here, virtual wires handle temp removes
-					extendChangeConnectionCommand(from, formerConnectorItem, false, false, parentCommand);
-					from->tempRemove(formerConnectorItem);
-					formerConnectorItem->tempRemove(from);
-				}
-
+				extendChangeConnectionCommand(from, formerConnectorItem, false, false, parentCommand);
+				from->tempRemove(formerConnectorItem);
+				formerConnectorItem->tempRemove(from);
 			}
 
 		}
@@ -1771,7 +1772,6 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 			extendChangeConnectionCommand(from, to, true, false, parentCommand);
 		}
 	}
-
 
 	clearTemporaries();
 

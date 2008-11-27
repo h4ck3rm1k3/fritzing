@@ -84,15 +84,6 @@ bool PCBSchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 
 void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
 
-	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
-		.arg(fromConnectorItem->attachedToTitle())
-		.arg(fromConnectorItem->attachedToID())
-		.arg(fromConnectorItem->connectorStuffID())
-		.arg(toConnectorItem->attachedToTitle())
-		.arg(toConnectorItem->attachedToID())
-		.arg(toConnectorItem->connectorStuffID())
-	);
-
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
 		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
@@ -108,6 +99,15 @@ void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorIte
 			return;
 		}
 	}
+
+	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
+		.arg(fromConnectorItem->attachedToTitle())
+		.arg(fromConnectorItem->attachedToID())
+		.arg(fromConnectorItem->connectorStuffID())
+		.arg(toConnectorItem->attachedToTitle())
+		.arg(toConnectorItem->attachedToID())
+		.arg(toConnectorItem->connectorStuffID())
+	);
 
 	if (connect) {
 		QList<ConnectorItem *> connectorItems;
@@ -211,8 +211,13 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 	foreach (QGraphicsItem * item, scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
-
 		if (!wire->getRatsnest()) continue;
+
+		// if a ratsnest is connecting two items that aren't connected
+		// delete the ratsnest
+
+		// TODO: the code below incorrectly deletes chained ratsnest wires
+
 		ConnectorItem * c0 = wire->connector0();
 		ConnectorItem * c1 = wire->connector1();
 		ConnectorItem * c0to = c0->firstConnectedToIsh();
