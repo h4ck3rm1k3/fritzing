@@ -188,7 +188,6 @@ protected:
     void createHelpMenuActions();
     void createMenus();
     void createToolBars();
-    void createZoomOptions();
     void createSketchButtons();
     void createStatusBar();
     void createDockWindows();
@@ -205,7 +204,7 @@ protected:
 	void notYetImplemented(QString action);
 	void calcPrinterScale();
 	void preloadSlowParts();
-	void setZoomComboBoxValue(qreal value);
+	void setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox = NULL);
 	void setCurrentFile(const QString &fileName, bool addToRecent=true);
 	bool eventFilter(QObject *obj, QEvent *event);
 	void setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2);
@@ -240,7 +239,16 @@ protected:
 
 	QMenu *viewItemMenuAux(QMenu* menu);
 	void setDockColor(MiniViewContainer *, const QString & colorString);
-	
+
+	ZoomComboBox *createZoomOptions(SketchAreaWidget* parent);
+	SketchToolButton *createRotateButton(SketchAreaWidget *parent);
+	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
+	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
+	SketchToolButton *createExportDiyButton(SketchAreaWidget *parent);
+	QWidget *createToolbarSpacer(SketchAreaWidget *parent);
+
+	SketchAreaWidget *currentSketchArea();
+
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
 	static qreal getSvgWidthInInches(QFile & file);
@@ -401,18 +409,10 @@ protected:
     QIcon m_dotIcon;
     QIcon m_emptyIcon;
 
-    // Sketch toolbar buttons
-	//SketchToolButton *m_exportToPdfButton;
-	SketchToolButton *m_rotateButton;
-	SketchToolButton *m_flipButton;
-	SketchToolButton *m_exportDiyButton;
-	SketchToolButton *m_autorouteButton;
-
-	QWidget *m_sketchToolbarSeparator;
 	ExpandingLabel *m_routingStatusLabel;
-	QFrame *m_toolbarSpacer;
+	QList<SketchToolButton*> m_rotateButtons;
+	QList<SketchToolButton*> m_flipButtons;
 
-    ZoomComboBox * m_zoomOptsComboBox;
     bool m_comboboxChanged;
 
     QStringList m_alienFiles;

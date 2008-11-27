@@ -117,12 +117,24 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     m_undoGroup->setActiveStack(m_breadboardGraphicsView->undoStack());
 
     createActions();
-    createZoomOptions();
     createSketchButtons();
     createMenus();
     createToolBars();
     createStatusBar();
     createDockWindows();
+
+    m_breadboardWidget->setContent(
+    	getButtonsForView(m_breadboardWidget->viewIdentifier()),
+    	createZoomOptions(m_breadboardWidget)
+    );
+    m_schematicWidget->setContent(
+    	getButtonsForView(m_schematicWidget->viewIdentifier()),
+    	createZoomOptions(m_schematicWidget)
+    );
+	m_pcbWidget->setContent(
+		getButtonsForView(m_pcbWidget->viewIdentifier()),
+		createZoomOptions(m_pcbWidget)
+	);
 
 
     if (!styleSheet.open(QIODevice::ReadOnly)) {
@@ -175,7 +187,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	// do this the first time, since the current_changed signal wasn't sent
 	m_currentWidget = NULL;
-	currentNavigatorChanged(m_navigators[0]);
+	int tab = 0;
+	currentNavigatorChanged(m_navigators[tab]);
+	tabWidget_currentChanged(tab);
 
 	this->installEventFilter(this);
 
@@ -417,26 +431,18 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent) {
 }
 
 
-void MainWindow::createZoomOptions() {
-	m_zoomOptsComboBox = new ZoomComboBox(this);
+ZoomComboBox *MainWindow::createZoomOptions(SketchAreaWidget* parent) {
+	ZoomComboBox *zoomOptsComboBox = new ZoomComboBox(parent);
 
-	connect(m_zoomOptsComboBox, SIGNAL(zoomChanged(qreal)), this, SLOT(updateViewZoom(qreal)));
+	setZoomComboBoxValue(parent->graphicsView()->currentZoom(), zoomOptsComboBox);
+	connect(zoomOptsComboBox, SIGNAL(zoomChanged(qreal)), this, SLOT(updateViewZoom(qreal)));
 
-    connect(m_breadboardGraphicsView, SIGNAL(zoomChanged(qreal)), this, SLOT(updateZoomOptions(qreal)));
-    connect(m_schematicGraphicsView, SIGNAL(zoomChanged(qreal)), this, SLOT(updateZoomOptions(qreal)));
-    connect(m_pcbGraphicsView, SIGNAL(zoomChanged(qreal)), this, SLOT(updateZoomOptions(qreal)));
+    connect(parent->graphicsView(), SIGNAL(zoomChanged(qreal)), this, SLOT(updateZoomOptions(qreal)));
+    connect(parent->graphicsView(), SIGNAL(zoomOutOfRange(qreal)), this, SLOT(updateZoomOptionsNoMatterWhat(qreal)));
+	connect(parent->graphicsView(), SIGNAL(zoomIn(int)), this, SLOT(zoomIn(int)));
+	connect(parent->graphicsView(), SIGNAL(zoomOut(int)), this, SLOT(zoomOut(int)));
 
-    connect(m_breadboardGraphicsView, SIGNAL(zoomOutOfRange(qreal)), this, SLOT(updateZoomOptionsNoMatterWhat(qreal)));
-	connect(m_schematicGraphicsView, SIGNAL(zoomOutOfRange(qreal)), this, SLOT(updateZoomOptionsNoMatterWhat(qreal)));
-	connect(m_pcbGraphicsView, SIGNAL(zoomOutOfRange(qreal)), this, SLOT(updateZoomOptionsNoMatterWhat(qreal)));
-
-	connect(m_breadboardGraphicsView, SIGNAL(zoomIn(int)), this, SLOT(zoomIn(int)));
-	connect(m_schematicGraphicsView, SIGNAL(zoomIn(int)), this, SLOT(zoomIn(int)));
-	connect(m_pcbGraphicsView, SIGNAL(zoomIn(int)), this, SLOT(zoomIn(int)));
-
-	connect(m_breadboardGraphicsView, SIGNAL(zoomOut(int)), this, SLOT(zoomOut(int)));
-	connect(m_schematicGraphicsView, SIGNAL(zoomOut(int)), this, SLOT(zoomOut(int)));
-	connect(m_pcbGraphicsView, SIGNAL(zoomOut(int)), this, SLOT(zoomOut(int)));
+	return zoomOptsComboBox;
 }
 
 void MainWindow::createToolBars() {
@@ -480,63 +486,82 @@ void MainWindow::createToolBars() {
 }
 
 void MainWindow::createSketchButtons() {
-	/*m_exportToPdfButton = new SketchToolButton(this, m_exportPdfAct);
-	m_exportToPdfButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarExport_pdf_icon.png"));
-	m_exportToPdfButton->setText(tr("Export"));*/
-
-	QList<QAction*> rotateMenuActions;
-	rotateMenuActions << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct;
-	m_rotateButton = new SketchToolButton(m_breadboardWidget, rotateMenuActions);
-	m_rotateButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarRotateEnabled_icon.png"));
-	m_rotateButton->setText(tr("Rotate"));
-	connect(m_rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
-
-	QList<QAction*> flipMenuActions;
-	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
-	m_flipButton = new SketchToolButton(m_breadboardWidget, flipMenuActions);
-	m_flipButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarFlipEnabled_icon.png"));
-	m_flipButton->setText(tr("Flip"));
-	connect(m_flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
-
-	//m_rotate180Button;
-	//m_rotate90ccwButton;
-	//	SketchToolButton *m_flipHorizontalButton;
-	//	SketchToolButton *m_flipVerticalButton;
-
-	m_autorouteButton = new SketchToolButton(m_pcbWidget, m_autorouteAct);
-	m_autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
-	m_autorouteButton->setText(tr("Autoroute"));
-
-	m_exportDiyButton = new SketchToolButton(m_pcbWidget, m_exportDiyAct);
-	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarDiyEnabled.png"));
-	m_exportDiyButton->setText(tr("DIY Etching"));
-
-	m_sketchToolbarSeparator = SketchAreaWidget::separator(m_pcbWidget);
-
 	m_routingStatusLabel = new ExpandingLabel(m_pcbWidget);
 	m_routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
-
-	m_toolbarSpacer = new QFrame(this);
-	QHBoxLayout *spacerLayout = new QHBoxLayout(m_toolbarSpacer);
-	spacerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 
 	routingStatusSlot(0,0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
 }
 
+SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
+	QList<QAction*> rotateMenuActions;
+	rotateMenuActions << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct;
+	SketchToolButton * rotateButton = new SketchToolButton(parent, rotateMenuActions);
+	rotateButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarRotateEnabled_icon.png"));
+	rotateButton->setText(tr("Rotate"));
+	connect(rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
+
+	m_rotateButtons << rotateButton;
+	return rotateButton;
+}
+
+SketchToolButton *MainWindow::createFlipButton(SketchAreaWidget *parent) {
+	QList<QAction*> flipMenuActions;
+	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
+	SketchToolButton *flipButton = new SketchToolButton(parent, flipMenuActions);
+	flipButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarFlipEnabled_icon.png"));
+	flipButton->setText(tr("Flip"));
+	connect(flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
+
+	m_flipButtons << flipButton;
+	return flipButton;
+}
+
+SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
+	SketchToolButton *autorouteButton = new SketchToolButton(parent, m_autorouteAct);
+	autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
+	autorouteButton->setText(tr("Autoroute"));
+
+	return autorouteButton;
+}
+
+SketchToolButton *MainWindow::createExportDiyButton(SketchAreaWidget *parent) {
+	SketchToolButton *exportDiyButton = new SketchToolButton(parent, m_exportDiyAct);
+	exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarDiyEnabled.png"));
+	exportDiyButton->setText(tr("DIY Etching"));
+
+	return exportDiyButton;
+}
+
+QWidget *MainWindow::createToolbarSpacer(SketchAreaWidget *parent) {
+	QFrame *toolbarSpacer = new QFrame(parent);
+	QHBoxLayout *spacerLayout = new QHBoxLayout(toolbarSpacer);
+	spacerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+
+	return toolbarSpacer;
+}
+
 QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
+	SketchAreaWidget *parent;
+	switch(viewId) {
+		case ItemBase::BreadboardView: parent = m_breadboardWidget; break;
+		case ItemBase::SchematicView: parent = m_schematicWidget; break;
+		case ItemBase::PCBView: parent = m_pcbWidget; break;
+		default: return retval;
+	}
 	/*if(viewId != ItemBase::PCBView) {
-		retval << m_exportToPdfButton;
+		retval << createExportToPdfButton(parent);
 	}*/
-	retval << m_rotateButton;
+	retval << createRotateButton(parent);
 	if(viewId == ItemBase::BreadboardView) {
-		retval << m_flipButton;
+		retval << createFlipButton(parent);
 	} else if(viewId == ItemBase::PCBView) {
-		retval << m_sketchToolbarSeparator << m_autorouteButton << m_exportDiyButton << m_routingStatusLabel;
+		retval << SketchAreaWidget::separator(parent) << createAutorouteButton(parent)
+			   << createExportDiyButton(parent) << m_routingStatusLabel;
 	}
 
 	if(viewId != ItemBase::PCBView) {
-		retval << m_toolbarSpacer;
+		retval << createToolbarSpacer(parent);
 	}
 	return retval;
 }
@@ -549,13 +574,17 @@ void MainWindow::updateZoomOptions(qreal zoom) {
 	}
 }
 
+SketchAreaWidget *MainWindow::currentSketchArea() {
+	return dynamic_cast<SketchAreaWidget*>(m_currentWidget->parent());
+}
+
 void MainWindow::updateZoomOptionsNoMatterWhat(qreal zoom) {
-	m_zoomOptsComboBox->setEditText(tr("%1%").arg(zoom));
+	currentSketchArea()->zoomComboBox()->setEditText(tr("%1%").arg(zoom));
 }
 
 void MainWindow::updateViewZoom(qreal newZoom) {
 	m_comboboxChanged = true;
-	m_currentWidget->absoluteZoom(newZoom);
+	if(m_currentWidget) m_currentWidget->absoluteZoom(newZoom);
 }
 
 
@@ -567,8 +596,6 @@ void MainWindow::createStatusBar()
 void MainWindow::tabWidget_currentChanged(int index) {
 	SketchAreaWidget * widgetParent = dynamic_cast<SketchAreaWidget *>(m_tabWidget->currentWidget());
 	if (widgetParent == NULL) return;
-
-	widgetParent->setContent(getButtonsForView(widgetParent->viewIdentifier()),m_zoomOptsComboBox);
 
 	SketchWidget *widget = widgetParent->graphicsView();
 
@@ -678,8 +705,9 @@ bool MainWindow::whatToDoWithAlienFiles() {
 }
 
 
-void MainWindow::setZoomComboBoxValue(qreal value) {
-	m_zoomOptsComboBox->setEditText(tr("%1%").arg(value,0,'f',2));
+void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
+	if(!zoomComboBox) zoomComboBox = currentSketchArea()->zoomComboBox();
+	zoomComboBox->setEditText(tr("%1%").arg(value,0,'f',2));
 }
 
 void MainWindow::changeEvent ( QEvent * event ) {
@@ -1198,7 +1226,7 @@ void MainWindow::applyReadOnlyChange(bool isReadOnly) {
 }
 
 void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
-	
+
 	int index = -1;
 	for (unsigned int i = 0; i < sizeof(m_navigators) / sizeof(MiniViewContainer *); i++) {
 		if (m_navigators[i] == miniView) {
@@ -1206,13 +1234,14 @@ void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
 			break;
 		}
 	}
-	
+
 	if (index < 0) return;
-		
+
 	int oldIndex = m_tabWidget->currentIndex();
 	if (oldIndex == index) return;
-	
+
 	this->m_tabWidget->setCurrentIndex(index);
+
 
 	setDockColor(m_navigators[index], dockSelectedColor);
 	setDockColor(m_navigators[oldIndex], dockUnselectedColor);
@@ -1220,7 +1249,7 @@ void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
 
 void MainWindow::setDockColor(MiniViewContainer * miniView, const QString & colorString)
 {
-		
+
 	miniView->parentWidget()->setStyleSheet(colorString.arg(miniView->parentWidget()->objectName()));
 }
 

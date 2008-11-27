@@ -43,6 +43,7 @@ public:
 
 	ItemBase::ViewIdentifier viewIdentifier();
 	SketchWidget* graphicsView();
+	ZoomComboBox *zoomComboBox();
 
 	void setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox);
 	static QWidget *separator(QWidget* parent);
@@ -55,6 +56,7 @@ public:
 
 protected:
 	SketchWidget *m_graphicsView;
+	ZoomComboBox *m_zoomComboBox;
 
 	QFrame *m_toolbar;
 	QHBoxLayout *m_buttonsContainer;

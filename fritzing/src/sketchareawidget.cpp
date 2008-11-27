@@ -38,6 +38,9 @@ SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QWidget *parent)
 {
 	m_graphicsView = graphicsView;
 	graphicsView->setParent(this);
+
+	m_zoomComboBox = NULL;
+
 	createLayout();
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
@@ -49,6 +52,10 @@ SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QWidget *parent)
 
 SketchAreaWidget::~SketchAreaWidget() {
 	// TODO Auto-generated destructor stub
+}
+
+ZoomComboBox *SketchAreaWidget::zoomComboBox() {
+	return m_zoomComboBox;
 }
 
 ItemBase::ViewIdentifier SketchAreaWidget::viewIdentifier() {
@@ -105,7 +112,8 @@ void SketchAreaWidget::setContent(QList<QWidget*> widgets, ZoomComboBox *zoomCom
 		}
 	}
 
-	m_zoomContainer->addWidget(zoomComboBox);
+	m_zoomComboBox = zoomComboBox;
+	m_zoomContainer->addWidget(m_zoomComboBox);
 
 }
 

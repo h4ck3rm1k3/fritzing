@@ -132,7 +132,7 @@ void MainWindow::exportDiy(QAction * action) {
     file.open(QIODevice::WriteOnly);
 
     QTextStream out(&file);
-    out << svg;    
+    out << svg;
 	file.close();
 
 /*
@@ -1086,13 +1086,17 @@ void MainWindow::updateTransformationActions() {
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
-	m_rotateButton->setEnabled(enable);
+	foreach(SketchToolButton* rotateButton, m_rotateButtons) {
+		rotateButton->setEnabled(enable);
+	}
 
 	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
 	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
 
 	enable = m_flipHorizontalAct->isEnabled() || m_flipVerticalAct->isEnabled();
-	m_flipButton->setEnabled(enable);
+	foreach(SketchToolButton* flipButton, m_flipButtons) {
+		flipButton->setEnabled(enable);
+	}
 }
 
 void MainWindow::updateItemMenu() {
@@ -1248,7 +1252,7 @@ void MainWindow::zoomIn() {
 
 void MainWindow::zoomIn(int steps) {
 	for(int i=0; i < steps; i++) {
-		m_zoomOptsComboBox->zoomIn();
+		currentSketchArea()->zoomComboBox()->zoomIn();
 	}
 }
 
@@ -1262,7 +1266,7 @@ void MainWindow::zoomOut() {
 
 void MainWindow::zoomOut(int steps) {
 	for(int i=0; i < steps; i++) {
-		m_zoomOptsComboBox->zoomOut();
+		currentSketchArea()->zoomComboBox()->zoomOut();
 	}
 }
 
