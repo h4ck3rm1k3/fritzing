@@ -40,10 +40,16 @@ public:
 	MiniViewContainer(QWidget * parent = 0);
 	void setView(QGraphicsView *);	
 	void resizeEvent ( QResizeEvent * event ); 
-	void mousePressEvent(QMouseEvent *event);
+	void filterIt();
+	
+protected:
+	bool eventFilter(QObject *obj, QEvent *event);
 	
 protected slots:
 	void updateFrame();
+	
+signals:
+	void navigatorMousePressSignal(MiniViewContainer *);
 	
 protected:
 	MiniView * m_miniView;

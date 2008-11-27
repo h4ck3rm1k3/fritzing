@@ -74,6 +74,7 @@ void MiniView::resizeEvent ( QResizeEvent * event )
 }
 
 void MiniView::mousePressEvent(QMouseEvent *) {
+	DebugDialog::debug("miniview mouse press");
 	// ignore mouse presses
 }
 

@@ -55,3 +55,7 @@ void FDockWidget::changeEvent(QEvent * event) {
 	}
 	QDockWidget::changeEvent(event);
 }
+
+
+
+

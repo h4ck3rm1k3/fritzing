@@ -30,6 +30,7 @@ $Date$
 #include <QDockWidget>
 #include <QEvent>
 #include <QSettings>
+#include <QMouseEvent>
 
 class FDockWidget : public QDockWidget
 {
@@ -43,7 +44,7 @@ public:
 
 protected:
 	void changeEvent(QEvent *event);
-
+	
 signals:
 	void dockChangeActivationSignal(FDockWidget *);
 

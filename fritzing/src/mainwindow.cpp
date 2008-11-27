@@ -750,18 +750,21 @@ void MainWindow::createDockWindows()
 
     m_miniViewContainer0 = new MiniViewContainer(this);
     makeDock(tr("Breadboard"), m_miniViewContainer0, NavigatorMinHeight, NavigatorDefaultHeight);
+	m_miniViewContainer0->filterIt();
 
     m_miniViewContainer1 = new MiniViewContainer(this);
     makeDock(tr("Schematic"), m_miniViewContainer1, NavigatorMinHeight, NavigatorDefaultHeight);
+	m_miniViewContainer1->filterIt();
 
     m_miniViewContainer2 = new MiniViewContainer(this);
     makeDock(tr("PCB"), m_miniViewContainer2, NavigatorMinHeight, NavigatorDefaultHeight);
+	m_miniViewContainer2->filterIt();
 
     makeDock(tr("Undo History"), m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
     m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
 
     m_consoleView = new Console();
-    QDockWidget * dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
+    FDockWidget * dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
 	dock->hide();
 
     m_windowMenu->addSeparator();

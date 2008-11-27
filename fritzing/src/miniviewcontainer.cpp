@@ -51,9 +51,7 @@ MiniViewContainer::MiniViewContainer( QWidget * parent )
 	p.setBrush(QPalette::Window, QBrush(QColor(0,0,0)));
 	m_mask->setPalette(p);
 	m_mask->setAutoFillBackground(true);
-	m_mask->resize(this->size());
-	
-	
+	m_mask->resize(this->size());	
 }
 
 void MiniViewContainer::setView(QGraphicsView * view) 
@@ -92,9 +90,6 @@ void MiniViewContainer::resizeEvent ( QResizeEvent * event )
 {
 	QWidget::resizeEvent(event);
 	m_miniView->resize(this->size());	
-}
-
-void MiniViewContainer::mousePressEvent(QMouseEvent *) {
 }
 
 void MiniViewContainer::updateFrame() 
@@ -177,6 +172,34 @@ void MiniViewContainer::updateFrame()
 	}
 }
 
+bool MiniViewContainer::eventFilter(QObject *obj, QEvent *event)
+{
+	switch (event->type()) {
+		case QEvent::MouseButtonPress:
+		case QEvent::NonClientAreaMouseButtonPress:
+		case QEvent::GraphicsSceneMousePress:
+			DebugDialog::debug("got navigator mouse press");
+			emit navigatorMousePressSignal(this);
+			break;
+		default:
+			DebugDialog::debug(QString("other event %1").arg(event->type()) );
+			break;
+    }
+	
+	return QObject::eventFilter(obj, event);
+}
+
+void MiniViewContainer::filterIt() 
+{
+	parent()->installEventFilter(this);
+	installEventFilter(this);
+	m_outerFrame->installEventFilter(this);	
+	m_frame->installEventFilter(this);	
+	m_mask->installEventFilter(this);	
+	m_miniView->installEventFilter(this);
+}
+
+/////////////////////////////////////////////
 
 MiniViewFrame::MiniViewFrame(QBrush & brush, bool draggable, QWidget * parent) 
 	: QFrame(parent)
