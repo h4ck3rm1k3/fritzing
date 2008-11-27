@@ -1429,13 +1429,13 @@ void MainWindow::toggleInfo(bool toggle) {
 
 void MainWindow::toggleNavigator(bool toggle) {
 	if(toggle) {
-		((QDockWidget*)m_miniViewContainer0->parent())->show();
-		((QDockWidget*)m_miniViewContainer1->parent())->show();
-		((QDockWidget*)m_miniViewContainer2->parent())->show();
+		((QDockWidget*)m_miniViewContainerBreadboard->parent())->show();
+		((QDockWidget*)m_miniViewContainerSchematic->parent())->show();
+		((QDockWidget*)m_miniViewContainerPCB->parent())->show();
 	} else {
-		((QDockWidget*)m_miniViewContainer0->parent())->hide();
-		((QDockWidget*)m_miniViewContainer1->parent())->hide();
-		((QDockWidget*)m_miniViewContainer2->parent())->hide();
+		((QDockWidget*)m_miniViewContainerBreadboard->parent())->hide();
+		((QDockWidget*)m_miniViewContainerSchematic->parent())->hide();
+		((QDockWidget*)m_miniViewContainerPCB->parent())->hide();
 	}
 }
 
@@ -1637,4 +1637,15 @@ void MainWindow::createTrace() {
 
 void MainWindow::createJumper() {
 	m_pcbGraphicsView->createJumper();
+}
+
+void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
+	int index = 0;
+	if (miniView == m_miniViewContainerSchematic) {
+		index = 1;
+	}
+	else if (miniView == m_miniViewContainerPCB) {
+		index = 2;
+	}
+	this->m_tabWidget->setCurrentIndex(index);
 }

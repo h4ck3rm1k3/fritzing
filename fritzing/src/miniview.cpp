@@ -74,8 +74,9 @@ void MiniView::resizeEvent ( QResizeEvent * event )
 }
 
 void MiniView::mousePressEvent(QMouseEvent *) {
-	DebugDialog::debug("miniview mouse press");
-	// ignore mouse presses
+	// for some reason, this mousePressEvent isn't detected by setting an event filter on the miniview
+	// maybe because the event happens in the scene and get swallowed before the filter gets it?
+	emit miniViewMousePressedSignal();
 }
 
 QGraphicsView * MiniView::view() {

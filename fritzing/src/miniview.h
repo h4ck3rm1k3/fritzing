@@ -50,6 +50,7 @@ public slots:
 	
 signals:
 	void rectChangedSignal();
+	void miniViewMousePressedSignal();
 	
 protected:
 	QGraphicsView * m_otherView;

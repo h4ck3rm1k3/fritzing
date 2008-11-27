@@ -84,7 +84,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_refModel = refModel;
 	m_sketchModel = new SketchModel(true);
 
-	m_tabWidget = new FTabWidget(this);
+	m_tabWidget = new QStackedWidget(this); //   FTabWidget(this);
 	m_tabWidget->setObjectName("sketch_tabs");
 	setCentralWidget(m_tabWidget);
 
@@ -93,18 +93,20 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ItemBase::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
-	m_tabWidget->addTab(m_breadboardWidget, tr("breadboard"));
-
+	//m_tabWidget->addTab(m_breadboardWidget, tr("breadboard"));
+	m_tabWidget->addWidget(m_breadboardWidget);
 
 	m_schematicGraphicsView = new SchematicSketchWidget(ItemBase::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
-	m_tabWidget->addTab(m_schematicWidget, tr("schematic"));
+	//m_tabWidget->addTab(m_schematicWidget, tr("schematic"));
+	m_tabWidget->addWidget(m_schematicWidget);
 
 	m_pcbGraphicsView = new PCBSketchWidget(ItemBase::PCBView, this);
 	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
-	m_tabWidget->addTab(m_pcbWidget, tr("pcb"));
+	//m_tabWidget->addTab(m_pcbWidget, tr("pcb"));
+	m_tabWidget->addWidget(m_pcbWidget);
 
     m_undoView = new QUndoView();
     m_undoGroup = new QUndoGroup(this);
@@ -124,13 +126,13 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
 #ifdef Q_WS_WIN
-		int marginTop = m_toolbar->height()-m_tabWidget->tabBar()->height()+4;
+		int marginTop = m_toolbar->height() /* - m_tabWidget->tabBar()->height() */ + 4;
 #else
-		int marginTop = m_toolbar->height()-m_tabWidget->tabBar()->height()+2;
+		int marginTop = m_toolbar->height() /* - m_tabWidget->tabBar()->height() */ + 2;
 #endif
 		QString tabbarStyle =
 			QString("QToolBar QTabBar::tab {margin-top: %1px;} ").arg(marginTop)+
-			QString("#sketch_tabs::pane {top: -%2px;}").arg(m_tabWidget->tabBar()->height()+8);
+			QString("#sketch_tabs::pane {top: -%2px;}").arg(/* m_tabWidget->tabBar()->height() + */ 8);
 		setStyleSheet(styleSheet.readAll()+___MacStyle___+tabbarStyle);
 	}
 
@@ -159,7 +161,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
     m_breadboardGraphicsView->setBackground(QColor(204,204,204));
     m_schematicGraphicsView->setBackground(QColor(255,255,255));
-    m_pcbGraphicsView->setBackground(QColor(137,144,153));
+    m_pcbGraphicsView->setBackground(QColor(163,163,163));							// QColor(137,144,153)
 
 	// make sure to set the connections after the views have been created
 	connect(m_tabWidget, SIGNAL(currentChanged ( int )),
@@ -176,6 +178,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_comboboxChanged = false;
 
 	QSettings settings("Fritzing","Fritzing");
+#ifndef QT_NO_DEBUG
+	settings.clear();
+#endif
 	if(!settings.value("main/state").isNull()) {
 		restoreState(settings.value("main/state").toByteArray());
 		restoreGeometry(settings.value("main/geometry").toByteArray());
@@ -185,9 +190,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_tabWidget->setMinimumWidth(500);
 	m_tabWidget->setMinimumWidth(0);
 
-	m_miniViewContainer0->setView(m_breadboardGraphicsView);
-	m_miniViewContainer1->setView(m_schematicGraphicsView);
-	m_miniViewContainer2->setView(m_pcbGraphicsView);
+	m_miniViewContainerBreadboard->setView(m_breadboardGraphicsView);
+	m_miniViewContainerSchematic->setView(m_schematicGraphicsView);
+	m_miniViewContainerPCB->setView(m_pcbGraphicsView);
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 }
@@ -438,12 +443,12 @@ void MainWindow::createToolBars() {
 	m_toolbar->setObjectName("fake_tabbar");
 	m_toolbar->setFloatable(false);
 	m_toolbar->setMovable(false);
-	int height = m_tabWidget->tabBar()->height();
+	int height = 0; //  m_tabWidget->tabBar()->height();
 	m_toolbar->layout()->setMargin(0);
 	m_toolbar->setFixedHeight(height+10);
 	m_toolbar->setMinimumWidth(400); // connect to tabwidget resize event
 	m_toolbar->toggleViewAction()->setVisible(false);
-	m_tabWidget->tabBar()->setParent(m_toolbar);
+	// m_tabWidget->tabBar()->setParent(m_toolbar);
 	addToolBar(m_toolbar);
 
 	/*	QToolBar *tb2 = new QToolBar(this);
@@ -558,6 +563,7 @@ void MainWindow::createStatusBar()
 void MainWindow::tabWidget_currentChanged(int index) {
 	SketchAreaWidget * widgetParent = dynamic_cast<SketchAreaWidget *>(m_tabWidget->currentWidget());
 	if (widgetParent == NULL) return;
+	
 	widgetParent->setContent(getButtonsForView(widgetParent->viewIdentifier()),m_zoomOptsComboBox);
 
 	SketchWidget *widget = widgetParent->graphicsView();
@@ -748,23 +754,32 @@ void MainWindow::createDockWindows()
 
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
-    m_miniViewContainer0 = new MiniViewContainer(this);
-    makeDock(tr("Breadboard"), m_miniViewContainer0, NavigatorMinHeight, NavigatorDefaultHeight);
-	m_miniViewContainer0->filterIt();
+    m_miniViewContainerBreadboard = new MiniViewContainer(this);
+    FDockWidget * dock = makeDock(tr("Breadboard"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
+	dock->setFeatures (QDockWidget::DockWidgetMovable);
+	m_miniViewContainerBreadboard->filterIt();
+	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
+								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_miniViewContainer1 = new MiniViewContainer(this);
-    makeDock(tr("Schematic"), m_miniViewContainer1, NavigatorMinHeight, NavigatorDefaultHeight);
-	m_miniViewContainer1->filterIt();
+    m_miniViewContainerSchematic = new MiniViewContainer(this);
+    dock = makeDock(tr("Schematic"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
+	dock->setFeatures (QDockWidget::DockWidgetMovable);
+	m_miniViewContainerSchematic->filterIt();
+	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
+								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_miniViewContainer2 = new MiniViewContainer(this);
-    makeDock(tr("PCB"), m_miniViewContainer2, NavigatorMinHeight, NavigatorDefaultHeight);
-	m_miniViewContainer2->filterIt();
+    m_miniViewContainerPCB = new MiniViewContainer(this);
+    dock = makeDock(tr("PCB"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
+	dock->setFeatures (QDockWidget::DockWidgetMovable);
+	m_miniViewContainerPCB->filterIt();
+	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
+								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     makeDock(tr("Undo History"), m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
     m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
 
     m_consoleView = new Console();
-    FDockWidget * dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
+    dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
 	dock->hide();
 
     m_windowMenu->addSeparator();

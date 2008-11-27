@@ -35,6 +35,7 @@ MiniViewContainer::MiniViewContainer( QWidget * parent )
 {
 	m_miniView = new MiniView(this);
 	connect(m_miniView, SIGNAL(rectChangedSignal()), this, SLOT(updateFrame()) );
+	connect(m_miniView, SIGNAL(miniViewMousePressedSignal()), this, SLOT(miniViewMousePressedSlot()) );
 	m_miniView->resize(this->size());
 		
 	QBrush brush1(QColor(0,0,0));
@@ -178,11 +179,9 @@ bool MiniViewContainer::eventFilter(QObject *obj, QEvent *event)
 		case QEvent::MouseButtonPress:
 		case QEvent::NonClientAreaMouseButtonPress:
 		case QEvent::GraphicsSceneMousePress:
-			DebugDialog::debug("got navigator mouse press");
-			emit navigatorMousePressSignal(this);
+			emit navigatorMousePressedSignal(this);
 			break;
 		default:
-			DebugDialog::debug(QString("other event %1").arg(event->type()) );
 			break;
     }
 	
@@ -198,6 +197,11 @@ void MiniViewContainer::filterIt()
 	m_mask->installEventFilter(this);	
 	m_miniView->installEventFilter(this);
 }
+
+void MiniViewContainer::miniViewMousePressedSlot() {
+	emit navigatorMousePressedSignal(this);
+}
+
 
 /////////////////////////////////////////////
 

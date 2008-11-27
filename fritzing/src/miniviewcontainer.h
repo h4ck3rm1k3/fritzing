@@ -47,9 +47,10 @@ protected:
 	
 protected slots:
 	void updateFrame();
+	void miniViewMousePressedSlot();
 	
 signals:
-	void navigatorMousePressSignal(MiniViewContainer *);
+	void navigatorMousePressedSignal(MiniViewContainer *);
 	
 protected:
 	MiniView * m_miniView;

@@ -33,6 +33,7 @@ $Date$
 #include <QUndoGroup>
 #include <QToolButton>
 #include <QPushButton>
+#include <QStackedWidget>
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
@@ -170,6 +171,7 @@ protected slots:
 	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
 	void applyReadOnlyChange(bool isReadOnly);
+	void currentNavigatorChanged(MiniViewContainer *);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -264,10 +266,11 @@ protected:
 	PCBSketchWidget *m_pcbGraphicsView;
 
     PartsBinPaletteWidget *m_paletteWidget;
-    MiniViewContainer *m_miniViewContainer0;
-    MiniViewContainer *m_miniViewContainer1;
-    MiniViewContainer *m_miniViewContainer2;
-    FTabWidget * m_tabWidget;
+    MiniViewContainer *m_miniViewContainerBreadboard;
+    MiniViewContainer *m_miniViewContainerSchematic;
+    MiniViewContainer *m_miniViewContainerPCB;
+    //FTabWidget * m_tabWidget;
+	QStackedWidget * m_tabWidget;
     PaletteModel *m_paletteModel;
     ReferenceModel *m_refModel;
     SketchModel *m_sketchModel;
