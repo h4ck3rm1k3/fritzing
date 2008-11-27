@@ -486,14 +486,14 @@ void MainWindow::createSketchButtons() {
 
 	QList<QAction*> rotateMenuActions;
 	rotateMenuActions << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct;
-	m_rotateButton = new SketchToolButton(this, rotateMenuActions);
+	m_rotateButton = new SketchToolButton(m_breadboardWidget, rotateMenuActions);
 	m_rotateButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarRotateEnabled_icon.png"));
 	m_rotateButton->setText(tr("Rotate"));
 	connect(m_rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
 	QList<QAction*> flipMenuActions;
 	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
-	m_flipButton = new SketchToolButton(this, flipMenuActions);
+	m_flipButton = new SketchToolButton(m_breadboardWidget, flipMenuActions);
 	m_flipButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarFlipEnabled_icon.png"));
 	m_flipButton->setText(tr("Flip"));
 	connect(m_flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
