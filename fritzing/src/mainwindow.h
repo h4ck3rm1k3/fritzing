@@ -238,7 +238,7 @@ protected:
 	QMenu *pcbItemMenu();
 
 	QMenu *viewItemMenuAux(QMenu* menu);
-	void setDockColor(MiniViewContainer *, const QString & colorString);
+	void setDockColorAnd(MiniViewContainer *, const QString & colorString, const QString & prefix);
 
 	ZoomComboBox *createZoomOptions(SketchAreaWidget* parent);
 	SketchToolButton *createRotateButton(SketchAreaWidget *parent);
@@ -278,7 +278,7 @@ protected:
     MiniViewContainer *m_miniViewContainerBreadboard;
     MiniViewContainer *m_miniViewContainerSchematic;
     MiniViewContainer *m_miniViewContainerPCB;
-	MiniViewContainer * m_navigators[3];
+	QList <MiniViewContainer *> m_navigators;
     //FTabWidget * m_tabWidget;
 	QStackedWidget * m_tabWidget;
     PaletteModel *m_paletteModel;

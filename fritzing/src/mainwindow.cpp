@@ -60,6 +60,7 @@ qreal MainWindow::m_printerScale = 1;
 
 static QString dockUnselectedColor = "QDockWidget#%1 { color: rgb(80, 80, 80); }";
 static QString dockSelectedColor = "QDockWidget#%1 { color: rgb(84,24,44); }";
+static QString clickToSeeString = QObject::tr("click to see %1");
 
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
@@ -786,28 +787,28 @@ void MainWindow::createDockWindows()
 
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
-    m_navigators[0] = m_miniViewContainerBreadboard = new MiniViewContainer(this);
+    m_navigators << (m_miniViewContainerBreadboard = new MiniViewContainer(this));
     FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setObjectName("dock_Breadboard");
-	setDockColor(m_miniViewContainerBreadboard, dockSelectedColor);
+	dock->setObjectName("Breadboard_view");
+	setDockColorAnd(m_miniViewContainerBreadboard, dockSelectedColor, ___emptyString___);
  	dock->setFeatures (QDockWidget::DockWidgetMovable);
 	m_miniViewContainerBreadboard->filterMousePress();
 	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_navigators[1] = m_miniViewContainerSchematic = new MiniViewContainer(this);
+    m_navigators << (m_miniViewContainerSchematic = new MiniViewContainer(this));
     dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setObjectName("dock_Schematic");
-	setDockColor(m_miniViewContainerSchematic, dockUnselectedColor);
+	dock->setObjectName("Schematic_view");
+	setDockColorAnd(m_miniViewContainerSchematic, dockUnselectedColor, clickToSeeString);
  	dock->setFeatures (QDockWidget::DockWidgetMovable);
 	m_miniViewContainerSchematic->filterMousePress();
 	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_navigators[2] = m_miniViewContainerPCB = new MiniViewContainer(this);
+    m_navigators << (m_miniViewContainerPCB = new MiniViewContainer(this));
     dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setObjectName("dock_PCB");
-	setDockColor(m_miniViewContainerPCB, dockUnselectedColor);
+	dock->setObjectName("PCB_view");
+	setDockColorAnd(m_miniViewContainerPCB, dockUnselectedColor, clickToSeeString);
 	dock->setFeatures (QDockWidget::DockWidgetMovable);
 	m_miniViewContainerPCB->filterMousePress();
 	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
@@ -1225,16 +1226,9 @@ void MainWindow::applyReadOnlyChange(bool isReadOnly) {
 	m_saveAct->setDisabled(isReadOnly);
 }
 
-void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
-
-	int index = -1;
-	for (unsigned int i = 0; i < sizeof(m_navigators) / sizeof(MiniViewContainer *); i++) {
-		if (m_navigators[i] == miniView) {
-			index = i;
-			break;
-		}
-	}
-
+void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) 
+{
+	int index = m_navigators.indexOf(miniView);
 	if (index < 0) return;
 
 	int oldIndex = m_tabWidget->currentIndex();
@@ -1242,14 +1236,22 @@ void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
 
 	this->m_tabWidget->setCurrentIndex(index);
 
-
-	setDockColor(m_navigators[index], dockSelectedColor);
-	setDockColor(m_navigators[oldIndex], dockUnselectedColor);
+	setDockColorAnd(m_navigators[index], dockSelectedColor, ___emptyString___);
+	setDockColorAnd(m_navigators[oldIndex], dockUnselectedColor, clickToSeeString);
 }
 
-void MainWindow::setDockColor(MiniViewContainer * miniView, const QString & colorString)
+void MainWindow::setDockColorAnd(MiniViewContainer * miniView, const QString & colorString, const QString & prefix)
 {
-
-	miniView->parentWidget()->setStyleSheet(colorString.arg(miniView->parentWidget()->objectName()));
+	QWidget * parentWidget = miniView->parentWidget();
+	QString name = parentWidget->objectName(); 
+	parentWidget->setStyleSheet(colorString.arg(name));
+	QStringList names = name.split("_");
+	QString useName = names.join(" ");
+	if (prefix.length() == 0) {
+		parentWidget->setWindowTitle(useName);
+	}
+	else {
+		parentWidget->setWindowTitle(prefix.arg(useName));
+	}
 }
 
