@@ -187,6 +187,7 @@ protected:
 	QMenu *m_itemMenu;
 	bool m_canFlipHorizontal;
 	bool m_canFlipVertical;
+	bool m_zUninitialized;
 
 protected:
 	static long nextID;

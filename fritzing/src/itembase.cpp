@@ -60,6 +60,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 
    	m_viewGeometry.set(viewGeometry);
 	setAcceptHoverEvents ( true );
+	m_zUninitialized = true;
 
 }
 
@@ -243,9 +244,10 @@ void ItemBase::setViewLayerID(const QString & layerName, const LayerHash & viewL
 
 void ItemBase::setViewLayerID(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers) {
 	m_viewLayerID = viewLayerID;
-	if (this->z() < 0) {
+	if (m_zUninitialized) {
    		ViewLayer * viewLayer = viewLayers.value(m_viewLayerID);
    		if (viewLayer != NULL) {
+			m_zUninitialized = false;
    			m_viewGeometry.setZ(viewLayer->nextZ());
   		}
 
