@@ -208,23 +208,37 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 	}
 
 	QSet<Wire *> deleteWires;
+	QSet<Wire *> visitedWires;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
 		if (!wire->getRatsnest()) continue;
+		if (visitedWires.contains(wire)) continue;
 
 		// if a ratsnest is connecting two items that aren't connected
 		// delete the ratsnest
 
-		// TODO: the code below incorrectly deletes chained ratsnest wires
-
-		ConnectorItem * c0 = wire->connector0();
-		ConnectorItem * c1 = wire->connector1();
-		ConnectorItem * c0to = c0->firstConnectedToIsh();
-		ConnectorItem * c1to = c1->firstConnectedToIsh();
+		QList<Wire *> wires;
+		QList<ConnectorItem *> ends;
+		QList<ConnectorItem *> uniqueEnds;
+		wire->collectChained(wires, ends, uniqueEnds);
+		foreach (Wire * w, wires) {
+			visitedWires.insert(w);
+		}
+		bool gotAll = true;
 		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-			if ((list->contains(c0to) && !list->contains(c1to)) || (list->contains(c1to) && !list->contains(c0to))) {
-				deleteWires.insert(wire);
+			gotAll = true;
+			foreach (ConnectorItem * ci, ends) {
+				if (!list->contains(ci)) {
+					gotAll = false;
+					break;
+				}
+			}
+			if (gotAll) break;
+		}
+		if (!gotAll) {
+			foreach (Wire * w, wires) {
+				deleteWires.insert(w);
 			}
 		}
 	}
