@@ -58,6 +58,9 @@ const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
 qreal MainWindow::m_printerScale = 1;
 
+static QString dockUnselectedColor = "QDockWidget#%1 { color: rgb(80, 80, 80); }";
+static QString dockSelectedColor = "QDockWidget#%1 { color: rgb(84,24,44); }";
+
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
@@ -172,7 +175,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	// do this the first time, since the current_changed signal wasn't sent
 	m_currentWidget = NULL;
-	tabWidget_currentChanged(0);
+	currentNavigatorChanged(m_navigators[0]);
 
 	this->installEventFilter(this);
 
@@ -755,22 +758,28 @@ void MainWindow::createDockWindows()
 
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
-    m_miniViewContainerBreadboard = new MiniViewContainer(this);
+    m_navigators[0] = m_miniViewContainerBreadboard = new MiniViewContainer(this);
     FDockWidget * dock = makeDock(tr("Breadboard"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setFeatures (QDockWidget::DockWidgetMovable);
+	dock->setObjectName("dock_Breadboard");
+	setDockColor(m_miniViewContainerBreadboard, dockSelectedColor);
+ 	dock->setFeatures (QDockWidget::DockWidgetMovable);
 	m_miniViewContainerBreadboard->filterIt();
 	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_miniViewContainerSchematic = new MiniViewContainer(this);
+    m_navigators[1] = m_miniViewContainerSchematic = new MiniViewContainer(this);
     dock = makeDock(tr("Schematic"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setFeatures (QDockWidget::DockWidgetMovable);
+	dock->setObjectName("dock_Schematic");
+	setDockColor(m_miniViewContainerSchematic, dockUnselectedColor);
+ 	dock->setFeatures (QDockWidget::DockWidgetMovable);
 	m_miniViewContainerSchematic->filterIt();
 	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
-    m_miniViewContainerPCB = new MiniViewContainer(this);
+    m_navigators[2] = m_miniViewContainerPCB = new MiniViewContainer(this);
     dock = makeDock(tr("PCB"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
+	dock->setObjectName("dock_PCB");
+	setDockColor(m_miniViewContainerPCB, dockUnselectedColor);
 	dock->setFeatures (QDockWidget::DockWidgetMovable);
 	m_miniViewContainerPCB->filterIt();
 	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
@@ -1187,3 +1196,31 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 void MainWindow::applyReadOnlyChange(bool isReadOnly) {
 	m_saveAct->setDisabled(isReadOnly);
 }
+
+void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
+	
+	int index = -1;
+	for (unsigned int i = 0; i < sizeof(m_navigators) / sizeof(MiniViewContainer *); i++) {
+		if (m_navigators[i] == miniView) {
+			index = i;
+			break;
+		}
+	}
+	
+	if (index < 0) return;
+		
+	int oldIndex = m_tabWidget->currentIndex();
+	if (oldIndex == index) return;
+	
+	this->m_tabWidget->setCurrentIndex(index);
+
+	setDockColor(m_navigators[index], dockSelectedColor);
+	setDockColor(m_navigators[oldIndex], dockUnselectedColor);
+}
+
+void MainWindow::setDockColor(MiniViewContainer * miniView, const QString & colorString)
+{
+		
+	miniView->parentWidget()->setStyleSheet(colorString.arg(miniView->parentWidget()->objectName()));
+}
+

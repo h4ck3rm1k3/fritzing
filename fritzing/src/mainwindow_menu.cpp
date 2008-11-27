@@ -1639,13 +1639,3 @@ void MainWindow::createJumper() {
 	m_pcbGraphicsView->createJumper();
 }
 
-void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) {
-	int index = 0;
-	if (miniView == m_miniViewContainerSchematic) {
-		index = 1;
-	}
-	else if (miniView == m_miniViewContainerPCB) {
-		index = 2;
-	}
-	this->m_tabWidget->setCurrentIndex(index);
-}

@@ -239,7 +239,8 @@ protected:
 	QMenu *pcbItemMenu();
 
 	QMenu *viewItemMenuAux(QMenu* menu);
-
+	void setDockColor(MiniViewContainer *, const QString & colorString);
+	
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
 	static qreal getSvgWidthInInches(QFile & file);
@@ -269,6 +270,7 @@ protected:
     MiniViewContainer *m_miniViewContainerBreadboard;
     MiniViewContainer *m_miniViewContainerSchematic;
     MiniViewContainer *m_miniViewContainerPCB;
+	MiniViewContainer * m_navigators[3];
     //FTabWidget * m_tabWidget;
 	QStackedWidget * m_tabWidget;
     PaletteModel *m_paletteModel;

@@ -3114,12 +3114,19 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
 								   const QString& oldColor, const QString newColor,
 								   qreal oldOpacity, qreal newOpacity) {
+	Wire * wire = dynamic_cast<Wire *>(findItem(wireId));
+	if (wire == NULL) return;
+	
+	
+	
 	QUndoCommand* parentCommand = new QUndoCommand(
 		tr("Wire %1 color changed from %2 to %3")
 			.arg(wireTitle)
 			.arg(oldColor)
 			.arg(newColor)
 	);
+	
+	
 	new WireColorChangeCommand(
 			this,
 			wireId,
