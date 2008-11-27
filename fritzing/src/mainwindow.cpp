@@ -125,15 +125,16 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     if (!styleSheet.open(QIODevice::ReadOnly)) {
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
+		/*
 #ifdef Q_WS_WIN
-		int marginTop = m_toolbar->height() /* - m_tabWidget->tabBar()->height() */ + 4;
-#else
-		int marginTop = m_toolbar->height() /* - m_tabWidget->tabBar()->height() */ + 2;
-#endif
+		int marginTop = m_toolbar->height() */ /* - m_tabWidget->tabBar()->height() */ // + 4;
+/*#else
+		int marginTop = m_toolbar->height() */ /* - m_tabWidget->tabBar()->height() */ //+ 2;
+/*#endif
 		QString tabbarStyle =
 			QString("QToolBar QTabBar::tab {margin-top: %1px;} ").arg(marginTop)+
-			QString("#sketch_tabs::pane {top: -%2px;}").arg(/* m_tabWidget->tabBar()->height() + */ 8);
-		setStyleSheet(styleSheet.readAll()+___MacStyle___+tabbarStyle);
+			QString("#sketch_tabs::pane {top: -%2px;}").arg(8);*/
+		setStyleSheet(styleSheet.readAll()+___MacStyle___);
 	}
 
 	m_itemMenu = new QMenu(QObject::tr("Part"), this);
@@ -439,7 +440,7 @@ void MainWindow::createToolBars() {
 	/* TODO: Mariano this is too hacky and requires some styling
 	 * around here and some else in the qss file
 	 */
-	m_toolbar = new QToolBar(this);
+	/*m_toolbar = new QToolBar(this);
 	m_toolbar->setObjectName("fake_tabbar");
 	m_toolbar->setFloatable(false);
 	m_toolbar->setMovable(false);
@@ -449,7 +450,7 @@ void MainWindow::createToolBars() {
 	m_toolbar->setMinimumWidth(400); // connect to tabwidget resize event
 	m_toolbar->toggleViewAction()->setVisible(false);
 	// m_tabWidget->tabBar()->setParent(m_toolbar);
-	addToolBar(m_toolbar);
+	addToolBar(m_toolbar);*/
 
 	/*	QToolBar *tb2 = new QToolBar(this);
 	tb2->setFloatable(false);
@@ -499,17 +500,17 @@ void MainWindow::createSketchButtons() {
 	//	SketchToolButton *m_flipHorizontalButton;
 	//	SketchToolButton *m_flipVerticalButton;
 
-	m_autorouteButton = new SketchToolButton(this, m_autorouteAct);
+	m_autorouteButton = new SketchToolButton(m_pcbWidget, m_autorouteAct);
 	m_autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
 	m_autorouteButton->setText(tr("Autoroute"));
 
-	m_exportDiyButton = new SketchToolButton(this, m_exportDiyAct);
+	m_exportDiyButton = new SketchToolButton(m_pcbWidget, m_exportDiyAct);
 	m_exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarDiyEnabled.png"));
 	m_exportDiyButton->setText(tr("DIY Etching"));
 
-	m_sketchToolbarSeparator = SketchAreaWidget::separator(this);
+	m_sketchToolbarSeparator = SketchAreaWidget::separator(m_pcbWidget);
 
-	m_routingStatusLabel = new ExpandingLabel(this);
+	m_routingStatusLabel = new ExpandingLabel(m_pcbWidget);
 	m_routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
 
 	m_toolbarSpacer = new QFrame(this);
@@ -563,7 +564,7 @@ void MainWindow::createStatusBar()
 void MainWindow::tabWidget_currentChanged(int index) {
 	SketchAreaWidget * widgetParent = dynamic_cast<SketchAreaWidget *>(m_tabWidget->currentWidget());
 	if (widgetParent == NULL) return;
-	
+
 	widgetParent->setContent(getButtonsForView(widgetParent->viewIdentifier()),m_zoomOptsComboBox);
 
 	SketchWidget *widget = widgetParent->graphicsView();
