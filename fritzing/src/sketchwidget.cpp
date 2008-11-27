@@ -1707,7 +1707,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		toConnectorID = to->connectorStuffID();
 	}
 
-	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true);
+	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
 
 	checkSticky(wire, parentCommand);
 
@@ -1741,9 +1741,9 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 			if (toWire == NULL) continue;
 
 			ViewGeometry vg = toWire->getViewGeometry();
-			toWire->saveGeometry();
-			ViewGeometry vg2 = toWire->getViewGeometry();
-			new ChangeWireCommand(this, toWire->id(), vg.line(), vg2.line(), vg.loc(), vg2.loc(), true, parentCommand);
+			QLineF nl = toWire->line();
+			QPointF np = toWire->pos();
+			new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, parentCommand);
 		}
 	}
 	else {
@@ -3113,7 +3113,11 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 
 void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
 								   const QString& oldColor, const QString newColor,
-								   qreal oldOpacity, qreal newOpacity) {
+								   qreal oldOpacity, qreal newOpacity) 
+{	
+	Q_UNUSED(oldColor);
+	Q_UNUSED(oldOpacity);
+	
 	Wire * wire = dynamic_cast<Wire *>(findItem(wireId));
 	if (wire == NULL) return;
 	
@@ -3134,7 +3138,7 @@ void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
 				wire->colorString(),
 				newColor,
 				wire->opacity(),
-				wire->opacity(),
+				newOpacity,
 				parentCommand);
 	}
 	m_undoStack->push(parentCommand);

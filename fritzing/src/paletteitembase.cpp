@@ -321,13 +321,11 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 	QString elementID = layerAttributes.layerName();
 	setViewLayerID(elementID, viewLayers);
 	
-	DebugDialog::debug(QString("setting layer %1 view:%2 z:%3").arg(modelPart->title()).arg(viewIdentifier).arg(this->z()) );
+	//DebugDialog::debug(QString("setting layer %1 view:%2 z:%3").arg(modelPart->title()).arg(viewIdentifier).arg(this->z()) );
 	this->setZValue(this->z());
 	this->setSharedRenderer(renderer);
-	//this->setElementId(elementID);
 
 	m_size = renderer->defaultSize();
-	//DebugDialog::debug(QString("default size %1 %2 %3").arg(m_size.width()).arg(m_size.height()).arg(elementID) );
 
 	m_svg = true;
 
