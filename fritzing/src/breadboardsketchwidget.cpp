@@ -78,3 +78,8 @@ void BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 		}
 	}
 }
+
+BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
+{
+	return BaseCommand::CrossView;
+}

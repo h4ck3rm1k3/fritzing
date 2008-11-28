@@ -2829,23 +2829,26 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	QLineF newLine2(QPointF(0,0), oldLine.p2() + oldPos - newPos);
 	vg.setLine(newLine2);
 
-	new AddItemCommand(this, BaseCommand::SingleView, Wire::moduleIDName, vg, newID, parentCommand);
+	BaseCommand::CrossViewType crossView = wireSplitCrossView();
+	
+	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
+	new WireChainedIDCommand(this, crossView, newID, wire->chainedID(), parentCommand);
 
 	// disconnect from original wire and reconnect to new wire
 	ConnectorItem * connector1 = wire->connector1();
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
-		new ChangeConnectionCommand(this, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 			wire->id(), connector1->connectorStuffID(),
 			false, true, toConnectorItem->chained(), parentCommand);
-		new ChangeConnectionCommand(this, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 			newID, connector1->connectorStuffID(),
 			true, true, toConnectorItem->chained(), parentCommand);
 	}
 
 	// connect the two wires
-	new ChangeConnectionCommand(this, BaseCommand::SingleView, wire->id(), connector1->connectorStuffID(),
+	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorStuffID(),
 			newID, "connector0", true, true, true, parentCommand);
 
 
@@ -2885,22 +2888,27 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 
 	ConnectorItem * otherConnector = toWire->otherConnector(toConnectorItem);
 
+	BaseCommand::CrossViewType crossView = wireSplitCrossView();
+
 	// disconnect the wires
-	new ChangeConnectionCommand(this, BaseCommand::SingleView, wire->id(), clickedConnectorItem->connectorStuffID(),
+	new ChangeConnectionCommand(this, crossView, wire->id(), clickedConnectorItem->connectorStuffID(),
 			toWire->id(), toConnectorItem->connectorStuffID(), false, true, true, parentCommand);
 
 	// disconnect everyone from the other end of the wire being deleted, and reconnect to the remaining wire
 	foreach (ConnectorItem * otherToConnectorItem, otherConnector->connectedToItems()) {
-		new ChangeConnectionCommand(this, BaseCommand::SingleView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
 			toWire->id(), otherConnector->connectorStuffID(),
 			false, true, otherToConnectorItem->chained(), parentCommand);
-		new ChangeConnectionCommand(this, BaseCommand::SingleView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
 			wire->id(), clickedConnectorItem->connectorStuffID(),
 			true, true, otherToConnectorItem->chained(), parentCommand);
 	}
 
 	toWire->saveGeometry();
 	makeDeleteItemCommand(toWire, parentCommand);
+	if (crossView == BaseCommand::CrossView) {
+		emit deleteItemSignal(toWire->id(), parentCommand);
+	}
 
 	QLineF newLine;
 	QPointF newPos;
@@ -3442,4 +3450,24 @@ const QString &SketchWidget::selectedModuleID() {
 		return m_lastPaletteItemSelected->modelPart()->moduleID();
 	}
 	return ___emptyString___;
+}
+
+
+void SketchWidget::setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType crossView) {
+	Wire * wire = dynamic_cast<Wire *>(findItem(wireID));
+	if (wire == NULL) return;
+
+	wire->setChainedID(chainedID);
+	if (crossView == BaseCommand::CrossView) {
+		emit setChainedWireIDSignal(wireID, chainedID);
+	}
+}
+
+BaseCommand::CrossViewType SketchWidget::wireSplitCrossView()
+{
+	return BaseCommand::SingleView;
+}
+
+void SketchWidget::setChainedWireIDSlot(qint64 wireID, qint64 chainedID) {
+	setChainedWireID(wireID, chainedID, BaseCommand::SingleView);
 }

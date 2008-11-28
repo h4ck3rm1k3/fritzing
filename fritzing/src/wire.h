@@ -111,6 +111,8 @@ public:
 	void connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> & out);
 	void simpleConnectedMoved(ConnectorItem * to);
 	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);
+	qint64 chainedID();
+	void setChainedID(qint64);
 
 public:
 	static QString moduleIDName;
@@ -152,6 +154,7 @@ protected:
 	bool m_autoroutable;
 	QPen m_shadowPen;
 	qreal m_opacity;
+	qint64 m_chainedID;
 
 public:
 	static QList<QString> colorNames;

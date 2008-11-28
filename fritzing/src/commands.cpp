@@ -468,3 +468,20 @@ void WireFlagChangeCommand::undo() {
 void WireFlagChangeCommand::redo() {
 	m_sketchWidget->changeWireFlags(m_wireId, m_newFlags);
 }
+
+////////////////////////////////////////////
+
+WireChainedIDCommand::WireChainedIDCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossView, qint64 wireID, qint64 chainedID, QUndoCommand *parent)
+: BaseCommand(crossView, sketchWidget, parent)
+{
+	m_wireID = wireID;
+	m_chainedID = chainedID;
+}
+
+void WireChainedIDCommand::undo() {
+}
+
+void WireChainedIDCommand::redo() {
+	m_sketchWidget->setChainedWireID(m_wireID, m_chainedID, m_crossViewType);
+}
+

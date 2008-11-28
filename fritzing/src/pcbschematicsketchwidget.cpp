@@ -225,7 +225,7 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 		foreach (Wire * w, wires) {
 			visitedWires.insert(w);
 		}
-		bool gotAll = true;
+		bool gotAll = false;
 		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
 			gotAll = true;
 			foreach (ConnectorItem * ci, ends) {

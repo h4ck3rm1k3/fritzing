@@ -45,6 +45,7 @@ protected:
 	void collectFemaleConnectees(PaletteItem *);
 	void findConnectorsUnder(ItemBase * item);
 	void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand);
+	BaseCommand::CrossViewType wireSplitCrossView();
 };
 
 #endif

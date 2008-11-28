@@ -310,4 +310,17 @@ protected:
 };
 
 
+class WireChainedIDCommand : public BaseCommand
+{
+public:
+	WireChainedIDCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType, qint64 wireID, qint64 chainedWireID, QUndoCommand *parent=0);
+    void undo();
+    void redo();
+
+protected:
+	long m_wireID;
+	qint64 m_chainedID;
+};
+
+
 #endif // COMMANDS_H

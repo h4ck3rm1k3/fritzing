@@ -166,6 +166,7 @@ public:
 	void clearRouting(QUndoCommand * parentCommand);
 
 	const QString &selectedModuleID();
+	void setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -244,6 +245,7 @@ protected:
 	void moveItems(QPoint globalPos);
 	virtual void redrawRatsnest(QHash<long, ItemBase *> & newItems);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
+	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	//void restoreDisconnectors();
 	//void collectDisconnectors(ItemBase * item);
 	//void dealWithVirtualDisconnections(ConnectorItem * src, ConnectorItem * dest);
@@ -283,6 +285,7 @@ signals:
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void changingConnectionSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void selectAllItemsSignal(bool state, bool doEmit);
+	void setChainedWireIDSignal(qint64 wireID, qint64 chainedID);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -309,6 +312,7 @@ protected slots:
 	void updateInfoViewSlot();
 	void spaceBarIsPressedSlot(bool);
 	void autoScrollTimeout();
+	void setChainedWireIDSlot(qint64 wireID, qint64 chainedID);
 
 public slots:
 	void swapSelected(const QString &moduleId);

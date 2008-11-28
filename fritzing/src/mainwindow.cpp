@@ -239,6 +239,14 @@ void MainWindow::preloadSlowParts() {
 }
 
 void MainWindow::calcPrinterScale() {
+
+	// note: I think that printerScale is probably just 90 dpi, since the calculation 
+	// result is 89.8407 across all three platforms
+
+	m_printerScale = 90.0;
+	return;
+
+/*
 	m_printerScale = 1;
 	ViewGeometry viewGeometry;
 	ItemBase * itemBase = m_breadboardGraphicsView->addItem(ItemBase::rulerModuleIDName, BaseCommand::SingleView, viewGeometry, ItemBase::getNextID());
@@ -253,6 +261,8 @@ void MainWindow::calcPrinterScale() {
 
 	m_printerScale = size.width() / width;
 	DebugDialog::debug(QString("printerscale %1").arg(m_printerScale));
+*/
+
 }
 
 qreal MainWindow::getSvgWidthInInches(const QString & filename)
@@ -401,6 +411,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_cleanUpWires()) );
 	succeeded = succeeded && connect(signaller, SIGNAL(swapped(long, ModelPart*)),
 									 slotter, SLOT(swap(long, ModelPart*)) );
+
+	succeeded = succeeded && connect(signaller, SIGNAL(setChainedWireIDSignal(qint64, qint64)),
+									 slotter, SLOT(setChainedWireIDSlot(qint64, qint64)) );
 
 
 	if (!succeeded) {
