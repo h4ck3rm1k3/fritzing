@@ -27,7 +27,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 #include "pcbsketchwidget.h"
 #include "debugdialog.h"
-#include "svgfilesplitter.h"
+#include "svg/svgfilesplitter.h"
 
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)

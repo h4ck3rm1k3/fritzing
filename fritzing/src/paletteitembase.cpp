@@ -29,7 +29,7 @@ $Date$
 #include "debugdialog.h"
 #include "rendererviewthing.h"
 #include "connectorviewthing.h"
-#include "svgfilesplitter.h"
+#include "svg/svgfilesplitter.h"
 #include "connectorstuff.h"
 #include "layerattributes.h"
 

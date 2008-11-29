@@ -24,24 +24,15 @@
 #
 #********************************************************************/
 
-CONFIG += debug_and_release
-win32::CONFIG -= embed_manifest_exe
-win32:INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
-ICON = resources/images/fritzing_icon.icns
-QT += core \
-    gui \
-    svg \
-    xml \
-    network \
-    webkit \
-    sql
-RC_FILE = fritzing.rc
-RESOURCES += phoenixresources.qrc
-include(kitchensink.pri)
-include(quazip.pri)
-include(partsbinpalette.pri)
-include(partseditor.pri)
-include(referencemodel.pri)
-include(svg.pri)
-TARGET = Fritzing
-TEMPLATE = app
+HEADERS += \
+	src/svg/svgfilesplitter.h \
+	src/svg/svgpathparser.h \
+	src/svg/svgpathgrammar_p.h \
+	src/svg/svgpathlexer.h 
+
+SOURCES += \
+	src/svg/svgfilesplitter.cpp \
+	src/svg/svgpathparser.cpp \
+	src/svg/svgpathgrammar.cpp \
+	src/svg/svgpathlexer.cpp
+

@@ -178,7 +178,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
     m_breadboardGraphicsView->setBackground(QColor(204,204,204));
     m_schematicGraphicsView->setBackground(QColor(255,255,255));
-    m_pcbGraphicsView->setBackground(QColor(163,163,163));							// QColor(137,144,153)
+    m_pcbGraphicsView->setBackground(QColor(0x8F, 0xBC, 0x8F));							// QColor(137,144,153)
 
 	// make sure to set the connections after the views have been created
 	connect(m_tabWidget, SIGNAL(currentChanged ( int )),

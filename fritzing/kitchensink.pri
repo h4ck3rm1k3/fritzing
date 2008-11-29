@@ -66,7 +66,6 @@ HEADERS += \
     src/sketchmodel.h \
     src/sketchtoolbutton.h \
     src/sketchwidget.h \
-    src/svgfilesplitter.h \
     src/svgandpartfilepath.h \
     src/version.h \
     src/viewgeometry.h \
@@ -127,7 +126,6 @@ SOURCES += \
     src/sketchmodel.cpp \
     src/sketchtoolbutton.cpp \
     src/sketchwidget.cpp \
-    src/svgfilesplitter.cpp \
     src/version.cpp \
     src/viewgeometry.cpp \
     src/viewlayer.cpp \

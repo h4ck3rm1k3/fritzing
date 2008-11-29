@@ -26,10 +26,14 @@ $Date$
 
 #include "svgfilesplitter.h"
 
-#include "misc.h"
-#include "debugdialog.h"
+#include "../misc.h"
+#include "../debugdialog.h"
+#include "svgpathparser.h"
+#include "svgpathlexer.h"
+
 #include <QDomDocument>
 #include <QFile>
+#include <QtDebug>
 
 SvgFileSplitter::SvgFileSplitter()
 {
@@ -110,9 +114,6 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID)
 	QString sheightStr = root.attribute("height");
 	if (sheightStr.isEmpty()) return false;
 
-	QString sviewboxStr = root.attribute("viewBox");
-	if (sviewboxStr.isEmpty()) return false;
-
 	bool ok;
 	qreal sWidth = convertToInches(swidthStr, &ok);
 	if (!ok) return false;
@@ -123,14 +124,26 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID)
 	root.setAttribute("width", QString::number(sWidth));
 	root.setAttribute("height", QString::number(sHeight));
 
-	QStringList strings = sviewboxStr.split(" ");
-	if (strings.size() != 4) return false;
+	// assume that if there's no viewBox, the viewbox is at the right dpi?
+	// or should the assumption be 90 or 100?
+	qreal vbWidth = sWidth * dpi;
+	qreal vbHeight = sHeight * dpi;
 
-	qreal vbWidth = strings[2].toDouble(&ok);
-	if (!ok) return false;
+	QString sviewboxStr = root.attribute("viewBox");
+	if (!sviewboxStr.isEmpty()) {
+		QStringList strings = sviewboxStr.split(" ");
+		if (strings.size() == 4) {
+			qreal tempWidth = strings[2].toDouble(&ok);
+			if (ok) {
+				vbWidth = tempWidth;
+			}
 
-	qreal vbHeight= strings[3].toDouble(&ok);
-	if (!ok) return false;
+			qreal tempHeight= strings[3].toDouble(&ok);
+			if (ok) {
+				vbHeight = tempHeight;
+			}
+		}
+	}
 
 	root.setAttribute("viewBox", QString("%1 %2 %3 %4").arg(0).arg(0).arg(vbWidth).arg(vbHeight) );
 
@@ -173,6 +186,32 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "y", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
 		element.setAttribute("stroke", "black");
+	}
+	else if (element.nodeName().compare("polygon") == 0) {
+		DebugDialog::debug("svg polygon not yet implemented");
+	}
+	else if (element.nodeName().compare("path") == 0) {
+		// if stroke attribute is not empty make it black
+		// if fill attribute is not empty and not "none" make it black
+
+		QString data = element.attribute("d");
+		if (!data.isEmpty()) {
+			SVGPathLexer lexer(data);
+			SVGPathParser parser;
+			if (!parser.parse(&lexer)) {
+				DebugDialog::debug("svg path parse failed");
+			}
+			else {
+				foreach (QVariant variant, parser.symStack()) {
+					if (variant.type() == QVariant::Char) {
+						qDebug() << variant.toChar();
+					}
+					else if (variant.type() == QVariant::Double) {
+						qDebug() << variant.toDouble();
+					}
+				}
+			}
+		}
 	}
 	else {
 		QDomElement childElement = element.firstChildElement();
