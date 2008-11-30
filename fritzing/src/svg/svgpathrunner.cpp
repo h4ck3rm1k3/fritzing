@@ -50,7 +50,10 @@ bool SVGPathRunner::runPath(QVector<QVariant> & pathData, void * userData) {
 			if (newCommand == NULL) return false;
 
 			if (currentCommand != NULL) {
-				if (args.count() != currentCommand->argCount) return false;
+				if (currentCommand->argCount == 0) {
+					if (args.count() != 0) return false;
+				}
+				else if (args.count() % currentCommand->argCount != 0) return false;
 
 				emit commandSignal(currentCommand->command, currentCommand->relative, args, userData);
 			}
@@ -65,7 +68,10 @@ bool SVGPathRunner::runPath(QVector<QVariant> & pathData, void * userData) {
 	}
 
 	if (currentCommand != NULL) {
-		if (args.count() != currentCommand->argCount) return false;
+		if (currentCommand->argCount == 0) {
+			if (args.count() != 0) return false;
+		}
+		else if (args.count() % currentCommand->argCount != 0) return false;
 
 		emit commandSignal(currentCommand->command, currentCommand->relative, args, userData);
 	}

@@ -31,6 +31,7 @@ $Date$
 static QRegExp findWhitespace("[\\s]+");
 static QRegExp findWhitespaceBefore(" ([CcMmVvTtQqSsLlVvHhZz,])");
 static QRegExp findWhitespaceAfter("([CcMmVvTtQqSsLlVvHhZz,]) ");
+static QRegExp findWhitespaceAtEnd(" $");
 
 SVGPathLexer::SVGPathLexer(const QString &source)
 {
@@ -56,10 +57,11 @@ QString SVGPathLexer::clean(const QString & source) {
 
 	
 	QString s1 = source;
-	QString s2 = s1.replace(findWhitespace, " ");
-	QString s3 = s2.replace(findWhitespaceBefore, "\\1");    // replace with the captured character
-	QString s4 = s3.replace(findWhitespaceAfter, "\\1");    // replace with the captured character
-	return s4;
+	s1.replace(findWhitespace, " ");
+	s1.replace(findWhitespaceBefore, "\\1");    // replace with the captured character
+	s1.replace(findWhitespaceAfter, "\\1");    // replace with the captured character
+	s1.replace(findWhitespaceAtEnd, "");
+	return s1;
 
 }
 

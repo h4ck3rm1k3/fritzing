@@ -36,16 +36,6 @@ $Date$
 #include <QFile>
 #include <QtDebug>
 
-struct PathUserData {
-	QString string;
-	qreal sNewWidth;
-	qreal sNewHeight;
-	qreal vbWidth; 
-	qreal vbHeight;
-	qreal x;
-	qreal y;
-};
-
 SvgFileSplitter::SvgFileSplitter()
 {
 }
@@ -180,7 +170,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
 		normalizeAttribute(element, "r", sNewWidth, vbWidth);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		element.setAttribute("stroke", "black");
+		setStrokeOrFill(element);
 	}
 	else if (element.nodeName().compare("line") == 0) {
 		normalizeAttribute(element, "x1", sNewWidth, vbWidth);
@@ -188,7 +178,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "x2", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y2", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		element.setAttribute("stroke", "black");
+		setStrokeOrFill(element);
 	}
 	else if (element.nodeName().compare("rect") == 0) {
 		normalizeAttribute(element, "width", sNewWidth, vbWidth);
@@ -196,47 +186,55 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "x", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		element.setAttribute("stroke", "black");
+
+		// rx, ry for rounded rects
+		if (!element.attribute("rx").isEmpty()) {
+			normalizeAttribute(element, "rx", sNewWidth, vbWidth);
+		}
+		if (!element.attribute("ry").isEmpty()) {
+			normalizeAttribute(element, "ry", sNewHeight, vbHeight);
+		}
+		setStrokeOrFill(element);
 	}
-	else if (element.nodeName().compare("polygon") == 0) {
-		DebugDialog::debug("svg polygon not yet implemented");
+	else if (element.nodeName().compare("ellipse") == 0) {
+		normalizeAttribute(element, "cx", sNewWidth, vbWidth);
+		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
+		normalizeAttribute(element, "rx", sNewWidth, vbWidth);
+		normalizeAttribute(element, "ry", sNewHeight, vbHeight);
+		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
+		setStrokeOrFill(element);
+	}
+	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
+		QString data = element.attribute("points");
+		if (!data.isEmpty()) {			
+			data.prepend("M");		// pretend it's a path so we can use the path parser
+			data.append("Z");
+			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
+			PathUserData pathUserData;
+			pathUserData.sNewHeight = sNewHeight;
+			pathUserData.sNewWidth = sNewWidth;
+			pathUserData.vbHeight = vbHeight;
+			pathUserData.vbWidth = vbWidth;
+			if (parsePath(data, slot, pathUserData)) {
+				pathUserData.string.remove(0, 1);			// get rid of the "M"
+				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
+				element.setAttribute("points", pathUserData.string);
+			}
+		}
+		setStrokeOrFill(element);
 	}
 	else if (element.nodeName().compare("path") == 0) {
-		// if stroke attribute is not empty make it black
-		// if fill attribute is not empty and not "none" make it black
-		QString stroke = element.attribute("stroke");
-		if (!stroke.isEmpty()) {
-			element.setAttribute("stroke", "black");
-		}
-		QString fill = element.attribute("fill");
-		if (!fill.isEmpty()) {
-			if (fill.compare("none") != 0) {
-				element.setAttribute("fill", "black");
-			}
-		}
-
+		setStrokeOrFill(element);
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
-			SVGPathLexer lexer(data);
-			SVGPathParser parser;
-			if (!parser.parse(&lexer)) {
-				DebugDialog::debug("svg path parse failed");
-			}
-			else {
-				SVGPathRunner svgPathRunner;
-				PathUserData pathUserData;
-				pathUserData.sNewHeight = sNewHeight;
-				pathUserData.sNewWidth = sNewWidth;
-				pathUserData.vbHeight = vbHeight;
-				pathUserData.vbWidth = vbWidth;
-
-				connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)),
-						this, SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *)),
-						Qt::DirectConnection);
-				bool ok = svgPathRunner.runPath(parser.symStack(), &pathUserData);
-				if (ok) {
-					element.setAttribute("d", pathUserData.string);
-				}
+			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
+			PathUserData pathUserData;
+			pathUserData.sNewHeight = sNewHeight;
+			pathUserData.sNewWidth = sNewWidth;
+			pathUserData.vbHeight = vbHeight;
+			pathUserData.vbWidth = vbWidth;
+			if (parsePath(data, slot, pathUserData)) {
+				element.setAttribute("d", pathUserData.string);
 			}
 		}
 	}
@@ -279,7 +277,7 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
 
 void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 {	
-	if (element.nodeName().compare("circle") == 0) {
+	if (element.nodeName().compare("circle") == 0 || element.nodeName().compare("ellipse") == 0) {
 		shiftAttribute(element, "cx", x);
 		shiftAttribute(element, "cy", y);
 	}
@@ -293,27 +291,31 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 		shiftAttribute(element, "x", x);
 		shiftAttribute(element, "y", y);
 	}
+	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
+		QString data = element.attribute("points");
+		if (!data.isEmpty()) {
+			data.prepend("M");		// pretend it's a path so we can use the path parser
+			data.append("Z");
+			const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
+			PathUserData pathUserData;
+			pathUserData.x = x;
+			pathUserData.y = y;
+			if (parsePath(data, slot, pathUserData)) {
+				pathUserData.string.remove(0, 1);			// get rid of the "M"
+				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
+				element.setAttribute("points", pathUserData.string);
+			}
+		}
+	}
 	else if (element.nodeName().compare("path") == 0) {
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
-			SVGPathLexer lexer(data);
-			SVGPathParser parser;
-			if (!parser.parse(&lexer)) {
-				DebugDialog::debug("svg path parse failed");
-			}
-			else {
-				SVGPathRunner svgPathRunner;
-				PathUserData pathUserData;
-				pathUserData.x = x;
-				pathUserData.y = y;
-
-				connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)),
-						this, SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *)),
-						Qt::DirectConnection);
-				bool ok = svgPathRunner.runPath(parser.symStack(), &pathUserData);
-				if (ok) {
-					element.setAttribute("d", pathUserData.string);
-				}
+			const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
+			PathUserData pathUserData;
+			pathUserData.x = x;
+			pathUserData.y = y;
+			if (parsePath(data, slot, pathUserData)) {
+				element.setAttribute("d", pathUserData.string);
 			}
 		}
 	}
@@ -344,13 +346,23 @@ void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<d
 	switch(command.toAscii()) {
 		case 'v':
 		case 'V':
-			d = args[0] * pathUserData->sNewHeight / pathUserData->vbHeight;
-			pathUserData->string.append(QString::number(d));
+			for (int i = 0; i < args.count(); i++) {
+				d = args[i] * pathUserData->sNewHeight / pathUserData->vbHeight;
+				pathUserData->string.append(QString::number(d));
+				if (i < args.count() - 1) {
+					pathUserData->string.append(',');
+				}
+			}
 			break;
 		case 'h':
 		case 'H':
-			d = args[0] * pathUserData->sNewWidth / pathUserData->vbWidth;
-			pathUserData->string.append(QString::number(d));
+			for (int i = 0; i < args.count(); i++) {
+				d = args[0] * pathUserData->sNewWidth / pathUserData->vbWidth;
+				pathUserData->string.append(QString::number(d));
+				if (i < args.count() - 1) {
+					pathUserData->string.append(',');
+				}
+			}
 			break;
 		default:
 			for (int i = 0; i < args.count(); i++) {
@@ -415,3 +427,33 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 			break;
 	}
 }
+
+bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData) {
+	SVGPathLexer lexer(data);
+	SVGPathParser parser;
+	if (!parser.parse(&lexer)) {
+		DebugDialog::debug(QString("svg path parse failed %1").arg(data));
+		return false;
+	}
+
+	SVGPathRunner svgPathRunner;
+	connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)), this, slot, Qt::DirectConnection);
+	return svgPathRunner.runPath(parser.symStack(), &pathUserData);
+}
+
+void SvgFileSplitter::setStrokeOrFill(QDomElement & element)
+{
+	// if stroke attribute is not empty make it black
+	// if fill attribute is not empty and not "none" make it black
+	QString stroke = element.attribute("stroke");
+	if (!stroke.isEmpty()) {
+		element.setAttribute("stroke", "black");
+	}
+	QString fill = element.attribute("fill");
+	if (!fill.isEmpty()) {
+		if (fill.compare("none") != 0) {
+			element.setAttribute("fill", "black");
+		}
+	}
+}
+

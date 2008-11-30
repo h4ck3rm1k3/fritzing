@@ -33,6 +33,16 @@ $Date$
 #include <QDomElement>
 #include <QObject>
 
+struct PathUserData {
+	QString string;
+	qreal sNewWidth;
+	qreal sNewHeight;
+	qreal vbWidth; 
+	qreal vbHeight;
+	qreal x;
+	qreal y;
+};
+
 class SvgFileSplitter : public QObject {
 	Q_OBJECT
 
@@ -52,6 +62,8 @@ protected:
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
 	void shiftChild(QDomElement & element, qreal x, qreal y);
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
+	bool parsePath(const QString & data, const char * slot, PathUserData &);
+	void setStrokeOrFill(QDomElement & element);
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
