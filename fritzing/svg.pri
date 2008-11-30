@@ -28,11 +28,13 @@ HEADERS += \
 	src/svg/svgfilesplitter.h \
 	src/svg/svgpathparser.h \
 	src/svg/svgpathgrammar_p.h \
-	src/svg/svgpathlexer.h 
+	src/svg/svgpathlexer.h \ 
+	src/svg/svgpathrunner.h 
 
 SOURCES += \
 	src/svg/svgfilesplitter.cpp \
 	src/svg/svgpathparser.cpp \
 	src/svg/svgpathgrammar.cpp \
-	src/svg/svgpathlexer.cpp
+	src/svg/svgpathlexer.cpp \
+	src/svg/svgpathrunner.cpp 
 

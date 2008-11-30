@@ -31,8 +31,10 @@ $Date$
 #include <QString>
 #include <QByteArray>
 #include <QDomElement>
+#include <QObject>
 
-class SvgFileSplitter {
+class SvgFileSplitter : public QObject {
+	Q_OBJECT
 
 public:
 	SvgFileSplitter();
@@ -50,6 +52,10 @@ protected:
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
 	void shiftChild(QDomElement & element, qreal x, qreal y);
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
+
+protected slots:
+	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
+	void shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
 
 protected:
 	QByteArray m_byteArray;

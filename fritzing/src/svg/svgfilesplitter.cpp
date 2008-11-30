@@ -30,10 +30,21 @@ $Date$
 #include "../debugdialog.h"
 #include "svgpathparser.h"
 #include "svgpathlexer.h"
+#include "svgpathrunner.h"
 
 #include <QDomDocument>
 #include <QFile>
 #include <QtDebug>
+
+struct PathUserData {
+	QString string;
+	qreal sNewWidth;
+	qreal sNewHeight;
+	qreal vbWidth; 
+	qreal vbHeight;
+	qreal x;
+	qreal y;
+};
 
 SvgFileSplitter::SvgFileSplitter()
 {
@@ -126,8 +137,8 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID)
 
 	// assume that if there's no viewBox, the viewbox is at the right dpi?
 	// or should the assumption be 90 or 100?
-	qreal vbWidth = sWidth * dpi;
-	qreal vbHeight = sHeight * dpi;
+	qreal vbWidth = sWidth * 90;
+	qreal vbHeight = sHeight * 90;
 
 	QString sviewboxStr = root.attribute("viewBox");
 	if (!sviewboxStr.isEmpty()) {
@@ -193,6 +204,16 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	else if (element.nodeName().compare("path") == 0) {
 		// if stroke attribute is not empty make it black
 		// if fill attribute is not empty and not "none" make it black
+		QString stroke = element.attribute("stroke");
+		if (!stroke.isEmpty()) {
+			element.setAttribute("stroke", "black");
+		}
+		QString fill = element.attribute("fill");
+		if (!fill.isEmpty()) {
+			if (fill.compare("none") != 0) {
+				element.setAttribute("fill", "black");
+			}
+		}
 
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
@@ -202,13 +223,19 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 				DebugDialog::debug("svg path parse failed");
 			}
 			else {
-				foreach (QVariant variant, parser.symStack()) {
-					if (variant.type() == QVariant::Char) {
-						qDebug() << variant.toChar();
-					}
-					else if (variant.type() == QVariant::Double) {
-						qDebug() << variant.toDouble();
-					}
+				SVGPathRunner svgPathRunner;
+				PathUserData pathUserData;
+				pathUserData.sNewHeight = sNewHeight;
+				pathUserData.sNewWidth = sNewWidth;
+				pathUserData.vbHeight = vbHeight;
+				pathUserData.vbWidth = vbWidth;
+
+				connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)),
+						this, SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *)),
+						Qt::DirectConnection);
+				bool ok = svgPathRunner.runPath(parser.symStack(), &pathUserData);
+				if (ok) {
+					element.setAttribute("d", pathUserData.string);
 				}
 			}
 		}
@@ -266,6 +293,30 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 		shiftAttribute(element, "x", x);
 		shiftAttribute(element, "y", y);
 	}
+	else if (element.nodeName().compare("path") == 0) {
+		QString data = element.attribute("d");
+		if (!data.isEmpty()) {
+			SVGPathLexer lexer(data);
+			SVGPathParser parser;
+			if (!parser.parse(&lexer)) {
+				DebugDialog::debug("svg path parse failed");
+			}
+			else {
+				SVGPathRunner svgPathRunner;
+				PathUserData pathUserData;
+				pathUserData.x = x;
+				pathUserData.y = y;
+
+				connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)),
+						this, SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *)),
+						Qt::DirectConnection);
+				bool ok = svgPathRunner.runPath(parser.symStack(), &pathUserData);
+				if (ok) {
+					element.setAttribute("d", pathUserData.string);
+				}
+			}
+		}
+	}
 	else {
 		QDomElement childElement = element.firstChildElement();
 		while (!childElement.isNull()) {
@@ -280,4 +331,87 @@ bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attribu
 	qreal n = element.attribute(attributeName).toDouble() + d;
 	element.setAttribute(attributeName, QString::number(n)); 
 	return true;
+}
+
+void SvgFileSplitter::normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
+
+	Q_UNUSED(relative);			// just normalizing here, so relative is not used
+
+	PathUserData * pathUserData = (PathUserData *) userData;
+
+	double d;
+	pathUserData->string.append(command);
+	switch(command.toAscii()) {
+		case 'v':
+		case 'V':
+			d = args[0] * pathUserData->sNewHeight / pathUserData->vbHeight;
+			pathUserData->string.append(QString::number(d));
+			break;
+		case 'h':
+		case 'H':
+			d = args[0] * pathUserData->sNewWidth / pathUserData->vbWidth;
+			pathUserData->string.append(QString::number(d));
+			break;
+		default:
+			for (int i = 0; i < args.count(); i++) {
+				if (i % 2 == 0) {
+					d = args[i] * pathUserData->sNewWidth / pathUserData->vbWidth;
+				}
+				else {
+					d = args[i] * pathUserData->sNewHeight / pathUserData->vbHeight;
+				}
+				pathUserData->string.append(QString::number(d));
+				if (i < args.count() - 1) {
+					pathUserData->string.append(',');
+				}
+			}
+			break;
+	}
+}
+
+void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
+
+	Q_UNUSED(relative);			// just normalizing here, so relative is not used
+
+	PathUserData * pathUserData = (PathUserData *) userData;
+
+	double d;
+	pathUserData->string.append(command);
+	switch(command.toAscii()) {
+		case 'v':
+		case 'V':
+			d = args[0];
+			if (!relative) {
+				 d += pathUserData->y;
+			}
+			pathUserData->string.append(QString::number(d));
+			break;
+		case 'h':
+		case 'H':
+			d = args[0];
+			if (!relative) {
+				 d += pathUserData->x;
+			}
+			pathUserData->string.append(QString::number(d));
+			break;
+		default:
+			for (int i = 0; i < args.count(); i++) {
+				d = args[i];
+				if (i % 2 == 0) {
+					if (!relative) {
+						d += pathUserData->x;
+					}
+				}
+				else {
+					if (!relative) {
+						d += pathUserData->y;
+					}
+				}
+				pathUserData->string.append(QString::number(d));
+				if (i < args.count() - 1) {
+					pathUserData->string.append(',');
+				}
+			}
+			break;
+	}
 }

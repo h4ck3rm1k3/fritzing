@@ -189,6 +189,7 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 		else {
 			Wire * wire = dynamic_cast<Wire *>(item);
 			if (wire == NULL) continue;
+			if (!wire->getTrace()) continue;
 
 			QPointF p1 = wire->pos();
 			QPointF p2 = wire->line().p2() + p1;
