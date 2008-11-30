@@ -396,10 +396,13 @@ void PartsBinPaletteWidget::addPart(const QString& moduleID) {
 }
 
 void PartsBinPaletteWidget::removePart(const QString& moduleID) {
-	m_model->removePart(moduleID);
-
 	m_iconView->removePart(moduleID);
 	m_listView->removePart(moduleID);
+
+	// remove the model part from the model last, as this deletes it, 
+	// and the removePart calls above still need the modelpart
+	m_model->removePart(moduleID);
+
 }
 
 void PartsBinPaletteWidget::removeAlienParts() {
