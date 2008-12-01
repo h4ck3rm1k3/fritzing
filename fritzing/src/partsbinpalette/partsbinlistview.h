@@ -53,6 +53,8 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		ModelPart *itemModelPart(const QListWidgetItem *item);
 		const QString& itemModuleID(const QListWidgetItem *item);
 
+		void showInfo(QListWidgetItem * item);
+
 	protected:
 		class HtmlInfoView * m_infoView;
 		QListWidgetItem * m_hoverItem;

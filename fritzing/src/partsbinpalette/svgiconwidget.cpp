@@ -72,24 +72,12 @@ ModelPart *SvgIconWidget::modelPart() const {
 	return m_paletteItem->modelPart();
 }
 
+QPixmap *SvgIconWidget::pixmap() const {
+	return m_paletteItem->pixmap();
+}
+
 const QString &SvgIconWidget::moduleID() const {
 	return m_moduleId;
-}
-
-void SvgIconWidget::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
-	Q_UNUSED(event)
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverEnterItem(modelPart(), m_paletteItem->pixmap());
-	}
-}
-
-void SvgIconWidget::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
-	Q_UNUSED(event)
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverLeaveItem(modelPart());
-	}
 }
 
 void SvgIconWidget::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {

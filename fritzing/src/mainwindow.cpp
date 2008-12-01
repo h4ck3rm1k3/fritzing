@@ -117,6 +117,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     m_undoView->setGroup(m_undoGroup);
     m_undoGroup->setActiveStack(m_breadboardGraphicsView->undoStack());
 
+    createBinAndInfoViewDocks();
     createActions();
     createSketchButtons();
     createMenus();
@@ -784,8 +785,7 @@ void MainWindow::dockChangeActivation(FDockWidget *) {
 	}
 }
 
-void MainWindow::createDockWindows()
-{
+void MainWindow::createBinAndInfoViewDocks() {
 	m_infoView = new HtmlInfoView(m_refModel);
 
 	m_paletteWidget = new PartsBinPaletteWidget(m_refModel, m_infoView, this);
@@ -794,11 +794,13 @@ void MainWindow::createDockWindows()
 
 	if (m_paletteModel->loadedFromFile()) {
 		m_paletteWidget->loadFromModel(m_paletteModel);
-	}
-	else
-	{
+	} else {
 		m_paletteWidget->setPaletteModel(m_paletteModel);
 	}
+}
+
+void MainWindow::createDockWindows()
+{
 	dockIt(m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
 
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
@@ -942,6 +944,8 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 	m_breadboardGraphicsView->setInfoViewOnHover(infoViewOnHover);
 	m_schematicGraphicsView->setInfoViewOnHover(infoViewOnHover);
 	m_pcbGraphicsView->setInfoViewOnHover(infoViewOnHover);
+
+	m_paletteWidget->setInfoViewOnHover(infoViewOnHover);
 }
 
 void MainWindow::swapSelected() {

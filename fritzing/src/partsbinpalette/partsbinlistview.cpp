@@ -36,6 +36,7 @@ $Date$
 PartsBinListView::PartsBinListView( QWidget * parent ) : QListWidget( parent ) {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
+	m_infoViewOnHover = false;
 	setMouseTracking( true );
 	setSpacing(2);
 	setIconSize(QSize(16,16));
@@ -81,7 +82,13 @@ void PartsBinListView::setItemAux(ModelPart * modelPart) {
 void PartsBinListView::mouseMoveEvent ( QMouseEvent * event ) {
 	if (m_infoView == NULL) return;
 
-	QListWidgetItem * item = itemAt(event->pos());
+	if(m_infoViewOnHover) {
+		QListWidgetItem * item = itemAt(event->pos());
+		showInfo(item);
+	}
+}
+
+void PartsBinListView::showInfo(QListWidgetItem * item) {
 	if (item == m_hoverItem) {
 		// no change
 		return;
@@ -116,6 +123,9 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 	if (modelPart == NULL) return;
 
 	mousePressOnItem(modelPart->moduleID(), iconSize());
+	if(!m_infoViewOnHover) {
+		showInfo(current);
+	}
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {

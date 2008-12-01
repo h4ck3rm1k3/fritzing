@@ -116,7 +116,6 @@ int main(int argc, char *argv[])
 	QString prevVersion = settings.value("version").toString();
 	QString currVersion = Version::versionString();
 	if(prevVersion != currVersion) {
-		DebugDialog::debug("<<<c< clearing ");
 		settings.clear();
 	}
 

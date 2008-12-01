@@ -81,8 +81,23 @@ void PartsBinIconView::resizeEvent(QResizeEvent * event) {
 	updateSize(event->size());
 }
 
-void PartsBinIconView::mousePressEvent(QMouseEvent *event)
-{
+void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
+	if (m_infoView == NULL) return;
+
+	if(m_infoViewOnHover) {
+		SvgIconWidget * item = dynamic_cast<SvgIconWidget*>(itemAt(event->pos()));
+		if(item) showInfo(item);
+	}
+}
+
+void PartsBinIconView::showInfo(SvgIconWidget * item) {
+	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(item->scene()->parent());
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->hoverEnterItem(item->modelPart(), item->pixmap());
+	}
+}
+
+void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 	QGraphicsItem* item = this->itemAt(event->pos());
 	if (item == NULL) {
 		return QGraphicsView::mousePressEvent(event);
@@ -104,6 +119,9 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event)
 		QPoint hotspot = (mts.toPoint()-icon->pos().toPoint());
 
 		mousePressOnItem( moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
+		if(!m_infoViewOnHover) {
+			showInfo(icon);
+		}
 	}
 }
 

@@ -74,6 +74,8 @@ class PartsBinPaletteWidget : public FDockWidget {
 		ModelPart * selected();
 		bool hasAlienParts();
 
+		void setInfoViewOnHover(bool infoViewOnHover);
+
 	public slots:
 		void addPart(const QString& moduleID);
 		void removePart(const QString& moduleID);

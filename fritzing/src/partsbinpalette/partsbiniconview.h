@@ -59,6 +59,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		ModelPart *selected();
 	protected:
 		void doClear();
+		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);
 		void setItemAux(ModelPart *);
 
@@ -69,6 +70,8 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void setupLayout();
 
 		void setFirstSelected();
+
+		void showInfo(SvgIconWidget * item);
 
 	protected:
 		LayerHash m_viewLayers;

@@ -190,6 +190,7 @@ protected:
     void createToolBars();
     void createSketchButtons();
     void createStatusBar();
+    void createBinAndInfoViewDocks();
     void createDockWindows();
 	void connectPairs();
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);

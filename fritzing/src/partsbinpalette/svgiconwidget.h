@@ -45,6 +45,7 @@ class SvgIconWidget : public QGraphicsProxyWidget {
 		SvgIconWidget(ModelPart *, ItemBase::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
 		~SvgIconWidget();
 		ModelPart *modelPart() const;
+		QPixmap *pixmap() const;
 		const QString &moduleID() const;
 		QPoint globalPos();
 
@@ -55,8 +56,6 @@ class SvgIconWidget : public QGraphicsProxyWidget {
 			NONSELECTEDSTYLESHEET = 0
 		};
 
-		void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
-		void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
 		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 
 		PaletteItem *m_paletteItem;

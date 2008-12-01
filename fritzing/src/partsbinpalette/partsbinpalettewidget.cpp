@@ -399,7 +399,7 @@ void PartsBinPaletteWidget::removePart(const QString& moduleID) {
 	m_iconView->removePart(moduleID);
 	m_listView->removePart(moduleID);
 
-	// remove the model part from the model last, as this deletes it, 
+	// remove the model part from the model last, as this deletes it,
 	// and the removePart calls above still need the modelpart
 	m_model->removePart(moduleID);
 
@@ -410,4 +410,9 @@ void PartsBinPaletteWidget::removeAlienParts() {
 		removePart(moduleID);
 	}
 	m_alienParts.clear();
+}
+
+void PartsBinPaletteWidget::setInfoViewOnHover(bool infoViewOnHover) {
+	if(m_iconView) m_iconView->setInfoViewOnHover(infoViewOnHover);
+	if(m_listView) m_listView->setInfoViewOnHover(infoViewOnHover);
 }

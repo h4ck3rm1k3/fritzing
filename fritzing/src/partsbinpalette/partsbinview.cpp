@@ -115,3 +115,7 @@ void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, 
 bool PartsBinView::alreadyIn(QString moduleID) {
 	return m_partHash.contains(moduleID);
 }
+
+void PartsBinView::setInfoViewOnHover(bool infoViewOnHover) {
+	m_infoViewOnHover = infoViewOnHover;
+}

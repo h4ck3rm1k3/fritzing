@@ -44,6 +44,7 @@ class PartsBinView {
 		virtual ModelPart *selected() = 0;
 
 		bool alreadyIn(QString moduleID);
+		void setInfoViewOnHover(bool infoViewOnHover);
 
 	protected:
 		virtual void doClear();
@@ -55,6 +56,7 @@ class PartsBinView {
 		virtual void setItemAux(ModelPart * modelPart) = 0;
 
 		QHash<QString /*moduleId*/,ModelPart*> m_partHash;
+		bool m_infoViewOnHover;
 };
 
 #endif /* PARTSBINVIEW_H_ */
