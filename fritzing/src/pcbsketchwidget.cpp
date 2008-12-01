@@ -28,6 +28,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "pcbsketchwidget.h"
 #include "debugdialog.h"
 #include "svg/svgfilesplitter.h"
+#include "tracewire.h"
 
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
@@ -214,23 +215,23 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 			*/
 		}
 		else {
-			Wire * wire = dynamic_cast<Wire *>(item);
+			TraceWire * wire = dynamic_cast<TraceWire *>(item);
 			if (wire == NULL) continue;
-			if (!wire->getTrace()) continue;
 
-			QPointF p1 = wire->pos();
-			QPointF p2 = wire->line().p2() + p1;
+			QLineF line = wire->getPaintLine();
+			QPointF p1 = wire->pos() + line.p1();
+			QPointF p2 = wire->pos() + line.p2();
 			p1.setX(p1.x() * dpi / printerScale);
 			p1.setY(p1.y() * dpi / printerScale);
 			p2.setX(p2.x() * dpi / printerScale);
 			p2.setY(p2.y() * dpi / printerScale);
-			QString line = QString("<line stroke=\"black\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
+			QString lineString = QString("<line style=\"stroke-linecap: round\" stroke=\"black\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
 							.arg(p1.x())
 							.arg(p1.y())
 							.arg(p2.x())
 							.arg(p2.y())
 							.arg(wire->width() * dpi / printerScale);
-			outputSVG.append(line);
+			outputSVG.append(lineString);
 		}
 	}
 

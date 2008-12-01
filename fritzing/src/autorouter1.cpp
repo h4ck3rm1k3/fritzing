@@ -28,6 +28,7 @@ $Date$
 #include "sketchwidget.h"
 #include "debugdialog.h"
 #include "virtualwire.h"
+#include "tracewire.h"
 
 #include <math.h>
 #include <QApplication>
@@ -244,6 +245,15 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	}
 
 	cleanUp();
+
+	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
+		TraceWire * wire = dynamic_cast<TraceWire *>(item);
+		if (wire == NULL) continue;
+
+		wire->setClipEnds(true);
+		wire->update();
+	}
+
 	if (m_progressDialog) {
 		m_progressDialog->setValue(edgesDone);
 	}
@@ -516,7 +526,8 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
 	trace->setSelected(false);
 
-	Wire * traceWire = dynamic_cast<Wire *>(trace);
+	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
+	traceWire->setClipEnds(false);
 	traceWire->setColorString("trace", 1.0);
 	traceWire->setWidth(3);
 

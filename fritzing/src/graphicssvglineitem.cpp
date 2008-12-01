@@ -175,12 +175,16 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	        qt_graphicsItem_highlightSelected(this, painter, option);
         }
 	    painter->setPen(m_pen);
-	    painter->drawLine(m_line);
+	    painter->drawLine(getPaintLine());
 	
     }
     else {
     	QGraphicsSvgItem::paint(painter, option, widget);
    	}
+}
+
+const QLineF & GraphicsSvgLineItem::getPaintLine() {
+	return m_line;
 }
 
 /////////////////////////////////

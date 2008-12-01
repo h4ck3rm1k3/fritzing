@@ -67,6 +67,7 @@ HEADERS += \
     src/sketchtoolbutton.h \
     src/sketchwidget.h \
     src/svgandpartfilepath.h \
+    src/tracewire.h \
     src/version.h \
     src/viewgeometry.h \
     src/viewlayer.h \
@@ -126,6 +127,7 @@ SOURCES += \
     src/sketchmodel.cpp \
     src/sketchtoolbutton.cpp \
     src/sketchwidget.cpp \
+    src/tracewire.cpp \
     src/version.cpp \
     src/viewgeometry.cpp \
     src/viewlayer.cpp \

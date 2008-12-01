@@ -53,6 +53,7 @@ $Date$
 #include "connectoritem.h"
 #include "bus.h"
 #include "virtualwire.h"
+#include "tracewire.h"
 #include "itemdrag.h"
 #include "layerattributes.h"
 #include "waitpushundostack.h"
@@ -296,7 +297,12 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			wire->setVisible(false);
 		}
 		else {
-			wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+			if (viewGeometry.getTrace()) {
+				wire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			}
+			else {
+				wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			}
 			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 		}
 

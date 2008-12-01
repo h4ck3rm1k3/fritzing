@@ -60,6 +60,9 @@ public:
 	bool hasLine();
 
 protected:
+	virtual const QLineF & getPaintLine();
+
+protected:
 	QLineF	m_line;
 	QPen	m_pen;	
 	bool	m_hasLine;
