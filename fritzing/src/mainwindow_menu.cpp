@@ -106,8 +106,7 @@ void MainWindow::exportDiy(QAction * action) {
 	QString path = defaultSaveFolder();
 
 	QString fileExt;
-	QString extFmt = fileExtFormats.value(svgActionType);
-	DebugDialog::debug(QString("file export string %1").arg(extFmt));
+	QString extFmt = fileExtFormats.value(pdfActionType);
 	QString fileName = QFileDialog::getSaveFileName(this,
 		tr("Export for DIY..."),
 		path+"/"+m_fileName.remove(FritzingExtension)+getExtFromFileDialog(extFmt),
@@ -127,13 +126,33 @@ void MainWindow::exportDiy(QAction * action) {
 		}
 	#endif
 
-	QString svg = m_pcbGraphicsView->renderToSVG(m_printerScale);
+	QPrinter printer(QPrinter::HighResolution);
+	printer.setOutputFormat(filePrintFormats[fileExt]);
+	printer.setOutputFileName(fileName);
+	QPainter painter;
+	if (painter.begin(&printer)) {
+		QString svg = m_pcbGraphicsView->renderToSVG(m_printerScale);
+		QSvgRenderer svgRenderer;
+		svgRenderer.load(svg.toLatin1());
+		qreal trueWidth = m_pcbGraphicsView->scene()->width() / m_printerScale;
+		qreal trueHeight = m_pcbGraphicsView->scene()->height() / m_printerScale;
+		int res = printer.resolution();
+		QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
+		svgRenderer.render(&painter, bounds);
+		painter.end();
+		statusBar()->showMessage(tr("Sketch exported"), 2000);
+	}
+
+
+/*
 	QFile file(fileName);
     file.open(QIODevice::WriteOnly);
 
     QTextStream out(&file);
     out << svg;
 	file.close();
+*/
+
 
 /*
 
