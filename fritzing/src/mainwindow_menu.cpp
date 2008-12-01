@@ -1210,12 +1210,18 @@ void MainWindow::updateEditMenu() {
 
 	if (m_currentWidget != NULL) {
 		const QList<QGraphicsItem *> items =  m_currentWidget->scene()->selectedItems();
-		bool actsEnabled = items.size() > 0;
+		bool actsEnabled = false;
 		foreach (QGraphicsItem * item, items) {
 			VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
-			if (wire) {
-				actsEnabled = false;
-				break;
+			if (wire == NULL) {
+				ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+				if (itemBase != NULL) {
+					ItemBase * chief = itemBase->layerKinChief();
+					if (chief != NULL) {
+						actsEnabled = true;
+						break;
+					}
+				}
 			}
 		}
 

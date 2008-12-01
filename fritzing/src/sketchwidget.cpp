@@ -502,7 +502,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 		if (itemBase->itemType() == ModelPart::Wire) {
 			Wire * wire = dynamic_cast<Wire *>(itemBase);
-			if (wire->getRatsnest()) {
+			if (wire->getRatsnest() || wire->getVirtual()) {   // right now the only virtual wires are ratsnest wires
 				// shouldn't be here, but check anyway
 				continue;
 			}
@@ -543,7 +543,11 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 		// now prepare to disconnect all the deleted item's connectors
 		foreach (ConnectorItem * fromConnectorItem,  connectorHash.uniqueKeys()) {
+			if (fromConnectorItem->attachedTo()->getVirtual()) continue;
+
 			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+				if (toConnectorItem->attachedTo()->getVirtual()) continue;
+
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
 											  false, false, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem);
@@ -557,7 +561,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		makeDeleteItemCommand(itemBase, parentCommand);
 		emit deleteItemSignal(itemBase->id(), parentCommand);			// let the other views add the command
 	}
-
 
 	new CleanUpWiresCommand(this, true, parentCommand);
    	m_undoStack->push(parentCommand);
@@ -611,16 +614,10 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 		return;		// for now
 	}
 
-	emit changingConnectionSignal(this, parentCommand);
-
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								fromItem->id(), fromConnectorItem->connectorStuffID(),
 								toItem->id(), toConnectorItem->connectorStuffID(),
 								connect, seekLayerKin, false, parentCommand);
-	if (connect) {
-	}
-	else {
-	}
 }
 
 
@@ -1147,6 +1144,8 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		new CleanUpWiresCommand(this, true, parentCommand);
         m_undoStack->waitPush(parentCommand, 10);
 
+		emit changingConnectionSignal(this, parentCommand);
+
         event->acceptProposedAction();
 		DebugDialog::debug("after drop event");
     }
@@ -1495,6 +1494,7 @@ bool SketchWidget::checkMoved()
 	}
 
 	QList<ConnectorItem *> keys = m_needToConnectItems.keys();
+	bool doEmit = false;
 	for (int i = 0; i < keys.count(); i++) {
 		ConnectorItem * from = keys[i];
 		if (from == NULL) continue;
@@ -1503,6 +1503,11 @@ bool SketchWidget::checkMoved()
 		if (to == NULL) continue;
 
 		extendChangeConnectionCommand(from, to, true, false, parentCommand);
+		doEmit = true;
+	}
+
+	if (doEmit) {
+		emit changingConnectionSignal(this, parentCommand);
 	}
 
 	clearTemporaries();
@@ -1761,6 +1766,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	parentCommand->setText(QObject::tr("%1 %2 %3").arg(prefix).arg(wire->modelPart()->title()).arg(suffix) );
 
+	bool doEmit = false;
 	if (!from->chained()) {
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
@@ -1769,14 +1775,20 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 			foreach (ConnectorItem * formerConnectorItem, former) {
 				extendChangeConnectionCommand(from, formerConnectorItem, false, false, parentCommand);
+				doEmit = true;
 				from->tempRemove(formerConnectorItem);
 				formerConnectorItem->tempRemove(from);
 			}
 
 		}
 		if (to != NULL) {
+			doEmit = true;
 			extendChangeConnectionCommand(from, to, true, false, parentCommand);
 		}
+	}
+
+	if (doEmit) {
+		emit changingConnectionSignal(this, parentCommand);
 	}
 
 	clearTemporaries();
@@ -1812,9 +1824,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, parentCommand);
 
 
+	bool doEmit = false;
 	ConnectorItem * anchor = wire->otherConnector(from);
 	if (anchor != NULL) {
 		extendChangeConnectionCommand(anchor, m_connectorDragConnector, true, false, parentCommand);
+		doEmit = true;
 	}
 	if (to != NULL) {
 		// since both wire connections are being newly created, set up the anchor connection temporarily
@@ -1824,7 +1838,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 		extendChangeConnectionCommand(from, to, true, false, parentCommand);
 		m_connectorDragConnector->tempRemove(anchor);
 		anchor->tempRemove(m_connectorDragConnector);
+		doEmit = true;
+	}
 
+	if (doEmit) {
+		emit changingConnectionSignal(this, parentCommand);
 	}
 
 	clearTemporaries();
