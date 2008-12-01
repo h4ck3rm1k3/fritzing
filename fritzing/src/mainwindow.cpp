@@ -57,6 +57,7 @@ $Date$
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
 qreal MainWindow::m_printerScale = 1;
+int MainWindow::CascadeFactor = 40;
 
 static QString dockUnselectedColor = "QDockWidget#%1 { color: rgb(80, 80, 80); }";
 static QString dockSelectedColor = "QDockWidget#%1 { color: rgb(84,24,44); }";
@@ -1061,6 +1062,7 @@ void MainWindow::moveToPartsFolderAndLoad(const QString &unzipDirPath) {
 
 	// the sketch itself
 	mw->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false);
+	mw->move(x()+CascadeFactor,y()+CascadeFactor);
 	mw->show();
 	mw->setWindowModified(true);
 

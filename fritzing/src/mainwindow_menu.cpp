@@ -465,6 +465,7 @@ void MainWindow::load() {
     } else if(fileName.endsWith(FritzingExtension+"z")) {
     	mw->loadBundledSketch(fileName);
     }
+    mw->move(x()+CascadeFactor,y()+CascadeFactor);
 	mw->show();
 
 	closeIfEmptySketch();
@@ -1409,6 +1410,7 @@ void MainWindow::openInPartsEditor() {
 
 void MainWindow::createNewSketch() {
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
+    mw->move(x()+CascadeFactor,y()+CascadeFactor);
     mw->show();
 
     QSettings settings("Fritzing","Fritzing");
@@ -1569,6 +1571,7 @@ void MainWindow::openRecentOrExampleFile() {
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
 		mw->load(action->data().toString(),!readOnly,!readOnly);
+		mw->move(x()+CascadeFactor,y()+CascadeFactor);
 		mw->show();
 	}
 }

@@ -441,6 +441,7 @@ protected:
 	static const QString UntitledSketchName;
 	static int UntitledSketchIndex;
 	static qreal m_printerScale;
+	static int CascadeFactor;
 };
 
 #endif
