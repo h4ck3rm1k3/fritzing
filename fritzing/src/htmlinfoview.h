@@ -92,6 +92,7 @@ protected:
 	ReferenceModel *m_refModel;
 	ItemBase *m_currentItem;
 	bool m_currentSwappingEnabled;
+	int m_maxPropCount;
 };
 
 #endif

@@ -71,6 +71,8 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QWebVie
 
 	connect(page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 	registerRefModel();
+
+	m_maxPropCount = 0;
 }
 
 void HtmlInfoView::jsRegister() {
@@ -395,10 +397,18 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 #endif
 	QHash<QString,QString> properties = modelPart->modelPartStuff()->properties();
 	QString family = properties["family"].toLower();
+
+	m_maxPropCount = properties.keys().size() > m_maxPropCount ? properties.keys().size() : m_maxPropCount;
+	int rowsLeft = m_maxPropCount;
 	for(int i=0; i < properties.keys().size(); i++) {
 		QString key = properties.keys()[i];
 		QString value = properties[ key ];
 		s += propertyHtml(key, value, family, swappingEnabled);
+		rowsLeft--;
+	}
+
+	for(int i = 0; i < rowsLeft; i++) {
+		s += "<tr style='height: 35px; '><td style='border-bottom: 0px;' colspan='2'>&nbsp;</td></tr>\n";
 	}
 	s += 		 "</table>\n";
 
@@ -433,7 +443,7 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 	QStringList values = m_refModel->values(family,name);
 
 	if(!dynamic || name.toLower() == "id" || name.toLower() == "family" || values.size() == 1) {
-		return QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(name).arg(value);
+		return QString("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n").arg(name).arg(value);
 	} else {
 		QString options = "";
 		QString jsCode = "<script language='JavaScript'>\n";
@@ -444,7 +454,7 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 		}
 		jsCode += "</script>\n";
 
-		return jsCode+QString("<tr><td class='label'>%1</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select></td></tr>\n")
+		return jsCode+QString("<tr style='height: 35px;'><td class='label'>%1</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select></td></tr>\n")
 						.arg(name).arg(value).arg(family).arg(options);
 	}
 }
