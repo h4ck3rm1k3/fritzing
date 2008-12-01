@@ -86,11 +86,11 @@ $Date$
     <file>resources/images/toolbar_icons/toolbarExport_pdf_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarExport_png_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarExport_ps_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarOrder_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarExport_diy_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarDiyEnabled.png</file>
-    <file>resources/images/toolbar_icons/toolbarDiyDisabled.png</file>
+    <file>resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarAutorouteDisabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarDiyEnabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarDiyDisabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarRotateEnabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarRotateDisabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarFlipEnabled_icon.png</file>

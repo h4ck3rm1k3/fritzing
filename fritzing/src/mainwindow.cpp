@@ -167,9 +167,16 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_itemMenu->addAction(m_deleteAct);
 	m_itemMenu->addAction(m_addToBinAct);
 
-    m_breadboardGraphicsView->setItemMenu(breadboardItemMenu());
+	QMenu *breadItemMenu = breadboardItemMenu();
+    m_breadboardGraphicsView->setItemMenu(breadItemMenu);
+    m_breadboardGraphicsView->setWireMenu(breadItemMenu);
+
+    m_pcbGraphicsView->setWireMenu(pcbWireMenu());
     m_pcbGraphicsView->setItemMenu(pcbItemMenu());
-    m_schematicGraphicsView->setItemMenu(schematicItemMenu());
+
+    QMenu *schemItemMenu = schematicItemMenu();
+    m_schematicGraphicsView->setItemMenu(schemItemMenu);
+    m_schematicGraphicsView->setWireMenu(schemItemMenu);
 
 
     m_breadboardGraphicsView->setInfoView(m_infoView);
@@ -240,7 +247,7 @@ void MainWindow::preloadSlowParts() {
 
 void MainWindow::calcPrinterScale() {
 
-	// note: I think that printerScale is probably just 90 dpi, since the calculation 
+	// note: I think that printerScale is probably just 90 dpi, since the calculation
 	// result is 89.8407 across all three platforms
 
 	m_printerScale = 90.0;
@@ -509,8 +516,7 @@ void MainWindow::createSketchButtons() {
 SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
 	QList<QAction*> rotateMenuActions;
 	rotateMenuActions << m_rotate90ccwAct << m_rotate180Act << m_rotate90cwAct;
-	SketchToolButton * rotateButton = new SketchToolButton(parent, rotateMenuActions);
-	rotateButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarRotateEnabled_icon.png"));
+	SketchToolButton * rotateButton = new SketchToolButton("Rotate",parent, rotateMenuActions);
 	rotateButton->setText(tr("Rotate"));
 	connect(rotateButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
@@ -521,8 +527,7 @@ SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
 SketchToolButton *MainWindow::createFlipButton(SketchAreaWidget *parent) {
 	QList<QAction*> flipMenuActions;
 	flipMenuActions << m_flipHorizontalAct << m_flipVerticalAct;
-	SketchToolButton *flipButton = new SketchToolButton(parent, flipMenuActions);
-	flipButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarFlipEnabled_icon.png"));
+	SketchToolButton *flipButton = new SketchToolButton("Flip",parent, flipMenuActions);
 	flipButton->setText(tr("Flip"));
 	connect(flipButton, SIGNAL(menuUpdateNeeded()), this, SLOT(updateTransformationActions()));
 
@@ -531,16 +536,14 @@ SketchToolButton *MainWindow::createFlipButton(SketchAreaWidget *parent) {
 }
 
 SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
-	SketchToolButton *autorouteButton = new SketchToolButton(parent, m_autorouteAct);
-	autorouteButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png"));
+	SketchToolButton *autorouteButton = new SketchToolButton("Autoroute",parent, m_autorouteAct);
 	autorouteButton->setText(tr("Autoroute"));
 
 	return autorouteButton;
 }
 
 SketchToolButton *MainWindow::createExportDiyButton(SketchAreaWidget *parent) {
-	SketchToolButton *exportDiyButton = new SketchToolButton(parent, m_exportDiyAct);
-	exportDiyButton->setIcon(QIcon(":/resources/images/toolbar_icons/toolbarDiyEnabled.png"));
+	SketchToolButton *exportDiyButton = new SketchToolButton("Diy",parent, m_exportDiyAct);
 	exportDiyButton->setText(tr("DIY Etching"));
 
 	return exportDiyButton;
@@ -1199,7 +1202,11 @@ QMenu *MainWindow::pcbItemMenu() {
 	menu->addAction(m_rotate180Act);
 	menu->addAction(m_rotate90ccwAct);
 	menu = viewItemMenuAux(menu);
-	menu->addSeparator();
+	return menu;
+}
+
+QMenu *MainWindow::pcbWireMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
 	menu->addAction(m_createTraceAct);
 	menu->addAction(m_createJumperAct);
 	return menu;
@@ -1239,7 +1246,7 @@ void MainWindow::applyReadOnlyChange(bool isReadOnly) {
 	m_saveAct->setDisabled(isReadOnly);
 }
 
-void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView) 
+void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView)
 {
 	int index = m_navigators.indexOf(miniView);
 	if (index < 0) return;
@@ -1256,7 +1263,7 @@ void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView)
 void MainWindow::setDockColorAnd(MiniViewContainer * miniView, const QString & colorString, const QString & prefix)
 {
 	QWidget * parentWidget = miniView->parentWidget();
-	QString name = parentWidget->objectName(); 
+	QString name = parentWidget->objectName();
 	parentWidget->setStyleSheet(colorString.arg(name));
 	QStringList names = name.split("_");
 	QString useName = names.join(" ");

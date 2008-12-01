@@ -28,16 +28,17 @@ $Date$
 
 
 #include "sketchtoolbutton.h"
+#include "debugdialog.h"
 
 #include <QAction>
 #include <QActionEvent>
 #include <QMenu>
+#include <QPaintEngine>
 
-SketchToolButton::SketchToolButton(QWidget *parent, QAction* defaultAction)
+SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QAction* defaultAction)
 	: QToolButton(parent)
 {
-	setIconSize(QSize(32,32));
-	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	setupIcons(imageName);
 
 	if(defaultAction) {
 		setDefaultAction(defaultAction);
@@ -45,11 +46,10 @@ SketchToolButton::SketchToolButton(QWidget *parent, QAction* defaultAction)
 	}
 }
 
-SketchToolButton::SketchToolButton(QWidget *parent, QList<QAction*> menuActions)
+SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QList<QAction*> menuActions)
 	: QToolButton(parent)
 {
-	setIconSize(QSize(32,32));
-	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	setupIcons(imageName);
 
 	QMenu *menu = new QMenu(this);
 	for(int i=0; i < menuActions.size(); i++) {
@@ -62,6 +62,17 @@ SketchToolButton::SketchToolButton(QWidget *parent, QList<QAction*> menuActions)
 	setMenu(menu);
 	setPopupMode(QToolButton::MenuButtonPopup);
 }
+
+#define IMAGE_PREFIX ":/resources/images/toolbar_icons/toolbar"
+#define IMAGE_SUBFIX "_icon.png"
+void SketchToolButton::setupIcons(const QString &imageName) {
+	setIconSize(QSize(32,32));
+	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	m_enabledIcon = QIcon(IMAGE_PREFIX+imageName+"Enabled"+IMAGE_SUBFIX);
+	m_disabledIcon = QIcon(IMAGE_PREFIX+imageName+"Disabled"+IMAGE_SUBFIX);
+}
+#undef IMAGE_SUBFIX
+#undef IMAGE_PREFIX
 
 void SketchToolButton::updateEnabledState() {
 	bool enabled = false;
@@ -85,6 +96,22 @@ void SketchToolButton::actionEvent(QActionEvent *event) {
 			QToolButton::actionEvent(event);
 	}
 }
+
+void SketchToolButton::changeEvent(QEvent *event) {
+	if(event->type() == QEvent::EnabledChange) {
+		if(this->isEnabled()) {
+			setIcon(m_enabledIcon);
+		} else {
+			setIcon(m_disabledIcon);
+		}
+	}
+	QToolButton::changeEvent(event);
+}
+
+/*void SketchToolButton::paintEvent(QPaintEvent *event) {
+	QPixmap pixmap = m_disabledIcon.pixmap(iconSize());
+	paintEngine()->painter()->drawPixmap(pos(), pixmap);
+}*/
 
 /*void SketchToolButton::mousePressEvent(QMouseEvent *event) {
 	emit menuUpdateNeeded();

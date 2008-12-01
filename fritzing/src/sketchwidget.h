@@ -115,6 +115,7 @@ public:
  	void setBackground(QColor);
  	const QColor& background();
  	void setItemMenu(QMenu*);
+ 	void setWireMenu(QMenu*);
 	void changeConnection(long fromID,
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
@@ -264,7 +265,7 @@ signals:
 	void wireDisconnectedSignal(long fromID, QString fromConnectorID);
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
-								long toID, QString toConnectorID,  
+								long toID, QString toConnectorID,
 								bool connect, bool chain);
 	void zoomChanged(qreal zoom);
 	void zoomOutOfRange(qreal zoom);
@@ -365,10 +366,11 @@ protected:
 
 	// Part Menu
 	QMenu *m_itemMenu;
+	QMenu *m_wireMenu;
 
 	bool m_infoViewOnHover;
 
-	QSet<ItemBase *> m_savedItems;	
+	QSet<ItemBase *> m_savedItems;
 	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;

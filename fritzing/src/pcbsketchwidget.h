@@ -38,7 +38,7 @@ class PCBSketchWidget : public PCBSchematicSketchWidget
 public:
     PCBSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
 
-	void addViewLayers(); 
+	void addViewLayers();
 	QString renderToSVG(qreal printerScale);
 
 protected:
@@ -46,6 +46,7 @@ protected:
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire);
 	void checkAutorouted();
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
+
 };
 
 #endif

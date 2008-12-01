@@ -236,6 +236,7 @@ protected:
 	QMenu *breadboardItemMenu();
 	QMenu *schematicItemMenu();
 	QMenu *pcbItemMenu();
+	QMenu *pcbWireMenu();
 
 	QMenu *viewItemMenuAux(QMenu* menu);
 	void setDockColorAnd(MiniViewContainer *, const QString & colorString, const QString & prefix);

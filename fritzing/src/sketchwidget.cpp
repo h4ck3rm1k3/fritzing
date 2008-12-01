@@ -289,14 +289,14 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		bool virtualWire = viewGeometry.getVirtual();
 		Wire * wire = NULL;
 		if (virtualWire) {
-			wire = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			wire = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
              			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 
 			// prevents virtual wires from flashing up on screen
 			wire->setVisible(false);
 		}
 		else {
-			wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
 			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 		}
 
@@ -1294,7 +1294,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	QGraphicsView::mouseMoveEvent(event);
 }
 
-void SketchWidget::moveItems(QPoint globalPos) 
+void SketchWidget::moveItems(QPoint globalPos)
 {
 	QRect r = rect();
 	QPoint q = mapFromGlobal(globalPos);
@@ -2410,6 +2410,10 @@ void SketchWidget::setItemMenu(QMenu* itemMenu){
 	m_itemMenu = itemMenu;
 }
 
+void SketchWidget::setWireMenu(QMenu* wireMenu){
+	m_wireMenu = wireMenu;
+}
+
 void SketchWidget::sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID) {
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
@@ -2605,7 +2609,7 @@ void SketchWidget::tempConnectWire(ItemBase * itemBase, ConnectorItem * from, Co
 
 void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
 												 long toID, QString toConnectorID,
-												 bool connect, bool chain) 
+												 bool connect, bool chain)
 {
 	changeConnection(fromID, fromConnectorID,
 					 toID, toConnectorID,
@@ -2830,7 +2834,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	vg.setLine(newLine2);
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
-	
+
 	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
@@ -3121,25 +3125,25 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 
 void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
 								   const QString& oldColor, const QString newColor,
-								   qreal oldOpacity, qreal newOpacity) 
-{	
+								   qreal oldOpacity, qreal newOpacity)
+{
 	Q_UNUSED(oldColor);
 	Q_UNUSED(oldOpacity);
-	
+
 	Wire * wire = dynamic_cast<Wire *>(findItem(wireId));
 	if (wire == NULL) return;
-	
+
 	QList<Wire *> wires;
 	wire->collectWires(wires);
-	
+
 	QUndoCommand* parentCommand = new QUndoCommand(
 		tr("Wire %1 color changed from %2 to %3")
 			.arg(wireTitle)
 			.arg(oldColor)
 			.arg(newColor)
 	);
-	
-	foreach (Wire * wire, wires) {	
+
+	foreach (Wire * wire, wires) {
 		new WireColorChangeCommand(
 				this,
 				wire->id(),

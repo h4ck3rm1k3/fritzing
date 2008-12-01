@@ -35,8 +35,8 @@ $Date$
 class SketchToolButton : public QToolButton {
 	Q_OBJECT
 	public:
-		SketchToolButton(QWidget *parent, QAction* defaultAction);
-		SketchToolButton(QWidget *parent, QList<QAction*> menuActions);
+		SketchToolButton(const QString &imageName, QWidget *parent, QAction* defaultAction);
+		SketchToolButton(const QString &imageName, QWidget *parent, QList<QAction*> menuActions);
 
 		void updateEnabledState();
 
@@ -46,6 +46,13 @@ class SketchToolButton : public QToolButton {
 	protected:
 		void actionEvent(QActionEvent *event);
 		//void mousePressEvent(QMouseEvent *event);
+		void changeEvent(QEvent *event);
+		//void paintEvent(QPaintEvent *event);
+
+		void setupIcons(const QString &imageName);
+
+		QIcon m_enabledIcon;
+		QIcon m_disabledIcon;
 };
 
 #endif /* SKETCHTOOLBUTTON_H_ */

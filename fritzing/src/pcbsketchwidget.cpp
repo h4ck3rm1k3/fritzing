@@ -77,7 +77,7 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 	}
 }
 
-void PCBSketchWidget::checkAutorouted() 
+void PCBSketchWidget::checkAutorouted()
 {
 	// TODO: the code below is mostly redundant to the code in updateRatsnestStatus
 
@@ -145,7 +145,7 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 	static qreal dpi = 1000;
 
 	QString outputSVG;
-	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> " 
+	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "
 							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
 							 "version=\"1.2\" baseProfile=\"tiny\" "
 							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
@@ -194,7 +194,7 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 					.arg(transform.dx())
 					.arg(transform.dy())
 					.append(itemSvg)
-					.append("</g>");				
+					.append("</g>");
 			}
 			if (loc.x() != 0 || loc.y() != 0) {
 				itemSvg = QString("<g transform=\"translate(%1,%2)\" >")
@@ -206,7 +206,7 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 
 			outputSVG.append(itemSvg);
 
-			/* 
+			/*
 			// TODO:  deal with rotations and flips
 			QString shifted = splitter->shift(loc.x(), loc.y(), "copper0");
 			outputSVG.append(shifted);
