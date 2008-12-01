@@ -53,6 +53,7 @@ public:
 	const QDomDocument & domDocument();
 	bool normalize(qreal dpi, const QString & elementID);
 	QString shift(qreal x, qreal y, const QString & elementID);
+	QString elementString(const QString & elementID);
 
 protected:
 	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);

@@ -101,6 +101,19 @@ const QDomDocument & SvgFileSplitter::domDocument() {
 	return m_domDocument;
 }
 
+QString SvgFileSplitter::elementString(const QString & elementID) {
+	QDomElement root = m_domDocument.documentElement();
+
+	QDomElement mainElement = findElementWithAttribute(root, "id", elementID);
+	if (mainElement.isNull()) return ___emptyString___;
+
+	QDomDocument document;
+	QDomNode node = document.importNode(mainElement, true);
+	document.appendChild(node);
+
+	return document.toString();
+}
+
 bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID) 
 {
 	// get the viewbox and the width and height

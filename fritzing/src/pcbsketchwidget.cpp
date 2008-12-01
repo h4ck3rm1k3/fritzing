@@ -181,10 +181,37 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 			QPointF loc = paletteItem->scenePos();
 			loc.setX(loc.x() * dpi / printerScale);
 			loc.setY(loc.y() * dpi / printerScale);
+
+			QString itemSvg = splitter->elementString("copper0");
+
+			if (!paletteItem->transform().isIdentity()) {
+				QTransform transform = paletteItem->transform();
+				itemSvg = QString("<g transform=\"matrix(%1,%2,%3,%4,%5,%6)\" >")
+					.arg(transform.m11())
+					.arg(transform.m12())
+					.arg(transform.m21())
+					.arg(transform.m22())
+					.arg(transform.dx())
+					.arg(transform.dy())
+					.append(itemSvg)
+					.append("</g>");				
+			}
+			if (loc.x() != 0 || loc.y() != 0) {
+				itemSvg = QString("<g transform=\"translate(%1,%2)\" >")
+					.arg(loc.x())
+					.arg(loc.y())
+					.append(itemSvg)
+					.append("</g>");
+			}
+
+			outputSVG.append(itemSvg);
+
+			/* 
 			// TODO:  deal with rotations and flips
 			QString shifted = splitter->shift(loc.x(), loc.y(), "copper0");
 			outputSVG.append(shifted);
 			splitter->shift(-loc.x(), -loc.y(), "copper0");
+			*/
 		}
 		else {
 			Wire * wire = dynamic_cast<Wire *>(item);
