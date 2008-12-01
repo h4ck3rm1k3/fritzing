@@ -118,10 +118,11 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 		QString moduleID = icon->moduleID();
 		QPoint hotspot = (mts.toPoint()-icon->pos().toPoint());
 
-		mousePressOnItem( moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
 		if(!m_infoViewOnHover) {
 			showInfo(icon);
 		}
+
+		mousePressOnItem( moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
 	}
 }
 

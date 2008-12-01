@@ -122,10 +122,11 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 	ModelPart * modelPart = current->data(Qt::UserRole).value<ModelPart *>();
 	if (modelPart == NULL) return;
 
-	mousePressOnItem(modelPart->moduleID(), iconSize());
 	if(!m_infoViewOnHover) {
 		showInfo(current);
 	}
+
+	mousePressOnItem(modelPart->moduleID(), iconSize());
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
