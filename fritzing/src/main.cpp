@@ -113,6 +113,13 @@ int main(int argc, char *argv[])
 	PaletteModel * paletteBinModel = new PaletteModel(true, false);
 
 	QSettings settings("Fritzing","Fritzing");
+	QString prevVersion = settings.value("version").toString();
+	QString currVersion = Version::versionString();
+	if(prevVersion != currVersion) {
+		DebugDialog::debug("<<<c< clearing ");
+		settings.clear();
+	}
+
 	QString binToOpen = settings.value("lastBin").toString();
 	binToOpen = binToOpen.isNull() || binToOpen.isEmpty() ? MainWindow::CoreBinLocation : binToOpen;
 
@@ -137,7 +144,6 @@ int main(int argc, char *argv[])
 
 		}
 	} else {
-		QSettings settings("Fritzing","Fritzing");
 		if(!settings.value("lastOpenSketch").isNull()) {
 			QString lastSketchPath = settings.value("lastOpenSketch").toString();
 			if(QFileInfo(lastSketchPath).exists()) {
@@ -155,6 +161,8 @@ int main(int argc, char *argv[])
 
     delete paletteBinModel;
     delete referenceModel;
+
+    settings.setValue("version",currVersion);
 
     return result;
 }
