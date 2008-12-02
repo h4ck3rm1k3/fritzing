@@ -536,14 +536,12 @@ bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
 			this->close();
 			event->ignore();
 			QCoreApplication::processEvents();
+#ifdef Q_WS_MAC
 			MainWindow *parent = dynamic_cast<MainWindow*>(parentWidget());
 			if(parent) {
-				parent->setDontClose(true);
-				QTimer *timer = new QTimer(this);
-				timer->setSingleShot(true);
-				connect(timer,SIGNAL(timeout()),parent,SLOT(ensureClosable()));
-				timer->start(30);
+				parent->notClosableForAWhile();
 			}
+#endif
 			return true;
 		}
 	}

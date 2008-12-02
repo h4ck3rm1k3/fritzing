@@ -1678,8 +1678,13 @@ void MainWindow::createJumper() {
 	m_pcbGraphicsView->createJumper();
 }
 
-void MainWindow::setDontClose(bool dontClose) {
-	m_dontClose = dontClose;
+void MainWindow::notClosableForAWhile() {
+	m_dontClose = true;
+
+	QTimer *timer = new QTimer(this);
+	timer->setSingleShot(true);
+	connect(timer,SIGNAL(timeout()),this,SLOT(ensureClosable()));
+	timer->start(500);
 }
 
 void MainWindow::ensureClosable() {
