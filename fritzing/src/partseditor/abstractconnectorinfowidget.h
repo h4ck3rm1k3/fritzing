@@ -43,6 +43,7 @@ class AbstractConnectorInfoWidget : public QFrame {
 	signals:
 		void tellSistersImNewSelected(AbstractConnectorInfoWidget*); // Meant to be used in the info context
 		void tellViewsMyConnectorIsNewSelected(const QString&); // Meant to be used in the info context
+		void repaintNeeded();
 
 	protected:
 		void reapplyStyle();

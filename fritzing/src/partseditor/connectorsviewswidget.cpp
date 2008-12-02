@@ -84,3 +84,9 @@ void ConnectorsViewsWidget::createViewImageWidget(
 	viw->setUndoStack(undoStack);
 	viw->addViewLayer(new ViewLayer(viewLayerId, true, 2.5));
 }
+
+void ConnectorsViewsWidget::repaint() {
+	m_breadView->scene()->update();
+	m_schemView->scene()->update();
+	m_pcbView->scene()->update();
+}

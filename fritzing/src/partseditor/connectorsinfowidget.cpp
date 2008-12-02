@@ -97,11 +97,20 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 	installEventFilter(this);
 }
 
+void ConnectorsInfoWidget::emitPaintNeeded() {
+	emit repaintNeeded();
+}
+
 void ConnectorsInfoWidget::selectionChanged(AbstractConnectorInfoWidget* selected) {
 	if(m_selected) {
 		m_selected->setSelected(false);
 	}
 	m_selected = selected;
+
+	QTimer *timer = new QTimer(this);
+	timer->setSingleShot(true);
+	connect(timer, SIGNAL(timeout()), this, SLOT(emitPaintNeeded()));
+	timer->start(20);
 }
 
 void ConnectorsInfoWidget::setSelected(AbstractConnectorInfoWidget * newSelected) {
@@ -213,6 +222,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 	connect(sci,SIGNAL(tellSistersImNewSelected(AbstractConnectorInfoWidget*)),this,SLOT(selectionChanged(AbstractConnectorInfoWidget*)));
 	connect(sci,SIGNAL(tellViewsMyConnectorIsNewSelected(const QString&)),this,SLOT(informConnectorSelection(const QString &)));
 	connect(this,SIGNAL(editionCompleted()),sci,SLOT(editionCompleted()));
+
 }
 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewId, QString connId) {

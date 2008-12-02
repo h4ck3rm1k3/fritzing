@@ -46,12 +46,14 @@ class ConnectorsInfoWidget : public QFrame{
 		void informConnectorSelection(const QString &);
 		void informEditionCompleted();
 		void syncNewConnectors(ItemBase::ViewIdentifier viewId, const QList<Connector*> &conns);
+		void emitPaintNeeded();
 
 	signals:
 		void connectorSelected(const QString &);
 		void editionCompleted();
 		void existingConnector(ItemBase::ViewIdentifier viewId, const QString &id, Connector*);
 		void setMismatching(ItemBase::ViewIdentifier viewId, const QString &connId, bool mismatching);
+		void repaintNeeded();
 
 	protected slots:
 		void updateLayout();

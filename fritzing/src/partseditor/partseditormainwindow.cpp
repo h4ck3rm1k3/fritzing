@@ -221,6 +221,8 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	m_connsInfo = new ConnectorsInfoWidget(m_undoStack,this);
 	m_connsViews = new ConnectorsViewsWidget(m_symbols, m_sketchModel, m_undoStack, m_connsInfo, this);
 
+	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_connsViews, SLOT(repaint()));
+
 	connect(
 		m_symbols, SIGNAL(connectorsFound(QList<Connector*>)),
 		m_connsInfo, SLOT(connectorsFound(QList<Connector*>))

@@ -41,6 +41,9 @@ class ConnectorsViewsWidget : public QFrame {
 	public:
 		ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchModel *sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent=0);
 
+	public slots:
+		void repaint();
+
 	protected:
 		void createViewImageWidget(
 				PartsEditorConnectorViewImageWidget *&viw, PartsEditorViewImageWidget* sister,
