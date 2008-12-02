@@ -68,6 +68,7 @@ public:
     MainWindow(QFile & fileToLoad);
     void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void doOnce();
+	void setDontClose(bool dontClose=false);
 
 public:
 	static void initExportConstants();
@@ -77,7 +78,7 @@ signals:
 	void aboutToClose();
 
 public slots:
-	void setDontClose(bool dontClose=false);
+	void ensureClosable();
 
 protected slots:
 	void load();

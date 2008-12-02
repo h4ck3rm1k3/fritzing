@@ -1681,3 +1681,7 @@ void MainWindow::createJumper() {
 void MainWindow::setDontClose(bool dontClose) {
 	m_dontClose = dontClose;
 }
+
+void MainWindow::ensureClosable() {
+	m_dontClose = false;
+}

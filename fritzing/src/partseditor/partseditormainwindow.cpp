@@ -533,8 +533,18 @@ bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
 	if (object == this && event->type() == QEvent::ShortcutOverride) {
 		QKeyEvent *keyEvent = dynamic_cast<QKeyEvent*>(event);
 		if(keyEvent && keyEvent->matches(QKeySequence::Close)) {
+			this->close();
+			event->ignore();
 			QCoreApplication::processEvents();
-			return this->close();
+			MainWindow *parent = dynamic_cast<MainWindow*>(parentWidget());
+			if(parent) {
+				parent->setDontClose(true);
+				QTimer *timer = new QTimer(this);
+				timer->setSingleShot(true);
+				connect(timer,SIGNAL(timeout()),parent,SLOT(ensureClosable()));
+				timer->start(30);
+			}
+			return true;
 		}
 	}
 	return QMainWindow::eventFilter(object, event);
