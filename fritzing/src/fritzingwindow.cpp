@@ -184,15 +184,24 @@ QString FritzingWindow::getExtFromFileDialog(const QString &extOpt) {
 }
 
 bool FritzingWindow::beforeClosing(bool showCancel) {
-	QFlags<QMessageBox::StandardButton> buttons = QMessageBox::Yes | QMessageBox::No;
-	if(showCancel) buttons = buttons | QMessageBox::Cancel;
-
 	if (this->isWindowModified()) {
      	QMessageBox::StandardButton reply;
-     	reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fileName).baseName()),
-                                     tr("Do you want to save the changes you made in the document %1? Your changes will be lost if you don't save them")
-                                     .arg(QFileInfo(m_fileName).baseName()),
-                                     buttons);
+     	QMessageBox *messageBox = new QMessageBox(
+     			tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
+     			tr("Do you want to save the changes you made in the document %1? Your changes will be lost if you don't save them")
+					.arg(QFileInfo(m_fileName).baseName()),
+     			QMessageBox::Warning,
+     			QMessageBox::Yes | QMessageBox::Default,
+     			QMessageBox::No,
+     			showCancel ? QMessageBox::Cancel | QMessageBox::Escape : QMessageBox::NoButton,
+     			this, Qt::Sheet);
+
+		messageBox->setButtonText(QMessageBox::Yes,
+			m_fileName.startsWith(untitledFileName()) ? tr("Save...") : tr("Save"));
+		messageBox->setButtonText(QMessageBox::No, tr("Don't Save"));
+
+		reply = (QMessageBox::StandardButton)messageBox->exec();
+
      	if (reply == QMessageBox::Yes) {
      		return save();
     	} else if (reply == QMessageBox::No) {
