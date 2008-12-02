@@ -43,7 +43,6 @@ public:
 		Male,
 		Female,
 		Wire,
-		BusType,
 		Unknown
 	};
 

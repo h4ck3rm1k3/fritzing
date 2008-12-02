@@ -152,7 +152,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	// run dykstra over each net
 	foreach (QList<ConnectorItem *>* partConnectorItems, m_allPartConnectorItems) {
 		// dijkstra will reorder *partConnectorItems
-		dijkstra(*partConnectorItems, indexer, adjacency);
+		dijkstra(*partConnectorItems, indexer, adjacency, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
 		for (int i = 0; i < partConnectorItems->count() - 1; i++) {
 			Edge * edge = new Edge;
 			edge->from = partConnectorItems->at(i);
@@ -314,7 +314,7 @@ void Autorouter1::updateRatsnest(bool routed) {
 }
 
 
-void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency) {
+void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy) {
 	// TODO: this is the most straightforward dijkstra, but there are more efficient implementations
 
 	int count = vertices.count();
@@ -334,11 +334,13 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 				ConnectorItem * ci = vertices[i];
 				ConnectorItem * cj = vertices[j];
 				double d = 0;
-				Wire * wire = ci->wiredTo(cj, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
+				Wire * wire = ci->wiredTo(cj, alreadyWiredBy);
 				if (wire && !wire->getAutoroutable()) {
+					// leave the distance at zero
 					// do not autoroute--user says leave it alone
 				}
 				else if (ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
+					// leave the distance at zero
 					// if connections are on the same bus on a given part
 				}
 				else {

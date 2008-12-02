@@ -48,7 +48,6 @@ void Connector::initNames() {
 		names.insert(Connector::Male, "male");
 		names.insert(Connector::Female, "female");
 		names.insert(Connector::Wire, "wire");
-		names.insert(Connector::BusType, "bus");
 	}
 }
 
@@ -72,9 +71,8 @@ Connector::ConnectorType Connector::connectorType() {
 	if (m_connectorStuff != NULL) {
 		return m_connectorStuff->connectorType();
 	}
-	else {
-		return Connector::BusType;
-	}
+
+	return Connector::Unknown;
 }
 
 ConnectorStuff * Connector::connectorStuff() {

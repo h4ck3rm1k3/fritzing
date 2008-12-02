@@ -52,6 +52,7 @@ public:
 		JumperFlag = 8,
 		RatsnestFlag = 16,
 		AutoroutableFlag = 32,
+		NormalFlag = 64
 	};
 	Q_DECLARE_FLAGS(WireFlags, WireFlag)
 
@@ -86,6 +87,8 @@ public:
 	bool getRatsnest() const;
 	void setAutoroutable(bool);
 	bool getAutoroutable() const;
+	void setNormal(bool);
+	bool getNormal() const;
 	void setWireFlags(WireFlags);
 	bool hasFlag(WireFlag);
 	bool hasAnyFlag(WireFlags);

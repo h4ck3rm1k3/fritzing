@@ -53,12 +53,13 @@ void BreadboardSketchWidget::addViewLayers() {
 	addBreadboardViewLayers();
 }
 
-void BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand)
+bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand)
 {
 	// if item is attached to a virtual wire or a female connector in breadboard view
 	// then disconnect it
 	// at the moment, I think this doesn't apply to other views
 
+	bool result;
 	foreach (QGraphicsItem * childItem, item->childItems()) {
 		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (fromConnectorItem == NULL) continue;
@@ -70,6 +71,7 @@ void BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 					continue;
 				}
 
+				result = true;
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem);
 				toConnectorItem->tempRemove(fromConnectorItem);
@@ -77,6 +79,8 @@ void BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 			}
 		}
 	}
+
+	return result;
 }
 
 BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()

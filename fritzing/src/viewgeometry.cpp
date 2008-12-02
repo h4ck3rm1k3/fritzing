@@ -176,6 +176,10 @@ void ViewGeometry::setRatsnest(bool ratsnest) {
 	setWireFlag(ratsnest, RatsnestFlag);
 }
 
+void ViewGeometry::setNormal(bool normal) {
+	setWireFlag(normal, NormalFlag);
+}
+
 void ViewGeometry::setAutoroutable(bool autoroutable) {
 	setWireFlag(autoroutable, AutoroutableFlag);
 }
@@ -187,6 +191,11 @@ bool ViewGeometry::getVirtual() const {
 bool ViewGeometry::getRouted() const {
 	
 	return m_wireFlags.testFlag(RoutedFlag);
+}
+
+bool ViewGeometry::getNormal() const {
+	
+	return m_wireFlags.testFlag(NormalFlag);
 }
 
 bool ViewGeometry::getTrace() const {

@@ -240,7 +240,7 @@ protected:
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
-	virtual void disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand);
+	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
@@ -280,11 +280,9 @@ signals:
 	void swapped(long itemId, ModelPart *with);
 	void resizeSignal();
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
-	void deletingSignal(SketchWidget *, QUndoCommand * parentCommand);
-	void addingSignal(SketchWidget *, QUndoCommand * parentCommand);
-	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
+	void ratsnestChangeSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
-	void changingConnectionSignal(SketchWidget *, QUndoCommand * parentCommand);
+	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void selectAllItemsSignal(bool state, bool doEmit);
 	void setChainedWireIDSignal(qint64 wireID, qint64 chainedID);
 

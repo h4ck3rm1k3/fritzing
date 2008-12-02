@@ -54,7 +54,6 @@ void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorIte
 		ConnectorItem * source = partsConnectorItems[i];
 		for (int j = i + 1; j < count; j++) {
 			ConnectorItem * dest = partsConnectorItems[j];
-			// if you can't get from i to j via wires, then add a virtual ratsnest wire
 			Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
 			if (tempWire != NULL) {
 				deleteItem(tempWire, false, false);
@@ -74,7 +73,7 @@ void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorIte
 		adjacency[i] = row;
 	}
 
-	Autorouter1::dijkstra(partsConnectorItems, indexer, adjacency);
+	Autorouter1::dijkstra(partsConnectorItems, indexer, adjacency, ViewGeometry::NormalFlag);
 
 	foreach (QVector<double> * row, adjacency) {
 		delete row;

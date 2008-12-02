@@ -41,6 +41,35 @@ QHash <ItemBase::ViewIdentifier, StringTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 
+
+bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
+{
+	if (c1->connectorType() == c2->connectorType()) {
+		// if they're the same type return the topmost
+		return c1->zValue() > c2->zValue();
+	}
+	if (c1->connectorType() == Connector::Female) {
+		// choose the female first
+		return true;
+	}
+	if (c2->connectorType() == Connector::Female) {
+		// choose the female first
+		return false;
+	}
+	if (c1->connectorType() == Connector::Male) {
+		// choose the male first
+		return true;
+	}
+	if (c2->connectorType() == Connector::Male) {
+		// choose the male first
+		return false;
+	}
+
+	return c1->zValue() > c2->zValue();
+	
+}
+
+
 ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
@@ -382,10 +411,10 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 	QList<QGraphicsItem *> items = useTerminalPoint
 		? this->scene()->items(connectorItemOver->sceneAdjustedTerminalPoint())
 		: this->scene()->items(mapToScene(connectorItemOver->rect()));
-	bool gotOne = false;
+	QList<ConnectorItem *> candidates;
 	// for the moment, take the topmost ConnectorItem that doesn't belong to me
-	for (int i = 0; i < items.count(); i++) {
-		ConnectorItem * connectorItemUnder = dynamic_cast<ConnectorItem *>(items[i]);
+	foreach (QGraphicsItem * item, items) {
+		ConnectorItem * connectorItemUnder = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItemUnder == NULL) continue;
 		if (connectorItemUnder->connector() == NULL) continue;			// for now; this is probably a busConnectorItem
 		if (childItems().contains(connectorItemUnder)) continue;
@@ -396,35 +425,26 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 			continue;		// already connected
 		}
 
-		//if (connector->attachedToItemType() == ModelPart::Wire) {
-		// for the moment, wires can't connect to wires
-		//continue;
-		//}
-
-		if (connectorItemUnder == lastUnderConnector) {
-			// no change
-			gotOne = true;
-			break;
-		}
-
-		if (lastUnderConnector != NULL) {
-			lastUnderConnector->connectorHover(this, false);
-		}
-
-		gotOne = true;
-		lastUnderConnector = connectorItemUnder;
-		lastUnderConnector->connectorHover(this, true);
-		break;
-
-		//DebugDialog::debug("rolled over a connector");
+		candidates.append(connectorItemUnder);
 	}
 
-	if (!gotOne) {
-		if (lastUnderConnector != NULL) {
-			lastUnderConnector->connectorHover(this, false);
-			lastUnderConnector = NULL;
-		}
+	ConnectorItem * candidate = NULL;
+	if (candidates.count() == 1) {
+		candidate = candidates[0];
 	}
+	else if (candidates.count() > 0) {
+		qSort(candidates.begin(), candidates.end(), wireLessThan);
+		candidate = candidates[0];
+	}
+
+	if (lastUnderConnector != NULL && candidate != lastUnderConnector) {
+		lastUnderConnector->connectorHover(this, false);
+	}
+	if (candidate != NULL && candidate != lastUnderConnector) {
+		candidate->connectorHover(this, true);
+	}
+
+	lastUnderConnector = candidate;
 
 	return lastUnderConnector;
 }

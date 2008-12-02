@@ -36,6 +36,8 @@ $Date$
 #include <QLine>
 #include <QProgressDialog>
 
+#include "viewgeometry.h"
+
 class Autorouter1
 {
 public:
@@ -45,8 +47,8 @@ public:
 	void start(QProgressDialog *);
 	
 public:
-	static void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency);
-	static void collectAllNets(SketchWidget *, QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems);
+	static void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy);
+	static void collectAllNets(class SketchWidget *, QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems);
 
 protected:
 	void drawTrace(class ConnectorItem * from, class ConnectorItem * to, const QPolygonF & boundingPoly, QList<class Wire *> & wires);

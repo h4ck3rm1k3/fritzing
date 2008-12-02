@@ -90,6 +90,9 @@ public:
 	void setRatsnest(bool);
 	void setAutoroutable(bool);
 	bool getAutoroutable();
+	void setNormal(bool);
+	bool getNormal();
+
 
 	bool hasFlag(ViewGeometry::WireFlag);
 	bool hasAnyFlag(ViewGeometry::WireFlags);

@@ -721,6 +721,14 @@ bool Wire::getAutoroutable() {
 	return m_viewGeometry.getAutoroutable();
 }
 
+void Wire::setNormal(bool normal) {
+	m_viewGeometry.setNormal(normal);
+}
+
+bool Wire::getNormal() {
+	return m_viewGeometry.getNormal();
+}
+
 void Wire::setColor(QColor & color, qreal op) {
 	m_pen.setBrush(QBrush(color));
 	m_opacity = op;
