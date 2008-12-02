@@ -384,6 +384,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 		delete pixmap3;
 	}
+	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartStuff()->title())
 											   .arg("&nbsp;"+modelPart->modelPartStuff()->version());
 	s += 		"</div>\n";
