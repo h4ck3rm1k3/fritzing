@@ -189,18 +189,19 @@ bool FritzingWindow::beforeClosing(bool showCancel) {
      	QMessageBox::StandardButton reply;
      	QMessageBox *messageBox = new QMessageBox(
      			tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
-     			tr("Do you want to save the changes you made in the document %1? Your changes will be lost if you don't save them")
+     			tr("Do you want to save the changes you made in the document \"%1\"?")
 					.arg(QFileInfo(m_fileName).baseName()),
      			QMessageBox::Warning,
-     			QMessageBox::Yes | QMessageBox::Default,
+				showCancel ? QMessageBox::Yes : QMessageBox::Yes | QMessageBox::Default,
      			QMessageBox::No,
-     			showCancel ? QMessageBox::Cancel | QMessageBox::Escape : QMessageBox::NoButton,
+     			showCancel ? QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default : QMessageBox::NoButton,
      			this, Qt::Sheet);
 
 		messageBox->setButtonText(QMessageBox::Yes,
 			m_fileName.startsWith(untitledFileName()) ? tr("Save...") : tr("Save"));
 		messageBox->setButtonText(QMessageBox::No, tr("Don't Save"));
 		messageBox->button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
+		messageBox->setInformativeText("Your changes will be lost if you don't save them.");
 
 		reply = (QMessageBox::StandardButton)messageBox->exec();
 
