@@ -3,7 +3,7 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    version="1.2" baseProfile="tiny"
-	 x="0px" y="0px" width="68.8mm" height="53.4mm"
+	 x="0px" y="0px" width="68.8mm" height="53.4mm" viewBox="0 0 243.77952 189.212598"
 	 id="svg2">
 	<g id="board">
 		<path fill="#800000" fill-opacity="0.35" d="M233.57,45.438V5.385l-6.241-4.459H0.888L0.89,188.052h232.683v-8.918l8.918-8.918
