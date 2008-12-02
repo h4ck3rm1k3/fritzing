@@ -76,6 +76,7 @@ $Date$
     <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>
     <file>resources/images/icons/partsBinSaveDisabled_icon.png</file>
     <file>resources/images/icons/partsBinCore_icon.png</file>
+    <file>resources/images/icons/partsBinDelete_icon.png</file>
     <file>resources/images/icons/partsBinIconViewActive_icon.png</file>
     <file>resources/images/icons/partsBinIconViewInactive_icon.png</file>
     <file>resources/images/icons/partsBinListViewActive_icon.png</file>

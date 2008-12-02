@@ -215,7 +215,7 @@ void PartsBinPaletteWidget::setupButtons() {
 	connect(m_showListViewButton,SIGNAL(clicked()),this,SLOT(toListView()));
 
 	m_removeSelected = new ImageButton(this);
-	m_removeSelected->setPixmap(QPixmap(":/resources/images/icons/partsBinOpen_icon.png"));
+	m_removeSelected->setPixmap(QPixmap(":/resources/images/icons/partsBinDelete_icon.png"));
 	m_removeSelected->setToolTip(tr("Remove selected part"));
 	connect(m_removeSelected,SIGNAL(clicked()),this,SLOT(removeSelected()));
 
