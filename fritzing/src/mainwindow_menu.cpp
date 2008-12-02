@@ -1678,3 +1678,6 @@ void MainWindow::createJumper() {
 	m_pcbGraphicsView->createJumper();
 }
 
+void MainWindow::setDontClose(bool dontClose) {
+	m_dontClose = dontClose;
+}

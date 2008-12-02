@@ -68,6 +68,7 @@ public:
     MainWindow(QFile & fileToLoad);
     void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void doOnce();
+	void setDontClose(bool dontClose);
 
 public:
 	static void initExportConstants();
