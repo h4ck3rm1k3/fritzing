@@ -858,13 +858,16 @@ void MainWindow::createPartMenuActions() {
 
 void MainWindow::createViewMenuActions() {
 	m_zoomInAct = new QAction(tr("&Zoom In"), this);
-#ifdef Q_WS_MAC
-	m_zoomInAct->setShortcut(tr("Ctrl+="));
-#else	
 	m_zoomInAct->setShortcut(tr("Ctrl++"));
-#endif
 	m_zoomInAct->setStatusTip(tr("Zoom in"));
 	connect(m_zoomInAct, SIGNAL(triggered()), this, SLOT(zoomIn()));
+
+	// instead of creating a filter to grab the shortcut, let's create a new action
+	// and append it to the window
+	QAction *zoomInAux = new QAction(this);
+	zoomInAux->setShortcut(tr("Ctrl+="));
+	connect(zoomInAux, SIGNAL(triggered()), this, SLOT(zoomIn()));
+	this->addAction(zoomInAux);
 
 	m_zoomOutAct = new QAction(tr("&Zoom Out"), this);
 	m_zoomOutAct->setShortcut(tr("Ctrl+-"));
