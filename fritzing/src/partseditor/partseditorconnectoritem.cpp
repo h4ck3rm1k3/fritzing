@@ -135,5 +135,5 @@ void PartsEditorConnectorItem::paint( QPainter * painter, const QStyleOptionGrap
 	}
 
 	painter->restore();
-	this->scene()->update();
+	//this->scene()->update();  // calling update here puts you in an infinite paint loop
 }
