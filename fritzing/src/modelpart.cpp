@@ -186,7 +186,8 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		foreach (ItemBase * itemBase, m_viewItems) {
 			itemBase->saveInstance(streamWriter);
 		}
-		streamWriter.writeEndElement();
+		streamWriter.writeEndElement();		// views
+		streamWriter.writeEndElement();		//instance
 	}
 
 	QList<QObject *>::const_iterator i;
@@ -197,9 +198,9 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		mp->saveInstances(streamWriter, false);
 	}
 
-	streamWriter.writeEndElement();
 	if (startDocument) {
-		streamWriter.writeEndElement();
+		streamWriter.writeEndElement();	  //  instances
+		streamWriter.writeEndElement();   //  module
 		streamWriter.writeEndDocument();
 	}
 }

@@ -240,11 +240,13 @@ void MainWindow::doOnce() {
 }
 
 void MainWindow::preloadSlowParts() {
+	DebugDialog::debug("start preload slow parts");
 	ViewGeometry viewGeometry;
 	ItemBase * itemBase = m_breadboardGraphicsView->addItem(ItemBase::breadboardModuleIDName, BaseCommand::SingleView, viewGeometry, ItemBase::getNextID());
 	if (itemBase == NULL) return;
 
 	m_breadboardGraphicsView->deleteItem(itemBase, true, false);
+	DebugDialog::debug("end preload slow parts");
 }
 
 void MainWindow::calcPrinterScale() {
