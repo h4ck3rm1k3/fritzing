@@ -34,6 +34,7 @@ $Date$
 #include <QCryptographicHash>
 #include <QIcon>
 #include <QAction>
+#include <QAbstractButton>
 
 #include "fritzingwindow.h"
 #include "debugdialog.h"
@@ -199,6 +200,7 @@ bool FritzingWindow::beforeClosing(bool showCancel) {
 		messageBox->setButtonText(QMessageBox::Yes,
 			m_fileName.startsWith(untitledFileName()) ? tr("Save...") : tr("Save"));
 		messageBox->setButtonText(QMessageBox::No, tr("Don't Save"));
+		messageBox->button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
 
 		reply = (QMessageBox::StandardButton)messageBox->exec();
 
