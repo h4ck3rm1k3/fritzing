@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+	 id="svg2" inkscape:output_extension="org.inkscape.output.svg.inkscape" xmlns:svg="http://www.w3.org/2000/svg" inkscape:version="0.46" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" sodipodi:version="0.32" sodipodi:docname="basic_toggle_switch.svg" xmlns:cc="http://creativecommons.org/ns#"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.62in"
+	 height="0.82in" viewBox="0.989 -35.029 56.208 73.453" enable-background="new 0.989 -35.029 56.208 73.453"
+	 xml:space="preserve">
+<defs>
+	
+	
+		<inkscape:perspective  id="perspective27" inkscape:persp3d-origin="19.49 : 13 : 1" inkscape:vp_z="38.98 : 19.5 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_x="0 : 19.5 : 1" sodipodi:type="inkscape:persp3d">
+		</inkscape:perspective>
+</defs>
+<sodipodi:namedview  id="base" inkscape:current-layer="svg2" inkscape:window-y="22" inkscape:window-x="0" inkscape:cy="11.183543" inkscape:cx="19.032034" inkscape:zoom="6.3846154" showgrid="false" pagecolor="#ffffff" bordercolor="#666666" borderopacity="1.0" objecttolerance="10.0" gridtolerance="10.0" guidetolerance="10.0" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:window-width="640" inkscape:window-height="701">
+	</sodipodi:namedview>
+<rect id="connector0terminal" x="8.469" y="36.772" fill="#B3B3B3" width="2.52" height="1.65"/>
+<rect id="connector1terminal" x="48.471" y="36.772" fill="#B3B3B3" width="2.521" height="1.65"/>
+<rect id="connector0pin" x="8.469" y="30.988" fill="#B3B3B3" width="2.52" height="7.437"/>
+<rect id="connector1pin" x="48.471" y="30.988" fill="#B3B3B3" width="2.521" height="7.437"/>
+<g id="breadboard" transform="translate(30.333672,6.5456771)">
+	<rect id="rect4" x="-21.877" y="11.025" fill="#B3B3B3" width="2.52" height="20.784"/>
+	<rect id="rect6" x="18.125" y="11.025" fill="#B3B3B3" width="2.521" height="20.784"/>
+	<rect x="-29.345" y="-41.574" fill="#D8F2FD" width="56.158" height="56.158"/>
+	<rect x="-29.294" y="13.348" fill="#6A8395" width="56.157" height="1.615"/>
+	<rect x="-29.345" y="14.853" fill="#FCDAD3" width="56.158" height="7.07"/>
+	<g>
+		<rect x="-2.819" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="1.181" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="5.181" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="-6.819" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="-10.819" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="-14.82" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="9.181" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="-18.82" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="13.181" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="-22.82" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="17.183" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="-26.82" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+		<rect x="21.183" y="16.761" fill="#545E68" width="3.105" height="5.646"/>
+	</g>
+	<rect x="-29.344" y="22.144" fill="#B78374" width="56.157" height="1.615"/>
+	<g>
+		<polygon fill="#FFFFFF" points="-26.697,13.044 12.955,-41.411 17.943,-41.425 -21.789,13.061 		"/>
+	</g>
+	<g>
+		<polygon fill="#FFFFFF" points="-17.697,12.96 21.955,-41.495 24.943,-41.509 -14.789,12.977 		"/>
+	</g>
+</g>
+</svg>
