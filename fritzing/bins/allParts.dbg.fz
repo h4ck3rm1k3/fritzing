@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion='0.1.b.11.26.1656'>
+<module fritzingVersion='0.1.b.12.01.1688'>
 	<title>All Parts</title>
 	<instances>
 		<instance moduleIdRef="1001AAAB555Timer" path="/Users/jonathancohen/fritzing/phoenix/parts/core/555timer.fz">

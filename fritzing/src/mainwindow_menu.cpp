@@ -858,7 +858,11 @@ void MainWindow::createPartMenuActions() {
 
 void MainWindow::createViewMenuActions() {
 	m_zoomInAct = new QAction(tr("&Zoom In"), this);
+#ifdef Q_WS_MAC
+	m_zoomInAct->setShortcut(tr("Ctrl+="));
+#else	
 	m_zoomInAct->setShortcut(tr("Ctrl++"));
+#endif
 	m_zoomInAct->setStatusTip(tr("Zoom in"));
 	connect(m_zoomInAct, SIGNAL(triggered()), this, SLOT(zoomIn()));
 
