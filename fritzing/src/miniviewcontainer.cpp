@@ -30,41 +30,41 @@ $Date$
 #include "miniviewcontainer.h"
 #include "debugdialog.h"
 
-MiniViewContainer::MiniViewContainer( QWidget * parent ) 
+MiniViewContainer::MiniViewContainer( QWidget * parent )
 	: QWidget(parent)
 {
 	m_miniView = new MiniView(this);
 	connect(m_miniView, SIGNAL(rectChangedSignal()), this, SLOT(updateFrame()) );
 	connect(m_miniView, SIGNAL(miniViewMousePressedSignal()), this, SLOT(miniViewMousePressedSlot()) );
-	m_miniView->resize(this->size());
-		
+	m_miniView->resize(this->minimumSize());
+
 	QBrush brush1(QColor(0,0,0));
 	m_outerFrame = new MiniViewFrame(brush1, false, this);
-	m_outerFrame->resize(this->size());
+	m_outerFrame->resize(this->minimumSize());
 	m_outerFrame->setUpdatesEnabled(false);
-	
+
 	QBrush brush2(QColor(128,0,0));
 	m_frame = new MiniViewFrame(brush2, true, this);
-	m_frame->resize(this->size());
-		
+	m_frame->resize(this->minimumSize());
+
 	m_mask = new QWidget(this);
 	QPalette p = m_mask->palette();
 	p.setBrush(QPalette::Window, QBrush(QColor(0,0,0)));
 	m_mask->setPalette(p);
 	m_mask->setAutoFillBackground(true);
-	m_mask->resize(this->size());	
+	m_mask->resize(this->minimumSize());
 }
 
-void MiniViewContainer::setView(QGraphicsView * view) 
+void MiniViewContainer::setView(QGraphicsView * view)
 {
 	QGraphicsView * oldView = m_miniView->view();
 	if (oldView == view) return;
-	
+
 	if (oldView != NULL) {
 		disconnect(oldView->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
-		disconnect(oldView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));		
-		disconnect(oldView->scene(), SIGNAL(sceneRectChanged(QRectF)), this, SLOT(updateFrame()));		
-		disconnect(oldView, SIGNAL(resizeSignal()), this, SLOT(updateFrame()));		
+		disconnect(oldView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
+		disconnect(oldView->scene(), SIGNAL(sceneRectChanged(QRectF)), this, SLOT(updateFrame()));
+		disconnect(oldView, SIGNAL(resizeSignal()), this, SLOT(updateFrame()));
 		disconnect(m_frame, SIGNAL(scrollChangeSignal(double, double)), oldView, SLOT(navigatorScrollChange(double, double)));
 	}
 
@@ -74,7 +74,7 @@ void MiniViewContainer::setView(QGraphicsView * view)
 
 	m_miniView->setView(view);
 	updateFrame();
-	
+
 	bool succeeded = connect(view->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
 	succeeded = connect(view->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
 	succeeded = connect(view->scene(), SIGNAL(sceneRectChanged(QRectF)), this, SLOT(updateFrame()));
@@ -87,13 +87,13 @@ void MiniViewContainer::setView(QGraphicsView * view)
 }
 
 
-void MiniViewContainer::resizeEvent ( QResizeEvent * event ) 
+void MiniViewContainer::resizeEvent ( QResizeEvent * event )
 {
 	QWidget::resizeEvent(event);
-	m_miniView->resize(this->size());	
+	m_miniView->resize(this->size());
 }
 
-void MiniViewContainer::updateFrame() 
+void MiniViewContainer::updateFrame()
 {
 	QGraphicsView * view = m_miniView->view();
 	QSize vSize = view->size();
@@ -115,7 +115,7 @@ void MiniViewContainer::updateFrame()
 	QRectF sceneRect = view->sceneRect();
 	if (sceneRect.width() >= 1 && sceneRect.height() >= 1) {
 		if (sceneRect.width() < vSize.width()) {
-			vSize.setWidth((int) sceneRect.width());			
+			vSize.setWidth((int) sceneRect.width());
 		}
 		if (sceneRect.height() < vSize.height()) {
 			vSize.setHeight((int) sceneRect.height());
@@ -123,7 +123,7 @@ void MiniViewContainer::updateFrame()
 	}
 	if (vVis || hVis) {
 		m_frame->setVisible(true);
-		m_outerFrame->setVisible(true);	
+		m_outerFrame->setVisible(true);
 		//m_mask->setVisible(true);
 	}
 	else {
@@ -132,13 +132,13 @@ void MiniViewContainer::updateFrame()
 		m_outerFrame->setVisible(false);
 		//m_mask->setVisible(false);
 	}
-	
+
 	int tw = sceneRect.width();
 	int th = sceneRect.height();
-	
+
 	int w = m_miniView->width();
 	int h = m_miniView->height();
-		
+
 	if (tw > 0 && th > 0) {
 	// deal with aspect ratio
 		int trueH = w * th / tw;
@@ -149,24 +149,24 @@ void MiniViewContainer::updateFrame()
 		else {
 			int trueW = h * tw / th;
 			m_mask->setGeometry(trueW, 0, w, h);
-			w = trueW;		
+			w = trueW;
 		}
 	}
-	
+
 	//DebugDialog::debug(tr("mask %1 %2 %3 %4").arg(m_mask->geometry().x())
 		//.arg(m_mask->geometry().y())
 		//.arg(m_mask->geometry().width())
 		//.arg(m_mask->geometry().height()) );
-	
+
 	m_outerFrame->resize(w, h);
 	m_frame->setMaxDrag(w, h);
-	
+
 	if (th > 0 && tw > 0) {
 		int newW = w * (bottomRight.x() - topLeft.x())  / tw;
 		int newH = h * (bottomRight.y() - topLeft.y())  / th;
 		int newX = w * (topLeft.x() - sceneRect.x()) / tw;
 		int newY = h * (topLeft.y() - sceneRect.y()) / th;
-		
+
 		//DebugDialog::debug(tr("minivp %1 %2").arg(w).arg(h) );
 
 		m_frame->setGeometry(newX, newY, newW, newH);
@@ -184,17 +184,17 @@ bool MiniViewContainer::eventFilter(QObject *obj, QEvent *event)
 		default:
 			break;
     }
-	
+
 	return QObject::eventFilter(obj, event);
 }
 
-void MiniViewContainer::filterMousePress() 
+void MiniViewContainer::filterMousePress()
 {
 	parent()->installEventFilter(this);
 	installEventFilter(this);
-	m_outerFrame->installEventFilter(this);	
-	m_frame->installEventFilter(this);	
-	m_mask->installEventFilter(this);	
+	m_outerFrame->installEventFilter(this);
+	m_frame->installEventFilter(this);
+	m_mask->installEventFilter(this);
 	m_miniView->installEventFilter(this);
 }
 
@@ -205,10 +205,10 @@ void MiniViewContainer::miniViewMousePressedSlot() {
 
 /////////////////////////////////////////////
 
-MiniViewFrame::MiniViewFrame(QBrush & brush, bool draggable, QWidget * parent) 
+MiniViewFrame::MiniViewFrame(QBrush & brush, bool draggable, QWidget * parent)
 	: QFrame(parent)
-	
-{	
+
+{
 	m_brush = brush;
 	m_pen.setBrush(m_brush);
 	m_pen.setWidth(4);

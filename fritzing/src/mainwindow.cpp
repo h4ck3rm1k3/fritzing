@@ -68,7 +68,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 {
 	QFile styleSheet(":/resources/styles/fritzing.qss");
 
-	resize(740,500);
+	resize(740,600);
 
 	// Create dot icons
 	m_dotIcon = QIcon(":/resources/images/dot.png");
@@ -799,6 +799,7 @@ void MainWindow::createDockWindows()
 	dock->setObjectName("Breadboard_view");
 	setDockColorAnd(m_miniViewContainerBreadboard, dockSelectedColor, ___emptyString___);
  	dock->setFeatures (QDockWidget::DockWidgetMovable);
+ 	dock->resize(m_miniViewContainerBreadboard->minimumSize());
 	m_miniViewContainerBreadboard->filterMousePress();
 	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
@@ -808,6 +809,7 @@ void MainWindow::createDockWindows()
 	dock->setObjectName("Schematic_view");
 	setDockColorAnd(m_miniViewContainerSchematic, dockUnselectedColor, clickToSeeString);
  	dock->setFeatures (QDockWidget::DockWidgetMovable);
+ 	dock->resize(m_miniViewContainerSchematic->minimumSize());
 	m_miniViewContainerSchematic->filterMousePress();
 	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
@@ -815,6 +817,7 @@ void MainWindow::createDockWindows()
     m_navigators << (m_miniViewContainerPCB = new MiniViewContainer(this));
     dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
 	dock->setObjectName("PCB_view");
+	dock->resize(m_miniViewContainerPCB->minimumSize());
 	setDockColorAnd(m_miniViewContainerPCB, dockUnselectedColor, clickToSeeString);
 	dock->setFeatures (QDockWidget::DockWidgetMovable);
 	m_miniViewContainerPCB->filterMousePress();

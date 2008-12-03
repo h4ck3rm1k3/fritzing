@@ -431,8 +431,8 @@ public:
 	static const int PartsBinMinHeight = 122;
 	static const int NavigatorDefaultHeight = 70;
 	static const int NavigatorMinHeight = NavigatorDefaultHeight;
-	static const int InfoViewDefaultHeight = 50;
-	static const int InfoViewMinHeight = InfoViewDefaultHeight;
+	static const int InfoViewDefaultHeight = 150;
+	static const int InfoViewMinHeight = 50;
 	static const int UndoHistoryDefaultHeight = 70;
 	static const int UndoHistoryMinHeight = UndoHistoryDefaultHeight;
 public:
