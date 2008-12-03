@@ -43,11 +43,15 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 
 		ModelPart *selected();
 		bool swappingEnabled();
+		int position(const QString &moduleID);
+
+	public slots:
+		void setSelected(int position);
 
 	protected:
 		void setModel(PaletteModel *model);
 		void doClear();
-		void setItemAux(ModelPart * modelPart);
+		void setItemAux(ModelPart * modelPart, int position = -1);
 		void mousePressEvent(QMouseEvent * event);
 		void mouseMoveEvent(QMouseEvent * event);
 		ModelPart *itemModelPart(const QListWidgetItem *item);

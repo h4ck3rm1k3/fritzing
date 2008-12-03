@@ -69,6 +69,9 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
 	m_untitledFileName = "Untitled Bin";
+
+	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
+	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
 }
 
 PartsBinPaletteWidget::~PartsBinPaletteWidget() {
@@ -140,7 +143,9 @@ void PartsBinPaletteWidget::toIconView() {
 }
 
 void PartsBinPaletteWidget::toListView() {
+	disconnect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	setView(m_listView, m_iconViewInactive, m_listViewActive);
+	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 }
 
 void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
@@ -182,11 +187,11 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_binTitle->setText(model->root()->modelPartStuff()->title(), false);
 }
 
-void PartsBinPaletteWidget::addPart(ModelPart *modelPart) {
+void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
 	ModelPart *mp = m_model->addModelPart(m_model->root(),modelPart);
 
-	m_iconView->addPart(mp);
-	m_listView->addPart(mp);
+	m_iconView->addPart(mp, position);
+	m_listView->addPart(mp, position);
 
 	if(modelPart->isAlien()) {
 		m_alienParts << mp->moduleID();
@@ -397,9 +402,9 @@ bool PartsBinPaletteWidget::hasAlienParts() {
 	return m_alienParts.size() > 0;
 }
 
-void PartsBinPaletteWidget::addPart(const QString& moduleID) {
+void PartsBinPaletteWidget::addPart(const QString& moduleID, int position) {
 	ModelPart *modelPart = m_refModel->retrieveModelPart(moduleID);
-	addPart(modelPart);
+	addPart(modelPart, position);
 }
 
 void PartsBinPaletteWidget::removePart(const QString& moduleID) {
@@ -435,13 +440,15 @@ void PartsBinPaletteWidget::addPartCommand(const QString& moduleID) {
 	}
 	QUndoCommand *parentCmd = new QUndoCommand(undoStackMsg);
 
-	new PartsBinAddCommand(this, moduleID, -1, parentCmd);
+	int index = m_listView->position(moduleID);
+	new PartsBinAddCommand(this, moduleID, index, parentCmd);
 	m_undoStack->push(parentCmd);
 }
 
 void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
 	QUndoCommand *parentCmd = new QUndoCommand(tr("Part \"%1\" removed from the bin").arg(moduleID));
 
-	new PartsBinRemoveCommand(this, moduleID, -1, parentCmd);
+	int index = m_listView->position(moduleID);
+	new PartsBinRemoveCommand(this, moduleID, index, parentCmd);
 	m_undoStack->push(parentCmd);
 }

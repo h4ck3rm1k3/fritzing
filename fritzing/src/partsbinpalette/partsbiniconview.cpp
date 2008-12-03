@@ -51,6 +51,10 @@ PartsBinIconView::PartsBinIconView(QWidget *parent)
     m_layouter = NULL;
     m_layout = NULL;
     setupLayout();
+
+    connect(scene, SIGNAL(selectionChanged()), this, SLOT(informNewSelection()));
+
+    m_noSelectionChangeEmition = false;
 }
 
 void PartsBinIconView::setupLayout() {
@@ -132,18 +136,21 @@ void PartsBinIconView::doClear() {
 	setupLayout();
 }
 
-void PartsBinIconView::addPart(ModelPart * model) {
-	PartsBinView::addPart(model);
+void PartsBinIconView::addPart(ModelPart * model, int position) {
+	PartsBinView::addPart(model, position);
 	updateSize();
 }
 
 void PartsBinIconView::removePart(const QString &moduleID) {
 	SvgIconWidget *itemToRemove = NULL;
+	int position = 0;
 	foreach(QGraphicsItem *gIt, m_layouter->childItems()) {
 		SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(gIt);
 		if(it && it->moduleID() == moduleID) {
 			itemToRemove = it;
 			break;
+		} else {
+			position++;
 		}
 	}
 	if(itemToRemove) {
@@ -153,11 +160,11 @@ void PartsBinIconView::removePart(const QString &moduleID) {
 		delete itemToRemove;
 	}
 
-	setFirstSelected();
+	setSelected(position);
 	updateSize();
 }
 
-void PartsBinIconView::setItemAux(ModelPart * modelPart) {
+void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	if (!modelPart || modelPart->itemType() == ModelPart::Module) {
 		// don't want the empty root item to appear in the view
 		return;
@@ -167,7 +174,11 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart) {
 
 	if(!alreadyIn(moduleID)) {
 		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ItemBase::IconView, m_viewLayers, ItemBase::getNextID(), NULL);
-		m_layout->addItem(svgicon);
+		if(position > -1) {
+			m_layout->insertItem(position, svgicon);
+		} else {
+			m_layout->addItem(svgicon);
+		}
 		m_partHash[moduleID] = svgicon->modelPart();
 	} else {
 		m_partHash[moduleID]->copy(modelPart);
@@ -212,16 +223,46 @@ ModelPart *PartsBinIconView::selected() {
 	}
 }
 
-void PartsBinIconView::setFirstSelected() {
-	foreach(QGraphicsItem *gIt, m_layouter->childItems()) {
+void PartsBinIconView::setSelected(int position) {
+	int count = m_layouter->childItems().count();
+	for(int i=0; i < count; i++) {
+		QGraphicsItem *gIt = m_layouter->childItems()[i];
 		SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(gIt);
-		if(it) {
+		if(it && position == 0 && position <= count) {
+			m_noSelectionChangeEmition = true;
+			scene()->clearSelection();
+			m_noSelectionChangeEmition = true;
 			it->setSelected(true);
 			break;
+		} else {
+			position--;
 		}
 	}
 }
 
 bool PartsBinIconView::swappingEnabled() {
 	return false;
+}
+
+int PartsBinIconView::selectedIndex() {
+	int idx = 0;
+	foreach(QGraphicsItem *it, scene()->items()) {
+		SvgIconWidget *icon = dynamic_cast<SvgIconWidget*>(it);
+		if(icon) {
+			if(icon->isSelected()) {
+				return idx;
+			} else {
+				idx++;
+			}
+		}
+	}
+	return -1;
+}
+
+void PartsBinIconView::informNewSelection() {
+	if(!m_noSelectionChangeEmition) {
+		emit selectionChanged(selectedIndex());
+	} else {
+		m_noSelectionChangeEmition = false;
+	}
 }

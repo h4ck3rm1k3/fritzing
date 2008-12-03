@@ -51,17 +51,18 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		PartsBinIconView(QWidget *parent=0);
 		void loadFromModel(PaletteModel *);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
-		void addPart(ModelPart * model);
+		void addPart(ModelPart * model, int position = -1);
 		void removePart(const QString &moduleID);
 
 		bool swappingEnabled();
 
 		ModelPart *selected();
+		int selectedIndex();
 	protected:
 		void doClear();
 		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);
-		void setItemAux(ModelPart *);
+		void setItemAux(ModelPart *, int position = -1);
 
 		void resizeEvent(QResizeEvent * event);
 		void updateSize(QSize newSize);
@@ -69,9 +70,14 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void updateSizeAux(int width);
 		void setupLayout();
 
-		void setFirstSelected();
-
 		void showInfo(SvgIconWidget * item);
+
+	public slots:
+		void setSelected(int position);
+		void informNewSelection();
+
+	signals:
+		void selectionChanged(int index);
 
 	protected:
 		LayerHash m_viewLayers;
@@ -80,6 +86,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		GraphicsFlowLayout *m_layout;
 
 		QMenu *m_itemMenu;
+		bool m_noSelectionChangeEmition;
 };
 
 #endif /* ICONVIEW_H_ */

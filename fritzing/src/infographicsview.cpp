@@ -115,7 +115,6 @@ ModelPart *InfoGraphicsView::selected() {
 
 QGraphicsItem *InfoGraphicsView::selectedAux() {
 	QList<QGraphicsItem*> selItems = scene()->selectedItems();
-	DebugDialog::debug(QString("sel items count = %2").arg(selItems.size()));
 	if(selItems.size() != 1) {
 		return NULL;
 	} else {

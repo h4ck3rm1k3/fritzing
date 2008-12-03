@@ -67,7 +67,7 @@ class PartsBinPaletteWidget : public FDockWidget {
 		void loadFromModel(PaletteModel *model);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
 
-		void addPart(ModelPart *modelPart);
+		void addPart(ModelPart *modelPart, int position = -1);
 
 		bool currentBinIsCore();
 		bool beforeClosing();
@@ -76,7 +76,7 @@ class PartsBinPaletteWidget : public FDockWidget {
 		bool hasAlienParts();
 
 		void setInfoViewOnHover(bool infoViewOnHover);
-		void addPart(const QString& moduleID);
+		void addPart(const QString& moduleID, int position = -1);
 		void removePart(const QString& moduleID);
 
 	public slots:

@@ -49,7 +49,7 @@ void PartsBinListView::doClear() {
 	clear();
 }
 
-void PartsBinListView::setItemAux(ModelPart * modelPart) {
+void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	if (modelPart->modelPartStuff() == NULL) return;
 	if (modelPart->itemType() == ModelPart::Module) {
 		// don't want the empty root to appear in the view
@@ -71,7 +71,11 @@ void PartsBinListView::setItemAux(ModelPart * modelPart) {
 			lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
 		}
 
-		this->addItem(lwi);
+		if(position > -1) {
+			insertItem(position, lwi);
+		} else {
+			addItem(lwi);
+		}
 
 		m_partHash[moduleID] = modelPart;
 	} else {
@@ -134,17 +138,20 @@ void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
 }
 
 void PartsBinListView::removePart(const QString &moduleID) {
-	int idxToRemove = -1;
-	for(int i=0; i < count(); i++) {
-		if(itemModuleID(item(i)) == moduleID) {
-			idxToRemove = i;
-			break;
-		}
-	}
+	int idxToRemove = position(moduleID);
 	if(idxToRemove > -1) {
 		m_partHash.remove(moduleID);
 		delete takeItem(idxToRemove);
 	}
+}
+
+int PartsBinListView::position(const QString &moduleID) {
+	for(int i=0; i < count(); i++) {
+		if(itemModuleID(item(i)) == moduleID) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 ModelPart *PartsBinListView::itemModelPart(const QListWidgetItem *item) {
@@ -164,4 +171,12 @@ ModelPart *PartsBinListView::selected() {
 
 bool PartsBinListView::swappingEnabled() {
 	return false;
+}
+
+void PartsBinListView::setSelected(int position) {
+	if(position > -1 && position < count()) {
+		item(position)->setSelected(true);
+	} else {
+		setCurrentRow(position);
+	}
 }

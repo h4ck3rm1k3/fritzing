@@ -58,7 +58,7 @@ PartsBinAddRemoveCommand::PartsBinAddRemoveCommand(class PartsBinPaletteWidget* 
 }
 
 void PartsBinAddRemoveCommand::add() {
-	m_bin->addPart(m_moduleID);
+	m_bin->addPart(m_moduleID, m_index);
 }
 
 void PartsBinAddRemoveCommand::remove() {

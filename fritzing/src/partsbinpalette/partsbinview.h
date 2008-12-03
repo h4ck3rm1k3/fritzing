@@ -38,13 +38,16 @@ class PartsBinView {
 
 		virtual void setPaletteModel(PaletteModel * model, bool clear = false);
 		void reloadParts(PaletteModel * model);
-		void addPart(ModelPart * model);
+		void addPart(ModelPart * model, int position = -1);
 		virtual void removePart(const QString &moduleID) = 0;
 
 		virtual ModelPart *selected() = 0;
 
 		bool alreadyIn(QString moduleID);
 		void setInfoViewOnHover(bool infoViewOnHover);
+
+	public slots:
+		virtual void setSelected(int position) = 0;
 
 	protected:
 		virtual void doClear();
@@ -53,7 +56,7 @@ class PartsBinView {
 				const QString &moduleId, const QSize &size,
 				const QPointF &dataPoint = QPointF(0,0), const QPoint &hotspot = QPoint(0,0));
 
-		virtual void setItemAux(ModelPart * modelPart) = 0;
+		virtual void setItemAux(ModelPart * modelPart, int position = -1) = 0;
 
 		QHash<QString /*moduleId*/,ModelPart*> m_partHash;
 		bool m_infoViewOnHover;

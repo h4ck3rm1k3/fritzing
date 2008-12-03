@@ -60,8 +60,8 @@ void PartsBinView::setItem(ModelPart * modelPart) {
 	}
 }
 
-void PartsBinView::addPart(ModelPart * model) {
-	setItemAux(model);
+void PartsBinView::addPart(ModelPart * model, int position) {
+	setItemAux(model, position);
 }
 
 void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, const QPointF &dataPoint, const QPoint &hotspot) {
