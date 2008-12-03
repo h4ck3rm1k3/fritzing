@@ -3,6 +3,7 @@
   <author>Brendan Howell, Jonathan Cohen and Mariano Crowe</author>
   <title>Generic Bajillion Hole Breadboard</title>
   <date>2008-10-03</date>
+  <label>Breadboard</label>
   <tags>
     <tag>breadboard</tag>
     <tag>fritzing core</tag>
