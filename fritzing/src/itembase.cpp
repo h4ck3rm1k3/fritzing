@@ -41,7 +41,6 @@ QHash <ItemBase::ViewIdentifier, StringTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 
-
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {
 	if (c1->connectorType() == c2->connectorType()) {
@@ -126,6 +125,19 @@ void ItemBase::setTooltip() {
 		}
 	} else {
 		setDefaultTooltip();
+	}
+}
+
+void ItemBase::setConnectorTooltips() {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (connectorItem == NULL) continue;
+
+		QString tt = QString("%1<br /><font size='2'>%2</font>").arg(toolTip()).arg(connectorItem->connectorStuffID());
+
+		//setToolTip("<b>"+text+"</b><br></br><font size='2'>"+modelPartStuff()->title()+"</font>");
+
+		connectorItem->setToolTip(tt);
 	}
 }
 
@@ -708,7 +720,7 @@ void ItemBase::setCanFlipVertical(bool cf) {
 	m_canFlipVertical = cf;
 }
 
-void ItemBase::connectedBusConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
+void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items) {
 	QList<ConnectorItem *> * busConnectorItems = m_busConnectorItems.value(bus);
 	if (busConnectorItems == NULL) return;
 /*

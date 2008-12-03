@@ -98,7 +98,7 @@ public:
 	bool topLevel();
 	virtual void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
 	void collectConnectors(QMultiHash<class ConnectorItem *, class ConnectorItem *> & connectorHash, QGraphicsScene * scene);
-	void connectedBusConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items);
+	void busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
 	bool hidden();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
@@ -120,6 +120,7 @@ public:
 	QString label();
 	virtual void updateTooltip();
 	void setTooltip();
+	void setConnectorTooltips();
 	void removeTooltip();
 	bool hasConnectors();
 	bool canFlipHorizontal();

@@ -331,6 +331,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 
 	if (doConnectors) {
 		setUpConnectors(renderer, modelPart->ignoreTerminalPoints());
+		setConnectorTooltips();
 	}
 
 	if (!m_viewGeometry.transform().isIdentity()) {

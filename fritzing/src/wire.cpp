@@ -94,6 +94,7 @@ void Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLaye
 	FSvgRenderer * svgRenderer = setUpConnectors(m_modelPart, m_viewIdentifier);
 	if (svgRenderer != NULL) {
 		initEnds(m_viewGeometry, svgRenderer->viewBox());
+		setConnectorTooltips();
 	}
 	setZValue(this->z());
 }

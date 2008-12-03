@@ -535,7 +535,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 		Bus * bus = connectorItem->bus();
 		if (bus != NULL) {
 			QList<ConnectorItem *> busConnectedItems;
-			connectorItem->attachedTo()->connectedBusConnectorItems(bus, busConnectedItems);
+			connectorItem->attachedTo()->busConnectorItems(bus, busConnectedItems);
 			foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
 				if (!tempItems.contains(busConnectedItem)) {
 					tempItems.append(busConnectedItem);
