@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.b.11.22.1612">
+<module fritzingVersion="0.1.b.11.24.1642">
     <instances>
-        <instance moduleIdRef="1234ABDE24_ST" modelIndex="482" path="C:/Users/andre/Documents/Uni/fritzing/dev/trunk/fritzing/parts/core/controller_arduino_diecimila.fz">
-            <title>Part1</title>
+        <instance moduleIdRef="1234ABDE24_ST" modelIndex="482" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/controller_arduino_diecimila.fz">
+            <title>Arduino1</title>
             <views>
                 <breadboardView layer="breadboardBreadboard">
                     <geometry z="1.5" x="39" y="99"></geometry>
@@ -42,12 +42,12 @@
                         <connector connectorId="ground" layer="breadboardBreadboard" busId="ground">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="484"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="495"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="484"></connect>
                             </connects>
                             <merged>
-                                <bus busId="bus16-1" modelIndex="485"></bus>
                                 <bus busId="busX-1" modelIndex="485"></bus>
+                                <bus busId="bus16-1" modelIndex="485"></bus>
                             </merged>
                         </connector>
                     </buses>
@@ -146,25 +146,25 @@
                                 <connect connectorId="connector1" bus="false" modelIndex="495"></connect>
                             </connects>
                             <merged>
-                                <bus busId="busX-1" modelIndex="485"></bus>
                                 <bus busId="bus16-1" modelIndex="485"></bus>
+                                <bus busId="busX-1" modelIndex="485"></bus>
                             </merged>
                         </connector>
                     </buses>
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24" modelIndex="483" path="C:/Users/andre/Documents/Uni/fritzing/dev/trunk/fritzing/parts/core/LED-red-5mm.fz">
+        <instance moduleIdRef="1234ABDC24" modelIndex="483" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/LED-red-5mm.fz">
             <title>LED1</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.5" x="159.895" y="47.7446"></geometry>
+                    <geometry z="2.5" x="159.661" y="47.7271"></geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="482"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="484"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="482"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboard">
@@ -184,9 +184,9 @@
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" bus="false" modelIndex="482"></connect>
-                                <connect connectorId="connector0" bus="false" modelIndex="484"></connect>
-                                <connect connectorId="connector0" bus="false" modelIndex="112"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="120"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="112"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="484"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="copper0">
@@ -206,8 +206,8 @@
                         <connector connectorId="connector0" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="484"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="482"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="484"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematic">
@@ -223,7 +223,7 @@
         <instance moduleIdRef="WireModuleID" modelIndex="484" path=":/resources/parts/core/wire.fz">
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50001" x="165.691" y="106.635" x1="0" y1="0" x2="-159.691" y2="-100.635" wireFlags="1"></geometry>
+                    <geometry z="3.50001" x="165.458" y="106.618" x1="0" y1="0" x2="-159.458" y2="-100.618" wireFlags="1"></geometry>
                     <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -279,7 +279,7 @@
             </views>
         </instance>
         <instance moduleIdRef="BreadboardModuleID" modelIndex="485" path=":/resources/parts/core/breadboard.fz">
-            <title>Part2</title>
+            <title>Breadboard1</title>
             <views>
                 <breadboardView layer="breadboardBreadboard">
                     <geometry z="1.50001" x="111" y="340"></geometry>
@@ -349,29 +349,11 @@
                         <connector connectorId="bus14-1" layer="breadboardBreadboard" busId="bus14-1">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="499"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="487"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="499"></connect>
                             </connects>
                             <merged>
                                 <bus busId="busW-1" modelIndex="485"></bus>
-                            </merged>
-                        </connector>
-                        <connector connectorId="bus15-1" layer="breadboardBreadboard" busId="bus15-1">
-                            <geometry x="0" y="0"></geometry>
-                            <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="488"></connect>
-                                <connect connectorId="connector1" bus="false" modelIndex="491"></connect>
-                            </connects>
-                        </connector>
-                        <connector connectorId="busX-1" layer="breadboardBreadboard" busId="busX-1">
-                            <geometry x="0" y="0"></geometry>
-                            <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="501"></connect>
-                                <connect connectorId="connector1" bus="false" modelIndex="496"></connect>
-                            </connects>
-                            <merged>
-                                <bus busId="bus16-1" modelIndex="485"></bus>
-                                <bus busId="ground" modelIndex="482"></bus>
                             </merged>
                         </connector>
                         <connector connectorId="bus16-1" layer="breadboardBreadboard" busId="bus16-1">
@@ -381,15 +363,33 @@
                                 <connect connectorId="connector1" bus="false" modelIndex="489"></connect>
                             </connects>
                             <merged>
-                                <bus busId="busX-1" modelIndex="485"></bus>
                                 <bus busId="ground" modelIndex="482"></bus>
+                                <bus busId="busX-1" modelIndex="485"></bus>
+                            </merged>
+                        </connector>
+                        <connector connectorId="bus15-1" layer="breadboardBreadboard" busId="bus15-1">
+                            <geometry x="0" y="0"></geometry>
+                            <connects>
+                                <connect connectorId="connector1" bus="false" modelIndex="491"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="488"></connect>
+                            </connects>
+                        </connector>
+                        <connector connectorId="busX-1" layer="breadboardBreadboard" busId="busX-1">
+                            <geometry x="0" y="0"></geometry>
+                            <connects>
+                                <connect connectorId="connector1" bus="false" modelIndex="501"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="496"></connect>
+                            </connects>
+                            <merged>
+                                <bus busId="ground" modelIndex="482"></bus>
+                                <bus busId="bus16-1" modelIndex="485"></bus>
                             </merged>
                         </connector>
                         <connector connectorId="busW-1" layer="breadboardBreadboard" busId="busW-1">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="493"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="498"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="493"></connect>
                             </connects>
                             <merged>
                                 <bus busId="bus14-1" modelIndex="485"></bus>
@@ -465,29 +465,11 @@
                         <connector connectorId="bus14-1" layer="unknown" busId="bus14-1">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="499"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="487"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="499"></connect>
                             </connects>
                             <merged>
                                 <bus busId="busW-1" modelIndex="485"></bus>
-                            </merged>
-                        </connector>
-                        <connector connectorId="bus15-1" layer="unknown" busId="bus15-1">
-                            <geometry x="0" y="0"></geometry>
-                            <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="488"></connect>
-                                <connect connectorId="connector1" bus="false" modelIndex="491"></connect>
-                            </connects>
-                        </connector>
-                        <connector connectorId="busX-1" layer="unknown" busId="busX-1">
-                            <geometry x="0" y="0"></geometry>
-                            <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="496"></connect>
-                                <connect connectorId="connector1" bus="false" modelIndex="501"></connect>
-                            </connects>
-                            <merged>
-                                <bus busId="ground" modelIndex="482"></bus>
-                                <bus busId="bus16-1" modelIndex="485"></bus>
                             </merged>
                         </connector>
                         <connector connectorId="bus16-1" layer="unknown" busId="bus16-1">
@@ -499,6 +481,24 @@
                             <merged>
                                 <bus busId="ground" modelIndex="482"></bus>
                                 <bus busId="busX-1" modelIndex="485"></bus>
+                            </merged>
+                        </connector>
+                        <connector connectorId="bus15-1" layer="unknown" busId="bus15-1">
+                            <geometry x="0" y="0"></geometry>
+                            <connects>
+                                <connect connectorId="connector1" bus="false" modelIndex="491"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="488"></connect>
+                            </connects>
+                        </connector>
+                        <connector connectorId="busX-1" layer="unknown" busId="busX-1">
+                            <geometry x="0" y="0"></geometry>
+                            <connects>
+                                <connect connectorId="connector1" bus="false" modelIndex="501"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="496"></connect>
+                            </connects>
+                            <merged>
+                                <bus busId="ground" modelIndex="482"></bus>
+                                <bus busId="bus16-1" modelIndex="485"></bus>
                             </merged>
                         </connector>
                         <connector connectorId="busW-1" layer="unknown" busId="busW-1">
@@ -581,18 +581,29 @@
                         <connector connectorId="bus14-1" layer="unknown" busId="bus14-1">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="499"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="487"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="499"></connect>
                             </connects>
                             <merged>
                                 <bus busId="busW-1" modelIndex="485"></bus>
                             </merged>
                         </connector>
+                        <connector connectorId="bus16-1" layer="unknown" busId="bus16-1">
+                            <geometry x="0" y="0"></geometry>
+                            <connects>
+                                <connect connectorId="connector1" bus="false" modelIndex="489"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="502"></connect>
+                            </connects>
+                            <merged>
+                                <bus busId="busX-1" modelIndex="485"></bus>
+                                <bus busId="ground" modelIndex="482"></bus>
+                            </merged>
+                        </connector>
                         <connector connectorId="bus15-1" layer="unknown" busId="bus15-1">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="488"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="491"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="488"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="busX-1" layer="unknown" busId="busX-1">
@@ -602,26 +613,15 @@
                                 <connect connectorId="connector1" bus="false" modelIndex="501"></connect>
                             </connects>
                             <merged>
-                                <bus busId="ground" modelIndex="482"></bus>
                                 <bus busId="bus16-1" modelIndex="485"></bus>
-                            </merged>
-                        </connector>
-                        <connector connectorId="bus16-1" layer="unknown" busId="bus16-1">
-                            <geometry x="0" y="0"></geometry>
-                            <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="502"></connect>
-                                <connect connectorId="connector1" bus="false" modelIndex="489"></connect>
-                            </connects>
-                            <merged>
                                 <bus busId="ground" modelIndex="482"></bus>
-                                <bus busId="busX-1" modelIndex="485"></bus>
                             </merged>
                         </connector>
                         <connector connectorId="busW-1" layer="unknown" busId="busW-1">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector1" bus="false" modelIndex="493"></connect>
                                 <connect connectorId="connector1" bus="false" modelIndex="498"></connect>
+                                <connect connectorId="connector1" bus="false" modelIndex="493"></connect>
                             </connects>
                             <merged>
                                 <bus busId="bus14-1" modelIndex="485"></bus>
@@ -631,17 +631,17 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="3234DBDC00" modelIndex="486" path="C:/Users/andre/Documents/Uni/fritzing/dev/trunk/fritzing/parts/core/basic_poti.fz">
+        <instance moduleIdRef="3234DBDC00" modelIndex="486" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/basic_poti.fz">
             <title>R1</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.50001" x="270.8" y="398.261"></geometry>
+                    <geometry z="2.50001" x="271.203" y="398.653"></geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="E14" bus="false" modelIndex="485"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="487"></connect>
+                                <connect connectorId="E14" bus="false" modelIndex="485"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboard">
@@ -654,8 +654,8 @@
                         <connector connectorId="connector2" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="E16" bus="false" modelIndex="485"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="489"></connect>
+                                <connect connectorId="E16" bus="false" modelIndex="485"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -697,8 +697,8 @@
                         <connector connectorId="connector0" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="487"></connect>
                                 <connect connectorId="E14" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="487"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematic">
@@ -711,8 +711,8 @@
                         <connector connectorId="connector2" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="489"></connect>
                                 <connect connectorId="E16" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="489"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -722,7 +722,7 @@
         <instance moduleIdRef="WireModuleID" modelIndex="487" path=":/resources/parts/core/wire.fz">
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50005" x="276.305" y="430" x1="0" y1="0" x2="-270.305" y2="-424" wireFlags="1"></geometry>
+                    <geometry z="3.50005" x="276.6" y="430" x1="0" y1="0" x2="-270.6" y2="-424" wireFlags="1"></geometry>
                     <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -780,7 +780,7 @@
         <instance moduleIdRef="WireModuleID" modelIndex="488" path=":/resources/parts/core/wire.fz">
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50006" x="286.139" y="398.847" x1="0" y1="0" x2="-280.139" y2="-392.847" wireFlags="1"></geometry>
+                    <geometry z="3.50006" x="286.242" y="399.232" x1="0" y1="0" x2="-280.242" y2="-393.232" wireFlags="1"></geometry>
                     <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -838,7 +838,7 @@
         <instance moduleIdRef="WireModuleID" modelIndex="489" path=":/resources/parts/core/wire.fz">
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50007" x="296.167" y="430" x1="0" y1="0" x2="-290.167" y2="-424" wireFlags="1"></geometry>
+                    <geometry z="3.50007" x="296.073" y="430" x1="0" y1="0" x2="-290.073" y2="-424" wireFlags="1"></geometry>
                     <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -894,10 +894,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="490" path=":/resources/parts/core/wire.fz">
-            <title>Part3</title>
+            <title>Wire4</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50008" x="286.167" y="390" x1="0" y1="0" x2="-0.505" y2="-93.365" wireFlags="0"></geometry>
+                    <geometry z="3.50008" x="286.078" y="390" x1="0" y1="0" x2="-0.818457" y2="-93.8171" wireFlags="0"></geometry>
                     <wireExtras width="3" color="#71a4d6" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -941,8 +941,8 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="491"></connect>
                                 <connect connectorId="A15" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="491"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
@@ -1014,17 +1014,17 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="492" path=":/resources/parts/core/wire.fz">
-            <title>Part4</title>
+            <title>Wire1</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50011" x="216.167" y="350" x1="0" y1="0" x2="-0.446" y2="-53.365" wireFlags="0"></geometry>
+                    <geometry z="3.50011" x="216.114" y="350" x1="0" y1="0" x2="-0.68086" y2="-53.8171" wireFlags="0"></geometry>
                     <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="W8" bus="false" modelIndex="485"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="493"></connect>
+                                <connect connectorId="W8" bus="false" modelIndex="485"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboardWire">
@@ -1042,8 +1042,8 @@
                         <connector connectorId="connector0" layer="ratsnest">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="493"></connect>
                                 <connect connectorId="W8" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="493"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="ratsnest">
@@ -1061,8 +1061,8 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="493"></connect>
                                 <connect connectorId="W8" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="493"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
@@ -1134,10 +1134,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="494" path=":/resources/parts/core/wire.fz">
-            <title>Part5</title>
+            <title>Wire2</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50014" x="226.167" y="360" x1="0" y1="0" x2="-0.4765" y2="-63.365" wireFlags="0"></geometry>
+                    <geometry z="3.50014" x="226.109" y="360" x1="0" y1="0" x2="-0.722552" y2="-63.8171" wireFlags="0"></geometry>
                     <wireExtras width="3" color="#4d4d4d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -1170,8 +1170,8 @@
                         <connector connectorId="connector1" layer="ratsnest">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="495"></connect>
                                 <connect connectorId="connector19" bus="false" modelIndex="482"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="495"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -1315,24 +1315,24 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="497" path=":/resources/parts/core/wire.fz">
-            <title>Part6</title>
+            <title>Wire3</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50019" x="276.167" y="390" x1="0" y1="0" x2="0" y2="-40" wireFlags="0"></geometry>
+                    <geometry z="3.50019" x="276.083" y="390" x1="0" y1="0" x2="0" y2="-40" wireFlags="0"></geometry>
                     <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A14" bus="false" modelIndex="485"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="499"></connect>
+                                <connect connectorId="A14" bus="false" modelIndex="485"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="498"></connect>
                                 <connect connectorId="W14" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="498"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -1364,8 +1364,8 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="499"></connect>
                                 <connect connectorId="A14" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="499"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
@@ -1496,10 +1496,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="500" path=":/resources/parts/core/wire.fz">
-            <title>Part7</title>
+            <title>Wire5</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50024" x="296.167" y="390" x1="0" y1="0" x2="0" y2="-30" wireFlags="0"></geometry>
+                    <geometry z="3.50024" x="296.073" y="390" x1="0" y1="0" x2="0" y2="-30" wireFlags="0"></geometry>
                     <wireExtras width="3" color="#4d4d4d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -1525,15 +1525,15 @@
                         <connector connectorId="connector0" layer="ratsnest">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A16" bus="false" modelIndex="485"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="502"></connect>
+                                <connect connectorId="A16" bus="false" modelIndex="485"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="ratsnest">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="X16" bus="false" modelIndex="485"></connect>
                                 <connect connectorId="connector0" bus="false" modelIndex="501"></connect>
+                                <connect connectorId="X16" bus="false" modelIndex="485"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -1545,15 +1545,15 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="502"></connect>
                                 <connect connectorId="A16" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="502"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" bus="false" modelIndex="501"></connect>
                                 <connect connectorId="X16" bus="false" modelIndex="485"></connect>
+                                <connect connectorId="connector0" bus="false" modelIndex="501"></connect>
                             </connects>
                         </connector>
                     </connectors>
