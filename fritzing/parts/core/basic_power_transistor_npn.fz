@@ -42,8 +42,8 @@
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="emmitter">
-            <description>emitter</description>
+        <connector id="connector0" type="male" name="base">
+            <description>base</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></pin>
@@ -56,8 +56,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="base">
-            <description>base</description>
+        <connector id="connector1" type="male" name="collector">
+            <description>collector</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></pin>
@@ -70,8 +70,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="collector">
-            <description>collector</description>
+        <connector id="connector2" type="male" name="emitter">
+            <description>emitter</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"></pin>
