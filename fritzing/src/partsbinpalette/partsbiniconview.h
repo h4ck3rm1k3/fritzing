@@ -73,7 +73,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void showInfo(SvgIconWidget * item);
 
 	public slots:
-		void setSelected(int position);
+		void setSelected(int position, bool doEmit=false);
 		void informNewSelection();
 
 	signals:

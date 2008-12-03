@@ -156,11 +156,12 @@ void PartsBinIconView::removePart(const QString &moduleID) {
 	if(itemToRemove) {
 		m_partHash.remove(moduleID);
 		itemToRemove->setParentItem(NULL);
+		m_noSelectionChangeEmition = true;
 		m_layout->removeItem(itemToRemove);
 		delete itemToRemove;
 	}
 
-	setSelected(position);
+	setSelected(position, true);
 	updateSize();
 }
 
@@ -223,7 +224,7 @@ ModelPart *PartsBinIconView::selected() {
 	}
 }
 
-void PartsBinIconView::setSelected(int position) {
+void PartsBinIconView::setSelected(int position, bool doEmit) {
 	int count = m_layouter->childItems().count();
 	for(int i=0; i < count; i++) {
 		QGraphicsItem *gIt = m_layouter->childItems()[i];
@@ -231,7 +232,7 @@ void PartsBinIconView::setSelected(int position) {
 		if(it && position == 0 && position <= count) {
 			m_noSelectionChangeEmition = true;
 			scene()->clearSelection();
-			m_noSelectionChangeEmition = true;
+			m_noSelectionChangeEmition = !doEmit;
 			it->setSelected(true);
 			break;
 		} else {

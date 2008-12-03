@@ -71,8 +71,9 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 			lwi->setData(Qt::UserRole + 1, renderer->defaultSize());
 		}
 
-		if(position > -1) {
+		if(position > -1 && position < count()) {
 			insertItem(position, lwi);
+			update();
 		} else {
 			addItem(lwi);
 		}

@@ -46,6 +46,7 @@ class ReferenceModel : public PaletteModel {
 		virtual bool addPart(Part* part) = 0;
 
 		virtual bool swapEnabled() = 0;
+		virtual QString partTitle(const QString moduleID) = 0;
 
 	public slots:
 		virtual void recordProperty(const QString &name, const QString &value) = 0;

@@ -45,7 +45,9 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 {
 	m_refModel = refModel;
 
-	m_undoStack = undoStack;
+	Q_UNUSED(undoStack);
+
+	m_undoStack = new WaitPushUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
 	m_iconView = new PartsBinIconView(this);
@@ -430,25 +432,57 @@ void PartsBinPaletteWidget::setInfoViewOnHover(bool infoViewOnHover) {
 }
 
 void PartsBinPaletteWidget::addPartCommand(const QString& moduleID) {
-	bool updating = alreadyIn(moduleID);
+	/*bool updating = alreadyIn(moduleID);
+
+	QString partTitle = m_refModel->partTitle(moduleID);
+	if(partTitle == ___emptyString___) partTitle = moduleID;
+
 	QString undoStackMsg;
 
 	if(!updating) {
-		undoStackMsg = tr("Part \"%1\" added to bin").arg(moduleID);
+		undoStackMsg = tr("\"%1\" added to bin").arg(partTitle);
 	} else {
-		undoStackMsg = tr("Part \"%1\" updated in bin").arg(moduleID);
+		undoStackMsg = tr("\"%1\" updated in bin").arg(partTitle);
 	}
 	QUndoCommand *parentCmd = new QUndoCommand(undoStackMsg);
 
 	int index = m_listView->position(moduleID);
 	new PartsBinAddCommand(this, moduleID, index, parentCmd);
-	m_undoStack->push(parentCmd);
+	m_undoStack->push(parentCmd);*/
+
+	QMessageBox::StandardButton answer = QMessageBox::question(
+		this,
+		tr("Add to bin"),
+		tr("Do you really want to add the selected part to the bin?"),
+		QMessageBox::Yes | QMessageBox::No,
+		QMessageBox::Yes
+	);
+	if(answer == QMessageBox::Yes) {
+		int index = m_listView->position(moduleID);
+		m_undoStack->push(new QUndoCommand("Parts bin: part added"));
+		addPart(moduleID, index);
+	}
 }
 
 void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
-	QUndoCommand *parentCmd = new QUndoCommand(tr("Part \"%1\" removed from the bin").arg(moduleID));
+	/*QString partTitle = m_refModel->partTitle(moduleID);
+	if(partTitle == ___emptyString___) partTitle = moduleID;
+
+	QUndoCommand *parentCmd = new QUndoCommand(tr("\"%1\" removed from the bin").arg(partTitle));
 
 	int index = m_listView->position(moduleID);
 	new PartsBinRemoveCommand(this, moduleID, index, parentCmd);
-	m_undoStack->push(parentCmd);
+	m_undoStack->push(parentCmd);*/
+
+	QMessageBox::StandardButton answer = QMessageBox::question(
+		this,
+		tr("Remove from bin"),
+		tr("Do you really want to remove the selected part from the bin?"),
+		QMessageBox::Yes | QMessageBox::No,
+		QMessageBox::Yes
+	);
+	if(answer == QMessageBox::Yes) {
+		m_undoStack->push(new QUndoCommand("Parts bin: part removed"));
+		removePart(moduleID);
+	}
 }

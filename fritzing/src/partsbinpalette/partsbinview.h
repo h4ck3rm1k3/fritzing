@@ -46,9 +46,6 @@ class PartsBinView {
 		bool alreadyIn(QString moduleID);
 		void setInfoViewOnHover(bool infoViewOnHover);
 
-	public slots:
-		virtual void setSelected(int position) = 0;
-
 	protected:
 		virtual void doClear();
 		void setItem(ModelPart * modelPart);

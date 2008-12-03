@@ -57,6 +57,8 @@ class SqliteReferenceModel : public ReferenceModel {
 		bool swapEnabled();
 		bool containsModelPart(const QString & moduleID);
 
+		QString partTitle(const QString moduleID);
+
 	public slots:
 		void recordProperty(const QString &name, const QString &value);
 		QString retrieveModuleIdWithRecordedProps(const QString &family);

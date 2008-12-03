@@ -121,7 +121,7 @@ bool SqliteReferenceModel::createConnection() {
 			"END; "
 		);
 
-		foreach(ModelPart* mp, partHash.values()) {									   
+		foreach(ModelPart* mp, partHash.values()) {
 			addPartAux(mp);
 		}
 
@@ -426,4 +426,13 @@ bool SqliteReferenceModel::removeProperties(qlonglong partId) {
 	}
 
 	return result;
+}
+
+QString SqliteReferenceModel::partTitle(const QString moduleID) {
+	ModelPart *mp = retrieveModelPart(moduleID);
+	if(mp) {
+		return mp->modelPartStuff()->title();
+	} else {
+		return ___emptyString___;
+	}
 }
