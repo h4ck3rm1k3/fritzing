@@ -31,7 +31,8 @@ HEADERS += \
     src/partsbinpalette/partsbinlistview.h \
     src/partsbinpalette/partsbiniconview.h \
     src/partsbinpalette/graphicsflowlayout.h \
-    src/partsbinpalette/svgiconwidget.h
+    src/partsbinpalette/svgiconwidget.h \
+    src/partsbinpalette/partsbincommands.h
 
 SOURCES += \
     src/partsbinpalette/simpleeditablelabelwidget.cpp \
@@ -40,5 +41,7 @@ SOURCES += \
     src/partsbinpalette/partsbinlistview.cpp \
     src/partsbinpalette/partsbiniconview.cpp \
     src/partsbinpalette/graphicsflowlayout.cpp \
-    src/partsbinpalette/svgiconwidget.cpp 
+    src/partsbinpalette/svgiconwidget.cpp \
+    src/partsbinpalette/partsbincommands.cpp
+ 
 

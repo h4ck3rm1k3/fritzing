@@ -1272,7 +1272,7 @@ void MainWindow::group() {
 }
 
 void MainWindow::addToBin() {
-	m_paletteWidget->addPart(m_currentWidget->selectedModuleID());
+	m_paletteWidget->addPartCommand(m_currentWidget->selectedModuleID());
 }
 
 void MainWindow::zoomIn() {

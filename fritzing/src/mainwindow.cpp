@@ -777,7 +777,7 @@ void MainWindow::dockChangeActivation(FDockWidget *) {
 void MainWindow::createBinAndInfoViewDocks() {
 	m_infoView = new HtmlInfoView(m_refModel);
 
-	m_paletteWidget = new PartsBinPaletteWidget(m_refModel, m_infoView, this);
+	m_paletteWidget = new PartsBinPaletteWidget(m_refModel, m_infoView, m_undoStack, this);
 	connect(m_paletteWidget, SIGNAL(saved(bool)), this, SLOT(binSaved(bool)));
 	connect(this, SIGNAL(alienPartsDismissed()), m_paletteWidget, SLOT(removeAlienParts()));
 

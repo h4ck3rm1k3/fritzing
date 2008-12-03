@@ -32,6 +32,7 @@ $Date$
 #include <QMessageBox>
 
 #include "partsbinpalettewidget.h"
+#include "partsbincommands.h"
 #include "../fritzingwindow.h"
 #include "../mainwindow.h"
 #include "../misc.h"
@@ -39,12 +40,12 @@ $Date$
 
 #define TITLE tr("Parts")
 
-PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, QWidget* parent) :
+PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent) :
 	FDockWidget(TITLE,parent)
 {
 	m_refModel = refModel;
 
-	m_undoStack = new QUndoStack(this);
+	m_undoStack = undoStack;
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
 	m_iconView = new PartsBinIconView(this);
@@ -184,12 +185,8 @@ void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 void PartsBinPaletteWidget::addPart(ModelPart *modelPart) {
 	ModelPart *mp = m_model->addModelPart(m_model->root(),modelPart);
 
-	bool updating = alreadyIn(mp->moduleID());
 	m_iconView->addPart(mp);
 	m_listView->addPart(mp);
-	if(!updating) {
-		m_undoStack->push(new QUndoCommand("Parts Bin: new part added"));
-	}
 
 	if(modelPart->isAlien()) {
 		m_alienParts << mp->moduleID();
@@ -247,8 +244,7 @@ void PartsBinPaletteWidget::setupPixmaps() {
 bool PartsBinPaletteWidget::removeSelected() {
 	if(selected()) {
 		QString modId = selected()->moduleID();
-		removePart(modId);
-		m_undoStack->push(new QUndoCommand(tr("Parts Bin: part %1 remover").arg(modId)));
+		removePartCommand(modId);
 		return true;
 	} else return false;
 }
@@ -426,4 +422,26 @@ void PartsBinPaletteWidget::removeAlienParts() {
 void PartsBinPaletteWidget::setInfoViewOnHover(bool infoViewOnHover) {
 	if(m_iconView) m_iconView->setInfoViewOnHover(infoViewOnHover);
 	if(m_listView) m_listView->setInfoViewOnHover(infoViewOnHover);
+}
+
+void PartsBinPaletteWidget::addPartCommand(const QString& moduleID) {
+	bool updating = alreadyIn(moduleID);
+	QString undoStackMsg;
+
+	if(!updating) {
+		undoStackMsg = tr("Part \"%1\" added to bin").arg(moduleID);
+	} else {
+		undoStackMsg = tr("Part \"%1\" updated in bin").arg(moduleID);
+	}
+	QUndoCommand *parentCmd = new QUndoCommand(undoStackMsg);
+
+	new PartsBinAddCommand(this, moduleID, -1, parentCmd);
+	m_undoStack->push(parentCmd);
+}
+
+void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
+	QUndoCommand *parentCmd = new QUndoCommand(tr("Part \"%1\" removed from the bin").arg(moduleID));
+
+	new PartsBinRemoveCommand(this, moduleID, -1, parentCmd);
+	m_undoStack->push(parentCmd);
 }

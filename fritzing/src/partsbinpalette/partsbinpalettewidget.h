@@ -34,6 +34,7 @@ $Date$
 #include "../palettemodel.h"
 #include "../modelpart.h"
 #include "../htmlinfoview.h"
+#include "../waitpushundostack.h"
 #include "partsbiniconview.h"
 #include "partsbinlistview.h"
 #include "simpleeditablelabelwidget.h"
@@ -58,7 +59,7 @@ class ImageButton : public QLabel {
 class PartsBinPaletteWidget : public FDockWidget {
 	Q_OBJECT
 	public:
-		PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, QWidget* parent = 0);
+		PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent = 0);
 		~PartsBinPaletteWidget();
 
 		QSize sizeHint() const;
@@ -75,10 +76,12 @@ class PartsBinPaletteWidget : public FDockWidget {
 		bool hasAlienParts();
 
 		void setInfoViewOnHover(bool infoViewOnHover);
-
-	public slots:
 		void addPart(const QString& moduleID);
 		void removePart(const QString& moduleID);
+
+	public slots:
+		void addPartCommand(const QString& moduleID);
+		void removePartCommand(const QString& moduleID);
 		void removeAlienParts();
 
 	protected slots:
@@ -144,7 +147,7 @@ class PartsBinPaletteWidget : public FDockWidget {
 		QPixmap *m_saveButtonEnabled;
 		QPixmap *m_saveButtonDisabled;
 
-		QUndoStack *m_undoStack;
+		WaitPushUndoStack *m_undoStack;
 
 		QStringList m_alienParts;
 };
