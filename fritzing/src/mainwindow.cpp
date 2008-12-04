@@ -626,7 +626,6 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		SLOT(updateTransformationActions())
 	);
 
-	//m_miniViewContainer0->setView(widget);
 
 	//  TODO:  should be a cleaner way to do this
 	switch( index ) {
@@ -641,7 +640,10 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	hideShowTraceMenu();
 	updateTraceMenu();
 
-	setZoomComboBoxValue(m_currentWidget->currentZoom());
+
+	// obsolete: when there are 3 navigators and 3 zoom boxes, no need to update when current view changes
+	//m_miniViewContainer0->setView(widget);
+	//setZoomComboBoxValue(m_currentWidget->currentZoom());
 }
 
 void MainWindow::setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2) {
