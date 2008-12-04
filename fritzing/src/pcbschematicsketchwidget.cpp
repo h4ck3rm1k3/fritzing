@@ -43,7 +43,7 @@ void PCBSchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 }
 
 void PCBSchematicSketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems) {
-	QMultiHash<ConnectorItem *, ConnectorItem *> allConnectors;
+	ConnectorPairHash allConnectors;
 	foreach (ItemBase * newItem, newItems.values()) {
 		foreach (QGraphicsItem * childItem, newItem->childItems()) {
 			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
@@ -207,6 +207,20 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 		}
 	}
 
+	removeRatsnestWires(allPartConnectorItems);
+
+
+	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+		delete list;
+	}
+
+	// divide jumpercount by two since we counted both ends of each wire
+	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount / 2);
+}
+
+
+void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems) 
+{
 	QSet<Wire *> deleteWires;
 	QSet<Wire *> visitedWires;
 	foreach (QGraphicsItem * item, scene()->items()) {
@@ -246,12 +260,34 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 	foreach (Wire * wire, deleteWires) {
 		deleteItem(wire, false, false);
 	}
+}
 
+void PCBSchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+{
+	Q_UNUSED(parentCommand);
+	Q_UNUSED(deletedItems);
 
-	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-		delete list;
+	foreach (ConnectorPairHash * connectorHash, deletedConnections.values()) 
+	{
+		QList <ConnectorItem *> removeKeys;
+		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
+			if (fromConnectorItem->attachedTo()->getVirtual()) {
+				removeKeys.append(fromConnectorItem);
+				continue;
+			}
+
+			QList<ConnectorItem *> removeValues;
+			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
+				if (toConnectorItem->attachedTo()->getVirtual()) {
+					removeValues.append(toConnectorItem);
+				}
+			}
+			foreach (ConnectorItem * toConnectorItem, removeValues) {
+				connectorHash->remove(fromConnectorItem, toConnectorItem);
+			}
+		}
+		foreach (ConnectorItem * fromConnectorItem, removeKeys) {
+			connectorHash->remove(fromConnectorItem);
+		}
 	}
-
-	// divide jumpercount by two since we counted both ends of each wire
-	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount / 2);
 }

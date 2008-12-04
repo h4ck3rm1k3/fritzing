@@ -44,6 +44,8 @@ $Date$
 #include "graphicssvglineitem.h"
 #include "partinstancestuff.h"
 
+typedef QMultiHash<class ConnectorItem *, class ConnectorItem *> ConnectorPairHash;
+
 class ItemBase : public GraphicsSvgLineItem
 {
 Q_OBJECT
@@ -97,7 +99,7 @@ public:
 	void setViewLayerID(const QString & layerName, const LayerHash & viewLayers);
 	bool topLevel();
 	virtual void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
-	void collectConnectors(QMultiHash<class ConnectorItem *, class ConnectorItem *> & connectorHash, QGraphicsScene * scene);
+	void collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene);
 	void busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
 	bool hidden();

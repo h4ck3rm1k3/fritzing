@@ -46,7 +46,8 @@ protected:
 	void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
 	bool canDropModelPart(ModelPart * modelPart);
 	virtual void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire) = 0;
-
+	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems);
+	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 };
 
 #endif

@@ -67,6 +67,7 @@ public:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	virtual void figureHover() = 0;
+	QRectF boundingRect() const;
 	
 	/*
 	// for debugging
@@ -81,7 +82,6 @@ signals:
 	void connectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
 
 protected:
-	QRectF boundingRect() const;
 	QPainterPath shape() const;
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

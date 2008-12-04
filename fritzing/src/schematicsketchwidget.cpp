@@ -24,9 +24,10 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 ********************************************************************/
 
-
 #include "schematicsketchwidget.h"
 #include "autorouter1.h"
+#include "debugdialog.h"
+#include "virtualwire.h"
 
 SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
@@ -43,9 +44,125 @@ void SchematicSketchWidget::addViewLayers() {
 	addSchematicViewLayers();
 }
 
+void SchematicSketchWidget::updateRatsnestStatus() {
+	QHash<ConnectorItem *, int> indexer;
+	QList< QList<ConnectorItem *>* > allPartConnectorItems;
+	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
+	removeRatsnestWires(allPartConnectorItems);
+	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+		delete list;
+	}
+}
+
+
+void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) 
+{
+	if (connect) {
+		bool useFrom = false;
+		bool useTo = false;
+		if ((fromConnectorItem->attachedToItemType() == ModelPart::Part) ||
+			(fromConnectorItem->attachedToItemType() == ModelPart::Board)) 
+		{
+			useFrom = true;
+		}
+		if ((toConnectorItem->attachedToItemType() == ModelPart::Part) ||
+			(toConnectorItem->attachedToItemType() == ModelPart::Board)) 
+		{
+			useTo = true;
+		}
+		
+		if (useFrom && useTo) {
+			makeOneRatsnestWire(fromConnectorItem, toConnectorItem);
+			return;
+		}
+
+		if (useFrom && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			ConnectorItem * newTo = tryWire(toConnectorItem, fromConnectorItem);
+			if (newTo != NULL) {
+				makeOneRatsnestWire(fromConnectorItem, newTo);
+				return;
+			}
+		}
+		else if (useTo && fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			ConnectorItem * newFrom = tryWire(fromConnectorItem, toConnectorItem);
+			if (newFrom != NULL) {
+				makeOneRatsnestWire(toConnectorItem, newFrom);
+				return;
+			}
+		}
+
+		QList<ConnectorItem *> connectorItems;
+		connectorItems << fromConnectorItem, toConnectorItem;
+		ConnectorItem::collectEqualPotential(connectorItems);
+		QList<ConnectorItem *> partsConnectorItems;
+		ConnectorItem::collectParts(connectorItems, partsConnectorItems);
+		if (useFrom) {
+			ConnectorItem * newTo = tryParts(fromConnectorItem, partsConnectorItems);
+			if (newTo != NULL) {
+				makeOneRatsnestWire(fromConnectorItem, newTo);
+				return;
+			}
+		}
+		else if (useTo) {
+			ConnectorItem * newFrom = tryParts(toConnectorItem, partsConnectorItems);
+			if (newFrom != NULL) {
+				makeOneRatsnestWire(toConnectorItem, newFrom);
+				return;
+			}
+		}
+		else {
+			return;
+		}
+	}
+
+}
+
+ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorItem, QList<ConnectorItem *> partsConnectorItems) 
+{
+	foreach (ConnectorItem * connectorItem, partsConnectorItems) {
+		if (connectorItem == otherConnectorItem) continue;
+		if (connectorItem->attachedTo() == otherConnectorItem->attachedTo() &&
+			connectorItem->bus() != NULL &&
+			connectorItem->bus() == otherConnectorItem->bus()) continue;
+
+
+		return connectorItem;
+	}
+
+	return NULL;
+
+}
+
+ConnectorItem * SchematicSketchWidget::tryWire(ConnectorItem * wireConnectorItem, ConnectorItem * otherConnectorItem)
+{
+	QList<Wire *> chained;
+	QList<ConnectorItem *> ends;
+	QList<ConnectorItem *> uniqueEnds;
+	dynamic_cast<Wire *>(wireConnectorItem->attachedTo())->collectChained(chained, ends, uniqueEnds);
+	foreach (ConnectorItem * end, ends) {
+		if (end == wireConnectorItem) continue;
+		if (end == otherConnectorItem) continue;
+		if (end->attachedToItemType() == ModelPart::Breadboard) continue;
+		if (end->attachedTo() == otherConnectorItem->attachedTo() &&
+			end->bus() != NULL &&
+			end->bus() == otherConnectorItem->bus()) continue;
+
+
+		return end;
+	}
+
+	return NULL;
+}
 
 void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire)
 {
+	Q_UNUSED(partsConnectorItems);
+	Q_UNUSED(modelWire);
+	Q_UNUSED(ratsnestWires);
+
+	return;
+
+	/*
 	modelWire = NULL;
 
 	// delete all the ratsnest wires before running dijkstra
@@ -85,5 +202,78 @@ void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorIte
 		ConnectorItem * dest = partsConnectorItems[i + 1];
 		Wire * newWire = makeOneRatsnestWire(source, dest);
 		ratsnestWires.append(newWire);
+	}
+*/
+}
+
+bool SchematicSketchWidget::canDeleteItem(QGraphicsItem * item) 
+{
+	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
+	if (wire != NULL) return true;
+
+	return SketchWidget::canDeleteItem(item);
+}
+
+
+void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+{
+	// don't forget to take the virtualwires out of the list:
+	PCBSchematicSketchWidget::reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
+
+	QSet<Wire *> deleteWires;
+	QSet<Wire *> undeleteWires;
+	QMultiHash<qint64, QString> moveItems;
+	foreach (ItemBase * itemBase, deletedItems) {
+		Wire * wire = dynamic_cast<Wire *>(itemBase);
+		if (wire == NULL) continue;
+		if (!wire->getRatsnest()) continue;
+
+		undeleteWires.insert(wire);
+		QList<Wire *> chained;
+		QList<ConnectorItem *> ends;
+		QList<ConnectorItem *> uniqueEnds;
+		wire->collectChained(chained, ends, uniqueEnds);
+		if (ends.count() == 2) {
+			Wire* extraWire = ends[0]->wiredTo(ends[1], ViewGeometry::NormalFlag);
+			if (extraWire != NULL) {
+				// need to delete the real wire from breadboard view
+				deleteWires.insert(extraWire);
+			}
+			else { 				
+				// move parts connected to female connectors
+				// but draw a wire to the remaining connections, if any
+				if (ends[0]->connectorType() == Connector::Female) {
+					moveItems.insert(ends[1]->attachedToID(), ends[1]->connectorStuffID());
+				}
+				else if (ends[1]->connectorType() == Connector::Female) {
+					moveItems.insert(ends[0]->attachedToID(), ends[0]->connectorStuffID());
+				}
+				else {
+					// connected to the breadboard
+					ConnectorItem * end0 = ends[0];
+					//ConnectorItem * end1 = ends[1];
+
+					moveItems.insert(end0->attachedToID(), end0->connectorStuffID());
+				}
+			}		
+		}
+		else {
+			// "isolate" the wire to determine a minimal number of parts
+			// then figure out which parts to move/disconnect
+		}
+	}
+
+	if (moveItems.count() > 0) {
+		emit schematicDisconnectWireSignal(moveItems, parentCommand);
+	}
+
+	foreach (Wire * wire, undeleteWires) {
+		deletedItems.removeOne(wire);
+	}
+
+	foreach (Wire * wire, deleteWires) {
+		if (!deletedItems.contains(wire)) {
+			deletedItems.append(wire);
+		}
 	}
 }

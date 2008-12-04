@@ -53,7 +53,7 @@ void BreadboardSketchWidget::addViewLayers() {
 	addBreadboardViewLayers();
 }
 
-bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand)
+bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, QUndoCommand * parentCommand)
 {
 	// if item is attached to a virtual wire or a female connector in breadboard view
 	// then disconnect it
@@ -75,6 +75,7 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem);
 				toConnectorItem->tempRemove(fromConnectorItem);
+				connectorHash.insert(fromConnectorItem, toConnectorItem);
 
 			}
 		}
@@ -86,4 +87,91 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 {
 	return BaseCommand::CrossView;
+}
+
+void BreadboardSketchWidget::schematicDisconnectWireSlot(QMultiHash<qint64, QString> & moveItems, QUndoCommand * parentCommand)
+{
+	foreach (qint64 itemID, moveItems.uniqueKeys()) {
+		ItemBase * itemBase = findItem(itemID);
+		if (itemBase == NULL) continue;
+
+		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(itemBase);
+		if (paletteItemBase == NULL) continue;
+
+		PaletteItemBase * detachFrom = NULL;
+		foreach (QString connectorID, moveItems.values(itemID)) {
+			ConnectorItem * fromConnectorItem = findConnectorItem(itemBase, connectorID, true);
+			if (fromConnectorItem == NULL) continue;
+
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard || toConnectorItem->attachedToItemType() == ModelPart::Board ) {
+					detachFrom = dynamic_cast<PaletteItemBase *>(toConnectorItem->attachedTo());
+					break;
+				}
+			}
+			if (detachFrom != NULL) break;
+		}
+		if (detachFrom == NULL) continue;
+
+		QPointF newPos = calcNewLoc(paletteItemBase, detachFrom);
+
+		// delete connections
+		// add wires and connections for undisconnected connectors
+
+		paletteItemBase->saveGeometry();
+		ViewGeometry vg = paletteItemBase->getViewGeometry();
+		vg.setLoc(newPos);
+		new MoveItemCommand(this, paletteItemBase->id(), paletteItemBase->getViewGeometry(), vg, parentCommand);
+		QSet<ItemBase *> tempItems;
+		ConnectorPairHash connectorHash;
+		disconnectFromFemale(paletteItemBase, tempItems, connectorHash, parentCommand);
+		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+			if (moveItems.values(itemID).contains(fromConnectorItem->connectorStuffID())) {
+				// don't need to reconnect
+				continue;
+			}
+
+			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, BaseCommand::CrossView, parentCommand);
+			}
+		}
+	}
+}
+
+QPointF BreadboardSketchWidget::calcNewLoc(PaletteItemBase * moveBase, PaletteItemBase * detachFrom)
+{
+	QRectF dr = detachFrom->boundingRect();
+	dr.moveTopLeft(detachFrom->pos());
+		
+	QPointF pos = moveBase->pos();
+	QRectF r = moveBase->boundingRect();
+	pos.setX(pos.x() + (r.width() / 2));
+	pos.setY(pos.y() + (r.height() / 2));
+	qreal d[4];
+	d[0] = qAbs(pos.y() - dr.top());
+	d[1] = qAbs(pos.y() - dr.bottom());
+	d[2] = qAbs(pos.x() - dr.left());
+	d[3] = qAbs(pos.x() - dr.right());
+	int ix = 0;
+	for (int i = 1; i < 4; i++) {
+		if (d[i] < d[ix]) {
+			ix = i;
+		}
+	}
+	QPointF newPos = moveBase->pos();
+	switch (ix) {
+		case 0:
+			newPos.setY(dr.top() - r.height());
+			break;
+		case 1:
+			newPos.setY(dr.bottom());
+			break;
+		case 2:
+			newPos.setX(dr.left() - r.width());
+			break;
+		case 3:
+			newPos.setY(dr.right());
+			break;
+	}
+	return newPos;
 }

@@ -40,6 +40,8 @@ public:
 
 	void addViewLayers();
 	QString renderToSVG(qreal printerScale);
+	bool canDeleteItem(QGraphicsItem * item);
+
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);

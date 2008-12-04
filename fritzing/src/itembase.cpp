@@ -77,7 +77,9 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	m_connectorHoverCount = 0;
 	m_viewIdentifier = viewIdentifier;
 	m_modelPart = modelPart;
-	m_modelPart->addViewItem(this);
+	if (m_modelPart) {
+		m_modelPart->addViewItem(this);
+	}
 	setTooltip();
 	m_id = id;
 	m_hidden = false;
@@ -116,7 +118,7 @@ ItemBase::~ItemBase() {
 }
 
 void ItemBase::setTooltip() {
-	if(m_modelPart->partInstanceStuff()) {
+	if(m_modelPart && m_modelPart->partInstanceStuff()) {
 		QString title = m_modelPart->partInstanceStuff()->title();
 		if(!title.isNull() && !title.isEmpty()) {
 			setInstanceTitleTooltip(m_modelPart->partInstanceStuff()->title());
@@ -369,7 +371,7 @@ bool ItemBase::hidden() {
 	return m_hidden;
 }
 
-void ItemBase::collectConnectors(QMultiHash<ConnectorItem *, ConnectorItem *> & connectorHash, QGraphicsScene * scene) {
+void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene) {
 	Q_UNUSED(scene);
 
 	ModelPart * modelPart = this->modelPart();
@@ -615,7 +617,7 @@ ConnectorItem * ItemBase::anyConnectorItem() {
 
 
 QString ItemBase::instanceTitle() {
-	if(m_modelPart->partInstanceStuff()) {
+	if(m_modelPart && m_modelPart->partInstanceStuff()) {
 		return m_modelPart->partInstanceStuff()->title();
 	}
 	return ___emptyString___;
@@ -629,14 +631,16 @@ void ItemBase::setInstanceTitle(const QString &title) {
 }
 
 QString ItemBase::label() {
-	if(m_modelPart->modelPartStuff()) {
+	if(m_modelPart && m_modelPart->modelPartStuff()) {
 		return m_modelPart->modelPartStuff()->label();
 	}
 	return ___emptyString___;
 }
 
 void ItemBase::setInstanceTitleAndTooltip(const QString &title) {
-	m_modelPart->partInstanceStuff()->setTitle(title);
+	if (m_modelPart) {
+		m_modelPart->partInstanceStuff()->setTitle(title);
+	}
 	setInstanceTitleTooltip(title);
 }
 
@@ -649,11 +653,13 @@ void ItemBase::setInstanceTitleTooltip(const QString &text) {
 }
 
 void ItemBase::setDefaultTooltip() {
-	QString base = "<font size='2'>%1</font>";
-	if(m_modelPart->itemType() != ModelPart::Wire) {
-		this->setToolTip(base.arg(m_modelPart->title()));
-	} else {
-		this->setToolTip(base.arg(m_modelPart->modelPartStuff()->title() + " (" + m_modelPart->modelPartStuff()->moduleID() + ")"));
+	if (m_modelPart) {
+		QString base = "<font size='2'>%1</font>";
+		if(m_modelPart->itemType() != ModelPart::Wire) {
+			this->setToolTip(base.arg(m_modelPart->title()));
+		} else {
+			this->setToolTip(base.arg(m_modelPart->modelPartStuff()->title() + " (" + m_modelPart->modelPartStuff()->moduleID() + ")"));
+		}
 	}
 }
 

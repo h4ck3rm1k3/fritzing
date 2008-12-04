@@ -37,6 +37,7 @@ $Date$
 #include <QRubberBand>
 #include <QLine>
 #include <QHash>
+#include <QMultiHash>
 #include <QBrush>
 #include <QGraphicsItem>
 #include <QMainWindow>
@@ -498,21 +499,10 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	QList<ItemBase *> deletedItems;
 
-	for (int i = 0; i < sitems.size(); i++) {
+	foreach (QGraphicsItem * sitem, sitems) {
+		if (!canDeleteItem(sitem)) continue;
 
-		ItemBase *itemBase = ItemBase::extractTopLevelItemBase(sitems[i]);
-		if (itemBase == NULL) continue;
-		if (itemBase->modelPart() == NULL) continue;
-
-		if (itemBase->itemType() == ModelPart::Wire) {
-			Wire * wire = dynamic_cast<Wire *>(itemBase);
-			if (wire->getRatsnest() || wire->getVirtual()) {   // right now the only virtual wires are ratsnest wires
-				// shouldn't be here, but check anyway
-				continue;
-			}
-		}
-
-		deletedItems.append(itemBase);
+		deletedItems.append(dynamic_cast<ItemBase *>(sitem));
 	}
 
 	if (deletedItems.count() <= 0) {
@@ -534,22 +524,21 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
     stackSelectionState(false, parentCommand);
 
-	// the theory is that we only need to disconnect virtual wires at this point
-	// and not regular connectors
-	// since in figuring out how to manage busConnections
-	// all parts are connected to busConnections only by virtual wires
+	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
 
 	foreach (ItemBase * itemBase, deletedItems) {
-		QMultiHash<ConnectorItem *, ConnectorItem *>  connectorHash;
-		itemBase->collectConnectors(connectorHash, this->scene());
+		ConnectorPairHash * connectorHash = new ConnectorPairHash;
+		itemBase->collectConnectors(*connectorHash, this->scene());
+		deletedConnections.insert(itemBase, connectorHash);
+	}
 
+	reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
+
+	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values()) 
+	{
 		// now prepare to disconnect all the deleted item's connectors
-		foreach (ConnectorItem * fromConnectorItem,  connectorHash.uniqueKeys()) {
-			if (fromConnectorItem->attachedTo()->getVirtual()) continue;
-
-			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-				if (toConnectorItem->attachedTo()->getVirtual()) continue;
-
+		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
+			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
 											  false, false, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem);
@@ -557,6 +546,11 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 			}
 		}
    	}
+
+	foreach (ConnectorPairHash * connectorHash, deletedConnections.values()) 
+	{
+		delete connectorHash;
+	}
 
 	for (int i = 0; i < deletedItems.count(); i++) {
 		ItemBase * itemBase = deletedItems[i];
@@ -570,6 +564,12 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
    	m_undoStack->push(parentCommand);
 
 
+}
+
+void SketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
+	Q_UNUSED(parentCommand);
+	Q_UNUSED(deletedConnections);
+	Q_UNUSED(deletedItems);
 }
 
 void SketchWidget::extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
@@ -805,13 +805,13 @@ void SketchWidget::copy() {
 		}
 	}
 
-	QMultiHash<ConnectorItem *, ConnectorItem *> allConnectorHash;
+	ConnectorPairHash allConnectorHash;
 
 	// now save the connector info
 	foreach (ItemBase * base, bases) {
-		QMultiHash<ConnectorItem *, ConnectorItem *> connectorHash;
+		ConnectorPairHash connectorHash;
 		base->collectConnectors(connectorHash, scene());
-		QMultiHash<ConnectorItem *, ConnectorItem *> disconnectorHash;
+		ConnectorPairHash disconnectorHash;
 
 		// first get the connectors from each part and remove the ones pointing outside the copied set of parts
 		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
@@ -1236,20 +1236,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		paletteItem->collectWireConnectees(wires);
 	}
 
-	/*
-	m_disconnectors.clear();
-	if (m_viewIdentifier == ItemBase::BreadboardView) {
-		foreach (ItemBase * item, m_savedItems) {
-			collectDisconnectors(item);
-		}
-
-		foreach (ConnectorItem * connectorItem, m_disconnectors.keys()) {
-			connectorItem->connectorHover(NULL, true);
-			m_disconnectors.value(connectorItem)->connectorHover(NULL, true);
-		}
-	}
-*/
-
 	foreach (Wire * wire, wires) {
 		if (m_savedItems.contains(wire)) continue;
 
@@ -1487,7 +1473,8 @@ bool SketchWidget::checkMoved()
 
 		if (item->itemType() == ModelPart::Wire) continue;
 
-		if (disconnectFromFemale(item, m_savedItems, parentCommand)) {
+		ConnectorPairHash ch;
+		if (disconnectFromFemale(item, m_savedItems, ch, parentCommand)) {
 			doEmit = true;
 		}
 	}
@@ -2363,8 +2350,9 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 	bool doEmit = false;
 	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
+	ConnectorPairHash connectorHash;
 	foreach (PaletteItem * item, targets) {
-		if (disconnectFromFemale(item, emptyList, parentCommand)) doEmit = true;
+		if (disconnectFromFemale(item, emptyList, connectorHash, parentCommand)) doEmit = true;
 
 		if (item->sticky()) {
 			//TODO: apply transformation to stuck items
@@ -3062,7 +3050,7 @@ void SketchWidget::cleanUpWiresAux() {
 	updateRatsnestStatus();
 }
 
-void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, QMultiHash<ConnectorItem *, ConnectorItem *> & connectionState) {
+void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState) {
 	foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 		connectionState.insert(fromConnectorItem, toConnectorItem);
 		fromConnectorItem->tempRemove(toConnectorItem);
@@ -3356,11 +3344,12 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	}
 }
 
-bool SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand)
+bool SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(item);
 	Q_UNUSED(savedItems);
 	Q_UNUSED(parentCommand);
+	Q_UNUSED(connectorHash);
 	return false;
 }
 
@@ -3421,67 +3410,6 @@ void SketchWidget::autoScrollTimeout()
 	moveItems(m_globalPos);
 }
 
-/*
-
-void SketchWidget::collectDisconnectors(ItemBase * item) {
-	if (item->itemType() == ModelPart::Breadboard || item->itemType() == ModelPart::Board) return;
-
-	foreach (QGraphicsItem * childItem, item->childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (fromConnectorItem == NULL) return;
-		if (fromConnectorItem->connectorType() != Connector::Male) continue;
-
-		ConnectorItem * disconnectee = NULL;
-		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-			if (toConnectorItem->connectorType() == Connector::Female && !m_savedItems.contains(toConnectorItem->attachedTo())) {
-				m_disconnectors.insert(fromConnectorItem, toConnectorItem);
-				fromConnectorItem->tempConnectTo(toConnectorItem);
-				toConnectorItem->tempConnectTo(fromConnectorItem);
-				disconnectee = toConnectorItem;
-				break;
-			}
-		}
-
-		if (disconnectee) {
-			// deal with bus connections
-			dealWithVirtualDisconnections(disconnectee, fromConnectorItem);
-			dealWithVirtualDisconnections(fromConnectorItem, disconnectee);
-		}
-	}
-}
-
-void SketchWidget::dealWithVirtualDisconnections(ConnectorItem * source, ConnectorItem * dest)
-{
-	Bus* bus = source->bus();
-	if (bus == NULL) return;
-
-	foreach (ConnectorItem * toConnectorItem, dest->connectedToItems()) {
-		if (toConnectorItem->attachedTo()->getVirtual()) {
-			Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-			ConnectorItem * otherEnd = wire->otherConnector(toConnectorItem);
-			foreach (ConnectorItem * otherConnectorToItem, otherEnd->connectedToItems()) {
-				if (otherConnectorToItem->bus() == bus) {
-					m_disconnectors.insert(dest, source);
-					dest->tempConnectTo(toConnectorItem);
-					source->tempConnectTo(dest);
-					break;
-				}
-			}
-		}
-	}
-}
-
-void SketchWidget::restoreDisconnectors() {
-	foreach (ConnectorItem * from, m_disconnectors.keys()) {
-		ConnectorItem * to = m_disconnectors.value(from);
-		from->tempConnectTo(to);
-		to->tempConnectTo(from);
-	}
-	m_disconnectors.clear();
-}
-
-*/
-
 const QString &SketchWidget::selectedModuleID() {
 	if(m_lastPaletteItemSelected) {
 		return m_lastPaletteItemSelected->modelPart()->moduleID();
@@ -3507,4 +3435,15 @@ BaseCommand::CrossViewType SketchWidget::wireSplitCrossView()
 
 void SketchWidget::setChainedWireIDSlot(qint64 wireID, qint64 chainedID) {
 	setChainedWireID(wireID, chainedID, BaseCommand::SingleView);
+}
+
+bool SketchWidget::canDeleteItem(QGraphicsItem * item) 
+{
+	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+	if (itemBase == NULL) return false;
+
+	ItemBase * chief = itemBase->layerKinChief();
+	if (chief == NULL) return false;
+
+	return true;
 }

@@ -168,6 +168,7 @@ public:
 
 	const QString &selectedModuleID();
 	void setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType);
+	virtual bool canDeleteItem(QGraphicsItem * item);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -223,7 +224,7 @@ protected:
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
 	ItemBase * overSticky(ItemBase *);
 	void cleanUpWiresAux();
-	void tempDisconnectWire(ConnectorItem * fromConnectorItem, QMultiHash<ConnectorItem *, ConnectorItem *> & connectionState);
+	void tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState);
 	virtual void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	virtual void setNewPartVisible(ItemBase *);
 	virtual void collectFemaleConnectees(PaletteItem *);
@@ -240,16 +241,14 @@ protected:
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
-	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand);
+	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
 	virtual void redrawRatsnest(QHash<long, ItemBase *> & newItems);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
-	//void restoreDisconnectors();
-	//void collectDisconnectors(ItemBase * item);
-	//void dealWithVirtualDisconnections(ConnectorItem * src, ConnectorItem * dest);
+	virtual void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 
 protected:
 	static bool lessThan(int a, int b);

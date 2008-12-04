@@ -40,12 +40,16 @@ public:
 
 	void addViewLayers();
 
+protected slots:
+	void schematicDisconnectWireSlot(QMultiHash<qint64, QString> & moveItems, QUndoCommand * parentCommand);
+
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	void collectFemaleConnectees(PaletteItem *);
 	void findConnectorsUnder(ItemBase * item);
-	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, QUndoCommand * parentCommand);
+	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
+	QPointF calcNewLoc(PaletteItemBase * moveBase, PaletteItemBase * detachFrom);
 };
 
 #endif

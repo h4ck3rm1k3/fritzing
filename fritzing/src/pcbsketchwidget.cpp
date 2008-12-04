@@ -29,6 +29,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "debugdialog.h"
 #include "svg/svgfilesplitter.h"
 #include "tracewire.h"
+#include "virtualwire.h"
 
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
@@ -245,3 +246,12 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 	return outputSVG;
 
 }
+
+bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item) 
+{
+	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
+	if (wire != NULL) return false;
+
+	return SketchWidget::canDeleteItem(item);
+}
+

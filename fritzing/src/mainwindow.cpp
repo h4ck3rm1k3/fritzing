@@ -363,6 +363,8 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(QMultiHash<qint64, QString> &, QUndoCommand *)), 
+						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(QMultiHash<qint64, QString> &, QUndoCommand *)));
 
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
 	if (fapp != NULL) {

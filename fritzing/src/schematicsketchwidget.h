@@ -39,11 +39,19 @@ public:
     SchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
 
 	void addViewLayers();
+	bool canDeleteItem(QGraphicsItem * item);
+
+signals:
+	void schematicDisconnectWireSignal(	QMultiHash<qint64, QString> & moveItems,  QUndoCommand * parentCommand);
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire);
-
+	void updateRatsnestStatus();
+	void dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
+	ConnectorItem * tryWire(ConnectorItem * wireConnectorItem, ConnectorItem * otherConnectorItem);
+	ConnectorItem * tryParts(ConnectorItem * otherConnectorItem, QList<ConnectorItem *> partsConnectorItems);
+	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 };
 
 #endif
