@@ -44,7 +44,7 @@
     </views>
     <connectors>
         <connector type="male" id="connector0" name="leg1" >
-            <description>emitter</description>
+            <description>leg1</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector0pin"/>
@@ -57,8 +57,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector type="male" id="connector1" name="leg2" >
-            <description>base</description>
+        <connector type="male" id="connector1" name="wiper" >
+            <description>wiper</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector1pin"/>
@@ -71,8 +71,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector type="male" id="connector2" name="leg3" >
-            <description>collector</description>
+        <connector type="male" id="connector2" name="leg2" >
+            <description>leg2</description>
             <views>
                 <breadboardView>
                     <pin layer="breadboard" svgId="connector2pin"/>
