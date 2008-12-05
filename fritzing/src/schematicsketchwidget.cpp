@@ -118,17 +118,29 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 				for (int j = i + 1; j < partsConnectorItems.count(); j++) {
 					ConnectorItem * cj = partsConnectorItems[j];
 					if (ci->bus() != NULL && ci->bus() == cj->bus()) continue;
+					if (ci->wiredTo(cj, ViewGeometry::RatsnestFlag)) continue;
+					
+					if (alreadyOnBus(ci, cj)) continue;
+					if (alreadyOnBus(cj, ci)) continue;
 
-					if (!ci->wiredTo(cj, ViewGeometry::RatsnestFlag)) {
-						makeOneRatsnestWire(ci, cj);
-						return;
-					}
+					makeOneRatsnestWire(ci, cj);
+					return;
 				}
 			}
 
 			return;
 		}
 	}
+}
+
+bool SchematicSketchWidget::alreadyOnBus(ConnectorItem * busCandidate, ConnectorItem * otherCandidate) {
+	if (busCandidate->bus() == NULL) return false;
+
+	foreach (ConnectorItem * toConnectorItem, otherCandidate->connectedToItems()) {
+		if (toConnectorItem->bus() == busCandidate->bus()) return true;
+	}
+
+	return false;
 }
 
 ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorItem, QList<ConnectorItem *> partsConnectorItems) 
@@ -138,6 +150,8 @@ ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorIt
 		if (connectorItem->attachedTo() == otherConnectorItem->attachedTo() &&
 			connectorItem->bus() != NULL &&
 			connectorItem->bus() == otherConnectorItem->bus()) continue;
+		if (alreadyOnBus(otherConnectorItem, connectorItem)) continue;
+		if (alreadyOnBus(connectorItem, otherConnectorItem)) continue;
 
 
 		return connectorItem;
@@ -160,6 +174,8 @@ ConnectorItem * SchematicSketchWidget::tryWire(ConnectorItem * wireConnectorItem
 		if (end->attachedTo() == otherConnectorItem->attachedTo() &&
 			end->bus() != NULL &&
 			end->bus() == otherConnectorItem->bus()) continue;
+		if (alreadyOnBus(otherConnectorItem, end)) continue;
+		if (alreadyOnBus(end, otherConnectorItem)) continue;
 
 
 		return end;

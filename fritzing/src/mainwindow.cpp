@@ -802,7 +802,7 @@ void MainWindow::createDockWindows()
     FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
 	dock->setObjectName("Breadboard_view");
 	setDockColorAnd(m_miniViewContainerBreadboard, dockSelectedColor, ___emptyString___);
- 	dock->setFeatures (QDockWidget::DockWidgetMovable);
+	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
  	dock->resize(m_miniViewContainerBreadboard->minimumSize());
 	m_miniViewContainerBreadboard->filterMousePress();
 	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
@@ -812,7 +812,7 @@ void MainWindow::createDockWindows()
     dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
 	dock->setObjectName("Schematic_view");
 	setDockColorAnd(m_miniViewContainerSchematic, dockUnselectedColor, clickToSeeString);
- 	dock->setFeatures (QDockWidget::DockWidgetMovable);
+ 	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
  	dock->resize(m_miniViewContainerSchematic->minimumSize());
 	m_miniViewContainerSchematic->filterMousePress();
 	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
@@ -823,7 +823,7 @@ void MainWindow::createDockWindows()
 	dock->setObjectName("PCB_view");
 	dock->resize(m_miniViewContainerPCB->minimumSize());
 	setDockColorAnd(m_miniViewContainerPCB, dockUnselectedColor, clickToSeeString);
-	dock->setFeatures (QDockWidget::DockWidgetMovable);
+	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	m_miniViewContainerPCB->filterMousePress();
 	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
