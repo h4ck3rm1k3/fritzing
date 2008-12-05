@@ -296,6 +296,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 
 			// prevents virtual wires from flashing up on screen
 			wire->setVisible(false);
+			wire->setCanChainMultiple(canChainMultiple());
 		}
 		else {
 			if (viewGeometry.getTrace()) {
@@ -3277,6 +3278,8 @@ void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeomet
 	QList<ConnectorItem *> ends;
 	Wire * jumperOrTrace = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);
+	new CleanUpWiresCommand(this, false, parentCommand);
+	
 	if (jumperOrTrace != NULL) {
 		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), .35, parentCommand);
@@ -3288,6 +3291,8 @@ void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeomet
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), 0.35, parentCommand);
 		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
 	}
+
+	new CleanUpWiresCommand(this, true, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -3446,4 +3451,8 @@ bool SketchWidget::canDeleteItem(QGraphicsItem * item)
 	if (chief == NULL) return false;
 
 	return true;
+}
+
+bool SketchWidget::canChainMultiple() {
+	return false;
 }

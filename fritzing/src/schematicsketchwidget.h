@@ -52,6 +52,7 @@ protected:
 	ConnectorItem * tryWire(ConnectorItem * wireConnectorItem, ConnectorItem * otherConnectorItem);
 	ConnectorItem * tryParts(ConnectorItem * otherConnectorItem, QList<ConnectorItem *> partsConnectorItems);
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	bool canChainMultiple();
 };
 
 #endif

@@ -249,6 +249,7 @@ protected:
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	virtual bool canChainMultiple();
 
 protected:
 	static bool lessThan(int a, int b);

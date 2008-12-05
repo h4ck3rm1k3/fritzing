@@ -57,6 +57,8 @@ void SchematicSketchWidget::updateRatsnestStatus() {
 
 void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) 
 {
+	if (alreadyRatsnest(fromConnectorItem, toConnectorItem)) return;
+
 	if (connect) {
 		bool useFrom = false;
 		bool useTo = false;
@@ -276,4 +278,8 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 			deletedItems.append(wire);
 		}
 	}
+}
+
+bool SchematicSketchWidget::canChainMultiple() {
+	return true;
 }

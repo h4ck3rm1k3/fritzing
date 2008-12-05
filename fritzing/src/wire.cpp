@@ -66,6 +66,7 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, true, itemMenu)
 {
+	m_canChainMultiple = false;
     setFlags(QGraphicsItem::ItemIsSelectable );
 	m_grabbedMouse = false;
 	m_connectorHover = NULL;
@@ -435,6 +436,15 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 			}
 			return;
 		}
+	}
+
+	if (m_canChainMultiple && event->modifiers() == Qt::ControlModifier) {
+		InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+		if (infoGraphicsView != NULL) {
+			infoGraphicsView->mousePressConnectorEvent(connectorItem, event);
+		}
+
+		return;
 	}
 
 
@@ -1011,3 +1021,8 @@ qint64 Wire::chainedID() {
 void Wire::setChainedID(qint64 cid) {
 	m_chainedID = cid;
 }
+
+void Wire::setCanChainMultiple(bool can) {
+	m_canChainMultiple = can;
+}
+

@@ -82,13 +82,12 @@ bool PCBSchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	return true;
 }
 
-void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
-
+bool PCBSchematicSketchWidget::alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem) {
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
 		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
 			// don't make further ratsnest's from ratsnest
-			return;
+			return true;
 		}
 	}
 
@@ -96,9 +95,17 @@ void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorIte
 		Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 		if (wire->getRatsnest() || wire->getJumper() || wire->getTrace()) {
 			// don't make further ratsnest's from ratsnest
-			return;
+			return true;
 		}
 	}
+
+	return false;
+}
+
+
+void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
+
+	if (alreadyRatsnest(fromConnectorItem, toConnectorItem)) return;
 
 	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
 		.arg(fromConnectorItem->attachedToTitle())
@@ -216,6 +223,11 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 
 	// divide jumpercount by two since we counted both ends of each wire
 	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount / 2);
+}
+
+void PCBSchematicSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) {
+	
+	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 }
 
 

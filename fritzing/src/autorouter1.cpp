@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "autorouter1.h"
-#include "sketchwidget.h"
+#include "pcbsketchwidget.h"
 #include "debugdialog.h"
 #include "virtualwire.h"
 #include "tracewire.h"
@@ -109,7 +109,7 @@ void tangent_PointPoly( QPointF P, QPolygonF & poly, int & rightTangent, int & l
 
 ////////////////////////////////////////////////////////////////////////
 
-Autorouter1::Autorouter1(SketchWidget * sketchWidget)
+Autorouter1::Autorouter1(PCBSketchWidget * sketchWidget)
 {
 	m_progressDialog = NULL;
 	m_sketchWidget = sketchWidget;
@@ -150,6 +150,11 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	QList<Edge *> edges;
 
 	// run dykstra over each net
+
+	QVector<int> netCounters(m_allPartConnectorItems.count());
+	for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
+		netCounters[i] = (m_allPartConnectorItems[i]->count() - 1) * 2;			// since we use two connectors at a time on a net
+	}
 	foreach (QList<ConnectorItem *>* partConnectorItems, m_allPartConnectorItems) {
 		// dijkstra will reorder *partConnectorItems
 		dijkstra(*partConnectorItems, indexer, adjacency, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
@@ -216,25 +221,39 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 			// TODO:  if we're stuck on two boards, use the union as the constraint?
 		}
 
-
+		int jumperCount = 0;
 		QList<Wire *> wires;
 		if (partForBounds == NULL) {
-			drawTrace(edge->from, edge->to, QPolygonF(), wires);
+			jumperCount += drawTrace(edge->from, edge->to, QPolygonF(), wires);
 		}
 		else {
 			QRectF boundingRect = partForBounds->boundingRect();
 			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
-			drawTrace(edge->from, edge->to, partForBounds->mapToScene(boundingRect), wires);
+			jumperCount += drawTrace(edge->from, edge->to, partForBounds->mapToScene(boundingRect), wires);
 			//foreach (Wire * wire, wires) {
 				//wire->addSticky(partForBounds, true);
 				//partForBounds->addSticky(wire, true);
 			//}
 		}
 
-
 		if (m_progressDialog) {
 			m_progressDialog->setValue(++edgesDone);
 		}
+		for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
+			if (m_allPartConnectorItems[i]->contains(edge->from)) {
+				netCounters[i] -= 2;
+				break;
+			}
+		}
+
+		int netsDone = 0;
+		foreach (int c, netCounters) {
+			if (c <= 0) {
+				netsDone++;
+			}
+		}
+		m_sketchWidget->forwardRoutingStatusSignal(m_allPartConnectorItems.count(), netsDone, edges.count() + 1 - edgesDone, jumperCount);
+
 		QApplication::processEvents();
 
 		if (m_progressDialog && m_progressDialog->wasCanceled()) {
@@ -285,6 +304,10 @@ void Autorouter1::clearTraces(SketchWidget * sketchWidget, bool deleteAll) {
 			if (deleteAll || wire->getAutoroutable()) {
 				oldTraces.append(wire);
 			}
+		}
+		else if (wire->getRatsnest()) {
+			wire->setRouted(false);
+			wire->setOpacity(1.0);	
 		}
 	}
 	
@@ -412,7 +435,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 }
 
-void Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {
+ int Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly, QList<Wire *> & wires) {
 
 	QPointF fromPos = from->sceneAdjustedTerminalPoint();
 	QPointF toPos = to->sceneAdjustedTerminalPoint();
@@ -427,7 +450,7 @@ void Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPol
 
 	bool result = drawTrace(fromPos, toPos, from, to, wires, boundingPoly);
 	if (m_progressDialog && m_progressDialog->wasCanceled()) {
-		return;
+		return 0;
 	}
 	if (!result) {
 		result = drawTrace(toPos, fromPos, to, from, wires, boundingPoly);
@@ -436,7 +459,7 @@ void Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPol
 		}
 	}
 	if (m_progressDialog && m_progressDialog->wasCanceled()) {
-		return;
+		return 0;
 	}
 	if (result) {
 		// hook everyone up
@@ -467,7 +490,7 @@ void Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPol
 													BaseCommand::SingleView, viewGeometry, newID, NULL);
 		if (jumper == NULL) {
 			// we're in trouble
-			return;
+			return 0;
 		}
 
 		Wire * jumperWire = dynamic_cast<Wire *>(jumper);
@@ -481,7 +504,11 @@ void Autorouter1::drawTrace(ConnectorItem * from, ConnectorItem * to, const QPol
 		jumperWire->connector1()->tempConnectTo(to);
 
 		wires.append(jumperWire);
+
+		return 1;
 	}
+
+	return 0;
 }
 
 bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly)

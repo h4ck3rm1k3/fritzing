@@ -116,6 +116,7 @@ public:
 	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);
 	qint64 chainedID();
 	void setChainedID(qint64);
+	void setCanChainMultiple(bool);
 
 public:
 	static QString moduleIDName;
@@ -158,6 +159,7 @@ protected:
 	QPen m_shadowPen;
 	qreal m_opacity;
 	qint64 m_chainedID;
+	bool m_canChainMultiple;
 
 public:
 	static QList<QString> colorNames;

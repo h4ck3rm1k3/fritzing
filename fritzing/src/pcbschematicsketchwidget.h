@@ -40,6 +40,7 @@ public:
 
 	void setNewPartVisible(ItemBase *);
 	void updateRatsnestStatus();
+	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 protected:
 	void redrawRatsnest(QHash<long, ItemBase *> & newItems);
@@ -48,6 +49,9 @@ protected:
 	virtual void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire) = 0;
 	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems);
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
+
+
 };
 
 #endif

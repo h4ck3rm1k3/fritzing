@@ -41,7 +41,7 @@ $Date$
 class Autorouter1
 {
 public:
-	Autorouter1(class SketchWidget *);
+	Autorouter1(class PCBSketchWidget *);
 	~Autorouter1(void);
 
 	void start(QProgressDialog *);
@@ -51,7 +51,7 @@ public:
 	static void collectAllNets(class SketchWidget *, QHash<class ConnectorItem *, int> & indexer, QList< QList<class ConnectorItem *>* > & allPartConnectorItems);
 
 protected:
-	void drawTrace(class ConnectorItem * from, class ConnectorItem * to, const QPolygonF & boundingPoly, QList<class Wire *> & wires);
+	int drawTrace(class ConnectorItem * from, class ConnectorItem * to, const QPolygonF & boundingPoly, QList<class Wire *> & wires);
 	bool drawTrace(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, const QPolygonF & boundingPoly);
 	bool tryLeftAndRight(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QPointF right, QPointF left, QList<class Wire *> & wires, const QPolygonF & boundingPoly);
 	bool tryOne(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QPointF midPos, QList<class Wire *> & wires, const QPolygonF & boundingPoly);
@@ -68,7 +68,7 @@ public:
 	static void clearTraces(SketchWidget * sketchWidget, bool deleteAll);
 
 protected:
-	class SketchWidget * m_sketchWidget;
+	class PCBSketchWidget * m_sketchWidget;
 	QList< QLine * > m_lastDrawTraces;
 	QList< QList<class ConnectorItem *>* > m_allPartConnectorItems;
 	QList<class ConnectorItem *> * m_drawingNet;
