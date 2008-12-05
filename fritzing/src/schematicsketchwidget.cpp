@@ -113,10 +113,22 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 			}
 		}
 		else {
+			for (int i = 0; i < partsConnectorItems.count() - 1; i++) {
+				ConnectorItem * ci = partsConnectorItems[i];
+				for (int j = i + 1; j < partsConnectorItems.count(); j++) {
+					ConnectorItem * cj = partsConnectorItems[j];
+					if (ci->bus() != NULL && ci->bus() == cj->bus()) continue;
+
+					if (!ci->wiredTo(cj, ViewGeometry::RatsnestFlag)) {
+						makeOneRatsnestWire(ci, cj);
+						return;
+					}
+				}
+			}
+
 			return;
 		}
 	}
-
 }
 
 ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorItem, QList<ConnectorItem *> partsConnectorItems) 
