@@ -12,7 +12,6 @@
     <properties>
         <property name="Default State">Normally Open</property>
         <property name="family">Switch</property>
-        <property name="Stateful?">Momentary</property>
         <property name="Switching Circuit">SPST</property>
     </properties>
     <taxonomy>discreteParts.switches.pushbutton</taxonomy>

@@ -11,7 +11,6 @@
     </tags>
     <properties>
         <property name="family">Switch</property>
-        <property name="stateful?">Momentary</property>
         <property name="switching circuit">SPST</property>
         <property name="default state">Normally Open</property>
     </properties>
