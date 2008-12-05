@@ -412,6 +412,21 @@
                 </iconView>
             </views>
         </instance>
+        
+        <instance moduleIdRef="1238DBDC00-toggle-switch" modelIndex="42" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic-toggle-switch.fz">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        
+        
+        
+        
         <instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" modelIndex="43" path="/Users/jonathancohen/fritzing/phoenix/parts/core/basic_pushbutton_2lead_horizon.fz">
             <views>
                 <iconView layer="icon">
