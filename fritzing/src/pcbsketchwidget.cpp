@@ -31,6 +31,8 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "tracewire.h"
 #include "virtualwire.h"
 
+static const QString ___viewName___ = QObject::tr("PCB View");
+
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
 {
@@ -255,3 +257,6 @@ bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item)
 	return SketchWidget::canDeleteItem(item);
 }
 
+const QString & PCBSketchWidget::viewName() {
+	return ___viewName___;
+}

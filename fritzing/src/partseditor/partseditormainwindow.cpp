@@ -42,6 +42,7 @@ $Date$
 #include <QRegExp>
 #include <stdlib.h>
 
+const QString ___partsEditorName___ = QObject::tr("Parts Editor");
 const QString PartsEditorMainWindow::templatePath = "/docs/templates/";
 const QString PartsEditorMainWindow::UntitledPartName = "Untitled Part";
 int PartsEditorMainWindow::UntitledPartIndex = 1;
@@ -546,4 +547,9 @@ bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
 		}
 	}
 	return QMainWindow::eventFilter(object, event);
+}
+
+const QString PartsEditorMainWindow::fritzingTitle() {
+	QString fritzing = FritzingWindow::fritzingTitle();
+	return tr("%1 %2").arg(fritzing).arg(___partsEditorName___);
 }

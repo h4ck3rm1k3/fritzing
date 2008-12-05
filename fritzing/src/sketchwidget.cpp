@@ -3456,3 +3456,7 @@ bool SketchWidget::canDeleteItem(QGraphicsItem * item)
 bool SketchWidget::canChainMultiple() {
 	return false;
 }
+
+const QString & SketchWidget::viewName() {
+	return ___emptyString___;
+}

@@ -49,6 +49,7 @@ class FritzingWindow : public QMainWindow {
 
 	protected:
 		void setTitle();
+		virtual const QString fritzingTitle();
 		virtual const QString fileExtension() = 0;
 		virtual const QString untitledFileName() = 0;
 		virtual int &untitledFileCount() = 0;

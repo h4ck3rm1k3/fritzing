@@ -40,6 +40,7 @@ public:
 
 	void addViewLayers();
 	bool canDeleteItem(QGraphicsItem * item);
+	const QString & viewName();
 
 signals:
 	void schematicDisconnectWireSignal(	QMultiHash<qint64, QString> & moveItems,  QUndoCommand * parentCommand);

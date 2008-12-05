@@ -29,6 +29,8 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "debugdialog.h"
 #include "virtualwire.h"
 
+static const QString ___viewName___ = QObject::tr("Schematic View");
+
 SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
 {
@@ -310,4 +312,9 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 
 bool SchematicSketchWidget::canChainMultiple() {
 	return true;
+}
+
+
+const QString & SchematicSketchWidget::viewName() {
+	return ___viewName___;
 }

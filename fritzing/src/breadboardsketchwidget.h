@@ -39,6 +39,8 @@ public:
     BreadboardSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
 
 	void addViewLayers();
+	const QString & viewName();
+
 
 protected slots:
 	void schematicDisconnectWireSlot(QMultiHash<qint64, QString> & moveItems, QUndoCommand * parentCommand);

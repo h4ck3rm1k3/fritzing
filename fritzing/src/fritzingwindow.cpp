@@ -48,6 +48,7 @@ const QString FritzingWindow::FritzingExtension = ".fz";
 QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
 QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");
 const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin.fz";
+static const QString ___fritzingTitle___ = QObject::tr("Fritzing");
 
 FritzingWindow::FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent, Qt::WFlags f)
 	: QMainWindow(parent, f)
@@ -81,7 +82,7 @@ void FritzingWindow::createCloseAction() {
 void FritzingWindow::setTitle() {
 	setWindowTitle(tr("%1 - %2")
 		.arg(QFileInfo(m_fileName).fileName()+(m_readOnly?ReadOnlyPlaceholder:"")+QtFunkyPlaceholder)
-		.arg(tr("Fritzing")));
+		.arg(fritzingTitle()));
 }
 
 // returns true if the user wanted to save the file
@@ -380,4 +381,8 @@ void FritzingWindow::setReadOnly(bool readOnly) {
 	if(hasChanged) {
 		emit readOnlyChanged(readOnly);
 	}
+}
+
+const QString FritzingWindow::fritzingTitle() {
+	return ___fritzingTitle___;
 }

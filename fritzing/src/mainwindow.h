@@ -254,6 +254,7 @@ protected:
 	QWidget *createToolbarSpacer(SketchAreaWidget *parent);
 
 	SketchAreaWidget *currentSketchArea();
+	const QString fritzingTitle();
 
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);

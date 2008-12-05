@@ -169,6 +169,7 @@ public:
 	const QString &selectedModuleID();
 	void setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType);
 	virtual bool canDeleteItem(QGraphicsItem * item);
+	virtual const QString & viewName();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

@@ -104,6 +104,8 @@ protected:
 	const QString defaultSaveFolder();
 
 	void updateSaveButton();
+	const QString fritzingTitle();
+
 
 	void cleanUp();
 

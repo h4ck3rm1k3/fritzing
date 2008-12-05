@@ -640,6 +640,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	hideShowTraceMenu();
 	updateTraceMenu();
 
+	setTitle();
+
 
 	// obsolete: when there are 3 navigators and 3 zoom boxes, no need to update when current view changes
 	//m_miniViewContainer0->setView(widget);
@@ -1276,3 +1278,11 @@ void MainWindow::setDockColorAnd(MiniViewContainer * miniView, const QString & c
 	}
 }
 
+const QString MainWindow::fritzingTitle() {
+	if (m_currentWidget == NULL) {
+		return FritzingWindow::fritzingTitle();
+	}
+
+	QString fritzing = FritzingWindow::fritzingTitle();
+	return tr("%1 - [%2]").arg(fritzing).arg(m_currentWidget->viewName());
+}
