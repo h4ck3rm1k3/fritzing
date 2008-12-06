@@ -801,41 +801,48 @@ void Wire::initNames() {
     colorNames.append(tr("black"));
 	colorNames.append(tr("yellow"));
 	colorNames.append(tr("green"));
+	colorNames.append(tr("grey"));
 	colorNames.append(tr("white"));
-
-        // need this hash table to translate from user's language to internal color name
-        colorTrans.insert(tr("blue"), "blue");
+	colorNames.append(tr("orange"));
+	
+	// need this hash table to translate from user's language to internal color name
+    colorTrans.insert(tr("blue"), "blue");
 	colorTrans.insert(tr("red"), "red");
     colorTrans.insert(tr("black"), "black");
 	colorTrans.insert(tr("yellow"), "yellow");
 	colorTrans.insert(tr("green"), "green");
+	colorTrans.insert(tr("grey"), "grey");
 	colorTrans.insert(tr("white"), "white");
-
-    colors.insert("blue",	"#71a4d6");
-	colors.insert("red",	"#cc1f1f");
-    colors.insert("black",	"#4d4d4d");
-	colors.insert("yellow", "#ffe666");
-	colors.insert("green",	"#52cc80");
-	colors.insert("white",	"#e6e6e6");
-    colors.insert("jumper", "#71a4d6");
+	colorTrans.insert(tr("orange"), "orange");
+	
+    colors.insert("blue",	"#418dd9");
+	colors.insert("red",	"#cc1414");
+    colors.insert("black",	"#404040");
+	colors.insert("yellow", "#ffe24d");
+	colors.insert("green",	"#47cc79");
+	colors.insert("grey",	"#999999");
+	colors.insert("white",	"#ffffff");
+	colors.insert("orange", "#ff7033");
+    colors.insert("jumper", "#6699cc");
 	colors.insert("trace",  "#ffbf00");
 	colors.insert("unrouted", "#000000");
 	colors.insert("routed", "#7d7d7d");
 	colors.insert("purple", "#b673e6");
-	colors.insert("orange", "#ff7033");
 	colors.insert("brown", "#8c3b00");
-
-    shadowColors.insert("blue",	"#357dcc");
-	shadowColors.insert("red",	"#990000");
-    shadowColors.insert("black",	"#363636");
-	shadowColors.insert("yellow", "#d9ad20");
-	shadowColors.insert("green", "#00b342");
-	shadowColors.insert("white",	"#b3b3b3");
-    shadowColors.insert("jumper", "#357dcc");
-	shadowColors.insert("trace", "#ffbf00");
+	
+    shadowColors.insert("blue",		"#1b5bb3");
+	shadowColors.insert("red",		"#8c0000");
+    shadowColors.insert("black",	"#000000");
+	shadowColors.insert("yellow",	"#e6ab00");
+	shadowColors.insert("green",	"#00a63d");
+	shadowColors.insert("grey",		"#666666");
+	shadowColors.insert("white",	"#999999");
+	shadowColors.insert("orange",	"#d95821");
+    shadowColors.insert("jumper",	"#2d6563");
+	shadowColors.insert("trace",	"#ffbf00");
 	shadowColors.insert("unrouted", "#000000");
-	shadowColors.insert("routed", "#7d7d7d");
-
+	shadowColors.insert("routed",	"#7d7d7d");
+	
 	netColorIndex.insert(ItemBase::BreadboardView, 0);
 	netColorIndex.insert(ItemBase::SchematicView, 0);
 	netColorIndex.insert(ItemBase::PCBView, 0);
