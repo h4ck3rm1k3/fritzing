@@ -344,6 +344,8 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 
 FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
 {
+	//QTime t;
+	//t.start();
     ModelPartStuff * modelPartStuff = modelPart->modelPartStuff();
 
     if (modelPartStuff == NULL) return NULL;
@@ -357,6 +359,7 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 		//.arg(ViewLayer::viewLayerNameFromID(viewLayerID))  );
 
 
+	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
 	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartStuff->moduleID(), viewLayerID);
 	if (renderer == NULL) {
 		QString tempPath;
@@ -380,6 +383,9 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 				break;
 			}
 		}
+
+		//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
+
 		if (gotOne) {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
 			if (renderer == NULL) {
@@ -395,16 +401,20 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 					}
 				}
 				else {
+					//DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
 					// only one layer, just load it directly
 					if (renderer->load(filename)) {
 						gotOne = true;
 					}
+					//DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
 				}
 				if (!gotOne) {
 					delete renderer;
 					renderer = NULL;
 				}
 			}
+			//DebugDialog::debug(QString("set up image elapsed (3) %1").arg(t.elapsed()) );
+
 			if (renderer) {
 				FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
 			}
@@ -419,6 +429,7 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 
 	return renderer;
 }
+
 
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
 	if (m_modelPart->connectors().count() <= 0) return;

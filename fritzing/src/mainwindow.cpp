@@ -52,6 +52,7 @@ $Date$
 #include "htmlinfoview.h"
 #include "waitpushundostack.h"
 #include "fapplication.h"
+#include "layerAttributes.h"
 
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
@@ -240,13 +241,23 @@ void MainWindow::doOnce() {
 }
 
 void MainWindow::preloadSlowParts() {
-	DebugDialog::debug("start preload slow parts");
-	ViewGeometry viewGeometry;
-	ItemBase * itemBase = m_breadboardGraphicsView->addItem(ItemBase::breadboardModuleIDName, BaseCommand::SingleView, viewGeometry, ItemBase::getNextID());
-	if (itemBase == NULL) return;
+	// loads the part into a renderer and sets up its connectors
+	// so this doesn't have to happen the first time the part is dragged into the sketch
 
-	m_breadboardGraphicsView->deleteItem(itemBase, true, false);
-	DebugDialog::debug("end preload slow parts");
+	QTime t;
+	t.start();
+	DebugDialog::debug(QString("preload slow parts"));
+	ModelPart * modelPart = m_paletteModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
+	LayerAttributes layerAttributes;
+	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
+	foreach (Connector * connector, modelPart->connectors().values()) {
+		if (connector == NULL) continue;
+
+		QRectF connectorRect;
+		QPointF terminalPoint;
+		connector->setUpConnector(renderer, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
+	}
+	DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
 }
 
 void MainWindow::calcPrinterScale() {

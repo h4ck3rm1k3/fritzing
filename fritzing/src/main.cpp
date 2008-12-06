@@ -32,6 +32,8 @@ $Date$
 #include <QSplashScreen>
 #include <QMessageBox>
 #include <QSettings>
+#include <QThread>
+#include <QMutex>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -44,6 +46,33 @@ $Date$
 #define CurrentReferenceModel SqliteReferenceModel
 
 #define kBottomOfAlpha 206
+
+
+class DoOnceThread : public QThread
+ {
+ public:
+	 DoOnceThread(MainWindow *, QMutex *);
+
+     void run();
+
+ protected:
+	MainWindow * m_mainWindow;
+	QMutex * m_mutex;
+ };
+
+
+DoOnceThread::DoOnceThread(MainWindow * mainWindow, QMutex * mutex) {
+	m_mainWindow = mainWindow;
+	m_mutex = mutex;
+}
+
+ void DoOnceThread::run()
+{
+	m_mutex->lock();
+	m_mainWindow->doOnce();
+	m_mutex->unlock();
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -135,8 +164,17 @@ int main(int argc, char *argv[])
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = new MainWindow(paletteBinModel, referenceModel);
 
-	mainWindow->doOnce();
-
+	// on my xp machine in debug mode, 
+	// sometimes the activities in doOnce cause the whole machine to peak at 100% cpu for 30 seconds or more
+	// so at least the whole machine doesn't lock up anymore with doOnce in its own thread.
+	QMutex mutex;
+	DoOnceThread doOnceThread(mainWindow, &mutex);
+	doOnceThread.start();
+	while (!doOnceThread.isFinished()) {
+		QApplication::processEvents();
+		mutex.tryLock(10);							// waits for the lock for 10 ms
+	}
+	
 	if(argc > 1) {
 		for(int i=1; i < argc; i++) {
 			mainWindow->load(argv[i]);
