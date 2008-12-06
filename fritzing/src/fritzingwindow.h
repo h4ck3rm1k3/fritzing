@@ -58,12 +58,6 @@ class FritzingWindow : public QMainWindow {
 		virtual void saveAsAux(const QString & fileName);
 		bool beforeClosing(bool showCancel=true); // returns true if close, false if cancel
 
-		bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
-		void rmdir(const QString &dirPath);
-		void rmdir(QDir & dir);
-		bool createZipAndSaveTo(const QDir &dirToCompress, const QString &filename);
-		bool unzipTo(const QString &filepath, const QString &dirToDecompress);
-
 		void createCloseAction();
 
 		void setReadOnly(bool readOnly);
@@ -76,17 +70,23 @@ class FritzingWindow : public QMainWindow {
 		QDir m_tempDir;
 
 	public:
+		// TODO: these probably belong in some separate file i/o class
 		static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);
 		static bool alreadyHasExtension(const QString &fileName);
 		static QString getExtFromFileDialog(const QString &extOpt);
+		static bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
+		static void rmdir(const QString &dirPath);
+		static void rmdir(QDir & dir);
+		static bool createZipAndSaveTo(const QDir &dirToCompress, const QString &filename);
+		static bool unzipTo(const QString &filepath, const QString &dirToDecompress);
+		static void replicateDir(QDir srcDir, QDir targDir);
+		static QString getRandText();
 
 	public:
 		static QString QtFunkyPlaceholder;  // this is some weird hack Qt uses in window titles as a placeholder to set the modified state
 		static QString ReadOnlyPlaceholder;
 		static const QString FritzingExtension;
 		static const QString CoreBinLocation;
-		static void replicateDir(QDir srcDir, QDir targDir);
-		static QString getRandText();
 };
 
 #endif /* FRITZINGWINDOW_H_ */

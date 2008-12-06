@@ -347,10 +347,25 @@ bool FritzingWindow::unzipTo(const QString &filepath, const QString &dirToDecomp
 			qWarning("out.open(): %s", out.errorString().toLocal8Bit().constData());
 			return false;
 		}
+		
 		// Slow like hell (on GNU/Linux at least), but it is not my fault.
 		// Not ZIP/UNZIP package's fault either.
 		// The slowest thing here is out.putChar(c).
-		while(file.getChar(&c)) out.putChar(c);
+		// TODO: now that out.putChar has been replaced with a buffered write, is it still slow under Linux?
+
+#define BUFFERSIZE 1024
+		char buffer[BUFFERSIZE];
+		int ix = 0;
+		while(file.getChar(&c)) {
+			buffer[ix++] = c;
+			if (ix == BUFFERSIZE) {
+				out.write(buffer, ix);
+				ix = 0;
+			}
+		}
+		if (ix > 0) {
+			out.write(buffer, ix);
+		}
 
 		out.close();
 		if(file.getZipError()!=UNZ_OK) {
