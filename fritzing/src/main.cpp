@@ -51,26 +51,22 @@ $Date$
 class DoOnceThread : public QThread
  {
  public:
-	 DoOnceThread(MainWindow *, QMutex *);
+	 DoOnceThread(MainWindow *);
 
      void run();
 
  protected:
 	MainWindow * m_mainWindow;
-	QMutex * m_mutex;
  };
 
 
-DoOnceThread::DoOnceThread(MainWindow * mainWindow, QMutex * mutex) {
+DoOnceThread::DoOnceThread(MainWindow * mainWindow) {
 	m_mainWindow = mainWindow;
-	m_mutex = mutex;
 }
 
  void DoOnceThread::run()
 {
-	m_mutex->lock();
 	m_mainWindow->doOnce();
-	m_mutex->unlock();
 }
 
 
@@ -167,13 +163,18 @@ int main(int argc, char *argv[])
 	// on my xp machine in debug mode, 
 	// sometimes the activities in doOnce cause the whole machine to peak at 100% cpu for 30 seconds or more
 	// so at least the whole machine doesn't lock up anymore with doOnce in its own thread.
+	
+	DebugDialog::debug("starting thread");
 	QMutex mutex;
-	DoOnceThread doOnceThread(mainWindow, &mutex);
+	mutex.lock();
+	DoOnceThread doOnceThread(mainWindow);
 	doOnceThread.start();
 	while (!doOnceThread.isFinished()) {
 		QApplication::processEvents();
-		mutex.tryLock(10);							// waits for the lock for 10 ms
+		mutex.tryLock(10);							// always fails, but effectively sleeps for 10 ms
 	}
+	mutex.unlock();
+	DebugDialog::debug("ending thread");
 	
 	if(argc > 1) {
 		for(int i=1; i < argc; i++) {
