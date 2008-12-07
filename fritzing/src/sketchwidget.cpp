@@ -3144,36 +3144,48 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 	}
 }
 
-void SketchWidget::changeWireColor(const QString &wireTitle, long wireId,
-								   const QString& oldColor, const QString newColor,
-								   qreal oldOpacity, qreal newOpacity)
+void SketchWidget::changeWireColor(const QString newColor)
 {
-	Q_UNUSED(oldColor);
-	Q_UNUSED(oldOpacity);
+	QList <Wire *> wires;
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
 
-	Wire * wire = dynamic_cast<Wire *>(findItem(wireId));
-	if (wire == NULL) return;
-
-	QList<Wire *> wires;
-	wire->collectWires(wires);
-
-	QUndoCommand* parentCommand = new QUndoCommand(
-		tr("Wire %1 color changed from %2 to %3")
-			.arg(wireTitle)
-			.arg(oldColor)
-			.arg(newColor)
-	);
-
-	foreach (Wire * wire, wires) {
-		new WireColorChangeCommand(
-				this,
-				wire->id(),
-				wire->colorString(),
-				newColor,
-				wire->opacity(),
-				newOpacity,
-				parentCommand);
+		wires.append(wire);
 	}
+
+	if (wires.count() <= 0) return;
+
+	QString commandString;
+	if (wires.count() == 1) {
+		commandString = tr("Change %1 color from %2 to %3")
+			.arg(wires[0]->instanceTitle())
+			.arg(wires[0]->colorString())
+			.arg(newColor);
+	}
+	else {
+		commandString = tr("Change color of %1 wires to %2")
+			.arg(wires.count())
+			.arg(newColor);
+	}
+
+	QUndoCommand* parentCommand = new QUndoCommand(commandString);
+	foreach (Wire * wire, wires) {
+		QList<Wire *> subWires;
+		wire->collectWires(subWires);
+
+		foreach (Wire * subWire, subWires) {
+			new WireColorChangeCommand(
+					this,
+					subWire->id(),
+					subWire->colorString(),
+					newColor,
+					subWire->opacity(),
+					subWire->opacity(),
+					parentCommand);
+		}
+	}
+
 	m_undoStack->push(parentCommand);
 }
 

@@ -140,6 +140,6 @@ function doSwap(family,name,currValue) {
 }
 
 function setWireColor(wireTitle, wireId, newColor) {
-	wireManager.changeWireColor(wireTitle, wireId, oldColor, newColor, 1.0, 1.0);
+	wireManager.changeWireColor(newColor);
 	oldColor = newColor
 }
