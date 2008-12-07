@@ -201,6 +201,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	int tab = 0;
 	currentNavigatorChanged(m_navigators[tab]);
 	tabWidget_currentChanged(tab);
+	updateTransformationActions();
 
 	this->installEventFilter(this);
 
@@ -224,6 +225,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_miniViewContainerPCB->setView(m_pcbGraphicsView);
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
+
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
