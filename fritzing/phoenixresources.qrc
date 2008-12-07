@@ -28,7 +28,7 @@ $Date$
 
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-    <file>resources/images/splash.png</file>
+    <file>resources/images/splash_2010.png</file>
     <file>resources/images/AboutBoxLogoShield.png</file>
     <file>resources/images/aboutbox_copyright_notice2008.png</file>
     <file>resources/images/aboutbox_scrollfade.png</file>

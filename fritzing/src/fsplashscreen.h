@@ -30,25 +30,27 @@ $Date$
 #include <QSplashScreen>
 #include <QPainter>
 
+struct MessageThing {
+	QString message;
+	QRect rect;
+	int alignment;
+	QColor color;
+};
+
 class FSplashScreen : public QSplashScreen {
 public:
 	FSplashScreen(const QPixmap & pixmap = QPixmap(), Qt::WindowFlags f = 0);
-	void setTextPosition(int x, int y);
+	~FSplashScreen();
 
 protected:
 	void drawContents ( QPainter * painter );
 
 public slots:
-	void showMessage(const QString &message, int alignment = Qt::AlignLeft, const QColor &color = Qt::black);
+	void showMessage(const QString &message, QRect rect, int alignment = Qt::AlignLeft, const QColor &color = Qt::black);
 
 protected:
     QPixmap m_pixmap;
-    QString m_currStatus;
-    QColor m_currColor;
-    int m_currAlign;
-	int m_x;
-	int m_y;
-
+	QList<MessageThing *> m_messages;
 
 };
 

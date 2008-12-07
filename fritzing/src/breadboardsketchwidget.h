@@ -43,7 +43,7 @@ public:
 
 
 protected slots:
-	void schematicDisconnectWireSlot(QMultiHash<qint64, QString> & moveItems, QUndoCommand * parentCommand);
+	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QList<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
@@ -52,6 +52,7 @@ protected:
 	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
 	QPointF calcNewLoc(PaletteItemBase * moveBase, PaletteItemBase * detachFrom);
+	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
 };
 
 #endif

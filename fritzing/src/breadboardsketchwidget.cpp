@@ -91,44 +91,102 @@ BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 	return BaseCommand::CrossView;
 }
 
-void BreadboardSketchWidget::schematicDisconnectWireSlot(QMultiHash<qint64, QString> & moveItems, QUndoCommand * parentCommand)
+void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QList<ItemBase *> & deletedItems, QUndoCommand * parentCommand)
 {
-	foreach (qint64 itemID, moveItems.uniqueKeys()) {
-		ItemBase * itemBase = findItem(itemID);
-		if (itemBase == NULL) continue;
+	// translate the foreign items into local ones
+	QMultiHash<PaletteItemBase *, ConnectorItem *> bases;
+	ConnectorPairHash moveItems;
+	foreach (ConnectorItem * foreignFromConnectorItem, foreignMoveItems.uniqueKeys()) {
+		qint64 fromItemID = foreignFromConnectorItem->attachedToID();
+		ItemBase * fromItemBase = findItem(fromItemID);
+		if (fromItemBase == NULL) continue;
 
-		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(itemBase);
-		if (paletteItemBase == NULL) continue;
+		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(fromItemBase);
+		if (paletteItemBase == NULL) {
+			// shouldn't be here: want parts not wires
+			continue;
+		}
 
-		PaletteItemBase * detachFrom = NULL;
-		foreach (QString connectorID, moveItems.values(itemID)) {
-			ConnectorItem * fromConnectorItem = findConnectorItem(itemBase, connectorID, true);
-			if (fromConnectorItem == NULL) continue;
+		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorStuffID(), true);
+		if (fromConnectorItem == NULL) continue;
 
-			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-				if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard || toConnectorItem->attachedToItemType() == ModelPart::Board ) {
-					detachFrom = dynamic_cast<PaletteItemBase *>(toConnectorItem->attachedTo());
-					break;
+		foreach (ConnectorItem * foreignToConnectorItem, foreignMoveItems.values(foreignFromConnectorItem)) {
+			qint64 toItemID = foreignToConnectorItem->attachedToID();
+			ItemBase * toItemBase = findItem(toItemID);
+			if (toItemBase == NULL) continue;
+
+			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorStuffID(), true);
+			if (toConnectorItem == NULL) continue;
+
+			moveItems.insert(fromConnectorItem, toConnectorItem);
+		}
+		bases.insert(paletteItemBase, fromConnectorItem);
+	}
+
+	QHash<PaletteItemBase *, ItemBase *> detachItems;
+
+	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
+		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
+			foreach (ConnectorItem * toConnectorItem, moveItems.values(fromConnectorItem)) {
+				if (toConnectorItem->connectorType() == Connector::Female) {
+					// paletteItemBase directly connected to arduino, for example
+					detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
+				}
+				else if (shareBreadboard(fromConnectorItem, toConnectorItem)) {
+					detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
+				}
+				else {
+					// if they they indirectly connected via a female connector, then delete a wire
+					QList<ConnectorItem *> connectorItems;
+					connectorItems.append(fromConnectorItem);
+					connectorItems.append(toConnectorItem);
+					ConnectorItem::collectEqualPotential(connectorItems);
+					bool foundIt = false;
+					foreach (ConnectorItem * candidate, connectorItems) {
+						if (candidate->connectorType() != Connector::Female) continue;
+
+						foreach (ConnectorItem * cto, candidate->connectedToItems()) {
+							if (cto->attachedToItemType() != ModelPart::Wire) continue;
+
+							QList<Wire *> chained;
+							QList<ConnectorItem *> ends;
+							QList<ConnectorItem *> uniqueEnds;
+							Wire * tempWire = dynamic_cast<Wire *>(cto->attachedTo());
+							tempWire->collectChained(chained, ends, uniqueEnds);
+							if (ends.contains(fromConnectorItem) || ends.contains(toConnectorItem)) {
+								// is this good enough or do we need more confirmation that it's the right wire?
+								deletedItems.append(tempWire);
+								foundIt = true;
+								break;
+							}
+						}
+						if (foundIt) break;
+					}
 				}
 			}
-			if (detachFrom != NULL) break;
 		}
-		if (detachFrom == NULL) continue;
+	}
 
-		QPointF newPos = calcNewLoc(paletteItemBase, detachFrom);
+	foreach (PaletteItemBase * detachee, detachItems.keys()) {
+		ItemBase * detachFrom = detachItems.value(detachee);
+		QPointF newPos = calcNewLoc(detachee, dynamic_cast<PaletteItemBase *>(detachFrom));
 
 		// delete connections
 		// add wires and connections for undisconnected connectors
 
-		paletteItemBase->saveGeometry();
-		ViewGeometry vg = paletteItemBase->getViewGeometry();
+		detachee->saveGeometry();
+		ViewGeometry vg = detachee->getViewGeometry();
 		vg.setLoc(newPos);
-		new MoveItemCommand(this, paletteItemBase->id(), paletteItemBase->getViewGeometry(), vg, parentCommand);
+		new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
 		QSet<ItemBase *> tempItems;
 		ConnectorPairHash connectorHash;
-		disconnectFromFemale(paletteItemBase, tempItems, connectorHash, parentCommand);
+		disconnectFromFemale(detachee, tempItems, connectorHash, parentCommand);
 		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
-			if (moveItems.values(itemID).contains(fromConnectorItem->connectorStuffID())) {
+			if (moveItems.uniqueKeys().contains(fromConnectorItem)) {
+				// don't need to reconnect
+				continue;
+			}
+			if (moveItems.values().contains(fromConnectorItem)) {
 				// don't need to reconnect
 				continue;
 			}
@@ -180,4 +238,19 @@ QPointF BreadboardSketchWidget::calcNewLoc(PaletteItemBase * moveBase, PaletteIt
 
 const QString & BreadboardSketchWidget::viewName() {
 	return ___viewName___;
+}
+
+bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem)
+{
+	foreach (ConnectorItem * ftci, fromConnectorItem->connectedToItems()) {
+		if (ftci->connectorType() == Connector::Female) {
+			foreach (ConnectorItem * ttci, toConnectorItem->connectedToItems()) {
+				if (ttci->connectorType() == Connector::Female) {
+					if (ftci->bus() == ttci->bus()) return true;
+				}
+			}
+		}
+	}
+
+	return false;
 }

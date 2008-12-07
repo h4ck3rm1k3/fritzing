@@ -38,6 +38,7 @@ QString Version::m_revision;
 QString Version::m_date;
 QString Version::m_shortDate;
 QString Version::m_versionString;
+QString Version::m_year;
 Version * Version::m_singleton = new Version();
 
 Version::Version() {
@@ -53,6 +54,7 @@ Version::Version() {
 		strings = m_date.split("-", QString::SkipEmptyParts);
 		if (strings.size() >= 3) {
 			m_shortDate = strings[1] + "." + strings[2];
+			m_year = strings[0];
 		}
 	}
 
@@ -85,4 +87,8 @@ const QString & Version::date() {
 
 const QString & Version::shortDate() {
 	return m_shortDate;
+}
+
+const QString & Version::year() {
+	return m_year;
 }

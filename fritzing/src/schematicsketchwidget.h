@@ -43,7 +43,7 @@ public:
 	const QString & viewName();
 
 signals:
-	void schematicDisconnectWireSignal(	QMultiHash<qint64, QString> & moveItems,  QUndoCommand * parentCommand);
+	void schematicDisconnectWireSignal(	ConnectorPairHash & moveItems,  QList<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);

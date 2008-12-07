@@ -31,20 +31,23 @@ $Date$
 
 FSplashScreen::FSplashScreen(const QPixmap & pixmap, Qt::WindowFlags f ) : QSplashScreen(pixmap, f)
 {
-	m_x = m_y = 0;
 }
 
-void FSplashScreen::setTextPosition(int x, int y) {
-	m_x = x;
-	m_y = y;
+FSplashScreen::~FSplashScreen() {
+	foreach (MessageThing * messageThing, m_messages) {
+		delete messageThing;
+	}
 }
 
-void FSplashScreen::showMessage(const QString &message, int alignment, const QColor &color)
+
+void FSplashScreen::showMessage(const QString &message, QRect rect, int alignment, const QColor &color)
 {
-    m_currStatus = message;
-    m_currAlign = alignment;
-    m_currColor = color;
-    emit messageChanged(m_currStatus);
+	MessageThing * messageThing = new MessageThing;
+	messageThing->alignment = alignment;
+	messageThing->color = color;
+	messageThing->rect = rect;
+	messageThing->message = message;
+	m_messages.append(messageThing);
     repaint();
 }
 
@@ -53,26 +56,28 @@ void FSplashScreen::drawContents ( QPainter * painter )
 {
 	// copied from QSplashScreen::drawContents
 
-    QRect r = rect();
-    r.setRect(r.x() + m_x, r.y() + m_y, r.width() - m_x, r.height() - m_y);
-    if (Qt::mightBeRichText(m_currStatus)) {
-        QTextDocument doc;
-#ifdef QT_NO_TEXTHTMLPARSER
-        doc.setPlainText(m_currStatus);
-#else
-        doc.setHtml(m_currStatus);
-#endif
-        doc.setTextWidth(r.width());
-        QTextCursor cursor(&doc);
-        cursor.select(QTextCursor::Document);
-        QTextBlockFormat fmt;
-        fmt.setAlignment(Qt::Alignment(m_currAlign));
-        cursor.mergeBlockFormat(fmt);
-        painter->save();
-        painter->translate(r.topLeft());
-        doc.drawContents(painter);
-        painter->restore();
-    } else {
-        painter->drawText(r, m_currAlign, m_currStatus);
-    }
+	foreach (MessageThing * messageThing, m_messages) {
+		painter->setPen(messageThing->color);
+		painter->setRenderHint ( QPainter::Antialiasing, true );				// TODO: might need to be in the stylesheet?
+		if (Qt::mightBeRichText(messageThing->message)) {
+			QTextDocument doc;
+	#ifdef QT_NO_TEXTHTMLPARSER
+			doc.setPlainText(messageThing->message);
+	#else
+			doc.setHtml(messageThing->message);
+	#endif
+			doc.setTextWidth(messageThing->rect.width());
+			QTextCursor cursor(&doc);
+			cursor.select(QTextCursor::Document);
+			QTextBlockFormat fmt;
+			fmt.setAlignment(Qt::Alignment(messageThing->alignment));
+			cursor.mergeBlockFormat(fmt);
+			painter->save();
+			painter->translate(messageThing->rect.topLeft());
+			doc.drawContents(painter);
+			painter->restore();
+		} else {
+			painter->drawText(messageThing->rect, messageThing->alignment, messageThing->message);
+		}
+	}
 }

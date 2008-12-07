@@ -83,19 +83,30 @@ int main(int argc, char *argv[])
 
 	QString libPath = QCoreApplication::applicationDirPath() + lib;   // applicationDirPath() doesn't work until after QApplication is instantiated
 	DebugDialog::debug(QString("libpath: %1").arg(libPath) );
-	QCoreApplication::addLibraryPath(libPath);
+	QCoreApplication::addLibraryPath(libPath);							// tell app where to search for plugins (jpeg export and sql lite)
 
     Q_INIT_RESOURCE(phoenixresources);
 
-    QPixmap pixmap(":/resources/images/splash.png");
+    QPixmap pixmap(":/resources/images/splash_2010.png");
     FSplashScreen splash(pixmap);
-	splash.setTextPosition(0, kBottomOfAlpha);
-	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='white'>version %1.%2 (%3%4)&nbsp;</font>")
+
+	QColor w(0xea, 0xf4, 0xed);
+	QRect r1(45, kBottomOfAlpha, pixmap.width() - 45, 20);
+	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
+								   "&#169; 2007-%1 Fachhochschule Potsdam"
+								   "</font>")
+									.arg(Version::year()),
+		r1, Qt::AlignLeft | Qt::AlignTop, w);
+
+	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
+	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
+								   "Version %1.%2 (%3%4)"
+								   "</font>")
 									.arg(Version::majorVersion())
 									.arg(Version::minorVersion())
 									.arg(Version::modifier())
 									.arg(Version::shortDate()),
-		Qt::AlignRight | Qt::AlignTop, Qt::white);
+		r2, Qt::AlignRight | Qt::AlignTop, w);
     splash.show();
 	QApplication::processEvents();			// seems to need this (sometimes?) to display the splash screen
 
@@ -116,7 +127,7 @@ int main(int argc, char *argv[])
     ZoomComboBox::loadFactors();
 
 #ifdef Q_WS_WIN
-	// associate .fz file with fritzing app on windows
+	// associate .fz file with fritzing app on windows (xp only--vista is different)
 	// TODO: don't change settings if they're already set?
 	// TODO: only do this at install time?
 	QSettings settings1("HKEY_CLASSES_ROOT\\Fritzing", QSettings::NativeFormat);

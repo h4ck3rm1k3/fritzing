@@ -254,7 +254,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 
 	QSet<Wire *> deleteWires;
 	QSet<Wire *> undeleteWires;
-	QMultiHash<qint64, QString> moveItems;
+	ConnectorPairHash moveItems;
 	foreach (ItemBase * itemBase, deletedItems) {
 		Wire * wire = dynamic_cast<Wire *>(itemBase);
 		if (wire == NULL) continue;
@@ -271,21 +271,23 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 				// need to delete the real wire from breadboard view
 				deleteWires.insert(extraWire);
 			}
-			else { 				
-				// move parts connected to female connectors
-				// but draw a wire to the remaining connections, if any
-				if (ends[0]->connectorType() == Connector::Female) {
-					moveItems.insert(ends[1]->attachedToID(), ends[1]->connectorStuffID());
+			else { 	
+				// ensure we're not cross-disconnecting
+				// and index by male connectors
+				if (moveItems.uniqueKeys().contains(ends[0])) {
+					moveItems.insert(ends[0], ends[1]);
+				}
+				else if (moveItems.uniqueKeys().contains(ends[1])) {
+					moveItems.insert(ends[1], ends[0]);
+				}
+				else if (ends[0]->connectorType() == Connector::Female) {
+					moveItems.insert(ends[1], ends[0]);
 				}
 				else if (ends[1]->connectorType() == Connector::Female) {
-					moveItems.insert(ends[0]->attachedToID(), ends[0]->connectorStuffID());
-				}
+					moveItems.insert(ends[0], ends[1]);
+				}	
 				else {
-					// connected to the breadboard
-					ConnectorItem * end0 = ends[0];
-					//ConnectorItem * end1 = ends[1];
-
-					moveItems.insert(end0->attachedToID(), end0->connectorStuffID());
+					moveItems.insert(ends[0], ends[1]);
 				}
 			}		
 		}
@@ -296,7 +298,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 	}
 
 	if (moveItems.count() > 0) {
-		emit schematicDisconnectWireSignal(moveItems, parentCommand);
+		emit schematicDisconnectWireSignal(moveItems, deletedItems, parentCommand);
 	}
 
 	foreach (Wire * wire, undeleteWires) {
