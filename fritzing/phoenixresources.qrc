@@ -90,12 +90,16 @@ $Date$
     <file>resources/images/toolbar_icons/toolbarOrder_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarAutorouteDisabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarAutoroutePressed_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarDiyEnabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarDiyDisabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarDiyPressed_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarRotateEnabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarRotateDisabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarRotatePressed_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarFlipEnabled_icon.png</file>
     <file>resources/images/toolbar_icons/toolbarFlipDisabled_icon.png</file>
+    <file>resources/images/toolbar_icons/toolbarFlipPressed_icon.png</file>
     <file>resources/images/toolbar_icons/toolbar_separator.png</file>
     <file>resources/styles/partseditor.qss</file>
     <file>resources/styles/fritzing.qss</file>
