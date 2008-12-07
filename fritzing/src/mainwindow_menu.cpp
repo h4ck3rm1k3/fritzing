@@ -1037,6 +1037,7 @@ void MainWindow::createMenus()
 	m_traceMenu->addAction(m_autorouteAct);
 	m_traceMenu->addAction(m_createTraceAct);
 	m_traceMenu->addAction(m_createJumperAct);
+	m_traceMenu->addAction(m_excludeFromAutorouteAct);
 	updateTraceMenu();
 	connect(m_traceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
 
@@ -1057,10 +1058,56 @@ void MainWindow::updateLayerMenu() {
     m_viewMenu->addAction(m_showAllLayersAct);
     m_viewMenu->addAction(m_hideAllLayersAct);
 
-
 	if (m_currentWidget == NULL) return;
 
 	m_currentWidget->updateLayerMenu(m_viewMenu, m_showAllLayersAct, m_hideAllLayersAct );
+}
+
+void MainWindow::updateWireMenu() {
+	if (m_currentWidget != m_pcbGraphicsView) return;
+
+	QList<QGraphicsItem *> items = m_pcbGraphicsView->scene()->selectedItems();
+	Wire * wire = NULL;
+	bool enableAll = false;
+	bool deleteOK = false;
+	bool createTraceOK = false;
+	bool createJumperOK = false;
+	bool excludeOK = false;
+	bool enableZOK = true;
+	if (items.count() == 1) {
+		enableAll = true;
+		wire = dynamic_cast<Wire *>(items[0]);
+		if (wire != NULL) {
+			if (wire->getRatsnest()) {
+				QList<ConnectorItem *> ends;
+				Wire * jt = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
+				createJumperOK = (jt == NULL) || (!jt->getJumper());
+				createTraceOK = (jt == NULL) || (!jt->getTrace());
+			}
+			else if (wire->getJumper()) {
+				deleteOK = true;
+				createTraceOK = true;
+				excludeOK = true;
+				m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
+			}
+			else if (wire->getTrace()) {
+				deleteOK = true;
+				createJumperOK = true;
+				excludeOK = true;
+				m_excludeFromAutorouteAct->setChecked(!wire->getAutoroutable());
+			}
+		}
+	}
+
+	m_bringToFrontAct->setEnabled(enableZOK);
+	m_bringForwardAct->setEnabled(enableZOK);
+	m_sendBackwardAct->setEnabled(enableZOK);
+	m_sendToBackAct->setEnabled(enableZOK);
+	m_createTraceAct->setEnabled(enableAll && createTraceOK);
+	m_createJumperAct->setEnabled(enableAll && createJumperOK);
+	m_deleteAct->setEnabled(enableAll && deleteOK);
+	m_excludeFromAutorouteAct->setEnabled(enableAll && excludeOK);
+	
 }
 
 void MainWindow::updatePartMenu() {
@@ -1136,15 +1183,6 @@ void MainWindow::updateItemMenu() {
 	QList<QGraphicsItem *> items = m_currentWidget->scene()->selectedItems();
 
 	if (m_currentWidget == m_pcbGraphicsView) {
-		if (!m_itemMenu->actions().contains(m_createJumperAct)) {
-			QAction * sep = m_itemMenu->addSeparator();
-			sep->setObjectName("trace");
-			m_itemMenu->addAction(m_createJumperAct);
-		}
-		if (!m_itemMenu->actions().contains(m_createTraceAct)) {
-			m_itemMenu->addAction(m_createTraceAct);
-		}
-
 		bool enabled = true;
 		int count = 0;
 		foreach (QGraphicsItem * item, items) {
@@ -1165,20 +1203,6 @@ void MainWindow::updateItemMenu() {
 		// TODO: if there's already a trace or jumper, disable appropriately
 		m_createTraceAct->setEnabled(enabled && count > 0);
 		m_createJumperAct->setEnabled(enabled && count > 0);
-	}
-	else {
-		if (m_itemMenu->actions().contains(m_createJumperAct)) {
-			m_itemMenu->removeAction(m_createJumperAct);
-			foreach (QAction * action, m_itemMenu->actions()) {
-				if (action->objectName().compare("trace") == 0) {
-					m_itemMenu->removeAction(action);
-					break;
-				}
-			}
-		}
-		if (m_itemMenu->actions().contains(m_createTraceAct)) {
-			m_itemMenu->removeAction(m_createTraceAct);
-		}
 	}
 
 	int selCount = 0;
@@ -1217,19 +1241,24 @@ void MainWindow::updateEditMenu() {
 
 	if (m_currentWidget != NULL) {
 		const QList<QGraphicsItem *> items =  m_currentWidget->scene()->selectedItems();
-		bool actsEnabled = false;
+		bool copyActsEnabled = false;
+		bool deleteActsEnabled = false;
 		foreach (QGraphicsItem * item, items) {
 			if (m_currentWidget->canDeleteItem(item)) {
-				actsEnabled = true;
+				deleteActsEnabled = true;
+				break;
+			}
+			if (m_currentWidget->canCopyItem(item)) {
+				copyActsEnabled = true;
 				break;
 			}
 		}
 
-		DebugDialog::debug(tr("enable cut/copy/duplicate/delete %1").arg(actsEnabled));
-		m_deleteAct->setEnabled(actsEnabled);
-		m_cutAct->setEnabled(actsEnabled);
-		m_copyAct->setEnabled(actsEnabled);
-		m_duplicateAct->setEnabled(actsEnabled);
+		//DebugDialog::debug(tr("enable cut/copy/duplicate/delete %1").arg(actsEnabled));
+		m_deleteAct->setEnabled(deleteActsEnabled);
+		m_cutAct->setEnabled(deleteActsEnabled && copyActsEnabled);
+		m_copyAct->setEnabled(copyActsEnabled);
+		m_duplicateAct->setEnabled(copyActsEnabled);
 	}
 }
 
@@ -1254,6 +1283,7 @@ void MainWindow::updateTraceMenu() {
 
 	m_autorouteAct->setEnabled(enabled);
 	m_exportDiyAct->setEnabled(enabled);
+	updateWireMenu();
 }
 
 
@@ -1639,6 +1669,11 @@ void MainWindow::createTraceMenuActions() {
 	m_createJumperAct = new QAction(tr("&Create Jumper Wire"), this);
 	m_createJumperAct->setStatusTip(tr("Create a jumper wire from the selected wire"));
 	connect(m_createJumperAct, SIGNAL(triggered()), this, SLOT(createJumper()));
+
+	m_excludeFromAutorouteAct = new QAction(tr("&Exclude from Autoroute"), this);
+	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this wire"));
+	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
+	m_excludeFromAutorouteAct->setCheckable(true);
 }
 
 void MainWindow::autoroute() {
@@ -1669,6 +1704,10 @@ void MainWindow::createTrace() {
 
 void MainWindow::createJumper() {
 	m_pcbGraphicsView->createJumper();
+}
+
+void MainWindow::excludeFromAutoroute() {
+	m_pcbGraphicsView->excludeFromAutoroute();
 }
 
 void MainWindow::notClosableForAWhile() {

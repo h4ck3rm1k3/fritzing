@@ -685,6 +685,11 @@ bool ItemBase::stickyEnabled(ItemBase * stickTo) {
 
 void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
+	if (m_hidden) {
+		event->ignore();
+		return;
+	}
+
     scene()->clearSelection();
     setSelected(true);
     if (m_itemMenu != NULL) {

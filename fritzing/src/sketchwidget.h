@@ -156,12 +156,9 @@ public:
 	void changeWireWidth(long wireId, int width);
 	void changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlags);
 	void setIgnoreSelectionChangeEvents(bool);
-	void createJumper();
-	void createTrace();
 	void hideConnectors(bool hide);
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
-	bool ratsAllRouted();
 	virtual void updateRatsnestStatus();
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 	void clearRouting(QUndoCommand * parentCommand);
@@ -169,6 +166,7 @@ public:
 	const QString &selectedModuleID();
 	void setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType);
 	virtual bool canDeleteItem(QGraphicsItem * item);
+	virtual bool canCopyItem(QGraphicsItem * item);
 	virtual const QString & viewName();
 
 protected:
@@ -240,7 +238,6 @@ protected:
 	virtual void checkAutorouted();
 	class Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
-	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
@@ -251,6 +248,7 @@ protected:
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
+	virtual bool canChainWire(Wire *);
 
 protected:
 	static bool lessThan(int a, int b);

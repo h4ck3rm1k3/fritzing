@@ -40,6 +40,7 @@ public:
 
 	void addViewLayers();
 	bool canDeleteItem(QGraphicsItem * item);
+	bool canCopyItem(QGraphicsItem * item);
 	const QString & viewName();
 
 signals:

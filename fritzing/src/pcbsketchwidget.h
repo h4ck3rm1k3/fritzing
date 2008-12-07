@@ -41,13 +41,20 @@ public:
 	void addViewLayers();
 	QString renderToSVG(qreal printerScale);
 	bool canDeleteItem(QGraphicsItem * item);
+	bool canCopyItem(QGraphicsItem * item);
 	const QString & viewName();
+	void createJumper();
+	void createTrace();
+	void excludeFromAutoroute();
+	bool ratsAllRouted();
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire);
 	void checkAutorouted();
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
+	bool canChainWire(Wire *);
+	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 
 };
 

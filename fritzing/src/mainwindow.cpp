@@ -181,7 +181,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     m_schematicGraphicsView->setItemMenu(schemItemMenu);
     m_schematicGraphicsView->setWireMenu(schemItemMenu);
 
-
     m_breadboardGraphicsView->setInfoView(m_infoView);
     m_pcbGraphicsView->setInfoView(m_infoView);
     m_schematicGraphicsView->setInfoView(m_infoView);
@@ -1224,8 +1223,28 @@ QMenu *MainWindow::pcbItemMenu() {
 
 QMenu *MainWindow::pcbWireMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	menu->addAction(m_bringToFrontAct);
+	menu->addAction(m_bringForwardAct);
+	menu->addAction(m_sendBackwardAct);
+	menu->addAction(m_sendToBackAct);
+	menu->addSeparator();
 	menu->addAction(m_createTraceAct);
 	menu->addAction(m_createJumperAct);
+	menu->addAction(m_excludeFromAutorouteAct);
+	menu->addSeparator();
+	menu->addAction(m_deleteAct);
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_infoViewOnHoverAction);
+#endif
+
+    connect(
+    	menu,
+    	SIGNAL(aboutToShow()),
+    	this,
+    	SLOT(updateWireMenu())
+    );
+
 	return menu;
 }
 

@@ -107,6 +107,7 @@ protected slots:
     void updateEditMenu();
     void updateLayerMenu();
     void updatePartMenu();
+    void updateWireMenu();
     void updateTransformationActions();
 	void updateTraceMenu();
     void tabWidget_currentChanged(int index);
@@ -166,6 +167,7 @@ protected slots:
 	void autoroute();
 	void createTrace();
 	void createJumper();
+	void excludeFromAutoroute();
 
 	void saveBundledSketch();
 	void loadBundledSketch(QString &fileName);
@@ -401,6 +403,7 @@ protected:
 	QAction *m_autorouteAct;
 	QAction *m_createTraceAct;
 	QAction *m_createJumperAct;
+	QAction *m_excludeFromAutorouteAct;
 
 
 	// Help Menu

@@ -246,6 +246,13 @@ bool SchematicSketchWidget::canDeleteItem(QGraphicsItem * item)
 	return SketchWidget::canDeleteItem(item);
 }
 
+bool SchematicSketchWidget::canCopyItem(QGraphicsItem * item) 
+{
+	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
+	if (wire != NULL) return false;
+
+	return SketchWidget::canDeleteItem(item);
+}
 
 void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {

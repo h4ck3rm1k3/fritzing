@@ -30,6 +30,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "svg/svgfilesplitter.h"
 #include "tracewire.h"
 #include "virtualwire.h"
+#include "waitpushundostack.h"
 
 static const QString ___viewName___ = QObject::tr("PCB View");
 
@@ -257,6 +258,107 @@ bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item)
 	return SketchWidget::canDeleteItem(item);
 }
 
+bool PCBSketchWidget::canCopyItem(QGraphicsItem * item) 
+{
+	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
+	if (wire != NULL) {
+		if (wire->getRatsnest()) return false;
+	}
+
+	return SketchWidget::canDeleteItem(item);
+}
+
 const QString & PCBSketchWidget::viewName() {
 	return ___viewName___;
+}
+
+bool PCBSketchWidget::canChainWire(Wire * wire) {
+	bool result = SketchWidget::canChainWire(wire);
+	if (!result) return result;
+
+	if (wire->getRatsnest()) return false;
+
+	return result;
+}
+
+void PCBSketchWidget::createJumper() {
+	QString commandString = "Create jumper wire";
+	QString colorString = "jumper";
+	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, colorString);
+	ensureLayerVisible(ViewLayer::Jumperwires);
+}
+
+void PCBSketchWidget::createTrace() {
+	QString commandString = tr("Create trace wire");
+	QString colorString = "trace";
+	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, colorString);
+	ensureLayerVisible(ViewLayer::Copper0);
+}
+
+void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag, const QString & colorString)
+{
+	QList<QGraphicsItem *> items = scene()->selectedItems();
+	if (items.count() != 1) return;
+
+	Wire * wire = dynamic_cast<Wire *>(items[0]);
+	if (wire == NULL) return;
+
+	QList<ConnectorItem *> ends;
+	Wire * jumperOrTrace = NULL;
+	if (wire->getRatsnest()) {
+		jumperOrTrace = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
+	}
+	else {
+		jumperOrTrace = wire;
+	}
+
+	if (jumperOrTrace != NULL) {
+		if (jumperOrTrace->hasFlag(flag)) {
+			return;
+		}
+
+		QList<Wire *> chained;
+		QList<ConnectorItem *> uniqueEnds;
+		jumperOrTrace->collectChained(chained, ends, uniqueEnds);
+	}
+
+	QUndoCommand * parentCommand = new QUndoCommand(commandString);
+	new CleanUpWiresCommand(this, false, parentCommand);
+	
+	if (jumperOrTrace != NULL) {
+		makeDeleteItemCommand(jumperOrTrace, parentCommand);
+	}
+
+	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
+	new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
+	new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
+	new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), 0.35, parentCommand);
+	new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
+
+	new CleanUpWiresCommand(this, true, parentCommand);
+	m_undoStack->push(parentCommand);
+}
+
+void PCBSketchWidget::excludeFromAutoroute() 
+{
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+
+		if (wire->getTrace() || wire->getJumper()) {
+			wire->setAutoroutable(!wire->getAutoroutable());
+		}
+	}
+}
+
+bool PCBSketchWidget::ratsAllRouted() {
+	foreach (QGraphicsItem * item, scene()->items()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+		if (!wire->getRatsnest()) continue;
+
+		if (!wire->getRouted()) return false;
+	}
+
+	return true;
 }

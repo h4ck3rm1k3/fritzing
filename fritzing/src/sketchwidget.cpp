@@ -300,10 +300,10 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		}
 		else {
 			if (viewGeometry.getTrace()) {
-				wire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+				wire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
 			}
 			else {
-				wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+				wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
 				if (!wire->hasAnyFlag(ViewGeometry::JumperFlag)) {
 					wire->setNormal(true);
 					wire->setAutoroutable(false);
@@ -2834,7 +2834,7 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, QUndoCommand * parentComman
 }
 
 void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QLineF oldLine) {
-	if (!m_chainDrag) return;  // can't split a wire in some views (for now)
+	if (!canChainWire(wire)) return;
 
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
@@ -2884,7 +2884,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 }
 
 void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorItem) {
-	if (!m_chainDrag) return;  // can't join a wire in some views (for now)
+	if (!canChainWire(wire)) return;  // can't join a wire in some views (for now)
 
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
@@ -2958,12 +2958,9 @@ void SketchWidget::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 		InfoGraphicsView::hoverEnterItem(event, item);
 	}
 
-	if (!this->m_chainDrag) return;
-
-	Wire * wire = dynamic_cast<Wire *>(item);
-	if (wire == NULL) return;
-
-	statusMessage(tr("Shift-click to add a bend point to the wire"));
+	if (canChainWire(dynamic_cast<Wire *>(item))) {
+		statusMessage(tr("Shift-click to add a bend point to the wire"));
+	}
 }
 
 void SketchWidget::statusMessage(QString message, int timeout) {
@@ -2978,12 +2975,9 @@ void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 		InfoGraphicsView::hoverLeaveItem(event, item);
 	}
 
-	if (!this->m_chainDrag) return;
-
-	Wire * wire = dynamic_cast<Wire *>(item);
-	if (wire == NULL) return;;
-
-	statusMessage(tr(""));
+	if (canChainWire(dynamic_cast<Wire *>(item))) {
+		statusMessage(tr(""));
+	}
 }
 
 void SketchWidget::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
@@ -3263,51 +3257,6 @@ void SketchWidget::setIgnoreSelectionChangeEvents(bool ignore) {
 	m_ignoreSelectionChangeEvents = ignore;
 }
 
-void SketchWidget::createJumper() {
-	QString commandString = "Create jumper wire";
-	QString colorString = "jumper";
-	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, colorString);
-	ensureLayerVisible(ViewLayer::Jumperwires);
-}
-
-void SketchWidget::createTrace() {
-	QString commandString = tr("Create trace wire");
-	QString colorString = "trace";
-	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, colorString);
-	ensureLayerVisible(ViewLayer::Copper0);
-}
-
-void SketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag, const QString & colorString)
-{
-	QList<QGraphicsItem *> items = scene()->selectedItems();
-	if (items.count() != 1) return;
-
-	Wire * wire = dynamic_cast<Wire *>(items[0]);
-	if (wire == NULL) return;
-
-	if (!wire->getRatsnest()) return;
-
-	QList<ConnectorItem *> ends;
-	Wire * jumperOrTrace = wire->findJumperOrTraced(ViewGeometry::JumperFlag | ViewGeometry::TraceFlag, ends);
-	QUndoCommand * parentCommand = new QUndoCommand(commandString);
-	new CleanUpWiresCommand(this, false, parentCommand);
-	
-	if (jumperOrTrace != NULL) {
-		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), .35, parentCommand);
-	}
-	else {
-		long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
-		new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
-		new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
-		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), 0.35, parentCommand);
-		new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
-	}
-
-	new CleanUpWiresCommand(this, true, parentCommand);
-	m_undoStack->push(parentCommand);
-}
-
 void SketchWidget::hideConnectors(bool hide) {
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
@@ -3339,18 +3288,6 @@ void SketchWidget::restoreLayerVisibility()
 	foreach (ViewLayer::ViewLayerID viewLayerID, m_viewLayerVisibility.keys()) {
 		setLayerVisible(m_viewLayers.value(viewLayerID),  m_viewLayerVisibility.value(viewLayerID));
 	}
-}
-
-bool SketchWidget::ratsAllRouted() {
-	foreach (QGraphicsItem * item, scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (!wire->getRatsnest()) continue;
-
-		if (!wire->getRouted()) return false;
-	}
-
-	return true;
 }
 
 void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlags)
@@ -3465,6 +3402,17 @@ bool SketchWidget::canDeleteItem(QGraphicsItem * item)
 	return true;
 }
 
+bool SketchWidget::canCopyItem(QGraphicsItem * item) 
+{
+	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+	if (itemBase == NULL) return false;
+
+	ItemBase * chief = itemBase->layerKinChief();
+	if (chief == NULL) return false;
+
+	return true;
+}
+
 bool SketchWidget::canChainMultiple() {
 	return false;
 }
@@ -3472,3 +3420,11 @@ bool SketchWidget::canChainMultiple() {
 const QString & SketchWidget::viewName() {
 	return ___emptyString___;
 }
+
+bool SketchWidget::canChainWire(Wire * wire) {
+	if (!this->m_chainDrag) return false;
+	if (wire == NULL) return false;
+
+	return true;
+}
+
