@@ -50,7 +50,7 @@ protected:
 	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems);
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
-
+	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 
 };
 

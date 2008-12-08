@@ -249,6 +249,7 @@ protected:
 	virtual void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
+	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 
 protected:
 	static bool lessThan(int a, int b);

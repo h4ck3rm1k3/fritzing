@@ -1789,6 +1789,14 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorItem * to)
 {
+	// if to == NULL and it's pcb or schematic view, bail out
+	if (!canCreateWire(wire, from, to)) {
+		clearDragWireTempCommand();
+		this->scene()->removeItem(m_connectorDragWire);
+		return;
+	}
+
+
 	QUndoCommand * parentCommand = new QUndoCommand();
 
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
@@ -3428,3 +3436,10 @@ bool SketchWidget::canChainWire(Wire * wire) {
 	return true;
 }
 
+bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to) 
+{
+	Q_UNUSED(dragWire);
+	Q_UNUSED(from);
+	Q_UNUSED(to);
+	return true;
+}

@@ -303,3 +303,9 @@ void PCBSchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & dele
 		}
 	}
 }
+
+bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to) 
+{
+	Q_UNUSED(dragWire);
+	return ((from != NULL) && (to != NULL));
+}
