@@ -457,7 +457,7 @@ ItemBase * SketchWidget::findItem(long id) {
 }
 
 void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit) {
-	DebugDialog::debug(tr("delete item %1 %2").arg(id).arg(doEmit) );
+	DebugDialog::debug(tr("delete item (1) %1 %2 %3").arg(id).arg(doEmit).arg(m_viewIdentifier) );
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
 		deleteItem(pitem, deleteModelPart, doEmit);
@@ -474,7 +474,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	long id = itemBase->id();
 	itemBase->removeLayerKin();
 	this->scene()->removeItem(itemBase);
-	DebugDialog::debug(tr("delete item %1 %2").arg(id).arg(itemBase->title()) );
+	DebugDialog::debug(tr("delete item (2) %1 %2 %3").arg(id).arg(itemBase->title()).arg(m_viewIdentifier) );
 
 	if (deleteModelPart) {
 		ModelPart * modelPart = itemBase->modelPart();
@@ -1797,7 +1797,8 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 		return;
 	}
 
-	modifyNewWireConnections(m_connectorDragConnector, to);
+	ConnectorItem * newFrom = m_connectorDragConnector;
+	modifyNewWireConnections(wire->id(), newFrom, to);
 
 	QUndoCommand * parentCommand = new QUndoCommand();
 
@@ -1827,16 +1828,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 	bool doEmit = false;
 	ConnectorItem * anchor = wire->otherConnector(from);
 	if (anchor != NULL) {
-		extendChangeConnectionCommand(anchor, m_connectorDragConnector, true, false, parentCommand);
+		extendChangeConnectionCommand(anchor, newFrom, true, false, parentCommand);
 		doEmit = true;
 	}
 	if (to != NULL) {
-		// since both wire connections are being newly created, set up the anchor connection temporarily
-		//m_connectorDragConnector->tempConnectTo(anchor);
-		//anchor->tempConnectTo(m_connectorDragConnector);
 		extendChangeConnectionCommand(from, to, true, false, parentCommand);
-		//m_connectorDragConnector->tempRemove(anchor);
-		//anchor->tempRemove(m_connectorDragConnector);
 		doEmit = true;
 	}
 
@@ -2632,9 +2628,12 @@ void SketchWidget::tempConnectWire(ItemBase * itemBase, ConnectorItem * from, Co
 	ConnectorItem * connector0 = wire->connector0();
 	from->tempConnectTo(connector0);
 	connector0->tempConnectTo(from);
+	connector0->setChained(from->chained());
+
 	ConnectorItem * connector1 = wire->connector1();
 	to->tempConnectTo(connector1);
 	connector1->tempConnectTo(to);
+	connector1->setChained(to->chained());
 }
 
 void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
@@ -3446,8 +3445,9 @@ bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Connecto
 }
 
 
-void SketchWidget::modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to) 
+void SketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to) 
 {
+	Q_UNUSED(wireID);
 	Q_UNUSED(from);
 	Q_UNUSED(to);
 }

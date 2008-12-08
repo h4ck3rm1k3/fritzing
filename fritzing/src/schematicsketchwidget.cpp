@@ -96,19 +96,19 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 		}
 
 		QList<ConnectorItem *> connectorItems;
-		connectorItems << fromConnectorItem, toConnectorItem;
+		connectorItems << fromConnectorItem << toConnectorItem;
 		ConnectorItem::collectEqualPotential(connectorItems);
 		QList<ConnectorItem *> partsConnectorItems;
 		ConnectorItem::collectParts(connectorItems, partsConnectorItems);
 		if (useFrom) {
-			ConnectorItem * newTo = tryParts(fromConnectorItem, partsConnectorItems);
+			ConnectorItem * newTo = tryParts(fromConnectorItem, toConnectorItem, partsConnectorItems);
 			if (newTo != NULL) {
 				makeOneRatsnestWire(fromConnectorItem, newTo);
 				return;
 			}
 		}
 		else if (useTo) {
-			ConnectorItem * newFrom = tryParts(toConnectorItem, partsConnectorItems);
+			ConnectorItem * newFrom = tryParts(toConnectorItem, fromConnectorItem, partsConnectorItems);
 			if (newFrom != NULL) {
 				makeOneRatsnestWire(toConnectorItem, newFrom);
 				return;
@@ -145,8 +145,9 @@ bool SchematicSketchWidget::alreadyOnBus(ConnectorItem * busCandidate, Connector
 	return false;
 }
 
-ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorItem, QList<ConnectorItem *> partsConnectorItems) 
+ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorItem, ConnectorItem * wireConnectorItem, QList<ConnectorItem *> partsConnectorItems) 
 {
+	Q_UNUSED(wireConnectorItem);
 	foreach (ConnectorItem * connectorItem, partsConnectorItems) {
 		if (connectorItem == otherConnectorItem) continue;
 		if (connectorItem->attachedTo() == otherConnectorItem->attachedTo() &&
@@ -165,6 +166,11 @@ ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorIt
 
 ConnectorItem * SchematicSketchWidget::tryWire(ConnectorItem * wireConnectorItem, ConnectorItem * otherConnectorItem)
 {
+	ConnectorItem * splitWireConnectorItem = m_wireHash.value(wireConnectorItem->attachedToID());
+	if (splitWireConnectorItem != NULL) {
+		return splitWireConnectorItem;
+	}
+
 	QList<Wire *> chained;
 	QList<ConnectorItem *> ends;
 	QList<ConnectorItem *> uniqueEnds;
@@ -329,13 +335,19 @@ const QString & SchematicSketchWidget::viewName() {
 }
 
 
-void SchematicSketchWidget::modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to) 
+void SchematicSketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to) 
 {
 	if (from->attachedToItemType() == ModelPart::Wire) {
 		from = lookForBreadboardConnection(from);
+		if (from->bus()) {
+			m_wireHash.insert(wireID, m_connectorDragConnector);
+		}
 	}
 	else if (to->attachedToItemType() == ModelPart::Wire) {
 		to = lookForBreadboardConnection(to);
+		if (to->bus()) {
+			m_wireHash.insert(wireID, m_connectorDragConnector);
+		}
 	}
 }
 

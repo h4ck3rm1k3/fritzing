@@ -250,7 +250,7 @@ protected:
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
-	virtual void modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to);
+	virtual void modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to);
 
 
 protected:

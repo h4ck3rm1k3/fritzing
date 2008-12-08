@@ -52,12 +52,15 @@ protected:
 	void updateRatsnestStatus();
 	void dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 	ConnectorItem * tryWire(ConnectorItem * wireConnectorItem, ConnectorItem * otherConnectorItem);
-	ConnectorItem * tryParts(ConnectorItem * otherConnectorItem, QList<ConnectorItem *> partsConnectorItems);
+	ConnectorItem * tryParts(ConnectorItem * otherConnectorItem, ConnectorItem * wireConnectorItem, QList<ConnectorItem *> partsConnectorItems);
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canChainMultiple();
 	bool alreadyOnBus(ConnectorItem * busCandidate, ConnectorItem * otherCandidate);
-	void modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to);
+	void modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * & connectorItem);
+
+protected:
+	QHash<int, ConnectorItem *> m_wireHash;
 
 };
 
