@@ -35,6 +35,7 @@ HEADERS += \
     src/expandinglabel.h \
     src/fapplication.h \
     src/fdockwidget.h \
+    src/fgraphicsscene.h \
     src/filedealingwidget.h \
     src/fritzingwindow.h \
     src/fsplashscreen.h \
@@ -94,6 +95,7 @@ SOURCES += \
     src/eventeater.cpp \
     src/fapplication.cpp \
     src/fdockwidget.cpp \
+    src/fgraphicsscene.cpp \
     src/filedealingwidget.cpp \
     src/fritzingwindow.cpp \
     src/fsplashscreen.cpp \

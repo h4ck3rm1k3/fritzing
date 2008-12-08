@@ -56,6 +56,8 @@ protected:
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canChainMultiple();
 	bool alreadyOnBus(ConnectorItem * busCandidate, ConnectorItem * otherCandidate);
+	void modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to);
+	ConnectorItem * lookForBreadboardConnection(ConnectorItem * & connectorItem);
 
 };
 

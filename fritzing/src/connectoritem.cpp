@@ -122,14 +122,18 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	if (m_attachedTo != NULL) {
 		m_attachedTo->connectionChange(this);
 	}
+
+	updateTooltip();
 }
 
 void ConnectorItem::tempConnectTo(ConnectorItem * item) {
 	m_connectedTo.append(item);
+	updateTooltip();
 }
 
 void ConnectorItem::tempRemove(ConnectorItem * item) {
 	m_connectedTo.removeOne(item);
+	updateTooltip();
 }
 
 void ConnectorItem::restoreColor() {
@@ -202,6 +206,7 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 				.arg((long) this, 0, 16)
 				.arg(itemBase->modelPart()->modelPartStuff()->title())
 				.arg(m_connectedTo.count()) );
+			updateTooltip();
 			return removed;
 		}
 	}
@@ -217,6 +222,7 @@ void ConnectorItem::removeConnection(ConnectorItem * connectedItem, bool emitCha
 	if (emitChange) {
 		m_attachedTo->connectionChange(this);
 	}
+	updateTooltip();
 }
 
 ConnectorItem * ConnectorItem::firstConnectedToIsh() {
@@ -286,6 +292,8 @@ void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemB
 				
 		connectToElement = connectToElement.nextSiblingElement("connect");
 	}
+
+	updateTooltip();
 }
 
 bool ConnectorItem::connectedTo(ConnectorItem * connectorItem) {
@@ -580,4 +588,24 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 			}
 		}
 	}
+}
+
+void ConnectorItem::updateTooltip() {
+	if (m_connectedTo.count() == 0) {
+		setToolTip(m_baseTooltip);
+		return;
+	}
+
+	QString connections;
+	foreach(ConnectorItem * toConnectorItem, m_connectedTo) {
+		connections += "<br />&nbsp;&nbsp;" + toConnectorItem->attachedToTitle() + ":" + toConnectorItem->connectorStuffID();
+	}
+
+	setToolTip(m_baseTooltip + ITEMBASE_FONT_PREFIX + connections + ITEMBASE_FONT_SUFFIX);
+
+}
+
+void ConnectorItem::setBaseTooltip(const QString & tooltip) {
+	m_baseTooltip = tooltip;
+	setToolTip(tooltip);
 }

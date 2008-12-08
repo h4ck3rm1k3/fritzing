@@ -135,11 +135,9 @@ void ItemBase::setConnectorTooltips() {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		QString tt = QString("%1<br /><font size='2'>%2</font>").arg(toolTip()).arg(connectorItem->connectorStuffID());
+		QString tt = QString("%1<br />" + ITEMBASE_FONT_PREFIX + "%2" + ITEMBASE_FONT_SUFFIX).arg(toolTip()).arg(connectorItem->connectorStuffID());
 
-		//setToolTip("<b>"+text+"</b><br></br><font size='2'>"+modelPartStuff()->title()+"</font>");
-
-		connectorItem->setToolTip(tt);
+		connectorItem->setBaseTooltip(tt);
 	}
 }
 
@@ -649,12 +647,12 @@ void ItemBase::updateTooltip() {
 }
 
 void ItemBase::setInstanceTitleTooltip(const QString &text) {
-	setToolTip("<b>"+text+"</b><br></br><font size='2'>"+modelPartStuff()->title()+"</font>");
+	setToolTip("<b>"+text+"</b><br></br>" + ITEMBASE_FONT_PREFIX + modelPartStuff()->title()+ ITEMBASE_FONT_SUFFIX);
 }
 
 void ItemBase::setDefaultTooltip() {
 	if (m_modelPart) {
-		QString base = "<font size='2'>%1</font>";
+		QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
 		if(m_modelPart->itemType() != ModelPart::Wire) {
 			this->setToolTip(base.arg(m_modelPart->title()));
 		} else {

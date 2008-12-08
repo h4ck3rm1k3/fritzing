@@ -71,6 +71,9 @@ static QStringList ___emptyStringList___;
 static QHash<QString, QString> ___emptyStringHash___;
 static QDir ___emptyDir___;
 
+static QString ITEMBASE_FONT_PREFIX = "<font size='2'>";
+static QString ITEMBASE_FONT_SUFFIX = "</font>";
+
 static const int STANDARD_ICON_IMG_WIDTH = 32;
 static const int STANDARD_ICON_IMG_HEIGHT = 32;
 

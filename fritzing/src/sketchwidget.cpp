@@ -60,6 +60,7 @@ $Date$
 #include "waitpushundostack.h"
 #include "zoomcombobox.h"
 #include "autorouter1.h"
+#include "fgraphicsscene.h"
 
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -85,7 +86,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 	setTransformationAnchor(QGraphicsView::AnchorViewCenter);
 	//setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	//setTransformationAnchor(QGraphicsView::NoAnchor);
-    QGraphicsScene* scene = new QGraphicsScene(this);
+    FGraphicsScene* scene = new FGraphicsScene(this);
     this->setScene(scene);
 
     //this->scene()->setSceneRect(0,0, 1000, 1000);
@@ -1796,6 +1797,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 		return;
 	}
 
+	modifyNewWireConnections(m_connectorDragConnector, to);
 
 	QUndoCommand * parentCommand = new QUndoCommand();
 
@@ -1830,12 +1832,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 	}
 	if (to != NULL) {
 		// since both wire connections are being newly created, set up the anchor connection temporarily
-		// the other connection is created temporarily in extendChangeConnectionCommand
-		m_connectorDragConnector->tempConnectTo(anchor);
-		anchor->tempConnectTo(m_connectorDragConnector);
+		//m_connectorDragConnector->tempConnectTo(anchor);
+		//anchor->tempConnectTo(m_connectorDragConnector);
 		extendChangeConnectionCommand(from, to, true, false, parentCommand);
-		m_connectorDragConnector->tempRemove(anchor);
-		anchor->tempRemove(m_connectorDragConnector);
+		//m_connectorDragConnector->tempRemove(anchor);
+		//anchor->tempRemove(m_connectorDragConnector);
 		doEmit = true;
 	}
 
@@ -3442,4 +3443,11 @@ bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Connecto
 	Q_UNUSED(from);
 	Q_UNUSED(to);
 	return true;
+}
+
+
+void SketchWidget::modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to) 
+{
+	Q_UNUSED(from);
+	Q_UNUSED(to);
 }

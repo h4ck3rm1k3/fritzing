@@ -250,6 +250,8 @@ protected:
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
+	virtual void modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to);
+
 
 protected:
 	static bool lessThan(int a, int b);

@@ -83,6 +83,7 @@ public:
 	class Wire * wiredTo(ConnectorItem *, ViewGeometry::WireFlags);
 	void setDirty(bool dirty);
 	bool isDirty();
+	void setBaseTooltip(const QString &);
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -97,6 +98,7 @@ protected:
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	virtual void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	virtual void writeOtherElements(QXmlStreamWriter & writer);
+	void updateTooltip();
 
 protected:
 	Connector * m_connector;
@@ -110,6 +112,7 @@ protected:
 	bool m_circular;
 	bool m_chained;
 	bool m_dirty;
+	QString m_baseTooltip;
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems);

@@ -327,3 +327,42 @@ bool SchematicSketchWidget::canChainMultiple() {
 const QString & SchematicSketchWidget::viewName() {
 	return ___viewName___;
 }
+
+
+void SchematicSketchWidget::modifyNewWireConnections(ConnectorItem * & from, ConnectorItem * & to) 
+{
+	if (from->attachedToItemType() == ModelPart::Wire) {
+		from = lookForBreadboardConnection(from);
+	}
+	else if (to->attachedToItemType() == ModelPart::Wire) {
+		to = lookForBreadboardConnection(to);
+	}
+}
+
+
+ConnectorItem * SchematicSketchWidget::lookForBreadboardConnection(ConnectorItem * & connectorItem) {
+	Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
+
+	QList<ConnectorItem *> ends;
+	QList<ConnectorItem *> uniqueEnds;
+	QList<Wire *> wires;
+	wire->collectChained(wires, ends, uniqueEnds);
+	foreach (ConnectorItem * end, ends) {
+		foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
+				return toConnectorItem;
+			}
+		}
+	}
+
+	ends.clear();
+	ends.append(connectorItem);
+	ConnectorItem::collectEqualPotential(ends);
+	foreach (ConnectorItem * end, ends) {
+		if (end->attachedToItemType() == ModelPart::Breadboard) {
+			return end;
+		}
+	}
+
+	return connectorItem;
+}
