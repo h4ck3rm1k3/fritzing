@@ -247,6 +247,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 		if (!wire->getRatsnest()) continue;
 
 		undeleteWires.insert(wire);
+		m_deleteStash.append(wire);
 		QList<Wire *> chained;
 		QList<ConnectorItem *> ends;
 		QList<ConnectorItem *> uniqueEnds;
@@ -404,3 +405,15 @@ int SchematicSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem *
 	return result;
 }
 
+void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems) 
+{
+	if (m_deleteStash.count() > 0) {
+		foreach(Wire * wire, m_deleteStash) {
+			deleteItem(wire, false, false);
+		}
+		m_deleteStash.clear();
+		return;
+	}
+
+	PCBSchematicSketchWidget::removeRatsnestWires(allPartConnectorItems);
+}

@@ -60,6 +60,7 @@ protected:
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * & connectorItem);
 	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires);
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
+	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems);
 
 protected:
 	QHash<int, ConnectorItem *> m_wireHash;
