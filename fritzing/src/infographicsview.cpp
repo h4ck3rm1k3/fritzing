@@ -51,10 +51,10 @@ void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase
 	m_infoView->hoverEnterItem(this, event, item, swappingEnabled());
 }
 
-void InfoGraphicsView::hoverEnterItem(ModelPart* modelPart, QPixmap *pixmap) {
+void InfoGraphicsView::hoverEnterItem(ModelPart* modelPart) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterItem(modelPart, swappingEnabled(), pixmap);
+	m_infoView->hoverEnterItem(modelPart, swappingEnabled());
 }
 
 void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){

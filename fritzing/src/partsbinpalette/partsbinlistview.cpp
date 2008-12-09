@@ -114,7 +114,7 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 	ModelPart * modelPart = item->data(Qt::UserRole).value<ModelPart *>();
 	if (modelPart == NULL) return;
 
-	m_infoView->hoverEnterItem(modelPart, swappingEnabled(), NULL);
+	m_infoView->hoverEnterItem(modelPart, swappingEnabled());
 }
 
 

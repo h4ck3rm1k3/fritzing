@@ -50,7 +50,7 @@ public:
 	void reloadContent();
 
 	void viewItemInfo(ItemBase* item, bool swappingEnabled);
-	void hoverEnterItem(ModelPart *, bool swappingEnabled, QPixmap *pixmap=NULL);
+	void hoverEnterItem(ModelPart *, bool swappingEnabled);
 	void hoverLeaveItem(ModelPart *);
 	void hoverEnterItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item, bool swappingEnabled);
 	void hoverLeaveItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item);
@@ -71,7 +71,7 @@ protected:
 	QString appendCurrentGeometry(ItemBase *, bool doLine);
 	QString appendWireStuff(Wire* wire, long itemID);
 	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
-	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, QPixmap *pixmap1 = NULL, const QString title = "");
+	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "");
 
 	void prepareTitleStuff(ItemBase *base, QString &title, QString &instanceTitle, QString &defaultTitle);
 	void ensureUniqueTitle(ItemBase* item, QString &title);

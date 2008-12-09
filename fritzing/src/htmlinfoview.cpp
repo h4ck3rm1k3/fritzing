@@ -36,6 +36,8 @@ $Date$
 #include "connector.h"
 #include "mainwindow.h"
 #include "rendererviewthing.h"
+#include "layerattributes.h"
+
 
 #define HTML_EOF "</body>\n</html>"
 #define PART_INSTANCE_DEFAULT_TITLE "Part"
@@ -87,10 +89,10 @@ void HtmlInfoView::registerRefModel() {
 	);
 }
 
-void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled, QPixmap *pixmap) {
+void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
 	m_currentSwappingEnabled = swappingEnabled;
 	QString s = "";
-	s += appendItemStuff(modelPart, 0, swappingEnabled, pixmap, "");
+	s += appendItemStuff(modelPart, 0, swappingEnabled, "");
 	setContent(s);
 }
 
@@ -223,17 +225,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnab
 	QString title; QString instanceTitle; QString defaultTitle;
 	prepareTitleStuff(base, title, instanceTitle, defaultTitle);
 
-
-	QPixmap *pixmap1 = NULL;
-	PaletteItem *pitem = dynamic_cast<PaletteItem *>(base);
-	if(pitem) {
-		QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
-		pixmap1 = FSvgRenderer::getPixmap(base->modelPart()->moduleID(), ViewLayer::Icon, size);
-	}
-
-	QString retval = appendItemStuff(base->modelPart(), id, swappingEnabled, pixmap1, title);
-	delete pixmap1;
-
+	QString retval = appendItemStuff(base->modelPart(), id, swappingEnabled, title);
 	return retval;
 }
 
@@ -357,16 +349,26 @@ int HtmlInfoView::getNextTitle(QList<QGraphicsItem*> items, const QString &title
 	return max;
 }
 
-QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, QPixmap *ignorePixmap, const QString title) {
+QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, const QString title) {
 	if (modelPart == NULL) return "missing modelpart";
 	if (modelPart->modelPartStuff() == NULL) return "missing modelpart stuff";
 
-
-	Q_UNUSED(ignorePixmap);
 	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
 	QPixmap *pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
 	QPixmap *pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
+
+	// TODO (jrc): calling setUpImage here is a hack, best to do it somewhere else
+	if (pixmap2 == NULL) {
+		LayerAttributes layerAttributes;
+		PaletteItemBase::setUpImage(modelPart, ItemBase::SchematicView, ViewLayer::Schematic, layerAttributes);
+		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
+	}
 	QPixmap *pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
+	if (pixmap3 == NULL) {
+		LayerAttributes layerAttributes;
+		PaletteItemBase::setUpImage(modelPart, ItemBase::PCBView, ViewLayer::Copper0, layerAttributes);
+		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
+	}
 
 	QString s = "";
 	if(!title.isNull() && !title.isEmpty()) {

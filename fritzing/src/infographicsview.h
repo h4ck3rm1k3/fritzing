@@ -47,7 +47,7 @@ public:
 
 	void viewItemInfo(ItemBase * item);
 	virtual void hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
-	virtual void hoverEnterItem(ModelPart * modelPart, QPixmap *pixmap=NULL);
+	virtual void hoverEnterItem(ModelPart * modelPart);
 	virtual void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	virtual void hoverLeaveItem(ModelPart * modelPart);
 
