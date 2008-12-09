@@ -48,18 +48,12 @@ $Date$
 PaletteItem::PaletteItem( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true)
 {
-	m_pixmap = NULL;
 }
 
-bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool renderPixmap, bool doConnectors) {
+bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {
 	Q_UNUSED(viewLayerID);
 
 	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);
-    if (result && renderPixmap) {
-		if (m_pixmap == NULL) {
-			m_pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), m_viewLayerID, m_size);
-		}
-   	}
 
 	m_syncMoved = this->pos();
 	return result;
@@ -92,20 +86,6 @@ void PaletteItem::loadLayerKin( const LayerHash & viewLayers) {
 		}
 	}
 }
-
-QPixmap * PaletteItem::pixmap() const {
-	return m_pixmap;
-}
-
-void PaletteItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{	
-	PaletteItemBase::paint(painter, option, widget);
-	if (!m_svg && (m_pixmap != NULL)) {
-		painter->drawPixmap ( 0, 0, *m_pixmap );
-	}
-
-}
-
 
 void PaletteItem::addLayerKin(LayerKinPaletteItem * lkpi) {
 	m_layerKin.append(lkpi);
@@ -295,7 +275,7 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
 		invalidateConnectors();
 		m_modelPart->copy(newModelPart);
 		m_modelPart->initConnectors(true);
-		renderImage(m_modelPart,m_viewIdentifier,layerHash,m_viewLayerID,false,true);
+		renderImage(m_modelPart,m_viewIdentifier,layerHash,m_viewLayerID,true);
 		cleanupConnectors();
 		updateTooltip();
 		scene()->update();

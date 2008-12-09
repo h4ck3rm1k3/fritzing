@@ -32,6 +32,7 @@ $Date$
 #include "../infographicsview.h"
 #include "../debugdialog.h"
 #include "../misc.h"
+#include "../rendererviewthing.h"
 
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #BEBEBE;"
@@ -42,7 +43,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ItemBase::ViewIdentifier vie
 	m_moduleId = modelPart->moduleID();
 
 	m_paletteItem = new PaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
-	m_paletteItem->renderImage(modelPart, ItemBase::IconView, viewLayers,ViewLayer::Icon, true, false);
+	m_paletteItem->renderImage(modelPart, ItemBase::IconView, viewLayers,ViewLayer::Icon, false);
 
 	m_container = new SvgIconWidgetContainer(m_paletteItem, this);
 	m_container->setStyleSheet(NON_SELECTED_STYLE);
@@ -50,7 +51,11 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ItemBase::ViewIdentifier vie
 	m_container->setFixedSize(32,32);
 
 	m_pixmapContainer = new QLabel(m_container);
-	m_pixmapContainer->setPixmap(*m_paletteItem->pixmap());
+	QPixmap * pixmap = FSvgRenderer::getPixmap(m_moduleId, ViewLayer::Icon, m_container->size());
+	if (pixmap) {
+		m_pixmapContainer->setPixmap(*pixmap);
+		delete pixmap;
+	}
 
 	QHBoxLayout *lo = new QHBoxLayout(m_container);
 	lo->setMargin(0);
@@ -70,10 +75,6 @@ SvgIconWidget::~SvgIconWidget() {
 
 ModelPart *SvgIconWidget::modelPart() const {
 	return m_paletteItem->modelPart();
-}
-
-QPixmap *SvgIconWidget::pixmap() const {
-	return m_paletteItem->pixmap();
 }
 
 const QString &SvgIconWidget::moduleID() const {

@@ -396,7 +396,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * pale
 
 	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart);
 
-	if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, true, doConnectors)) {
+	if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
 		addToScene(paletteItem, paletteItem->viewLayerID());
 		paletteItem->loadLayerKin(m_viewLayers);
 		for (int i = 0; i < paletteItem->layerKin().count(); i++) {

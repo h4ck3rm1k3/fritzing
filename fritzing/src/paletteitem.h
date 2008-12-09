@@ -41,7 +41,6 @@ public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <reanderImage>
 	PaletteItem(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
-	QPixmap * pixmap() const;
 	void removeLayerKin();
 	void addLayerKin(class LayerKinPaletteItem * lkpi);
 	QList<class LayerKinPaletteItem *> & layerKin();
@@ -53,7 +52,7 @@ public:
 	ItemBase * layerKinChief();
 	void sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
 
-	bool renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool renderPixmap, bool doConnectors);
+	bool renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 
 	void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
 	void setTransforms();
@@ -71,7 +70,6 @@ public:
 
 
 protected:
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void syncKinSelection(bool selected, PaletteItemBase * originator);
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
@@ -81,7 +79,6 @@ protected:
 	void figureHover();
 
  protected:
- 	QPixmap *m_pixmap;
  	QList<class LayerKinPaletteItem *> m_layerKin;
 
 };
