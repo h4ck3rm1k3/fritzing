@@ -241,7 +241,7 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 		if (!wire->getRatsnest()) continue;
 		if (visitedWires.contains(wire)) continue;
 
-		// if a ratsnest is connecting two items that aren't connected
+		// if a ratsnest is connecting two items that aren't connected any longer
 		// delete the ratsnest
 
 		QList<Wire *> wires;
@@ -251,27 +251,57 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 		foreach (Wire * w, wires) {
 			visitedWires.insert(w);
 		}
-		bool gotAll = false;
+		
 		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-			gotAll = true;
 			foreach (ConnectorItem * ci, ends) {
-				if (!list->contains(ci)) {
-					gotAll = false;
-					break;
+				if (!list->contains(ci)) continue;
+
+				foreach (ConnectorItem * tci, ci->connectedToItems()) {
+					if (tci->attachedToItemType() != ModelPart::Wire) continue;
+
+					Wire * w = dynamic_cast<Wire *>(tci->attachedTo());
+					if (!w->getRatsnest()) continue;
+
+					bothEndsConnected(w, tci, wires, *list);
 				}
 			}
-			if (gotAll) break;
+			if (wires.count() == 0) break;
 		}
-		if (!gotAll) {
-			foreach (Wire * w, wires) {
-				deleteWires.insert(w);
-			}
+
+		foreach (Wire * w, wires) {
+			deleteWires.insert(w);
 		}
+
 	}
 
 	foreach (Wire * wire, deleteWires) {
 		deleteItem(wire, false, false);
 	}
+}
+
+bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems) 
+{
+	bool result = false;
+	ConnectorItem * otherEnd = wire->otherConnector(oneEnd);
+	foreach (ConnectorItem * toConnectorItem, otherEnd->connectedToItems()) {
+		if (partConnectorItems.contains(toConnectorItem)) {
+			result = true;
+			continue;
+		}
+
+		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
+
+		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		if (!w->getRatsnest()) continue;
+
+		result = result || bothEndsConnected(w, toConnectorItem, wires, partConnectorItems);
+	}
+
+	if (result) {
+		wires.removeOne(wire);
+	}
+
+	return result;
 }
 
 void PCBSchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)

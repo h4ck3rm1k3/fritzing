@@ -199,49 +199,6 @@ void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorIte
 	Q_UNUSED(ratsnestWires);
 
 	return;
-
-	/*
-	modelWire = NULL;
-
-	// delete all the ratsnest wires before running dijkstra
-	int count = partsConnectorItems.count();
-	for (int i = 0; i < count - 1; i++) {
-		ConnectorItem * source = partsConnectorItems[i];
-		for (int j = i + 1; j < count; j++) {
-			ConnectorItem * dest = partsConnectorItems[j];
-			Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
-			if (tempWire != NULL) {
-				deleteItem(tempWire, false, false);
-			}
-		}
-	}
-
-	QHash<ConnectorItem *, int> indexer;
-	int ix = 0;
-	foreach (ConnectorItem * connectorItem, partsConnectorItems) {
-		indexer.insert(connectorItem, ix++);
-	}
-
-	QVector< QVector<double> *> adjacency(count);
-	for (int i = 0; i < count; i++) {
-		QVector<double> * row = new QVector<double>(count);
-		adjacency[i] = row;
-	}
-
-	Autorouter1::dijkstra(partsConnectorItems, indexer, adjacency, ViewGeometry::NormalFlag);
-
-	foreach (QVector<double> * row, adjacency) {
-		delete row;
-	}
-
-	count = partsConnectorItems.count();
-	for (int i = 0; i < count - 1; i++) {
-		ConnectorItem * source = partsConnectorItems[i];
-		ConnectorItem * dest = partsConnectorItems[i + 1];
-		Wire * newWire = makeOneRatsnestWire(source, dest);
-		ratsnestWires.append(newWire);
-	}
-*/
 }
 
 bool SchematicSketchWidget::canDeleteItem(QGraphicsItem * item) 
