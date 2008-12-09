@@ -35,22 +35,40 @@ $Date$
 #include "../modelpart.h"
 #include "../htmlinfoview.h"
 #include "../waitpushundostack.h"
+#include "../abstractstatesbutton.h"
 #include "partsbiniconview.h"
 #include "partsbinlistview.h"
 #include "simpleeditablelabelwidget.h"
 
-class ImageButton : public QLabel {
+class ImageButton : public QLabel, public AbstractStatesButton {
 	Q_OBJECT
 	public:
-		ImageButton(QWidget *parent=0) : QLabel(parent) {};
+		ImageButton(const QString &imageName, QWidget *parent=0)
+			: QLabel(parent)
+		{
+			setupIcons(imageName);
+		};
 
 	signals:
 		void clicked();
 
 	protected:
+		QString imagePrefix() {
+			return ":/resources/images/icons/partsBin";
+		}
+		void setImage(const QPixmap & pixmap) {
+			setPixmap(pixmap);
+		}
+
+		void mousePressEvent(QMouseEvent * event) {
+			setPressedIcon();
+			QLabel::mousePressEvent(event);
+		}
+
 		void mouseReleaseEvent(QMouseEvent * event) {
 			if(isEnabled()) {
 				emit clicked();
+				setEnabledIcon();
 			}
 			QLabel::mouseReleaseEvent(event);
 		}
@@ -60,7 +78,6 @@ class PartsBinPaletteWidget : public FDockWidget {
 	Q_OBJECT
 	public:
 		PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent = 0);
-		~PartsBinPaletteWidget();
 
 		QSize sizeHint() const;
 
@@ -102,12 +119,11 @@ class PartsBinPaletteWidget : public FDockWidget {
 
 		void setupFooter();
 		void setupButtons();
-		void setupPixmaps();
 
 		void grabTitle(PaletteModel *model);
 		void load(const QString&);
 
-		void setView(PartsBinView *view, QPixmap *showIconPixmap, QPixmap *showListPixmap);
+		void setView(PartsBinView *view);
 		void saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
@@ -139,16 +155,6 @@ class PartsBinPaletteWidget : public FDockWidget {
 		ImageButton *m_openBinButton;
 		ImageButton *m_saveBinButton;
 		ImageButton *m_coreBinButton;
-
-		QPixmap *m_iconViewActive;
-		QPixmap *m_iconViewInactive;
-		QPixmap *m_iconViewPressed;
-		QPixmap *m_listViewActive;
-		QPixmap *m_listViewInactive;
-		QPixmap *m_listViewPressed;
-		QPixmap *m_saveButtonEnabled;
-		QPixmap *m_saveButtonDisabled;
-		QPixmap *m_saveButtonPressed;
 
 		WaitPushUndoStack *m_undoStack;
 

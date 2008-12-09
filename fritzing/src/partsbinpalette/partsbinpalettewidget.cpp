@@ -61,7 +61,6 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_container = new QFrame(this);
 	m_container->setObjectName("partsBinContainer");
 
-	setupPixmaps();
 	setupButtons();
 	setupFooter();
 
@@ -74,15 +73,6 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
-}
-
-PartsBinPaletteWidget::~PartsBinPaletteWidget() {
-	delete m_iconViewActive;
-	delete m_iconViewInactive;
-	delete m_listViewActive;
-	delete m_listViewInactive;
-	delete m_saveButtonEnabled;
-	delete m_saveButtonDisabled;
 }
 
 QSize PartsBinPaletteWidget::sizeHint() const {
@@ -118,14 +108,18 @@ void PartsBinPaletteWidget::setupFooter() {
 	footerLayout->addWidget(rightButtons);
 }
 
-void PartsBinPaletteWidget::setView(PartsBinView *view, QPixmap *showIconPixmap, QPixmap *showListPixmap) {
+void PartsBinPaletteWidget::setView(PartsBinView *view) {
 	m_currentView = view;
 	if(m_currentView == m_iconView) {
 		m_iconView->show();
+		m_showIconViewButton->setEnabledIcon();
 		m_listView->hide();
+		m_showListViewButton->setDisabledIcon();
 	} else if(m_currentView == m_listView) {
 		m_listView->show();
+		m_showListViewButton->setEnabledIcon();
 		m_iconView->hide();
+		m_showIconViewButton->setDisabledIcon();
 	}
 
 	delete m_container->layout();
@@ -135,18 +129,15 @@ void PartsBinPaletteWidget::setView(PartsBinView *view, QPixmap *showIconPixmap,
 	lo->addWidget(m_binTitle);
 	lo->addWidget(dynamic_cast<QWidget*>(m_currentView));
 	lo->addWidget(m_footer);
-
-	m_showIconViewButton->setPixmap(*showIconPixmap);
-	m_showListViewButton->setPixmap(*showListPixmap);
 }
 
 void PartsBinPaletteWidget::toIconView() {
-	setView(m_iconView, m_iconViewActive, m_listViewInactive);
+	setView(m_iconView);
 }
 
 void PartsBinPaletteWidget::toListView() {
 	disconnect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
-	setView(m_listView, m_iconViewInactive, m_listViewActive);
+	setView(m_listView);
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 }
 
@@ -203,52 +194,40 @@ void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
 void PartsBinPaletteWidget::setSaveButtonEnabled(bool enabled) {
 	m_saveBinButton->setEnabled(enabled);
 	if(!enabled) {
-		m_saveBinButton->setPixmap(*m_saveButtonDisabled);
+		m_saveBinButton->setDisabledIcon();
 	} else {
-		m_saveBinButton->setPixmap(*m_saveButtonEnabled);
+		m_saveBinButton->setEnabledIcon();
 	}
 }
 
 void PartsBinPaletteWidget::setupButtons() {
-	m_showIconViewButton = new ImageButton(this);
+	m_showIconViewButton = new ImageButton("IconView",this);
 	m_showIconViewButton->setToolTip(tr("Show as icons"));
 	connect(m_showIconViewButton,SIGNAL(clicked()),this,SLOT(toIconView()));
 
-	m_showListViewButton = new ImageButton(this);
+	m_showListViewButton = new ImageButton("ListView",this);
 	m_showListViewButton->setToolTip(tr("Show as list"));
 	connect(m_showListViewButton,SIGNAL(clicked()),this,SLOT(toListView()));
 
-	m_removeSelected = new ImageButton(this);
-	m_removeSelected->setPixmap(QPixmap(":/resources/images/icons/partsBinDeleteEnabled_icon.png"));
+	m_removeSelected = new ImageButton("Delete",this);
 	m_removeSelected->setToolTip(tr("Remove selected part"));
+	m_removeSelected->setEnabledIcon();
 	connect(m_removeSelected,SIGNAL(clicked()),this,SLOT(removeSelected()));
 
-	m_openBinButton = new ImageButton(this);
-	m_openBinButton->setPixmap(QPixmap(":/resources/images/icons/partsBinOpenEnabled_icon.png"));
+	m_openBinButton = new ImageButton("Open",this);
 	m_openBinButton->setToolTip(tr("Open bin"));
+	m_openBinButton->setEnabledIcon();
 	connect(m_openBinButton,SIGNAL(clicked()),this,SLOT(open()));
 
-	m_saveBinButton = new ImageButton(this);
-	m_saveBinButton->setPixmap(*m_saveButtonEnabled);
+	m_saveBinButton = new ImageButton("Save",this);
 	m_saveBinButton->setToolTip(tr("Save bin"));
+	m_saveBinButton->setDisabledIcon();
 	connect(m_saveBinButton,SIGNAL(clicked()),this,SLOT(save()));
 
-	m_coreBinButton = new ImageButton(this);
-	m_coreBinButton->setPixmap(QPixmap(":/resources/images/icons/partsBinCoreEnabled_icon.png"));
+	m_coreBinButton = new ImageButton("Core",this);
 	m_coreBinButton->setToolTip(tr("Restore core bin"));
+	m_coreBinButton->setEnabledIcon();
 	connect(m_coreBinButton,SIGNAL(clicked()),this,SLOT(openCore()));
-}
-
-void PartsBinPaletteWidget::setupPixmaps() {
-	m_iconViewActive = new QPixmap(":/resources/images/icons/partsBinIconViewEnabled_icon.png");
-	m_iconViewInactive = new QPixmap(":/resources/images/icons/partsBinIconViewDisabled_icon.png");
-	m_iconViewPressed = new QPixmap(":/resources/images/icons/partsBinIconViewPressed_icon.png");
-	m_listViewActive = new QPixmap(":/resources/images/icons/partsBinListViewEnabled_icon.png");
-	m_listViewInactive = new QPixmap(":/resources/images/icons/partsBinListViewDisabled_icon.png");
-	m_listViewPressed = new QPixmap(":/resources/images/icons/partsBinListViewPressed_icon.png");
-	m_saveButtonEnabled = new QPixmap(":/resources/images/icons/partsBinSaveEnabled_icon.png");
-	m_saveButtonDisabled = new QPixmap(":/resources/images/icons/partsBinSaveDisabled_icon.png");
-	m_saveButtonPressed = new QPixmap(":/resources/images/icons/partsBinSavePressed_icon.png");
 }
 
 bool PartsBinPaletteWidget::removeSelected() {

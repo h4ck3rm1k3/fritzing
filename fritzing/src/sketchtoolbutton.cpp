@@ -72,8 +72,8 @@ QString SketchToolButton::imagePrefix() {
 	return ":/resources/images/icons/toolbar";
 }
 
-void SketchToolButton::setIconAux(const QIcon &icon) {
-	setIcon(icon);
+void SketchToolButton::setImage(const QPixmap & pixmap) {
+	setIcon(QIcon(pixmap));
 }
 
 void SketchToolButton::setupIcons(const QString &imageName) {
