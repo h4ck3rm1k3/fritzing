@@ -94,7 +94,7 @@ void MainWindow::exportDiy(QAction * action) {
 	Q_UNUSED(action);
 
 	if (!m_pcbGraphicsView->ratsAllRouted()) {
-		QMessageBox msgBox;
+		QMessageBox msgBox(this);
 		msgBox.setText("All traces have not yet been routed.");
 		msgBox.setInformativeText("Do you want to proceed anyway?");
 		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
