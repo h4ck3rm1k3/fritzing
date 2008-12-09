@@ -117,6 +117,7 @@ public:
 	qint64 chainedID();
 	void setChainedID(qint64);
 	void setCanChainMultiple(bool);
+	bool canChangeColor();
 
 public:
 	static QString moduleIDName;

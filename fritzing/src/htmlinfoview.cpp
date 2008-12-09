@@ -427,17 +427,22 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 
 QString HtmlInfoView::wireColorsSelect(Wire *wire) {
 	QString currColor = wire->colorString();
-	QString retval = QString("<script language='JavaScript'>var oldColor = '%1'</script>\n").arg(currColor);
-	retval += QString("<select onchange='setWireColor(\"%1\",%2,this.value)'>\n")
-				.arg(wire->instanceTitle())
-				.arg(wire->id());
-	foreach(QString colorName, Wire::colorNames) {
-		QString colorValue = Wire::colorTrans.value(colorName);
-		QString selected = colorValue == currColor ? " selected='selected' " : "";
-		retval += QString("\t<option value='%2' %3>%1</option>\n").arg(colorName).arg(colorValue).arg(selected);
+	if (wire->canChangeColor()) {
+		QString retval = QString("<script language='JavaScript'>var oldColor = '%1'</script>\n").arg(currColor);
+		retval += QString("<select onchange='setWireColor(\"%1\",%2,this.value)'>\n")
+					.arg(wire->instanceTitle())
+					.arg(wire->id());
+		foreach(QString colorName, Wire::colorNames) {
+			QString colorValue = Wire::colorTrans.value(colorName);
+			QString selected = colorValue == currColor ? " selected='selected' " : "";
+			retval += QString("\t<option value='%2' %3>%1</option>\n").arg(colorName).arg(colorValue).arg(selected);
+		}
+		retval += "</select>\n";
+		return retval;
 	}
-	retval += "</select>\n";
-	return retval;
+	else {
+		return currColor;
+	}
 }
 
 QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic) {

@@ -1033,3 +1033,8 @@ void Wire::setCanChainMultiple(bool can) {
 	m_canChainMultiple = can;
 }
 
+bool Wire::canChangeColor() {
+	if (getTrace() || getRatsnest()) return false;
+
+	return true;
+}

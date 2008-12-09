@@ -221,7 +221,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 			renderer = new FSvgRenderer();
 			if (!renderer->load(fn)) {
 				QMessageBox::information( NULL, QObject::tr("Fritzing"),
-						QObject::tr("The file %1 is not a Fritzing file (6).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath()));
+						QObject::tr("The file %1 is not a Fritzing file (11).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath()));
 				delete renderer;
 				return false;
 			}
