@@ -25,8 +25,6 @@ $Date$
 ********************************************************************/
 
 
-
-
 #include <QtGui>
 #include <QGraphicsScene>
 #include <QPoint>
@@ -997,6 +995,7 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 {
 	if (dragEnterEventAux(event)) {
+		setupAutoscroll(false);
 		event->acceptProposedAction();
 	}
 	else {
@@ -1070,6 +1069,8 @@ bool SketchWidget::canDropModelPart(ModelPart * modelPart) {
 }
 
 void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
+	turnOffAutoscroll();
+
 	if (m_droppingItem != NULL) {
 		m_droppingItem->setVisible(false);
 		//ItemDrag::_setPixmapVisible(true);
@@ -1081,8 +1082,7 @@ void SketchWidget::dragLeaveEvent(QDragLeaveEvent * event) {
 void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 {
     if (event->mimeData()->hasFormat("application/x-dnditemdata") && event->source() != this) {
-    	dragMoveHighlightConnector(event);
-
+    	dragMoveHighlightConnector(event->pos());
         event->acceptProposedAction();
         return;
     }
@@ -1090,16 +1090,22 @@ void SketchWidget::dragMoveEvent(QDragMoveEvent *event)
 	QGraphicsView::dragMoveEvent(event);
 }
 
-void SketchWidget::dragMoveHighlightConnector(QDragMoveEvent *event) {
+void SketchWidget::dragMoveHighlightConnector(QPoint eventPos) {
 	if (m_droppingItem == NULL) return;
-	QPointF loc = this->mapToScene(event->pos()) - m_droppingOffset;
+
+	m_globalPos = this->mapToGlobal(eventPos);
+	checkAutoscroll(m_globalPos);
+
+	QPointF loc = this->mapToScene(eventPos) - m_droppingOffset;
 	m_droppingItem->setItemPos(loc);
 	m_droppingItem->findConnectorsUnder();
+
 }
 
 
 void SketchWidget::dropEvent(QDropEvent *event)
 {
+	turnOffAutoscroll();
 	clearHoldingSelectItem();
 
 	if (m_droppingItem == NULL) return;
@@ -1252,8 +1258,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		wire->saveGeometry();
 	}
 
-	m_autoScrollX = m_autoScrollY = 0;
-	connect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
+	setupAutoscroll(true);
 
 	// do something with wires--chained, wires within, wires without
 	// don't forget about checking connections-to-be
@@ -1290,58 +1295,10 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 void SketchWidget::moveItems(QPoint globalPos)
 {
-	QRect r = rect();
+	bool result = checkAutoscroll(globalPos);
+	if (!result) return;
+
 	QPoint q = mapFromGlobal(globalPos);
-
-	if (verticalScrollBar()->isVisible()) {
-		r.setWidth(width() - verticalScrollBar()->width());
-	}
-
-	if (horizontalScrollBar()->isVisible()) {
-		r.setHeight(height() - horizontalScrollBar()->height());
-	}
-
-	if (!r.contains(q)) {
-		m_autoScrollX = m_autoScrollY = 0;
-		return;
-	}
-
-	//DebugDialog::debug(QString("move items %1").arg(QTime::currentTime().msec()) );
-
-	r.adjust(16,16,-16,-16);						// these should be set someplace
-	bool autoScroll = !r.contains(q);
-	if (autoScroll) {
-		int dx = 0, dy = 0;
-		if (q.x() > r.right()) {
-			dx = q.x() - r.right();
-		}
-		else if (q.x() < r.left()) {
-			dx = q.x() - r.left();
-		}
-		if (q.y() > r.bottom()) {
-			dy = q.y() - r.bottom();
-		}
-		else if (q.y() < r.top()) {
-			dy = q.y() - r.top();
-		}
-
-		int div = 3;
-		if (dx != 0) {
-			m_autoScrollX = (dx + ((dx > 0) ? div : -div)) / (div + 1);		// ((m_autoScrollX > 0) ? 1 : -1)
-		}
-		if (dy != 0) {
-			m_autoScrollY = (dy + ((dy > 0) ? div : -div)) / (div + 1);		// ((m_autoScrollY > 0) ? 1 : -1)
-		}
-
-		if (!m_autoScrollTimer.isActive()) {
-			m_autoScrollTimer.start(10);
-		}
-
-	}
-	else {
-		m_autoScrollX = m_autoScrollY = 0;
-	}
-
 	QPointF scenePos = mapToScene(q);
 
 /*
@@ -1385,9 +1342,7 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
-	m_autoScrollTimer.stop();
-	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
-	//restoreDisconnectors();
+	turnOffAutoscroll();
 	QGraphicsView::mouseReleaseEvent(event);
 
 	if (m_connectorDragWire != NULL) {
@@ -3356,9 +3311,10 @@ void SketchWidget::clearDragWireTempCommand()
 
 void SketchWidget::autoScrollTimeout()
 {
+	DebugDialog::debug(QString("scrolling dx:%1 dy%2").arg(m_autoScrollX).arg(m_autoScrollY) );
+
 	if (m_autoScrollX == 0 && m_autoScrollY == 0 ) return;
 
-	//DebugDialog::debug(QString("scrolling dx:%1 dy%2").arg(m_autoScrollX).arg(m_autoScrollY) );
 
 	if (m_autoScrollX != 0) {
 		QScrollBar * h = horizontalScrollBar();
@@ -3368,7 +3324,18 @@ void SketchWidget::autoScrollTimeout()
 		QScrollBar * v = verticalScrollBar();
 		v->setValue(m_autoScrollY + v->value());
 	}
+}
 
+void SketchWidget::dragAutoScrollTimeout()
+{
+	autoScrollTimeout();
+	dragMoveHighlightConnector(mapFromGlobal(m_globalPos));
+}
+
+
+void SketchWidget::moveAutoScrollTimeout()
+{
+	autoScrollTimeout();
 	moveItems(m_globalPos);
 }
 
@@ -3450,4 +3417,78 @@ void SketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & fro
 	Q_UNUSED(wireID);
 	Q_UNUSED(from);
 	Q_UNUSED(to);
+}
+
+void SketchWidget::setupAutoscroll(bool moving) {
+	m_autoScrollX = m_autoScrollY = 0;
+	connect(&m_autoScrollTimer, SIGNAL(timeout()), this, 
+		moving ? SLOT(moveAutoScrollTimeout()) : SLOT(dragAutoScrollTimeout()));
+	DebugDialog::debug("set up autoscroll");
+}
+
+void SketchWidget::turnOffAutoscroll() {
+	m_autoScrollTimer.stop();
+	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
+	DebugDialog::debug("turn off autoscroll");
+
+}
+
+bool SketchWidget::checkAutoscroll(QPoint globalPos) 
+{
+	QRect r = rect();
+	QPoint q = mapFromGlobal(globalPos);
+
+	if (verticalScrollBar()->isVisible()) {
+		r.setWidth(width() - verticalScrollBar()->width());
+	}
+
+	if (horizontalScrollBar()->isVisible()) {
+		r.setHeight(height() - horizontalScrollBar()->height());
+	}
+
+	if (!r.contains(q)) {
+		m_autoScrollX = m_autoScrollY = 0;
+		return false;
+	}
+
+	DebugDialog::debug(QString("check autoscroll %1, %2 %3").arg(QTime::currentTime().msec())
+		.arg(q.x()).arg(q.y()) );
+
+	r.adjust(16,16,-16,-16);						// these should be set someplace
+	bool autoScroll = !r.contains(q);
+	if (autoScroll) {
+		int dx = 0, dy = 0;
+		if (q.x() > r.right()) {
+			dx = q.x() - r.right();
+		}
+		else if (q.x() < r.left()) {
+			dx = q.x() - r.left();
+		}
+		if (q.y() > r.bottom()) {
+			dy = q.y() - r.bottom();
+		}
+		else if (q.y() < r.top()) {
+			dy = q.y() - r.top();
+		}
+
+		int div = 3;
+		if (dx != 0) {
+			m_autoScrollX = (dx + ((dx > 0) ? div : -div)) / (div + 1);		// ((m_autoScrollX > 0) ? 1 : -1)
+		}
+		if (dy != 0) {
+			m_autoScrollY = (dy + ((dy > 0) ? div : -div)) / (div + 1);		// ((m_autoScrollY > 0) ? 1 : -1)
+		}
+
+		if (!m_autoScrollTimer.isActive()) {
+			DebugDialog::debug("starting autoscroll timer");
+			m_autoScrollTimer.start(10);
+		}
+
+	}
+	else {
+		m_autoScrollX = m_autoScrollY = 0;
+	}
+
+	DebugDialog::debug(QString("autoscroll %1 %2").arg(m_autoScrollX).arg(m_autoScrollY) );
+	return true;
 }

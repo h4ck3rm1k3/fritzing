@@ -193,7 +193,7 @@ protected:
 	ViewLayer::ViewLayerID getPartViewLayerID();
 	ViewLayer::ViewLayerID getRulerViewLayerID();
 	ViewLayer::ViewLayerID getConnectorViewLayerID();
-	void dragMoveHighlightConnector(QDragMoveEvent *event);
+	void dragMoveHighlightConnector(QPoint eventPos);
 
 	void addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerID);
 	ConnectorItem * findConnectorItem(ItemBase * item, const QString & connectorID, bool seekLayerKin);
@@ -251,6 +251,9 @@ protected:
 	virtual bool canChainWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	virtual void modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to);
+	void setupAutoscroll(bool moving);
+	void turnOffAutoscroll();
+	bool checkAutoscroll(QPoint globalPos);
 
 
 protected:
@@ -313,6 +316,8 @@ protected slots:
 	void updateInfoViewSlot();
 	void spaceBarIsPressedSlot(bool);
 	void autoScrollTimeout();
+	void dragAutoScrollTimeout();
+	void moveAutoScrollTimeout();
 	void setChainedWireIDSlot(qint64 wireID, qint64 chainedID);
 
 public slots:
