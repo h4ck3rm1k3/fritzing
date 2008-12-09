@@ -52,6 +52,7 @@ protected:
 	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	bool bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems); 
+	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
 
 };
 

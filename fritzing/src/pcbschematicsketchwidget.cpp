@@ -275,7 +275,7 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 	}
 
 	foreach (Wire * wire, deleteWires) {
-		deleteItem(wire, false, false);
+		deleteItem(wire, true, false);
 	}
 }
 
@@ -339,3 +339,31 @@ bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * fr
 	Q_UNUSED(dragWire);
 	return ((from != NULL) && (to != NULL));
 }
+
+Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest) {
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	QPointF fromPos = source->sceneAdjustedTerminalPoint();
+	viewGeometry.setLoc(fromPos);
+	QPointF toPos = dest->sceneAdjustedTerminalPoint();
+	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
+	viewGeometry.setLine(line);
+	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);
+
+	/*
+	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
+	 .arg(newID)
+	 .arg(fromPos.x()).arg(fromPos.y())
+	 .arg(toPos.x()).arg(toPos.y())
+	 .arg(source->attachedToTitle()).arg(source->connectorStuffID())
+	 .arg(dest->attachedToTitle()).arg(dest->connectorStuffID())
+	 .arg(m_viewIdentifier)
+	 );
+	 */
+
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, NULL);
+	//ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
+	tempConnectWire(newItemBase, source, dest);
+	return  dynamic_cast<Wire *>(newItemBase);
+}
+

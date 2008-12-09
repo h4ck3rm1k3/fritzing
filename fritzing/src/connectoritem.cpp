@@ -423,13 +423,13 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	
 	writer.writeStartElement("connects");
 	foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
-		if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-			Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
-			if (wire->getRatsnest()) {
+		//if (connectorItem->attachedToItemType() == ModelPart::Wire) {
+			//Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
+			//if (wire->getRatsnest()) {
 				// for now, don't save ratsnest connections
-				continue;
-			}
-		}
+				//continue;
+			//}
+		//}
 		writer.writeStartElement("connect");
 		writer.writeAttribute("connectorId", connectorItem->connectorStuffID());
 		writer.writeAttribute("modelIndex", QString::number(connectorItem->connector()->modelIndex()));

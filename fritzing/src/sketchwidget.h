@@ -236,7 +236,6 @@ protected:
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
 	virtual void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
 	virtual void checkAutorouted();
-	class Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);

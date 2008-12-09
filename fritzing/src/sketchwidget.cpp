@@ -171,7 +171,7 @@ void SketchWidget::loadFromModel() {
 	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
 
 	// first make the parts
-	QList<ModelPart *> badModelParts;
+	//QList<ModelPart *> badModelParts;
 	foreach (QObject * object, root->children()) {
 		ModelPart* mp = qobject_cast<ModelPart *>(object);
 		if (mp == NULL) continue;
@@ -190,11 +190,12 @@ void SketchWidget::loadFromModel() {
 
 		ViewGeometry viewGeometry(geometry);
 
+		// removed hack 2008/12/09 since we're saving ratsnests again
 		// hack 2008/11/25 to deal with earlier versions of saved files
-		if (viewGeometry.getVirtual()) {
-			badModelParts.append(mp);
-			continue;
-		}
+		//if (viewGeometry.getVirtual()) {
+			//badModelParts.append(mp);
+			//continue;
+		//}
 
 		// use a function of the model index to ensure the same parts have the same ID across views
 		ItemBase * item = addItemAux(mp, viewGeometry, ItemBase::getNextID(mp->modelIndex()), NULL, true);
@@ -218,9 +219,9 @@ void SketchWidget::loadFromModel() {
 		}
 	}
 
-	foreach (ModelPart * mp, badModelParts) {
-		m_sketchModel->removeModelPart(mp);
-	}
+	//foreach (ModelPart * mp, badModelParts) {
+		//m_sketchModel->removeModelPart(mp);
+	//}
 
 
 	foreach (ItemBase * itemBase, itemDoms.keys()) {
@@ -238,8 +239,8 @@ void SketchWidget::loadFromModel() {
 	updateRatsnestStatus();
 
 	m_dealWithRatsNestEnabled = true;
-	redrawRatsnest(newItems);
-	checkAutorouted();
+	//redrawRatsnest(newItems);
+	//checkAutorouted();
 	this->scene()->clearSelection();
 	cleanUpWires(false);
 	m_ignoreSelectionChangeEvents = false;
@@ -303,7 +304,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			}
 			else {
 				wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
-				if (!wire->hasAnyFlag(ViewGeometry::JumperFlag)) {
+				if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
 					wire->setNormal(true);
 					wire->setAutoroutable(false);
 				}
@@ -2548,33 +2549,6 @@ void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, Connector
 	Q_UNUSED(toConnectorItem);
 	Q_UNUSED(connect);
 }
-
-Wire * SketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest) {
-	long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	QPointF fromPos = source->sceneAdjustedTerminalPoint();
-	viewGeometry.setLoc(fromPos);
-	QPointF toPos = dest->sceneAdjustedTerminalPoint();
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-	viewGeometry.setLine(line);
-	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);
-
-	/*
-	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
-	 .arg(newID)
-	 .arg(fromPos.x()).arg(fromPos.y())
-	 .arg(toPos.x()).arg(toPos.y())
-	 .arg(source->attachedToTitle()).arg(source->connectorStuffID())
-	 .arg(dest->attachedToTitle()).arg(dest->connectorStuffID())
-	 .arg(m_viewIdentifier)
-	 );
-	 */
-
-	ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
-	tempConnectWire(newItemBase, source, dest);
-	return  dynamic_cast<Wire *>(newItemBase);
-}
-
 
 void SketchWidget::tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to) {
 	Wire * wire = dynamic_cast<Wire *>(itemBase);
