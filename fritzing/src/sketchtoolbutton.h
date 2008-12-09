@@ -32,7 +32,9 @@ $Date$
 
 #include <QToolButton>
 
-class SketchToolButton : public QToolButton {
+#include "abstractstatesbutton.h"
+
+class SketchToolButton : public QToolButton, public AbstractStatesButton {
 	Q_OBJECT
 	public:
 		SketchToolButton(const QString &imageName, QWidget *parent, QAction* defaultAction);
@@ -43,16 +45,19 @@ class SketchToolButton : public QToolButton {
 	signals:
 		void menuUpdateNeeded();
 
-	protected:
-		void actionEvent(QActionEvent *event);
-		//void mousePressEvent(QMouseEvent *event);
-		void changeEvent(QEvent *event);
-		//void paintEvent(QPaintEvent *event);
+	protected slots:
+		void setEnabledIconAux();
 
+	protected:
+		QString imagePrefix();
+		void setIconAux(const QIcon &icon);
 		void setupIcons(const QString &imageName);
 
-		QIcon m_enabledIcon;
-		QIcon m_disabledIcon;
+		void actionEvent(QActionEvent *event);
+		void mousePressEvent(QMouseEvent *event);
+		void mouseReleaseEvent(QMouseEvent *event);
+		void changeEvent(QEvent *event);
+		//void paintEvent(QPaintEvent *event);
 };
 
 #endif /* SKETCHTOOLBUTTON_H_ */

@@ -72,35 +72,39 @@ $Date$
     <file>resources/parts/svg/core/breadboard/ruler.svg</file>
     <file>resources/parts/svg/core/breadboard/breadboard.svg</file>
     <file>resources/parts/svg/core/breadboard/wire.svg</file>
-    <file>resources/images/icons/partsBinOpen_icon.png</file>
+    <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
+    <file>resources/images/icons/partsBinOpenPressed_icon.png</file>
     <file>resources/images/icons/partsBinSaveEnabled_icon.png</file>
     <file>resources/images/icons/partsBinSaveDisabled_icon.png</file>
-    <file>resources/images/icons/partsBinCore_icon.png</file>
-    <file>resources/images/icons/partsBinDelete_icon.png</file>
-    <file>resources/images/icons/partsBinIconViewActive_icon.png</file>
-    <file>resources/images/icons/partsBinIconViewInactive_icon.png</file>
-    <file>resources/images/icons/partsBinListViewActive_icon.png</file>
-    <file>resources/images/icons/partsBinListViewInactive_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarExport_gbr_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarExport_gbx_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarExport_jpeg_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarExport_pdf_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarExport_png_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarExport_ps_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarOrder_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarAutorouteEnabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarAutorouteDisabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarAutoroutePressed_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarDiyEnabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarDiyDisabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarDiyPressed_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarRotateEnabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarRotateDisabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarRotatePressed_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarFlipEnabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarFlipDisabled_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbarFlipPressed_icon.png</file>
-    <file>resources/images/toolbar_icons/toolbar_separator.png</file>
+    <file>resources/images/icons/partsBinCoreEnabled_icon.png</file>
+    <file>resources/images/icons/partsBinDeleteEnabled_icon.png</file>
+    <file>resources/images/icons/partsBinDeletePressed_icon.png</file>
+    <file>resources/images/icons/partsBinIconViewEnabled_icon.png</file>
+    <file>resources/images/icons/partsBinIconViewDisabled_icon.png</file>
+    <file>resources/images/icons/partsBinIconViewPressed_icon.png</file>
+    <file>resources/images/icons/partsBinListViewEnabled_icon.png</file>
+    <file>resources/images/icons/partsBinListViewDisabled_icon.png</file>
+    <file>resources/images/icons/partsBinListViewPressed_icon.png</file>
+    <file>resources/images/icons/toolbarExport_gbr_icon.png</file>
+    <file>resources/images/icons/toolbarExport_gbx_icon.png</file>
+    <file>resources/images/icons/toolbarExport_jpeg_icon.png</file>
+    <file>resources/images/icons/toolbarExport_pdf_icon.png</file>
+    <file>resources/images/icons/toolbarExport_png_icon.png</file>
+    <file>resources/images/icons/toolbarExport_ps_icon.png</file>
+    <file>resources/images/icons/toolbarOrder_icon.png</file>
+    <file>resources/images/icons/toolbarAutorouteEnabled_icon.png</file>
+    <file>resources/images/icons/toolbarAutorouteDisabled_icon.png</file>
+    <file>resources/images/icons/toolbarAutoroutePressed_icon.png</file>
+    <file>resources/images/icons/toolbarDiyEnabled_icon.png</file>
+    <file>resources/images/icons/toolbarDiyDisabled_icon.png</file>
+    <file>resources/images/icons/toolbarDiyPressed_icon.png</file>
+    <file>resources/images/icons/toolbarRotateEnabled_icon.png</file>
+    <file>resources/images/icons/toolbarRotateDisabled_icon.png</file>
+    <file>resources/images/icons/toolbarRotatePressed_icon.png</file>
+    <file>resources/images/icons/toolbarFlipEnabled_icon.png</file>
+    <file>resources/images/icons/toolbarFlipDisabled_icon.png</file>
+    <file>resources/images/icons/toolbarFlipPressed_icon.png</file>
+    <file>resources/images/icons/toolbar_separator.png</file>
     <file>resources/styles/partseditor.qss</file>
     <file>resources/styles/fritzing.qss</file>
     <file>resources/styles/infoview.css</file>

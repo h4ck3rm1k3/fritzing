@@ -142,10 +142,13 @@ class PartsBinPaletteWidget : public FDockWidget {
 
 		QPixmap *m_iconViewActive;
 		QPixmap *m_iconViewInactive;
+		QPixmap *m_iconViewPressed;
 		QPixmap *m_listViewActive;
 		QPixmap *m_listViewInactive;
+		QPixmap *m_listViewPressed;
 		QPixmap *m_saveButtonEnabled;
 		QPixmap *m_saveButtonDisabled;
+		QPixmap *m_saveButtonPressed;
 
 		WaitPushUndoStack *m_undoStack;
 

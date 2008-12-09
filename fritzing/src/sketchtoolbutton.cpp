@@ -60,19 +60,27 @@ SketchToolButton::SketchToolButton(const QString &imageName, QWidget *parent, QL
 		}
 	}
 	setMenu(menu);
+	connect(menu,SIGNAL(aboutToHide()),this,SLOT(setEnabledIconAux()));
 	setPopupMode(QToolButton::MenuButtonPopup);
 }
 
-#define IMAGE_PREFIX ":/resources/images/toolbar_icons/toolbar"
-#define IMAGE_SUBFIX "_icon.png"
+void SketchToolButton::setEnabledIconAux() {
+	setEnabledIcon();
+}
+
+QString SketchToolButton::imagePrefix() {
+	return ":/resources/images/icons/toolbar";
+}
+
+void SketchToolButton::setIconAux(const QIcon &icon) {
+	setIcon(icon);
+}
+
 void SketchToolButton::setupIcons(const QString &imageName) {
 	setIconSize(QSize(32,32));
 	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-	m_enabledIcon = QIcon(IMAGE_PREFIX+imageName+"Enabled"+IMAGE_SUBFIX);
-	m_disabledIcon = QIcon(IMAGE_PREFIX+imageName+"Disabled"+IMAGE_SUBFIX);
+	AbstractStatesButton::setupIcons(imageName);
 }
-#undef IMAGE_SUBFIX
-#undef IMAGE_PREFIX
 
 void SketchToolButton::updateEnabledState() {
 	bool enabled = false;
@@ -97,12 +105,22 @@ void SketchToolButton::actionEvent(QActionEvent *event) {
 	}
 }
 
+void SketchToolButton::mousePressEvent(QMouseEvent *event) {
+	setPressedIcon();
+	QToolButton::mousePressEvent(event);
+}
+
+void SketchToolButton::mouseReleaseEvent(QMouseEvent *event) {
+	setEnabledIcon();
+	QToolButton::mouseReleaseEvent(event);
+}
+
 void SketchToolButton::changeEvent(QEvent *event) {
 	if(event->type() == QEvent::EnabledChange) {
 		if(this->isEnabled()) {
-			setIcon(m_enabledIcon);
+			setEnabledIcon();
 		} else {
-			setIcon(m_disabledIcon);
+			setDisabledIcon();
 		}
 	}
 	QToolButton::changeEvent(event);
@@ -111,10 +129,4 @@ void SketchToolButton::changeEvent(QEvent *event) {
 /*void SketchToolButton::paintEvent(QPaintEvent *event) {
 	QPixmap pixmap = m_disabledIcon.pixmap(iconSize());
 	paintEngine()->painter()->drawPixmap(pos(), pixmap);
-}*/
-
-/*void SketchToolButton::mousePressEvent(QMouseEvent *event) {
-	emit menuUpdateNeeded();
-	QToolButton::mousePressEvent(event);
-
 }*/
