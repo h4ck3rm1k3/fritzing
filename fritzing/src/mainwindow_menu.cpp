@@ -465,18 +465,23 @@ void MainWindow::load() {
     } else if(fileName.endsWith(FritzingExtension+"z")) {
     	mw->loadBundledSketch(fileName);
     }
-    mw->move(x()+CascadeFactor,y()+CascadeFactor);
-	mw->show();
 
-	closeIfEmptySketch();
+	closeIfEmptySketch(mw);
 }
 
-void MainWindow::closeIfEmptySketch() {
+void MainWindow::closeIfEmptySketch(MainWindow* mw) {
+	int cascFactorX; int cascFactorY;
 	// close empty sketch window if user opens from a file
-	if (isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty())
-	{
-		QTimer::singleShot(10, this, SLOT(close()) );
+	if (isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty()) {
+		QTimer::singleShot(0, this, SLOT(close()) );
+		cascFactorX = 0;
+		cascFactorY = 0;
+	} else {
+		cascFactorX = CascadeFactorX;
+		cascFactorY = CascadeFactorY;
 	}
+	mw->move(x()+cascFactorX,y()+cascFactorY);
+	mw->show();
 }
 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
@@ -1107,7 +1112,7 @@ void MainWindow::updateWireMenu() {
 	m_createJumperAct->setEnabled(enableAll && createJumperOK);
 	m_deleteAct->setEnabled(enableAll && deleteOK);
 	m_excludeFromAutorouteAct->setEnabled(enableAll && excludeOK);
-	
+
 }
 
 void MainWindow::updatePartMenu() {
@@ -1446,7 +1451,7 @@ void MainWindow::openInPartsEditor() {
 
 void MainWindow::createNewSketch() {
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
-    mw->move(x()+CascadeFactor,y()+CascadeFactor);
+    mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
     mw->show();
 
     QSettings settings("Fritzing","Fritzing");
@@ -1607,7 +1612,7 @@ void MainWindow::openRecentOrExampleFile() {
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
 		mw->load(action->data().toString(),!readOnly,!readOnly);
-		mw->move(x()+CascadeFactor,y()+CascadeFactor);
+		mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
 		mw->show();
 	}
 }

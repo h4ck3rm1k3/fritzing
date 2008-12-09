@@ -234,7 +234,7 @@ protected:
 	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 	void copyToPartsFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 
-	void closeIfEmptySketch();
+	void closeIfEmptySketch(MainWindow* mw);
 	bool whatToDoWithAlienFiles();
 	void backupExistingFileIfExists(const QString &destFilePath);
 	void recoverBackupedFiles();
@@ -449,7 +449,8 @@ protected:
 	static const QString UntitledSketchName;
 	static int UntitledSketchIndex;
 	static qreal m_printerScale;
-	static int CascadeFactor;
+	static int CascadeFactorX;
+	static int CascadeFactorY;
 };
 
 #endif
