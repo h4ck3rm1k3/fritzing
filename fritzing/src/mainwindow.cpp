@@ -52,7 +52,7 @@ $Date$
 #include "htmlinfoview.h"
 #include "waitpushundostack.h"
 #include "fapplication.h"
-#include "layerAttributes.h"
+#include "layerattributes.h"
 
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
@@ -375,7 +375,7 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QList<ItemBase *> &, QUndoCommand *)), 
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QList<ItemBase *> &, QUndoCommand *)),
 						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QList<ItemBase *> &, QUndoCommand *)),
 						Qt::DirectConnection);
 
