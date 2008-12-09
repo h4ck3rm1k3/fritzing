@@ -548,6 +548,11 @@ void MainWindow::about()
 
 void MainWindow::createActions()
 {
+	m_raiseWindowAct = new QAction(m_fileName, this);
+	m_raiseWindowAct->setCheckable(true);
+	connect( m_raiseWindowAct, SIGNAL(triggered()), this, SLOT(raiseAndActivate()));
+	updateRaiseWindowAction();
+
     createFileMenuActions();
     createEditMenuActions();
     createPartMenuActions();
@@ -1037,6 +1042,7 @@ void MainWindow::createMenus()
 	m_windowMenu->addSeparator();
 	//m_windowMenu->addAction(m_toggleToolbarAct);
 	updateWindowMenu();
+	connect(m_windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
 	m_traceMenu = menuBar()->addMenu(tr("&Trace"));
 	m_traceMenu->addAction(m_autorouteAct);
@@ -1523,6 +1529,14 @@ void MainWindow::toggleDebuggerOutput(bool toggle) {
 
 void MainWindow::updateWindowMenu() {
 	m_toggleDebuggerOutputAct->setChecked(DebugDialog::visible());
+	foreach (QWidget * widget, QApplication::topLevelWidgets()) {
+		MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
+		if (mainWindow == NULL) continue;
+
+		QAction *action = mainWindow->raiseWindowAction();
+		action->setChecked(action == m_raiseWindowAct);
+		m_windowMenu->addAction(action);
+	}
 }
 
 void MainWindow::pageSetup() {

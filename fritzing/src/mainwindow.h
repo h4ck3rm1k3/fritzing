@@ -69,6 +69,7 @@ public:
     void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void doOnce();
 	void notClosableForAWhile();
+	QAction *raiseWindowAction();
 
 public:
 	static void initExportConstants();
@@ -179,6 +180,9 @@ protected slots:
 	void applyReadOnlyChange(bool isReadOnly);
 	void currentNavigatorChanged(MiniViewContainer *);
 
+	void raiseAndActivate();
+	void activateWindowAux();
+
 protected:
 	void initSketchWidget(SketchWidget *);
 
@@ -258,6 +262,8 @@ protected:
 	SketchAreaWidget *currentSketchArea();
 	const QString fritzingTitle();
 
+	void updateRaiseWindowAction();
+
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
 	static qreal getSvgWidthInInches(QFile & file);
@@ -307,6 +313,8 @@ protected:
 
     //QToolBar *m_fileToolBar;
     //QToolBar *m_editToolBar;
+
+    QAction *m_raiseWindowAct;
 
     // Fritzing Menu
     QMenu *m_fritzingMenu;

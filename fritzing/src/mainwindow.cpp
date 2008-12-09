@@ -437,6 +437,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent) {
 	m_fileName = fileName;
+
+	updateRaiseWindowAction();
 	setTitle();
 
 	if(addToRecent) {
@@ -853,7 +855,7 @@ void MainWindow::createDockWindows()
 
     m_windowMenu->addSeparator();
     m_windowMenu->addAction(m_toggleDebuggerOutputAct);
-    connect(m_windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
+    m_windowMenu->addSeparator();
 }
 
 FDockWidget * MainWindow::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
@@ -1317,4 +1319,39 @@ const QString MainWindow::fritzingTitle() {
 
 	QString fritzing = FritzingWindow::fritzingTitle();
 	return tr("%1 - [%2]").arg(fritzing).arg(m_currentWidget->viewName());
+}
+
+QAction *MainWindow::raiseWindowAction() {
+	return m_raiseWindowAct;
+}
+
+void MainWindow::raiseAndActivate() {
+	if(isMinimized()) {
+		showNormal();
+	}
+	raise();
+	QTimer *timer = new QTimer(this);
+	timer->setSingleShot(true);
+	connect(timer, SIGNAL(timeout()), this, SLOT(activateWindowAux()));
+	timer->start(20);
+}
+
+void MainWindow::activateWindowAux() {
+	activateWindow();
+}
+
+void MainWindow::updateRaiseWindowAction() {
+	QString actionText;
+	QFileInfo fileInfo(m_fileName);
+	if(fileInfo.exists()) {
+		int lastSlashIdx = m_fileName.lastIndexOf("/");
+		int beforeLastSlashIdx = m_fileName.left(lastSlashIdx).lastIndexOf("/");
+		actionText = beforeLastSlashIdx > -1 && lastSlashIdx > -1 ? "..." : "";
+		actionText += m_fileName.right(m_fileName.size()-beforeLastSlashIdx-1);
+	} else {
+		actionText = m_fileName;
+	}
+	m_raiseWindowAct->setText(actionText);
+	m_raiseWindowAct->setToolTip(m_fileName);
+	m_raiseWindowAct->setStatusTip("raise \""+m_fileName+"\" window");
 }
