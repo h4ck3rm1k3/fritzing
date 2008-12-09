@@ -356,6 +356,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
 	QPixmap *pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
 	QPixmap *pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
+	QPixmap *pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 
 	// TODO (jrc): calling setUpImage here is a hack, best to do it somewhere else
 	if (pixmap2 == NULL) {
@@ -363,7 +364,6 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		PaletteItemBase::setUpImage(modelPart, ItemBase::SchematicView, ViewLayer::Schematic, layerAttributes);
 		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
 	}
-	QPixmap *pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 	if (pixmap3 == NULL) {
 		LayerAttributes layerAttributes;
 		PaletteItemBase::setUpImage(modelPart, ItemBase::PCBView, ViewLayer::Copper0, layerAttributes);
