@@ -550,6 +550,12 @@ bool ItemBase::sticky() {
 
 void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
 	if (stickem) {
+		if (!m_sticky) {
+			foreach (ItemBase * oldStuckTo, m_stickyList.keys()) {
+				oldStuckTo->addSticky(this, false);
+			}
+			m_stickyList.clear();
+		}
 		m_stickyList.insert(sticky, QPointF());
 	}
 	else {
