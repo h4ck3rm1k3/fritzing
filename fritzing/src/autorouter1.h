@@ -60,6 +60,7 @@ protected:
 	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint);
 	void cleanUp();
 	void updateRatsnest(bool routed);
+	void drawJumper(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires);
 
 public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);

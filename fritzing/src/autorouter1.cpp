@@ -193,6 +193,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	qSort(edges.begin(), edges.end(), edgeGreaterThan);
 
 	int edgesDone = 0;
+	int jumperCount = 0;
 	foreach (Edge * edge, edges) {
 		/*
 		DebugDialog::debug(QString("edge from %1 %2 to %3 %4, %5")
@@ -221,10 +222,10 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 			// TODO:  if we're stuck on two boards, use the union as the constraint?
 		}
 
-		int jumperCount = 0;
 		QList<Wire *> wires;
 		if (partForBounds == NULL) {
-			jumperCount += drawTrace(edge->from, edge->to, QPolygonF(), wires);
+			drawJumper(edge->from, edge->to, wires);
+			jumperCount++;
 		}
 		else {
 			QRectF boundingRect = partForBounds->boundingRect();
@@ -478,38 +479,44 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		}
 	}
 	else {
-		long newID = ItemBase::getNextID();
-		ViewGeometry viewGeometry;
-		viewGeometry.setLoc(fromPos);
-		QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-		viewGeometry.setLine(line);
-		viewGeometry.setJumper(true);
-		viewGeometry.setAutoroutable(true);
-
-		ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
-													BaseCommand::SingleView, viewGeometry, newID, NULL);
-		if (jumper == NULL) {
-			// we're in trouble
-			return 0;
-		}
-
-		Wire * jumperWire = dynamic_cast<Wire *>(jumper);
-		jumperWire->setColorString("jumper", 1.0);
-		jumperWire->setWidth(3);
-		jumperWire->setSelected(false);
-
-		from->tempConnectTo(jumperWire->connector0());
-		jumperWire->connector0()->tempConnectTo(from);
-		to->tempConnectTo(jumperWire->connector1());
-		jumperWire->connector1()->tempConnectTo(to);
-
-		wires.append(jumperWire);
+		drawJumper(from, to, wires);
 
 		return 1;
 	}
 
 	return 0;
 }
+
+ void Autorouter1::drawJumper(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires) {
+	QPointF fromPos = from->sceneAdjustedTerminalPoint();
+	QPointF toPos = to->sceneAdjustedTerminalPoint();
+ 	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(fromPos);
+	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
+	viewGeometry.setLine(line);
+	viewGeometry.setJumper(true);
+	viewGeometry.setAutoroutable(true);
+
+	ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
+												BaseCommand::SingleView, viewGeometry, newID, NULL);
+	if (jumper == NULL) {
+		// we're in trouble
+		return;
+	}
+
+	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
+	jumperWire->setColorString("jumper", 1.0);
+	jumperWire->setWidth(3);
+	jumperWire->setSelected(false);
+
+	from->tempConnectTo(jumperWire->connector0());
+	jumperWire->connector0()->tempConnectTo(from);
+	to->tempConnectTo(jumperWire->connector1());
+	jumperWire->connector1()->tempConnectTo(to);
+
+	wires.append(jumperWire);
+ }
 
 bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly)
 {

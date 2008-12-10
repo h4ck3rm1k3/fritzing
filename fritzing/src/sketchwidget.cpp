@@ -503,7 +503,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	foreach (QGraphicsItem * sitem, sitems) {
 		if (!canDeleteItem(sitem)) continue;
 
-		deletedItems.append(dynamic_cast<ItemBase *>(sitem));
+		deletedItems.append(dynamic_cast<ItemBase *>(sitem)->layerKinChief());
 	}
 
 	if (deletedItems.count() <= 0) {

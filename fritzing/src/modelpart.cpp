@@ -24,8 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
 #include "modelpart.h"
 #include "debugdialog.h"
 #include "connectorstuff.h"
