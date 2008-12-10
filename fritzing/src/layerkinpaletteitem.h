@@ -41,6 +41,7 @@ public:
 	ItemBase * layerKinChief();
 	bool ok();
 	void setHidden(bool hidden);
+	void clearModelPart();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

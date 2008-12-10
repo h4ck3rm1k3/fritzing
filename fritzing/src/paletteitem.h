@@ -67,6 +67,7 @@ public:
 	void setHidden(bool hidden);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
+	void clearModelPart();
 
 
 protected:

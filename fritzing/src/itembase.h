@@ -129,6 +129,7 @@ public:
 	void setCanFlipHorizontal(bool);
 	bool canFlipVertical();
 	void setCanFlipVertical(bool);
+	virtual void clearModelPart();
 
 public:
 	virtual bool stickyEnabled(ItemBase * stickTo);

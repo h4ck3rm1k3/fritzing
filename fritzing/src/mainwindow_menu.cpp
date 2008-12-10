@@ -1257,15 +1257,13 @@ void MainWindow::updateEditMenu() {
 		foreach (QGraphicsItem * item, items) {
 			if (m_currentWidget->canDeleteItem(item)) {
 				deleteActsEnabled = true;
-				break;
 			}
 			if (m_currentWidget->canCopyItem(item)) {
 				copyActsEnabled = true;
-				break;
 			}
 		}
 
-		//DebugDialog::debug(tr("enable cut/copy/duplicate/delete %1").arg(actsEnabled));
+		DebugDialog::debug(tr("enable cut/copy/duplicate/delete %1 %2").arg(copyActsEnabled).arg(deleteActsEnabled));
 		m_deleteAct->setEnabled(deleteActsEnabled);
 		m_cutAct->setEnabled(deleteActsEnabled && copyActsEnabled);
 		m_copyAct->setEnabled(copyActsEnabled);

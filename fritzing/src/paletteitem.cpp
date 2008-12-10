@@ -368,3 +368,10 @@ void PaletteItem::figureHover() {
 		}
 	}
 }
+
+void PaletteItem::clearModelPart() {
+	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+		lkpi->setModelPart(NULL);
+	}
+	ItemBase::clearModelPart();
+}

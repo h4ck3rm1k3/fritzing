@@ -92,3 +92,8 @@ void LayerKinPaletteItem::setHidden(bool hide) {
 
 void LayerKinPaletteItem::figureHover() {
 }
+
+
+void LayerKinPaletteItem::clearModelPart() {
+	m_layerKinChief->clearModelPart();
+}

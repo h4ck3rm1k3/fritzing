@@ -1563,7 +1563,7 @@ void SketchWidget::scene_selectionChanged() {
 		return;
 	}
 
-	DebugDialog::debug("selection changed");
+	//DebugDialog::debug("selection changed");
 	// TODO: this can be dangerous if an item is on m_lastSelected and the item is deleted without being deselected first.
 
 	// hack to make up for missing selection state updates
@@ -3425,8 +3425,7 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 		return false;
 	}
 
-	DebugDialog::debug(QString("check autoscroll %1, %2 %3").arg(QTime::currentTime().msec())
-		.arg(q.x()).arg(q.y()) );
+	//DebugDialog::debug(QString("check autoscroll %1, %2 %3").arg(QTime::currentTime().msec()).arg(q.x()).arg(q.y()) );
 
 	r.adjust(16,16,-16,-16);						// these should be set someplace
 	bool autoScroll = !r.contains(q);
@@ -3454,7 +3453,7 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 		}
 
 		if (!m_autoScrollTimer.isActive()) {
-			DebugDialog::debug("starting autoscroll timer");
+			//DebugDialog::debug("starting autoscroll timer");
 			m_autoScrollTimer.start(10);
 		}
 
@@ -3463,6 +3462,6 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 		m_autoScrollX = m_autoScrollY = 0;
 	}
 
-	DebugDialog::debug(QString("autoscroll %1 %2").arg(m_autoScrollX).arg(m_autoScrollY) );
+	//DebugDialog::debug(QString("autoscroll %1 %2").arg(m_autoScrollX).arg(m_autoScrollY) );
 	return true;
 }

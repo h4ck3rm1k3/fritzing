@@ -68,7 +68,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 
 ModelPart::~ModelPart() {
 	foreach (ItemBase * itemBase, m_viewItems) {
-		itemBase->setModelPart(NULL);
+		itemBase->clearModelPart();
 	}
 }
 

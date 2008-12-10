@@ -760,3 +760,7 @@ void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> &
 	}
 
 }
+
+void ItemBase::clearModelPart() {
+	m_modelPart = NULL;
+}
