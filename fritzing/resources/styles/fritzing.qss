@@ -35,8 +35,6 @@ QStatusBar {
 /* this separates palettes from each other and is movable */
 MainWindow::separator {
 	background-color: #666666;
-	width: 25px; /* has no effect also the QT example says it should ??? */
-	height: 25px; /* has no effect ??? */
 }
 
 MainWindow QLabel {
@@ -191,8 +189,8 @@ QDockWidget {
 	background-color: rgb(179,179,179);
 
 	/* this defines the title text! */
-	font-size: 8px;
-	font-weight: 500;
+	font-size: 10px;
+	font-weight: 600;
 	text-transform: uppercase;
 	color: #555;
 	
@@ -201,19 +199,24 @@ QDockWidget {
 }
 
 QDockWidget::title {
-	height: 15px;
+	height: 10px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                      stop: 0 #ededed, stop: 1.0 #ccc);
 	border-top: 1px #e3e3e3 solid;
 	padding-left: 6px;
-	padding-top: 4px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+}
+QDockWidget::close-button,
+QDockWidget::float-button {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
 }
 
 QDockWidget::close-button {
-	border: none;
-	width: 13px;
 	image: url(:/resources/images/icons/dockWidgetCloseNormal_icon.png); 
 }
 QDockWidget::close-button:hover {
@@ -226,8 +229,6 @@ QDockWidget::close-button:pressed {
 }
 
 QDockWidget::float-button {
-	border: none;
-	width: 13px;
 	image: url(:/resources/images/icons/dockWidgetFloatNormal_icon.png);
 }
 QDockWidget::float-button:hover {
@@ -239,6 +240,7 @@ QDockWidget::float-button:pressed {
  	background-image: url(:/resources/images/icons/dockWidgetFloatPressed_icon.png);
 }
 
+/* INFO VIEW */
 HtmlInfoView {
 	border: 1px solid rgb(117,117,117);
 	border-top: 0px;
