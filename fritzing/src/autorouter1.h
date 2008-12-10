@@ -35,6 +35,7 @@ $Date$
 #include <QGraphicsItem>
 #include <QLine>
 #include <QProgressDialog>
+#include <QUndoCommand>
 
 #include "viewgeometry.h"
 
@@ -59,14 +60,17 @@ protected:
 	bool tryWithWire(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, QPointF midpoint, QList<class Wire *> & chainedWires, const QPolygonF & boundingPoly);
 	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint);
 	void cleanUp();
-	void updateRatsnest(bool routed);
+	void updateRatsnest(bool routed, QUndoCommand * parentCommand);
 	void drawJumper(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires);
+	void restoreOriginalState(QUndoCommand * parentCommand);
+	void addToUndo(Wire * wire, QUndoCommand * parentCommand);
+	void addToUndo(QUndoCommand * parentCommand);
 
 public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);
 	static double calcDistance(QPointF fromPos, QGraphicsItem *);
 	static double distanceToLine(QPointF fromPos, QPointF p1, QPointF p2);
-	static void clearTraces(SketchWidget * sketchWidget, bool deleteAll);
+	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
 
 protected:
 	class PCBSketchWidget * m_sketchWidget;

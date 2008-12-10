@@ -138,7 +138,7 @@ void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorIte
 			}
 			foreach (Wire * wire, ratsnestWires) {
 				QColor colorAsQColor = (QColor) *color;
-				wire->setColor(colorAsQColor, wire->getRouted() ? 0.35 : 1.0);
+				wire->setColor(colorAsQColor, wire->getRouted() ? ROUTED_OPACITY : UNROUTED_OPACITY);
 			}
 		}
 

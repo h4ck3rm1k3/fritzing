@@ -65,6 +65,7 @@ AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseComma
 AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, QUndoCommand *parent, bool updateInfoView)
     : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, parent)
 {
+	m_doFirstRedo = m_firstRedo = true;
 	m_updateInfoView = updateInfoView;
 }
 
@@ -75,8 +76,15 @@ void AddItemCommand::undo()
 
 void AddItemCommand::redo()
 {
-    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID);
-    m_sketchWidget->selectItem(m_itemID,true,m_updateInfoView);
+	if (!m_firstRedo || m_doFirstRedo) {
+		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID);
+		m_sketchWidget->selectItem(m_itemID,true,m_updateInfoView);
+	}
+	m_firstRedo = false;
+}
+
+void AddItemCommand::turnOffFirstRedo() {
+	m_doFirstRedo = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

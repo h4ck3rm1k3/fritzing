@@ -6,7 +6,7 @@ Copyright (c) 2007-08 Fachhochschule Potsdam - http://fh-potsdam.de
 Fritzing is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+(at your option) any later version.a
 
 Fritzing is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -129,8 +129,10 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0);
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Jumperwires);
 
-	clearTraces(m_sketchWidget, false);
-	updateRatsnest(false);
+	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
+
+	clearTraces(m_sketchWidget, false, parentCommand);
+	updateRatsnest(false, parentCommand);
 	// associate ConnectorItem with index
 	QHash<ConnectorItem *, int> indexer;
 	collectAllNets(m_sketchWidget, indexer, m_allPartConnectorItems);
@@ -179,6 +181,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	adjacency.clear();
 
 	if (m_progressDialog && m_progressDialog->wasCanceled()) {
+		restoreOriginalState(parentCommand);
 		cleanUp();
 		return;
 	}
@@ -258,7 +261,8 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 		QApplication::processEvents();
 
 		if (m_progressDialog && m_progressDialog->wasCanceled()) {
-			clearTraces(m_sketchWidget, false);
+			clearTraces(m_sketchWidget, false, NULL);
+			restoreOriginalState(parentCommand);
 			cleanUp();
 			return;
 		}
@@ -266,20 +270,15 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 
 	cleanUp();
 
-	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
-		TraceWire * wire = dynamic_cast<TraceWire *>(item);
-		if (wire == NULL) continue;
-
-		wire->setClipEnds(true);
-		wire->update();
-	}
+	addToUndo(parentCommand);
 
 	if (m_progressDialog) {
 		m_progressDialog->setValue(edgesDone);
 	}
 	
-	updateRatsnest(true);
+	updateRatsnest(true, parentCommand);
 
+	m_sketchWidget->undoStack()->push(parentCommand);
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
@@ -295,7 +294,7 @@ void Autorouter1::cleanUp() {
 
 }
 
-void Autorouter1::clearTraces(SketchWidget * sketchWidget, bool deleteAll) {
+void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand) {
 	QList<Wire *> oldTraces;
 	foreach (QGraphicsItem * item, sketchWidget->scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
@@ -304,11 +303,17 @@ void Autorouter1::clearTraces(SketchWidget * sketchWidget, bool deleteAll) {
 		if (wire->getTrace() || wire->getJumper()) {
 			if (deleteAll || wire->getAutoroutable()) {
 				oldTraces.append(wire);
+				if (parentCommand) {
+					sketchWidget->makeDeleteItemCommand(wire, parentCommand);
+				}
 			}
 		}
 		else if (wire->getRatsnest()) {
+			if (parentCommand) {
+				sketchWidget->makeChangeRoutedCommand(wire, false, UNROUTED_OPACITY, parentCommand);
+			}
 			wire->setRouted(false);
-			wire->setOpacity(1.0);	
+			wire->setOpacity(UNROUTED_OPACITY);	
 		}
 	}
 	
@@ -317,7 +322,7 @@ void Autorouter1::clearTraces(SketchWidget * sketchWidget, bool deleteAll) {
 	}
 }
 
-void Autorouter1::updateRatsnest(bool routed) {
+void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 
 	foreach (QGraphicsItem * item, m_sketchWidget->scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
@@ -326,15 +331,16 @@ void Autorouter1::updateRatsnest(bool routed) {
 		
 		QList<ConnectorItem *>  ends;
 		if (wire->findJumperOrTraced(ViewGeometry::TraceFlag | ViewGeometry::JumperFlag, ends)) {
-			wire->setOpacity(0.35);
+			m_sketchWidget->makeChangeRoutedCommand(wire, true, ROUTED_OPACITY, parentCommand);
+			wire->setOpacity(ROUTED_OPACITY);
 			wire->setRouted(true);
 		}
-		else {		
-			wire->setOpacity(routed ? 0.35 : 1.0);	
+		else {	
+			m_sketchWidget->makeChangeRoutedCommand(wire, routed, routed ? ROUTED_OPACITY : UNROUTED_OPACITY, parentCommand);
+			wire->setOpacity(routed ? ROUTED_OPACITY : UNROUTED_OPACITY);	
 			wire->setRouted(routed);
 		}
 	}
-	
 }
 
 
@@ -506,7 +512,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	}
 
 	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
-	jumperWire->setColorString("jumper", 1.0);
+	jumperWire->setColorString("jumper", UNROUTED_OPACITY);
 	jumperWire->setWidth(3);
 	jumperWire->setSelected(false);
 
@@ -564,7 +570,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	traceWire->setClipEnds(false);
-	traceWire->setColorString("trace", 1.0);
+	traceWire->setColorString("trace", UNROUTED_OPACITY);
 	traceWire->setWidth(3);
 
 	QGraphicsItem * nearestObstacle = NULL;
@@ -1016,5 +1022,42 @@ void Autorouter1::collectAllNets(SketchWidget * sketchWidget, QHash<ConnectorIte
 			indexer.insert(ci, indexer.count());
 		}
 		allPartConnectorItems.append(partConnectorItems);
+	}
+}
+
+void Autorouter1::restoreOriginalState(QUndoCommand * parentCommand) {
+	QUndoStack undoStack;
+	addToUndo(parentCommand);
+	undoStack.push(parentCommand);
+	undoStack.undo();
+}
+
+void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
+	if (!wire->getAutoroutable()) {
+		// it was here before the autoroute, so don't add it again
+		return;
+	}
+
+	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), parentCommand, false);
+	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
+	new WireColorChangeCommand(m_sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
+	addItemCommand->turnOffFirstRedo();
+}
+
+void Autorouter1::addToUndo(QUndoCommand * parentCommand) 
+{
+	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
+		TraceWire * wire = dynamic_cast<TraceWire *>(item);
+		if (wire != NULL) {
+			wire->setClipEnds(true);
+			wire->update();
+			addToUndo(wire, parentCommand);
+		}
+		else {
+			Wire * w = dynamic_cast<Wire *>(item);
+			if (w != NULL && w->getJumper()) {
+				addToUndo(w, parentCommand);
+			}
+		}
 	}
 }

@@ -70,8 +70,7 @@ Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
     setFlags(QGraphicsItem::ItemIsSelectable );
 	m_grabbedMouse = false;
 	m_connectorHover = NULL;
-	m_autoroutable = true;
-	m_opacity = 1.0;
+	m_opacity = UNROUTED_OPACITY;
 	m_chainedID = id;
 
 	//DebugDialog::debug(QObject::tr("aix line %1 %2 %3 %4").arg(this->viewGeometry().line().x1())
@@ -172,14 +171,14 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 		case ItemBase::BreadboardView:
 			m_pen.setWidth(penWidth - 2);
 			m_shadowPen.setWidth(penWidth);
-                        setColorString("blue", 1.0);
+                        setColorString("blue", UNROUTED_OPACITY);
 			break;
 		case ItemBase::SchematicView:
-			setColorString("routed", 1.0);
+			setColorString("routed", UNROUTED_OPACITY);
 			m_pen.setWidth(2);
 			break;
 		case ItemBase::PCBView:
-			setColorString("unrouted", 1.0);
+			setColorString("unrouted", UNROUTED_OPACITY);
 			m_pen.setWidth(1);
 			break;
 		default:
@@ -386,7 +385,7 @@ void Wire::setColor(QDomElement & element) {
 	bool ok;
 	qreal op = element.attribute("opacity").toDouble(&ok);
 	if (!ok) {
-		op = 1.0;
+		op = UNROUTED_OPACITY;
 	}
 
 	foreach (QString colorName, colors.keys()) {

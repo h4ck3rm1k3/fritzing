@@ -31,6 +31,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "tracewire.h"
 #include "virtualwire.h"
 #include "waitpushundostack.h"
+#include "autorouter1.h"
 
 static const QString ___viewName___ = QObject::tr("PCB View");
 
@@ -129,7 +130,7 @@ void PCBSketchWidget::checkAutorouted()
 
 			if (wire->getRatsnest()) {
 				wire->setRouted(true);
-				wire->setOpacity(0.35);
+				wire->setOpacity(ROUTED_OPACITY);
 			}
 		}
 	}
@@ -330,10 +331,9 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 	}
 
 	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
-	new WireColorChangeCommand(this, newID, colorString, colorString, 1.0, 1.0, parentCommand);
+	new WireColorChangeCommand(this, newID, colorString, colorString, UNROUTED_OPACITY, UNROUTED_OPACITY, parentCommand);
 	new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
-	new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), 0.35, parentCommand);
-	new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wire->wireFlags() | ViewGeometry::RoutedFlag, parentCommand);
+	makeChangeRoutedCommand(wire, true, ROUTED_OPACITY, parentCommand);
 
 	new CleanUpWiresCommand(this, true, parentCommand);
 	m_undoStack->push(parentCommand);
@@ -361,4 +361,21 @@ bool PCBSketchWidget::ratsAllRouted() {
 	}
 
 	return true;
+}
+
+void PCBSketchWidget::makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand) {
+	new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), opacity, parentCommand);
+	ViewGeometry::WireFlags wireFlags = wire->wireFlags();
+	wireFlags |= ViewGeometry::RoutedFlag;
+	if (!routed) {
+		wireFlags &= ~ViewGeometry::RoutedFlag;
+	}
+	new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wireFlags, parentCommand);
+}
+
+
+void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
+	Q_UNUSED(parentCommand);
+	Autorouter1::clearTraces(this, true, parentCommand);
+	updateRatsnestStatus();
 }

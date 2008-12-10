@@ -47,6 +47,8 @@ public:
 	void createTrace();
 	void excludeFromAutoroute();
 	bool ratsAllRouted();
+	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
+	void clearRouting(QUndoCommand * parentCommand);
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);

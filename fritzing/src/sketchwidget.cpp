@@ -306,7 +306,6 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 				wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
 				if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
 					wire->setNormal(true);
-					wire->setAutoroutable(false);
 				}
 			}
 			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
@@ -3267,12 +3266,6 @@ void SketchWidget::ensureLayerVisible(ViewLayer::ViewLayerID viewLayerID)
 	if (!viewLayer->visible()) {
 		setLayerVisible(viewLayer, true);
 	}
-}
-
-void SketchWidget::clearRouting(QUndoCommand * parentCommand) {
-	Q_UNUSED(parentCommand);
-	Autorouter1::clearTraces(this, true);
-	updateRatsnestStatus();
 }
 
 void SketchWidget::clearDragWireTempCommand()

@@ -72,9 +72,12 @@ public:
     AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent = 0, bool updateInfoView=true);
     void undo();
     void redo();
+	void turnOffFirstRedo();
 
 protected:
 	bool m_updateInfoView;
+	bool m_firstRedo;
+	bool m_doFirstRedo;
 
 };
 

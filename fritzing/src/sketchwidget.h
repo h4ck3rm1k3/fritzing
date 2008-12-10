@@ -161,13 +161,13 @@ public:
 	void restoreLayerVisibility();
 	virtual void updateRatsnestStatus();
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
-	void clearRouting(QUndoCommand * parentCommand);
 
 	const QString &selectedModuleID();
 	void setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType);
 	virtual bool canDeleteItem(QGraphicsItem * item);
 	virtual bool canCopyItem(QGraphicsItem * item);
 	virtual const QString & viewName();
+	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -216,7 +216,6 @@ protected:
 
 
 	void keyPressEvent ( QKeyEvent * event );
-	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
 	void clearTemporaries();
 	void dragWireChanged(class Wire* wire, ConnectorItem * from, ConnectorItem * to);
 	void killDroppingItem();
