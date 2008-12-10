@@ -1,7 +1,5 @@
 /*
 
-??? = unsolved problems
-
 lightest red:	rgb(126,54,77);
 medium red_l:	rgb(108,36,60); (little lighter for hover)
 medium red:		rgb(84,24,44);
@@ -157,8 +155,6 @@ ZoomComboBox QScrollBar::sub-page:vertical {
 }
 
 
-
-
 /* ################### the sketch #################### */
 
 QToolBar QTabBar::tab {
@@ -187,85 +183,67 @@ QToolBar QTabBar::tab:selected {
 	left: 5px;
 }
 
-
-
-
 /* ################### the palettes #################### */
-
-RightDockWidgetArea {
-	/* no effect */
-	border: 30px solid white;
-	padding-left: 20px;
-}
-
 QDockWidget {
-	/* no effect ??? */
-	position: absolute;
-	top: 30px;
-
-	/* no effect on WIN and MAC, but works on Linux ???
-	   for undocked palettes
-	padding: 10px;
-	margin: 20px;
-	border: 8px solid red;
-	*/
-
 	/* only relevant if palette is floating
 	   and only visible with tabs inside the widget
 	   such as Parts Library */
 	background-color: rgb(179,179,179);
 
 	/* this defines the title text! */
-	font-weight: bold;
-	color: rgb(84,24,44);
+	font-size: 8px;
+	font-weight: 500;
+	text-transform: uppercase;
+	color: #555;
+	
+	titlebar-close-icon: url(:/resources/images/icons/dockWidgetEmpty_icon.png);
+	titlebar-normal-icon: url(:/resources/images/icons/dockWidgetEmpty_icon.png);
 }
 
 QDockWidget::title {
-	/* no effects
-	position: absolute;
-	top: 25px; left: 25px;
-	*/
-
-	margin-top: 0px;
-
-    padding-top: 5px;
-    padding-left: 5px;
-
-	min-height: 10px;
-
-	/*border: 1px solid rgb(117,117,117);*/
-	border-bottom: 0px;
+	height: 15px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	background-color: rgb(179,179,179);
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                     stop: 0 #ededed, stop: 1.0 #ccc);
+	border-top: 1px #e3e3e3 solid;
+	padding-left: 6px;
+	padding-top: 4px;
 }
 
-/* doesn't work, needs to be set in QDockWidget
-QDockWidget::title,
-QDockWidget::title QAbstractItemView,
-QDockWidget QAbstractItemView,
-InfoView::title,
-InfoView::title QLabel,
-InfoView QLabel::title {
-	font-weight: bold;
-	color: rgb(84,24,44);
+QDockWidget::close-button {
+	border: none;
+	width: 13px;
+	image: url(:/resources/images/icons/dockWidgetCloseNormal_icon.png); 
 }
-*/
+QDockWidget::close-button:hover {
+	border: none;
+ 	image: url(:/resources/images/icons/dockWidgetCloseHover_icon.png);
+}
+QDockWidget::close-button:pressed {
+	border: none;
+	image: url(:/resources/images/icons/dockWidgetClosePressed_icon.png);
+}
+
+QDockWidget::float-button {
+	border: none;
+	width: 13px;
+	image: url(:/resources/images/icons/dockWidgetFloatNormal_icon.png);
+}
+QDockWidget::float-button:hover {
+	border: none;
+	image: url(:/resources/images/icons/dockWidgetFloatHover_icon.png);
+}
+QDockWidget::float-button:pressed {
+	border: none;
+ 	background-image: url(:/resources/images/icons/dockWidgetFloatPressed_icon.png);
+}
 
 HtmlInfoView {
 	border: 1px solid rgb(117,117,117);
 	border-top: 0px;
 	background-color: rgb(179,179,179);
 	color: rgb(0,0,0,);
-}
-
-HtmlInfoView {
-	/* all rich text contents get set in a sparate infoview.css */
-}
-
-
-PartsLibrary {
-	/* general settings at QDockWidget */
 }
 
 QTabWidget#palette_tabs QTabBar::tab {
@@ -343,9 +321,6 @@ SketchArea QToolButton {
 }
 
 #sketchAreaToolbar {
-	/*background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                 stop: 0 #b8b8b8, stop: 0.4 #f4f4f4,
-                                 stop: 0.5 #e7e7e7, stop: 1.0 #e5e5e5);*/
 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                  stop: 0 #e5e5e5, stop: 1.0 #b8b8b8);
 

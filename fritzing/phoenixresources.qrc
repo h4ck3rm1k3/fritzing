@@ -107,6 +107,16 @@ $Date$
     <file>resources/images/icons/toolbarFlipDisabled_icon.png</file>
     <file>resources/images/icons/toolbarFlipPressed_icon.png</file>
     <file>resources/images/icons/toolbar_separator.png</file>
+    <file>resources/images/icons/dockWidgetEmpty_icon.png</file>
+    <file>resources/images/icons/dockWidgetCloseNormal_icon.png</file>
+    <file>resources/images/icons/dockWidgetCloseHover_icon.png</file>
+    <file>resources/images/icons/dockWidgetClosePressed_icon.png</file>
+    <file>resources/images/icons/dockWidgetFloatNormal_icon.png</file>
+    <file>resources/images/icons/dockWidgetFloatHover_icon.png</file>
+    <file>resources/images/icons/dockWidgetFloatPressed_icon.png</file>
+    <file>resources/images/icons/dockWidgetCollapseNormal_icon.png</file>
+    <file>resources/images/icons/dockWidgetCollapseHover_icon.png</file>
+    <file>resources/images/icons/dockWidgetCollapsePressed_icon.png</file>
     <file>resources/styles/partseditor.qss</file>
     <file>resources/styles/fritzing.qss</file>
     <file>resources/styles/infoview.css</file>
