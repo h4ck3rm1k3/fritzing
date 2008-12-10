@@ -818,7 +818,7 @@ void MainWindow::createDockWindows()
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_navigators << (m_miniViewContainerBreadboard = new MiniViewContainer(this));
-//    FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
+//  FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
 //	dock->setObjectName("Breadboard_view");
 //	setDockColorAnd(m_miniViewContainerBreadboard, dockSelectedColor, ___emptyString___);
 //	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
@@ -828,7 +828,7 @@ void MainWindow::createDockWindows()
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators << (m_miniViewContainerSchematic = new MiniViewContainer(this));
-//    dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
+//  dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
 //	dock->setObjectName("Schematic_view");
 //	setDockColorAnd(m_miniViewContainerSchematic, dockUnselectedColor, clickToSeeString);
 //	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
@@ -838,7 +838,7 @@ void MainWindow::createDockWindows()
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators << (m_miniViewContainerPCB = new MiniViewContainer(this));
-//    dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
+//  dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
 //	dock->setObjectName("PCB_view");
 //	dock->resize(m_miniViewContainerPCB->minimumSize());
 //	setDockColorAnd(m_miniViewContainerPCB, dockUnselectedColor, clickToSeeString);
@@ -851,11 +851,10 @@ void MainWindow::createDockWindows()
     m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
 
 	m_tripleNavigator = new TripleNavigator(this);
-	m_tripleNavigator->addView(m_miniViewContainerBreadboard);
-	m_tripleNavigator->addView(m_miniViewContainerSchematic);
-	m_tripleNavigator->addView(m_miniViewContainerPCB);
+	m_tripleNavigator->addView(m_miniViewContainerBreadboard, tr("Breadboard"));
+	m_tripleNavigator->addView(m_miniViewContainerSchematic, tr("Schematic"));
+	m_tripleNavigator->addView(m_miniViewContainerPCB, tr("PCB"));
 	makeDock(tr("Navigator"), m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
-
 
     m_consoleView = new Console();
     FDockWidget * dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);

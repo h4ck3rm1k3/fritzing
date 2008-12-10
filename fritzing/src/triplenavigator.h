@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1668 $:
-$Author: cohen@irascible.com $:
-$Date: 2008-11-27 22:51:05 +0100 (Thu, 27 Nov 2008) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -39,14 +39,46 @@ class TripleNavigator : public QFrame
 	
 public:
 	TripleNavigator(QWidget * parent = 0);
-	void addView(MiniViewContainer *);	
+	void addView(MiniViewContainer *, const QString & title);	
 	
 protected:
 	QSplitter * m_splitter;
 };
 
-class TripleNavigatorLabel : public QLabel 
+
+class TripleNavigatorLabel : public QLabel
 {
+	Q_OBJECT
+
+public:
+	TripleNavigatorLabel(QWidget * parent = 0);
+	void setMiniViewContainer(MiniViewContainer *);
+
+protected:
+	void mousePressEvent(QMouseEvent *);
+
+protected slots:
+	void navigatorMousePressedSlot(MiniViewContainer *);
+
+
+protected:
+	MiniViewContainer * m_miniViewContainer;
+};
+
+
+class TripleNavigatorFrame : public QFrame
+{
+	Q_OBJECT
+
+public:
+	TripleNavigatorFrame(MiniViewContainer *, const QString & title, QWidget * parent = 0);
+
+	void hook(MiniViewContainer * miniViewContainer);
+
+protected:
+	TripleNavigatorLabel * m_tripleNavigatorLabel;
+	MiniViewContainer * m_miniViewContainer;
+
 };
 
 #endif

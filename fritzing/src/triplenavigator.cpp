@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1714 $:
-$Author: merunga $:
-$Date: 2008-12-03 15:00:18 +0100 (Wed, 03 Dec 2008) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -42,15 +42,64 @@ TripleNavigator::TripleNavigator( QWidget * parent )
     this->setLayout(layout);
 }
 
-void TripleNavigator::addView(MiniViewContainer * miniViewContainer) 
+void TripleNavigator::addView(MiniViewContainer * miniViewContainer, const QString & title) 
 {
-	QFrame * frame = new QFrame(this);
+	TripleNavigatorFrame * frame = new TripleNavigatorFrame(miniViewContainer, title, this);
+
+	m_splitter->addWidget(frame);
+	for (int i = 0; i < m_splitter->count(); i++) {
+		((TripleNavigatorFrame *) m_splitter->widget(i))->hook(miniViewContainer);
+	}
+
+
+}
+
+///////////////////////////////////////////
+
+TripleNavigatorLabel::TripleNavigatorLabel(QWidget * parent) : QLabel(parent) 
+{
+	m_miniViewContainer = NULL;
+}
+
+void TripleNavigatorLabel::mousePressEvent(QMouseEvent * event) {
+	Q_UNUSED(event);
+	if (m_miniViewContainer) {
+		m_miniViewContainer->miniViewMousePressedSlot();
+	}
+}
+
+void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewContainer) 
+{
+	m_miniViewContainer = miniViewContainer;
+}
+
+void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) {
+	if (miniViewContainer == m_miniViewContainer) {
+		setStyleSheet("#tripleNavigatorLabel { height: 13; color: #ffffff; }");
+	}
+	else {
+		setStyleSheet("#tripleNavigatorLabel { height: 13; color: #000000; }");
+	}
+}
+
+////////////////////////////////////
+
+TripleNavigatorFrame::TripleNavigatorFrame(MiniViewContainer * miniViewContainer, const QString & title, QWidget * parent) : QFrame(parent)
+{
+	m_miniViewContainer = miniViewContainer;
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	layout->setMargin(0);
-	frame->setLayout(layout);
+	this->setLayout(layout);
 	layout->addWidget(miniViewContainer);
-	TripleNavigatorLabel * tripleNavigatorLabel = new TripleNavigatorLabel;
-	tripleNavigatorLabel->setText("hello");
-	layout->addWidget(tripleNavigatorLabel);
-	m_splitter->addWidget(frame);
+	m_tripleNavigatorLabel = new TripleNavigatorLabel(this);
+	m_tripleNavigatorLabel->setMiniViewContainer(miniViewContainer);
+	m_tripleNavigatorLabel->setObjectName("tripleNavigatorLabel");
+	m_tripleNavigatorLabel->setText(title);
+	m_tripleNavigatorLabel->setFixedHeight(15);
+	m_tripleNavigatorLabel->setAlignment(Qt::AlignCenter);
+	layout->addWidget(m_tripleNavigatorLabel);
+}
+
+void TripleNavigatorFrame::hook(MiniViewContainer * miniViewContainer) {
+	//connect(miniViewContainer, SIGNAL(), this->
 }

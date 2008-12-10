@@ -361,3 +361,8 @@ QSplitter::handle {
      color: #666666;
      background-color: #666666;
 } 
+
+#tripleNavigatorLabel {
+	height: 13;
+	color: #000000;
+}

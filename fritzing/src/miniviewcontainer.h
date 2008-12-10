@@ -47,6 +47,8 @@ protected:
 	
 protected slots:
 	void updateFrame();
+
+public slots:
 	void miniViewMousePressedSlot();
 	
 signals:
