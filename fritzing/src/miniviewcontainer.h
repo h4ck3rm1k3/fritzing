@@ -44,6 +44,7 @@ public:
 	
 protected:
 	bool eventFilter(QObject *obj, QEvent *event);
+	bool isParent(QObject * object);
 	
 protected slots:
 	void updateFrame();

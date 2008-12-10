@@ -62,10 +62,6 @@ qreal MainWindow::m_printerScale = 1;
 int MainWindow::CascadeFactorX = 21;
 int MainWindow::CascadeFactorY = 19;
 
-static QString dockUnselectedColor = "QDockWidget#%1 { color: rgb(80, 80, 80); }";
-static QString dockSelectedColor = "QDockWidget#%1 { color: rgb(84,24,44); }";
-static QString clickToSeeString = QObject::tr("click to see %1");
-
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
@@ -659,6 +655,9 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	setTitle();
 
+	// triggers a signal to the navigator widget
+	m_navigators[index]->miniViewMousePressedSlot();
+
 
 	// obsolete: when there are 3 navigators and 3 zoom boxes, no need to update when current view changes
 	//m_miniViewContainer0->setView(widget);
@@ -818,31 +817,16 @@ void MainWindow::createDockWindows()
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_navigators << (m_miniViewContainerBreadboard = new MiniViewContainer(this));
-//  FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
-//	dock->setObjectName("Breadboard_view");
-//	setDockColorAnd(m_miniViewContainerBreadboard, dockSelectedColor, ___emptyString___);
-//	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-//	dock->resize(m_miniViewContainerBreadboard->minimumSize());
 	m_miniViewContainerBreadboard->filterMousePress();
 	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators << (m_miniViewContainerSchematic = new MiniViewContainer(this));
-//  dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
-//	dock->setObjectName("Schematic_view");
-//	setDockColorAnd(m_miniViewContainerSchematic, dockUnselectedColor, clickToSeeString);
-//	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
-//	dock->resize(m_miniViewContainerSchematic->minimumSize());
 	m_miniViewContainerSchematic->filterMousePress();
 	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators << (m_miniViewContainerPCB = new MiniViewContainer(this));
-//  dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
-//	dock->setObjectName("PCB_view");
-//	dock->resize(m_miniViewContainerPCB->minimumSize());
-//	setDockColorAnd(m_miniViewContainerPCB, dockUnselectedColor, clickToSeeString);
-//	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	m_miniViewContainerPCB->filterMousePress();
 	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
@@ -1299,24 +1283,6 @@ void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView)
 	if (oldIndex == index) return;
 
 	this->m_tabWidget->setCurrentIndex(index);
-
-	setDockColorAnd(m_navigators[index], dockSelectedColor, ___emptyString___);
-	setDockColorAnd(m_navigators[oldIndex], dockUnselectedColor, clickToSeeString);
-}
-
-void MainWindow::setDockColorAnd(MiniViewContainer * miniView, const QString & colorString, const QString & prefix)
-{
-	QWidget * parentWidget = miniView->parentWidget();
-	QString name = parentWidget->objectName();
-	parentWidget->setStyleSheet(colorString.arg(name));
-	QStringList names = name.split("_");
-	QString useName = names.join(" ");
-	if (prefix.length() == 0) {
-		parentWidget->setWindowTitle(useName);
-	}
-	else {
-		parentWidget->setWindowTitle(prefix.arg(useName));
-	}
 }
 
 const QString MainWindow::fritzingTitle() {

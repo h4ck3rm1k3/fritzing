@@ -30,6 +30,7 @@ $Date$
 #include "miniviewcontainer.h"
 #include "debugdialog.h"
 
+
 MiniViewContainer::MiniViewContainer( QWidget * parent )
 	: QWidget(parent)
 {
@@ -181,7 +182,9 @@ bool MiniViewContainer::eventFilter(QObject *obj, QEvent *event)
 		case QEvent::MouseButtonPress:
 		case QEvent::NonClientAreaMouseButtonPress:
 		case QEvent::GraphicsSceneMousePress:
-			emit navigatorMousePressedSignal(this);
+			if (obj == this || this->isParent(obj)) {
+				emit navigatorMousePressedSignal(this);
+			}
 			break;
 		default:
 			break;
@@ -204,6 +207,16 @@ void MiniViewContainer::miniViewMousePressedSlot() {
 	emit navigatorMousePressedSignal(this);
 }
 
+bool MiniViewContainer::isParent(QObject * object) {
+	QObject * parent = object->parent();
+	while (parent) {
+		if (parent == this) return true;
+
+		parent = parent->parent();
+	}
+
+	return false;
+}
 
 /////////////////////////////////////////////
 

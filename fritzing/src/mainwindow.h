@@ -250,7 +250,6 @@ protected:
 	QMenu *pcbWireMenu();
 
 	QMenu *viewItemMenuAux(QMenu* menu);
-	void setDockColorAnd(MiniViewContainer *, const QString & colorString, const QString & prefix);
 
 	ZoomComboBox *createZoomOptions(SketchAreaWidget* parent);
 	SketchToolButton *createRotateButton(SketchAreaWidget *parent);

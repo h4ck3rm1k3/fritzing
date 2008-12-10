@@ -46,12 +46,14 @@ void TripleNavigator::addView(MiniViewContainer * miniViewContainer, const QStri
 {
 	TripleNavigatorFrame * frame = new TripleNavigatorFrame(miniViewContainer, title, this);
 
+	for (int i = 0; i < m_splitter->count(); i++) {
+		frame->hook(((TripleNavigatorFrame *) m_splitter->widget(i))->miniViewContainer());
+	}
+
 	m_splitter->addWidget(frame);
 	for (int i = 0; i < m_splitter->count(); i++) {
 		((TripleNavigatorFrame *) m_splitter->widget(i))->hook(miniViewContainer);
 	}
-
-
 }
 
 ///////////////////////////////////////////
@@ -75,10 +77,10 @@ void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewCont
 
 void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
-		setStyleSheet("#tripleNavigatorLabel { height: 13; color: #ffffff; }");
+		setStyleSheet("#tripleNavigatorLabel { color: #ffffff; font-weight: bold; }");
 	}
 	else {
-		setStyleSheet("#tripleNavigatorLabel { height: 13; color: #000000; }");
+		setStyleSheet("#tripleNavigatorLabel { color: #000000; font-weight: normal; }");
 	}
 }
 
@@ -95,11 +97,16 @@ TripleNavigatorFrame::TripleNavigatorFrame(MiniViewContainer * miniViewContainer
 	m_tripleNavigatorLabel->setMiniViewContainer(miniViewContainer);
 	m_tripleNavigatorLabel->setObjectName("tripleNavigatorLabel");
 	m_tripleNavigatorLabel->setText(title);
-	m_tripleNavigatorLabel->setFixedHeight(15);
-	m_tripleNavigatorLabel->setAlignment(Qt::AlignCenter);
+	m_tripleNavigatorLabel->setFixedHeight(11);
+	m_tripleNavigatorLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 	layout->addWidget(m_tripleNavigatorLabel);
 }
 
 void TripleNavigatorFrame::hook(MiniViewContainer * miniViewContainer) {
-	//connect(miniViewContainer, SIGNAL(), this->
+	connect(miniViewContainer, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)), 
+		    this->m_tripleNavigatorLabel, SLOT(navigatorMousePressedSlot(MiniViewContainer *)) );
+}
+
+MiniViewContainer * TripleNavigatorFrame::miniViewContainer() {
+	return m_miniViewContainer;
 }

@@ -74,6 +74,8 @@ public:
 	TripleNavigatorFrame(MiniViewContainer *, const QString & title, QWidget * parent = 0);
 
 	void hook(MiniViewContainer * miniViewContainer);
+	MiniViewContainer * miniViewContainer();
+
 
 protected:
 	TripleNavigatorLabel * m_tripleNavigatorLabel;
