@@ -192,7 +192,7 @@ QDockWidget {
 	font-size: 10px;
 	font-weight: 600;
 	text-transform: uppercase;
-	color: #555;
+	color: #777;
 	
 	titlebar-close-icon: url(:/resources/images/icons/dockWidgetEmpty_icon.png);
 	titlebar-normal-icon: url(:/resources/images/icons/dockWidgetEmpty_icon.png);
@@ -214,9 +214,15 @@ QDockWidget::float-button {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
+	subcontrol-position: top right;
+	subcontrol-origin: margin;
+	position: absolute;
+	top: 0px;  bottom: 0px;
+	width: 13px;
 }
 
 QDockWidget::close-button {
+	right: 17px;
 	image: url(:/resources/images/icons/dockWidgetCloseNormal_icon.png); 
 }
 QDockWidget::close-button:hover {
@@ -229,6 +235,7 @@ QDockWidget::close-button:pressed {
 }
 
 QDockWidget::float-button {
+	right: 2px;
 	image: url(:/resources/images/icons/dockWidgetFloatNormal_icon.png);
 }
 QDockWidget::float-button:hover {
