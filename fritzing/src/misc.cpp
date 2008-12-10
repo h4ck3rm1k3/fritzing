@@ -98,3 +98,15 @@ qreal convertToInches(const QString & s, bool * ok) {
 	if (ok) *ok = true;
 	return result / divisor;
 }
+
+
+bool isParent(QObject * candidateParent, QObject * candidateChild) {
+	QObject * parent = candidateChild->parent();
+	while (parent) {
+		if (parent == candidateParent) return true;
+
+		parent = parent->parent();
+	}
+
+	return false;
+}

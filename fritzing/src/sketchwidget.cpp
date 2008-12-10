@@ -3281,7 +3281,7 @@ void SketchWidget::clearDragWireTempCommand()
 
 void SketchWidget::autoScrollTimeout()
 {
-	DebugDialog::debug(QString("scrolling dx:%1 dy%2").arg(m_autoScrollX).arg(m_autoScrollY) );
+	//DebugDialog::debug(QString("scrolling dx:%1 dy:%2").arg(m_autoScrollX).arg(m_autoScrollY) );
 
 	if (m_autoScrollX == 0 && m_autoScrollY == 0 ) return;
 

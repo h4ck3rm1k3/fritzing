@@ -41,19 +41,23 @@ public:
 	void setView(QGraphicsView *);	
 	void resizeEvent ( QResizeEvent * event ); 
 	void filterMousePress();
+	void hideHandle(bool hide);
 	
 protected:
 	bool eventFilter(QObject *obj, QEvent *event);
-	bool isParent(QObject * object);
 	
 protected slots:
 	void updateFrame();
 
 public slots:
 	void miniViewMousePressedSlot();
+	void miniViewMouseEnterSlot();
+	void miniViewMouseLeaveSlot();
 	
 signals:
 	void navigatorMousePressedSignal(MiniViewContainer *);
+	void navigatorMouseEnterSignal(MiniViewContainer *);
+	void navigatorMouseLeaveSignal(MiniViewContainer *);
 	
 protected:
 	MiniView * m_miniView;

@@ -54,15 +54,16 @@ public:
 	TripleNavigatorLabel(QWidget * parent = 0);
 	void setMiniViewContainer(MiniViewContainer *);
 
-protected:
-	void mousePressEvent(QMouseEvent *);
-
 protected slots:
 	void navigatorMousePressedSlot(MiniViewContainer *);
+	void navigatorMouseEnterSlot(MiniViewContainer *);
+	void navigatorMouseLeaveSlot(MiniViewContainer *);
 
 
 protected:
 	MiniViewContainer * m_miniViewContainer;
+	QString m_currentStyleWeight;
+	QString m_currentStyleColor;
 };
 
 
@@ -76,11 +77,12 @@ public:
 	void hook(MiniViewContainer * miniViewContainer);
 	MiniViewContainer * miniViewContainer();
 
+protected:
+	bool eventFilter(QObject *obj, QEvent *event);
 
 protected:
 	TripleNavigatorLabel * m_tripleNavigatorLabel;
 	MiniViewContainer * m_miniViewContainer;
-
 };
 
 #endif

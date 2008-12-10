@@ -26,10 +26,20 @@ $Date$
 
 #include "triplenavigator.h"
 #include "debugdialog.h"
+#include "misc.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
+
+
+const QString labelStyle = "#tripleNavigatorLabel { color: %1; font-weight: %2; }";
+const QString pressedStyleColor = "#ffffff";
+const QString pressedStyleWeight = "bold";
+const QString normalStyleColor = "#000000";
+const QString normalStyleWeight = "normal";
+const QString hoverStyleColor = "#e5e5e5";
+const QString hoverStyleWeight = "normal";
 
 TripleNavigator::TripleNavigator( QWidget * parent )
 	: QFrame(parent)
@@ -63,13 +73,6 @@ TripleNavigatorLabel::TripleNavigatorLabel(QWidget * parent) : QLabel(parent)
 	m_miniViewContainer = NULL;
 }
 
-void TripleNavigatorLabel::mousePressEvent(QMouseEvent * event) {
-	Q_UNUSED(event);
-	if (m_miniViewContainer) {
-		m_miniViewContainer->miniViewMousePressedSlot();
-	}
-}
-
 void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewContainer) 
 {
 	m_miniViewContainer = miniViewContainer;
@@ -77,10 +80,30 @@ void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewCont
 
 void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
-		setStyleSheet("#tripleNavigatorLabel { color: #ffffff; font-weight: bold; }");
+		setStyleSheet(labelStyle.arg(pressedStyleColor).arg(pressedStyleWeight));
+		m_currentStyleColor = pressedStyleColor;
+		m_currentStyleWeight = pressedStyleWeight;
+		m_miniViewContainer->hideHandle(false);
 	}
 	else {
-		setStyleSheet("#tripleNavigatorLabel { color: #000000; font-weight: normal; }");
+		setStyleSheet(labelStyle.arg(normalStyleColor).arg(normalStyleWeight));
+		m_currentStyleColor = normalStyleColor;
+		m_currentStyleWeight = normalStyleWeight;
+		m_miniViewContainer->hideHandle(true);
+	}
+}
+
+void TripleNavigatorLabel::navigatorMouseEnterSlot(MiniViewContainer * miniViewContainer) {
+	if (miniViewContainer == m_miniViewContainer) {
+		if (m_currentStyleColor != pressedStyleColor) {
+			setStyleSheet(labelStyle.arg(hoverStyleColor).arg(hoverStyleWeight));
+		}
+	}
+}
+
+void TripleNavigatorLabel::navigatorMouseLeaveSlot(MiniViewContainer * miniViewContainer) {
+	if (miniViewContainer == m_miniViewContainer) {
+		setStyleSheet(labelStyle.arg(m_currentStyleColor).arg(m_currentStyleWeight));
 	}
 }
 
@@ -100,13 +123,46 @@ TripleNavigatorFrame::TripleNavigatorFrame(MiniViewContainer * miniViewContainer
 	m_tripleNavigatorLabel->setFixedHeight(11);
 	m_tripleNavigatorLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 	layout->addWidget(m_tripleNavigatorLabel);
+	installEventFilter(this);
 }
 
 void TripleNavigatorFrame::hook(MiniViewContainer * miniViewContainer) {
 	connect(miniViewContainer, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)), 
 		    this->m_tripleNavigatorLabel, SLOT(navigatorMousePressedSlot(MiniViewContainer *)) );
+	connect(miniViewContainer, SIGNAL(navigatorMouseEnterSignal(MiniViewContainer *)), 
+		    this->m_tripleNavigatorLabel, SLOT(navigatorMouseEnterSlot(MiniViewContainer *)) );
+	connect(miniViewContainer, SIGNAL(navigatorMouseLeaveSignal(MiniViewContainer *)), 
+		    this->m_tripleNavigatorLabel, SLOT(navigatorMouseLeaveSlot(MiniViewContainer *)) );
 }
 
 MiniViewContainer * TripleNavigatorFrame::miniViewContainer() {
 	return m_miniViewContainer;
+}
+
+bool TripleNavigatorFrame::eventFilter(QObject *obj, QEvent *event)
+{
+	if (m_miniViewContainer) {
+		switch (event->type()) {
+			case QEvent::MouseButtonPress:
+			case QEvent::NonClientAreaMouseButtonPress:
+				if (obj == this || isParent(this, obj)) {
+					m_miniViewContainer->miniViewMousePressedSlot();
+				}
+				break;
+			case QEvent::Enter:
+				if (obj == this || isParent(this, obj)) {
+					m_miniViewContainer->miniViewMouseEnterSlot();
+				}
+				break;
+			case QEvent::Leave:
+				if (obj == this || isParent(this, obj)) {
+					m_miniViewContainer->miniViewMouseLeaveSlot();
+				}
+				break;
+			default:
+				break;
+		}
+	}
+
+	return QObject::eventFilter(obj, event);
 }
