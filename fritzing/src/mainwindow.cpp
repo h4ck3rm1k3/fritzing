@@ -53,6 +53,7 @@ $Date$
 #include "waitpushundostack.h"
 #include "fapplication.h"
 #include "layerattributes.h"
+#include "triplenavigator.h"
 
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
@@ -817,31 +818,31 @@ void MainWindow::createDockWindows()
     makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_navigators << (m_miniViewContainerBreadboard = new MiniViewContainer(this));
-    FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setObjectName("Breadboard_view");
-	setDockColorAnd(m_miniViewContainerBreadboard, dockSelectedColor, ___emptyString___);
-	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
- 	dock->resize(m_miniViewContainerBreadboard->minimumSize());
+//    FDockWidget * dock = makeDock(tr("Breadboard view"), m_miniViewContainerBreadboard, NavigatorMinHeight, NavigatorDefaultHeight);
+//	dock->setObjectName("Breadboard_view");
+//	setDockColorAnd(m_miniViewContainerBreadboard, dockSelectedColor, ___emptyString___);
+//	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+//	dock->resize(m_miniViewContainerBreadboard->minimumSize());
 	m_miniViewContainerBreadboard->filterMousePress();
 	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators << (m_miniViewContainerSchematic = new MiniViewContainer(this));
-    dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setObjectName("Schematic_view");
-	setDockColorAnd(m_miniViewContainerSchematic, dockUnselectedColor, clickToSeeString);
- 	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
- 	dock->resize(m_miniViewContainerSchematic->minimumSize());
+//    dock = makeDock(tr("Schematic view"), m_miniViewContainerSchematic, NavigatorMinHeight, NavigatorDefaultHeight);
+//	dock->setObjectName("Schematic_view");
+//	setDockColorAnd(m_miniViewContainerSchematic, dockUnselectedColor, clickToSeeString);
+//	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+//	dock->resize(m_miniViewContainerSchematic->minimumSize());
 	m_miniViewContainerSchematic->filterMousePress();
 	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
 
     m_navigators << (m_miniViewContainerPCB = new MiniViewContainer(this));
-    dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
-	dock->setObjectName("PCB_view");
-	dock->resize(m_miniViewContainerPCB->minimumSize());
-	setDockColorAnd(m_miniViewContainerPCB, dockUnselectedColor, clickToSeeString);
-	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+//    dock = makeDock(tr("PCB view"), m_miniViewContainerPCB, NavigatorMinHeight, NavigatorDefaultHeight);
+//	dock->setObjectName("PCB_view");
+//	dock->resize(m_miniViewContainerPCB->minimumSize());
+//	setDockColorAnd(m_miniViewContainerPCB, dockUnselectedColor, clickToSeeString);
+//	dock->setFeatures (QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
 	m_miniViewContainerPCB->filterMousePress();
 	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
@@ -849,8 +850,15 @@ void MainWindow::createDockWindows()
     makeDock(tr("Undo History"), m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
     m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
 
+	m_tripleNavigator = new TripleNavigator(this);
+	m_tripleNavigator->addView(m_miniViewContainerBreadboard);
+	m_tripleNavigator->addView(m_miniViewContainerSchematic);
+	m_tripleNavigator->addView(m_miniViewContainerPCB);
+	makeDock(tr("Navigator"), m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
+
+
     m_consoleView = new Console();
-    dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
+    FDockWidget * dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
 	dock->hide();
 
     m_windowMenu->addSeparator();

@@ -438,6 +438,8 @@ protected:
 
     QStringList m_openExampleActions;
 
+	class TripleNavigator * m_tripleNavigator;
+
 public:
 	static const int PartsBinDefaultHeight = 220;
 	static const int PartsBinMinHeight = 122;

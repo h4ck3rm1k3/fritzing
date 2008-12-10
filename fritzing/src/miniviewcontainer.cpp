@@ -33,6 +33,8 @@ $Date$
 MiniViewContainer::MiniViewContainer( QWidget * parent )
 	: QWidget(parent)
 {
+	this->setMinimumSize(32, 32);
+
 	m_miniView = new MiniView(this);
 	connect(m_miniView, SIGNAL(rectChangedSignal()), this, SLOT(updateFrame()) );
 	connect(m_miniView, SIGNAL(miniViewMousePressedSignal()), this, SLOT(miniViewMousePressedSlot()) );
