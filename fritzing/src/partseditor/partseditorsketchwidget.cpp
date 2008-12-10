@@ -31,8 +31,8 @@ $Date$
 
 QT_BEGIN_NAMESPACE
 
-PartsEditorSketchWidget::PartsEditorSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
-	: SketchWidget(viewIdentifier, parent, 300)
+PartsEditorSketchWidget::PartsEditorSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
+	: SketchWidget(viewIdentifier, parent, size, minSize)
 {
 
 }

@@ -36,7 +36,7 @@ class PCBSchematicSketchWidget : public SketchWidget
 	Q_OBJECT
 
 public:
-    PCBSchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
+    PCBSchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent);
 
 	void setNewPartVisible(ItemBase *);
 	void updateRatsnestStatus();
@@ -51,7 +51,7 @@ protected:
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
-	bool bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems); 
+	bool bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
 	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
 
 };

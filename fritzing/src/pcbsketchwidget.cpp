@@ -35,8 +35,8 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 static const QString ___viewName___ = QObject::tr("PCB View");
 
-PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
-    : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
+PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
+    : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
 }
 
@@ -251,7 +251,7 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 
 }
 
-bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item) 
+bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
 	if (wire != NULL) return false;
@@ -259,7 +259,7 @@ bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item)
 	return SketchWidget::canDeleteItem(item);
 }
 
-bool PCBSketchWidget::canCopyItem(QGraphicsItem * item) 
+bool PCBSketchWidget::canCopyItem(QGraphicsItem * item)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
 	if (wire != NULL) {
@@ -325,7 +325,7 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);
 	new CleanUpWiresCommand(this, false, parentCommand);
-	
+
 	if (jumperOrTrace != NULL) {
 		makeDeleteItemCommand(jumperOrTrace, parentCommand);
 	}
@@ -339,7 +339,7 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 	m_undoStack->push(parentCommand);
 }
 
-void PCBSketchWidget::excludeFromAutoroute() 
+void PCBSketchWidget::excludeFromAutoroute()
 {
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		Wire * wire = dynamic_cast<Wire *>(item);

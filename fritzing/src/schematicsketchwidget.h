@@ -36,7 +36,7 @@ class SchematicSketchWidget : public PCBSchematicSketchWidget
 	Q_OBJECT
 
 public:
-    SchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
+    SchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
 	bool canDeleteItem(QGraphicsItem * item);

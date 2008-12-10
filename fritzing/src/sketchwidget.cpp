@@ -534,7 +534,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
 
-	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values()) 
+	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
 		// now prepare to disconnect all the deleted item's connectors
 		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
@@ -547,7 +547,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		}
    	}
 
-	foreach (ConnectorPairHash * connectorHash, deletedConnections.values()) 
+	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
 		delete connectorHash;
 	}
@@ -1149,7 +1149,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		clearTemporaries();
 
 		killDroppingItem();
-		
+
 		emit ratsnestChangeSignal(this, parentCommand);
 		new CleanUpWiresCommand(this, true, parentCommand);
         m_undoStack->waitPush(parentCommand, 10);
@@ -2380,6 +2380,9 @@ PaletteItem * SketchWidget::getSelectedPart(){
 }
 
 void SketchWidget::setBackground(QColor color) {
+	/*QBrush brush(color);
+	brush.setTexture(QPixmap("/home/merun/workspace/fritzing_trunk/phoenix/resources/images/schematic_grid_tile.png"));
+	scene()->setBackgroundBrush(brush);*/
 	scene()->setBackgroundBrush(QBrush(color));
 }
 
@@ -3333,7 +3336,7 @@ void SketchWidget::setChainedWireIDSlot(qint64 wireID, qint64 chainedID) {
 	setChainedWireID(wireID, chainedID, BaseCommand::SingleView);
 }
 
-bool SketchWidget::canDeleteItem(QGraphicsItem * item) 
+bool SketchWidget::canDeleteItem(QGraphicsItem * item)
 {
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase == NULL) return false;
@@ -3344,7 +3347,7 @@ bool SketchWidget::canDeleteItem(QGraphicsItem * item)
 	return true;
 }
 
-bool SketchWidget::canCopyItem(QGraphicsItem * item) 
+bool SketchWidget::canCopyItem(QGraphicsItem * item)
 {
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase == NULL) return false;
@@ -3370,7 +3373,7 @@ bool SketchWidget::canChainWire(Wire * wire) {
 	return true;
 }
 
-bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to) 
+bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to)
 {
 	Q_UNUSED(dragWire);
 	Q_UNUSED(from);
@@ -3379,7 +3382,7 @@ bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Connecto
 }
 
 
-void SketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to) 
+void SketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to)
 {
 	Q_UNUSED(wireID);
 	Q_UNUSED(from);
@@ -3388,7 +3391,7 @@ void SketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & fro
 
 void SketchWidget::setupAutoscroll(bool moving) {
 	m_autoScrollX = m_autoScrollY = 0;
-	connect(&m_autoScrollTimer, SIGNAL(timeout()), this, 
+	connect(&m_autoScrollTimer, SIGNAL(timeout()), this,
 		moving ? SLOT(moveAutoScrollTimeout()) : SLOT(dragAutoScrollTimeout()));
 	DebugDialog::debug("set up autoscroll");
 }
@@ -3400,7 +3403,7 @@ void SketchWidget::turnOffAutoscroll() {
 
 }
 
-bool SketchWidget::checkAutoscroll(QPoint globalPos) 
+bool SketchWidget::checkAutoscroll(QPoint globalPos)
 {
 	QRect r = rect();
 	QPoint q = mapFromGlobal(globalPos);

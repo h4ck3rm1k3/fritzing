@@ -47,8 +47,8 @@ bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 	return distances.value(end0, MAX_INT) <= distances.value(end1, MAX_INT);
 }
 
-SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
-    : PCBSchematicSketchWidget(viewIdentifier, parent, size, minSize)
+SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
+    : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
 }
 
@@ -73,7 +73,7 @@ void SchematicSketchWidget::updateRatsnestStatus() {
 }
 
 
-void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) 
+void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect)
 {
 	if (alreadyRatsnest(fromConnectorItem, toConnectorItem)) return;
 
@@ -81,16 +81,16 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 		bool useFrom = false;
 		bool useTo = false;
 		if ((fromConnectorItem->attachedToItemType() == ModelPart::Part) ||
-			(fromConnectorItem->attachedToItemType() == ModelPart::Board)) 
+			(fromConnectorItem->attachedToItemType() == ModelPart::Board))
 		{
 			useFrom = true;
 		}
 		if ((toConnectorItem->attachedToItemType() == ModelPart::Part) ||
-			(toConnectorItem->attachedToItemType() == ModelPart::Board)) 
+			(toConnectorItem->attachedToItemType() == ModelPart::Board))
 		{
 			useTo = true;
 		}
-		
+
 		if (useFrom && useTo) {
 			makeOneRatsnestWire(fromConnectorItem, toConnectorItem);
 			return;
@@ -137,7 +137,7 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 					ConnectorItem * cj = partsConnectorItems[j];
 					if (ci->bus() != NULL && ci->bus() == cj->bus()) continue;
 					if (ci->wiredTo(cj, ViewGeometry::RatsnestFlag)) continue;
-					
+
 					if (alreadyOnBus(ci, cj)) continue;
 					if (alreadyOnBus(cj, ci)) continue;
 
@@ -161,7 +161,7 @@ bool SchematicSketchWidget::alreadyOnBus(ConnectorItem * busCandidate, Connector
 	return false;
 }
 
-ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorItem, ConnectorItem * wireConnectorItem, QList<ConnectorItem *> partsConnectorItems) 
+ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorItem, ConnectorItem * wireConnectorItem, QList<ConnectorItem *> partsConnectorItems)
 {
 	Q_UNUSED(wireConnectorItem);
 	foreach (ConnectorItem * connectorItem, partsConnectorItems) {
@@ -217,7 +217,7 @@ void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorIte
 	return;
 }
 
-bool SchematicSketchWidget::canDeleteItem(QGraphicsItem * item) 
+bool SchematicSketchWidget::canDeleteItem(QGraphicsItem * item)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
 	if (wire != NULL) return true;
@@ -225,7 +225,7 @@ bool SchematicSketchWidget::canDeleteItem(QGraphicsItem * item)
 	return SketchWidget::canDeleteItem(item);
 }
 
-bool SchematicSketchWidget::canCopyItem(QGraphicsItem * item) 
+bool SchematicSketchWidget::canCopyItem(QGraphicsItem * item)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
 	if (wire != NULL) return false;
@@ -271,7 +271,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 		ConnectorItem * end0 = NULL;
 		ConnectorItem * end1 = NULL;
 
-		// if in earlier runs through this loop we've already chosen to move a particular part, 
+		// if in earlier runs through this loop we've already chosen to move a particular part,
 		// then choose to disconnect other connectors on the same part
 		foreach (ConnectorItem * move, moveItems.uniqueKeys()) {
 			foreach (ConnectorItem * end, ends) {
@@ -289,7 +289,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 			int distance = calcDistance(wire, end, 0, distanceWires);
 			distances.insert(end, distance);
 		}
-		qSort(ends.begin(), ends.end(), distanceLessThan);	
+		qSort(ends.begin(), ends.end(), distanceLessThan);
 		if (end0 == NULL) {
 			end0 = ends[0];
 			end1 = ends[1];
@@ -302,7 +302,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 				}
 			}
 		}
-		moveItems.insert(end0, end1);	
+		moveItems.insert(end0, end1);
 	}
 
 	if (moveItems.count() > 0) {
@@ -330,7 +330,7 @@ const QString & SchematicSketchWidget::viewName() {
 }
 
 
-void SchematicSketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to) 
+void SchematicSketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to)
 {
 	if (from->attachedToItemType() == ModelPart::Wire) {
 		from = lookForBreadboardConnection(from);
@@ -405,7 +405,7 @@ int SchematicSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem *
 	return result;
 }
 
-void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems) 
+void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems)
 {
 	if (m_deleteStash.count() > 0) {
 		foreach(Wire * wire, m_deleteStash) {

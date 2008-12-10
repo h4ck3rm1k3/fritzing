@@ -31,11 +31,12 @@ $Date: 2008-11-24 12:33:07 +0100 (Mon, 24 Nov 2008) $
 
 class ExpandingLabel : public QTextEdit {
 public:
-	ExpandingLabel(QWidget *parent) : QTextEdit(parent) {
+	ExpandingLabel(QWidget *parent, int minSize=100) : QTextEdit(parent) {
+		setMinimumWidth(minSize);
 		setReadOnly(true);
 		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 		setStyleSheet("border: 0px; background-color: transparent; margin-top: 8px; margin-bottom: 5px;");
-		setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Minimum);
+		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
 	}
 
 	void setLabelText(const QString& theText) {

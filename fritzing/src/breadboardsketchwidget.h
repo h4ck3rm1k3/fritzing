@@ -36,7 +36,7 @@ class BreadboardSketchWidget : public SketchWidget
 	Q_OBJECT
 
 public:
-    BreadboardSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
+    BreadboardSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
 	const QString & viewName();

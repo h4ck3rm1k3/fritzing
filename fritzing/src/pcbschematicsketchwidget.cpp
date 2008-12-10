@@ -29,8 +29,8 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "debugdialog.h"
 #include "autorouter1.h"
 
-PCBSchematicSketchWidget::PCBSchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
-    : SketchWidget(viewIdentifier, parent, size, minSize)
+PCBSchematicSketchWidget::PCBSchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
+    : SketchWidget(viewIdentifier, parent)
 {
 }
 
@@ -147,7 +147,7 @@ void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorIte
 
 }
 
-void PCBSchematicSketchWidget::updateRatsnestStatus() 
+void PCBSchematicSketchWidget::updateRatsnestStatus()
 {
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
@@ -226,12 +226,12 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 }
 
 void PCBSchematicSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) {
-	
+
 	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 }
 
 
-void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems) 
+void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems)
 {
 	QSet<Wire *> deleteWires;
 	QSet<Wire *> visitedWires;
@@ -251,7 +251,7 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 		foreach (Wire * w, wires) {
 			visitedWires.insert(w);
 		}
-		
+
 		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
 			foreach (ConnectorItem * ci, ends) {
 				if (!list->contains(ci)) continue;
@@ -279,7 +279,7 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 	}
 }
 
-bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems) 
+bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems)
 {
 	bool result = false;
 	ConnectorItem * otherEnd = wire->otherConnector(oneEnd);
@@ -309,7 +309,7 @@ void PCBSchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & dele
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(deletedItems);
 
-	foreach (ConnectorPairHash * connectorHash, deletedConnections.values()) 
+	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
 		QList <ConnectorItem *> removeKeys;
 		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
@@ -334,7 +334,7 @@ void PCBSchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & dele
 	}
 }
 
-bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to) 
+bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to)
 {
 	Q_UNUSED(dragWire);
 	return ((from != NULL) && (to != NULL));

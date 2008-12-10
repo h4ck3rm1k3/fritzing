@@ -31,8 +31,8 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 static const QString ___viewName___ = QObject::tr("Breadboard View");
 
-BreadboardSketchWidget::BreadboardSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
-    : SketchWidget(viewIdentifier, parent, size, minSize)
+BreadboardSketchWidget::BreadboardSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
+    : SketchWidget(viewIdentifier, parent)
 {
 }
 
@@ -202,7 +202,7 @@ QPointF BreadboardSketchWidget::calcNewLoc(PaletteItemBase * moveBase, PaletteIt
 {
 	QRectF dr = detachFrom->boundingRect();
 	dr.moveTopLeft(detachFrom->pos());
-		
+
 	QPointF pos = moveBase->pos();
 	QRectF r = moveBase->boundingRect();
 	pos.setX(pos.x() + (r.width() / 2));

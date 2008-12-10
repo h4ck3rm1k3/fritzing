@@ -36,7 +36,7 @@ class PCBSketchWidget : public PCBSchematicSketchWidget
 	Q_OBJECT
 
 public:
-    PCBSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
+    PCBSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
 	QString renderToSVG(qreal printerScale);

@@ -36,7 +36,7 @@ class PartsEditorSketchWidget : public SketchWidget
 Q_OBJECT
 
 public:
-    PartsEditorSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0);
+    PartsEditorSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=300, int minSize=100);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void loadSvgFile(StringPair *path, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, QString layer);
 

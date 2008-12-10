@@ -65,7 +65,7 @@ class SketchWidget : public InfoGraphicsView
 	Q_OBJECT
 
 public:
-    SketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=500, int minSize=100);
+    SketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=600, int minSize=400);
 
     QUndoStack* undoStack();
     ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, PaletteItem* item=0);
