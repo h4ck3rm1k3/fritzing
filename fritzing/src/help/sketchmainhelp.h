@@ -31,17 +31,41 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #ifndef SKETCHMAINHELP_H_
 #define SKETCHMAINHELP_H_
 
+#include <QLabel>
 #include <QFrame>
 #include <QGraphicsProxyWidget>
 
+class SketchMainHelpCloseButton : public QLabel {
+	Q_OBJECT
+	public:
+		SketchMainHelpCloseButton(const QString &imagePath, QWidget *parent);
+
+	signals:
+		void clicked();
+
+	protected:
+		void mousePressEvent(QMouseEvent * event);
+};
+
+class SketchMainHelp;
+
 class SketchMainHelpPrivate : public QFrame {
-public:
-	SketchMainHelpPrivate(const QString &imagePath, const QString &htmlText);
+	Q_OBJECT
+
+	public:
+		SketchMainHelpPrivate(const QString &imagePath, const QString &htmlText, SketchMainHelp *parent);
+
+	protected slots:
+		void doClose();
+
+	protected:
+		SketchMainHelp *m_parent;
 };
 
 class SketchMainHelp : public QGraphicsProxyWidget {
 public:
 	SketchMainHelp(const QString &imagePath, const QString &htmlText);
+	void doClose();
 
 };
 

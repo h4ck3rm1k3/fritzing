@@ -25,26 +25,51 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 ********************************************************************/
 
 #include <QHBoxLayout>
-#include <QLabel>
+#include <QGraphicsScene>
 
 #include "sketchmainhelp.h"
 #include "../expandinglabel.h"
 
+SketchMainHelpCloseButton::SketchMainHelpCloseButton(const QString &imagePath, QWidget *parent)
+	:QLabel(parent)
+{
+	setPixmap(QPixmap(imagePath));
+}
 
-SketchMainHelpPrivate::SketchMainHelpPrivate (const QString &imagePath, const QString &htmlText)
+void SketchMainHelpCloseButton::mousePressEvent(QMouseEvent * event) {
+	emit clicked();
+	QLabel::mousePressEvent(event);
+}
+
+SketchMainHelpPrivate::SketchMainHelpPrivate (const QString &imagePath, const QString &htmlText, SketchMainHelp *parent)
 	: QFrame()
 {
-	QHBoxLayout *layout = new QHBoxLayout(this);
+	m_parent = parent;
+
+	QFrame *main = new QFrame(this);
+	QHBoxLayout *mainLayout = new QHBoxLayout(main);
 	QLabel *imageLabel = new QLabel(this);
 	imageLabel->setPixmap(QPixmap(imagePath));
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
 	textLabel->setToolTip("");
+	mainLayout->setSpacing(0);
+	mainLayout->setMargin(0);
+	mainLayout->addWidget(imageLabel);
+	mainLayout->addWidget(textLabel);
+	setFixedWidth(430);
+
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	SketchMainHelpCloseButton *closeBtn = new SketchMainHelpCloseButton(":/resources/images/inViewHelpCloseButtonBreadboard.png",this);
+	connect(closeBtn, SIGNAL(clicked()), this, SLOT(doClose()));
+	layout->addWidget(closeBtn);
+	layout->addWidget(main);
 	layout->setSpacing(0);
 	layout->setMargin(0);
-	layout->addWidget(imageLabel);
-	layout->addWidget(textLabel);
-	setFixedWidth(430);
+}
+
+void SketchMainHelpPrivate::doClose() {
+	m_parent->doClose();
 }
 
 SketchMainHelp::SketchMainHelp (
@@ -52,6 +77,11 @@ SketchMainHelp::SketchMainHelp (
 		const QString &htmlText
 	) : QGraphicsProxyWidget()
 {
-	SketchMainHelpPrivate *son = new SketchMainHelpPrivate(imagePath, htmlText);
+	SketchMainHelpPrivate *son = new SketchMainHelpPrivate(imagePath, htmlText, this);
 	setWidget(son);
+}
+
+
+void SketchMainHelp::doClose() {
+	scene()->removeItem(this);
 }

@@ -125,5 +125,6 @@ $Date$
     <file>resources/images/helpImageBreadboard.png</file>
     <file>resources/images/helpImageSchematic.png</file>
     <file>resources/images/helpImagePCB.png</file>
+    <file>resources/images/inViewHelpCloseButtonBreadboard.png</file>
 </qresource>
 </RCC>

@@ -65,7 +65,7 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 	QTimer *timer = new QTimer(this);
 	timer->setSingleShot(true);
 	connect(timer, SIGNAL(timeout()), this, SLOT(init()));
-	timer->start(200);
+	timer->start(400);
 }
 
 void Helper::init() {
