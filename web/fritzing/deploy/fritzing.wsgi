@@ -1,4 +1,4 @@
-# basic_project.wsgi is configured to live in projects/basic_project/deploy.
+# fritzing.wsgi is configured to live in fritzing/deploy.
 
 import os
 import sys
@@ -13,7 +13,7 @@ from site import addsitedir
 sys.path.insert(0, abspath(join(dirname(__file__), "../../")))
 
 from django.conf import settings
-os.environ["DJANGO_SETTINGS_MODULE"] = "content_project.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "fritzing.settings"
 
 path = addsitedir(join(settings.PINAX_ROOT, "libs/external_libs"), set())
 if path:
