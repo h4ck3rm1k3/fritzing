@@ -58,9 +58,11 @@ QString Helper::PCBHelpImage = ":/resources/images/helpImagePCB.png";
 
 Helper::Helper(MainWindow *owner) : QObject(owner) {
 	m_owner = owner;
-	m_breadMainHelp = new SketchMainHelp(BreadboardHelpImage,BreadboardHelpText);
-	m_schemMainHelp = new SketchMainHelp(SchematicHelpImage,SchematicHelpText);
-	m_pcbMainHelp = new SketchMainHelp(PCBHelpImage,PCBHelpText);
+	m_breadMainHelp = new SketchMainHelp("Breadboard", BreadboardHelpImage, BreadboardHelpText);
+	m_schemMainHelp = new SketchMainHelp("Schematic", SchematicHelpImage, SchematicHelpText);
+	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpImage, PCBHelpText);
+
+	m_stillWaitingFirstDrop = true;
 
 	QTimer *timer = new QTimer(this);
 	timer->setSingleShot(true);
@@ -83,6 +85,8 @@ void Helper::addAndCenterItemInView(SketchMainHelp *item, SketchWidget* view) {
 		this,
 		SLOT(viewResized(const QSize&, const QSize&))
 	);
+	connect(view, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
+
 	view->scene()->addItem(item);
 	centerItemInView(item, view);
 }
@@ -101,6 +105,15 @@ void Helper::viewResized(const QSize& oldSize, const QSize& newSize) {
 		moveItemBy(m_breadMainHelp, dx, dy);
 		moveItemBy(m_schemMainHelp, dx, dy);
 		moveItemBy(m_pcbMainHelp, dx, dy);
+	}
+}
+
+void Helper::somethingDroppedIntoView() {
+	if(m_stillWaitingFirstDrop) {
+		m_stillWaitingFirstDrop = false;
+		m_breadMainHelp->applyAlpha();
+		m_schemMainHelp->applyAlpha();
+		m_pcbMainHelp->applyAlpha();
 	}
 }
 

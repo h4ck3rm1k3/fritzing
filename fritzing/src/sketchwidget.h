@@ -282,6 +282,7 @@ signals:
 
 	void swapped(long itemId, ModelPart *with);
 	void resizeSignal(const QSize& oldSize, const QSize& newSize);
+	void dropSignal();
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void ratsnestChangeSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);

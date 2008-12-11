@@ -30,10 +30,13 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include "sketchmainhelp.h"
 #include "../expandinglabel.h"
 
+qreal SketchMainHelp::OpacityLevel = 0.5;
+
 SketchMainHelpCloseButton::SketchMainHelpCloseButton(const QString &imagePath, QWidget *parent)
 	:QLabel(parent)
 {
-	setPixmap(QPixmap(imagePath));
+	QString pathAux = ":/resources/images/inViewHelpCloseButton%1.png";
+	setPixmap(QPixmap(pathAux.arg(imagePath)));
 }
 
 void SketchMainHelpCloseButton::mousePressEvent(QMouseEvent * event) {
@@ -41,7 +44,14 @@ void SketchMainHelpCloseButton::mousePressEvent(QMouseEvent * event) {
 	QLabel::mousePressEvent(event);
 }
 
-SketchMainHelpPrivate::SketchMainHelpPrivate (const QString &imagePath, const QString &htmlText, SketchMainHelp *parent)
+
+//////////////////////////////////////////////////////////////
+
+SketchMainHelpPrivate::SketchMainHelpPrivate (
+		const QString &viewString,
+		const QString &imagePath,
+		const QString &htmlText,
+		SketchMainHelp *parent)
 	: QFrame()
 {
 	m_parent = parent;
@@ -53,35 +63,60 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (const QString &imagePath, const QS
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
 	textLabel->setToolTip("");
-	mainLayout->setSpacing(0);
-	mainLayout->setMargin(0);
+	mainLayout->setSpacing(2);
+	mainLayout->setMargin(2);
 	mainLayout->addWidget(imageLabel);
 	mainLayout->addWidget(textLabel);
 	setFixedWidth(430);
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	SketchMainHelpCloseButton *closeBtn = new SketchMainHelpCloseButton(":/resources/images/inViewHelpCloseButtonBreadboard.png",this);
+	SketchMainHelpCloseButton *closeBtn = new SketchMainHelpCloseButton(viewString,this);
 	connect(closeBtn, SIGNAL(clicked()), this, SLOT(doClose()));
 	layout->addWidget(closeBtn);
 	layout->addWidget(main);
-	layout->setSpacing(0);
-	layout->setMargin(0);
+	layout->setSpacing(2);
+	layout->setMargin(2);
+
+	m_shouldGetTransparent = false;
 }
 
 void SketchMainHelpPrivate::doClose() {
 	m_parent->doClose();
 }
 
+void SketchMainHelpPrivate::enterEvent(QEvent * event) {
+	if(m_shouldGetTransparent) {
+		setWindowOpacity(1.0);
+	}
+	QFrame::enterEvent(event);
+}
+
+void SketchMainHelpPrivate::leaveEvent(QEvent * event) {
+	if(m_shouldGetTransparent) {
+		setWindowOpacity(SketchMainHelp::OpacityLevel);
+	}
+	QFrame::leaveEvent(event);
+}
+
+
+//////////////////////////////////////////////////////////////
+
 SketchMainHelp::SketchMainHelp (
+		const QString &viewString,
 		const QString &imagePath,
 		const QString &htmlText
 	) : QGraphicsProxyWidget()
 {
-	SketchMainHelpPrivate *son = new SketchMainHelpPrivate(imagePath, htmlText, this);
-	setWidget(son);
+	m_son = new SketchMainHelpPrivate(viewString, imagePath, htmlText, this);
+	setWidget(m_son);
 }
 
 
 void SketchMainHelp::doClose() {
 	scene()->removeItem(this);
+}
+
+void SketchMainHelp::applyAlpha() {
+	m_son->setWindowOpacity(OpacityLevel);
+	m_son->m_shouldGetTransparent = true;
 }

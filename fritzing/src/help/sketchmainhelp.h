@@ -53,20 +53,35 @@ class SketchMainHelpPrivate : public QFrame {
 	Q_OBJECT
 
 	public:
-		SketchMainHelpPrivate(const QString &imagePath, const QString &htmlText, SketchMainHelp *parent);
+		SketchMainHelpPrivate(
+				const QString &viewString, const QString &imagePath,
+				const QString &htmlText, SketchMainHelp *parent);
 
 	protected slots:
 		void doClose();
 
 	protected:
+		void enterEvent(QEvent * event);
+		void leaveEvent(QEvent * event);
+
+	protected:
+		friend class SketchMainHelp;
+
 		SketchMainHelp *m_parent;
+		volatile bool m_shouldGetTransparent;
 };
 
 class SketchMainHelp : public QGraphicsProxyWidget {
 public:
-	SketchMainHelp(const QString &imagePath, const QString &htmlText);
+	SketchMainHelp(const QString &viewString, const QString &imagePath, const QString &htmlText);
 	void doClose();
+	void applyAlpha();
 
+protected:
+	SketchMainHelpPrivate *m_son;
+
+public:
+	static qreal OpacityLevel;
 };
 
 #endif /* SKETCHMAINHELP_H_ */

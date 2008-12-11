@@ -44,6 +44,7 @@ class Helper : public QObject {
 	protected slots:
 		void init();
 		void viewResized(const QSize& oldSize, const QSize& newSize);
+		void somethingDroppedIntoView();
 
 	protected:
 		void addAndCenterItemInView(SketchMainHelp *item, SketchWidget* view);
@@ -56,6 +57,8 @@ class Helper : public QObject {
 		SketchMainHelp *m_breadMainHelp;
 		SketchMainHelp *m_schemMainHelp;
 		SketchMainHelp *m_pcbMainHelp;
+
+		bool m_stillWaitingFirstDrop;
 
 	protected:
 		static QString BreadboardHelpText;
