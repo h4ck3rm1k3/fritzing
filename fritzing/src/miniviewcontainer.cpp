@@ -31,6 +31,7 @@ $Date$
 #include "debugdialog.h"
 #include "misc.h"
 
+bool firstTime = true;
 
 MiniViewContainer::MiniViewContainer( QWidget * parent )
 	: QWidget(parent)
@@ -45,18 +46,11 @@ MiniViewContainer::MiniViewContainer( QWidget * parent )
 	QBrush brush1(QColor(0,0,0));
 	m_outerFrame = new MiniViewFrame(brush1, false, this);
 	m_outerFrame->resize(this->minimumSize());
-	m_outerFrame->setUpdatesEnabled(false);
+	//m_outerFrame->setUpdatesEnabled(false);
 
 	QBrush brush2(QColor(128,0,0));
 	m_frame = new MiniViewFrame(brush2, true, this);
 	m_frame->resize(this->minimumSize());
-
-	m_mask = new QWidget(this);
-	QPalette p = m_mask->palette();
-	p.setBrush(QPalette::Window, QBrush(QColor(0,0,0)));
-	m_mask->setPalette(p);
-	m_mask->setAutoFillBackground(true);
-	m_mask->resize(this->minimumSize());
 }
 
 void MiniViewContainer::setView(QGraphicsView * view)
@@ -72,10 +66,6 @@ void MiniViewContainer::setView(QGraphicsView * view)
 		disconnect(m_frame, SIGNAL(scrollChangeSignal(double, double)), oldView, SLOT(navigatorScrollChange(double, double)));
 	}
 
-	QPalette p = m_mask->palette();
-	p.setBrush(QPalette::Window, view->backgroundBrush());
-	m_mask->setPalette(p);
-
 	m_miniView->setView(view);
 	updateFrame();
 
@@ -85,11 +75,14 @@ void MiniViewContainer::setView(QGraphicsView * view)
 	succeeded = connect(view, SIGNAL(resizeSignal(const QSize&, const QSize&)), this, SLOT(updateFrame()));
 	succeeded = connect(m_frame, SIGNAL(scrollChangeSignal(double, double)), view, SLOT(navigatorScrollChange(double, double)));
 
+	forceResize();
+}
+
+void MiniViewContainer::forceResize() {
 	// force a resize on a view change because otherwise some size or sceneRect isn't updated and the navigator is off
 	m_miniView->resize(this->size() / 2);
 	m_miniView->resize(this->size());
 }
-
 
 void MiniViewContainer::resizeEvent ( QResizeEvent * event )
 {
@@ -115,66 +108,92 @@ void MiniViewContainer::updateFrame()
 
 	QPointF topLeft = view->mapToScene(QPoint(0, 0));
 	QPointF bottomRight = view->mapToScene(QPoint(vSize.width(), vSize.height()));
-
+	DebugDialog::debug(QString("tl %1 %2; br %3 %4, vs %5 %6")
+		.arg(topLeft.x()).arg(topLeft.y()).arg(bottomRight.x()).arg(bottomRight.y())
+		.arg(vSize.width()).arg(vSize.height()) );
 	QRectF sceneRect = view->sceneRect();
-	if (sceneRect.width() >= 1 && sceneRect.height() >= 1) {
-		if (sceneRect.width() < vSize.width()) {
-			vSize.setWidth((int) sceneRect.width());
-		}
-		if (sceneRect.height() < vSize.height()) {
-			vSize.setHeight((int) sceneRect.height());
-		}
-	}
-	if (vVis || hVis) {
-		m_frame->setVisible(true);
-		m_outerFrame->setVisible(true);
-		//m_mask->setVisible(true);
-	}
-	else {
-		// scrollbars not visible
-		m_frame->setVisible(false);
-		m_outerFrame->setVisible(false);
-		//m_mask->setVisible(false);
-	}
 
-	int tw = sceneRect.width();
-	int th = sceneRect.height();
+	int h, w, dw, dh, newW, newH, newX, newY, tw, th;
 
-	int w = m_miniView->width();
-	int h = m_miniView->height();
+	if (hVis && vVis) {
+		tw = sceneRect.width();
+		w = m_miniView->width();
+		th = sceneRect.height();
+		h = m_miniView->height();
+		
+		DebugDialog::debug(QString("tw:%1 th:%2").arg(tw).arg(th) );
 
-	if (tw > 0 && th > 0) {
-	// deal with aspect ratio
+		// deal with aspect ratio
 		int trueH = w * th / tw;
 		if (trueH <= h) {
-			m_mask->setGeometry(0, trueH, w, h);
 			h = trueH;
 		}
 		else {
 			int trueW = h * tw / th;
-			m_mask->setGeometry(trueW, 0, w, h);
 			w = trueW;
 		}
+
+		dw = (this->width() - w) / 2;
+		dh = (this->height() - h) / 2;
+
+		DebugDialog::debug(QString("dw:%1 dh%2 w:%3 h:%4").arg(dw).arg(dh).arg(w).arg(h));
+
+		newW = w * (bottomRight.x() - topLeft.x())  / tw;
+		newX = w * (topLeft.x() - sceneRect.x()) / tw;
+		newY = h * (topLeft.y() - sceneRect.y()) / th;
+		newH = h * (bottomRight.y() - topLeft.y())  / th;
+	}
+	else if (hVis) {
+		int min = view->horizontalScrollBar()->minimum();
+		int max = view->horizontalScrollBar()->maximum();
+		int page = view->horizontalScrollBar()->pageStep();
+		int value = view->horizontalScrollBar()->value();
+
+		DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
+
+		QMatrix matrix = m_miniView->matrix();
+		w = sceneRect.width() * matrix.m11();		
+		dw = (this->width() - w) / 2;
+		newW = w * page / (max + page - min);
+		newX = w * (value - min) / (max + page - min);
+
+		h = (bottomRight.y() - topLeft.y()) * matrix.m11();
+		dh = (this->height() - h) / 2;
+		newY = 0;
+		newH = h;
+
+	}
+	else if (vVis) {
+		int min = view->verticalScrollBar()->minimum();
+		int max = view->verticalScrollBar()->maximum();
+		int page = view->verticalScrollBar()->pageStep();
+		int value = view->verticalScrollBar()->value();
+
+		DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
+
+		QMatrix matrix = m_miniView->matrix();
+		h = sceneRect.height() * matrix.m11();		
+		dh = (this->height() - h) / 2;
+		newH = h * page / (max + page - min);
+		newY = h * (value - min) / (max + page - min);
+
+		w = (bottomRight.x() - topLeft.x()) * matrix.m11();
+		dw = (this->width() - w) / 2;
+		newX = 0;
+		newW = w;
+	}
+	else {
+		dw = dh = 0;
+		newW = w = this->width();
+		newH = h = this->height();
+		newX = newY = 0;
 	}
 
-	//DebugDialog::debug(tr("mask %1 %2 %3 %4").arg(m_mask->geometry().x())
-		//.arg(m_mask->geometry().y())
-		//.arg(m_mask->geometry().width())
-		//.arg(m_mask->geometry().height()) );
+	m_outerFrame->setGeometry(dw, dh, w, h);
+	m_frame->setMaxDrag(w + dw, h + dh);
+	m_frame->setMinDrag(dw, dh);
+	m_frame->setGeometry(newX + dw, newY + dh, newW, newH);
 
-	m_outerFrame->resize(w, h);
-	m_frame->setMaxDrag(w, h);
-
-	if (th > 0 && tw > 0) {
-		int newW = w * (bottomRight.x() - topLeft.x())  / tw;
-		int newH = h * (bottomRight.y() - topLeft.y())  / th;
-		int newX = w * (topLeft.x() - sceneRect.x()) / tw;
-		int newY = h * (topLeft.y() - sceneRect.y()) / th;
-
-		//DebugDialog::debug(tr("minivp %1 %2").arg(w).arg(h) );
-
-		m_frame->setGeometry(newX, newY, newW, newH);
-	}
 }
 
 bool MiniViewContainer::eventFilter(QObject *obj, QEvent *event)
@@ -200,7 +219,6 @@ void MiniViewContainer::filterMousePress()
 	installEventFilter(this);
 	m_outerFrame->installEventFilter(this);
 	m_frame->installEventFilter(this);
-	m_mask->installEventFilter(this);
 	m_miniView->installEventFilter(this);
 }
 
@@ -218,6 +236,7 @@ void MiniViewContainer::miniViewMouseLeaveSlot() {
 
 void MiniViewContainer::hideHandle(bool hide) {
 	m_frame->setVisible(!hide);
+	m_outerFrame->setVisible(!hide);
 }
 
 /////////////////////////////////////////////
@@ -254,23 +273,23 @@ void MiniViewFrame::mouseMoveEvent(QMouseEvent * event) {
 	if (m_inDrag) {
 		QRect r = this->geometry();
 		QPoint newPos = m_originalPos + event->globalPos() - m_dragOffset;
-		if (newPos.x() < 0) {
-			newPos.setX(0);
+		if (newPos.x() < m_minDrag.x()) {
+			newPos.setX(m_minDrag.x());
 		}
-		if (newPos.y() < 0) {
-			newPos.setY(0);
+		if (newPos.y() < m_minDrag.y()) {
+			newPos.setY(m_minDrag.y());
 		}
-		if (newPos.x() + r.width() > m_maxDrag.width()) {
-			newPos.setX(m_maxDrag.width() - r.width());
+		if (newPos.x() + r.width() > m_maxDrag.x()) {
+			newPos.setX(m_maxDrag.x() - r.width());
 		}
-		if (newPos.y() + r.height() > m_maxDrag.height()) {
-			newPos.setY(m_maxDrag.height() - r.height());
+		if (newPos.y() + r.height() > m_maxDrag.y()) {
+			newPos.setY(m_maxDrag.y() - r.height());
 		}
 		r.moveTopLeft(newPos);
 		if (r != this->geometry()) {
 			this->setGeometry(r);
-			emit scrollChangeSignal(newPos.x() / (double) (m_maxDrag.width() - r.width()),
-									newPos.y() / (double) (m_maxDrag.height() - r.height()) );
+			emit scrollChangeSignal((newPos.x() - m_minDrag.x()) / (double) (m_maxDrag.x() - m_minDrag.x() - r.width()),
+									(newPos.y() - m_minDrag.y()) / (double) (m_maxDrag.y() - m_minDrag.y() - r.height()) );
 		}
 	}
 	else {
@@ -288,7 +307,12 @@ void MiniViewFrame::mouseReleaseEvent(QMouseEvent * event) {
 }
 
 void MiniViewFrame::setMaxDrag(int x, int y) {
-	m_maxDrag.setWidth(x);
-	m_maxDrag.setHeight(y);
+	m_maxDrag.setX(x);
+	m_maxDrag.setY(y);
+}
+
+void MiniViewFrame::setMinDrag(int x, int y) {
+	m_minDrag.setX(x);
+	m_minDrag.setY(y);
 }
 

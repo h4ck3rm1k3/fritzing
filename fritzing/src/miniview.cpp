@@ -34,10 +34,8 @@ MiniView::MiniView(QWidget *parent )
 	m_otherView = NULL;
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	setAlignment(Qt::AlignLeft | Qt::AlignTop);
-	
-
-
+	//setAlignment(Qt::AlignLeft | Qt::AlignTop);
+	setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
 }
 
 MiniView::~MiniView()

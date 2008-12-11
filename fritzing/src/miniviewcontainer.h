@@ -42,6 +42,7 @@ public:
 	void resizeEvent ( QResizeEvent * event ); 
 	void filterMousePress();
 	void hideHandle(bool hide);
+	void forceResize();
 	
 protected:
 	bool eventFilter(QObject *obj, QEvent *event);
@@ -63,7 +64,6 @@ protected:
 	MiniView * m_miniView;
 	class MiniViewFrame * m_frame;
 	class MiniViewFrame * m_outerFrame;
-	QWidget * m_mask;
 	
 };
 
@@ -76,6 +76,7 @@ public:
 	MiniViewFrame(QBrush &, bool draggable, QWidget * parent = 0);
 	
 	void setMaxDrag(int x, int y);
+	void setMinDrag(int x, int y);
 	
 protected:
 	void paintEvent(QPaintEvent * event);
@@ -90,7 +91,8 @@ protected:
 	QPoint m_originalPos;
 	bool m_inDrag;
 	bool m_draggable;
-	QSize m_maxDrag;
+	QPoint m_maxDrag;
+	QPoint m_minDrag;
 	
 signals:
 	void scrollChangeSignal(double x, double y);
