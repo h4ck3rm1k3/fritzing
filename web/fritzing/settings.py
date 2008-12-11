@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
+# Django settings for content pinax project.
+
 import os
+
+PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../pinax/"))
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+# tells Pinax to serve media through django.views.static.serve.
+SERVE_MEDIA = DEBUG
 
 ADMINS = (
     ('Jannis Leidel', 'jannis@leidel.info'),
@@ -38,7 +46,7 @@ USE_I18N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "media")
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media")
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -63,18 +71,20 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    'django_openid.consumer.SessionConsumer',
+    'account.middleware.LocaleMiddleware',
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'tools.middleware.RequireLoginMiddleware',
+    'pages.middleware.CurrentSiteMiddleware',
 )
 
 ROOT_URLCONF = 'fritzing.urls'
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), "../apps/debug_toolbar/templates"),
-    os.path.join(os.path.dirname(__file__), "templates"),
+    os.path.join(PROJECT_ROOT, "../apps/debug_toolbar/templates"),
+    os.path.join(PROJECT_ROOT, "templates"),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -83,10 +93,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
+    
+    "notification.context_processors.notification",
+    "announcements.context_processors.site_wide_announcements",
+    "account.context_processors.openid",
+    "account.context_processors.account",
+    "misc.context_processors.contact_email",
+    "misc.context_processors.site_name",
     "pages.context_processors.media",
 )
 
 INSTALLED_APPS = (
+    # included
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.comments',
@@ -98,23 +116,50 @@ INSTALLED_APPS = (
     'django.contrib.redirects',
     'django_extensions',
 
+
+    # external
     'django_extensions',
+    'notification', # must be first
+    'django_openid',
+    'emailconfirmation',
+    'mailer',
+    'announcements',
+    'pagination',
+    'timezones',
+    'ajax_validation',
     'dbtemplates',
     'reversion',
-    'pagination',
-    'pages',
-    'template_utils',
     'tagging',
     'mptt',
     'mptt_comments',
+    'tagging',
+    'pages',
+    'template_utils',
     'filebrowser',
+    
+    # internal (for now)
+    'basic_profiles',
+    'account',
+    'misc',
     'tools',
     'partslib',
+    
+    'django.contrib.admin',
 )
+
+ABSOLUTE_URL_OVERRIDES = {
+    "auth.user": lambda o: "/profiles/%s/" % o.username,
+}
+
+AUTH_PROFILE_MODULE = 'basic_profiles.Profile'
+NOTIFICATION_LANGUAGE_MODULE = 'account.Account'
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
 CONTACT_EMAIL = "jannis@leidel.info"
+SITE_NAME = "Fritzing"
+LOGIN_URL = "/account/login"
+LOGIN_REDIRECT_URL = "/"
 
 ugettext = lambda s: s
 LANGUAGES = (
@@ -149,13 +194,11 @@ PAGE_TEMPLATES = (
     ('fritzing/docs/overview.html', 'documentation overview'),
 )
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 PAGE_PERMISSION = False
-PAGE_UNIQUE_SLUG_REQUIRED = True
-
-LOGIN_REDIRECT_URL = '/login/'
 REQUIRE_LOGIN_PATH = LOGIN_REDIRECT_URL
 
+# local_settings.py can be used to override environment-specific settings
+# like database and email that differ between development and production.
 try:
     from local_settings import *
 except ImportError:

@@ -18,7 +18,7 @@
         <!--[if IE]>
         <style type="text/css" media="all">@import url({{ MEDIA_URL }}fritzing/css/IEFixes.css);</style>
     <![endif]-->
-        <link rel="shortcut icon" type="image/x-icon" href="http://fritzing.org/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="home" href="http://fritzing.org" title="Front page" />
         <link rel="contents" href="http://fritzing.org/sitemap" title="Site Map" />
         <link rel="search" href="http://fritzing.org/search_form" title="Search this site" /><!-- Disable IE6 image toolbar -->
@@ -37,6 +37,19 @@
             <div class="visualClear" id="clear-space-before-wrapper-table">
                 <!-- -->
             </div>
+            {% if site_wide_announcements %}
+                <div id="site_wide_announcements">
+                    <ul>
+                        {% for announcement in site_wide_announcements %}
+                        <li>
+                            <a href="{{ announcement.get_absolute_url }}">{{ announcement }}</a> -
+                            <a href="{% url announcement_hide announcement.pk %}?next={{ request.path }}">{% trans "Hide announcement" %}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            
             <div id="portal-columns">
                 {% block navigation %}
                 <div id="portal-column-one">
@@ -58,6 +71,13 @@
                         <div id="region-content" class="documentContent">
                             <span id="contentTopLeft"></span> <span id="contentTopRight"></span> <a name="documentContent" id="documentContent"></a>
                             <div id="content">
+                                {% if messages %}
+                                    <ul id="messages">
+                                        {% for message in messages %}
+                                        <li id="message_{{ forloop.counter }}"><a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
                                 <h1 class="documentFirstHeading">
                                     <span class="" id="parent-fieldname-title">
                                         {% block page_title %}{% endblock %}

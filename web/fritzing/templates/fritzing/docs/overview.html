@@ -8,13 +8,13 @@
 {% endblock page_title %}
 
 {% block teaser %}
-    {% placeholder teaser current_page %}
+    {% placeholder with teaser %}
 {% endblock %}
 
 {% block left_column %}
-    {% placeholder left_column current_page WYMEditor %}
+    {% placeholder left_column with WYMEditor %}
 {% endblock %}
 
 {% block right_column %}
-    {% placeholder right_column current_page WYMEditor %}
+    {% placeholder right_column with WYMEditor %}
 {% endblock %}
