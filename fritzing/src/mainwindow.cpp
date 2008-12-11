@@ -144,15 +144,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     if (!styleSheet.open(QIODevice::ReadOnly)) {
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
-		/*
-#ifdef Q_WS_WIN
-		int marginTop = m_toolbar->height() */ /* - m_tabWidget->tabBar()->height() */ // + 4;
-/*#else
-		int marginTop = m_toolbar->height() */ /* - m_tabWidget->tabBar()->height() */ //+ 2;
-/*#endif
-		QString tabbarStyle =
-			QString("QToolBar QTabBar::tab {margin-top: %1px;} ").arg(marginTop)+
-			QString("#sketch_tabs::pane {top: -%2px;}").arg(8);*/
 		setStyleSheet(styleSheet.readAll()+___MacStyle___);
 	}
 
@@ -225,7 +216,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
-	/* HELP STUFF */
 	new Helper(this);
 }
 

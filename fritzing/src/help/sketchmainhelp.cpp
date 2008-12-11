@@ -28,6 +28,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QLabel>
 
 #include "sketchmainhelp.h"
+#include "../expandinglabel.h"
 
 
 SketchMainHelpPrivate::SketchMainHelpPrivate (const QString &imagePath, const QString &htmlText)
@@ -36,11 +37,14 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (const QString &imagePath, const QS
 	QHBoxLayout *layout = new QHBoxLayout(this);
 	QLabel *imageLabel = new QLabel(this);
 	imageLabel->setPixmap(QPixmap(imagePath));
-	QLabel *textLabel = new QLabel(htmlText, this);
+	ExpandingLabel *textLabel = new ExpandingLabel(this);
+	textLabel->setLabelText(htmlText);
+	textLabel->setToolTip("");
 	layout->setSpacing(0);
 	layout->setMargin(0);
 	layout->addWidget(imageLabel);
 	layout->addWidget(textLabel);
+	setFixedWidth(430);
 }
 
 SketchMainHelp::SketchMainHelp (

@@ -123,5 +123,7 @@ $Date$
     <file>resources/js/infoview.js</file>
     <file>resources/bins/bin.fz</file>
     <file>resources/images/helpImageBreadboard.png</file>
+    <file>resources/images/helpImageSchematic.png</file>
+    <file>resources/images/helpImagePCB.png</file>
 </qresource>
 </RCC>

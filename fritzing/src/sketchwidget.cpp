@@ -3146,7 +3146,7 @@ bool SketchWidget::swappingEnabled() {
 
 void SketchWidget::resizeEvent(QResizeEvent * event) {
 	InfoGraphicsView::resizeEvent(event);
-	emit resizeSignal();
+	emit resizeSignal(event->oldSize(), event->size());
 }
 
 void SketchWidget::addBreadboardViewLayers() {

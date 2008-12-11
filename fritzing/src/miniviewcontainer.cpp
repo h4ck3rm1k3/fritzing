@@ -68,7 +68,7 @@ void MiniViewContainer::setView(QGraphicsView * view)
 		disconnect(oldView->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
 		disconnect(oldView->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
 		disconnect(oldView->scene(), SIGNAL(sceneRectChanged(QRectF)), this, SLOT(updateFrame()));
-		disconnect(oldView, SIGNAL(resizeSignal()), this, SLOT(updateFrame()));
+		disconnect(oldView, SIGNAL(resizeSignal(const QSize&, const QSize&)), this, SLOT(updateFrame()));
 		disconnect(m_frame, SIGNAL(scrollChangeSignal(double, double)), oldView, SLOT(navigatorScrollChange(double, double)));
 	}
 
@@ -82,7 +82,7 @@ void MiniViewContainer::setView(QGraphicsView * view)
 	bool succeeded = connect(view->horizontalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
 	succeeded = connect(view->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(updateFrame()));
 	succeeded = connect(view->scene(), SIGNAL(sceneRectChanged(QRectF)), this, SLOT(updateFrame()));
-	succeeded = connect(view, SIGNAL(resizeSignal()), this, SLOT(updateFrame()));
+	succeeded = connect(view, SIGNAL(resizeSignal(const QSize&, const QSize&)), this, SLOT(updateFrame()));
 	succeeded = connect(m_frame, SIGNAL(scrollChangeSignal(double, double)), view, SLOT(navigatorScrollChange(double, double)));
 
 	// force a resize on a view change because otherwise some size or sceneRect isn't updated and the navigator is off

@@ -37,19 +37,34 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include "../mainwindow.h"
 
 class Helper : public QObject {
-public:
-	Helper(MainWindow *owner);
+	Q_OBJECT
+	public:
+		Helper(MainWindow *owner);
 
-protected:
-	MainWindow *m_owner;
+	protected slots:
+		void init();
+		void viewResized(const QSize& oldSize, const QSize& newSize);
 
-	SketchMainHelp *m_breadMainHelp;
-	SketchMainHelp *m_schemMainHelp;
-	SketchMainHelp *m_pcbMainHelp;
+	protected:
+		void addAndCenterItemInView(SketchMainHelp *item, SketchWidget* view);
+		void centerItemInView(SketchMainHelp *item, SketchWidget* view);
+		void moveItemBy(SketchMainHelp *item, qreal dx, qreal dy);
 
-protected:
-	static QString BreadboardHelpText;
-	static QString BreadboardHelpImage;
+	protected:
+		MainWindow *m_owner;
+
+		SketchMainHelp *m_breadMainHelp;
+		SketchMainHelp *m_schemMainHelp;
+		SketchMainHelp *m_pcbMainHelp;
+
+	protected:
+		static QString BreadboardHelpText;
+		static QString SchematicHelpText;
+		static QString PCBHelpText;
+
+		static QString BreadboardHelpImage;
+		static QString SchematicHelpImage;
+		static QString PCBHelpImage;
 };
 
 #endif /* HELPER_H_ */
