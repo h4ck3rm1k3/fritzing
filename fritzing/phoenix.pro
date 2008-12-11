@@ -43,5 +43,6 @@ include(partsbinpalette.pri)
 include(partseditor.pri)
 include(referencemodel.pri)
 include(svg.pri)
+include(help.pri)
 TARGET = Fritzing
 TEMPLATE = app

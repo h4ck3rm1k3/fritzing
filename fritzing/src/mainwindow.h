@@ -59,10 +59,11 @@ class QListWidget;
 class QMenu;
 QT_END_NAMESPACE
 
+class Helper;
+
 class MainWindow : public FritzingWindow
 {
     Q_OBJECT
-
 public:
     MainWindow(PaletteModel *, ReferenceModel *refModel);
     MainWindow(QFile & fileToLoad);
@@ -438,6 +439,8 @@ protected:
     QStringList m_openExampleActions;
 
 	class TripleNavigator * m_tripleNavigator;
+
+	friend class Helper;
 
 public:
 	static const int PartsBinDefaultHeight = 220;

@@ -55,6 +55,8 @@ $Date$
 #include "layerattributes.h"
 #include "triplenavigator.h"
 
+#include "help/helper.h"
+
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
@@ -223,6 +225,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
+	/* HELP STUFF */
+	new Helper(this);
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {

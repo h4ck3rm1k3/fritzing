@@ -122,5 +122,6 @@ $Date$
     <file>resources/styles/infoview.css</file>
     <file>resources/js/infoview.js</file>
     <file>resources/bins/bin.fz</file>
+    <file>resources/images/helpImageBreadboard.png</file>
 </qresource>
 </RCC>
