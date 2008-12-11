@@ -39,12 +39,15 @@ class SketchMainHelpCloseButton : public QLabel {
 	Q_OBJECT
 	public:
 		SketchMainHelpCloseButton(const QString &imagePath, QWidget *parent);
+		void doShow();
+		void doHide();
 
 	signals:
 		void clicked();
 
 	protected:
 		void mousePressEvent(QMouseEvent * event);
+		QPixmap m_pixmap;
 };
 
 class SketchMainHelp;
@@ -68,6 +71,7 @@ class SketchMainHelpPrivate : public QFrame {
 		friend class SketchMainHelp;
 
 		SketchMainHelp *m_parent;
+		SketchMainHelpCloseButton *m_closeButton;
 		volatile bool m_shouldGetTransparent;
 };
 

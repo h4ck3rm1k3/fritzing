@@ -36,13 +36,22 @@ qreal SketchMainHelp::OpacityLevel = 0.5;
 SketchMainHelpCloseButton::SketchMainHelpCloseButton(const QString &imagePath, QWidget *parent)
 	:QLabel(parent)
 {
-	QString pathAux = ":/resources/images/inViewHelpCloseButton%1.png";
-	setPixmap(QPixmap(pathAux.arg(imagePath)));
+	m_pixmap = QPixmap(QString(":/resources/images/inViewHelpCloseButton%1.png").arg(imagePath));
+	setPixmap(m_pixmap);
+	setFixedHeight(m_pixmap.height());
 }
 
 void SketchMainHelpCloseButton::mousePressEvent(QMouseEvent * event) {
 	emit clicked();
 	QLabel::mousePressEvent(event);
+}
+
+void SketchMainHelpCloseButton::doShow() {
+	setPixmap(m_pixmap);
+}
+
+void SketchMainHelpCloseButton::doHide() {
+	setPixmap(0);
 }
 
 
@@ -74,21 +83,22 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	textLabel->setLabelText(htmlText);
 	textLabel->setToolTip("");
 
-	mainLayout->setSpacing(2);
+	mainLayout->setSpacing(4);
 	mainLayout->setMargin(2);
 	mainLayout->addWidget(imageLabel);
 	mainLayout->addWidget(textLabel);
 	setFixedWidth(430);
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	SketchMainHelpCloseButton *closeBtn = new SketchMainHelpCloseButton(viewString,this);
-	connect(closeBtn, SIGNAL(clicked()), this, SLOT(doClose()));
-	layout->addWidget(closeBtn);
+	m_closeButton = new SketchMainHelpCloseButton(viewString,this);
+	connect(m_closeButton, SIGNAL(clicked()), this, SLOT(doClose()));
+	layout->addWidget(m_closeButton);
 	layout->addWidget(main);
-	layout->setSpacing(2);
+	layout->setSpacing(0);
 	layout->setMargin(2);
 
 	m_shouldGetTransparent = false;
+	m_closeButton->doHide();
 
 	QFile styleSheet(":/resources/styles/inviewhelp.qss");
     if (!styleSheet.open(QIODevice::ReadOnly)) {
@@ -106,6 +116,7 @@ void SketchMainHelpPrivate::enterEvent(QEvent * event) {
 	if(m_shouldGetTransparent) {
 		setWindowOpacity(1.0);
 	}
+	m_closeButton->doShow();
 	QFrame::enterEvent(event);
 }
 
@@ -113,6 +124,7 @@ void SketchMainHelpPrivate::leaveEvent(QEvent * event) {
 	if(m_shouldGetTransparent) {
 		setWindowOpacity(SketchMainHelp::OpacityLevel);
 	}
+	m_closeButton->doHide();
 	QFrame::leaveEvent(event);
 }
 
