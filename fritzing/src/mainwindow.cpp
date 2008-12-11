@@ -216,7 +216,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
-	new Helper(this);
+	if(settings.allKeys().isEmpty()) {
+		new Helper(this);
+	}
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {

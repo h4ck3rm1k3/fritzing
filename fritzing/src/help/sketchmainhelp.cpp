@@ -26,6 +26,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 
 #include <QHBoxLayout>
 #include <QGraphicsScene>
+#include <QFile>
 
 #include "sketchmainhelp.h"
 #include "../expandinglabel.h"
@@ -54,15 +55,25 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 		SketchMainHelp *parent)
 	: QFrame()
 {
+	setObjectName("sketchMainHelp"+viewString);
 	m_parent = parent;
 
 	QFrame *main = new QFrame(this);
 	QHBoxLayout *mainLayout = new QHBoxLayout(main);
 	QLabel *imageLabel = new QLabel(this);
-	imageLabel->setPixmap(QPixmap(imagePath));
+	QLabel *imageLabelAux = new QLabel(imageLabel);
+	imageLabelAux->setObjectName("inviewHelpImage");
+	QPixmap pixmap(imagePath);
+	imageLabelAux->setPixmap(pixmap);
+	imageLabel->setFixedWidth(pixmap.width());
+	imageLabel->setFixedHeight(pixmap.height());
+	imageLabelAux->setFixedWidth(pixmap.width());
+	imageLabelAux->setFixedHeight(pixmap.height());
+
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
 	textLabel->setToolTip("");
+
 	mainLayout->setSpacing(2);
 	mainLayout->setMargin(2);
 	mainLayout->addWidget(imageLabel);
@@ -78,6 +89,13 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	layout->setMargin(2);
 
 	m_shouldGetTransparent = false;
+
+	QFile styleSheet(":/resources/styles/inviewhelp.qss");
+    if (!styleSheet.open(QIODevice::ReadOnly)) {
+		qWarning("Unable to open :/resources/styles/inviewhelp.qss");
+	} else {
+		setStyleSheet(styleSheet.readAll());
+	}
 }
 
 void SketchMainHelpPrivate::doClose() {

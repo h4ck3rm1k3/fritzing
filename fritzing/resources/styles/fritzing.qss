@@ -348,9 +348,9 @@ SketchArea QToolButton {
 }
 
 #sketchAreaToolbar QToolButton::menu-button {
-     border: none;
-	 background-color: none;
-	 padding-top: 17px;
+	border: none;
+	background-color: none;
+	padding-top: 17px;
 }
 
 SketchWidget {

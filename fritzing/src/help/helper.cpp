@@ -30,25 +30,25 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 
 QString Helper::BreadboardHelpText = tr(
 	"Sketches and Prototypes usally start in the <b>Breadboard View</b>."
-	"<br/>"
+	"<br/><br/>"
 	"Begin by dragging out a Bradboard Part from the Parts Bin."
 	"Then populate the breadboard with the components, just like they are arranged in the real world."
-	"<br/>"
+	"<br/><br/>"
 	"The Arduino part wil turn into an Arduino Shield.");
 QString Helper::SchematicHelpText = tr(
 	"Engineers and teachers typically like a <b>Schematic View</b>"
-	"<br/>"
+	"<br/><br/>"
 	"Here you have the same components as you have on your breadboard, "
 	"they just look different and more ... ehm schematic"
-	"<br/>"
+	"<br/><br/>"
 	"Use this Schematic View to check your connections with the ones "
 	"the datasheet will tell you need");
 QString Helper::PCBHelpText = tr(
 	"Use the <b>PCB View</b> for producing your prototype or product."
-	"<br/>"
+	"<br/><br/>"
 	"You can use different (typically smaller) sizes of the parts you have in the "
 	"breadboard, in order to make production faster, lighter and cheaper."
-	"<br/>"
+	"<br/><br/>"
 	"First rearrange all the components so they fit nicely on the board. Then use "
 	"Autoroute &darr; to generate the optimal traces between components.");
 

@@ -117,8 +117,9 @@ $Date$
     <file>resources/images/icons/dockWidgetCollapseNormal_icon.png</file>
     <file>resources/images/icons/dockWidgetCollapseHover_icon.png</file>
     <file>resources/images/icons/dockWidgetCollapsePressed_icon.png</file>
-    <file>resources/styles/partseditor.qss</file>
     <file>resources/styles/fritzing.qss</file>
+    <file>resources/styles/partseditor.qss</file>
+    <file>resources/styles/inviewhelp.qss</file>
     <file>resources/styles/infoview.css</file>
     <file>resources/js/infoview.js</file>
     <file>resources/bins/bin.fz</file>
