@@ -54,6 +54,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::SchematicRuler,  new StringPair("schematicRuler", QObject::tr("Rulers")));
 
 		names.insert(ViewLayer::Board,  new StringPair("board", QObject::tr("Board")));
+		names.insert(ViewLayer::Ratsnest, new StringPair("ratsnest", QObject::tr("Rat's nest")));
 		names.insert(ViewLayer::Silkscreen,  new StringPair("silkscreen", QObject::tr("Silkscreen")));
 		names.insert(ViewLayer::Copper0,  new StringPair("copper0", QObject::tr("Copper 0")));
 		names.insert(ViewLayer::Copper1,  new StringPair("copper1", QObject::tr("Copper 1")));
@@ -61,7 +62,6 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));
 		names.insert(ViewLayer::Vias, new StringPair("vias", QObject::tr("Vias")));
 		names.insert(ViewLayer::Keepout, new StringPair("keepout", QObject::tr("Keep out")));
-		names.insert(ViewLayer::Ratsnest, new StringPair("ratsnest", QObject::tr("Rat's nest")));
 		names.insert(ViewLayer::Jumperwires, new StringPair("jumperwires", QObject::tr("Jumper wires")));
 		names.insert(ViewLayer::PcbRuler,  new StringPair("pcbRuler", QObject::tr("Rulers")));
 

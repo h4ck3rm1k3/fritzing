@@ -184,6 +184,7 @@ ConnectorItem * SchematicSketchWidget::tryWire(ConnectorItem * wireConnectorItem
 {
 	ConnectorItem * splitWireConnectorItem = m_wireHash.value(wireConnectorItem->attachedToID());
 	if (splitWireConnectorItem != NULL) {
+		m_wireHash.remove(wireConnectorItem->attachedToID());
 		return splitWireConnectorItem;
 	}
 
@@ -306,7 +307,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 	}
 
 	if (moveItems.count() > 0) {
-		emit schematicDisconnectWireSignal(moveItems, deletedItems, parentCommand);
+		emit schematicDisconnectWireSignal(moveItems, deletedItems, deletedConnections, parentCommand);
 	}
 
 	foreach (Wire * wire, undeleteWires) {

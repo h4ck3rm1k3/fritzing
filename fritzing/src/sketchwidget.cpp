@@ -526,6 +526,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	QHash<ItemBase *, QMultiHash<ConnectorItem *, ConnectorItem *> * > deletedConnections;
 
+
 	foreach (ItemBase * itemBase, deletedItems) {
 		ConnectorPairHash * connectorHash = new ConnectorPairHash;
 		itemBase->collectConnectors(*connectorHash, this->scene());
@@ -1361,6 +1362,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		delete m_connectorDragWire;
 		m_connectorDragWire = NULL;
 		m_savedItems.clear();
+		m_savedWires.clear();
 		return;
 	}
 
@@ -1373,6 +1375,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		}
 	}
 	m_savedItems.clear();
+	m_savedWires.clear();
 }
 
 bool SketchWidget::checkMoved()

@@ -178,7 +178,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
     m_breadboardGraphicsView->setBackground(QColor(204,204,204));
     m_schematicGraphicsView->setBackground(QColor(255,255,255));
-    m_pcbGraphicsView->setBackground(QColor(0x8F, 0xBC, 0x8F));							// QColor(137,144,153)
+    m_pcbGraphicsView->setBackground(QColor(160,168,179));							// QColor(137,144,153)
 
 	// make sure to set the connections after the views have been created
 	connect(m_tabWidget, SIGNAL(currentChanged ( int )),
@@ -369,8 +369,8 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QList<ItemBase *> &, QUndoCommand *)),
-						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QList<ItemBase *> &, QUndoCommand *)),
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QList<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
+						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QList<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
 						Qt::DirectConnection);
 
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);

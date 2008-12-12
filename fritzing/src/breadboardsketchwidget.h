@@ -43,7 +43,7 @@ public:
 
 
 protected slots:
-	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QList<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
+	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);

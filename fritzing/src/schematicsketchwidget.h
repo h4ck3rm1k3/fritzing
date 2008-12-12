@@ -44,7 +44,7 @@ public:
 	const QString & viewName();
 
 signals:
-	void schematicDisconnectWireSignal(	ConnectorPairHash & moveItems,  QList<ItemBase *> & deletedItems, QUndoCommand * parentCommand);
+	void schematicDisconnectWireSignal(	ConnectorPairHash & moveItems,  QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);

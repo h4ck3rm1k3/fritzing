@@ -108,9 +108,9 @@ void MiniViewContainer::updateFrame()
 
 	QPointF topLeft = view->mapToScene(QPoint(0, 0));
 	QPointF bottomRight = view->mapToScene(QPoint(vSize.width(), vSize.height()));
-	DebugDialog::debug(QString("tl %1 %2; br %3 %4, vs %5 %6")
-		.arg(topLeft.x()).arg(topLeft.y()).arg(bottomRight.x()).arg(bottomRight.y())
-		.arg(vSize.width()).arg(vSize.height()) );
+	//DebugDialog::debug(QString("tl %1 %2; br %3 %4, vs %5 %6")
+		//.arg(topLeft.x()).arg(topLeft.y()).arg(bottomRight.x()).arg(bottomRight.y())
+		//.arg(vSize.width()).arg(vSize.height()) );
 	QRectF sceneRect = view->sceneRect();
 
 	int h, w, dw, dh, newW, newH, newX, newY, tw, th;
@@ -121,7 +121,7 @@ void MiniViewContainer::updateFrame()
 		th = sceneRect.height();
 		h = m_miniView->height();
 		
-		DebugDialog::debug(QString("tw:%1 th:%2").arg(tw).arg(th) );
+		//DebugDialog::debug(QString("tw:%1 th:%2").arg(tw).arg(th) );
 
 		// deal with aspect ratio
 		int trueH = w * th / tw;
@@ -136,7 +136,7 @@ void MiniViewContainer::updateFrame()
 		dw = (this->width() - w) / 2;
 		dh = (this->height() - h) / 2;
 
-		DebugDialog::debug(QString("dw:%1 dh%2 w:%3 h:%4").arg(dw).arg(dh).arg(w).arg(h));
+		//DebugDialog::debug(QString("dw:%1 dh%2 w:%3 h:%4").arg(dw).arg(dh).arg(w).arg(h));
 
 		newW = w * (bottomRight.x() - topLeft.x())  / tw;
 		newX = w * (topLeft.x() - sceneRect.x()) / tw;
@@ -149,7 +149,7 @@ void MiniViewContainer::updateFrame()
 		int page = view->horizontalScrollBar()->pageStep();
 		int value = view->horizontalScrollBar()->value();
 
-		DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
+		//DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
 
 		QMatrix matrix = m_miniView->matrix();
 		w = sceneRect.width() * matrix.m11();		
@@ -157,7 +157,7 @@ void MiniViewContainer::updateFrame()
 		newW = w * page / (max + page - min);
 		newX = w * (value - min) / (max + page - min);
 
-		h = (bottomRight.y() - topLeft.y()) * matrix.m11();
+		h = sceneRect.height() * matrix.m22();
 		dh = (this->height() - h) / 2;
 		newY = 0;
 		newH = h;
@@ -169,18 +169,30 @@ void MiniViewContainer::updateFrame()
 		int page = view->verticalScrollBar()->pageStep();
 		int value = view->verticalScrollBar()->value();
 
-		DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
+		//DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
 
 		QMatrix matrix = m_miniView->matrix();
-		h = sceneRect.height() * matrix.m11();		
+		h = sceneRect.height() * matrix.m22();		
 		dh = (this->height() - h) / 2;
 		newH = h * page / (max + page - min);
 		newY = h * (value - min) / (max + page - min);
 
-		w = (bottomRight.x() - topLeft.x()) * matrix.m11();
+		w = sceneRect.width() * matrix.m11();
 		dw = (this->width() - w) / 2;
 		newX = 0;
 		newW = w;
+	}
+	else if ((sceneRect.width() > 0) && (sceneRect.height() > 0)) {
+		QMatrix matrix = m_miniView->matrix();
+		w = sceneRect.width() * matrix.m11();
+		dw = (this->width() - w) / 2;
+		newX = 0;
+		newW = w;
+
+		h = sceneRect.height() * matrix.m22();
+		dh = (this->height() - h) / 2;
+		newY = 0;
+		newH = h;
 	}
 	else {
 		dw = dh = 0;
