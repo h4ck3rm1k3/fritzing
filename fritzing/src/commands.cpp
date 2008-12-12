@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 
-
 #include "commands.h"
 #include "debugdialog.h"
 #include "sketchwidget.h"
@@ -492,4 +491,35 @@ void WireChainedIDCommand::undo() {
 void WireChainedIDCommand::redo() {
 	m_sketchWidget->setChainedWireID(m_wireID, m_chainedID, m_crossViewType);
 }
+
+//////////////////////////////////////////
+
+
+RatsnestCommand::RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType crossViewType,
+									long fromID, const QString & fromConnectorID,
+									long toID, const QString & toConnectorID,
+									bool connect, bool seekLayerKin,
+									bool chain, QUndoCommand * parent) 
+: ChangeConnectionCommand(sketchWidget, crossViewType, fromID, fromConnectorID, toID, toConnectorID,
+						connect, seekLayerKin, chain, parent)
+{
+}
+
+void RatsnestCommand::undo() {
+	foreach (AddItemCommand * addItemCommand, m_addItemCommands) {
+		addItemCommand->undo();
+	}
+}
+
+void RatsnestCommand::redo() {
+	if (m_addItemCommands.count() == 0) {
+		m_sketchWidget->dealWithRatsnest(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, this);
+	}
+	else {
+		foreach (AddItemCommand * addItemCommand, m_addItemCommands) {
+			addItemCommand->redo();
+		}
+	}
+}
+
 

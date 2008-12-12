@@ -42,6 +42,7 @@ void PCBSchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 	}
 }
 
+/*
 void PCBSchematicSketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems) {
 	ConnectorPairHash allConnectors;
 	foreach (ItemBase * newItem, newItems.values()) {
@@ -50,14 +51,14 @@ void PCBSchematicSketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems
 			if (fromConnectorItem == NULL) continue;
 
 			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-				/*
+				
 				DebugDialog::debug(QString("restoring ratsnest: %1 %2, %3 %4")
 					.arg(fromConnectorItem->attachedToTitle())
 					.arg(fromConnectorItem->connectorStuffID())
 					.arg(toConnectorItem->attachedToTitle())
 					.arg(toConnectorItem->connectorStuffID())
 					);
-				*/
+				
 				allConnectors.insert(fromConnectorItem, toConnectorItem);
 			}
 		}
@@ -72,6 +73,7 @@ void PCBSchematicSketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems
 		}
 	}
 }
+*/
 
 bool PCBSchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Wire || modelPart->itemType() == ModelPart::Breadboard) {

@@ -82,7 +82,7 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 		}
 	}
 }
-
+/*
 void PCBSketchWidget::checkAutorouted()
 {
 	// TODO: the code below is mostly redundant to the code in updateRatsnestStatus
@@ -135,6 +135,7 @@ void PCBSketchWidget::checkAutorouted()
 		}
 	}
 }
+*/
 
 ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName) {
 	Q_UNUSED(layerName);

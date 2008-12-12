@@ -246,12 +246,15 @@ void SketchWidget::loadFromModel() {
 	m_ignoreSelectionChangeEvents = false;
 }
 
+/*
 void SketchWidget::checkAutorouted() {
 }
+
 
 void SketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems) {
 	Q_UNUSED(newItems);
 }
+*/
 
 ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id) {
 	if (m_paletteModel == NULL) return NULL;
@@ -2128,7 +2131,7 @@ void SketchWidget::continueZChangeMax(QList<ItemBase *> & bases, int start, int 
 
 void SketchWidget::continueZChangeAux(QList<ItemBase *> & bases, const QString & text) {
 
-	ChangeZCommand * changeZCommand = new ChangeZCommand(this );
+	ChangeZCommand * changeZCommand = new ChangeZCommand(this, NULL);
 
 	ViewLayer::ViewLayerID lastViewLayerID = ViewLayer::UnknownLayer;
 	qreal z = 0;
@@ -3465,4 +3468,16 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 
 	//DebugDialog::debug(QString("autoscroll %1 %2").arg(m_autoScrollX).arg(m_autoScrollY) );
 	return true;
+}
+
+void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+											long toID, const QString & toConnectorID,
+											bool connect, RatsnestCommand * ratsnestCommand) 
+{
+	Q_UNUSED(fromID);
+	Q_UNUSED(fromConnectorID); 
+	Q_UNUSED(toID);
+	Q_UNUSED(toConnectorID);
+	Q_UNUSED(connect);
+	Q_UNUSED(ratsnestCommand);
 }

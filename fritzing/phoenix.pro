@@ -25,8 +25,11 @@
 #********************************************************************/
 
 CONFIG += debug_and_release
-win32::CONFIG -= embed_manifest_exe
-win32:INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
+win32 {
+	CONFIG -= embed_manifest_exe
+	INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
+	DEFINES += _CRT_SECURE_NO_DEPRECATE
+}
 ICON = resources/images/fritzing_icon.icns
 QT += core \
     gui \

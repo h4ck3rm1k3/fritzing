@@ -45,7 +45,7 @@ public:
 	};
 
 public:
-	BaseCommand(BaseCommand::CrossViewType, class SketchWidget*, QUndoCommand* parent = 0);
+	BaseCommand(BaseCommand::CrossViewType, class SketchWidget*, QUndoCommand* parent);
 	BaseCommand::CrossViewType crossViewType();
 	class SketchWidget* sketchWidget();
 
@@ -57,7 +57,7 @@ protected:
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
-    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent = 0);
+    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent);
 
 protected:
     QString m_moduleID;
@@ -69,7 +69,7 @@ protected:
 class AddItemCommand : public AddDeleteItemCommand
 {
 public:
-    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent = 0, bool updateInfoView=true);
+    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent, bool updateInfoView=true);
     void undo();
     void redo();
 	void turnOffFirstRedo();
@@ -84,7 +84,7 @@ protected:
 class DeleteItemCommand : public AddDeleteItemCommand
 {
 public:
-    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent = 0);
+    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -93,7 +93,7 @@ public:
 class MoveItemCommand : public BaseCommand
 {
 public:
-    MoveItemCommand(class SketchWidget *sketchWidget, long id, ViewGeometry & oldG, ViewGeometry & newG, QUndoCommand *parent = 0);
+    MoveItemCommand(class SketchWidget *sketchWidget, long id, ViewGeometry & oldG, ViewGeometry & newG, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -106,7 +106,7 @@ protected:
 class RotateItemCommand : public BaseCommand
 {
 public:
-    RotateItemCommand(class SketchWidget *sketchWidget, long id, qreal degrees, QUndoCommand *parent = 0);
+    RotateItemCommand(class SketchWidget *sketchWidget, long id, qreal degrees, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -119,7 +119,7 @@ class FlipItemCommand : public BaseCommand
 {
 
 public:
-    FlipItemCommand(class SketchWidget *sketchWidget, long id, Qt::Orientations orientation, QUndoCommand *parent = 0);
+    FlipItemCommand(class SketchWidget *sketchWidget, long id, Qt::Orientations orientation, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -156,7 +156,7 @@ public:
     ChangeWireCommand(class SketchWidget *sketchWidget, long fromID,
     					QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos,
     					bool useLine,
-    					QUndoCommand *parent = 0);
+    					QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -180,7 +180,7 @@ public:
 	};
 
 public:
-    SelectItemCommand(class SketchWidget *sketchWidget, SelectItemType type = NormalSelect, QUndoCommand *parent = 0);
+    SelectItemCommand(class SketchWidget *sketchWidget, SelectItemType type, QUndoCommand *parent);
 
     void undo();
     void redo();
@@ -206,7 +206,7 @@ protected:
 class ChangeZCommand : public BaseCommand
 {
 public:
-    ChangeZCommand(class SketchWidget *sketchWidget, QUndoCommand *parent = 0);
+    ChangeZCommand(class SketchWidget *sketchWidget, QUndoCommand *parent);
     void addTriplet(long id, qreal oldZ, qreal newZ);
     void undo();
     void redo();
@@ -222,7 +222,7 @@ protected:
 class StickyCommand : public BaseCommand
 {
 public:
-	StickyCommand(class SketchWidget *sketchWidget, long stickTargetID, long stickSourceID, bool stick, QUndoCommand *parent = 0);
+	StickyCommand(class SketchWidget *sketchWidget, long stickTargetID, long stickSourceID, bool stick, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -235,7 +235,7 @@ protected:
 class CleanUpWiresCommand : public BaseCommand
 {
 public:
-	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool execRedo, QUndoCommand * parent = 0);
+	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool execRedo, QUndoCommand * parent);
     void undo();
     void redo();
 
@@ -285,7 +285,7 @@ public:
 	WireWidthChangeCommand(
 		SketchWidget* sketchWidget,
 		long wireId, int oldWidth, int newWidth,
-		QUndoCommand *parent=0);
+		QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -302,7 +302,7 @@ public:
 	WireFlagChangeCommand(
 		SketchWidget* sketchWidget,
 		long wireId, ViewGeometry::WireFlags oldFlags, ViewGeometry::WireFlags newFlags,
-		QUndoCommand *parent=0);
+		QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -316,13 +316,29 @@ protected:
 class WireChainedIDCommand : public BaseCommand
 {
 public:
-	WireChainedIDCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType, qint64 wireID, qint64 chainedWireID, QUndoCommand *parent=0);
+	WireChainedIDCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType, qint64 wireID, qint64 chainedWireID, QUndoCommand *parent);
     void undo();
     void redo();
 
 protected:
 	long m_wireID;
 	qint64 m_chainedID;
+};
+
+class RatsnestCommand : public ChangeConnectionCommand
+{
+public:
+	RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType,
+					long fromID, const QString & fromConnectorID,
+					long toID, const QString & toConnectorID,
+					bool connect, bool seekLayerKin,
+					bool chain, QUndoCommand * parent);
+    void undo();
+    void redo();
+
+protected:
+	QList<AddItemCommand *> m_addItemCommands;
+
 };
 
 

@@ -43,7 +43,7 @@ public:
 	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 protected:
-	void redrawRatsnest(QHash<long, ItemBase *> & newItems);
+	//void redrawRatsnest(QHash<long, ItemBase *> & newItems);
 	void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
 	bool canDropModelPart(ModelPart * modelPart);
 	virtual void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire) = 0;

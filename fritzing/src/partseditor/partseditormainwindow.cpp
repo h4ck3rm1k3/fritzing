@@ -198,6 +198,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	QString tags = modelPart ? modelPart->modelPartStuff()->tags().join(", ") : TAGS_FRESH_START_TEXT;
 	m_tags = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
+ 
 
 	m_author = new EditableLineWidget(
 		modelPart ? modelPart->modelPartStuff()->author() : QString(getenv("USER")),

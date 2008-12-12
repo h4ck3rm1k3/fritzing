@@ -168,6 +168,9 @@ public:
 	virtual bool canCopyItem(QGraphicsItem * item);
 	virtual const QString & viewName();
 	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
+	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+								  long toID, const QString & toConnectorID,
+								  bool connect, class RatsnestCommand *);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -234,14 +237,15 @@ protected:
 
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
 	virtual void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
-	virtual void checkAutorouted();
+
+	// virtual void checkAutorouted();
+	// virtual void redrawRatsnest(QHash<long, ItemBase *> & newItems);
 	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
-	virtual void redrawRatsnest(QHash<long, ItemBase *> & newItems);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);

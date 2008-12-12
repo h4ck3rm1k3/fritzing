@@ -53,7 +53,7 @@ public:
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire);
-	void checkAutorouted();
+	// void checkAutorouted();
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	bool canChainWire(Wire *);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
