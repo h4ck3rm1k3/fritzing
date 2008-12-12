@@ -170,7 +170,7 @@ public:
 	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
-								  bool connect, class RatsnestCommand *);
+								  bool connect, class RatsnestCommand *, bool doEmit);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -203,7 +203,7 @@ protected:
 	void updateAllLayersActions(QAction * showAllAction, QAction * hideAllAction);
 	bool checkMoved();
 
-	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
+	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	void changeConnectionAux(long fromID, const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
 						  bool connect, bool seekLayerKin, bool chain);
@@ -236,11 +236,10 @@ protected:
 	void resizeEvent(QResizeEvent *);
 
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
-	virtual void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
-
+	// virtual void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
 	// virtual void checkAutorouted();
 	// virtual void redrawRatsnest(QHash<long, ItemBase *> & newItems);
-	void tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to);
+	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
@@ -293,6 +292,9 @@ signals:
 	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void selectAllItemsSignal(bool state, bool doEmit);
 	void setChainedWireIDSignal(qint64 wireID, qint64 chainedID);
+	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID, 
+								long toID, const QString & toConnectorID,
+								bool connect, class RatsnestCommand * ratsnestCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -322,6 +324,9 @@ protected slots:
 	void dragAutoScrollTimeout();
 	void moveAutoScrollTimeout();
 	void setChainedWireIDSlot(qint64 wireID, qint64 chainedID);
+	void dealWithRatsnestSlot(long fromID, const QString & fromConnectorID, 
+							  long toID, const QString & toConnectorID,
+							  bool connect, class RatsnestCommand * ratsnestCommand); 
 
 public slots:
 	void swapSelected(const QString &moduleId);
@@ -380,7 +385,7 @@ protected:
 	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;
-	bool m_dealWithRatsNestEnabled;
+	//bool m_dealWithRatsNestEnabled;
 	QHash<ConnectorItem *, ConnectorItem *> m_disconnectors;
 };
 

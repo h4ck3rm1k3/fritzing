@@ -72,10 +72,18 @@ void SchematicSketchWidget::updateRatsnestStatus() {
 	}
 }
 
-
-void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect)
+void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+								  long toID, const QString & toConnectorID,
+								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 {
-	if (alreadyRatsnest(fromConnectorItem, toConnectorItem)) return;
+	ConnectorItem * fromConnectorItem = NULL;
+	ConnectorItem * toConnectorItem = NULL;
+	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
+							toID, toConnectorID,
+							connect, ratsnestCommand, doEmit)) 
+	{
+		return;
+	}
 
 	if (connect) {
 		bool useFrom = false;
@@ -92,21 +100,21 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 		}
 
 		if (useFrom && useTo) {
-			makeOneRatsnestWire(fromConnectorItem, toConnectorItem);
+			makeOneRatsnestWire(fromConnectorItem, toConnectorItem, ratsnestCommand);
 			return;
 		}
 
 		if (useFrom && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			ConnectorItem * newTo = tryWire(toConnectorItem, fromConnectorItem);
 			if (newTo != NULL) {
-				makeOneRatsnestWire(fromConnectorItem, newTo);
+				makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
 				return;
 			}
 		}
 		else if (useTo && fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			ConnectorItem * newFrom = tryWire(fromConnectorItem, toConnectorItem);
 			if (newFrom != NULL) {
-				makeOneRatsnestWire(toConnectorItem, newFrom);
+				makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
 				return;
 			}
 		}
@@ -119,14 +127,14 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 		if (useFrom) {
 			ConnectorItem * newTo = tryParts(fromConnectorItem, toConnectorItem, partsConnectorItems);
 			if (newTo != NULL) {
-				makeOneRatsnestWire(fromConnectorItem, newTo);
+				makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
 				return;
 			}
 		}
 		else if (useTo) {
 			ConnectorItem * newFrom = tryParts(toConnectorItem, fromConnectorItem, partsConnectorItems);
 			if (newFrom != NULL) {
-				makeOneRatsnestWire(toConnectorItem, newFrom);
+				makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
 				return;
 			}
 		}
@@ -141,7 +149,7 @@ void SchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, 
 					if (alreadyOnBus(ci, cj)) continue;
 					if (alreadyOnBus(cj, ci)) continue;
 
-					makeOneRatsnestWire(ci, cj);
+					makeOneRatsnestWire(ci, cj, ratsnestCommand);
 					return;
 				}
 			}
@@ -209,11 +217,12 @@ ConnectorItem * SchematicSketchWidget::tryWire(ConnectorItem * wireConnectorItem
 	return NULL;
 }
 
-void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire)
+void SchematicSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand * ratsnestCommand)
 {
 	Q_UNUSED(partsConnectorItems);
 	Q_UNUSED(modelWire);
 	Q_UNUSED(ratsnestWires);
+	Q_UNUSED(ratsnestCommand);
 
 	return;
 }

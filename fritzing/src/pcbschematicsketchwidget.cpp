@@ -104,10 +104,19 @@ bool PCBSchematicSketchWidget::alreadyRatsnest(ConnectorItem * fromConnectorItem
 	return false;
 }
 
+void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+								  long toID, const QString & toConnectorID,
+								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
-void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
-
-	if (alreadyRatsnest(fromConnectorItem, toConnectorItem)) return;
+{
+	ConnectorItem * fromConnectorItem = NULL;
+	ConnectorItem * toConnectorItem = NULL;
+	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
+							toID, toConnectorID,
+							connect, ratsnestCommand, doEmit)) 
+	{
+		return;
+	}
 
 	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
 		.arg(fromConnectorItem->attachedToTitle())
@@ -128,7 +137,7 @@ void PCBSchematicSketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorIte
 		QList <Wire *> ratsnestWires;
 		Wire * modelWire = NULL;
 
-		makeWires(partsConnectorItems, ratsnestWires, modelWire);
+		makeWires(partsConnectorItems, ratsnestWires, modelWire, ratsnestCommand);
 
 		if (ratsnestWires.count() > 0) {
 			const QColor * color = NULL;
@@ -342,7 +351,7 @@ bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * fr
 	return ((from != NULL) && (to != NULL));
 }
 
-Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest) {
+Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand * ratsnestCommand) {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	QPointF fromPos = source->sceneAdjustedTerminalPoint();
@@ -363,9 +372,33 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, NULL);
-	//ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
-	tempConnectWire(newItemBase, source, dest);
-	return  dynamic_cast<Wire *>(newItemBase);
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, NULL);		
+	Wire * wire = dynamic_cast<Wire *>(newItemBase);
+	tempConnectWire(wire, source, dest);
+	ratsnestCommand->addWire(this, wire, source, dest);
+	return wire ;
 }
+
+bool PCBSchematicSketchWidget::dealWithRatsnestAux(ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem, 
+						long fromID, const QString & fromConnectorID, 
+						long toID, const QString & toConnectorID,
+						bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit) 
+{
+	SketchWidget::dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand, doEmit);
+
+	ItemBase * from = findItem(fromID);
+	if (from == NULL) return true;
+
+	fromConnectorItem = findConnectorItem(from, fromConnectorID, true);
+	if (fromConnectorItem == NULL) return true;
+
+	ItemBase * to = findItem(toID);
+	if (to == NULL) return true;
+
+	toConnectorItem = findConnectorItem(to, toConnectorID, true);
+	if (toConnectorItem == NULL) return true;
+
+	return alreadyRatsnest(fromConnectorItem, toConnectorItem);
+}
+
 

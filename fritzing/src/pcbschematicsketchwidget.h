@@ -44,15 +44,22 @@ public:
 
 protected:
 	//void redrawRatsnest(QHash<long, ItemBase *> & newItems);
-	void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
+	//void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
+	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+								  long toID, const QString & toConnectorID,
+								  bool connect, class RatsnestCommand *, bool doEmit);
+	bool dealWithRatsnestAux(ConnectorItem * & from, ConnectorItem * & to,
+							long fromID, const QString & fromConnectorID, 
+							long toID, const QString & toConnectorID,
+							bool connect, class RatsnestCommand *, bool doEmit);
 	bool canDropModelPart(ModelPart * modelPart);
-	virtual void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire) = 0;
+	virtual void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *) = 0;
 	virtual void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems);
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	bool bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
-	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest);
+	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *);
 
 };
 

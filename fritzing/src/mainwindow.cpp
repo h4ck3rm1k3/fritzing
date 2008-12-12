@@ -429,6 +429,13 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(setChainedWireIDSignal(qint64, qint64)),
 									 slotter, SLOT(setChainedWireIDSlot(qint64, qint64)) );
 
+	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &, 
+																			  long, const QString &,
+																			  bool, RatsnestCommand *)),
+									 slotter, SLOT(dealWithRatsnestSlot(long, const QString &, 
+																			  long, const QString &,
+																			  bool, RatsnestCommand *)) );
+
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

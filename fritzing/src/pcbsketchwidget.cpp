@@ -59,7 +59,7 @@ void PCBSketchWidget::addViewLayers() {
 }
 
 
-void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire)
+void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand * ratsnestCommand)
 {
 	int count = partsConnectorItems.count();
 	for (int i = 0; i < count - 1; i++) {
@@ -69,7 +69,7 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 			// if you can't get from i to j via wires, then add a virtual ratsnest wire
 			Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
 			if (tempWire == NULL) {
-				Wire * newWire = makeOneRatsnestWire(source, dest);
+				Wire * newWire = makeOneRatsnestWire(source, dest, ratsnestCommand);
 				ratsnestWires.append(newWire);
 				if (source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
 					newWire->setRouted(true);
@@ -331,7 +331,7 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 		makeDeleteItemCommand(jumperOrTrace, parentCommand);
 	}
 
-	long newID = createWire(ends[0], ends[1], flag, false, BaseCommand::SingleView, parentCommand);
+	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, UNROUTED_OPACITY, UNROUTED_OPACITY, parentCommand);
 	new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
 	makeChangeRoutedCommand(wire, true, ROUTED_OPACITY, parentCommand);

@@ -64,7 +64,7 @@ $Date$
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
-	m_dealWithRatsNestEnabled = true;
+	//m_dealWithRatsNestEnabled = true;
 	m_ignoreSelectionChangeEvents = false;
 	m_droppingItem = NULL;
 	m_chainDrag = false;
@@ -166,7 +166,7 @@ void SketchWidget::loadFromModel() {
 	ModelPart* root = m_sketchModel->root();
 	QHash<long, ItemBase *> newItems;
 	QHash<ItemBase *, QDomElement *> itemDoms;
-	m_dealWithRatsNestEnabled = false;
+	//m_dealWithRatsNestEnabled = false;
 	m_ignoreSelectionChangeEvents = true;
 
 	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
@@ -239,7 +239,7 @@ void SketchWidget::loadFromModel() {
 
 	updateRatsnestStatus();
 
-	m_dealWithRatsNestEnabled = true;
+	//m_dealWithRatsNestEnabled = true;
 	//redrawRatsnest(newItems);
 	//checkAutorouted();
 	this->scene()->clearSelection();
@@ -627,11 +627,16 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 								fromItem->id(), fromConnectorItem->connectorStuffID(),
 								toItem->id(), toConnectorItem->connectorStuffID(),
 								connect, seekLayerKin, false, parentCommand);
+	new RatsnestCommand(this, BaseCommand::CrossView,
+								fromItem->id(), fromConnectorItem->connectorStuffID(),
+								toItem->id(), toConnectorItem->connectorStuffID(),
+								connect, seekLayerKin, false, parentCommand);
 }
 
 
 long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags wireFlags,
-							  bool addItNow, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
+							  bool addItNow, bool doRatsnest,
+							  BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand)
 {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
@@ -657,11 +662,17 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 			newID, "connector0", true, true, false, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
 			newID, "connector1", true, true, false, parentCommand);
+	if (doRatsnest) {
+		new RatsnestCommand(this, crossViewType, from->attachedToID(), from->connectorStuffID(),
+				newID, "connector0", true, true, false, parentCommand);
+		new RatsnestCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
+				newID, "connector1", true, true, false, parentCommand);
+	}
 
 	if (addItNow) {
 		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
 		if (newItemBase) {
-			tempConnectWire(newItemBase, from, to);
+			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
 		}
 	}
@@ -973,14 +984,9 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 			DebugDialog::debug(tr("pasting %1 %2 %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
 			fromID = mapIDs.value(fromID);
 			toID = mapIDs.value(toID);
-			new ChangeConnectionCommand(this, BaseCommand::CrossView,
-										fromID, fromConnectorID,
-										toID, toConnectorID,
-										true, true, false, parentCommand);
-
-			//extendChangeConnectionCommand(fromID, fromConnectorID,
-			//							  toID, toConnectorID,
-			//							  true, true, parentCommand);
+			extendChangeConnectionCommand(fromID, fromConnectorID,
+										  toID, toConnectorID,
+										  true, true, parentCommand);
 		}
 	}
 
@@ -2550,21 +2556,17 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	fromConnectorItem->attachedTo()->updateConnections(fromConnectorItem);
 	toConnectorItem->attachedTo()->updateConnections(toConnectorItem);
 
-	if (m_dealWithRatsNestEnabled) {
-		dealWithRatsnest(fromConnectorItem, toConnectorItem, connect);
-	}
 }
 
+/*
 void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
 	Q_UNUSED(fromConnectorItem);
 	Q_UNUSED(toConnectorItem);
 	Q_UNUSED(connect);
 }
+*/
 
-void SketchWidget::tempConnectWire(ItemBase * itemBase, ConnectorItem * from, ConnectorItem * to) {
-	Wire * wire = dynamic_cast<Wire *>(itemBase);
-	if (wire == NULL) return;
-
+void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to) {
 	ConnectorItem * connector0 = wire->connector0();
 	from->tempConnectTo(connector0);
 	connector0->tempConnectTo(from);
@@ -3482,12 +3484,17 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 
 void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID,
 											long toID, const QString & toConnectorID,
-											bool connect, RatsnestCommand * ratsnestCommand)
+											bool connect, RatsnestCommand * ratsnestCommand, bool doEmit)
 {
-	Q_UNUSED(fromID);
-	Q_UNUSED(fromConnectorID);
-	Q_UNUSED(toID);
-	Q_UNUSED(toConnectorID);
-	Q_UNUSED(connect);
-	Q_UNUSED(ratsnestCommand);
+	if (doEmit) {
+		emit dealWithRatsnestSignal(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand);
+	}
+}
+
+
+void SketchWidget::dealWithRatsnestSlot(long fromID, const QString & fromConnectorID, 
+													long toID, const QString & toConnectorID,
+													bool connect, class RatsnestCommand * ratsnestCommand) 
+{
+	dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand, false);
 }

@@ -506,20 +506,44 @@ RatsnestCommand::RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand:
 }
 
 void RatsnestCommand::undo() {
-	foreach (AddItemCommand * addItemCommand, m_addItemCommands) {
-		addItemCommand->undo();
+	foreach (BaseCommand * command, m_commands) {
+		command->undo();
 	}
 }
 
 void RatsnestCommand::redo() {
-	if (m_addItemCommands.count() == 0) {
-		m_sketchWidget->dealWithRatsnest(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, this);
+	if (m_commands.count() == 0) {
+		m_sketchWidget->dealWithRatsnest(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, this, m_crossViewType == BaseCommand::CrossView);
 	}
 	else {
-		foreach (AddItemCommand * addItemCommand, m_addItemCommands) {
-			addItemCommand->redo();
+		foreach (BaseCommand * command, m_commands) {
+			command->redo();
 		}
 	}
 }
+
+void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest) 
+{
+	m_commands.append(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), NULL));
+	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
+	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
+	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorStuffID(),
+			wire->id(), "connector0", true, true, false, NULL));
+	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorStuffID(),
+			wire->id(), "connector1", true, true, false, NULL));
+
+	/*
+	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
+	 .arg(newID)
+	 .arg(fromPos.x()).arg(fromPos.y())
+	 .arg(toPos.x()).arg(toPos.y())
+	 .arg(source->attachedToTitle()).arg(source->connectorStuffID())
+	 .arg(dest->attachedToTitle()).arg(dest->connectorStuffID())
+	 .arg(m_viewIdentifier)
+	 );
+	 */
+
+}
+
 
 

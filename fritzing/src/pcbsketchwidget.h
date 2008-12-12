@@ -52,7 +52,7 @@ public:
 
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
-	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire);
+	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
 	// void checkAutorouted();
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	bool canChainWire(Wire *);

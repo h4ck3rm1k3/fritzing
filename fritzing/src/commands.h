@@ -335,9 +335,10 @@ public:
 					bool chain, QUndoCommand * parent);
     void undo();
     void redo();
+	void addWire(class SketchWidget *, class Wire *, class ConnectorItem * source, class ConnectorItem * dest);
 
 protected:
-	QList<AddItemCommand *> m_addItemCommands;
+	QList<BaseCommand *> m_commands;
 
 };
 
