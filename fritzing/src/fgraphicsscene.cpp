@@ -30,4 +30,10 @@ FGraphicsScene::FGraphicsScene( QObject * parent) : QGraphicsScene(parent)
 {
 }
 
+void FGraphicsScene::drawItems ( QPainter * painter, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget * widget)
+{
+	QGraphicsScene::drawItems(painter, numItems, items, options, widget);
+}
+
+
 

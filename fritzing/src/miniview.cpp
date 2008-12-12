@@ -26,6 +26,8 @@ $Date$
 
 #include "miniview.h"
 #include "debugdialog.h"
+#include "fgraphicsscene.h"
+#include "help/sketchmainhelp.h"
 
 
 MiniView::MiniView(QWidget *parent ) 
@@ -81,3 +83,25 @@ QGraphicsView * MiniView::view() {
 	return m_otherView;
 }
 
+void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[])
+{
+	FGraphicsScene * fScene = dynamic_cast<FGraphicsScene *>(scene());
+
+    QGraphicsItem **itemArray = new QGraphicsItem *[numItems];
+    QStyleOptionGraphicsItem *styleOptionArray = new QStyleOptionGraphicsItem[numItems];
+
+	int ix = 0;
+	for (int i = 0; i < numItems; i++) {
+		if (dynamic_cast<SketchMainHelp *>(items[i])) continue;
+
+		itemArray[ix] = items[i];
+		styleOptionArray[ix++] = options[i];
+	}
+
+	if (fScene != NULL) {
+		fScene->drawItems(painter, ix, itemArray, styleOptionArray, viewport());
+	}
+
+	delete [] itemArray;
+	delete [] styleOptionArray;
+}
