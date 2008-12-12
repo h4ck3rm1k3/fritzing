@@ -47,7 +47,7 @@ class Helper : public QObject {
 		void somethingDroppedIntoView();
 
 	protected:
-		void addAndCenterItemInView(SketchMainHelp *item, SketchWidget* view);
+		void addItemToView(SketchMainHelp *item, SketchWidget* view);
 		void centerItemInView(SketchMainHelp *item, SketchWidget* view);
 		void moveItemBy(SketchMainHelp *item, qreal dx, qreal dy);
 

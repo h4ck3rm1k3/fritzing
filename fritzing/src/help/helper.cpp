@@ -71,12 +71,17 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 }
 
 void Helper::init() {
-	addAndCenterItemInView(m_breadMainHelp, m_owner->m_breadboardGraphicsView);
-	addAndCenterItemInView(m_schemMainHelp, m_owner->m_schematicGraphicsView);
-	addAndCenterItemInView(m_pcbMainHelp, m_owner->m_pcbGraphicsView);
+	addItemToView(m_breadMainHelp, m_owner->m_breadboardGraphicsView);
+	centerItemInView(m_breadMainHelp, m_owner->m_breadboardGraphicsView);
+
+	addItemToView(m_schemMainHelp, m_owner->m_schematicGraphicsView);
+	centerItemInView(m_schemMainHelp, m_owner->m_breadboardGraphicsView);
+
+	addItemToView(m_pcbMainHelp, m_owner->m_pcbGraphicsView);
+	centerItemInView(m_pcbMainHelp, m_owner->m_breadboardGraphicsView);
 }
 
-void Helper::addAndCenterItemInView(SketchMainHelp *item, SketchWidget* view) {
+void Helper::addItemToView(SketchMainHelp *item, SketchWidget* view) {
 	// here we assume that when a view is resized, the no
 	// visible ones, also get resized in the background
 	connect(
@@ -88,7 +93,7 @@ void Helper::addAndCenterItemInView(SketchMainHelp *item, SketchWidget* view) {
 	connect(view, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
 
 	view->scene()->addItem(item);
-	centerItemInView(item, view);
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 }
 
 void Helper::centerItemInView(SketchMainHelp *item, SketchWidget* view) {
@@ -111,9 +116,9 @@ void Helper::viewResized(const QSize& oldSize, const QSize& newSize) {
 void Helper::somethingDroppedIntoView() {
 	if(m_stillWaitingFirstDrop) {
 		m_stillWaitingFirstDrop = false;
-		m_breadMainHelp->applyAlpha();
-		m_schemMainHelp->applyAlpha();
-		m_pcbMainHelp->applyAlpha();
+		m_breadMainHelp->setTransparent();
+		m_schemMainHelp->setTransparent();
+		m_pcbMainHelp->setTransparent();
 	}
 }
 

@@ -27,6 +27,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QHBoxLayout>
 #include <QGraphicsScene>
 #include <QFile>
+#include <QTimer>
 
 #include "sketchmainhelp.h"
 #include "../expandinglabel.h"
@@ -82,6 +83,7 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
 	textLabel->setToolTip("");
+	textLabel->setAlignment(Qt::AlignLeft);
 
 	mainLayout->setSpacing(4);
 	mainLayout->setMargin(2);
@@ -115,14 +117,22 @@ void SketchMainHelpPrivate::doClose() {
 void SketchMainHelpPrivate::enterEvent(QEvent * event) {
 	if(m_shouldGetTransparent) {
 		setWindowOpacity(1.0);
+		QTimer *timer = new QTimer(this);
+		timer->setSingleShot(true);
+		connect(timer, SIGNAL(timeout()), this, SLOT(setTransparent()));
+		timer->start(2000);
 	}
 	m_closeButton->doShow();
 	QFrame::enterEvent(event);
 }
 
+void SketchMainHelpPrivate::setTransparent() {
+	setWindowOpacity(SketchMainHelp::OpacityLevel);
+}
+
 void SketchMainHelpPrivate::leaveEvent(QEvent * event) {
 	if(m_shouldGetTransparent) {
-		setWindowOpacity(SketchMainHelp::OpacityLevel);
+		setTransparent();
 	}
 	m_closeButton->doHide();
 	QFrame::leaveEvent(event);
@@ -137,6 +147,7 @@ SketchMainHelp::SketchMainHelp (
 		const QString &htmlText
 	) : QGraphicsProxyWidget()
 {
+	setObjectName(viewString);
 	m_son = new SketchMainHelpPrivate(viewString, imagePath, htmlText, this);
 	setWidget(m_son);
 }
@@ -146,7 +157,7 @@ void SketchMainHelp::doClose() {
 	scene()->removeItem(this);
 }
 
-void SketchMainHelp::applyAlpha() {
+void SketchMainHelp::setTransparent() {
 	m_son->setWindowOpacity(OpacityLevel);
 	m_son->m_shouldGetTransparent = true;
 }

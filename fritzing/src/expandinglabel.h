@@ -46,6 +46,17 @@ public:
 		setAlignment(Qt::AlignCenter);
 		setContextMenuPolicy(Qt::NoContextMenu);
 	}
+
+protected:
+	void mouseMoveEvent(QMouseEvent * event) {
+		QAbstractScrollArea::mouseMoveEvent(event);
+	}
+	void mousePressEvent(QMouseEvent *event) {
+		QAbstractScrollArea::mousePressEvent(event);
+	}
+	void mouseReleaseEvent(QMouseEvent *event) {
+		QAbstractScrollArea::mouseReleaseEvent(event);
+	}
 };
 
 #endif /* EXPANDINGLABEL_H_ */

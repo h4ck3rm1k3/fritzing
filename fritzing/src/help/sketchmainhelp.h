@@ -62,6 +62,7 @@ class SketchMainHelpPrivate : public QFrame {
 
 	protected slots:
 		void doClose();
+		void setTransparent();
 
 	protected:
 		void enterEvent(QEvent * event);
@@ -79,7 +80,7 @@ class SketchMainHelp : public QGraphicsProxyWidget {
 public:
 	SketchMainHelp(const QString &viewString, const QString &imagePath, const QString &htmlText);
 	void doClose();
-	void applyAlpha();
+	void setTransparent();
 
 protected:
 	SketchMainHelpPrivate *m_son;

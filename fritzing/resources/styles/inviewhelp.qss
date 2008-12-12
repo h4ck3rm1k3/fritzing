@@ -1,9 +1,30 @@
 SketchMainHelpPrivate {
 	padding: 5px;
 	border-radius: 5px;
-	border: 1px solid black;
+	border: 3px solid black;
+}
+
+#sketchMainHelpBreadboard {
+	background-color: #e2e2e2;
+	/*border-top-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                     		stop: 0 #bbb, stop: 1.0 #dedede);
+	border-right-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                     		stop: 0 #bbb, stop: 1.0 #dedede);
+	border-bottom-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                     		stop: 0 #eaeaea, stop: 1.0 #dedede);
+	border-left-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                     		stop: 0 #eaeaea, stop: 1.0 #dedede);*/
+}
+
+#sketchMainHelpSchematic {
+	background-color: #f1f1f1;
+}
+
+#sketchMainHelpPCB {
+	background-color: #a5abb0;
 }
 
 #inviewHelpImage {
 	border: 4px solid white;
 }
+
