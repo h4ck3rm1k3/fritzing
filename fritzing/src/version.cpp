@@ -17,18 +17,18 @@ You should have received a copy of the GNU General Public License
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
-												
+
 $Revision$:
 $Author$:
 $Date$
 
 ********************************************************************/
-	
+
 #include "version.h"
-			
+
 #include <QString>
 #include <QStringList>
-			
+
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("1");
 QString Version::m_modifier("b");
@@ -40,7 +40,7 @@ QString Version::m_shortDate;
 QString Version::m_versionString;
 QString Version::m_year;
 Version * Version::m_singleton = new Version();
-									
+
 Version::Version() {
 	m_revision = "";
 	QStringList strings = m_svnRevision.split(" ", QString::SkipEmptyParts);

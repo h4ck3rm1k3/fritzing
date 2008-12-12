@@ -458,7 +458,7 @@ void MainPartsEditorWindow::makeDock(const QString & title, QWidget * widget,  Q
     addDockWidget(area, dock);
     dock->setMinimumSize(dock->minimumSize().width(), docMinHeight);
     dock->resize(docWidth, dock->size().height());
-    connect(dock, SIGNAL(dockChangeActivationSignal(FDockWidget *)), this, SLOT(dockChangeActivation(class FDockWidget *)));
+    //connect(dock, SIGNAL(dockChangeActivationSignal(FDockWidget *)), this, SLOT(dockChangeActivation(class FDockWidget *)));
 }
 
 void MainPartsEditorWindow::closeEvent(QCloseEvent *event) {

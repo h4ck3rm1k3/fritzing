@@ -77,7 +77,9 @@ HEADERS += src/abstractstatesbutton.h \
     src/virtualwire.h \
     src/waitpushundostack.h \
     src/wire.h \
-    src/zoomcombobox.h
+    src/zoomcombobox.h \
+    src/dockmanager.h \
+    src/idockablewidget.h
 SOURCES += src/aboutbox.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
@@ -137,4 +139,5 @@ SOURCES += src/aboutbox.cpp \
     src/virtualwire.cpp \
     src/wire.cpp \
     src/waitpushundostack.cpp \
-    src/zoomcombobox.cpp
+    src/zoomcombobox.cpp \
+    src/dockmanager.cpp

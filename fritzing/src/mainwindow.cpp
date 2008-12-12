@@ -56,6 +56,7 @@ $Date$
 #include "triplenavigator.h"
 
 #include "help/helper.h"
+#include "dockmanager.h"
 
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
@@ -78,6 +79,10 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_currentWidget = NULL;
 	m_firstOpen = true;
 
+	m_statusBar = new QStatusBar(this);
+	setStatusBar(m_statusBar);
+	m_statusBar->setSizeGripEnabled(false);
+
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
 #ifdef Q_WS_MAC
@@ -92,6 +97,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_tabWidget = new QStackedWidget(this); //   FTabWidget(this);
 	m_tabWidget->setObjectName("sketch_tabs");
+
 	setCentralWidget(m_tabWidget);
 
 
@@ -119,13 +125,14 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     m_undoView->setGroup(m_undoGroup);
     m_undoGroup->setActiveStack(m_breadboardGraphicsView->undoStack());
 
-    createBinAndInfoViewDocks();
+    DockManager *dockManager = new DockManager(this);
+    dockManager->createBinAndInfoViewDocks();
     createActions();
     createSketchButtons();
     createMenus();
     createToolBars();
     createStatusBar();
-    createDockWindows();
+    dockManager->createDockWindows();
 
     m_breadboardWidget->setContent(
     	getButtonsForView(m_breadboardWidget->viewIdentifier()),
@@ -190,6 +197,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_currentWidget = NULL;
 	int tab = 0;
 	currentNavigatorChanged(m_navigators[tab]);
+	tabWidget_currentChanged(tab+1);
 	tabWidget_currentChanged(tab);
 	updateTransformationActions();
 
@@ -608,12 +616,17 @@ void MainWindow::updateViewZoom(qreal newZoom) {
 
 void MainWindow::createStatusBar()
 {
-    statusBar()->showMessage(tr("Ready"));
+    m_statusBar->showMessage(tr("Ready"));
 }
 
 void MainWindow::tabWidget_currentChanged(int index) {
 	SketchAreaWidget * widgetParent = dynamic_cast<SketchAreaWidget *>(m_tabWidget->currentWidget());
 	if (widgetParent == NULL) return;
+
+	QStatusBar *sb = statusBar();
+	connect(sb, SIGNAL(messageChanged(const QString &)), m_statusBar, SLOT(showMessage(const QString &)));
+	widgetParent->layout()->addWidget(m_statusBar);
+	if(sb != m_statusBar) sb->hide();
 
 	SketchWidget *widget = widgetParent->graphicsView();
 
@@ -785,89 +798,6 @@ void MainWindow::changeActivation(QEvent *) {
 	}
 
 }
-
-void MainWindow::dockChangeActivation(FDockWidget *) {
-	if (!m_closing) {
-		changeActivation(NULL);
-	}
-}
-
-void MainWindow::createBinAndInfoViewDocks() {
-	m_infoView = new HtmlInfoView(m_refModel);
-
-	m_paletteWidget = new PartsBinPaletteWidget(m_refModel, m_infoView, m_undoStack, this);
-	connect(m_paletteWidget, SIGNAL(saved(bool)), this, SLOT(binSaved(bool)));
-	connect(this, SIGNAL(alienPartsDismissed()), m_paletteWidget, SLOT(removeAlienParts()));
-
-	if (m_paletteModel->loadedFromFile()) {
-		m_paletteWidget->loadFromModel(m_paletteModel);
-	} else {
-		m_paletteWidget->setPaletteModel(m_paletteModel);
-	}
-}
-
-void MainWindow::createDockWindows()
-{
-	dockIt(m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
-
-    makeDock(tr("Part Inspector"), m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
-
-    m_navigators << (m_miniViewContainerBreadboard = new MiniViewContainer(this));
-	m_miniViewContainerBreadboard->filterMousePress();
-	connect(m_miniViewContainerBreadboard, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
-								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
-
-    m_navigators << (m_miniViewContainerSchematic = new MiniViewContainer(this));
-	m_miniViewContainerSchematic->filterMousePress();
-	connect(m_miniViewContainerSchematic, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
-								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
-
-    m_navigators << (m_miniViewContainerPCB = new MiniViewContainer(this));
-	m_miniViewContainerPCB->filterMousePress();
-	connect(m_miniViewContainerPCB, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
-								this, SLOT(currentNavigatorChanged(MiniViewContainer *)));
-
-    makeDock(tr("Undo History"), m_undoView, UndoHistoryMinHeight, UndoHistoryDefaultHeight)->hide();
-    m_undoView->setMinimumSize(DockMinWidth, UndoHistoryMinHeight);
-
-	m_tripleNavigator = new TripleNavigator(this);
-	m_tripleNavigator->addView(m_miniViewContainerBreadboard, tr("Breadboard"));
-	m_tripleNavigator->addView(m_miniViewContainerSchematic, tr("Schematic"));
-	m_tripleNavigator->addView(m_miniViewContainerPCB, tr("PCB"));
-	makeDock(tr("Navigator"), m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
-
-    m_consoleView = new Console();
-    FDockWidget * dock = makeDock(tr("Console"), m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
-	dock->hide();
-
-    m_windowMenu->addSeparator();
-    m_windowMenu->addAction(m_toggleDebuggerOutputAct);
-    m_windowMenu->addSeparator();
-}
-
-FDockWidget * MainWindow::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
-    FDockWidget * dock = new FDockWidget(title, this);
-    dock->setWidget(widget);
-    widget->setParent(dock);
-    widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-	return dockIt(dock, dockMinHeight, dockDefaultHeight, area);
-}
-
-FDockWidget *MainWindow::dockIt(FDockWidget* dock, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
-    //dock->setStyle(new QCleanlooksStyle());
-	dock->setAllowedAreas(area);
-    addDockWidget(area, dock);
-    m_windowMenu->addAction(dock->toggleViewAction());
-
-    dock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	dock->setMinimumSize(DockMinWidth, dockMinHeight);
-	dock->resize(DockDefaultWidth, dockDefaultHeight);
-    connect(dock, SIGNAL(dockChangeActivationSignal(FDockWidget *)), this, SLOT(dockChangeActivation(class FDockWidget *)));
-
-    return dock;
-}
-
 
 void MainWindow::loadPart(QString newPartPath) {
 	ModelPart * modelPart = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
@@ -1323,4 +1253,8 @@ void MainWindow::updateRaiseWindowAction() {
 	m_raiseWindowAct->setText(actionText);
 	m_raiseWindowAct->setToolTip(m_fileName);
 	m_raiseWindowAct->setStatusTip("raise \""+m_fileName+"\" window");
+}
+
+QSizeGrip *MainWindow::sizeGrip() {
+	return m_sizeGrip;
 }

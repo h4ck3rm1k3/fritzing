@@ -34,6 +34,7 @@ $Date$
 #include <QToolButton>
 #include <QPushButton>
 #include <QStackedWidget>
+#include <QSizeGrip>
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
@@ -60,6 +61,7 @@ class QMenu;
 QT_END_NAMESPACE
 
 class Helper;
+class DockManager;
 
 class MainWindow : public FritzingWindow
 {
@@ -71,6 +73,7 @@ public:
 	void doOnce();
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
+	QSizeGrip *sizeGrip();
 
 public:
 	static void initExportConstants();
@@ -132,7 +135,6 @@ protected slots:
 	void updateWindowMenu();
 	void preferences();
 	void pageSetup();
-	void dockChangeActivation(class FDockWidget *);
 	void sendToBack();
 	void sendBackward();
 	void bringForward();
@@ -201,8 +203,6 @@ protected:
     void createToolBars();
     void createSketchButtons();
     void createStatusBar();
-    void createBinAndInfoViewDocks();
-    void createDockWindows();
 	void connectPairs();
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
 	void closeEvent(QCloseEvent * event);
@@ -211,8 +211,6 @@ protected:
 	void exportAux(QString fileName, QImage::Format format);
 	void changeActivation(QEvent * event);
 	void changeEvent ( QEvent * event );
-	class FDockWidget * makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
-	class FDockWidget * dockIt(FDockWidget* dock, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
 	void notYetImplemented(QString action);
 	void calcPrinterScale();
 	void preloadSlowParts();
@@ -439,23 +437,11 @@ protected:
     QStringList m_openExampleActions;
 
 	class TripleNavigator * m_tripleNavigator;
+	QSizeGrip *m_sizeGrip;
 
 	friend class Helper;
+	friend class DockManager;
 
-public:
-	static const int PartsBinDefaultHeight = 220;
-	static const int PartsBinMinHeight = 122;
-	static const int NavigatorDefaultHeight = 70;
-	static const int NavigatorMinHeight = NavigatorDefaultHeight;
-	static const int InfoViewDefaultHeight = 150;
-	static const int InfoViewMinHeight = 50;
-	static const int UndoHistoryDefaultHeight = 70;
-	static const int UndoHistoryMinHeight = UndoHistoryDefaultHeight;
-public:
-	static const int DockDefaultWidth = 185;
-	static const int DockMinWidth = 130;
-	static const int DockDefaultHeight = 50;
-	static const int DockMinHeight = 30;
 
 protected:
 	static const QString UntitledSketchName;

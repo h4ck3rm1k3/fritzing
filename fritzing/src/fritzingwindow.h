@@ -31,6 +31,7 @@ $Date$
 
 #include <QMainWindow>
 #include <QDir>
+#include <QStatusBar>
 
 #include "waitpushundostack.h"
 
@@ -68,6 +69,7 @@ class FritzingWindow : public QMainWindow {
 		bool m_readOnly;
 		QAction *m_closeAct;
 		QDir m_tempDir;
+		QStatusBar *m_statusBar;
 
 	public:
 		// TODO: these probably belong in some separate file i/o class

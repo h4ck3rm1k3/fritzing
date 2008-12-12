@@ -37,6 +37,7 @@ $Date$
 #include "mainwindow.h"
 #include "rendererviewthing.h"
 #include "layerattributes.h"
+#include "dockmanager.h"
 
 
 #define HTML_EOF "</body>\n</html>"
@@ -488,7 +489,7 @@ void HtmlInfoView::setContent(const QString &html) {
 }
 
 QSize HtmlInfoView::sizeHint() const {
-	return QSize(MainWindow::DockDefaultWidth,MainWindow::InfoViewDefaultHeight);
+	return QSize(DockManager::DockDefaultWidth, DockManager::InfoViewDefaultHeight);
 }
 
 void HtmlInfoView::registerCurrentAgain() {

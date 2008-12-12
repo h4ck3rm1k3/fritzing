@@ -37,6 +37,7 @@ $Date$
 #include "../mainwindow.h"
 #include "../misc.h"
 #include "../debugdialog.h"
+#include "../dockmanager.h"
 
 #define TITLE tr("Parts")
 
@@ -76,7 +77,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 }
 
 QSize PartsBinPaletteWidget::sizeHint() const {
-	return QSize(MainWindow::DockDefaultWidth, MainWindow::PartsBinDefaultHeight);
+	return QSize(DockManager::DockDefaultWidth, DockManager::PartsBinDefaultHeight);
 }
 
 void PartsBinPaletteWidget::setupFooter() {

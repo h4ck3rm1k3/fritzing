@@ -83,7 +83,7 @@ void MainWindow::print() {
 		QPrintDialog *printDialog = new QPrintDialog(&printer, this);
 		if (printDialog->exec() == QDialog::Accepted) {
 			printAux(printer,tr("Printing..."));
-			statusBar()->showMessage(tr("Ready"), 2000);
+			m_statusBar->showMessage(tr("Ready"), 2000);
 		} else {
 			return;
 		}
@@ -140,7 +140,7 @@ void MainWindow::exportDiy(QAction * action) {
 		QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
 		svgRenderer.render(&painter, bounds);
 		painter.end();
-		statusBar()->showMessage(tr("Sketch exported"), 2000);
+		m_statusBar->showMessage(tr("Sketch exported"), 2000);
 	}
 
 
@@ -263,7 +263,7 @@ void MainWindow::doExport(QAction * action) {
 				printer.setOutputFormat(filePrintFormats[fileExt]);
 				printer.setOutputFileName(fileName);
 				printAux(printer,tr("Exporting..."));
-				statusBar()->showMessage(tr("Sketch exported"), 2000);
+				m_statusBar->showMessage(tr("Sketch exported"), 2000);
 			} else { // PNG...
 				DebugDialog::debug(tr("format: %1 %2").arg(fileExt).arg(fileExportFormats[fileExt]));
 				exportAux(fileName,fileExportFormats[fileExt]);
@@ -400,7 +400,7 @@ void MainWindow::saveAsAux(const QString & fileName) {
 	m_sketchModel->save(fileName);
     QApplication::restoreOverrideCursor();
 
-    statusBar()->showMessage(tr("Saved '%1'").arg(fileName), 2000);
+    m_statusBar->showMessage(tr("Saved '%1'").arg(fileName), 2000);
     setCurrentFile(fileName);
 
    // mark the stack clean so we update the window dirty flag

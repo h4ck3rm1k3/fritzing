@@ -347,7 +347,7 @@ bool FritzingWindow::unzipTo(const QString &filepath, const QString &dirToDecomp
 			qWarning("out.open(): %s", out.errorString().toLocal8Bit().constData());
 			return false;
 		}
-		
+
 		// Slow like hell (on GNU/Linux at least), but it is not my fault.
 		// Not ZIP/UNZIP package's fault either.
 		// The slowest thing here is out.putChar(c).
