@@ -74,6 +74,7 @@ public:
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
 	QSizeGrip *sizeGrip();
+	QStatusBar *realStatusBar();
 
 public:
 	static void initExportConstants();

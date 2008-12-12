@@ -59,6 +59,7 @@ $Date$
 #include "zoomcombobox.h"
 #include "autorouter1.h"
 #include "fgraphicsscene.h"
+#include "mainwindow.h"
 
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -2911,10 +2912,19 @@ void SketchWidget::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 }
 
 void SketchWidget::statusMessage(QString message, int timeout) {
-	QMainWindow * mainWindow = dynamic_cast<QMainWindow *>(window());
-	if (mainWindow == NULL) return;
+	QStatusBar *sb;
+	MainWindow * mainWindow = dynamic_cast<MainWindow *>(window());
+	if (mainWindow == NULL) {
+		QMainWindow * qMainWindow = dynamic_cast<QMainWindow *>(window());
+		if (qMainWindow == NULL) return;
+		else {
+			sb = qMainWindow->statusBar();
+		}
+	} else {
+		sb = mainWindow->realStatusBar();
+	}
 
-	mainWindow->statusBar()->showMessage(message, timeout);
+	sb->showMessage(message, timeout);
 }
 
 void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
@@ -3470,12 +3480,12 @@ bool SketchWidget::checkAutoscroll(QPoint globalPos)
 	return true;
 }
 
-void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID,
 											long toID, const QString & toConnectorID,
-											bool connect, RatsnestCommand * ratsnestCommand) 
+											bool connect, RatsnestCommand * ratsnestCommand)
 {
 	Q_UNUSED(fromID);
-	Q_UNUSED(fromConnectorID); 
+	Q_UNUSED(fromConnectorID);
 	Q_UNUSED(toID);
 	Q_UNUSED(toConnectorID);
 	Q_UNUSED(connect);

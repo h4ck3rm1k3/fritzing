@@ -24,6 +24,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 
 ********************************************************************/
 
+#include <math.h>
 
 #include "helper.h"
 #include "../debugdialog.h"
@@ -104,12 +105,14 @@ void Helper::centerItemInView(SketchMainHelp *item, SketchWidget* view) {
 }
 
 void Helper::viewResized(const QSize& oldSize, const QSize& newSize) {
-	if(oldSize.width() > -1 || oldSize.height() > -1) { // don't apply on hide/show transition
+	if(oldSize.width() > -1 && oldSize.height() > -1) { // don't apply on hide/show transition
 		qreal dx = (newSize.width()-oldSize.width())/2;
 		qreal dy = (newSize.height()-oldSize.height())/2;
-		moveItemBy(m_breadMainHelp, dx, dy);
-		moveItemBy(m_schemMainHelp, dx, dy);
-		moveItemBy(m_pcbMainHelp, dx, dy);
+		if(fabs(dx) >= 0.1 && fabs(dy) >= 0.1) {
+			moveItemBy(m_breadMainHelp, dx, dy);
+			moveItemBy(m_schemMainHelp, dx, dy);
+			moveItemBy(m_pcbMainHelp, dx, dy);
+		}
 	}
 }
 

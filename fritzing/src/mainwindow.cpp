@@ -1258,3 +1258,7 @@ void MainWindow::updateRaiseWindowAction() {
 QSizeGrip *MainWindow::sizeGrip() {
 	return m_sizeGrip;
 }
+
+QStatusBar *MainWindow::realStatusBar() {
+	return m_statusBar;
+}
