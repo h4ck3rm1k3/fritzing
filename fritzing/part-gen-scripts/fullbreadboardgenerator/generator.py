@@ -117,12 +117,12 @@ http://fritzing.org/learning/parts
 """
 
 def makeUUID():
-    "creates an 8 character hex UUID"
-    return str(uuid.uuid1())
+	"creates an 8 character hex UUID"
+	return str(uuid.uuid1())
     
 def makeDate():
-    "creates a date formatted as YYYY-MM-DD"
-    return date.today().isoformat()
+	"creates a date formatted as YYYY-MM-DD"
+	return date.today().isoformat()
 
 def getUserName():
 	"gets the full user name if available"

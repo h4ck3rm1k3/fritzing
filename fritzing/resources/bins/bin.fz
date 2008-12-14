@@ -9,7 +9,7 @@
                 </iconView >
             </views>
         </instance>
-        <instance moduleIdRef="29496e0b-aa71-11dd-9a14-00c0a8a9e65d" path="parts/core/basic-resistor-220.fz">
+        <instance moduleIdRef="9e39adf0-ca08-11dd-9c4a-001f5b3a17a4" path="parts/core/resistor_220.fz">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
