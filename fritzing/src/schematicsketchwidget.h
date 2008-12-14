@@ -49,7 +49,7 @@ signals:
 protected:
 	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
-	void updateRatsnestStatus();
+	void updateRatsnestStatus(CleanUpWiresCommand*);
 	//void dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
@@ -63,7 +63,7 @@ protected:
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * & connectorItem);
 	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires);
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
-	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems);
+	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
 
 protected:
 	QHash<int, ConnectorItem *> m_wireHash;

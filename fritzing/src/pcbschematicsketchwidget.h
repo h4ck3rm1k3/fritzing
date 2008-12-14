@@ -39,7 +39,7 @@ public:
     PCBSchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent);
 
 	void setNewPartVisible(ItemBase *);
-	void updateRatsnestStatus();
+	void updateRatsnestStatus(CleanUpWiresCommand*);
 	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 protected:
@@ -54,7 +54,7 @@ protected:
 							bool connect, class RatsnestCommand *, bool doEmit);
 	bool canDropModelPart(ModelPart * modelPart);
 	virtual void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *) = 0;
-	virtual void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems);
+	virtual void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);

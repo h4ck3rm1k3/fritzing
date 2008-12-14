@@ -378,5 +378,5 @@ void PCBSketchWidget::makeChangeRoutedCommand(Wire * wire, bool routed, qreal op
 void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
 	Q_UNUSED(parentCommand);
 	Autorouter1::clearTraces(this, true, parentCommand);
-	updateRatsnestStatus();
+	updateRatsnestStatus(NULL);
 }

@@ -238,9 +238,12 @@ public:
 	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool execRedo, QUndoCommand * parent);
     void undo();
     void redo();
+	void addWire(SketchWidget *, class Wire *);
 
 protected:
 	bool m_execRedo;
+	bool m_firstTime;
+	QList<BaseCommand *> m_commands;
 };
 
 class SwapCommand : public BaseCommand
@@ -339,6 +342,7 @@ public:
 
 protected:
 	QList<BaseCommand *> m_commands;
+	bool m_firstTime;
 
 };
 

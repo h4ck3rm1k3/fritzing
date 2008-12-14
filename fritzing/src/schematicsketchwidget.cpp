@@ -62,13 +62,15 @@ void SchematicSketchWidget::addViewLayers() {
 	addSchematicViewLayers();
 }
 
-void SchematicSketchWidget::updateRatsnestStatus() {
-	QHash<ConnectorItem *, int> indexer;
-	QList< QList<ConnectorItem *>* > allPartConnectorItems;
-	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
-	removeRatsnestWires(allPartConnectorItems);
-	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
-		delete list;
+void SchematicSketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command) {
+	if (command) {
+		QHash<ConnectorItem *, int> indexer;
+		QList< QList<ConnectorItem *>* > allPartConnectorItems;
+		Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
+		removeRatsnestWires(allPartConnectorItems, command);
+		foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+			delete list;
+		}
 	}
 }
 
@@ -415,15 +417,16 @@ int SchematicSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem *
 	return result;
 }
 
-void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems)
+void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand * command)
 {
 	if (m_deleteStash.count() > 0) {
 		foreach(Wire * wire, m_deleteStash) {
+			command->addWire(this, wire);
 			deleteItem(wire, true, false);
 		}
 		m_deleteStash.clear();
 		return;
 	}
 
-	PCBSchematicSketchWidget::removeRatsnestWires(allPartConnectorItems);
+	PCBSchematicSketchWidget::removeRatsnestWires(allPartConnectorItems, command);
 }

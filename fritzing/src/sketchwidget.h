@@ -136,7 +136,7 @@ public:
 	void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	void cleanUpWires(bool doEmit);
+	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
 
 	void setItemTooltip(long id, const QString &newTooltip);
 
@@ -159,7 +159,7 @@ public:
 	void hideConnectors(bool hide);
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
-	virtual void updateRatsnestStatus();
+	virtual void updateRatsnestStatus(CleanUpWiresCommand*);
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
 	const QString &selectedModuleID();
@@ -224,7 +224,7 @@ protected:
 	void killDroppingItem();
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
 	ItemBase * overSticky(ItemBase *);
-	void cleanUpWiresAux();
+	void cleanUpWiresAux(CleanUpWiresCommand *);
 	void tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState);
 	virtual void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	virtual void setNewPartVisible(ItemBase *);
@@ -280,7 +280,7 @@ signals:
 	void copyItemSignal(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
 	void deleteItemSignal(long itemID, QUndoCommand * parentCommand);
 	void findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &);
-	void cleanUpWiresSignal();
+	void cleanUpWiresSignal(CleanUpWiresCommand *);
 	void selectionChangedSignal();
 
 	void swapped(long itemId, ModelPart *with);
@@ -317,7 +317,7 @@ protected slots:
 	void sketchWidget_deleteItem(long itemID, QUndoCommand * parentCommand);
 	void dragIsDoneSlot(class ItemDrag *);
 	void statusMessage(QString message, int timeout = 0);
-	void sketchWidget_cleanUpWires();
+	void sketchWidget_cleanUpWires(CleanUpWiresCommand *);
 	void updateInfoViewSlot();
 	void spaceBarIsPressedSlot(bool);
 	void autoScrollTimeout();

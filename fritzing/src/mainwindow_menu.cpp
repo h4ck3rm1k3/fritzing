@@ -1712,7 +1712,7 @@ void MainWindow::autoroute() {
 	qApp->removeEventFilter(&eater);
 	m_dontClose = false;
 
-	m_pcbGraphicsView->updateRatsnestStatus();
+	m_pcbGraphicsView->updateRatsnestStatus(NULL);
 }
 
 void MainWindow::createTrace() {

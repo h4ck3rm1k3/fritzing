@@ -384,22 +384,46 @@ CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, bool execRe
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
 	m_execRedo = execRedo;
+	m_firstTime = true;
 }
 
 void CleanUpWiresCommand::undo()
 {
+	foreach (BaseCommand * command, m_commands) {
+		command->undo();
+	}
 	if (!m_execRedo) {
-		m_sketchWidget->cleanUpWires(true);
+		m_sketchWidget->cleanUpWires(true, NULL);
 	}
 }
 
 void CleanUpWiresCommand::redo()
 {
+	foreach (BaseCommand * command, m_commands) {
+		command->undo();
+	}
 	if (m_execRedo) {
-		m_sketchWidget->cleanUpWires(true);
+		m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL);
+		m_firstTime = false;
 	}
 }
 
+void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire) 
+{
+	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
+	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
+	
+	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
+		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+				wire->id(), "connector0", true, true, false, NULL));
+	}
+	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
+		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+				wire->id(), "connector1", true, true, false, NULL));
+	}
+
+	m_commands.append(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), NULL));
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -503,6 +527,7 @@ RatsnestCommand::RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand:
 : ChangeConnectionCommand(sketchWidget, crossViewType, fromID, fromConnectorID, toID, toConnectorID,
 						connect, seekLayerKin, chain, parent)
 {
+	m_firstTime = true;
 }
 
 void RatsnestCommand::undo() {
@@ -512,7 +537,8 @@ void RatsnestCommand::undo() {
 }
 
 void RatsnestCommand::redo() {
-	if (m_commands.count() == 0) {
+	if (m_firstTime) {
+		m_firstTime = false;
 		m_sketchWidget->dealWithRatsnest(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, this, m_crossViewType == BaseCommand::CrossView);
 	}
 	else {
@@ -531,17 +557,6 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 			wire->id(), "connector0", true, true, false, NULL));
 	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorStuffID(),
 			wire->id(), "connector1", true, true, false, NULL));
-
-	/*
-	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
-	 .arg(newID)
-	 .arg(fromPos.x()).arg(fromPos.y())
-	 .arg(toPos.x()).arg(toPos.y())
-	 .arg(source->attachedToTitle()).arg(source->connectorStuffID())
-	 .arg(dest->attachedToTitle()).arg(dest->connectorStuffID())
-	 .arg(m_viewIdentifier)
-	 );
-	 */
 
 }
 

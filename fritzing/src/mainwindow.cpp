@@ -421,8 +421,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_deleteItem(long, QUndoCommand *)),
 									 Qt::DirectConnection);
 
-	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal()),
-									 slotter, SLOT(sketchWidget_cleanUpWires()) );
+	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal(CleanUpWiresCommand *)),
+									 slotter, SLOT(sketchWidget_cleanUpWires(CleanUpWiresCommand *)) );
 	succeeded = succeeded && connect(signaller, SIGNAL(swapped(long, ModelPart*)),
 									 slotter, SLOT(swap(long, ModelPart*)) );
 

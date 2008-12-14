@@ -158,7 +158,7 @@ void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fro
 
 }
 
-void PCBSchematicSketchWidget::updateRatsnestStatus()
+void PCBSchematicSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command)
 {
 	QHash<ConnectorItem *, int> indexer;
 	QList< QList<ConnectorItem *>* > allPartConnectorItems;
@@ -225,7 +225,9 @@ void PCBSchematicSketchWidget::updateRatsnestStatus()
 		}
 	}
 
-	removeRatsnestWires(allPartConnectorItems);
+	if (command) {
+		removeRatsnestWires(allPartConnectorItems, command);
+	}
 
 
 	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
@@ -242,7 +244,7 @@ void PCBSchematicSketchWidget::forwardRoutingStatusSignal(int netCount, int netR
 }
 
 
-void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems)
+void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand * command)
 {
 	QSet<Wire *> deleteWires;
 	QSet<Wire *> visitedWires;
@@ -286,6 +288,7 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 	}
 
 	foreach (Wire * wire, deleteWires) {
+		command->addWire(this, wire);
 		deleteItem(wire, true, false);
 	}
 }

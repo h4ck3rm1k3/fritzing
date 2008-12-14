@@ -237,13 +237,13 @@ void SketchWidget::loadFromModel() {
 		}
 	}
 
-	updateRatsnestStatus();
+	updateRatsnestStatus(NULL);
 
 	//m_dealWithRatsNestEnabled = true;
 	//redrawRatsnest(newItems);
 	//checkAutorouted();
 	this->scene()->clearSelection();
-	cleanUpWires(false);
+	cleanUpWires(false, NULL);
 	m_ignoreSelectionChangeEvents = false;
 }
 
@@ -2977,19 +2977,19 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 	return false;
 }
 
-void SketchWidget::cleanUpWires(bool doEmit) {
-	cleanUpWiresAux();
+void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
+	cleanUpWiresAux(command);
 
 	if (doEmit) {
-		emit cleanUpWiresSignal();
+		emit cleanUpWiresSignal(command);
 	}
 }
 
-void SketchWidget::sketchWidget_cleanUpWires() {
-	cleanUpWiresAux();
+void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
+	cleanUpWiresAux(command);
 }
 
-void SketchWidget::cleanUpWiresAux() {
+void SketchWidget::cleanUpWiresAux(CleanUpWiresCommand * command) {
 	QList<Wire *> wires;
 	QList<QGraphicsItem *>items = scene()->items();
 	// TODO: get rid of scene()->items()
@@ -3001,7 +3001,7 @@ void SketchWidget::cleanUpWiresAux() {
 		cleanUpWire(wire, wires);
 	}
 
-	updateRatsnestStatus();
+	updateRatsnestStatus(command);
 }
 
 void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState) {
@@ -3277,7 +3277,8 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	}
 }
 
-void SketchWidget::updateRatsnestStatus() {
+void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command) {
+	Q_UNUSED(command);
 }
 
 
