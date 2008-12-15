@@ -32,3 +32,12 @@ SketchMainHelpPrivate {
 #inviewHelpImage {
 	border: 4px solid white;
 }
+
+#toolHelp, #toolHelp QLabel {
+	background-color: transparent;
+}
+
+#toolHelpTextPartsBin {
+	padding-top: 15px;
+	padding-left: 20px;
+}

@@ -34,6 +34,7 @@ $Date$
 #include <QObject>
 
 #include "sketchmainhelp.h"
+#include "toolhelp.h"
 #include "../mainwindow.h"
 
 class Helper : public QObject {
@@ -43,13 +44,16 @@ class Helper : public QObject {
 
 	protected slots:
 		void init();
-		void viewResized(const QSize& oldSize, const QSize& newSize);
+		void viewChanged();
 		void somethingDroppedIntoView();
 
 	protected:
-		void addItemToView(SketchMainHelp *item, SketchWidget* view);
+		void addItemToView(QGraphicsWidget *item, SketchWidget* view);
 		void centerItemInView(SketchMainHelp *item, SketchWidget* view);
-		void moveItemBy(SketchMainHelp *item, qreal dx, qreal dy);
+		void fixedX(ToolHelp *item, SketchWidget* view);
+		void fixedY(ToolHelp *item, SketchWidget* view);
+		void moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy);
+		void connectToScrollBar(QScrollBar *scrollBar);
 
 	protected:
 		MainWindow *m_owner;
@@ -58,6 +62,10 @@ class Helper : public QObject {
 		SketchMainHelp *m_schemMainHelp;
 		SketchMainHelp *m_pcbMainHelp;
 
+		ToolHelp *m_partsBinHelp;
+		ToolHelp *m_autorouteHelp;
+		ToolHelp *m_switchButtonsHelp;
+
 		bool m_stillWaitingFirstDrop;
 
 	protected:
@@ -65,9 +73,9 @@ class Helper : public QObject {
 		static QString SchematicHelpText;
 		static QString PCBHelpText;
 
-		static QString BreadboardHelpImage;
-		static QString SchematicHelpImage;
-		static QString PCBHelpImage;
+		static QString PartsBinHelpText;
+		static QString AutorouteHelpText;
+		static QString SwitchButtonsHelpText;
 };
 
 #endif /* HELPER_H_ */

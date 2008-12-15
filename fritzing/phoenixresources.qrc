@@ -129,5 +129,8 @@ $Date$
     <file>resources/images/inViewHelpCloseButtonBreadboard.png</file>
     <file>resources/images/inViewHelpCloseButtonSchematic.png</file>
     <file>resources/images/inViewHelpCloseButtonPCB.png</file>
+    <file>resources/images/inViewHelpPartsBinArrow.png</file>
+    <file>resources/images/inViewHelpAutorouteArrow.png</file>
+    <file>resources/images/inViewHelpSwitchButtonsArrow.png</file>
 </qresource>
 </RCC>

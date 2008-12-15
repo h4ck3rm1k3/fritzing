@@ -60,7 +60,6 @@ void SketchMainHelpCloseButton::doHide() {
 
 SketchMainHelpPrivate::SketchMainHelpPrivate (
 		const QString &viewString,
-		const QString &imagePath,
 		const QString &htmlText,
 		SketchMainHelp *parent)
 	: QFrame()
@@ -73,7 +72,7 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	QLabel *imageLabel = new QLabel(this);
 	QLabel *imageLabelAux = new QLabel(imageLabel);
 	imageLabelAux->setObjectName("inviewHelpImage");
-	QPixmap pixmap(imagePath);
+	QPixmap pixmap(QString(":/resources/images/helpImage%1.png").arg(viewString));
 	imageLabelAux->setPixmap(pixmap);
 	imageLabel->setFixedWidth(pixmap.width());
 	imageLabel->setFixedHeight(pixmap.height());
@@ -143,12 +142,11 @@ void SketchMainHelpPrivate::leaveEvent(QEvent * event) {
 
 SketchMainHelp::SketchMainHelp (
 		const QString &viewString,
-		const QString &imagePath,
 		const QString &htmlText
 	) : QGraphicsProxyWidget()
 {
 	setObjectName(viewString);
-	m_son = new SketchMainHelpPrivate(viewString, imagePath, htmlText, this);
+	m_son = new SketchMainHelpPrivate(viewString, htmlText, this);
 	setWidget(m_son);
 }
 

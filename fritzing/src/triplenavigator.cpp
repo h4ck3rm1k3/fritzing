@@ -33,7 +33,7 @@ $Date$
 #include <QLabel>
 
 
-const QString labelStyle = "#tripleNavigatorLabel { color: %1; font-weight: %2; }";
+const QString labelStyle = "#tripleNavigatorLabel { /*color: %1; font-weight: %2;*/ }";
 const QString pressedStyleColor = "#ffffff";
 const QString pressedStyleWeight = "bold";
 const QString normalStyleColor = "#000000";
@@ -52,7 +52,7 @@ TripleNavigator::TripleNavigator( QWidget * parent )
     this->setLayout(layout);
 }
 
-void TripleNavigator::addView(MiniViewContainer * miniViewContainer, const QString & title) 
+void TripleNavigator::addView(MiniViewContainer * miniViewContainer, const QString & title)
 {
 	TripleNavigatorFrame * frame = new TripleNavigatorFrame(miniViewContainer, title, this);
 
@@ -68,12 +68,12 @@ void TripleNavigator::addView(MiniViewContainer * miniViewContainer, const QStri
 
 ///////////////////////////////////////////
 
-TripleNavigatorLabel::TripleNavigatorLabel(QWidget * parent) : QLabel(parent) 
+TripleNavigatorLabel::TripleNavigatorLabel(QWidget * parent) : QLabel(parent)
 {
 	m_miniViewContainer = NULL;
 }
 
-void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewContainer) 
+void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewContainer)
 {
 	m_miniViewContainer = miniViewContainer;
 }
@@ -96,14 +96,14 @@ void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniVie
 void TripleNavigatorLabel::navigatorMouseEnterSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
 		if (m_currentStyleColor != pressedStyleColor) {
-			setStyleSheet(labelStyle.arg(hoverStyleColor).arg(hoverStyleWeight));
+			//setStyleSheet(labelStyle.arg(hoverStyleColor).arg(hoverStyleWeight));
 		}
 	}
 }
 
 void TripleNavigatorLabel::navigatorMouseLeaveSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
-		setStyleSheet(labelStyle.arg(m_currentStyleColor).arg(m_currentStyleWeight));
+		//setStyleSheet(labelStyle.arg(m_currentStyleColor).arg(m_currentStyleWeight));
 	}
 }
 
@@ -120,18 +120,19 @@ TripleNavigatorFrame::TripleNavigatorFrame(MiniViewContainer * miniViewContainer
 	m_tripleNavigatorLabel->setMiniViewContainer(miniViewContainer);
 	m_tripleNavigatorLabel->setObjectName("tripleNavigatorLabel");
 	m_tripleNavigatorLabel->setText(title);
-	m_tripleNavigatorLabel->setFixedHeight(11);
+	m_tripleNavigatorLabel->setFixedHeight(13);
+	//m_tripleNavigatorLabel->setFixedWidth(m_tripleNavigatorLabel->te);
 	m_tripleNavigatorLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 	layout->addWidget(m_tripleNavigatorLabel);
 	installEventFilter(this);
 }
 
 void TripleNavigatorFrame::hook(MiniViewContainer * miniViewContainer) {
-	connect(miniViewContainer, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)), 
+	connect(miniViewContainer, SIGNAL(navigatorMousePressedSignal(MiniViewContainer *)),
 		    this->m_tripleNavigatorLabel, SLOT(navigatorMousePressedSlot(MiniViewContainer *)) );
-	connect(miniViewContainer, SIGNAL(navigatorMouseEnterSignal(MiniViewContainer *)), 
+	connect(miniViewContainer, SIGNAL(navigatorMouseEnterSignal(MiniViewContainer *)),
 		    this->m_tripleNavigatorLabel, SLOT(navigatorMouseEnterSlot(MiniViewContainer *)) );
-	connect(miniViewContainer, SIGNAL(navigatorMouseLeaveSignal(MiniViewContainer *)), 
+	connect(miniViewContainer, SIGNAL(navigatorMouseLeaveSignal(MiniViewContainer *)),
 		    this->m_tripleNavigatorLabel, SLOT(navigatorMouseLeaveSlot(MiniViewContainer *)) );
 }
 

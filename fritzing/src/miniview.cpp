@@ -30,7 +30,7 @@ $Date$
 #include "help/sketchmainhelp.h"
 
 
-MiniView::MiniView(QWidget *parent ) 
+MiniView::MiniView(QWidget *parent )
 	: QGraphicsView(parent)
 {
 	m_otherView = NULL;
@@ -62,14 +62,14 @@ void MiniView::updateSceneRect ( const QRectF & rect ) {
 		QMatrix m2(-matrix.m11(), matrix.m12(), matrix.m21(), -matrix.m22(), matrix.dx(), matrix.dy());
 		setMatrix(m2);
 	}
-	
+
 	emit rectChangedSignal();
 }
 
-void MiniView::resizeEvent ( QResizeEvent * event ) 
+void MiniView::resizeEvent ( QResizeEvent * event )
 {
 	QGraphicsView::resizeEvent(event);
-	fitInView(sceneRect(), Qt::KeepAspectRatio);	
+	fitInView(sceneRect(), Qt::KeepAspectRatio);
 	emit rectChangedSignal();
 }
 
@@ -92,7 +92,7 @@ void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[]
 
 	int ix = 0;
 	for (int i = 0; i < numItems; i++) {
-		if (dynamic_cast<SketchMainHelp *>(items[i])) continue;
+		if (dynamic_cast<ISketchHelpItem *>(items[i])) continue;
 
 		itemArray[ix] = items[i];
 		styleOptionArray[ix++] = options[i];

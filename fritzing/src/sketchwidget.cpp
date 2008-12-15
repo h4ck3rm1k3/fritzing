@@ -1540,6 +1540,7 @@ void SketchWidget::wheelEvent(QWheelEvent* event) {
 
 	//DebugDialog::debug(QObject::tr("translate %1 %2").arg(spos.x()).arg(spos.y()) );
 
+	emit wheelSignal();
 }
 
 
@@ -3148,7 +3149,7 @@ bool SketchWidget::swappingEnabled() {
 
 void SketchWidget::resizeEvent(QResizeEvent * event) {
 	InfoGraphicsView::resizeEvent(event);
-	emit resizeSignal(event->oldSize(), event->size());
+	emit resizeSignal();
 }
 
 void SketchWidget::addBreadboardViewLayers() {
@@ -3475,9 +3476,9 @@ void SketchWidget::dealWithRatsnest(long fromID, const QString & fromConnectorID
 }
 
 
-void SketchWidget::dealWithRatsnestSlot(long fromID, const QString & fromConnectorID, 
+void SketchWidget::dealWithRatsnestSlot(long fromID, const QString & fromConnectorID,
 													long toID, const QString & toConnectorID,
-													bool connect, class RatsnestCommand * ratsnestCommand) 
+													bool connect, class RatsnestCommand * ratsnestCommand)
 {
 	dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand, false);
 }

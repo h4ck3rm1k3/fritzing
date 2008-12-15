@@ -77,6 +77,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_emptyIcon = QIcon();
 
 	m_currentWidget = NULL;
+	m_currentGraphicsView = NULL;
 	m_firstOpen = true;
 
 	m_statusBar = new QStatusBar(this);
@@ -194,7 +195,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	connectPairs();
 
 	// do this the first time, since the current_changed signal wasn't sent
-	m_currentWidget = NULL;
+	m_currentGraphicsView = NULL;
 	int tab = 0;
 	currentNavigatorChanged(m_navigators[tab]);
 	tabWidget_currentChanged(tab+1);
@@ -429,10 +430,10 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(setChainedWireIDSignal(qint64, qint64)),
 									 slotter, SLOT(setChainedWireIDSlot(qint64, qint64)) );
 
-	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &, 
+	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &,
 																			  long, const QString &,
 																			  bool, RatsnestCommand *)),
-									 slotter, SLOT(dealWithRatsnestSlot(long, const QString &, 
+									 slotter, SLOT(dealWithRatsnestSlot(long, const QString &,
 																			  long, const QString &,
 																			  bool, RatsnestCommand *)) );
 
@@ -608,7 +609,7 @@ void MainWindow::updateZoomOptions(qreal zoom) {
 }
 
 SketchAreaWidget *MainWindow::currentSketchArea() {
-	return dynamic_cast<SketchAreaWidget*>(m_currentWidget->parent());
+	return dynamic_cast<SketchAreaWidget*>(m_currentGraphicsView->parent());
 }
 
 void MainWindow::updateZoomOptionsNoMatterWhat(qreal zoom) {
@@ -617,7 +618,7 @@ void MainWindow::updateZoomOptionsNoMatterWhat(qreal zoom) {
 
 void MainWindow::updateViewZoom(qreal newZoom) {
 	m_comboboxChanged = true;
-	if(m_currentWidget) m_currentWidget->absoluteZoom(newZoom);
+	if(m_currentGraphicsView) m_currentGraphicsView->absoluteZoom(newZoom);
 }
 
 
@@ -630,6 +631,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	SketchAreaWidget * widgetParent = dynamic_cast<SketchAreaWidget *>(m_tabWidget->currentWidget());
 	if (widgetParent == NULL) return;
 
+	m_currentWidget = widgetParent;
+
 	QStatusBar *sb = statusBar();
 	connect(sb, SIGNAL(messageChanged(const QString &)), m_statusBar, SLOT(showMessage(const QString &)));
 	widgetParent->layout()->addWidget(m_statusBar);
@@ -637,19 +640,19 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	SketchWidget *widget = widgetParent->graphicsView();
 
-	if(m_currentWidget) {
+	if(m_currentGraphicsView) {
 		disconnect(
-			m_currentWidget,
+			m_currentGraphicsView,
 			SIGNAL(selectionChangedSignal()),
 			this,
 			SLOT(updateTransformationActions())
 		);
 	}
-	m_currentWidget = widget;
+	m_currentGraphicsView = widget;
 	if (widget == NULL) return;
 
 	connect(
-		m_currentWidget,					// don't connect directly to the scene here, connect to the widget's signal
+		m_currentGraphicsView,					// don't connect directly to the scene here, connect to the widget's signal
 		SIGNAL(selectionChangedSignal()),
 		this,
 		SLOT(updateTransformationActions())
@@ -888,7 +891,7 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 
 void MainWindow::swapSelected() {
 	ModelPart *selInParts = m_paletteWidget->selected();
-	if(selInParts) m_currentWidget->swapSelected(selInParts);
+	if(selInParts) m_currentGraphicsView->swapSelected(selInParts);
 }
 
 #define ZIP_PART QString("part.")
@@ -1219,12 +1222,12 @@ void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView)
 }
 
 const QString MainWindow::fritzingTitle() {
-	if (m_currentWidget == NULL) {
+	if (m_currentGraphicsView == NULL) {
 		return FritzingWindow::fritzingTitle();
 	}
 
 	QString fritzing = FritzingWindow::fritzingTitle();
-	return tr("%1 - [%2]").arg(fritzing).arg(m_currentWidget->viewName());
+	return tr("%1 - [%2]").arg(fritzing).arg(m_currentGraphicsView->viewName());
 }
 
 QAction *MainWindow::raiseWindowAction() {

@@ -308,7 +308,9 @@ protected:
     bool m_closing;
 	bool m_dontClose;
     bool m_firstOpen;
-    SketchWidget * m_currentWidget;
+
+    SketchAreaWidget *m_currentWidget;
+    SketchWidget * m_currentGraphicsView;
 
     //QToolBar *m_fileToolBar;
     //QToolBar *m_editToolBar;

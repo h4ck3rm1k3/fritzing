@@ -16,7 +16,10 @@
 # $Author: andre.knoerig $:
 # $Date: 2008-11-15 16:16:14 +0100 (Sat, 15 Nov 2008) $
 # ********************************************************************/
-HEADERS += src/help/sketchmainhelp.h \
+HEADERS += src/help/isketchhelpitem.h \
+    src/help/toolhelp.h \
+    src/help/sketchmainhelp.h \
     src/help/helper.h
-SOURCES += src/help/sketchmainhelp.cpp \
+SOURCES += src/help/toolhelp.cpp \
+    src/help/sketchmainhelp.cpp \
     src/help/helper.cpp

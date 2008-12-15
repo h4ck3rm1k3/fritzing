@@ -273,13 +273,13 @@ void MainWindow::doExport(QAction * action) {
 }
 
 void MainWindow::exportAux(QString fileName, QImage::Format format) {
-	int width = m_currentWidget->width();
-	if (m_currentWidget->verticalScrollBar()->isVisible()) {
-		width -= m_currentWidget->verticalScrollBar()->width();
+	int width = m_currentGraphicsView->width();
+	if (m_currentGraphicsView->verticalScrollBar()->isVisible()) {
+		width -= m_currentGraphicsView->verticalScrollBar()->width();
 	}
-	int height = m_currentWidget->height();
-	if (m_currentWidget->horizontalScrollBar()->isVisible()) {
-		height -= m_currentWidget->horizontalScrollBar()->height();
+	int height = m_currentGraphicsView->height();
+	if (m_currentGraphicsView->horizontalScrollBar()->isVisible()) {
+		height -= m_currentGraphicsView->horizontalScrollBar()->height();
 	}
 	QSize imgSize(width, height);
 	QImage image(imgSize,format);
@@ -294,7 +294,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format) {
 	//}
 
 	painter.begin(&image);
-	m_currentWidget->render(&painter);
+	m_currentGraphicsView->render(&painter);
 	painter.end();
 
 	//if (true) {
@@ -332,21 +332,21 @@ void MainWindow::printAux(QPrinter &printer, QString /* message */, bool removeB
 
 		QColor color;
 		if(removeBackground) {
-			color = m_currentWidget->background();
-			m_currentWidget->setBackground(QColor::fromRgb(255,255,255,255));
+			color = m_currentGraphicsView->background();
+			m_currentGraphicsView->setBackground(QColor::fromRgb(255,255,255,255));
 		}
 
-		QList<QGraphicsItem*> selItems = m_currentWidget->scene()->selectedItems();
+		QList<QGraphicsItem*> selItems = m_currentGraphicsView->scene()->selectedItems();
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(false);
 		}
-		m_currentWidget->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+		m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(true);
 		}
 
 		if(removeBackground) {
-			m_currentWidget->setBackground(color);
+			m_currentGraphicsView->setBackground(color);
 		}
 
 		DebugDialog::debug(QObject::tr("source w:%1 h:%2 target w:%5 h:%6 pres:%3 screenres:%4")
@@ -502,42 +502,42 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 }
 
 void MainWindow::copy() {
-	if (m_currentWidget == NULL) return;
-	m_currentWidget->copy();
+	if (m_currentGraphicsView == NULL) return;
+	m_currentGraphicsView->copy();
 }
 
 void MainWindow::cut() {
-	if (m_currentWidget == NULL) return;
-	m_currentWidget->cut();
+	if (m_currentGraphicsView == NULL) return;
+	m_currentGraphicsView->cut();
 }
 
 void MainWindow::paste() {
-	if (m_currentWidget == NULL) return;
-	m_currentWidget->paste();
+	if (m_currentGraphicsView == NULL) return;
+	m_currentGraphicsView->paste();
 }
 
 void MainWindow::duplicate() {
-	if (m_currentWidget == NULL) return;
-	m_currentWidget->duplicate();
+	if (m_currentGraphicsView == NULL) return;
+	m_currentGraphicsView->duplicate();
 }
 
 void MainWindow::doDelete() {
 	DebugDialog::debug(QString("invoking do delete") );
 
-	if (m_currentWidget != NULL) {
-		m_currentWidget->deleteItem();
+	if (m_currentGraphicsView != NULL) {
+		m_currentGraphicsView->deleteItem();
 	}
 }
 
 void MainWindow::selectAll() {
-	if (m_currentWidget != NULL) {
-		m_currentWidget->selectDeselectAllCommand(true);
+	if (m_currentGraphicsView != NULL) {
+		m_currentGraphicsView->selectDeselectAllCommand(true);
 	}
 }
 
 void MainWindow::deselect() {
-	if (m_currentWidget != NULL) {
-		m_currentWidget->selectDeselectAllCommand(false);
+	if (m_currentGraphicsView != NULL) {
+		m_currentGraphicsView->selectDeselectAllCommand(false);
 	}
 }
 
@@ -1069,13 +1069,13 @@ void MainWindow::updateLayerMenu() {
     m_viewMenu->addAction(m_showAllLayersAct);
     m_viewMenu->addAction(m_hideAllLayersAct);
 
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->updateLayerMenu(m_viewMenu, m_showAllLayersAct, m_hideAllLayersAct );
+	m_currentGraphicsView->updateLayerMenu(m_viewMenu, m_showAllLayersAct, m_hideAllLayersAct );
 }
 
 void MainWindow::updateWireMenu() {
-	if (m_currentWidget != m_pcbGraphicsView) return;
+	if (m_currentGraphicsView != m_pcbGraphicsView) return;
 
 	QList<QGraphicsItem *> items = m_pcbGraphicsView->scene()->selectedItems();
 	Wire * wire = NULL;
@@ -1122,9 +1122,9 @@ void MainWindow::updateWireMenu() {
 }
 
 void MainWindow::updatePartMenu() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	ItemCount itemCount = m_currentWidget->calcItemCount();
+	ItemCount itemCount = m_currentGraphicsView->calcItemCount();
 
 	bool enable = true;
 
@@ -1154,17 +1154,17 @@ void MainWindow::updatePartMenu() {
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
 
-	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
-	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
+	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
+	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 
 	updateItemMenu();
 	updateEditMenu();
 }
 
 void MainWindow::updateTransformationActions() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	ItemCount itemCount = m_currentWidget->calcItemCount();
+	ItemCount itemCount = m_currentGraphicsView->calcItemCount();
 	bool enable = (itemCount.selRotatable > 0);
 
 	DebugDialog::debug(tr("enable rotate (1) %1").arg(enable));
@@ -1175,8 +1175,8 @@ void MainWindow::updateTransformationActions() {
 		rotateButton->setEnabled(enable);
 	}
 
-	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
-	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentWidget != m_pcbGraphicsView));
+	m_flipHorizontalAct->setEnabled((itemCount.selHFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
+	m_flipVerticalAct->setEnabled((itemCount.selVFlipable > 0) && (m_currentGraphicsView != m_pcbGraphicsView));
 
 	enable = m_flipHorizontalAct->isEnabled() || m_flipVerticalAct->isEnabled();
 	foreach(SketchToolButton* flipButton, m_flipButtons) {
@@ -1189,11 +1189,11 @@ void MainWindow::updateItemMenu() {
 	PaletteItem *selInSketch = m_currentWidget->selected();
 	m_swapPartAction->setEnabled(selInParts && selInSketch && selInParts->family() == selInSketch->family());*/
 
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	QList<QGraphicsItem *> items = m_currentWidget->scene()->selectedItems();
+	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
 
-	if (m_currentWidget == m_pcbGraphicsView) {
+	if (m_currentGraphicsView == m_pcbGraphicsView) {
 		bool enabled = true;
 		int count = 0;
 		foreach (QGraphicsItem * item, items) {
@@ -1250,15 +1250,15 @@ void MainWindow::updateEditMenu() {
 		}
 	}
 
-	if (m_currentWidget != NULL) {
-		const QList<QGraphicsItem *> items =  m_currentWidget->scene()->selectedItems();
+	if (m_currentGraphicsView != NULL) {
+		const QList<QGraphicsItem *> items =  m_currentGraphicsView->scene()->selectedItems();
 		bool copyActsEnabled = false;
 		bool deleteActsEnabled = false;
 		foreach (QGraphicsItem * item, items) {
-			if (m_currentWidget->canDeleteItem(item)) {
+			if (m_currentGraphicsView->canDeleteItem(item)) {
 				deleteActsEnabled = true;
 			}
-			if (m_currentWidget->canCopyItem(item)) {
+			if (m_currentGraphicsView->canCopyItem(item)) {
 				copyActsEnabled = true;
 			}
 		}
@@ -1277,9 +1277,9 @@ void MainWindow::updateTraceMenu() {
 	m_autorouteAct->setEnabled(false);
 	m_exportDiyAct->setEnabled(false);
 
-	if (m_currentWidget != NULL) {
-		if (m_currentWidget == this->m_pcbGraphicsView) {
-			QList<QGraphicsItem *> items = m_currentWidget->scene()->items();
+	if (m_currentGraphicsView != NULL) {
+		if (m_currentGraphicsView == this->m_pcbGraphicsView) {
+			QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
 			foreach (QGraphicsItem * item, items) {
 				VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
 				if (vw && vw->getRatsnest()) {
@@ -1297,14 +1297,14 @@ void MainWindow::updateTraceMenu() {
 
 
 void MainWindow::group() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
 	notYetImplemented("Group");
 	//m_currentWidget->group();
 }
 
 void MainWindow::addToBin() {
-	m_paletteWidget->addPartCommand(m_currentWidget->selectedModuleID());
+	m_paletteWidget->addPartCommand(m_currentGraphicsView->selectedModuleID());
 }
 
 void MainWindow::zoomIn() {
@@ -1336,13 +1336,13 @@ void MainWindow::zoomOut(int steps) {
 }
 
 void MainWindow::fitInWindow() {
-	if (m_currentWidget == NULL) return;
-	m_currentWidget->fitInWindow();
+	if (m_currentGraphicsView == NULL) return;
+	m_currentGraphicsView->fitInWindow();
 }
 
 void MainWindow::actualSize() {
-	if (m_currentWidget == NULL) return;
-	m_currentWidget->absoluteZoom(100);
+	if (m_currentGraphicsView == NULL) return;
+	m_currentGraphicsView->absoluteZoom(100);
 }
 
 void MainWindow::showBreadboardView() {
@@ -1432,17 +1432,17 @@ void MainWindow::partsEditorClosed(long id) {
 
 void MainWindow::openInOldPartsEditor() {
 	// TODO: check to see if part is already open in a part editor window
-	if (m_currentWidget == NULL) return;
-	PaletteItem *selectedPart = m_currentWidget->getSelectedPart();
+	if (m_currentGraphicsView == NULL) return;
+	PaletteItem *selectedPart = m_currentGraphicsView->getSelectedPart();
 
 	openOldPartsEditor(selectedPart);
 }
 
 // TODO PARTS EDITOR REMOVE
 void MainWindow::openInPartsEditor() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	PaletteItem *selectedPart = m_currentWidget->getSelectedPart();
+	PaletteItem *selectedPart = m_currentGraphicsView->getSelectedPart();
 	PartsEditorMainWindow * window = m_partsEditorWindows.value(selectedPart->id());
 
 	if(window != NULL) {
@@ -1556,65 +1556,65 @@ void MainWindow::notYetImplemented(QString action) {
 
 
 void MainWindow::rotate90cw() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->rotateX(90);
+	m_currentGraphicsView->rotateX(90);
 }
 
 void MainWindow::rotate90ccw() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->rotateX(-90);
+	m_currentGraphicsView->rotateX(-90);
 }
 
 void MainWindow::rotate180() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->rotateX(180);
+	m_currentGraphicsView->rotateX(180);
 }
 
 void MainWindow::flipHorizontal() {
-	m_currentWidget->flip(Qt::Horizontal);
+	m_currentGraphicsView->flip(Qt::Horizontal);
 }
 
 void MainWindow::flipVertical() {
-	m_currentWidget->flip(Qt::Vertical);
+	m_currentGraphicsView->flip(Qt::Vertical);
 }
 
 void MainWindow::sendToBack() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->sendToBack();
+	m_currentGraphicsView->sendToBack();
 }
 
 void MainWindow::sendBackward() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->sendBackward();
+	m_currentGraphicsView->sendBackward();
 }
 
 void MainWindow::bringForward() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->bringForward();
+	m_currentGraphicsView->bringForward();
 }
 
 void MainWindow::bringToFront() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->bringToFront();
+	m_currentGraphicsView->bringToFront();
 }
 
 void MainWindow::showAllLayers() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->setAllLayersVisible(true);
+	m_currentGraphicsView->setAllLayersVisible(true);
 }
 
 void MainWindow::hideAllLayers() {
-	if (m_currentWidget == NULL) return;
+	if (m_currentGraphicsView == NULL) return;
 
-	m_currentWidget->setAllLayersVisible(false);
+	m_currentGraphicsView->setAllLayersVisible(false);
 }
 
 void MainWindow::openRecentOrExampleFile() {
@@ -1671,7 +1671,7 @@ void MainWindow::exportToEagle() {
 }
 
 void MainWindow::hideShowTraceMenu() {
-	m_traceMenu->menuAction()->setVisible(m_currentWidget == m_pcbGraphicsView);
+	m_traceMenu->menuAction()->setVisible(m_currentGraphicsView == m_pcbGraphicsView);
 }
 
 void MainWindow::createTraceMenuActions() {

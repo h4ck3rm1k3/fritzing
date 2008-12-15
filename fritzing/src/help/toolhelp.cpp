@@ -1,0 +1,64 @@
+/*******************************************************************
+
+Part of the Fritzing project - http://fritzing.org
+Copyright (c) 2007-08 Fachhochschule Potsdam - http://fh-potsdam.de
+
+Fritzing is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fritzing is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************
+
+$Revision: 1490 $:
+$Author: cohen@irascible.com $:
+$Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
+
+********************************************************************/
+
+#include <QFrame>
+#include <QBoxLayout>
+#include <QLabel>
+#include <QFile>
+
+#include "toolhelp.h"
+
+ToolHelp::ToolHelp(
+		const QString &text,
+		const QString imageName,
+		QBoxLayout::Direction direction
+	) : QGraphicsProxyWidget()
+{
+	QFrame *frame = new QFrame();
+	frame->setObjectName("toolHelp");
+	QBoxLayout *layout = new QBoxLayout(direction, frame);
+	layout->setSpacing(3);
+	layout->setMargin(0);
+
+	QLabel *label = new QLabel(frame);
+	label->setText(text);
+	label->setObjectName("toolHelpText"+imageName);
+
+	QLabel *image = new QLabel(frame);
+	image->setPixmap(QPixmap(QString(":/resources/images/inViewHelp%1Arrow.png").arg(imageName)));
+
+	layout->addWidget(label);
+	layout->addWidget(image);
+
+	setWidget(frame);
+
+	QFile styleSheet(":/resources/styles/inviewhelp.qss");
+    if (!styleSheet.open(QIODevice::ReadOnly)) {
+		qWarning("Unable to open :/resources/styles/inviewhelp.qss");
+	} else {
+		frame->setStyleSheet(styleSheet.readAll());
+	}
+}

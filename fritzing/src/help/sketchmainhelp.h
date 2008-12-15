@@ -35,6 +35,8 @@ $Date$
 #include <QFrame>
 #include <QGraphicsProxyWidget>
 
+#include "isketchhelpitem.h"
+
 class SketchMainHelpCloseButton : public QLabel {
 	Q_OBJECT
 	public:
@@ -56,9 +58,7 @@ class SketchMainHelpPrivate : public QFrame {
 	Q_OBJECT
 
 	public:
-		SketchMainHelpPrivate(
-				const QString &viewString, const QString &imagePath,
-				const QString &htmlText, SketchMainHelp *parent);
+		SketchMainHelpPrivate(const QString &viewString, const QString &htmlText, SketchMainHelp *parent);
 
 	protected slots:
 		void doClose();
@@ -76,9 +76,9 @@ class SketchMainHelpPrivate : public QFrame {
 		volatile bool m_shouldGetTransparent;
 };
 
-class SketchMainHelp : public QGraphicsProxyWidget {
+class SketchMainHelp : public QGraphicsProxyWidget, public ISketchHelpItem {
 public:
-	SketchMainHelp(const QString &viewString, const QString &imagePath, const QString &htmlText);
+	SketchMainHelp(const QString &viewString, const QString &htmlText);
 	void doClose();
 	void setTransparent();
 

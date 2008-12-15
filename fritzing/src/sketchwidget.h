@@ -168,7 +168,7 @@ public:
 	virtual bool canCopyItem(QGraphicsItem * item);
 	virtual const QString & viewName();
 	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
-	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
 
@@ -282,15 +282,16 @@ signals:
 	void selectionChangedSignal();
 
 	void swapped(long itemId, ModelPart *with);
-	void resizeSignal(const QSize& oldSize, const QSize& newSize);
+	void resizeSignal();
 	void dropSignal();
+	void wheelSignal();
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void ratsnestChangeSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void selectAllItemsSignal(bool state, bool doEmit);
 	void setChainedWireIDSignal(qint64 wireID, qint64 chainedID);
-	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID, 
+	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID,
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
 
@@ -322,9 +323,9 @@ protected slots:
 	void dragAutoScrollTimeout();
 	void moveAutoScrollTimeout();
 	void setChainedWireIDSlot(qint64 wireID, qint64 chainedID);
-	void dealWithRatsnestSlot(long fromID, const QString & fromConnectorID, 
+	void dealWithRatsnestSlot(long fromID, const QString & fromConnectorID,
 							  long toID, const QString & toConnectorID,
-							  bool connect, class RatsnestCommand * ratsnestCommand); 
+							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 public slots:
 	void swapSelected(const QString &moduleId);
