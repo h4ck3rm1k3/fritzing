@@ -33,13 +33,15 @@ $Date$
 #include <QLabel>
 
 
-const QString labelStyle = "#tripleNavigatorLabel { /*color: %1; font-weight: %2;*/ }";
+const QString labelStyle = "#tripleNavigatorLabel { color: %1; font-weight: %2; }";
 const QString pressedStyleColor = "#ffffff";
 const QString pressedStyleWeight = "bold";
 const QString normalStyleColor = "#000000";
 const QString normalStyleWeight = "normal";
 const QString hoverStyleColor = "#e5e5e5";
 const QString hoverStyleWeight = "normal";
+const QColor normalColor(0, 0, 0);
+const QColor hoverColor(0xe5, 0xe5, 0xe5);
 
 TripleNavigator::TripleNavigator( QWidget * parent )
 	: QFrame(parent)
@@ -97,13 +99,22 @@ void TripleNavigatorLabel::navigatorMouseEnterSlot(MiniViewContainer * miniViewC
 	if (miniViewContainer == m_miniViewContainer) {
 		if (m_currentStyleColor != pressedStyleColor) {
 			//setStyleSheet(labelStyle.arg(hoverStyleColor).arg(hoverStyleWeight));
+			QPalette palette = this->palette();
+			palette.setColor(QPalette::WindowText, hoverColor);
+			this->setPalette(palette);
+
 		}
 	}
 }
 
 void TripleNavigatorLabel::navigatorMouseLeaveSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
-		//setStyleSheet(labelStyle.arg(m_currentStyleColor).arg(m_currentStyleWeight));
+		if (m_currentStyleColor != pressedStyleColor) {
+			//setStyleSheet(labelStyle.arg(m_currentStyleColor).arg(m_currentStyleWeight));
+			QPalette palette = this->palette();
+			palette.setColor(QPalette::WindowText, normalColor);
+			this->setPalette(palette);
+		}
 	}
 }
 
@@ -121,7 +132,9 @@ TripleNavigatorFrame::TripleNavigatorFrame(MiniViewContainer * miniViewContainer
 	m_tripleNavigatorLabel->setObjectName("tripleNavigatorLabel");
 	m_tripleNavigatorLabel->setText(title);
 	m_tripleNavigatorLabel->setFixedHeight(13);
-	//m_tripleNavigatorLabel->setFixedWidth(m_tripleNavigatorLabel->te);
+	//m_tripleNavigatorLabel->setStyleSheet(labelStyle.arg(pressedStyleColor).arg(pressedStyleWeight));
+	//QFontMetrics fm(m_tripleNavigatorLabel->font());
+	//m_tripleNavigatorLabel->setFixedWidth(fm.width(title));
 	m_tripleNavigatorLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 	layout->addWidget(m_tripleNavigatorLabel);
 	installEventFilter(this);
