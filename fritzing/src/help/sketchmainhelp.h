@@ -60,6 +60,9 @@ class SketchMainHelpPrivate : public QFrame {
 	public:
 		SketchMainHelpPrivate(const QString &viewString, const QString &htmlText, SketchMainHelp *parent);
 
+	signals:
+		void aboutToClose();
+
 	protected slots:
 		void doClose();
 		void setTransparent();

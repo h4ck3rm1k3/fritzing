@@ -44,10 +44,15 @@ class Helper : public QObject {
 
 	protected slots:
 		void init();
-		void viewChanged();
+		void viewResized();
 		void somethingDroppedIntoView();
 		void viewSwitched();
+		void viewScaleChanged();
 		void autorouted();
+
+		void removePartsBinHelp();
+		void removeSwitchButtonsHelp();
+		void removeAutorouteHelp();
 
 	protected:
 		void addItemToView(QGraphicsWidget *item, SketchWidget* view);

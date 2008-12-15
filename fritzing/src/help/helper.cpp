@@ -61,8 +61,13 @@ QString Helper::SwitchButtonsHelpText = tr("Use these buttons to <br> toggle bet
 Helper::Helper(MainWindow *owner) : QObject(owner) {
 	m_owner = owner;
 	m_breadMainHelp = new SketchMainHelp("Breadboard", BreadboardHelpText);
+	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removePartsBinHelp()));
+	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeSwitchButtonsHelp()));
+
 	m_schemMainHelp = new SketchMainHelp("Schematic", SchematicHelpText);
+
 	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpText);
+	connect(m_pcbMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeAutorouteHelp()));
 
 	m_partsBinHelp = new ToolHelp(PartsBinHelpText, QString("PartsBin"));
 	m_autorouteHelp = new ToolHelp(AutorouteHelpText, QString("Autoroute"), QBoxLayout::RightToLeft);
@@ -96,13 +101,13 @@ void Helper::init() {
 
 	addItemToView(m_switchButtonsHelp, m_owner->m_breadboardGraphicsView);
 
-	connect(m_owner->m_breadboardGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewChanged()));
-	connect(m_owner->m_schematicGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewChanged()));
-	connect(m_owner->m_pcbGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewChanged()));
+	connect(m_owner->m_breadboardGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewResized()));
+	connect(m_owner->m_schematicGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewResized()));
+	connect(m_owner->m_pcbGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewResized()));
 
-	/*connect(m_owner->m_breadboardGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewChanged()));
-	connect(m_owner->m_schematicGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewChanged()));
-	connect(m_owner->m_pcbGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewChanged()));*/
+	connect(m_owner->m_breadboardGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewScaleChanged()));
+	connect(m_owner->m_schematicGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewScaleChanged()));
+	connect(m_owner->m_pcbGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewScaleChanged()));
 }
 
 void Helper::addItemToView(QGraphicsWidget *item, SketchWidget* view) {
@@ -119,52 +124,69 @@ void Helper::addItemToView(QGraphicsWidget *item, SketchWidget* view) {
 
 void Helper::centerItemInView(SketchMainHelp *item, SketchWidget* view) {
 	QWidget *w = item->widget();
-	qreal xAux = (view->width() - w->width())/2 - w->pos().x();
-	qreal yAux = (view->height() - w->height())/2 - w->pos().y();
-	qreal x = (view->width() + view->mapToScene(w->pos()).x() - w->width())/2 - w->pos().x();
-	qreal y = (view->height() + view->mapToScene(w->pos()).y() - w->height())/2 - w->pos().y();
-
-	DebugDialog::debug(
-			QString("<<<< %1 %2 - %3 %4")
-				.arg(view->sceneRect().width())
-				.arg(view->sceneRect().height())
-				.arg(view->mapToScene(x,y).x())
-				.arg(view->mapToScene(x,y).y())
-		);
-
-	moveItemBy(item,xAux,yAux);
+	qreal x = (view->width() - w->width())/2 - w->pos().x();
+	qreal y = (view->height() - w->height())/2 - w->pos().y();
+	//qreal x = (view->width() + view->mapToScene(w->pos()).x() - w->width())/2 - w->pos().x();
+	//qreal y = (view->height() + view->mapToScene(w->pos()).y() - w->height())/2 - w->pos().y();
+	moveItemBy(item,x,y);
 }
 
 void Helper::fixedX(ToolHelp *item, SketchWidget* view) {
 	QScrollBar * sb = view->horizontalScrollBar();
 	qreal hScroll = sb->isVisible() ? sb->height() : 0;
 	qreal y = view->height()-item->widget()->height()-item->y()-hScroll;
+	//QPointF p = view->mapToScene(item->widget()->pos());
 	moveItemBy(item,0,y);
+	//moveItemBy(item,p.x(),y+p.y());
 }
 
 void Helper::fixedY(ToolHelp *item, SketchWidget* view) {
 	QScrollBar * sb = view->verticalScrollBar();
 	qreal wScroll = sb->isVisible() ? sb->width() : 0;
 	qreal x = view->width()-item->widget()->width()-item->x()-wScroll;
+	//QPointF p = view->mapToScene(item->widget()->pos());
 	moveItemBy(item,x,0);
+	//moveItemBy(item,x+p.x(),p.y());
 }
 
-void Helper::viewChanged() {
-	/*if(oldSize.width() > -1 && oldSize.height() > -1) { // don't apply on hide/show transition
-		qreal dx = (newSize.width()-oldSize.width())/2;
-		qreal dy = (newSize.height()-oldSize.height())/2;
-		if(fabs(dx) >= 0.1 && fabs(dy) >= 0.1) {
-			moveItemBy(m_breadMainHelp, dx, dy);
-			moveItemBy(m_schemMainHelp, dx, dy);
-			moveItemBy(m_pcbMainHelp, dx, dy);
-			moveItemBy(m_partsBinHelp, dx, 0);
-		}
-	}*/
+void Helper::viewResized() {
 	centerItemInView(m_breadMainHelp, m_owner->m_currentGraphicsView);
 	centerItemInView(m_schemMainHelp, m_owner->m_currentGraphicsView);
 	centerItemInView(m_pcbMainHelp, m_owner->m_currentGraphicsView);
 	fixedY(m_partsBinHelp, m_owner->m_currentGraphicsView);
 	fixedX(m_autorouteHelp, m_owner->m_currentGraphicsView);
+}
+
+void Helper::viewScaleChanged() {
+	QMatrix matrix = m_owner->m_currentGraphicsView->matrix();
+	//qreal x = m_owner->m_currentGraphicsView->width() * matrix.m11();
+	//qreal y = m_owner->m_currentGraphicsView->height() * matrix.m22();
+	QWidget *w = m_breadMainHelp->widget();
+
+	// ZOOM OUT
+	//qreal x = ((m_owner->m_currentGraphicsView->width() - w->width())/(2*matrix.m11()) - w->pos().x());
+	//qreal y = ((m_owner->m_currentGraphicsView->height() - w->height())/(2*matrix.m22()) - w->pos().y());
+
+	SketchWidget *view = m_owner->m_currentGraphicsView;
+	int vScrollW = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
+	int hScrollH = view->horizontalScrollBar()->isVisible() ? view->horizontalScrollBar()->height() : 0;
+
+
+	// ZOOM in
+		qreal x = (view->width()  - w->width())/(2*matrix.m11()) - w->pos().x();
+		qreal y = (view->height() - w->height())/(2*matrix.m22()) - w->pos().y();
+
+	DebugDialog::debug(QString("<<<<< %1 %2 - %3 %4")
+		.arg(matrix.m11()).arg(matrix.m12())
+		.arg(matrix.m21()).arg(matrix.m22())
+	);
+	m_breadMainHelp->moveBy(x,y);
+	//m_breadMainHelp->moveBy(vScrollW*(matrix.m11()>1?matrix.m11() : 1),hScrollH*(matrix.m22()>1?matrix.m22() : 1/matrix.m22()));
+	//m_breadMainHelp->moveBy(vScrollW*matrix.m11()*matrix.m11(),hScrollH*matrix.m22()*matrix.m22());
+
+
+	//qreal x = (view->width() + view->mapToScene(w->pos()).x() - w->width())/2 - w->pos().x();
+	//qreal y = (view->height() + view->mapToScene(w->pos()).y() - w->height())/2 - w->pos().y();
 }
 
 void Helper::somethingDroppedIntoView() {
@@ -173,16 +195,28 @@ void Helper::somethingDroppedIntoView() {
 		m_breadMainHelp->setTransparent();
 		m_schemMainHelp->setTransparent();
 		m_pcbMainHelp->setTransparent();
-		m_owner->m_breadboardGraphicsView->scene()->removeItem(m_partsBinHelp);
+		removePartsBinHelp();
 	} else {
 		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
 	}
 }
 
+void Helper::removePartsBinHelp() {
+	m_owner->m_breadboardGraphicsView->scene()->removeItem(m_partsBinHelp);
+}
+
+void Helper::removeSwitchButtonsHelp() {
+	m_owner->m_breadboardGraphicsView->scene()->removeItem(m_switchButtonsHelp);
+}
+
+void Helper::removeAutorouteHelp() {
+	m_owner->m_pcbGraphicsView->scene()->removeItem(m_autorouteHelp);
+}
+
 void Helper::viewSwitched() {
 	if(m_stillWaitingFirstViewSwitch) {
 		m_stillWaitingFirstViewSwitch = false;
-		m_owner->m_breadboardGraphicsView->scene()->removeItem(m_switchButtonsHelp);
+		removeSwitchButtonsHelp();
 	} else {
 		//disconnect(m_owner->m_viewSwitcher, SIGNAL(viewSwitched()), this, SLOT(viewSwitched()));
 	}
@@ -191,7 +225,7 @@ void Helper::viewSwitched() {
 void Helper::autorouted() {
 	if(m_stillWaitingFirstAutoroute) {
 		m_stillWaitingFirstAutoroute = false;
-		m_owner->m_pcbGraphicsView->scene()->removeItem(m_autorouteHelp);
+		removeAutorouteHelp();
 	} else {
 		disconnect(m_owner, SIGNAL(autorouteSignal()), this, SLOT(autorouted()));
 	}
