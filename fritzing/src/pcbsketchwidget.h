@@ -51,7 +51,7 @@ public:
 	void clearRouting(QUndoCommand * parentCommand);
 
 protected:
-	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
+	void setWireVisible(Wire * wire);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
 	// void checkAutorouted();
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);

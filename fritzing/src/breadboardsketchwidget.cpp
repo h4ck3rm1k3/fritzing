@@ -36,9 +36,8 @@ BreadboardSketchWidget::BreadboardSketchWidget(ItemBase::ViewIdentifier viewIden
 {
 }
 
-void BreadboardSketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
+void BreadboardSketchWidget::setWireVisible(Wire * wire)
 {
-	Q_UNUSED(wires);
 	wire->setVisible(!wire->getVirtual());
 	//wire->setVisible(true);					// for debugging
 }
@@ -233,7 +232,7 @@ QPointF BreadboardSketchWidget::calcNewLoc(PaletteItemBase * moveBase, PaletteIt
 			newPos.setX(dr.left() - r.width());
 			break;
 		case 3:
-			newPos.setY(dr.right());
+			newPos.setX(dr.right());
 			break;
 	}
 	return newPos;

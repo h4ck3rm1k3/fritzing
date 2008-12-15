@@ -389,8 +389,8 @@ CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, bool execRe
 
 void CleanUpWiresCommand::undo()
 {
-	foreach (BaseCommand * command, m_commands) {
-		command->undo();
+	for (int i = m_commands.count() - 1; i >= 0; i--) { 
+		m_commands[i]->undo();
 	}
 	if (!m_execRedo) {
 		m_sketchWidget->cleanUpWires(true, NULL);
@@ -400,7 +400,7 @@ void CleanUpWiresCommand::undo()
 void CleanUpWiresCommand::redo()
 {
 	foreach (BaseCommand * command, m_commands) {
-		command->undo();
+		command->redo();
 	}
 	if (m_execRedo) {
 		m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL);
@@ -415,11 +415,11 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 	
 	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
 		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-				wire->id(), "connector0", true, true, false, NULL));
+				wire->id(), "connector0", false, true, false, NULL));
 	}
 	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
 		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-				wire->id(), "connector1", true, true, false, NULL));
+				wire->id(), "connector1", false, true, false, NULL));
 	}
 
 	m_commands.append(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), NULL));
@@ -531,8 +531,8 @@ RatsnestCommand::RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand:
 }
 
 void RatsnestCommand::undo() {
-	foreach (BaseCommand * command, m_commands) {
-		command->undo();
+	for (int i = m_commands.count() - 1; i >= 0; i--) { 
+		m_commands[i]->undo();
 	}
 }
 

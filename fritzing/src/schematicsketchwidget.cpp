@@ -52,10 +52,10 @@ SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdenti
 {
 }
 
-void SchematicSketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
+void SchematicSketchWidget::setWireVisible(Wire * wire)
 {
-	Q_UNUSED(wires);
 	wire->setVisible(wire->getRatsnest());
+	wire->setVisible(true);
 }
 
 void SchematicSketchWidget::addViewLayers() {
@@ -78,16 +78,17 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 {
-	ConnectorItem * fromConnectorItem = NULL;
-	ConnectorItem * toConnectorItem = NULL;
-	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
-							toID, toConnectorID,
-							connect, ratsnestCommand, doEmit)) 
-	{
-		return;
-	}
 
 	if (connect) {
+		ConnectorItem * fromConnectorItem = NULL;
+		ConnectorItem * toConnectorItem = NULL;
+		if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
+								toID, toConnectorID,
+								connect, ratsnestCommand, doEmit)) 
+		{
+			return;
+		}
+
 		bool useFrom = false;
 		bool useTo = false;
 		if ((fromConnectorItem->attachedToItemType() == ModelPart::Part) ||
@@ -369,7 +370,7 @@ ConnectorItem * SchematicSketchWidget::lookForBreadboardConnection(ConnectorItem
 	foreach (ConnectorItem * end, ends) {
 		foreach (ConnectorItem * toConnectorItem, end->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-				return toConnectorItem;
+				return findEmptyBusConnectorItem(toConnectorItem);
 			}
 		}
 	}
@@ -379,11 +380,26 @@ ConnectorItem * SchematicSketchWidget::lookForBreadboardConnection(ConnectorItem
 	ConnectorItem::collectEqualPotential(ends);
 	foreach (ConnectorItem * end, ends) {
 		if (end->attachedToItemType() == ModelPart::Breadboard) {
-			return end;
+			return findEmptyBusConnectorItem(end);
 		}
 	}
 
 	return connectorItem;
+}
+
+ConnectorItem * SchematicSketchWidget::findEmptyBusConnectorItem(ConnectorItem * busConnectorItem) {
+	Bus * bus = busConnectorItem->bus();
+	if (bus == NULL) return busConnectorItem;
+
+	QList<ConnectorItem *> connectorItems;
+	busConnectorItem->attachedTo()->busConnectorItems(bus, connectorItems);
+	foreach (ConnectorItem * connectorItem, connectorItems) {
+		if (connectorItem->connectionsCount() == 0) {
+			return connectorItem;
+		}
+	}
+
+	return busConnectorItem;
 }
 
 int SchematicSketchWidget::calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires) {

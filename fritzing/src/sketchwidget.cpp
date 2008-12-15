@@ -299,7 +299,6 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
              			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 
 			// prevents virtual wires from flashing up on screen
-			wire->setVisible(false);
 			wire->setCanChainMultiple(canChainMultiple());
 		}
 		else {
@@ -314,6 +313,8 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			}
 			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 		}
+
+		setWireVisible(wire);
 
 		bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
 				this, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
@@ -346,10 +347,6 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 
 }
 
-void SketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires) {
-	Q_UNUSED(wire);
-	Q_UNUSED(wires);
-}
 
 void SketchWidget::setNewPartVisible(ItemBase * itemBase) {
 	Q_UNUSED(itemBase);
@@ -1189,7 +1186,7 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 
 	// if pushIt assumes m_undoStack->beginMacro has previously been called
 
-	DebugDialog::debug(QString("stack selection state %1 %2").arg(pushIt).arg((long) parentCommand));
+	// DebugDialog::debug(QString("stack selection state %1 %2").arg(pushIt).arg((long) parentCommand));
 	SelectItemCommand* selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
  	for (int i = 0; i < sitems.size(); ++i) {
@@ -1594,7 +1591,7 @@ void SketchWidget::scene_selectionChanged() {
 	}
 
 	if (m_holdingSelectItemCommand != NULL) {
-		DebugDialog::debug("got holding command");
+		// DebugDialog::debug("got holding command");
 
 		int selCount = 0;
 		ItemBase* saveBase = NULL;
@@ -1620,7 +1617,7 @@ void SketchWidget::scene_selectionChanged() {
 }
 
 void SketchWidget::clearHoldingSelectItem() {
-	DebugDialog::debug("clear holding");
+	// DebugDialog::debug("clear holding");
 	if (m_holdingSelectItemCommand != NULL) {
 		delete m_holdingSelectItemCommand;
 		m_holdingSelectItemCommand = NULL;
@@ -2978,7 +2975,7 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 }
 
 void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
-	cleanUpWiresAux(command);
+	updateRatsnestStatus(command);
 
 	if (doEmit) {
 		emit cleanUpWiresSignal(command);
@@ -2986,21 +2983,6 @@ void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
 }
 
 void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
-	cleanUpWiresAux(command);
-}
-
-void SketchWidget::cleanUpWiresAux(CleanUpWiresCommand * command) {
-	QList<Wire *> wires;
-	QList<QGraphicsItem *>items = scene()->items();
-	// TODO: get rid of scene()->items()
-	foreach (QGraphicsItem * item, items) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-		if (wires.contains(wire)) continue;			// already processed
-
-		cleanUpWire(wire, wires);
-	}
-
 	updateRatsnestStatus(command);
 }
 
@@ -3414,13 +3396,13 @@ void SketchWidget::setupAutoscroll(bool moving) {
 	m_autoScrollX = m_autoScrollY = 0;
 	connect(&m_autoScrollTimer, SIGNAL(timeout()), this,
 		moving ? SLOT(moveAutoScrollTimeout()) : SLOT(dragAutoScrollTimeout()));
-	DebugDialog::debug("set up autoscroll");
+	//DebugDialog::debug("set up autoscroll");
 }
 
 void SketchWidget::turnOffAutoscroll() {
 	m_autoScrollTimer.stop();
 	disconnect(&m_autoScrollTimer, SIGNAL(timeout()), this, SLOT(autoScrollTimeout()));
-	DebugDialog::debug("turn off autoscroll");
+	//DebugDialog::debug("turn off autoscroll");
 
 }
 
@@ -3498,4 +3480,8 @@ void SketchWidget::dealWithRatsnestSlot(long fromID, const QString & fromConnect
 													bool connect, class RatsnestCommand * ratsnestCommand) 
 {
 	dealWithRatsnest(fromID, fromConnectorID, toID, toConnectorID, connect, ratsnestCommand, false);
+}
+
+void SketchWidget::setWireVisible(Wire * wire) {
+	Q_UNUSED(wire);
 }

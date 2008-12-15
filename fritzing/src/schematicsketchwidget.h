@@ -47,7 +47,7 @@ signals:
 	void schematicDisconnectWireSignal(	ConnectorPairHash & moveItems,  QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
 
 protected:
-	void cleanUpWire(Wire * wire, QList<Wire *> & wires);
+	void setWireVisible(Wire * wire);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
 	void updateRatsnestStatus(CleanUpWiresCommand*);
 	//void dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
@@ -64,6 +64,7 @@ protected:
 	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires);
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
+	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
 
 protected:
 	QHash<int, ConnectorItem *> m_wireHash;

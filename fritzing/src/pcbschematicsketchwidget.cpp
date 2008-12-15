@@ -109,25 +109,25 @@ void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fro
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
 {
-	ConnectorItem * fromConnectorItem = NULL;
-	ConnectorItem * toConnectorItem = NULL;
-	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
-							toID, toConnectorID,
-							connect, ratsnestCommand, doEmit)) 
-	{
-		return;
-	}
-
-	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
-		.arg(fromConnectorItem->attachedToTitle())
-		.arg(fromConnectorItem->attachedToID())
-		.arg(fromConnectorItem->connectorStuffID())
-		.arg(toConnectorItem->attachedToTitle())
-		.arg(toConnectorItem->attachedToID())
-		.arg(toConnectorItem->connectorStuffID())
-	);
-
 	if (connect) {
+		ConnectorItem * fromConnectorItem = NULL;
+		ConnectorItem * toConnectorItem = NULL;
+		if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
+								toID, toConnectorID,
+								connect, ratsnestCommand, doEmit)) 
+		{
+			return;
+		}
+
+		DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
+			.arg(fromConnectorItem->attachedToTitle())
+			.arg(fromConnectorItem->attachedToID())
+			.arg(fromConnectorItem->connectorStuffID())
+			.arg(toConnectorItem->attachedToTitle())
+			.arg(toConnectorItem->attachedToID())
+			.arg(toConnectorItem->connectorStuffID())
+		);
+
 		QList<ConnectorItem *> connectorItems;
 		QList<ConnectorItem *> partsConnectorItems;
 		connectorItems.append(fromConnectorItem);

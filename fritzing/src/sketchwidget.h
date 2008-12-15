@@ -224,9 +224,7 @@ protected:
 	void killDroppingItem();
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
 	ItemBase * overSticky(ItemBase *);
-	void cleanUpWiresAux(CleanUpWiresCommand *);
 	void tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState);
-	virtual void cleanUpWire(Wire * wire, QList<Wire *> & wires);
 	virtual void setNewPartVisible(ItemBase *);
 	virtual void collectFemaleConnectees(PaletteItem *);
 	virtual void findConnectorsUnder(ItemBase * item);
@@ -255,7 +253,7 @@ protected:
 	void setupAutoscroll(bool moving);
 	void turnOffAutoscroll();
 	bool checkAutoscroll(QPoint globalPos);
-
+	virtual void setWireVisible(Wire *);
 
 protected:
 	static bool lessThan(int a, int b);

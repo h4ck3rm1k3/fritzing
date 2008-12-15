@@ -40,9 +40,8 @@ PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidge
 {
 }
 
-void PCBSketchWidget::cleanUpWire(Wire * wire, QList<Wire *> & wires)
+void PCBSketchWidget::setWireVisible(Wire * wire)
 {
-	Q_UNUSED(wires);
 	wire->setVisible(wire->getRatsnest() || wire->getTrace() || wire->getJumper());
 }
 
