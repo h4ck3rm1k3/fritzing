@@ -42,6 +42,7 @@ const QString hoverStyleColor = "#e5e5e5";
 const QString hoverStyleWeight = "normal";
 const QColor normalColor(0, 0, 0);
 const QColor hoverColor(0xe5, 0xe5, 0xe5);
+const QColor pressedColor(0xff, 0xff, 0xff);
 
 TripleNavigator::TripleNavigator( QWidget * parent )
 	: QFrame(parent)
@@ -82,13 +83,25 @@ void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewCont
 
 void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
-		setStyleSheet(labelStyle.arg(pressedStyleColor).arg(pressedStyleWeight));
+		//setStyleSheet(labelStyle.arg(pressedStyleColor).arg(pressedStyleWeight));
+		QPalette palette = this->palette();
+		palette.setColor(QPalette::WindowText, pressedColor);
+		this->setPalette(palette);
+		QFont font = this->font();
+		font.setBold(true);
+		this->setFont(font);
 		m_currentStyleColor = pressedStyleColor;
 		m_currentStyleWeight = pressedStyleWeight;
 		m_miniViewContainer->hideHandle(false);
 	}
 	else {
-		setStyleSheet(labelStyle.arg(normalStyleColor).arg(normalStyleWeight));
+		//setStyleSheet(labelStyle.arg(normalStyleColor).arg(normalStyleWeight));
+		QPalette palette = this->palette();
+		palette.setColor(QPalette::WindowText, normalColor);
+		this->setPalette(palette);
+		QFont font = this->font();
+		font.setBold(false);
+		this->setFont(font);
 		m_currentStyleColor = normalStyleColor;
 		m_currentStyleWeight = normalStyleWeight;
 		m_miniViewContainer->hideHandle(true);
@@ -131,10 +144,8 @@ TripleNavigatorFrame::TripleNavigatorFrame(MiniViewContainer * miniViewContainer
 	m_tripleNavigatorLabel->setMiniViewContainer(miniViewContainer);
 	m_tripleNavigatorLabel->setObjectName("tripleNavigatorLabel");
 	m_tripleNavigatorLabel->setText(title);
-	m_tripleNavigatorLabel->setFixedHeight(13);
-	//m_tripleNavigatorLabel->setStyleSheet(labelStyle.arg(pressedStyleColor).arg(pressedStyleWeight));
-	//QFontMetrics fm(m_tripleNavigatorLabel->font());
-	//m_tripleNavigatorLabel->setFixedWidth(fm.width(title));
+	QFontMetrics fm(m_tripleNavigatorLabel->font());
+	m_tripleNavigatorLabel->setFixedHeight(fm.height());
 	m_tripleNavigatorLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
 	layout->addWidget(m_tripleNavigatorLabel);
 	installEventFilter(this);
