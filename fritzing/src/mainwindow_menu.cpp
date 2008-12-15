@@ -1698,6 +1698,9 @@ void MainWindow::autoroute() {
 	m_dontClose = true;
 	EventEater eater(this);
 	qApp->installEventFilter(&eater);
+
+	emit autorouted();
+
 	QProgressDialog progress(QObject::tr("Autorouting..."), QObject::tr("Cancel"), 0, 1, this);
 	progress.show();
 

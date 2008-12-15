@@ -69,6 +69,8 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 	m_switchButtonsHelp = new ToolHelp(SwitchButtonsHelpText, QString("SwitchButtons"), QBoxLayout::RightToLeft);
 
 	m_stillWaitingFirstDrop = true;
+	m_stillWaitingFirstViewSwitch = true;
+	m_stillWaitingFirstAutoroute = true;
 
 	QTimer *timer = new QTimer(this);
 	timer->setSingleShot(true);
@@ -101,9 +103,6 @@ void Helper::init() {
 	/*connect(m_owner->m_breadboardGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewChanged()));
 	connect(m_owner->m_schematicGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewChanged()));
 	connect(m_owner->m_pcbGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewChanged()));*/
-
-	/*connectToScrollBar(m_owner->m_breadboardGraphicsView->verticalScrollBar());
-	connectToScrollBar(m_owner->m_breadboardGraphicsView->horizontalScrollBar());*/
 }
 
 void Helper::addItemToView(QGraphicsWidget *item, SketchWidget* view) {
@@ -111,19 +110,11 @@ void Helper::addItemToView(QGraphicsWidget *item, SketchWidget* view) {
 	// visible ones, also get resized in the background
 
 	connect(view, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
+	//connect(m_owner->m_viewSwitcher, SIGNAL(viewSwitched()), this, SLOT(viewSwitched()));
+	connect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 
 	view->scene()->addItem(item);
 	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-}
-
-
-void Helper::connectToScrollBar(QScrollBar *scrollBar) {
-	connect(scrollBar, SIGNAL(valueChanged(int)),		this, SLOT(viewChanged()));
-	connect(scrollBar, SIGNAL(rangeChanged(int,int)),	this, SLOT(viewChanged()));
-	connect(scrollBar, SIGNAL(sliderPressed()),			this, SLOT(viewChanged()));
-	connect(scrollBar, SIGNAL(sliderMoved(int)),		this, SLOT(viewChanged()));
-	connect(scrollBar, SIGNAL(sliderReleased()),		this, SLOT(viewChanged()));
-	connect(scrollBar, SIGNAL(actionTriggered(int)),	this, SLOT(viewChanged()));
 }
 
 void Helper::centerItemInView(SketchMainHelp *item, SketchWidget* view) {
@@ -182,6 +173,27 @@ void Helper::somethingDroppedIntoView() {
 		m_breadMainHelp->setTransparent();
 		m_schemMainHelp->setTransparent();
 		m_pcbMainHelp->setTransparent();
+		m_owner->m_breadboardGraphicsView->scene()->removeItem(m_partsBinHelp);
+	} else {
+		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
+	}
+}
+
+void Helper::viewSwitched() {
+	if(m_stillWaitingFirstViewSwitch) {
+		m_stillWaitingFirstViewSwitch = false;
+		m_owner->m_breadboardGraphicsView->scene()->removeItem(m_switchButtonsHelp);
+	} else {
+		//disconnect(m_owner->m_viewSwitcher, SIGNAL(viewSwitched()), this, SLOT(viewSwitched()));
+	}
+}
+
+void Helper::autorouted() {
+	if(m_stillWaitingFirstAutoroute) {
+		m_stillWaitingFirstAutoroute = false;
+		m_owner->m_pcbGraphicsView->scene()->removeItem(m_autorouteHelp);
+	} else {
+		disconnect(m_owner, SIGNAL(autorouteSignal()), this, SLOT(autorouted()));
 	}
 }
 

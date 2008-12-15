@@ -46,6 +46,8 @@ class Helper : public QObject {
 		void init();
 		void viewChanged();
 		void somethingDroppedIntoView();
+		void viewSwitched();
+		void autorouted();
 
 	protected:
 		void addItemToView(QGraphicsWidget *item, SketchWidget* view);
@@ -53,7 +55,6 @@ class Helper : public QObject {
 		void fixedX(ToolHelp *item, SketchWidget* view);
 		void fixedY(ToolHelp *item, SketchWidget* view);
 		void moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy);
-		void connectToScrollBar(QScrollBar *scrollBar);
 
 	protected:
 		MainWindow *m_owner;
@@ -67,6 +68,8 @@ class Helper : public QObject {
 		ToolHelp *m_switchButtonsHelp;
 
 		bool m_stillWaitingFirstDrop;
+		bool m_stillWaitingFirstViewSwitch;
+		bool m_stillWaitingFirstAutoroute;
 
 	protected:
 		static QString BreadboardHelpText;

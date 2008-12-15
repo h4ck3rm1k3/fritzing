@@ -82,6 +82,7 @@ public:
 signals:
 	void alienPartsDismissed();
 	void aboutToClose();
+	void autorouted();
 
 public slots:
 	void ensureClosable();
