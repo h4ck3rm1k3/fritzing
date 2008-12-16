@@ -82,7 +82,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_statusBar = new QStatusBar(this);
 	setStatusBar(m_statusBar);
-	m_statusBar->setSizeGripEnabled(false);
+	//m_statusBar->setSizeGripEnabled(false);
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
