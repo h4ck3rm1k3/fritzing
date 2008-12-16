@@ -102,11 +102,12 @@ bool FritzingWindow::isEmptyFileName(const QString &fileName, const QString &unt
 bool FritzingWindow::saveAs() {
 	DebugDialog::debug(tr("current path: %1").arg(QDir::currentPath()));
 	QString fileExt;
-	QString path;
+        QString path;
+        QString untitledBase = tr("Untitled Sketch");
 
 	if(m_readOnly) {
 		path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName();
-	} else if(m_fileName == tr("Untitled Sketch.fz")){
+        } else if(m_fileName.contains(untitledBase, Qt::CaseInsensitive){
 		path = defaultSaveFolder() + "/" + m_fileName;
 	} else if(m_fileName.isNull() || m_fileName.isEmpty()){
 		path = defaultSaveFolder();
