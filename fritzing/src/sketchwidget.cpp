@@ -166,6 +166,8 @@ void SketchWidget::ensureFixedItemsPositions() {
 	ensureFixedToCenterItems();
 	ensureFixedToTopLeftItems();
 	ensureFixedToTopRightItems();
+
+	scene()->update(sceneRect());
 }
 
 void SketchWidget::restartPasteCount() {

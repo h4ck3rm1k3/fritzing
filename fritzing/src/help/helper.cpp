@@ -71,7 +71,7 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 
 	m_partsBinHelp = new ToolHelp(PartsBinHelpText, QString("PartsBin"));
 	m_autorouteHelp = new ToolHelp(AutorouteHelpText, QString("Autoroute"), QBoxLayout::RightToLeft);
-	m_switchButtonsHelp = new ToolHelp(SwitchButtonsHelpText, QString("SwitchButtons"), QBoxLayout::RightToLeft);
+	m_switchButtonsHelp = new ToolHelp(SwitchButtonsHelpText, QString("SwitchButtons"), QBoxLayout::BottomToTop);
 
 	m_stillWaitingFirstDrop = true;
 	m_stillWaitingFirstViewSwitch = true;
