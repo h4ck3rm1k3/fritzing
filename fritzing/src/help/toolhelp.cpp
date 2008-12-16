@@ -40,7 +40,7 @@ ToolHelp::ToolHelp(
 	) : QGraphicsProxyWidget()
 {
 	QFrame *frame = new QFrame();
-	frame->setObjectName("toolHelp");
+	frame->setObjectName("toolHelp"+imageName);
 	QBoxLayout *layout = new QBoxLayout(direction, frame);
 	layout->setSpacing(3);
 	layout->setMargin(0);

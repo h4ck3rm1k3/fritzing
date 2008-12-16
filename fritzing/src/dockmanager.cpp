@@ -127,4 +127,5 @@ FDockWidget *DockManager::dockIt(FDockWidget* dock, int dockMinHeight, int dockD
 
 void DockManager::ensureSpaceForSizeGrip(Qt::DockWidgetArea area) {
 	//m_mainWindow->corner(Qt::BottomRightCorner)
+	Q_UNUSED(area);
 }

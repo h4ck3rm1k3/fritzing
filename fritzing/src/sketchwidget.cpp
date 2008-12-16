@@ -145,6 +145,14 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 
     connect(this, SIGNAL(resizeSignal()), this, SLOT(ensureFixedItemsPositions()));
     connect(this, SIGNAL(wheelSignal()),  this, SLOT(ensureFixedItemsPositions()));
+    connect(
+    	horizontalScrollBar(), SIGNAL(valueChanged(int)),
+    	this, SLOT(ensureFixedItemsPositions())
+    );
+    connect(
+    	verticalScrollBar(), SIGNAL(valueChanged(int)),
+    	this, SLOT(ensureFixedItemsPositions())
+    );
 
 
 	QTimer *timer = new QTimer(this);

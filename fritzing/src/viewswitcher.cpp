@@ -65,7 +65,7 @@ void ViewSwitcherButton::leaveEvent(QEvent *event) {
 ViewSwitcherPrivate::ViewSwitcherPrivate() : QFrame()
 {
 	// TODO Mariano: couldn't get this applied with the qss file
-	setStyleSheet("ViewSwitcherPrivate {background-color: transparent; margin-top: 10px; margin-left: 10px; } ViewSwitcherButton {	margin: 0px;}");
+	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: transparent; margin-top: 10px; margin-left: 10px; } ViewSwitcherButton {	margin: 0px;}");
 
 	m_layout = new QHBoxLayout(this);
 	m_layout->setSpacing(0);
