@@ -34,6 +34,7 @@ $Date$
 
 class AbstractStatesButton {
 public:
+	virtual ~AbstractStatesButton() {}			// clears compiler warning
 	void setEnabledIcon() {
 		setImage(m_enabledImage);
 	}
