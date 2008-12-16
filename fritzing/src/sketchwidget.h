@@ -173,6 +173,11 @@ public:
 								  bool connect, class RatsnestCommand *, bool doEmit);
 	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
+	void addFixedToTopLeftItem(QGraphicsProxyWidget *item);
+	void addFixedToTopRightItem(QGraphicsProxyWidget *item);
+	void addFixedToBottomLeftItem(QGraphicsProxyWidget *item);
+	void addFixedToCenterItem(QGraphicsProxyWidget *item);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
 	bool dragEnterEventAux(QDragEnterEvent *event);
@@ -256,6 +261,11 @@ protected:
 	bool checkAutoscroll(QPoint globalPos);
 	virtual void setWireVisible(Wire *);
 
+	void ensureFixedToTopLeftItems();
+	void ensureFixedToTopRightItems();
+	void ensureFixedToBottomLeftItems();
+	void ensureFixedToCenterItems();
+
 protected:
 	static bool lessThan(int a, int b);
 	static bool greaterThan(int a, int b);
@@ -328,6 +338,8 @@ protected slots:
 							  long toID, const QString & toConnectorID,
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
+	void ensureFixedItemsPositions();
+
 public slots:
 	void swapSelected(const QString &moduleId);
 	void swapSelected(PaletteItem* other);
@@ -387,6 +399,11 @@ protected:
 	bool m_ignoreSelectionChangeEvents;
 	//bool m_dealWithRatsNestEnabled;
 	QHash<ConnectorItem *, ConnectorItem *> m_disconnectors;
+
+	QList<QGraphicsProxyWidget*> m_fixedToTopLeftItems;
+	QList<QGraphicsProxyWidget*> m_fixedToTopRightItems;
+	QList<QGraphicsProxyWidget*> m_fixedToBottomLeftItems;
+	QList<QGraphicsProxyWidget*> m_fixedToCenterItems;
 };
 
 #endif

@@ -43,11 +43,8 @@ class Helper : public QObject {
 		Helper(MainWindow *owner);
 
 	protected slots:
-		void init();
-		void viewResized();
 		void somethingDroppedIntoView();
 		void viewSwitched();
-		void viewScaleChanged();
 		void autorouted();
 
 		void removePartsBinHelp();
@@ -55,10 +52,7 @@ class Helper : public QObject {
 		void removeAutorouteHelp();
 
 	protected:
-		void addItemToView(QGraphicsWidget *item, SketchWidget* view);
-		void centerItemInView(SketchMainHelp *item, SketchWidget* view);
-		void fixedX(ToolHelp *item, SketchWidget* view);
-		void fixedY(ToolHelp *item, SketchWidget* view);
+		void connectToView(SketchWidget* view);
 		void moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy);
 
 	protected:
@@ -75,6 +69,9 @@ class Helper : public QObject {
 		bool m_stillWaitingFirstDrop;
 		bool m_stillWaitingFirstViewSwitch;
 		bool m_stillWaitingFirstAutoroute;
+
+		qreal m_prevVScroolW;
+		qreal m_prevHScroolH;
 
 	protected:
 		static QString BreadboardHelpText;

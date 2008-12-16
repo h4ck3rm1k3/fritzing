@@ -77,117 +77,28 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 	m_stillWaitingFirstViewSwitch = true;
 	m_stillWaitingFirstAutoroute = true;
 
-	QTimer *timer = new QTimer(this);
-	timer->setSingleShot(true);
-	connect(timer, SIGNAL(timeout()), this, SLOT(init()));
-	timer->start(400);
+	m_prevVScroolW = 0;
+	m_prevHScroolH = 0;
+
+	connectToView(m_owner->m_breadboardGraphicsView);
+	connectToView(m_owner->m_schematicGraphicsView);
+	connectToView(m_owner->m_pcbGraphicsView);
+
+	m_owner->m_breadboardGraphicsView->addFixedToCenterItem(m_breadMainHelp);
+	m_owner->m_schematicGraphicsView->addFixedToCenterItem(m_schemMainHelp);
+	m_owner->m_pcbGraphicsView->addFixedToCenterItem(m_pcbMainHelp);
+
+	m_owner->m_breadboardGraphicsView->addFixedToTopRightItem(m_partsBinHelp);
+	m_owner->m_breadboardGraphicsView->addFixedToTopLeftItem(m_switchButtonsHelp);
+	m_owner->m_pcbGraphicsView->addFixedToBottomLeftItem(m_autorouteHelp);
 }
 
-void Helper::init() {
-	addItemToView(m_breadMainHelp, m_owner->m_breadboardGraphicsView);
-	centerItemInView(m_breadMainHelp, m_owner->m_currentGraphicsView);
-
-	addItemToView(m_schemMainHelp, m_owner->m_schematicGraphicsView);
-	centerItemInView(m_schemMainHelp, m_owner->m_currentGraphicsView);
-
-	addItemToView(m_pcbMainHelp, m_owner->m_pcbGraphicsView);
-	centerItemInView(m_pcbMainHelp, m_owner->m_currentGraphicsView);
-
-	addItemToView(m_partsBinHelp, m_owner->m_currentGraphicsView);
-	moveItemBy(m_partsBinHelp, m_owner->m_breadboardGraphicsView->width()-m_partsBinHelp->widget()->width(), 0);
-
-	addItemToView(m_autorouteHelp, m_owner->m_pcbGraphicsView);
-	moveItemBy(m_autorouteHelp,110,m_owner->m_breadboardGraphicsView->height()-m_partsBinHelp->widget()->height());
-
-	addItemToView(m_switchButtonsHelp, m_owner->m_breadboardGraphicsView);
-
-	connect(m_owner->m_breadboardGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewResized()));
-	connect(m_owner->m_schematicGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewResized()));
-	connect(m_owner->m_pcbGraphicsView,SIGNAL(resizeSignal()),this,SLOT(viewResized()));
-
-	connect(m_owner->m_breadboardGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewScaleChanged()));
-	connect(m_owner->m_schematicGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewScaleChanged()));
-	connect(m_owner->m_pcbGraphicsView,SIGNAL(wheelSignal()),this,SLOT(viewScaleChanged()));
-}
-
-void Helper::addItemToView(QGraphicsWidget *item, SketchWidget* view) {
-	// here we assume that when a view is resized, the no
-	// visible ones, also get resized in the background
-
+void Helper::connectToView(SketchWidget* view) {
 	connect(view, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
-	//connect(m_owner->m_viewSwitcher, SIGNAL(viewSwitched()), this, SLOT(viewSwitched()));
+	connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	connect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
-
-	view->scene()->addItem(item);
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 }
 
-void Helper::centerItemInView(SketchMainHelp *item, SketchWidget* view) {
-	QWidget *w = item->widget();
-	qreal x = (view->width() - w->width())/2 - w->pos().x();
-	qreal y = (view->height() - w->height())/2 - w->pos().y();
-	//qreal x = (view->width() + view->mapToScene(w->pos()).x() - w->width())/2 - w->pos().x();
-	//qreal y = (view->height() + view->mapToScene(w->pos()).y() - w->height())/2 - w->pos().y();
-	moveItemBy(item,x,y);
-}
-
-void Helper::fixedX(ToolHelp *item, SketchWidget* view) {
-	QScrollBar * sb = view->horizontalScrollBar();
-	qreal hScroll = sb->isVisible() ? sb->height() : 0;
-	qreal y = view->height()-item->widget()->height()-item->y()-hScroll;
-	//QPointF p = view->mapToScene(item->widget()->pos());
-	moveItemBy(item,0,y);
-	//moveItemBy(item,p.x(),y+p.y());
-}
-
-void Helper::fixedY(ToolHelp *item, SketchWidget* view) {
-	QScrollBar * sb = view->verticalScrollBar();
-	qreal wScroll = sb->isVisible() ? sb->width() : 0;
-	qreal x = view->width()-item->widget()->width()-item->x()-wScroll;
-	//QPointF p = view->mapToScene(item->widget()->pos());
-	moveItemBy(item,x,0);
-	//moveItemBy(item,x+p.x(),p.y());
-}
-
-void Helper::viewResized() {
-	centerItemInView(m_breadMainHelp, m_owner->m_currentGraphicsView);
-	centerItemInView(m_schemMainHelp, m_owner->m_currentGraphicsView);
-	centerItemInView(m_pcbMainHelp, m_owner->m_currentGraphicsView);
-	fixedY(m_partsBinHelp, m_owner->m_currentGraphicsView);
-	fixedX(m_autorouteHelp, m_owner->m_currentGraphicsView);
-}
-
-void Helper::viewScaleChanged() {
-	QMatrix matrix = m_owner->m_currentGraphicsView->matrix();
-	//qreal x = m_owner->m_currentGraphicsView->width() * matrix.m11();
-	//qreal y = m_owner->m_currentGraphicsView->height() * matrix.m22();
-	QWidget *w = m_breadMainHelp->widget();
-
-	// ZOOM OUT
-	//qreal x = ((m_owner->m_currentGraphicsView->width() - w->width())/(2*matrix.m11()) - w->pos().x());
-	//qreal y = ((m_owner->m_currentGraphicsView->height() - w->height())/(2*matrix.m22()) - w->pos().y());
-
-	SketchWidget *view = m_owner->m_currentGraphicsView;
-	int vScrollW = view->verticalScrollBar()->isVisible() ? view->verticalScrollBar()->width() : 0;
-	int hScrollH = view->horizontalScrollBar()->isVisible() ? view->horizontalScrollBar()->height() : 0;
-
-
-	// ZOOM in
-		qreal x = (view->width()  - w->width())/(2*matrix.m11()) - w->pos().x();
-		qreal y = (view->height() - w->height())/(2*matrix.m22()) - w->pos().y();
-
-	DebugDialog::debug(QString("<<<<< %1 %2 - %3 %4")
-		.arg(matrix.m11()).arg(matrix.m12())
-		.arg(matrix.m21()).arg(matrix.m22())
-	);
-	m_breadMainHelp->moveBy(x,y);
-	//m_breadMainHelp->moveBy(vScrollW*(matrix.m11()>1?matrix.m11() : 1),hScrollH*(matrix.m22()>1?matrix.m22() : 1/matrix.m22()));
-	//m_breadMainHelp->moveBy(vScrollW*matrix.m11()*matrix.m11(),hScrollH*matrix.m22()*matrix.m22());
-
-
-	//qreal x = (view->width() + view->mapToScene(w->pos()).x() - w->width())/2 - w->pos().x();
-	//qreal y = (view->height() + view->mapToScene(w->pos()).y() - w->height())/2 - w->pos().y();
-}
 
 void Helper::somethingDroppedIntoView() {
 	if(m_stillWaitingFirstDrop) {
@@ -216,9 +127,13 @@ void Helper::removeAutorouteHelp() {
 void Helper::viewSwitched() {
 	if(m_stillWaitingFirstViewSwitch) {
 		m_stillWaitingFirstViewSwitch = false;
-		removeSwitchButtonsHelp();
+
+		QTimer *timer = new QTimer(this);
+		timer->setSingleShot(true);
+		connect(timer, SIGNAL(timeout()), this, SLOT(removeSwitchButtonsHelp()));
+		timer->start(400);
 	} else {
-		//disconnect(m_owner->m_viewSwitcher, SIGNAL(viewSwitched()), this, SLOT(viewSwitched()));
+		disconnect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	}
 }
 

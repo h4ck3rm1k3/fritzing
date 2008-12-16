@@ -28,6 +28,8 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QBoxLayout>
 #include <QLabel>
 #include <QFile>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 #include "toolhelp.h"
 
@@ -62,3 +64,17 @@ ToolHelp::ToolHelp(
 		frame->setStyleSheet(styleSheet.readAll());
 	}
 }
+
+//QVariant ToolHelp::itemChange(GraphicsItemChange change, const QVariant &value) {
+	//QPointF pos = value.toPointF();
+	// Map the original button-down position back to local coordinates.
+	//QPointF buttonDownPos = mapFromScene(pos);
+
+	//newScale = scale * distanceToPoint(pos) / distanceToPoint(buttonDownPos);
+
+	// Apply the new transformation
+	//QMatrix matrix = scene()->views()[0]->matrix();
+	//setMatrix(matrix.scale(1/matrix.m11(),1/matrix.m11()));
+	//QGraphicsProxyWidget::itemChange(change,value);
+//}
+

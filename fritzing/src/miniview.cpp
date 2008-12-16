@@ -92,7 +92,7 @@ void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[]
 
 	int ix = 0;
 	for (int i = 0; i < numItems; i++) {
-		if (dynamic_cast<ISketchHelpItem *>(items[i])) continue;
+		if (dynamic_cast<INotSeenInMiniView *>(items[i])) continue;
 
 		itemArray[ix] = items[i];
 		styleOptionArray[ix++] = options[i];

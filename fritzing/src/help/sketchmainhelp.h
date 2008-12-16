@@ -35,7 +35,7 @@ $Date$
 #include <QFrame>
 #include <QGraphicsProxyWidget>
 
-#include "isketchhelpitem.h"
+#include "inotseeninminiview.h"
 
 class SketchMainHelpCloseButton : public QLabel {
 	Q_OBJECT
@@ -79,7 +79,7 @@ class SketchMainHelpPrivate : public QFrame {
 		volatile bool m_shouldGetTransparent;
 };
 
-class SketchMainHelp : public QGraphicsProxyWidget, public ISketchHelpItem {
+class SketchMainHelp : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
 	SketchMainHelp(const QString &viewString, const QString &htmlText);
 	void doClose();

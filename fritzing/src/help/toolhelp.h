@@ -30,13 +30,16 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QGraphicsProxyWidget>
 #include <QBoxLayout>
 
-#include "isketchhelpitem.h"
+#include "inotseeninminiview.h"
 
-class ToolHelp : public QGraphicsProxyWidget, public ISketchHelpItem {
+class ToolHelp : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
 	ToolHelp(
 		const QString &text, const QString imageName,
 		QBoxLayout::Direction direction = QBoxLayout::TopToBottom);
+
+//protected:
+	//QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 };
 
 #endif /* TOOLHELP_H_ */

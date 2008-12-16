@@ -132,5 +132,23 @@ $Date$
     <file>resources/images/inViewHelpPartsBinArrow.png</file>
     <file>resources/images/inViewHelpAutorouteArrow.png</file>
     <file>resources/images/inViewHelpSwitchButtonsArrow.png</file>
+    <file>resources/images/icons/segmentedSwitcherBreadboardActiveDimmed.png</file>
+    <file>resources/images/icons/segmentedSwitcherBreadboardActiveFocus.png</file>
+    <file>resources/images/icons/segmentedSwitcherBreadboardActiveFocusHover.png</file>
+    <file>resources/images/icons/segmentedSwitcherBreadboardInactiveDimmed.png</file>
+    <file>resources/images/icons/segmentedSwitcherBreadboardInactiveFocus.png</file>
+    <file>resources/images/icons/segmentedSwitcherBreadboardInactiveFocusHover.png</file>
+    <file>resources/images/icons/segmentedSwitcherPCBActiveDimmed.png</file>
+    <file>resources/images/icons/segmentedSwitcherPCBActiveFocus.png</file>
+    <file>resources/images/icons/segmentedSwitcherPCBActiveFocusHover.png</file>
+    <file>resources/images/icons/segmentedSwitcherPCBInactiveDimmed.png</file>
+    <file>resources/images/icons/segmentedSwitcherPCBInactiveFocus.png</file>
+    <file>resources/images/icons/segmentedSwitcherPCBInactiveFocusHover.png</file>
+    <file>resources/images/icons/segmentedSwitcherSchematicActiveDimmed.png</file>
+    <file>resources/images/icons/segmentedSwitcherSchematicActiveFocus.png</file>
+    <file>resources/images/icons/segmentedSwitcherSchematicActiveFocusHover.png</file>
+    <file>resources/images/icons/segmentedSwitcherSchematicInactiveDimmed.png</file>
+    <file>resources/images/icons/segmentedSwitcherSchematicInactiveFocus.png</file>
+    <file>resources/images/icons/segmentedSwitcherSchematicInactiveFocusHover.png</file>
 </qresource>
 </RCC>

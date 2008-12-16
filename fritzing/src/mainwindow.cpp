@@ -109,18 +109,24 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
 	//m_tabWidget->addTab(m_breadboardWidget, tr("breadboard"));
+	m_breadViewSwitcher = new ViewSwitcher(this);
+	connectSwitcherToView(m_breadViewSwitcher,m_breadboardGraphicsView);
 	m_tabWidget->addWidget(m_breadboardWidget);
 
 	m_schematicGraphicsView = new SchematicSketchWidget(ItemBase::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
 	//m_tabWidget->addTab(m_schematicWidget, tr("schematic"));
+	m_schemViewSwitcher = new ViewSwitcher(this);
+	connectSwitcherToView(m_schemViewSwitcher,m_schematicGraphicsView);
 	m_tabWidget->addWidget(m_schematicWidget);
 
 	m_pcbGraphicsView = new PCBSketchWidget(ItemBase::PCBView, this);
 	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
 	//m_tabWidget->addTab(m_pcbWidget, tr("pcb"));
+	m_pcbViewSwitcher = new ViewSwitcher(this);
+	connectSwitcherToView(m_pcbViewSwitcher,m_pcbGraphicsView);
 	m_tabWidget->addWidget(m_pcbWidget);
 
     m_undoView = new QUndoView();
@@ -239,6 +245,10 @@ void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->setUndoStack(m_undoStack);
 	sketchWidget->setChainDrag(true);			// enable bend points
 	sketchWidget->addViewLayers();
+}
+
+void MainWindow::connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view) {
+	view->addFixedToTopLeftItem(switcher);
 }
 
 void MainWindow::doOnce() {
@@ -438,7 +448,6 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(dealWithRatsnestSlot(long, const QString &,
 																			  long, const QString &,
 																			  bool, RatsnestCommand *)) );
-
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");
@@ -678,6 +687,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	// triggers a signal to the navigator widget
 	m_navigators[index]->miniViewMousePressedSlot();
+	emit viewSwitched(index);
 
 
 	// obsolete: when there are 3 navigators and 3 zoom boxes, no need to update when current view changes
@@ -1221,6 +1231,10 @@ void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView)
 	if (oldIndex == index) return;
 
 	this->m_tabWidget->setCurrentIndex(index);
+}
+
+void MainWindow::viewSwitchedTo(int viewIndex) {
+	m_tabWidget->setCurrentIndex(viewIndex);
 }
 
 const QString MainWindow::fritzingTitle() {

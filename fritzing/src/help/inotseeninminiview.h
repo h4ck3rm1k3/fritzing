@@ -24,10 +24,10 @@ $Date: 2008-12-12 19:07:25 +0100 (Fri, 12 Dec 2008) $
 
 ********************************************************************/
 
-#ifndef ISKETCHHELPITEM_H_
-#define ISKETCHHELPITEM_H_
+#ifndef INOTSEENINMINIVIEW_H_
+#define INOTSEENINMINIVIEW_H_
 
-class ISketchHelpItem {
+class INotSeenInMiniView {
 };
 
-#endif /* ISKETCHHELPITEM_H_ */
+#endif /* INOTSEENINMINIVIEW_H_ */
