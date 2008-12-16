@@ -16,13 +16,13 @@
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1099ABDE24_ST_relay" path="/parts/core/basic-relay.fz">
+		<!-- instance moduleIdRef="1099ABDE24_ST_relay" path="/parts/core/basic-relay.fz">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
-		</instance>
+		</instance -->
 		<instance moduleIdRef="1238DBDC00-toggle-switch" path="/parts/core/basic-toggle-switch.fz">
 			<views>
 				<iconView layer="icon">
