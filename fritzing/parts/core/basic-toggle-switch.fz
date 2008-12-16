@@ -10,7 +10,7 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="family">Switch</property>
+        <property name="family">Switch - 3 pin</property>
         <property name="switching circuit">SPDT</property>
     </properties>
     <description>Toggle Switch</description>

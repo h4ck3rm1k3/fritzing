@@ -10,7 +10,7 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="family">Switch</property>
+        <property name="family">Switch - 4 pin</property>
         <property name="switching circuit">SPST</property>
         <property name="default state">Normally Open</property>
     </properties>
