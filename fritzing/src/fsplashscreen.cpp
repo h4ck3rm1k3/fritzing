@@ -52,13 +52,23 @@ void FSplashScreen::showMessage(const QString &message, QRect rect, int alignmen
 }
 
 
+void FSplashScreen::showPixmap(const QPixmap & pixmap, QPoint point)
+{
+	PixmapThing * pixmapThing = new PixmapThing;
+	pixmapThing->point = point;
+	pixmapThing->pixmap = pixmap;
+	m_pixmaps.append(pixmapThing);
+    repaint();
+}
+
+
 void FSplashScreen::drawContents ( QPainter * painter )
 {
 	// copied from QSplashScreen::drawContents
+	painter->setRenderHint ( QPainter::Antialiasing, true );				// TODO: might need to be in the stylesheet?
 
 	foreach (MessageThing * messageThing, m_messages) {
 		painter->setPen(messageThing->color);
-		painter->setRenderHint ( QPainter::Antialiasing, true );				// TODO: might need to be in the stylesheet?
 		if (Qt::mightBeRichText(messageThing->message)) {
 			QTextDocument doc;
 	#ifdef QT_NO_TEXTHTMLPARSER
@@ -79,5 +89,9 @@ void FSplashScreen::drawContents ( QPainter * painter )
 		} else {
 			painter->drawText(messageThing->rect, messageThing->alignment, messageThing->message);
 		}
+	}
+
+	foreach (PixmapThing * pixmapThing, m_pixmaps) {
+		painter->drawPixmap(pixmapThing->point, pixmapThing->pixmap);
 	}
 }

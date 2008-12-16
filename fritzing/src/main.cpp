@@ -90,6 +90,10 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/resources/images/splash_2010.png");
     FSplashScreen splash(pixmap);
 
+	QPixmap logo(":/resources/images/fhp_logo_small.png");
+
+
+
 	QColor w(0xea, 0xf4, 0xed);
 	QRect r1(45, kBottomOfAlpha, pixmap.width() - 45, 20);
 	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
@@ -97,6 +101,7 @@ int main(int argc, char *argv[])
 								   "</font>")
 									.arg(Version::year()),
 		r1, Qt::AlignLeft | Qt::AlignTop, w);
+	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
 
 	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
 	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"

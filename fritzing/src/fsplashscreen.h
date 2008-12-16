@@ -37,6 +37,11 @@ struct MessageThing {
 	QColor color;
 };
 
+struct PixmapThing {
+	QPixmap pixmap;
+	QPoint point;
+};
+
 class FSplashScreen : public QSplashScreen {
 public:
 	FSplashScreen(const QPixmap & pixmap = QPixmap(), Qt::WindowFlags f = 0);
@@ -47,10 +52,12 @@ protected:
 
 public slots:
 	void showMessage(const QString &message, QRect rect, int alignment = Qt::AlignLeft, const QColor &color = Qt::black);
+	void showPixmap(const QPixmap &pixmap, QPoint point);
 
 protected:
     QPixmap m_pixmap;
 	QList<MessageThing *> m_messages;
+	QList<PixmapThing *> m_pixmaps;
 
 };
 
