@@ -39,7 +39,7 @@ struct MessageThing {
 
 struct PixmapThing {
 	QPixmap pixmap;
-	QPoint point;
+	QRect rect;
 };
 
 class FSplashScreen : public QSplashScreen {
@@ -52,7 +52,8 @@ protected:
 
 public slots:
 	void showMessage(const QString &message, QRect rect, int alignment = Qt::AlignLeft, const QColor &color = Qt::black);
-	void showPixmap(const QPixmap &pixmap, QPoint point);
+	int showPixmap(const QPixmap &pixmap, QPoint point);
+	void showProgress(int index, qreal progress);			// progress is from 0.0 to 1.0;
 
 protected:
     QPixmap m_pixmap;

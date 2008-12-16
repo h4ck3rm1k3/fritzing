@@ -91,28 +91,33 @@ int main(int argc, char *argv[])
     FSplashScreen splash(pixmap);
 
 	QPixmap logo(":/resources/images/fhp_logo_small.png");
+	QPixmap progress(":/resources/images/splash_progressbar.png");
 
+	int progressIndex = splash.showPixmap(progress, QPoint(0, pixmap.height() - progress.height()));
+	splash.showProgress(progressIndex, 0);
 
+	// put this above the progress indicator
+	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
 
 	QColor w(0xea, 0xf4, 0xed);
 	QRect r1(45, kBottomOfAlpha, pixmap.width() - 45, 20);
-	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
+	QString msg1 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
 								   "&#169; 2007-%1 Fachhochschule Potsdam"
 								   "</font>")
-									.arg(Version::year()),
-		r1, Qt::AlignLeft | Qt::AlignTop, w);
-	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
+									.arg(Version::year());
+	splash.showMessage(msg1, r1, Qt::AlignLeft | Qt::AlignTop, w);
 
 	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
-	splash.showMessage(QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
+	QString msg2 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
 								   "Version %1.%2 (%3%4)"
 								   "</font>")
 									.arg(Version::majorVersion())
 									.arg(Version::minorVersion())
 									.arg(Version::modifier())
-									.arg(Version::shortDate()),
-		r2, Qt::AlignRight | Qt::AlignTop, w);
+									.arg(Version::shortDate());
+	splash.showMessage(msg2, r2, Qt::AlignRight | Qt::AlignTop, w);
     splash.show();
+	
 	QApplication::processEvents();			// seems to need this (sometimes?) to display the splash screen
 
 	QCoreApplication::setOrganizationName("Fritzing");
@@ -130,6 +135,9 @@ int main(int argc, char *argv[])
     ModelPart::initNames();
     Connector::initNames();
     ZoomComboBox::loadFactors();
+
+	splash.showProgress(progressIndex, 0.1);
+
 
 #ifdef Q_WS_WIN
 	// associate .fz file with fritzing app on windows (xp only--vista is different)
@@ -160,6 +168,8 @@ int main(int argc, char *argv[])
 		settings.clear();
 	}
 
+	splash.showProgress(progressIndex, 0.2);
+
 	QString binToOpen = settings.value("lastBin").toString();
 	binToOpen = binToOpen.isNull() || binToOpen.isEmpty() ? MainWindow::CoreBinLocation : binToOpen;
 
@@ -172,9 +182,12 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	splash.showProgress(progressIndex, 0.4);
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = new MainWindow(paletteBinModel, referenceModel);
+
+	splash.showProgress(progressIndex, 0.7);
 
 	// on my xp machine in debug mode, 
 	// sometimes the activities in doOnce cause the whole machine to peak at 100% cpu for 30 seconds or more
@@ -191,7 +204,9 @@ int main(int argc, char *argv[])
 	}
 	mutex.unlock();
 	DebugDialog::debug("ending thread");
-	
+
+	splash.showProgress(progressIndex, 0.9);
+
 	if(argc > 1) {
 		for(int i=1; i < argc; i++) {
 			mainWindow->load(argv[i]);
@@ -207,6 +222,9 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
+
+	splash.showProgress(progressIndex, 0.99);
+
 
 	mainWindow->show();
 	splash.finish(mainWindow);

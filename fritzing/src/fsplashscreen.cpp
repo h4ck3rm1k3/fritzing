@@ -52,13 +52,25 @@ void FSplashScreen::showMessage(const QString &message, QRect rect, int alignmen
 }
 
 
-void FSplashScreen::showPixmap(const QPixmap & pixmap, QPoint point)
+int FSplashScreen::showPixmap(const QPixmap & pixmap, QPoint point)
 {
 	PixmapThing * pixmapThing = new PixmapThing;
-	pixmapThing->point = point;
+	pixmapThing->rect = QRect(point, QPoint(-1,-1));
 	pixmapThing->pixmap = pixmap;
 	m_pixmaps.append(pixmapThing);
     repaint();
+
+	return m_pixmaps.count() - 1;
+}
+
+void FSplashScreen::showProgress(int index, qreal progress) {
+	if (index < 0) return;
+	if (index >= m_pixmaps.count()) return;
+
+	int w = this->width() * progress;
+	PixmapThing * pixmapThing = m_pixmaps[index];
+	pixmapThing->rect.setWidth(w);
+	repaint();
 }
 
 
@@ -66,6 +78,11 @@ void FSplashScreen::drawContents ( QPainter * painter )
 {
 	// copied from QSplashScreen::drawContents
 	painter->setRenderHint ( QPainter::Antialiasing, true );				// TODO: might need to be in the stylesheet?
+
+	// pixmaps first, since they go beneath text
+	foreach (PixmapThing * pixmapThing, m_pixmaps) {
+		painter->drawPixmap(pixmapThing->rect, pixmapThing->pixmap);
+	}
 
 	foreach (MessageThing * messageThing, m_messages) {
 		painter->setPen(messageThing->color);
@@ -89,9 +106,5 @@ void FSplashScreen::drawContents ( QPainter * painter )
 		} else {
 			painter->drawText(messageThing->rect, messageThing->alignment, messageThing->message);
 		}
-	}
-
-	foreach (PixmapThing * pixmapThing, m_pixmaps) {
-		painter->drawPixmap(pixmapThing->point, pixmapThing->pixmap);
 	}
 }
