@@ -171,7 +171,7 @@ public:
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
-	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
+	virtual void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 	void addFixedToTopLeftItem(QGraphicsProxyWidget *item);
 	void addFixedToTopRightItem(QGraphicsProxyWidget *item);

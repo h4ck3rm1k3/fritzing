@@ -1,158 +1,158 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.beta.1407" moduleId="1001AAAB555Timer">
-    <author>Dirk van Oosterbosch</author>
-    <title>555 Timer</title>
-    <date>2008-11-11</date>
-    <label>U</label>
-    <tags>
-        <tag>555</tag>
-        <tag>Timer</tag>
-        <tag>555 Timer</tag>
-        <tag>IC</tag>
-        <tag>DIL package</tag>
-    </tags>
-    <properties>
-        <property name="family">Timer IC</property>
-    </properties>
-    <description>The 555 timer is one of the most popular and versatile integrated circuits ever produced. It can used in a variety of timer and multivibrator applications.</description>
-    <views>
-        <iconView>
-            <layers>
-                <layer layerId="icon" image="icon/555timericon.svg"></layer>
-            </layers>
-        </iconView>
-        <pcbView>
-            <layers>
-                <layer layerId="copper0" image="pcb/DIP8.svg"></layer>
-                <layer layerId="keepout" image="pcb/DIP8.svg"></layer>
-                <layer layerId="soldermask" image="pcb/DIP8.svg"></layer>
-                <layer layerId="silkscreen" image="pcb/DIP8.svg"></layer>
-                <layer layerId="outline" image="pcb/DIP8.svg"></layer>
-            </layers>
-        </pcbView>
-        <breadboardView>
-            <layers>
-                <layer layerId="breadboard" image="breadboard/555timerbreadboard.svg"></layer>
-            </layers>
-        </breadboardView>
-        <schematicView>
-            <layers>
-                <layer layerId="schematic" image="schematic/555timerschematic.svg"></layer>
-            </layers>
-        </schematicView>
-    </views>
-    <connectors>
-        <connector id="connector3" type="male" name="Pin 4">
-            <description>Reset</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector3pin" terminalId="connector3terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector3pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector4" type="male" name="Pin 5">
-            <description>Control</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector4pin" terminalId="connector4terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector4pin" terminalId="connector4terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector4pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector5" type="male" name="Pin 6">
-            <description>Threshold</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector5pin" terminalId="connector5terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector5pin" terminalId="connector5terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector5pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector6" type="male" name="Pin 7">
-            <description>Discharge</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector6pin" terminalId="connector6terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector6pin" terminalId="connector6terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector6pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector7" type="male" name="Pin 8">
-            <description>Supply +Vs</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector7pin" terminalId="connector7terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector7pin" terminalId="connector7terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector7pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector0" type="male" name="Pin 1">
-            <description>Ground</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector0pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector1" type="male" name="Pin 2">
-            <description>Trigger</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector1pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-        <connector id="connector2" type="male" name="Pin 3">
-            <description>Output</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"></pin>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector2pin" terminalId="connector2terminal"></pin>
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector2pad"></pin>
-                </pcbView>
-            </views>
-        </connector>
-    </connectors>
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion="0.1.beta.1407" moduleId="1001AAAB555Timer" >
+ <author>Dirk van Oosterbosch</author>
+ <title>555 Timer</title>
+ <date>2008-11-11</date>
+ <label>U</label>
+ <tags>
+  <tag>555</tag>
+  <tag>Timer</tag>
+  <tag>555 Timer</tag>
+  <tag>IC</tag>
+  <tag>DIL package</tag>
+ </tags>
+ <properties>
+  <property name="family" >Timer IC</property>
+ </properties>
+ <description>The 555 timer is one of the most popular and versatile integrated circuits ever produced. It can used in a variety of timer and multivibrator applications.</description>
+ <views>
+  <iconView>
+   <layers image="icon/555timericon.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <pcbView>
+   <layers image="pcb/DIP8.svg" >
+    <layer layerId="copper0" />
+    <layer layerId="keepout" />
+    <layer layerId="soldermask" />
+    <layer layerId="silkscreen" />
+    <layer layerId="outline" />
+   </layers>
+  </pcbView>
+  <breadboardView>
+   <layers image="breadboard/555timerbreadboard.svg" >
+    <layer layerId="breadboard" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/555timerschematic.svg" >
+    <layer layerId="schematic" />
+   </layers>
+  </schematicView>
+ </views>
+ <connectors>
+  <connector type="male" id="connector3" name="Pin 4" >
+   <description>Reset</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector3pin" layer="breadboard" terminalId="connector3terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector3pin" layer="schematic" terminalId="connector3terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector3pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector4" name="Pin 5" >
+   <description>Control</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector4pin" layer="breadboard" terminalId="connector4terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector4pin" layer="schematic" terminalId="connector4terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector4pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector5" name="Pin 6" >
+   <description>Threshold</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector5pin" layer="breadboard" terminalId="connector5terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector5pin" layer="schematic" terminalId="connector5terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector5pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector6" name="Pin 7" >
+   <description>Discharge</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector6pin" layer="breadboard" terminalId="connector6terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector6pin" layer="schematic" terminalId="connector6terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector6pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector7" name="Pin 8" >
+   <description>Supply +Vs</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector7pin" layer="breadboard" terminalId="connector7terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector7pin" layer="schematic" terminalId="connector7terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector7pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector0" name="Pin 1" >
+   <description>Ground</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector0pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="Pin 2" >
+   <description>Trigger</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector2" name="Pin 3" >
+   <description>Output</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector2pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
 </module>

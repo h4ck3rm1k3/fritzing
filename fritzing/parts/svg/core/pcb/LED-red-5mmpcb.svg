@@ -14,12 +14,12 @@
        >
       <path
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:8;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="connector0pin"
+         id="connector0pad"
          transform="matrix(1.0688938,0,0,1.0688938,-12.867196,-67.444467)"
          d="M 153.73839,955.87811 C 153.73839,966.41834 146.14324,974.96288 136.77416,974.96288 C 127.40507,974.96288 119.80992,966.41834 119.80992,955.87811 C 119.80992,945.33788 127.40507,936.79334 136.77416,936.79334 C 146.14324,936.79334 153.73839,945.33788 153.73839,955.87811 L 153.73839,955.87811 z" />
       <rect
          style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:10;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="connector1pin"
+         id="connector1pad"
          y="937.85358"
          x="46.651649"
          height="29.687515"

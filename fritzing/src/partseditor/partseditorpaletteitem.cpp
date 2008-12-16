@@ -102,15 +102,13 @@ void PartsEditorPaletteItem::writeXmlLocation(QXmlStreamWriter & /*streamWriter*
 void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeStartElement(names[m_viewIdentifier]->first);
 	streamWriter.writeStartElement("layers");
-
+	streamWriter.writeAttribute("image",m_svgStrings->fileRelativePath());
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
-		streamWriter.writeAttribute("image",m_svgStrings->fileRelativePath());
 		streamWriter.writeEndElement();
 	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(lkpi->viewLayerID()));
-		streamWriter.writeAttribute("image",m_svgStrings->fileRelativePath());
 		streamWriter.writeEndElement();
 	}
 

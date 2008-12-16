@@ -8,8 +8,8 @@
  </g>
  <g id="copper0" >
   <rect width="48" x="69" y="10" fill="none" height="48" stroke="rgb(255, 191, 0)" stroke-width="21" />
-  <circle fill="none" cx="93" cy="34" stroke="rgb(255, 191, 0)" r="24" id="connector0pin" stroke-width="21" />
-  <circle fill="none" cx="93" cy="134" stroke="rgb(255, 191, 0)" r="24" id="connector1pin" stroke-width="21" />
+  <circle fill="none" cx="93" cy="34" stroke="rgb(255, 191, 0)" r="24" id="connector0pad" stroke-width="21" />
+  <circle fill="none" cx="93" cy="134" stroke="rgb(255, 191, 0)" r="24" id="connector1pad" stroke-width="21" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />

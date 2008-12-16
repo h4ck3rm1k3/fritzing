@@ -6,9 +6,9 @@
  </g>
  <g id="copper0" >
   <rect width="56" x="22" y="172" fill="none" height="56" stroke="rgb(255, 191, 0)" stroke-width="15" />
-  <circle fill="none" cx="50" cy="200" stroke="rgb(255, 191, 0)" r="28" id="connector0pin" stroke-width="15" />
-  <circle fill="none" cx="150" cy="200" stroke="rgb(255, 191, 0)" r="28" id="connector1pin" stroke-width="15" />
-  <circle fill="none" cx="250" cy="200" stroke="rgb(255, 191, 0)" r="28" id="connector2pin" stroke-width="15" />
+  <circle fill="none" cx="50" cy="200" stroke="rgb(255, 191, 0)" r="28" id="connector0pad" stroke-width="15" />
+  <circle fill="none" cx="150" cy="200" stroke="rgb(255, 191, 0)" r="28" id="connector1pad" stroke-width="15" />
+  <circle fill="none" cx="250" cy="200" stroke="rgb(255, 191, 0)" r="28" id="connector2pad" stroke-width="15" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />

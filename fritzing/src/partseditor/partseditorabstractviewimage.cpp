@@ -133,9 +133,9 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString
 	int errorColumn;
 	QString fakeFzFile =
 		QString("<module><views>\n")+
-			QString("<%1><layers>\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier));
+			QString("<%1><layers image='%2' >\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier)).arg(fakePath);
 		foreach(QString layer, layers) { fakeFzFile +=
-			QString("    <layer layerId='%1' image='%2'/>\n").arg(layer).arg(fakePath);
+			QString("    <layer layerId='%1' />\n").arg(layer);
 		}
 	fakeFzFile +=
 			QString("</layers></%1>\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier))+
@@ -145,7 +145,7 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString
 		QString terminalAttr = conns[id]->second != ___emptyString___ ? QString("terminalId='%1'").arg(conns[id]->second) : "";
 		fakeFzFile += QString("<connector id='%1'><views>\n").arg(id)+
 				QString("<%1>\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier))+
-				QString("<pin layer='%1' svgId='%2' %3/>\n")
+				QString("<p layer='%1' svgId='%2' %3/>\n")
 					.arg(ViewLayer::viewLayerXmlNameFromID(ItemBase::defaultConnectorLayer(m_viewIdentifier)))
 					.arg(conns[id]->first)
 					.arg(terminalAttr)+
@@ -181,17 +181,19 @@ void PartsEditorAbstractViewImage::getConnectorIdsAux(QHash<QString/*connectorId
 	QDomElement e = n.toElement(); // try to convert the node to an element.
 	if(!e.isNull()) {
 		QString id = e.attribute("id");
-		if(id.startsWith("connector") && id.endsWith("pin")) {
-			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
-			StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
-			pair->first = id;
-			retval[conn] = pair;
-		} else if(id.startsWith("connector") && id.endsWith("terminal")) {
+		if(id.startsWith("connector") && id.endsWith("terminal")) {
 			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
 			StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
 			pair->second = id;
 			retval[conn] = pair;
-		} else if(n.hasChildNodes()) {
+		} 
+		else if(id.startsWith("connector") /*&& id.endsWith("pin") */ ) {
+			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
+			StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
+			pair->first = id;
+			retval[conn] = pair;
+		} 
+		else if(n.hasChildNodes()) {
 			getConnectorIdsAux(retval, e);
 		}
 	}

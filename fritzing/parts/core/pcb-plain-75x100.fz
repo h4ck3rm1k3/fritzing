@@ -1,51 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module uri="http://fritzing.org/modules/arduino-diecimila" moduleId="1234ABDE26BH">
-	<version>1.0</version> 
-	<creator>Brendan Howell</creator>
-	<title>Plain PCB - 75 x 100 mm</title>
-	<date>2008-11-25</date>
-	<label>PCB</label>
-	<tags>
-		<tag>pcb</tag>
-		<tag>board</tag>
-		<tag>diy</tag>
-		<tag>fritzing core</tag>
-	</tags>
-	<properties>
-		<property name="Size">75 x 100 mm</property>
-		<property name="family">Plain PCB</property>
-	</properties>
-	<taxonomy>discreteParts.pcb.plain.75x100mm</taxonomy>
-	<description>Plain Vanilla 75 x 100 mm Circuit Board</description>
-	<views>
-	    <defaultUnits>mm</defaultUnits>
-	    	<iconView>
-			<layers>
-				<layer image="icon/plain_pcb.svg" layerId="icon" />
-			</layers>
-		</iconView>
-    		<breadboardView>
- 			<layers>
-				<layer image="icon/plain_pcb.svg" layerId="unknown" />
-			</layers>
-   		</breadboardView>
-    		<schematicView>
-			<layers>
-				<layer image="icon/plain_pcb.svg" layerId="unknown" />
-			</layers>
-     		</schematicView>
-	    	<pcbView>
-	    	    <label></label>
-	    	    <layers>
-	    	        <layer image="pcb/pcb_75x100mm.svg" layerId="board" sticky="true" />
-	     	    </layers>
-	    	</pcbView>
-    	</views>
-	
-	<connectors>
-    	
-	</connectors>
-    	<buses>
-	    	
-	</buses>
+<?xml version='1.0' encoding='UTF-8'?>
+<module uri="http://fritzing.org/modules/arduino-diecimila" moduleId="1234ABDE26BH" >
+ <version>1.0</version>
+ <creator>Brendan Howell</creator>
+ <title>Plain PCB - 75 x 100 mm</title>
+ <date>2008-11-25</date>
+ <label>PCB</label>
+ <tags>
+  <tag>pcb</tag>
+  <tag>board</tag>
+  <tag>diy</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="Size" >75 x 100 mm</property>
+  <property name="family" >Plain PCB</property>
+ </properties>
+ <taxonomy>discreteParts.pcb.plain.75x100mm</taxonomy>
+ <description>Plain Vanilla 75 x 100 mm Circuit Board</description>
+ <views>
+  <defaultUnits>mm</defaultUnits>
+  <iconView>
+   <layers image="icon/plain_pcb.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers image="icon/plain_pcb.svg" >
+    <layer layerId="unknown" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="icon/plain_pcb.svg" >
+    <layer layerId="unknown" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <label/>
+   <layers image="pcb/pcb_75x100mm.svg" >
+    <layer layerId="board" sticky="true" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors/>
+ <buses/>
 </module>

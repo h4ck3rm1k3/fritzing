@@ -4,8 +4,8 @@
  <g id="silkscreen" />
  <g id="copper0" >
   <rect width="44" x="103" y="228" fill="none" height="44" stroke="black" stroke-width="15" />
-  <circle fill="none" cx="125" cy="250" stroke="black" r="22" id="connector0pin" stroke-width="15" />
-  <circle fill="none" cx="375" cy="250" stroke="black" r="22" id="connector1pin" stroke-width="15" />
+  <circle fill="none" cx="125" cy="250" stroke="black" r="22" id="connector0pad" stroke-width="15" />
+  <circle fill="none" cx="375" cy="250" stroke="black" r="22" id="connector1pad" stroke-width="15" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />

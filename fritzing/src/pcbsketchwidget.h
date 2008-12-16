@@ -50,6 +50,7 @@ public:
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
 	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
+	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 protected:
 	void setWireVisible(Wire * wire);

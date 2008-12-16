@@ -20,10 +20,10 @@
   <line stroke="white" y1="87" x1="399" y2="162" stroke-width="12" x2="449" />
  </g>
  <g id="copper0" >
-  <circle fill="none" cx="49" cy="312" stroke="rgb(255, 191, 0)" r="35" id="connector2pin" stroke-width="29" />
+  <circle fill="none" cx="49" cy="312" stroke="rgb(255, 191, 0)" r="35" id="connector2pad" stroke-width="29" />
   <rect width="70" x="14" y="77" fill="none" height="70" stroke="rgb(255, 191, 0)" stroke-width="29" />
-  <circle fill="none" cx="49" cy="112" stroke="rgb(255, 191, 0)" r="35" id="connector0pin" stroke-width="29" />
-  <circle fill="none" cx="449" cy="212" stroke="rgb(255, 191, 0)" r="35" id="connector1pin" stroke-width="29" />
+  <circle fill="none" cx="49" cy="112" stroke="rgb(255, 191, 0)" r="35" id="connector0pad" stroke-width="29" />
+  <circle fill="none" cx="449" cy="212" stroke="rgb(255, 191, 0)" r="35" id="connector1pad" stroke-width="29" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />

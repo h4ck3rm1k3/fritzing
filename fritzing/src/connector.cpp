@@ -123,7 +123,7 @@ void Connector::saveAsPart(QXmlStreamWriter & writer) {
 	foreach (ItemBase::ViewIdentifier currView, pins.keys()) {
 		writer.writeStartElement(ItemBase::viewIdentifierXmlName(currView));
 		foreach (SvgIdLayer * svgIdLayer, pins.values(currView)) {
-			writer.writeStartElement("pin");
+			writer.writeStartElement("p");
 			writeLayerAttr(writer, svgIdLayer->m_viewLayerID);
 			writeSvgIdAttr(writer, currView, svgIdLayer->m_svgId);
 			writeTerminalIdAttr(writer, currView, svgIdLayer->m_terminalId);
@@ -142,9 +142,9 @@ void Connector::writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID 
 void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString connId) {
 	QString attrValue = "";
 	if(view == ItemBase::BreadboardView || view == ItemBase::SchematicView) {
-		attrValue = connId+"pin";
+		attrValue = connId /*+"pin"*/;
 	} else if(view == ItemBase::PCBView) {
-		attrValue = connId+"pad";
+		attrValue = connId /*+"pad" */;
 	} else {
 		return;
 	}
@@ -232,7 +232,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 			return false;
 		}
 
-		QString connectorID = svgIdLayer->m_svgId + "pin" ;
+		QString connectorID = svgIdLayer->m_svgId; // + "pin" ;
 
 		//DebugDialog::debug(QString("bounds on element %1").arg(connectorID) );
 		QRectF bounds = renderer->boundsOnElement(connectorID);
@@ -247,11 +247,10 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 		}
 
 		QMatrix matrix0 = renderer->matrixForElement(connectorID);
+		QRectF viewBox = renderer->viewBoxF();
 
 		// TODO: all parts should either have connectors with or without a matrix
 		if (matrix0.isIdentity()) {
-			QRectF viewBox = renderer->viewBoxF();
-			QSize defaultSize = renderer->defaultSize();
 			/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorStuffID())
 							   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
 							   .arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
@@ -266,14 +265,15 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 		}
 		connectorViewThing->setRectInView(viewIdentifier, viewLayerID, connectorRect);
 		connectorViewThing->setTerminalPointInView(viewIdentifier, viewLayerID, connectorRect.center() - connectorRect.topLeft());		// default spot is centered
-		terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, viewIdentifier, viewLayerID, connectorRect, connectorViewThing, ignoreTerminalPoint);
+		terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, viewIdentifier, viewLayerID, connectorRect, connectorViewThing, ignoreTerminalPoint, viewBox);
 	}
 
 	return true;
 }
 
 QPointF Connector::calcTerminalPoint(const QString & terminalId, QSvgRenderer * renderer, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID,
-									const QRectF & connectorRect, ConnectorViewThing * connectorViewThing, bool ignoreTerminalPoint)
+									const QRectF & connectorRect, ConnectorViewThing * connectorViewThing, bool ignoreTerminalPoint,
+									const QRectF & viewBox)
 {
 	// this code is a bit more viewish than modelish...
 
@@ -303,8 +303,20 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, QSvgRenderer * 
 										//arg(terminalID) );
 
 	QMatrix tMatrix = renderer->matrixForElement(terminalId);
-	QRectF terminalRect = tMatrix.mapRect(tBounds);
-	terminalPoint = terminalRect.center() - connectorRect.topLeft();
+	if (tMatrix.isIdentity()) {
+		QPointF c = tBounds.center();
+		QPointF q(c.x() * defaultSize.width() / viewBox.width(), c.y() * defaultSize.height() / viewBox.height());
+		terminalPoint = q - connectorRect.topLeft();	
+		//QRectF terminalRect = tMatrix.mapRect(tBounds);
+		//QPointF tp = terminalRect.center() - connectorRect.topLeft();
+		//if (qAbs(tp.x() - terminalPoint.x()) > 1 || (qAbs(tp.y() - terminalPoint.y()) > 1)) {
+			//DebugDialog::debug("got a big difference in terminalrect");
+		//}
+	}
+	else {
+		QRectF terminalRect = tMatrix.mapRect(tBounds);
+		terminalPoint = terminalRect.center() - connectorRect.topLeft();
+	}
 	connectorViewThing->setTerminalPointInView(viewIdentifier, viewLayerID, terminalPoint);
 	//DebugDialog::debug(	tr("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
 										//arg(terminalPoint.y()).

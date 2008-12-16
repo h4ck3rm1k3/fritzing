@@ -148,10 +148,10 @@ void ConnectorStuff::loadPins(const QDomElement & domElement) {
 }
 
 void ConnectorStuff::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) {
-	QDomElement pinElem = elem.firstChildElement("pin");
+	QDomElement pinElem = elem.firstChildElement("p");
 	while (!pinElem.isNull()) {
 		QString svgId = pinElem.attribute("svgId");
-		svgId = svgId.left(svgId.lastIndexOf(QRegExp("\\d"))+1);
+		//svgId = svgId.left(svgId.lastIndexOf(QRegExp("\\d"))+1);
 		QString layer = pinElem.attribute("layer");
 		SvgIdLayer * svgIdLayer = new SvgIdLayer();
 		svgIdLayer->m_svgId = svgId;
@@ -162,7 +162,7 @@ void ConnectorStuff::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) 
 		svgIdLayer->m_terminalId = terminalId;
 		m_pins.insert(viewId, svgIdLayer);
 
-		pinElem = pinElem.nextSiblingElement("pin");
+		pinElem = pinElem.nextSiblingElement("p");
 	}
 }
 

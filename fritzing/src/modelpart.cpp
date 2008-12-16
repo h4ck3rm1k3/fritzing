@@ -465,15 +465,14 @@ void ModelPart::grabImagePath(QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath
 	QDomElement viewElem = viewsElems.firstChildElement(ItemBase::viewIdentifierXmlName(viewId));
 	if(!viewElem.isNull()) {
 		QString partspath = getApplicationSubFolderPath("parts")+"/svg";
-		QDomElement layerElem = viewElem.firstChildElement("layers").firstChildElement("layer");
-		while (!layerElem.isNull()) {
+		QDomElement layerElem = viewElem.firstChildElement("layers");
+		if (!layerElem.isNull()) {
 			QString imagepath = layerElem.attribute("image");
 			QString folderinparts = inWhichFolder(partspath, imagepath);
 			if(folderinparts != ___emptyString___) {
 				SvgAndPartFilePath st(partspath,folderinparts,imagepath);
 				viewImages[viewId] = st;
 			}
-			layerElem = layerElem.nextSibling().toElement();
 		}
 	}
 }

@@ -461,12 +461,12 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 		if (command) {
 			// changing state after the command has already been executed
 			command->addRoutingStatus(this, m_netCount, m_netRoutedCount, m_connectorsLeftToRoute, m_jumperCount,
-									        netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+											netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 		}
 		if (undoCommand) {
 			// the command is still to be executed
 			new RoutingStatusCommand(this, m_netCount, m_netRoutedCount, m_connectorsLeftToRoute, m_jumperCount,
-									        netCount, netRoutedCount, connectorsLeftToRoute, jumperCount, undoCommand);
+											netCount, netRoutedCount, connectorsLeftToRoute, jumperCount, undoCommand);
 		}
 
 		emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
@@ -478,3 +478,11 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 	}
 }
 
+void PCBSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) 
+{
+	m_netCount = netCount;
+	m_netRoutedCount = netRoutedCount;
+	m_connectorsLeftToRoute = connectorsLeftToRoute;
+	m_jumperCount = jumperCount;
+	SketchWidget::forwardRoutingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+}

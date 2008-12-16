@@ -104,7 +104,7 @@ void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect)
 
 		QDomDocument *svgDom = m_item->svgDom();
 		QDomElement connElem = svgDom->createElement("rect");
-		connElem.setAttribute("id",connId+"pin");
+		connElem.setAttribute("id",connId /*+"pin"*/);
 		connElem.setAttribute("x",x);
 		connElem.setAttribute("y",y);
 		connElem.setAttribute("width",width);

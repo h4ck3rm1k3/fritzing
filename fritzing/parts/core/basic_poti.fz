@@ -1,89 +1,89 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module uri="http://fritzing.org/modules/potentiometer" moduleId="3234DBDC00">
-    <version>1.1</version>
-    <author>Stefan Hermann</author>
-    <title>Basic Potentiometer</title>
-    <label>R</label>
-    <date>2008-10-10</date>
-    <tags>
-    	<tag>potentiometer</tag>
-    	<tag>poti</tag>
-    	<tag>adjustable</tag>
-    	<tag>resistor</tag>
-    	<tag>fritzing core</tag>
-    </tags>
-    <properties>
-    	<property name="family">Potentiometer</property>
-    </properties>
-    <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
-    <description>A standard adjustable resistor (potentiometer).</description>
-    <views>
-        <image composited="false" file="basic_poti.svg" />
-        <defaultUnits>cmil</defaultUnits>
-        <iconView>
-            <layers>
-                <layer layerId="icon" image="icon/basic_poti_icon.svg"/>
-            </layers>
-        </iconView>
-        <breadboardView flipvertical="true">
-            <layers>
-                <layer layerId="breadboard" image="breadboard/basic_poti_sm.svg"/>
-            </layers>
-        </breadboardView>
-        <schematicView>
-            <layers>
-                <layer layerId="schematic" image="schematic/basic_poti.svg"/>
-            </layers>
-        </schematicView>
-        <pcbView>
-            <layers>
-                <layer layerId="silkscreen" image="pcb/trimpot.svg"/>
-                <layer layerId="copper0" image="pcb/trimpot.svg"/>
-            </layers>
-        </pcbView>
-    </views>
-    <connectors>
-        <connector type="male" id="connector0" name="leg1" >
-            <description>leg1</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector0pin"/>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector0pin" terminalId="connector0terminal" />
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector0pin" />
-                </pcbView>
-            </views>
-        </connector>
-        <connector type="male" id="connector1" name="wiper" >
-            <description>wiper</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector1pin"/>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector1pin" terminalId="connector1terminal" />
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector1pin" />
-                </pcbView>
-            </views>
-        </connector>
-        <connector type="male" id="connector2" name="leg2" >
-            <description>leg2</description>
-            <views>
-                <breadboardView>
-                    <pin layer="breadboard" svgId="connector2pin"/>
-                </breadboardView>
-                <schematicView>
-                    <pin layer="schematic" svgId="connector2pin" terminalId="connector2terminal" />
-                </schematicView>
-                <pcbView>
-                    <pin layer="copper0" svgId="connector2pin" />
-                </pcbView>
-            </views>
-        </connector>
-    </connectors>
+<?xml version='1.0' encoding='UTF-8'?>
+<module uri="http://fritzing.org/modules/potentiometer" moduleId="3234DBDC00" >
+ <version>1.1</version>
+ <author>Stefan Hermann</author>
+ <title>Basic Potentiometer</title>
+ <label>R</label>
+ <date>2008-10-10</date>
+ <tags>
+  <tag>potentiometer</tag>
+  <tag>poti</tag>
+  <tag>adjustable</tag>
+  <tag>resistor</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="family" >Potentiometer</property>
+ </properties>
+ <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
+ <description>A standard adjustable resistor (potentiometer).</description>
+ <views>
+  <image composited="false" file="basic_poti.svg" />
+  <defaultUnits>cmil</defaultUnits>
+  <iconView>
+   <layers image="icon/basic_poti_icon.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView flipvertical="true" >
+   <layers image="breadboard/basic_poti_sm.svg" >
+    <layer layerId="breadboard" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/basic_poti.svg" >
+    <layer layerId="schematic" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="pcb/trimpot.svg" >
+    <layer layerId="silkscreen" />
+    <layer layerId="copper0" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors>
+  <connector type="male" id="connector0" name="leg1" >
+   <description>leg1</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector0pin" layer="breadboard" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector0pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="wiper" >
+   <description>wiper</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector2" name="leg2" >
+   <description>leg2</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector2pin" layer="breadboard" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector2pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
 </module>

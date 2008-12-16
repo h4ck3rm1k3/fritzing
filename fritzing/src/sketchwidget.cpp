@@ -1068,9 +1068,8 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 		// create temporary item
 		// don't need connectors for breadboard
-		// could live without them for arduino as well
 		// TODO: how to specify which parts don't need connectors during drag and drop from palette?
-		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, modelPart->itemType() != ModelPart::Breadboard);
+		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, modelPart->itemType() != ModelPart::Breadboard && modelPart->itemType() != ModelPart::Board);
 
 		ItemDrag::_cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -2297,6 +2296,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	}
 
 	// give connector item the mouse, so wire doesn't get mouse moved events
+	m_connectorDragWire->setVisible(true);
 	m_connectorDragWire->grabMouse();
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
 }

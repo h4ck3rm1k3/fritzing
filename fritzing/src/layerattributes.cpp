@@ -67,16 +67,16 @@ bool LayerAttributes::getSvgElementID(QDomDocument * doc, ItemBase::ViewIdentifi
 	if (layer.isNull()) return false;
 	if (layerCount == 0) return false;
 
+	m_filename = layer.parentNode().toElement().attribute("image");
+	if (m_filename.isNull()) return false;
+	if (m_filename.isEmpty()) return false;
+
 	m_canFlipVertical = layer.parentNode().parentNode().toElement().attribute("flipvertical").compare("true") == 0;
 	m_canFlipHorizontal = layer.parentNode().parentNode().toElement().attribute("fliphorizontal").compare("true") == 0;
 
 	m_layerName = layer.attribute("layerId");
 	if (m_layerName.isNull()) return false;
 	if (m_layerName.isEmpty()) return false;
-
-	m_filename = layer.attribute("image");
-	if (m_filename.isNull()) return false;
-	if (m_filename.isEmpty()) return false;
 
 	QString stickyVal = layer.attribute("sticky");
 	m_sticky = stickyVal.compare("true", Qt::CaseInsensitive) == 0;
