@@ -30,7 +30,7 @@
         </breadboardView>
         <schematicView>
             <layers>
-                <layer layerId="schematic" image="schematic/basic_transistor_npn.svg"></layer>
+                <layer layerId="schematic" image="schematic/voltage_regulator_5v.svg"></layer>
             </layers>
         </schematicView>
         <pcbView>
