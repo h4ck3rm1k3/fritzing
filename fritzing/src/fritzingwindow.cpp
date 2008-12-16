@@ -107,7 +107,7 @@ bool FritzingWindow::saveAs() {
 
 	if(m_readOnly) {
 		path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName();
-        } else if(m_fileName.contains(untitledBase, Qt::CaseInsensitive){
+        } else if(m_fileName.contains(untitledBase, Qt::CaseInsensitive)){
 		path = defaultSaveFolder() + "/" + m_fileName;
 	} else if(m_fileName.isNull() || m_fileName.isEmpty()){
 		path = defaultSaveFolder();
