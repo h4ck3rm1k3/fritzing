@@ -49,6 +49,7 @@ public:
 	bool ratsAllRouted();
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
+	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
 
 protected:
 	void setWireVisible(Wire * wire);
@@ -57,6 +58,12 @@ protected:
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	bool canChainWire(Wire *);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
+
+protected:
+	int m_netCount;
+	int m_netRoutedCount;
+	int m_connectorsLeftToRoute;
+	int m_jumperCount;
 
 };
 

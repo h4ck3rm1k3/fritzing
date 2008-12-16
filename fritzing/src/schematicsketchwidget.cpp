@@ -62,7 +62,8 @@ void SchematicSketchWidget::addViewLayers() {
 	addSchematicViewLayers();
 }
 
-void SchematicSketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command) {
+void SchematicSketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand) {
+	Q_UNUSED(undoCommand);
 	if (command) {
 		QHash<ConnectorItem *, int> indexer;
 		QList< QList<ConnectorItem *>* > allPartConnectorItems;

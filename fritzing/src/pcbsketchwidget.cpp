@@ -38,6 +38,7 @@ static const QString ___viewName___ = QObject::tr("PCB View");
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
+	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 }
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
@@ -324,7 +325,6 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(commandString);
-	new CleanUpWiresCommand(this, false, parentCommand);
 
 	if (jumperOrTrace != NULL) {
 		makeDeleteItemCommand(jumperOrTrace, parentCommand);
@@ -335,7 +335,7 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 	new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
 	makeChangeRoutedCommand(wire, true, ROUTED_OPACITY, parentCommand);
 
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -373,9 +373,108 @@ void PCBSketchWidget::makeChangeRoutedCommand(Wire * wire, bool routed, qreal op
 	new WireFlagChangeCommand(this, wire->id(), wire->wireFlags(), wireFlags, parentCommand);
 }
 
-
 void PCBSketchWidget::clearRouting(QUndoCommand * parentCommand) {
-	Q_UNUSED(parentCommand);
 	Autorouter1::clearTraces(this, true, parentCommand);
-	updateRatsnestStatus(NULL);
+	updateRatsnestStatus(NULL, parentCommand);
 }
+
+void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCommand * undoCommand)
+{
+	QHash<ConnectorItem *, int> indexer;
+	QList< QList<ConnectorItem *>* > allPartConnectorItems;
+	Autorouter1::collectAllNets(this, indexer, allPartConnectorItems);
+	int netCount = 0;
+	int netRoutedCount = 0;
+	int connectorsLeftToRoute = 0;
+	int jumperCount = 0;
+	foreach (QList<ConnectorItem *>* netList, allPartConnectorItems) {
+		if (netList->count() <= 1) continue;			// nets with a single part are not worth counting
+
+		int selfConnections = 0;
+		QVector<bool> self(netList->count(), true);
+		for (int i = 0; i < netList->count() - 1; i++) {
+			for (int j = i + 1; j < netList->count(); j++) {
+				ConnectorItem * ci = netList->at(i);
+				ConnectorItem * cj = netList->at(j);
+				if (ci->bus() && ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
+					// if connections are on the same bus on a given part
+					self[i] = false;
+					self[j] = false;
+					selfConnections++;
+				}
+			}
+		}
+
+		int useIndex = 0;
+		bool bail = true;
+		foreach (bool v, self) {
+			if (v) {
+				bail = false;
+				break;
+			}
+			useIndex++;
+		}
+
+		if (bail) {
+			continue;			// only have a net on the same part on the same bus
+		}
+
+		netCount++;
+		ConnectorItem * connectorItem = netList->at(useIndex);
+
+		// figure out how many parts are connected via jumpers or traces
+		QList<ConnectorItem *> partConnectorItems;
+		partConnectorItems.append(connectorItem);
+		ConnectorItem::collectEqualPotentialParts(partConnectorItems, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
+		foreach (ConnectorItem * jConnectorItem, partConnectorItems) {
+			foreach (ConnectorItem * kConnectorItem, jConnectorItem->connectedToItems()) {
+				if (kConnectorItem->attachedToItemType() == ModelPart::Wire) {
+					Wire * wire = dynamic_cast<Wire *>(kConnectorItem->attachedTo());
+					if (wire->getJumper()) {
+						jumperCount++;
+					}
+				}
+			}
+		}
+		int todo = netList->count() - partConnectorItems.count() - selfConnections;
+		if (todo <= 0) {
+			netRoutedCount++;
+		}
+		else {
+			connectorsLeftToRoute += (todo + 1);
+		}
+	}
+
+	if (command) {
+		removeRatsnestWires(allPartConnectorItems, command);
+	}
+
+
+	foreach (QList<ConnectorItem *>* list, allPartConnectorItems) {
+		delete list;
+	}
+
+	// divide jumpercount by two since we counted both ends of each jumper wire
+	jumperCount /= 2;
+
+	if (netCount != m_netCount || jumperCount != m_jumperCount || netRoutedCount != m_netRoutedCount || connectorsLeftToRoute != m_connectorsLeftToRoute) {
+		if (command) {
+			// changing state after the command has already been executed
+			command->addRoutingStatus(this, m_netCount, m_netRoutedCount, m_connectorsLeftToRoute, m_jumperCount,
+									        netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+		}
+		if (undoCommand) {
+			// the command is still to be executed
+			new RoutingStatusCommand(this, m_netCount, m_netRoutedCount, m_connectorsLeftToRoute, m_jumperCount,
+									        netCount, netRoutedCount, connectorsLeftToRoute, jumperCount, undoCommand);
+		}
+
+		emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+
+		m_netCount = netCount;
+		m_jumperCount = jumperCount;
+		m_connectorsLeftToRoute = connectorsLeftToRoute;
+		m_netRoutedCount = netRoutedCount;
+	}
+}
+

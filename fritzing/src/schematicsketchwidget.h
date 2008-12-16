@@ -49,7 +49,7 @@ signals:
 protected:
 	void setWireVisible(Wire * wire);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
-	void updateRatsnestStatus(CleanUpWiresCommand*);
+	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
 	//void dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,

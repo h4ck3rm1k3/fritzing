@@ -380,10 +380,9 @@ void StickyCommand::redo()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, bool execRedo, QUndoCommand *parent)
+CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, QUndoCommand *parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
-	m_execRedo = execRedo;
 	m_firstTime = true;
 }
 
@@ -392,9 +391,6 @@ void CleanUpWiresCommand::undo()
 	for (int i = m_commands.count() - 1; i >= 0; i--) { 
 		m_commands[i]->undo();
 	}
-	if (!m_execRedo) {
-		m_sketchWidget->cleanUpWires(true, NULL);
-	}
 }
 
 void CleanUpWiresCommand::redo()
@@ -402,10 +398,9 @@ void CleanUpWiresCommand::redo()
 	foreach (BaseCommand * command, m_commands) {
 		command->redo();
 	}
-	if (m_execRedo) {
-		m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL);
-		m_firstTime = false;
-	}
+
+	m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL);
+	m_firstTime = false;
 }
 
 void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire) 
@@ -423,6 +418,14 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 	}
 
 	m_commands.append(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), NULL));
+}
+
+
+void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
+										  int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers)
+{
+	m_commands.append(new RoutingStatusCommand(sketchWidget, oldNetCount, oldNetRoutedCount, oldConnectorsLeftToRoute,  oldJumpers,
+										   newNetCount, newNetRoutedCount, newConnectorsLeftToRoute, newJumpers, NULL));
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -558,6 +561,30 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorStuffID(),
 			wire->id(), "connector1", true, true, false, NULL));
 
+}
+
+///////////////////////////////////////////
+
+RoutingStatusCommand::RoutingStatusCommand(class SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
+												int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers, QUndoCommand * parent)												
+	: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_oldNetCount = oldNetCount;
+	m_oldNetRoutedCount = oldNetRoutedCount;
+	m_oldConnectorsLeftToRoute = oldConnectorsLeftToRoute;
+	m_oldJumpers = oldJumpers;
+	m_newNetCount = newNetCount;
+	m_newNetRoutedCount = newNetRoutedCount;
+	m_newConnectorsLeftToRoute = newConnectorsLeftToRoute;
+	m_newJumpers = newJumpers;
+}
+
+void RoutingStatusCommand::undo() {
+	m_sketchWidget->forwardRoutingStatusSignal(m_oldNetCount, m_oldNetRoutedCount, m_oldConnectorsLeftToRoute, m_oldJumpers);
+}
+
+void RoutingStatusCommand::redo() {
+	m_sketchWidget->forwardRoutingStatusSignal(m_newNetCount, m_newNetRoutedCount, m_newConnectorsLeftToRoute, m_newJumpers);
 }
 
 

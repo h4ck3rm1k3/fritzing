@@ -270,6 +270,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 
 	cleanUp();
 
+
 	addToUndo(parentCommand);
 
 	if (m_progressDialog) {
@@ -277,7 +278,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	}
 	
 	updateRatsnest(true, parentCommand);
-
+	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
 	m_sketchWidget->undoStack()->push(parentCommand);
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }

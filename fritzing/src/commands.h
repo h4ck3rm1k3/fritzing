@@ -235,16 +235,19 @@ protected:
 class CleanUpWiresCommand : public BaseCommand
 {
 public:
-	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool execRedo, QUndoCommand * parent);
+	CleanUpWiresCommand(class SketchWidget * sketchWidget, QUndoCommand * parent);
     void undo();
     void redo();
 	void addWire(SketchWidget *, class Wire *);
+	void addRoutingStatus(SketchWidget *, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
+										  int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers);
 
 protected:
-	bool m_execRedo;
+
 	bool m_firstTime;
 	QList<BaseCommand *> m_commands;
 };
+
 
 class SwapCommand : public BaseCommand
 {
@@ -343,6 +346,26 @@ public:
 protected:
 	QList<BaseCommand *> m_commands;
 	bool m_firstTime;
+
+};
+
+class RoutingStatusCommand : public BaseCommand 
+{
+public:
+	RoutingStatusCommand(class SketchWidget *, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
+						int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers, QUndoCommand * parent);
+    void undo();
+    void redo();
+
+protected:
+	int m_oldNetCount;
+	int m_oldNetRoutedCount;
+	int m_oldConnectorsLeftToRoute;
+	int m_oldJumpers;
+	int m_newNetCount;
+	int m_newNetRoutedCount;
+	int m_newConnectorsLeftToRoute;
+	int m_newJumpers;
 
 };
 

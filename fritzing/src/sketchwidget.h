@@ -159,7 +159,7 @@ public:
 	void hideConnectors(bool hide);
 	void saveLayerVisibility();
 	void restoreLayerVisibility();
-	virtual void updateRatsnestStatus(CleanUpWiresCommand*);
+	virtual void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand*);
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
 	const QString &selectedModuleID();
@@ -171,6 +171,7 @@ public:
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
+	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

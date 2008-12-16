@@ -237,7 +237,7 @@ void SketchWidget::loadFromModel() {
 		}
 	}
 
-	updateRatsnestStatus(NULL);
+	updateRatsnestStatus(NULL, NULL);
 
 	//m_dealWithRatsNestEnabled = true;
 	//redrawRatsnest(newItems);
@@ -520,7 +520,6 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(string);
-	new CleanUpWiresCommand(this, false, parentCommand);
 	parentCommand->setText(string);
 
     stackSelectionState(false, parentCommand);
@@ -562,7 +561,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	emit ratsnestChangeSignal(this, parentCommand);
 
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
    	m_undoStack->push(parentCommand);
 
 
@@ -929,7 +928,6 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(messageStr);
-	new CleanUpWiresCommand(this, false, parentCommand);
 
     stackSelectionState(false, parentCommand);
 
@@ -995,7 +993,7 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 	clearTemporaries();
 
 	emit ratsnestChangeSignal(this, parentCommand);
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
    	m_undoStack->push(parentCommand);
 }
 
@@ -1125,7 +1123,6 @@ void SketchWidget::dropEvent(QDropEvent *event)
     	if (modelPart->modelPartStuff() == NULL) return;
 
 		QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(modelPart->title()));
-		new CleanUpWiresCommand(this, false, parentCommand);
     	stackSelectionState(false, parentCommand);
 
 		m_droppingItem->saveGeometry();
@@ -1159,7 +1156,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		killDroppingItem();
 
 		emit ratsnestChangeSignal(this, parentCommand);
-		new CleanUpWiresCommand(this, true, parentCommand);
+		new CleanUpWiresCommand(this, parentCommand);
         m_undoStack->waitPush(parentCommand, 10);
 
 
@@ -1415,7 +1412,6 @@ bool SketchWidget::checkMoved()
 	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(moveString);
-	new CleanUpWiresCommand(this, false, parentCommand);
 
 	bool hasBoard = false;
 	bool doEmit = false;
@@ -1471,7 +1467,7 @@ bool SketchWidget::checkMoved()
 		emit movingSignal(this, parentCommand);
 	}
 
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
 	m_undoStack->push(parentCommand);
 
 	return true;
@@ -1670,7 +1666,6 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	clearDragWireTempCommand();
 	QUndoCommand * parentCommand = new QUndoCommand();
-	new CleanUpWiresCommand(this, false, parentCommand);
 
 	long fromID = wire->id();
 
@@ -1752,7 +1747,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	clearTemporaries();
 
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -1775,8 +1770,6 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 		selectItemCommand->copyUndo(m_tempDragWireCommand);
 		clearDragWireTempCommand();
 	}
-
-	new CleanUpWiresCommand(this, false, parentCommand);
 
 	m_connectorDragWire->saveGeometry();
 	long fromID = wire->id();
@@ -1813,7 +1806,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 	// remove the temporary one
 	this->scene()->removeItem(m_connectorDragWire);
 
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
 	m_undoStack->push(parentCommand);
 
 }
@@ -2319,8 +2312,6 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 			.arg((degrees != 0) ? tr("Rotate") : tr("Flip"));
 
 	QUndoCommand * parentCommand = new QUndoCommand(string);
-	new CleanUpWiresCommand(this, false, parentCommand);
-
 
 	bool doEmit = false;
 	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
@@ -2349,7 +2340,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		emit rotatingFlippingSignal(this, parentCommand);		// eventually, don't send signal when rotating board
 	}
 
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
 	m_undoStack->push(parentCommand);
 
 }
@@ -2788,7 +2779,6 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
 
 	QUndoCommand * parentCommand = new QUndoCommand();
-	new CleanUpWiresCommand(this, false, parentCommand);
 	parentCommand->setText(QObject::tr("Split Wire") );
 
 	long fromID = wire->id();
@@ -2827,7 +2817,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	//checkSticky(wire, parentCommand);
 
-	new CleanUpWiresCommand(this, true, parentCommand);
+	new CleanUpWiresCommand(this, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -2976,7 +2966,7 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 }
 
 void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
-	updateRatsnestStatus(command);
+	updateRatsnestStatus(command, NULL);
 
 	if (doEmit) {
 		emit cleanUpWiresSignal(command);
@@ -2984,7 +2974,7 @@ void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
 }
 
 void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
-	updateRatsnestStatus(command);
+	updateRatsnestStatus(command, NULL);
 }
 
 void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState) {
@@ -3260,8 +3250,9 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	}
 }
 
-void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command) {
+void SketchWidget::updateRatsnestStatus(CleanUpWiresCommand * command, QUndoCommand * undoCommand) {
 	Q_UNUSED(command);
+	Q_UNUSED(undoCommand);
 }
 
 
@@ -3485,4 +3476,9 @@ void SketchWidget::dealWithRatsnestSlot(long fromID, const QString & fromConnect
 
 void SketchWidget::setWireVisible(Wire * wire) {
 	Q_UNUSED(wire);
+}
+
+void SketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) {
+
+	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 }

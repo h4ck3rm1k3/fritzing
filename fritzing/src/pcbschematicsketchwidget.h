@@ -39,8 +39,6 @@ public:
     PCBSchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent);
 
 	void setNewPartVisible(ItemBase *);
-	void updateRatsnestStatus(CleanUpWiresCommand*);
-	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
 protected:
 	//void redrawRatsnest(QHash<long, ItemBase *> & newItems);
