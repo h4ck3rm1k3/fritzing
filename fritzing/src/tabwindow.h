@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1666 $:
-$Author: merunga $:
-$Date: 2008-11-27 17:11:05 +0100 (Thu, 27 Nov 2008) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -30,6 +30,7 @@ $Date: 2008-11-27 17:11:05 +0100 (Thu, 27 Nov 2008) $
 
 #include <QWidget>
 #include <QHBoxLayout>
+#include <QAction>
 
 class TabWindow : public QWidget
 {
@@ -48,7 +49,10 @@ protected:
 	QHBoxLayout * m_hLayout;
 	bool m_inDrag;
 	QPoint m_dragStartPos;
-};
+	QAction * m_toggleViewAction;
 
+protected slots:
+	void toggleMe(bool);
+};
 
 #endif

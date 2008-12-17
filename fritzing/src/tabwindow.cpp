@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1666 $:
-$Author: merunga $:
-$Date: 2008-11-27 17:11:05 +0100 (Thu, 27 Nov 2008) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
@@ -38,6 +38,12 @@ TabWindow::TabWindow(QWidget *parent)
 	this->setLayout(m_hLayout);
 	m_hLayout->setSpacing(0);
 	m_hLayout->setMargin(0);
+
+    m_toggleViewAction = new QAction(this);
+    m_toggleViewAction->setCheckable(true);
+    m_toggleViewAction->setText(windowTitle());
+    QObject::connect(m_toggleViewAction, SIGNAL(triggered(bool)), this, SLOT(toggleMe(bool)));
+
 }
 
 void TabWindow::addViewSwitcher(ViewSwitcherPrivate * viewSwitcher) {
@@ -65,3 +71,13 @@ void TabWindow::mouseMoveEvent(QMouseEvent *event)
 		this->move(pos - m_dragStartPos);
 	}
 } 
+
+void TabWindow::toggleMe(bool b)
+{
+    if (b == isHidden()) {
+        if (b)
+            show();
+        else
+            close();
+    }
+}

@@ -77,10 +77,10 @@ class ViewSwitcherPrivate : public QFrame {
 
 	public slots:
 		void updateHoverState(ViewSwitcherButton* hoverOne = NULL);
+		void viewSwitchedTo(int);
 
 	protected slots:
 		void updateState(ViewSwitcherButton* clickedOne, bool doEmit=true);
-		void viewSwitchedTo(int);
 
 	protected:
 		void enterEvent(QEvent *event);

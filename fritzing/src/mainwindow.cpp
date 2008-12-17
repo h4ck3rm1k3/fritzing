@@ -240,12 +240,14 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	}
 
 	m_tabWindow = new TabWindow(this);
+	m_tabWindow->setWindowTitle(tr("Tabs"));
 	ViewSwitcherPrivate * viewSwitcher = new ViewSwitcherPrivate();
 	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
 
 	m_tabWindow->addViewSwitcher(viewSwitcher);
-
+	viewSwitcher->viewSwitchedTo(0);
 	m_tabWindow->show();
+	m_tabWindow->move(this->pos() + QPoint(10, 50));
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {

@@ -64,7 +64,7 @@ void DockManager::createDockWindows()
 {
 	dockIt(m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
 
-    makeDock(tr("Part Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
+    makeDock(tr("Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerBreadboard = new MiniViewContainer(m_mainWindow));
 	m_mainWindow->m_miniViewContainerBreadboard->filterMousePress();
