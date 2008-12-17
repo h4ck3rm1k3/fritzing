@@ -59,7 +59,7 @@ void TabWindow::addViewSwitcher(ViewSwitcherPrivate * viewSwitcher) {
 
 void TabWindow::mousePressEvent(QMouseEvent *event)
 {
-	m_inDrag = m_viewSwitchTime.msecsTo(QTime::currentTime()) > 5;
+	m_inDrag = true;
 	m_dragStartPos = event->globalPos() - this->pos();
 }
 
@@ -67,13 +67,20 @@ void TabWindow::mouseReleaseEvent(QMouseEvent *   event )
 {
 	Q_UNUSED(event);
 	m_inDrag = false;
+	m_movedEnough = false;
 }
 
 void TabWindow::mouseMoveEvent(QMouseEvent *event)
 {
 	if (m_inDrag) {
 		QPoint pos = event->globalPos();
-		this->move(pos - m_dragStartPos);
+		if (m_movedEnough) {
+			this->move(pos - m_dragStartPos);
+		}
+		else {
+			QPoint d = pos - m_dragStartPos;
+			m_movedEnough =(d.x() * d.x()) + (d.y() * d.y()) >= 36;				
+		}
 	}
 } 
 
@@ -116,6 +123,5 @@ void TabWindow::setWindowTitle(const QString & title) {
 void TabWindow::viewSwitched(int index) {
 	if (index != m_viewIndex) {
 		m_viewIndex = index;
-		m_viewSwitchTime = QTime::currentTime();
 	}
 }

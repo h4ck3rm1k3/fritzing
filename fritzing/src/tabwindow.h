@@ -31,7 +31,6 @@ $Date$
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QAction>
-#include <QTime>
 
 
 class TabWindow : public QWidget
@@ -55,8 +54,8 @@ protected:
 	bool m_inDrag;
 	QPoint m_dragStartPos;
 	QAction * m_toggleViewAction;
-	QTime m_viewSwitchTime;
 	int m_viewIndex;
+	bool m_movedEnough;
 	
 protected slots:
 	void toggleMe(bool);

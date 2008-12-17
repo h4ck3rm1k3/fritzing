@@ -249,9 +249,10 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_tabWindow->addViewSwitcher(viewSwitcher);
 	viewSwitcher->viewSwitchedTo(0);
+	viewSwitcher->connectClose(m_tabWindow, SLOT(hide()));
+
 	m_tabWindow->show();
 	m_tabWindow->move(this->pos() + QPoint(10, 50));
-	viewSwitcher->createMask();
 	m_tabWindow->setMask(viewSwitcher->getMask());
 	int sep = 0;
 	foreach (QAction * action, m_windowMenu->actions()) {

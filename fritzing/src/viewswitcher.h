@@ -73,8 +73,8 @@ class ViewSwitcherPrivate : public QFrame {
 	public:
 		ViewSwitcherPrivate();
 
-		void createMask();
 		const QBitmap & getMask();
+		void connectClose(QObject * target, const char* slot);
 
 	signals:
 		void viewSwitched(int index);
@@ -91,11 +91,13 @@ class ViewSwitcherPrivate : public QFrame {
 		void leaveEvent(QEvent *event);
 
 		ViewSwitcherButton *createButton(const QString &view);
+		void createMask();
 
 	protected:
 		QHBoxLayout *m_layout;
 		QList<ViewSwitcherButton*> m_buttons;
 		static QBitmap * m_mask;
+		class SketchMainHelpCloseButton * m_closeButton;
 };
 
 class ViewSwitcher : public QGraphicsProxyWidget, public INotSeenInMiniView {

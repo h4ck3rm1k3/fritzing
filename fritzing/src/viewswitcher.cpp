@@ -30,6 +30,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 
 #include "viewswitcher.h"
 #include "debugdialog.h"
+#include "help/sketchmainhelp.h"
 
 QString ViewSwitcherButton::ResourcePathPattern = tr(":/resources/images/icons/segmentedSwitcher%1%2.png");
 QBitmap * ViewSwitcherPrivate::m_mask = NULL;
@@ -92,13 +93,19 @@ ViewSwitcherPrivate::ViewSwitcherPrivate() : QFrame()
 	// TODO Mariano: couldn't get this applied with the qss file
 	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
+	m_mask = NULL;
+
 	m_layout = new QHBoxLayout(this);
 	m_layout->setSpacing(0);
 	m_layout->setMargin(0);
 
+	m_closeButton = new SketchMainHelpCloseButton("PCB" ,this);
+	m_layout->addWidget(m_closeButton);
+
 	m_buttons << createButton("Breadboard");
 	m_buttons << createButton("Schematic");
 	m_buttons << createButton("PCB");
+
 }
 
 ViewSwitcherButton *ViewSwitcherPrivate::createButton(const QString &view) {
@@ -179,9 +186,16 @@ void ViewSwitcherPrivate::createMask()
 
 
 const QBitmap & ViewSwitcherPrivate::getMask() {
+	if (m_mask == NULL) {
+		createMask();
+	}
+
 	return *m_mask;
 }
 
+void ViewSwitcherPrivate::connectClose(QObject * target, const char* slot) {
+	connect(m_closeButton, SIGNAL(clicked()), target, slot);
+}
 
 /////////////////////////////////////////
 
