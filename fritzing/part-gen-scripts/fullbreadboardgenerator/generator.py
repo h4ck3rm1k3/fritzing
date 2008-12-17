@@ -51,7 +51,11 @@ def setup():
 	# Edit these variables below to generate different breadboards
 	#
 	# sL = searchList, a dict to use with the template 
-	sL['title'] = "Generic Bajillion Hole Breadboard"
+	sL['title'] = "My Breadboard"
+	sL['moduleID'] = "MyBreadboardModuleID"
+	sL['svgFile'] = "myBreadboard.svg"
+
+	sL['label'] = "Breadboard"
 	sL['taxonomy'] = "prototyping.breadboard.breadboard.breadboard0"
 	
 	# Most breadboards have rows and lines.
@@ -117,12 +121,12 @@ http://fritzing.org/learning/parts
 """
 
 def makeUUID():
-	"creates an 8 character hex UUID"
-	return str(uuid.uuid1())
+    "creates an 8 character hex UUID"
+    return str(uuid.uuid1())
     
 def makeDate():
-	"creates a date formatted as YYYY-MM-DD"
-	return date.today().isoformat()
+    "creates a date formatted as YYYY-MM-DD"
+    return date.today().isoformat()
 
 def getUserName():
 	"gets the full user name if available"
@@ -234,7 +238,7 @@ def main():
 			metaData = {}
 			metaData['moduleID'] = makeUUID()
 			# TODO for the real generator use the UUID
-			metaData['moduleID'] = "BreadboardModuleID"
+			metaData['moduleID'] = sL['moduleID']
 			metaData['date'] = makeDate()
 			metaData['author'] = getUserName()
 			sL['metaData'] = metaData

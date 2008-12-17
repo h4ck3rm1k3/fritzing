@@ -5,7 +5,7 @@
   <author>$metaData.author</author>
   <title>$title</title>
   <date>$metaData.date</date>
-  <label>Breadboard</label>
+  <label>$label</label>
   <tags>
     <tag>breadboard</tag>
   </tags>
@@ -15,26 +15,24 @@
   <taxonomy>$taxonomy</taxonomy>
   <description>A breadboard for easily prototyping circuits</description>
   <views>
-    <image composited="false" file="breadboard/part/breadboard.svg"/>
-    <defaultUnits>cmil</defaultUnits>
     <iconView>
-      <layers>
-        <layer image="icon/breadboardicon.svg" layerId="icon"/>
+      <layers image="icon/breadboardicon.svg">
+        <layer layerId="icon"/>
       </layers>
     </iconView>
     <breadboardView>
-      <layers>
-        <layer image="breadboard/breadboard.svg" layerId="breadboardbreadboard"/>
+      <layers image="breadboard/${svgFile}">
+        <layer layerId="breadboardbreadboard"/>
       </layers>
     </breadboardView>
     <schematicView>
-      <layers>
-        <layer image="breadboard/breadboard.svg" layerId="breadboardbreadboard"/>
+      <layers image="breadboard/${svgFile}">
+        <layer layerId="breadboardbreadboard"/>
       </layers>
     </schematicView>
     <pcbView>
-      <layers>
-        <layer image="breadboard/breadboard.svg" layerId="breadboardbreadboard"/>
+      <layers image="breadboard/${svgFile}">
+        <layer layerId="breadboardbreadboard"/>
       </layers>
     </pcbView>
   </views>
@@ -47,13 +45,13 @@
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <pin svgId="$pinID" layer="breadboardbreadboard"/>
+          <p svgId="$pinID" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <pin svgId="$pinID" layer="breadboardbreadboard"/>
+          <p svgId="$pinID" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <pin svgId="$pinID" layer="breadboardbreadboard"/>
+          <p svgId="$pinID" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -67,13 +65,13 @@
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <pin svgId="$pinID" layer="breadboardbreadboard"/>
+          <p svgId="$pinID" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <pin svgId="$pinID" layer="breadboardbreadboard"/>
+          <p svgId="$pinID" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <pin svgId="$pinID" layer="breadboardbreadboard"/>
+          <p svgId="$pinID" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
