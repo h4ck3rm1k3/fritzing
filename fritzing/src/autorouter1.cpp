@@ -304,9 +304,6 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 		if (wire->getTrace() || wire->getJumper()) {
 			if (deleteAll || wire->getAutoroutable()) {
 				oldTraces.append(wire);
-				if (parentCommand) {
-					sketchWidget->makeDeleteItemCommand(wire, parentCommand);
-				}
 			}
 		}
 		else if (wire->getRatsnest()) {
@@ -317,6 +314,15 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 			wire->setOpacity(UNROUTED_OPACITY);	
 		}
 	}
+
+
+	if (parentCommand) {
+		addUndoConnections(sketchWidget, false, oldTraces, parentCommand);
+		foreach (Wire * wire, oldTraces) {
+			sketchWidget->makeDeleteItemCommand(wire, parentCommand);
+		}
+	}
+
 	
 	foreach (Wire * wire, oldTraces) {
 		sketchWidget->deleteItem(wire, true, false);
@@ -1047,18 +1053,41 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 
 void Autorouter1::addToUndo(QUndoCommand * parentCommand) 
 {
+	QList<Wire *> wires;
 	foreach (QGraphicsItem * item, m_sketchWidget->items()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire != NULL) {
 			wire->setClipEnds(true);
 			wire->update();
 			addToUndo(wire, parentCommand);
+			wires.append(wire);
 		}
 		else {
 			Wire * w = dynamic_cast<Wire *>(item);
 			if (w != NULL && w->getJumper()) {
 				addToUndo(w, parentCommand);
+				wires.append(wire);
 			}
+		}
+	}
+
+	addUndoConnections(m_sketchWidget, true, wires, parentCommand);
+}
+
+void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand) 
+{
+	foreach (Wire * wire, wires) {
+		ConnectorItem * connector1 = wire->connector1();
+		foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
+			new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+				wire->id(), connector1->connectorStuffID(),
+				connect, true, toConnectorItem->chained(), parentCommand);
+		}
+		ConnectorItem * connector0 = wire->connector0();
+		foreach (ConnectorItem * toConnectorItem, connector0->connectedToItems()) {
+			new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+				wire->id(), connector0->connectorStuffID(),
+				connect, true, toConnectorItem->chained(), parentCommand);
 		}
 	}
 }

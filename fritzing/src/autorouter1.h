@@ -71,6 +71,7 @@ public:
 	static double calcDistance(QPointF fromPos, QGraphicsItem *);
 	static double distanceToLine(QPointF fromPos, QPointF p1, QPointF p2);
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
+	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
 
 protected:
 	class PCBSketchWidget * m_sketchWidget;
