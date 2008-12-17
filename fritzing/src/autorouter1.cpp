@@ -1066,7 +1066,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 			Wire * w = dynamic_cast<Wire *>(item);
 			if (w != NULL && w->getJumper()) {
 				addToUndo(w, parentCommand);
-				wires.append(wire);
+				wires.append(w);
 			}
 		}
 	}
