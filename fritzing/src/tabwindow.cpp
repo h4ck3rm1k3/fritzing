@@ -50,7 +50,7 @@ TabWindow::TabWindow(QWidget *parent)
 
 }
 
-void TabWindow::addViewSwitcher(ViewSwitcherPrivate * viewSwitcher) {
+void TabWindow::addViewSwitcher(ViewSwitcher * viewSwitcher) {
 	viewSwitcher->setParent(this);
 	m_hLayout->addWidget(viewSwitcher);
 	QApplication::processEvents();
@@ -123,5 +123,15 @@ void TabWindow::setWindowTitle(const QString & title) {
 void TabWindow::viewSwitched(int index) {
 	if (index != m_viewIndex) {
 		m_viewIndex = index;
+	}
+}
+
+void TabWindow::saveState() {
+	m_state = this->isVisible();
+}
+
+void TabWindow::restoreState() {
+	if (m_state) {
+		this->setVisible(true);
 	}
 }

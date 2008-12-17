@@ -244,8 +244,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_tabWindow = new TabWindow(this);
 	m_tabWindow->setWindowTitle(tr("Tabs"));
-	ViewSwitcherPrivate * viewSwitcher = new ViewSwitcherPrivate();
+	ViewSwitcher * viewSwitcher = new ViewSwitcher();
 	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
+	connect(this, SIGNAL(viewSwitched(int)), viewSwitcher, SLOT(viewSwitchedTo(int)));
 
 	m_tabWindow->addViewSwitcher(viewSwitcher);
 	viewSwitcher->viewSwitchedTo(0);
@@ -277,9 +278,11 @@ void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->addViewLayers();
 }
 
+/*
 void MainWindow::connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view) {
 	view->addFixedToTopLeftItem(switcher);
 }
+*/
 
 void MainWindow::doOnce() {
 	calcPrinterScale();
@@ -828,6 +831,8 @@ void MainWindow::changeActivation(QEvent *) {
 
 				dock->restoreState();
 			}
+
+			m_tabWindow->restoreState();
 		}
 	}
 	else {
@@ -845,6 +850,11 @@ void MainWindow::changeActivation(QEvent *) {
 				if (dock->isFloating() && dock->isVisible()) {
 					dock->hide();
 				}
+			}
+
+			m_tabWindow->saveState();
+			if (m_tabWindow->isVisible()) {
+				m_tabWindow->hide();
 			}
 		}
 	}

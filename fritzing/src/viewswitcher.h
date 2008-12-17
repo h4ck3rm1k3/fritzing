@@ -35,13 +35,13 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 
 #include "help/inotseeninminiview.h"
 
-class ViewSwitcherPrivate;
+class ViewSwitcher;
 
 class ViewSwitcherButton : public QLabel {
 	Q_OBJECT
 
 	public:
-		ViewSwitcherButton(const QString &view, int index, ViewSwitcherPrivate *parent);
+		ViewSwitcherButton(const QString &view, int index, ViewSwitcher *parent);
 		void setFocus(bool active);
 		void setActive(bool selected);
 		void setHover(bool hover);
@@ -62,16 +62,16 @@ class ViewSwitcherButton : public QLabel {
 		bool m_hover;
 		int m_index;
 		QString m_resourcePath;
-		ViewSwitcherPrivate *m_parent;
+		ViewSwitcher *m_parent;
 
 	protected:
 		static QString ResourcePathPattern;
 };
 
-class ViewSwitcherPrivate : public QFrame {
+class ViewSwitcher : public QFrame {
 	Q_OBJECT
 	public:
-		ViewSwitcherPrivate();
+		ViewSwitcher();
 
 		const QBitmap & getMask();
 		void connectClose(QObject * target, const char* slot);
@@ -100,9 +100,11 @@ class ViewSwitcherPrivate : public QFrame {
 		class SketchMainHelpCloseButton * m_closeButton;
 };
 
+/*
 class ViewSwitcher : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
 	ViewSwitcher(QWidget *parent);
 };
+*/
 
 #endif /* VIEWSWITCHER_H_ */

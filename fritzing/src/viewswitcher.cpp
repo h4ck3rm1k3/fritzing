@@ -33,9 +33,9 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include "help/sketchmainhelp.h"
 
 QString ViewSwitcherButton::ResourcePathPattern = tr(":/resources/images/icons/segmentedSwitcher%1%2.png");
-QBitmap * ViewSwitcherPrivate::m_mask = NULL;
+QBitmap * ViewSwitcher::m_mask = NULL;
 
-ViewSwitcherButton::ViewSwitcherButton(const QString &view, int index, ViewSwitcherPrivate *parent) : QLabel(parent)
+ViewSwitcherButton::ViewSwitcherButton(const QString &view, int index, ViewSwitcher *parent) : QLabel(parent)
 {
 	m_focus = false;
 	m_active = false;
@@ -88,10 +88,10 @@ void ViewSwitcherButton::leaveEvent(QEvent *event) {
 
 /////////////////////////////////////////////////////////////////////
 
-ViewSwitcherPrivate::ViewSwitcherPrivate() : QFrame()
+ViewSwitcher::ViewSwitcher() : QFrame()
 {
 	// TODO Mariano: couldn't get this applied with the qss file
-	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
+	setStyleSheet("ViewSwitcher {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
 	m_mask = NULL;
 
@@ -108,33 +108,33 @@ ViewSwitcherPrivate::ViewSwitcherPrivate() : QFrame()
 
 }
 
-ViewSwitcherButton *ViewSwitcherPrivate::createButton(const QString &view) {
+ViewSwitcherButton *ViewSwitcher::createButton(const QString &view) {
 	ViewSwitcherButton *btn = new ViewSwitcherButton(view, m_buttons.size(), this);
 	connect(btn, SIGNAL(clicked(ViewSwitcherButton*)), this, SLOT(updateState(ViewSwitcherButton*)));
 	m_layout->addWidget(btn);
 	return btn;
 }
 
-void ViewSwitcherPrivate::enterEvent(QEvent *event) {
+void ViewSwitcher::enterEvent(QEvent *event) {
 	foreach(ViewSwitcherButton *btn, m_buttons) {
 		btn->setFocus(true);
 	}
 	QFrame::enterEvent(event);
 }
 
-void ViewSwitcherPrivate::leaveEvent(QEvent *event) {
+void ViewSwitcher::leaveEvent(QEvent *event) {
 	foreach(ViewSwitcherButton *btn, m_buttons) {
 		btn->setFocus(false);
 	}
 	QFrame::leaveEvent(event);
 }
 
-void ViewSwitcherPrivate::updateHoverState(ViewSwitcherButton* hoverOne) {
+void ViewSwitcher::updateHoverState(ViewSwitcherButton* hoverOne) {
 	foreach(ViewSwitcherButton *btn, m_buttons) {
 		btn->setHover(btn==hoverOne);
 	}
 }
-void ViewSwitcherPrivate::updateState(ViewSwitcherButton* clickedOne, bool doEmit) {
+void ViewSwitcher::updateState(ViewSwitcherButton* clickedOne, bool doEmit) {
 
 
 	foreach(ViewSwitcherButton *btn, m_buttons) {
@@ -143,15 +143,15 @@ void ViewSwitcherPrivate::updateState(ViewSwitcherButton* clickedOne, bool doEmi
 	if(doEmit) emit viewSwitched(clickedOne->index());
 }
 
-void ViewSwitcherPrivate::viewSwitchedTo(int index) {
+void ViewSwitcher::viewSwitchedTo(int index) {
 	updateState(m_buttons[index],false);
 }
 
-void ViewSwitcherPrivate::createMask() 
+void ViewSwitcher::createMask() 
 {
 	if (m_mask != NULL) return;
 
-	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: rgb(0,255,255); margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
+	setStyleSheet("ViewSwitcher {border: 0px; background-color: rgb(0,255,255); margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
 	QPixmap pixmap(this->size());
 	this->render(&pixmap);
@@ -179,13 +179,13 @@ void ViewSwitcherPrivate::createMask()
 
 	}
 
-	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
+	setStyleSheet("ViewSwitcher {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 	
 	m_mask = new QBitmap(QBitmap::fromImage(bImage));
 }
 
 
-const QBitmap & ViewSwitcherPrivate::getMask() {
+const QBitmap & ViewSwitcher::getMask() {
 	if (m_mask == NULL) {
 		createMask();
 	}
@@ -193,13 +193,13 @@ const QBitmap & ViewSwitcherPrivate::getMask() {
 	return *m_mask;
 }
 
-void ViewSwitcherPrivate::connectClose(QObject * target, const char* slot) {
+void ViewSwitcher::connectClose(QObject * target, const char* slot) {
 	connect(m_closeButton, SIGNAL(clicked()), target, slot);
 }
 
 /////////////////////////////////////////
 
-
+/*
 ViewSwitcher::ViewSwitcher(QWidget *parent) : QGraphicsProxyWidget()
 {
 	ViewSwitcherPrivate *d = new ViewSwitcherPrivate();
@@ -209,3 +209,4 @@ ViewSwitcher::ViewSwitcher(QWidget *parent) : QGraphicsProxyWidget()
 	setWidget(d);
 	setZValue(10000);
 }
+*/

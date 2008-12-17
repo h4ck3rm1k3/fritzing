@@ -268,7 +268,7 @@ protected:
 
 	void updateRaiseWindowAction();
 
-	void connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view);
+	//void connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view);
 
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
@@ -449,9 +449,9 @@ protected:
 	class TripleNavigator * m_tripleNavigator;
 	QSizeGrip *m_sizeGrip;
 
-	class ViewSwitcher *m_breadViewSwitcher;
-	class ViewSwitcher *m_schemViewSwitcher;
-	class ViewSwitcher *m_pcbViewSwitcher;
+	//class ViewSwitcher *m_breadViewSwitcher;
+	//class ViewSwitcher *m_schemViewSwitcher;
+	//class ViewSwitcher *m_pcbViewSwitcher;
 
 	friend class Helper;
 	friend class DockManager;

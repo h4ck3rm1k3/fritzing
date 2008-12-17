@@ -39,9 +39,11 @@ class TabWindow : public QWidget
 
 public:
     TabWindow(QWidget *parent = 0);
-	void addViewSwitcher(class ViewSwitcherPrivate * viewSwitcher);
+	void addViewSwitcher(class ViewSwitcher * viewSwitcher);
 	QAction * toggleViewAction() const;
 	void setWindowTitle(const QString & title);
+	void saveState();
+	void restoreState();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
@@ -56,6 +58,7 @@ protected:
 	QAction * m_toggleViewAction;
 	int m_viewIndex;
 	bool m_movedEnough;
+	bool m_state;
 	
 protected slots:
 	void toggleMe(bool);

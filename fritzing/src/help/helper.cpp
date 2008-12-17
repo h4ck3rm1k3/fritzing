@@ -133,7 +133,7 @@ void Helper::viewSwitched() {
 		connect(timer, SIGNAL(timeout()), this, SLOT(removeSwitchButtonsHelp()));
 		timer->start(400);
 	} else {
-		disconnect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
+		//disconnect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	}
 }
 
