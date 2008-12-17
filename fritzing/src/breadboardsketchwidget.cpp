@@ -126,13 +126,24 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 
 	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
 		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
+			int femaleCount = 0;
+			int totalCount = 0;
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				if (toConnectorItem->connectorType() == Connector::Female) femaleCount++;
+				totalCount++;
+			}
+			if (femaleCount == 1 && totalCount == 1) {
+				detachItems.insert(paletteItemBase, fromConnectorItem->connectedToItems()[0]->attachedTo());
+				continue;
+			}
 			foreach (ConnectorItem * toConnectorItem, moveItems.values(fromConnectorItem)) {
+				ItemBase * breadboardItemBase = NULL;
 				if (toConnectorItem->connectorType() == Connector::Female) {
 					// paletteItemBase directly connected to arduino, for example
 					detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
 				}
-				else if (shareBreadboard(fromConnectorItem, toConnectorItem)) {
-					detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
+				else if (shareBreadboard(fromConnectorItem, toConnectorItem, breadboardItemBase)) {
+					detachItems.insert(paletteItemBase, breadboardItemBase);
 				}
 				else {
 					// if they they indirectly connected via a female connector, then delete a wire
@@ -242,13 +253,16 @@ const QString & BreadboardSketchWidget::viewName() {
 	return ___viewName___;
 }
 
-bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem)
+bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & itemBase)
 {
 	foreach (ConnectorItem * ftci, fromConnectorItem->connectedToItems()) {
 		if (ftci->connectorType() == Connector::Female) {
 			foreach (ConnectorItem * ttci, toConnectorItem->connectedToItems()) {
 				if (ttci->connectorType() == Connector::Female) {
-					if (ftci->bus() == ttci->bus()) return true;
+					if (ftci->bus() == ttci->bus()) {
+						itemBase = ftci->attachedTo();
+						return true;
+					}
 				}
 			}
 		}

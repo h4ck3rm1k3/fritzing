@@ -55,7 +55,7 @@ SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdenti
 void SchematicSketchWidget::setWireVisible(Wire * wire)
 {
 	wire->setVisible(wire->getRatsnest());
-	wire->setVisible(true);
+	//wire->setVisible(true);
 }
 
 void SchematicSketchWidget::addViewLayers() {

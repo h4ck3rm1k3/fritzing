@@ -51,8 +51,8 @@
     </schematicView>
     <pcbView>
      <p svgId="connector0pin" layer="ratsnest" />
-     <pin svgId="connector0pin" layer="copper0" />
-     <pin svgId="connector0pin" layer="jumperwires" />
+     <p svgId="connector0pin" layer="copper0" />
+     <p svgId="connector0pin" layer="jumperwires" />
     </pcbView>
    </views>
   </connector>
@@ -67,8 +67,8 @@
     </schematicView>
     <pcbView>
      <p svgId="connector1pin" layer="ratsnest" />
-     <pin svgId="connector1pin" layer="copper0" />
-     <pin svgId="connector1pin" layer="jumperwires" />
+     <p svgId="connector1pin" layer="copper0" />
+     <p svgId="connector1pin" layer="jumperwires" />
     </pcbView>
    </views>
   </connector>

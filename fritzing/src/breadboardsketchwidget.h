@@ -52,7 +52,7 @@ protected:
 	bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
 	BaseCommand::CrossViewType wireSplitCrossView();
 	QPointF calcNewLoc(PaletteItemBase * moveBase, PaletteItemBase * detachFrom);
-	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
+	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & breadboardItemBase);
 };
 
 #endif
