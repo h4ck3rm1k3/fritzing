@@ -143,6 +143,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     createMenus();
     createToolBars();
     createStatusBar();
+
+
+
     dockManager->createDockWindows();
 
     m_breadboardWidget->setContent(
@@ -248,6 +251,20 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	viewSwitcher->viewSwitchedTo(0);
 	m_tabWindow->show();
 	m_tabWindow->move(this->pos() + QPoint(10, 50));
+	viewSwitcher->createMask();
+	m_tabWindow->setMask(viewSwitcher->getMask());
+	int sep = 0;
+	foreach (QAction * action, m_windowMenu->actions()) {
+		if (action->isSeparator()) {
+			if (++sep == 2) {
+				m_windowMenu->insertAction(action, m_tabWindow->toggleViewAction());
+				break;
+			}
+		}
+	}
+	if (sep < 2) {
+		m_windowMenu->addAction(m_tabWindow->toggleViewAction());
+	}
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
@@ -1300,3 +1317,8 @@ QSizeGrip *MainWindow::sizeGrip() {
 QStatusBar *MainWindow::realStatusBar() {
 	return m_statusBar;
 }
+
+TabWindow * MainWindow::tabWindow() {
+	return m_tabWindow;
+}
+

@@ -31,6 +31,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QLabel>
 #include <QFrame>
 #include <QHBoxLayout>
+#include <QBitmap>
 
 #include "help/inotseeninminiview.h"
 
@@ -72,6 +73,9 @@ class ViewSwitcherPrivate : public QFrame {
 	public:
 		ViewSwitcherPrivate();
 
+		void createMask();
+		const QBitmap & getMask();
+
 	signals:
 		void viewSwitched(int index);
 
@@ -91,6 +95,7 @@ class ViewSwitcherPrivate : public QFrame {
 	protected:
 		QHBoxLayout *m_layout;
 		QList<ViewSwitcherButton*> m_buttons;
+		static QBitmap * m_mask;
 };
 
 class ViewSwitcher : public QGraphicsProxyWidget, public INotSeenInMiniView {

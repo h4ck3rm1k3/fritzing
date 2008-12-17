@@ -31,6 +31,8 @@ $Date$
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QAction>
+#include <QTime>
+
 
 class TabWindow : public QWidget
 {
@@ -39,20 +41,26 @@ class TabWindow : public QWidget
 public:
     TabWindow(QWidget *parent = 0);
 	void addViewSwitcher(class ViewSwitcherPrivate * viewSwitcher);
+	QAction * toggleViewAction() const;
+	void setWindowTitle(const QString & title);
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
+	bool event(QEvent *event);
 
 protected:
 	QHBoxLayout * m_hLayout;
 	bool m_inDrag;
 	QPoint m_dragStartPos;
 	QAction * m_toggleViewAction;
-
+	QTime m_viewSwitchTime;
+	int m_viewIndex;
+	
 protected slots:
 	void toggleMe(bool);
+	void viewSwitched(int);
 };
 
 #endif

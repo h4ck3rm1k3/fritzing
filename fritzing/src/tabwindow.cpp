@@ -32,17 +32,21 @@ $Date$
 TabWindow::TabWindow(QWidget *parent)
     : QWidget(parent)
 {
+    m_toggleViewAction = new QAction(this);
+    m_toggleViewAction->setCheckable(true);
+    m_toggleViewAction->setText(windowTitle());
+    QObject::connect(m_toggleViewAction, SIGNAL(triggered(bool)), this, SLOT(toggleMe(bool)));
+
 	setWindowFlags(Qt::Tool | Qt::FramelessWindowHint);
 	resize(20, 20);
 	m_hLayout = new QHBoxLayout;
 	this->setLayout(m_hLayout);
 	m_hLayout->setSpacing(0);
 	m_hLayout->setMargin(0);
+	setWindowOpacity(0.7);
 
-    m_toggleViewAction = new QAction(this);
-    m_toggleViewAction->setCheckable(true);
-    m_toggleViewAction->setText(windowTitle());
-    QObject::connect(m_toggleViewAction, SIGNAL(triggered(bool)), this, SLOT(toggleMe(bool)));
+	m_viewIndex = 999;
+
 
 }
 
@@ -50,11 +54,12 @@ void TabWindow::addViewSwitcher(ViewSwitcherPrivate * viewSwitcher) {
 	viewSwitcher->setParent(this);
 	m_hLayout->addWidget(viewSwitcher);
 	QApplication::processEvents();
+	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched(int)), Qt::DirectConnection);
 }
 
 void TabWindow::mousePressEvent(QMouseEvent *event)
 {
-	m_inDrag = true;
+	m_inDrag = m_viewSwitchTime.msecsTo(QTime::currentTime()) > 5;
 	m_dragStartPos = event->globalPos() - this->pos();
 }
 
@@ -80,4 +85,37 @@ void TabWindow::toggleMe(bool b)
         else
             close();
     }
+}
+
+
+bool TabWindow::event(QEvent *event)
+{
+	switch (event->type()) {
+    case QEvent::Hide:
+        m_toggleViewAction->setChecked(false);
+        break;
+    case QEvent::Show:
+        m_toggleViewAction->setChecked(true);
+        break;
+    default:
+        break;
+    }
+    return QWidget::event(event);
+}
+
+QAction * TabWindow::toggleViewAction() const
+{
+    return m_toggleViewAction;
+}
+
+void TabWindow::setWindowTitle(const QString & title) {
+	m_toggleViewAction->setText(title);
+	QWidget::setWindowTitle(title);
+}
+
+void TabWindow::viewSwitched(int index) {
+	if (index != m_viewIndex) {
+		m_viewIndex = index;
+		m_viewSwitchTime = QTime::currentTime();
+	}
 }

@@ -76,6 +76,7 @@ public:
 	QAction *raiseWindowAction();
 	QSizeGrip *sizeGrip();
 	QStatusBar *realStatusBar();
+	class TabWindow * tabWindow();
 
 public:
 	static void initExportConstants();

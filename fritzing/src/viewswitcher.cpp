@@ -25,11 +25,14 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 ********************************************************************/
 
 #include <QGraphicsScene>
+#include <QImage>
+#include <QRgb>
 
 #include "viewswitcher.h"
 #include "debugdialog.h"
 
 QString ViewSwitcherButton::ResourcePathPattern = tr(":/resources/images/icons/segmentedSwitcher%1%2.png");
+QBitmap * ViewSwitcherPrivate::m_mask = NULL;
 
 ViewSwitcherButton::ViewSwitcherButton(const QString &view, int index, ViewSwitcherPrivate *parent) : QLabel(parent)
 {
@@ -87,7 +90,7 @@ void ViewSwitcherButton::leaveEvent(QEvent *event) {
 ViewSwitcherPrivate::ViewSwitcherPrivate() : QFrame()
 {
 	// TODO Mariano: couldn't get this applied with the qss file
-	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: transparent; margin-top: 10px; margin-left: 10px; } ViewSwitcherButton {	margin: 0px;}");
+	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
 	m_layout = new QHBoxLayout(this);
 	m_layout->setSpacing(0);
@@ -124,9 +127,9 @@ void ViewSwitcherPrivate::updateHoverState(ViewSwitcherButton* hoverOne) {
 		btn->setHover(btn==hoverOne);
 	}
 }
-
-
 void ViewSwitcherPrivate::updateState(ViewSwitcherButton* clickedOne, bool doEmit) {
+
+
 	foreach(ViewSwitcherButton *btn, m_buttons) {
 		btn->setActive(btn == clickedOne);
 	}
@@ -136,6 +139,52 @@ void ViewSwitcherPrivate::updateState(ViewSwitcherButton* clickedOne, bool doEmi
 void ViewSwitcherPrivate::viewSwitchedTo(int index) {
 	updateState(m_buttons[index],false);
 }
+
+void ViewSwitcherPrivate::createMask() 
+{
+	if (m_mask != NULL) return;
+
+	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: rgb(0,255,255); margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
+
+	QPixmap pixmap(this->size());
+	this->render(&pixmap);
+	QImage image = pixmap.toImage();
+
+	QBitmap bitmap(this->size());
+	bitmap.fill(Qt::white);
+	QImage bImage = bitmap.toImage();
+
+	QRgb value = qRgb(0, 0, 0); 
+	bImage.setColor(0, value);
+	value = qRgb(255, 255, 255); 
+	bImage.setColor(1, value);
+
+	for (int y = 0; y < pixmap.height(); y++) {
+		QRgb* scanLine = (QRgb *) image.scanLine(y);
+		for (int x = 0; x < pixmap.width(); x++, scanLine++) {
+			if (qRed(*scanLine) == 0 && qGreen(*scanLine) == 255 && qBlue(*scanLine) == 255) {
+				bImage.setPixel(x, y, 1);
+			}
+			else {
+				bImage.setPixel(x, y, 0);
+			}
+		}
+
+	}
+
+	setStyleSheet("ViewSwitcherPrivate {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
+	
+	m_mask = new QBitmap(QBitmap::fromImage(bImage));
+}
+
+
+const QBitmap & ViewSwitcherPrivate::getMask() {
+	return *m_mask;
+}
+
+
+/////////////////////////////////////////
+
 
 ViewSwitcher::ViewSwitcher(QWidget *parent) : QGraphicsProxyWidget()
 {
