@@ -35,43 +35,22 @@ $Date$
 #include "../modelpart.h"
 #include "../htmlinfoview.h"
 #include "../waitpushundostack.h"
-#include "../abstractstatesbutton.h"
+#include "../abstractimagebutton.h"
 #include "partsbiniconview.h"
 #include "partsbinlistview.h"
 #include "simpleeditablelabelwidget.h"
 
-class ImageButton : public QLabel, public AbstractStatesButton {
-	Q_OBJECT
-	public:
-		ImageButton(const QString &imageName, QWidget *parent=0)
-			: QLabel(parent)
-		{
-			setupIcons(imageName);
-		};
-
-	signals:
-		void clicked();
-
-	protected:
-		QString imagePrefix() {
-			return ":/resources/images/icons/partsBin";
-		}
-		void setImage(const QPixmap & pixmap) {
-			setPixmap(pixmap);
-		}
-
-		void mousePressEvent(QMouseEvent * event) {
-			setPressedIcon();
-			QLabel::mousePressEvent(event);
-		}
-
-		void mouseReleaseEvent(QMouseEvent * event) {
-			if(isEnabled()) {
-				emit clicked();
-				setEnabledIcon();
-			}
-			QLabel::mouseReleaseEvent(event);
-		}
+class ImageButton : public AbstractImageButton {
+public:
+	ImageButton(const QString &imageName, QWidget *parent=0)
+		: AbstractImageButton(parent)
+	{
+		setupIcons(imageName);
+	};
+protected:
+	QString imagePrefix() {
+		return ":/resources/images/icons/partsBin";
+	}
 };
 
 class PartsBinPaletteWidget : public FDockWidget {

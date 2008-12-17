@@ -40,9 +40,11 @@ class ConnectorsViewsWidget : public QFrame {
 	Q_OBJECT
 	public:
 		ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchModel *sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent=0);
+		void aboutToSave();
 
 	public slots:
 		void repaint();
+		void drawConnector(Connector*);
 
 	protected:
 		void createViewImageWidget(

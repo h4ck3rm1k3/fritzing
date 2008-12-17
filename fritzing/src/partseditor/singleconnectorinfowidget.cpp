@@ -87,7 +87,9 @@ void ConnectorTypeWidget::toggleValue() {
 
 
 //TODO Mariano: looks like an abstracteditable, perhaps can be one
-SingleConnectorInfoWidget::SingleConnectorInfoWidget(WaitPushUndoStack *undoStack, Connector* connector, QWidget *parent) : AbstractConnectorInfoWidget(parent) {
+SingleConnectorInfoWidget::SingleConnectorInfoWidget(WaitPushUndoStack *undoStack, Connector* connector, QWidget *parent)
+	: AbstractConnectorInfoWidget(parent)
+{
 	QString name;
 	QString description;
 	Connector::ConnectorType type;

@@ -154,5 +154,11 @@ $Date$
     <file>resources/images/icons/segmentedSwitcherSchematicInactiveFocusHover.png</file>
     <file>resources/images/icons/partsEditorZoomInButton.png</file>
     <file>resources/images/icons/partsEditorZoomOutButton.png</file>
+    <file>resources/images/icons/partsEditorConnectorAddEnabled_icon.png</file>
+    <file>resources/images/icons/partsEditorConnectorAddDisabled_icon.png</file>
+    <file>resources/images/icons/partsEditorConnectorAddPressed_icon.png</file>
+    <file>resources/images/icons/partsEditorConnectorRemoveEnabled_icon.png</file>
+    <file>resources/images/icons/partsEditorConnectorRemoveDisabled_icon.png</file>
+    <file>resources/images/icons/partsEditorConnectorRemovePressed_icon.png</file>
 </qresource>
 </RCC>

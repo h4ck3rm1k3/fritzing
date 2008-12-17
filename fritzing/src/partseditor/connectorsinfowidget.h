@@ -29,6 +29,7 @@ $Date$
 #ifndef CONNECTORSINFOWIDGET_H_
 #define CONNECTORSINFOWIDGET_H_
 
+#include <QScrollArea>
 #include <QFrame>
 #include <QLabel>
 
@@ -47,6 +48,9 @@ class ConnectorsInfoWidget : public QFrame{
 		void informEditionCompleted();
 		void syncNewConnectors(ItemBase::ViewIdentifier viewId, const QList<Connector*> &conns);
 		void emitPaintNeeded();
+		void emitShowHideTerminalPoints(int checkState);
+		void addConnector();
+		void removeSelectedConnector();
 
 	signals:
 		void connectorSelected(const QString &);
@@ -54,14 +58,19 @@ class ConnectorsInfoWidget : public QFrame{
 		void existingConnector(ItemBase::ViewIdentifier viewId, const QString &id, Connector*);
 		void setMismatching(ItemBase::ViewIdentifier viewId, const QString &connId, bool mismatching);
 		void repaintNeeded();
+		void showTerminalPoints(bool show);
+		void drawConnector(Connector*);
 
 	protected slots:
 		void updateLayout();
 		void selectionChanged(AbstractConnectorInfoWidget* selected);
 
 	protected:
+		void createScrollArea();
+		void createToolsArea();
+
 		void addConnectorInfo(MismatchingConnectorWidget* mcw);
-		void addConnectorInfo(QString id);
+		Connector* addConnectorInfo(QString id);
 		void addConnectorInfo(Connector *conn);
 		void addMismatchingConnectorInfo(MismatchingConnectorWidget *mcw);
 		void addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewID, QString connId);
@@ -81,9 +90,16 @@ class ConnectorsInfoWidget : public QFrame{
 		Connector* findConnector(const QString &id);
 
 		QHash<QString /*connId*/, QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
+
+
+		QLabel *m_title;
+		QScrollArea *m_scrollArea;
+
 		QFrame *m_scrollContent;
 		QFrame *m_mismatchersFrame;
 		QFrame *m_mismatchersFrameParent;
+
+		QFrame *m_toolsContainter;
 
 		AbstractConnectorInfoWidget *m_selected;
 

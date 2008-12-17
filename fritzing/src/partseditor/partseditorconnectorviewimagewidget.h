@@ -29,6 +29,7 @@ $Date$
 #ifndef PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_
 #define PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_
 
+#include "partseditorconnectoritem.h"
 #include "partseditorabstractviewimage.h"
 #include "zoomcontrols.h"
 
@@ -36,6 +37,8 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 	Q_OBJECT
 	public:
 		PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=150);
+		void drawConector(Connector *conn);
+		void updateDomIfNeeded();
 
 	public slots:
 		void informConnectorSelection(const QString& connId);
@@ -53,12 +56,19 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void mouseMoveEvent(QMouseEvent *event);
 		void mouseReleaseEvent(QMouseEvent *event);
 		void connectItem();
-		void createConnector(const QRect &rect);
+		void createConnector(Connector *conn, const QRect &rect);
 
 		QRubberBand *m_connRubberBand;
 		QPoint m_connRubberBandOrigin;
 		bool m_connFreeDrawingEnabled;
 		ZoomControls *m_zoomControls;
+
+		QList<PartsEditorConnectorItem*> m_drawnConns;
+
+	protected:
+		static int ConnDefaultWidth;
+		static int ConnDefaultHeight;
 };
 
 #endif /* PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_ */
+

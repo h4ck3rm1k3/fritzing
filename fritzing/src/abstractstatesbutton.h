@@ -32,6 +32,8 @@ $Date$
 #include <QIcon>
 #include <QMouseEvent>
 
+#include "debugdialog.h"
+
 class AbstractStatesButton {
 public:
 	virtual ~AbstractStatesButton() {}			// clears compiler warning

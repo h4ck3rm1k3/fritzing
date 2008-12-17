@@ -90,3 +90,15 @@ void ConnectorsViewsWidget::repaint() {
 	m_schemView->scene()->update();
 	m_pcbView->scene()->update();
 }
+
+void ConnectorsViewsWidget::drawConnector(Connector* conn) {
+	m_breadView->drawConector(conn);
+	m_schemView->drawConector(conn);
+	m_pcbView->drawConector(conn);
+}
+
+void ConnectorsViewsWidget::aboutToSave() {
+	m_breadView->updateDomIfNeeded();
+	m_schemView->updateDomIfNeeded();
+	m_pcbView->updateDomIfNeeded();
+}

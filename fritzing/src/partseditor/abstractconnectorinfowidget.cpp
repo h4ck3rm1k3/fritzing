@@ -32,7 +32,8 @@ $Date$
 
 AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(QWidget *parent) : QFrame(parent) {
 	resize(sizeHint());
-	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Maximum);
+	setMinimumHeight(30);
 }
 
 QSize AbstractConnectorInfoWidget::sizeHint() {

@@ -198,7 +198,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	QString tags = modelPart ? modelPart->modelPartStuff()->tags().join(", ") : TAGS_FRESH_START_TEXT;
 	m_tags = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
- 
+
 
 	m_author = new EditableLineWidget(
 		modelPart ? modelPart->modelPartStuff()->author() : QString(getenv("USER")),
@@ -224,6 +224,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	m_connsViews = new ConnectorsViewsWidget(m_symbols, m_sketchModel, m_undoStack, m_connsInfo, this);
 
 	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_connsViews, SLOT(repaint()));
+	connect(m_connsInfo, SIGNAL(drawConnector(Connector*)), m_connsViews, SLOT(drawConnector(Connector*)));
 
 	connect(
 		m_symbols, SIGNAL(connectorsFound(QList<Connector*>)),
@@ -465,6 +466,7 @@ ModelPartStuff* PartsEditorMainWindow::modelPartStuff() {
 	stuff->setTags(tags);
 	stuff->setProperties(m_properties->hash());
 
+	m_connsViews->aboutToSave();
 	stuff->setConnectorsStuff(m_connsInfo->connectorsStuffs());
 
 	return stuff;

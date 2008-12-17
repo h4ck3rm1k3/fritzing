@@ -25,13 +25,15 @@ $Date$
 ********************************************************************/
 
 
-#include <QScrollArea>
 #include <QKeyEvent>
 #include <QProgressDialog>
 #include <QApplication>
+#include <QCheckBox>
 
 #include "connectorsinfowidget.h"
+#include "addremoveconnectorbutton.h"
 #include "../debugdialog.h"
+#include "../fritzingwindow.h"
 
 #define MISMATCH_CONNS_HEADER tr("Mismatching Connector IDs")
 #define MISMATCH_CONNS_FOOTER tr("These problems need to be fixed in the svg-files directly")
@@ -40,9 +42,53 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 	m_selected = NULL;
 	m_undoStack = undoStack;
 
+	createScrollArea();
+	createToolsArea();
+
+	QGridLayout *layout = new QGridLayout(this);
+	layout->addWidget(m_title,0,0);
+	layout->addWidget(m_scrollArea,1,0);
+	layout->addWidget(m_toolsContainter,2,0);
+	layout->setContentsMargins(3, 10, 3, 10);
+
+	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	setFocusPolicy(Qt::StrongFocus);
+
+	installEventFilter(this);
+}
+
+void ConnectorsInfoWidget::emitPaintNeeded() {
+	emit repaintNeeded();
+}
+
+void ConnectorsInfoWidget::createToolsArea() {
+	m_toolsContainter = new QFrame(this);
+	QHBoxLayout *lo = new QHBoxLayout(m_toolsContainter);
+
+	AddRemoveConnectorButton *addBtn = new AddRemoveConnectorButton("Add",this);
+	connect(addBtn, SIGNAL(clicked()), this, SLOT(addConnector()));
+
+	AddRemoveConnectorButton *removeBtn = new AddRemoveConnectorButton("Remove",this);
+	connect(addBtn, SIGNAL(clicked()), this, SLOT(removeSelectedConnector()));
+
+	lo->setMargin(2);
+	lo->setSpacing(2);
+	lo->addWidget(addBtn);
+	lo->addWidget(removeBtn);
+	lo->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+
+	QCheckBox *showTerminalPoints = new QCheckBox(this);
+	showTerminalPoints->setText(tr("Show Terminal Points"));
+	connect(showTerminalPoints, SIGNAL(stateChanged(int)), this, SLOT(emitShowHideTerminalPoints(int)));
+
+	lo->addWidget(showTerminalPoints);
+
+}
+
+void ConnectorsInfoWidget::createScrollArea() {
 	m_scrollContent = new QFrame();
 	m_scrollContent->setObjectName("connInfoContent");
-	m_scrollContent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+	m_scrollContent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 	m_mismatchersFrameParent = new QFrame(this);
 	m_mismatchersFrameParent->setObjectName("mismatchConns");
@@ -74,31 +120,16 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 	m_mismatchersFrameParent->hide();
 
 
-	QGridLayout *scrollLayout = new QGridLayout();
+	QGridLayout *scrollLayout = new QGridLayout(m_scrollContent);
 	scrollLayout->setMargin(0);
 	scrollLayout->setSpacing(0);
-	m_scrollContent->setLayout(scrollLayout);
 	scrollContentLayout()->addWidget(m_mismatchersFrameParent,0,0);
 
-	QScrollArea *scrollArea = new QScrollArea();
-	scrollArea->setWidget(m_scrollContent);
+	m_scrollArea = new QScrollArea();
+	m_scrollArea->setWidget(m_scrollContent);
 
-	QLabel *title = new QLabel("  "+tr("List of Connectors"));
-	title->setObjectName("title");
-
-	QGridLayout *layout = new QGridLayout();
-	layout->addWidget(title,0,0);
-	layout->addWidget(scrollArea,1,0);
-	layout->setContentsMargins(3, 10, 3, 10);
-	setLayout(layout);
-
-	setFocusPolicy(Qt::StrongFocus);
-
-	installEventFilter(this);
-}
-
-void ConnectorsInfoWidget::emitPaintNeeded() {
-	emit repaintNeeded();
+	m_title = new QLabel("  "+tr("List of Connectors"));
+	m_title->setObjectName("title");
 }
 
 void ConnectorsInfoWidget::selectionChanged(AbstractConnectorInfoWidget* selected) {
@@ -205,11 +236,12 @@ void ConnectorsInfoWidget::addConnectorInfo(MismatchingConnectorWidget* mcw) {
 	}
 }
 
-void ConnectorsInfoWidget::addConnectorInfo(QString id) {
+Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 	ConnectorStuff *connStuff = new ConnectorStuff();
 	connStuff->setId(id);
 	Connector *conn = new Connector(connStuff,0); // modelPart =? null
 	addConnectorInfo(conn);
+	return conn;
 }
 
 void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
@@ -222,7 +254,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 	connect(sci,SIGNAL(tellSistersImNewSelected(AbstractConnectorInfoWidget*)),this,SLOT(selectionChanged(AbstractConnectorInfoWidget*)));
 	connect(sci,SIGNAL(tellViewsMyConnectorIsNewSelected(const QString&)),this,SLOT(informConnectorSelection(const QString &)));
 	connect(this,SIGNAL(editionCompleted()),sci,SLOT(editionCompleted()));
-
+	m_scrollContent->updateGeometry();
 }
 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewId, QString connId) {
@@ -418,4 +450,32 @@ Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
 		}
 	}
 	return NULL;
+}
+
+
+void ConnectorsInfoWidget::emitShowHideTerminalPoints(int checkState) {
+	if(checkState == Qt::Checked) {
+		emit showTerminalPoints(true);
+	} else if(checkState == Qt::Unchecked) {
+		emit showTerminalPoints(false);
+	}
+}
+
+void ConnectorsInfoWidget::addConnector() {
+	QString connId = "connector"+FritzingWindow::getRandText();
+	DebugDialog::debug("<<<< adding connector "+connId);
+	emit drawConnector(addConnectorInfo(connId));
+}
+
+void ConnectorsInfoWidget::removeSelectedConnector() {
+	if(!m_selected) return;
+	MismatchingConnectorWidget* mismatch = dynamic_cast<MismatchingConnectorWidget*>(m_selected);
+	if(mismatch) {
+		removeMismatchingConnectorInfo(mismatch);
+	} else {
+		SingleConnectorInfoWidget *single = dynamic_cast<SingleConnectorInfoWidget*>(m_selected);
+		if(single) {
+			removeConnectorInfo(single);
+		}
+	}
 }

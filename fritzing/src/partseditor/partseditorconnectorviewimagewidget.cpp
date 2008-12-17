@@ -30,10 +30,11 @@ $Date$
 #include <QInputDialog>
 
 #include "partseditorconnectorviewimagewidget.h"
-#include "partseditorconnectoritem.h"
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
 
+int PartsEditorConnectorViewImageWidget::ConnDefaultWidth = 20;
+int PartsEditorConnectorViewImageWidget::ConnDefaultHeight = PartsEditorConnectorViewImageWidget::ConnDefaultWidth;
 
 PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
 	: PartsEditorAbstractViewImage(viewId, parent, size)
@@ -46,12 +47,12 @@ PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBas
 	m_zoomControls = new ZoomControls(this);
 	addFixedToBottomRightItem(m_zoomControls);
 
-	m_connFreeDrawingEnabled = false;
-	if(m_connFreeDrawingEnabled) {
-		setDragMode(QGraphicsView::RubberBandDrag);
-	} else {
+	//m_connFreeDrawingEnabled = false;
+	//if(m_connFreeDrawingEnabled) {
+		//setDragMode(QGraphicsView::RubberBandDrag);
+	//} else {
 		setDragMode(QGraphicsView::ScrollHandDrag);
-	}
+	//}
 }
 
 void PartsEditorConnectorViewImageWidget::wheelEvent(QWheelEvent* event) {
@@ -60,7 +61,7 @@ void PartsEditorConnectorViewImageWidget::wheelEvent(QWheelEvent* event) {
 
 void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
 	PartsEditorAbstractViewImage::mousePressEvent(event);
-	if(m_connFreeDrawingEnabled && m_item) {
+	/*if(m_connFreeDrawingEnabled && m_item) {
 		m_connRubberBandOrigin = event->pos();
 		if (!m_connRubberBand) {
 			m_connRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
@@ -68,81 +69,36 @@ void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
 
 		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, QSize()));
 		m_connRubberBand->show();
-	}
+	}*/
 }
 
 void PartsEditorConnectorViewImageWidget::mouseMoveEvent(QMouseEvent *event) {
 	PartsEditorAbstractViewImage::mouseMoveEvent(event);
-	if(m_connFreeDrawingEnabled && m_item && m_connRubberBandOrigin != QPoint(-1,-1)) {
+	/*if(m_connFreeDrawingEnabled && m_item && m_connRubberBandOrigin != QPoint(-1,-1)) {
 		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, event->pos()).normalized());
-	}
+	}*/
 }
 
 void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) {
-	if(m_connFreeDrawingEnabled && m_item) {
+	/*if(m_connFreeDrawingEnabled && m_item) {
 		m_connRubberBand->hide();
 		createConnector(m_connRubberBand->geometry());
 		m_connRubberBandOrigin = QPoint(-1,-1);
-	}
+	}*/
 	PartsEditorAbstractViewImage::mouseReleaseEvent(event);
 }
 
-void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect) {
+void PartsEditorConnectorViewImageWidget::drawConector(Connector *conn) {
+	QRect rect(2,2,ConnDefaultWidth,ConnDefaultHeight);
+	createConnector(conn,rect);
+}
+
+void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const QRect &connRect) {
 	Q_ASSERT(m_item);
-	bool ok;
-	QString connId =
-		QInputDialog::getText(
-			this,
-			tr("Please, give this connector an id"),
-			tr("Connector id:"),
-			QLineEdit::Normal,
-			"connector",
-			&ok
-		);
+	QString connId = conn->connectorStuffID();
 
-	if(ok) {
-		QRectF bounds = mapToScene(connRect).boundingRect();
-
-		/*QGraphicsRectItem *rect = new QGraphicsRectItem(bounds);
-		QPen pen(QColor::fromRgb(255,0,0));
-		int penWidth = 1;
-		pen.setWidth(penWidth);
-		pen.setJoinStyle(Qt::MiterJoin);
-		pen.setCapStyle(Qt::SquareCap);
-		rect->setPen(pen);
-		scene()->addItem(rect);*/
-
-		QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
-		QRectF viewBox = renderer->viewBoxF();
-		QSize defaultSize = renderer->defaultSize();
-
-		qreal x = bounds.x() * defaultSize.width() / viewBox.width();
-		qreal y = bounds.y() * defaultSize.height() / viewBox.height();
-		qreal width = bounds.width() * defaultSize.width() / viewBox.width();
-		qreal height = bounds.height() * defaultSize.height() / viewBox.height();
-
-		QDomDocument *svgDom = m_item->svgDom();
-		QDomElement connElem = svgDom->createElement("rect");
-		connElem.setAttribute("id",connId /*+"pin"*/);
-		connElem.setAttribute("x",x);
-		connElem.setAttribute("y",y);
-		connElem.setAttribute("width",width);
-		connElem.setAttribute("height",height);
-		connElem.setAttribute("style","fill:transparent");
-		Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
-		svgDom->firstChildElement("svg").appendChild(connElem);
-
-		QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
-		QFile file(tempFile);
-		Q_ASSERT(file.open(QFile::WriteOnly));
-		QTextStream out(&file);
-		out << svgDom->toString();
-		file.close();
-
-		svgFileLoadNeeded(tempFile);
-
-		QFile::remove(tempFile);
-	}
+	QRectF bounds = mapToScene(connRect).boundingRect();
+	m_drawnConns << new PartsEditorConnectorItem(conn, m_item, bounds);
 }
 
 void PartsEditorConnectorViewImageWidget::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
@@ -181,5 +137,47 @@ void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifie
 				connectorItem->setMismatching(mismatching);
 			}
 		}
+	}
+}
+
+void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
+	if(m_item && !m_drawnConns.isEmpty()) {
+		QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
+		QRectF viewBox = renderer->viewBoxF();
+		QSize defaultSize = renderer->defaultSize();
+
+		QDomDocument *svgDom = m_item->svgDom();
+		QRectF bounds;
+		QString connId;
+
+		foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
+			bounds = drawnConn->rect();
+			connId = drawnConn->connectorStuffID();
+
+			qreal x = bounds.x() * defaultSize.width() / viewBox.width();
+			qreal y = bounds.y() * defaultSize.height() / viewBox.height();
+			qreal width = bounds.width() * defaultSize.width() / viewBox.width();
+			qreal height = bounds.height() * defaultSize.height() / viewBox.height();
+
+			QDomElement connElem = svgDom->createElement("rect");
+			connElem.setAttribute("id",connId /*+"pin"*/ );
+			connElem.setAttribute("x",x);
+			connElem.setAttribute("y",y);
+			connElem.setAttribute("width",width);
+			connElem.setAttribute("height",height);
+			connElem.setAttribute("style","fill:transparent");
+			Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
+			svgDom->firstChildElement("svg").appendChild(connElem);
+		}
+
+		QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
+		QFile file(tempFile);
+		Q_ASSERT(file.open(QFile::WriteOnly));
+		QTextStream out(&file);
+		out << svgDom->toString();
+		file.close();
+
+		svgFileLoadNeeded(tempFile);
+		QFile::remove(tempFile);
 	}
 }

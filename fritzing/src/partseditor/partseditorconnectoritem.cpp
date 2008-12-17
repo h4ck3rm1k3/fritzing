@@ -41,6 +41,18 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 	m_errorIcon = NULL;
 }
 
+PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds)
+	: ConnectorItem(conn, attachedTo)
+{
+	setAcceptsHoverEvents(false);
+	this->setCursor(Qt::ArrowCursor);
+	m_withBorder = false;
+	m_errorIcon = NULL;
+
+	setRect(bounds);
+	removeBorder();
+}
+
 void PartsEditorConnectorItem::setSelectedColor(const QColor &color) {
 	setColorAux(color);
 }

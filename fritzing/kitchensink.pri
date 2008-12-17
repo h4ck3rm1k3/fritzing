@@ -81,7 +81,8 @@ HEADERS += src/abstractstatesbutton.h \
     src/zoomcombobox.h \
     src/dockmanager.h \
     src/idockablewidget.h \
-    src/viewswitcher.h
+    src/viewswitcher.h \
+    src/abstractimagebutton.h
 SOURCES += src/aboutbox.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
