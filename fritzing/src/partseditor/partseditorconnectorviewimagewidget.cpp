@@ -146,12 +146,19 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 		QRectF viewBox = renderer->viewBoxF();
 		QSize defaultSize = renderer->defaultSize();
 
+		DebugDialog::debug(QString("<<<< dsW %1  vwH %2  vbW %3  vbH %4")
+				.arg(defaultSize.width()).arg(defaultSize.height())
+				.arg(viewBox.width()).arg(viewBox.height()));
+
 		QDomDocument *svgDom = m_item->svgDom();
 		QRectF bounds;
 		QString connId;
 
 		foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
-			bounds = drawnConn->rect();
+			QRectF rectAux = drawnConn->boundingRect();;
+			qreal xAux = drawnConn->pos().x();
+			qreal yAux = drawnConn->pos().y();
+			bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
 			connId = drawnConn->connectorStuffID();
 
 			qreal x = bounds.x() * defaultSize.width() / viewBox.width();
@@ -159,13 +166,17 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 			qreal width = bounds.width() * defaultSize.width() / viewBox.width();
 			qreal height = bounds.height() * defaultSize.height() / viewBox.height();
 
+
+			DebugDialog::debug(QString("<<<< x %1  y %2  width %3  height %4")
+				.arg(x).arg(y).arg(width).arg(height));
+
 			QDomElement connElem = svgDom->createElement("rect");
 			connElem.setAttribute("id",connId /*+"pin"*/ );
 			connElem.setAttribute("x",x);
 			connElem.setAttribute("y",y);
 			connElem.setAttribute("width",width);
 			connElem.setAttribute("height",height);
-			connElem.setAttribute("style","fill:transparent");
+			connElem.setAttribute("fill","none");
 			Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
 			svgDom->firstChildElement("svg").appendChild(connElem);
 		}

@@ -48,10 +48,21 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void addErrorIcon();
 		void addBorder();
 		void removeBorder();
-		void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );
+		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+		void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+		void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+		void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+		void mousePressEvent(QGraphicsSceneMouseEvent *event);
+		void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+		void updateCursor(const QPointF &mousePos);
+		/*Qt::Corner*/ int closeToCorner(const QPointF &pos);
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;
+		bool m_resizable;
+		bool m_resizing;
 	public:
 		static QColor selectedColor;
 		static QColor notSelectedColor;
