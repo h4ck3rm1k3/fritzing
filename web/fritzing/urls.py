@@ -16,11 +16,15 @@ urlpatterns = patterns('',
     (r'^admin/(.*)', admin.site.root),
     (r'^i18n/', include('django.conf.urls.i18n')),
     (r'^robots.txt$', include('robots.urls')),
+    (r'^emailthis/', include('emailthis.urls')),
+    (r'^forum/', include('forum.urls')),
+    (r'^faq/', include('faq.urls')),
     (r'', include('pages.urls')),
 )
 
 if settings.SERVE_MEDIA:
-    urlpatterns += patterns('',
-        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve',
-            {'document_root': settings.MEDIA_ROOT}),
+    urlpatterns += patterns('django.views.static',
+        (r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], 'serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
     )

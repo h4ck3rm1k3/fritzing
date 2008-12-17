@@ -76,7 +76,7 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'tools.middleware.RequireLoginMiddleware',
+#    'tools.middleware.RequireLoginMiddleware',
     'pages.middleware.CurrentSiteMiddleware',
 )
 
@@ -107,15 +107,13 @@ INSTALLED_APPS = (
     # included
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.comments',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.humanize',
     'django.contrib.markup',
     'django.contrib.admin',
     'django.contrib.redirects',
-    'django_extensions',
-
+    'django.contrib.admin',
 
     # external
     'django_extensions',
@@ -131,20 +129,21 @@ INSTALLED_APPS = (
     'reversion',
     'tagging',
     'mptt',
-    'mptt_comments',
     'tagging',
     'pages',
     'template_utils',
     'filebrowser',
-    
+    'emailthis',
+    'forum',
+    'threadedcomments',
+
     # internal (for now)
     'basic_profiles',
+    'faq',
     'account',
     'misc',
     'tools',
     'partslib',
-    
-    'django.contrib.admin',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -156,7 +155,7 @@ NOTIFICATION_LANGUAGE_MODULE = 'account.Account'
 
 EMAIL_CONFIRMATION_DAYS = 2
 EMAIL_DEBUG = DEBUG
-CONTACT_EMAIL = "jannis@leidel.info"
+CONTACT_EMAIL = "info@fritzing.org"
 SITE_NAME = "Fritzing"
 LOGIN_URL = "/account/login"
 LOGIN_REDIRECT_URL = "/"
@@ -187,11 +186,11 @@ FILEBROWSER_EXTENSIONS = {
 
 INTERNAL_IPS = ('127.0.0.1',)
 
-DEFAULT_PAGE_TEMPLATE = 'fritzing/docs/index.html'
+DEFAULT_PAGE_TEMPLATE = 'pages/docs/index.html'
 PAGE_TEMPLATES = (
-    ('fritzing/docs/index.html', 'documentation index'),
-    ('fritzing/docs/detail.html', 'documentation detail'),
-    ('fritzing/docs/overview.html', 'documentation overview'),
+    ('pages/docs/index.html', 'documentation index'),
+    ('pages/docs/detail.html', 'documentation detail'),
+    ('pages/docs/overview.html', 'documentation overview'),
 )
 
 PAGE_PERMISSION = False
