@@ -68,6 +68,7 @@ HEADERS += src/abstractstatesbutton.h \
     src/sketchtoolbutton.h \
     src/sketchwidget.h \
     src/svgandpartfilepath.h \
+    src/tabwindow.h \
     src/tracewire.h \
     src/triplenavigator.h \
     src/version.h \
@@ -132,6 +133,7 @@ SOURCES += src/aboutbox.cpp \
     src/sketchmodel.cpp \
     src/sketchtoolbutton.cpp \
     src/sketchwidget.cpp \
+    src/tabwindow.cpp \
     src/tracewire.cpp \
     src/triplenavigator.cpp \
     src/version.cpp \

@@ -58,6 +58,8 @@ $Date$
 #include "help/helper.h"
 #include "dockmanager.h"
 
+#include "tabwindow.h"
+
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
@@ -109,24 +111,24 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
 	//m_tabWidget->addTab(m_breadboardWidget, tr("breadboard"));
-	m_breadViewSwitcher = new ViewSwitcher(this);
-	connectSwitcherToView(m_breadViewSwitcher,m_breadboardGraphicsView);
+	//m_breadViewSwitcher = new ViewSwitcher(this);
+	//connectSwitcherToView(m_breadViewSwitcher,m_breadboardGraphicsView);
 	m_tabWidget->addWidget(m_breadboardWidget);
 
 	m_schematicGraphicsView = new SchematicSketchWidget(ItemBase::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
 	//m_tabWidget->addTab(m_schematicWidget, tr("schematic"));
-	m_schemViewSwitcher = new ViewSwitcher(this);
-	connectSwitcherToView(m_schemViewSwitcher,m_schematicGraphicsView);
+	//m_schemViewSwitcher = new ViewSwitcher(this);
+	//connectSwitcherToView(m_schemViewSwitcher,m_schematicGraphicsView);
 	m_tabWidget->addWidget(m_schematicWidget);
 
 	m_pcbGraphicsView = new PCBSketchWidget(ItemBase::PCBView, this);
 	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
 	//m_tabWidget->addTab(m_pcbWidget, tr("pcb"));
-	m_pcbViewSwitcher = new ViewSwitcher(this);
-	connectSwitcherToView(m_pcbViewSwitcher,m_pcbGraphicsView);
+	//m_pcbViewSwitcher = new ViewSwitcher(this);
+	//connectSwitcherToView(m_pcbViewSwitcher,m_pcbGraphicsView);
 	m_tabWidget->addWidget(m_pcbWidget);
 
     m_undoView = new QUndoView();
@@ -236,6 +238,14 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	if(settings.allKeys().isEmpty()) {
 		new Helper(this);
 	}
+
+	m_tabWindow = new TabWindow(this);
+	ViewSwitcherPrivate * viewSwitcher = new ViewSwitcherPrivate();
+	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
+
+	m_tabWindow->addViewSwitcher(viewSwitcher);
+
+	m_tabWindow->show();
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {

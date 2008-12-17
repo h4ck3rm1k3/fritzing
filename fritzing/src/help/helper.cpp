@@ -88,14 +88,14 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 	m_owner->m_schematicGraphicsView->addFixedToCenterItem(m_schemMainHelp);
 	m_owner->m_pcbGraphicsView->addFixedToCenterItem(m_pcbMainHelp);
 
-	m_owner->m_breadboardGraphicsView->addFixedToTopRightItem(m_partsBinHelp);
-	m_owner->m_breadboardGraphicsView->addFixedToTopLeftItem(m_switchButtonsHelp);
-	m_owner->m_pcbGraphicsView->addFixedToBottomLeftItem(m_autorouteHelp);
+	//m_owner->m_breadboardGraphicsView->addFixedToTopRightItem(m_partsBinHelp);
+	//m_owner->m_breadboardGraphicsView->addFixedToTopLeftItem(m_switchButtonsHelp);
+	//m_owner->m_pcbGraphicsView->addFixedToBottomLeftItem(m_autorouteHelp);
 }
 
 void Helper::connectToView(SketchWidget* view) {
 	connect(view, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
-	connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
+	//connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	connect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 }
 

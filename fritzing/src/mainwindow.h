@@ -454,7 +454,8 @@ protected:
 
 	friend class Helper;
 	friend class DockManager;
-
+	
+	class TabWindow * m_tabWindow;
 
 protected:
 	static const QString UntitledSketchName;
