@@ -34,15 +34,33 @@ $Date$
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
 
+
 PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
 	: PartsEditorAbstractViewImage(viewId, parent, size)
 {
 	m_connRubberBandOrigin = QPoint(-1,-1);
 	m_connRubberBand = NULL;
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+	m_zoomControls = new ZoomControls(this);
+	addFixedToBottomRightItem(m_zoomControls);
+
+	m_connFreeDrawingEnabled = false;
+	if(m_connFreeDrawingEnabled) {
+		setDragMode(QGraphicsView::RubberBandDrag);
+	} else {
+		setDragMode(QGraphicsView::ScrollHandDrag);
+	}
+}
+
+void PartsEditorConnectorViewImageWidget::wheelEvent(QWheelEvent* event) {
+	SketchWidget::wheelEvent(event);
 }
 
 void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
-	if(m_item) {
+	PartsEditorAbstractViewImage::mousePressEvent(event);
+	if(m_connFreeDrawingEnabled && m_item) {
 		m_connRubberBandOrigin = event->pos();
 		if (!m_connRubberBand) {
 			m_connRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
@@ -54,18 +72,19 @@ void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void PartsEditorConnectorViewImageWidget::mouseMoveEvent(QMouseEvent *event) {
-	if(m_item && m_connRubberBandOrigin != QPoint(-1,-1)) {
+	PartsEditorAbstractViewImage::mouseMoveEvent(event);
+	if(m_connFreeDrawingEnabled && m_item && m_connRubberBandOrigin != QPoint(-1,-1)) {
 		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, event->pos()).normalized());
 	}
 }
 
 void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) {
-	Q_UNUSED(event);
-	if(m_item) {
+	if(m_connFreeDrawingEnabled && m_item) {
 		m_connRubberBand->hide();
 		createConnector(m_connRubberBand->geometry());
 		m_connRubberBandOrigin = QPoint(-1,-1);
 	}
+	PartsEditorAbstractViewImage::mouseReleaseEvent(event);
 }
 
 void PartsEditorConnectorViewImageWidget::createConnector(const QRect &connRect) {

@@ -52,7 +52,8 @@ HEADERS += \
     src/partseditor/partseditorsketchwidget.h \
     src/partseditor/pcbxml.h \
     src/partseditor/svgdomdocument.h \
-    src/partseditor/svgview.h 
+    src/partseditor/svgview.h \
+    src/partseditor/zoomcontrols.h  
 
 SOURCES += \
     src/partseditor/editabledatewidget.cpp \
@@ -83,5 +84,6 @@ SOURCES += \
     src/partseditor/partseditorsketchwidget.cpp \
     src/partseditor/pcbxml.cpp \
     src/partseditor/svgdomdocument.cpp \
-    src/partseditor/svgview.cpp 
+    src/partseditor/svgview.cpp \
+    src/partseditor/zoomcontrols.cpp
 

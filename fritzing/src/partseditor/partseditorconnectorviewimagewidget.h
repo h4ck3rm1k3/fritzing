@@ -30,6 +30,7 @@ $Date$
 #define PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_
 
 #include "partseditorabstractviewimage.h"
+#include "zoomcontrols.h"
 
 class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 	Q_OBJECT
@@ -47,6 +48,7 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void svgFileLoadNeeded(const QString &filepath);
 
 	protected:
+		void wheelEvent(QWheelEvent* event);
 		void mousePressEvent(QMouseEvent *event);
 		void mouseMoveEvent(QMouseEvent *event);
 		void mouseReleaseEvent(QMouseEvent *event);
@@ -55,6 +57,8 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 
 		QRubberBand *m_connRubberBand;
 		QPoint m_connRubberBandOrigin;
+		bool m_connFreeDrawingEnabled;
+		ZoomControls *m_zoomControls;
 };
 
 #endif /* PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_ */

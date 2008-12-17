@@ -177,6 +177,13 @@ public:
 	void addFixedToTopRightItem(QGraphicsProxyWidget *item);
 	void addFixedToBottomLeftItem(QGraphicsProxyWidget *item);
 	void addFixedToCenterItem(QGraphicsProxyWidget *item);
+	void addFixedToBottomRightItem(QGraphicsProxyWidget *item);
+
+	void ensureFixedToTopLeftItems();
+	void ensureFixedToTopRightItems();
+	void ensureFixedToBottomLeftItems();
+	void ensureFixedToCenterItems();
+	void ensureFixedToBottomRightItems();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -260,11 +267,6 @@ protected:
 	void turnOffAutoscroll();
 	bool checkAutoscroll(QPoint globalPos);
 	virtual void setWireVisible(Wire *);
-
-	void ensureFixedToTopLeftItems();
-	void ensureFixedToTopRightItems();
-	void ensureFixedToBottomLeftItems();
-	void ensureFixedToCenterItems();
 
 protected:
 	static bool lessThan(int a, int b);
@@ -403,6 +405,7 @@ protected:
 	QList<QGraphicsProxyWidget*> m_fixedToTopLeftItems;
 	QList<QGraphicsProxyWidget*> m_fixedToTopRightItems;
 	QList<QGraphicsProxyWidget*> m_fixedToBottomLeftItems;
+	QList<QGraphicsProxyWidget*> m_fixedToBottomRightItems;
 	QList<QGraphicsProxyWidget*> m_fixedToCenterItems;
 };
 

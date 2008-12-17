@@ -152,5 +152,7 @@ $Date$
     <file>resources/images/icons/segmentedSwitcherSchematicInactiveDimmed.png</file>
     <file>resources/images/icons/segmentedSwitcherSchematicInactiveFocus.png</file>
     <file>resources/images/icons/segmentedSwitcherSchematicInactiveFocusHover.png</file>
+    <file>resources/images/icons/partsEditorZoomInButton.png</file>
+    <file>resources/images/icons/partsEditorZoomOutButton.png</file>
 </qresource>
 </RCC>
