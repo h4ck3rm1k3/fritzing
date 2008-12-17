@@ -228,10 +228,10 @@ def main():
 		totalX = (18.3 + 9 * maxSizeX)
 		totalY = (9 + 9 * incrementalY)
 		sizeDict = {}
-		sizeDict['pxWidth'] = "%.2f" % (totalX)
-		sizeDict['pxHeight'] = "%.2f" % (totalY)
-		sizeDict['realWidth'] = "%.3fin" % (totalX / 90.0)
-		sizeDict['realHeight'] = "%.3fin" % (totalY / 90.0)
+		sizeDict['pxWidth'] = "%.3f" % (totalX)
+		sizeDict['pxHeight'] = "%.3f" % (totalY)
+		sizeDict['realWidth'] = "%.4fin" % (totalX / 90.0)
+		sizeDict['realHeight'] = "%.4fin" % (totalY / 90.0)
 		sL['size'] = sizeDict
 		
 		if len(sys.argv) >= 3 and sys.argv[2] == 'fz':

@@ -5,15 +5,15 @@
 <rect id="connector0pin" x="3.5" y="28.66" fill="#8C8C8C" width="3" height="4.34"/>
 <rect id="connector1pin" x="13.5" y="28.66" fill="#8C8C8C" width="3" height="4.34"/>
 <rect id="connector2pin" x="23.5" y="28.66" fill="#8C8C8C" width="3" height="4.34"/>
-<rect id="connector3pin" x="23.5" fill="#8C8C8C" width="3" height="4.34"/>
-<rect id="connector4pin" x="13.5" fill="#8C8C8C" width="3" height="4.34"/>
-<rect id="connector5pin" x="3.5" fill="#8C8C8C" width="3" height="4.34"/>
+<rect id="connector3pin" x="23.5" y="0" fill="#8C8C8C" width="3" height="4.34"/>
+<rect id="connector4pin" x="13.5" y="0" fill="#8C8C8C" width="3" height="4.34"/>
+<rect id="connector5pin" x="3.5" y="0" fill="#8C8C8C" width="3" height="4.34"/>
 <rect id="connector0terminal" x="3.5" y="30" fill="#8C8C8C" width="3" height="3"/>
 <rect id="connector1terminal" x="13.5" y="30" fill="#8C8C8C" width="3" height="3"/>
 <rect id="connector2terminal" x="23.5" y="30" fill="#8C8C8C" width="3" height="3"/>
-<rect id="connector3terminal" x="23.5" fill="#8C8C8C" width="3" height="3"/>
-<rect id="connector4terminal" x="13.5" fill="#8C8C8C" width="3" height="3"/>
-<rect id="connector5terminal" x="3.5" fill="#8C8C8C" width="3" height="3"/>
+<rect id="connector3terminal" x="23.5" y="0" fill="#8C8C8C" width="3" height="3"/>
+<rect id="connector4terminal" x="13.5" y="0" fill="#8C8C8C" width="3" height="3"/>
+<rect id="connector5terminal" x="3.5" y="0" fill="#8C8C8C" width="3" height="3"/>
 <g id="breadboard">
 	<g>
 		<rect x="3.5" y="26.319" fill="#8C8C8C" width="3" height="6.681"/>
