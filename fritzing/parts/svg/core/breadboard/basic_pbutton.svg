@@ -1,55 +1,49 @@
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.2" baseProfile="tiny"
-   x="0px" y="0px" 
-   width=".28in" height=".37in" 
-	  xml:space="preserve">
-
-<rect id="connector0pin" x="20.6" y="0.0" fill="none" width="3" height="4.25"/>
-<rect id="connector1pin" x="20.6" y="28.75" fill="none" width="3" height="4.25"/>
-<rect id="connector2pin" x="0.6" y="0.0" fill="none" width="3" height="4.25"/>
-<rect id="connector3pin" x="0.6" y="28.75" fill="none" width="3" height="4.25"/>
-
-<rect id="connector0terminal" x="20.6" y="0.0" fill="none" width="3" height="3"/>
-<rect id="connector1terminal" x="20.6" y="30" fill="none" width="3" height="3"/>
-<rect id="connector2terminal" x="0.6" y="0.0" fill="none" width="3" height="3"/>
-<rect id="connector3terminal" x="0.6" y="30" fill="none" width="3" height="3"/>
-
-
-<g id="breadboard" style="display:inline">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.24518in"
+	 height="0.33002in" viewBox="0 0 24.518 33.002" enable-background="new 0 0 24.518 33.002" xml:space="preserve">
+<rect id="connector0pin" x="20.606" y="0.002" fill="none" width="3" height="4.25"/>
+<rect id="connector1pin" x="20.606" y="28.752" fill="none" width="3" height="4.25"/>
+<rect id="connector2pin" x="0.606" y="0.002" fill="none" width="3" height="4.25"/>
+<rect id="connector3pin" x="0.606" y="28.752" fill="none" width="3" height="4.25"/>
+<rect id="connector0terminal" x="20.606" y="0.002" fill="none" width="3" height="3"/>
+<rect id="connector1terminal" x="20.606" y="30.002" fill="none" width="3" height="3"/>
+<rect id="connector2terminal" x="0.606" y="0.002" fill="none" width="3" height="3"/>
+<rect id="connector3terminal" x="0.606" y="30.002" fill="none" width="3" height="3"/>
+<g id="breadboard">
 	<g>
-	<polygon fill="#8C8C8C" points="20.58,32.978 20.58,21.485 23.58,21.485 23.58,32.978 		"/>
-	<polygon fill="#8C8C8C" points="0.58,11.491 0.58,-0.001 3.578,-0.001 3.578,11.491 		"/>
-	<polygon fill="#8C8C8C" points="20.58,11.492 20.58,-0.002 23.58,-0.002 23.58,11.492 		"/>
-	<polygon fill="#8C8C8C" points="0.581,32.979 0.581,21.486 3.58,21.486 3.58,32.979 		"/>
-	<rect x="0.006" y="4.23" width="24.518" height="24.519"/>
-	<path fill="#999999" d="M24.523,26.75c0,1.1-0.898,1.999-1.999,1.999H2.005c-1.1,0-1.999-0.899-1.999-1.999V6.228
-		c0-1.099,0.899-1.998,1.999-1.998h20.52c1.101,0,1.999,0.899,1.999,1.998V26.75z"/>
-	<circle cx="3.577" cy="7.801" r="2.124"/>
-	<circle cx="21.011" cy="7.838" r="2.124"/>
-	<circle cx="20.974" cy="25.273" r="2.124"/>
-	<circle cx="3.54" cy="25.235" r="2.124"/>
-	<circle fill="#3F3F3F" cx="12.264" cy="16.489" r="7.15"/>
-	
-		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="12.2903" y1="31.2361" x2="12.2903" y2="16.9285" gradientTransform="matrix(0.9994 0 0 -0.9994 -0.0181 40.5569)">
-		<stop  offset="0" style="stop-color:#333333"/>
-		<stop  offset="1" style="stop-color:#4D4D4D"/>
-	</linearGradient>
-	<circle fill="url(#SVGID_1_)" cx="12.264" cy="16.489" r="7.15"/>
-	<circle opacity="0.6" enable-background="new    " cx="12.389" cy="17.339" r="6.292"/>
-	<circle fill="#735348" cx="12.273" cy="16.531" r="6.132"/>
-	<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M3.302,7.69C3.344,7.59,3.421,7.513,3.529,7.493L3.321,6.155
-		C3.24,6.169,3.156,6.158,3.076,6.182L3.074,6.176C2.579,6.329,2.209,6.697,2.02,7.169L3.302,7.69z"/>
-	<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M20.737,7.726c0.041-0.101,0.118-0.178,0.227-0.197
-		l-0.207-1.338c-0.082,0.014-0.166,0.002-0.245,0.027l-0.003-0.007c-0.493,0.153-0.864,0.521-1.053,0.993L20.737,7.726z"/>
-	<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M20.701,25.161c0.041-0.1,0.118-0.178,0.227-0.197l-0.208-1.337
-		c-0.082,0.014-0.166,0.002-0.245,0.027l-0.003-0.009c-0.493,0.154-0.864,0.521-1.052,0.994L20.701,25.161z"/>
-	<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M3.265,25.124c0.041-0.1,0.118-0.176,0.228-0.196L3.284,23.59
-		c-0.082,0.015-0.166,0.002-0.245,0.027l-0.002-0.006c-0.495,0.151-0.865,0.521-1.054,0.993L3.265,25.124z"/>
-	<path opacity="0.6" fill="#FFFFFF" enable-background="new    " d="M14.467,10.816c-0.475-0.184-0.975-0.319-1.504-0.378
-		c-1.316-0.148-2.576,0.144-3.653,0.742l-0.134,0.348c1.203-0.642,2.603-0.942,4.061-0.779c0.449,0.052,0.881,0.153,1.298,0.284
-		L14.467,10.816z"/>
-</g></g>
-
+		<polygon fill="#8C8C8C" points="20.586,32.979 20.586,21.487 23.586,21.487 23.586,32.979 		"/>
+		<polygon fill="#8C8C8C" points="0.586,11.493 0.586,0.001 3.584,0.001 3.584,11.493 		"/>
+		<polygon fill="#8C8C8C" points="20.586,11.494 20.586,0 23.586,0 23.586,11.494 		"/>
+		<polygon fill="#8C8C8C" points="0.587,32.981 0.587,21.487 3.586,21.487 3.586,32.981 		"/>
+		<rect x="0.012" y="4.232" width="24.518" height="24.52"/>
+		<path fill="#999999" d="M24.529,26.752c0,1.101-0.896,1.999-2,1.999H2.011c-1.101,0-1.999-0.898-1.999-1.999V6.23
+			c0-1.1,0.898-1.998,1.999-1.998h20.521c1.103,0,1.997,0.898,1.997,1.998L24.529,26.752L24.529,26.752z"/>
+		<circle cx="3.583" cy="7.803" r="2.124"/>
+		<circle cx="21.018" cy="7.84" r="2.124"/>
+		<circle cx="20.981" cy="25.275" r="2.124"/>
+		<circle cx="3.546" cy="25.236" r="2.124"/>
+		<circle fill="#3F3F3F" cx="12.27" cy="16.491" r="7.15"/>
+		
+			<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-267.8796" y1="-465.3486" x2="-253.5798" y2="-465.3486" gradientTransform="matrix(1 0 0 -1 273 -448.8574)">
+			<stop  offset="0" style="stop-color:#333333"/>
+			<stop  offset="1" style="stop-color:#3C3C3C"/>
+		</linearGradient>
+		<circle fill="url(#SVGID_1_)" cx="12.27" cy="16.491" r="7.15"/>
+		<circle opacity="0.6" enable-background="new    " cx="12.395" cy="17.341" r="6.292"/>
+		<circle fill="#735348" cx="12.279" cy="16.533" r="6.132"/>
+		<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M3.308,7.692c0.042-0.1,0.119-0.177,0.228-0.196L3.326,6.158
+			C3.246,6.171,3.161,6.16,3.082,6.184L3.08,6.178C2.585,6.331,2.215,6.7,2.026,7.171L3.308,7.692z"/>
+		<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M20.741,7.728c0.041-0.102,0.118-0.179,0.229-0.197
+			l-0.207-1.338c-0.082,0.015-0.166,0.002-0.245,0.026l-0.003-0.007c-0.493,0.152-0.864,0.521-1.053,0.993L20.741,7.728z"/>
+		<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M20.707,25.163c0.041-0.102,0.116-0.18,0.227-0.197
+			l-0.207-1.337c-0.082,0.015-0.166,0.002-0.246,0.026l-0.002-0.01c-0.494,0.152-0.865,0.521-1.053,0.994L20.707,25.163z"/>
+		<path opacity="0.5" fill="#FFFFFF" enable-background="new    " d="M3.271,25.126c0.041-0.102,0.118-0.176,0.229-0.195
+			l-0.21-1.339c-0.082,0.017-0.166,0.002-0.245,0.027l-0.002-0.007c-0.495,0.15-0.865,0.521-1.056,0.992L3.271,25.126z"/>
+		<path opacity="0.6" fill="#FFFFFF" enable-background="new    " d="M14.473,10.818c-0.475-0.185-0.975-0.318-1.504-0.378
+			c-1.316-0.147-2.576,0.145-3.653,0.742L9.182,11.53c1.203-0.643,2.604-0.941,4.062-0.778c0.448,0.052,0.884,0.152,1.301,0.284
+			L14.473,10.818z"/>
+	</g>
+</g>
 </svg>
