@@ -224,9 +224,9 @@ void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {
 
 void PaletteItem::mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event) {
 	DebugDialog::debug("layerkinchief got mouse press event");
-	if (acceptsMousePressConnectorEvent(NULL, event) /* && isBuriedConnectorHit(event)  */) return;
-
-	/*
+	/*  
+	
+	if (acceptsMousePressConnectorEvent(NULL, event) && isBuriedConnectorHit(event)  ) return;
 	foreach(LayerKinPaletteItem * lkpi, m_layerKin) {
 		if (lkpi->isBuriedConnectorHit(event)) return;
 	}
