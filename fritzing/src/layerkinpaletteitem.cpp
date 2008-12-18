@@ -82,6 +82,11 @@ void LayerKinPaletteItem::updateConnections() {
 
 void LayerKinPaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	DebugDialog::debug("layer kin mouse press event");
+	if (m_layerKinChief->isLowerLayerVisible(this)) {
+		event->ignore();
+		return;
+	}
+
 	m_layerKinChief->mousePressEvent(this, event);
 }
 
@@ -97,3 +102,8 @@ void LayerKinPaletteItem::figureHover() {
 void LayerKinPaletteItem::clearModelPart() {
 	m_layerKinChief->clearModelPart();
 }
+
+bool LayerKinPaletteItem::isLowerLayerVisible(PaletteItemBase * paletteItemBase) {
+	return m_layerKinChief->isLowerLayerVisible(paletteItemBase);
+}
+

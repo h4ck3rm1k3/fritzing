@@ -42,13 +42,13 @@ public:
 	bool ok();
 	void setHidden(bool hidden);
 	void clearModelPart();
+	bool isLowerLayerVisible(PaletteItemBase * paletteItemBase);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void figureHover();
-
 
 protected:
 	PaletteItemBase * m_layerKinChief;

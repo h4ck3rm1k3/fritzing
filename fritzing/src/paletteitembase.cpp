@@ -209,10 +209,7 @@ bool PaletteItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphics
 
 void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event)
 {
-	if (originalItem->m_mouseTransparent) {
-		event->ignore();
-		return;
-	}
+	Q_UNUSED(originalItem);
 
 	ItemBase::mousePressEvent(event);
 	if (this->itemType() != ModelPart::Breadboard) {
@@ -323,7 +320,6 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 	m_filename = layerAttributes.filename();
 	//DebugDialog::debug(QString("filename %1").arg(m_filename) );
 	m_sticky = layerAttributes.sticky();
-	m_mouseTransparent = layerAttributes.mouseTransparent();
 	QString elementID = layerAttributes.layerName();
 	setViewLayerID(elementID, viewLayers);
 	
@@ -493,6 +489,7 @@ void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	updateConnections();
 }
 
+/*
 bool PaletteItemBase::isBuriedConnectorHit(QGraphicsSceneMouseEvent *event) {
 	if (itemType() == ModelPart::Breadboard) return false;
 
@@ -510,6 +507,33 @@ bool PaletteItemBase::isBuriedConnectorHit(QGraphicsSceneMouseEvent *event) {
 
 	return false;
 }
+*/
+
+bool PaletteItemBase::isLowerLayerVisible(PaletteItemBase * paletteItemBase) {
+	Q_UNUSED(paletteItemBase);
+	return false;
+}
+
+
+void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
+	if (isLowerLayerVisible(this)) {
+		event->ignore();
+		return;
+	}
+
+	ItemBase::hoverEnterEvent(event);
+}
+
+
+void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
+	if (isLowerLayerVisible(this)) {
+		event->ignore();
+		return;
+	}
+
+	ItemBase::contextMenuEvent(event);
+}
+
 
 /*
 

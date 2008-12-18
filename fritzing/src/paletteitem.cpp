@@ -224,17 +224,24 @@ void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {
 
 void PaletteItem::mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event) {
 	DebugDialog::debug("layerkinchief got mouse press event");
-	if (acceptsMousePressConnectorEvent(NULL, event) && isBuriedConnectorHit(event)) return;
+	if (acceptsMousePressConnectorEvent(NULL, event) /* && isBuriedConnectorHit(event)  */) return;
 
+	/*
 	foreach(LayerKinPaletteItem * lkpi, m_layerKin) {
 		if (lkpi->isBuriedConnectorHit(event)) return;
 	}
+	*/
 
 	PaletteItemBase::mousePressEvent(originalItem, event);
 }
 
 void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+	if (isLowerLayerVisible(this)) {
+		event->ignore();
+		return;
+	}
+
 	mousePressEvent(this, event);
 }
 
@@ -380,3 +387,20 @@ void PaletteItem::clearModelPart() {
 	ItemBase::clearModelPart();
 }
 
+bool PaletteItem::isLowerLayerVisible(PaletteItemBase * paletteItemBase) {
+	if (m_layerKin.count() == 0) return false;
+
+	if (paletteItemBase != this && this->isVisible() && this->zValue() < paletteItemBase->zValue()) {
+		return true;
+	}
+
+	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+		if (lkpi == paletteItemBase) continue;
+
+		if (lkpi->zValue() < paletteItemBase->zValue() && lkpi->isVisible()) {
+			return true;
+		}
+	}
+	
+	return false;
+}

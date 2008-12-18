@@ -64,10 +64,12 @@ public:
 	void collectFemaleConnecteesAux(QSet<ItemBase *> & items);
 	void collectWireConnecteesAux(QSet<class Wire *> & wires);
 	virtual void updateConnections() = 0;
-	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
-	bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
+	virtual void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
+	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	virtual void figureHover() = 0;
 	QRectF boundingRect() const;
+	virtual bool isLowerLayerVisible(PaletteItemBase *);
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	
 	/*
 	// for debugging
@@ -89,6 +91,7 @@ protected:
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void transformItem(QTransform currTransf);
 	void findConnectorsUnder();
+	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 
 protected:
  	bool m_blockItemSelectedChange;

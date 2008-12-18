@@ -83,7 +83,6 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	setTooltip();
 	m_id = id;
 	m_hidden = false;
-	m_mouseTransparent = false;
 	m_sticky = false;
 	m_canFlipHorizontal = m_canFlipVertical = false;
 

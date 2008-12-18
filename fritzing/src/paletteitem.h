@@ -69,6 +69,7 @@ public:
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void clearModelPart();
 	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *);
+	bool isLowerLayerVisible(PaletteItemBase *);
 
 
 protected:
