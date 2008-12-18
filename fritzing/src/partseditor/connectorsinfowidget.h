@@ -90,6 +90,8 @@ class ConnectorsInfoWidget : public QFrame{
 		void removeConnectorInfo(SingleConnectorInfoWidget *sci, bool alsoDeleteFromView = false);
 		Connector* findConnector(const QString &id);
 
+		int nextConnId();
+
 		QHash<QString /*connId*/, QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
 
 
@@ -106,6 +108,7 @@ class ConnectorsInfoWidget : public QFrame{
 
 		QList<SingleConnectorInfoWidget*> m_connsInfo;
 		QList<MismatchingConnectorWidget*> m_mismatchConnsInfo;
+		QStringList m_connIds;
 
 		WaitPushUndoStack *m_undoStack;
 };

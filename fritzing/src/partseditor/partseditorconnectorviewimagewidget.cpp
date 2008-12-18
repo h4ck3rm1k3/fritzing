@@ -99,6 +99,11 @@ void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const
 
 	QRectF bounds = mapToScene(connRect).boundingRect();
 	m_drawnConns << new PartsEditorConnectorItem(conn, m_item, bounds);
+
+	m_undoStack->push(new QUndoCommand(
+		QString("connector '%1' added to %2 view")
+		.arg(connId).arg(ItemBase::viewIdentifierName(m_viewIdentifier))
+	));
 }
 
 void PartsEditorConnectorViewImageWidget::removeConnector(const QString &connId) {
@@ -113,7 +118,11 @@ void PartsEditorConnectorViewImageWidget::removeConnector(const QString &connId)
 
 	if(connToRemove) {
 		scene()->removeItem(connToRemove);
-		DebugDialog::debug("<<< flagged to be removed "+connId);
+		scene()->update();
+		m_undoStack->push(new QUndoCommand(
+			QString("connector '%1' removed from %2 view")
+			.arg(connId).arg(ItemBase::viewIdentifierName(m_viewIdentifier))
+		));
 		m_removedConnIds << connId;
 	}
 }
@@ -210,7 +219,6 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 			}
 		}
 
-		DebugDialog::debug("<<<<<<<<<<< "+ItemBase::viewIdentifierName(m_viewIdentifier));
 		if(!m_removedConnIds.isEmpty()) {
 			QDomElement docEle = svgDom->documentElement();
 			if (docEle.tagName() != "svg") return;
@@ -220,7 +228,6 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 				QDomNode n = docEle.childNodes().at(i);
 				if (n.nodeType() == QDomNode::ElementNode) {
 					if (isSupposedToBeRemoved(n.toElement().attribute("id"))) {
-						DebugDialog::debug("<<< removing id top level "+n.toElement().attribute("id"));
 						docEle.removeChild(n);
 						continue;
 					}
@@ -230,7 +237,6 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 						QDomNode child = children.at(c);
 						if (child.nodeType() == QDomNode::ElementNode
 							&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
-							DebugDialog::debug("<<< removing id child "+child.toElement().attribute("id"));
 							n.removeChild(child);
 							continue;
 						}

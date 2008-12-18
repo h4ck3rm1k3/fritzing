@@ -82,7 +82,6 @@ void ConnectorsInfoWidget::createToolsArea() {
 	connect(showTerminalPoints, SIGNAL(stateChanged(int)), this, SLOT(emitShowHideTerminalPoints(int)));
 
 	lo->addWidget(showTerminalPoints);
-
 }
 
 void ConnectorsInfoWidget::createScrollArea() {
@@ -245,6 +244,8 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 }
 
 void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
+	m_connIds << conn->connectorStuffID();
+
 	int connCount = m_connsInfo.size();
 	SingleConnectorInfoWidget *sci = new SingleConnectorInfoWidget(m_undoStack,conn,m_scrollContent);
 	scrollContentLayout()->addWidget(sci,connCount+1,0);
@@ -258,6 +259,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 }
 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewId, QString connId) {
+	m_connIds << connId;
 	addMismatchingConnectorInfo(new MismatchingConnectorWidget(viewId,connId,m_mismatchersFrame));
 }
 
@@ -470,7 +472,7 @@ void ConnectorsInfoWidget::emitShowHideTerminalPoints(int checkState) {
 }
 
 void ConnectorsInfoWidget::addConnector() {
-	QString connId = "connector"+FritzingWindow::getRandText();
+	QString connId = QString("connector%1").arg(nextConnId());
 	emit drawConnector(addConnectorInfo(connId));
 }
 
@@ -485,4 +487,23 @@ void ConnectorsInfoWidget::removeSelectedConnector() {
 			removeConnectorInfo(single, true);
 		}
 	}
+}
+
+int ConnectorsInfoWidget::nextConnId() {
+	int max = 0;
+	foreach(QString connId, m_connIds) {
+		QString currId = connId;
+
+		if(currId.startsWith("connector")) {
+			QString helpStr = currId.remove("connector");
+			if(!helpStr.isEmpty()) {
+				bool isInt;
+				int helpInt = helpStr.toInt(&isInt);
+				if(isInt && max <= helpInt) {
+					max = ++helpInt;
+				}
+			}
+		}
+	}
+	return max;
 }
