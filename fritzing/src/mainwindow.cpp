@@ -803,24 +803,15 @@ void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
 	zoomComboBox->setEditText(tr("%1%").arg(value,0,'f',2));
 }
 
-void MainWindow::changeEvent ( QEvent * event ) {
-	if (event) {
-		if (event->type() == QEvent::ActivationChange && !m_closing) {
-			//DebugDialog::debug(QObject::tr("change activation %1 %2").arg(m_savedState).arg((long) this));
-			changeActivation(event);
-		}
-	}
-	QMainWindow::changeEvent(event);
-}
-
-void MainWindow::changeActivation(QEvent *) {
+void MainWindow::changeActivation(bool activate) {
 	// tried using this->saveState() and this->restoreState() but couldn't get it to work
 
+	//DebugDialog::debug(QString("change activation %1\n\t%2").arg(this->windowTitle()).arg(activeWindow->windowTitle()));
+		
 	QWidget * activeWindow = QApplication::activeWindow ();
-
 	if (activeWindow == NULL) return;
 
-	if (activeWindow == this || activeWindow->parent() == this) {
+	if (activate) {
 		if (m_savedState == Saved) {
 			m_savedState = Restored;
 			//DebugDialog::debug("restore state", this);
@@ -836,7 +827,12 @@ void MainWindow::changeActivation(QEvent *) {
 		}
 	}
 	else {
+		if (activeWindow == this || activeWindow->parent() == this) {
+			return;
+		}
+
 		if (!(m_savedState == Saved)) {
+
 			//m_savedStateData = saveState(0);
 			m_savedState = Saved;
 
@@ -1353,6 +1349,12 @@ bool MainWindow::event(QEvent * e) {
 	switch (e->type()) {
 		case QEvent::NonClientAreaMouseButtonPress:
 			m_firstMove = true;
+			break;
+		case QEvent::WindowActivate:
+			changeActivation(true);
+			break;
+		case QEvent::WindowDeactivate:
+			changeActivation(false);
 			break;
 		default:
 			break;

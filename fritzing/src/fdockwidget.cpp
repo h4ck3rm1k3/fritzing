@@ -46,16 +46,18 @@ void FDockWidget::restoreState() {
 	}
 }
 
-void FDockWidget::changeEvent(QEvent * event) {
-	if (event) {
-		if (event->type() == QEvent::ActivationChange) {
-			DebugDialog::debug(QObject::tr("change activation in dock"));
-			emit dockChangeActivationSignal(this);
-		}
+bool FDockWidget::event(QEvent * e) {
+	switch (e->type()) {
+		case QEvent::WindowActivate:
+			emit dockChangeActivationSignal(true);
+			break;
+		case QEvent::WindowDeactivate:
+			emit dockChangeActivationSignal(false);
+			break;
+		default:
+			break;
 	}
-	QDockWidget::changeEvent(event);
+	return QDockWidget::event(e);
 }
-
-
 
 

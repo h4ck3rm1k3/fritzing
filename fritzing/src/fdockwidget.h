@@ -43,10 +43,10 @@ public:
 	void restoreState();
 
 protected:
-	void changeEvent(QEvent *event);
+	bool event(QEvent *event);
 	
 signals:
-	void dockChangeActivationSignal(FDockWidget *);
+	void dockChangeActivationSignal(bool activate);
 
 protected:
 	bool m_state;

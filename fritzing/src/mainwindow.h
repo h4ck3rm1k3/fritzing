@@ -89,6 +89,7 @@ signals:
 
 public slots:
 	void ensureClosable();
+	void changeActivation(bool activate);
 
 protected slots:
 	void load();
@@ -215,8 +216,6 @@ protected:
 	void saveAsAux(const QString & fileName);
 	void printAux(QPrinter &printer, QString message, bool removeBackground=true);
 	void exportAux(QString fileName, QImage::Format format);
-	void changeActivation(QEvent * event);
-	void changeEvent ( QEvent * event );
 	void notYetImplemented(QString action);
 	void calcPrinterScale();
 	void preloadSlowParts();

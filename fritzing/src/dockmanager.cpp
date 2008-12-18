@@ -40,9 +40,9 @@ DockManager::DockManager(MainWindow *mainWindow)
 	//m_mainWindow->m_sizeGrip = sizeGrip;
 }
 
-void DockManager::dockChangeActivation(FDockWidget *) {
+void DockManager::dockChangeActivation(bool activate) {
 	if (!m_mainWindow->m_closing) {
-		m_mainWindow->changeActivation(NULL);
+		m_mainWindow->changeActivation(activate);
 	}
 }
 
@@ -119,7 +119,7 @@ FDockWidget *DockManager::dockIt(FDockWidget* dock, int dockMinHeight, int dockD
     dock->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	dock->setMinimumSize(DockMinWidth, dockMinHeight);
 	dock->resize(DockDefaultWidth, dockDefaultHeight);
-    connect(dock, SIGNAL(dockChangeActivationSignal(FDockWidget *)), this, SLOT(dockChangeActivation(class FDockWidget *)));
+    connect(dock, SIGNAL(dockChangeActivationSignal(bool)), this, SLOT(dockChangeActivation(bool)));
 
     return dock;
 }

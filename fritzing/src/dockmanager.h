@@ -40,7 +40,7 @@ class DockManager : public QObject {
 		void createDockWindows();
 
 	protected slots:
-		void dockChangeActivation(class FDockWidget *);
+		void dockChangeActivation(bool activate);
 		void ensureSpaceForSizeGrip(Qt::DockWidgetArea area);
 
 	protected:

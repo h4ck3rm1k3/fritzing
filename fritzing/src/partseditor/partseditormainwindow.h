@@ -75,6 +75,7 @@ public:
 signals:
 	void partUpdated(QString);
 	void closed(long id);
+	void changeActivationSignal(bool activate);
 
 public slots:
 	void parentAboutToClose();
@@ -108,6 +109,7 @@ protected:
 
 
 	void cleanUp();
+	bool event(QEvent *);
 
 protected:
 	long m_id;

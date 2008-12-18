@@ -558,3 +558,19 @@ const QString PartsEditorMainWindow::fritzingTitle() {
 	QString fritzing = FritzingWindow::fritzingTitle();
 	return tr("%1 %2").arg(fritzing).arg(___partsEditorName___);
 }
+
+bool PartsEditorMainWindow::event(QEvent * e) {
+	switch (e->type()) {
+		case QEvent::WindowActivate:
+			emit changeActivationSignal(true);
+			break;
+		case QEvent::WindowDeactivate:
+			emit changeActivationSignal(false);
+			break;
+		default:
+			break;
+	}
+	return FritzingWindow::event(e);
+}
+
+
