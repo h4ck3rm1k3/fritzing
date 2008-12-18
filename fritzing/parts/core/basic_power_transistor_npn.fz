@@ -17,15 +17,15 @@
   <property name="family" >Bipolar Transistor</property>
   <property name="doping" >npn</property>
  </properties>
- <description>A standard pnp-powertransistor</description>
+ <description>A npn transistor which can drive a higher load</description>
  <views>
   <iconView>
-   <layers image="icon/basic_power_transistor_npnicon.svg" >
+   <layers image="icon/powertransistor_npn_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/basic_power_transistor_npn.svg" >
+   <layers image="breadboard/powertransistor_npn.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>

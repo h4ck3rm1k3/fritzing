@@ -15,15 +15,15 @@
   <property name="family" >FET-Transistor</property>
   <property name="doping" >n-channel</property>
  </properties>
- <description>A generic FET N-Channel</description>
+ <description>A MOSFET N-Channel Transistor</description>
  <views>
   <iconView>
-   <layers image="icon/basic_fet_n_icon.svg" >
+   <layers image="icon/mosfet_n_channel_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/basic_fet_n.svg" >
+   <layers image="breadboard/mosfet_n_channel.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>

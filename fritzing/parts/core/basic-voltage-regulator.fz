@@ -7,6 +7,7 @@
  <date>2008-11-12</date>
  <tags>
   <tag>transistor</tag>
+  <tag>7805</tag>
   <tag>power</tag>
   <tag>aplifier</tag>
   <tag>fritzing core</tag>
@@ -19,12 +20,12 @@
  <description>5V DC Voltage Regulator</description>
  <views>
   <iconView>
-   <layers image="icon/basic_voltage_regulator.svg" >
+   <layers image="icon/voltage_regulator_vreg_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/basic_voltage_regulator.svg" >
+   <layers image="breadboard/voltage_regulator_vreg.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>

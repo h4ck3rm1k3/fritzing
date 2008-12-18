@@ -15,15 +15,15 @@
   <property name="family" >FET-Transistor</property>
   <property name="doping" >p-channel</property>
  </properties>
- <description>A generic FET P-Channel</description>
+ <description>A MOSFET P-Channel Transistor</description>
  <views>
   <iconView>
-   <layers image="icon/basic_fet_p_icon.svg" >
+   <layers image="icon/mosfet_p_channel_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/basic_fet_p.svg" >
+   <layers image="breadboard/mosfet_p_channel.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
