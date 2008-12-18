@@ -1333,3 +1333,29 @@ TabWindow * MainWindow::tabWindow() {
 	return m_tabWindow;
 }
 
+void MainWindow::moveEvent(QMoveEvent * event) {
+	FritzingWindow::moveEvent(event);
+	if (m_tabWindow) {
+		if (m_firstMove) {
+			m_firstMove = false;
+			QRect rw = this->frameGeometry();
+			QRect rt = m_tabWindow->frameGeometry();
+			m_moveTabWindow = rw.intersects(rt);
+		}
+
+		if (m_moveTabWindow) {
+			m_tabWindow->move(m_tabWindow->pos() + event->pos() - event->oldPos());
+		}
+	}
+}
+
+bool MainWindow::event(QEvent * e) {
+	switch (e->type()) {
+		case QEvent::NonClientAreaMouseButtonPress:
+			m_firstMove = true;
+			break;
+		default:
+			break;
+	}
+	return FritzingWindow::event(e);
+}

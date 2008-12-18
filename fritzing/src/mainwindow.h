@@ -268,6 +268,9 @@ protected:
 
 	void updateRaiseWindowAction();
 
+	void moveEvent(QMoveEvent * event);
+	bool event(QEvent *);
+
 	//void connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view);
 
 protected:
@@ -457,6 +460,8 @@ protected:
 	friend class DockManager;
 	
 	class TabWindow * m_tabWindow;
+	bool m_firstMove;
+	bool m_moveTabWindow;
 
 protected:
 	static const QString UntitledSketchName;

@@ -94,13 +94,14 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	setStyleSheet("ViewSwitcher {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
 	m_mask = NULL;
+	m_closeButton = NULL;
 
 	m_layout = new QHBoxLayout(this);
 	m_layout->setSpacing(0);
 	m_layout->setMargin(0);
 
-	m_closeButton = new SketchMainHelpCloseButton("PCB" ,this);
-	m_layout->addWidget(m_closeButton);
+	//m_closeButton = new SketchMainHelpCloseButton("PCB" ,this);
+	//m_layout->addWidget(m_closeButton);
 
 	m_buttons << createButton("Breadboard");
 	m_buttons << createButton("Schematic");
@@ -194,7 +195,9 @@ const QBitmap & ViewSwitcher::getMask() {
 }
 
 void ViewSwitcher::connectClose(QObject * target, const char* slot) {
-	connect(m_closeButton, SIGNAL(clicked()), target, slot);
+	if (m_closeButton) {
+		connect(m_closeButton, SIGNAL(clicked()), target, slot);
+	}
 }
 
 /////////////////////////////////////////
