@@ -809,7 +809,7 @@ void MainWindow::changeActivation(bool activate) {
 	//DebugDialog::debug(QString("change activation %1\n\t%2").arg(this->windowTitle()).arg(activeWindow->windowTitle()));
 		
 	QWidget * activeWindow = QApplication::activeWindow ();
-	if (activeWindow == NULL) return;
+	//if (activeWindow == NULL) return;
 
 	if (activate) {
 		if (m_savedState == Saved) {
@@ -827,7 +827,7 @@ void MainWindow::changeActivation(bool activate) {
 		}
 	}
 	else {
-		if (activeWindow == this || activeWindow->parent() == this) {
+		if ((activeWindow != NULL) && (activeWindow == this || activeWindow->parent() == this)) {
 			return;
 		}
 
