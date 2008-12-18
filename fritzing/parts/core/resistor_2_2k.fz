@@ -37,7 +37,11 @@
   <pcbView>
    <layers image="pcb/resistor-025W.svg" >
     <layer layerId="copper0" />
-   </layers>
+    <layer layerId="keepout" />
+    <layer layerId="soldermask" />
+    <layer layerId="silkscreen" />
+    <layer layerId="outline" />
+  </layers>
   </pcbView>
  </views>
  <connectors>

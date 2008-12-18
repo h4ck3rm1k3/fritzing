@@ -37,7 +37,8 @@
   <pcbView>
    <layers image="pcb/radial_can_300mil.svg" >
     <layer layerId="copper0" />
-   </layers>
+ 	 <layer layerId="silkscreen" />
+  </layers>
   </pcbView>
  </views>
  <connectors>

@@ -35,6 +35,7 @@
   <pcbView>
    <layers image="pcb/LED-red-5mmpcb_gen.svg" >
     <layer layerId="copper0" />
+	<layer layerId="silkscreen" />
    </layers>
   </pcbView>
  </views>

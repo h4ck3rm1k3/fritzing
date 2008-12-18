@@ -68,10 +68,11 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, bool doConn
 
     if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
         QMessageBox::information(NULL, QObject::tr("Fritzing"),
-                                 QObject::tr("Parse error at line %1, column %2:\n%3")
+                                 QObject::tr("Parse error (1) at line %1, column %2:\n%3\n%4")
                                  .arg(errorLine)
                                  .arg(errorColumn)
-                                 .arg(errorStr));
+                                 .arg(errorStr)
+								 .arg(fileName));
         return false;
     }
 

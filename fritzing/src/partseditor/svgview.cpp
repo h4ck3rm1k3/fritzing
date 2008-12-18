@@ -118,10 +118,11 @@ void SVGView::importPCBXML(){
 
     if (!m_domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
         QMessageBox::critical(NULL, QObject::tr("FritzBau"),
-                                 QObject::tr("Parse error at line %1, column %2:\n%3")
+                                 QObject::tr("Parse error (3) at line %1, column %2:\n%3\n%4")
                                  .arg(errorLine)
                                  .arg(errorColumn)
-                                 .arg(errorStr));
+                                 .arg(errorStr)
+								 .arg(path));
         return;
     }
 
