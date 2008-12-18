@@ -222,8 +222,7 @@ void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {
 	}
 }
 
-void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
+void PaletteItem::mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event) {
 	DebugDialog::debug("layerkinchief got mouse press event");
 	if (acceptsMousePressConnectorEvent(NULL, event) && isBuriedConnectorHit(event)) return;
 
@@ -231,7 +230,12 @@ void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 		if (lkpi->isBuriedConnectorHit(event)) return;
 	}
 
-	PaletteItemBase::mousePressEvent(event);
+	PaletteItemBase::mousePressEvent(originalItem, event);
+}
+
+void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+	mousePressEvent(this, event);
 }
 
 
@@ -375,3 +379,4 @@ void PaletteItem::clearModelPart() {
 	}
 	ItemBase::clearModelPart();
 }
+

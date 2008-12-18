@@ -68,6 +68,7 @@ public:
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void clearModelPart();
+	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *);
 
 
 protected:

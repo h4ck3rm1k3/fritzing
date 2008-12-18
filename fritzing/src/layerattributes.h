@@ -43,6 +43,7 @@ public:
 	void setFilename(const QString &);
 	const QString & layerName();
 	bool sticky();
+	bool mouseTransparent();
 	bool multiLayer();
 	bool getSvgElementID(QDomDocument * , ItemBase::ViewIdentifier, ViewLayer::ViewLayerID );
 	static QDomElement getSvgElementLayers(QDomDocument * doc, ItemBase::ViewIdentifier viewIdentifier );
@@ -57,6 +58,7 @@ protected:
 	QString m_layerName;
 	bool m_multiLayer;
 	bool m_sticky;
+	bool m_mouseTransparent;
 	bool m_canFlipHorizontal;
 	bool m_canFlipVertical;
 };

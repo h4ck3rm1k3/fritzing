@@ -82,7 +82,7 @@ void LayerKinPaletteItem::updateConnections() {
 
 void LayerKinPaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	DebugDialog::debug("layer kin mouse press event");
-	m_layerKinChief->mousePressEvent(event);
+	m_layerKinChief->mousePressEvent(this, event);
 }
 
 void LayerKinPaletteItem::setHidden(bool hide) {

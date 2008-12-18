@@ -39,7 +39,7 @@
    <label/>
    <layers image="pcb/pcb-arduino-diecimila.svg" >
     <layer layerId="board" sticky="true" />
-    <layer layerId="copper0" sticky="true" />
+    <layer layerId="copper0" sticky="true" mouseTransparent="true" />
    </layers>
   </pcbView>
  </views>

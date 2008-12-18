@@ -64,7 +64,7 @@ public:
 	void collectFemaleConnecteesAux(QSet<ItemBase *> & items);
 	void collectWireConnecteesAux(QSet<class Wire *> & wires);
 	virtual void updateConnections() = 0;
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
 	bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	virtual void figureHover() = 0;
 	QRectF boundingRect() const;

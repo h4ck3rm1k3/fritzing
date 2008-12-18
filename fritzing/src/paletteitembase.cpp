@@ -207,8 +207,13 @@ bool PaletteItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphics
 }
 
 
-void PaletteItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event)
 {
+	if (originalItem->m_mouseTransparent) {
+		event->ignore();
+		return;
+	}
+
 	ItemBase::mousePressEvent(event);
 	if (this->itemType() != ModelPart::Breadboard) {
 		foreach (QGraphicsItem * childItem, childItems()) {
@@ -318,6 +323,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 	m_filename = layerAttributes.filename();
 	//DebugDialog::debug(QString("filename %1").arg(m_filename) );
 	m_sticky = layerAttributes.sticky();
+	m_mouseTransparent = layerAttributes.mouseTransparent();
 	QString elementID = layerAttributes.layerName();
 	setViewLayerID(elementID, viewLayers);
 	

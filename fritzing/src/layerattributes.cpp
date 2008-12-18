@@ -39,6 +39,7 @@ $Date$
 LayerAttributes::LayerAttributes()
 {
 	m_sticky = false;
+	m_mouseTransparent = false;
 	m_multiLayer = false;
 	m_canFlipHorizontal = m_canFlipVertical = false;
 }
@@ -80,6 +81,12 @@ bool LayerAttributes::getSvgElementID(QDomDocument * doc, ItemBase::ViewIdentifi
 
 	QString stickyVal = layer.attribute("sticky");
 	m_sticky = stickyVal.compare("true", Qt::CaseInsensitive) == 0;
+
+	QString transVal = layer.attribute("mouseTransparent");
+	m_mouseTransparent = transVal.compare("true", Qt::CaseInsensitive) == 0;
+	if (m_mouseTransparent == true) {
+		DebugDialog::debug("hello");
+	}
 
 	return true;
 }
@@ -139,6 +146,10 @@ QDomElement LayerAttributes::getSvgElementLayer(QDomDocument * doc, ItemBase::Vi
 
 bool LayerAttributes::sticky() {
 	return m_sticky;
+}
+
+bool LayerAttributes::mouseTransparent() {
+	return m_mouseTransparent;
 }
 
 bool LayerAttributes::canFlipHorizontal() {

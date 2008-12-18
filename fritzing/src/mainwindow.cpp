@@ -243,7 +243,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	}
 
 	m_tabWindow = new TabWindow(this);
-	m_tabWindow->setWindowTitle(tr("Tabs"));
+	m_tabWindow->setWindowTitle(tr("View Switcher"));
 	ViewSwitcher * viewSwitcher = new ViewSwitcher();
 	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
 	connect(this, SIGNAL(viewSwitched(int)), viewSwitcher, SLOT(viewSwitchedTo(int)));

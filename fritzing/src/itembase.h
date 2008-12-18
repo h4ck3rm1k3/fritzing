@@ -187,6 +187,7 @@ protected:
 	bool m_hidden;
 	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
 	bool m_sticky;
+	bool m_mouseTransparent;
 	QHash<ItemBase *, QPointF> m_stickyList;
 	QMenu *m_itemMenu;
 	bool m_canFlipHorizontal;
