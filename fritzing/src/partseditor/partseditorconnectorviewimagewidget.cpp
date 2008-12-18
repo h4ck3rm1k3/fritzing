@@ -73,7 +73,7 @@ void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
 }
 
 void PartsEditorConnectorViewImageWidget::mouseMoveEvent(QMouseEvent *event) {
-	PartsEditorAbstractViewImage::mouseMoveEvent(event);
+	QGraphicsView::mouseMoveEvent(event);
 	/*if(m_connFreeDrawingEnabled && m_item && m_connRubberBandOrigin != QPoint(-1,-1)) {
 		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, event->pos()).normalized());
 	}*/
@@ -101,10 +101,26 @@ void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const
 	m_drawnConns << new PartsEditorConnectorItem(conn, m_item, bounds);
 }
 
+void PartsEditorConnectorViewImageWidget::removeConnector(const QString &connId) {
+	PartsEditorConnectorItem *connToRemove = NULL;
+	foreach(QGraphicsItem *item, items()) {
+		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
+		if(connItem && connItem->connector()->connectorStuffID() == connId) {
+			connToRemove = connItem;
+			break;
+		}
+	}
+
+	if(connToRemove) {
+		scene()->removeItem(connToRemove);
+		DebugDialog::debug("<<< flagged to be removed "+connId);
+		m_removedConnIds << connId;
+	}
+}
+
 void PartsEditorConnectorViewImageWidget::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
 	PartsEditorAbstractViewImage::loadFromModel(paletteModel, modelPart);
-	m_item->removeFromModel();
-	m_item->highlightConnectors("");
+	setItemProperties();
 }
 
 void PartsEditorConnectorViewImageWidget::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
@@ -114,11 +130,22 @@ void PartsEditorConnectorViewImageWidget::addItemInPartsEditor(ModelPart * model
 	}
 
 	PartsEditorAbstractViewImage::addItemInPartsEditor(modelPart,svgFilePath);
-	m_item->removeFromModel();
+	setItemProperties();
+	//m_item->removeFromModel();
 
 	emit connectorsFound(this->m_viewIdentifier,m_item->connectors());
 
-	m_item->highlightConnectors("");
+	//m_item->highlightConnectors("");
+}
+
+void PartsEditorConnectorViewImageWidget::setItemProperties() {
+	if(m_item) {
+		m_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
+		m_item->setFlag(QGraphicsItem::ItemIsMovable, false);
+		m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, false);
+		m_item->removeFromModel();
+		m_item->highlightConnectors("");
+	}
 }
 
 void PartsEditorConnectorViewImageWidget::informConnectorSelection(const QString &connId) {
@@ -141,44 +168,75 @@ void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifie
 }
 
 void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
-	if(m_item && !m_drawnConns.isEmpty()) {
+	if(m_item) {
 		QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
 		QRectF viewBox = renderer->viewBoxF();
 		QSize defaultSize = renderer->defaultSize();
-
-		DebugDialog::debug(QString("<<<< dsW %1  vwH %2  vbW %3  vbH %4")
-				.arg(defaultSize.width()).arg(defaultSize.height())
-				.arg(viewBox.width()).arg(viewBox.height()));
-
 		QDomDocument *svgDom = m_item->svgDom();
-		QRectF bounds;
-		QString connId;
 
-		foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
-			QRectF rectAux = drawnConn->boundingRect();;
-			qreal xAux = drawnConn->pos().x();
-			qreal yAux = drawnConn->pos().y();
-			bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
-			connId = drawnConn->connectorStuffID();
+		if(!m_drawnConns.isEmpty()) {
+			DebugDialog::debug(QString("<<<< dsW %1  vwH %2  vbW %3  vbH %4")
+					.arg(defaultSize.width()).arg(defaultSize.height())
+					.arg(viewBox.width()).arg(viewBox.height()));
 
-			qreal x = bounds.x() * defaultSize.width() / viewBox.width();
-			qreal y = bounds.y() * defaultSize.height() / viewBox.height();
-			qreal width = bounds.width() * defaultSize.width() / viewBox.width();
-			qreal height = bounds.height() * defaultSize.height() / viewBox.height();
+			QRectF bounds;
+			QString connId;
+
+			foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
+				QRectF rectAux = drawnConn->boundingRect();;
+				qreal xAux = drawnConn->pos().x();
+				qreal yAux = drawnConn->pos().y();
+				bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
+				connId = drawnConn->connectorStuffID();
+
+				qreal x = bounds.x() * defaultSize.width() / viewBox.width();
+				qreal y = bounds.y() * defaultSize.height() / viewBox.height();
+				qreal width = bounds.width() * defaultSize.width() / viewBox.width();
+				qreal height = bounds.height() * defaultSize.height() / viewBox.height();
 
 
-			DebugDialog::debug(QString("<<<< x %1  y %2  width %3  height %4")
-				.arg(x).arg(y).arg(width).arg(height));
+				DebugDialog::debug(QString("<<<< x %1  y %2  width %3  height %4")
+					.arg(x).arg(y).arg(width).arg(height));
 
-			QDomElement connElem = svgDom->createElement("rect");
-			connElem.setAttribute("id",connId /*+"pin"*/ );
-			connElem.setAttribute("x",x);
-			connElem.setAttribute("y",y);
-			connElem.setAttribute("width",width);
-			connElem.setAttribute("height",height);
-			connElem.setAttribute("fill","none");
-			Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
-			svgDom->firstChildElement("svg").appendChild(connElem);
+				QDomElement connElem = svgDom->createElement("rect");
+				connElem.setAttribute("id",connId /*+"pin"*/ );
+				connElem.setAttribute("x",x);
+				connElem.setAttribute("y",y);
+				connElem.setAttribute("width",width);
+				connElem.setAttribute("height",height);
+				connElem.setAttribute("fill","none");
+				Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
+				svgDom->firstChildElement("svg").appendChild(connElem);
+			}
+		}
+
+		DebugDialog::debug("<<<<<<<<<<< "+ItemBase::viewIdentifierName(m_viewIdentifier));
+		if(!m_removedConnIds.isEmpty()) {
+			QDomElement docEle = svgDom->documentElement();
+			if (docEle.tagName() != "svg") return;
+			QString result;
+			QList<QDomNode> nodesToRemove;
+			for (int i = 0; i < docEle.childNodes().count(); ++i) {
+				QDomNode n = docEle.childNodes().at(i);
+				if (n.nodeType() == QDomNode::ElementNode) {
+					if (isSupposedToBeRemoved(n.toElement().attribute("id"))) {
+						DebugDialog::debug("<<< removing id top level "+n.toElement().attribute("id"));
+						docEle.removeChild(n);
+						continue;
+					}
+
+					QDomNodeList children = n.toElement().childNodes();
+					for (int c = 0; c < children.count(); ++c) {
+						QDomNode child = children.at(c);
+						if (child.nodeType() == QDomNode::ElementNode
+							&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
+							DebugDialog::debug("<<< removing id child "+child.toElement().attribute("id"));
+							n.removeChild(child);
+							continue;
+						}
+					}
+				}
+			}
 		}
 
 		QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
@@ -191,4 +249,14 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 		svgFileLoadNeeded(tempFile);
 		QFile::remove(tempFile);
 	}
+}
+
+
+bool PartsEditorConnectorViewImageWidget::isSupposedToBeRemoved(const QString& id) {
+	foreach(QString toBeRemoved, m_removedConnIds) {
+		if(id.startsWith(toBeRemoved)) {
+			return true;
+		}
+	}
+	return false;
 }

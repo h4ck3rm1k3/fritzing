@@ -56,7 +56,7 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void mousePressEvent(QGraphicsSceneMouseEvent *event);
 		void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-		void updateCursor(const QPointF &mousePos);
+		/*Qt::Corner*/ int updateCursor(const QPointF &mousePos, const QCursor &defaultCursor=QCursor());
 		/*Qt::Corner*/ int closeToCorner(const QPointF &pos);
 
 		QGraphicsSvgItem *m_errorIcon;

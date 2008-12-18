@@ -56,6 +56,7 @@ public:
     	BreadboardView,
     	SchematicView,
     	PCBView,
+    	AllViews,
     	ViewCount
    	};
 

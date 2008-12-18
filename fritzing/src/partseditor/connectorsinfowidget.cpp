@@ -69,7 +69,7 @@ void ConnectorsInfoWidget::createToolsArea() {
 	connect(addBtn, SIGNAL(clicked()), this, SLOT(addConnector()));
 
 	AddRemoveConnectorButton *removeBtn = new AddRemoveConnectorButton("Remove",this);
-	connect(addBtn, SIGNAL(clicked()), this, SLOT(removeSelectedConnector()));
+	connect(removeBtn, SIGNAL(clicked()), this, SLOT(removeSelectedConnector()));
 
 	lo->setMargin(2);
 	lo->setSpacing(2);
@@ -413,7 +413,7 @@ MismatchingConnectorWidget* ConnectorsInfoWidget::existingMismatchingConnector(c
 	return NULL;
 }
 
-void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw) {
+void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool alsoDeleteFromView) {
 	m_mismatchersFrame->layout()->removeWidget(mcw);
 	m_mismatchConnsInfo.removeOne(mcw);
 	if(m_mismatchConnsInfo.size()==0) {
@@ -421,8 +421,12 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 		updateLayout();
 	}
 
-	foreach(ItemBase::ViewIdentifier viewId, mcw->views()) {
-		emit setMismatching(viewId, mcw->connId(), false);
+	if(alsoDeleteFromView) {
+		emit removeConnectorFrom(mcw->connId(),ItemBase::AllViews);
+	} else {
+		foreach(ItemBase::ViewIdentifier viewId, mcw->views()) {
+			emit setMismatching(viewId, mcw->connId(), false);
+		}
 	}
 
 	if(m_selected == mcw) {
@@ -432,12 +436,16 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 	delete mcw;
 }
 
-void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci) {
+void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool alsoDeleteFromView) {
 	scrollContentLayout()->removeWidget(sci);
 	m_connsInfo.removeOne(sci);
 
 	if(m_selected == sci) {
 		m_selected = NULL;
+	}
+
+	if(alsoDeleteFromView) {
+		emit removeConnectorFrom(sci->connector()->connectorStuffID(), ItemBase::AllViews);
 	}
 
 	delete sci;
@@ -463,7 +471,6 @@ void ConnectorsInfoWidget::emitShowHideTerminalPoints(int checkState) {
 
 void ConnectorsInfoWidget::addConnector() {
 	QString connId = "connector"+FritzingWindow::getRandText();
-	DebugDialog::debug("<<<< adding connector "+connId);
 	emit drawConnector(addConnectorInfo(connId));
 }
 
@@ -471,11 +478,11 @@ void ConnectorsInfoWidget::removeSelectedConnector() {
 	if(!m_selected) return;
 	MismatchingConnectorWidget* mismatch = dynamic_cast<MismatchingConnectorWidget*>(m_selected);
 	if(mismatch) {
-		removeMismatchingConnectorInfo(mismatch);
+		removeMismatchingConnectorInfo(mismatch, true);
 	} else {
 		SingleConnectorInfoWidget *single = dynamic_cast<SingleConnectorInfoWidget*>(m_selected);
 		if(single) {
-			removeConnectorInfo(single);
+			removeConnectorInfo(single, true);
 		}
 	}
 }

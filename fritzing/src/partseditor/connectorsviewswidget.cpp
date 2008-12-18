@@ -102,3 +102,24 @@ void ConnectorsViewsWidget::aboutToSave() {
 	m_schemView->updateDomIfNeeded();
 	m_pcbView->updateDomIfNeeded();
 }
+
+
+void ConnectorsViewsWidget::removeConnectorFrom(const QString &connId, ItemBase::ViewIdentifier viewId) {
+	switch(viewId) {
+		case ItemBase::AllViews:
+			m_breadView->removeConnector(connId);
+			m_schemView->removeConnector(connId);
+			m_pcbView->removeConnector(connId);
+			break;
+		case ItemBase::BreadboardView:
+			m_breadView->removeConnector(connId);
+			break;
+		case ItemBase::SchematicView:
+			m_schemView->removeConnector(connId);
+			break;
+		case ItemBase::PCBView:
+			m_pcbView->removeConnector(connId);
+			break;
+		default: Q_ASSERT(false);
+	}
+}

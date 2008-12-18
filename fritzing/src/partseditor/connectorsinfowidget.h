@@ -60,6 +60,7 @@ class ConnectorsInfoWidget : public QFrame{
 		void repaintNeeded();
 		void showTerminalPoints(bool show);
 		void drawConnector(Connector*);
+		void removeConnectorFrom(const QString &connId, ItemBase::ViewIdentifier view);
 
 	protected slots:
 		void updateLayout();
@@ -85,8 +86,8 @@ class ConnectorsInfoWidget : public QFrame{
 
 		bool existingConnId(const QString &id);
 		MismatchingConnectorWidget* existingMismatchingConnector(const QString &id);
-		void removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw);
-		void removeConnectorInfo(SingleConnectorInfoWidget *sci);
+		void removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool alsoDeleteFromView = false);
+		void removeConnectorInfo(SingleConnectorInfoWidget *sci, bool alsoDeleteFromView = false);
 		Connector* findConnector(const QString &id);
 
 		QHash<QString /*connId*/, QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;

@@ -38,6 +38,7 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 	: ConnectorItem(conn, attachedTo)
 {
 	setAcceptsHoverEvents(false);
+	setAcceptHoverEvents(false);
 	this->setCursor(Qt::ArrowCursor);
 	m_withBorder = false;
 	m_errorIcon = NULL;
@@ -50,6 +51,7 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 	: ConnectorItem(conn, attachedTo)
 {
 	setAcceptsHoverEvents(true);
+	setAcceptHoverEvents(true);
 	this->setCursor(Qt::ArrowCursor);
 	m_withBorder = false;
 	m_errorIcon = NULL;
@@ -160,25 +162,28 @@ void PartsEditorConnectorItem::paint( QPainter * painter, const QStyleOptionGrap
 }
 
 void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-	DebugDialog::debug("<<< hoverenter");
 	if(m_resizable) {
-		updateCursor(event->pos());
+		grabMouse();
+		updateCursor(event->pos(),QCursor(Qt::SizeAllCursor));
+	} else {
+		QGraphicsItem::hoverEnterEvent(event);
 	}
 }
 
 void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-	DebugDialog::debug("<<< hoverleave");
 	if(m_resizable) {
+		ungrabMouse();
 		updateCursor(event->pos());
+	} else {
+		QGraphicsItem::hoverEnterEvent(event);
 	}
 }
 
 void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	updateCursor(event->pos());
+	DebugDialog::debug("<<< moveevent");
+	int corner = updateCursor(event->pos());
 	if(m_resizable && m_resizing) {
 		prepareGeometryChange();
-		DebugDialog::debug("<<< moveevent");
-		int corner = closeToCorner(event->pos());
 		if(corner > -1) {
 			qreal oldX1 = pos().x();
 			qreal oldY1 = pos().y();
@@ -187,22 +192,10 @@ void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			qreal newX = event->pos().x();
 			qreal newY = event->pos().y();
 			switch(corner) {
-				case Qt::TopLeftCorner:
-					//setRect(newX,newY,oldX-newX+w, oldY-newY+h);
-					setRect(newX,newY,oldX2,oldY2);
-					break;
-				case Qt::BottomLeftCorner:
-					//setRect(newX,oldY,oldX-newX+w, newY-oldY+w);
-					setRect(newX,oldY1,oldX1,newY);
-					break;
-				case Qt::TopRightCorner:
-					//setRect(oldX,newY,newX-oldX+w, oldY-newY+w);
-					setRect(oldX1,newY,newX,oldX2);
-					break;
-				case Qt::BottomRightCorner:
-					//setRect(oldX,oldY,newX-oldX+w, newY-oldY+h);
-					setRect(oldX1,oldY1,newX,newY);
-					break;
+				case Qt::TopLeftCorner: 	setRect(newX,newY,oldX2,oldY2); break;
+				case Qt::BottomLeftCorner: 	setRect(newX,oldY1,oldX1,newY); break;
+				case Qt::TopRightCorner: 	setRect(oldX1,newY,newX,oldX2); break;
+				case Qt::BottomRightCorner: setRect(oldX1,oldY1,newX,newY); break;
 				default: break;
 			}
 
@@ -210,10 +203,14 @@ void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 				.arg(rect().x()).arg(rect().y())
 				.arg(rect().width()).arg(rect().height())
 				);
+		} else {
+			ConnectorItem::mouseMoveEvent(event);
 		}
 	} else {
 		ConnectorItem::mouseMoveEvent(event);
 	}
+
+
 	//ConnectorItem::mouseMoveEvent(event);
 }
 
@@ -232,7 +229,7 @@ void PartsEditorConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
 	ConnectorItem::mouseReleaseEvent(event);
 }
 
-void PartsEditorConnectorItem::updateCursor(const QPointF &mousePos) {
+/*Qt::Corner*/ int PartsEditorConnectorItem::updateCursor(const QPointF &mousePos, const QCursor &defaultCursor) {
 	QCursor cursor;
 	int corner = closeToCorner(mousePos);
 	switch(corner) {
@@ -245,28 +242,32 @@ void PartsEditorConnectorItem::updateCursor(const QPointF &mousePos) {
 		case Qt::BottomLeftCorner:
 			cursor = QCursor(Qt::SizeBDiagCursor); break;
 		case -1:
-			cursor = QCursor(); break;
+			cursor = defaultCursor; break;
 	}
 	setCursor(cursor);
+	return corner;
 }
 
 /*Qt::Corner*/ int PartsEditorConnectorItem::closeToCorner(const QPointF &pos) {
-	qreal x1 = this->pos().x();
-	qreal y1 = this->pos().y();
-	qreal x2 = this->pos().x()+boundingRect().width();
-	qreal y2 = this->pos().y()+boundingRect().height();
+	qreal x1 = 0;//this->pos().x();
+	qreal y1 = 0;//this->pos().y();
+	qreal x2 = boundingRect().width();//this->pos().x()+boundingRect().width();
+	qreal y2 = boundingRect().height();//this->pos().y()+boundingRect().height();
+
+	DebugDialog::debug(QString("<<< (%1,%2) (%3,%4)").arg(x1).arg(y1).arg(x2).arg(y2));
+	DebugDialog::debug(QString("<<< mouse (%1,%2)").arg(pos.x()).arg(pos.y()));
 
 	// TODO: trasladar las lineas al origen
-	QPair<qreal,Qt::Corner> tl(QLineF(QPointF(x1,y1),pos).length(), Qt::TopLeftCorner);
-	QPair<qreal,Qt::Corner> tr(QLineF(QPointF(x2,y1),pos).length(), Qt::TopRightCorner);
-	QPair<qreal,Qt::Corner> br(QLineF(QPointF(x2,y2),pos).length(), Qt::BottomRightCorner);
-	QPair<qreal,Qt::Corner> bl(QLineF(QPointF(x1,y2),pos).length(), Qt::BottomLeftCorner);
+	QPair<qreal,Qt::Corner> tl(QLineF(QPointF(0,0),QPointF(x1,y1)-pos).length(), Qt::TopLeftCorner);
+	QPair<qreal,Qt::Corner> tr(QLineF(QPointF(0,0),QPointF(x2,y1)-pos).length(), Qt::TopRightCorner);
+	QPair<qreal,Qt::Corner> br(QLineF(QPointF(0,0),QPointF(x2,y2)-pos).length(), Qt::BottomRightCorner);
+	QPair<qreal,Qt::Corner> bl(QLineF(QPointF(0,0),QPointF(x1,y2)-pos).length(), Qt::BottomLeftCorner);
 
 	QPair<qreal,Qt::Corner> min = tl.first < tr.first ? tl : tr;
 	min = min.first < br.first ? min : br;
 	min = min.first < bl.first ? min : bl;
 
 	DebugDialog::debug(QString("<<<<< min %1 %2").arg(min.first).arg(min.second));
-	if(min.first <= 2.5) return min.second;
+	if(min.first <= 3) return min.second;
 	else return -1;
 }

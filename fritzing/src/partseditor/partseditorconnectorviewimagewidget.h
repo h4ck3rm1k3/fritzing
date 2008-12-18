@@ -38,6 +38,7 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 	public:
 		PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=150);
 		void drawConector(Connector *conn);
+		void removeConnector(const QString &connId);
 		void updateDomIfNeeded();
 
 	public slots:
@@ -57,6 +58,8 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void mouseReleaseEvent(QMouseEvent *event);
 		void connectItem();
 		void createConnector(Connector *conn, const QRect &rect);
+		void setItemProperties();
+		bool isSupposedToBeRemoved(const QString& id);
 
 		QRubberBand *m_connRubberBand;
 		QPoint m_connRubberBandOrigin;
@@ -64,6 +67,7 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		ZoomControls *m_zoomControls;
 
 		QList<PartsEditorConnectorItem*> m_drawnConns;
+		QStringList m_removedConnIds;
 
 	protected:
 		static int ConnDefaultWidth;

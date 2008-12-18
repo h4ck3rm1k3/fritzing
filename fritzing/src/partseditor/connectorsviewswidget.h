@@ -45,6 +45,7 @@ class ConnectorsViewsWidget : public QFrame {
 	public slots:
 		void repaint();
 		void drawConnector(Connector*);
+		void removeConnectorFrom(const QString&,ItemBase::ViewIdentifier);
 
 	protected:
 		void createViewImageWidget(
