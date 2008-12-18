@@ -1,0 +1,23 @@
+[
+    {
+        "pk": 1, 
+        "model": "treemenus.menuitem", 
+        "fields": {
+            "parent": null, 
+            "level": 0, 
+            "url": "", 
+            "menu": 1, 
+            "rank": 0, 
+            "caption": "Root", 
+            "named_url": ""
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "treemenus.menu", 
+        "fields": {
+            "root_item": 1, 
+            "name": "main"
+        }
+    }
+]
