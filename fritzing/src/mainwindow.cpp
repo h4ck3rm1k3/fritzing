@@ -84,7 +84,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_currentGraphicsView = NULL;
 	m_firstOpen = true;
 
-	m_firstMove = false;
+	m_moveTabWindow = m_firstMove = false;
 
 	m_statusBar = new QStatusBar(this);
 	setStatusBar(m_statusBar);
@@ -247,7 +247,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	}
 
 
-	QTimer::singleShot(75, this, SLOT(showTabWindow()));
+	QTimer::singleShot(65, this, SLOT(showTabWindow()));
 
 }
 
@@ -1314,6 +1314,7 @@ TabWindow * MainWindow::tabWindow() {
 
 void MainWindow::moveEvent(QMoveEvent * event) {
 	FritzingWindow::moveEvent(event);
+	DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
 	if (m_tabWindow) {
 		if (m_firstMove) {
 			m_firstMove = false;
@@ -1371,5 +1372,7 @@ void MainWindow::showTabWindow() {
 	}
 	if (sep < 2) {
 		m_windowMenu->addAction(m_tabWindow->toggleViewAction());
-	}	
+	}
+	m_firstMove = true;
+	DebugDialog::debug(QString("tab done"));
 }
