@@ -82,6 +82,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_currentGraphicsView = NULL;
 	m_firstOpen = true;
 
+	m_firstMove = false;
+
 	m_statusBar = new QStatusBar(this);
 	setStatusBar(m_statusBar);
 #ifndef Q_WS_MAC
@@ -252,9 +254,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	viewSwitcher->viewSwitchedTo(0);
 	viewSwitcher->connectClose(m_tabWindow, SLOT(hide()));
 
-	m_tabWindow->show();
-	m_tabWindow->move(this->pos() + QPoint(10, 50));
-	m_tabWindow->setMask(viewSwitcher->getMask());
+	QTimer::singleShot(60, this, SLOT(showTabWindow()));
+
 	int sep = 0;
 	foreach (QAction * action, m_windowMenu->actions()) {
 		if (action->isSeparator()) {
@@ -1357,4 +1358,11 @@ bool MainWindow::event(QEvent * e) {
 			break;
 	}
 	return FritzingWindow::event(e);
+}
+
+
+void MainWindow::showTabWindow() {
+	m_tabWindow->show();
+	m_tabWindow->move(this->pos() + QPoint(10, 50));
+	m_tabWindow->setMask();
 }

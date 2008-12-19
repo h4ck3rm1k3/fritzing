@@ -32,6 +32,7 @@ $Date$
 TabWindow::TabWindow(QWidget *parent)
     : QWidget(parent)
 {
+	m_viewSwitcher = NULL;
     m_toggleViewAction = new QAction(this);
     m_toggleViewAction->setCheckable(true);
     m_toggleViewAction->setText(windowTitle());
@@ -51,6 +52,7 @@ TabWindow::TabWindow(QWidget *parent)
 }
 
 void TabWindow::addViewSwitcher(ViewSwitcher * viewSwitcher) {
+	m_viewSwitcher = viewSwitcher;
 	viewSwitcher->setParent(this);
 	m_hLayout->addWidget(viewSwitcher);
 	QApplication::processEvents();
@@ -134,4 +136,8 @@ void TabWindow::restoreState() {
 	if (m_state) {
 		this->setVisible(true);
 	}
+}
+
+void TabWindow::setMask() {
+	QWidget::setMask(m_viewSwitcher->getMask());
 }

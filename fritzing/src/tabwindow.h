@@ -44,6 +44,7 @@ public:
 	void setWindowTitle(const QString & title);
 	void saveState();
 	void restoreState();
+	void setMask();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
@@ -59,6 +60,7 @@ protected:
 	int m_viewIndex;
 	bool m_movedEnough;
 	bool m_state;
+	class ViewSwitcher * m_viewSwitcher;
 	
 protected slots:
 	void toggleMe(bool);

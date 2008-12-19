@@ -192,6 +192,7 @@ protected slots:
 
 	void raiseAndActivate();
 	void activateWindowAux();
+	void showTabWindow();
 
 protected:
 	void initSketchWidget(SketchWidget *);
