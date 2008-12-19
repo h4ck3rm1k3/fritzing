@@ -28,6 +28,7 @@ $Date$
 
 #include <QFileDialog>
 #include <QFrame>
+#include <QBuffer>
 
 #include "partseditorviewimagewidget.h"
 #include "../layerkinpaletteitem.h"
@@ -72,12 +73,18 @@ void PartsEditorViewImageWidget::loadFile() {
 	QString origPath = QFileDialog::getOpenFileName(this,
        tr("Open Image"),
        m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
-       tr("SVG Files (*.svg)"));
+       tr("SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)"));
 
 	if(origPath.isEmpty()) {
 		return; // Cancel pressed
 	} else {
-		loadSvgFile(origPath);
+		if(!origPath.endsWith(".svg")) {
+			DebugDialog::debug("<<< no es svg");
+			origPath = createSvgFromImage(origPath);
+		}
+		if(origPath != ___emptyString___) {
+			loadSvgFile(origPath);
+		}
 	}
 }
 
@@ -178,4 +185,36 @@ const StringPair& PartsEditorViewImageWidget::svgFileSplit() {
 void PartsEditorViewImageWidget::fitCenterAndDeselect() {
 	scene()->setSceneRect(0,0,width(),height());
 	PartsEditorAbstractViewImage::fitCenterAndDeselect();
+}
+
+QString PartsEditorViewImageWidget::createSvgFromImage(const QString &origFilePath) {
+	DebugDialog::debug("<<< original "+origFilePath);
+
+	QImage imgOrig(origFilePath);
+
+	QImage newImg(imgOrig.size(),QImage::Format_ARGB32);
+
+	QByteArray bytes;
+	QBuffer buffer(&bytes);
+	buffer.open(QIODevice::WriteOnly);
+	imgOrig.convertToFormat(QImage::Format_ARGB32).save(&buffer);
+	QSvgRenderer renderer(bytes.toBase64());
+
+	QPainter painter;
+	painter.begin(&newImg);
+	renderer.render(&painter);
+	painter.end();
+
+
+	QString newFilePath = m_tempFolder.path()+"/"+FritzingWindow::getRandText()+".svg";
+	DebugDialog::debug("<<< nueva imagen "+newFilePath);
+
+	bool result = newImg.save(newFilePath);
+	if(!result) {
+		DebugDialog::debug("<<< failed");
+		return ___emptyString___;
+	} else {
+		DebugDialog::debug("<<< succes");
+		return newFilePath;
+	}
 }
