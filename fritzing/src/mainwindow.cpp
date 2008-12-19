@@ -148,8 +148,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     createToolBars();
     createStatusBar();
 
-
-
     dockManager->createDockWindows();
 
     m_breadboardWidget->setContent(
@@ -1314,7 +1312,7 @@ TabWindow * MainWindow::tabWindow() {
 
 void MainWindow::moveEvent(QMoveEvent * event) {
 	FritzingWindow::moveEvent(event);
-	DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
+	//DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
 	if (m_tabWindow) {
 		if (m_firstMove) {
 			m_firstMove = false;
@@ -1339,6 +1337,10 @@ bool MainWindow::event(QEvent * e) {
 			break;
 		case QEvent::WindowDeactivate:
 			changeActivation(false);
+			break;
+		case QEvent::WindowStateChange:
+			//DebugDialog::debug(QString("window state change"));
+			m_moveTabWindow = m_firstMove = false;
 			break;
 		default:
 			break;

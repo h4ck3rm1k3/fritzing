@@ -344,18 +344,33 @@ const QString & SchematicSketchWidget::viewName() {
 }
 
 
-void SchematicSketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to)
+void SchematicSketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem)
 {
-	if (from->attachedToItemType() == ModelPart::Wire) {
-		from = lookForBreadboardConnection(from);
-		if (from->bus()) {
+	// possibly find or create a new breadboard
+
+	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		// lookForBreadboardConnection may change fromConnectorItem
+		if (fromConnectorItem->bus()) {
+			// cache this for drawing the ratsnest wire back in the same place
 			m_wireHash.insert(wireID, m_connectorDragConnector);
 		}
+		else {
+			// find an empty bus or make a breadboard
+			// find the nearest part to m_connectorDragConnector
+			// make a wire from that part to the breadboard
+			// draw a wire from that bus on the breadboard to the other part
+			// figure out how to tie that to one ratsnest wire
+			// and what happens when you delete
+
+		}
 	}
-	else if (to->attachedToItemType() == ModelPart::Wire) {
-		to = lookForBreadboardConnection(to);
-		if (to->bus()) {
+	else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		toConnectorItem = lookForBreadboardConnection(toConnectorItem);			// lookForBreadboardConnection may change toConnectorItem
+		if (toConnectorItem->bus()) {
+			// cache this for drawing the ratsnest wire back in the same place
 			m_wireHash.insert(wireID, m_connectorDragConnector);
+		}
+		else {
 		}
 	}
 }
