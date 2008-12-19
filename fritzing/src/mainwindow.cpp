@@ -72,6 +72,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 {
 	QFile styleSheet(":/resources/styles/fritzing.qss");
 
+	m_tabWindow = NULL;
+
 	resize(740,600);
 
 	// Create dot icons
