@@ -1,1 +1,29 @@
-{% extends "fritzing/base.html" %}
+{% extends "base.html" %}
+{% load i18n %}
+{% load openid_tags %}
+{% load pages_tags %}
+{% load tree_menu_tags %}
+
+{% block login %}
+<ul id="portal-personaltools" class="visualInline">
+    {% if user.is_authenticated %}
+    <li>
+        {% openid_icon openid user %} <a href="{% url acct_email %}">{% trans "Account" %}</a> {% if user.is_staff %}<a href="/admin/">{% trans "Admin" %}</a> {% endif %}<a href="/openid/logout/?next={% url acct_logout %}">{% trans "Logout" %}</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="{% url acct_login %}">{% trans "Login" %}</a> <a href="{% url acct_signup %}"><b>{% trans "Sign up" %}</b></a>
+    </li>
+    {% endif %}
+</ul>
+{% endblock %}
+
+{% block subnav %}
+    {% for page in all_pages %}
+        {% pages_menu page %}
+    {% endfor %}
+    {% show_menu "Left" %}
+    <span style="float:right">
+        {% show_menu "Right" %}
+    </span>
+{% endblock subnav %}

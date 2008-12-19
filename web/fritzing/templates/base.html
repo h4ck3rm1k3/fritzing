@@ -1,4 +1,4 @@
-{% load pages_tags %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+{% load i18n pages_tags %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -23,6 +23,7 @@
         <link rel="contents" href="http://fritzing.org/sitemap" title="Site Map" />
         <link rel="search" href="http://fritzing.org/search_form" title="Search this site" /><!-- Disable IE6 image toolbar -->
         <meta http-equiv="imagetoolbar" content="no" />
+        {% block extrea_head %}{% endblock %}
     </head>
     <body class="section-learning template-folder_listing" dir="ltr">
         <div id="visual-portal-wrapper">
@@ -32,6 +33,8 @@
                         <a accesskey="2" href="#documentContent">Skip to content.</a> | <a accesskey="6" href="#portlet-navigation-tree">Skip to navigation</a>
                     </p>
                     <a id="portal-logo" accesskey="1" href="/" name="portal-logo"><img src="{{ MEDIA_URL }}fritzing/img/logo.gif" alt="" title="" height="29" width="289" /></a>
+                    <div id="portal-personaltools-wrapper">
+                    {% block login %}{% endblock %}
                 </div>
             </div>
             <div class="visualClear" id="clear-space-before-wrapper-table">
@@ -51,21 +54,16 @@
             {% endif %}
             
             <div id="portal-columns">
-                {% block navigation %}
                 <div id="portal-column-one">
                     <div class="visualPadding">
                     <dl class="portlet portletNavigationTree">
                     <dd class="portletItem">
                     <ul class="navTree navTreeLevel0">
-                    {% for page in pages %}
-                        {% show_menu page %}
-                    {% endfor %}
+                        {% block subnav %}{% endblock subnav %}
                     </ul>
                     </dd>
                     </dl>
                 </div>
-                {% endblock navigation %}
-                
                 <div id="portal-column-content">
                     <div class="">
                         <div id="region-content" class="documentContent">
@@ -89,10 +87,11 @@
                                     </span>
                                 </p>
                                 <div class="" id="parent-fieldname-text">
+                                    {% block body %}{% endblock %}
+                                    {% block content %}{% endblock %}
                                     {% block left_column %}{% endblock %}
                                     {% block right_column %}{% endblock %}
                                 </div>
-                                <div class="relatedItems"></div>
                                 <div class="visualClear">
                                     <!-- -->
                                 </div>
@@ -101,6 +100,13 @@
                                         Document Actions
                                     </h5>
                                     <ul>
+                                        {% if request.user.is_authenticated %}
+                                            {% if current_page %}
+                                            <li id="document-action-sendto">
+                                                <a href="/admin/pages/page/{{ current_page.pk }}/" title="">Edit</a>
+                                            </li>
+                                            {% endif %}
+                                        {% endif %}
                                         <li id="document-action-sendto">
                                             <a href="#" title="">Send this</a>
                                         </li>

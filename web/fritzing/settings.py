@@ -101,6 +101,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "misc.context_processors.contact_email",
     "misc.context_processors.site_name",
     "pages.context_processors.media",
+    "tools.context_processors.pages",
 )
 
 INSTALLED_APPS = (
@@ -136,6 +137,7 @@ INSTALLED_APPS = (
     'emailthis',
     'forum',
     'threadedcomments',
+    'treemenus',
 
     # internal (for now)
     'basic_profiles',
@@ -195,6 +197,10 @@ PAGE_TEMPLATES = (
 
 PAGE_PERMISSION = False
 REQUIRE_LOGIN_PATH = LOGIN_REDIRECT_URL
+
+FIXTURES_DIRS = (
+    os.path.join(PROJECT_ROOT, "fixtures"),
+)
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

@@ -19,6 +19,9 @@ urlpatterns = patterns('',
     (r'^emailthis/', include('emailthis.urls')),
     (r'^forum/', include('forum.urls')),
     (r'^faq/', include('faq.urls')),
+    (r'^admin/(.*)', admin.site.root),
+    url(r'^faq/$', 'faq.views.faq_list', name='faq_list'),
+    url(r'^faq/(?P<slug>[\w]+)/$', 'faq.views.question_detail', name='faq_detail'),
     (r'', include('pages.urls')),
 )
 
