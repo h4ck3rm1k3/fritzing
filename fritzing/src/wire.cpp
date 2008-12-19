@@ -71,7 +71,6 @@ Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_grabbedMouse = false;
 	m_connectorHover = NULL;
 	m_opacity = UNROUTED_OPACITY;
-	m_chainedID = id;
 
 	//DebugDialog::debug(QObject::tr("aix line %1 %2 %3 %4").arg(this->viewGeometry().line().x1())
 													//.arg(this->viewGeometry().line().y1())
@@ -1018,14 +1017,6 @@ bool Wire::connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, 
 	}
 
 	return false;
-}
-
-qint64 Wire::chainedID() {
-	return m_chainedID;
-}
-
-void Wire::setChainedID(qint64 cid) {
-	m_chainedID = cid;
 }
 
 void Wire::setCanChainMultiple(bool can) {

@@ -163,7 +163,6 @@ public:
 	void ensureLayerVisible(ViewLayer::ViewLayerID);
 
 	const QString &selectedModuleID();
-	void setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType);
 	virtual bool canDeleteItem(QGraphicsItem * item);
 	virtual bool canCopyItem(QGraphicsItem * item);
 	virtual const QString & viewName();
@@ -303,7 +302,6 @@ signals:
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void selectAllItemsSignal(bool state, bool doEmit);
-	void setChainedWireIDSignal(qint64 wireID, qint64 chainedID);
 	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID,
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
@@ -335,7 +333,6 @@ protected slots:
 	void autoScrollTimeout();
 	void dragAutoScrollTimeout();
 	void moveAutoScrollTimeout();
-	void setChainedWireIDSlot(qint64 wireID, qint64 chainedID);
 	void dealWithRatsnestSlot(long fromID, const QString & fromConnectorID,
 							  long toID, const QString & toConnectorID,
 							  bool connect, class RatsnestCommand * ratsnestCommand);

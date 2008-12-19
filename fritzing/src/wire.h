@@ -114,8 +114,6 @@ public:
 	void connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> & out);
 	void simpleConnectedMoved(ConnectorItem * to);
 	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);
-	qint64 chainedID();
-	void setChainedID(qint64);
 	void setCanChainMultiple(bool);
 	bool canChangeColor();
 
@@ -158,7 +156,6 @@ protected:
 	QString m_colorName;
 	QPen m_shadowPen;
 	qreal m_opacity;
-	qint64 m_chainedID;
 	bool m_canChainMultiple;
 
 public:

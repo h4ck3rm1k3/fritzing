@@ -318,19 +318,6 @@ protected:
 	ViewGeometry::WireFlags m_newFlags;
 };
 
-
-class WireChainedIDCommand : public BaseCommand
-{
-public:
-	WireChainedIDCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType, qint64 wireID, qint64 chainedWireID, QUndoCommand *parent);
-    void undo();
-    void redo();
-
-protected:
-	long m_wireID;
-	qint64 m_chainedID;
-};
-
 class RatsnestCommand : public ChangeConnectionCommand
 {
 public:

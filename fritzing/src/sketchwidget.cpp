@@ -2824,7 +2824,6 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
-	new WireChainedIDCommand(this, crossView, newID, wire->chainedID(), parentCommand);
 
 	// disconnect from original wire and reconnect to new wire
 	ConnectorItem * connector1 = wire->connector1();
@@ -3338,24 +3337,9 @@ const QString &SketchWidget::selectedModuleID() {
 	return ___emptyString___;
 }
 
-
-void SketchWidget::setChainedWireID(qint64 wireID, qint64 chainedID, BaseCommand::CrossViewType crossView) {
-	Wire * wire = dynamic_cast<Wire *>(findItem(wireID));
-	if (wire == NULL) return;
-
-	wire->setChainedID(chainedID);
-	if (crossView == BaseCommand::CrossView) {
-		emit setChainedWireIDSignal(wireID, chainedID);
-	}
-}
-
 BaseCommand::CrossViewType SketchWidget::wireSplitCrossView()
 {
 	return BaseCommand::SingleView;
-}
-
-void SketchWidget::setChainedWireIDSlot(qint64 wireID, qint64 chainedID) {
-	setChainedWireID(wireID, chainedID, BaseCommand::SingleView);
 }
 
 bool SketchWidget::canDeleteItem(QGraphicsItem * item)
