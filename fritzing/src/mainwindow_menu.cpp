@@ -649,7 +649,8 @@ void MainWindow::createFileMenuActions() {
 	m_quitAct = new QAction(tr("&Quit"), this);
 	m_quitAct->setShortcut(tr("Ctrl+Q"));
 	m_quitAct->setStatusTip(tr("Quit the application"));
-	connect(m_quitAct, SIGNAL(triggered()), this, SLOT(close()));
+	//connect(m_quitAct, SIGNAL(triggered()), this, SLOT(close()));
+	connect(m_quitAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 }
 
 void MainWindow::createOpenExampleMenu(QMenu * parentMenu, QString path) {
