@@ -29,6 +29,7 @@ $Date$
 #include <QFileDialog>
 #include <QFrame>
 #include <QBuffer>
+#include <QSvgGenerator>
 
 #include "partseditorviewimagewidget.h"
 #include "../layerkinpaletteitem.h"
@@ -190,7 +191,21 @@ void PartsEditorViewImageWidget::fitCenterAndDeselect() {
 QString PartsEditorViewImageWidget::createSvgFromImage(const QString &origFilePath) {
 	DebugDialog::debug("<<< original "+origFilePath);
 
+	QString newFilePath = m_tempFolder.path()+"/"+FritzingWindow::getRandText()+".svg";
+	DebugDialog::debug("<<< nueva imagen "+newFilePath);
+
 	QImage imgOrig(origFilePath);
+
+	QSvgGenerator svgGenerator;
+	svgGenerator.setFileName(newFilePath);
+    svgGenerator.setSize(imgOrig.size());
+	QPainter svgPainter(&svgGenerator);
+	svgPainter.drawImage(QPoint(0,0), imgOrig);
+	svgPainter.end();
+
+	return newFilePath;
+
+	/*
 
 	QImage newImg(imgOrig.size(),QImage::Format_ARGB32);
 
@@ -217,4 +232,6 @@ QString PartsEditorViewImageWidget::createSvgFromImage(const QString &origFilePa
 		DebugDialog::debug("<<< succes");
 		return newFilePath;
 	}
+
+	*/
 }
