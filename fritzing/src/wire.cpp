@@ -233,6 +233,7 @@ void Wire::initDragEnd(ConnectorItem * connectorItem) {
  		//DebugDialog::debug(QObject::tr("drag far origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
  		//DebugDialog::debug(QObject::tr("drag far other %1 %2").arg(line.p2().x()).arg(line.p2().y()) );
 	}
+
 	if (connectorItem->chained()) {
 		QList<Wire *> chained;
 		QList<ConnectorItem *> ends;
@@ -278,15 +279,16 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	}
 	setConnector1Rect();
 
-	if (whichConnectorItem->chained()) {
-		foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
-			if (toConnectorItem->chained()) {
-				Wire * chainedWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-				chainedWire->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
-			}
-		}
+	bool chained = false;
+	foreach (ConnectorItem * toConnectorItem, whichConnectorItem->connectedToItems()) {
+		Wire * chainedWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		if (chainedWire == NULL) continue;
+
+		chainedWire->simpleConnectedMoved(whichConnectorItem, toConnectorItem);
+		chained = true;
 	}
-	else {
+
+	if (!chained) {
 		whichConnectorItem->setOverConnectorItem(
 					findConnectorUnder(whichConnectorItem,  whichConnectorItem->overConnectorItem(), false));
 	}
@@ -428,10 +430,16 @@ void Wire::connectionChange(ConnectorItem * ) {
 
 void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
 	if (event->modifiers() == Qt::ShiftModifier) {
-		if (connectorItem->chained()) {
-			if (connectorItem->connectionsCount() == 1) {
-				emit wireJoinSignal(this, connectorItem);
+
+		int chained = 0;
+		foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				chained++;
 			}
+		}
+
+		if (chained == 1) {
+			emit wireJoinSignal(this, connectorItem);
 			return;
 		}
 	}
@@ -518,9 +526,9 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	*/
 
 	ConnectorItem * otherEnd = otherConnector(to);
-
+	bool chained = otherEnd->chained();
 	QPointF p1, p2;
-	if (otherEnd->chained()) {
+	if (chained) {
 		// move both ends
 		if (to == m_connector0) {
 			p1 = from->sceneAdjustedTerminalPoint();
@@ -539,9 +547,9 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	//DebugDialog::debug(QString("set line %5: %1 %2, %3 %4, vis:%6 lyr:%7").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()).arg(id()).arg(isVisible()).arg(m_viewIdentifier) );
 	setConnector1Rect();
 
-	if (otherEnd->chained()) {
+	if (chained) {
 		foreach (ConnectorItem * otherEndTo, otherEnd->connectedToItems()) {
-			if (otherEndTo->chained()) {
+			if (otherEndTo->attachedToItemType() == ModelPart::Wire) {
 				otherEndTo->attachedTo()->connectedMoved(otherEnd, otherEndTo);
 			}
 		}
@@ -648,17 +656,16 @@ void Wire::collectChained(QList<Wire *> & chained, QList<ConnectorItem *> & ends
 
 void Wire::collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained, QList<ConnectorItem *> & ends) {
 	foreach (ConnectorItem * connectedToItem, connectorItem->connectedToItems()) {
-		if (connectedToItem->chained()) {
-			Wire * wire = dynamic_cast<Wire *>(connectedToItem->attachedTo());
-			if (wire == NULL) continue;
-			if (chained.contains(wire)) continue;
-			chained.append(wire);
-		}
-		else {
+		Wire * wire = dynamic_cast<Wire *>(connectedToItem->attachedTo());
+		if (wire == NULL) {
 			if (!ends.contains(connectedToItem)) {
 				ends.append(connectedToItem);
 			}
+			continue;
 		}
+
+		if (chained.contains(wire)) continue;
+		chained.append(wire);
 	}
 }
 

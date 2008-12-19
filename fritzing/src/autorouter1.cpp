@@ -487,8 +487,6 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 			ConnectorItem * c0 = wires[i + 1]->connector0();
 			c1->tempConnectTo(c0);
 			c0->tempConnectTo(c1);
-			c1->setChained(true);
-			c0->setChained(true);
 		}
 	}
 	else {
@@ -1081,13 +1079,13 @@ void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connec
 		foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
 			new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 				wire->id(), connector1->connectorStuffID(),
-				connect, true, toConnectorItem->chained(), parentCommand);
+				connect, true, parentCommand);
 		}
 		ConnectorItem * connector0 = wire->connector0();
 		foreach (ConnectorItem * toConnectorItem, connector0->connectedToItems()) {
 			new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 				wire->id(), connector0->connectorStuffID(),
-				connect, true, toConnectorItem->chained(), parentCommand);
+				connect, true, parentCommand);
 		}
 	}
 }

@@ -135,7 +135,7 @@ public:
 							long fromID, const QString & fromConnectorID,
 							long toID, const QString & toConnectorID,
 							bool connect, bool seekLayerKin,
-							bool chain, QUndoCommand * parent);
+							QUndoCommand * parent);
 	void undo();
 	void redo();
 
@@ -146,7 +146,6 @@ protected:
     QString m_fromConnectorID;
     QString m_toConnectorID;
 	bool m_connect;
-	bool m_chain;
 
 };
 
@@ -325,7 +324,7 @@ public:
 					long fromID, const QString & fromConnectorID,
 					long toID, const QString & toConnectorID,
 					bool connect, bool seekLayerKin,
-					bool chain, QUndoCommand * parent);
+					QUndoCommand * parent);
     void undo();
     void redo();
 	void addWire(class SketchWidget *, class Wire *, class ConnectorItem * source, class ConnectorItem * dest);

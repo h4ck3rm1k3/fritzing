@@ -167,7 +167,7 @@ void FlipItemCommand::redo()
 ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, BaseCommand::CrossViewType crossView,
 												 long fromID, const QString & fromConnectorID,
 												 long toID, const QString & toConnectorID,
-												 bool connect, bool seekLayerKin, bool chain,
+												 bool connect, bool seekLayerKin,
 												 QUndoCommand * parent)
 : BaseCommand(crossView, sketchWidget, parent)
 {
@@ -178,17 +178,17 @@ ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, Ba
     m_toConnectorID = toConnectorID;
 	m_connect = connect;
 	m_seekLayerKin = seekLayerKin;
-	m_chain = chain;
+
 }
 
 void ChangeConnectionCommand::undo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, !m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_chain);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, !m_connect, m_crossViewType == CrossView, m_seekLayerKin);
 }
 
 void ChangeConnectionCommand::redo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_chain);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, m_crossViewType == CrossView, m_seekLayerKin);
 }
 
 
@@ -410,11 +410,11 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 	
 	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
 		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-				wire->id(), "connector0", false, true, false, NULL));
+				wire->id(), "connector0", false, true, NULL));
 	}
 	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
 		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-				wire->id(), "connector1", false, true, false, NULL));
+				wire->id(), "connector1", false, true, NULL));
 	}
 
 	m_commands.append(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), NULL));
@@ -509,9 +509,9 @@ RatsnestCommand::RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand:
 									long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
 									bool connect, bool seekLayerKin,
-									bool chain, QUndoCommand * parent) 
+									QUndoCommand * parent) 
 : ChangeConnectionCommand(sketchWidget, crossViewType, fromID, fromConnectorID, toID, toConnectorID,
-						connect, seekLayerKin, chain, parent)
+						connect, seekLayerKin, parent)
 {
 	m_firstTime = true;
 }
@@ -540,9 +540,9 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorStuffID(),
-			wire->id(), "connector0", true, true, false, NULL));
+			wire->id(), "connector0", true, true, NULL));
 	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorStuffID(),
-			wire->id(), "connector1", true, true, false, NULL));
+			wire->id(), "connector1", true, true, NULL));
 
 }
 

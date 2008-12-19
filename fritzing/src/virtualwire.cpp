@@ -85,9 +85,4 @@ void VirtualWire::tempRemoveAllConnections() {
 	}
 }	
 
-void VirtualWire::setChained(ConnectorItem * item, bool chained) {
-	Wire::setChained(item, chained);
-	item->setHidden(!chained);
-}
-
 

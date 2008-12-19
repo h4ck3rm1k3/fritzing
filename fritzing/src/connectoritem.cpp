@@ -46,7 +46,6 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
 	m_dirty = false;
-	m_chained = false;
 	m_opacity = 0.4;
 	m_circular = false;
 	m_overConnectorItem = NULL;
@@ -266,9 +265,7 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint() {
 	return this->mapToScene(m_terminalPoint + this->rect().topLeft());
 }
 
-void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemBase *> newItems) {
-	setChained(instance.attribute("chained").compare("true") == 0);
-		
+void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemBase *> newItems) {		
 	QDomElement connectsToElement = instance.firstChildElement("connects");
 	if (connectsToElement.isNull()) return;
 	
@@ -390,12 +387,14 @@ Connector::ConnectorType ConnectorItem::connectorType() {
 	return m_connector->connectorType();
 }
 
-void ConnectorItem::setChained(bool chained) {
-	m_chained = chained;
-}
-
 bool ConnectorItem::chained() {
-	return m_chained;
+	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
+		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void ConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
@@ -410,11 +409,7 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	}
 	
 	writer.writeStartElement("connector");
-	writer.writeAttribute("connectorId", connectorStuffID());
-	if (m_chained) {
-		writer.writeAttribute("chained", "true");
-	}
-	
+	writer.writeAttribute("connectorId", connectorStuffID());	
 	writeTopLevelAttributes(writer);
 	writer.writeStartElement("geometry");	
 	writer.writeAttribute("x", QString::number(this->pos().x()));
@@ -466,13 +461,17 @@ Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags fl
 		if (!wire->hasAnyFlag(flags)) continue;
 
 		ConnectorItem * otherEnd = wire->otherConnector(toConnectorItem);
+		bool chained = false;
 		foreach (ConnectorItem * otherConnectorItem, otherEnd->m_connectedTo) {
 			if (target == otherConnectorItem) {
 				return wire;
 			}
+			if (otherConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				chained = true;
+			}
 		}
 
-		if (otherEnd->chained()) {
+		if (chained) {
 			if (otherEnd->wiredTo(target, flags)) {
 				return wire;
 			}

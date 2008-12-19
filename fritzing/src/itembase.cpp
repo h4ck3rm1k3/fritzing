@@ -580,17 +580,6 @@ bool ItemBase::alreadySticking(ItemBase * itemBase) {
 	return m_stickyList.keys().contains(itemBase);
 }
 
-void ItemBase::setChained(ConnectorItem * item, bool chained) {
-	item->setChained(chained);
-}
-
-void ItemBase::setChained(const QString & connectorItemName, bool chained) {
-	ConnectorItem * item = findConnectorItemNamed(connectorItemName);
-	if (item != NULL) {
-		item->setChained(chained);
-	}
-}
-
 ConnectorItem* ItemBase::newConnectorItem(Connector *connector) {
 	return new ConnectorItem(connector,this);
 }

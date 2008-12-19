@@ -134,8 +134,6 @@ public:
 
 public:
 	virtual bool stickyEnabled(ItemBase * stickTo);
-	virtual void setChained(ConnectorItem * item, bool chained);
-	virtual void setChained(const QString & connectorItemName, bool chained);
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	virtual void connectorHover(class ConnectorItem *, ItemBase *, bool hovering);

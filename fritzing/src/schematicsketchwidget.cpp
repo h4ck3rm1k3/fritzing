@@ -447,3 +447,11 @@ void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* >
 
 	PCBSchematicSketchWidget::removeRatsnestWires(allPartConnectorItems, command);
 }
+
+void SchematicSketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
+	if (fromConnectorItem->attachedToItemType() != ModelPart::Wire) return;
+	if (toConnectorItem->attachedToItemType() != ModelPart::Wire) return;
+
+	fromConnectorItem->setHidden(!connect);
+	toConnectorItem->setHidden(!connect);
+}

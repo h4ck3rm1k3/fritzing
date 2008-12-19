@@ -65,6 +65,7 @@ protected:
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
 	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
+	void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 
 protected:
 	QHash<int, ConnectorItem *> m_wireHash;

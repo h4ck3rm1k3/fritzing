@@ -76,7 +76,6 @@ public:
 	void setOpacity(qreal);
 	Connector::ConnectorType connectorType();
 	bool chained();
-	void setChained(bool chained);
 	virtual void saveInstance(QXmlStreamWriter & );
 	bool maleToFemale(ConnectorItem * other);
 	bool wiredTo(ConnectorItem *);
@@ -110,7 +109,6 @@ protected:
 	ConnectorItem * m_overConnectorItem;
 	qreal m_opacity;
 	bool m_circular;
-	bool m_chained;
 	bool m_dirty;
 	QString m_baseTooltip;
 

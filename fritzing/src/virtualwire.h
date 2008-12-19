@@ -37,7 +37,6 @@ public:
 	
 	void setHidden(bool hidden);
 	void tempRemoveAllConnections();
-	void setChained(ConnectorItem * item, bool chained);
 	
 protected:
 	void paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );	

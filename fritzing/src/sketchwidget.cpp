@@ -649,11 +649,11 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								fromItem->id(), fromConnectorItem->connectorStuffID(),
 								toItem->id(), toConnectorItem->connectorStuffID(),
-								connect, seekLayerKin, false, parentCommand);
+								connect, seekLayerKin, parentCommand);
 	new RatsnestCommand(this, BaseCommand::CrossView,
 								fromItem->id(), fromConnectorItem->connectorStuffID(),
 								toItem->id(), toConnectorItem->connectorStuffID(),
-								connect, seekLayerKin, false, parentCommand);
+								connect, seekLayerKin, parentCommand);
 }
 
 
@@ -682,14 +682,14 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 
 	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, parentCommand, false);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorStuffID(),
-			newID, "connector0", true, true, false, parentCommand);
+			newID, "connector0", true, true, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
-			newID, "connector1", true, true, false, parentCommand);
+			newID, "connector1", true, true, parentCommand);
 	if (doRatsnest) {
 		new RatsnestCommand(this, crossViewType, from->attachedToID(), from->connectorStuffID(),
-				newID, "connector0", true, true, false, parentCommand);
+				newID, "connector0", true, true, parentCommand);
 		new RatsnestCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
-				newID, "connector1", true, true, false, parentCommand);
+				newID, "connector1", true, true, parentCommand);
 	}
 
 	if (addItNow) {
@@ -1707,17 +1707,19 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 		toConnectorID = to->connectorStuffID();
 	}
 
-	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
-	if (from->chained()) {
-		foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
-			Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-			if (toWire == NULL) continue;
 
-			ViewGeometry vg = toWire->getViewGeometry();
-			QLineF nl = toWire->line();
-			QPointF np = toWire->pos();
-			new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, parentCommand);
-		}
+	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, newPos, true, parentCommand);
+
+	bool chained = false;
+	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
+		Wire * toWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+		if (toWire == NULL) continue;
+
+		ViewGeometry vg = toWire->getViewGeometry();
+		QLineF nl = toWire->line();
+		QPointF np = toWire->pos();
+		new ChangeWireCommand(this, toWire->id(), vg.line(), nl, vg.loc(), np, true, parentCommand);
+		chained = true;
 	}
 
 	checkSticky(wire, parentCommand);
@@ -1727,7 +1729,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	QString prefix;
 	QString suffix;
 	if (to == NULL) {
-		if (former.count() > 0  && !from->chained()) {
+		if (former.count() > 0  && !chained) {
 			prefix = tr("Disconnect");
 			// the suffix is a little tricky to determine
 			// it might be multiple disconnects, or might be disconnecting a virtual wire, in which case, the
@@ -1747,7 +1749,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	parentCommand->setText(QObject::tr("%1 %2 %3").arg(prefix).arg(wire->modelPart()->title()).arg(suffix) );
 
 	bool doEmit = false;
-	if (!from->chained()) {
+	if (!chained) {
 		if (former.count() > 0) {
 			QList<ConnectorItem *> connectorItems;
 			connectorItems.append(from);
@@ -2510,18 +2512,17 @@ void SketchWidget::sketchWidget_wireDisconnected(long fromID, QString fromConnec
 
 void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool doEmit, bool seekLayerKin,
-									bool chain)
+									bool connect, bool doEmit, bool seekLayerKin)
 {
-	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin, chain);
+	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin);
 	if (doEmit) {
-		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect, chain);
+		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect);
 	}
 }
 
 void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool seekLayerKin, bool chain)
+									bool connect, bool seekLayerKin)
 {
 	DebugDialog::debug(QObject::tr("changeConnection: from %1 %2; to %3 %4 con:%5 v:%6")
 				.arg(fromID).arg(fromConnectorID)
@@ -2558,9 +2559,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	if (connect) {
 		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
 		fromConnectorItem->connectTo(toConnectorItem);
-		toConnectorItem->connectTo(fromConnectorItem);
-		fromItem->setChained(fromConnectorItem, chain);
-		toItem->setChained(toConnectorItem, chain);
+		toConnectorItem->connectTo(fromConnectorItem);			
 	}
 	else {
 		fromConnectorItem->connector()->disconnectFrom(toConnectorItem->connector());
@@ -2568,6 +2567,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 		toConnectorItem->removeConnection(fromConnectorItem, true);
 	}
 
+	chainVisible(fromConnectorItem, toConnectorItem, connect);
 
 	fromConnectorItem->attachedTo()->updateConnections(fromConnectorItem);
 	toConnectorItem->attachedTo()->updateConnections(toConnectorItem);
@@ -2586,21 +2586,19 @@ void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorI
 	ConnectorItem * connector0 = wire->connector0();
 	from->tempConnectTo(connector0);
 	connector0->tempConnectTo(from);
-	connector0->setChained(from->chained());
 
 	ConnectorItem * connector1 = wire->connector1();
 	to->tempConnectTo(connector1);
 	connector1->tempConnectTo(to);
-	connector1->setChained(to->chained());
 }
 
 void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
 												 long toID, QString toConnectorID,
-												 bool connect, bool chain)
+												 bool connect)
 {
 	changeConnection(fromID, fromConnectorID,
 					 toID, toConnectorID,
-					 connect, false, true, chain);
+					 connect, false, true);
 }
 
 void SketchWidget::navigatorScrollChange(double x, double y) {
@@ -2830,15 +2828,15 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
 		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 			wire->id(), connector1->connectorStuffID(),
-			false, true, toConnectorItem->chained(), parentCommand);
+			false, true, parentCommand);
 		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
 			newID, connector1->connectorStuffID(),
-			true, true, toConnectorItem->chained(), parentCommand);
+			true, true, parentCommand);
 	}
 
 	// connect the two wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorStuffID(),
-			newID, "connector0", true, true, true, parentCommand);
+			newID, "connector0", true, true, parentCommand);
 
 
 	//checkSticky(wire, parentCommand);
@@ -2881,16 +2879,16 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 
 	// disconnect the wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), clickedConnectorItem->connectorStuffID(),
-			toWire->id(), toConnectorItem->connectorStuffID(), false, true, true, parentCommand);
+			toWire->id(), toConnectorItem->connectorStuffID(), false, true, parentCommand);
 
 	// disconnect everyone from the other end of the wire being deleted, and reconnect to the remaining wire
 	foreach (ConnectorItem * otherToConnectorItem, otherConnector->connectedToItems()) {
 		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
 			toWire->id(), otherConnector->connectorStuffID(),
-			false, true, otherToConnectorItem->chained(), parentCommand);
+			false, true, parentCommand);
 		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
 			wire->id(), clickedConnectorItem->connectorStuffID(),
-			true, true, otherToConnectorItem->chained(), parentCommand);
+			true, true, parentCommand);
 	}
 
 	toWire->saveGeometry();
@@ -3634,4 +3632,13 @@ void SketchWidget::ensureFixedToCenterItems() {
 			m_fixedToCenterItems.removeAll(item);
 		}
 	}
+}
+
+
+void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) 
+{
+	Q_UNUSED(fromConnectorItem);
+	Q_UNUSED(toConnectorItem);
+	Q_UNUSED(connect);
+
 }
