@@ -58,6 +58,7 @@ protected:
 	void setSvgFilePath(const QString &filePath);
 	void copyToTempAndRenameIfNecessary(StringPair *filePathOrig);
 	void mousePressEvent(QMouseEvent *event);
+	void fitCenterAndDeselect();
 
 	StringPair *m_svgFilePath;
 	QString m_originalSvgFilePath;

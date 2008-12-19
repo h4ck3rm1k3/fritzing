@@ -174,3 +174,8 @@ const QString PartsEditorViewImageWidget::svgFilePath() {
 const StringPair& PartsEditorViewImageWidget::svgFileSplit() {
 	return *m_svgFilePath;
 }
+
+void PartsEditorViewImageWidget::fitCenterAndDeselect() {
+	scene()->setSceneRect(0,0,width(),height());
+	PartsEditorAbstractViewImage::fitCenterAndDeselect();
+}

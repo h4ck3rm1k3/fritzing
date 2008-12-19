@@ -36,6 +36,8 @@ PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentif
 {
 	m_item = NULL;
 	setFixedSize(size,size);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void PartsEditorAbstractViewImage::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
@@ -65,13 +67,20 @@ ItemBase * PartsEditorAbstractViewImage::addItemAux(ModelPart * modelPart, const
 void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
 	m_item->setSelected(false);
 	m_item->setHidden(false);
-	/*QRectF itemsRect = this->scene()->itemsBoundingRect();
-	DebugDialog::debug(tr("bound rect before fittin: %1 %2 center %3 %4").arg(itemsRect.width()).arg(itemsRect.height()).arg(itemsRect.center().x()).arg(itemsRect.center().y()));
-	fitInView(itemsRect, Qt::KeepAspectRatio);
-	itemsRect = this->scene()->itemsBoundingRect();
-	this->centerOn(itemsRect.center()); // TODO Mariano: It's not centering!!!*/
-	QRectF itemsRect = this->scene()->itemsBoundingRect();
+
 	QRectF viewRect = rect();
+
+	int zoomCorrection;
+	if(m_viewIdentifier != ItemBase::IconView) {
+		qreal x = viewRect.center().x();
+		qreal y = viewRect.center().y();
+		m_item->setPos(x,y);
+		zoomCorrection = 10;
+	} else {
+		zoomCorrection = 0;
+	}
+
+	QRectF itemsRect = scene()->itemsBoundingRect();
 
 	qreal wRelation = viewRect.width()  / itemsRect.width();
 	qreal hRelation = viewRect.height() / itemsRect.height();
@@ -82,7 +91,7 @@ void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
 		m_scaleValue = (hRelation * 100);
 	}
 
-	absoluteZoom(m_scaleValue);
+	absoluteZoom(m_scaleValue-zoomCorrection);
 	centerOn(itemsRect.center());
 }
 
@@ -186,13 +195,13 @@ void PartsEditorAbstractViewImage::getConnectorIdsAux(QHash<QString/*connectorId
 			StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
 			pair->second = id;
 			retval[conn] = pair;
-		} 
+		}
 		else if(id.startsWith("connector") /*&& id.endsWith("pin") */ ) {
 			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
 			StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
 			pair->first = id;
 			retval[conn] = pair;
-		} 
+		}
 		else if(n.hasChildNodes()) {
 			getConnectorIdsAux(retval, e);
 		}

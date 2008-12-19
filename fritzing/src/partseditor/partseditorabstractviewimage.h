@@ -44,7 +44,7 @@ class PartsEditorAbstractViewImage : public SketchWidget {
 
 	protected:
 		void clearScene();
-		void fitCenterAndDeselect();
+		virtual void fitCenterAndDeselect();
 		void removeConnectors();
 
 		void wheelEvent(QWheelEvent* event);

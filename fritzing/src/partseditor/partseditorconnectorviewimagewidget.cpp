@@ -41,8 +41,6 @@ PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBas
 {
 	m_connRubberBandOrigin = QPoint(-1,-1);
 	m_connRubberBand = NULL;
-	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	m_zoomControls = new ZoomControls(this);
 	addFixedToBottomRightItem(m_zoomControls);
@@ -154,6 +152,16 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 		m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, false);
 		m_item->removeFromModel();
 		m_item->highlightConnectors("");
+
+		qreal itemW = m_item->size().width();
+		qreal itemH = m_item->size().height();
+		qreal size = 500;
+
+		setSceneRect(0,0,size,size);
+		//fitCenterAndDeselect();
+
+		m_item->setPos((size-itemW)/2,(size-itemH)/2);
+		centerOn(m_item);
 	}
 }
 
