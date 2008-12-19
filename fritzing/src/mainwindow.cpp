@@ -244,30 +244,9 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 		new Helper(this);
 	}
 
-	m_tabWindow = new TabWindow(this);
-	m_tabWindow->setWindowTitle(tr("View Switcher"));
-	ViewSwitcher * viewSwitcher = new ViewSwitcher();
-	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
-	connect(this, SIGNAL(viewSwitched(int)), viewSwitcher, SLOT(viewSwitchedTo(int)));
 
-	m_tabWindow->addViewSwitcher(viewSwitcher);
-	viewSwitcher->viewSwitchedTo(0);
-	viewSwitcher->connectClose(m_tabWindow, SLOT(hide()));
+	QTimer::singleShot(75, this, SLOT(showTabWindow()));
 
-	QTimer::singleShot(60, this, SLOT(showTabWindow()));
-
-	int sep = 0;
-	foreach (QAction * action, m_windowMenu->actions()) {
-		if (action->isSeparator()) {
-			if (++sep == 2) {
-				m_windowMenu->insertAction(action, m_tabWindow->toggleViewAction());
-				break;
-			}
-		}
-	}
-	if (sep < 2) {
-		m_windowMenu->addAction(m_tabWindow->toggleViewAction());
-	}
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
@@ -821,7 +800,9 @@ void MainWindow::changeActivation(bool activate) {
 				dock->restoreState();
 			}
 
-			m_tabWindow->restoreState();
+			if (m_tabWindow) {
+				m_tabWindow->restoreState();
+			}
 		}
 	}
 	else {
@@ -846,9 +827,11 @@ void MainWindow::changeActivation(bool activate) {
 				}
 			}
 
-			m_tabWindow->saveState();
-			if (m_tabWindow->isVisible()) {
-				m_tabWindow->hide();
+			if (m_tabWindow) {
+				m_tabWindow->saveState();
+				if (m_tabWindow->isVisible()) {
+					m_tabWindow->hide();
+				}
 			}
 		}
 	}
@@ -1362,7 +1345,29 @@ bool MainWindow::event(QEvent * e) {
 
 
 void MainWindow::showTabWindow() {
+	m_tabWindow = new TabWindow(this);
+	m_tabWindow->setWindowTitle(tr("View Switcher"));
+	ViewSwitcher * viewSwitcher = new ViewSwitcher();
+	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
+	connect(this, SIGNAL(viewSwitched(int)), viewSwitcher, SLOT(viewSwitchedTo(int)));
+	
+	m_tabWindow->addViewSwitcher(viewSwitcher);
+	viewSwitcher->viewSwitchedTo(0);
+	viewSwitcher->connectClose(m_tabWindow, SLOT(hide()));
 	m_tabWindow->show();
 	m_tabWindow->move(this->pos() + QPoint(10, 50));
 	m_tabWindow->setMask();
+
+	int sep = 0;
+	foreach (QAction * action, m_windowMenu->actions()) {
+		if (action->isSeparator()) {
+			if (++sep == 2) {
+				m_windowMenu->insertAction(action, m_tabWindow->toggleViewAction());
+				break;
+			}
+		}
+	}
+	if (sep < 2) {
+		m_windowMenu->addAction(m_tabWindow->toggleViewAction());
+	}	
 }
