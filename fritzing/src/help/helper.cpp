@@ -93,6 +93,12 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 	//m_owner->m_pcbGraphicsView->addFixedToBottomLeftItem(m_autorouteHelp);
 }
 
+Helper::~Helper() {
+	m_breadMainHelp->doClose();
+	m_schemMainHelp->doClose();
+	m_pcbMainHelp->doClose();
+}
+
 void Helper::connectToView(SketchWidget* view) {
 	connect(view, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
 	//connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));

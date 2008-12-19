@@ -41,6 +41,7 @@ class Helper : public QObject {
 	Q_OBJECT
 	public:
 		Helper(MainWindow *owner);
+		~Helper();
 
 	protected slots:
 		void somethingDroppedIntoView();

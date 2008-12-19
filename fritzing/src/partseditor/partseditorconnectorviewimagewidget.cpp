@@ -87,15 +87,20 @@ void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) 
 }
 
 void PartsEditorConnectorViewImageWidget::drawConector(Connector *conn) {
-	QRect rect(2,2,ConnDefaultWidth,ConnDefaultHeight);
-	createConnector(conn,rect);
+	QSize size(ConnDefaultWidth,ConnDefaultHeight);
+	createConnector(conn,size);
 }
 
-void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const QRect &connRect) {
+void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const QSize &connSize) {
 	Q_ASSERT(m_item);
 	QString connId = conn->connectorStuffID();
 
-	QRectF bounds = mapToScene(connRect).boundingRect();
+	DebugDialog::debug(QString("<<< scale %1  -   size %2")
+		.arg(m_scaleValue)
+		.arg((connSize*m_scaleValue/100).width()))
+		;
+
+	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize*m_scaleValue/100);
 	m_drawnConns << new PartsEditorConnectorItem(conn, m_item, bounds);
 
 	m_undoStack->push(new QUndoCommand(
@@ -153,14 +158,10 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 		m_item->removeFromModel();
 		m_item->highlightConnectors("");
 
-		qreal itemW = m_item->size().width();
-		qreal itemH = m_item->size().height();
-		qreal size = 500;
-
+		qreal size = 500; // just make sure the user get enough place to play
 		setSceneRect(0,0,size,size);
-		//fitCenterAndDeselect();
 
-		m_item->setPos((size-itemW)/2,(size-itemH)/2);
+		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
 		centerOn(m_item);
 	}
 }

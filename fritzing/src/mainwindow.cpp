@@ -240,9 +240,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
-	if(settings.allKeys().isEmpty()) {
-		new Helper(this);
-	}
+	m_helper = settings.allKeys().isEmpty() ? new Helper(this) : NULL;
 
 
 	QTimer::singleShot(65, this, SLOT(showTabWindow()));
@@ -784,7 +782,7 @@ void MainWindow::changeActivation(bool activate) {
 	// tried using this->saveState() and this->restoreState() but couldn't get it to work
 
 	//DebugDialog::debug(QString("change activation %1\n\t%2").arg(this->windowTitle()).arg(activeWindow->windowTitle()));
-		
+
 	QWidget * activeWindow = QApplication::activeWindow ();
 	//if (activeWindow == NULL) return;
 
@@ -1355,7 +1353,7 @@ void MainWindow::showTabWindow() {
 	ViewSwitcher * viewSwitcher = new ViewSwitcher();
 	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
 	connect(this, SIGNAL(viewSwitched(int)), viewSwitcher, SLOT(viewSwitchedTo(int)));
-	
+
 	m_tabWindow->addViewSwitcher(viewSwitcher);
 	viewSwitcher->viewSwitchedTo(0);
 	viewSwitcher->connectClose(m_tabWindow, SLOT(hide()));
@@ -1377,4 +1375,9 @@ void MainWindow::showTabWindow() {
 	}
 	m_firstMove = true;
 	DebugDialog::debug(QString("tab done"));
+}
+
+void MainWindow::showInViewHelp() {
+	delete m_helper;
+	m_helper = new Helper(this);
 }

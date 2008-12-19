@@ -153,7 +153,9 @@ SketchMainHelp::SketchMainHelp (
 
 
 void SketchMainHelp::doClose() {
-	scene()->removeItem(this);
+	if(scene()) {
+		scene()->removeItem(this);
+	}
 }
 
 void SketchMainHelp::setTransparent() {

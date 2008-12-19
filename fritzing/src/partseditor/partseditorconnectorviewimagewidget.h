@@ -57,7 +57,7 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void mouseMoveEvent(QMouseEvent *event);
 		void mouseReleaseEvent(QMouseEvent *event);
 		void connectItem();
-		void createConnector(Connector *conn, const QRect &rect);
+		void createConnector(Connector *conn, const QSize &connSize);
 		void setItemProperties();
 		bool isSupposedToBeRemoved(const QString& id);
 

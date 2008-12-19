@@ -180,8 +180,8 @@ public:
 	void ensureFixedToTopLeftItems();
 	void ensureFixedToTopRightItems();
 	void ensureFixedToBottomLeftItems();
-	void ensureFixedToCenterItems();
 	void ensureFixedToBottomRightItems();
+	void ensureFixedToCenterItems();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -266,6 +266,12 @@ protected:
 	bool checkAutoscroll(QPoint globalPos);
 	virtual void setWireVisible(Wire *);
 	virtual void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
+
+	void ensureFixedToTopLeft(QGraphicsProxyWidget* item);
+	void ensureFixedToTopRight(QGraphicsProxyWidget* item);
+	void ensureFixedToBottomLeft(QGraphicsProxyWidget* item);
+	void ensureFixedToBottomRight(QGraphicsProxyWidget* item);
+	void ensureFixedToCenter(QGraphicsProxyWidget* item);
 
 protected:
 	static bool lessThan(int a, int b);

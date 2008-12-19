@@ -152,6 +152,7 @@ protected slots:
 	void flipVertical();
 	void showAllLayers();
 	void hideAllLayers();
+	void showInViewHelp();
 
 	// TODO PARTS EDITOR REMOVE
 	void openInOldPartsEditor();
@@ -430,6 +431,7 @@ protected:
     QAction *m_openHelpAct;
     QAction *m_examplesAct;
     QAction *m_partsRefAct;
+    QAction *m_showInViewHelpAct;;
     QAction *m_visitFritzingDotOrgAct;
 
 	QMenu *m_itemMenu;
@@ -458,10 +460,12 @@ protected:
 
 	friend class Helper;
 	friend class DockManager;
-	
+
 	class TabWindow * m_tabWindow;
 	bool m_firstMove;
 	bool m_moveTabWindow;
+
+	Helper *m_helper;
 
 protected:
 	static const QString UntitledSketchName;
