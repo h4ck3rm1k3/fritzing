@@ -129,7 +129,7 @@ bool DirtyFilesManager::saveAs() {
 	QString fileExt;
     QString fileName = QFileDialog::getSaveFileName(
 						m_widgetParent,
-                        tr("Choose a file name"),
+                        tr("Specify a file name"),
                         (m_fileName->isNull() || m_fileName->isEmpty()) ? m_defaultSaveFolder : *m_fileName,
                         tr("Fritzing (*%1)").arg(FritzingExtension),
                         &fileExt

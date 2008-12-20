@@ -117,7 +117,7 @@ bool FritzingWindow::saveAs() {
 	DebugDialog::debug(QString("current file: %1").arg(m_fileName));
     QString fileName = QFileDialog::getSaveFileName(
 						this,
-                        tr("Choose a file name"),
+                        tr("Specify a file name"),
                         path,
                         tr("Fritzing (*%1)").arg(fileExtension()),
                         &fileExt

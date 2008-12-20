@@ -43,7 +43,7 @@ void MainPartsEditorWindow::saveAs() {
 	QString fileExt;
     QString fileName = QFileDialog::getSaveFileName(
 						this,
-                        tr("Choose a file name"),
+                        tr("Specify a file name"),
                         (m_fileName.isNull() || m_fileName.isEmpty()) ? QDir::currentPath()+"/parts/user/" : m_fileName,
                         tr("Fritzing (*%1)").arg(MainWindow::FritzingExtension),
                         &fileExt

@@ -600,7 +600,7 @@ void MainWindow::createFileMenuActions() {
 
 	m_saveAsBundledAct = new QAction(tr("Save As Shareable..."), this);
 	m_saveAsBundledAct->setShortcut(tr("Alt+Ctrl+S"));
-	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and it's non-core part"));
+	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and its non-core parts"));
 	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
 
 	m_exportJpgAct = new BetterTriggerAction(tr("to &JPG..."), this);

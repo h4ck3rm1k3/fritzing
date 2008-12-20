@@ -932,7 +932,7 @@ void MainWindow::saveBundledSketch() {
 
 	QString bundledFileName = QFileDialog::getSaveFileName(
 			this,
-			tr("Choose a file name"),
+			tr("Specify a file name"),
 			path,
 			tr("Fritzing (*%1)").arg(FritzingExtension+"z"),
 			&fileExt

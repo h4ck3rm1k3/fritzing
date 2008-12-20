@@ -172,7 +172,7 @@
     </message>
     <message>
         <location filename="src/filedealingwidget.cpp" line="132"/>
-        <source>Choose a file name</source>
+        <source>Specify a file name</source>
         <translation>Datei auswählen</translation>
     </message>
     <message>
@@ -258,7 +258,7 @@
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="120"/>
-        <source>Choose a file name</source>
+        <source>Specify a file name</source>
         <translation>Datei auswählen</translation>
     </message>
     <message>
@@ -410,7 +410,7 @@
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="211"/>
         <source>Layer Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einlagiginstellungen</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="250"/>
@@ -420,12 +420,12 @@
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="241"/>
         <source>&amp;Import Footprint:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anschlussfläche Pixmap-Datei Importieren:</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="256"/>
         <source>General Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Allgemeine Angaben </translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="260"/>
@@ -489,7 +489,7 @@
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow_menu.cpp" line="46"/>
-        <source>Choose a file name</source>
+        <source>Specify a file name</source>
         <translation>Datei auswählen</translation>
     </message>
     <message>
@@ -519,12 +519,12 @@
     <message>
         <location filename="src/mainwindow.cpp" line="556"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotieren</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="567"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Umdrehen</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="576"/>
@@ -539,7 +539,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="778"/>
         <source>%1%</source>
-        <translation type="unfinished">%1%</translation>
+        <translation>%1%</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="87"/>
@@ -558,8 +558,8 @@
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="935"/>
-        <source>Choose a file name</source>
-        <translation type="unfinished">Datei auswählen</translation>
+        <source>Specify a file name</source>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="937"/>
@@ -574,12 +574,12 @@
     <message>
         <location filename="src/mainwindow.cpp" line="984"/>
         <source>Unable to export %1 to bundled</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht exportiert werden</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="1001"/>
         <source>Unable to open bundled file %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gelesen werden</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="1121"/>
@@ -624,7 +624,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="1261"/>
         <source>%1 - [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - [%2]</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="1352"/>
@@ -659,7 +659,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="86"/>
         <source>Printing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="112"/>
@@ -674,28 +674,28 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="246"/>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>Export...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="266"/>
         <source>Exporting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportiere...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="309"/>
         <source>Unable to save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gespeichert werden</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="381"/>
         <source>Cannot print to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gedruckt werden</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="390"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished">Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
+        <translation>Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="404"/>
@@ -710,13 +710,13 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="445"/>
         <source>Cannot find file %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gefindet werden.</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="456"/>
         <source>Cannot read file  1 %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gelesen werden: %2.</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="567"/>
@@ -731,7 +731,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="569"/>
         <source>Create a new sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu Formular erstellen</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="578"/>
@@ -746,7 +746,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="580"/>
         <source>Open a sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen Formular</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="583"/>
@@ -771,7 +771,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="598"/>
         <source>Save the current sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern deise Formular</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="596"/>
@@ -781,7 +781,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="597"/>
         <source>Shift+Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Ctrl+S</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="601"/>
@@ -795,68 +795,68 @@
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="603"/>
-        <source>Export current sketch and it&apos;s non-core part</source>
+        <source>Export current sketch and its non-core parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="606"/>
         <source>to &amp;JPG...</source>
-        <translation type="unfinished"></translation>
+        <translation>als &amp;JPG...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="608"/>
         <source>Export the current sketch as a JPG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren diese Formular als JPG-Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="611"/>
         <source>to P&amp;NG...</source>
-        <translation type="unfinished"></translation>
+        <translation>als P&amp;NG...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="613"/>
         <source>Export the current sketch as a PNG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren diese Formular als PNG-Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="616"/>
         <source>to Post&amp;Script...</source>
-        <translation type="unfinished"></translation>
+        <translation>als Post&amp;Script...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="618"/>
         <source>Export the current sketch as a PostScript image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren diese Formular als PostScript-Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="621"/>
         <source>to &amp;PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>als &amp;PDF...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="623"/>
         <source>Export the current sketch as a PDF image</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren diese Formular als PDF-Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="626"/>
         <source>to &amp;Eagle...</source>
-        <translation type="unfinished"></translation>
+        <translation>als &amp;Eagle...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="628"/>
         <source>Export the current sketch to Eagle CAD</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren diese Formular als Eagle-CAD-Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="631"/>
         <source>to &amp;Gerber...</source>
-        <translation type="unfinished"></translation>
+        <translation>als &amp;Gerber...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="633"/>
         <source>Export the current sketch to Gerber</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren diese Formular als Gerber-Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="636"/>
@@ -876,12 +876,12 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="646"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="647"/>
         <source>Print the current view</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Ansicht drucken</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="650"/>
@@ -896,57 +896,57 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="652"/>
         <source>Quit the application</source>
-        <translation type="unfinished">Beenden </translation>
+        <translation>Fritzing Beenden </translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="705"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="726"/>
         <source>&amp;Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ausschneiden</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="727"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="728"/>
         <source>Cut selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausschneiden die Auswahl</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="731"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopieren</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="732"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="733"/>
         <source>Copy selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopieren die Auswahl</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="736"/>
         <source>&amp;Paste</source>
-        <translation>Einfügen</translation>
+        <translation>&amp;Einfügen</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="737"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="738"/>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt den Inhalt der Zwischenablage ein</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="741"/>
@@ -956,37 +956,37 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="742"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Ctrl+D</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="743"/>
         <source>Duplicate selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplizieren die Auswahl</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="746"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="754"/>
         <source>Delete selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen die Auswahl</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="757"/>
         <source>&amp;Select All</source>
-        <translation type="unfinished">&amp;Alles markieren</translation>
+        <translation>&amp;Alles markieren</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="758"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="759"/>
         <source>Select all elements</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles Teile markieren</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="762"/>
@@ -1001,17 +1001,17 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="766"/>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Einstellungen...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="958"/>
         <source>Show the application&apos;s about box</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Informationen über Fritzing an</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="776"/>
         <source>&amp;Create New Part...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Neu Teil erstellen...</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="777"/>
@@ -1021,17 +1021,17 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="778"/>
         <source>Create new part</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu Teil erstellen</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="781"/>
         <source>&amp;Open in Parts Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen in Teileditor</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="782"/>
         <source>Ctrl+Return</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="783"/>
@@ -1041,12 +1041,12 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="786"/>
         <source>&amp;Add to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Teil zu dem Bunker hinzufügen</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="787"/>
         <source>Add selected part to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil zu dem Bunker hinzufügen</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="795"/>
@@ -1056,42 +1056,42 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="808"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil um 90° &amp;rechtsdrehend gedreht</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="809"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="810"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil um 90° rechtsdrehend gedreht</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="813"/>
         <source>&amp;Rotate 180&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil um 180° ged&amp;reht</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="814"/>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil um 180° gedreht</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="817"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil um 90° linksdrehend ged&amp;reht</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="818"/>
         <source>Alt+Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="819"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil um 90° linksdrehend gedreht</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="822"/>
@@ -1146,7 +1146,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="840"/>
         <source>Send Backward</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Rückwärts</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="841"/>
@@ -1331,7 +1331,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="918"/>
         <source>Minimize current window</source>
-        <translation type="unfinished"></translation>
+        <translation>Fenster Minimieren </translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="930"/>
@@ -1391,32 +1391,32 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="957"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Info</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="964"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Datei</translation>
+        <translation>&amp;Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="976"/>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Export</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="991"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>B&amp;earbeiten</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="1009"/>
         <source>&amp;Part</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Teil</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="1033"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ansicht</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="1046"/>
@@ -1472,7 +1472,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="1701"/>
         <source>&amp;Create Jumper Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Neu Schaltdraht erstellen</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="1702"/>
@@ -1500,17 +1500,17 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/mismatchingconnectorwidget.cpp" line="118"/>
         <source>In </source>
-        <translation type="unfinished"></translation>
+        <translation>nur in</translation>
     </message>
     <message>
         <location filename="src/partseditor/mismatchingconnectorwidget.cpp" line="124"/>
         <source>and </source>
-        <translation type="unfinished"></translation>
+        <translation>und</translation>
     </message>
     <message>
         <location filename="src/partseditor/mismatchingconnectorwidget.cpp" line="130"/>
         <source>view only</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
 </context>
 <context>
@@ -1575,7 +1575,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partsymbolswidget.cpp" line="57"/>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbols</translation>
     </message>
 </context>
 <context>
@@ -1593,7 +1593,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="214"/>
         <source>Remove selected part</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen der Auswahlteil</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="219"/>
@@ -1608,12 +1608,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="229"/>
         <source>Restore core bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentralbunker Wiederherstellen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="255"/>
-        <source>Choose a file name</source>
-        <translation type="unfinished">Datei auswählen</translation>
+        <source>Specify a file name</source>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="276"/>
@@ -1628,13 +1628,13 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="283"/>
         <source>Cannot find file %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gefindet werden.</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="290"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gelesen werden: %2.</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="336"/>
@@ -1644,7 +1644,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="338"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation type="unfinished">Möchten Sie die Änderungen an diesem Formular speichern %1?</translation>
+        <translation>Möchten Sie die Änderungen an diesem Formular speichern %1?</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
@@ -1654,32 +1654,32 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished">Speichern abbrechen</translation>
+        <translation>Speichern abbrechen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="347"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Ctrl+D</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="438"/>
         <source>Add to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Teil zu dem Bunker hinzufügen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="439"/>
         <source>Do you really want to add the selected part to the bin?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie den ausgewählten Teil zu dem Bunker hinzufügen?</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="462"/>
         <source>Remove from bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Teil vom Bunker löschen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="463"/>
         <source>Do you really want to remove the selected part from the bin?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie den ausgewählten Teil löschen?</translation>
     </message>
 </context>
 <context>
@@ -1687,13 +1687,13 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="79"/>
         <source>Parts Editor</source>
-        <translation type="unfinished">Teileeditor</translation>
+        <translation>Teileeditor</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="80"/>
         <source>Error! Cannot create part file.
 </source>
-        <translation type="unfinished">Fehler: Die Teildatei konnte nicht gemacht werden.</translation>
+        <translation>Fehler: Die Teildatei konnte nicht gemacht werden.</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="175"/>
@@ -1723,12 +1723,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="212"/>
         <source>Created/Updated on</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzeugen/Aktualisieren Date</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="239"/>
         <source>Specifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Technische Daten</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="240"/>
@@ -1738,7 +1738,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="267"/>
         <source>save as new part</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern unter neu Teil-Datei</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="271"/>
@@ -1763,12 +1763,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="383"/>
         <source>Save as new part</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern unter neu Teil-Datei</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="384"/>
         <source>Please, specify a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="413"/>
@@ -1779,12 +1779,12 @@ Please stay tuned.</source>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="415"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished">Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
+        <translation>Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="433"/>
         <source>Saved &apos;%1&apos;</source>
-        <translation type="unfinished">Speichern &apos;%1&apos;</translation>
+        <translation>Speichern &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="559"/>
@@ -1877,14 +1877,14 @@ Please stay tuned.</source>
         <location filename="src/partseditor/svgview.cpp" line="111"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht gelesen werden: %2.</translation>
     </message>
     <message>
         <location filename="src/modelbase.cpp" line="72"/>
         <source>Parse error (1) at line %1, column %2:
 %3
 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Der XML-Code für der Teil (1) %4 enthält einen Fehler bei Zeile %1, Spalte %2:%3</translation>
     </message>
     <message>
         <location filename="src/modelbase.cpp" line="81"/>
@@ -1905,7 +1905,7 @@ Please stay tuned.</source>
         <location filename="src/modelbase.cpp" line="187"/>
         <source>Cannot write file temp file:
 %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine temporäre Datei %1 konnte nicht geschreiben werden.</translation>
     </message>
     <message>
         <location filename="src/modelpart.cpp" line="92"/>
@@ -1935,14 +1935,14 @@ Please stay tuned.</source>
     <message>
         <location filename="src/palettemodel.cpp" line="63"/>
         <source>No parts found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Teile gefunden.</translation>
     </message>
     <message>
         <location filename="src/palettemodel.cpp" line="193"/>
         <source>Parse error (2) at line %1, column %2:
 %3
 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Der XML-Code für der Teil (2) %4 enthält einen Fehler bei Zeile %1, Spalte %2:%3</translation>
     </message>
     <message>
         <location filename="src/palettemodel.cpp" line="239"/>
@@ -1952,7 +1952,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/svgdomdocument.cpp" line="90"/>
         <source>Parts Editor</source>
-        <translation type="unfinished">Teileeditor</translation>
+        <translation>Teileeditor</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditorpaletteitem.cpp" line="222"/>
@@ -1963,19 +1963,14 @@ Please stay tuned.</source>
         <location filename="src/partseditor/svgdomdocument.cpp" line="92"/>
         <source>Cannot write to file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/partseditor/svgview.cpp" line="136"/>
-        <source>FritzBau</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="122"/>
         <source>Parse error (3) at line %1, column %2:
 %3
 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Der XML-Code für der Teil (3) %4 enthält einen Fehler bei Zeile %1, Spalte %2:%3</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="131"/>
@@ -1985,7 +1980,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="136"/>
         <source>The file %1 is not a Fritzing Footprint XML file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei %1 ist keine Fritzing Anschlussfläche-Datei.</translation>
     </message>
     <message>
         <location filename="src/pcbsketchwidget.cpp" line="36"/>
@@ -2115,7 +2110,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/viewlayer.cpp" line="65"/>
         <source>Jumper wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltdraht</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="68"/>
@@ -2136,17 +2131,17 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/partseditor/singleconnectorinfowidget.cpp" line="33"/>
         <source>%1</source>
-        <translation type="unfinished">%1</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="src/partseditor/singleconnectorinfowidget.cpp" line="85"/>
         <source>no name yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Noch kein Name</translation>
     </message>
     <message>
         <location filename="src/partseditor/singleconnectorinfowidget.cpp" line="86"/>
         <source>no description yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Noch kein Angabe</translation>
     </message>
     <message>
         <location filename="src/partseditor/singleconnectorinfowidget.cpp" line="245"/>
@@ -2161,12 +2156,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/partseditor/hashpopulatewidget.cpp" line="36"/>
         <source>a label</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Bezeichnung</translation>
     </message>
     <message>
         <location filename="src/partseditor/hashpopulatewidget.cpp" line="38"/>
         <source>a value</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Wert</translation>
     </message>
 </context>
 <context>
@@ -2187,17 +2182,17 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/partseditor/svgview.cpp" line="80"/>
         <source>Import XML</source>
-        <translation type="unfinished"></translation>
+        <translation>XML Importieren</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="105"/>
         <source>Select Footprint XML File</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anschlussfläche XML-Datei auswählen</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="106"/>
         <source>Fritzing Footprint XML Files (*.fzp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing Anschlussfläche XML-Datei (*.fzp);;Alles Datei (*)</translation>
     </message>
 </context>
 <context>
@@ -2215,7 +2210,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="951"/>
         <source>%1 %2</source>
-        <translation></translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="954"/>
@@ -2245,17 +2240,17 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="1151"/>
         <source>Add %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Hinzufügen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1434"/>
         <source>Move %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 Verschieben (%1)</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1437"/>
         <source>Move %2 items (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 Teile Verschieben (%1)</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1633"/>
@@ -2270,42 +2265,42 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="1733"/>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation>Abschalten</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1741"/>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation>Wechsel</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1745"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Anschließen </translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1746"/>
         <source>to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>mit %1</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1811"/>
         <source>Create and connect wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu Kabel erstellen und anschließen </translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2339"/>
         <source>%3 %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>%3 %2 (%1)</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2341"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotieren</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2341"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Umdrehen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2924"/>
@@ -2336,12 +2331,12 @@ Where&apos;re working to avoid this message, and only let you choose between pro
     <message>
         <location filename="src/sketchwidget.cpp" line="3112"/>
         <source>Change %1 color from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbe %1 von %2 zu %3 wechsel</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3118"/>
         <source>Change color of %1 wires to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Kabelfarbe zu %2 wechsel</translation>
     </message>
 </context>
 <context>
