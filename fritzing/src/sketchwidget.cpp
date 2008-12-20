@@ -2947,7 +2947,7 @@ void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 	}
 
 	if (canChainWire(dynamic_cast<Wire *>(item))) {
-		statusMessage(tr(""));
+		statusMessage(QString());
 	}
 }
 
@@ -2978,7 +2978,7 @@ void SketchWidget::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, Con
 	if (!this->m_chainDrag) return;
 	if (!item->chained()) return;
 
-	statusMessage(tr(""));
+	statusMessage(QString());
 }
 
 bool SketchWidget::currentlyInfoviewed(ItemBase *item) {

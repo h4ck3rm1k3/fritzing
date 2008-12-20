@@ -216,7 +216,7 @@ void MainWindow::exportDiy(QAction * action) {
 
 	bool result = image.save(fileName);
 	if (!result) {
-		QMessageBox::warning(this, tr("fritzing"), tr("Unable to save %1").arg(fileName) );
+		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save %1").arg(fileName) );
 	}
 
 */
@@ -306,7 +306,7 @@ void MainWindow::exportAux(QString fileName, QImage::Format format) {
 	//bool result = bw.save(fileName);
 	bool result = image.save(fileName);
 	if (!result) {
-		QMessageBox::warning(this, tr("fritzing"), tr("Unable to save %1").arg(fileName) );
+		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to save %1").arg(fileName) );
 	}
 }
 

@@ -73,7 +73,7 @@ ConnectorsWidget::ConnectorsWidget(QWidget *parent) : QWidget(parent) {
 	layout->addWidget(m_newButton, row, 0);
 	layout->addWidget(m_userDefConnectors, row++, 1);
 
-	layout->addWidget(new QLabel(tr("Id")), row, 0);
+	layout->addWidget(new QLabel(tr("ID")), row, 0);
 	layout->addWidget(m_connId, row++, 1);
 
 	layout->addWidget(new QLabel(tr("Name")), row, 0);

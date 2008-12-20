@@ -76,7 +76,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 
 	if(modelPart == NULL){
 		if (fromTemplate && !createTemplate()){
-			QMessageBox::critical(this, tr("Part Editor"),
+			QMessageBox::critical(this, tr("Parts Editor"),
 	                           tr("Error! Cannot create part file.\n"),
 	                           QMessageBox::Close);
 	        // this seems hacky but maybe it's ok

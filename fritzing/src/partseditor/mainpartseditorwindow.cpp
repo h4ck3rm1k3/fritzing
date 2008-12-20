@@ -55,7 +55,7 @@ MainPartsEditorWindow::MainPartsEditorWindow(long id, QWidget * parent, Qt::WFla
 
 	if(modelPart == NULL){
 		if (fromTemplate && !createTemplate()){
-			QMessageBox::critical(this, tr("Part Editor"),
+			QMessageBox::critical(this, tr("Parts Editor"),
 	                           tr("Error! Cannot create part file.\n"),
 	                           QMessageBox::Close);
 	        // this seems hacky but maybe it's ok
@@ -124,7 +124,7 @@ MainPartsEditorWindow::MainPartsEditorWindow(long id, QWidget * parent, Qt::WFla
 	m_tabWidget->connect(m_tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabWidget_currentChanged(int)));
 	tabWidget_currentChanged(0);
 
-    statusBar()->showMessage(tr(" "), 2000);
+    statusBar()->showMessage(QString(" "), 2000);
 
     if(fromTemplate) {
 		loadSketchWidgetFromModel(m_breadView, m_breadSvgFile, m_sketchModel->root(), ItemBase::BreadboardView);
@@ -356,7 +356,7 @@ void MainPartsEditorWindow::createMenus(){
 
 	QAction *closeAct = new QAction(tr("&Close"), this);
 	closeAct->setShortcut(tr("Ctrl+W"));
-	closeAct->setStatusTip(tr("Quit the application"));
+	closeAct->setStatusTip(tr("Close the Parts Editor Window"));
 	connect(closeAct, SIGNAL(triggered()), this, SLOT(close()));
 
 	QAction *saveAct = new QAction(tr("&Save"), this);

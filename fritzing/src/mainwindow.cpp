@@ -997,7 +997,7 @@ void MainWindow::loadBundledSketch(QString &fileName) {
 	if(!unzipTo(fileName, unzipDir)) {
 		QMessageBox::warning(
 			this,
-			tr("fritzing"),
+			tr("Fritzing"),
 			tr("Unable to open bundled file %1").arg(fileName)
 		);
 	}

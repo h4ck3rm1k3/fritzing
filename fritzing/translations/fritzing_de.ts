@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
-<defaultcodec></defaultcodec>
 <context>
     <name></name>
     <message>
@@ -459,11 +458,6 @@
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="src/partseditor/mainpartseditorwindow.cpp" line="359"/>
-        <source>Quit the application</source>
-        <translation type="obsolete">Beenden </translation>
-    </message>
-    <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="362"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
@@ -545,7 +539,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="778"/>
         <source>%1%</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1%</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="87"/>
@@ -581,11 +575,6 @@
         <location filename="src/mainwindow.cpp" line="984"/>
         <source>Unable to export %1 to bundled</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/mainwindow_menu.cpp" line="309"/>
-        <source>fritzing</source>
-        <translation type="obsolete">Fritzing</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="1001"/>
@@ -706,7 +695,7 @@
         <location filename="src/mainwindow_menu.cpp" line="390"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="404"/>
@@ -1407,7 +1396,7 @@
     <message>
         <location filename="src/mainwindow_menu.cpp" line="964"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Datei</translation>
     </message>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="976"/>
@@ -1790,7 +1779,7 @@ Please stay tuned.</source>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="415"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="433"/>

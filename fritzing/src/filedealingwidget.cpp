@@ -170,7 +170,7 @@ bool DirtyFilesManager::beforeClosing() {
      	reply = QMessageBox::question(
 					m_widgetParent,
 					tr("Save %1").arg(QFileInfo(*m_fileName).baseName()),
-                    tr("Do you want to save the changes you made in the document %1? Your changes will be lost if you don't save them")
+                    tr("Do you want to save the changes you made in the document %1? Your changes will be lost if you don't save them.")
 						.arg(QFileInfo(*m_fileName).baseName()),
                     QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
      	if (reply == QMessageBox::Yes) {
