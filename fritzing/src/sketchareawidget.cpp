@@ -89,7 +89,7 @@ void SketchAreaWidget::createLayout() {
 	if(viewIdentifier() == ItemBase::PCBView) {
 		m_zoomContainer->addWidget(separator(this->parentWidget()));
 	}
-	QLabel *zoomLabel = new QLabel(tr("Zoom"),this);
+	QLabel *zoomLabel = new QLabel(QObject::tr("Zoom"),this);
 	zoomLabel->setStyleSheet("font-size: 12px;");
 	m_zoomContainer->addWidget(zoomLabel);
 

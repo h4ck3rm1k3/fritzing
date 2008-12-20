@@ -29,8 +29,8 @@ $Date$
 #include "singleconnectorinfowidget.h"
 #include "../debugdialog.h"
 
-const QString ConnectorTypeWidget::FemaleSymbol = tr("%1").arg(QChar(0x2640));
-const QString ConnectorTypeWidget::MaleSymbol = tr("%1").arg(QChar(0x2642));
+const QString ConnectorTypeWidget::FemaleSymbol = QObject::tr("%1").arg(QChar(0x2640));
+const QString ConnectorTypeWidget::MaleSymbol = QObject::tr("%1").arg(QChar(0x2642));
 
 ConnectorTypeWidget::ConnectorTypeWidget(Connector::ConnectorType type, QWidget *parent) : QLabel(parent) {
 	m_isSelected = false;
@@ -81,8 +81,8 @@ void ConnectorTypeWidget::toggleValue() {
 	}
 }
 
-#define EMPTY_CONN_NAME tr("no name yet")
-#define EMPTY_CONN_DESC tr("no description yet")
+#define EMPTY_CONN_NAME QObject::tr("no name yet")
+#define EMPTY_CONN_DESC QObject::tr("no description yet")
 #define EMPTY_CONN_TYPE Connector::Female
 
 
@@ -242,14 +242,14 @@ void SingleConnectorInfoWidget::toEditionMode() {
 	m_descEdit->show();
 
 	if(!m_acceptButton) {
-		m_acceptButton = new QPushButton(tr("Accept"),this);
+		m_acceptButton = new QPushButton(QObject::tr("Accept"),this);
 		connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(editionCompleted()));
 	}
 	layout->addWidget(m_acceptButton,2,4);
 	m_acceptButton->show();
 
 	if(!m_cancelButton) {
-		m_cancelButton = new QPushButton(tr("Cancel"),this);
+		m_cancelButton = new QPushButton(QObject::tr("Cancel"),this);
 		connect(m_cancelButton,SIGNAL(clicked()),this,SLOT(editionCanceled()));
 	}
 	layout->addWidget(m_cancelButton,2,5);

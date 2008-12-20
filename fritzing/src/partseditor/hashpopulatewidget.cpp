@@ -32,8 +32,8 @@ $Date$
 #include "../debugdialog.h"
 #include "../misc.h"
 
-#define NEW_LABEL_TEXT tr("a label")
-#define NEW_VALUE_TEXT tr("a value")
+#define NEW_LABEL_TEXT QObject::tr("a label")
+#define NEW_VALUE_TEXT QObject::tr("a value")
 
 HashLineEdit::HashLineEdit(QUndoStack *undoStack, const QString &text, bool defaultValue, QWidget *parent) : QLineEdit(text, parent) {
 	m_firstText = text;

@@ -94,9 +94,12 @@ Helper::Helper(MainWindow *owner) : QObject(owner) {
 }
 
 Helper::~Helper() {
-	m_breadMainHelp->doClose();
-	m_schemMainHelp->doClose();
-	m_pcbMainHelp->doClose();
+	// m_...MainHelp objects  are deleted by the scene when the scene is deleted
+	// when the sketch is closed, so calling doClose crashes at this point
+
+	//m_breadMainHelp->doClose();
+	//m_schemMainHelp->doClose();
+	//m_pcbMainHelp->doClose();
 }
 
 void Helper::connectToView(SketchWidget* view) {

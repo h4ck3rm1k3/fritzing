@@ -42,6 +42,9 @@ SketchMainHelpCloseButton::SketchMainHelpCloseButton(const QString &imagePath, Q
 	setFixedHeight(m_pixmap.height());
 }
 
+SketchMainHelp::~SketchMainHelp() {
+}
+
 void SketchMainHelpCloseButton::mousePressEvent(QMouseEvent * event) {
 	emit clicked();
 	QLabel::mousePressEvent(event);

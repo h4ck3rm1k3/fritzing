@@ -82,6 +82,7 @@ class SketchMainHelpPrivate : public QFrame {
 class SketchMainHelp : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
 	SketchMainHelp(const QString &viewString, const QString &htmlText);
+	~SketchMainHelp();
 	void doClose();
 	void setTransparent();
 

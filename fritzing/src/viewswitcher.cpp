@@ -32,7 +32,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include "debugdialog.h"
 #include "help/sketchmainhelp.h"
 
-QString ViewSwitcherButton::ResourcePathPattern = tr(":/resources/images/icons/segmentedSwitcher%1%2.png");
+QString ViewSwitcherButton::ResourcePathPattern = (":/resources/images/icons/segmentedSwitcher%1%2.png");
 QBitmap * ViewSwitcher::m_mask = NULL;
 
 ViewSwitcherButton::ViewSwitcherButton(const QString &view, int index, ViewSwitcher *parent) : QLabel(parent)

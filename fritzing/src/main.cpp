@@ -34,6 +34,7 @@ $Date$
 #include <QSettings>
 #include <QThread>
 #include <QMutex>
+#include <QTranslator>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -82,10 +83,20 @@ int main(int argc, char *argv[])
 	#endif
 
 	QString libPath = QCoreApplication::applicationDirPath() + lib;   // applicationDirPath() doesn't work until after QApplication is instantiated
-	DebugDialog::debug(QString("libpath: %1").arg(libPath) );
 	QCoreApplication::addLibraryPath(libPath);							// tell app where to search for plugins (jpeg export and sql lite)
 
-    Q_INIT_RESOURCE(phoenixresources);
+	/*
+	// beginnings of translated text
+    QString locale = QLocale::system().name();
+    QTranslator translator;
+    //translator.load(QString("fritzing_") + locale, libPath);
+    bool loaded = translator.load("fritzing_de", libPath);
+	if (loaded) {
+		app.installTranslator(&translator);
+	}
+	*/
+
+	Q_INIT_RESOURCE(phoenixresources);
 
     QPixmap pixmap(":/resources/images/splash_2010.png");
     FSplashScreen splash(pixmap);

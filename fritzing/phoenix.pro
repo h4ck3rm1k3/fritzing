@@ -49,3 +49,4 @@ include(svg.pri)
 include(help.pri)
 TARGET = Fritzing
 TEMPLATE = app
+TRANSLATIONS += fritzing_de.ts

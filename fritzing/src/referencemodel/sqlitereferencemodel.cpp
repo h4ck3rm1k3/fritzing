@@ -51,8 +51,8 @@ SqliteReferenceModel::SqliteReferenceModel() {
 
 	if(!m_swappingEnabled) {
 		QMessageBox::warning(0,
-			qApp->tr("Oops!"),
-			qApp->tr("Sorry, we have a problem with the swapping mechanism.\nFritzing still works, but you won't be able to change parts properties."),
+			QObject::tr("Oops!"),
+			QObject::tr("Sorry, we have a problem with the swapping mechanism.\nFritzing still works, but you won't be able to change parts properties."),
 			QMessageBox::Ok);
 	}
 
