@@ -464,6 +464,7 @@ protected:
 	class TabWindow * m_tabWindow;
 	bool m_firstMove;
 	bool m_moveTabWindow;
+	bool m_reopenTabWindowAfterParts;
 
 	Helper *m_helper;
 

@@ -40,6 +40,7 @@ $Date$
 #include "autorouter1.h"
 #include "eventeater.h"
 #include "virtualwire.h"
+#include "tabwindow.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1418,8 +1419,12 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 		id = paletteItem->id();
 	}
 
-	if(paletteItem != NULL) {
-		modelPart = paletteItem->modelPart();
+	if (m_partsEditorWindows.count() == 0) {
+		m_reopenTabWindowAfterParts = false;
+		if (m_tabWindow->isVisible()) {
+			m_reopenTabWindowAfterParts = true;
+			m_tabWindow->hide();
+		}
 	}
 
 	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(id,this,0,modelPart,modelPart!=NULL);
@@ -1435,6 +1440,9 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 
 void MainWindow::partsEditorClosed(long id) {
 	m_partsEditorWindows.remove(id);
+	if (m_partsEditorWindows.count() == 0 && m_reopenTabWindowAfterParts) {
+		m_tabWindow->show();
+	}
 }
 
 void MainWindow::openInOldPartsEditor() {
