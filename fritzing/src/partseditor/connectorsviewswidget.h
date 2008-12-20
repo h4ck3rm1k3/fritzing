@@ -44,8 +44,9 @@ class ConnectorsViewsWidget : public QFrame {
 
 	public slots:
 		void repaint();
-		void drawConnector(Connector*);
+		void drawConnector(Connector*, bool showTerminalPoint);
 		void removeConnectorFrom(const QString&,ItemBase::ViewIdentifier);
+		void showTerminalPoints(bool);
 
 	protected:
 		void createViewImageWidget(

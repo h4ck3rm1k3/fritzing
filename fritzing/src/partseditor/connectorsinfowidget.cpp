@@ -28,7 +28,6 @@ $Date$
 #include <QKeyEvent>
 #include <QProgressDialog>
 #include <QApplication>
-#include <QCheckBox>
 
 #include "connectorsinfowidget.h"
 #include "addremoveconnectorbutton.h"
@@ -77,11 +76,11 @@ void ConnectorsInfoWidget::createToolsArea() {
 	lo->addWidget(removeBtn);
 	lo->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 
-	QCheckBox *showTerminalPoints = new QCheckBox(this);
-	showTerminalPoints->setText(tr("Show Terminal Points"));
-	connect(showTerminalPoints, SIGNAL(stateChanged(int)), this, SLOT(emitShowHideTerminalPoints(int)));
+	m_showTerminalPointsCheckBox = new QCheckBox(this);
+	m_showTerminalPointsCheckBox->setText(tr("Show Terminal Points"));
+	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(emitShowHideTerminalPoints(int)));
 
-	lo->addWidget(showTerminalPoints);
+	lo->addWidget(m_showTerminalPointsCheckBox);
 }
 
 void ConnectorsInfoWidget::createScrollArea() {
@@ -473,7 +472,7 @@ void ConnectorsInfoWidget::emitShowHideTerminalPoints(int checkState) {
 
 void ConnectorsInfoWidget::addConnector() {
 	QString connId = QString("connector%1").arg(nextConnId());
-	emit drawConnector(addConnectorInfo(connId));
+	emit drawConnector(addConnectorInfo(connId),m_showTerminalPointsCheckBox->isChecked());
 }
 
 void ConnectorsInfoWidget::removeSelectedConnector() {
@@ -506,4 +505,8 @@ int ConnectorsInfoWidget::nextConnId() {
 		}
 	}
 	return max;
+}
+
+QCheckBox *ConnectorsInfoWidget::showTerminalPointsCheckBox() {
+	return m_showTerminalPointsCheckBox;
 }

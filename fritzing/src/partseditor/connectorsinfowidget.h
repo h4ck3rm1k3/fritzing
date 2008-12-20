@@ -32,6 +32,7 @@ $Date$
 #include <QScrollArea>
 #include <QFrame>
 #include <QLabel>
+#include <QCheckBox>
 
 #include "singleconnectorinfowidget.h"
 #include "mismatchingconnectorwidget.h"
@@ -41,6 +42,7 @@ class ConnectorsInfoWidget : public QFrame{
 	public:
 		ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent=0);
 		const QList<ConnectorStuff *> connectorsStuffs();
+		QCheckBox *showTerminalPointsCheckBox();
 
 	public slots:
 		void connectorsFound(QList<Connector *>);
@@ -59,7 +61,7 @@ class ConnectorsInfoWidget : public QFrame{
 		void setMismatching(ItemBase::ViewIdentifier viewId, const QString &connId, bool mismatching);
 		void repaintNeeded();
 		void showTerminalPoints(bool show);
-		void drawConnector(Connector*);
+		void drawConnector(Connector*, bool showTerminalPoint);
 		void removeConnectorFrom(const QString &connId, ItemBase::ViewIdentifier view);
 
 	protected slots:
@@ -111,6 +113,7 @@ class ConnectorsInfoWidget : public QFrame{
 		QStringList m_connIds;
 
 		WaitPushUndoStack *m_undoStack;
+		QCheckBox *m_showTerminalPointsCheckBox;
 };
 
 #endif /* CONNECTORSINFOWIDGET_H_ */

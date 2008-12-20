@@ -148,6 +148,7 @@ void PartsEditorViewImageWidget::copyToTempAndRenameIfNecessary(StringPair *file
 }
 
 void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
+	DebugDialog::debug("<<< file path to use "+filePath);
 	m_originalSvgFilePath = filePath;
 	QString folder = getApplicationSubFolderPath("parts")+"/svg";
 
@@ -161,11 +162,13 @@ void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
 	cs = Qt::CaseInsensitive;
 #endif
 	if(filePath.contains(folder, cs)) {
+		DebugDialog::debug("<<< is in core");
 		QString filePathAux = filePath;
 		QString svgFile = filePathAux.remove(folder+"/", cs);
 		first = folder;
 		second = svgFile;
 	} else {
+		DebugDialog::debug("<<< isn't in core");
 		first = filePath;
 		second = "";
 	}
@@ -189,11 +192,13 @@ void PartsEditorViewImageWidget::fitCenterAndDeselect() {
 }
 
 QString PartsEditorViewImageWidget::createSvgFromImage(const QString &origFilePath) {
-	DebugDialog::debug("<<< original "+origFilePath);
+	QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
 
-	QString newFilePath = m_tempFolder.path()+"/"+FritzingWindow::getRandText()+".svg";
-	DebugDialog::debug("<<< nueva imagen "+newFilePath);
+	if(!QFileInfo(m_tempFolder.path()+"/"+viewFolder).exists()) {
+		if(!m_tempFolder.mkdir(viewFolder)) return ___emptyString___;
+	}
 
+	QString newFilePath = m_tempFolder.path()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
 	QImage imgOrig(origFilePath);
 
 	QSvgGenerator svgGenerator;

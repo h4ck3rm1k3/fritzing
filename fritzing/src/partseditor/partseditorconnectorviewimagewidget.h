@@ -37,9 +37,10 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 	Q_OBJECT
 	public:
 		PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=150);
-		void drawConector(Connector *conn);
+		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void updateDomIfNeeded();
+		void showTerminalPoints(bool show);
 
 	public slots:
 		void informConnectorSelection(const QString& connId);
@@ -57,7 +58,7 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void mouseMoveEvent(QMouseEvent *event);
 		void mouseReleaseEvent(QMouseEvent *event);
 		void connectItem();
-		void createConnector(Connector *conn, const QSize &connSize);
+		void createConnector(Connector *conn, const QSize &connSize, bool showTerminalPoint);
 		void setItemProperties();
 		bool isSupposedToBeRemoved(const QString& id);
 

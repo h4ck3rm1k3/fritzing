@@ -29,10 +29,20 @@ $Date$
 #ifndef PARTSEDITORCONNECTORITEM_H_
 #define PARTSEDITORCONNECTORITEM_H_
 
+#include <QGraphicsView>
+#include "terminalpointitem.h"
 #include "../connectoritem.h"
 
 
 class PartsEditorConnectorItem: public ConnectorItem {
+	enum Position {
+		TopLeftCorner = 0x00000,
+		TopRightCorner = 0x00001,
+		BottomLeftCorner = 0x00002,
+		BottomRightCorner = 0x00003,
+		Inside = 0x00004,
+		Outside = 0x00005,
+	};
 	public:
 		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo);
 		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds);
@@ -40,8 +50,11 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void removeFromModel();
 		void setConnector(Connector *connector);
 		void setMismatching(bool isMismatching);
+		void showTerminalPoint(bool show);
 
 	protected:
+		void init(bool resizable);
+
 		void setSelectedColor(const QColor &color = selectedColor);
 		void setNotSelectedColor(const QColor &color = notSelectedColor);
 		void removeErrorIcon();
@@ -56,13 +69,18 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void mousePressEvent(QGraphicsSceneMouseEvent *event);
 		void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-		/*Qt::Corner*/ int updateCursor(const QPointF &mousePos, const QCursor &defaultCursor=QCursor());
-		/*Qt::Corner*/ int closeToCorner(const QPointF &pos);
+		PartsEditorConnectorItem::Position updateCursor(const QPointF &mousePos, const QCursor &defaultCursor=QCursor());
+		PartsEditorConnectorItem::Position closeToCorner(const QPointF &pos);
+		void setParentDragMode(QGraphicsView::DragMode);
+
+		void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;
 		bool m_resizable;
-		bool m_resizing;
+		volatile bool m_resizing;
+		volatile Position m_mousePosition;
+		TerminalPointItem *m_terminalPointItem;
 	public:
 		static QColor selectedColor;
 		static QColor notSelectedColor;

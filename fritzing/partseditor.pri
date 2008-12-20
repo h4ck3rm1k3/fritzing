@@ -54,7 +54,8 @@ HEADERS += \
     src/partseditor/svgdomdocument.h \
     src/partseditor/svgview.h \
     src/partseditor/zoomcontrols.h \
-    src/partseditor/addremoveconnectorbutton.h
+    src/partseditor/addremoveconnectorbutton.h \
+    src/partseditor/terminalpointitem.h
 
 SOURCES += \
     src/partseditor/editabledatewidget.cpp \
@@ -86,5 +87,6 @@ SOURCES += \
     src/partseditor/pcbxml.cpp \
     src/partseditor/svgdomdocument.cpp \
     src/partseditor/svgview.cpp \
-    src/partseditor/zoomcontrols.cpp
+    src/partseditor/zoomcontrols.cpp \
+    src/partseditor/terminalpointitem.cpp
 

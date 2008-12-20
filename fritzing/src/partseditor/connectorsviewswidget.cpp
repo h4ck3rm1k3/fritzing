@@ -91,10 +91,10 @@ void ConnectorsViewsWidget::repaint() {
 	m_pcbView->scene()->update();
 }
 
-void ConnectorsViewsWidget::drawConnector(Connector* conn) {
-	m_breadView->drawConector(conn);
-	m_schemView->drawConector(conn);
-	m_pcbView->drawConector(conn);
+void ConnectorsViewsWidget::drawConnector(Connector* conn, bool showTerminalPoints) {
+	m_breadView->drawConector(conn,showTerminalPoints);
+	m_schemView->drawConector(conn,showTerminalPoints);
+	m_pcbView->drawConector(conn,showTerminalPoints);
 }
 
 void ConnectorsViewsWidget::aboutToSave() {
@@ -122,4 +122,11 @@ void ConnectorsViewsWidget::removeConnectorFrom(const QString &connId, ItemBase:
 			break;
 		default: Q_ASSERT(false);
 	}
+}
+
+
+void ConnectorsViewsWidget::showTerminalPoints(bool show) {
+	m_breadView->showTerminalPoints(show);
+	m_schemView->showTerminalPoints(show);
+	m_pcbView->showTerminalPoints(show);
 }

@@ -37,31 +37,32 @@ qreal PartsEditorConnectorItem::selectedPenWidth = 1.5;
 PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo)
 	: ConnectorItem(conn, attachedTo)
 {
-	setAcceptsHoverEvents(false);
-	setAcceptHoverEvents(false);
-	this->setCursor(Qt::ArrowCursor);
-	m_withBorder = false;
-	m_errorIcon = NULL;
-
-	m_resizable = false;
-	m_resizing = false;
+	init(false);
+	m_terminalPointItem = NULL;
 }
 
 PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds)
 	: ConnectorItem(conn, attachedTo)
 {
-	setAcceptsHoverEvents(true);
-	setAcceptHoverEvents(true);
-	this->setCursor(Qt::ArrowCursor);
-	m_withBorder = false;
-	m_errorIcon = NULL;
+	init(true);
 
-	setFlag(QGraphicsItem::ItemIsMovable);
 	setRect(bounds);
 	removeBorder();
 
-	m_resizable = true;
+	setFlag(QGraphicsItem::ItemIsSelectable);
+	setFlag(QGraphicsItem::ItemIsMovable);
+	m_terminalPointItem = new TerminalPointItem(this);
+}
+
+void PartsEditorConnectorItem::init(bool resizable) {
+	setAcceptsHoverEvents(resizable);
+	setAcceptHoverEvents(resizable);
+	m_withBorder = false;
+	m_errorIcon = NULL;
+
+	m_resizable = resizable;
 	m_resizing = false;
+	m_mousePosition = Outside;
 }
 
 void PartsEditorConnectorItem::setSelectedColor(const QColor &color) {
@@ -166,108 +167,163 @@ void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) 
 		grabMouse();
 		updateCursor(event->pos(),QCursor(Qt::SizeAllCursor));
 	} else {
-		QGraphicsItem::hoverEnterEvent(event);
+		//QGraphicsItem::hoverEnterEvent(event);
 	}
 }
 
 void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 	if(m_resizable) {
-		ungrabMouse();
 		updateCursor(event->pos());
+		ungrabMouse();
 	} else {
-		QGraphicsItem::hoverEnterEvent(event);
+		//QGraphicsItem::hoverEnterEvent(event);
 	}
 }
 
 void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	DebugDialog::debug("<<< moveevent");
-	int corner = updateCursor(event->pos());
 	if(m_resizable && m_resizing) {
-		prepareGeometryChange();
-		if(corner > -1) {
-			qreal oldX1 = pos().x();
-			qreal oldY1 = pos().y();
-			qreal oldX2 = pos().x()+boundingRect().width();
-			qreal oldY2 = pos().y()+boundingRect().height();
+		if(m_mousePosition < Inside) {
+			prepareGeometryChange();
+
+			qreal oldX1 = boundingRect().x();
+			qreal oldY1 = boundingRect().y();
+			qreal oldX2 = oldX1+boundingRect().width();
+			qreal oldY2 = oldY1+boundingRect().height();
 			qreal newX = event->pos().x();
 			qreal newY = event->pos().y();
-			switch(corner) {
-				case Qt::TopLeftCorner: 	setRect(newX,newY,oldX2,oldY2); break;
-				case Qt::BottomLeftCorner: 	setRect(newX,oldY1,oldX1,newY); break;
-				case Qt::TopRightCorner: 	setRect(oldX1,newY,newX,oldX2); break;
-				case Qt::BottomRightCorner: setRect(oldX1,oldY1,newX,newY); break;
+
+			DebugDialog::debug(QString("<<< (%1,%2)  (%3,%4)")
+					.arg(oldX1).arg(oldY1).arg(oldX2).arg(oldY2));
+
+			DebugDialog::debug(QString("<<< mouse (%1,%2)")
+								.arg(newX).arg(newY));
+
+			switch(m_mousePosition) {
+				case TopLeftCorner: 	setRectAux(newX,newY,oldX2,oldY2);
+				DebugDialog::debug(QString("<<< from top left new rect (%1,%2)  (%3,%4)")
+						.arg(newX).arg(newY).arg(oldX2).arg(oldY2));
+				break;
+				case BottomLeftCorner: 	setRectAux(newX,oldY1,oldX1,newY);
+				DebugDialog::debug(QString("<<< from bottom left new rect (%1,%2)  (%3,%4)")
+						.arg(newX).arg(oldY1).arg(oldX1).arg(newY));
+				break;
+				case TopRightCorner: 	setRectAux(oldX1,newY,newX,oldX2);
+				DebugDialog::debug(QString("<<< from top right new rect (%1,%2)  (%3,%4)")
+						.arg(oldX1).arg(newY).arg(newX).arg(oldX2));
+				break;
+				case BottomRightCorner: setRectAux(oldX1,oldY1,newX,newY);
+				DebugDialog::debug(QString("<<< from bottom right new rect (%1,%2)  (%3,%4)")
+						.arg(oldX1).arg(oldY1).arg(newX).arg(newY));
+				break;
 				default: break;
 			}
 
-			DebugDialog::debug(QString("<<<< new rect %1 %2 %3 %4")
-				.arg(rect().x()).arg(rect().y())
-				.arg(rect().width()).arg(rect().height())
-				);
+			DebugDialog::debug("");
+		} else if(m_mousePosition == Inside) {
+			DebugDialog::debug("move it!");
+			QPointF currentParentPos = mapToParent(mapFromScene(event->scenePos()));
+			QPointF  buttonDownParentPos = mapToParent(mapFromScene(event->buttonDownScenePos(Qt::LeftButton)));
+			QPointF aux = currentParentPos - buttonDownParentPos;
+			moveBy(aux.x(),aux.y());
 		} else {
 			ConnectorItem::mouseMoveEvent(event);
 		}
 	} else {
 		ConnectorItem::mouseMoveEvent(event);
 	}
+	updateCursor(event->pos());
+}
 
-
-	//ConnectorItem::mouseMoveEvent(event);
+void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
+	setRect(x1,y1,x2-x1,y2-y1);
+	if(m_terminalPointItem) {
+		m_terminalPointItem->updatePoint();
+	}
 }
 
 void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if(m_resizable && cursor().shape() != QCursor().shape()) {
-		m_resizing = true;
+	setParentDragMode(QGraphicsView::NoDrag);
+	if(m_resizable) {
+		setFlag(QGraphicsItem::ItemIsMovable,true);
+		m_mousePosition = closeToCorner(event->pos());
+		if(m_mousePosition != Outside) {
+			DebugDialog::debug("<<<<<<<<<<<<<<<<<<<<<< listo apra resize");
+			m_resizing = true;
+		}
+	} else {
+		ConnectorItem::mousePressEvent(event);
 	}
-	ConnectorItem::mousePressEvent(event);
 }
 
 void PartsEditorConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_resizable) {
 		m_resizing = false;
+		setParentDragMode(QGraphicsView::ScrollHandDrag);
 		setCursor(QCursor());
 	}
 	ConnectorItem::mouseReleaseEvent(event);
 }
 
-/*Qt::Corner*/ int PartsEditorConnectorItem::updateCursor(const QPointF &mousePos, const QCursor &defaultCursor) {
+PartsEditorConnectorItem::Position PartsEditorConnectorItem::updateCursor(const QPointF &mousePos, const QCursor &defaultCursor) {
 	QCursor cursor;
-	int corner = closeToCorner(mousePos);
-	switch(corner) {
-		case Qt::TopLeftCorner:
-			cursor = QCursor(Qt::SizeFDiagCursor); break;
-		case Qt::BottomRightCorner:
-			cursor = QCursor(Qt::SizeFDiagCursor); break;
-		case Qt::TopRightCorner:
-			cursor = QCursor(Qt::SizeBDiagCursor); break;
-		case Qt::BottomLeftCorner:
-			cursor = QCursor(Qt::SizeBDiagCursor); break;
-		case -1:
-			cursor = defaultCursor; break;
+	m_mousePosition = closeToCorner(mousePos);
+	switch(m_mousePosition) {
+		case TopLeftCorner:
+			cursor = QCursor(Qt::SizeFDiagCursor);
+			break;
+		case BottomRightCorner:
+			cursor = QCursor(Qt::SizeFDiagCursor);
+			break;
+		case TopRightCorner:
+			cursor = QCursor(Qt::SizeBDiagCursor);
+			break;
+		case BottomLeftCorner:
+			cursor = QCursor(Qt::SizeBDiagCursor);
+			break;
+		case Inside:
+			cursor = QCursor(Qt::SizeAllCursor);
+			break;
+		case Outside:
+			cursor = defaultCursor;
+			break;
 	}
 	setCursor(cursor);
-	return corner;
+	return m_mousePosition;
 }
 
-/*Qt::Corner*/ int PartsEditorConnectorItem::closeToCorner(const QPointF &pos) {
-	qreal x1 = 0;//this->pos().x();
-	qreal y1 = 0;//this->pos().y();
-	qreal x2 = boundingRect().width();//this->pos().x()+boundingRect().width();
-	qreal y2 = boundingRect().height();//this->pos().y()+boundingRect().height();
 
-	DebugDialog::debug(QString("<<< (%1,%2) (%3,%4)").arg(x1).arg(y1).arg(x2).arg(y2));
-	DebugDialog::debug(QString("<<< mouse (%1,%2)").arg(pos.x()).arg(pos.y()));
+PartsEditorConnectorItem::Position PartsEditorConnectorItem::closeToCorner(const QPointF &pos) {
+	qreal x1 = boundingRect().x();
+	qreal y1 = boundingRect().y();
+	qreal x2 = x1+boundingRect().width();
+	qreal y2 = y1+boundingRect().height();
 
-	// TODO: trasladar las lineas al origen
-	QPair<qreal,Qt::Corner> tl(QLineF(QPointF(0,0),QPointF(x1,y1)-pos).length(), Qt::TopLeftCorner);
-	QPair<qreal,Qt::Corner> tr(QLineF(QPointF(0,0),QPointF(x2,y1)-pos).length(), Qt::TopRightCorner);
-	QPair<qreal,Qt::Corner> br(QLineF(QPointF(0,0),QPointF(x2,y2)-pos).length(), Qt::BottomRightCorner);
-	QPair<qreal,Qt::Corner> bl(QLineF(QPointF(0,0),QPointF(x1,y2)-pos).length(), Qt::BottomLeftCorner);
+	bool mouseOutOfRect = pos.x() < x1 || pos.y() < y1 || pos.x() > x2 || pos.y() > y2;
 
-	QPair<qreal,Qt::Corner> min = tl.first < tr.first ? tl : tr;
+	QPair<qreal,Position> tl(QLineF(QPointF(x1,y1),pos).length(), TopLeftCorner);
+	QPair<qreal,Position> tr(QLineF(QPointF(x2,y1),pos).length(), TopRightCorner);
+	QPair<qreal,Position> br(QLineF(QPointF(x2,y2),pos).length(), BottomRightCorner);
+	QPair<qreal,Position> bl(QLineF(QPointF(x1,y2),pos).length(), BottomLeftCorner);
+
+	QPair<qreal,Position> min = tl.first < tr.first ? tl : tr;
 	min = min.first < br.first ? min : br;
 	min = min.first < bl.first ? min : bl;
 
-	DebugDialog::debug(QString("<<<<< min %1 %2").arg(min.first).arg(min.second));
-	if(min.first <= 3) return min.second;
-	else return -1;
+	if(min.first <= 3)
+		return min.second;
+	else if(mouseOutOfRect) return Outside;
+	else return Inside;
+}
+
+
+void PartsEditorConnectorItem::setParentDragMode(QGraphicsView::DragMode dragMode) {
+	QGraphicsView *prnt = dynamic_cast<QGraphicsView*>(scene()->parent());
+	if(prnt) prnt->setDragMode(dragMode);
+}
+
+
+void PartsEditorConnectorItem::showTerminalPoint(bool show) {
+	if(m_terminalPointItem) {
+		m_terminalPointItem->setVisible(show);
+	}
 }

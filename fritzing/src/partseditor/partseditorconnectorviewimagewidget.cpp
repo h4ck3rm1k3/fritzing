@@ -86,12 +86,12 @@ void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) 
 	PartsEditorAbstractViewImage::mouseReleaseEvent(event);
 }
 
-void PartsEditorConnectorViewImageWidget::drawConector(Connector *conn) {
+void PartsEditorConnectorViewImageWidget::drawConector(Connector *conn, bool showTerminalPoint) {
 	QSize size(ConnDefaultWidth,ConnDefaultHeight);
-	createConnector(conn,size);
+	createConnector(conn,size,showTerminalPoint);
 }
 
-void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const QSize &connSize) {
+void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const QSize &connSize, bool showTerminalPoint) {
 	Q_ASSERT(m_item);
 	QString connId = conn->connectorStuffID();
 
@@ -101,7 +101,9 @@ void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const
 		;
 
 	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize*m_scaleValue/100);
-	m_drawnConns << new PartsEditorConnectorItem(conn, m_item, bounds);
+	PartsEditorConnectorItem *connItem = new PartsEditorConnectorItem(conn, m_item, bounds);
+	m_drawnConns << connItem;
+	connItem->showTerminalPoint(showTerminalPoint);
 
 	m_undoStack->push(new QUndoCommand(
 		QString("connector '%1' added to %2 view")
@@ -154,7 +156,7 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 	if(m_item) {
 		m_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 		m_item->setFlag(QGraphicsItem::ItemIsMovable, false);
-		m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, false);
+		//m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 		m_item->removeFromModel();
 		m_item->highlightConnectors("");
 
@@ -274,4 +276,13 @@ bool PartsEditorConnectorViewImageWidget::isSupposedToBeRemoved(const QString& i
 		}
 	}
 	return false;
+}
+
+void PartsEditorConnectorViewImageWidget::showTerminalPoints(bool show) {
+	foreach(QGraphicsItem *item, items()) {
+		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
+		if(connItem) {
+			connItem->showTerminalPoint(show);
+		}
+	}
 }
