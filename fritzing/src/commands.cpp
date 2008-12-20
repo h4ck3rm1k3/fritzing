@@ -171,7 +171,7 @@ ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, Ba
 												 QUndoCommand * parent)
 : BaseCommand(crossView, sketchWidget, parent)
 {
-	//DebugDialog::debug(QObject::tr("ccc: from %1 %2; to %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
+	//DebugDialog::debug(QString("ccc: from %1 %2; to %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
     m_fromID = fromID;
     m_fromConnectorID = fromConnectorID;
     m_toID = toID;
@@ -256,29 +256,29 @@ bool SelectItemCommand::mergeWith(const QUndoCommand *other)
     const SelectItemCommand * sother = dynamic_cast<const SelectItemCommand *>(other);
     if (sother == NULL) return false;
 
-	//DebugDialog::debug(QObject::tr("merge %1 other:%2").arg(id()).arg(other->id()));
+	//DebugDialog::debug(QString("merge %1 other:%2").arg(id()).arg(other->id()));
 
 	//QString s;
    	//for (int i = 0; i < this->m_undoIDs.size(); i++) {
    		//s += QString::number(this->m_undoIDs[i]) + " ";
   	//}
-	//DebugDialog::debug(QObject::tr("this undo %1").arg(s));
+	//DebugDialog::debug(QString("this undo %1").arg(s));
 	//s = "";
    	//for (int i = 0; i < this->m_redoIDs.size(); i++) {
    		//s += QString::number(this->m_redoIDs[i]) + " ";
   	//}
-	//DebugDialog::debug(QObject::tr("this redo %1").arg(s));
+	//DebugDialog::debug(QString("this redo %1").arg(s));
 
 	//s = "";
    	//for (int i = 0; i < sother->m_undoIDs.size(); i++) {
    		//s += QString::number(sother->m_undoIDs[i]) + " ";
   	//}
-	//DebugDialog::debug(QObject::tr("other undo %1").arg(s));
+	//DebugDialog::debug(QString("other undo %1").arg(s));
 	//s = "";
    	//for (int i = 0; i < sother->m_redoIDs.size(); i++) {
    		//s += QString::number(sother->m_redoIDs[i]) + " ";
   	//}
-	//DebugDialog::debug(QObject::tr("other redo %1").arg(s));
+	//DebugDialog::debug(QString("other redo %1").arg(s));
 
 
 

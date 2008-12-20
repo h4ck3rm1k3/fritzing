@@ -47,7 +47,7 @@ QString getUserPartsFolder(){
 QDir * getApplicationSubFolder(QString search) {
 	QString path = QCoreApplication::applicationDirPath();
     path += "/" + search;
-	//DebugDialog::debug(QObject::tr("path %1").arg(path) );
+	//DebugDialog::debug(QString("path %1").arg(path) );
     QDir* dir= new QDir(path);
     while (!dir->exists()) {
     	// if we're running from the debug or release folder, go up one to find things

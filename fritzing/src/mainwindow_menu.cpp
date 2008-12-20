@@ -265,7 +265,7 @@ void MainWindow::doExport(QAction * action) {
 				printAux(printer,tr("Exporting..."));
 				m_statusBar->showMessage(tr("Sketch exported"), 2000);
 			} else { // PNG...
-				DebugDialog::debug(tr("format: %1 %2").arg(fileExt).arg(fileExportFormats[fileExt]));
+				DebugDialog::debug(QString("format: %1 %2").arg(fileExt).arg(fileExportFormats[fileExt]));
 				exportAux(fileName,fileExportFormats[fileExt]);
 			}
 		}
@@ -317,7 +317,7 @@ void MainWindow::printAux(QPrinter &printer, QString /* message */, bool removeB
 
 		qreal scale2 = res / m_printerScale;
 
-		DebugDialog::debug(QObject::tr("p.w:%1 p.h:%2 pager.w:%3 pager.h:%4 paperr.w:%5 paperr.h:%6 source.w:%7 source.h:%8")
+		DebugDialog::debug(QString("p.w:%1 p.h:%2 pager.w:%3 pager.h:%4 paperr.w:%5 paperr.h:%6 source.w:%7 source.h:%8")
 			.arg(printer.width()).arg(printer.height()).arg(printer.pageRect().width())
 			.arg(printer.pageRect().height())
 			.arg(printer.paperRect().width()).arg(printer.paperRect().height())
@@ -349,7 +349,7 @@ void MainWindow::printAux(QPrinter &printer, QString /* message */, bool removeB
 			m_currentGraphicsView->setBackground(color);
 		}
 
-		DebugDialog::debug(QObject::tr("source w:%1 h:%2 target w:%5 h:%6 pres:%3 screenres:%4")
+		DebugDialog::debug(QString("source w:%1 h:%2 target w:%5 h:%6 pres:%3 screenres:%4")
 			.arg(source.width())
 			.arg(source.height()).arg(res).arg(this->physicalDpiX())
 			.arg(target.width()).arg(target.height()) );
@@ -1147,7 +1147,7 @@ void MainWindow::updatePartMenu() {
 		}
 	}
 
-	DebugDialog::debug(tr("enable layer actions %1").arg(enable));
+	DebugDialog::debug(QString("enable layer actions %1").arg(enable));
 	m_bringToFrontAct->setEnabled(enable);
 	m_bringForwardAct->setEnabled(enable);
 	m_sendBackwardAct->setEnabled(enable);
@@ -1155,7 +1155,7 @@ void MainWindow::updatePartMenu() {
 
 	enable = (itemCount.selRotatable > 0);
 
-	DebugDialog::debug(tr("enable rotate (2) %1").arg(enable));
+	DebugDialog::debug(QString("enable rotate (2) %1").arg(enable));
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
@@ -1173,7 +1173,7 @@ void MainWindow::updateTransformationActions() {
 	ItemCount itemCount = m_currentGraphicsView->calcItemCount();
 	bool enable = (itemCount.selRotatable > 0);
 
-	DebugDialog::debug(tr("enable rotate (1) %1").arg(enable));
+	DebugDialog::debug(QString("enable rotate (1) %1").arg(enable));
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
@@ -1251,7 +1251,7 @@ void MainWindow::updateEditMenu() {
 		if (mimeData != NULL) {
 			if (mimeData->hasFormat("application/x-dnditemsdata")) {
 				m_pasteAct->setEnabled(true);
-				//DebugDialog::debug(tr("paste enabled: true"));
+				//DebugDialog::debug(QString("paste enabled: true"));
 			}
 		}
 	}
@@ -1269,7 +1269,7 @@ void MainWindow::updateEditMenu() {
 			}
 		}
 
-		DebugDialog::debug(tr("enable cut/copy/duplicate/delete %1 %2 %3").arg(copyActsEnabled).arg(deleteActsEnabled).arg(m_currentWidget->viewIdentifier()) );
+		DebugDialog::debug(QString("enable cut/copy/duplicate/delete %1 %2 %3").arg(copyActsEnabled).arg(deleteActsEnabled).arg(m_currentWidget->viewIdentifier()) );
 		m_deleteAct->setEnabled(deleteActsEnabled);
 		m_cutAct->setEnabled(deleteActsEnabled && copyActsEnabled);
 		m_copyAct->setEnabled(copyActsEnabled);

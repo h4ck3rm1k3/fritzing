@@ -125,7 +125,7 @@ bool DirtyFilesManager::isEmptyFile() {
 }
 
 bool DirtyFilesManager::saveAs() {
-	DebugDialog::debug(tr("current path: %1").arg(QDir::currentPath()));
+	DebugDialog::debug(QString("current path: %1").arg(QDir::currentPath()));
 	QString fileExt;
     QString fileName = QFileDialog::getSaveFileName(
 						m_widgetParent,

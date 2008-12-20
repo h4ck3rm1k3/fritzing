@@ -356,7 +356,7 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 	bool result = layerAttributes.getSvgElementID(modelPartStuff->domDocument(), viewIdentifier, viewLayerID);
 	if (!result) return NULL;
 
-	//DebugDialog::debug(tr("setting z %1 %2")
+	//DebugDialog::debug(QString("setting z %1 %2")
 		//.arg(this->z())
 		//.arg(ViewLayer::viewLayerNameFromID(viewLayerID))  );
 
@@ -456,13 +456,13 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);
 
-		//DebugDialog::debug(	tr("in layer %1 with z %2")
+		//DebugDialog::debug(	QString("in layer %1 with z %2")
 			//.arg(ViewLayer::viewLayerNameFromID(m_viewLayerID))
 			//.arg(this->zValue()) );
 
 		connectorItem->setRect(connectorRect);
 		connectorItem->setTerminalPoint(terminalPoint);
-		//DebugDialog::debug(tr("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
+		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
 
 		Bus * bus = connectorItem->bus();
 		if (bus != NULL) {

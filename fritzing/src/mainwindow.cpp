@@ -732,7 +732,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		count++;
 	}
 
-	DebugDialog::debug(tr("current main windows: %1").arg(QApplication::topLevelWidgets().size()));
+	DebugDialog::debug(QString("current main windows: %1").arg(QApplication::topLevelWidgets().size()));
 
 	if (count == 0) {
 		DebugDialog::closeDebug();

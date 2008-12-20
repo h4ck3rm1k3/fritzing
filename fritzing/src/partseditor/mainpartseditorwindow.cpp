@@ -318,7 +318,7 @@ void MainPartsEditorWindow::loadFileIntoView(StringPair *svgFilePath, PartsEdito
 }
 
 void MainPartsEditorWindow::copyToTempAndRename(QString filePathOrig, StringPair* filePathDest, ItemBase::ViewIdentifier viewId) {
-	DebugDialog::debug(tr("---- copying from %1").arg(filePathOrig));
+	DebugDialog::debug(QString("---- copying from %1").arg(filePathOrig));
 	QDir randDir = createTempFolderIfNecessary();
 	QString viewFolder = ItemBase::viewIdentifierNaturalName(viewId);
 
@@ -326,17 +326,17 @@ void MainPartsEditorWindow::copyToTempAndRename(QString filePathOrig, StringPair
 	if(!randDir.cd(viewFolder)) return;
 
 	QString destFilePath = getRandText()+".svg";
-	DebugDialog::debug(tr("dest file: %1").arg(randDir.path()+"/"+destFilePath));
+	DebugDialog::debug(QString("dest file: %1").arg(randDir.path()+"/"+destFilePath));
 	QFile tempFile(filePathOrig);
 	tempFile.copy(randDir.path()+"/"+destFilePath);
 
 	if(!randDir.cd("..")) return; // out of view folder
 	filePathDest->first = randDir.path();
 
-	DebugDialog::debug(tr("path in fz file: %1").arg(viewFolder+"/"+destFilePath));
+	DebugDialog::debug(QString("path in fz file: %1").arg(viewFolder+"/"+destFilePath));
 	filePathDest->second = viewFolder+"/"+destFilePath;
 
-	DebugDialog::debug(tr("++++ copying to %1").arg(filePathDest->first+"/"+filePathDest->second));
+	DebugDialog::debug(QString("++++ copying to %1").arg(filePathDest->first+"/"+filePathDest->second));
 }
 
 QString MainPartsEditorWindow::getRandText() {
@@ -471,12 +471,12 @@ void MainPartsEditorWindow::closeEvent(QCloseEvent *event) {
 }
 
 void MainPartsEditorWindow::rmdir(QDir & dir) {
-	DebugDialog::debug(tr("removing temp folder: %1").arg(dir.path()));
+	DebugDialog::debug(QString("removing temp folder: %1").arg(dir.path()));
 
 	QStringList files = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
 	for(int i=0; i < files.size(); i++) {
 		QFile tempFile(dir.path() + "/" +files.at(i));
-		DebugDialog::debug(tr("removing temp folder inside original: %1").arg(tempFile.fileName()));
+		DebugDialog::debug(QString("removing temp folder inside original: %1").arg(tempFile.fileName()));
 		if(QFileInfo(tempFile.fileName()).isDir()) {
 			QDir dir = QDir(tempFile.fileName());
 			rmdir(dir);

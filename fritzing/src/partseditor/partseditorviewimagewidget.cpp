@@ -58,9 +58,9 @@ void PartsEditorViewImageWidget::mousePressConnectorEvent(ConnectorItem *, QGrap
 void PartsEditorViewImageWidget::copySvgFileToDestiny() {
 	// if the svg file is in the temp folder, then copy it to destiny
 	if(!m_svgFilePath->first.isEmpty() && !m_svgFilePath->second.isEmpty() && m_svgFilePath->first == m_tempFolder.path()) {
-		DebugDialog::debug(tr("copying from %1").arg(svgFilePath()));
+		DebugDialog::debug(QString("copying from %1").arg(svgFilePath()));
 		QFile tempFile(svgFilePath());
-                DebugDialog::debug(tr("copying to %1").arg(getApplicationSubFolderPath("parts")+ "/parts/svg/user/"+m_svgFilePath->second));
+                DebugDialog::debug(QString("copying to %1").arg(getApplicationSubFolderPath("parts")+ "/parts/svg/user/"+m_svgFilePath->second));
                 tempFile.copy(getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->second);
 	}
 }
@@ -123,14 +123,14 @@ void PartsEditorViewImageWidget::copyToTempAndRenameIfNecessary(StringPair *file
 	QString svgFolderPath = getApplicationSubFolderPath("parts")+"/svg";
 
 	if(filePathOrig->first != svgFolderPath) {
-		DebugDialog::debug(tr("copying from %1").arg(m_originalSvgFilePath));
+		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
 		QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
 
 		if(!m_tempFolder.mkdir(viewFolder)) return;
 		if(!m_tempFolder.cd(viewFolder)) return;
 
 		QString destFilePath = FritzingWindow::getRandText()+".svg";
-		DebugDialog::debug(tr("dest file: %1").arg(m_tempFolder.path()+"/"+destFilePath));
+		DebugDialog::debug(QString("dest file: %1").arg(m_tempFolder.path()+"/"+destFilePath));
 		QFile tempFile(m_originalSvgFilePath);
 		tempFile.copy(m_tempFolder.path()+"/"+destFilePath);
 

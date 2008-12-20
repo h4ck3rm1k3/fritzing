@@ -81,13 +81,13 @@ ConnectorStuff * Connector::connectorStuff() {
 
 void Connector::addViewItem(ConnectorItem * item) {
 	m_connectorItems.append(item);
-	//DebugDialog::debug(QObject::tr("adding view %1 %2").arg(this->connectorStuff()->name()).arg(m_connectorItems.count()) );
+	//DebugDialog::debug(QString("adding view %1 %2").arg(this->connectorStuff()->name()).arg(m_connectorItems.count()) );
 }
 
 void Connector::removeViewItem(ConnectorItem * item) {
 	m_connectorItems.removeOne(item);
 
-	//DebugDialog::debug(QObject::tr("removing view %1 %2").arg(this->connectorStuff()->name()).arg(m_connectorItems.count()) );
+	//DebugDialog::debug(QString("removing view %1 %2").arg(this->connectorStuff()->name()).arg(m_connectorItems.count()) );
 }
 
 void Connector::connectTo(Connector * connector) {
@@ -296,7 +296,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, QSvgRenderer * 
 	}
 
 
-	//DebugDialog::debug(	tr("terminal %5 rect %1,%2,%3,%4").arg(tBounds.x()).
+	//DebugDialog::debug(	QString("terminal %5 rect %1,%2,%3,%4").arg(tBounds.x()).
 										//arg(tBounds.y()).
 										//arg(tBounds.width()).
 										//arg(tBounds.height()).
@@ -318,7 +318,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, QSvgRenderer * 
 		terminalPoint = terminalRect.center() - connectorRect.topLeft();
 	}
 	connectorViewThing->setTerminalPointInView(viewIdentifier, viewLayerID, terminalPoint);
-	//DebugDialog::debug(	tr("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
+	//DebugDialog::debug(	QString("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
 										//arg(terminalPoint.y()).
 										//arg(terminalID) );
 

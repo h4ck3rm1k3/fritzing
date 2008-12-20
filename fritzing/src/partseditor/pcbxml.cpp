@@ -76,7 +76,7 @@ PcbXML::PcbXML( const QDomElement & pcbDocument )
 	shiftCoordinates();
 
 	m_svgFile = QDir::tempPath () + "/footprint.svg";
-	DebugDialog::debug(QObject::tr("temp path %1").arg(QDir::tempPath () + "/test.svg" ) );
+	DebugDialog::debug(QString("temp path %1").arg(QDir::tempPath () + "/test.svg" ) );
 	m_svg->save(m_svgFile);
 }
 

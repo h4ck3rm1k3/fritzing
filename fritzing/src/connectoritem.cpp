@@ -59,7 +59,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
     setAcceptsHoverEvents(true);
     this->setCursor(Qt::CrossCursor);
 
-	//DebugDialog::debug(QObject::tr("%1 attached to %2")
+	//DebugDialog::debug(QString("%1 attached to %2")
 			//.arg(this->connector()->connectorStuff()->id())
 			//.arg(attachedTo->modelPart()->modelPartStuff()->title()) );
 }
@@ -116,7 +116,7 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	if (m_connectedTo.contains(connected)) return;
 
 	m_connectedTo.append(connected);
-	//DebugDialog::debug(QObject::tr("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPart()->modelPartStuff()->title()).arg(m_connectedTo.count()) );
+	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPart()->modelPartStuff()->title()).arg(m_connectedTo.count()) );
 	restoreColor();
 	if (m_attachedTo != NULL) {
 		m_attachedTo->connectionChange(this);
@@ -201,7 +201,7 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 				m_attachedTo->connectionChange(this);
 			}
 			restoreColor();
-			DebugDialog::debug(QObject::tr("remove from:%1 to:%2 count%3")
+			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
 				.arg((long) this, 0, 16)
 				.arg(itemBase->modelPart()->modelPartStuff()->title())
 				.arg(m_connectedTo.count()) );

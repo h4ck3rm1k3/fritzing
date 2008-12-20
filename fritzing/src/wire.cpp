@@ -72,11 +72,11 @@ Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_connectorHover = NULL;
 	m_opacity = UNROUTED_OPACITY;
 
-	//DebugDialog::debug(QObject::tr("aix line %1 %2 %3 %4").arg(this->viewGeometry().line().x1())
+	//DebugDialog::debug(QString("aix line %1 %2 %3 %4").arg(this->viewGeometry().line().x1())
 													//.arg(this->viewGeometry().line().y1())
 													//.arg(this->viewGeometry().line().x2())
 													//.arg(this->viewGeometry().line().y2()) );
-	//DebugDialog::debug(QObject::tr("aix loc %1 %2").arg(this->viewGeometry().loc().x())
+	//DebugDialog::debug(QString("aix loc %1 %2").arg(this->viewGeometry().loc().x())
 														//.arg(this->viewGeometry().loc().y()) );
 
 	setPos(m_viewGeometry.loc());
@@ -226,12 +226,12 @@ void Wire::initDragEnd(ConnectorItem * connectorItem) {
 	m_dragEnd = true;
 	if (m_drag0) {
 		m_wireDragOrigin = line.p2();
- 		//DebugDialog::debug(QObject::tr("drag near origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
+ 		//DebugDialog::debug(QString("drag near origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
 	}
 	else {
 		m_wireDragOrigin = line.p1();
- 		//DebugDialog::debug(QObject::tr("drag far origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
- 		//DebugDialog::debug(QObject::tr("drag far other %1 %2").arg(line.p2().x()).arg(line.p2().y()) );
+ 		//DebugDialog::debug(QString("drag far origin %1 %2").arg(m_wireDragOrigin.x()).arg(m_wireDragOrigin.y()) );
+ 		//DebugDialog::debug(QString("drag far other %1 %2").arg(line.p2().x()).arg(line.p2().y()) );
 	}
 
 	if (connectorItem->chained()) {
@@ -517,7 +517,7 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	return;
 
 	/*
-	DebugDialog::debug(QObject::tr("connected moved %1 %2, %3 %4")
+	DebugDialog::debug(QString("connected moved %1 %2, %3 %4")
 		.arg(from->attachedToID())
 		.arg(from->attachedToTitle())
 		.arg(to->attachedToID())
@@ -579,7 +579,7 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdenti
 		connectorItem->setTerminalPoint(terminalPoint);
 
 		connectorItem->setCircular(true);
-		//DebugDialog::debug(tr("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
+		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
 
 
 		Bus * bus = connectorItem->bus();

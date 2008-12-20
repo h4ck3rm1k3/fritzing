@@ -43,6 +43,6 @@ SketchModel::SketchModel(ModelPart * root) : ModelBase(false) {
 
 void SketchModel::removeModelPart(ModelPart * modelPart) {
 	modelPart->setParent(NULL);
-	//DebugDialog::debug(QObject::tr("model count %1").arg(root()->children().size()));
+	//DebugDialog::debug(QString("model count %1").arg(root()->children().size()));
 }
 

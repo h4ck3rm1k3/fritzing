@@ -94,7 +94,7 @@ void PaletteItem::addLayerKin(LayerKinPaletteItem * lkpi) {
 void PaletteItem::removeLayerKin() {
 	// assumes paletteitem is still in scene
 	for (int i = 0; i < m_layerKin.size(); i++) {
-		DebugDialog::debug(QObject::tr("removing kin %1 %2").arg(m_layerKin[i]->id()).arg(m_layerKin[i]->z()));
+		DebugDialog::debug(QString("removing kin %1 %2").arg(m_layerKin[i]->id()).arg(m_layerKin[i]->z()));
 		this->scene()->removeItem(m_layerKin[i]);
 		delete m_layerKin[i];
 	}

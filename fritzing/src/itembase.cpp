@@ -279,7 +279,7 @@ ViewLayer::ViewLayerID ItemBase::viewLayerID() {
 }
 
 void ItemBase::setViewLayerID(const QString & layerName, const LayerHash & viewLayers) {
-	//DebugDialog::debug(QObject::tr("using z %1").arg(layerName));
+	//DebugDialog::debug(QString("using z %1").arg(layerName));
 	setViewLayerID(ViewLayer::viewLayerIDFromXmlString(layerName), viewLayers);
 }
 
@@ -294,7 +294,7 @@ void ItemBase::setViewLayerID(ViewLayer::ViewLayerID viewLayerID, const LayerHas
 
   	}
 
-    //DebugDialog::debug(QObject::tr("using z: %1 z:%2 lid:%3").arg(modelPart()->modelPartStuff()->title()).arg(m_viewGeometry.z()).arg(m_viewLayerID) );
+    //DebugDialog::debug(QString("using z: %1 z:%2 lid:%3").arg(modelPart()->modelPartStuff()->title()).arg(m_viewGeometry.z()).arg(m_viewLayerID) );
 }
 
 void ItemBase::removeLayerKin() {

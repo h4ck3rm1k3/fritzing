@@ -100,7 +100,7 @@ bool FritzingWindow::isEmptyFileName(const QString &fileName, const QString &unt
 }
 
 bool FritzingWindow::saveAs() {
-	DebugDialog::debug(tr("current path: %1").arg(QDir::currentPath()));
+	DebugDialog::debug(QString("current path: %1").arg(QDir::currentPath()));
 	QString fileExt;
         QString path;
         QString untitledBase = tr("Untitled Sketch");
@@ -114,7 +114,7 @@ bool FritzingWindow::saveAs() {
 	} else {
 		path = m_fileName;
 	}
-	DebugDialog::debug(tr("current file: %1").arg(m_fileName));
+	DebugDialog::debug(QString("current file: %1").arg(m_fileName));
     QString fileName = QFileDialog::getSaveFileName(
 						this,
                         tr("Choose a file name"),
@@ -233,12 +233,12 @@ void FritzingWindow::rmdir(const QString &dirPath) {
 }
 
 void FritzingWindow::rmdir(QDir & dir) {
-	DebugDialog::debug(tr("removing folder: %1").arg(dir.path()));
+	DebugDialog::debug(QString("removing folder: %1").arg(dir.path()));
 
 	QStringList files = dir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
 	for(int i=0; i < files.size(); i++) {
 		QFile tempFile(dir.path() + "/" +files.at(i));
-		DebugDialog::debug(tr("removing from original folder: %1").arg(tempFile.fileName()));
+		DebugDialog::debug(QString("removing from original folder: %1").arg(tempFile.fileName()));
 		if(QFileInfo(tempFile.fileName()).isDir()) {
 			QDir dir = QDir(tempFile.fileName());
 			rmdir(dir);

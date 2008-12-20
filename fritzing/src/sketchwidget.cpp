@@ -483,7 +483,7 @@ ItemBase * SketchWidget::findItem(long id) {
 }
 
 void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit) {
-	DebugDialog::debug(tr("delete item (1) %1 %2 %3").arg(id).arg(doEmit).arg(m_viewIdentifier) );
+	DebugDialog::debug(QString("delete item (1) %1 %2 %3").arg(id).arg(doEmit).arg(m_viewIdentifier) );
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
 		deleteItem(pitem, deleteModelPart, doEmit);
@@ -500,7 +500,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	long id = itemBase->id();
 	itemBase->removeLayerKin();
 	this->scene()->removeItem(itemBase);
-	DebugDialog::debug(tr("delete item (2) %1 %2 %3").arg(id).arg(itemBase->title()).arg(m_viewIdentifier) );
+	DebugDialog::debug(QString("delete item (2) %1 %2 %3").arg(id).arg(itemBase->title()).arg(m_viewIdentifier) );
 
 	if (deleteModelPart) {
 		ModelPart * modelPart = itemBase->modelPart();
@@ -714,7 +714,7 @@ void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry) {
 }
 
 void SketchWidget::rotateItem(long id, qreal degrees) {
-	DebugDialog::debug(QObject::tr("rotating %1 %2").arg(id).arg(degrees) );
+	DebugDialog::debug(QString("rotating %1 %2").arg(id).arg(degrees) );
 
 	if (!isVisible()) return;
 
@@ -729,7 +729,7 @@ void SketchWidget::rotateItem(long id, qreal degrees) {
 }
 
 void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
-	DebugDialog::debug(QObject::tr("fliping %1 %2").arg(id).arg(orientation) );
+	DebugDialog::debug(QString("fliping %1 %2").arg(id).arg(orientation) );
 
 	if (!isVisible()) return;
 
@@ -1003,7 +1003,7 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 			QString toConnectorID;
 			qint64 toID;
 			dataStream >> fromID >> fromConnectorID  >> toID >> toConnectorID;
-			DebugDialog::debug(tr("pasting %1 %2 %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
+			DebugDialog::debug(QString("pasting %1 %2 %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
 			fromID = mapIDs.value(fromID);
 			toID = mapIDs.value(toID);
 			extendChangeConnectionCommand(fromID, fromConnectorID,
@@ -1560,7 +1560,7 @@ void SketchWidget::wheelEvent(QWheelEvent* event) {
 	//QPointF spos = this->mapToScene((int) pos.x(), (int) pos.y());
 
 
-	//DebugDialog::debug(QObject::tr("translate %1 %2").arg(spos.x()).arg(spos.y()) );
+	//DebugDialog::debug(QString("translate %1 %2").arg(spos.x()).arg(spos.y()) );
 
 	emit wheelSignal();
 }
@@ -1802,7 +1802,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 	m_connectorDragWire->saveGeometry();
 	long fromID = wire->id();
 
-	DebugDialog::debug(tr("m_connectorDragConnector:%1 %4 from:%2 to:%3")
+	DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
 					   .arg(m_connectorDragConnector->connectorStuffID())
 					   .arg(from->connectorStuffID())
 					   .arg((to == NULL) ? "null" : to->connectorStuffID())
@@ -1892,10 +1892,10 @@ void SketchWidget::updateAllLayersActions(QAction * showAllAction, QAction * hid
 		}
 		bool sameState = prev->action()->isChecked();
 		bool checked = prev->action()->isChecked();
-		//DebugDialog::debug(tr("Layer: %1 is %2").arg(prev->action()->text()).arg(prev->action()->isChecked()));
+		//DebugDialog::debug(QString("Layer: %1 is %2").arg(prev->action()->text()).arg(prev->action()->isChecked()));
 		for (int i = 1; i < keys.count(); i++) {
 			ViewLayer *viewLayer = m_viewLayers.value(keys[i]);
-			//DebugDialog::debug(tr("Layer: %1 is %2").arg(viewLayer->action()->text()).arg(viewLayer->action()->isChecked()));
+			//DebugDialog::debug(QString("Layer: %1 is %2").arg(viewLayer->action()->text()).arg(viewLayer->action()->isChecked()));
 			if (viewLayer != NULL) {
 				if(prev != NULL && prev->action()->isChecked() != viewLayer->action()->isChecked() ) {
 					// if the actions aren't all checked or unchecked I don't bother about the "checked" variable
@@ -1909,8 +1909,8 @@ void SketchWidget::updateAllLayersActions(QAction * showAllAction, QAction * hid
 			}
 		}
 
-		//DebugDialog::debug(tr("sameState: %1").arg(sameState));
-		//DebugDialog::debug(tr("checked: %1").arg(checked));
+		//DebugDialog::debug(QString("sameState: %1").arg(sameState));
+		//DebugDialog::debug(QString("checked: %1").arg(checked));
 		if(sameState) {
 			if(checked) {
 				showAllAction->setEnabled(false);
@@ -2022,7 +2022,7 @@ void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible) {
 
 		if (itemBase->viewLayerID() == viewLayer->viewLayerID()) {
 			itemBase->setHidden(!visible);
-			DebugDialog::debug(QObject::tr("setting visible %1").arg(viewLayer->visible()) );
+			DebugDialog::debug(QString("setting visible %1").arg(viewLayer->visible()) );
 		}
 	}
 }
@@ -2071,9 +2071,9 @@ void SketchWidget::fitInWindow() {
 	qreal wRelation = (viewRect.width()-this->verticalScrollBar()->width())  / itemsRect.width();
 	qreal hRelation = (viewRect.height()-this->horizontalScrollBar()->height()) / itemsRect.height();
 
-	DebugDialog::debug(tr("scen rect: w%1 h%2").arg(itemsRect.width()).arg(itemsRect.height()));
-	DebugDialog::debug(tr("view rect: w%1 h%2").arg(viewRect.width()).arg(viewRect.height()));
-	DebugDialog::debug(tr("relations (v/s): w%1 h%2").arg(wRelation).arg(hRelation));
+	DebugDialog::debug(QString("scen rect: w%1 h%2").arg(itemsRect.width()).arg(itemsRect.height()));
+	DebugDialog::debug(QString("view rect: w%1 h%2").arg(viewRect.width()).arg(viewRect.height()));
+	DebugDialog::debug(QString("relations (v/s): w%1 h%2").arg(wRelation).arg(hRelation));
 
 	if(wRelation < hRelation) {
 		m_scaleValue = (wRelation * 100);
@@ -2142,7 +2142,7 @@ void SketchWidget::continueZChangeMax(QList<ItemBase *> & bases, int start, int 
 		if (dest >= 0) {
 			moved = true;
 			bases.move(i, dest);
-			DebugDialog::debug(QObject::tr("moving %1 to %2").arg(i).arg(dest));
+			DebugDialog::debug(QString("moving %1 to %2").arg(i).arg(dest));
 			i -= inc;	// because we just modified the list and would miss the next item
 		}
 	}
@@ -2236,7 +2236,7 @@ void SketchWidget::changeZ(QHash<long, RealPair * > triplets, qreal (*pairAccess
 		if (pair == NULL) continue;
 
 		qreal newZ = pairAccessor(pair);
-		DebugDialog::debug(QObject::tr("change z %1 %2").arg(itemBase->id()).arg(newZ));
+		DebugDialog::debug(QString("change z %1 %2").arg(itemBase->id()).arg(newZ));
 		items[i]->setZValue(newZ);
 
 	}
@@ -2490,7 +2490,7 @@ void SketchWidget::sketchWidget_wireConnected(long fromID, QString fromConnector
 }
 
 void SketchWidget::sketchWidget_wireDisconnected(long fromID, QString fromConnectorID) {
-	DebugDialog::debug(tr("got wire disconnected"));
+	DebugDialog::debug(QString("got wire disconnected"));
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) return;
 
@@ -2524,7 +2524,7 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 									long toID, const QString & toConnectorID,
 									bool connect, bool seekLayerKin)
 {
-	DebugDialog::debug(QObject::tr("changeConnection: from %1 %2; to %3 %4 con:%5 v:%6")
+	DebugDialog::debug(QString("changeConnection: from %1 %2; to %3 %4 con:%5 v:%6")
 				.arg(fromID).arg(fromConnectorID)
 				.arg(toID).arg(toConnectorID)
 				.arg(connect).arg(m_viewIdentifier) );

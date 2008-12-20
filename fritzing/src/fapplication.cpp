@@ -59,7 +59,7 @@ void FApplication::setOpenSaveFolder(const QString& path) {
 
 const QString FApplication::openSaveFolder() {
 	if(m_openSaveFolder == ___emptyString___) {
-		DebugDialog::debug(tr("default save location: %1").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)));
+		DebugDialog::debug(QString("default save location: %1").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)));
 		return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
 	} else {
 		return m_openSaveFolder;

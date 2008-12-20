@@ -39,7 +39,7 @@ int MainPartsEditorWindow::UntitledPartIndex = 1;
 
 // TODO mariano: EXTRACT common functionality of both windows classes into an abstract ancestor
 void MainPartsEditorWindow::saveAs() {
-	DebugDialog::debug(tr("current path: %1").arg(QDir::currentPath()));
+	DebugDialog::debug(QString("current path: %1").arg(QDir::currentPath()));
 	QString fileExt;
     QString fileName = QFileDialog::getSaveFileName(
 						this,
@@ -81,7 +81,7 @@ void MainPartsEditorWindow::saveAsAux(const QString & fileName) {
 
     QApplication::restoreOverrideCursor();
 
-    statusBar()->showMessage(tr("Saved '%1'").arg(fileName), 2000);
+    statusBar()->showMessage(QString("Saved '%1'").arg(fileName), 2000);
 
     emit partUpdated(fileName);
    // setCurrentFile(fileName);
@@ -98,9 +98,9 @@ void MainPartsEditorWindow::copySvgFilesToDestiny() {
 
 void MainPartsEditorWindow::copySvgFilesToDestinyAux(StringPair *path) {
 	if(!path->first.isEmpty() && !path->second.isEmpty() && path->first == QDir::tempPath()) {
-		DebugDialog::debug(tr("copying from %1").arg(path->first+"/"+path->second));
+		DebugDialog::debug(QString("copying from %1").arg(path->first+"/"+path->second));
 		QFile tempFile(path->first+"/"+path->second);
-		DebugDialog::debug(tr("copying to %1").arg(QDir::currentPath()+"/parts/svg/user/"+path->second));
+		DebugDialog::debug(QString("copying to %1").arg(QDir::currentPath()+"/parts/svg/user/"+path->second));
 		tempFile.copy(QDir::currentPath()+"/parts/svg/user/"+path->second);
 	}
 }
