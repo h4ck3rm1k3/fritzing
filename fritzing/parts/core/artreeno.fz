@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module uri="http://fritzing.org/modules/arduino-diecimila" moduleId="angels_we_have_heard_on_high" >
+ <version>1.0</version>
+ <author>O. Tannenbaum</author>
+ <title>Artreeno</title>
+ <date>2008-12-25</date>
+ <label>PCB</label>
+ <tags>
+  <tag>pcb</tag>
+  <tag>board</tag>
+  <tag>diy</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="Size" >135 x 126 mm</property>
+  <property name="family" >PCB Tree</property>
+ </properties>
+ <taxonomy>discreteParts.pcb.Tree.135x126mm</taxonomy>
+ <description>Plain Vanilla 135 x 126 mm Circuit Tree Board</description>
+ <views>
+  <defaultUnits>mm</defaultUnits>
+  <iconView>
+   <layers image="pcb/artreeno.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers image="pcb/artreeno.svg" >
+    <layer layerId="breadboardbreadboard" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="pcb/artreeno.svg" >
+    <layer layerId="unknown" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <label/>
+   <layers image="pcb/artreeno.svg" >
+    <layer layerId="board" sticky="true" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors/>
+ <buses/>
+</module>
