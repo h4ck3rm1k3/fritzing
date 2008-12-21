@@ -26,6 +26,8 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 #include "terminalpointitem.h"
 
+const qreal TerminalPointItem::size = 3;
+
 TerminalPointItem::TerminalPointItem(ConnectorItem *parent) : QGraphicsRectItem(parent) {
 	initPen();
 	m_vLine = NULL;

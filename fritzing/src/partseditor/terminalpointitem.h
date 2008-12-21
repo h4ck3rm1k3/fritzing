@@ -46,7 +46,7 @@ protected:
 	QGraphicsLineItem *m_hLine;
 	QGraphicsLineItem *m_vLine;
 
-	static const qreal size = 3;
+	static const qreal size;
 };
 
 #endif /* TERMINALPOINTITEM_H_ */
