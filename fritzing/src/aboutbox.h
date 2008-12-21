@@ -46,9 +46,10 @@ class AboutBox : public QWidget {
 	Q_OBJECT
 
 private:
-	void resetScrollAnimation();
 	AboutBox(QWidget *parent = 0);
+	void resetScrollAnimation();
 
+private:
 	QScrollArea *m_scrollArea;
 	bool m_restartAtTop;
 	QTime m_startTime;
@@ -65,8 +66,10 @@ public slots:
 protected:
 	static AboutBox* singleton;
 
+protected:
 	void closeEvent ( QCloseEvent * event );
 	void keyPressEvent ( QKeyEvent * event );
+	void show();
 };
 
 #endif

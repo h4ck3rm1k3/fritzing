@@ -104,12 +104,38 @@ AboutBox::AboutBox(QWidget *parent)
 
 	// creditsScroll as QLabel
 	QLabel *creditsScroll = new QLabel(this);
-	QFile creditsFile(":/resources/Credits.txt");
-	if (creditsFile.open(QFile::ReadOnly)) {
-		QString data(creditsFile.readAll());
-		creditsScroll->setText(data);
-	}
 
+	// moved data out of credits.txt so we could apply translation
+	QString data = 
+tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />") +
+tr("<p><br>Fritzing is made by:<br />") +
+tr("Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic,<br>") +
+tr("Zach Eveland, Dirk van Oosterbosch,<br>") +
+tr("Jonathan Cohen, Marcus Paeschke, Omer Yosha,<br>") +
+tr("Travis Robertson, Stefan Hermann, Brendan Howell,<br>") +
+tr("Mariano Crowe, Johannes Landstorfer,<br>") +
+tr("Jenny Chowdhury, Lionel Michel and Jannis Leidel.</p>") +
+
+tr("<p>Special thanks goes out to:<br />") +
+tr("Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir,<br>") +
+tr("Durrell Bishop, David Cuartielles, Fabian Hemmert,<br />") +
+tr("Gero Herkenrath, Jeff Hoefs, Tom Hulbert,<br>") +
+tr("Tom Igoe, Hans-Peter Kadel, Till Savelkoul,<br>") +
+tr("Jan Sieber, Yaniv Steiner, Olaf Val,<br>") +
+tr("Michaela Vieser and Julia Werner.</p>") +
+
+tr("<p>Fritzing is made possible with funding from the<br>") +
+tr("MWFK Brandenburg, the sponsorship of the Design<br>") +
+tr("Department of Bauhaus-University Weimar and<br>") +
+tr("IxDS.</p>") +
+
+tr("<p>Special thanks goes out as well to all the students<br>") +
+tr("and alpha testers who were brave enough to give<br>") +
+tr("Fritzing a test spin and who stayed with us,<br>") +
+tr("throughout our rewrite of the app.</p>") +
+tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />");
+
+	creditsScroll->setText(data);
 	creditsScroll->setFont(smallFont);
 	creditsScroll->setGeometry(0, 0, 390, 800);
 	creditsScroll->setWordWrap(false);
@@ -143,25 +169,25 @@ AboutBox::AboutBox(QWidget *parent)
 
 void AboutBox::resetScrollAnimation() {
 	// Only called when the window is newly loaded
-	m_autoScrollTimer->start(50);
+	m_autoScrollTimer->start(25);
 	m_startTime.start();
 }
 
 void AboutBox::scrollCredits() {
-	if (m_startTime.elapsed() >= 3000 ) {
+	if (m_startTime.elapsed() >= 0 ) {
 		//int max = m_scrollArea->verticalScrollBar()->maximum();
 		//int v = m_scrollArea->widget()->sizeHint().height();
 		if (m_restartAtTop) {
 			// Reset at the top
 			m_startTime.start();
-			m_restartAtTop = FALSE;
+			m_restartAtTop = false;
 			m_scrollArea->verticalScrollBar()->setValue(0);
 			return;
 		}
 		if (m_scrollArea->verticalScrollBar()->value() >= m_scrollArea->verticalScrollBar()->maximum()) {
 			// go and reset
 			// m_startTime.start();
-			m_restartAtTop = TRUE;
+			m_restartAtTop = true;
 		} else {
 			m_scrollArea->verticalScrollBar()->setValue(m_scrollArea->verticalScrollBar()->value() + 1);
 		}
@@ -206,4 +232,10 @@ void AboutBox::keyPressEvent ( QKeyEvent * event ) {
 		//DebugDialog::debug("W key!");
 		this->closeAbout();
 	}
+}
+
+void AboutBox::show() {
+	QWidget::show();
+	m_restartAtTop = true;
+	resetScrollAnimation();
 }

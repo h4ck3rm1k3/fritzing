@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name></name>
     <message>
@@ -8,12 +9,12 @@
         <translation>Teilen</translation>
     </message>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="39"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="38"/>
         <source>Mismatching Connector IDs</source>
         <translation>Versatz Verbindung IDs</translation>
     </message>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="41"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="40"/>
         <source>These problems need to be fixed in the svg-files directly</source>
         <translation>Diese probleme mussen in dem SVG Datei gerade reparieren</translation>
     </message>
@@ -60,6 +61,121 @@
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="136"/>
+        <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="112"/>
+        <source>&lt;p&gt;&lt;br&gt;Fritzing is made by:&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="113"/>
+        <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="114"/>
+        <source>Zach Eveland, Dirk van Oosterbosch,&lt;br&gt;</source>
+        <translation>Zach Eveland, Dirk van Oosterbosch,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="115"/>
+        <source>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br&gt;</source>
+        <translation>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="116"/>
+        <source>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br&gt;</source>
+        <translation>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="117"/>
+        <source>Mariano Crowe, Johannes Landstorfer,&lt;br&gt;</source>
+        <translation>Mariano Crowe, Johannes Landstorfer,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="119"/>
+        <source>Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
+        <translation>Jenny Chowdhury, Lionel Michel und Jannis Leidel.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="120"/>
+        <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="121"/>
+        <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br&gt;</source>
+        <translation>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="122"/>
+        <source>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</source>
+        <translation>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="123"/>
+        <source>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br&gt;</source>
+        <translation>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="124"/>
+        <source>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br&gt;</source>
+        <translation>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="125"/>
+        <source>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br&gt;</source>
+        <translation>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="127"/>
+        <source>Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
+        <translation type="unfinished">Michaela Vieser und Julia Werner.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="128"/>
+        <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="129"/>
+        <source>MWFK Brandenburg, the sponsorship of the Design&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="130"/>
+        <source>Department of Bauhaus-University Weimar and&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="132"/>
+        <source>IxDS.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="133"/>
+        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="134"/>
+        <source>and alpha testers who were brave enough to give&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="135"/>
+        <source>Fritzing a test spin and who stayed with us,&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/aboutbox.cpp" line="136"/>
+        <source>throughout our rewrite of the app.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AbstractEditableLabelWidget</name>
@@ -77,17 +193,17 @@
 <context>
     <name>ConnectorsInfoWidget</name>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="81"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="80"/>
         <source>Show Terminal Points</source>
         <translation>Endpunkte Anzeigen </translation>
     </message>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="130"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="129"/>
         <source>List of Connectors</source>
         <translation>Liste von Verbindungen</translation>
     </message>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="293"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="292"/>
         <source>Loading connectors...</source>
         <translation>Verbindungen aufladen...</translation>
     </message>
@@ -1726,68 +1842,68 @@ Please stay tuned.</source>
         <translation>Erzeugen/Aktualisieren Date</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="239"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="241"/>
         <source>Specifications</source>
         <translation>Technische Daten</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="240"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="242"/>
         <source>Connectors</source>
         <translation>Verbindungen</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="267"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="269"/>
         <source>save as new part</source>
         <translation>Speichern unter neu Teil-Datei</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="271"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="273"/>
         <source>save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="283"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="285"/>
         <source>cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="345"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="347"/>
         <source>Open Image</source>
         <translation>Öffnen Die Pixmap-Datei</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="345"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="347"/>
         <source>SVG Files (*.fzp)</source>
         <translation>SVG Datei  (*.fzp)</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="383"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="385"/>
         <source>Save as new part</source>
         <translation>Speichern unter neu Teil-Datei</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="384"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="386"/>
         <source>Please, specify a new filename</source>
         <translation>Datei auswählen</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="413"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="415"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="415"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="417"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="433"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="435"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>Speichern &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="559"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="561"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
