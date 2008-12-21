@@ -23,7 +23,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1001ABDC03" path="parts/core/basic_electrolytic_capacitor.fz">
+        <instance moduleIdRef="1001ABDC03" path="parts/core/electrolytic_capacitor_basic_10uF.fz">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
