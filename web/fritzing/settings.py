@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'forum',
     'threadedcomments',
     'treemenus',
+    'robots',
 
     # internal (for now)
     'basic_profiles',
