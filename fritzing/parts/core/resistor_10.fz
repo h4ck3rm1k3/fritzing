@@ -3,7 +3,7 @@
 <module fritzingVersion="0.1.1201" moduleId="9e2d86a6-ca08-11dd-9c4a-001f5b3a17a4" >
  <version>1.0</version>
  <title>10 Resistor</title>
- <defaultLabel>R</defaultLabel>
+ <label>R</label>
  <author>Dirk van Oosterbosch</author>
  <date>2008-12-14</date>
  <tags>
