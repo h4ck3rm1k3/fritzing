@@ -109,53 +109,52 @@ void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fro
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 
 {
-	if (connect) {
-		ConnectorItem * fromConnectorItem = NULL;
-		ConnectorItem * toConnectorItem = NULL;
-		if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
-								toID, toConnectorID,
-								connect, ratsnestCommand, doEmit)) 
-		{
-			return;
-		}
+	if (!connect) return;
 
-		DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
-			.arg(fromConnectorItem->attachedToTitle())
-			.arg(fromConnectorItem->attachedToID())
-			.arg(fromConnectorItem->connectorStuffID())
-			.arg(toConnectorItem->attachedToTitle())
-			.arg(toConnectorItem->attachedToID())
-			.arg(toConnectorItem->connectorStuffID())
-		);
-
-		QList<ConnectorItem *> connectorItems;
-		QList<ConnectorItem *> partsConnectorItems;
-		connectorItems.append(fromConnectorItem);
-		ConnectorItem::collectEqualPotential(connectorItems);
-		ConnectorItem::collectParts(connectorItems, partsConnectorItems);
-
-		QList <Wire *> ratsnestWires;
-		Wire * modelWire = NULL;
-
-		makeWires(partsConnectorItems, ratsnestWires, modelWire, ratsnestCommand);
-
-		if (ratsnestWires.count() > 0) {
-			const QColor * color = NULL;
-			if (modelWire) {
-				color = modelWire->color();
-			}
-			else {
-				color = Wire::netColor(m_viewIdentifier);
-			}
-			foreach (Wire * wire, ratsnestWires) {
-				QColor colorAsQColor = (QColor) *color;
-				wire->setColor(colorAsQColor, wire->getRouted() ? ROUTED_OPACITY : UNROUTED_OPACITY);
-			}
-		}
-
+	ConnectorItem * fromConnectorItem = NULL;
+	ConnectorItem * toConnectorItem = NULL;
+	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
+							toID, toConnectorID,
+							connect, ratsnestCommand, doEmit)) 
+	{
 		return;
 	}
 
+	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
+		.arg(fromConnectorItem->attachedToTitle())
+		.arg(fromConnectorItem->attachedToID())
+		.arg(fromConnectorItem->connectorStuffID())
+		.arg(toConnectorItem->attachedToTitle())
+		.arg(toConnectorItem->attachedToID())
+		.arg(toConnectorItem->connectorStuffID())
+	);
+
+	QList<ConnectorItem *> connectorItems;
+	QList<ConnectorItem *> partsConnectorItems;
+	connectorItems.append(fromConnectorItem);
+	ConnectorItem::collectEqualPotential(connectorItems);
+	ConnectorItem::collectParts(connectorItems, partsConnectorItems);
+
+	QList <Wire *> ratsnestWires;
+	Wire * modelWire = NULL;
+
+	makeWires(partsConnectorItems, ratsnestWires, modelWire, ratsnestCommand);
+
+	if (ratsnestWires.count() > 0) {
+		const QColor * color = NULL;
+		if (modelWire) {
+			color = modelWire->color();
+		}
+		else {
+			color = Wire::netColor(m_viewIdentifier);
+		}
+		foreach (Wire * wire, ratsnestWires) {
+			QColor colorAsQColor = (QColor) *color;
+			wire->setColor(colorAsQColor, wire->getRouted() ? ROUTED_OPACITY : UNROUTED_OPACITY);
+		}
+	}
+
+	return;
 }
 
 void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand * command)

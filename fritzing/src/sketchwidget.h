@@ -245,9 +245,6 @@ protected:
 	void resizeEvent(QResizeEvent *);
 
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
-	// virtual void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
-	// virtual void checkAutorouted();
-	// virtual void redrawRatsnest(QHash<long, ItemBase *> & newItems);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
 	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
@@ -260,7 +257,7 @@ protected:
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
-	virtual void modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to);
+	virtual void modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to);
 	void setupAutoscroll(bool moving);
 	void turnOffAutoscroll();
 	bool checkAutoscroll(QPoint globalPos);
@@ -402,7 +399,6 @@ protected:
 	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;
-	//bool m_dealWithRatsNestEnabled;
 	QHash<ConnectorItem *, ConnectorItem *> m_disconnectors;
 
 	QList<QGraphicsProxyWidget*> m_fixedToTopLeftItems;

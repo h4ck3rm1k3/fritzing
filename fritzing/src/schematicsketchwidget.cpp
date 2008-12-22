@@ -79,87 +79,101 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand * ratsnestCommand, bool doEmit)
 {
+	if (!connect) return;
 
-	if (connect) {
-		ConnectorItem * fromConnectorItem = NULL;
-		ConnectorItem * toConnectorItem = NULL;
-		if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
-								toID, toConnectorID,
-								connect, ratsnestCommand, doEmit)) 
-		{
+	QString h1 = QString("%1.%2.%3.%4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID);
+	ConnectorPair * cp = m_wireHash.value(h1);
+	if (cp == NULL) {
+		h1 = QString("%3.%4.%1.%2").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID);
+		cp = m_wireHash.value(h1);
+	}
+	if (cp != NULL) {
+		m_wireHash.remove(h1);
+		if (cp->connectorItem0 != NULL) {
+			makeOneRatsnestWire(cp->connectorItem0, cp->connectorItem1, ratsnestCommand);
+		}
+		delete cp;
+		return;
+	}
+
+	ConnectorItem * fromConnectorItem = NULL;
+	ConnectorItem * toConnectorItem = NULL;
+	if (dealWithRatsnestAux(fromConnectorItem, toConnectorItem, fromID, fromConnectorID, 
+							toID, toConnectorID,
+							connect, ratsnestCommand, doEmit)) 
+	{
+		return;
+	}
+
+	bool useFrom = false;
+	bool useTo = false;
+	if ((fromConnectorItem->attachedToItemType() == ModelPart::Part) ||
+		(fromConnectorItem->attachedToItemType() == ModelPart::Board))
+	{
+		useFrom = true;
+	}
+	if ((toConnectorItem->attachedToItemType() == ModelPart::Part) ||
+		(toConnectorItem->attachedToItemType() == ModelPart::Board))
+	{
+		useTo = true;
+	}
+
+	if (useFrom && useTo) {
+		makeOneRatsnestWire(fromConnectorItem, toConnectorItem, ratsnestCommand);
+		return;
+	}
+
+	if (useFrom && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		ConnectorItem * newTo = tryWire(toConnectorItem, fromConnectorItem);
+		if (newTo != NULL) {
+			makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
 			return;
 		}
-
-		bool useFrom = false;
-		bool useTo = false;
-		if ((fromConnectorItem->attachedToItemType() == ModelPart::Part) ||
-			(fromConnectorItem->attachedToItemType() == ModelPart::Board))
-		{
-			useFrom = true;
-		}
-		if ((toConnectorItem->attachedToItemType() == ModelPart::Part) ||
-			(toConnectorItem->attachedToItemType() == ModelPart::Board))
-		{
-			useTo = true;
-		}
-
-		if (useFrom && useTo) {
-			makeOneRatsnestWire(fromConnectorItem, toConnectorItem, ratsnestCommand);
+	}
+	else if (useTo && fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		ConnectorItem * newFrom = tryWire(fromConnectorItem, toConnectorItem);
+		if (newFrom != NULL) {
+			makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
 			return;
 		}
+	}
 
-		if (useFrom && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			ConnectorItem * newTo = tryWire(toConnectorItem, fromConnectorItem);
-			if (newTo != NULL) {
-				makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
-				return;
-			}
-		}
-		else if (useTo && fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
-			ConnectorItem * newFrom = tryWire(fromConnectorItem, toConnectorItem);
-			if (newFrom != NULL) {
-				makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
-				return;
-			}
-		}
-
-		QList<ConnectorItem *> connectorItems;
-		connectorItems << fromConnectorItem << toConnectorItem;
-		ConnectorItem::collectEqualPotential(connectorItems);
-		QList<ConnectorItem *> partsConnectorItems;
-		ConnectorItem::collectParts(connectorItems, partsConnectorItems);
-		if (useFrom) {
-			ConnectorItem * newTo = tryParts(fromConnectorItem, toConnectorItem, partsConnectorItems);
-			if (newTo != NULL) {
-				makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
-				return;
-			}
-		}
-		else if (useTo) {
-			ConnectorItem * newFrom = tryParts(toConnectorItem, fromConnectorItem, partsConnectorItems);
-			if (newFrom != NULL) {
-				makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
-				return;
-			}
-		}
-		else {
-			for (int i = 0; i < partsConnectorItems.count() - 1; i++) {
-				ConnectorItem * ci = partsConnectorItems[i];
-				for (int j = i + 1; j < partsConnectorItems.count(); j++) {
-					ConnectorItem * cj = partsConnectorItems[j];
-					if (ci->bus() != NULL && ci->bus() == cj->bus()) continue;
-					if (ci->wiredTo(cj, ViewGeometry::RatsnestFlag)) continue;
-
-					if (alreadyOnBus(ci, cj)) continue;
-					if (alreadyOnBus(cj, ci)) continue;
-
-					makeOneRatsnestWire(ci, cj, ratsnestCommand);
-					return;
-				}
-			}
-
+	QList<ConnectorItem *> connectorItems;
+	connectorItems << fromConnectorItem << toConnectorItem;
+	ConnectorItem::collectEqualPotential(connectorItems);
+	QList<ConnectorItem *> partsConnectorItems;
+	ConnectorItem::collectParts(connectorItems, partsConnectorItems);
+	if (useFrom) {
+		ConnectorItem * newTo = tryParts(fromConnectorItem, toConnectorItem, partsConnectorItems);
+		if (newTo != NULL) {
+			makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
 			return;
 		}
+	}
+	else if (useTo) {
+		ConnectorItem * newFrom = tryParts(toConnectorItem, fromConnectorItem, partsConnectorItems);
+		if (newFrom != NULL) {
+			makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
+			return;
+		}
+	}
+	else {
+		for (int i = 0; i < partsConnectorItems.count() - 1; i++) {
+			ConnectorItem * ci = partsConnectorItems[i];
+			for (int j = i + 1; j < partsConnectorItems.count(); j++) {
+				ConnectorItem * cj = partsConnectorItems[j];
+				if (ci->bus() != NULL && ci->bus() == cj->bus()) continue;
+				if (ci->wiredTo(cj, ViewGeometry::RatsnestFlag)) continue;
+
+				if (alreadyOnBus(ci, cj)) continue;
+				if (alreadyOnBus(cj, ci)) continue;
+
+				makeOneRatsnestWire(ci, cj, ratsnestCommand);
+				return;
+			}
+		}
+
+		return;
 	}
 }
 
@@ -194,12 +208,6 @@ ConnectorItem * SchematicSketchWidget::tryParts(ConnectorItem * otherConnectorIt
 
 ConnectorItem * SchematicSketchWidget::tryWire(ConnectorItem * wireConnectorItem, ConnectorItem * otherConnectorItem)
 {
-	ConnectorItem * splitWireConnectorItem = m_wireHash.value(wireConnectorItem->attachedToID());
-	if (splitWireConnectorItem != NULL) {
-		m_wireHash.remove(wireConnectorItem->attachedToID());
-		return splitWireConnectorItem;
-	}
-
 	QList<Wire *> chained;
 	QList<ConnectorItem *> ends;
 	QList<ConnectorItem *> uniqueEnds;
@@ -344,15 +352,27 @@ const QString & SchematicSketchWidget::viewName() {
 }
 
 
-void SchematicSketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem)
+void SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem)
 {
-	// possibly find or create a new breadboard
+	// if needed, find or create a new breadboard to make the connection
 
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		// lookForBreadboardConnection may change fromConnectorItem
 		if (fromConnectorItem->bus()) {
 			// cache this for drawing the ratsnest wire back in the same place
-			m_wireHash.insert(wireID, m_connectorDragConnector);
+			ConnectorPair * cp = new ConnectorPair;
+			cp->connectorItem0 = m_connectorDragConnector;
+			cp->connectorItem1 = toConnectorItem;
+			QString h1 = QString("%1.%2.%3.%4")
+								.arg(dragWire->id()).arg(dragWire->otherConnector(fromOnWire)->connectorStuffID())
+								.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorStuffID());
+			m_wireHash.insert(h1, cp);
+			cp = new ConnectorPair;
+			cp->connectorItem1 = cp->connectorItem0 = NULL;
+			QString h2 = QString("%1.%2.%3.%4")
+								.arg(dragWire->id()).arg(fromOnWire->connectorStuffID())
+								.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorStuffID());
+			m_wireHash.insert(h2, cp);							  
 		}
 		else {
 			// find an empty bus or make a breadboard
@@ -368,7 +388,7 @@ void SchematicSketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorIte
 		toConnectorItem = lookForBreadboardConnection(toConnectorItem);			// lookForBreadboardConnection may change toConnectorItem
 		if (toConnectorItem->bus()) {
 			// cache this for drawing the ratsnest wire back in the same place
-			m_wireHash.insert(wireID, m_connectorDragConnector);
+			//m_wireHash.insert(dragWire->id(), m_connectorDragConnector);
 		}
 		else {
 		}

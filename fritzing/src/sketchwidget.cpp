@@ -64,7 +64,6 @@ $Date$
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
-	//m_dealWithRatsNestEnabled = true;
 	m_ignoreSelectionChangeEvents = false;
 	m_droppingItem = NULL;
 	m_chainDrag = false;
@@ -193,7 +192,6 @@ void SketchWidget::loadFromModel() {
 	ModelPart* root = m_sketchModel->root();
 	QHash<long, ItemBase *> newItems;
 	QHash<ItemBase *, QDomElement *> itemDoms;
-	//m_dealWithRatsNestEnabled = false;
 	m_ignoreSelectionChangeEvents = true;
 
 	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
@@ -266,23 +264,10 @@ void SketchWidget::loadFromModel() {
 
 	updateRatsnestStatus(NULL, NULL);
 
-	//m_dealWithRatsNestEnabled = true;
-	//redrawRatsnest(newItems);
-	//checkAutorouted();
 	this->scene()->clearSelection();
 	cleanUpWires(false, NULL);
 	m_ignoreSelectionChangeEvents = false;
 }
-
-/*
-void SketchWidget::checkAutorouted() {
-}
-
-
-void SketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems) {
-	Q_UNUSED(newItems);
-}
-*/
 
 ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id) {
 	if (m_paletteModel == NULL) return NULL;
@@ -1779,17 +1764,17 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 	m_undoStack->push(parentCommand);
 }
 
-void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorItem * to)
+void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, ConnectorItem * to)
 {
 	// if to == NULL and it's pcb or schematic view, bail out
-	if (!canCreateWire(wire, from, to)) {
+	if (!canCreateWire(wire, fromOnWire, to)) {
 		clearDragWireTempCommand();
 		this->scene()->removeItem(m_connectorDragWire);
 		return;
 	}
 
 	ConnectorItem * newFrom = m_connectorDragConnector;
-	modifyNewWireConnections(wire->id(), newFrom, to);
+	modifyNewWireConnections(wire, fromOnWire, newFrom, to);
 
 	QUndoCommand * parentCommand = new QUndoCommand();
 
@@ -1804,7 +1789,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 
 	DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
 					   .arg(m_connectorDragConnector->connectorStuffID())
-					   .arg(from->connectorStuffID())
+					   .arg(fromOnWire->connectorStuffID())
 					   .arg((to == NULL) ? "null" : to->connectorStuffID())
 					   .arg(m_connectorDragConnector->attachedTo()->modelPart()->title()) );
 
@@ -1815,13 +1800,13 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * from, ConnectorIt
 
 
 	bool doEmit = false;
-	ConnectorItem * anchor = wire->otherConnector(from);
+	ConnectorItem * anchor = wire->otherConnector(fromOnWire);
 	if (anchor != NULL) {
 		extendChangeConnectionCommand(anchor, newFrom, true, false, parentCommand);
 		doEmit = true;
 	}
 	if (to != NULL) {
-		extendChangeConnectionCommand(from, to, true, false, parentCommand);
+		extendChangeConnectionCommand(fromOnWire, to, true, false, parentCommand);
 		doEmit = true;
 	}
 
@@ -2573,14 +2558,6 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 	toConnectorItem->attachedTo()->updateConnections(toConnectorItem);
 
 }
-
-/*
-void SketchWidget::dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect) {
-	Q_UNUSED(fromConnectorItem);
-	Q_UNUSED(toConnectorItem);
-	Q_UNUSED(connect);
-}
-*/
 
 void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to) {
 	ConnectorItem * connector0 = wire->connector0();
@@ -3386,9 +3363,10 @@ bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Connecto
 }
 
 
-void SketchWidget::modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to)
+void SketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to)
 {
-	Q_UNUSED(wireID);
+	Q_UNUSED(dragWire);
+	Q_UNUSED(fromOnWire);
 	Q_UNUSED(from);
 	Q_UNUSED(to);
 }

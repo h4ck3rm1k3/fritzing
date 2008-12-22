@@ -41,8 +41,6 @@ public:
 	void setNewPartVisible(ItemBase *);
 
 protected:
-	//void redrawRatsnest(QHash<long, ItemBase *> & newItems);
-	//void dealWithRatsnest(ConnectorItem * from, ConnectorItem * to, bool connect);
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);

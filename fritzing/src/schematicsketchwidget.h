@@ -31,6 +31,11 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 #include "pcbschematicsketchwidget.h"
 
+struct ConnectorPair {
+	ConnectorItem* connectorItem0;
+	ConnectorItem * connectorItem1;
+};
+
 class SchematicSketchWidget : public PCBSchematicSketchWidget
 {
 	Q_OBJECT
@@ -50,7 +55,6 @@ protected:
 	void setWireVisible(Wire * wire);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
 	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
-	//void dealWithRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
@@ -59,7 +63,7 @@ protected:
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canChainMultiple();
 	bool alreadyOnBus(ConnectorItem * busCandidate, ConnectorItem * otherCandidate);
-	void modifyNewWireConnections(qint64 wireID, ConnectorItem * & from, ConnectorItem * & to);
+	void modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * & connectorItem);
 	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires);
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
@@ -68,7 +72,7 @@ protected:
 	void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 
 protected:
-	QHash<int, ConnectorItem *> m_wireHash;
+	QHash<QString, ConnectorPair *> m_wireHash;
 	QList<Wire *> m_deleteStash;
 
 };
