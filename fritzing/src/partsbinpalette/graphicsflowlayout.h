@@ -38,6 +38,7 @@ class GraphicsFlowLayout : public QGraphicsLinearLayout {
 		GraphicsFlowLayout(QGraphicsLayoutItem *parent = 0, int spacing = 3);
 		void setGeometry(const QRectF &rect);
 		int heightForWidth(int width);
+		void clear();
 
 	protected:
 		void widgetEvent(QEvent * e);

@@ -73,3 +73,15 @@ int GraphicsFlowLayout::doLayout(const QRectF &rect) {
 	m_lastWidth = rect.width();
 	return y + lineHeight - rect.y();
 }
+
+
+void GraphicsFlowLayout::clear() {
+	QList<QGraphicsLayoutItem*> itemsToRemove;
+	for(int i=0; i < count(); i++) {
+		itemsToRemove << itemAt(i);
+	}
+
+	foreach(QGraphicsLayoutItem* iToR, itemsToRemove) {
+		removeItem(iToR);
+	}
+}
