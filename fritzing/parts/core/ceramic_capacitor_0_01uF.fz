@@ -2,7 +2,7 @@
 <module fritzingVersion="0.1.1201" moduleId="1001ABDC02" >
  <version>1.0</version>
  <author>Stefan Hermann</author>
- <title>0.01 &#181;F Basic Ceramic Capacitor</title>
+ <title>Ceramic Capacitor</title>
  <label>C</label>
  <date>2008-09-23</date>
  <tags>
@@ -17,15 +17,15 @@
   <property name="Rated Voltage" >50 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
- <description>A 0.01 &#181;F ceramic capacitor</description>
+ <description>0.01 &#181;F Ceramic Disk Capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/ceramic_capacitor_blue_icon.svg" >
+   <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/ceramic_capacitor_blue.svg" >
+   <layers image="breadboard/ceramic_disk_capacitor_ochre.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>

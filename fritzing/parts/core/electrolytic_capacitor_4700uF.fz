@@ -17,7 +17,7 @@
   <property name="Rated Voltage" >35 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
- <description>Big 4700&#181;F electrolytic capacitor</description>
+ <description>Big ol' 4700&#181;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_4700uF_icon.svg" >

@@ -17,15 +17,15 @@
   <property name="Rated Voltage" >50 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic.round</taxonomy>
- <description>A generic ceramic capacitor</description>
+ <description>0.1 &#181;F Ceramic Disk Capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/ceramic_capacitor_blue_icon.svg" >
+   <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/ceramic_capacitor_blue.svg" >
+   <layers image="breadboard/ceramic_disk_capacitor_ochre.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
@@ -43,7 +43,7 @@
  </views>
  <connectors>
   <connector type="male" id="connector0" name="pin 0" >
-   <description>pin0</description>
+   <description>pin 0</description>
    <views>
     <breadboardView>
      <p svgId="connector0pin" layer="breadboard" />
@@ -57,7 +57,7 @@
    </views>
   </connector>
   <connector type="male" id="connector1" name="pin 1" >
-   <description>pin1</description>
+   <description>pin 1</description>
    <views>
     <breadboardView>
      <p svgId="connector1pin" layer="breadboard" />
