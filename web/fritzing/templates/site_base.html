@@ -19,11 +19,7 @@
 {% endblock %}
 
 {% block subnav %}
-    {% if pages %}
-        {% for page in pages %}
-            {% pages_menu page %}
-        {% endfor %}
-    {% else %}
+    {% if all_pages %}
         {% for page in all_pages %}
             {% pages_menu page %}
         {% endfor %}
