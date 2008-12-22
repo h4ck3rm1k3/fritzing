@@ -31,6 +31,7 @@ $Date$
 #include <QKeyEvent>
 #include <QFileInfo>
 #include <QDesktopServices>
+#include <QLocale>
 
 bool FApplication::m_spaceBarIsPressed = false;
 QString FApplication::m_openSaveFolder = ___emptyString___;
@@ -98,3 +99,17 @@ bool FApplication::eventFilter(QObject *obj, QEvent *event)
 	return false;
 }
 
+bool FApplication::findTranslator(const QString & libPath) {
+    QString suffix = QLocale::system().name();	   // Returns the language and country of this locale as a string of the form "language_country", where language is a lowercase, two-letter ISO 639 language code, and country is an uppercase, two-letter ISO 3166 country code.
+    
+	// uncomment and change this to load a translator if it's different from the language your system is running
+	//QLocale other(QLocale::German);  // or for example:  other(QLocale::German, QLocale::Germany);
+	//suffix = other.name();
+	
+    bool loaded = m_translator.load(QString("fritzing_") + suffix, libPath + "/translations");
+	if (loaded) {
+		this->installTranslator(&m_translator);
+	}
+
+	return loaded;
+}

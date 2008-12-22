@@ -28,6 +28,7 @@ $Date$
 #define FAPPLICATION_H
 
 #include <QApplication>
+#include <QTranslator>
 
 class FApplication :
 	public QApplication
@@ -38,9 +39,11 @@ public:
 	FApplication(int & argc, char ** argv);
 	~FApplication(void);
 
+public:
+	bool findTranslator(const QString & libPath);
+
 	static void setOpenSaveFolder(const QString& path);
 	static const QString openSaveFolder();
-
 	static bool spaceBarIsPressed();
 
 signals:
@@ -52,6 +55,7 @@ protected:
 protected:
 	static bool m_spaceBarIsPressed;
 	static QString m_openSaveFolder;
+	QTranslator m_translator;
 };
 
 
