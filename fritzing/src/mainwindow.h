@@ -63,6 +63,7 @@ QT_END_NAMESPACE
 
 class Helper;
 class DockManager;
+class FSizeGrip;
 
 class MainWindow : public FritzingWindow
 {
@@ -271,6 +272,7 @@ protected:
 
 	void moveEvent(QMoveEvent * event);
 	bool event(QEvent *);
+	void resizeEvent(QResizeEvent * event);
 
 	//void connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view);
 
@@ -452,7 +454,7 @@ protected:
     QStringList m_openExampleActions;
 
 	class TripleNavigator * m_tripleNavigator;
-	QSizeGrip *m_sizeGrip;
+	class FSizeGrip *m_sizeGrip;
 
 	//class ViewSwitcher *m_breadViewSwitcher;
 	//class ViewSwitcher *m_schemViewSwitcher;

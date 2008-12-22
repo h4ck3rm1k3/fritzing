@@ -29,6 +29,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 
 #include "dockmanager.h"
 #include "triplenavigator.h"
+#include "fsizegrip.h"
 
 DockManager::DockManager(MainWindow *mainWindow)
 	: QObject(mainWindow)
@@ -36,8 +37,7 @@ DockManager::DockManager(MainWindow *mainWindow)
 	m_mainWindow = mainWindow;
 	m_mainWindow->setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 	m_mainWindow->setDockOptions(QMainWindow::AnimatedDocks);
-	//QSizeGrip *sizeGrip = new QSizeGrip(m_mainWindow);
-	//m_mainWindow->m_sizeGrip = sizeGrip;
+	m_mainWindow->m_sizeGrip = new FSizeGrip(mainWindow);
 }
 
 void DockManager::dockChangeActivation(bool activate) {
@@ -94,12 +94,16 @@ void DockManager::createDockWindows()
     FDockWidget * dock = makeDock(tr("Console"), m_mainWindow->m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
 	dock->hide();
 
+
+
 #ifndef QT_NO_DEBUG
     m_mainWindow->m_windowMenu->addSeparator();
     m_mainWindow->m_windowMenu->addAction(m_mainWindow->m_toggleDebuggerOutputAct);
 #endif
 
     m_mainWindow->m_windowMenu->addSeparator();
+
+    //createSizeGripDock();
 }
 
 FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
@@ -108,7 +112,7 @@ FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int
     widget->setParent(dock);
     widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    connect(dock, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(ensureSpaceForSizeGrip(Qt::DockWidgetArea)));
+    //connect(dock, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(ensureSpaceForSizeGrip(Qt::DockWidgetArea)));
 
 	return dockIt(dock, dockMinHeight, dockDefaultHeight, area);
 }
@@ -132,3 +136,26 @@ void DockManager::ensureSpaceForSizeGrip(Qt::DockWidgetArea area) {
 	//m_mainWindow->corner(Qt::BottomRightCorner)
 	Q_UNUSED(area);
 }
+
+/*FDockWidget *DockManager::createSizeGripDock() {
+	QFrame *sizeGripFrame = new QFrame();
+	QSizeGrip *sg = new QSizeGrip(sizeGripFrame);
+	QBoxLayout *lo = new QBoxLayout(QBoxLayout::RightToLeft,sizeGripFrame);
+	lo->setMargin(0);
+	lo->setSpacing(0);
+	lo->addWidget(sg);
+
+	sizeGripFrame->setStyleSheet("margin: 0px; padding: 0px; border: 0px;");
+
+    FDockWidget * dock = new FDockWidget(___emptyString___, m_mainWindow);
+    dock->setWidget(sizeGripFrame);
+    sizeGripFrame->setParent(dock);
+    sizeGripFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    dock->setTitleBarWidget(0);
+
+	FDockWidget *retval = dockIt(dock, 6, 6, Qt::RightDockWidgetArea);
+	retval->setTitleBarWidget(0);
+
+	return retval;
+}*/

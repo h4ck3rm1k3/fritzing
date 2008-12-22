@@ -59,6 +59,7 @@ $Date$
 #include "dockmanager.h"
 
 #include "tabwindow.h"
+#include "fsizegrip.h"
 
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
@@ -88,9 +89,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_statusBar = new QStatusBar(this);
 	setStatusBar(m_statusBar);
-#ifndef Q_WS_MAC
 	m_statusBar->setSizeGripEnabled(false);
-#endif
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
@@ -1346,6 +1345,10 @@ bool MainWindow::event(QEvent * e) {
 	return FritzingWindow::event(e);
 }
 
+void MainWindow::resizeEvent(QResizeEvent * event) {
+	m_sizeGrip->rearrange();
+	FritzingWindow::resizeEvent(event);
+}
 
 void MainWindow::showTabWindow() {
 	m_tabWindow = new TabWindow(this);

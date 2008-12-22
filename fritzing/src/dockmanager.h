@@ -46,6 +46,7 @@ class DockManager : public QObject {
 	protected:
 		class FDockWidget * makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
 		class FDockWidget * dockIt(FDockWidget* dock, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
+		//class FDockWidget * createSizeGripDock();
 
 	protected:
 		MainWindow *m_mainWindow;
