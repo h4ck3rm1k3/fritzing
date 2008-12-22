@@ -1,5 +1,4 @@
 {% load pages_tags cache %}
-{% cache PAGE_CONTENT_CACHE_DURATION menu page.id lang %}
 {% if page.status %}
 <li class="navTreeItem visualNoMarker navTreeFolderish">
     <div>
@@ -7,6 +6,7 @@
         <span>{% show_content page "title" %}</span>
     </a></div>
     {% if current_page %}
+        {% cache PAGE_CONTENT_CACHE_DURATION menu page.id lang current_page.id %}
         {% ifequal page current_page %}
         <ul class="navTree navTreeLevel{{ page.level|add:"1" }}">
             {% for child in children %}
@@ -21,7 +21,7 @@
             {% endfor %}
         </ul>
         {% endifequal %}
+        {% endcache %}
     {% endif %}
 </li>
 {% endif %}
-{% endcache %}
