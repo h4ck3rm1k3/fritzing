@@ -82,7 +82,8 @@ HEADERS += src/abstractstatesbutton.h \
     src/dockmanager.h \
     src/idockablewidget.h \
     src/viewswitcher.h \
-    src/abstractimagebutton.h
+    src/abstractimagebutton.h \
+    src/fsizegrip.h
 SOURCES += src/aboutbox.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
@@ -145,4 +146,5 @@ SOURCES += src/aboutbox.cpp \
     src/waitpushundostack.cpp \
     src/zoomcombobox.cpp \
     src/dockmanager.cpp \
-    src/viewswitcher.cpp
+    src/viewswitcher.cpp \
+    src/fsizegrip.cpp
