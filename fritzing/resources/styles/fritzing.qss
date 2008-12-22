@@ -198,10 +198,15 @@ FDockWidget {
 	titlebar-normal-icon: url(:/resources/images/icons/dockWidgetEmpty_icon.png);
 }
 
+#topMostDock {
+	margin: 0px;
+	margin-top: 6px;
+	border: 0px;
+}
+
 #bottomMostDock {
 	margin: 0px;
 	margin-bottom: 6px;
-	background-color: rgb(179,179,179);
 	border: 0px;
 }
 
@@ -389,4 +394,7 @@ QSplitter::handle {
 	font-size: 10px;
 }
 
-
+WaitPushUndoStack {
+	background-color: white;
+	color: black;
+}

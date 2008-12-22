@@ -53,7 +53,7 @@ protected:
 	}
 };
 
-class PartsBinPaletteWidget : public FDockWidget {
+class PartsBinPaletteWidget : public QFrame {
 	Q_OBJECT
 	public:
 		PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent = 0);
@@ -125,8 +125,6 @@ class PartsBinPaletteWidget : public FDockWidget {
 		PartsBinIconView *m_iconView;
 		PartsBinListView *m_listView;
 
-		QFrame *m_container;
-
 		QFrame *m_footer;
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;
@@ -138,6 +136,9 @@ class PartsBinPaletteWidget : public FDockWidget {
 		WaitPushUndoStack *m_undoStack;
 
 		QStringList m_alienParts;
+
+	public:
+		static QString Title;
 };
 
 #endif /* PARTSBINPALETTEWIDGET_H_ */

@@ -42,7 +42,8 @@ DockManager::DockManager(MainWindow *mainWindow)
 	m_topDock = NULL;
 	m_bottomDock = NULL;
 
-	m_oldDockStyle = ___emptyString___;
+	m_oldTopDockStyle = ___emptyString___;
+	m_oldBottomDockStyle = ___emptyString___;
 }
 
 void DockManager::dockChangeActivation(bool activate) {
@@ -69,8 +70,7 @@ void DockManager::createBinAndInfoViewDocks() {
 
 void DockManager::createDockWindows()
 {
-	dockIt(m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
-
+	makeDock(PartsBinPaletteWidget::Title, m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
     makeDock(tr("Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerBreadboard = new MiniViewContainer(m_mainWindow));
@@ -102,15 +102,12 @@ void DockManager::createDockWindows()
 	dock->hide();
 
 
-
 #ifndef QT_NO_DEBUG
     m_mainWindow->m_windowMenu->addSeparator();
     m_mainWindow->m_windowMenu->addAction(m_mainWindow->m_toggleDebuggerOutputAct);
 #endif
 
     m_mainWindow->m_windowMenu->addSeparator();
-
-    keepMargins();
 }
 
 FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
@@ -121,6 +118,7 @@ FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int
     widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     connect(dock, SIGNAL(positionChanged()), this, SLOT(keepMargins()));
+    connect(dock, SIGNAL(topLevelChanged(bool)), this, SLOT(keepMargins()));
 
 	return dockIt(dock, dockMinHeight, dockDefaultHeight, area);
 }
@@ -141,10 +139,12 @@ FDockWidget *DockManager::dockIt(FDockWidget* dock, int dockMinHeight, int dockD
 }
 
 FDockWidget *DockManager::newTopWidget() {
-	int topMostY = -1;
+	int topMostY = 10000;
 	FDockWidget *topWidget = NULL;
 	foreach(FDockWidget* dock, m_docks) {
-		if(!dock->isFloating() && dock->isVisible() && dock->pos().y() > topMostY) {
+		if(/*!dock->isFloating() && dock->isVisible() &&*/
+			m_mainWindow->dockWidgetArea(dock) == Qt::RightDockWidgetArea
+			&& dock->pos().y() < topMostY) {
 			topMostY = dock->pos().y();
 			topWidget = dock;
 		}
@@ -156,7 +156,7 @@ FDockWidget *DockManager::newBottomWidget() {
 	int bottomMostY = -1;
 	FDockWidget *bottomWidget = NULL;
 	foreach(FDockWidget* dock, m_docks) {
-		if(/*!dock->isFloating() && dock->isVisible() &&*/
+		if(!dock->isFloating() && dock->isVisible() &&
 			m_mainWindow->dockWidgetArea(dock) == Qt::RightDockWidgetArea
 			&& dock->pos().y() > bottomMostY) {
 			bottomMostY = dock->pos().y();
@@ -169,37 +169,28 @@ FDockWidget *DockManager::newBottomWidget() {
 void DockManager::keepMargins() {
 	/*FDockWidget* newTopWidget = this->newTopWidget();
 	if(m_topDock != newTopWidget) {
-		removeTopMargin(m_topDock);
+		removeMargin(m_topDock);
 		m_topDock = newTopWidget;
+		if(m_topDock) m_oldTopDockStyle = m_topDock->styleSheet();
 		addTopMargin(m_topDock);
 	}*/
 
 	FDockWidget* newBottomWidget = this->newBottomWidget();
 	if(m_bottomDock != newBottomWidget) {
-		removeBottomMargin(m_bottomDock);
+		removeMargin(m_bottomDock);
 		m_bottomDock = newBottomWidget;
-		if(m_bottomDock) m_oldDockStyle = m_bottomDock->styleSheet();
+		if(m_bottomDock) m_oldBottomDockStyle = m_bottomDock->styleSheet();
 		addBottomMargin(m_bottomDock);
 	}
 }
 
 
-/*void DockManager::removeTopMargin(FDockWidget* dock) {
-	if(dock) {
-		dock->widget()->setObjectName("");
-		dock->widget()->setStyleSheet(dock->widget()->styleSheet());
-	}
+void DockManager::removeMargin(FDockWidget* dock) {
+	dockMarginAux(dock, "", m_oldBottomDockStyle);
 }
 
 void DockManager::addTopMargin(FDockWidget* dock) {
-	if(dock) {
-		dock->widget()->setObjectName("topMostDock");
-		dock->widget()->setStyleSheet(dock->widget()->styleSheet());
-	}
-}*/
-
-void DockManager::removeBottomMargin(FDockWidget* dock) {
-	dockMarginAux(dock, "", m_oldDockStyle);
+	dockMarginAux(dock, "topMostDock", dock->widget()->styleSheet());
 }
 
 void DockManager::addBottomMargin(FDockWidget* dock) {
@@ -209,8 +200,14 @@ void DockManager::addBottomMargin(FDockWidget* dock) {
 
 void DockManager::dockMarginAux(FDockWidget* dock, const QString &name, const QString &style) {
 	if(dock) {
+		QPalette paletteD = dock->palette();
+		QPalette paletteW = dock->widget()->palette();
+
 		dock->widget()->setObjectName(name);
 		dock->widget()->setStyleSheet(style);
 		dock->setStyleSheet(dock->styleSheet());
+
+		dock->setPalette(paletteD);
+		dock->widget()->setPalette(paletteW);
 	}
 }

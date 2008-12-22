@@ -39,27 +39,30 @@ class DockManager : public QObject {
 		void createBinAndInfoViewDocks();
 		void createDockWindows();
 
+	public slots:
+		void keepMargins();
+
 	protected slots:
 		void dockChangeActivation(bool activate);
-		void keepMargins();
 
 	protected:
 		class FDockWidget * makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
 		class FDockWidget * dockIt(FDockWidget* dock, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
 		FDockWidget *newTopWidget();
 		FDockWidget *newBottomWidget();
-		//void removeTopMargin(FDockWidget* dock);
-		//void addTopMargin(FDockWidget* dock);
-		void removeBottomMargin(FDockWidget* dock);
+		void removeMargin(FDockWidget* dock);
+		void addTopMargin(FDockWidget* dock);
 		void addBottomMargin(FDockWidget* dock);
 		void dockMarginAux(FDockWidget* dock, const QString &name, const QString &style);
 
 	protected:
 		MainWindow *m_mainWindow;
 		QList<FDockWidget*> m_docks;
+
 		FDockWidget* m_topDock;
 		FDockWidget* m_bottomDock;
-		QString m_oldDockStyle;
+		QString m_oldTopDockStyle;
+		QString m_oldBottomDockStyle;
 
 	public:
 		static const int PartsBinDefaultHeight = 220;

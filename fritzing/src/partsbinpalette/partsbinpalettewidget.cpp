@@ -39,10 +39,10 @@ $Date$
 #include "../debugdialog.h"
 #include "../dockmanager.h"
 
-#define TITLE tr("Parts")
+QString PartsBinPaletteWidget::Title = tr("Parts");
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent) :
-	FDockWidget(TITLE,parent)
+	QFrame(parent)
 {
 	m_refModel = refModel;
 
@@ -59,15 +59,13 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	m_binTitle = new SimpleEditableLabelWidget(m_undoStack,this);
 
-	m_container = new QFrame(this);
-	m_container->setObjectName("partsBinContainer");
+	setObjectName("partsBinContainer");
 
 	setupButtons();
 	setupFooter();
 
 	toIconView();
 
-	setWidget(m_container);
 
 	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
 	m_untitledFileName = "Untitled Bin";
@@ -123,8 +121,8 @@ void PartsBinPaletteWidget::setView(PartsBinView *view) {
 		m_showIconViewButton->setDisabledIcon();
 	}
 
-	delete m_container->layout();
-	QVBoxLayout *lo = new QVBoxLayout(m_container);
+	delete layout();
+	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(3);
 	lo->setSpacing(0);
 	lo->addWidget(m_binTitle);
@@ -320,7 +318,7 @@ void PartsBinPaletteWidget::undoStackCleanChanged(bool isClean) {
 		setSaveButtonEnabled(true);
 	}
 	setWindowModified(!isClean);
-	setWindowTitle(TITLE + (!isClean ? " (modified)" : ""));
+	parentWidget()->setWindowTitle(Title + (!isClean ? " (modified)" : ""));
 }
 
 bool PartsBinPaletteWidget::currentBinIsCore() {
@@ -372,7 +370,7 @@ void PartsBinPaletteWidget::saveAsLastBin() {
 
 void PartsBinPaletteWidget::closeEvent(QCloseEvent* event) {
 	saveAsLastBin();
-	FDockWidget::closeEvent(event);
+	QFrame::closeEvent(event);
 }
 
 ModelPart * PartsBinPaletteWidget::selected() {

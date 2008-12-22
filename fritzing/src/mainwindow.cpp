@@ -241,9 +241,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_helper = settings.allKeys().isEmpty() ? new Helper(this) : NULL;
 
-
 	QTimer::singleShot(65, this, SLOT(showTabWindow()));
-
+	QTimer::singleShot(1000, dockManager, SLOT(keepMargins()));
 }
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
