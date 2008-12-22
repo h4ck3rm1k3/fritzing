@@ -381,6 +381,10 @@ TripleNavigator {
 	background-color: rgb(179,179,179);
 }
 
+#tripleNavigatorBottomMargin {
+	background-color: #666;
+}
+
 QSplitter::handle {
      height: 4px;
      width: 4px;

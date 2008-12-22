@@ -49,10 +49,26 @@ TripleNavigator::TripleNavigator( QWidget * parent )
 {
 	m_splitter = new QSplitter(Qt::Horizontal, this);
 	m_splitter->setChildrenCollapsible(false);
-	QHBoxLayout *layout = new QHBoxLayout(this);
+
+	m_bottomMargin = new QFrame(this);
+	m_bottomMargin->setFixedHeight(6);
+	m_bottomMargin->setObjectName("tripleNavigatorBottomMargin");
+
+	QFrame *realArea = new QFrame(this);
+	QHBoxLayout *layout = new QHBoxLayout(realArea);
 	layout->addWidget(m_splitter);
 	layout->setMargin(1);
-    this->setLayout(layout);
+
+	QVBoxLayout *mainLO = new QVBoxLayout(this);
+	mainLO->setMargin(0);
+	mainLO->setSpacing(0);
+
+    mainLO->addWidget(realArea);
+    mainLO->addWidget(m_bottomMargin);
+}
+
+void TripleNavigator::showBottomMargin(bool show) {
+	m_bottomMargin->setVisible(show);
 }
 
 void TripleNavigator::addView(MiniViewContainer * miniViewContainer, const QString & title)
@@ -83,7 +99,7 @@ void TripleNavigatorLabel::setMiniViewContainer(MiniViewContainer * miniViewCont
 
 void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
-		// removed setStylesheet and setBold because under linux they cause a resize event 
+		// removed setStylesheet and setBold because under linux they cause a resize event
 		// which resized the whole navigator
 
 		//setStyleSheet(labelStyle.arg(pressedStyleColor).arg(pressedStyleWeight));
@@ -98,7 +114,7 @@ void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniVie
 		m_miniViewContainer->hideHandle(false);
 	}
 	else {
-		// removed setStylesheet and setBold because under linux they cause a resize event 
+		// removed setStylesheet and setBold because under linux they cause a resize event
 		// which resized the whole navigator
 
 		//setStyleSheet(labelStyle.arg(normalStyleColor).arg(normalStyleWeight));
@@ -117,7 +133,7 @@ void TripleNavigatorLabel::navigatorMousePressedSlot(MiniViewContainer * miniVie
 void TripleNavigatorLabel::navigatorMouseEnterSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
 		if (m_currentStyleColor != pressedStyleColor) {
-		// removed setStylesheet and setBold because under linux they cause a resize event 
+		// removed setStylesheet and setBold because under linux they cause a resize event
 		// which resized the whole navigator
 
 			//setStyleSheet(labelStyle.arg(hoverStyleColor).arg(hoverStyleWeight));
@@ -132,7 +148,7 @@ void TripleNavigatorLabel::navigatorMouseEnterSlot(MiniViewContainer * miniViewC
 void TripleNavigatorLabel::navigatorMouseLeaveSlot(MiniViewContainer * miniViewContainer) {
 	if (miniViewContainer == m_miniViewContainer) {
 		if (m_currentStyleColor != pressedStyleColor) {
-		// removed setStylesheet and setBold because under linux they cause a resize event 
+		// removed setStylesheet and setBold because under linux they cause a resize event
 		// which resized the whole navigator
 			//setStyleSheet(labelStyle.arg(m_currentStyleColor).arg(m_currentStyleWeight));
 			QPalette palette = this->palette();

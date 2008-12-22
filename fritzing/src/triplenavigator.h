@@ -36,13 +36,15 @@ $Date$
 class TripleNavigator : public QFrame
 {
 	Q_OBJECT
-	
+
 public:
 	TripleNavigator(QWidget * parent = 0);
-	void addView(MiniViewContainer *, const QString & title);	
-	
+	void addView(MiniViewContainer *, const QString & title);
+	void showBottomMargin(bool show);
+
 protected:
 	QSplitter * m_splitter;
+	QFrame *m_bottomMargin;
 };
 
 

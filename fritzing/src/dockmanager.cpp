@@ -188,7 +188,14 @@ void DockManager::keepMargins() {
 
 
 void DockManager::removeMargin(FDockWidget* dock) {
-	if(dock) dockMarginAux(dock, "", m_oldBottomDockStyle);
+	if(dock) {
+		TripleNavigator *tn = dynamic_cast<TripleNavigator*>(dock->widget());
+		if(tn) {
+			tn->showBottomMargin(false);
+		} else {
+			dockMarginAux(dock, "", m_oldBottomDockStyle);
+		}
+	}
 }
 
 void DockManager::addTopMargin(FDockWidget* dock) {
@@ -196,20 +203,22 @@ void DockManager::addTopMargin(FDockWidget* dock) {
 }
 
 void DockManager::addBottomMargin(FDockWidget* dock) {
-	if(dock) dockMarginAux(dock, "bottomMostDock", dock->widget()->styleSheet());
+	if(dock) {
+		TripleNavigator *tn = dynamic_cast<TripleNavigator*>(dock->widget());
+		if(tn) {
+			tn->showBottomMargin(true);
+		} else {
+			dockMarginAux(dock, "bottomMostDock", dock->widget()->styleSheet());
+		}
+	}
 }
 
 
 void DockManager::dockMarginAux(FDockWidget* dock, const QString &name, const QString &style) {
 	Q_ASSERT(dock);
 
-	QPalette paletteD = dock->palette();
-	QPalette paletteW = dock->widget()->palette();
-
 	dock->widget()->setObjectName(name);
 	dock->widget()->setStyleSheet(style);
 	dock->setStyleSheet(dock->styleSheet());
 
-	dock->setPalette(paletteD);
-	dock->widget()->setPalette(paletteW);
 }
