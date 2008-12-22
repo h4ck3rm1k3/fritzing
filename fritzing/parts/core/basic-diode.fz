@@ -2,12 +2,12 @@
 <module fritzingVersion="0.1.beta.1396" moduleId="1234ABDC24diode" >
  <version>1.1</version>
  <author>JennyLC</author>
- <title>Recifier Diode</title>
+ <title>Rectifier Diode</title>
  <label>D</label>
  <date>2008-11-11</date>
  <tags>
   <tag>Diode</tag>
-  <tag>Recifider Diode</tag>
+  <tag>Rectifider Diode</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
