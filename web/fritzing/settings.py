@@ -78,6 +78,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 #    'tools.middleware.RequireLoginMiddleware',
     'pages.middleware.CurrentSiteMiddleware',
+    'tools.middleware.UserBasedExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'fritzing.urls'
