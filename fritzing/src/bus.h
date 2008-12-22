@@ -55,7 +55,7 @@ public:
 	void addConnector(class Connector *);
 	class Connector * busConnector();
 	class ModelPart * modelPart();
-	ConnectorItem * connectorItem(QGraphicsScene * scene);
+	//ConnectorItem * connectorItem(QGraphicsScene * scene);
 	
 public:
 	static QHash<QString, class Bus *> ___emptyBusList___;

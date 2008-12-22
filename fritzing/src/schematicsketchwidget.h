@@ -63,13 +63,18 @@ protected:
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canChainMultiple();
 	bool alreadyOnBus(ConnectorItem * busCandidate, ConnectorItem * otherCandidate);
-	void modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to);
-	ConnectorItem * lookForBreadboardConnection(ConnectorItem * & connectorItem);
+	void modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to, QUndoCommand * parentCommand);
+	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
 	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires);
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
 	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
 	void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
+	ConnectorItem * lookForNewBreadboardConnection(ConnectorItem * connectorItem);
+	ConnectorItem * findEmptyBus(ItemBase * breadboard);
+	void cacheWire(Wire * wire, ConnectorItem * fromOnWire, 
+		ConnectorItem * oldFromConnectorItem, ConnectorItem * newFromConnectorItem, 
+		ConnectorItem * oldToConnectorItem, ConnectorItem * newToConnectorItem);
 
 protected:
 	QHash<QString, ConnectorPair *> m_wireHash;

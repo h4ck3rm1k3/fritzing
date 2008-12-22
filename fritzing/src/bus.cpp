@@ -89,10 +89,4 @@ ModelPart * Bus::modelPart() {
 	return m_modelPart;
 }
 
-ConnectorItem * Bus::connectorItem(QGraphicsScene * scene) {
-	foreach (ConnectorItem * connectorItem, m_connectorItems) {
-		if (connectorItem->scene() == scene) return connectorItem;
-	}
 
-	return NULL;
-}
