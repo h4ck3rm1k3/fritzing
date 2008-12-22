@@ -2,7 +2,7 @@
 <module fritzingVersion="0.2.1223" moduleId="1001ABDC03A" >
  <version>1.0</version>
  <author>Brendan Howell</author>
- <title>1 &#181;F Electrolytic Capacitor</title>
+ <title>Electrolytic Capacitor</title>
  <label>C</label>
  <date>2008-11-04</date>
  <tags>
@@ -17,7 +17,7 @@
   <property name="Rated Voltage" >35 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>An 1&#181;F electrolytic capacitor, measuring 5 mm diameter by 11 mm in height</description>
+ <description>An 1&#181;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_small_icon.svg" >
@@ -36,8 +36,8 @@
   </schematicView>
   <pcbView>
    <layers image="pcb/radial_can_200mil.svg" >
-    <layer layerId="copper0" />
- 	 <layer layerId="silkscreen" />
+     <layer layerId="copper0" />
+     <layer layerId="silkscreen" />
   </layers>
   </pcbView>
  </views>

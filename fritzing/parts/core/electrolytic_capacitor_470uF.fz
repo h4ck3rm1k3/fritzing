@@ -2,9 +2,9 @@
 <module fritzingVersion="0.2.1223" moduleId="1001ABDC03E" >
  <version>1.0</version>
  <author>Brendan Howell</author>
- <title>470 &#181;F Electrolytic Capacitor</title>
+ <title>Electrolytic Capacitor</title>
  <label>C</label>
- <date>2008-11-04</date>
+ <date>2008-12-22</date>
  <tags>
   <tag>Electrolytic</tag>
   <tag>Capacitor</tag>
@@ -17,7 +17,7 @@
   <property name="Rated Voltage" >35 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>An 470&#181;F electrolytic capacitor, measuring 10 mm diameter by 17 mm in height</description>
+ <description>470&#181;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_470uF_icon.svg" >
@@ -35,7 +35,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_400mil.svg" >
+   <layers image="pcb/radial_can_200mil.svg" >
     <layer layerId="copper0" />
     <layer layerId="silkscreen" />
    </layers>

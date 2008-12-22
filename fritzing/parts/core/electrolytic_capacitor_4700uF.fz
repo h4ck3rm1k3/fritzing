@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.2.1223" moduleId="1001ABDC03H" >
  <version>1.0</version>
- <author>Dirk van Oosterbosch</author>
- <title>4700 &#181;F Electrolytic Capacitor</title>
+ <author>Brendan Howell</author>
+ <title>Electrolytic Capacitor</title>
  <label>C</label>
- <date>2008-12-20</date>
+ <date>2008-12-22</date>
  <tags>
   <tag>Electrolytic</tag>
   <tag>Capacitor</tag>
@@ -16,8 +16,8 @@
   <property name="Capacitor Type" >Electrolytic</property>
   <property name="Rated Voltage" >35 v</property>
  </properties>
- <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>An heavy 4700&#181;F electrolytic capacitor, measuring 18 mm diameter by 35.5 mm in height</description>
+ <taxonomy>discreteParts.capacitor.electrolytic</taxonomy>
+ <description>Big 4700&#181;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_4700uF_icon.svg" >
@@ -35,7 +35,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/radial_can_600mil.svg" >
+   <layers image="pcb/radial_can_300mil.svg" >
     <layer layerId="copper0" />
     <layer layerId="silkscreen" />
    </layers>

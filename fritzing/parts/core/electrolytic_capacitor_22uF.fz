@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module fritzingVersion="0.2.1223" moduleId="1001ABDC03I" >
  <version>1.0</version>
- <author>Dirk van Oosterbosch</author>
- <title>22 &#181;F Electrolytic Capacitor</title>
+ <author>Brendan Howell</author>
+ <title>Electrolytic Capacitor</title>
  <label>C</label>
  <date>2008-12-20</date>
  <tags>
@@ -17,7 +17,7 @@
   <property name="Rated Voltage" >35 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>An 22&#181;F electrolytic capacitor, measuring 5 mm diameter by 11 mm in height</description>
+ <description>22&#181;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_small_icon.svg" >

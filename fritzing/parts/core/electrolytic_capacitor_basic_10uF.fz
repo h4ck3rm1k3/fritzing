@@ -2,7 +2,7 @@
 <module fritzingVersion="0.2.1223" moduleId="1001ABDC03" >
  <version>1.0</version>
  <author>Stefan Hermann</author>
- <title>Basic Electrolytic Capacitor</title>
+ <title>Electrolytic Capacitor</title>
  <label>C</label>
  <date>2008-09-24</date>
  <tags>
@@ -17,7 +17,7 @@
   <property name="Rated Voltage" >35 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.elecrtolytic</taxonomy>
- <description>A generic electrolytic capacitor</description>
+ <description>10 &#181;F electrolytic capacitor</description>
  <views>
   <iconView>
    <layers image="icon/electrolytic_capacitor_small_icon.svg" >
