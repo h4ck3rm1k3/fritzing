@@ -2,12 +2,12 @@
 <module fritzingVersion="0.1.1201" moduleId="1001ABDC02A" >
  <version>1.0</version>
  <author>Brendan Howell</author>
- <title>Basic Ceramic Capacitor</title>
+ <title>22 pF Ceramic Disk Capacitor</title>
  <label>C</label>
  <date>2008-11-04</date>
  <tags>
-  <tag>Ceramic</tag>
   <tag>Capacitor</tag>
+  <tag>Ceramic Disk Capacitor</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
@@ -17,15 +17,15 @@
   <property name="Rated Voltage" >200 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic</taxonomy>
- <description>A generic ceramic capacitor</description>
+ <description>A 22 pF ceramic disk capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/basic_ceramic_cap_icon.svg" >
+   <layers image="icon/ceramic_disk_capacitor_ochre_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/basic_ceramic_cap.svg" >
+   <layers image="breadboard/ceramic_disk_capacitor_ochre.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>

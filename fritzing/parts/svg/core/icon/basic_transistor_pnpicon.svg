@@ -1,119 +1,39 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.0"
-   baseProfile="tiny"
-   id="svg2"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   sodipodi:version="0.32"
-   sodipodi:docname="basic_transistor_pnpicon.svg"
-   inkscape:version="0.46"
-   x="0px"
-   y="0px"
-   width="32"
-   height="32"
-   viewBox="1 0 39.375 41.5"
-   xml:space="preserve"><metadata
-   id="metadata3294"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-   id="defs3292"><inkscape:perspective
-     sodipodi:type="inkscape:persp3d"
-     inkscape:vp_x="0 : 20.75 : 1"
-     inkscape:vp_y="0 : 1000 : 0"
-     inkscape:vp_z="39.375 : 20.75 : 1"
-     inkscape:persp3d-origin="19.6875 : 13.833333 : 1"
-     id="perspective3296" /></defs><sodipodi:namedview
-   inkscape:window-height="726"
-   inkscape:window-width="896"
-   inkscape:pageshadow="2"
-   inkscape:pageopacity="0.0"
-   guidetolerance="10.0"
-   gridtolerance="10.0"
-   objecttolerance="10.0"
-   borderopacity="1.0"
-   bordercolor="#666666"
-   pagecolor="#ffffff"
-   id="base"
-   showgrid="false"
-   inkscape:zoom="11.903614"
-   inkscape:cx="19.6875"
-   inkscape:cy="17.389676"
-   inkscape:window-x="238"
-   inkscape:window-y="25"
-   inkscape:current-layer="svg2" />
-<g
-   id="icon"
-   transform="matrix(2.3972928,0,0,2.4022782,-966.56317,-155.90572)">
-	<g
-   id="g11">
-		<g
-   id="Transistor_pins_1_">
-			<g
-   id="g9504">
-				<rect
-   id="rect9506"
-   x="411.082"
-   y="75.330002"
-   width="1.429"
-   height="6.1880002"
-   style="fill:#b3b3b3" />
-			</g>
-			<g
-   id="g9508">
-				<path
-   id="path9510"
-   d="M 408.502,75.33 L 408.502,77.524 C 408.502,77.804 407.983,78.224 407.707,78.467 C 407.027,79.056 406.322,79.671 406.322,80.447 L 406.322,81.518 L 407.751,81.518 C 407.751,81.518 407.751,80.857 407.751,80.718 C 407.751,80.376 408.351,79.799 408.646,79.547 C 409.308,78.971 409.936,78.429 409.936,77.728 L 409.936,75.33 L 408.502,75.33 L 408.502,75.33 z"
-   style="fill:#b3b3b3" />
-			</g>
-			<g
-   id="g9512">
-				<path
-   id="path9514"
-   d="M 415.09,75.33 L 415.09,77.524 C 415.09,77.804 415.609,78.224 415.885,78.467 C 416.566,79.056 417.27,79.671 417.27,80.447 L 417.27,81.518 L 415.841,81.518 C 415.841,81.518 415.841,80.857 415.841,80.718 C 415.841,80.376 415.241,79.799 414.946,79.547 C 414.284,78.971 413.656,78.429 413.656,77.728 L 413.656,75.33 L 415.09,75.33 L 415.09,75.33 z"
-   style="fill:#b3b3b3" />
-			</g>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg version="1.0" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px"
+	 viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+<g id="icon">
+	<g id="part">
+		<g id="Transistor_legs">
+			<rect id="rect9479_2_" x="14.644" y="31.528" fill="#8C8C8C" width="2.693" height="8.989"/>
+			<rect id="rect9481_2_" x="5.672" y="31.528" fill="#8C8C8C" width="2.693" height="8.989"/>
+			<rect id="rect9483_2_" x="23.617" y="31.528" fill="#8C8C8C" width="2.693" height="8.989"/>
 		</g>
-		<rect
-   id="rect9553"
-   x="407.39301"
-   y="68.666"
-   width="8.8059998"
-   height="6.664"
-   style="fill:#1a1a1a" />
-		<path
-   id="path9555"
-   d="M 415.532,68.666 L 415.532,70.289 L 415.532,75.734 L 415.532,76.953 C 415.951,76.481 416.198,75.925 416.198,75.33 L 416.198,75.33 L 416.198,68.666 L 415.532,68.666 z"
-   style="fill:#141414" />
-		<path
-   id="path9557"
-   d="M 408.06,68.666 L 407.394,68.666 L 407.394,75.33 L 407.394,75.33 C 407.394,75.925 407.641,76.48 408.06,76.953 L 408.06,75.734 L 408.06,70.289 L 408.06,68.666 z"
-   style="fill:#242424" />
-		<path
-   id="path9559"
-   d="M 407.393,68.666 L 407.393,68.666 C 407.393,69.261 407.641,69.817 408.059,70.289 L 415.537,70.289 C 415.956,69.817 416.203,69.261 416.203,68.666 L 416.203,68.666 L 407.393,68.666 z"
-   style="fill:#1f1f1f" />
-		<path
-   id="path9561"
-   d="M 411.796,65.582 C 409.364,65.582 407.393,66.963 407.393,68.667 L 416.198,68.667 C 416.198,66.963 414.229,65.582 411.796,65.582 z"
-   style="fill:#141414" />
-		<rect
-   id="rect9563"
-   x="408.06"
-   y="70.289001"
-   width="7.4780002"
-   height="6.664" />
+		<g id="Transistor_pins">
+			<rect id="rect9506_1_" x="14.644" y="19.841" fill="#8C8C8C" width="2.693" height="11.688"/>
+			<path id="path9510_1_" fill="#8C8C8C" d="M9.781,19.841v4.146c0,0.53-0.977,1.322-1.498,1.781
+				c-1.281,1.112-2.61,2.274-2.61,3.738v2.025h2.693c0,0,0-1.251,0-1.513c0-0.647,1.13-1.737,1.688-2.212
+				c1.247-1.086,2.431-2.112,2.431-3.436V19.84L9.781,19.841L9.781,19.841z"/>
+			<path id="path9514_1_" fill="#8C8C8C" d="M22.199,19.841v4.146c0,0.53,0.976,1.322,1.499,1.781
+				c1.283,1.112,2.61,2.274,2.61,3.738v2.025h-2.693c0,0,0-1.251,0-1.513c0-0.647-1.131-1.737-1.688-2.212
+				c-1.246-1.086-2.431-2.112-2.431-3.436V19.84L22.199,19.841L22.199,19.841z"/>
+		</g>
+		<rect id="rect9553_1_" x="7.69" y="7.252" fill="#1A1A1A" width="16.598" height="12.587"/>
+		<path id="path9555_1_" fill="#141414" d="M23.032,7.252v3.066v10.284v2.305c0.791-0.891,1.256-1.942,1.256-3.067l0,0V7.252H23.032
+			z"/>
+		<path id="path9557_1_" fill="#242424" d="M8.949,7.252H7.693v12.587l0,0c0,1.125,0.466,2.177,1.256,3.067v-2.305V10.318
+			L8.949,7.252L8.949,7.252z"/>
+		<path id="path9559_1_" fill="#1F1F1F" d="M7.69,7.252L7.69,7.252c0,1.124,0.466,2.175,1.256,3.066h14.096
+			C23.832,9.427,24.3,8.376,24.3,7.252l0,0H7.69z"/>
+		<path id="path9561_1_" fill="#141414" d="M15.99,1.427c-4.584,0-8.301,2.607-8.301,5.828h16.599
+			C24.288,4.035,20.576,1.427,15.99,1.427z"/>
+		<rect id="rect9563_1_" x="8.949" y="10.318" width="14.094" height="12.588"/>
 	</g>
-	<path
-   d="M 413.005,71.582 L 413.631,71.582 L 413.631,72.831 L 413.005,72.831 L 413.005,73.455 L 411.128,73.455 L 411.128,74.079 L 409.877,74.079 L 409.877,70.957 L 413.006,70.957 L 413.006,71.582 L 413.005,71.582 z M 412.379,71.582 L 411.127,71.582 L 411.127,72.831 L 412.379,72.831 L 412.379,71.582 z"
-   id="path3289"
-   style="fill:#999999" />
+	<g id="label">
+		<path fill="#999999" d="M18.809,13.451h1.351v2.699h-1.351v1.35h-4.049v1.35h-2.7v-6.75h6.751L18.809,13.451L18.809,13.451z
+			 M17.459,13.451H14.76v2.699h2.699V13.451z"/>
+	</g>
 </g>
 </svg>

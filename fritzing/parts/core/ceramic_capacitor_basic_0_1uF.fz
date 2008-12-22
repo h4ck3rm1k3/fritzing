@@ -2,12 +2,12 @@
 <module fritzingVersion="0.1.1201" moduleId="1000AAAA01" >
  <version>1.0</version>
  <author>Stefan Hermann</author>
- <title>Ceramic Capacitor Round</title>
+ <title>Ceramic Capacitor</title>
  <label>C</label>
  <date>2008-09-24</date>
  <tags>
   <tag>Capacitor</tag>
-  <tag>ceramic capacitor</tag>
+  <tag>Ceramic Capacitor</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
@@ -17,15 +17,15 @@
   <property name="Rated Voltage" >50 v</property>
  </properties>
  <taxonomy>discreteParts.capacitor.ceramic.round</taxonomy>
- <description>A generic ceramic capacitor.</description>
+ <description>A generic ceramic capacitor</description>
  <views>
   <iconView>
-   <layers image="icon/basic_ceramic_cap_round_icon.svg" >
+   <layers image="icon/ceramic_capacitor_blue_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
   <breadboardView fliphorizontal="true" flipvertical="true" >
-   <layers image="breadboard/basic_ceramic_cap_round.svg" >
+   <layers image="breadboard/ceramic_capacitor_blue.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
