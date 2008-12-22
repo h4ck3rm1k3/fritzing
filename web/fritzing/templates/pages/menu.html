@@ -1,5 +1,5 @@
 {% load pages_tags cache %}
-{% cache PAGES_CONTENT_CACHE_DURATION menu page.id lang current_page.id %}
+{% cache PAGE_CONTENT_CACHE_DURATION menu page.id lang current_page.id %}
 {% if page.status %}
 <li class="navTreeItem visualNoMarker navTreeFolderish">
     <div>
