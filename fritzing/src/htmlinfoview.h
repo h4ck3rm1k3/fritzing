@@ -29,6 +29,7 @@ $Date$
 #ifndef HTMLINFOVIEW_H
 #define HTMLINFOVIEW_H
 
+#include <QFrame>
 #include <QWebView>
 #include <QGraphicsSceneHoverEvent>
 
@@ -38,7 +39,7 @@ $Date$
 #include "connectoritem.h"
 #include "referencemodel/referencemodel.h"
 
-class HtmlInfoView : public QWebView
+class HtmlInfoView : public QFrame
 {
 Q_OBJECT
 public:
@@ -93,6 +94,8 @@ protected:
 	ItemBase *m_currentItem;
 	bool m_currentSwappingEnabled;
 	int m_maxPropCount;
+
+	QWebView *m_webView;
 };
 
 #endif

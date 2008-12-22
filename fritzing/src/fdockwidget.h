@@ -44,9 +44,11 @@ public:
 
 protected:
 	bool event(QEvent *event);
-	
+	void moveEvent(QMoveEvent *);
+
 signals:
 	void dockChangeActivationSignal(bool activate);
+	void positionChanged();
 
 protected:
 	bool m_state;

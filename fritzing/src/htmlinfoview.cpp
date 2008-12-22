@@ -28,6 +28,7 @@ $Date$
 
 #include <QWebFrame>
 #include <QBuffer>
+#include <QVBoxLayout>
 
 #include "htmlinfoview.h"
 #include "infographicsview.h"
@@ -44,8 +45,14 @@ $Date$
 #define PART_INSTANCE_DEFAULT_TITLE "Part"
 
 
-HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QWebView(parent) {
-	setContextMenuPolicy(Qt::PreventContextMenu);
+HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) {
+	QVBoxLayout *lo = new QVBoxLayout(this);
+	lo->setMargin(0);
+	lo->setSpacing(0);
+	m_webView = new QWebView(this);
+	lo->addWidget(m_webView);
+
+	m_webView->setContextMenuPolicy(Qt::PreventContextMenu);
 	m_includes = "";
 
 	QFile styleSheet(":/resources/styles/infoview.css");
@@ -72,7 +79,7 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QWebVie
 	m_refModel = refModel;
 	Q_ASSERT(m_refModel);
 
-	connect(page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
+	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 	registerRefModel();
 
 	m_maxPropCount = 0;
@@ -85,7 +92,7 @@ void HtmlInfoView::jsRegister() {
 }
 
 void HtmlInfoView::registerRefModel() {
-	this->page()->mainFrame()->addToJavaScriptWindowObject(
+	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
 		"refModel", m_refModel
 	);
 }
@@ -478,7 +485,7 @@ QString HtmlInfoView::toHtmlImage(QPixmap *pixmap, const char* format) {
 
 void HtmlInfoView::setContent(const QString &html) {
 	QString fileContent = QString(QString("<html>\n%1<body>\n%2")+HTML_EOF).arg(m_includes).arg(html);
-	setHtml(fileContent);
+	m_webView->setHtml(fileContent);
 
 	/*QFile file("/tmp/infoview.html");
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -511,14 +518,14 @@ bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 }
 
 void HtmlInfoView::registerJsObjects(const QString &parentName) {
-	this->page()->mainFrame()->addToJavaScriptWindowObject(
+	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
 		"currentItem", m_currentItem
 	);
 
 	if (m_currentItem->scene()) {   // jrc: got a crash without this check, but haven't been able to replicate it.  Actually it turns out that item in m_currentItem was deleted, so m_currentItem is invalid
 		SketchWidget *sketch = dynamic_cast<SketchWidget*>(m_currentItem->scene()->parent());
 		if(sketch) {
-			this->page()->mainFrame()->addToJavaScriptWindowObject(
+			m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
 				parentName, sketch
 			);
 		}

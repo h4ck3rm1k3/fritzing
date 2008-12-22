@@ -60,4 +60,7 @@ bool FDockWidget::event(QEvent * e) {
 	return QDockWidget::event(e);
 }
 
-
+void FDockWidget::moveEvent(QMoveEvent *event) {
+	QDockWidget::moveEvent(event);
+	emit positionChanged();
+}

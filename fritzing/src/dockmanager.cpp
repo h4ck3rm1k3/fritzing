@@ -38,12 +38,19 @@ DockManager::DockManager(MainWindow *mainWindow)
 	m_mainWindow->setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 	m_mainWindow->setDockOptions(QMainWindow::AnimatedDocks);
 	m_mainWindow->m_sizeGrip = new FSizeGrip(mainWindow);
+
+	m_topDock = NULL;
+	m_bottomDock = NULL;
+
+	m_oldDockStyle = ___emptyString___;
 }
 
 void DockManager::dockChangeActivation(bool activate) {
 	if (!m_mainWindow->m_closing) {
 		m_mainWindow->changeActivation(activate);
+		m_mainWindow->m_sizeGrip->rearrange();
 	}
+
 }
 
 void DockManager::createBinAndInfoViewDocks() {
@@ -103,22 +110,22 @@ void DockManager::createDockWindows()
 
     m_mainWindow->m_windowMenu->addSeparator();
 
-    //createSizeGripDock();
+    keepMargins();
 }
 
 FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
     FDockWidget * dock = new FDockWidget(title, m_mainWindow);
+    dock->setObjectName(title);
     dock->setWidget(widget);
     widget->setParent(dock);
     widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    //connect(dock, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), this, SLOT(ensureSpaceForSizeGrip(Qt::DockWidgetArea)));
+    connect(dock, SIGNAL(positionChanged()), this, SLOT(keepMargins()));
 
 	return dockIt(dock, dockMinHeight, dockDefaultHeight, area);
 }
 
 FDockWidget *DockManager::dockIt(FDockWidget* dock, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
-    //dock->setStyle(new QCleanlooksStyle());
 	dock->setAllowedAreas(area);
 	m_mainWindow->addDockWidget(area, dock);
     m_mainWindow->m_windowMenu->addAction(dock->toggleViewAction());
@@ -128,34 +135,82 @@ FDockWidget *DockManager::dockIt(FDockWidget* dock, int dockMinHeight, int dockD
 	dock->resize(DockDefaultWidth, dockDefaultHeight);
     connect(dock, SIGNAL(dockChangeActivationSignal(bool)), this, SLOT(dockChangeActivation(bool)));
 
+    m_docks << dock;
+
     return dock;
 }
 
-
-void DockManager::ensureSpaceForSizeGrip(Qt::DockWidgetArea area) {
-	//m_mainWindow->corner(Qt::BottomRightCorner)
-	Q_UNUSED(area);
+FDockWidget *DockManager::newTopWidget() {
+	int topMostY = -1;
+	FDockWidget *topWidget = NULL;
+	foreach(FDockWidget* dock, m_docks) {
+		if(!dock->isFloating() && dock->isVisible() && dock->pos().y() > topMostY) {
+			topMostY = dock->pos().y();
+			topWidget = dock;
+		}
+	}
+	return topWidget;
 }
 
-/*FDockWidget *DockManager::createSizeGripDock() {
-	QFrame *sizeGripFrame = new QFrame();
-	QSizeGrip *sg = new QSizeGrip(sizeGripFrame);
-	QBoxLayout *lo = new QBoxLayout(QBoxLayout::RightToLeft,sizeGripFrame);
-	lo->setMargin(0);
-	lo->setSpacing(0);
-	lo->addWidget(sg);
+FDockWidget *DockManager::newBottomWidget() {
+	int bottomMostY = -1;
+	FDockWidget *bottomWidget = NULL;
+	foreach(FDockWidget* dock, m_docks) {
+		if(/*!dock->isFloating() && dock->isVisible() &&*/
+			m_mainWindow->dockWidgetArea(dock) == Qt::RightDockWidgetArea
+			&& dock->pos().y() > bottomMostY) {
+			bottomMostY = dock->pos().y();
+			bottomWidget = dock;
+		}
+	}
+	return bottomWidget;
+}
 
-	sizeGripFrame->setStyleSheet("margin: 0px; padding: 0px; border: 0px;");
+void DockManager::keepMargins() {
+	/*FDockWidget* newTopWidget = this->newTopWidget();
+	if(m_topDock != newTopWidget) {
+		removeTopMargin(m_topDock);
+		m_topDock = newTopWidget;
+		addTopMargin(m_topDock);
+	}*/
 
-    FDockWidget * dock = new FDockWidget(___emptyString___, m_mainWindow);
-    dock->setWidget(sizeGripFrame);
-    sizeGripFrame->setParent(dock);
-    sizeGripFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    dock->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    dock->setTitleBarWidget(0);
+	FDockWidget* newBottomWidget = this->newBottomWidget();
+	if(m_bottomDock != newBottomWidget) {
+		removeBottomMargin(m_bottomDock);
+		m_bottomDock = newBottomWidget;
+		if(m_bottomDock) m_oldDockStyle = m_bottomDock->styleSheet();
+		addBottomMargin(m_bottomDock);
+	}
+}
 
-	FDockWidget *retval = dockIt(dock, 6, 6, Qt::RightDockWidgetArea);
-	retval->setTitleBarWidget(0);
 
-	return retval;
+/*void DockManager::removeTopMargin(FDockWidget* dock) {
+	if(dock) {
+		dock->widget()->setObjectName("");
+		dock->widget()->setStyleSheet(dock->widget()->styleSheet());
+	}
+}
+
+void DockManager::addTopMargin(FDockWidget* dock) {
+	if(dock) {
+		dock->widget()->setObjectName("topMostDock");
+		dock->widget()->setStyleSheet(dock->widget()->styleSheet());
+	}
 }*/
+
+void DockManager::removeBottomMargin(FDockWidget* dock) {
+	dockMarginAux(dock, "", m_oldDockStyle);
+}
+
+void DockManager::addBottomMargin(FDockWidget* dock) {
+	dockMarginAux(dock, "bottomMostDock", dock->widget()->styleSheet());
+}
+
+
+void DockManager::dockMarginAux(FDockWidget* dock, const QString &name, const QString &style) {
+	if(dock) {
+		dock->widget()->setObjectName(name);
+		dock->widget()->setStyleSheet(style);
+		dock->setStyleSheet(dock->styleSheet());
+	}
+}

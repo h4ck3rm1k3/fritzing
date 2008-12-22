@@ -182,12 +182,12 @@ QToolBar QTabBar::tab:selected {
 }
 
 /* ################### the palettes #################### */
-QDockWidget {
+FDockWidget {
 	/* only relevant if palette is floating
 	   and only visible with tabs inside the widget
 	   such as Parts Library */
 	background-color: rgb(179,179,179);
-
+	
 	/* this defines the title text! */
 	font-size: 10px;
 	font-weight: 600;
@@ -198,7 +198,14 @@ QDockWidget {
 	titlebar-normal-icon: url(:/resources/images/icons/dockWidgetEmpty_icon.png);
 }
 
-QDockWidget::title {
+#bottomMostDock {
+	margin: 0px;
+	margin-bottom: 6px;
+	background-color: rgb(179,179,179);
+	border: 0px;
+}
+
+FDockWidget::title {
 	height: 10px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
@@ -209,8 +216,8 @@ QDockWidget::title {
 	padding-top: 2px;
 	padding-bottom: 0px;
 }
-QDockWidget::close-button,
-QDockWidget::float-button {
+FDockWidget::close-button,
+FDockWidget::float-button {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
@@ -220,28 +227,28 @@ QDockWidget::float-button {
 	top: 2px;  bottom: 0px;
 }
 
-QDockWidget::close-button {
+FDockWidget::close-button {
 	right: 2px;
 	image: url(:/resources/images/icons/dockWidgetCloseNormal_icon.png); 
 }
-QDockWidget::close-button:hover {
+FDockWidget::close-button:hover {
 	border: none;
  	image: url(:/resources/images/icons/dockWidgetCloseHover_icon.png);
 }
-QDockWidget::close-button:pressed {
+FDockWidget::close-button:pressed {
 	border: none;
 	image: url(:/resources/images/icons/dockWidgetClosePressed_icon.png);
 }
 
-QDockWidget::float-button {
+FDockWidget::float-button {
 	right: 17px;
 	image: url(:/resources/images/icons/dockWidgetFloatNormal_icon.png);
 }
-QDockWidget::float-button:hover {
+FDockWidget::float-button:hover {
 	border: none;
 	image: url(:/resources/images/icons/dockWidgetFloatHover_icon.png);
 }
-QDockWidget::float-button:pressed {
+FDockWidget::float-button:pressed {
 	border: none;
  	background-image: url(:/resources/images/icons/dockWidgetFloatPressed_icon.png);
 }
@@ -252,6 +259,10 @@ HtmlInfoView {
 	border-top: 0px;
 	background-color: rgb(179,179,179);
 	color: rgb(0,0,0,);
+}
+
+HtmlInfoView QWebView {
+	background-color: rgb(179,179,179);
 }
 
 QTabWidget#palette_tabs QTabBar::tab {
@@ -298,14 +309,17 @@ PartsBinIconView {
 
 #partsBinTitle {
 	border: 1px solid #CECECE;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	margin: 0px;
+	padding: 0px;
 }
 
 #partsBinTitle QLabel {
-	margin: 2px 2px 0px 2px;
+	margin: 0px 1px 0px 1px;
 	font-weight: bold;
 	color: #575757;
+	font-size: 11px;
 }
 
 PartsBinListView {
@@ -314,6 +328,7 @@ PartsBinListView {
 
 #partsBinFooter,
 #partsBinContainer,
+PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
 	background-color: rgb(179,179,179);
