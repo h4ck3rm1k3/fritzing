@@ -119,6 +119,7 @@ FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int
 
     connect(dock, SIGNAL(positionChanged()), this, SLOT(keepMargins()));
     connect(dock, SIGNAL(topLevelChanged(bool)), this, SLOT(keepMargins()));
+    connect(dock, SIGNAL(visibilityChanged(bool)), this, SLOT(keepMargins()));
 
 	return dockIt(dock, dockMinHeight, dockDefaultHeight, area);
 }
@@ -200,15 +201,15 @@ void DockManager::addBottomMargin(FDockWidget* dock) {
 
 
 void DockManager::dockMarginAux(FDockWidget* dock, const QString &name, const QString &style) {
-	if(dock) {
-		QPalette paletteD = dock->palette();
-		QPalette paletteW = dock->widget()->palette();
+	Q_ASSERT(dock);
 
-		dock->widget()->setObjectName(name);
-		dock->widget()->setStyleSheet(style);
-		dock->setStyleSheet(dock->styleSheet());
+	QPalette paletteD = dock->palette();
+	QPalette paletteW = dock->widget()->palette();
 
-		dock->setPalette(paletteD);
-		dock->widget()->setPalette(paletteW);
-	}
+	dock->widget()->setObjectName(name);
+	dock->widget()->setStyleSheet(style);
+	dock->setStyleSheet(dock->styleSheet());
+
+	dock->setPalette(paletteD);
+	dock->widget()->setPalette(paletteW);
 }
