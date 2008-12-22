@@ -181,20 +181,21 @@ void DockManager::keepMargins() {
 		m_bottomDock = newBottomWidget;
 		if(m_bottomDock) m_oldBottomDockStyle = m_bottomDock->styleSheet();
 		addBottomMargin(m_bottomDock);
+		m_mainWindow->m_sizeGrip->raise();
 	}
 }
 
 
 void DockManager::removeMargin(FDockWidget* dock) {
-	dockMarginAux(dock, "", m_oldBottomDockStyle);
+	if(dock) dockMarginAux(dock, "", m_oldBottomDockStyle);
 }
 
 void DockManager::addTopMargin(FDockWidget* dock) {
-	dockMarginAux(dock, "topMostDock", dock->widget()->styleSheet());
+	if(dock) dockMarginAux(dock, "topMostDock", dock->widget()->styleSheet());
 }
 
 void DockManager::addBottomMargin(FDockWidget* dock) {
-	dockMarginAux(dock, "bottomMostDock", dock->widget()->styleSheet());
+	if(dock) dockMarginAux(dock, "bottomMostDock", dock->widget()->styleSheet());
 }
 
 
