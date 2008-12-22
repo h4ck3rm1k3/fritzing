@@ -19,9 +19,15 @@
 {% endblock %}
 
 {% block subnav %}
-    {% for page in all_pages %}
-        {% pages_menu page %}
-    {% endfor %}
+    {% if pages %}
+        {% for page in pages %}
+            {% pages_menu page %}
+        {% endfor %}
+    {% else %}
+        {% for page in all_pages %}
+            {% pages_menu page %}
+        {% endfor %}
+    {% endif %}
     {% show_menu "Left" %}
     <span style="float:right">
         {% show_menu "Right" %}
