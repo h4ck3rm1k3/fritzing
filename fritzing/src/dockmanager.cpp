@@ -97,9 +97,10 @@ void DockManager::createDockWindows()
 	m_mainWindow->m_tripleNavigator->addView(m_mainWindow->m_miniViewContainerPCB, tr("PCB"));
 	makeDock(tr("Navigator"), m_mainWindow->m_tripleNavigator, NavigatorMinHeight, NavigatorDefaultHeight);
 
-    m_mainWindow->m_consoleView = new Console();
-    FDockWidget * dock = makeDock(tr("Console"), m_mainWindow->m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
-	dock->hide();
+	// comment out the console for nows
+	// m_mainWindow->m_consoleView = new Console();
+	// FDockWidget * dock = makeDock(tr("Console"), m_mainWindow->m_consoleView, DockMinHeight, DockDefaultHeight, Qt::BottomDockWidgetArea);
+	// dock->hide();
 
 
 #ifndef QT_NO_DEBUG

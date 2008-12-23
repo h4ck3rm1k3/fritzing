@@ -30,28 +30,33 @@ $Date$
 #include "../debugdialog.h"
 
 QString Helper::BreadboardHelpText = tr(
-	"Sketches and Prototypes usally start in the <b>Breadboard View</b>."
+	"Sketches and prototypes usally start in the <b>Breadboard View</b>."
 	"<br/><br/>"
-	"Begin by dragging out a Bradboard Part from the Parts Bin."
-	"Then populate the breadboard with the components, just like they are arranged in the real world."
+	"Begin by dragging out a part from the Parts Bin, which is over at the top right. "
+	"Then populate the breadboard with the parts, just as you had arranged them in the physical world. "
 	"<br/><br/>"
-	"The Arduino part wil turn into an Arduino Shield.");
+	"After you're finished creating your sketch in the breadboard view, switch to the PCB view. "
+	"You can switch by clicking 'PCB View' in either the View Switcher widget or the Navigator Widget. "
+	"In the PCB view the Arduino part will turn into an Arduino Shield, "
+	"and other parts will also appear differently in PCB View.");
 QString Helper::SchematicHelpText = tr(
-	"Engineers and teachers typically like a <b>Schematic View</b>"
+	"Engineers and teachers typically work with a <b>Schematic View</b>"
 	"<br/><br/>"
-	"Here you have the same components as you have on your breadboard, "
-	"they just look different and more ... ehm schematic"
+	"This is a more abstract way to look at parts and wires than the Breadboard View. "
+	"You have the same parts as you have on your breadboard, "
+	"they just look different. "
 	"<br/><br/>"
-	"Use this Schematic View to check your connections with the ones "
-	"the datasheet will tell you need");
+	"If you are using a datasheet, the Schematic View can help you check your connections with the ones "
+	"the datasheet will suggest.");
 QString Helper::PCBHelpText = tr(
 	"Use the <b>PCB View</b> for producing your prototype or product."
 	"<br/><br/>"
 	"You can use different (typically smaller) sizes of the parts you have in the "
-	"breadboard, in order to make production faster, lighter and cheaper."
+	"breadboard, in order to make production faster, lighter and cheaper. "
 	"<br/><br/>"
 	"First rearrange all the components so they fit nicely on the board. Then use "
-	"Autoroute &darr; to generate the optimal traces between components.");
+	"Autoroute to generate the copper traces between parts. "
+	"The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is at the bottom left.");
 
 QString Helper::PartsBinHelpText = tr("Drag out your <br> parts from here");
 QString Helper::AutorouteHelpText = tr("When done with arranging, <br> use Autoroute to create <br> your copper traces");
