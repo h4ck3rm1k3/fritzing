@@ -10,8 +10,9 @@
         /*]]>*/
         </style>
         <link rel="kinetic-stylesheet" type="text/css" href="{{ MEDIA_URL }}fritzing/css/at-cachekey.kss" />
+        <style type="text/css" media="all">@import url({{ MEDIA_URL }}fritzing/css/ploneboard.css);</style>
         <title>
-            {% if current_page %}{% show_content current_page "title" %}{% endif %} — Fritzing
+            {% block title %}{% if current_page %}{% show_content current_page "title" %}{% endif %}{% endblock %} - Fritzing
         </title>
         <meta content="Learn from circuit examples how to use parts. From &quot;Hello World&quot; to complex hacks. Please note: this page is under heavy development!" name="description" />
         <!-- Internet Explorer CSS Fixes -->

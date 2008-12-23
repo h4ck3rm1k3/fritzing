@@ -1,0 +1,34 @@
+{% extends "forum_base.html" %}{% load i18n %}
+
+{% block content %}
+<h1>Forums</h1>
+<table class='listing nosort'>
+<thead>
+<tr>
+    <th>{% trans "Forum name" %}</th>
+    <th>{% trans "Threads" %}</th>
+    <th>{% trans "Most recent" %}</th>
+</tr>
+</thead>
+<tbody>
+{% for forum in object_list %}
+<tr class="{% cycle 'odd' 'even' %}">
+<td class='djangoForumListDetails'>
+    <p><strong><a href='{{ forum.get_absolute_url }}'>{{ forum.title }}</a></strong></p>
+    <span class="discreet">{{ forum.description }}</span>
+</td>
+<td>{{ forum.threads }}</td>
+{% with forum.forum_latest_post as latest_post %}
+<td class='djangoForumListLastPost'>
+    {% if latest_post %}
+        <a href='{{ latest_post.get_absolute_url }}'>{{ latest_post.time|timesince }} ago by {{ latest_post.author }}</a>
+    {% else %}
+        {% trans "No Posts" %}
+    {% endif %}
+</td>
+{% endwith %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

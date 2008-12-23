@@ -2,8 +2,6 @@
 
 {% load i18n %}
 
-{% block rtab_id %}id="account_tab"{% endblock %}
-
 {% block subnav %}
     {% if user.is_authenticated %}
         <ul>
@@ -17,10 +15,9 @@
             {% if user.password and request.openids %}
             <li><a href="{% url acct_passwd_delete %}">{% trans "Delete Password" %}</a></li>
             {% endif %}
-            <li><a href="{% url acct_language_change %}">{% trans "Language" %}</a></li>
-            <li><a href="{% url acct_timezone_change %}">{% trans "Timezone" %}</a></li>
+            {# <li><a href="{% url acct_language_change %}">{% trans "Language" %}</a></li> #}
+            {# <li><a href="{% url acct_timezone_change %}">{% trans "Timezone" %}</a></li> #}
+            <li><a href="{% url forum_subscriptions %}">{% trans "Forum subscriptions" %}</a></li>
         </ul>
-    {% else %}
-        &nbsp; {# need this to give subnav some height when empty #}
     {% endif %}
 {% endblock %}
