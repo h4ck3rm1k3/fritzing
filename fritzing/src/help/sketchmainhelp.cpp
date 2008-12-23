@@ -87,6 +87,8 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
+	textLabel->setFixedWidth(300);
+	textLabel->allTextVisible();
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 	textLabel->setToolTip("");
 	textLabel->setAlignment(Qt::AlignLeft);
@@ -100,8 +102,14 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	QVBoxLayout *layout = new QVBoxLayout(this);
 	m_closeButton = new SketchMainHelpCloseButton(viewString,this);
 	connect(m_closeButton, SIGNAL(clicked()), this, SLOT(doClose()));
+
+	QFrame *bottomMargin = new QFrame(this);
+	bottomMargin->setFixedHeight(m_closeButton->height());
+
 	layout->addWidget(m_closeButton);
 	layout->addWidget(main);
+	layout->addWidget(bottomMargin);
+
 	layout->setSpacing(0);
 	layout->setMargin(2);
 
@@ -114,8 +122,6 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	} else {
 		setStyleSheet(styleSheet.readAll());
 	}
-
-    QTimer::singleShot(1000,textLabel,SLOT(allTextVisible()));
 }
 
 void SketchMainHelpPrivate::doClose() {

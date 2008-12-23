@@ -56,8 +56,10 @@ public:
 
 public slots:
 	void allTextVisible() {
-		int height = document()->documentLayout()->documentSize().toSize().height();
-		setStyleSheet("border: 0px; background-color: transparent; margin-top: 0px; margin-bottom: 8px;");
+		QTextDocument *doc = document();
+		doc->setTextWidth(width());
+		int height = doc->documentLayout()->documentSize().toSize().height();
+		setStyleSheet("border: 0px; background-color: transparent; margin-top: 0px; margin-bottom: 0px;");
 		setFixedHeight(height);
 	}
 
