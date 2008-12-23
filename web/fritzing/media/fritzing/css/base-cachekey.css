@@ -1,3 +1,5 @@
+/* @override http://127.0.0.1:8000/media/fritzing/css/base-cachekey.css */
+
 /* - base.css - */
 
 @media screen {
@@ -562,14 +564,17 @@ form {
 
 fieldset {
 	border: none;
-	border-top: 1px solid #5a9bc6;
 	width: 100%;
 }
 
 legend {
-	padding: 0 0.5em;
-	font-size: 90%;
-	margin-left: -1.5em;
+	padding: 0 0 10px 0;
+	font-size: 1.4em;
+	text-transform: uppercase;
+	font-family: "Helvetica Neue Light","Helvetica Neue",Arial,Helvetica,Geneva,sans-serif;
+	letter-spacing: 1px;
+	font-weight: normal;
+	font-style: normal;
 }
 
 a:link, a:visited {
@@ -611,15 +616,16 @@ textarea {
 
 input[type="text"],
 input[type="password"] {
-	border: 1px solid #666;
+	border: 1px solid #ccc;
 	width: 99%;
-	padding: 2px;
+	padding: 3px 2px;
 	font-size: 1.1em;
+	margin: 5px 0;
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-	border: 1px solid black;
+	border: 1px solid #999;
 	background-color: #ffffe0;
 	outline: none;
 }
@@ -2611,7 +2617,7 @@ img {
 /* */
 
 #portal-header {
-	background: #380A1A;
+	background: #52001C url(../img/red_bar.png) repeat-x;
 	padding: 12px 10px 0px 50px;
 	width: 700px;
 	height: 43px;
@@ -2673,7 +2679,6 @@ ul#portal-siteactions a {
 
 ul#portal-personaltools a {
 	color: #fff;
-	font-size: 84%;
 }
 
 /* */
@@ -2687,7 +2692,7 @@ ul#portal-personaltools a {
 	height: 15px;
 	width: 705px;
 	padding: 5px 10px 5px 45px;
-	background: #64A284;
+	background: #4EA172 url(../img/first_green_bar.png) repeat-x;
 	z-index: -1;
 }
 
@@ -2757,12 +2762,29 @@ ul#portal-personaltools a {
 }
 
 #portal-column-one ul.navTree ul.navTreeLevel1 li {
-	background-color: #9BCCC1;
 	margin: 7px 0 0 0;
-	padding: 5px 0 5px 
+	padding: 5px 0 5px 0;
+    background: #95D2AF url(../img/second_green_bar.png) repeat-x;
+}
 
-0;
-/* */
+#new-website-badge {
+    background: url(../img/new_badge.png) no-repeat;
+    width: 60px;
+    height: 60px;
+    z-index: 10000000;
+    position: absolute;
+    left: 537px;
+    top: 6px;
+}
+
+a.login-link {
+    background: url(../img/login_icon.png) no-repeat right;
+    padding-right: 17px;
+}
+
+a.logout-link {
+    background: url(../img/logout_icon.png) no-repeat right;
+    padding-right: 21px;
 }
 
 /* */
@@ -2987,7 +3009,7 @@ dl.portlet dd {
 
 #portal-footer {
 	width: 710px;
-	background: #380A1A;
+	background: #52001C;
 	padding: 3px 0 3px 50px;
 }
 
