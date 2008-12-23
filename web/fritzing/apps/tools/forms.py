@@ -1,9 +1,17 @@
 from django import forms
+from django.db import models
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
 from contact_form.forms import AkismetContactForm
 
+# favour django-mailer but fall back to django.core.mail
+try:
+    mailer = models.get_app("mailer")
+    from mailer import send_mail
+except ImproperlyConfigured:
+    from django.core.mail import send_mail
 attrs = {'class': 'required'}
 
 class FritzingContactForm(AkismetContactForm):
@@ -18,3 +26,6 @@ class FritzingContactForm(AkismetContactForm):
 
     def message(self):
         return "From: %(name)s <%(email)s>\n\n%(body)s" % self.cleaned_data
+
+    def save(self, fail_silently=False):
+        send_mail(**self.get_message_dict())
