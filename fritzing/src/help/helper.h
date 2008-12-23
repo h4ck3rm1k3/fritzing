@@ -43,6 +43,8 @@ class Helper : public QObject {
 		Helper(MainWindow *owner);
 		~Helper();
 
+	void toggleHelpVisibility(int ix);
+
 	protected slots:
 		void somethingDroppedIntoView();
 		void viewSwitched();

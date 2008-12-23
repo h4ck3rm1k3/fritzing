@@ -163,3 +163,25 @@ void Helper::autorouted() {
 void Helper::moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy) {
 	item->moveBy(dx,dy);
 }
+
+void Helper::toggleHelpVisibility(int index) {
+
+	SketchMainHelp * which = NULL;
+	switch (index) {
+		case 0:
+			which = m_breadMainHelp;
+			break;
+		case 1:
+			which = m_schemMainHelp;
+			break;
+		case 2:
+			which = m_pcbMainHelp;
+			break;
+		default:
+			break;
+	}
+
+	if (which == NULL) return;
+
+	which->setVisible(!which->isVisible());
+}

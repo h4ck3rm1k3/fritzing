@@ -1387,8 +1387,9 @@ void MainWindow::showTabWindow() {
 }
 
 void MainWindow::showInViewHelp() {
-	delete m_helper;
-	m_helper = new Helper(this);
+	//delete m_helper;
+	//m_helper = new Helper(this);
+	m_helper->toggleHelpVisibility(m_tabWidget->currentIndex());
 }
 
 void MainWindow::restoreTabWindow() {

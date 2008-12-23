@@ -948,6 +948,7 @@ void MainWindow::createHelpMenuActions() {
 
 	m_showInViewHelpAct = new QAction(tr("Show First Time Help"), this);
 	m_showInViewHelpAct->setStatusTip(tr("Show First Time Help"));
+	m_showInViewHelpAct->setCheckable(true);
 	connect(m_showInViewHelpAct, SIGNAL(triggered(bool)), this, SLOT(showInViewHelp()));
 
 	m_visitFritzingDotOrgAct = new QAction(tr("Visit fritzing.org"), this);
@@ -1719,6 +1720,13 @@ void MainWindow::autoroute() {
 	QProgressDialog progress(QObject::tr("Autorouting..."), QObject::tr("Cancel"), 0, 1, this);
 	progress.show();
 
+	QProgressBar progressBar;
+	statusBar()->insertWidget (1, &progressBar, 100 );
+	QPushButton cancelButton;
+	cancelButton.setText(tr("Cancel autorouting"));
+	statusBar()->insertWidget(2, &cancelButton, 100);
+
+
 	eater.allowEventsIn(&progress);
 
 	m_pcbGraphicsView->scene()->clearSelection();
@@ -1728,6 +1736,8 @@ void MainWindow::autoroute() {
 	autorouter1->start(&progress);
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
 	qApp->removeEventFilter(&eater);
+	statusBar()->removeWidget(&progressBar);
+	statusBar()->removeWidget(&cancelButton);
 	m_dontClose = false;
 }
 
