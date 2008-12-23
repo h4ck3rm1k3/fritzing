@@ -237,7 +237,7 @@ int main(int argc, char *argv[])
 		if (tree.exists()) {
 			QApplication::processEvents();
 			MainWindow * treeduino = new MainWindow(paletteBinModel, referenceModel);
-			treeduino->load(path);
+			treeduino->load(path, false);
 			treeduino->show();
 		}
 	}
