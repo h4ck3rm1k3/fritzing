@@ -5,10 +5,14 @@
     {% placeholder teaser %}
 {% endblock %}
 
-{% block left_column %}
-    {% placeholder left_column with WYMEditor %}
-{% endblock %}
-
-{% block right_column %}
-    {% placeholder right_column with WYMEditor %}
+{% block body %}
+    {% placeholder header with WYMEditor %}
+    <table class="plain">
+    <tbody>
+        <tr>
+            <td width="50%">{% placeholder left_column with WYMEditor %}</td>
+            <td width="50%">{% placeholder right_column with WYMEditor %}</td>
+        </tr>
+    </tbody>
+    </table>
 {% endblock %}
