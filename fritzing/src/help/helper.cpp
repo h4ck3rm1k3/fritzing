@@ -30,33 +30,36 @@ $Date$
 #include "../debugdialog.h"
 
 QString Helper::BreadboardHelpText = tr(
-	"Sketches and prototypes usally start in the <b>Breadboard View</b>."
+        "The <b>Breadboard View</b> is meant to look like a <i>real-life</i> breadboard prototype."
 	"<br/><br/>"
-	"Begin by dragging out a part from the Parts Bin, which is over at the top right. "
-	"Then populate the breadboard with the parts, just as you had arranged them in the physical world. "
+        "Begin by dragging a part from the Parts Bin, which is over at the top right. "
+        "Then pull in more parts, connecting them by clicking on the connectors and dragging wires. "
+        "The process is similar to how you would arrange things in the physical world. "
 	"<br/><br/>"
-	"After you're finished creating your sketch in the breadboard view, switch to the PCB view. "
-	"You can switch by clicking 'PCB View' in either the View Switcher widget or the Navigator Widget. "
-	"In the PCB view the Arduino part will turn into an Arduino Shield, "
-	"and other parts will also appear differently in PCB View.");
+        "After you're finished creating your sketch in the breadboard view, try the other views. "
+        "You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. "
+        "Because different views have different purposes, parts will look different in the other views.");
 QString Helper::SchematicHelpText = tr(
-	"Engineers and teachers typically work with a <b>Schematic View</b>"
+        "Welcome to the <b>Schematic View</b>"
 	"<br/><br/>"
-	"This is a more abstract way to look at parts and wires than the Breadboard View. "
-	"You have the same parts as you have on your breadboard, "
-	"they just look different. "
-	"<br/><br/>"
-	"If you are using a datasheet, the Schematic View can help you check your connections with the ones "
-	"the datasheet will suggest.");
+        "This is a more abstract way to look at components and connections than the Breadboard View. "
+        "You have the same elements as you have on your breadboard, "
+        "they just look different. This representation is closer to the traditional diagrams used by engineers."
+        "<br/><br/>"
+        "You can press &lt;Shift&gt;-click with the mouse to create bend points and tidy up your connections. "
+        "The Schematic View can help you check that you have made the right connections between components. "
+        "You can also print out your schematic for documentation.");
 QString Helper::PCBHelpText = tr(
-	"Use the <b>PCB View</b> for producing your prototype or product."
+        "The <b>PCB View</b> is where you design how the components will appear on a physical PCB (Printed Circuit Board)."
 	"<br/><br/>"
-	"You can use different (typically smaller) sizes of the parts you have in the "
-	"breadboard, in order to make production faster, lighter and cheaper. "
+        "PCBs can be made at home or in a small lab using DIY etching processes. "
+        "They also can be sent to professional PCB manufacturing services for more precise fabrication. "
 	"<br/><br/>"
-	"First rearrange all the components so they fit nicely on the board. Then use "
-	"Autoroute to generate the copper traces between parts. "
-	"The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is at the bottom left.");
+        "To lay out your PCB, first rearrange all the components so they fit nicely on the board. "
+        "Then try to shift them around to minimize the length and confusion of connections. "
+        "Once the parts are sorted out, you can right-click on individual connections or use "
+        "Autoroute to generate the copper traces between parts. "
+        "The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is on the bottom left.");
 
 QString Helper::PartsBinHelpText = tr("Drag out your <br> parts from here");
 QString Helper::AutorouteHelpText = tr("When done with arranging, <br> use Autoroute to create <br> your copper traces");
