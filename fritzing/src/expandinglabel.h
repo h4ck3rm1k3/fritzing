@@ -34,6 +34,7 @@ $Date: 2008-11-24 12:33:07 +0100 (Mon, 24 Nov 2008) $
 #include "debugdialog.h"
 
 class ExpandingLabel : public QTextEdit {
+	Q_OBJECT
 public:
 	ExpandingLabel(QWidget *parent, int minSize=100) : QTextEdit(parent) {
 		setMinimumWidth(minSize);
@@ -53,10 +54,11 @@ public:
 		setContextMenuPolicy(Qt::NoContextMenu);
 	}
 
+public slots:
 	void allTextVisible() {
 		int height = document()->documentLayout()->documentSize().toSize().height();
 		setStyleSheet("border: 0px; background-color: transparent; margin-top: 0px; margin-bottom: 8px;");
-		setFixedHeight(height/2.9); //TODO Mariano: hack!
+		setFixedHeight(height);
 	}
 
 protected:

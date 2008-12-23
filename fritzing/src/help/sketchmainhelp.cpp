@@ -88,7 +88,6 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-	textLabel->allTextVisible();
 	textLabel->setToolTip("");
 	textLabel->setAlignment(Qt::AlignLeft);
 
@@ -115,6 +114,8 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 	} else {
 		setStyleSheet(styleSheet.readAll());
 	}
+
+    QTimer::singleShot(1000,textLabel,SLOT(allTextVisible()));
 }
 
 void SketchMainHelpPrivate::doClose() {
