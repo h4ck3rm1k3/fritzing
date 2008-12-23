@@ -156,6 +156,13 @@
 				</iconView>
 			</views>
 		</instance>
+		<instance moduleIdRef="3234DFDC00" path="/parts/core/big_pot.fz">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
 		<instance moduleIdRef="1238DBDC00" path="/parts/core/basic_power_transistor_npn.fz">
 			<views>
 				<iconView layer="icon">
