@@ -37,7 +37,8 @@ qreal SketchMainHelp::OpacityLevel = 0.5;
 SketchMainHelpCloseButton::SketchMainHelpCloseButton(const QString &imagePath, QWidget *parent)
 	:QLabel(parent)
 {
-	m_pixmap = QPixmap(QString(":/resources/images/inViewHelpCloseButton%1.png").arg(imagePath));
+	m_pixmap = QPixmap(
+		QString(":/resources/images/inViewHelpCloseButton%1.png").arg(imagePath));
 	setPixmap(m_pixmap);
 	setFixedHeight(m_pixmap.height());
 }
@@ -72,6 +73,7 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 
 	QFrame *main = new QFrame(this);
 	QHBoxLayout *mainLayout = new QHBoxLayout(main);
+
 	QLabel *imageLabel = new QLabel(this);
 	QLabel *imageLabelAux = new QLabel(imageLabel);
 	imageLabelAux->setObjectName("inviewHelpImage");
@@ -84,6 +86,8 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	textLabel->allTextVisible();
 	textLabel->setToolTip("");
 	textLabel->setAlignment(Qt::AlignLeft);
 

@@ -58,7 +58,6 @@ void PartsEditorViewImageWidget::mousePressConnectorEvent(ConnectorItem *, QGrap
 void PartsEditorViewImageWidget::copySvgFileToDestiny() {
 	// if the svg file is in the temp folder, then copy it to destiny
 	if(!m_svgFilePath->first.isEmpty() && !m_svgFilePath->second.isEmpty() && m_svgFilePath->first == m_tempFolder.path()) {
-		DebugDialog::debug(QString("copying from %1").arg(svgFilePath()));
 		QFile tempFile(svgFilePath());
                 DebugDialog::debug(QString("copying to %1").arg(getApplicationSubFolderPath("parts")+ "/parts/svg/user/"+m_svgFilePath->second));
                 tempFile.copy(getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->second);
@@ -72,15 +71,16 @@ void PartsEditorViewImageWidget::mousePressEvent(QMouseEvent *event) {
 
 void PartsEditorViewImageWidget::loadFile() {
 	QString origPath = QFileDialog::getOpenFileName(this,
-       tr("Open Image"),
-       m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
-       tr("SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)"));
+		tr("Open Image"),
+		m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
+		//tr("SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)"));
+		tr("SVG Files (*.svg)"));
 
 	if(origPath.isEmpty()) {
 		return; // Cancel pressed
 	} else {
 		if(!origPath.endsWith(".svg")) {
-			DebugDialog::debug("<<< no es svg");
+			//DebugDialog::debug("<<< no es svg");
 			origPath = createSvgFromImage(origPath);
 		}
 		if(origPath != ___emptyString___) {
@@ -110,6 +110,7 @@ void PartsEditorViewImageWidget::loadSvgFile(ModelPart * modelPart) {
 
 void PartsEditorViewImageWidget::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
 	PartsEditorAbstractViewImage::loadFromModel(paletteModel, modelPart);
+
 	StringPair *sp = m_item->svgFilePath();
 	copyToTempAndRenameIfNecessary(sp);
 	delete sp;
@@ -148,7 +149,6 @@ void PartsEditorViewImageWidget::copyToTempAndRenameIfNecessary(StringPair *file
 }
 
 void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
-	DebugDialog::debug("<<< file path to use "+filePath);
 	m_originalSvgFilePath = filePath;
 	QString folder = getApplicationSubFolderPath("parts")+"/svg";
 
@@ -162,13 +162,13 @@ void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
 	cs = Qt::CaseInsensitive;
 #endif
 	if(filePath.contains(folder, cs)) {
-		DebugDialog::debug("<<< is in core");
+		//DebugDialog::debug("<<< is in core");
 		QString filePathAux = filePath;
 		QString svgFile = filePathAux.remove(folder+"/", cs);
 		first = folder;
 		second = svgFile;
 	} else {
-		DebugDialog::debug("<<< isn't in core");
+		//DebugDialog::debug("<<< isn't in core");
 		first = filePath;
 		second = "";
 	}

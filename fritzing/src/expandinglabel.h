@@ -28,6 +28,7 @@ $Date: 2008-11-24 12:33:07 +0100 (Mon, 24 Nov 2008) $
 #define EXPANDINGLABEL_H_
 
 #include <QTextEdit>
+#include <QScrollBar>
 
 class ExpandingLabel : public QTextEdit {
 public:
@@ -36,15 +37,21 @@ public:
 		setReadOnly(true);
 		setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 		setStyleSheet("border: 0px; background-color: transparent; margin-top: 8px; margin-bottom: 5px;");
-		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
+		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	}
 
 	void setLabelText(const QString& theText) {
 		setText(theText);
 		setToolTip(theText);
-		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
+		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		setAlignment(Qt::AlignCenter);
 		setContextMenuPolicy(Qt::NoContextMenu);
+	}
+
+	void allTextVisible() {
+		setStyleSheet("border: 0px; background-color: transparent; margin-top: 0px; margin-bottom: 8px;");
+		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+		//setFixedHeight(verticalScrollBar()->height());
 	}
 
 protected:

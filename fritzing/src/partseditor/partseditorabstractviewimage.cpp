@@ -128,7 +128,6 @@ void PartsEditorAbstractViewImage::removeConnectors() {
 }
 
 ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QString &svgpath, const QString &relativepath) {
-	DebugDialog::debug("<<< svgPath = "+svgpath);
 	const QHash<QString,StringPair*> connIds = getConnectorIds(svgpath);
 	const QStringList layers = getLayers(svgpath);
 
@@ -137,9 +136,9 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QString &svgp
 }
 
 ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
-	DebugDialog::debug("<<< SVFfILEpAYH = "+svgFilePath);
+	//DebugDialog::debug("<<< SVFfILEpAYH = "+svgFilePath);
 	QString fakePath = svgFilePath.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
-	DebugDialog::debug("<<< fakePath = "+fakePath);
+	//DebugDialog::debug("<<< fakePath = "+fakePath);
 	QDomDocument *domDoc = new QDomDocument();
 	QString errorStr;
 	int errorLine;
