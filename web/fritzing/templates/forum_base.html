@@ -3,3 +3,8 @@
 {% load i18n %}
 
 {% block title %}{% trans "Forums" %}{% endblock %}
+
+{% block documentactions %}
+    <li><a href="/forum/rss/">RSS</a></li>
+    <li><a href="/forum/atom/">Atom</a></li>
+{% endblock %}
