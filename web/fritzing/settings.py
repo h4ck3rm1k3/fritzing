@@ -169,7 +169,7 @@ EMAIL_SUBJECT_PREFIX = "[Fritzing] "
 ugettext = lambda s: s
 LANGUAGES = (
   ('en', u'English'),
-  ('de', u'Deutsch'),
+#  ('de', u'Deutsch'),
 )
 
 CACHE_BACKEND = "locmem:///?max_entries=3000"

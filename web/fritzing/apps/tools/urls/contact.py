@@ -7,7 +7,7 @@ from tools.forms import FritzingContactForm
 urlpatterns = patterns('',
                        url(r'^$',
                            contact_form,
-                           {'form_class': FritzingContactForm}
+                           {'form_class': FritzingContactForm},
                            name='contact_form'),
                        url(r'^sent/$',
                            direct_to_template,
