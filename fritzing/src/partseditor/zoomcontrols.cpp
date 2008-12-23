@@ -52,7 +52,8 @@ void ZoomButton::zoom() {
 }
 
 void ZoomButton::mousePressEvent(QMouseEvent *event) {
-	QLabel::mouseReleaseEvent(event);
+	//QLabel::mousePressEvent(event);
+	Q_UNUSED(event);
 	emit clicked();
 }
 

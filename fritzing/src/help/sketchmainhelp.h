@@ -81,13 +81,17 @@ class SketchMainHelpPrivate : public QFrame {
 
 class SketchMainHelp : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
-	SketchMainHelp(const QString &viewString, const QString &htmlText);
+	SketchMainHelp(const QString &viewString, const QString &htmlText, bool doShow);
 	~SketchMainHelp();
 	void doClose();
 	void setTransparent();
+	void doSetVisible(bool visible);
 
 protected:
+	void loadState();
+	void saveState();
 	SketchMainHelpPrivate *m_son;
+	bool m_visible;
 
 public:
 	static qreal OpacityLevel;

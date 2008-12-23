@@ -28,6 +28,7 @@ $Date$
 #include <QGraphicsScene>
 #include <QFile>
 #include <QTimer>
+#include <QSettings>
 
 #include "sketchmainhelp.h"
 #include "../expandinglabel.h"
@@ -150,22 +151,43 @@ void SketchMainHelpPrivate::leaveEvent(QEvent * event) {
 
 SketchMainHelp::SketchMainHelp (
 		const QString &viewString,
-		const QString &htmlText
+		const QString &htmlText,
+		bool doShow
 	) : QGraphicsProxyWidget()
 {
-	setObjectName(viewString);
+	setObjectName("sketchMainHelp"+viewString);
 	m_son = new SketchMainHelpPrivate(viewString, htmlText, this);
 	setWidget(m_son);
+	if(!doShow) loadState();
 }
 
 
 void SketchMainHelp::doClose() {
-	if(scene()) {
-		scene()->removeItem(this);
-	}
+	doSetVisible(false);
+}
+
+void SketchMainHelp::doSetVisible(bool visible) {
+	m_visible = visible;
+	setVisible(visible);
+	saveState();
 }
 
 void SketchMainHelp::setTransparent() {
 	m_son->setWindowOpacity(OpacityLevel);
 	m_son->m_shouldGetTransparent = true;
+}
+
+void SketchMainHelp::saveState() {
+	QSettings settings("Fritzing","Fritzing");
+	QString prop = objectName()+"Visibility";
+	settings.setValue(prop,QVariant::fromValue(m_visible));
+}
+
+void SketchMainHelp::loadState() {
+	QSettings settings("Fritzing","Fritzing");
+	QString prop = objectName()+"Visibility";
+	bool visible = settings.contains(prop)
+		? settings.value(prop).toBool()
+		: true;
+	doSetVisible(visible);
 }

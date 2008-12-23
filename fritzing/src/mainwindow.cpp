@@ -240,7 +240,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
-	m_helper = settings.allKeys().isEmpty() ? new Helper(this) : NULL;
+	m_helper = new Helper(this, true);
 
 	QTimer::singleShot(65, this, SLOT(showTabWindow()));
 	QTimer::singleShot(1000, dockManager, SLOT(keepMargins()));
@@ -1396,7 +1396,7 @@ void MainWindow::showTabWindow() {
 void MainWindow::showInViewHelp() {
 	//delete m_helper;
 	if (m_helper == NULL) {
-		m_helper = new Helper(this);
+		m_helper = new Helper(this, true);
 		return;
 	}
 

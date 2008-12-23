@@ -1174,7 +1174,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
         event->acceptProposedAction();
 		DebugDialog::debug("after drop event");
 
-		emit dropSignal();
+		emit dropSignal(event->pos());
     }
 	else {
 		QGraphicsView::dropEvent(event);

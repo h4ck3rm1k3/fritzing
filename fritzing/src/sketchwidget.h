@@ -298,7 +298,7 @@ signals:
 
 	void swapped(long itemId, ModelPart *with);
 	void resizeSignal();
-	void dropSignal();
+	void dropSignal(const QPoint &pos);
 	void wheelSignal();
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void ratsnestChangeSignal(SketchWidget *, QUndoCommand * parentCommand);

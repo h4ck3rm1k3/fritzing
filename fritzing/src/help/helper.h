@@ -40,7 +40,7 @@ $Date$
 class Helper : public QObject {
 	Q_OBJECT
 	public:
-		Helper(MainWindow *owner);
+		Helper(MainWindow *owner, bool doShow);
 		~Helper();
 
 	void toggleHelpVisibility(int ix);
@@ -48,7 +48,7 @@ class Helper : public QObject {
 	bool helpVisible(int index);
 
 	protected slots:
-		void somethingDroppedIntoView();
+		void somethingDroppedIntoView(const QPoint &);
 		void viewSwitched();
 		void autorouted();
 
@@ -59,6 +59,7 @@ class Helper : public QObject {
 	protected:
 		void connectToView(SketchWidget* view);
 		void moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy);
+		SketchMainHelp *helpForIndex(int index);
 
 	protected:
 		MainWindow *m_owner;

@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 									.arg(Version::shortDate());
 	splash.showMessage(msg2, r2, Qt::AlignRight | Qt::AlignTop, w);
     splash.show();
-	
+
 	QApplication::processEvents();			// seems to need this (sometimes?) to display the splash screen
 
 	QCoreApplication::setOrganizationName("Fritzing");
@@ -191,10 +191,10 @@ int main(int argc, char *argv[])
 
 	splash.showProgress(progressIndex, 0.7);
 
-	// on my xp machine in debug mode, 
+	// on my xp machine in debug mode,
 	// sometimes the activities in doOnce cause the whole machine to peak at 100% cpu for 30 seconds or more
 	// so at least the whole machine doesn't lock up anymore with doOnce in its own thread.
-	
+
 	DebugDialog::debug("starting thread");
 	QMutex mutex;
 	mutex.lock();
@@ -212,7 +212,6 @@ int main(int argc, char *argv[])
 	if(argc > 1) {
 		for(int i=1; i < argc; i++) {
 			mainWindow->load(argv[i]);
-
 		}
 	} else {
 		if(!settings.value("lastOpenSketch").isNull()) {
@@ -240,7 +239,7 @@ int main(int argc, char *argv[])
 			MainWindow * treeduino = new MainWindow(paletteBinModel, referenceModel);
 			treeduino->load(path);
 			treeduino->show();
-		}		
+		}
 	}
 
 	splash.finish(mainWindow);

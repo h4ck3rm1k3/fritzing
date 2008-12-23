@@ -66,15 +66,15 @@ QString Helper::AutorouteHelpText = tr("When done with arranging, <br> use Autor
 QString Helper::SwitchButtonsHelpText = tr("Use these buttons to <br> toggle between views");
 
 
-Helper::Helper(MainWindow *owner) : QObject(owner) {
+Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {
 	m_owner = owner;
-	m_breadMainHelp = new SketchMainHelp("Breadboard", BreadboardHelpText);
+	m_breadMainHelp = new SketchMainHelp("Breadboard", BreadboardHelpText, doShow);
 	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removePartsBinHelp()));
 	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeSwitchButtonsHelp()));
 
-	m_schemMainHelp = new SketchMainHelp("Schematic", SchematicHelpText);
+	m_schemMainHelp = new SketchMainHelp("Schematic", SchematicHelpText, doShow);
 
-	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpText);
+	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpText, doShow);
 	connect(m_pcbMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeAutorouteHelp()));
 
 	m_partsBinHelp = new ToolHelp(PartsBinHelpText, QString("PartsBin"));
@@ -111,20 +111,43 @@ Helper::~Helper() {
 }
 
 void Helper::connectToView(SketchWidget* view) {
-	connect(view, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
+	connect(view, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
 	//connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	connect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 }
 
 
-void Helper::somethingDroppedIntoView() {
+void Helper::somethingDroppedIntoView(const QPoint & pos) {
+	Q_UNUSED(pos);
+	/*SketchAreaWidget * widgetParent = dynamic_cast<SketchAreaWidget *>(
+		m_owner->m_tabWidget->currentWidget()
+	);
+	SketchWidget *currSketch = widgetParent->graphicsView();
+
+	int currIdx = m_owner->m_tabWidget->currentIndex();
+	SketchMainHelp *mainHelp = helpForIndex(currIdx);
+
+	bool doHide = false;
+	if(currSketch && mainHelp) {
+		QPointF posAux = currSketch->mapFrom(m_owner,pos);
+		doHide = mainHelp->boundingRect().contains(posAux);
+		DebugDialog::debug(QString("<<<< %1,%2").arg(posAux.x()).arg(posAux.y()));
+		DebugDialog::debug(doHide ? "<<< hide" : "<<< show");
+	}*/
+
 	if(m_stillWaitingFirstDrop) {
-		m_stillWaitingFirstDrop = false;
+		m_stillWaitingFirstDrop = false; //false;
+		/*m_breadMainHelp->setTransparent();
+		m_schemMainHelp->setTransparent();
+		m_pcbMainHelp->setTransparent();*/
+		m_breadMainHelp->doSetVisible(false);
+		m_schemMainHelp->doSetVisible(false);
+		m_pcbMainHelp->doSetVisible(false);
+		removePartsBinHelp();
+	} else {
 		m_breadMainHelp->setTransparent();
 		m_schemMainHelp->setTransparent();
 		m_pcbMainHelp->setTransparent();
-		removePartsBinHelp();
-	} else {
 		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
 	}
 }
@@ -168,51 +191,27 @@ void Helper::moveItemBy(QGraphicsProxyWidget *item, qreal dx, qreal dy) {
 }
 
 void Helper::toggleHelpVisibility(int index) {
-
-	SketchMainHelp * which = NULL;
-	switch (index) {
-		case 0:
-			which = m_breadMainHelp;
-			break;
-		case 1:
-			which = m_schemMainHelp;
-			break;
-		case 2:
-			which = m_pcbMainHelp;
-			break;
-		default:
-			break;
-	}
-
+	SketchMainHelp * which = helpForIndex(index);
 	if (which == NULL) return;
 
-	which->setVisible(!which->isVisible());
+	which->doSetVisible(!which->isVisible());
 }
 
 void Helper::setHelpVisibility(int index, bool show) {
-
-	SketchMainHelp * which = NULL;
-	switch (index) {
-		case 0:
-			which = m_breadMainHelp;
-			break;
-		case 1:
-			which = m_schemMainHelp;
-			break;
-		case 2:
-			which = m_pcbMainHelp;
-			break;
-		default:
-			break;
-	}
-
+	SketchMainHelp * which = helpForIndex(index);
 	if (which == NULL) return;
 
-	which->setVisible(show);
+	which->doSetVisible(show);
 }
 
 bool Helper::helpVisible(int index) {
+	SketchMainHelp * which = helpForIndex(index);
+	if (which == NULL) return false;
 
+	return which->isVisible();
+}
+
+SketchMainHelp *Helper::helpForIndex(int index) {
 	SketchMainHelp * which = NULL;
 	switch (index) {
 		case 0:
@@ -228,7 +227,5 @@ bool Helper::helpVisible(int index) {
 			break;
 	}
 
-	if (which == NULL) return false;
-
-	return which->isVisible();
+	return which;
 }
