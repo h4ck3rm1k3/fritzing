@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<svg width="0.479in" version="1.2" xmlns="http://www.w3.org/2000/svg" height="0.329in" viewBox="0 0 479 329" baseProfile="tiny" >
+<svg width="0.61in" version="1.2" xmlns="http://www.w3.org/2000/svg" height="0.61in" viewBox="0 0 610 610" baseProfile="tiny" >
  <desc>Fritzing footprint SVG</desc>
- <g id="silkscreen" />
+ <g id="silkscreen" >
+  <circle fill="none" cx="305" cy="305" stroke="white" r="300" stroke-width="10" />
+ </g>
  <g id="copper0" >
-  <rect width="54" x="123" y="273" fill="none" height="54" stroke="black" stroke-width="5" />
-  <circle fill="none" cx="150" cy="300" stroke="black" r="27" id="connector0pad" stroke-width="5" />
-  <circle fill="none" cx="450" cy="300" stroke="black" r="27" id="connector1pad" stroke-width="5" />
+  <rect width="54" x="128" y="278" fill="none" height="54" stroke="rgb(255, 191, 0)" stroke-width="5" />
+  <circle fill="none" cx="155" cy="305" stroke="rgb(255, 191, 0)" r="27" id="connector0pin" stroke-width="5" />
+  <circle fill="none" cx="455" cy="305" stroke="rgb(255, 191, 0)" r="27" id="connector1pin" stroke-width="5" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />
