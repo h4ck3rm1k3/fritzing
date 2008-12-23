@@ -291,9 +291,13 @@ void PartsEditorMainWindow::createFooter() {
 
 	footerLayout->setMargin(0);
 	footerLayout->setSpacing(0);
+	footerLayout->addSpacerItem(new QSpacerItem(40,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveAsNewPartButton);
+	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_saveButton);
+	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_cancelButton);
+	footerLayout->addSpacerItem(new QSpacerItem(40,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	m_footerFrame->setLayout(footerLayout);
 }
 
