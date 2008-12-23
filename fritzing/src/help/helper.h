@@ -44,6 +44,7 @@ class Helper : public QObject {
 		~Helper();
 
 	void toggleHelpVisibility(int ix);
+	void setHelpVisibility(int index, bool show);
 	bool helpVisible(int index);
 
 	protected slots:

@@ -26,7 +26,7 @@
   </iconView>
   <breadboardView>
    <layers image="breadboard/artreeno.svg" >
-    <layer layerId="breadboardbreadboard" />
+    <layer layerId="breadboardbreadboard" sticky="true" />
    </layers>
   </breadboardView>
   <schematicView>

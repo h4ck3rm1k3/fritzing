@@ -499,6 +499,9 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	}
 
 	setCurrentFile(fileName, addToRecent);
+
+	showAllFirstTimeHelp(false);
+
 	UntitledSketchIndex--;
 }
 

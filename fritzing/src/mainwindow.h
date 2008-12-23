@@ -78,6 +78,7 @@ public:
 	QSizeGrip *sizeGrip();
 	QStatusBar *realStatusBar();
 	class TabWindow * tabWindow();
+	void showAllFirstTimeHelp(bool show);
 
 public:
 	static void initExportConstants();

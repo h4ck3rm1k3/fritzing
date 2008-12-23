@@ -1408,3 +1408,11 @@ void MainWindow::restoreTabWindow() {
 	m_tabWindow->restoreState();
 }
 
+void MainWindow::showAllFirstTimeHelp(bool show) {
+	if (m_helper) {
+		for (int i = 0; i < 3; i++) {
+			m_helper->setHelpVisibility(i, show);
+		}
+	}
+	m_showInViewHelpAct->setChecked(show);
+}

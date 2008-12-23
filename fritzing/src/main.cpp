@@ -229,6 +229,20 @@ int main(int argc, char *argv[])
 
 
 	mainWindow->show();
+
+	QDate now = QDate::currentDate();
+	QDate over = QDate(2009, 1, 7);
+	if (now < over) {
+		QString path = getApplicationSubFolderPath("examples") + "/Fritzmas/treeduino.fz";
+		QFileInfo tree(path);
+		if (tree.exists()) {
+			QApplication::processEvents();
+			MainWindow * treeduino = new MainWindow(paletteBinModel, referenceModel);
+			treeduino->load(path);
+			treeduino->show();
+		}		
+	}
+
 	splash.finish(mainWindow);
 
     int result = app.exec();
