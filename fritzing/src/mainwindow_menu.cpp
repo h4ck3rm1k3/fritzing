@@ -1724,11 +1724,11 @@ void MainWindow::autoroute() {
 	QProgressDialog progress(QObject::tr("Autorouting..."), QObject::tr("Cancel"), 0, 1, this);
 	progress.show();
 
-	QProgressBar progressBar;
-	statusBar()->insertWidget (1, &progressBar, 100 );
-	QPushButton cancelButton;
-	cancelButton.setText(tr("Cancel autorouting"));
-	statusBar()->insertWidget(2, &cancelButton, 100);
+	//QProgressBar progressBar;
+	//statusBar()->insertWidget (1, &progressBar, 100 );
+	//QPushButton cancelButton;
+	//cancelButton.setText(tr("Cancel autorouting"));
+	//statusBar()->insertWidget(2, &cancelButton, 100);
 
 
 	eater.allowEventsIn(&progress);
@@ -1740,8 +1740,8 @@ void MainWindow::autoroute() {
 	autorouter1->start(&progress);
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
 	qApp->removeEventFilter(&eater);
-	statusBar()->removeWidget(&progressBar);
-	statusBar()->removeWidget(&cancelButton);
+	//statusBar()->removeWidget(&progressBar);
+	//statusBar()->removeWidget(&cancelButton);
 	m_dontClose = false;
 }
 
