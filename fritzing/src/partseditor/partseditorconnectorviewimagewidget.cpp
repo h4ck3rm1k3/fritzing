@@ -165,6 +165,8 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 
 		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
 		centerOn(m_item);
+
+		ensureFixedToBottomRight(m_zoomControls);
 	}
 }
 

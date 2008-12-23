@@ -69,7 +69,7 @@ void ZoomButton::leaveEvent(QEvent *event) {
 
 ZoomControlsPrivate::ZoomControlsPrivate(SketchWidget* view) : QFrame()
 {
-	setObjectName("zoomControls");
+	//setObjectName("zoomControls");
 
 	m_zoomInButton = new ZoomButton(ZoomControls::ZoomIn, view, this);
 	m_zoomOutButton = new ZoomButton(ZoomControls::ZoomOut, view, this);
@@ -79,6 +79,8 @@ ZoomControlsPrivate::ZoomControlsPrivate(SketchWidget* view) : QFrame()
 	lo->addWidget(m_zoomOutButton);
 	lo->setMargin(2);
 	lo->setSpacing(2);
+
+	setStyleSheet("background-color: transparent;");
 }
 
 ///////////////////////////////////////////////////////////

@@ -185,7 +185,3 @@ QTabBar::tab:!selected {
 	margin-top: 4px;
 	margin-left: 3px;
 }
-
-#zoomControls {
-	background-color: transparent;
-}
