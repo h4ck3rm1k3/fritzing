@@ -1,0 +1,16 @@
+{% extends "pages/base.html" %}
+{% load pages_tags %}
+
+{% block teaser %}
+    {% placeholder teaser %}
+{% endblock %}
+
+{% block body %}
+    {% placeholder header with WYMEditor %}
+    <table>
+        <tr>
+            <td width="50%">{% placeholder left_column with WYMEditor %}</td>
+            <td width="50%">{% placeholder right_column with WYMEditor %}</td>
+        </tr>
+    </table>
+{% endblock %}

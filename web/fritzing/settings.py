@@ -194,9 +194,9 @@ INTERNAL_IPS = ('127.0.0.1',)
 
 DEFAULT_PAGE_TEMPLATE = 'pages/docs/index.html'
 PAGE_TEMPLATES = (
-    ('pages/docs/index.html', 'documentation index'),
-    ('pages/docs/detail.html', 'documentation detail'),
-    ('pages/docs/overview.html', 'documentation overview'),
+    ('pages/single-col.html', 'one column'),
+    ('pages/two-cols.html', 'two columns'),
+    ('pages/two-cols-header.html', 'one header, two columns'),
 )
 
 PAGE_PERMISSION = False

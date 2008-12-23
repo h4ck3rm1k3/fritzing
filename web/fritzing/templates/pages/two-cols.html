@@ -1,0 +1,14 @@
+{% extends "pages/base.html" %}
+{% load pages_tags %}
+
+{% block teaser %}
+    {% placeholder teaser %}
+{% endblock %}
+
+{% block left_column %}
+    {% placeholder left_column with WYMEditor %}
+{% endblock %}
+
+{% block right_column %}
+    {% placeholder right_column with WYMEditor %}
+{% endblock %}
