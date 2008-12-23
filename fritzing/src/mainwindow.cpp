@@ -1363,7 +1363,11 @@ void MainWindow::showTabWindow() {
 	viewSwitcher->viewSwitchedTo(0);
 	viewSwitcher->connectClose(m_tabWindow, SLOT(hide()));
 	m_tabWindow->show();
-	m_tabWindow->move(this->pos() + QPoint(10, 50));
+	QPoint initial(10,50);
+#ifdef Q_WS_MAC
+	initial.setY(34);
+#endif
+	m_tabWindow->move(this->pos() + initial);
 	m_tabWindow->setMask();
 
 	int sep = 0;
