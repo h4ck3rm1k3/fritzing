@@ -30,7 +30,7 @@
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/LED-red-5mmschematic_st.svg" >
+   <layers image="schematic/led.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>
