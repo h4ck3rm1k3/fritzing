@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion="0.1.1201" moduleId="1000FADF10011" >
+ <version>1.0</version>
+ <title>DC Motor</title>
+ <label>M</label>
+ <date>2008-12-23</date>
+ <author>Brendan Howell/Dirk van Osterbosch/Lionel Michel</author>
+ <tags>
+  <tag>Motor</tag>
+  <tag>DC Motor</tag>
+  <tag>electro mechanical</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="family" >DC Motor</property>
+ </properties>
+ <taxonomy>discreteParts.electromechanical.motor.dc</taxonomy>
+ <description>Your standard 2x AA battery pack (3 Volts)</description>
+ <views>
+  <iconView>
+   <layers image="icon/dc_motor.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView fliphorizontal="true" flipvertical="true" >
+   <layers image="breadboard/dc_motor.svg" >
+    <layer layerId="breadboard" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/dc_motor.svg" >
+    <layer layerId="schematic" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="pcb/jumper2.svg" >
+    <layer layerId="copper0" />
+    <layer layerId="silkscreen" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors>
+  <connector type="male" id="connector0" name="pin 1" >
+   <description>Pin 1</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector0pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="pin 2" >
+   <description>Pin 2</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
+</module>

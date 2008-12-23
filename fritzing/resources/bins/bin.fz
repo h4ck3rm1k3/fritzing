@@ -135,6 +135,20 @@
                 </iconView >
             </views>
         </instance>
+        <instance moduleIdRef="1000AFDF10011" path="/parts/core/battery-AA.fz">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+		<instance moduleIdRef="1000FADF10011" path="/parts/core/dc_motor.fz">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
         <instance moduleIdRef="1234ABDE24_ST" path="parts/core/controller_arduino_diecimila.fz">
             <views>
                 <iconView layer="icon">
