@@ -1,0 +1,11 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block title %}Message sent{% endblock %}
+
+{% block body %}
+<h1>{% trans "Message sent" %}</h1>
+<p class="documentDescription">
+    {% trans "Your message has been sent. Thanks!" %}
+</p>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+<h1>{% trans "Contact form" %}</h1>
+<p class="documentDescription">{% trans "The Fritzing project helps designers and artists to move their electronic sketches from prototype to product" %}
+</p>
+
+<form method='post' action=''>
+<p>
+    <label for="id_name">Your name:</label>
+    {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}
+    {{ form.name }}
+</p>
+<p>
+    <label for="id_email">Your email address:</label>
+    {% if form.email.errors %}<p class="errors">{{ form.email.errors.as_text }}</p>{% endif %}
+    {{ form.email }}
+</p>
+<p>
+    <label for="id_message_subject">Subject:</label>
+    {% if form.message_subject.errors %}<p class="errors">{{ form.message_subject.errors.as_text }}</p>{% endif %}
+    {{ form.message_subject }}
+</p>
+<p>
+    <label for="id_body">Your message:</label>
+    {% if form.body.errors %}<p class="errors">{{ form.body.errors.as_text }}</p>{% endif %}
+    {{ form.body }}
+</p>
+<p><input type='submit' value='Send' /></p>
+</form>
+{% endblock %}
