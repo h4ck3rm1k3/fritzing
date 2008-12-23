@@ -1,19 +1,21 @@
 {% extends "faq/base.html" %}
 
-{% block title %}{{ block.super }}: Example {% endblock %}
+{% block title %}FAQ{% endblock %}
 
 {% block body %}
 <h1>FAQ</h1>
-<div class="documentDescription">Frequently Asked Questions</div>
-<div>
-    <dl>
+<p class="documentDescription">
+    <span id="parent-fieldname-description">Frequently Asked Questions</span>
+</p>
+<div class="" id="parent-fieldname-text">
+    <dl style="width:500px;padding:0px;">
     {% for question in object_list %}
     {% if question.is_active %}
-        <a id="{{ question.slug }}">
         {% if question.is_header %}
             <h3>{{ question.text }}</h3>
         {% else %}
-            <dt>{{ question.text }}</dt>
+            <a id="{{ question.slug }}"></a>
+            <dt style="color:black;">{{ question.text }}</dt>
             <dd>
                 {% autoescape off %}
                 {{ question.answer }}

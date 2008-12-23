@@ -18,12 +18,10 @@
         <!-- Internet Explorer CSS Fixes -->
         <!--[if IE]>
         <style type="text/css" media="all">@import url({{ MEDIA_URL }}fritzing/css/IEFixes.css);</style>
-    <![endif]-->
+        <![endif]-->
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="home" href="http://fritzing.org" title="Front page" />
-        <link rel="contents" href="http://fritzing.org/sitemap" title="Site Map" />
-        <link rel="search" href="http://fritzing.org/search_form" title="Search this site" /><!-- Disable IE6 image toolbar -->
-        <meta http-equiv="imagetoolbar" content="no" />
+        <meta http-equiv="imagetoolbar" content="no" /><!-- Disable IE6 image toolbar -->
         {% block extrea_head %}{% endblock %}
     </head>
     <body class="section-learning template-folder_listing" dir="ltr">
@@ -35,11 +33,9 @@
                     </p>
                     <a id="portal-logo" accesskey="1" href="/" name="portal-logo"><img src="{{ MEDIA_URL }}fritzing/img/logo.gif" alt="" title="" height="29" width="289" /></a>
                     <div id="portal-personaltools-wrapper">
-                    {% block login %}{% endblock %}
+                        {% block login %}{% endblock %}
+                    </div>
                 </div>
-            </div>
-            <div class="visualClear" id="clear-space-before-wrapper-table">
-                <!-- -->
             </div>
             {% if site_wide_announcements %}
                 <div id="site_wide_announcements">
@@ -53,7 +49,6 @@
                     </ul>
                 </div>
             {% endif %}
-            
             <div id="portal-columns">
                 <div id="portal-column-one">
                     <div class="visualPadding">
