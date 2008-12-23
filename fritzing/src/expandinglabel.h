@@ -29,6 +29,9 @@ $Date: 2008-11-24 12:33:07 +0100 (Mon, 24 Nov 2008) $
 
 #include <QTextEdit>
 #include <QScrollBar>
+#include <QAbstractTextDocumentLayout>
+
+#include "debugdialog.h"
 
 class ExpandingLabel : public QTextEdit {
 public:
@@ -41,7 +44,9 @@ public:
 	}
 
 	void setLabelText(const QString& theText) {
-		setText(theText);
+		QTextDocument *doc = new QTextDocument(this);
+		doc->setHtml(theText);
+		setDocument(doc);
 		setToolTip(theText);
 		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		setAlignment(Qt::AlignCenter);
@@ -49,9 +54,9 @@ public:
 	}
 
 	void allTextVisible() {
+		int height = document()->documentLayout()->documentSize().toSize().height();
 		setStyleSheet("border: 0px; background-color: transparent; margin-top: 0px; margin-bottom: 8px;");
-		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-		//setFixedHeight(verticalScrollBar()->height());
+		setFixedHeight(height/2.9); //TODO Mariano: hack!
 	}
 
 protected:

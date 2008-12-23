@@ -87,12 +87,12 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 
 	ExpandingLabel *textLabel = new ExpandingLabel(this);
 	textLabel->setLabelText(htmlText);
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
 	textLabel->allTextVisible();
 	textLabel->setToolTip("");
 	textLabel->setAlignment(Qt::AlignLeft);
 
-	mainLayout->setSpacing(4);
+	mainLayout->setSpacing(6);
 	mainLayout->setMargin(2);
 	mainLayout->addWidget(imageLabel);
 	mainLayout->addWidget(textLabel);
