@@ -28,6 +28,7 @@ $Date$
 
 #include "tabwindow.h"
 #include "viewswitcher.h"
+#include "debugdialog.h"
 
 TabWindow::TabWindow(QWidget *parent)
     : QWidget(parent)
@@ -133,6 +134,7 @@ void TabWindow::saveState() {
 }
 
 void TabWindow::restoreState() {
+	//DebugDialog::debug(QString("tab window restore state %1").arg(m_state));
 	if (m_state) {
 		this->setVisible(true);
 	}

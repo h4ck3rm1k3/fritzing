@@ -779,7 +779,7 @@ void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
 void MainWindow::changeActivation(bool activate) {
 	// tried using this->saveState() and this->restoreState() but couldn't get it to work
 
-	//DebugDialog::debug(QString("change activation %1\n\t%2").arg(this->windowTitle()).arg(activeWindow->windowTitle()));
+	//DebugDialog::debug(QString("change activation:%2 %1").arg(this->windowTitle()).arg(activate));
 
 	QWidget * activeWindow = QApplication::activeWindow ();
 	//if (activeWindow == NULL) return;
@@ -797,12 +797,15 @@ void MainWindow::changeActivation(bool activate) {
 			}
 
 			if (m_tabWindow) {
-				m_tabWindow->restoreState();
+				//DebugDialog::debug("restoring tabwindow");
+				// on mac, if using dock to switch views between apps, restore doesn't work without a timer
+				QTimer::singleShot(30, this, SLOT(restoreTabWindow()));
 			}
 		}
 	}
 	else {
 		if ((activeWindow != NULL) && (activeWindow == this || activeWindow->parent() == this)) {
+			DebugDialog::debug("skipping save");
 			return;
 		}
 
@@ -811,7 +814,7 @@ void MainWindow::changeActivation(bool activate) {
 			//m_savedStateData = saveState(0);
 			m_savedState = Saved;
 
-			//DebugDialog::debug("save state", this);
+			//DebugDialog::debug("save state");
 			for (int i = 0; i < children().count(); i++) {
 				FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 				if (dock == NULL) continue;
@@ -1383,3 +1386,8 @@ void MainWindow::showInViewHelp() {
 	delete m_helper;
 	m_helper = new Helper(this);
 }
+
+void MainWindow::restoreTabWindow() {
+	m_tabWindow->restoreState();
+}
+
