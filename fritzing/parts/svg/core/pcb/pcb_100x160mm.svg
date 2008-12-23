@@ -64,11 +64,11 @@
      inkscape:groupmode="layer"
      id="board">
     <rect
-       style="fill:#800000;fill-opacity:0.34901961;fill-rule:evenodd;stroke:#800000;stroke-width:3.24170423;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#338040;fill-opacity:0.5;fill-rule:evenodd;stroke:#338040;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3832"
        width="563.68744"
        height="351.08899"
-       x="1.6208521"
-       y="1.6208471" />
+       x="1"
+       y="1" />
   </g>
 </svg>
