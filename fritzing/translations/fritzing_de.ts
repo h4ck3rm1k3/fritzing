@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name></name>
     <message>
@@ -10,7 +11,7 @@
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="38"/>
         <source>Mismatching Connector IDs</source>
-        <translation>Versatz Verbindung IDs</translation>
+        <translation type="unfinished">Versatz Verbindung IDs</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="40"/>
@@ -68,12 +69,12 @@
     <message>
         <location filename="src/aboutbox.cpp" line="112"/>
         <source>&lt;p&gt;&lt;br&gt;Fritzing is made by:&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;br&gt;Fritzing Mitarbeiter:&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="113"/>
         <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="114"/>
@@ -103,7 +104,7 @@
     <message>
         <location filename="src/aboutbox.cpp" line="120"/>
         <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Extra Dank an:&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="121"/>
@@ -133,47 +134,47 @@
     <message>
         <location filename="src/aboutbox.cpp" line="127"/>
         <source>Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation type="unfinished">Michaela Vieser und Julia Werner.&lt;/p&gt;</translation>
+        <translation>Michaela Vieser und Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="128"/>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Fritzing ist unterstutzt von&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="129"/>
         <source>MWFK Brandenburg, the sponsorship of the Design&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>MWFK Brandenburg, Design&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="130"/>
         <source>Department of Bauhaus-University Weimar and&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Fakultät der Bauhaus-Universät Weimar und&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="132"/>
         <source>IxDS.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="133"/>
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Vielen Dank auch an alle Studierende&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="134"/>
         <source>and alpha testers who were brave enough to give&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>und Alpha-Tester, die uns wehrende&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="135"/>
         <source>Fritzing a test spin and who stayed with us,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>unsere renovierungs-Phase&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="136"/>
         <source>throughout our rewrite of the app.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Bugs gefunden und Feedback gegeben.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -199,12 +200,12 @@
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="131"/>
         <source>List of Connectors</source>
-        <translation>Liste von Verbindungen</translation>
+        <translation>Liste von Verbindungspunkte</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="294"/>
         <source>Loading connectors...</source>
-        <translation>Verbindungen aufladen...</translation>
+        <translation>Verbindungspunkte aufladen...</translation>
     </message>
 </context>
 <context>
@@ -237,7 +238,7 @@
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="82"/>
         <source>Description</source>
-        <translation>Angabe</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="85"/>
@@ -247,12 +248,12 @@
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="88"/>
         <source>Breadboard</source>
-        <translation>Lochraster</translation>
+        <translation>Steckplatine</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="91"/>
         <source>Schematic</source>
-        <translation>Schaltschema</translation>
+        <translation>Schaltplan</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="94"/>
@@ -265,7 +266,7 @@
     <message>
         <location filename="src/debugdialog.cpp" line="62"/>
         <source>for debugging</source>
-        <translation>für Das Debug</translation>
+        <translation>für Debugging</translation>
     </message>
 </context>
 <context>
@@ -303,7 +304,7 @@
     <message>
         <location filename="src/filedealingwidget.cpp" line="174"/>
         <source>Do you want to save the changes you made in the document %1? Your changes will be lost if you don&apos;t save them.</source>
-        <translation>Möchten Sie die Änderungen an diesem Formular speichern %1?  Die Änderungen gehen verloren, wenn Sie nicht speichern.</translation>
+        <translation>Möchten Sie die Änderungen an dem Dokument %1 speichern?  Ihre Änderungen werden verworfen, wenn Sie sie nicht speichern.</translation>
     </message>
 </context>
 <context>
@@ -311,22 +312,22 @@
     <message>
         <location filename="src/dockmanager.cpp" line="74"/>
         <source>Inspector</source>
-        <translation>Prüfer</translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="91"/>
         <source>Undo History</source>
-        <translation>Rückgängighistorie</translation>
+        <translation>Verlauf</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="95"/>
         <source>Breadboard</source>
-        <translation>Lochraster</translation>
+        <translation>Steckplatine</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="96"/>
         <source>Schematic</source>
-        <translation>Schaltschema</translation>
+        <translation>Schaltplan</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="97"/>
@@ -349,7 +350,7 @@
     <message>
         <location filename="src/fritzingwindow.cpp" line="76"/>
         <source>&amp;Close Window</source>
-        <translation>&amp;Schließen Fenster</translation>
+        <translation>Fenster S&amp;chließen</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="77"/>
@@ -359,7 +360,7 @@
     <message>
         <location filename="src/fritzingwindow.cpp" line="78"/>
         <source>Close the current sketch</source>
-        <translation>Schließen deise Formular</translation>
+        <translation>Dokument Schließen</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="84"/>
@@ -369,7 +370,7 @@
     <message>
         <location filename="src/fritzingwindow.cpp" line="106"/>
         <source>Untitled Sketch</source>
-        <translation>Unbenannt Formular</translation>
+        <translation>Unbenannte Skizze</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="120"/>
@@ -389,7 +390,7 @@
     <message>
         <location filename="src/fritzingwindow.cpp" line="195"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation>Möchten Sie die Änderungen an diesem Formular speichern %1?</translation>
+        <translation>Möchten Sie die Änderungen von diesem Skizze speichern %1?</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="203"/>
@@ -405,7 +406,7 @@
     <message>
         <location filename="src/fritzingwindow.cpp" line="204"/>
         <source>Don&apos;t Save</source>
-        <translation>Speichern abbrechen</translation>
+        <translation>Nicht speichern</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="205"/>
@@ -418,17 +419,17 @@
     <message>
         <location filename="src/help/helper.cpp" line="64"/>
         <source>Drag out your &lt;br&gt; parts from here</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteile von hier ziehen</translation>
     </message>
     <message>
         <location filename="src/help/helper.cpp" line="65"/>
         <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Wann die teile sind in Ordnung,  &lt;br&gt;click auf Autoroute&lt;br&gt; um die Leiterbahnen zu erstellen</translation>
     </message>
     <message>
         <location filename="src/help/helper.cpp" line="66"/>
         <source>Use these buttons to &lt;br&gt; toggle between views</source>
-        <translation type="unfinished"></translation>
+        <translation>Druck auf diese Knöpfe &lt;br&gt; den View zu ändern</translation>
     </message>
     <message>
         <location filename="src/help/helper.cpp" line="41"/>
@@ -494,23 +495,23 @@
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="58"/>
         <source>Parts Editor</source>
-        <translation>Teileeditor</translation>
+        <translation>Bauteileeditor</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="59"/>
         <source>Error! Cannot create part file.
 </source>
-        <translation>Fehler: Die Teildatei konnte nicht gemacht werden.</translation>
+        <translation>Fehler: Die Bauteildatei konnte nicht gemacht werden.</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="115"/>
         <source>breadboard</source>
-        <translation>Lochraster</translation>
+        <translation>Steckplatine</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="116"/>
         <source>schematic</source>
-        <translation>Schaltschema</translation>
+        <translation>Schaltplan</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="117"/>
@@ -520,22 +521,22 @@
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="118"/>
         <source>icon</source>
-        <translation>Symbol</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="211"/>
         <source>Layer Settings</source>
-        <translation>Einlagiginstellungen</translation>
+        <translation>Ebeneneinstellungen</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="250"/>
         <source>&amp;SVG Image:</source>
-        <translation>&amp;SVG Pixmap:</translation>
+        <translation>&amp;SVG Bild:</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="241"/>
         <source>&amp;Import Footprint:</source>
-        <translation>&amp;Anschlussfläche Pixmap-Datei Importieren:</translation>
+        <translation>Anschlussfläche Datei &amp;Importieren:</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="256"/>
@@ -545,12 +546,12 @@
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="260"/>
         <source>Connectors</source>
-        <translation>Verbindungen</translation>
+        <translation>Verbindungspunkte</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="306"/>
         <source>Open Image</source>
-        <translation>Öffnen Die Pixmap-Datei</translation>
+        <translation>Bild Öffnen</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="274"/>
@@ -621,12 +622,12 @@
         <location filename="src/partseditor/mainpartseditorwindow_menu.cpp" line="66"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation>Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
+        <translation>Die Datei %1 konnte nicht gespeichert werden: %2.</translation>
     </message>
     <message>
         <location filename="src/partseditor/mainpartseditorwindow.cpp" line="359"/>
         <source>Close the Parts Editor Window</source>
-        <translation>Schließen der Teileeditorfenster</translation>
+        <translation>Beuteileeditorfenster Schließen</translation>
     </message>
 </context>
 <context>
@@ -1638,7 +1639,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/pcbsketchwidget.cpp" line="294"/>
         <source>Create trace wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahn erstellen</translation>
     </message>
 </context>
 <context>
@@ -1646,7 +1647,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partinfowidget.cpp" line="46"/>
         <source>Tags</source>
-        <translation>Marken</translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <location filename="src/partseditor/partinfowidget.cpp" line="47"/>
@@ -1676,13 +1677,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partinfowidget.cpp" line="65"/>
         <source>Description</source>
-        <translation>Angabe</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location filename="src/partseditor/partinfowidget.cpp" line="70"/>
         <source>Date</source>
-        <translation>Date
-</translation>
+        <translation>Datum</translation>
     </message>
 </context>
 <context>
@@ -1703,32 +1703,32 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="204"/>
         <source>Show as icons</source>
-        <translation>Anzeigen als Symbols</translation>
+        <translation>als Icons anzeigen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="208"/>
         <source>Show as list</source>
-        <translation>Anzeigen als Liste</translation>
+        <translation>als Liste Anzeigen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="212"/>
         <source>Remove selected part</source>
-        <translation>Löschen der Auswahlteil</translation>
+        <translation>Auswahlteil Löschen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="217"/>
         <source>Open bin</source>
-        <translation>Öffnen Bunker</translation>
+        <translation>Sortiment Öffnen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="222"/>
         <source>Save bin</source>
-        <translation>Speichern Bunker</translation>
+        <translation>Sortiment Speichern</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="227"/>
         <source>Restore core bin</source>
-        <translation>Zentralbunker Wiederherstellen</translation>
+        <translation>Standard-Sortiment Wiederherstellen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="253"/>
@@ -1764,7 +1764,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="336"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation>Möchten Sie die Änderungen an diesem Formular speichern %1?</translation>
+        <translation type="unfinished">Möchten Sie die Änderungen an diesem Formular speichern %1?</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="343"/>
@@ -1774,7 +1774,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
         <source>Don&apos;t Save</source>
-        <translation>Speichern abbrechen</translation>
+        <translation>Nicht speichern</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
@@ -1784,27 +1784,27 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="436"/>
         <source>Add to bin</source>
-        <translation>Teil zu dem Bunker hinzufügen</translation>
+        <translation type="unfinished">Teil zu dem Sortiment hinzufügen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
         <source>Do you really want to add the selected part to the bin?</source>
-        <translation>Möchten Sie den ausgewählten Teil zu dem Bunker hinzufügen?</translation>
+        <translation>Möchten Sie den ausgewählten Teil zu dem Sortiment hinzufügen?</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="460"/>
         <source>Remove from bin</source>
-        <translation>Der Teil vom Bunker löschen</translation>
+        <translation>Bauteil vom Sortiment löschen</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
         <source>Do you really want to remove the selected part from the bin?</source>
-        <translation>Möchten Sie den ausgewählten Teil löschen?</translation>
+        <translation>Möchten Sie den ausgewählten Bauteil löschen?</translation>
     </message>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="42"/>
         <source>Parts</source>
-        <translation type="unfinished">Teilen</translation>
+        <translation>Bauteile</translation>
     </message>
 </context>
 <context>
@@ -1812,13 +1812,14 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="79"/>
         <source>Parts Editor</source>
-        <translation>Teileeditor</translation>
+        <translation>Bauteileeditor</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="80"/>
         <source>Error! Cannot create part file.
 </source>
-        <translation>Fehler: Die Teildatei konnte nicht gemacht werden.</translation>
+        <translation>Fehler: Die Teildatei konnte nicht gemacht werden.
+</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="175"/>
@@ -1848,7 +1849,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="212"/>
         <source>Created/Updated on</source>
-        <translation>Erzeugen/Aktualisieren Date</translation>
+        <translation>Erzeugen/Aktualisiert am Datum</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="241"/>
@@ -1858,12 +1859,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="242"/>
         <source>Connectors</source>
-        <translation>Verbindungen</translation>
+        <translation>Verbindungspunkte</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="269"/>
         <source>save as new part</source>
-        <translation>Speichern unter neu Teil-Datei</translation>
+        <translation>als neue Bauteil-Datei Speichern</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="273"/>
@@ -1878,7 +1879,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="351"/>
         <source>Open Image</source>
-        <translation>Öffnen Die Pixmap-Datei</translation>
+        <translation>Bild Öffnen</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="351"/>
@@ -1888,7 +1889,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="389"/>
         <source>Save as new part</source>
-        <translation>Speichern unter neu Teil-Datei</translation>
+        <translation>als neue Bauteil-Datei Speichern</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.cpp" line="390"/>
@@ -1922,12 +1923,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partseditor/partseditorviewimagewidget.cpp" line="74"/>
         <source>Open Image</source>
-        <translation>Öffnen Die Pixmap-Datei</translation>
+        <translation>Bild Öffnen</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditorviewimagewidget.cpp" line="77"/>
         <source>SVG Files (*.svg)</source>
-        <translation type="unfinished">SVG Datei (*.svg);;JPEG (*.jpg);;PNG (*.png)</translation>
+        <translation>SVG Datei (*.svg)</translation>
     </message>
 </context>
 <context>
@@ -1935,7 +1936,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/breadboardsketchwidget.cpp" line="32"/>
         <source>Breadboard View</source>
-        <translation>Lochraster Ansicht</translation>
+        <translation>Steckplatine Ansicht</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="430"/>
@@ -1945,18 +1946,17 @@ Please stay tuned.</source>
     <message>
         <location filename="src/itembase.cpp" line="218"/>
         <source>icon view</source>
-        <translation>Symbol Ansicht
-</translation>
+        <translation>Icon Ansicht</translation>
     </message>
     <message>
         <location filename="src/itembase.cpp" line="219"/>
         <source>breadboard view</source>
-        <translation>Lochraster Ansicht</translation>
+        <translation>Steckplatine Ansicht</translation>
     </message>
     <message>
         <location filename="src/itembase.cpp" line="220"/>
         <source>schematic view</source>
-        <translation>Schaltschema Ansicht</translation>
+        <translation>Schaltplan Ansicht</translation>
     </message>
     <message>
         <location filename="src/itembase.cpp" line="221"/>
@@ -1976,12 +1976,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="308"/>
         <source>Friting cannot load the parts bin</source>
-        <translation>Der Teilbunker konnte nicht geladen werden</translation>
+        <translation>Sortiment konnte nicht geladen werden</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="1179"/>
         <source>Part</source>
-        <translation>Teil</translation>
+        <translation>Bauteil</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="1188"/>
@@ -1991,7 +1991,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/mainwindow_menu.cpp" line="1724"/>
         <source>Autorouting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autorouting.  Bitte warten...</translation>
     </message>
     <message>
         <location filename="src/partseditor/singleconnectorinfowidget.cpp" line="252"/>
@@ -2009,7 +2009,7 @@ Please stay tuned.</source>
         <source>Parse error (1) at line %1, column %2:
 %3
 %4</source>
-        <translation>Der XML-Code für der Teil (1) %4 enthält einen Fehler bei Zeile %1, Spalte %2:%3</translation>
+        <translation>Der XML-Code für der Bauteil (1) %4 enthält einen Fehler bei Zeile %1, Spalte %2:%3</translation>
     </message>
     <message>
         <location filename="src/modelbase.cpp" line="81"/>
@@ -2035,7 +2035,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/modelpart.cpp" line="92"/>
         <source>part</source>
-        <translation>Teil</translation>
+        <translation>Bauteil</translation>
     </message>
     <message>
         <location filename="src/modelpart.cpp" line="93"/>
@@ -2045,22 +2045,22 @@ Please stay tuned.</source>
     <message>
         <location filename="src/modelpart.cpp" line="94"/>
         <source>breadboard</source>
-        <translation>Lochraster</translation>
+        <translation>Steckplatine</translation>
     </message>
     <message>
         <location filename="src/modelpart.cpp" line="95"/>
         <source>board</source>
-        <translation type="unfinished"></translation>
+        <translation>Platine</translation>
     </message>
     <message>
         <location filename="src/modelpart.cpp" line="96"/>
         <source>module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul</translation>
     </message>
     <message>
         <location filename="src/palettemodel.cpp" line="63"/>
         <source>No parts found.</source>
-        <translation>Keine Teile gefunden.</translation>
+        <translation>Keine Bauteile gefunden.</translation>
     </message>
     <message>
         <location filename="src/palettemodel.cpp" line="193"/>
@@ -2072,12 +2072,12 @@ Please stay tuned.</source>
     <message>
         <location filename="src/palettemodel.cpp" line="239"/>
         <source>The part &apos;%1&apos; at &apos;%2&apos; does not have a unique module id &apos;%3&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil &apos;%1&apos; bei &apos;%2&apos; hat keine eindeutige module id &apos;%3&apos;.</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgdomdocument.cpp" line="90"/>
         <source>Parts Editor</source>
-        <translation>Teileeditor</translation>
+        <translation>Bauteileeditor</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditorpaletteitem.cpp" line="222"/>
@@ -2088,7 +2088,8 @@ Please stay tuned.</source>
         <location filename="src/partseditor/svgdomdocument.cpp" line="92"/>
         <source>Cannot write to file %1:
 %2.</source>
-        <translation>Die Datei %1 konnte nicht geschreiben werden: %2.</translation>
+        <translation>Die Datei %1 konnte nicht geschreiben werden: 
+%2.</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="122"/>
@@ -2115,7 +2116,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/schematicsketchwidget.cpp" line="35"/>
         <source>Schematic View</source>
-        <translation>Schaltschema Ansicht</translation>
+        <translation>Schaltplan Ansicht</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="431"/>
@@ -2125,7 +2126,7 @@ Please stay tuned.</source>
     <message>
         <location filename="src/sketchwidget.cpp" line="1734"/>
         <source>%1 %2 %3</source>
-        <translation type="unfinished">%1 %2 %3</translation>
+        <translation>%1 %2 %3</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1829"/>
@@ -2135,27 +2136,27 @@ Please stay tuned.</source>
     <message>
         <location filename="src/sketchwidget.cpp" line="2036"/>
         <source>Bring forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach vorne</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2028"/>
         <source>Send backward</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach hinten</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2045"/>
         <source>Bring to front</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganz vorne</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2784"/>
         <source>Split Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Kabel Punkte ersetzen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2832"/>
         <source>Join Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Kabel Punkte löschen</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="46"/>
@@ -2180,47 +2181,47 @@ Please stay tuned.</source>
     <message>
         <location filename="src/viewlayer.cpp" line="66"/>
         <source>Rulers</source>
-        <translation type="unfinished"></translation>
+        <translation>Zollstock</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="53"/>
         <source>Nets</source>
-        <translation type="unfinished"></translation>
+        <translation>Netz</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="56"/>
         <source>Board</source>
-        <translation type="unfinished"></translation>
+        <translation>Platine</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="57"/>
         <source>Rat&apos;s nest</source>
-        <translation type="unfinished"></translation>
+        <translation>Wirrwarr</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="58"/>
         <source>Silkscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Siebdruck</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="59"/>
         <source>Copper 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Kupfer 0</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="60"/>
         <source>Copper 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kupfer 1</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="61"/>
         <source>Solder mask</source>
-        <translation type="unfinished"></translation>
+        <translation>Lötmaske</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="62"/>
         <source>Outline</source>
-        <translation type="unfinished"></translation>
+        <translation>Umriss</translation>
     </message>
     <message>
         <location filename="src/viewlayer.cpp" line="63"/>
@@ -2317,7 +2318,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/partseditor/svgview.cpp" line="106"/>
         <source>Fritzing Footprint XML Files (*.fzp);;All Files (*)</source>
-        <translation>Fritzing Anschlussfläche XML-Datei (*.fzp);;Alles Datei (*)</translation>
+        <translation>Fritzing Anschlussfläche XML-Datei (*.fzp);;Alle Dateien (*)</translation>
     </message>
 </context>
 <context>
@@ -2325,7 +2326,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="279"/>
         <source>loading part</source>
-        <translation>Teil aufladen</translation>
+        <translation type="unfinished">Bauteil aufladen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="281"/>
@@ -2345,7 +2346,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="776"/>
         <source>Select All</source>
-        <translation>Alles markieren</translation>
+        <translation>Alles auswählen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="776"/>
@@ -2380,27 +2381,27 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="1618"/>
         <source>Select %1</source>
-        <translation>Auswählen %1</translation>
+        <translation> %1 Auswählen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1621"/>
         <source>Select %1 items</source>
-        <translation>Auswählen %1 Teile</translation>
+        <translation>%1 Teile Auswählen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1718"/>
         <source>Disconnect</source>
-        <translation>Abschalten</translation>
+        <translation>Verbindung lösen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1726"/>
         <source>Change</source>
-        <translation>Wechsel</translation>
+        <translation>Ändern</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1730"/>
         <source>Connect</source>
-        <translation>Anschließen </translation>
+        <translation>Verbinden</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1731"/>
@@ -2410,7 +2411,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="1777"/>
         <source>Create and connect wire</source>
-        <translation>Neu Kabel erstellen und anschließen </translation>
+        <translation>Neu Kabel erstellen und verbinden </translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2324"/>
@@ -2430,22 +2431,22 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="2901"/>
         <source>Shift-click to add a bend point to the wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Halten sie die Umschalt taste und clicken, eine Kabelpunkt zu ersetzen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2940"/>
         <source>Shift-click to delete this bend point</source>
-        <translation type="unfinished"></translation>
+        <translation>Halten sie die Umschalt taste und clicken, diese Kabelpunkt zu löschen</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3024"/>
         <source>Swapped %1 with module %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ausgetauscht mit Modul %2</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3036"/>
         <source>Sorry!</source>
-        <translation type="unfinished">Tut mir leid!</translation>
+        <translation>Sorry!</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3040"/>
