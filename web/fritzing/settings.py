@@ -140,6 +140,7 @@ INSTALLED_APPS = (
     'threadedcomments',
     'treemenus',
     'robots',
+    'contact_form',
 
     # internal (for now)
     'basic_profiles',
@@ -163,6 +164,7 @@ CONTACT_EMAIL = "info@fritzing.org"
 SITE_NAME = "Fritzing"
 LOGIN_URL = "/account/login"
 LOGIN_REDIRECT_URL = "/"
+EMAIL_SUBJECT_PREFIX = "[Fritzing] "
 
 ugettext = lambda s: s
 LANGUAGES = (
