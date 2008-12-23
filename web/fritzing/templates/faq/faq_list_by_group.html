@@ -5,22 +5,24 @@
 {% block body %}
 <h1>FAQ</h1>
 <div class="documentDescription">Frequently Asked Questions</div>
-<dl>
-{% for question in object_list %}
-{% if question.is_active %}
-    <a id="{{ question.slug }}">
-    {% if question.is_header %}
-        <h4>{{ question.text }}</h4>
-    {% else %}
-        <dt><a href="#{{ question.slug }}">{{ question.text }}</a></dt>
-        <dd>
-            {% autoescape off %}
-            {{ question.answer }}
-            {% endautoescape %}
-        <br />
-        </dd>
+<div>
+    <dl>
+    {% for question in object_list %}
+    {% if question.is_active %}
+        <a id="{{ question.slug }}">
+        {% if question.is_header %}
+            <h3>{{ question.text }}</h3>
+        {% else %}
+            <dt>{{ question.text }}</dt>
+            <dd>
+                {% autoescape off %}
+                {{ question.answer }}
+                {% endautoescape %}
+            <br />
+            </dd>
+        {% endif %}
     {% endif %}
-{% endif %}
-{% endfor %}
-</dl>
+    {% endfor %}
+    </dl>
+</div>
 {% endblock %}
