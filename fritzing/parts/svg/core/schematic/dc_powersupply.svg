@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" width="89.8px" height="54.3px" viewBox="0 -2.5 89.8 54.3" xml:space="preserve">
+<rect id="connector0pin" x="1.15" y="23.15" fill="none" width="10" height="2"/>
+<rect id="connector1pin" x="78.65" y="23.15" fill="none" width="10" height="2"/>
+<rect id="connector0terminal" x="1.15" y="23.15" fill="none" width="2" height="2"/>
+<rect id="connector1terminal" x="86.65" y="23.15" fill="none" width="2" height="2"/>
+<g id="schematic">
+	<g id="text">
+		<g>
+			<path d="M62.981,16.639v-1.115h6.597v1.115H62.981z"/>
+		</g>
+		<g>
+			<path d="M25.547,16.615v2.339h-1.211v-2.339h-2.195v-1.067h2.195v-2.327h1.211v2.327h2.207v1.067H25.547z"/>
+		</g>
+	</g>
+	<g id="diagram">
+		
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="1.15" y1="24.15" x2="32.15" y2="24.15"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="57.65" y1="24.15" x2="88.65" y2="24.15"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="32.15" y1="-1.35" x2="32.15" y2="50.65"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="40.65" y1="9.983" x2="40.65" y2="39.317"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="49.15" y1="-1.35" x2="49.15" y2="50.65"/>
+		
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="57.65" y1="9.983" x2="57.65" y2="39.317"/>
+	</g>
+</g>
+</svg>
