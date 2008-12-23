@@ -1400,7 +1400,13 @@ void MainWindow::showInViewHelp() {
 		return;
 	}
 
+	bool toggle = !m_helper->helpVisible(m_tabWidget->currentIndex());
+	showAllFirstTimeHelp(toggle);
+	
+	/*
 	m_helper->toggleHelpVisibility(m_tabWidget->currentIndex());
+	*/
+
 	m_showInViewHelpAct->setChecked(m_helper->helpVisible(m_tabWidget->currentIndex()));
 }
 

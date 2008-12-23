@@ -53,6 +53,8 @@ protected:
 	BaseCommand::CrossViewType wireSplitCrossView();
 	QPointF calcNewLoc(PaletteItemBase * moveBase, PaletteItemBase * detachFrom);
 	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & breadboardItemBase);
+	bool canDropModelPart(ModelPart * modelPart); 
+
 };
 
 #endif

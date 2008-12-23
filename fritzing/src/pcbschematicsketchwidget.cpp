@@ -81,6 +81,10 @@ bool PCBSchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 		return false;
 	}
 
+	if (modelPart->itemType() == ModelPart::Board) {
+		return matchesLayer(modelPart);
+	}
+
 	return true;
 }
 

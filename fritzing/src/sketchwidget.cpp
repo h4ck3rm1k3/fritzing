@@ -3645,3 +3645,32 @@ void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem
 	Q_UNUSED(connect);
 
 }
+
+bool SketchWidget::matchesLayer(ModelPart * modelPart) {
+	QDomDocument * domDocument = modelPart->modelPartStuff()->domDocument();
+	if (domDocument->isNull()) return false;
+	
+	QDomElement views = domDocument->documentElement().firstChildElement("views");
+	if(views.isNull()) return false;
+
+	QDomElement view = views.firstChildElement(ItemBase::viewIdentifierXmlName(m_viewIdentifier));
+	if (view.isNull()) return false;
+
+	QDomElement layers = view.firstChildElement("layers");
+	if (layers.isNull()) return false;
+
+	QDomElement layer = layers.firstChildElement("layer");
+	while (!layer.isNull()) {
+		QString layerName = layer.attribute("layerId");
+		ViewLayer::ViewLayerID viewLayerID = ViewLayer::viewLayerIDFromXmlString(layerName);
+		foreach (ViewLayer* viewLayer, m_viewLayers) {
+			if (viewLayer == NULL) continue;
+
+			if (viewLayer->viewLayerID() == viewLayerID) return true;
+		}
+
+		layer = layer.nextSiblingElement("layer");
+	}
+
+	return false;
+}

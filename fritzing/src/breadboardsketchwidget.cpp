@@ -270,3 +270,11 @@ bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, 
 
 	return false;
 }
+
+bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
+	if (modelPart->itemType() == ModelPart::Board) {
+		return matchesLayer(modelPart);
+	}
+
+	return true;
+}
