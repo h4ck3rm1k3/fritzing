@@ -74,6 +74,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	QFile styleSheet(":/resources/styles/fritzing.qss");
 
 	m_tabWindow = NULL;
+	m_helper = NULL;
 
 	resize(740,600);
 
@@ -695,6 +696,12 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	m_navigators[index]->miniViewMousePressedSlot();
 	emit viewSwitched(index);
 
+	if (m_helper == NULL) {
+		m_showInViewHelpAct->setChecked(false);
+	}
+	else {
+		m_showInViewHelpAct->setChecked(m_helper->helpVisible(m_tabWidget->currentIndex()));
+	}
 
 	// obsolete: when there are 3 navigators and 3 zoom boxes, no need to update when current view changes
 	//m_miniViewContainer0->setView(widget);
@@ -1388,8 +1395,13 @@ void MainWindow::showTabWindow() {
 
 void MainWindow::showInViewHelp() {
 	//delete m_helper;
-	//m_helper = new Helper(this);
+	if (m_helper == NULL) {
+		m_helper = new Helper(this);
+		return;
+	}
+
 	m_helper->toggleHelpVisibility(m_tabWidget->currentIndex());
+	m_showInViewHelpAct->setChecked(m_helper->helpVisible(m_tabWidget->currentIndex()));
 }
 
 void MainWindow::restoreTabWindow() {

@@ -946,9 +946,10 @@ void MainWindow::createHelpMenuActions() {
 	m_partsRefAct->setStatusTip(tr("Open Parts Reference"));
 	connect(m_partsRefAct, SIGNAL(triggered(bool)), this, SLOT(openPartsReference()));
 
-	m_showInViewHelpAct = new QAction(tr("Show First Time Help"), this);
-	m_showInViewHelpAct->setStatusTip(tr("Show First Time Help"));
+	m_showInViewHelpAct = new QAction(tr("First Time Help"), this);
+	m_showInViewHelpAct->setStatusTip(tr("Show or Hide First Time Help"));
 	m_showInViewHelpAct->setCheckable(true);
+	m_showInViewHelpAct->setChecked(true);
 	connect(m_showInViewHelpAct, SIGNAL(triggered(bool)), this, SLOT(showInViewHelp()));
 
 	m_visitFritzingDotOrgAct = new QAction(tr("Visit fritzing.org"), this);

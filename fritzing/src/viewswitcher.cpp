@@ -121,6 +121,7 @@ void ViewSwitcher::enterEvent(QEvent *event) {
 		btn->setFocus(true);
 	}
 	QFrame::enterEvent(event);
+
 }
 
 void ViewSwitcher::leaveEvent(QEvent *event) {

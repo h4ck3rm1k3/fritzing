@@ -51,6 +51,8 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	bool event(QEvent *event);
+	void enterEvent(QEvent *event);
+	void leaveEvent(QEvent *event);
 
 protected:
 	QHBoxLayout * m_hLayout;

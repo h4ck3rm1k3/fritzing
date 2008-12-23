@@ -185,3 +185,25 @@ void Helper::toggleHelpVisibility(int index) {
 
 	which->setVisible(!which->isVisible());
 }
+
+bool Helper::helpVisible(int index) {
+
+	SketchMainHelp * which = NULL;
+	switch (index) {
+		case 0:
+			which = m_breadMainHelp;
+			break;
+		case 1:
+			which = m_schemMainHelp;
+			break;
+		case 2:
+			which = m_pcbMainHelp;
+			break;
+		default:
+			break;
+	}
+
+	if (which == NULL) return false;
+
+	return which->isVisible();
+}

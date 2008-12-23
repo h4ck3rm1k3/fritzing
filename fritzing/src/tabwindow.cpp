@@ -30,6 +30,9 @@ $Date$
 #include "viewswitcher.h"
 #include "debugdialog.h"
 
+const double inactiveOpacity = 0.6;
+const double activeOpacity = 1.0;
+
 TabWindow::TabWindow(QWidget *parent)
     : QWidget(parent)
 {
@@ -45,7 +48,7 @@ TabWindow::TabWindow(QWidget *parent)
 	this->setLayout(m_hLayout);
 	m_hLayout->setSpacing(0);
 	m_hLayout->setMargin(0);
-	setWindowOpacity(0.7);
+	setWindowOpacity(inactiveOpacity);
 
 	m_viewIndex = 999;
 
@@ -142,4 +145,14 @@ void TabWindow::restoreState() {
 
 void TabWindow::setMask() {
 	QWidget::setMask(m_viewSwitcher->getMask());
+}
+
+void TabWindow::enterEvent(QEvent *event) {
+	QWidget::enterEvent(event);
+	setWindowOpacity(activeOpacity);
+}
+
+void TabWindow::leaveEvent(QEvent *event) {
+	QWidget::leaveEvent(event);
+	setWindowOpacity(inactiveOpacity);
 }
