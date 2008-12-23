@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module uri="http://fritzing.org/modules/arduino-diecimila" moduleId="1234ABDE25BH" >
  <version>1.0</version>
- <creator>Brendan Howell</creator>
+ <author>Brendan Howell</author>
  <title>Plain PCB - 200 x 300 mm</title>
  <date>2008-11-25</date>
  <label>PCB</label>
