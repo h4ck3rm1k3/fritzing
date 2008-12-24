@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS><TS version="1.1" language="fr">
+<defaultcodec></defaultcodec>
 <context>
     <name></name>
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="38"/>
         <source>Mismatching Connector IDs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Les ID des connecteurs ne correspondent pas</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="40"/>
         <source>These problems need to be fixed in the svg-files directly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ces problèmes sont à régler directement dans le fichier .svg</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.h" line="59"/>
         <source>Please find a name for me!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Trouver moi un nom s&apos;il vous plaît!</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.h" line="60"/>
         <source>Please provide a label</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Veuillez fournir une étiquette</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.h" line="61"/>
         <source>You could tell a little bit about this part</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vous pourriez quelques détails à propos de ce composant</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.h" line="62"/>
         <source>Please clasify this part</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Veuillez classifier ce composant</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.h" line="63"/>
         <source>You can add your tags to find things easier</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vous pouvez ajouter des tags pour s&apos;y retrouver plus facilement</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditormainwindow.h" line="66"/>
         <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;i&gt;créé par&lt;/i&gt; %1 &lt;i&gt;le&lt;/i&gt; %2</translation>
     </message>
 </context>
 <context>
@@ -48,127 +49,127 @@
     <message>
         <location filename="src/aboutbox.cpp" line="79"/>
         <source>Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="90"/>
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="136"/>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="112"/>
         <source>&lt;p&gt;&lt;br&gt;Fritzing is made by:&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;p&gt;&lt;br&gt;Fritzing est réalisé par :&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="113"/>
         <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="114"/>
         <source>Zach Eveland, Dirk van Oosterbosch,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zach Eveland, Dirk van Oosterbosch,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="115"/>
         <source>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="116"/>
         <source>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="117"/>
         <source>Mariano Crowe, Johannes Landstorfer,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mariano Crowe, Johannes Landstorfer,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="119"/>
         <source>Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="120"/>
         <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;p&gt;Nos remerciements vont à :&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="121"/>
         <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="122"/>
         <source>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="123"/>
         <source>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="124"/>
         <source>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="125"/>
         <source>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="127"/>
         <source>Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="128"/>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;p&gt;Fritzing a été rendu possible grâce au financement du&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="129"/>
         <source>MWFK Brandenburg, the sponsorship of the Design&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MWFK Brandenburg, le soutient du département de design&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="130"/>
         <source>Department of Bauhaus-University Weimar and&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">de la Bauhaus-University de Weimar et </translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="132"/>
         <source>IxDS.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">et de IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="133"/>
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;p&gt;Nos remerciements vont à topus les étudiants&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="134"/>
         <source>and alpha testers who were brave enough to give&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">et alpha-testeurs qui se sont donner la peine de </translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="135"/>
         <source>Fritzing a test spin and who stayed with us,&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">tester Fritzing et qui sont rester avec nous</translation>
     </message>
     <message>
         <location filename="src/aboutbox.cpp" line="136"/>
         <source>throughout our rewrite of the app.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">pendant la réécriture de l&apos;application.</translation>
     </message>
 </context>
 <context>
@@ -176,12 +177,12 @@
     <message>
         <location filename="src/partseditor/abstracteditablelabelwidget.cpp" line="56"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Accepter</translation>
     </message>
     <message>
         <location filename="src/partseditor/abstracteditablelabelwidget.cpp" line="59"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Annuler</translation>
     </message>
 </context>
 <context>
@@ -189,17 +190,17 @@
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="82"/>
         <source>Show Terminal Points</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Montrer les embouts</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="131"/>
         <source>List of Connectors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste des connecteurs</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorsinfowidget.cpp" line="294"/>
         <source>Loading connectors...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chargement des connecteurs...</translation>
     </message>
 </context>
 <context>
@@ -207,52 +208,52 @@
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="48"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nouveau</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="59"/>
         <source>Female</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Femelle</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="60"/>
         <source>Male</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mâle</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="76"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ID</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="79"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nom</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="82"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Description</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="85"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="88"/>
         <source>Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Breadboard</translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="91"/>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vue Schématique </translation>
     </message>
     <message>
         <location filename="src/partseditor/connectorswidget.cpp" line="94"/>
         <source>PCB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Circuit imprimé</translation>
     </message>
 </context>
 <context>
@@ -260,7 +261,7 @@
     <message>
         <location filename="src/debugdialog.cpp" line="62"/>
         <source>for debugging</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pour le débuggage</translation>
     </message>
 </context>
 <context>
@@ -268,37 +269,37 @@
     <message>
         <location filename="src/filedealingwidget.cpp" line="101"/>
         <source>%1 - %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 - %2</translation>
     </message>
     <message>
         <location filename="src/filedealingwidget.cpp" line="102"/>
         <source>Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fritzing</translation>
     </message>
     <message>
         <location filename="src/filedealingwidget.cpp" line="104"/>
         <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1</translation>
     </message>
     <message>
         <location filename="src/filedealingwidget.cpp" line="132"/>
         <source>Specify a file name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spécifier un nom de fichier</translation>
     </message>
     <message>
         <location filename="src/filedealingwidget.cpp" line="134"/>
         <source>Fritzing (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fritzing (*%1)</translation>
     </message>
     <message>
         <location filename="src/filedealingwidget.cpp" line="172"/>
         <source>Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
         <location filename="src/filedealingwidget.cpp" line="174"/>
         <source>Do you want to save the changes you made in the document %1? Your changes will be lost if you don&apos;t save them.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Voulez-vous enregistrer les modifications que vous avez faites dans le document %1? Les modifications seront perdues si vous ne les enregistrez pas.</translation>
     </message>
 </context>
 <context>
@@ -306,32 +307,32 @@
     <message>
         <location filename="src/dockmanager.cpp" line="74"/>
         <source>Inspector</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Propriétés</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="91"/>
         <source>Undo History</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Historique</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="95"/>
         <source>Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Breadboard</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="96"/>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vue schématique</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="97"/>
         <source>PCB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Circuit imprimé</translation>
     </message>
     <message>
         <location filename="src/dockmanager.cpp" line="98"/>
         <source>Navigator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Navigateur</translation>
     </message>
 </context>
 <context>
@@ -339,67 +340,67 @@
     <message>
         <location filename="src/fritzingwindow.cpp" line="76"/>
         <source>&amp;Close Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Fermer la fenêtre</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="77"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+W</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="78"/>
         <source>Close the current sketch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fermer le schéma actuel</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="84"/>
         <source>%1 - %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 - %2</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="106"/>
         <source>Untitled Sketch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Schéma sans nom</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="120"/>
         <source>Specify a file name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Spécifier un nom de fichier</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="122"/>
         <source>Fritzing (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fritzing (*%1)</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="193"/>
         <source>Save &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer %1</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="195"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Voulez-vous enregistrer les modifications faites dans le document &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="203"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer...</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="203"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="204"/>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ne pas enregistrer</translation>
     </message>
     <message>
         <location filename="src/fritzingwindow.cpp" line="205"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+D</translation>
     </message>
 </context>
 <context>
@@ -407,12 +408,12 @@
     <message>
         <location filename="src/help/helper.cpp" line="41"/>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">La &lt;b&gt;vue breadboard&lt;b&gt; est destinée à ressembler à un véritable montage avec une breadboard.&lt;br/&gt;&lt;br/&gt; Commencer par déposer des composants depuis la bibliothèque, qui se situe en haut à droite. ????, les connecter en cliquant sur les connecteurs et en tirant les câbles. Ce processus est similaire à la manière de s&apos;y prendre dans le monde réel.&lt;br/&gt;&lt;br/&gt;Lorsque la schéma est terminé en vue breadboard, veuillez essayer les autres vues. Vous pouvez changer à tout moment de vue en utilisant en en sélectionnant une dans le sélecteur de vue ou dans le naviagteur. En raison des différentes missions des différentes vues, l&apos;apparences des composants sera différentes dans les autres vues. </translation>
     </message>
     <message>
         <location filename="src/help/helper.cpp" line="51"/>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bienvenue dans la &lt;b&gt;vue schématique&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt; C&apos;est une maniére plus abstraite de voir les composants et les connections que dans la vue breadboard. Vous disposez des mêmes éléments que dans la vue breadboard, seule leur apparence est différente. Cette représentation se rapproche des diagrammes traditionnels utilisés par les ingénieurs.&lt;br/&gt;&lt;br/&gt; Vous pouvez pressez &amp;lt;Shift&amp;gt;-click pour créér des points d&apos;articulation pour optimiser vos montages. La vue schématique peut vous aider à vérifier la validité des connectiosn entre composants que vous avez effectuez. Vous pouvez aussi l&apos;imprimer à fin de documentation.</translation>
     </message>
     <message>
         <location filename="src/help/helper.cpp" line="62"/>
@@ -2289,22 +2290,22 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/partseditor/svgview.cpp" line="75"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Imprimer</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="80"/>
         <source>Import XML</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Importer le fichier XML</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="105"/>
         <source>Select Footprint XML File</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sélectionner le fichier d&apos;empreinte XML</translation>
     </message>
     <message>
         <location filename="src/partseditor/svgview.cpp" line="106"/>
         <source>Fritzing Footprint XML Files (*.fzp);;All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fichier d&apos;empreinte XML Fritzing (*.fzp);;Tous les fichiers (*)</translation>
     </message>
 </context>
 <context>
@@ -2312,138 +2313,139 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="src/sketchwidget.cpp" line="279"/>
         <source>loading part</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">charger le composant</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="281"/>
         <source>done loading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">chargement terminé</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="936"/>
         <source>%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 %2</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="939"/>
         <source>%1 %2 items</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 %2 éléments</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="776"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tout sélectionner</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="776"/>
         <source>Deselect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Désélectionner</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="800"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dupliquer</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="901"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Coller</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1136"/>
         <source>Add %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ajouter %1</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1419"/>
         <source>Move %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Déplacer %2 (%1)</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1422"/>
         <source>Move %2 items (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Déplacer %2 élements (%1)</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1618"/>
         <source>Select %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sélectionner %1</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1621"/>
         <source>Select %1 items</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sélectionner %1 élements</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1718"/>
         <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Déconnecter</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1726"/>
         <source>Change</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Changer</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1730"/>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Connecter</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1731"/>
         <source>to %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">à %1</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="1777"/>
         <source>Create and connect wire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Créer et connecter un câble</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2324"/>
         <source>%3 %2 (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%3 %2 (%1)</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2326"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rotation</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2326"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Transformation miroir</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2901"/>
         <source>Shift-click to add a bend point to the wire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Shift-clic pour ajouter un point sur le câble</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="2940"/>
         <source>Shift-click to delete this bend point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Shift-clic pour supprimer un point sur le câble</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3024"/>
         <source>Swapped %1 with module %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Echanger %1 avec le module %2</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3036"/>
         <source>Sorry!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oups!</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3040"/>
         <source>No part with those characteristics.
 Where&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aucun composant n&apos;a ces caractéristiques
+</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3089"/>
         <source>Change %1 color from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Change la couleur de %1 de %2 à %3</translation>
     </message>
     <message>
         <location filename="src/sketchwidget.cpp" line="3095"/>
@@ -2456,42 +2458,42 @@ Where&apos;re working to avoid this message, and only let you choose between pro
     <message>
         <location filename="src/wire.cpp" line="814"/>
         <source>blue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">bleu</translation>
     </message>
     <message>
         <location filename="src/wire.cpp" line="815"/>
         <source>red</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">rouge</translation>
     </message>
     <message>
         <location filename="src/wire.cpp" line="816"/>
         <source>black</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">noir</translation>
     </message>
     <message>
         <location filename="src/wire.cpp" line="817"/>
         <source>yellow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">jaune</translation>
     </message>
     <message>
         <location filename="src/wire.cpp" line="818"/>
         <source>green</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">vert</translation>
     </message>
     <message>
         <location filename="src/wire.cpp" line="819"/>
         <source>grey</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">gris</translation>
     </message>
     <message>
         <location filename="src/wire.cpp" line="820"/>
         <source>white</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">blanc</translation>
     </message>
     <message>
         <location filename="src/wire.cpp" line="821"/>
         <source>orange</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">orange</translation>
     </message>
 </context>
 </TS>
