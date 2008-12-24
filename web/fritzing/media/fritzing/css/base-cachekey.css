@@ -454,13 +454,13 @@ ul#portal-siteactions li a {
 
 input#searchGadget {
 	width: 220px;
-	background: url(searchField.png) no-repeat right center;
+	background: url(../img/searchField.png) no-repeat right center;
 	color: #666;
 }
 
 input#searchGadget:focus {
 	width: 220px;
-	background: url(searchField.png) no-repeat right center;
+	background: url(../img/searchField.png) no-repeat right center;
 	color: black;
 }
 
@@ -476,7 +476,7 @@ input#searchGadget:focus {
 
 body {
 	font: 70% Arial, sans-serif;
-	background: url(body-ltr.gif) repeat-y;
+	background: url(../img/body-ltr.gif) repeat-y;
 }
 
 img {
@@ -822,7 +822,7 @@ ul.portletNavigationTree li a {
 ul.portletNavigationTree li a span {
 	display: block;
 	padding: 4px 6px 4px 0;
-	background: url(edgeColour.gif) repeat-y right;
+	background: url(../img/edgeColour.gif) repeat-y right;
 }
 
 ul.portletNavigationTree li a img {
@@ -842,19 +842,19 @@ ul.portletNavigationTree li.navTreeItemInPath {
 }
 
 ul.portletNavigationTree li a.navTreeCurrentItem span {
-	background: url(currentNav.gif) no-repeat right center !important;
+	background: url(../img/currentNav.gif) no-repeat right center !important;
 	color: black !important;
 }
 
 a.navTreeFolderish {
-	background: url(twistie-closed-gray.gif) no-repeat 10px 6px;
+	background: url(../img/twistie-closed-gray.gif) no-repeat 10px 6px;
 	display: block;
 }
 
 a.navTreeItemInPath.navTreeFolderish,
 a.navTreeCurrentItem.navTreeFolderish,
 a.navTreeCurrentNode.navTreeFolderish {
-	background-image: url(twistie-open-gray.gif);
+	background-image: url(../img/twistie-open-gray.gif);
 	background-repeat: no-repeat;
 }
 
@@ -921,7 +921,7 @@ dl.portletSearch {
 
 input.searchField {
 	width: 173px;
-	background: url(searchField.png) no-repeat right center;
+	background: url(../img/searchField.png) no-repeat right center;
 	color: #999;
 	border: 1px solid #666;
 	font-size: 11px;
@@ -1162,12 +1162,12 @@ fieldset.formPanel.hidden {
 	padding: 4px 0;
 	text-decoration: none;
 	font-size: 12px;
-	background: url(bulletLeft.gif) no-repeat right center;
+	background: url(../img/bulletLeft.gif) no-repeat right center;
 	line-height: 20px;
 }
 
 #region-content ul.formTabs li a span {
-	background: url(bulletRight.gif) no-repeat 0 center;
+	background: url(../img/bulletRight.gif) no-repeat 0 center;
 	padding: 3px 1em;
 	border-top: 1px solid #5a9bc6;
 	border-bottom: 1px solid #5a9bc6;
@@ -1187,20 +1187,20 @@ fieldset.formPanel.hidden {
 
 
 #region-content ul.formTabs li.firstFormTab {
-	background: url(pageTabs-bottom-left.gif) no-repeat 0 bottom;
+	background: url(../img/pageTabs-bottom-left.gif) no-repeat 0 bottom;
 	padding-bottom: 4px;
 	padding-top: 4px;
 }
 
 #region-content ul.formTabs li.firstFormTab a {
-	background: url(pageTabs-top-left.gif) no-repeat 0 top;
+	background: url(../img/pageTabs-top-left.gif) no-repeat 0 top;
 	border-top-style: none;
 	border-bottom-style: none;
 	padding: 4px 0;
 }
 
 #region-content ul.formTabs li.firstFormTab a span {
-	background: url(bulletLeft.gif) no-repeat right center;
+	background: url(../img/bulletLeft.gif) no-repeat right center;
 	border-top-style: none;
 	border-bottom-style: none;
 	padding: 4px 1em 3px;
@@ -1208,24 +1208,24 @@ fieldset.formPanel.hidden {
 
 #region-content ul.formTabs li.firstFormTab a:hover,
 #region-content ul.formTabs li.firstFormTab a.selected {
-	background: url(pageTabs-bottom-left-over.gif) no-repeat 0 bottom;
+	background: url(../img/pageTabs-bottom-left-over.gif) no-repeat 0 bottom;
 }
 
 #region-content ul.formTabs li.firstFormTab a:hover span,
 #region-content ul.formTabs li.firstFormTab a.selected span {
-	background: url(pageTabs-top-left-over.gif) no-repeat 0 top;
+	background: url(../img/pageTabs-top-left-over.gif) no-repeat 0 top;
 }
 
 
 
 #region-content ul.formTabs li.lastFormTab {
-	background: url(pageTabs-bottom-right.gif) no-repeat right bottom;
+	background: url(../img/pageTabs-bottom-right.gif) no-repeat right bottom;
 	padding-bottom: 4px;
 	padding-top: 4px;
 }
 
 #region-content ul.formTabs li.lastFormTab a {
-	background: url(pageTabs-top-right.gif) no-repeat right top;
+	background: url(../img/pageTabs-top-right.gif) no-repeat right top;
 	border-top-style: none;
 	border-bottom-style: none;
 	padding: 4px 0;
@@ -1239,12 +1239,12 @@ fieldset.formPanel.hidden {
 
 #region-content ul.formTabs li.lastFormTab a:hover,
 #region-content ul.formTabs li.lastFormTab a.selected {
-	background: url(pageTabs-bottom-right-over.gif) no-repeat right bottom;
+	background: url(../img/pageTabs-bottom-right-over.gif) no-repeat right bottom;
 }
 
 #region-content ul.formTabs li.lastFormTab a:hover span,
 #region-content ul.formTabs li.lastFormTab a.selected span {
-	background: url(pageTabs-top-right-over.gif) no-repeat right top;
+	background: url(../img/pageTabs-top-right-over.gif) no-repeat right top;
 }
 
 
@@ -1306,7 +1306,7 @@ margin-bottom: -1px;
 	color: #7f7f7f;
 	float: left;
 	padding: 5px 0 5px 10px;
-	background: url(breadCrumbDivider.gif) no-repeat left center;
+	background: url(../img/breadCrumbDivider.gif) no-repeat left center;
 	margin-right: 6px;
 }
 
@@ -1370,7 +1370,7 @@ ul#portal-globalnav li a:hover {
 #portal-column-content ul.contentViews {
 	float: left;
 	list-style-type: none;
-	background: url(edgeColour.gif) repeat-x 0 bottom;
+	background: url(../img/edgeColour.gif) repeat-x 0 bottom;
 	width: 451px;
 	position: relative;
 	margin-bottom: 1em;
@@ -1522,7 +1522,7 @@ ul#contentActionMenus li dt a:hover {
 }
 
 ul#contentActionMenus dl.activated dt {
-	background: url(listBox-header-right.gif) no-repeat right top;
+	background: url(../img/listBox-header-right.gif) no-repeat right top;
 	position: relative;
 	z-index: 1000;
 	color: black;
@@ -1533,7 +1533,7 @@ ul#contentActionMenus dl.activated dt {
 ul#contentActionMenus dl.activated dt a {
 	color: black;
 	text-decoration: none;
-	background: url(listBox-header-left.gif) no-repeat left top;
+	background: url(../img/listBox-header-left.gif) no-repeat left top;
 	position: relative;
 	z-index: 1000;
 	margin-top: 3px;
@@ -1549,14 +1549,14 @@ ul#contentActionMenus dl.activated dd {
 	text-align: left;
 	position: absolute;
 	right: 0;
-	background: url(listBox-top.gif) no-repeat;
+	background: url(../img/listBox-top.gif) no-repeat;
 	margin-top: -1px;
 }
 
 ul#contentActionMenus dl.activated ul {
 	width: 150px;
 	float: left;
-	background: url(listBox-bottom.gif) no-repeat 0 bottom;
+	background: url(../img/listBox-bottom.gif) no-repeat 0 bottom;
 	margin-top: 10px;
 	padding-bottom: 10px;
 }
@@ -2197,12 +2197,12 @@ e;
 }
 
 .documentContent div#review-history dl.collapsedInlineCollapsible dt.collapsibleHeader {
-	background: transparent url(twistie-closed.gif) no-repeat scroll 9px center;
+	background: transparent url(../img/twistie-closed.gif) no-repeat scroll 9px center;
 	color: white;
 }
 
 .documentContent div#review-history dl.expandedInlineCollapsible dt.collapsibleHeader {
-	background: transparent url(twistie-open.gif) no-repeat scroll 8px center;
+	background: transparent url(../img/twistie-open.gif) no-repeat scroll 8px center;
 	color: white;
 }
 
