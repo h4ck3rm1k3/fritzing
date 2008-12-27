@@ -1303,7 +1303,7 @@ void MainWindow::updateTraceMenu() {
 	}
 
 	m_autorouteAct->setEnabled(enabled);
-	m_exportDiyAct->setEnabled(enabled);
+	m_exportDiyAct->setEnabled(true);				// enabled
 	updateWireMenu();
 }
 

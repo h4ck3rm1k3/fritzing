@@ -65,7 +65,8 @@ public:
 	long attachedToID();
 	int attachedToItemType();
 	const QString & attachedToTitle();
-	virtual const QString & connectorStuffID();
+	const QString & connectorStuffID();
+	const QString & connectorStuffName();
 	const QString & busID();
 	ModelPartStuff * modelPartStuff();
 	ModelPart * modelPart();

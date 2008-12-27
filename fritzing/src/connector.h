@@ -60,6 +60,7 @@ public:
 	ConnectorItem * connectorItem(QGraphicsScene *);
 	bool connectionIsAllowed(Connector* that);
 	const QString & connectorStuffID();
+	const QString & connectorStuffName();
 	const QString & busID();
 	class Bus * bus();
 	void setBus(class Bus *);

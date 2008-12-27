@@ -135,7 +135,9 @@ void ItemBase::setConnectorTooltips() {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		QString tt = QString("%1<br />" + ITEMBASE_FONT_PREFIX + "%2" + ITEMBASE_FONT_SUFFIX).arg(toolTip()).arg(connectorItem->connectorStuffID());
+		QString tt = QString("%1<br />" + ITEMBASE_FONT_PREFIX + "%2" + ITEMBASE_FONT_SUFFIX)
+			.arg(toolTip())
+			.arg(connectorItem->connectorStuffName());
 
 		connectorItem->setBaseTooltip(tt);
 	}

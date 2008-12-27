@@ -192,6 +192,12 @@ const QString & Connector::connectorStuffID() {
 	return m_connectorStuff->id();
 }
 
+const QString & Connector::connectorStuffName() {
+	if (m_connectorStuff == NULL) return ___emptyString___;
+
+	return m_connectorStuff->name();
+}
+
 
 const QString & Connector::busID() {
 	if (m_bus == NULL) return ___emptyString___;

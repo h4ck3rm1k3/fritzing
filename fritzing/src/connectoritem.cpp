@@ -347,6 +347,12 @@ const QString & ConnectorItem::connectorStuffID() {
 	return m_connector->connectorStuffID();
 }
 
+const QString & ConnectorItem::connectorStuffName() {
+	if (m_connector == NULL) return ___emptyString___;
+
+	return m_connector->connectorStuffName();
+}
+
 const QString & ConnectorItem::busID() {
 	if (m_connector == NULL) return ___emptyString___;
 
@@ -603,7 +609,7 @@ void ConnectorItem::updateTooltip() {
 
 	QString connections;
 	foreach(ConnectorItem * toConnectorItem, m_connectedTo) {
-		connections += "<br />&nbsp;&nbsp;" + toConnectorItem->attachedToTitle() + ":" + toConnectorItem->connectorStuffID();
+		connections += "<br />&nbsp;&nbsp;" + toConnectorItem->attachedToTitle() + ":" + toConnectorItem->connectorStuffName();
 	}
 
 	setToolTip(m_baseTooltip + ITEMBASE_FONT_PREFIX + connections + ITEMBASE_FONT_SUFFIX);
