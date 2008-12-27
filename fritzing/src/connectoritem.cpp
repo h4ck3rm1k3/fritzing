@@ -268,6 +268,8 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint() {
 void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemBase *> newItems) {		
 	QDomElement connectsToElement = instance.firstChildElement("connects");
 	if (connectsToElement.isNull()) return;
+
+	bool isWire = this->attachedToItemType() == ModelPart::Wire;
 	
 	QDomElement connectToElement = connectsToElement.firstChildElement("connect");
 	while (!connectToElement.isNull()) {
@@ -283,6 +285,10 @@ void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemB
 					connectTo(connectorItem);
 					connectorItem->connectTo(this);
 					m_connector->connectTo(connectorItem->connector());
+					if (isWire && connectorItem->attachedToItemType() == ModelPart::Wire) {
+						this->setHidden(false);
+						connectorItem->setHidden(false);
+					}
 				}					
 			}
 		}

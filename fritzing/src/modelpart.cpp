@@ -487,3 +487,11 @@ QString ModelPart::inWhichFolder(const QString &partspath, const QString &imagep
 	}
 	return ___emptyString___;
 }
+
+bool ModelPart::hasViewID(long id) {
+	foreach (ItemBase * item, m_viewItems) {
+		if (item->id() == id) return true;
+	}
+
+	return false;
+}

@@ -46,3 +46,28 @@ void SketchModel::removeModelPart(ModelPart * modelPart) {
 	//DebugDialog::debug(QString("model count %1").arg(root()->children().size()));
 }
 
+ModelPart * SketchModel::findModelPart(const QString & moduleID, long id) {
+	if (m_root == NULL) return NULL;
+
+	return findModelPartAux(m_root, moduleID, id);
+}
+
+ModelPart * SketchModel::findModelPartAux(ModelPart * modelPart, const QString & moduleID, long id) 
+{
+	if (modelPart->moduleID().compare(moduleID) == 0 && modelPart->hasViewID(id)) {
+		return modelPart;
+	}
+
+	foreach (QObject * child, modelPart->children()) {
+		ModelPart * mp = dynamic_cast<ModelPart *>(child);
+		if (mp == NULL) continue;
+
+		mp = findModelPartAux(mp, moduleID, id);
+		if (mp != NULL) {
+			return mp;
+		}
+	}
+
+	return NULL;
+}
+

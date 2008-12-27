@@ -107,6 +107,7 @@ public:
 
 	QList<ModelPart*> getAllNonCoreParts();
 	QList<SvgAndPartFilePath> getAvailableViewFiles();
+	bool hasViewID(long id);
 
 protected:
 	void writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue);

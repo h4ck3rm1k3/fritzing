@@ -58,6 +58,7 @@ protected:
 	QHBoxLayout * m_hLayout;
 	bool m_inDrag;
 	QPoint m_dragStartPos;
+	QPoint m_movedEnoughPos;
 	QAction * m_toggleViewAction;
 	int m_viewIndex;
 	bool m_movedEnough;

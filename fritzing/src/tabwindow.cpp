@@ -67,6 +67,8 @@ void TabWindow::mousePressEvent(QMouseEvent *event)
 {
 	m_inDrag = true;
 	m_dragStartPos = event->globalPos() - this->pos();
+	m_movedEnoughPos = event->globalPos();
+	m_movedEnough = false;
 }
 
 void TabWindow::mouseReleaseEvent(QMouseEvent *   event )
@@ -84,8 +86,8 @@ void TabWindow::mouseMoveEvent(QMouseEvent *event)
 			this->move(pos - m_dragStartPos);
 		}
 		else {
-			QPoint d = pos - m_dragStartPos;
-			m_movedEnough =(d.x() * d.x()) + (d.y() * d.y()) >= 36;				
+			QPoint d = pos - m_movedEnoughPos;
+			m_movedEnough =(d.x() * d.x()) + (d.y() * d.y()) >= 25;
 		}
 	}
 } 

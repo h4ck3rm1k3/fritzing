@@ -229,6 +229,7 @@ int main(int argc, char *argv[])
 
 	mainWindow->show();
 
+	/*
 	QDate now = QDate::currentDate();
 	QDate over = QDate(2009, 1, 7);
 	if (now < over) {
@@ -241,6 +242,7 @@ int main(int argc, char *argv[])
 			treeduino->show();
 		}
 	}
+	*/
 
 	splash.finish(mainWindow);
 

@@ -39,6 +39,9 @@ public:
 	SketchModel(bool makeRoot);
 	SketchModel(ModelPart * root);
 	void removeModelPart(ModelPart *);
+	ModelPart * findModelPart(const QString & moduleID, long id);
 
+protected:
+	ModelPart * findModelPartAux(ModelPart * modelPart, const QString & moduleID, long id);
 };
 #endif

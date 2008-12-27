@@ -286,7 +286,22 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 }
 
 ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem) {
-	modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
+	// FindModelPart is for the benefit of paste.
+	// The problem is that paste generates a separate AddItemCommand for each view
+	// because the view geometry and other details for each view are different.
+	// However, this causes a bug because each AddItemCommand was creating a separate ModelPart for each part for each view
+	// (here at addModelPart) rather than having a single ModelPart per part.
+	// So adding the findModelPart call lets us retrieve a modelpart that has already been created for a given
+	// moduleID/item ID pair.
+	// This might be better handled at the paste end, when the AddItemCommands are created
+	// but so far I haven't come up with a clean approach.
+	ModelPart * mp = m_sketchModel->findModelPart(modelPart->moduleID(), id);
+	if (mp == NULL) {
+		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
+	}
+	else {
+		modelPart = mp;
+	}
 	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, partsEditorPaletteItem, true);
 	if (crossViewType == BaseCommand::CrossView) {
 		emit itemAddedSignal(modelPart, viewGeometry, id);
@@ -1643,6 +1658,7 @@ void SketchWidget::sketchWidget_clearSelection() {
 
 void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	ItemBase * item = findItem(id);
+	DebugDialog::debug(QString("got item selected signal %1 %2 %3 %4").arg(id).arg(state).arg(item != NULL).arg(m_viewIdentifier));
 	if (item != NULL) {
 		item->setSelected(state);
 	}
@@ -1782,10 +1798,10 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		clearDragWireTempCommand();
 	}
 
+	m_connectorDragWire->saveGeometry();
 	ConnectorItem * newFrom = m_connectorDragConnector;
 	modifyNewWireConnections(wire, fromOnWire, newFrom, to, parentCommand);
 
-	m_connectorDragWire->saveGeometry();
 	long fromID = wire->id();
 
 	DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
@@ -1797,7 +1813,6 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 	// create a new wire with the same id as the temporary wire
 	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, parentCommand);
-
 
 	bool doEmit = false;
 	ConnectorItem * anchor = wire->otherConnector(fromOnWire);

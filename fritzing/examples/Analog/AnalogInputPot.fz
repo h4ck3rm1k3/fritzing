@@ -156,7 +156,7 @@
                         <connector connectorId="connector0" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="W8" modelIndex="9295"></connect>
+                                <connect connectorId="W8" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboardWire">
@@ -192,7 +192,7 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="W8" modelIndex="9294"></connect>
+                                <connect connectorId="W8" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
@@ -215,7 +215,7 @@
                         <connector connectorId="connector0" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="X9" modelIndex="9295"></connect>
+                                <connect connectorId="X9" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboardWire">
@@ -251,7 +251,7 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="X9" modelIndex="9294"></connect>
+                                <connect connectorId="X9" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
@@ -340,7 +340,7 @@
                         <connector connectorId="connector0" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A15" modelIndex="9295"></connect>
+                                <connect connectorId="A15" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboardWire">
@@ -376,7 +376,7 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A15" modelIndex="9294"></connect>
+                                <connect connectorId="A15" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
@@ -399,13 +399,13 @@
                         <connector connectorId="connector0" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A16" modelIndex="9295"></connect>
+                                <connect connectorId="A16" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="X16" modelIndex="9295"></connect>
+                                <connect connectorId="X16" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -435,13 +435,13 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A16" modelIndex="9294"></connect>
+                                <connect connectorId="A16" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="X16" modelIndex="9294"></connect>
+                                <connect connectorId="X16" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -458,13 +458,13 @@
                         <connector connectorId="connector0" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A14" modelIndex="9295"></connect>
+                                <connect connectorId="A14" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboardWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="W14" modelIndex="9295"></connect>
+                                <connect connectorId="W14" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -494,13 +494,13 @@
                         <connector connectorId="connector0" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="A14" modelIndex="9294"></connect>
+                                <connect connectorId="A14" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematicWire">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="W14" modelIndex="9294"></connect>
+                                <connect connectorId="W14" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -516,19 +516,19 @@
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="E14" modelIndex="9295"></connect>
+                                <connect connectorId="E14" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="B15" modelIndex="9295"></connect>
+                                <connect connectorId="B15" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector2" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="E16" modelIndex="9295"></connect>
+                                <connect connectorId="E16" modelIndex="9293"></connect>
                             </connects>
                         </connector>
                     </connectors>
@@ -575,21 +575,21 @@
                         <connector connectorId="connector0" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="E14" modelIndex="9294"></connect>
+                                <connect connectorId="E14" modelIndex="9293"></connect>
                                 <connect connectorId="connector0" modelIndex="9288"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="B15" modelIndex="9294"></connect>
+                                <connect connectorId="B15" modelIndex="9293"></connect>
                                 <connect connectorId="connector0" modelIndex="9290"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector2" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="E16" modelIndex="9294"></connect>
+                                <connect connectorId="E16" modelIndex="9293"></connect>
                                 <connect connectorId="connector0" modelIndex="9287"></connect>
                                 <connect connectorId="connector1" modelIndex="24433"></connect>
                             </connects>
@@ -1114,11 +1114,6 @@
                         </connector>
                     </connectors>
                 </pcbView>
-            </views>
-        </instance>
-        <instance moduleIdRef="BreadboardModuleID" modelIndex="9294" path=":/resources/parts/core/breadboard.fz">
-            <title>Breadboard1</title>
-            <views>
                 <schematicView layer="breadboardBreadboard">
                     <geometry z="1.50002" x="86" y="243"></geometry>
                     <connectors>
@@ -1184,12 +1179,7 @@
                         </connector>
                     </connectors>
                 </schematicView>
-            </views>
-        </instance>
-        <instance moduleIdRef="BreadboardModuleID" modelIndex="9295" path=":/resources/parts/core/breadboard.fz">
-            <title>Breadboard1</title>
-            <views>
-                <breadboardView layer="breadboardBreadboard">
+                 <breadboardView layer="breadboardBreadboard">
                     <geometry z="1.50001" x="103" y="245"></geometry>
                     <connectors>
                         <connector connectorId="B15" layer="breadboardBreadboard">
