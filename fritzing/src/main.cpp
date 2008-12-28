@@ -175,9 +175,9 @@ int main(int argc, char *argv[])
 	QString binToOpen = settings.value("lastBin").toString();
 	binToOpen = binToOpen.isNull() || binToOpen.isEmpty() ? MainWindow::CoreBinLocation : binToOpen;
 
-	if (!paletteBinModel->load(binToOpen, referenceModel, false)) {
+	if (!paletteBinModel->load(binToOpen, referenceModel)) {
 		if(binToOpen == MainWindow::CoreBinLocation
-		   || !paletteBinModel->load(MainWindow::CoreBinLocation, referenceModel, false)) {
+		   || !paletteBinModel->load(MainWindow::CoreBinLocation, referenceModel)) {
 			// TODO: we're really screwed, what now?
 			QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 			return -1;

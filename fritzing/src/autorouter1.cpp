@@ -510,7 +510,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, NULL);
+												BaseCommand::SingleView, viewGeometry, newID, -1, NULL);
 	if (jumper == NULL) {
 		// we're in trouble
 		return;
@@ -563,7 +563,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, NULL);
+												BaseCommand::SingleView, viewGeometry, newID, -1, NULL);
 	if (trace == NULL) {
 		// we're in trouble
 		return false;
@@ -1043,7 +1043,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 		return;
 	}
 
-	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), parentCommand, false);
+	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
 	new WireColorChangeCommand(m_sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	addItemCommand->turnOffFirstRedo();

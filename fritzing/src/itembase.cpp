@@ -586,20 +586,6 @@ ConnectorItem* ItemBase::newConnectorItem(Connector *connector) {
 	return new ConnectorItem(connector,this);
 }
 
-void ItemBase::restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems) {
-
-	QDomElement connectorsElement = instance.firstChildElement("connectors");
-	if (!connectorsElement.isNull()) {
-		QDomElement connectorElement = connectorsElement.firstChildElement("connector");
-		while (!connectorElement.isNull()) {
-			ConnectorItem * connectorItem = findConnectorItemNamed(connectorElement.attribute("connectorId"));
-			if (connectorItem != NULL) {
-				connectorItem->restoreConnections(connectorElement, newItems);
-			}
-			connectorElement = connectorElement.nextSiblingElement("connector");
-		}
-	}
-}
 
 ConnectorItem * ItemBase::anyConnectorItem() {
 	foreach (QGraphicsItem * childItem, childItems()) {

@@ -163,14 +163,6 @@ void PaletteItem::flipItemAnd(Qt::Orientations orientation) {
 	}
 }
 
-
-void PaletteItem::restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems) {
-	PaletteItemBase::restoreConnections(instance, newItems);
-	for (int i = 0; i < m_layerKin.count(); i++) {
-		m_layerKin[i]->restoreConnections(instance, newItems);
-	}
-}
-
 void PaletteItem::setTransforms() {
 	setTransform(getViewGeometry().transform());
 	for (int i = 0; i < m_layerKin.count(); i++) {

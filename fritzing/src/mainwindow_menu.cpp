@@ -486,12 +486,13 @@ void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 }
 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
-	m_sketchModel->load(fileName, m_paletteModel, true);
+	QList<ModelPart *> modelParts;
+	m_sketchModel->load(fileName, m_paletteModel, modelParts);
 	//m_sketchModel->load(fileName, m_refModel, true);
 
-	m_breadboardGraphicsView->loadFromModel();
-	m_pcbGraphicsView->loadFromModel();
-	m_schematicGraphicsView->loadFromModel();
+	m_breadboardGraphicsView->loadFromModel(modelParts, false);
+	m_pcbGraphicsView->loadFromModel(modelParts, false);
+	m_schematicGraphicsView->loadFromModel(modelParts, false);
 
 	if(setAsLastOpened) {
 		QSettings settings("Fritzing","Fritzing");
@@ -517,12 +518,42 @@ void MainWindow::cut() {
 
 void MainWindow::paste() {
 	if (m_currentGraphicsView == NULL) return;
-	m_currentGraphicsView->paste();
+
+	QClipboard *clipboard = QApplication::clipboard();
+	if (clipboard == NULL) {
+		// shouldn't happen
+		return;
+	}
+
+	const QMimeData* mimeData = clipboard->mimeData(QClipboard::Clipboard);
+	if (mimeData == NULL) return;
+
+   	if (!mimeData->hasFormat("application/x-dnditemsdata")) return;
+
+
+
+    QByteArray itemData = mimeData->data("application/x-dnditemsdata");
+	QList<ModelPart *> modelParts;
+	if (m_sketchModel->paste(m_paletteModel, itemData, modelParts)) {
+		QUndoCommand * parentCommand = new QUndoCommand("Paste");
+
+		m_breadboardGraphicsView->loadFromModel(modelParts, parentCommand);
+		m_pcbGraphicsView->loadFromModel(modelParts, parentCommand);
+		m_schematicGraphicsView->loadFromModel(modelParts, parentCommand);
+
+		m_undoStack->push(parentCommand);
+	}
+
+	//m_currentGraphicsView->paste();
 }
 
 void MainWindow::duplicate() {
 	if (m_currentGraphicsView == NULL) return;
-	m_currentGraphicsView->duplicate();
+
+	m_currentGraphicsView->copy();
+	paste();
+
+	//m_currentGraphicsView->duplicate();
 }
 
 void MainWindow::doDelete() {

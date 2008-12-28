@@ -68,8 +68,8 @@ public:
     SketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=600, int minSize=400);
 
     QUndoStack* undoStack();
-    ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, PaletteItem* item=0);
-	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id);
+    ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, PaletteItem* item);
+	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex);
     void deleteItem(long id, bool deleteModelPart, bool doEmit);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit);
     void moveItem(long id, ViewGeometry &);
@@ -80,14 +80,12 @@ public:
     void changeWire(long fromID, QLineF line, QPointF pos, bool useLine);   //  const QString & fromConnectorID, long toID, const QString & toConnectorID, bool dragend
     void cut();
     void copy();
-    void paste();
-    void duplicate();
     void setPaletteModel(PaletteModel *);
     void setRefModel(ReferenceModel *refModel);
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-    void loadFromModel();
+    void loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand * parentCommand);
     ItemBase* loadFromModel(ModelPart *, const ViewGeometry&);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
     void relativeZoom(qreal step);
@@ -270,6 +268,9 @@ protected:
 	void ensureFixedToBottomLeft(QGraphicsProxyWidget* item);
 	void ensureFixedToBottomRight(QGraphicsProxyWidget* item);
 	void ensureFixedToCenter(QGraphicsProxyWidget* item);
+	void removeOutsideConnections(QByteArray & itemData, QList<long> & modelIndexes);
+	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
+	virtual bool doRatsnestOnCopy();
 
 protected:
 	static bool lessThan(int a, int b);

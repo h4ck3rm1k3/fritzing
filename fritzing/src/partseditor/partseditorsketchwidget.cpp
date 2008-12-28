@@ -47,7 +47,7 @@ void PartsEditorSketchWidget::loadSvgFile(StringPair *path, ModelPart * modelPar
 	//if(item->connectors().size() > 0) {
 		//emit connectorsFound(this->m_viewIdentifier,item->connectors());
 	//}
-	this->addItem(modelPart, BaseCommand::CrossView, item->getViewGeometry(),item->id(),item);
+	this->addItem(modelPart, BaseCommand::CrossView, item->getViewGeometry(),item->id(), -1, item);
 }
 
 ItemBase * PartsEditorSketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors)

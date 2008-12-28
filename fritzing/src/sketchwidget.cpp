@@ -60,6 +60,7 @@ $Date$
 #include "autorouter1.h"
 #include "fgraphicsscene.h"
 #include "mainwindow.h"
+#include "version.h"
 
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -188,20 +189,17 @@ ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& 
 	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), NULL, true);
 }
 
-void SketchWidget::loadFromModel() {
-	ModelPart* root = m_sketchModel->root();
+void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand * parentCommand) {
+	clearHoldingSelectItem();
+
 	QHash<long, ItemBase *> newItems;
 	QHash<ItemBase *, QDomElement *> itemDoms;
 	m_ignoreSelectionChangeEvents = true;
 
 	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
 
-	// first make the parts
-	//QList<ModelPart *> badModelParts;
-	foreach (QObject * object, root->children()) {
-		ModelPart* mp = qobject_cast<ModelPart *>(object);
-		if (mp == NULL) continue;
-
+	// make parts
+	foreach (ModelPart * mp, modelParts) {
 		QDomElement instance = mp->instanceDomElement();
 		if (instance.isNull()) continue;
 
@@ -216,60 +214,146 @@ void SketchWidget::loadFromModel() {
 
 		ViewGeometry viewGeometry(geometry);
 
-		// removed hack 2008/12/09 since we're saving ratsnests again
-		// hack 2008/11/25 to deal with earlier versions of saved files
-		//if (viewGeometry.getVirtual()) {
-			//badModelParts.append(mp);
-			//continue;
-		//}
+		long newID = ItemBase::getNextID(mp->modelIndex());
+		if (parentCommand == NULL) {
+			// use a function of the model index to ensure the same parts have the same ID across views
+			ItemBase * item = addItemAux(mp, viewGeometry, newID, NULL, true);
+			if (item != NULL) {
+				PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
+				if (paletteItem) {
+					// wires don't have transforms
+					paletteItem->setTransforms();
+				}
+				else {
+					Wire * wire = dynamic_cast<Wire *>(item);
+					if (wire != NULL) {
+						QDomElement extras = view.firstChildElement("wireExtras");
+						wire->setExtras(extras);
+					}
+				}
 
-		// use a function of the model index to ensure the same parts have the same ID across views
-		ItemBase * item = addItemAux(mp, viewGeometry, ItemBase::getNextID(mp->modelIndex()), NULL, true);
-		if (item != NULL) {
-			PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
-			if (paletteItem) {
-				// wires don't have transforms
-				paletteItem->setTransforms();
+				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
+				newItems.insert(mp->modelIndex(), item);
+				itemDoms.insert(item, new QDomElement(view));
 			}
-			else {
-				Wire * wire = dynamic_cast<Wire *>(item);
-				if (wire != NULL) {
-					QDomElement extras = view.firstChildElement("wireExtras");
-					wire->setExtras(extras);
+		}
+		else {
+			// offset pasted items so we can differentiate them from the originals
+			viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
+			new AddItemCommand(this, BaseCommand::SingleView, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
+			if (mp->moduleID() == Wire::moduleIDName) {
+				addWireExtras(newID, view, parentCommand);
+			}
+
+
+		}
+	}
+
+	// now restore connections
+	foreach (ModelPart * mp, modelParts) {
+		QDomElement instance = mp->instanceDomElement();
+		if (instance.isNull()) continue;
+
+		QDomElement views = instance.firstChildElement("views");
+		if (views.isNull()) continue;
+
+		QDomElement view = views.firstChildElement(viewName);
+		if (view.isNull()) continue;
+
+		QDomElement connectors = view.firstChildElement("connectors");
+		if (connectors.isNull()) continue;
+
+		QDomElement connector = connectors.firstChildElement("connector");
+		while (!connector.isNull()) {
+			// TODO: make sure layerkin are searched for connectors
+			QString fromConnectorID = connector.attribute("connectorId");
+			QDomElement connects = connector.firstChildElement("connects");
+			if (!connects.isNull()) {
+				QDomElement connect = connects.firstChildElement("connect");
+				while (!connect.isNull()) {
+					long modelIndex = connect.attribute("modelIndex").toLong();
+					QString toConnectorID = connect.attribute("connectorId");
+					if (parentCommand == NULL) {
+						ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
+						ItemBase * toBase = newItems.value(modelIndex, NULL);					
+						if (fromBase != NULL && toBase != NULL) {
+							// TODO: make sure layerkin are searched for connectors
+							ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
+							ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID);
+							if (fromConnectorItem != NULL && toConnectorItem != NULL) {
+								fromConnectorItem->connectTo(toConnectorItem);
+								toConnectorItem->connectTo(fromConnectorItem);
+								fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
+								if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+									fromConnectorItem->setHidden(false);
+									toConnectorItem->setHidden(false);
+								}				
+							}
+						}
+					}
+					else {
+						new ChangeConnectionCommand(this, BaseCommand::SingleView,
+													ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
+													ItemBase::getNextID(modelIndex), toConnectorID,
+													true, true, parentCommand);
+						if (doRatsnestOnCopy()) {
+							new RatsnestCommand(this, BaseCommand::SingleView,
+														ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
+														ItemBase::getNextID(modelIndex), toConnectorID,
+														true, true, parentCommand);
+						}
+					}
+					connect = connect.nextSiblingElement("connect");
 				}
 			}
 
-			// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
-			newItems.insert(mp->modelIndex(), item);
-			itemDoms.insert(item, new QDomElement(view));
+			connector = connector.nextSiblingElement("connector");
 		}
 	}
 
-	//foreach (ModelPart * mp, badModelParts) {
-		//m_sketchModel->removeModelPart(mp);
-	//}
-
-
-	foreach (ItemBase * itemBase, itemDoms.keys()) {
-		QDomElement * dom = itemDoms.value(itemBase);
-		itemBase->restoreConnections(*dom,  newItems);
-		delete dom;
-	}
-
-	foreach (ItemBase * item, newItems) {
-		if (item->sticky()) {
-			stickyScoop(item, NULL);
+	if (parentCommand == NULL) {
+		foreach (ItemBase * item, newItems) {
+			if (item->sticky()) {
+				stickyScoop(item, NULL);
+			}
 		}
+
+		m_pasteCount = 0;
+		this->scene()->clearSelection();
+		cleanUpWires(false, NULL);
+	}
+	else {
+		// TODO: select the pasted items
+		m_pasteCount++;								// used for offsetting paste items, not a count of how many items are pasted
+
+
 	}
 
-	updateRatsnestStatus(NULL, NULL);
-
-	this->scene()->clearSelection();
-	cleanUpWires(false, NULL);
 	m_ignoreSelectionChangeEvents = false;
 }
 
-ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id) {
+void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand) 
+{
+	QDomElement extras = view.firstChildElement("wireExtras");
+	if (extras.isNull()) return;
+
+	bool ok;
+	int w = extras.attribute("width").toInt(&ok);
+	if (ok) {
+		new WireWidthChangeCommand(this, newID, w, w, parentCommand);
+	}
+
+	QString colorString = extras.attribute("color");
+	if (!colorString.isEmpty()) {
+		qreal op = extras.attribute("opacity").toDouble(&ok);
+		if (!ok) {
+			op = UNROUTED_OPACITY;
+		}
+		new WireColorChangeCommand(this, newID, colorString, colorString, op, op, parentCommand);
+	}
+}
+
+ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex) {
 	if (m_paletteModel == NULL) return NULL;
 
 	ItemBase * itemBase = NULL;
@@ -277,7 +361,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	if (modelPart != NULL) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		statusMessage(tr("loading part"));
-		itemBase = addItem(modelPart, crossViewType, viewGeometry, id);
+		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, NULL);
 		statusMessage(tr("done loading"), 2000);
 		QApplication::restoreOverrideCursor();
 	}
@@ -285,23 +369,21 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	return itemBase;
 }
 
-ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem) {
-	// FindModelPart is for the benefit of paste.
-	// The problem is that paste generates a separate AddItemCommand for each view
-	// because the view geometry and other details for each view are different.
-	// However, this causes a bug because each AddItemCommand was creating a separate ModelPart for each part for each view
-	// (here at addModelPart) rather than having a single ModelPart per part.
-	// So adding the findModelPart call lets us retrieve a modelpart that has already been created for a given
-	// moduleID/item ID pair.
-	// This might be better handled at the paste end, when the AddItemCommands are created
-	// but so far I haven't come up with a clean approach.
-	ModelPart * mp = m_sketchModel->findModelPart(modelPart->moduleID(), id);
-	if (mp == NULL) {
+ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, PaletteItem* partsEditorPaletteItem) {
+	
+	ModelPart * mp = NULL;
+	if (modelIndex >= 0) {
+		// used only with Paste, so far--this assures that parts created across views will share the same ModelPart
+		mp = m_sketchModel->findModelPart(modelPart->moduleID(), id);
+	}
+	if (mp == NULL) {	
 		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
 	}
 	else {
 		modelPart = mp;
 	}
+	if (modelPart == NULL) return NULL;
+
 	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, partsEditorPaletteItem, true);
 	if (crossViewType == BaseCommand::CrossView) {
 		emit itemAddedSignal(modelPart, viewGeometry, id);
@@ -680,7 +762,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, parentCommand, false);
+	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, false, -1, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorStuffID(),
 			newID, "connector0", true, true, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
@@ -810,11 +892,6 @@ void SketchWidget::cut() {
 	cutDeleteAux("Cut");
 }
 
-void SketchWidget::duplicate() {
-	copy();
-	pasteDuplicateAux(tr("Duplicate"));
-}
-
 void SketchWidget::copy() {
 	QList<ItemBase *> bases;
 
@@ -822,87 +899,27 @@ void SketchWidget::copy() {
 	sortSelectedByZ(bases);
 
     QByteArray itemData;
-    QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    dataStream << bases.size();
+	QXmlStreamWriter streamWriter(&itemData);
 
- 	for (int i = 0; i < bases.size(); ++i) {
- 		ItemBase *base = bases.at(i);
- 		ViewGeometry * viewGeometry = new ViewGeometry(base->getViewGeometry());
-		QHash<ItemBase::ViewIdentifier, ViewGeometry * > geometryHash;
-		geometryHash.insert(m_viewIdentifier, viewGeometry);
-		emit copyItemSignal(base->id(), geometryHash);			// let the other views add their geometry
- 		dataStream << base->modelPart()->moduleID() << (qint64) base->id();
-		QList <ItemBase::ViewIdentifier> keys = geometryHash.keys();
-		dataStream << (qint32) keys.count();
-		for (int j = 0; j < keys.count(); j++) {
-			ViewGeometry * vg = geometryHash.value(keys[j]);
-			dataStream << (qint32) keys[j] << vg->loc() << vg->line() << vg->transform();
-		}
-		for (int j = 0; j < keys.count(); j++) {
-			ViewGeometry * vg = geometryHash[keys[j]];
-			delete vg;
-		}
-	}
-
-	ConnectorPairHash allConnectorHash;
-
-	// now save the connector info
+	QList<long> modelIndexes;
+	streamWriter.writeStartElement("module");
+	streamWriter.writeAttribute("fritzingVersion", Version::versionString());
+	streamWriter.writeStartElement("instances");
 	foreach (ItemBase * base, bases) {
-		ConnectorPairHash connectorHash;
-		base->collectConnectors(connectorHash, scene());
-		ConnectorPairHash disconnectorHash;
-
-		// first get the connectors from each part and remove the ones pointing outside the copied set of parts
-		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
-			DebugDialog::debug(QString("testing from: %1 %2 %3").arg(fromConnectorItem->attachedToID())
-				.arg(fromConnectorItem->attachedToTitle())
-				.arg(fromConnectorItem->connectorStuffID()) );
-			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-				DebugDialog::debug(QString("testing to: %1 %2 %3").arg(toConnectorItem->attachedToID())
-					.arg(toConnectorItem->attachedToTitle())
-					.arg(toConnectorItem->connectorStuffID()) );
-				ItemBase * toBase = toConnectorItem->attachedTo()->layerKinChief();
-				if (!bases.contains(toBase)) {
-					// don't copy external connection--but don't delete during walkthrough
-					disconnectorHash.insert(fromConnectorItem, toConnectorItem);
-					DebugDialog::debug("deleting");
-				}
-			}
-		}
-
-		// delete now so that connectorHash isn't modified as we're walking through it  
-		foreach (ConnectorItem * fromConnectorItem, disconnectorHash.uniqueKeys()) {
-			foreach (ConnectorItem * toConnectorItem, disconnectorHash.values(fromConnectorItem)) {
-				connectorHash.remove(fromConnectorItem, toConnectorItem);
-			}
-		}
-
-		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
-			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-				allConnectorHash.insert(fromConnectorItem, toConnectorItem);
-			}
-		}
-    }
-
-	// now shove the connection info into the dataStream
-	dataStream << (int) allConnectorHash.count();
-	DebugDialog::debug(QString("copying %1").arg(allConnectorHash.count()) );
-	foreach (ConnectorItem * fromConnectorItem,  allConnectorHash.uniqueKeys()) {
-		foreach (ConnectorItem * toConnectorItem, allConnectorHash.values(fromConnectorItem)) {
-			dataStream << (qint64) fromConnectorItem->attachedTo()->layerKinChief()->id();
-			dataStream << fromConnectorItem->connectorStuffID();
-			dataStream << (qint64) toConnectorItem->attachedTo()->layerKinChief()->id();
-			dataStream << toConnectorItem->connectorStuffID();
-
-			DebugDialog::debug(QString("copying %1 %2 %3 %4").arg(fromConnectorItem->attachedTo()->layerKinChief()->id())
-			.arg(fromConnectorItem->connectorStuffID())
-			.arg( toConnectorItem->attachedTo()->layerKinChief()->id())
-			.arg(toConnectorItem->connectorStuffID()) );
-		}
+		base->modelPart()->saveInstances(streamWriter, false);
+		modelIndexes.append(base->modelPart()->modelIndex());
 	}
+	streamWriter.writeEndElement();
+	streamWriter.writeEndElement();
+
+	// only preserve connections for copied items that connect to each other
+	removeOutsideConnections(itemData, modelIndexes);
+
 
     QMimeData *mimeData = new QMimeData;
     mimeData->setData("application/x-dnditemsdata", itemData);
+	mimeData->setData("text/plain", itemData);
+
 	QClipboard *clipboard = QApplication::clipboard();
 	if (clipboard == NULL) {
 		// shouldn't happen
@@ -912,9 +929,67 @@ void SketchWidget::copy() {
 
 	clipboard->setMimeData(mimeData, QClipboard::Clipboard);
 }
-void SketchWidget::paste() {
-	pasteDuplicateAux(tr("Paste"));
+
+void SketchWidget::removeOutsideConnections(QByteArray & itemData, QList<long> & modelIndexes) {
+	// now have to remove each connection that points to a part outside of the set of parts being copied
+
+	QDomDocument domDocument;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	bool result = domDocument.setContent(itemData, &errorStr, &errorLine, &errorColumn);
+	if (!result) return;
+
+	QDomElement root = domDocument.documentElement();
+   	if (root.isNull()) {
+   		return;
+	}
+
+	QDomElement instances = root.firstChildElement("instances");
+	if (instances.isNull()) return;
+
+	QDomElement instance = instances.firstChildElement("instance");
+	while (!instance.isNull()) {
+		QDomElement views = instance.firstChildElement("views");
+		if (!views.isNull()) {
+			QDomElement view = views.firstChildElement();
+			while (!view.isNull()) {
+				QDomElement connectors = view.firstChildElement("connectors");
+				if (!connectors.isNull()) {
+					QDomElement connector = connectors.firstChildElement("connector");
+					while (!connector.isNull()) {
+						QDomElement connects = connector.firstChildElement("connects");
+						if (!connects.isNull()) {
+							QDomElement connect = connects.firstChildElement("connect");
+							QList<QDomElement> toDelete;
+							while (!connect.isNull()) {
+								long modelIndex = connect.attribute("modelIndex").toLong();
+								if (!modelIndexes.contains(modelIndex)) {
+									toDelete.append(connect);
+								}
+
+								connect = connect.nextSiblingElement("connect");
+							}
+
+							foreach (QDomElement connect, toDelete) {
+								connects.removeChild(connect);
+							}
+						}
+						connector = connector.nextSiblingElement("connector");
+					}
+				}
+
+				view = view.nextSiblingElement();
+			}
+		}
+
+		instance = instance.nextSiblingElement("instance");
+	}
+
+	// does this cause a leak?
+	itemData = domDocument.toByteArray();
 }
+
 
 void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 	clearHoldingSelectItem();
@@ -985,7 +1060,7 @@ void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
 			SketchWidget * sketchWidget = NULL;
 			emit findSketchWidgetSignal((ItemBase::ViewIdentifier) viewIdentifier, sketchWidget);
 			if (sketchWidget != NULL) {
-				new AddItemCommand(sketchWidget, BaseCommand::SingleView, modelPart->moduleID(), viewGeometry, newItemID, parentCommand, false);
+				new AddItemCommand(sketchWidget, BaseCommand::SingleView, modelPart->moduleID(), viewGeometry, newItemID, false, -1, parentCommand);
 			}
 		}
    	}
@@ -1161,7 +1236,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 			// rulers are local to a particular view
 			crossViewType = BaseCommand::SingleView;
 		}
-		new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, parentCommand);
+		new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, parentCommand);
 
 		bool gotConnector = false;
 		foreach (QGraphicsItem * childItem, m_droppingItem->childItems()) {
@@ -1812,7 +1887,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 
 	// create a new wire with the same id as the temporary wire
-	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, parentCommand);
+	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
 
 	bool doEmit = false;
 	ConnectorItem * anchor = wire->otherConnector(fromOnWire);
@@ -2191,6 +2266,7 @@ void SketchWidget::sortSelectedByZ(QList<ItemBase *> & bases) {
 	QList<QGraphicsItem *> tlBases;
 	for (int i = 0; i < items.count(); i++) {
 		ItemBase * itemBase =  ItemBase::extractTopLevelItemBase(items[i]);
+		if (itemBase == NULL) continue;
 		if (itemBase->getVirtual()) continue;
 
 		if (itemBase != NULL) {
@@ -2811,7 +2887,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
-	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, parentCommand);
+	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, true, -1, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
 
@@ -3687,5 +3763,10 @@ bool SketchWidget::matchesLayer(ModelPart * modelPart) {
 		layer = layer.nextSiblingElement("layer");
 	}
 
+	return false;
+}
+
+bool SketchWidget::doRatsnestOnCopy() 
+{
 	return false;
 }

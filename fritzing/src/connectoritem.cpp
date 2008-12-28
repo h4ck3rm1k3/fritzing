@@ -265,40 +265,6 @@ QPointF ConnectorItem::sceneAdjustedTerminalPoint() {
 	return this->mapToScene(m_terminalPoint + this->rect().topLeft());
 }
 
-void ConnectorItem::restoreConnections(QDomElement & instance, QHash<long, ItemBase *> newItems) {		
-	QDomElement connectsToElement = instance.firstChildElement("connects");
-	if (connectsToElement.isNull()) return;
-
-	bool isWire = this->attachedToItemType() == ModelPart::Wire;
-	
-	QDomElement connectToElement = connectsToElement.firstChildElement("connect");
-	while (!connectToElement.isNull()) {
-		bool ok;
-   		long modelIndex = connectToElement.attribute("modelIndex").toLong(&ok);
-   		if (ok) {
-			ItemBase * toBase = newItems.value(modelIndex);
-			if (toBase != NULL) {	
-				ConnectorItem * connectorItem = NULL;
-				QString toConnectorID = connectToElement.attribute("connectorId");
-				connectorItem = toBase->findConnectorItemNamed(toConnectorID);
-				if (connectorItem != NULL) {
-					connectTo(connectorItem);
-					connectorItem->connectTo(this);
-					m_connector->connectTo(connectorItem->connector());
-					if (isWire && connectorItem->attachedToItemType() == ModelPart::Wire) {
-						this->setHidden(false);
-						connectorItem->setHidden(false);
-					}
-				}					
-			}
-		}
-				
-		connectToElement = connectToElement.nextSiblingElement("connect");
-	}
-
-	updateTooltip();
-}
-
 bool ConnectorItem::connectedTo(ConnectorItem * connectorItem) {
 	return this->m_connectedTo.contains(connectorItem);
 }

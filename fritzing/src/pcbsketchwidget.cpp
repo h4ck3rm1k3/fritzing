@@ -486,3 +486,4 @@ void PCBSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCoun
 	m_jumperCount = jumperCount;
 	SketchWidget::forwardRoutingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 }
+

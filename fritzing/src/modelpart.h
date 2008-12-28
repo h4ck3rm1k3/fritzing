@@ -81,14 +81,10 @@ public:
 	const QHash<QString, Connector *> & connectors();
 	long modelIndex();
 	void setModelIndex(long index);
-	void initConnections(QHash<long, ModelPart *> &);
 	void setInstanceDomElement(const QDomElement &);
 	const QDomElement & instanceDomElement();
 	Connector * getConnector(const QString & id);
 
-	static const QString & itemTypeName(ModelPart::ItemType);
-	static const QString & itemTypeName(int);
-	static void initNames();
 	const QString & title();
 	const QStringList & tags();
 	const QHash<QString,QString> & properties();
@@ -108,6 +104,13 @@ public:
 	QList<ModelPart*> getAllNonCoreParts();
 	QList<SvgAndPartFilePath> getAvailableViewFiles();
 	bool hasViewID(long id);
+
+public:
+	static const QString & itemTypeName(ModelPart::ItemType);
+	static const QString & itemTypeName(int);
+	static void initNames();
+	static long nextIndex();
+
 
 protected:
 	void writeTag(QXmlStreamWriter & streamWriter, QString tagName, QString tagValue);
@@ -132,7 +135,7 @@ protected:
 	bool m_alien;
 
 	static QHash<ItemType, QString> itemTypeNames;
-	static long nextIndex;
+	static long m_nextIndex;
 
 
 };

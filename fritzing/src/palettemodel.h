@@ -49,7 +49,7 @@ public:
 	void clear();
 	bool loadedFromFile();
 	QString loadedFrom();
-	bool load(const QString & fileName, ModelBase* refModel, bool doConnections);
+	bool load(const QString & fileName, ModelBase* refModel);
 	ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists=false);
 	void removePart(const QString &moduleID);
 

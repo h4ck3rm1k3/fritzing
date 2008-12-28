@@ -61,9 +61,10 @@ AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseComma
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, QUndoCommand *parent, bool updateInfoView)
+AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
     : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, parent)
 {
+	m_modelIndex = modelIndex;
 	m_doFirstRedo = m_firstRedo = true;
 	m_updateInfoView = updateInfoView;
 }
@@ -76,7 +77,7 @@ void AddItemCommand::undo()
 void AddItemCommand::redo()
 {
 	if (!m_firstRedo || m_doFirstRedo) {
-		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID);
+		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex);
 		m_sketchWidget->selectItem(m_itemID,true,m_updateInfoView);
 	}
 	m_firstRedo = false;
@@ -95,7 +96,7 @@ DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::Cro
 
 void DeleteItemCommand::undo()
 {
-    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID);
+    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, -1);
 }
 
 void DeleteItemCommand::redo()
@@ -536,7 +537,7 @@ void RatsnestCommand::redo() {
 
 void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest) 
 {
-	m_commands.append(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), NULL));
+	m_commands.append(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), true, -1, NULL));
 	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorStuffID(),

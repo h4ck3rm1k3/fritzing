@@ -264,8 +264,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
     return modelPart;
 }
 
-bool PaletteModel::load(const QString & fileName, ModelBase * refModel, bool doConnections) {
-	bool result = ModelBase::load(fileName, refModel, doConnections);
+bool PaletteModel::load(const QString & fileName, ModelBase * refModel) {
+	QList<ModelPart *> modelParts;
+	bool result = ModelBase::load(fileName, refModel, modelParts);
 	if (result) {
 		m_loadedFromFile = true;
 		m_loadedFrom = fileName;

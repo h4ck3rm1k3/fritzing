@@ -401,7 +401,7 @@ void SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorI
 			QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 			viewGeometry.setLine(line);
 
-			new AddItemCommand(this, BaseCommand::CrossView, wire->modelPart()->moduleID(), viewGeometry, newID, parentCommand);
+			new AddItemCommand(this, BaseCommand::CrossView, wire->modelPart()->moduleID(), viewGeometry, newID, true, -1, parentCommand);
 			new ChangeConnectionCommand(this, BaseCommand::CrossView,
 										newID, wire->connector0()->connectorStuffID(),
 										otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorStuffID(),

@@ -304,7 +304,7 @@ void PartsBinPaletteWidget::openCore() {
 void PartsBinPaletteWidget::load(const QString &filename) {
 	PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
 	PaletteModel * paletteBinModel = new PaletteModel(true, false);
-	if (!paletteBinModel->load(filename, paletteReferenceModel, false)) {
+	if (!paletteBinModel->load(filename, paletteReferenceModel)) {
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 		return;
 	}

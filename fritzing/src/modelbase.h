@@ -40,11 +40,15 @@ public:
 	ModelPart * root();
 	virtual ModelPart* retrieveModelPart(const QString & moduleID);
 	virtual ModelPart * addModelPart(ModelPart * parent, ModelPart * copyChild);
-	virtual bool load(const QString & fileName, ModelBase* refModel, bool doConnections);
+	virtual bool load(const QString & fileName, ModelBase* refModel, QList<ModelPart *> & modelParts);
 	void save(const QString & fileName, bool asPart=false);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
+	bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
 
+protected:
+	void renewModelIndexes(QDomElement & root, QHash<long, long> & oldToNew);
+	bool loadInstances(QDomElement & root, QList<ModelPart *> & modelParts);
 
 protected:
 	ModelPart * m_root;

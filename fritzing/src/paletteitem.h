@@ -54,7 +54,6 @@ public:
 
 	bool renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 
-	void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
 	void setTransforms();
 	void syncKinMoved(QPointF offset, QPointF loc);
 

@@ -49,7 +49,7 @@ ModelPart * ModelBase::retrieveModelPart(const QString & /* moduleID */)  {
 }
 
 // loads a model from an fz file--assumes a reference model exists with all parts
-bool ModelBase::load(const QString & fileName, ModelBase * refModel, bool doConnections) {
+bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<ModelPart *> & modelParts) {
 	m_referenceModel = refModel;
 
     QFile file(fileName);
@@ -105,13 +105,19 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, bool doConn
     	delete child;
    	}
 
+	return loadInstances(instances, modelParts);
+
+}
+
+bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & modelParts) 
+{
    	QHash<long, ModelPart *> partHash;
    	QDomElement instance = instances.firstChildElement("instance");
    	ModelPart* modelPart = NULL;
    	while (!instance.isNull()) {
    		// for now assume all parts are in the palette
    		QString moduleIDRef = instance.attribute("moduleIdRef");
-   		modelPart = refModel->retrieveModelPart(moduleIDRef);
+   		modelPart = m_referenceModel->retrieveModelPart(moduleIDRef);
    		if (modelPart == NULL) {
    			instance = instance.nextSiblingElement("instance");
    			continue;
@@ -119,6 +125,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, bool doConn
 
    		modelPart = addModelPart(m_root, modelPart);
    		modelPart->setInstanceDomElement(instance);
+		modelParts.append(modelPart);
 
    		// TODO Mariano: i think this is not the way
    		QString instanceTitle = instance.firstChildElement("title").text();
@@ -139,17 +146,10 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, bool doConn
    		instance = instance.nextSiblingElement("instance");
   	}
 
-  	if (doConnections) {
-		for (int i = 0; i < m_root->children().count(); i++) {
-			ModelPart * modelPart = dynamic_cast<ModelPart *>(m_root->children()[i]);
-			if (modelPart == NULL) continue;
-
-			modelPart->initConnections(partHash);
-		}
-	}
-
 	return true;
 }
+
+
 
 ModelPart * ModelBase::addModelPart(ModelPart * parent, ModelPart * copyChild) {
 	ModelPart * modelPart = new ModelPart();
@@ -201,4 +201,78 @@ void ModelBase::save(const QString & fileName, bool asPart) {
 	QFile original(fileName);
 	original.remove();
 	file1.rename(fileName);
+}
+
+bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts) 
+{
+	m_referenceModel = refModel;
+
+	QDomDocument domDocument;
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	bool result = domDocument.setContent(data, &errorStr, &errorLine, &errorColumn);
+	if (!result) return false;
+
+	QDomElement module = domDocument.documentElement();
+	if (module.isNull()) {
+		return false;
+	}
+
+	QDomElement instances = module.firstChildElement("instances");
+   	if (instances.isNull()) {
+   		return false;
+	}
+
+	// need to map modelIndexes from copied parts to new modelIndexes
+	QHash<long, long> oldToNew;
+	QDomElement instance = instances.firstChildElement("instance");
+	while (!instance.isNull()) {
+		long oldModelIndex = instance.attribute("modelIndex").toLong();
+		oldToNew.insert(oldModelIndex, ModelPart::nextIndex());
+		instance = instance.nextSiblingElement("instance");
+	}
+	renewModelIndexes(instances, oldToNew);
+
+	//QFile file("test.xml");
+	//file.open(QFile::WriteOnly);
+	//file.write(domDocument.toByteArray());
+	//file.close();
+
+	return loadInstances(instances, modelParts);
+}
+
+void ModelBase::renewModelIndexes(QDomElement & instances, QHash<long, long> & oldToNew) 
+{
+	QDomElement instance = instances.firstChildElement("instance");
+	while (!instance.isNull()) {
+		long oldModelIndex = instance.attribute("modelIndex").toLong();
+		instance.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
+		QDomElement views = instance.firstChildElement("views");
+		if (!views.isNull()) {
+			QDomElement view = views.firstChildElement();
+			while (!view.isNull()) {
+				QDomElement connectors = view.firstChildElement("connectors");
+				if (!connectors.isNull()) {
+					QDomElement connector = connectors.firstChildElement("connector");
+					while (!connector.isNull()) {
+						QDomElement connects = connector.firstChildElement("connects");
+						if (!connects.isNull()) {
+							QDomElement connect = connects.firstChildElement("connect");
+							while (!connect.isNull()) {
+								oldModelIndex = connect.attribute("modelIndex").toLong();
+								connect.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
+								connect = connect.nextSiblingElement("connect");
+							}
+						}
+						connector = connector.nextSiblingElement("connector");
+					}
+				}
+
+				view = view.nextSiblingElement();
+			}
+		}
+
+		instance = instance.nextSiblingElement("instance");
+	}
 }

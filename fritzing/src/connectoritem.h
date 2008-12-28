@@ -56,7 +56,6 @@ public:
 	QPointF terminalPoint();
 	QPointF adjustedTerminalPoint();
 	QPointF sceneAdjustedTerminalPoint();
-	void restoreConnections(QDomElement & element, QHash<long, ItemBase *> newItems);
 	bool connectedTo(ConnectorItem *);
 	const QList<ConnectorItem *> & connectedToItems();
 	void setHidden(bool hidden);

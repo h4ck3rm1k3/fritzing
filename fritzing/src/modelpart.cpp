@@ -34,7 +34,7 @@ $Date$
 #include <QDomElement>
 
 QHash<ModelPart::ItemType, QString> ModelPart::itemTypeNames;
-long ModelPart::nextIndex = 0;
+long ModelPart::m_nextIndex = 0;
 
 
 ModelPart::ModelPart(ItemType type)
@@ -43,7 +43,7 @@ ModelPart::ModelPart(ItemType type)
 	m_type = type;
 	m_modelPartStuff = NULL;
 	m_partInstanceStuff = NULL;
-	m_index = nextIndex++;
+	m_index = m_nextIndex++;
 	m_core = false;
 	m_alien = false;
 }
@@ -323,51 +323,13 @@ long ModelPart::modelIndex() {
 
 void ModelPart::setModelIndex(long index) {
 	m_index = index;
-	if (index >= nextIndex) {
-		nextIndex = index + 1;
+	if (index >= m_nextIndex) {
+		m_nextIndex = index + 1;
 	}
 }
 
-void ModelPart::initConnections(QHash<long, ModelPart *> & partHash) {
-	if (m_instanceDomElement.isNull()) return;
-
-	QDomElement connectors = m_instanceDomElement.firstChildElement("connectors");
-	if (connectors.isNull()) return;
-
-	QDomElement connectorElement = connectors.firstChildElement("connector");
-	while (!connectorElement.isNull()) {
-		Connector * connector = m_connectorHash.value(connectorElement.attribute("connectorId"));
-		if (connector != NULL){
-			QDomElement connectElement = connectorElement.firstChildElement("connect");
-			while (!connectElement.isNull()) {
-				QString connectorID = connectElement.attribute("connectorId");
-				bool ok;
-				int modelIndex = connectElement.attribute("modelIndex").toLong(&ok);
-				if (ok){
-					ModelPart * modelPart = partHash.value(modelIndex);
-					if (modelPart != NULL) {
-						Connector * otherConnector = modelPart->connectors().value(connectorID);
-						if (otherConnector != NULL) {
-							connector->connectTo(otherConnector);
-						}
-						else {
-							QString busID = connectElement.attribute("busId");
-							Bus * theBus = modelPart->bus(busID);
-							if (theBus != NULL) {
-								Connector * busConnector = theBus->busConnector();
-								if (busConnector != NULL) {
-									connector->connectTo(busConnector);
-								}
-							}
-						}
-					}
-				}
-				connectElement = connectElement.nextSiblingElement("connect");
-			}
-		}
-		connectorElement = connectorElement.nextSiblingElement("connector");
-	}
-
+long ModelPart::nextIndex() {
+	return m_nextIndex++;
 }
 
 void ModelPart::setInstanceDomElement(const QDomElement & domElement) {

@@ -99,7 +99,6 @@ public:
 	void setViewLayerID(ViewLayer::ViewLayerID, const LayerHash & viewLayers);
 	void setViewLayerID(const QString & layerName, const LayerHash & viewLayers);
 	bool topLevel();
-	virtual void restoreConnections(QDomElement & instance, QHash<long, ItemBase *> & newItems);
 	void collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene);
 	void busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);

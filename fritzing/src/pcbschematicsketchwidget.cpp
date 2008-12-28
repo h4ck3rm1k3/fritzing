@@ -292,7 +292,7 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, NULL);		
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 	ratsnestCommand->addWire(this, wire, source, dest);
@@ -321,4 +321,8 @@ bool PCBSchematicSketchWidget::dealWithRatsnestAux(ConnectorItem * & fromConnect
 	return alreadyRatsnest(fromConnectorItem, toConnectorItem);
 }
 
+bool PCBSchematicSketchWidget::doRatsnestOnCopy() 
+{
+	return true;
+}
 
