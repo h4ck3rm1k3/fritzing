@@ -490,9 +490,9 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	m_sketchModel->load(fileName, m_paletteModel, modelParts);
 	//m_sketchModel->load(fileName, m_refModel, true);
 
-	m_breadboardGraphicsView->loadFromModel(modelParts, false);
-	m_pcbGraphicsView->loadFromModel(modelParts, false);
-	m_schematicGraphicsView->loadFromModel(modelParts, false);
+	m_breadboardGraphicsView->loadFromModel(modelParts, NULL);
+	m_pcbGraphicsView->loadFromModel(modelParts, NULL);
+	m_schematicGraphicsView->loadFromModel(modelParts, NULL);
 
 	if(setAsLastOpened) {
 		QSettings settings("Fritzing","Fritzing");
@@ -530,8 +530,6 @@ void MainWindow::paste() {
 
    	if (!mimeData->hasFormat("application/x-dnditemsdata")) return;
 
-
-
     QByteArray itemData = mimeData->data("application/x-dnditemsdata");
 	QList<ModelPart *> modelParts;
 	if (m_sketchModel->paste(m_paletteModel, itemData, modelParts)) {
@@ -543,8 +541,6 @@ void MainWindow::paste() {
 
 		m_undoStack->push(parentCommand);
 	}
-
-	//m_currentGraphicsView->paste();
 }
 
 void MainWindow::duplicate() {

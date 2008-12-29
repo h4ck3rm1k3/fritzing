@@ -46,7 +46,8 @@ public:
 
 public:
 	BaseCommand(BaseCommand::CrossViewType, class SketchWidget*, QUndoCommand* parent);
-	BaseCommand::CrossViewType crossViewType();
+	BaseCommand::CrossViewType crossViewType() const;
+	void setCrossViewType(BaseCommand::CrossViewType);
 	class SketchWidget* sketchWidget();
 
 protected:

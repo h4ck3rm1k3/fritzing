@@ -75,7 +75,7 @@ public:
     void moveItem(long id, ViewGeometry &);
     void rotateItem(long id, qreal degrees);
     void flipItem(long id, Qt::Orientations orientation);
-    void selectItem(long id, bool state, bool updateInfoView=true);
+    void selectItem(long id, bool state, bool updateInfoView, bool doEmit);
     void selectDeselectAllCommand(bool state);
     void changeWire(long fromID, QLineF line, QPointF pos, bool useLine);   //  const QString & fromConnectorID, long toID, const QString & toConnectorID, bool dragend
     void cut();
@@ -218,7 +218,6 @@ protected:
 						  bool connect, bool seekLayerKin);
 
 
-	void pasteDuplicateAux(QString undoStackMessage);
 	void cutDeleteAux(QString undoStackMessage);
 	void extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
 									   long toID, const QString & toConnectorID,

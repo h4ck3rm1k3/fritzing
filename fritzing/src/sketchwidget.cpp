@@ -192,6 +192,12 @@ ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& 
 void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand * parentCommand) {
 	clearHoldingSelectItem();
 
+	if (parentCommand) {
+		SelectItemCommand * selectItemCommand = stackSelectionState(false, parentCommand);
+		selectItemCommand->setSelectItemType(SelectItemCommand::DeselectAll);
+		selectItemCommand->setCrossViewType(BaseCommand::SingleView);
+	}
+
 	QHash<long, ItemBase *> newItems;
 	QHash<ItemBase *, QDomElement *> itemDoms;
 	m_ignoreSelectionChangeEvents = true;
@@ -323,10 +329,9 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 		cleanUpWires(false, NULL);
 	}
 	else {
-		// TODO: select the pasted items
 		m_pasteCount++;								// used for offsetting paste items, not a count of how many items are pasted
-
-
+		//emit ratsnestChangeSignal(this, parentCommand);
+		new CleanUpWiresCommand(this, parentCommand);
 	}
 
 	m_ignoreSelectionChangeEvents = false;
@@ -845,7 +850,7 @@ void SketchWidget::changeWire(long fromID, QLineF line, QPointF pos, bool useLin
 	wire->setLineAnd(line, pos, useLine);
 }
 
-void SketchWidget::selectItem(long id, bool state, bool updateInfoView) {
+void SketchWidget::selectItem(long id, bool state, bool updateInfoView, bool doEmit) {
 	this->clearHoldingSelectItem();
 	ItemBase * item = findItem(id);
 	if (item != NULL) {
@@ -859,7 +864,9 @@ void SketchWidget::selectItem(long id, bool state, bool updateInfoView) {
 				InfoGraphicsView::viewItemInfo(wire);
 			}
 		}
-		emit itemSelectedSignal(id, state);
+		if (doEmit) {
+			emit itemSelectedSignal(id, state);
+		}
 	}
 
 	PaletteItem *pitem = dynamic_cast<PaletteItem*>(item);
@@ -988,115 +995,6 @@ void SketchWidget::removeOutsideConnections(QByteArray & itemData, QList<long> &
 
 	// does this cause a leak?
 	itemData = domDocument.toByteArray();
-}
-
-
-void SketchWidget::pasteDuplicateAux(QString undoStackMessage) {
-	clearHoldingSelectItem();
-
-	QClipboard *clipboard = QApplication::clipboard();
-	if (clipboard == NULL) {
-		// shouldn't happen
-		return;
-	}
-
-	const QMimeData* mimeData = clipboard->mimeData(QClipboard::Clipboard);
-	if (mimeData == NULL) return;
-
-   	if (!mimeData->hasFormat("application/x-dnditemsdata")) return;
-
-    QByteArray itemData = mimeData->data("application/x-dnditemsdata");
-    QDataStream dataStream(&itemData, QIODevice::ReadOnly);
-    int size;
-    dataStream >> size;
-	qint64 dataStreamPos = dataStream.device()->pos();					// remember where we are so we can reset back
-
-	QString messageStr;
-	if (size == 1) {
-		QString moduleID;
-		dataStream >> moduleID;
-		bool reset = dataStream.device()->seek(dataStreamPos);			// reset the datastream so the next loop can start reading from there
-		if (!reset) {
-			// this shouldn't happen
-			DebugDialog::debug("reset datastream didn't happen, bailing out");
-			return;
-		}
-
-		ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
-		messageStr = tr("%1 %2").arg(undoStackMessage).arg(modelPart->title());
-	}
-	else {
-		messageStr = tr("%1 %2 items").arg(undoStackMessage).arg(QString::number(size));
-	}
-
-	QUndoCommand * parentCommand = new QUndoCommand(messageStr);
-
-    stackSelectionState(false, parentCommand);
-
-	QHash<long, long> mapIDs;
-    for (int i = 0; i < size; i++) {
-		QString moduleID;
-		qint64 itemID;
-		ModelPart* modelPart = NULL;
-		qint32 geometryCount;
-
-		dataStream >> moduleID >> itemID >> geometryCount;
-		long newItemID = ItemBase::getNextID();
-		mapIDs.insert(itemID, newItemID);
-		modelPart = m_paletteModel->retrieveModelPart(moduleID);
-		for (int j = 0; j < geometryCount; j++) {
-			QTransform transform;
-			QPointF loc;
-			QLineF line;
-    		ViewGeometry viewGeometry;
-			qint32 viewIdentifier;
-
-			dataStream >> viewIdentifier >> loc >> line >> transform;
-    		viewGeometry.setLoc(loc);
-    		viewGeometry.setLine(line);
-			viewGeometry.setTransform(transform);
-    		viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
-
-			SketchWidget * sketchWidget = NULL;
-			emit findSketchWidgetSignal((ItemBase::ViewIdentifier) viewIdentifier, sketchWidget);
-			if (sketchWidget != NULL) {
-				new AddItemCommand(sketchWidget, BaseCommand::SingleView, modelPart->moduleID(), viewGeometry, newItemID, false, -1, parentCommand);
-			}
-		}
-   	}
-    m_pasteCount++;				// used for offsetting paste items, not a count of how many items are pasted
-
-
-	// now deal with interconnections between the copied parts
-	for (int i = 0; i < size; i++) {
-		int connectionCount;
-		dataStream >> connectionCount;
-		DebugDialog::debug(QString("pasting connections %1").arg(connectionCount) );
-		for (int j = 0; j < connectionCount; j++) {
-			qint64 fromID;
-			QString fromConnectorID;
-			QString toConnectorID;
-			qint64 toID;
-			dataStream >> fromID >> fromConnectorID  >> toID >> toConnectorID;
-			DebugDialog::debug(QString("pasting %1 %2 %3 %4").arg(fromID).arg(fromConnectorID).arg(toID).arg(toConnectorID) );
-			fromID = mapIDs.value(fromID);
-			toID = mapIDs.value(toID);
-			extendChangeConnectionCommand(fromID, fromConnectorID,
-										  toID, toConnectorID,
-										  true, true, parentCommand);
-		}
-	}
-
-
-	foreach (long oid, mapIDs.keys()) {
-		DebugDialog::debug(QString("map from: %1 to: %2").arg(oid).arg(mapIDs.value(oid)) );
-	}
-
-	clearTemporaries();
-
-	emit ratsnestChangeSignal(this, parentCommand);
-	new CleanUpWiresCommand(this, parentCommand);
-   	m_undoStack->push(parentCommand);
 }
 
 

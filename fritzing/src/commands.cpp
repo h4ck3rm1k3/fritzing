@@ -41,8 +41,12 @@ BaseCommand::BaseCommand(BaseCommand::CrossViewType crossViewType, SketchWidget*
 	m_sketchWidget = sketchWidget;
 }
 
-BaseCommand::CrossViewType BaseCommand::crossViewType() {
+BaseCommand::CrossViewType BaseCommand::crossViewType() const {
 	return m_crossViewType;
+}
+
+void BaseCommand::setCrossViewType(BaseCommand::CrossViewType crossViewType) {
+	m_crossViewType = crossViewType;
 }
 
 SketchWidget* BaseCommand::sketchWidget() {
@@ -78,7 +82,7 @@ void AddItemCommand::redo()
 {
 	if (!m_firstRedo || m_doFirstRedo) {
 		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex);
-		m_sketchWidget->selectItem(m_itemID,true,m_updateInfoView);
+		m_sketchWidget->selectItem(m_itemID,true,m_updateInfoView, m_crossViewType == BaseCommand::CrossView);
 	}
 	m_firstRedo = false;
 }
@@ -253,35 +257,12 @@ bool SelectItemCommand::mergeWith(const QUndoCommand *other)
         return false;
    	}
 
-
     const SelectItemCommand * sother = dynamic_cast<const SelectItemCommand *>(other);
     if (sother == NULL) return false;
 
-	//DebugDialog::debug(QString("merge %1 other:%2").arg(id()).arg(other->id()));
-
-	//QString s;
-   	//for (int i = 0; i < this->m_undoIDs.size(); i++) {
-   		//s += QString::number(this->m_undoIDs[i]) + " ";
-  	//}
-	//DebugDialog::debug(QString("this undo %1").arg(s));
-	//s = "";
-   	//for (int i = 0; i < this->m_redoIDs.size(); i++) {
-   		//s += QString::number(this->m_redoIDs[i]) + " ";
-  	//}
-	//DebugDialog::debug(QString("this redo %1").arg(s));
-
-	//s = "";
-   	//for (int i = 0; i < sother->m_undoIDs.size(); i++) {
-   		//s += QString::number(sother->m_undoIDs[i]) + " ";
-  	//}
-	//DebugDialog::debug(QString("other undo %1").arg(s));
-	//s = "";
-   	//for (int i = 0; i < sother->m_redoIDs.size(); i++) {
-   		//s += QString::number(sother->m_redoIDs[i]) + " ";
-  	//}
-	//DebugDialog::debug(QString("other redo %1").arg(s));
-
-
+	if (sother->crossViewType() != this->crossViewType()) {
+		return false;
+	}
 
    	this->m_redoIDs.clear();
    	for (int i = 0; i < sother->m_redoIDs.size(); i++) {
@@ -304,10 +285,10 @@ void SelectItemCommand::redo()
 			selectAllFromStack(m_redoIDs);
 			break;
 		case SelectAll: 
-			m_sketchWidget->selectAllItems(true, true); 
+			m_sketchWidget->selectAllItems(true, m_crossViewType == BaseCommand::CrossView); 
 			break;
 		case DeselectAll: 
-			m_sketchWidget->selectAllItems(false, true); 
+			m_sketchWidget->selectAllItems(false, m_crossViewType == BaseCommand::CrossView); 
 			break;
 	}
 }
@@ -315,7 +296,7 @@ void SelectItemCommand::redo()
 void SelectItemCommand::selectAllFromStack(QList<long> & stack) {
 	m_sketchWidget->clearSelection();
 	for (int i = 0; i < stack.size(); i++) {
-		m_sketchWidget->selectItem(stack[i], true);
+		m_sketchWidget->selectItem(stack[i], true, true, m_crossViewType == BaseCommand::CrossView);
 	}
 }
 
