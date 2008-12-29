@@ -255,6 +255,8 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 		}
 	}
 
+	QStringList alreadyConnected;
+
 	// now restore connections
 	foreach (ModelPart * mp, modelParts) {
 		QDomElement instance = mp->instanceDomElement();
@@ -279,34 +281,39 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 				while (!connect.isNull()) {
 					long modelIndex = connect.attribute("modelIndex").toLong();
 					QString toConnectorID = connect.attribute("connectorId");
-					if (parentCommand == NULL) {
-						ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
-						ItemBase * toBase = newItems.value(modelIndex, NULL);					
-						if (fromBase != NULL && toBase != NULL) {
-							// TODO: make sure layerkin are searched for connectors
-							ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
-							ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID);
-							if (fromConnectorItem != NULL && toConnectorItem != NULL) {
-								fromConnectorItem->connectTo(toConnectorItem);
-								toConnectorItem->connectTo(fromConnectorItem);
-								fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
-								if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-									fromConnectorItem->setHidden(false);
-									toConnectorItem->setHidden(false);
-								}				
+					QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+										.arg(mp->modelIndex()).arg(fromConnectorID).arg(modelIndex).arg(toConnectorID);
+					if (!alreadyConnected.contains(already)) {
+						alreadyConnected.append(already);
+						if (parentCommand == NULL) {
+							ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
+							ItemBase * toBase = newItems.value(modelIndex, NULL);					
+							if (fromBase != NULL && toBase != NULL) {
+								// TODO: make sure layerkin are searched for connectors
+								ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
+								ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID);
+								if (fromConnectorItem != NULL && toConnectorItem != NULL) {
+									fromConnectorItem->connectTo(toConnectorItem);
+									toConnectorItem->connectTo(fromConnectorItem);
+									fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
+									if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+										fromConnectorItem->setHidden(false);
+										toConnectorItem->setHidden(false);
+									}				
+								}
 							}
 						}
-					}
-					else {
-						new ChangeConnectionCommand(this, BaseCommand::SingleView,
-													ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
-													ItemBase::getNextID(modelIndex), toConnectorID,
-													true, true, parentCommand);
-						if (doRatsnestOnCopy()) {
-							new RatsnestCommand(this, BaseCommand::SingleView,
+						else {
+							new ChangeConnectionCommand(this, BaseCommand::SingleView,
 														ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
 														ItemBase::getNextID(modelIndex), toConnectorID,
 														true, true, parentCommand);
+							if (doRatsnestOnCopy()) {
+								new RatsnestCommand(this, BaseCommand::SingleView,
+															ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
+															ItemBase::getNextID(modelIndex), toConnectorID,
+															true, true, parentCommand);
+							}
 						}
 					}
 					connect = connect.nextSiblingElement("connect");
