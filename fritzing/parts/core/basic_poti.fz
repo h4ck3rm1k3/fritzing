@@ -15,19 +15,19 @@
  <properties>
    <property name="family" >Potentiometer</property>
    <property name="type">Trimmer Potentiometer</property>
+   <property name="Maximum Resistance" >10k&#8486;</property>
+   <property name="Track" >Linear</property>
  </properties>
  <taxonomy>discreteParts.resistors.adjustable.potentiometer</taxonomy>
  <description>A standard adjustable resistor (potentiometer).</description>
  <views>
-  <image composited="false" file="basic_poti.svg" />
-  <defaultUnits>cmil</defaultUnits>
   <iconView>
    <layers image="icon/basic_poti_icon.svg" >
     <layer layerId="icon" />
    </layers>
   </iconView>
-  <breadboardView flipvertical="true" >
-   <layers image="breadboard/basic_poti_sm.svg" >
+  <breadboardView>
+   <layers image="breadboard/potentiometer_trimmer.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
@@ -48,7 +48,7 @@
    <description>leg1</description>
    <views>
     <breadboardView>
-     <p svgId="connector0pin" layer="breadboard" />
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
@@ -62,7 +62,7 @@
    <description>wiper</description>
    <views>
     <breadboardView>
-     <p svgId="connector1pin" layer="breadboard" />
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
@@ -76,7 +76,7 @@
    <description>leg2</description>
    <views>
     <breadboardView>
-     <p svgId="connector2pin" layer="breadboard" />
+     <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
     </breadboardView>
     <schematicView>
      <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />

@@ -18,8 +18,6 @@
  <taxonomy>discreteParts.controller</taxonomy>
  <description>The awesome Arduino Diecimila microcontroller</description>
  <views>
-  <image composited="false" file="LED-red-5mm.svg" />
-  <defaultUnits>cmil</defaultUnits>
   <iconView>
    <layers image="icon/arduino_diecimila.svg" >
     <layer layerId="icon" />

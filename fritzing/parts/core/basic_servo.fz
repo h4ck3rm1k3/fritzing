@@ -15,7 +15,6 @@
  <taxonomy>discreteParts.servo</taxonomy>
  <description>A generic servo.</description>
  <views>
-  <defaultUnits>cmil</defaultUnits>
   <iconView>
    <layers image="icon/basic_servo.svg" >
     <layer layerId="icon" />
