@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
 <svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="89.8px" height="54.3px" viewBox="0 0 89.8 54.3" xml:space="preserve">
-	
-<rect id="connector0pin" x="1.15" y="25.65" fill="none" width="10" height="2"/>
-<rect id="connector1pin" x="78.65" y="25.65" fill="none" width="10" height="2"/>
-<rect id="connector0terminal" x="1.15" y="25.65" fill="none" width="2" height="2"/>
-<rect id="connector1terminal" x="86.65" y="25.65" fill="none" width="2" height="2"/>
+	 x="0px" y="0px" width="54.3px" height="89.8px" viewBox="0 0 54.3 89.8" xml:space="preserve">
+
+<rect id="connector0pin" x="26.65" y="78.65" fill="none" width="2" height="10"/>
+<rect id="connector1pin" x="26.65" y="1.15" fill="none" width="2" height="10"/>
+<rect id="connector0terminal" x="26.65" y="86.65" fill="none" width="2" height="2"/>
+<rect id="connector1terminal" x="26.65" y="1.15" fill="none" width="2" height="2"/>
+
 <g id="schematic">
 	<g id="text">
 		<g>
-			<path d="M62.981,19.139v-1.115h6.597v1.115H62.981z"/>
+			<path d="M19.31,62.981h1.114v6.597H19.31V62.981z"/>
 		</g>
 		<g>
-			<path d="M25.547,19.115v2.339h-1.211v-2.339h-2.195v-1.067h2.195v-2.327h1.211v2.327h2.207v1.067H25.547z"/>
+			<path d="M19.333,25.547h-2.34v-1.211h2.34v-2.195H20.4v2.195h2.326v1.211H20.4v2.207h-1.066L19.333,25.547L19.333,25.547z"/>
 		</g>
 	</g>
 	<g id="diagram">
 		
-			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="1.15" y1="26.65" x2="32.15" y2="26.65"/>
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="27.65" y1="1.15" x2="27.65" y2="32.15"/>
 		
-			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="57.65" y1="26.65" x2="88.65" y2="26.65"/>
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="27.65" y1="57.65" x2="27.65" y2="88.65"/>
 		
-			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="32.15" y1="1.15" x2="32.15" y2="53.15"/>
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="53.15" y1="32.15" x2="1.15" y2="32.15"/>
 		
-			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="40.65" y1="12.483" x2="40.65" y2="41.817"/>
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="41.817" y1="40.65" x2="12.483" y2="40.65"/>
 		
-			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="49.15" y1="1.15" x2="49.15" y2="53.15"/>
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="53.15" y1="49.15" x2="1.15" y2="49.15"/>
 		
-			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="57.65" y1="12.483" x2="57.65" y2="41.817"/>
+			<line fill="none" stroke="#000000" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" x1="41.817" y1="57.65" x2="12.483" y2="57.65"/>
 	</g>
 </g>
 </svg>
