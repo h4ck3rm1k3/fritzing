@@ -29,7 +29,8 @@ $Date: 2008-11-21 11:04:36 +0100 (Fri, 21 Nov 2008) $
 
 generator.py
 
-This script generates a partdescription.xml file for Breadboards.
+This script generates a svg or fz file for breadboards to be used in Fritzing.
+Edit it directly, then run it in the commmand line.
 
 Run it in the commandline with this:
  python generator.py run [svg|fz] > partdescription.xml

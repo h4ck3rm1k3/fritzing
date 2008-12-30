@@ -1,0 +1,3123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This xml file is generated through a template. Please don't edit it directly -->
+<module uri="http://fritzing.org/modules/breadboard" moduleId="TinyBreadboardModuleID">
+  <version>1.1</version>
+  <author>Dirk van Oosterbosch</author>
+  <title>Tiny Breadboard</title>
+  <date>2008-12-30</date>
+  <label>Breadboard</label>
+  <tags>
+    <tag>breadboard</tag>
+  </tags>
+  <properties>
+    <property name="family">Breadboard</property>
+  </properties>
+  <taxonomy>prototyping.breadboard.breadboard.tiny</taxonomy>
+  <description>A breadboard for easily prototyping circuits</description>
+  <views>
+    <iconView>
+      <layers image="icon/tinyBreadboardIcon.svg">
+        <layer layerId="icon"/>
+      </layers>
+    </iconView>
+    <breadboardView>
+      <layers image="breadboard/tinyBreadboard.svg">
+        <layer layerId="breadboardbreadboard"/>
+      </layers>
+    </breadboardView>
+    <schematicView>
+      <layers image="breadboard/tinyBreadboard.svg">
+        <layer layerId="breadboardbreadboard"/>
+      </layers>
+    </schematicView>
+    <pcbView>
+      <layers image="breadboard/tinyBreadboard.svg">
+        <layer layerId="breadboardbreadboard"/>
+      </layers>
+    </pcbView>
+  </views>
+  <connectors ignoreTerminalPoints="true" >
+    <connector name="A1" type="female" id="A1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B1" type="female" id="B1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C1" type="female" id="C1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D1" type="female" id="D1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E1" type="female" id="E1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A2" type="female" id="A2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B2" type="female" id="B2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C2" type="female" id="C2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D2" type="female" id="D2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E2" type="female" id="E2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A3" type="female" id="A3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B3" type="female" id="B3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C3" type="female" id="C3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D3" type="female" id="D3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E3" type="female" id="E3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A4" type="female" id="A4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B4" type="female" id="B4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C4" type="female" id="C4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D4" type="female" id="D4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E4" type="female" id="E4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A5" type="female" id="A5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B5" type="female" id="B5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C5" type="female" id="C5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D5" type="female" id="D5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E5" type="female" id="E5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A6" type="female" id="A6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B6" type="female" id="B6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C6" type="female" id="C6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D6" type="female" id="D6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E6" type="female" id="E6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A7" type="female" id="A7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B7" type="female" id="B7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C7" type="female" id="C7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D7" type="female" id="D7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E7" type="female" id="E7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A8" type="female" id="A8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B8" type="female" id="B8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C8" type="female" id="C8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D8" type="female" id="D8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E8" type="female" id="E8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A9" type="female" id="A9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B9" type="female" id="B9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C9" type="female" id="C9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D9" type="female" id="D9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E9" type="female" id="E9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A10" type="female" id="A10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B10" type="female" id="B10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C10" type="female" id="C10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D10" type="female" id="D10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E10" type="female" id="E10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A11" type="female" id="A11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B11" type="female" id="B11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C11" type="female" id="C11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D11" type="female" id="D11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E11" type="female" id="E11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A12" type="female" id="A12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B12" type="female" id="B12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C12" type="female" id="C12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D12" type="female" id="D12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E12" type="female" id="E12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A13" type="female" id="A13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B13" type="female" id="B13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C13" type="female" id="C13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D13" type="female" id="D13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E13" type="female" id="E13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A14" type="female" id="A14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B14" type="female" id="B14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C14" type="female" id="C14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D14" type="female" id="D14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E14" type="female" id="E14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A15" type="female" id="A15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B15" type="female" id="B15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C15" type="female" id="C15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D15" type="female" id="D15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E15" type="female" id="E15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A16" type="female" id="A16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B16" type="female" id="B16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C16" type="female" id="C16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D16" type="female" id="D16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E16" type="female" id="E16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A17" type="female" id="A17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B17" type="female" id="B17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C17" type="female" id="C17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D17" type="female" id="D17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E17" type="female" id="E17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A18" type="female" id="A18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B18" type="female" id="B18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C18" type="female" id="C18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D18" type="female" id="D18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E18" type="female" id="E18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A19" type="female" id="A19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B19" type="female" id="B19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C19" type="female" id="C19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D19" type="female" id="D19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E19" type="female" id="E19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A20" type="female" id="A20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B20" type="female" id="B20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C20" type="female" id="C20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D20" type="female" id="D20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E20" type="female" id="E20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F1" type="female" id="F1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G1" type="female" id="G1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H1" type="female" id="H1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I1" type="female" id="I1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J1" type="female" id="J1">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J1pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J1pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J1pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F2" type="female" id="F2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G2" type="female" id="G2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H2" type="female" id="H2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I2" type="female" id="I2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J2" type="female" id="J2">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J2pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J2pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J2pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F3" type="female" id="F3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G3" type="female" id="G3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H3" type="female" id="H3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I3" type="female" id="I3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J3" type="female" id="J3">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J3pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J3pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J3pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F4" type="female" id="F4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G4" type="female" id="G4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H4" type="female" id="H4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I4" type="female" id="I4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J4" type="female" id="J4">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J4pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J4pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J4pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F5" type="female" id="F5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G5" type="female" id="G5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H5" type="female" id="H5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I5" type="female" id="I5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J5" type="female" id="J5">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J5pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J5pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J5pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F6" type="female" id="F6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G6" type="female" id="G6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H6" type="female" id="H6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I6" type="female" id="I6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J6" type="female" id="J6">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J6pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J6pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J6pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F7" type="female" id="F7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G7" type="female" id="G7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H7" type="female" id="H7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I7" type="female" id="I7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J7" type="female" id="J7">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J7pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J7pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J7pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F8" type="female" id="F8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G8" type="female" id="G8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H8" type="female" id="H8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I8" type="female" id="I8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J8" type="female" id="J8">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J8pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J8pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J8pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F9" type="female" id="F9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G9" type="female" id="G9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H9" type="female" id="H9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I9" type="female" id="I9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J9" type="female" id="J9">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J9pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J9pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J9pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F10" type="female" id="F10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G10" type="female" id="G10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H10" type="female" id="H10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I10" type="female" id="I10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J10" type="female" id="J10">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J10pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J10pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J10pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F11" type="female" id="F11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G11" type="female" id="G11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H11" type="female" id="H11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I11" type="female" id="I11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J11" type="female" id="J11">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J11pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J11pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J11pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F12" type="female" id="F12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G12" type="female" id="G12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H12" type="female" id="H12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I12" type="female" id="I12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J12" type="female" id="J12">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J12pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J12pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J12pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F13" type="female" id="F13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G13" type="female" id="G13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H13" type="female" id="H13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I13" type="female" id="I13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J13" type="female" id="J13">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J13pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J13pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J13pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F14" type="female" id="F14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G14" type="female" id="G14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H14" type="female" id="H14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I14" type="female" id="I14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J14" type="female" id="J14">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J14pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J14pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J14pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F15" type="female" id="F15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G15" type="female" id="G15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H15" type="female" id="H15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I15" type="female" id="I15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J15" type="female" id="J15">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J15pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J15pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J15pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F16" type="female" id="F16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G16" type="female" id="G16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H16" type="female" id="H16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I16" type="female" id="I16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J16" type="female" id="J16">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J16pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J16pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J16pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F17" type="female" id="F17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G17" type="female" id="G17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H17" type="female" id="H17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I17" type="female" id="I17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J17" type="female" id="J17">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J17pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J17pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J17pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F18" type="female" id="F18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G18" type="female" id="G18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H18" type="female" id="H18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I18" type="female" id="I18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J18" type="female" id="J18">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J18pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J18pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J18pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F19" type="female" id="F19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G19" type="female" id="G19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H19" type="female" id="H19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I19" type="female" id="I19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J19" type="female" id="J19">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J19pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J19pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J19pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F20" type="female" id="F20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G20" type="female" id="G20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H20" type="female" id="H20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I20" type="female" id="I20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J20" type="female" id="J20">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J20pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J20pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J20pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+  </connectors>
+  <buses>
+    <bus id="bus0-1">
+      <nodeMember connectorId="A1"/>
+      <nodeMember connectorId="B1"/>
+      <nodeMember connectorId="C1"/>
+      <nodeMember connectorId="D1"/>
+      <nodeMember connectorId="E1"/>
+    </bus>
+    <bus id="bus1-1">
+      <nodeMember connectorId="A2"/>
+      <nodeMember connectorId="B2"/>
+      <nodeMember connectorId="C2"/>
+      <nodeMember connectorId="D2"/>
+      <nodeMember connectorId="E2"/>
+    </bus>
+    <bus id="bus2-1">
+      <nodeMember connectorId="A3"/>
+      <nodeMember connectorId="B3"/>
+      <nodeMember connectorId="C3"/>
+      <nodeMember connectorId="D3"/>
+      <nodeMember connectorId="E3"/>
+    </bus>
+    <bus id="bus3-1">
+      <nodeMember connectorId="A4"/>
+      <nodeMember connectorId="B4"/>
+      <nodeMember connectorId="C4"/>
+      <nodeMember connectorId="D4"/>
+      <nodeMember connectorId="E4"/>
+    </bus>
+    <bus id="bus4-1">
+      <nodeMember connectorId="A5"/>
+      <nodeMember connectorId="B5"/>
+      <nodeMember connectorId="C5"/>
+      <nodeMember connectorId="D5"/>
+      <nodeMember connectorId="E5"/>
+    </bus>
+    <bus id="bus5-1">
+      <nodeMember connectorId="A6"/>
+      <nodeMember connectorId="B6"/>
+      <nodeMember connectorId="C6"/>
+      <nodeMember connectorId="D6"/>
+      <nodeMember connectorId="E6"/>
+    </bus>
+    <bus id="bus6-1">
+      <nodeMember connectorId="A7"/>
+      <nodeMember connectorId="B7"/>
+      <nodeMember connectorId="C7"/>
+      <nodeMember connectorId="D7"/>
+      <nodeMember connectorId="E7"/>
+    </bus>
+    <bus id="bus7-1">
+      <nodeMember connectorId="A8"/>
+      <nodeMember connectorId="B8"/>
+      <nodeMember connectorId="C8"/>
+      <nodeMember connectorId="D8"/>
+      <nodeMember connectorId="E8"/>
+    </bus>
+    <bus id="bus8-1">
+      <nodeMember connectorId="A9"/>
+      <nodeMember connectorId="B9"/>
+      <nodeMember connectorId="C9"/>
+      <nodeMember connectorId="D9"/>
+      <nodeMember connectorId="E9"/>
+    </bus>
+    <bus id="bus9-1">
+      <nodeMember connectorId="A10"/>
+      <nodeMember connectorId="B10"/>
+      <nodeMember connectorId="C10"/>
+      <nodeMember connectorId="D10"/>
+      <nodeMember connectorId="E10"/>
+    </bus>
+    <bus id="bus10-1">
+      <nodeMember connectorId="A11"/>
+      <nodeMember connectorId="B11"/>
+      <nodeMember connectorId="C11"/>
+      <nodeMember connectorId="D11"/>
+      <nodeMember connectorId="E11"/>
+    </bus>
+    <bus id="bus11-1">
+      <nodeMember connectorId="A12"/>
+      <nodeMember connectorId="B12"/>
+      <nodeMember connectorId="C12"/>
+      <nodeMember connectorId="D12"/>
+      <nodeMember connectorId="E12"/>
+    </bus>
+    <bus id="bus12-1">
+      <nodeMember connectorId="A13"/>
+      <nodeMember connectorId="B13"/>
+      <nodeMember connectorId="C13"/>
+      <nodeMember connectorId="D13"/>
+      <nodeMember connectorId="E13"/>
+    </bus>
+    <bus id="bus13-1">
+      <nodeMember connectorId="A14"/>
+      <nodeMember connectorId="B14"/>
+      <nodeMember connectorId="C14"/>
+      <nodeMember connectorId="D14"/>
+      <nodeMember connectorId="E14"/>
+    </bus>
+    <bus id="bus14-1">
+      <nodeMember connectorId="A15"/>
+      <nodeMember connectorId="B15"/>
+      <nodeMember connectorId="C15"/>
+      <nodeMember connectorId="D15"/>
+      <nodeMember connectorId="E15"/>
+    </bus>
+    <bus id="bus15-1">
+      <nodeMember connectorId="A16"/>
+      <nodeMember connectorId="B16"/>
+      <nodeMember connectorId="C16"/>
+      <nodeMember connectorId="D16"/>
+      <nodeMember connectorId="E16"/>
+    </bus>
+    <bus id="bus16-1">
+      <nodeMember connectorId="A17"/>
+      <nodeMember connectorId="B17"/>
+      <nodeMember connectorId="C17"/>
+      <nodeMember connectorId="D17"/>
+      <nodeMember connectorId="E17"/>
+    </bus>
+    <bus id="bus17-1">
+      <nodeMember connectorId="A18"/>
+      <nodeMember connectorId="B18"/>
+      <nodeMember connectorId="C18"/>
+      <nodeMember connectorId="D18"/>
+      <nodeMember connectorId="E18"/>
+    </bus>
+    <bus id="bus18-1">
+      <nodeMember connectorId="A19"/>
+      <nodeMember connectorId="B19"/>
+      <nodeMember connectorId="C19"/>
+      <nodeMember connectorId="D19"/>
+      <nodeMember connectorId="E19"/>
+    </bus>
+    <bus id="bus19-1">
+      <nodeMember connectorId="A20"/>
+      <nodeMember connectorId="B20"/>
+      <nodeMember connectorId="C20"/>
+      <nodeMember connectorId="D20"/>
+      <nodeMember connectorId="E20"/>
+    </bus>
+    <bus id="bus0-8">
+      <nodeMember connectorId="F1"/>
+      <nodeMember connectorId="G1"/>
+      <nodeMember connectorId="H1"/>
+      <nodeMember connectorId="I1"/>
+      <nodeMember connectorId="J1"/>
+    </bus>
+    <bus id="bus1-8">
+      <nodeMember connectorId="F2"/>
+      <nodeMember connectorId="G2"/>
+      <nodeMember connectorId="H2"/>
+      <nodeMember connectorId="I2"/>
+      <nodeMember connectorId="J2"/>
+    </bus>
+    <bus id="bus2-8">
+      <nodeMember connectorId="F3"/>
+      <nodeMember connectorId="G3"/>
+      <nodeMember connectorId="H3"/>
+      <nodeMember connectorId="I3"/>
+      <nodeMember connectorId="J3"/>
+    </bus>
+    <bus id="bus3-8">
+      <nodeMember connectorId="F4"/>
+      <nodeMember connectorId="G4"/>
+      <nodeMember connectorId="H4"/>
+      <nodeMember connectorId="I4"/>
+      <nodeMember connectorId="J4"/>
+    </bus>
+    <bus id="bus4-8">
+      <nodeMember connectorId="F5"/>
+      <nodeMember connectorId="G5"/>
+      <nodeMember connectorId="H5"/>
+      <nodeMember connectorId="I5"/>
+      <nodeMember connectorId="J5"/>
+    </bus>
+    <bus id="bus5-8">
+      <nodeMember connectorId="F6"/>
+      <nodeMember connectorId="G6"/>
+      <nodeMember connectorId="H6"/>
+      <nodeMember connectorId="I6"/>
+      <nodeMember connectorId="J6"/>
+    </bus>
+    <bus id="bus6-8">
+      <nodeMember connectorId="F7"/>
+      <nodeMember connectorId="G7"/>
+      <nodeMember connectorId="H7"/>
+      <nodeMember connectorId="I7"/>
+      <nodeMember connectorId="J7"/>
+    </bus>
+    <bus id="bus7-8">
+      <nodeMember connectorId="F8"/>
+      <nodeMember connectorId="G8"/>
+      <nodeMember connectorId="H8"/>
+      <nodeMember connectorId="I8"/>
+      <nodeMember connectorId="J8"/>
+    </bus>
+    <bus id="bus8-8">
+      <nodeMember connectorId="F9"/>
+      <nodeMember connectorId="G9"/>
+      <nodeMember connectorId="H9"/>
+      <nodeMember connectorId="I9"/>
+      <nodeMember connectorId="J9"/>
+    </bus>
+    <bus id="bus9-8">
+      <nodeMember connectorId="F10"/>
+      <nodeMember connectorId="G10"/>
+      <nodeMember connectorId="H10"/>
+      <nodeMember connectorId="I10"/>
+      <nodeMember connectorId="J10"/>
+    </bus>
+    <bus id="bus10-8">
+      <nodeMember connectorId="F11"/>
+      <nodeMember connectorId="G11"/>
+      <nodeMember connectorId="H11"/>
+      <nodeMember connectorId="I11"/>
+      <nodeMember connectorId="J11"/>
+    </bus>
+    <bus id="bus11-8">
+      <nodeMember connectorId="F12"/>
+      <nodeMember connectorId="G12"/>
+      <nodeMember connectorId="H12"/>
+      <nodeMember connectorId="I12"/>
+      <nodeMember connectorId="J12"/>
+    </bus>
+    <bus id="bus12-8">
+      <nodeMember connectorId="F13"/>
+      <nodeMember connectorId="G13"/>
+      <nodeMember connectorId="H13"/>
+      <nodeMember connectorId="I13"/>
+      <nodeMember connectorId="J13"/>
+    </bus>
+    <bus id="bus13-8">
+      <nodeMember connectorId="F14"/>
+      <nodeMember connectorId="G14"/>
+      <nodeMember connectorId="H14"/>
+      <nodeMember connectorId="I14"/>
+      <nodeMember connectorId="J14"/>
+    </bus>
+    <bus id="bus14-8">
+      <nodeMember connectorId="F15"/>
+      <nodeMember connectorId="G15"/>
+      <nodeMember connectorId="H15"/>
+      <nodeMember connectorId="I15"/>
+      <nodeMember connectorId="J15"/>
+    </bus>
+    <bus id="bus15-8">
+      <nodeMember connectorId="F16"/>
+      <nodeMember connectorId="G16"/>
+      <nodeMember connectorId="H16"/>
+      <nodeMember connectorId="I16"/>
+      <nodeMember connectorId="J16"/>
+    </bus>
+    <bus id="bus16-8">
+      <nodeMember connectorId="F17"/>
+      <nodeMember connectorId="G17"/>
+      <nodeMember connectorId="H17"/>
+      <nodeMember connectorId="I17"/>
+      <nodeMember connectorId="J17"/>
+    </bus>
+    <bus id="bus17-8">
+      <nodeMember connectorId="F18"/>
+      <nodeMember connectorId="G18"/>
+      <nodeMember connectorId="H18"/>
+      <nodeMember connectorId="I18"/>
+      <nodeMember connectorId="J18"/>
+    </bus>
+    <bus id="bus18-8">
+      <nodeMember connectorId="F19"/>
+      <nodeMember connectorId="G19"/>
+      <nodeMember connectorId="H19"/>
+      <nodeMember connectorId="I19"/>
+      <nodeMember connectorId="J19"/>
+    </bus>
+    <bus id="bus19-8">
+      <nodeMember connectorId="F20"/>
+      <nodeMember connectorId="G20"/>
+      <nodeMember connectorId="H20"/>
+      <nodeMember connectorId="I20"/>
+      <nodeMember connectorId="J20"/>
+    </bus>
+  </buses>
+</module>
