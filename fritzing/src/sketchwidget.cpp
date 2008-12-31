@@ -1779,30 +1779,32 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 	}
 
 	m_connectorDragWire->saveGeometry();
-	ConnectorItem * newFrom = m_connectorDragConnector;
-	modifyNewWireConnections(wire, fromOnWire, newFrom, to, parentCommand);
-
-	long fromID = wire->id();
-
-	DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
-					   .arg(m_connectorDragConnector->connectorStuffID())
-					   .arg(fromOnWire->connectorStuffID())
-					   .arg((to == NULL) ? "null" : to->connectorStuffID())
-					   .arg(m_connectorDragConnector->attachedTo()->modelPart()->title()) );
-
-
-	// create a new wire with the same id as the temporary wire
-	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
-
 	bool doEmit = false;
-	ConnectorItem * anchor = wire->otherConnector(fromOnWire);
-	if (anchor != NULL) {
-		extendChangeConnectionCommand(anchor, newFrom, true, false, parentCommand);
+	if (modifyNewWireConnections(wire, fromOnWire, m_connectorDragConnector, to, parentCommand)) {
 		doEmit = true;
 	}
-	if (to != NULL) {
-		extendChangeConnectionCommand(fromOnWire, to, true, false, parentCommand);
-		doEmit = true;
+	else {
+		long fromID = wire->id();
+
+		DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
+						   .arg(m_connectorDragConnector->connectorStuffID())
+						   .arg(fromOnWire->connectorStuffID())
+						   .arg((to == NULL) ? "null" : to->connectorStuffID())
+						   .arg(m_connectorDragConnector->attachedTo()->modelPart()->title()) );
+
+
+		// create a new wire with the same id as the temporary wire
+		new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
+
+		ConnectorItem * anchor = wire->otherConnector(fromOnWire);
+		if (anchor != NULL) {
+			extendChangeConnectionCommand(anchor, m_connectorDragConnector, true, false, parentCommand);
+			doEmit = true;
+		}
+		if (to != NULL) {
+			extendChangeConnectionCommand(fromOnWire, to, true, false, parentCommand);
+			doEmit = true;
+		}
 	}
 
 	if (doEmit) {
@@ -1811,7 +1813,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 	clearTemporaries();
 
-	// remove the temporary one
+	// remove the temporary wire
 	this->scene()->removeItem(m_connectorDragWire);
 
 	new CleanUpWiresCommand(this, parentCommand);
@@ -3359,13 +3361,14 @@ bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Connecto
 }
 
 
-void SketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to, QUndoCommand * parentCommand)
+bool SketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(dragWire);
 	Q_UNUSED(fromOnWire);
 	Q_UNUSED(from);
 	Q_UNUSED(to);
 	Q_UNUSED(parentCommand);
+	return false;
 }
 
 void SketchWidget::setupAutoscroll(bool moving) {

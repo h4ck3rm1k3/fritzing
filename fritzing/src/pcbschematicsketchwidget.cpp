@@ -191,7 +191,9 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 
 					Wire * w = dynamic_cast<Wire *>(tci->attachedTo());
 					if (!w->getRatsnest()) continue;
+					if (!wires.contains(w)) continue;  // already been tested and removed so keep going
 
+					// assumes one end is connected to a part, checks to see if the other end is also, possibly indirectly, connected
 					bothEndsConnected(w, tci, wires, *list);
 				}
 			}
@@ -225,7 +227,7 @@ bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ConnectorItem * on
 		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 		if (!w->getRatsnest()) continue;
 
-		result = result || bothEndsConnected(w, toConnectorItem, wires, partConnectorItems);
+		result = bothEndsConnected(w, toConnectorItem, wires, partConnectorItems) || result;   // let it recurse
 	}
 
 	if (result) {
@@ -273,13 +275,9 @@ bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * fr
 
 Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand * ratsnestCommand) {
 	long newID = ItemBase::getNextID();
+
 	ViewGeometry viewGeometry;
-	QPointF fromPos = source->sceneAdjustedTerminalPoint();
-	viewGeometry.setLoc(fromPos);
-	QPointF toPos = dest->sceneAdjustedTerminalPoint();
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-	viewGeometry.setLine(line);
-	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);
+	makeRatsnestViewGeometry(viewGeometry, source, dest);
 
 	/*
 	 DebugDialog::debug(QString("creating ratsnest %10: %1, from %6 %7, to %8 %9, frompos: %2 %3, topos: %4 %5")
@@ -298,6 +296,17 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	ratsnestCommand->addWire(this, wire, source, dest);
 	return wire ;
 }
+
+void PCBSchematicSketchWidget::makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest) 
+{
+	QPointF fromPos = source->sceneAdjustedTerminalPoint();
+	viewGeometry.setLoc(fromPos);
+	QPointF toPos = dest->sceneAdjustedTerminalPoint();
+	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
+	viewGeometry.setLine(line);
+	viewGeometry.setWireFlags(ViewGeometry::RatsnestFlag | ViewGeometry::VirtualFlag);
+}
+
 
 bool PCBSchematicSketchWidget::dealWithRatsnestAux(ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem, 
 						long fromID, const QString & fromConnectorID, 
