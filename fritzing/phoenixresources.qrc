@@ -66,12 +66,12 @@ $Date$
     <file>resources/part-template/core/template.fz</file>
     <file>resources/parts/core/wire.fz</file>
     <file>resources/parts/core/cmRuler.fz</file>
-    <file>resources/parts/core/breadboard.fz</file>
+    <file>resources/parts/core/tinyBreadboard.fz</file>
     <file>resources/parts/svg/core/icon/wireicon.svg</file>
-    <file>resources/parts/svg/core/icon/breadboardicon.svg</file>
+    <file>resources/parts/svg/core/icon/tinyBreadboardIcon.svg</file>
     <file>resources/parts/svg/core/icon/rulericon.svg</file>
     <file>resources/parts/svg/core/breadboard/ruler.svg</file>
-    <file>resources/parts/svg/core/breadboard/breadboard.svg</file>
+    <file>resources/parts/svg/core/breadboard/tinyBreadboard.svg</file>
     <file>resources/parts/svg/core/breadboard/wire.svg</file>
     <file>resources/images/icons/partsBinOpenEnabled_icon.png</file>
     <file>resources/images/icons/partsBinOpenPressed_icon.png</file>

@@ -40,6 +40,7 @@ long ItemBase::nextID = 0;
 QHash <ItemBase::ViewIdentifier, StringTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
+QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
 
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {

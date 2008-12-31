@@ -62,6 +62,7 @@ public:
 
 	static QString rulerModuleIDName;
 	static QString breadboardModuleIDName;
+	static QString tinyBreadboardModuleIDName;
 	static QString & viewIdentifierName(ViewIdentifier);
 	static QString & viewIdentifierXmlName(ViewIdentifier);
 	static QString & viewIdentifierNaturalName(ViewIdentifier);

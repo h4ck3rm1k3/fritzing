@@ -354,79 +354,100 @@ const QString & SchematicSketchWidget::viewName() {
 }
 
 
-void SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem, QUndoCommand * parentCommand)
+void SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromDragWire, ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem, QUndoCommand * parentCommand)
 {
 	// if needed, find or create a new breadboard to make the connection
 
-	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		
-		if (fromConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-			// cache this for drawing the ratsnest wire back in the same place when we get the dealWithRatsnest call
-			cacheWire(dragWire, fromOnWire, m_connectorDragConnector, fromConnectorItem, toConnectorItem, toConnectorItem);
+	if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && 
+		toConnectorItem->attachedToItemType() == ModelPart::Wire)
+	{
+		ConnectorItem * originalFromConnectorItem = fromConnectorItem;
+		ConnectorItem * originalToConnectorItem = toConnectorItem;
+		fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);
+		toConnectorItem = lookForBreadboardConnection(toConnectorItem);
+		if (fromConnectorItem->attachedToItemType() == ModelPart::Breadboard &&
+			toConnectorItem->attachedToItemType() == ModelPart::Breadboard)
+		{
+			// connection can be made with one wire
+			cacheWire(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, originalToConnectorItem, toConnectorItem);
+			return;
 		}
-		else {
-			// find an empty bus on a breadboard
-			fromConnectorItem = lookForNewBreadboardConnection(fromConnectorItem);
-			if (fromConnectorItem == NULL) return;
 
-			// find the nearest part to m_connectorDragConnector
-			Wire * wire = dynamic_cast<Wire *>(m_connectorDragConnector->attachedTo());
-			QList<ConnectorItem *> ends;
-			QList<ConnectorItem *> uniqueEnds;
-			QList<Wire *> chained;
-			wire->collectChained(chained, ends, uniqueEnds);
-			if (ends.count() < 1) return;
 
-			distances.clear();
-			QList<Wire *> distanceWires;
-			foreach (ConnectorItem * end, ends) {
-				int distance = calcDistance(wire, end, 0, distanceWires);
-				distances.insert(end, distance);
-			}
-			qSort(ends.begin(), ends.end(), distanceLessThan);
+	}
+	else if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		ConnectorItem * originalFromConnectorItem = fromConnectorItem;
+		modifyNewWireConnectionsAux(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, toConnectorItem, parentCommand);
 
-			// make a wire from that nearest part to the breadboard
-			ConnectorItem * otherPartConnectorItem = toConnectorItem;
-			toConnectorItem = ends[0];
-
-			cacheWire(dragWire, fromOnWire, m_connectorDragConnector, fromConnectorItem, otherPartConnectorItem, toConnectorItem);
-
-			// draw a wire from that bus on the breadboard to the other part
-			ConnectorItem * otherPartBusConnectorItem = findEmptyBusConnectorItem(fromConnectorItem);
-			long newID = ItemBase::getNextID();
-			ViewGeometry viewGeometry;
-			QPointF fromPos = otherPartBusConnectorItem->sceneAdjustedTerminalPoint();
-			viewGeometry.setLoc(fromPos);
-			QPointF toPos = otherPartConnectorItem->sceneAdjustedTerminalPoint();
-			QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-			viewGeometry.setLine(line);
-
-			new AddItemCommand(this, BaseCommand::CrossView, wire->modelPart()->moduleID(), viewGeometry, newID, true, -1, parentCommand);
-			new ChangeConnectionCommand(this, BaseCommand::CrossView,
-										newID, wire->connector0()->connectorStuffID(),
-										otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorStuffID(),
-										true, true, parentCommand);
-			new ChangeConnectionCommand(this, BaseCommand::CrossView,
-										newID, wire->connector1()->connectorStuffID(),
-										otherPartConnectorItem->attachedToID(), otherPartConnectorItem->connectorStuffID(),
-										true, true, parentCommand);
-
-			
-			// figure out how to tie all that to one ratsnest wire
-
-		}
 	}
 	else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		toConnectorItem = lookForBreadboardConnection(toConnectorItem);			// lookForBreadboardConnection may change toConnectorItem
-		if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-			// cache this for drawing the ratsnest wire back in the same place
-			//m_wireHash.insert(dragWire->id(), m_connectorDragConnector);
-		}
-		else {
-		}
+		ConnectorItem * originalToConnectorItem = toConnectorItem;
+		modifyNewWireConnectionsAux(dragWire, dragWire->otherConnector(fromDragWire), originalToConnectorItem, toConnectorItem, fromConnectorItem, parentCommand);
 	}
 }
 
+void SchematicSketchWidget::modifyNewWireConnectionsAux(Wire * dragWire, ConnectorItem * fromDragWire, 
+														ConnectorItem * originalFromConnectorItem, ConnectorItem * & fromConnectorItem,
+														ConnectorItem * & toConnectorItem, QUndoCommand * parentCommand)
+{
+	fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		
+	if (fromConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
+		// cache this for drawing the ratsnest wire back in the same place when we get the dealWithRatsnest call
+		cacheWire(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, toConnectorItem, toConnectorItem);
+		return;
+	}
+
+	// find an empty bus on a breadboard
+	ItemBase * newBreadboard = NULL;
+	fromConnectorItem = lookForNewBreadboardConnection(fromConnectorItem, newBreadboard);
+	if (fromConnectorItem == NULL) return;
+
+	// find the nearest part to originalFromConnectorItem
+	Wire * wire = dynamic_cast<Wire *>(originalFromConnectorItem->attachedTo());
+	QList<ConnectorItem *> ends;
+	QList<ConnectorItem *> uniqueEnds;
+	QList<Wire *> chained;
+	wire->collectChained(chained, ends, uniqueEnds);
+	if (ends.count() < 1) return;
+
+	distances.clear();
+	QList<Wire *> distanceWires;
+	foreach (ConnectorItem * end, ends) {
+		int distance = calcDistance(wire, end, 0, distanceWires);
+		distances.insert(end, distance);
+	}
+	qSort(ends.begin(), ends.end(), distanceLessThan);
+
+	// make a wire from that nearest part (nearest fromConnectorItem) to the breadboard
+	ConnectorItem * originalToConnectorItem = toConnectorItem;
+	toConnectorItem = ends[0];
+	cacheWire(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, originalToConnectorItem, toConnectorItem);
+
+	// draw a wire from that bus on the breadboard to the other part (toConnectorItem)
+	ConnectorItem * otherPartBusConnectorItem = findEmptyBusConnectorItem(fromConnectorItem);
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	QPointF fromPos = otherPartBusConnectorItem->sceneAdjustedTerminalPoint();
+	viewGeometry.setLoc(fromPos);
+	QPointF toPos = originalToConnectorItem->sceneAdjustedTerminalPoint();
+	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
+	viewGeometry.setLine(line);
+
+	if (newBreadboard) {
+		new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
+		m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
+	}
+
+	new AddItemCommand(this, BaseCommand::CrossView, wire->modelPart()->moduleID(), viewGeometry, newID, true, -1, parentCommand);
+	new ChangeConnectionCommand(this, BaseCommand::CrossView,
+								newID, wire->connector0()->connectorStuffID(),
+								otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorStuffID(),
+								true, true, parentCommand);
+	new ChangeConnectionCommand(this, BaseCommand::CrossView,
+								newID, wire->connector1()->connectorStuffID(),
+								originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorStuffID(),
+								true, true, parentCommand);
+}
 
 ConnectorItem * SchematicSketchWidget::lookForBreadboardConnection(ConnectorItem * connectorItem) {
 	Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
@@ -525,8 +546,12 @@ void SchematicSketchWidget::chainVisible(ConnectorItem * fromConnectorItem, Conn
 	toConnectorItem->setHidden(!connect);
 }
 
-ConnectorItem * SchematicSketchWidget::lookForNewBreadboardConnection(ConnectorItem * connectorItem) {
+ConnectorItem * SchematicSketchWidget::lookForNewBreadboardConnection(ConnectorItem * connectorItem,  ItemBase * & newBreadboard) {
+	Q_UNUSED(connectorItem);
+	
+	newBreadboard = NULL;
 	QList<ItemBase *> breadboards;
+	qreal maxY = 0;
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
@@ -535,6 +560,12 @@ ConnectorItem * SchematicSketchWidget::lookForNewBreadboardConnection(ConnectorI
 			breadboards.append(itemBase);
 			break;
 		}
+
+		qreal y = itemBase->pos().y() + itemBase->size().height();
+		if (y > maxY) {
+			maxY = y;
+		}
+		
 	}
 
 	ConnectorItem * busConnectorItem = NULL;
@@ -543,12 +574,13 @@ ConnectorItem * SchematicSketchWidget::lookForNewBreadboardConnection(ConnectorI
 		if (busConnectorItem != NULL) return busConnectorItem;
 	}
 
+	ViewGeometry vg;
+	vg.setLoc(QPointF(0, maxY + 50));
 
-	// addItem(breadboard)
-	// busConnectorItem = findEmptyBus(breadboard);
-	// return busConnectorItem
-
-	return connectorItem;
+	long id = ItemBase::getNextID();
+	newBreadboard = this->addItem(ItemBase::tinyBreadboardModuleIDName, BaseCommand::SingleView, vg, id, -1);
+	busConnectorItem = findEmptyBus(newBreadboard);
+	return busConnectorItem;
 }
 
 ConnectorItem * SchematicSketchWidget::findEmptyBus(ItemBase * breadboard) {
@@ -569,21 +601,21 @@ ConnectorItem * SchematicSketchWidget::findEmptyBus(ItemBase * breadboard) {
 	return NULL;
 }
 
-void SchematicSketchWidget::cacheWire(Wire * wire, ConnectorItem * fromOnWire, 
+void SchematicSketchWidget::cacheWire(Wire * wire, ConnectorItem * fromDragWire, 
 									  ConnectorItem * oldFromConnectorItem, ConnectorItem * newFromConnectorItem, 
 									  ConnectorItem * oldToConnectorItem, ConnectorItem * newToConnectorItem) {
 	ConnectorPair * cp = new ConnectorPair;
 	cp->connectorItem0 = oldFromConnectorItem;
 	cp->connectorItem1 = oldToConnectorItem;
 	QString h1 = QString("%1.%2.%3.%4")
-						.arg(wire->id()).arg(wire->otherConnector(fromOnWire)->connectorStuffID())
+						.arg(wire->id()).arg(wire->otherConnector(fromDragWire)->connectorStuffID())
 						.arg(newFromConnectorItem->attachedToID()).arg(newFromConnectorItem->connectorStuffID());
 	m_wireHash.insert(h1, cp);
 	DebugDialog::debug(QString("hashing h1 %1").arg(h1));
 	cp = new ConnectorPair;
 	cp->connectorItem1 = cp->connectorItem0 = NULL;
 	QString h2 = QString("%1.%2.%3.%4")
-						.arg(wire->id()).arg(fromOnWire->connectorStuffID())
+						.arg(wire->id()).arg(fromDragWire->connectorStuffID())
 						.arg(newToConnectorItem->attachedToID()).arg(newToConnectorItem->connectorStuffID());
 	m_wireHash.insert(h2, cp);	
 	DebugDialog::debug(QString("hashing h2 %1").arg(h2));
