@@ -1180,7 +1180,7 @@ void MainWindow::updatePartMenu() {
 		}
 	}
 
-	DebugDialog::debug(QString("enable layer actions %1").arg(enable));
+	//DebugDialog::debug(QString("enable layer actions %1").arg(enable));
 	m_bringToFrontAct->setEnabled(enable);
 	m_bringForwardAct->setEnabled(enable);
 	m_sendBackwardAct->setEnabled(enable);
@@ -1188,7 +1188,7 @@ void MainWindow::updatePartMenu() {
 
 	enable = (itemCount.selRotatable > 0);
 
-	DebugDialog::debug(QString("enable rotate (2) %1").arg(enable));
+	//DebugDialog::debug(QString("enable rotate (2) %1").arg(enable));
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
@@ -1206,7 +1206,7 @@ void MainWindow::updateTransformationActions() {
 	ItemCount itemCount = m_currentGraphicsView->calcItemCount();
 	bool enable = (itemCount.selRotatable > 0);
 
-	DebugDialog::debug(QString("enable rotate (1) %1").arg(enable));
+	//DebugDialog::debug(QString("enable rotate (1) %1").arg(enable));
 	m_rotate90cwAct->setEnabled(enable);
 	m_rotate180Act->setEnabled(enable);
 	m_rotate90ccwAct->setEnabled(enable);
@@ -1302,7 +1302,7 @@ void MainWindow::updateEditMenu() {
 			}
 		}
 
-		DebugDialog::debug(QString("enable cut/copy/duplicate/delete %1 %2 %3").arg(copyActsEnabled).arg(deleteActsEnabled).arg(m_currentWidget->viewIdentifier()) );
+		//DebugDialog::debug(QString("enable cut/copy/duplicate/delete %1 %2 %3").arg(copyActsEnabled).arg(deleteActsEnabled).arg(m_currentWidget->viewIdentifier()) );
 		m_deleteAct->setEnabled(deleteActsEnabled);
 		m_cutAct->setEnabled(deleteActsEnabled && copyActsEnabled);
 		m_copyAct->setEnabled(copyActsEnabled);

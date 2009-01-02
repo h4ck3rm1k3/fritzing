@@ -1638,7 +1638,7 @@ void SketchWidget::sketchWidget_clearSelection() {
 
 void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	ItemBase * item = findItem(id);
-	DebugDialog::debug(QString("got item selected signal %1 %2 %3 %4").arg(id).arg(state).arg(item != NULL).arg(m_viewIdentifier));
+	//DebugDialog::debug(QString("got item selected signal %1 %2 %3 %4").arg(id).arg(state).arg(item != NULL).arg(m_viewIdentifier));
 	if (item != NULL) {
 		item->setSelected(state);
 	}
@@ -2514,27 +2514,27 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 
 	ItemBase * fromItem = findItem(fromID);
 	if (fromItem == NULL) {
-		DebugDialog::debug("change connection exit 1");
+		DebugDialog::debug(QString("change connection exit 1 %1").arg(fromID));
 		return;			// for now
 	}
 
 	ConnectorItem * fromConnectorItem = findConnectorItem(fromItem, fromConnectorID, seekLayerKin);
 	if (fromConnectorItem == NULL) {
 		// shouldn't be here
-		DebugDialog::debug("change connection exit 2");
+		DebugDialog::debug(QString("change connection exit 2 %1 %2").arg(fromID).arg(fromConnectorID));
 		return;
 	}
 
 	ItemBase * toItem = findItem(toID);
 	if (toItem == NULL) {
-		DebugDialog::debug("change connection exit 3");
+		DebugDialog::debug(QString("change connection exit 3 %1").arg(toID));
 		return;
 	}
 
 	ConnectorItem * toConnectorItem = findConnectorItem(toItem, toConnectorID, seekLayerKin);
 	if (toConnectorItem == NULL) {
 		// shouldn't be here
-		DebugDialog::debug("change connection exit 4");
+		DebugDialog::debug(QString("change connection exit 4 %1 %2").arg(toID).arg(toConnectorID));
 		return;
 	}
 
@@ -3361,7 +3361,7 @@ bool SketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Connecto
 }
 
 
-bool SketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to, QUndoCommand * parentCommand)
+bool SketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(dragWire);
 	Q_UNUSED(fromOnWire);

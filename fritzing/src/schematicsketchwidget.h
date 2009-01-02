@@ -47,6 +47,7 @@ public:
 	bool canDeleteItem(QGraphicsItem * item);
 	bool canCopyItem(QGraphicsItem * item);
 	const QString & viewName();
+	void addRatnestTarget(SketchWidget * target);
 
 signals:
 	void schematicDisconnectWireSignal(	ConnectorPairHash & moveItems,  QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);
@@ -63,10 +64,14 @@ protected:
 	void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canChainMultiple();
 	bool alreadyOnBus(ConnectorItem * busCandidate, ConnectorItem * otherCandidate);
-	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to, QUndoCommand * parentCommand);
+	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void modifyNewWireConnectionsAux(Wire * dragWire, ConnectorItem * fromDragWire, 
-									 ConnectorItem * originalFromConnectorItem, ConnectorItem * & fromConnectorItem,
-									 ConnectorItem * & toConnectorItem, QUndoCommand * parentCommand);
+									 ConnectorItem * fromConnectorItem,
+									 ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
+	void makeTwoWires(Wire * dragWire, ConnectorItem * fromDragWire, 
+						 ConnectorItem * originalFromConnectorItem, ConnectorItem * fromConnectorItem,
+						 ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
+						 QUndoCommand * parentCommand);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
 	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires);
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
@@ -78,9 +83,11 @@ protected:
 	void makeModifiedWire(Wire * wire, ConnectorItem * fromOnWire, 
 		ConnectorItem * originalFromConnectorItem, ConnectorItem * newFromConnectorItem, 
 		ConnectorItem * originalToConnectorItem, ConnectorItem * newToConnectorItem, QUndoCommand * parentCommand);
+	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
 
 protected:
 	QList<Wire *> m_deleteStash;
+	QList<SketchWidget *> m_ratsnestTargets;
 
 };
 

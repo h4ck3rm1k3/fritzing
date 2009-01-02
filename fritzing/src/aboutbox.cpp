@@ -49,6 +49,8 @@ $Date$
 
 AboutBox* AboutBox::singleton = NULL;
 
+static const int AboutWidth = 390;
+
 AboutBox::AboutBox(QWidget *parent)
 : QWidget(parent)
 {
@@ -56,7 +58,7 @@ AboutBox::AboutBox(QWidget *parent)
 	// To make the application not quit when the window closes
 	this->setAttribute(Qt::WA_QuitOnClose, FALSE);
 
-	setFixedSize(390, 430);
+	setFixedSize(AboutWidth, 430);
 
 	// the background color
 	setStyleSheet("background-color: #E8E8E8");
@@ -96,10 +98,31 @@ AboutBox::AboutBox(QWidget *parent)
 
 	// Copyright messages
 	
-	QLabel *copyrightNotice = new QLabel(this);
-	copyrightNotice->setPixmap(QPixmap(":/resources/images/aboutbox_copyright_notice2008.png"));
-	copyrightNotice->setGeometry(30, 398, 330, 32);
-	
+
+	QLabel *copyrightGNU = new QLabel(this);
+	copyrightGNU->setText(tr("<b>GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest"));
+	copyrightGNU->setFont(extraSmallFont);
+	copyrightGNU->setGeometry(0, 398, AboutWidth, 16);
+	copyrightGNU->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+
+	QLabel *CC = new QLabel(this);
+	QPixmap cc(":/resources/images/aboutbox_CC.png");
+	CC->setPixmap(cc);
+	CC->setGeometry(30, this->height() - cc.height(), cc.width(), cc.height());
+
+	QLabel *FHP = new QLabel(this);
+	QPixmap fhp(":/resources/images/aboutbox_FHP.png");
+	FHP->setPixmap(fhp);
+	FHP->setGeometry(360 - fhp.width(), this->height() - fhp.height(), fhp.width(), fhp.height());
+
+	int w = qMax(fhp.width(), cc.width());
+
+	QLabel *copyrightFHP = new QLabel(this);
+	copyrightFHP->setText(tr("<b>2007-%1 Fachhochschule Potsdam</b>").arg(Version::year()));
+	copyrightFHP->setFont(extraSmallFont);
+	copyrightFHP->setGeometry(30 + w, 414, AboutWidth - 30 - 30 - w - w, 16);
+	copyrightFHP->setAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+
 	// Scrolling Credits Text
 
 	// creditsScroll as QLabel
@@ -137,17 +160,17 @@ tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />");
 
 	creditsScroll->setText(data);
 	creditsScroll->setFont(smallFont);
-	creditsScroll->setGeometry(0, 0, 390, 800);
+	creditsScroll->setGeometry(0, 0, AboutWidth, 800);
 	creditsScroll->setWordWrap(false);
 	creditsScroll->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
 
 	int max = creditsScroll->sizeHint().height();
-	creditsScroll->setGeometry(0, 0, 390, max);
+	creditsScroll->setGeometry(0, 0, AboutWidth, max);
 
 	// set the creditsScroll inside our QScrollArea
 	m_scrollArea = new QScrollArea(this);
 	m_scrollArea->setWidget(creditsScroll);
-	m_scrollArea->setGeometry(0, 210, 390, 160);
+	m_scrollArea->setGeometry(0, 210, AboutWidth, 160);
 	m_scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	m_scrollArea->setFrameStyle(QFrame::NoFrame);
@@ -156,7 +179,7 @@ tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />");
 	// Add a fade out and a fade in the scrollArea
 	QLabel *scrollFade = new QLabel(this);
 	scrollFade->setPixmap(QPixmap(":/resources/images/aboutbox_scrollfade.png"));
-	scrollFade->setGeometry(0, 210, 390, 160);
+	scrollFade->setGeometry(0, 210, AboutWidth, 160);
 	scrollFade->setStyleSheet("background-color: none");
 	
 
@@ -206,9 +229,11 @@ void AboutBox::showAbout() {
 	if (singleton == NULL) {
 		new AboutBox();
 	}
+
+	// scroll text now to prevent a flash of text if text was visible the last time the about box was open
+	singleton->m_scrollArea->verticalScrollBar()->setValue(0);
+
 	singleton->show();
-	// Start the scroll timer
-	singleton->resetScrollAnimation();
 }
 
 void AboutBox::closeAbout() {

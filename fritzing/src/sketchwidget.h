@@ -254,7 +254,7 @@ protected:
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
-	virtual bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * & from, ConnectorItem * & to, QUndoCommand * parentCommand);
+	virtual bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void setupAutoscroll(bool moving);
 	void turnOffAutoscroll();
 	bool checkAutoscroll(QPoint globalPos);

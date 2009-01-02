@@ -135,6 +135,8 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	//connectSwitcherToView(m_pcbViewSwitcher,m_pcbGraphicsView);
 	m_tabWidget->addWidget(m_pcbWidget);
 
+	m_schematicGraphicsView->addRatnestTarget(m_pcbGraphicsView);
+
     m_undoView = new QUndoView();
     m_undoGroup = new QUndoGroup(this);
     m_undoView->setGroup(m_undoGroup);
@@ -1390,7 +1392,7 @@ void MainWindow::showTabWindow() {
 		m_windowMenu->addAction(m_tabWindow->toggleViewAction());
 	}
 	m_firstMove = true;
-	DebugDialog::debug(QString("tab done"));
+	//DebugDialog::debug(QString("tab done"));
 }
 
 void MainWindow::showInViewHelp() {

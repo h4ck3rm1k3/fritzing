@@ -337,7 +337,7 @@ const QString & SchematicSketchWidget::viewName() {
 }
 
 
-bool SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromDragWire, ConnectorItem * & fromConnectorItem, ConnectorItem * & toConnectorItem, QUndoCommand * parentCommand)
+bool SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromDragWire, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand)
 {
 	// if needed, find or create a new breadboard to make the connection
 
@@ -353,19 +353,21 @@ bool SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorI
 		{
 			// connection can be made with one wire
 			makeModifiedWire(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, originalToConnectorItem, toConnectorItem, parentCommand);
-			return true;
 		}
-
-
+		else if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
+			makeTwoWires(dragWire, fromDragWire, originalToConnectorItem, toConnectorItem, originalFromConnectorItem, fromConnectorItem, parentCommand);
+		}
+		else {
+			makeTwoWires(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, originalToConnectorItem, toConnectorItem, parentCommand);
+		}
+		return true;
 	}
 	else if (fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		ConnectorItem * originalFromConnectorItem = fromConnectorItem;
-		modifyNewWireConnectionsAux(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, toConnectorItem, parentCommand);
+		modifyNewWireConnectionsAux(dragWire, fromDragWire, fromConnectorItem, toConnectorItem, parentCommand);
 		return true;
 	}
 	else if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-		ConnectorItem * originalToConnectorItem = toConnectorItem;
-		modifyNewWireConnectionsAux(dragWire, dragWire->otherConnector(fromDragWire), originalToConnectorItem, toConnectorItem, fromConnectorItem, parentCommand);
+		modifyNewWireConnectionsAux(dragWire, dragWire->otherConnector(fromDragWire), toConnectorItem, fromConnectorItem, parentCommand);
 		return true;
 	}
 
@@ -373,41 +375,51 @@ bool SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorI
 }
 
 void SchematicSketchWidget::modifyNewWireConnectionsAux(Wire * dragWire, ConnectorItem * fromDragWire, 
-														ConnectorItem * originalFromConnectorItem, ConnectorItem * & fromConnectorItem,
-														ConnectorItem * & toConnectorItem, QUndoCommand * parentCommand)
+														ConnectorItem * fromConnectorItem,
+														ConnectorItem * toConnectorItem, 
+														QUndoCommand * parentCommand)
 {
+	ConnectorItem * originalFromConnectorItem = fromConnectorItem;
 	fromConnectorItem = lookForBreadboardConnection(fromConnectorItem);		
 	if (fromConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
-		// cache this for drawing the ratsnest wire back in the same place when we get the dealWithRatsnest call
 		makeModifiedWire(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, toConnectorItem, toConnectorItem, parentCommand);
 		return;
 	}
 
-	// find an empty bus on a breadboard
+	makeTwoWires(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, toConnectorItem, toConnectorItem, parentCommand);
+}
+
+void SchematicSketchWidget::makeTwoWires(Wire * dragWire, ConnectorItem * fromDragWire, 
+										 ConnectorItem * originalFromConnectorItem, ConnectorItem * fromConnectorItem,
+										 ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
+										 QUndoCommand * parentCommand) 
+{	
 	ItemBase * newBreadboard = NULL;
-	fromConnectorItem = lookForNewBreadboardConnection(fromConnectorItem, newBreadboard);
-	if (fromConnectorItem == NULL) return;
+	if (!(fromConnectorItem->attachedToItemType() == ModelPart::Breadboard)) {
+		// find an empty bus on a breadboard
+		fromConnectorItem = lookForNewBreadboardConnection(fromConnectorItem, newBreadboard);
+		if (fromConnectorItem == NULL) {
+			// this shouldn't happen
+			return;
+		}
 
-	// find the nearest part to originalFromConnectorItem
-	Wire * wire = dynamic_cast<Wire *>(originalFromConnectorItem->attachedTo());
-	QList<ConnectorItem *> ends;
-	QList<ConnectorItem *> uniqueEnds;
-	QList<Wire *> chained;
-	wire->collectChained(chained, ends, uniqueEnds);
-	if (ends.count() < 1) return;
-
-	distances.clear();
-	QList<Wire *> distanceWires;
-	foreach (ConnectorItem * end, ends) {
-		int distance = calcDistance(wire, end, 0, distanceWires);
-		distances.insert(end, distance);
+		if (newBreadboard) {
+			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
+			m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
+		}
 	}
-	qSort(ends.begin(), ends.end(), distanceLessThan);
 
-	// make a wire from that nearest part (nearest fromConnectorItem) to the breadboard
-	ConnectorItem * originalToConnectorItem = toConnectorItem;
-	toConnectorItem = ends[0];
+	ConnectorItem * nearestPartConnectorItem = findNearestPartConnectorItem(originalFromConnectorItem);
+	if (nearestPartConnectorItem == NULL) return;
+
+	// make a wire, from the part nearest to fromConnectorItem, to the breadboard
+	toConnectorItem = nearestPartConnectorItem;
 	makeModifiedWire(dragWire, fromDragWire, originalFromConnectorItem, fromConnectorItem, originalToConnectorItem, toConnectorItem, parentCommand);
+
+	if (originalToConnectorItem->attachedToItemType() == ModelPart::Wire) {
+		originalToConnectorItem = findNearestPartConnectorItem(originalToConnectorItem);
+		if (originalToConnectorItem == NULL) return;
+	}
 
 	// draw a wire from that bus on the breadboard to the other part (toConnectorItem)
 	ConnectorItem * otherPartBusConnectorItem = findEmptyBusConnectorItem(fromConnectorItem);
@@ -419,20 +431,30 @@ void SchematicSketchWidget::modifyNewWireConnectionsAux(Wire * dragWire, Connect
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 	viewGeometry.setLine(line);
 
-	if (newBreadboard) {
-		new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
-		m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
-	}
+	DebugDialog::debug(QString("new second wire %1").arg(newID));
 
-	new AddItemCommand(this, BaseCommand::CrossView, wire->modelPart()->moduleID(), viewGeometry, newID, true, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, viewGeometry, newID, true, -1, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
-								newID, wire->connector0()->connectorStuffID(),
+								newID, "connector0",
 								otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorStuffID(),
 								true, true, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
-								newID, wire->connector1()->connectorStuffID(),
+								newID, "connector1",
 								originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorStuffID(),
 								true, true, parentCommand);
+
+	foreach (SketchWidget * target, m_ratsnestTargets) {
+		new RatsnestCommand(target, BaseCommand::SingleView,
+									newID, "connector0",
+									otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorStuffID(),
+									true, true, parentCommand);
+		new RatsnestCommand(target, BaseCommand::SingleView,
+									newID, "connector1",
+									originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorStuffID(),
+									true, true, parentCommand);
+
+	}
+
 }
 
 ConnectorItem * SchematicSketchWidget::lookForBreadboardConnection(ConnectorItem * connectorItem) {
@@ -592,8 +614,9 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 									  ConnectorItem * originalToConnectorItem, ConnectorItem * newToConnectorItem,
 									  QUndoCommand * parentCommand) 
 {
+	DebugDialog::debug(QString("new real wire %1").arg(m_connectorDragWire->id()));
 	// create a new "real" wire with the same id as the temporary wire
-	new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), m_connectorDragWire->id(), true, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, m_connectorDragWire->getViewGeometry(), m_connectorDragWire->id(), true, -1, parentCommand);
 
 	ConnectorItem * anchor = wire->otherConnector(fromDragWire);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
@@ -605,13 +628,26 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 								newToConnectorItem->attachedToID(), newToConnectorItem->connectorStuffID(),
 								true, true, parentCommand);
 
+	foreach (SketchWidget * target, m_ratsnestTargets) {
+		new RatsnestCommand(target, BaseCommand::SingleView,
+									anchor->attachedToID(), anchor->connectorStuffID(),
+									newFromConnectorItem->attachedToID(), newFromConnectorItem->connectorStuffID(),
+									true, true, parentCommand);
+		new RatsnestCommand(target, BaseCommand::SingleView,
+									fromDragWire->attachedToID(), fromDragWire->connectorStuffID(),
+									newToConnectorItem->attachedToID(), newToConnectorItem->connectorStuffID(),
+									true, true, parentCommand);
+
+	}
 
 	long newID = ItemBase::getNextID();
 
 	ViewGeometry vg;
 	this->makeRatsnestViewGeometry(vg, originalFromConnectorItem, originalToConnectorItem);
 
-	new AddItemCommand(this, BaseCommand::SingleView, m_connectorDragWire->modelPart()->moduleID(), vg, newID, true, -1, parentCommand);
+	DebugDialog::debug(QString("new ratsnest wire %1").arg(newID));
+
+	new AddItemCommand(this, BaseCommand::SingleView, Wire::moduleIDName, vg, newID, true, -1, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::SingleView,
 								newID, "connector0",
 								originalFromConnectorItem->attachedToID(), originalFromConnectorItem->connectorStuffID(),
@@ -620,4 +656,31 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 								newID, "connector1",
 								originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorStuffID(),
 								true, true, parentCommand);
+}
+
+
+ConnectorItem * SchematicSketchWidget::findNearestPartConnectorItem(ConnectorItem * fromConnectorItem) {
+	// find the nearest part to fromConnectorItem
+	Wire * wire = dynamic_cast<Wire *>(fromConnectorItem->attachedTo());
+	if (wire == NULL) return NULL;
+
+	QList<ConnectorItem *> ends;
+	QList<ConnectorItem *> uniqueEnds;
+	QList<Wire *> chained;
+	wire->collectChained(chained, ends, uniqueEnds);
+	if (ends.count() < 1) return NULL;
+
+	distances.clear();
+	QList<Wire *> distanceWires;
+	foreach (ConnectorItem * end, ends) {
+		int distance = calcDistance(wire, end, 0, distanceWires);
+		distances.insert(end, distance);
+	}
+	qSort(ends.begin(), ends.end(), distanceLessThan);
+
+	return ends[0];
+}
+
+void SchematicSketchWidget::addRatnestTarget(SketchWidget * target) {
+	m_ratsnestTargets.append(target);
 }
