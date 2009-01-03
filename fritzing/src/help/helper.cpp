@@ -148,7 +148,7 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 		m_breadMainHelp->setTransparent();
 		m_schemMainHelp->setTransparent();
 		m_pcbMainHelp->setTransparent();
-		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal()), this, SLOT(somethingDroppedIntoView()));
+		disconnect(m_owner->m_currentGraphicsView, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
 	}
 }
 

@@ -553,7 +553,7 @@ void MainWindow::duplicate() {
 }
 
 void MainWindow::doDelete() {
-	DebugDialog::debug(QString("invoking do delete") );
+	//DebugDialog::debug(QString("invoking do delete") );
 
 	if (m_currentGraphicsView != NULL) {
 		m_currentGraphicsView->deleteItem();
@@ -1748,27 +1748,32 @@ void MainWindow::autoroute() {
 
 	emit autorouted();
 
-	QProgressDialog progress(QObject::tr("Autorouting..."), QObject::tr("Cancel"), 0, 1, this);
-	progress.show();
+	//QProgressDialog progress(QObject::tr("Autorouting..."), QObject::tr("Cancel"), 0, 1, this);
+	//progress.show();
 
-	//QProgressBar progressBar;
-	//statusBar()->insertWidget (1, &progressBar, 100 );
-	//QPushButton cancelButton;
-	//cancelButton.setText(tr("Cancel autorouting"));
-	//statusBar()->insertWidget(2, &cancelButton, 100);
+	QProgressBar progressBar;
+	m_statusBar->addPermanentWidget (&progressBar);
+	QPushButton cancelButton;
+	cancelButton.setText(tr("Cancel autorouting"));
+	m_statusBar->addPermanentWidget(&cancelButton);
+	progressBar.show();
+	cancelButton.show();
 
-
-	eater.allowEventsIn(&progress);
+	eater.allowEventsIn(&cancelButton);
 
 	m_pcbGraphicsView->scene()->clearSelection();
 	QApplication::processEvents();
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(true);
 	Autorouter1 * autorouter1 = new Autorouter1(m_pcbGraphicsView);
-	autorouter1->start(&progress);
+	connect(&cancelButton, SIGNAL(clicked()), autorouter1, SLOT(cancel()), Qt::DirectConnection);
+	connect(autorouter1, SIGNAL(setMaximumProgress(int)), &progressBar, SLOT(setMaximum(int)), Qt::DirectConnection);
+	connect(autorouter1, SIGNAL(setProgressValue(int)), &progressBar, SLOT(setValue(int)), Qt::DirectConnection);
+
+	autorouter1->start();
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
 	qApp->removeEventFilter(&eater);
-	//statusBar()->removeWidget(&progressBar);
-	//statusBar()->removeWidget(&cancelButton);
+	m_statusBar->removeWidget(&progressBar);
+	m_statusBar->removeWidget(&cancelButton);
 	m_dontClose = false;
 }
 

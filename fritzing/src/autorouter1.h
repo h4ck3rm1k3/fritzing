@@ -39,13 +39,15 @@ $Date$
 
 #include "viewgeometry.h"
 
-class Autorouter1
+class Autorouter1 : public QObject
 {
+	Q_OBJECT
+
 public:
 	Autorouter1(class PCBSketchWidget *);
 	~Autorouter1(void);
 
-	void start(QProgressDialog *);
+	void start();
 	
 public:
 	static void dijkstra(QList<class ConnectorItem *> & vertices, QHash<class ConnectorItem *, int> & indexer, QVector< QVector<double> *> adjacency, ViewGeometry::WireFlags alreadyWiredBy);
@@ -73,13 +75,19 @@ public:
 	static void clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand);
 	static void addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand);
 
+public slots:
+	void cancel();
+
+signals:
+	void setMaximumProgress(int);
+	void setProgressValue(int);
+
 protected:
 	class PCBSketchWidget * m_sketchWidget;
 	QList< QLine * > m_lastDrawTraces;
 	QList< QList<class ConnectorItem *>* > m_allPartConnectorItems;
 	QList<class ConnectorItem *> * m_drawingNet;
-	QProgressDialog * m_progressDialog;
-
+	bool m_cancelled;
 
 };
 

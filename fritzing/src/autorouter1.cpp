@@ -111,21 +111,24 @@ void tangent_PointPoly( QPointF P, QPolygonF & poly, int & rightTangent, int & l
 
 Autorouter1::Autorouter1(PCBSketchWidget * sketchWidget)
 {
-	m_progressDialog = NULL;
 	m_sketchWidget = sketchWidget;
+	m_cancelled = false;
 }
 
 Autorouter1::~Autorouter1()
 {
 }
 
-void Autorouter1::start(QProgressDialog * progressDialog)
+void Autorouter1::cancel() {
+	m_cancelled = true;
+}
+
+void Autorouter1::start()
 {
 	// TODO: put this in a command object
 	// TODO: tighten path between connectors once trace has succeeded
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
 	
-	m_progressDialog = progressDialog;
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0);
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Jumperwires);
 
@@ -180,15 +183,13 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 	}
 	adjacency.clear();
 
-	if (m_progressDialog && m_progressDialog->wasCanceled()) {
+	if (m_cancelled) {
 		restoreOriginalState(parentCommand);
 		cleanUp();
 		return;
 	}
 
-	if (m_progressDialog) {
-		m_progressDialog->setMaximum(edges.count());
-	}
+	emit setMaximumProgress(edges.count());
 	QApplication::processEvents(); // to keep the app  from freezing
 
 	// sort the edges by distance (bigger distances first)
@@ -240,9 +241,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 			//}
 		}
 
-		if (m_progressDialog) {
-			m_progressDialog->setValue(++edgesDone);
-		}
+		emit setProgressValue(++edgesDone);
 		for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
 			if (m_allPartConnectorItems[i]->contains(edge->from)) {
 				netCounters[i] -= 2;
@@ -260,7 +259,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 
 		QApplication::processEvents();
 
-		if (m_progressDialog && m_progressDialog->wasCanceled()) {
+		if (m_cancelled) {
 			clearTraces(m_sketchWidget, false, NULL);
 			restoreOriginalState(parentCommand);
 			cleanUp();
@@ -273,9 +272,7 @@ void Autorouter1::start(QProgressDialog * progressDialog)
 
 	addToUndo(parentCommand);
 
-	if (m_progressDialog) {
-		m_progressDialog->setValue(edgesDone);
-	}
+	emit setProgressValue(edgesDone);
 	
 	updateRatsnest(true, parentCommand);
 	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
@@ -463,7 +460,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	}
 
 	bool result = drawTrace(fromPos, toPos, from, to, wires, boundingPoly);
-	if (m_progressDialog && m_progressDialog->wasCanceled()) {
+	if (m_cancelled) {
 		return 0;
 	}
 	if (!result) {
@@ -472,7 +469,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 			DebugDialog::debug("backwards");
 		}
 	}
-	if (m_progressDialog && m_progressDialog->wasCanceled()) {
+	if (m_cancelled) {
 		return 0;
 	}
 	if (result) {
@@ -533,7 +530,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 {
 	QApplication::processEvents();
 	DebugDialog::debug(QString("drawtrace from:%1 %2, to:%3 %4").arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()) );
-	if (m_progressDialog && m_progressDialog->wasCanceled()) {
+	if (m_cancelled) {
 		return false;
 	}
 
