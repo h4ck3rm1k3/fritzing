@@ -36,6 +36,11 @@ struct ConnectorPair {
 	ConnectorItem * connectorItem1;
 };
 
+struct DistanceThing {
+	int distance;
+	bool fromConnector0;
+};
+
 class SchematicSketchWidget : public PCBSchematicSketchWidget
 {
 	Q_OBJECT
@@ -73,7 +78,7 @@ protected:
 						 ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
 						 QUndoCommand * parentCommand);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
-	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires);
+	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0);
 	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
 	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
@@ -84,6 +89,9 @@ protected:
 		ConnectorItem * originalFromConnectorItem, ConnectorItem * newFromConnectorItem, 
 		ConnectorItem * originalToConnectorItem, ConnectorItem * newToConnectorItem, QUndoCommand * parentCommand);
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
+	void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
+	void clearDistances();
+	const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
 protected:
 	QList<Wire *> m_deleteStash;

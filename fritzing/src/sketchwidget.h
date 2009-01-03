@@ -270,6 +270,8 @@ protected:
 	void removeOutsideConnections(QByteArray & itemData, QList<long> & modelIndexes);
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
 	virtual bool doRatsnestOnCopy();
+	virtual const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+
 
 protected:
 	static bool lessThan(int a, int b);

@@ -34,7 +34,7 @@ static int MAX_INT = std::numeric_limits<int>::max();
 
 static const QString ___viewName___ = QObject::tr("Schematic View");
 
-QHash <ConnectorItem *, int> distances;
+QHash <ConnectorItem *, DistanceThing *> distances;
 
 bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 	if (end0->connectorType() == Connector::Male && end1->connectorType() == Connector::Female) {
@@ -44,7 +44,21 @@ bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 		return false;
 	}
 
-	return distances.value(end0, MAX_INT) <= distances.value(end1, MAX_INT);
+	DistanceThing * dt0 = distances.value(end0, NULL);
+	DistanceThing * dt1 = distances.value(end1, NULL);
+	if (dt0 && dt1) {
+		return dt0->distance <= dt1->distance;
+	}
+
+	if (dt0) {
+		return true;
+	}
+
+	if (dt1) {
+		return false;
+	}
+
+	return true;
 }
 
 SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
@@ -255,28 +269,57 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 
 		undeleteWires.insert(wire);
 		m_deleteStash.append(wire);
-		QList<Wire *> chained;
-		QList<ConnectorItem *> ends;
-		QList<ConnectorItem *> uniqueEnds;
-		wire->collectChained(chained, ends, uniqueEnds);
-		if (ends.count() < 2) continue;
 
-		Wire * extraWire = NULL;
-		for (int i = 0; i < ends.count() - 1; i++) {
-			for (int j = i + 1; j < ends.count(); j++) {
-				extraWire = ends[i]->wiredTo(ends[j], ViewGeometry::NormalFlag);
-				if (extraWire != NULL) break;
-			}
-			if (extraWire != NULL) break;
+		QList<ConnectorItem *> ends;
+		calcDistances(wire, ends);
+		if (ends.count() < 2) {
+			continue;
 		}
+
+		ConnectorItem * end0 = ends[0];
+		ConnectorItem * end1 = NULL;
+		bool fromConnector0_0 = distances.value(end0)->fromConnector0;
+		for (int i = 1; i < ends.count(); i++) {
+			if (distances.value(ends[i])->fromConnector0 != fromConnector0_0) {
+				end1 = ends[i];
+				break;
+			}
+		}
+		clearDistances();
+
+		if (end1 == NULL) {
+			// not sure what to do if there's no end1
+			continue;
+		}
+
+		Wire * extraWire = end0->wiredTo(end1, ViewGeometry::NormalFlag);
 		if (extraWire != NULL) {
 			// need to delete the real wire from breadboard view
 			deleteWires.insert(extraWire);
 			continue;
 		}
 
-		ConnectorItem * end0 = NULL;
-		ConnectorItem * end1 = NULL;
+		/*
+		if (end1) {
+			// try to find a real wire between end0 and end1 to delete
+			Wire * extraWire = NULL;
+			for (int i = 0; i < ends.count() - 1; i++) {
+				for (int j = i + 1; j < ends.count(); j++) {
+					extraWire = ;
+					if (extraWire != NULL) break;
+				}
+				if (extraWire != NULL) break;
+			}
+			if (extraWire != NULL) {
+				// need to delete the real wire from breadboard view
+				deleteWires.insert(extraWire);
+				continue;
+			}
+
+		}
+
+
+		end0 = end1 = NULL;
 
 		// if in earlier runs through this loop we've already chosen to move a particular part,
 		// then choose to disconnect other connectors on the same part
@@ -290,13 +333,6 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 			if (end0 != NULL) break;
 		}
 
-		distances.clear();
-		QList<Wire *> distanceWires;
-		foreach (ConnectorItem * end, ends) {
-			int distance = calcDistance(wire, end, 0, distanceWires);
-			distances.insert(end, distance);
-		}
-		qSort(ends.begin(), ends.end(), distanceLessThan);
 		if (end0 == NULL) {
 			end0 = ends[0];
 			end1 = ends[1];
@@ -309,7 +345,12 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 				}
 			}
 		}
+
+		*/
+
+
 		moveItems.insert(end0, end1);
+		clearDistances();
 	}
 
 	if (moveItems.count() > 0) {
@@ -501,19 +542,35 @@ ConnectorItem * SchematicSketchWidget::findEmptyBusConnectorItem(ConnectorItem *
 	return busConnectorItem;
 }
 
-int SchematicSketchWidget::calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires) {
+int SchematicSketchWidget::calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0) {
+	//DebugDialog::debug(QString("calc distance wire: %1 rat:%2 to %3 %4, %5").arg(wire->id()).arg(wire->getRatsnest())
+		//.arg(end->attachedToTitle()).arg(end->connectorStuffID()).arg(distance));
+	
 	distanceWires.append(wire);
 	int d0 = calcDistanceAux(wire->connector0(), end, distance, distanceWires);
-	if (d0 == distance) return d0;
+	if (d0 == distance) {
+		fromConnector0 = true;
+		return d0;
+	}
 
 	int d1 = calcDistanceAux(wire->connector1(), end, distance, distanceWires);
+	if (d0 <= d1) {
+		fromConnector0 = true;
+		return d0;
+	}
 
-	return qMin(d0, d1);
+	fromConnector0 = false;
+	return d1;
 }
 
 int SchematicSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires) {
+	//DebugDialog::debug(QString("calc distance aux: %1 %2, %3 %4, %5").arg(from->attachedToID()).arg(from->connectorStuffID())
+		//.arg(to->attachedToTitle()).arg(to->connectorStuffID()).arg(distance));
+
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
-		if (toConnectorItem == to) return distance;
+		if (toConnectorItem == to) {
+			return distance;
+		}
 	}
 
 	int result = MAX_INT;
@@ -523,7 +580,8 @@ int SchematicSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem *
 		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
 		if (distanceWires.contains(w)) continue;
 
-		int temp = calcDistance(w, to, distance + 1, distanceWires);
+		bool fromConnector0;
+		int temp = calcDistance(w, to, distance + 1, distanceWires, fromConnector0);
 		if (temp < result) {
 			result = temp;
 		}
@@ -665,22 +723,58 @@ ConnectorItem * SchematicSketchWidget::findNearestPartConnectorItem(ConnectorIte
 	if (wire == NULL) return NULL;
 
 	QList<ConnectorItem *> ends;
-	QList<ConnectorItem *> uniqueEnds;
-	QList<Wire *> chained;
-	wire->collectChained(chained, ends, uniqueEnds);
+	calcDistances(wire, ends);
+	clearDistances();
 	if (ends.count() < 1) return NULL;
-
-	distances.clear();
-	QList<Wire *> distanceWires;
-	foreach (ConnectorItem * end, ends) {
-		int distance = calcDistance(wire, end, 0, distanceWires);
-		distances.insert(end, distance);
-	}
-	qSort(ends.begin(), ends.end(), distanceLessThan);
 
 	return ends[0];
 }
 
 void SchematicSketchWidget::addRatnestTarget(SketchWidget * target) {
 	m_ratsnestTargets.append(target);
+}
+
+void SchematicSketchWidget::calcDistances(Wire * wire, QList<ConnectorItem *> & ends) {
+	QList<Wire *> chained;
+	QList<ConnectorItem *> uniqueEnds;
+	wire->collectChained(chained, ends, uniqueEnds);
+	if (ends.count() < 2) return;
+
+	clearDistances();
+	foreach (ConnectorItem * end, ends) {
+		bool fromConnector0;
+		QList<Wire *> distanceWires;
+		int distance = calcDistance(wire, end, 0, distanceWires, fromConnector0);
+		DistanceThing * dt = new DistanceThing();
+		dt->distance = distance;
+		dt->fromConnector0 = fromConnector0;
+		DebugDialog::debug(QString("distance %1 %2 %3, %4 %5")
+			.arg(end->attachedToID()).arg(end->attachedToTitle()).arg(end->connectorStuffID())
+			.arg(distance).arg(fromConnector0 ? "connector0" : "connector1"));
+		distances.insert(end, dt);
+	}
+	qSort(ends.begin(), ends.end(), distanceLessThan);
+
+}
+
+void SchematicSketchWidget::clearDistances() {
+	foreach (ConnectorItem * c, distances.keys()) {
+		DistanceThing * dt = distances.value(c, NULL);
+		if (dt) delete dt;
+	}
+	distances.clear();
+}
+
+const QString & SchematicSketchWidget::hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
+{
+	Q_UNUSED(event);
+	Q_UNUSED(item);
+
+#ifdef Q_WS_MAC
+	static QString message = tr("Shift-click to delete this bend point; Cmd-click to drag out a new wire.");
+#else
+	static QString message = tr("Shift-click to delete this bend point; Ctrl-click to drag out a new wire.");
+#endif
+
+	return message;
 }

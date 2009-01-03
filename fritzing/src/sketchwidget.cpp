@@ -2927,7 +2927,6 @@ void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 }
 
 void SketchWidget::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
-	Q_UNUSED(event)
 	if(m_infoViewOnHover || currentlyInfoviewed(item->attachedTo())) {
 		viewConnectorItemInfo(item);
 	}
@@ -2935,7 +2934,17 @@ void SketchWidget::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, Con
 	if (!this->m_chainDrag) return;
 	if (!item->chained()) return;
 
-	statusMessage(tr("Shift-click to delete this bend point"));
+	QString msg = hoverEnterConnectorMessage(event, item);
+	statusMessage(msg);
+
+}
+const QString & SketchWidget::hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
+{
+	Q_UNUSED(event);
+	Q_UNUSED(item);
+
+	static QString message = tr("Shift-click to delete this bend point");
+	return message;
 }
 
 void SketchWidget::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item){
