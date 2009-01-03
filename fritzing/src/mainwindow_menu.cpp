@@ -486,13 +486,40 @@ void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 }
 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
+	this->show();
+	QApplication::processEvents();
+
+	QFileInfo fileInfo(fileName);
+
+	m_statusBar->showMessage(tr("loading %1 (model)").arg(fileInfo.fileName()));
+	QProgressBar progressBar;
+	m_statusBar->addPermanentWidget (&progressBar);
+	progressBar.setMaximum(100);
+	progressBar.setValue(10);
+
+	QApplication::processEvents();
+
 	QList<ModelPart *> modelParts;
 	m_sketchModel->load(fileName, m_paletteModel, modelParts);
 	//m_sketchModel->load(fileName, m_refModel, true);
 
+	progressBar.setValue(55);
+	m_statusBar->showMessage(tr("loading %1 (breadboard)").arg(fileInfo.fileName()));
+
 	m_breadboardGraphicsView->loadFromModel(modelParts, NULL);
+
+	progressBar.setValue(70);
+	m_statusBar->showMessage(tr("loading %1 (pcb)").arg(fileInfo.fileName()));
+
 	m_pcbGraphicsView->loadFromModel(modelParts, NULL);
+
+	progressBar.setValue(85);
+	m_statusBar->showMessage(tr("loading %1 (schematic)").arg(fileInfo.fileName()));
+
 	m_schematicGraphicsView->loadFromModel(modelParts, NULL);
+
+	progressBar.setValue(98);
+	QApplication::processEvents();
 
 	if(setAsLastOpened) {
 		QSettings settings("Fritzing","Fritzing");
@@ -504,6 +531,9 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	showAllFirstTimeHelp(false);
 
 	UntitledSketchIndex--;
+
+	m_statusBar->removeWidget(&progressBar);
+	m_statusBar->showMessage("");
 }
 
 void MainWindow::copy() {
