@@ -268,7 +268,7 @@
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="94"/>
         <source>PCB</source>
-        <translation>Platine</translation>
+        <translation>Leiterplatte</translation>
     </message>
 </context>
 <context>
@@ -342,7 +342,7 @@
     <message>
         <location filename="../src/dockmanager.cpp" line="97"/>
         <source>PCB</source>
-        <translation>Platine</translation>
+        <translation>Leiterplatte</translation>
     </message>
     <message>
         <location filename="../src/dockmanager.cpp" line="98"/>
@@ -365,7 +365,7 @@
     <message>
         <location filename="../src/fritzingwindow.cpp" line="77"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation>Strg+W</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="78"/>
@@ -421,7 +421,7 @@
     <message>
         <location filename="../src/fritzingwindow.cpp" line="205"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation type="unfinished">Strg+D</translation>
     </message>
 </context>
 <context>
@@ -449,12 +449,12 @@
     <message>
         <location filename="../src/help/helper.cpp" line="51"/>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Willkommen in der &lt;b&gt;Schaltplan-Ansicht&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies ist eine abstraktere Art der Darstellung von Komponenten und Verbindungen als die Steckplatinen-Ansicht. Es sind dieselben Elemente, sie sehen nur anders aus. Die Steckplatine selbst ist hier nur noch als Verbindungen vorhanden.&lt;br/&gt;&lt;br/&gt; Diese Repräsentation ist näher an den traditionellen Diagrammen wie sie von Ingenieuren benutzt werden. Die Schaltplan-Ansicht kann Dir überprüfen helfen, dass Du die richtigen Verbindungen zwischen Komponenten gemacht hast. Du kannst sie auch zur Dokumentation ausdrucken.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="62"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, first rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation type="unfinished"></translation>
+        <translation>In der &lt;b&gt;Leiterplatten-Ansicht&lt;/b&gt; gestaltest Du, wie die Komponenten und Verbindungen auf der Leiterplatte (englisch &quot;PCB&quot;) angeordnet werden.&lt;br/&gt;&lt;br/&gt;Leiterplatten können mit relativ geringem Aufwand zu Hause oder in einem kleinen Labor selber hergestellt werden. Sie können auch bei professionellen Herstellern in Auftrag gegeben werden, falls man höhere Qualität oder Stückzahlen benötigt.&lt;br/&gt;&lt;br/&gt;Um Deine Leiterplatte zu gestalten, arrangiere zunächst alle Bauteile innerhalb der Leiterplattenbegrenzung. Versuche dabei möglichst die Überschneidungen der sogenannten &quot;Luftlinien&quot; gering zu halten. Anschließend kannst Du mit dem Autorouting-Knopf &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; die Leiterbahnen erstellen lassen.</translation>
     </message>
 </context>
 <context>
@@ -526,7 +526,7 @@
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="117"/>
         <source>pcb</source>
-        <translation>Platine</translation>
+        <translation>Leiterplatte</translation>
     </message>
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="118"/>
@@ -581,7 +581,7 @@
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="358"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation>Strg+W</translation>
     </message>
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="362"/>
@@ -591,7 +591,7 @@
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="363"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation>Strg+S</translation>
     </message>
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="364"/>
@@ -852,7 +852,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="628"/>
         <source>Ctrl+N</source>
-        <translation>Ctrl+N</translation>
+        <translation>Strg+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="629"/>
@@ -867,7 +867,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="639"/>
         <source>Ctrl+O</source>
-        <translation>Ctrl+O</translation>
+        <translation>Strg+O</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="640"/>
@@ -892,7 +892,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="652"/>
         <source>Ctrl+S</source>
-        <translation>Ctrl+S</translation>
+        <translation>Strg+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="658"/>
@@ -907,7 +907,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="657"/>
         <source>Shift+Ctrl+S</source>
-        <translation>Shift+Ctrl+S</translation>
+        <translation>Umsch+Strg+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="661"/>
@@ -917,7 +917,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="662"/>
         <source>Alt+Ctrl+S</source>
-        <translation>Alt+Ctrl+S</translation>
+        <translation>Alt+Strg+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="663"/>
@@ -1002,7 +1002,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="706"/>
         <source>Ctrl+P</source>
-        <translation>Ctrl+P</translation>
+        <translation>Strg+P</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="707"/>
@@ -1017,7 +1017,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="711"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation>Strg+Q</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="712"/>
@@ -1037,7 +1037,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="787"/>
         <source>Ctrl+X</source>
-        <translation>Ctrl+X</translation>
+        <translation>Strg+X</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="788"/>
@@ -1052,7 +1052,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="792"/>
         <source>Ctrl+C</source>
-        <translation>Ctrl+C</translation>
+        <translation>Strg+C</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="793"/>
@@ -1067,7 +1067,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="797"/>
         <source>Ctrl+V</source>
-        <translation>Ctrl+V</translation>
+        <translation>Strg+V</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="798"/>
@@ -1082,7 +1082,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="802"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation>Strg+D</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="803"/>
@@ -1107,7 +1107,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="818"/>
         <source>Ctrl+A</source>
-        <translation>Ctrl+A</translation>
+        <translation>Strg+A</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="819"/>
@@ -1142,7 +1142,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="837"/>
         <source>Alt+Ctrl+N</source>
-        <translation>Alt+Ctrl+N</translation>
+        <translation>Alt+Strg+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="838"/>
@@ -1157,7 +1157,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="842"/>
         <source>Ctrl+Return</source>
-        <translation>Ctrl+Return</translation>
+        <translation>Strg+Eingabe</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="843"/>
@@ -1187,7 +1187,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="869"/>
         <source>Ctrl+R</source>
-        <translation>Ctrl+R</translation>
+        <translation>Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="870"/>
@@ -1212,7 +1212,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="878"/>
         <source>Alt+Ctrl+R</source>
-        <translation>Alt+Ctrl+R</translation>
+        <translation>Alt+Strg+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="879"/>
@@ -1247,7 +1247,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="891"/>
         <source>Shift+Ctrl+]</source>
-        <translation>Shift+Ctrl+]</translation>
+        <translation>Umsch+Strg+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="892"/>
@@ -1262,7 +1262,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="896"/>
         <source>Ctrl+]</source>
-        <translation>Ctrl+]</translation>
+        <translation>Strg+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="897"/>
@@ -1277,7 +1277,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="901"/>
         <source>Ctrl+[</source>
-        <translation>Ctrl+[</translation>
+        <translation>Strg+[</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="902"/>
@@ -1292,7 +1292,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="906"/>
         <source>Shift+Ctrl+[</source>
-        <translation>Shift+Ctrl+[</translation>
+        <translation>Umsch+Strg+[</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="907"/>
@@ -1307,7 +1307,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="916"/>
         <source>Ctrl+G</source>
-        <translation>Ctrl+G</translation>
+        <translation>Strg+G</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="917"/>
@@ -1342,7 +1342,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="933"/>
         <source>Ctrl++</source>
-        <translation>Ctrl++</translation>
+        <translation>Strg++</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="934"/>
@@ -1352,7 +1352,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="940"/>
         <source>Ctrl+=</source>
-        <translation>Ctrl+=</translation>
+        <translation>Strg+=</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="944"/>
@@ -1362,7 +1362,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="945"/>
         <source>Ctrl+-</source>
-        <translation>Ctrl+-</translation>
+        <translation>Strg+-</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="946"/>
@@ -1377,7 +1377,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="950"/>
         <source>Ctrl+0</source>
-        <translation>Ctrl+0</translation>
+        <translation>Strg+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="951"/>
@@ -1392,7 +1392,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="955"/>
         <source>Shift+Ctrl+0</source>
-        <translation></translation>
+        <translation>Umsch+Strg+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="956"/>
@@ -1407,12 +1407,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="960"/>
         <source>Ctrl+1</source>
-        <translation>Ctrl+1</translation>
+        <translation>Strg+1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="961"/>
         <source>Show the breadboard view</source>
-        <translation>Steckplatinenansicht anzeigen</translation>
+        <translation>Steckplatinen-Ansicht anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="964"/>
@@ -1422,27 +1422,27 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="965"/>
         <source>Ctrl+2</source>
-        <translation>Ctrl+2</translation>
+        <translation>Strg+2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="966"/>
         <source>Show the schematic view</source>
-        <translation>Schaltplanansicht anzeigen</translation>
+        <translation>Schaltplan-Ansicht anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="969"/>
         <source>&amp;Show PCB</source>
-        <translation>&amp;Platine anzeigen</translation>
+        <translation>&amp;Leiterplatte anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="970"/>
         <source>Ctrl+3</source>
-        <translation>Ctrl+3</translation>
+        <translation>Strg+3</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="971"/>
         <source>Show the PCB view</source>
-        <translation>Platinenansicht anzeigen</translation>
+        <translation>Leiterplatte-Ansicht anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="976"/>
@@ -1452,7 +1452,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="977"/>
         <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
+        <translation>Strg+M</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="978"/>
@@ -1472,7 +1472,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="997"/>
         <source>Ctrl+?</source>
-        <translation>Ctrl+?</translation>
+        <translation>Strg+?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="998"/>
@@ -1641,7 +1641,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="512"/>
         <source>loading %1 (pcb)</source>
-        <translation>Lade %1 (Platine)</translation>
+        <translation>Lade %1 (Leiterplatte)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="517"/>
@@ -1817,7 +1817,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
         <source>Ctrl+D</source>
-        <translation>Ctrl+D</translation>
+        <translation>Strg+D</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="436"/>
@@ -1999,7 +1999,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/itembase.cpp" line="224"/>
         <source>pcb view</source>
-        <translation>Platinen-Ansicht</translation>
+        <translation>Leiterplatte-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="109"/>
@@ -2088,7 +2088,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/modelpart.cpp" line="95"/>
         <source>board</source>
-        <translation>Platine</translation>
+        <translation>Leiterplatte</translation>
     </message>
     <message>
         <location filename="../src/modelpart.cpp" line="96"/>
@@ -2149,7 +2149,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="36"/>
         <source>PCB View</source>
-        <translation>Platinen-Ansicht</translation>
+        <translation>Leiterplatte-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="35"/>
@@ -2229,7 +2229,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="56"/>
         <source>Board</source>
-        <translation>Platine</translation>
+        <translation>Leiterplatte</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="57"/>
