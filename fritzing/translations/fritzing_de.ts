@@ -1961,12 +1961,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partseditor/partseditorviewimagewidget.cpp" line="74"/>
         <source>Open Image</source>
-        <translation>Bild Öffnen</translation>
+        <translation>Bild öffnen</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditorviewimagewidget.cpp" line="77"/>
         <source>SVG Files (*.svg)</source>
-        <translation>SVG Datei (*.svg)</translation>
+        <translation>SVG-Datei (*.svg)</translation>
     </message>
 </context>
 <context>
@@ -1974,7 +1974,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/breadboardsketchwidget.cpp" line="32"/>
         <source>Breadboard View</source>
-        <translation type="unfinished">Steckplatine Ansicht</translation>
+        <translation>Steckplatinen-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="539"/>
@@ -1984,22 +1984,22 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/itembase.cpp" line="221"/>
         <source>icon view</source>
-        <translation type="unfinished">Icon Ansicht</translation>
+        <translation>Icon-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/itembase.cpp" line="222"/>
         <source>breadboard view</source>
-        <translation type="unfinished">Steckplatine Ansicht</translation>
+        <translation>Steckplatinen-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/itembase.cpp" line="223"/>
         <source>schematic view</source>
-        <translation type="unfinished">Schaltplan Ansicht</translation>
+        <translation>Schaltplan-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/itembase.cpp" line="224"/>
         <source>pcb view</source>
-        <translation type="unfinished">Platine Ansicht</translation>
+        <translation>Platinen-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="109"/>
@@ -2120,7 +2120,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="222"/>
         <source>The file %1 is not a Fritzing file (11).</source>
-        <translation>Die Datei %1 ist keine Fritzing Datei (11).</translation>
+        <translation>Die Datei %1 ist keine Fritzing-Datei (11).</translation>
     </message>
     <message>
         <location filename="../src/partseditor/svgdomdocument.cpp" line="92"/>
@@ -2139,7 +2139,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partseditor/svgview.cpp" line="131"/>
         <source>The file %1 is not a Fritzing file (12).</source>
-        <translation>Die Datei %1 ist keine Fritzing Datei (12).</translation>
+        <translation>Die Datei %1 ist keine Fritzing-Datei (12).</translation>
     </message>
     <message>
         <location filename="../src/partseditor/svgview.cpp" line="136"/>
@@ -2149,12 +2149,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="36"/>
         <source>PCB View</source>
-        <translation>Platinenansicht</translation>
+        <translation>Platinen-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="35"/>
         <source>Schematic View</source>
-        <translation>Schaltplanansicht</translation>
+        <translation>Schaltplan-Ansicht</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="540"/>
@@ -2189,27 +2189,27 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/sketchwidget.cpp" line="2782"/>
         <source>Split Wire</source>
-        <translation type="unfinished">Kabel Punkte ersetzen</translation>
+        <translation>Kabel trennen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2830"/>
         <source>Join Wire</source>
-        <translation type="unfinished">Kabel Punkte löschen</translation>
+        <translation>Kabel verbinden</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="46"/>
         <source>Icon</source>
-        <translation type="unfinished">Symbol</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="47"/>
         <source>Breadboard</source>
-        <translation type="unfinished">Lochraster</translation>
+        <translation>Steckplatine</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="52"/>
         <source>Parts</source>
-        <translation type="unfinished">Teilen</translation>
+        <translation>Bauteile</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="49"/>
@@ -2219,27 +2219,27 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="66"/>
         <source>Rulers</source>
-        <translation type="unfinished">Zollstock</translation>
+        <translation>Lineale</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="53"/>
         <source>Nets</source>
-        <translation type="unfinished">Netz</translation>
+        <translation>Netze</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="56"/>
         <source>Board</source>
-        <translation type="unfinished">Platine</translation>
+        <translation>Platine</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="57"/>
         <source>Rat&apos;s nest</source>
-        <translation type="unfinished">Wirrwarr</translation>
+        <translation>Luftlinien</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="58"/>
         <source>Silkscreen</source>
-        <translation type="unfinished">Siebdruck</translation>
+        <translation>Siebdruck</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="59"/>
@@ -2259,12 +2259,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="62"/>
         <source>Outline</source>
-        <translation type="unfinished">Umriss</translation>
+        <translation>Umriss</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="63"/>
         <source>Vias</source>
-        <translation type="unfinished"></translation>
+        <translation>Vias</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="64"/>
@@ -2274,23 +2274,24 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="65"/>
         <source>Jumper wires</source>
-        <translation type="unfinished">Schaltdraht</translation>
+        <translation>Schaltdrähte</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="68"/>
         <source>Unknown Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannte Ebene</translation>
     </message>
     <message>
         <location filename="../src/referencemodel/sqlitereferencemodel.cpp" line="54"/>
         <source>Oops!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ups!</translation>
     </message>
     <message>
         <location filename="../src/referencemodel/sqlitereferencemodel.cpp" line="55"/>
         <source>Sorry, we have a problem with the swapping mechanism.
 Fritzing still works, but you won&apos;t be able to change parts properties.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sorry, wir habben noch ein kleines Problem mit dem Ändern von Eigenschaften.
+Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich an uns.</translation>
     </message>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="33"/>
@@ -2300,17 +2301,17 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="85"/>
         <source>no name yet</source>
-        <translation type="unfinished">Noch kein Name</translation>
+        <translation>Noch kein Name</translation>
     </message>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="86"/>
         <source>no description yet</source>
-        <translation type="unfinished">Noch kein Angabe</translation>
+        <translation>Noch keine Beschreibung</translation>
     </message>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="245"/>
         <source>Accept</source>
-        <translation type="unfinished">Abnehmen</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/sketchareawidget.cpp" line="92"/>
@@ -2320,12 +2321,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/partseditor/hashpopulatewidget.cpp" line="36"/>
         <source>a label</source>
-        <translation type="unfinished">Eine Bezeichnung</translation>
+        <translation>eine Bezeichnung</translation>
     </message>
     <message>
         <location filename="../src/partseditor/hashpopulatewidget.cpp" line="38"/>
         <source>a value</source>
-        <translation type="unfinished">Ein Wert</translation>
+        <translation>ein Wert</translation>
     </message>
 </context>
 <context>
@@ -2333,7 +2334,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/lib/quazip/quazipfile.cpp" line="141"/>
         <source>ZIP/UNZIP API error %1</source>
-        <translation>ZIP/UNZIP API Fehler %1</translation>
+        <translation>ZIP/UNZIP API-Fehler %1</translation>
     </message>
 </context>
 <context>
@@ -2351,12 +2352,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/partseditor/svgview.cpp" line="105"/>
         <source>Select Footprint XML File</source>
-        <translation>Die Anschlussfläche XML-Datei auswählen</translation>
+        <translation>Lötflächen-Datei auswählen</translation>
     </message>
     <message>
         <location filename="../src/partseditor/svgview.cpp" line="106"/>
         <source>Fritzing Footprint XML Files (*.fzp);;All Files (*)</source>
-        <translation>Fritzing Anschlussfläche XML-Datei (*.fzp);;Alle Dateien (*)</translation>
+        <translation>Fritzing Lötflächen-Datei (*.fzp);;Alle Dateien (*)</translation>
     </message>
 </context>
 <context>
@@ -2364,12 +2365,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="774"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="776"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
 </context>
 <context>
@@ -2377,22 +2378,22 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/sketchwidget.cpp" line="375"/>
         <source>loading part</source>
-        <translation type="unfinished">Bauteil aufladen</translation>
+        <translation>Lade Bauteil..</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="377"/>
         <source>done loading</source>
-        <translation>Aufladen fertig</translation>
+        <translation>Bauteil geladen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="637"/>
         <source>%1 %2</source>
-        <translation>%1 %2</translation>
+        <translation type="unfinished">%1 %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="640"/>
         <source>%1 %2 items</source>
-        <translation>%1 %2 Teile</translation>
+        <translation type="unfinished">%1 %2 Teile</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="887"/>
@@ -2402,7 +2403,7 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/sketchwidget.cpp" line="887"/>
         <source>Deselect</source>
-        <translation>Auswahl rücksetzen</translation>
+        <translation>Auswahl zurücksetzen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="800"/>
@@ -2417,27 +2418,27 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/sketchwidget.cpp" line="1131"/>
         <source>Add %1</source>
-        <translation>%1 Hinzufügen</translation>
+        <translation>%1 hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1414"/>
         <source>Move %2 (%1)</source>
-        <translation>%2 Verschieben (%1)</translation>
+        <translation>%2 verschieben (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1417"/>
         <source>Move %2 items (%1)</source>
-        <translation>%2 Teile Verschieben (%1)</translation>
+        <translation>%2 Elemente verschieben (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1613"/>
         <source>Select %1</source>
-        <translation> %1 Auswählen</translation>
+        <translation> %1 auswählen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1616"/>
         <source>Select %1 items</source>
-        <translation>%1 Teile Auswählen</translation>
+        <translation>%1 Elemente auswählen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1714"/>
@@ -2447,12 +2448,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/sketchwidget.cpp" line="1722"/>
         <source>Change</source>
-        <translation>Ändern</translation>
+        <translation>Ändere</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1726"/>
         <source>Connect</source>
-        <translation>Verbinden</translation>
+        <translation>Verbinde</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1727"/>
@@ -2462,12 +2463,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/sketchwidget.cpp" line="1773"/>
         <source>Create and connect wire</source>
-        <translation>Neu Kabel erstellen und verbinden </translation>
+        <translation>Neues Kabel erstellen und verbinden </translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2322"/>
         <source>%3 %2 (%1)</source>
-        <translation>%3 %2 (%1)</translation>
+        <translation type="unfinished">%3 %2 (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2324"/>
@@ -2482,12 +2483,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
     <message>
         <location filename="../src/sketchwidget.cpp" line="2899"/>
         <source>Shift-click to add a bend point to the wire</source>
-        <translation>Halten sie die Umschalt taste und clicken, eine Kabelpunkt zu ersetzen</translation>
+        <translation>Umschalttaste halten und klicken, um einen Biegepunkt zu setzen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2946"/>
         <source>Shift-click to delete this bend point</source>
-        <translation>Halten sie die Umschalt taste und clicken, diese Kabelpunkt zu löschen</translation>
+        <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3031"/>
@@ -2503,17 +2504,18 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <location filename="../src/sketchwidget.cpp" line="3047"/>
         <source>No part with those characteristics.
 Where&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Es existiert kein Bauteil mit diesen Eigenschaften.
+Wir arbeiten daran, diese Nachricht in Zukunft zu vermeiden.</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3096"/>
         <source>Change %1 color from %2 to %3</source>
-        <translation>Farbe %1 von %2 zu %3 wechsel</translation>
+        <translation>Farbe %1 von %2 nach %3 ändern</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3102"/>
         <source>Change color of %1 wires to %2</source>
-        <translation>%1 Kabelfarbe zu %2 wechsel</translation>
+        <translation>Farbe von %1 Kabel(n) nach %2 ändern</translation>
     </message>
 </context>
 <context>
