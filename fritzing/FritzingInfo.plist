@@ -31,19 +31,43 @@ $Date: 2009-01-03 18:55:48 +0100 (Sat, 03 Jan 2009) $
 	<key>CFBundleExecutable</key>
 	<string>Fritzing</string>
 	<key>CFBundleGetInfoString</key>
-	<string>Fritzing version 0.1 (b01.03)</string>
+	<string>Fritzing 0.1 (b01.03)</string>
 	<key>CFBundleIconFile</key>
 	<string>fritzing_icon.icns</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>frtz</string>
-  <key>CFBundleTypeExtensions</key>
-  <array>
-    <string>fz</string>
-    <string>fzz</string>
-    <string>fzp</string>
-    <string>fzb</string>
-  </array>
-</dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>fz</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Fritzing sketch</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>fzz</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>Fritzing shareable sketch</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<false/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>XML</string>
+		</dict>
+	</array>
+	</dict>
 </plist>

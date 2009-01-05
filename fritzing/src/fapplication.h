@@ -40,22 +40,31 @@ public:
 	~FApplication(void);
 
 public:
-	bool findTranslator(const QString & libPath);
+	int startup(int & argc, char ** argv);
 
 	static void setOpenSaveFolder(const QString& path);
 	static const QString openSaveFolder();
 	static bool spaceBarIsPressed();
-
+	
 signals:
 	void spaceBarIsPressedSignal(bool);
 
 protected:
-     bool eventFilter(QObject *obj, QEvent *event);
-
+    bool eventFilter(QObject *obj, QEvent *event);
+	bool event(QEvent *event);
+	bool findTranslator(const QString & libPath);
+	void loadNew(QString path);
+	void loadOne(class MainWindow *, QString path, int loaded);
+	
 protected:
 	static bool m_spaceBarIsPressed;
 	static QString m_openSaveFolder;
-	QTranslator m_translator;
+	static QTranslator m_translator;
+	static class ReferenceModel * m_referenceModel;
+	static class PaletteModel * m_paletteBinModel;
+	static bool m_started;
+	static QList<QString> m_filesToLoad;
+
 };
 
 
