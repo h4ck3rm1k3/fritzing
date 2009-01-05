@@ -756,7 +756,7 @@ bool MainWindow::whatToDoWithAlienFiles() {
 	if (m_alienFiles.size() > 0) {
 		QMessageBox::StandardButton reply;
 		reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fileName).baseName()),
-									 tr("Do you want to keep the parts that were loaded with this bundled sketch %1?")
+									 tr("Do you want to keep the parts that were loaded with this shareable sketch %1?")
 									 .arg(QFileInfo(m_fileName).baseName()),
 									 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		if (reply == QMessageBox::Yes) {
@@ -991,7 +991,7 @@ void MainWindow::saveBundledSketch() {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
-			tr("Unable to export %1 to bundled").arg(bundledFileName)
+			tr("Unable to export %1 to shareable sketch").arg(bundledFileName)
 		);
 	}
 
@@ -1008,7 +1008,7 @@ void MainWindow::loadBundledSketch(QString &fileName) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
-			tr("Unable to open bundled file %1").arg(fileName)
+			tr("Unable to open shareable sketch %1").arg(fileName)
 		);
 	}
 

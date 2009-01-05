@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
-<defaultcodec></defaultcodec>
 <context>
     <name></name>
     <message>
@@ -680,7 +679,7 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="760"/>
         <source>Do you want to keep the parts that were loaded with this bundled sketch %1?</source>
-        <translation type="unfinished">Möchtest Du die Bauteile behalten, die mit dem geteilten Entwurf %1 geladen wurden?</translation>
+        <translation type="obsolete">Möchtest Du die Bauteile behalten, die mit dem geteilten Entwurf %1 geladen wurden?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="945"/>
@@ -700,12 +699,12 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="994"/>
         <source>Unable to export %1 to bundled</source>
-        <translation type="unfinished">Der Entwurf %1 konnte nicht exportiert werden</translation>
+        <translation type="obsolete">Der Entwurf %1 konnte nicht exportiert werden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1011"/>
         <source>Unable to open bundled file %1</source>
-        <translation type="unfinished">Der geteilte Entwurf %1 konnte nicht gelesen werden</translation>
+        <translation type="obsolete">Der geteilte Entwurf %1 konnte nicht gelesen werden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1131"/>
@@ -1653,6 +1652,21 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <source>Cancel autorouting</source>
         <translation>Autorouting abbrechen</translation>
     </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="760"/>
+        <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="994"/>
+        <source>Unable to export %1 to shareable sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1011"/>
+        <source>Unable to open shareable sketch %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2363,12 +2377,12 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="774"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="780"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
         <translation type="unfinished">Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="776"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="782"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
         <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>

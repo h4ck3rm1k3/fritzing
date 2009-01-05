@@ -666,11 +666,6 @@
         <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="760"/>
-        <source>Do you want to keep the parts that were loaded with this bundled sketch %1?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="945"/>
         <source>Specify a file name</source>
         <translation type="unfinished">Spécifier un nom de fichier</translation>
@@ -684,16 +679,6 @@
         <location filename="../src/mainwindow_menu.cpp" line="1747"/>
         <source>Fritzing</source>
         <translation type="unfinished">Fritzing</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="994"/>
-        <source>Unable to export %1 to bundled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1011"/>
-        <source>Unable to open bundled file %1</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1131"/>
@@ -1638,6 +1623,21 @@ Please stay tuned.</source>
         <source>Cancel autorouting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="760"/>
+        <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="994"/>
+        <source>Unable to export %1 to shareable sketch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1011"/>
+        <source>Unable to open shareable sketch %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2340,12 +2340,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="774"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="780"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="776"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="782"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>
