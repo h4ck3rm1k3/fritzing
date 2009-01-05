@@ -1564,18 +1564,8 @@ Please stay tuned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1759"/>
-        <source>&amp;Create Trace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow_menu.cpp" line="1760"/>
         <source>Create a trace from the selected wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1763"/>
-        <source>&amp;Create Jumper Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1638,6 +1628,16 @@ Please stay tuned.</source>
         <source>Unable to open shareable sketch %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="1759"/>
+        <source>&amp;Create Trace from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="1763"/>
+        <source>&amp;Create Jumper from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1660,8 +1660,23 @@ Please stay tuned.</source>
 <context>
     <name>PCBSketchWidget</name>
     <message>
+        <location filename="../src/pcbsketchwidget.cpp" line="287"/>
+        <source>Create Jumper from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pcbsketchwidget.cpp" line="288"/>
+        <source>jumper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/pcbsketchwidget.cpp" line="294"/>
-        <source>Create trace wire</source>
+        <source>Create Trace from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pcbsketchwidget.cpp" line="295"/>
+        <source>trace</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

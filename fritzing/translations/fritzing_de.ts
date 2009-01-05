@@ -420,7 +420,7 @@
     <message>
         <location filename="../src/fritzingwindow.cpp" line="205"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Strg+D</translation>
+        <translation>Strg+D</translation>
     </message>
 </context>
 <context>
@@ -820,7 +820,7 @@
         <location filename="../src/mainwindow_menu.cpp" line="390"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished">Der Entwurf %1 konnte nicht geschrieben werden: %2.</translation>
+        <translation>Der Entwurf %1 konnte nicht geschrieben werden: %2.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="404"/>
@@ -1590,7 +1590,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1759"/>
         <source>&amp;Create Trace</source>
-        <translation>&amp;In Leiterbahn umwandeln</translation>
+        <translation type="obsolete">&amp;In Leiterbahn umwandeln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1760"/>
@@ -1600,7 +1600,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1763"/>
         <source>&amp;Create Jumper Wire</source>
-        <translation type="unfinished">&amp;In Schaltdraht umwandeln</translation>
+        <translation type="obsolete">&amp;In Schaltdraht umwandeln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1764"/>
@@ -1667,6 +1667,16 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <source>Unable to open shareable sketch %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="1759"/>
+        <source>&amp;Create Trace from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="1763"/>
+        <source>&amp;Create Jumper from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1691,7 +1701,27 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="294"/>
         <source>Create trace wire</source>
-        <translation>Leiterbahn erstellen</translation>
+        <translation type="obsolete">Leiterbahn erstellen</translation>
+    </message>
+    <message>
+        <location filename="../src/pcbsketchwidget.cpp" line="287"/>
+        <source>Create Jumper from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pcbsketchwidget.cpp" line="288"/>
+        <source>jumper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pcbsketchwidget.cpp" line="294"/>
+        <source>Create Trace from this Ratsnest Wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/pcbsketchwidget.cpp" line="295"/>
+        <source>trace</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1756,11 +1756,11 @@ void MainWindow::createTraceMenuActions() {
 	m_autorouteAct->setStatusTip(tr("Autoroute..."));
 	connect(m_autorouteAct, SIGNAL(triggered()), this, SLOT(autoroute()));
 
-	m_createTraceAct = new QAction(tr("&Create Trace"), this);
+	m_createTraceAct = new QAction(tr("&Create Trace from this Ratsnest Wire"), this);
 	m_createTraceAct->setStatusTip(tr("Create a trace from the selected wire"));
 	connect(m_createTraceAct, SIGNAL(triggered()), this, SLOT(createTrace()));
 
-	m_createJumperAct = new QAction(tr("&Create Jumper Wire"), this);
+	m_createJumperAct = new QAction(tr("&Create Jumper from this Ratsnest Wire"), this);
 	m_createJumperAct->setStatusTip(tr("Create a jumper wire from the selected wire"));
 	connect(m_createJumperAct, SIGNAL(triggered()), this, SLOT(createJumper()));
 
