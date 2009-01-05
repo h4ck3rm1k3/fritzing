@@ -29,6 +29,7 @@ $Date$
 
 #include <QApplication>
 #include <QTranslator>
+#include <QPixmap>
 
 class FApplication :
 	public QApplication
@@ -48,6 +49,10 @@ public:
 	
 signals:
 	void spaceBarIsPressedSignal(bool);
+	
+public slots:
+	void preferences();
+
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -55,6 +60,7 @@ protected:
 	bool findTranslator(const QString & libPath);
 	void loadNew(QString path);
 	void loadOne(class MainWindow *, QString path, int loaded);
+	void initSplash(class FSplashScreen & splash, int & progressIndex, QPixmap & pixmap);
 	
 protected:
 	static bool m_spaceBarIsPressed;
@@ -64,6 +70,7 @@ protected:
 	static class PaletteModel * m_paletteBinModel;
 	static bool m_started;
 	static QList<QString> m_filesToLoad;
+	static QString m_libPath;
 
 };
 

@@ -61,6 +61,7 @@ HEADERS += src/abstractstatesbutton.h \
     src/partinstancestuff.h \
     src/pcbsketchwidget.h \
     src/pcbschematicsketchwidget.h \
+    src/prefsdialog.h \
     src/rendererviewthing.h \
     src/schematicsketchwidget.h \
     src/sketchareawidget.h \
@@ -129,6 +130,7 @@ SOURCES += src/aboutbox.cpp \
     src/partinstancestuff.cpp \
     src/pcbsketchwidget.cpp \
     src/pcbschematicsketchwidget.cpp \
+    src/prefsdialog.cpp \
     src/rendererviewthing.cpp \
     src/schematicsketchwidget.cpp \
     src/sketchareawidget.cpp \

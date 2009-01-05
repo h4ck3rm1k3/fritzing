@@ -30,6 +30,7 @@ $Date$
 #include "mainwindow.h"
 #include "fsplashscreen.h"
 #include "version.h"
+#include "prefsdialog.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -41,6 +42,7 @@ $Date$
 #include <QLocale>
 #include <QFileOpenEvent>
 #include <QThread>
+#include <QMessageBox>
 
 bool FApplication::m_spaceBarIsPressed = false;
 QString FApplication::m_openSaveFolder = ___emptyString___;
@@ -49,6 +51,7 @@ ReferenceModel * FApplication::m_referenceModel = NULL;
 PaletteModel * FApplication::m_paletteBinModel = NULL;
 bool FApplication::m_started = false;
 QList<QString> FApplication::m_filesToLoad;
+QString FApplication::m_libPath;
 
 static int kBottomOfAlpha = 206;
 
@@ -88,11 +91,11 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	QString lib = "/lib";
 #endif
 	
-	QString libPath = applicationDirPath() + lib;   // applicationDirPath() doesn't work until after QApplication is instantiated
-	addLibraryPath(libPath);							// tell app where to search for plugins (jpeg export and sql lite)
+	m_libPath = applicationDirPath() + lib;   // applicationDirPath() doesn't work until after QApplication is instantiated
+	addLibraryPath(m_libPath);							// tell app where to search for plugins (jpeg export and sql lite)
 	
 	// !!! translator must be installed before any widgets are created !!!
-	findTranslator(libPath);
+	findTranslator(m_libPath);
 
 	Q_INIT_RESOURCE(phoenixresources);
 }
@@ -193,37 +196,10 @@ bool FApplication::findTranslator(const QString & libPath) {
 
 int FApplication::startup(int & argc, char ** argv) 
 {
+	int progressIndex;
     QPixmap pixmap(":/resources/images/splash_2010.png");
-    FSplashScreen splash(pixmap);
-	
-	QPixmap logo(":/resources/images/fhp_logo_small.png");
-	QPixmap progress(":/resources/images/splash_progressbar.png");
-	
-	int progressIndex = splash.showPixmap(progress, QPoint(0, pixmap.height() - progress.height()));
-	splash.showProgress(progressIndex, 0);
-	
-	// put this above the progress indicator
-	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
-	
-	QColor w(0xea, 0xf4, 0xed);
-	QRect r1(45, kBottomOfAlpha, pixmap.width() - 45, 20);
-	QString msg1 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
-							   "&#169; 2007-%1 Fachhochschule Potsdam"
-							   "</font>")
-	.arg(Version::year());
-	splash.showMessage(msg1, r1, Qt::AlignLeft | Qt::AlignTop, w);
-	
-	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
-	QString msg2 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
-							   "Version %1.%2 (%3%4)"
-							   "</font>")
-	.arg(Version::majorVersion())
-	.arg(Version::minorVersion())
-	.arg(Version::modifier())
-	.arg(Version::shortDate());
-	splash.showMessage(msg2, r2, Qt::AlignRight | Qt::AlignTop, w);
-    splash.show();
-	
+    FSplashScreen splash(pixmap);	
+	initSplash(splash, progressIndex, pixmap);
 	QApplication::processEvents();			// seems to need this (sometimes?) to display the splash screen
 	
 	QCoreApplication::setOrganizationName("Fritzing");
@@ -382,3 +358,47 @@ void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 		loadNew(path);
 	}
 }
+
+void FApplication::preferences() {
+	QDir dir(m_libPath + "/translations");
+	QStringList nameFilters;
+	nameFilters << "*.qm";
+    QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+	
+
+	PrefsDialog prefsDialog(list, NULL);    // TODO: use the topmost MainWindow as parent
+	if (QDialog::Accepted == prefsDialog.exec()) {
+	}
+	
+}
+
+void FApplication::initSplash(FSplashScreen & splash, int & progressIndex, QPixmap & pixmap) {
+	QPixmap logo(":/resources/images/fhp_logo_small.png");
+	QPixmap progress(":/resources/images/splash_progressbar.png");
+	
+	progressIndex = splash.showPixmap(progress, QPoint(0, pixmap.height() - progress.height()));
+	splash.showProgress(progressIndex, 0);
+	
+	// put this above the progress indicator
+	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
+	
+	QColor w(0xea, 0xf4, 0xed);
+	QRect r1(45, kBottomOfAlpha, pixmap.width() - 45, 20);
+	QString msg1 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
+							   "&#169; 2007-%1 Fachhochschule Potsdam"
+							   "</font>")
+	.arg(Version::year());
+	splash.showMessage(msg1, r1, Qt::AlignLeft | Qt::AlignTop, w);
+	
+	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
+	QString msg2 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
+							   "Version %1.%2 (%3%4)"
+							   "</font>")
+	.arg(Version::majorVersion())
+	.arg(Version::minorVersion())
+	.arg(Version::modifier())
+	.arg(Version::shortDate());
+	splash.showMessage(msg2, r2, Qt::AlignRight | Qt::AlignTop, w);
+    splash.show();
+}
+

@@ -1,0 +1,60 @@
+/*******************************************************************
+
+Part of the Fritzing project - http://fritzing.org
+Copyright (c) 2007-08 Fachhochschule Potsdam - http://fh-potsdam.de
+
+Fritzing is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fritzing is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************
+
+$Revision: 1490 $:
+$Author: cohen@irascible.com $:
+$Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
+
+********************************************************************/
+
+
+#ifndef PREFSDIALOG_H
+#define PREFSDIALOG_H
+
+#include <QDialog>
+#include <QEvent>
+#include <QTextEdit>
+#include <QFile>
+#include <QAbstractListModel>
+#include <QFileInfoList>
+
+class TranslatorListModel : public  QAbstractListModel
+{
+	Q_OBJECT
+
+public:
+	TranslatorListModel(QFileInfoList &, QObject* parent = 0);
+	
+	QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+	int rowCount ( const QModelIndex & parent = QModelIndex() ) const ;
+};
+
+class PrefsDialog : public QDialog
+{
+	Q_OBJECT
+
+public:
+	PrefsDialog(QFileInfoList & list, QWidget *parent = 0);
+	~PrefsDialog();
+
+
+};
+
+#endif 

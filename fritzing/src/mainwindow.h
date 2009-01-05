@@ -141,7 +141,6 @@ protected slots:
 	void openPartsReference();
 	void visitFritzingDotOrg();
 	void updateWindowMenu();
-	void preferences();
 	void pageSetup();
 	void sendToBack();
 	void sendBackward();

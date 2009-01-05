@@ -825,7 +825,7 @@ void MainWindow::createEditMenuActions() {
 
 	m_preferencesAct = new QAction(tr("&Preferences..."), this);
 	m_preferencesAct->setStatusTip(tr("Show the application's about box"));
-	connect(m_preferencesAct, SIGNAL(triggered()), this, SLOT(preferences()));
+	connect(m_preferencesAct, SIGNAL(triggered()), QApplication::instance(), SLOT(preferences()));
 }
 
 void MainWindow::createPartMenuActions() {
@@ -1616,14 +1616,6 @@ void MainWindow::updateWindowMenu() {
 
 void MainWindow::pageSetup() {
 	notYetImplemented("Page Setup");
-}
-
-void MainWindow::preferences() {
-	QString text =
-		tr("This will soon provide the ability to set some preferences. "
-		"such as your default sketch folder, your fritzing.org login name, etc.\n"
-		"Please stay tuned.");
-	QMessageBox::information(this, tr("Fritzing"), text);
 }
 
 void MainWindow::notYetImplemented(QString action) {
