@@ -3,7 +3,7 @@
 <module fritzingVersion="0.1.1201" moduleId="$metaData.moduleID">
     <version>1.0</version>
     <title>$resistance Resistor</title>
-    <defaultLabel>R</defaultLabel>
+    <label>R</label>
     <author>$metaData.author</author>
     <date>$metaData.date</date>
     <tags>
@@ -37,6 +37,10 @@
         <pcbView>
             <layers image="pcb/resistor-025W.svg">
                 <layer layerId="copper0" />
+			    <layer layerId="keepout" />
+			    <layer layerId="soldermask" />
+			    <layer layerId="silkscreen" />
+			    <layer layerId="outline" />
             </layers>
         </pcbView>
     </views>

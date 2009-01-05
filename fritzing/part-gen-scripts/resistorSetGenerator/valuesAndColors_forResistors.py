@@ -41,7 +41,7 @@ E6Set = [100, 150, 220, 330, 470, 680]
 E12Set = [100, 120, 150, 180, 220, 270, 330, 390, 470, 560, 680, 820]
 E24Set = [100, 110, 120, 130, 150, 160, 180, 200, 220, 240, 270, 300, 330, 360, 390, 430, 470, 510, 560, 620, 680, 750, 820, 910]
 
-NamedSets = {'E3': E3Set, 'E6': E6Set, 'E12': E12Set, 'E24': E24Set}
+NamedSets = {'e3': E3Set, 'e6': E6Set, 'e12': E12Set, 'e24': E24Set}
  
 SetMultiplication = [0.1, 1, 10, 100, 1000, 10000]
 letterDict = { 'k': 1000, 'M': 1000000, 'G': 1000000000}
@@ -61,7 +61,7 @@ colors = { 'black': (0, 0, 0),
 def resistorSetForSetName(setName):
 	if (setName[-3:].lower() == 'Set'.lower()):
 		setName = setName[:-3]
-	if NamedSets.has_key(setName):
+	if NamedSets.has_key(setName.lower()):
 		currentSet = NamedSets[setName]
 		resistorSet = []
 		for m in SetMultiplication:

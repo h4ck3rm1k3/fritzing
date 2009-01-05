@@ -34,17 +34,23 @@ resistorSetGenerator.py
 import sys, getopt, ConfigParser, os, uuid
 from datetime import date
 from Cheetah.Template import Template
+from xml.dom import minidom
+
 
 import valuesAndColors_forResistors
 
 help_message = """
 Usage:
-	resistorSetGenerator.py -s [Resistor Set] -o [Output Dir]
+	resistorSetGenerator.py -s [Resistor Set] -o [Output Dir] -b [Existing Resistor Bin]
 	
-	Resistor Set - the named set of standard resistors that should be generated
-					Possible values are: E3, E6, E12, E24 for the E3Set, E6Set etc.
+	Resistor Set          - the named set of standard resistors that should be generated
+					        Possible values are: E3, E6, E12, E24 for the E3Set, E6Set etc.
 					
-	Output Dir - the location where the output files are written
+	Output Dir            - the location where the output files are written
+	
+	Existing Resistor Bin - the Fritzing bin file (.fzb) from which this script should try
+	                        to find the matching moduleID's. If no bin is given, all new
+	                        resistors with new moduleID's will be generated. 
 """
 
 
@@ -88,6 +94,38 @@ def getConfigFile(fileName):
 		print >> sys.stderr, "Script Package Incomplete: Couldn't load the config file: %s" % (fileName)
 		sys.exit(2)
 
+def getExistingResistorsFromBin(filename):
+	if os.path.exists(filename):
+		# Load the bin file as xml
+		try:
+			binFile = open(filename)
+			xmldoc = minidom.parse(binFile).documentElement
+			binFile.close()
+		except (IOError, OSError):
+			print >> sys.stderr, "Couldn't open bin: %s " % (fileName)
+			sys.exit(2)
+		# See if the bin got any resistors
+		foundResistors = []
+		for aPart in xmldoc.getElementsByTagName("instance"):
+			# print aPart
+			# print aPart.attributes.keys()
+			if aPart.attributes.has_key("path") and aPart.attributes.has_key("moduleIdRef"):
+				partFilename = os.path.split(aPart.attributes["path"].value)[1]
+				if (partFilename.startswith("resistor_")):
+					# There is a resistor. Strip of the resistor_ and .fz part
+					resistorValueString = os.path.splitext(partFilename)[0][9:]
+					thisResistor = {}
+					thisResistor['value'] = resistorValueString.replace("_", ".")
+					thisResistor['moduleID'] = aPart.attributes["moduleIdRef"].value
+					foundResistors.append(thisResistor)
+			else:
+				print "Couldn't determine following part in bin, because it has no path and moduleIdRef property: %s" % (aPart.toxml())
+		return foundResistors
+	else:
+		print >> sys.stderr, "No Fritzing bin file: %s found" % (fileName)
+		sys.exit(2)
+	
+
 def writeOutFileInSubDirectoryWithData(outputDir,  subDirectory, fileName, data):
 	outputDir = os.path.join(outputDir, subDirectory)
 	if not os.path.exists(outputDir):
@@ -101,13 +139,14 @@ def main(argv=None):
 		argv = sys.argv
 	try:
 		try:
-			opts, args = getopt.getopt(argv[1:], "ho:s:", ["help", "output=", "set="])
+			opts, args = getopt.getopt(argv[1:], "ho:s:b:", ["help", "output=", "set=", "bin="])
 		except getopt.error, msg:
 			raise Usage(msg)
 		
-		output = "."	
+		output = "."
 		verbose = False
 		namedSet = None
+		existingBin = None
 	
 		# option processing
 		for option, value in opts:
@@ -117,6 +156,8 @@ def main(argv=None):
 				output = value
 			if option in ("-s", "--set"):
 				namedSet = value
+			if option in ("-b", "--bin"):
+				existingBin = value
 		
 		if(not(namedSet) or not(output)):
 			print >> sys.stderr, "No Resistor Set or Output Dir specified"
@@ -127,36 +168,55 @@ def main(argv=None):
 		
 		resistorSet = valuesAndColors_forResistors.resistorSetForSetName(namedSet)
 		print "number of resistors in set: %d" % (len(resistorSet))
+		
+		# Analyzing bin for existing resistor moduleID's
+		existingResistors = []
+		if existingBin:
+			print "analyzing bin for existing resistor moduleID's ..."
+			existingResistors = getExistingResistorsFromBin(existingBin)
+			existingResistorsValues = [r['value'] for r in existingResistors]
+			
 		resistorBin = []
+		skipThisResistor = False
 		for r in resistorSet:
 			sL = {}
 			metaData = {}
 			resistorInBin = {}
-			metaData['moduleID'] = makeUUID()
-			metaData['date'] = makeDate()
-			metaData['author'] = getUserName()
-			sL['metaData'] = metaData
 			resistanceString = valuesAndColors_forResistors.valueStringFromValue(r)
-			sL['resistance'] = resistanceString
-			# sL['taxonomy'] = "discreteParts.resistor.%s" % (resistanceString)
-			# The resistance with the dot notation in the taxonomy might be a problem, so we'd better do:
-			sL['taxonomy'] = "discreteParts.resistor.%d" % (r)
-			sL['colorBands'] = valuesAndColors_forResistors.hexColorsForResistorValue(r)
-			# Breadboard svg
-			svg = Template(file=getTemplatefile("resistor_breadboard_svg.tmpl"), searchList = [sL])
-			writeOutFileInSubDirectoryWithData(output, "breadboard", "resistor_%s.svg" % (resistanceString), svg)
-			# Icon svg
-			svg = Template(file=getTemplatefile("resistor_icon_svg.tmpl"), searchList = [sL])
-			writeOutFileInSubDirectoryWithData(output, "icon", "resistor_icon_%s.svg" % (resistanceString), svg)
-			# Partfile fz
-			# TODO Part should be a .fzp file
-			fzfilename = "resistor_%s.fz" % valuesAndColors_forResistors.valueStringWithoutDots(r)
-			fz = Template(file=getTemplatefile("resistor_fz.tmpl"), searchList = [sL])
-			writeOutFileInSubDirectoryWithData(output, "fz_files", fzfilename, fz)
-			# For in the bin
-			resistorInBin['moduleID'] = metaData['moduleID']
-			resistorInBin['filename'] = fzfilename
-			resistorBin.append(resistorInBin)
+			# check if this resistor doesn't have a moduleID already 
+			if existingResistors and (resistanceString in existingResistorsValues):
+				if (not config.getboolean('ExistingResistors', 'regenerateExitsingParts')):
+					# Don't regnerate this resistor (leave it out the new set)
+					print "Skipping %s resistor, because it is already in the existing bin" % (resistanceString)
+					skipThisResistor = True
+				i = existingResistorsValues.index(resistanceString)
+				metaData['moduleID'] = existingResistors[i]['moduleID']
+			else:
+				metaData['moduleID'] = makeUUID()
+			if (not skipThisResistor):
+				metaData['date'] = makeDate()
+				metaData['author'] = getUserName()
+				sL['metaData'] = metaData
+				sL['resistance'] = resistanceString
+				# sL['taxonomy'] = "discreteParts.resistor.%s" % (resistanceString)
+				# The resistance with the dot notation in the taxonomy might be a problem, so we'd better do:
+				sL['taxonomy'] = "discreteParts.resistor.%d" % (r)
+				sL['colorBands'] = valuesAndColors_forResistors.hexColorsForResistorValue(r)
+				# Breadboard svg
+				svg = Template(file=getTemplatefile("resistor_breadboard_svg.tmpl"), searchList = [sL])
+				writeOutFileInSubDirectoryWithData(output, "breadboard", "resistor_%s.svg" % (resistanceString), svg)
+				# Icon svg
+				svg = Template(file=getTemplatefile("resistor_icon_svg.tmpl"), searchList = [sL])
+				writeOutFileInSubDirectoryWithData(output, "icon", "resistor_icon_%s.svg" % (resistanceString), svg)
+				# Partfile fz
+				# TODO Part should be a .fzp file
+				fzfilename = "resistor_%s.fz" % valuesAndColors_forResistors.valueStringWithoutDots(r)
+				fz = Template(file=getTemplatefile("resistor_fz.tmpl"), searchList = [sL])
+				writeOutFileInSubDirectoryWithData(output, "fz_files", fzfilename, fz)
+				# For in the bin
+				resistorInBin['moduleID'] = metaData['moduleID']
+				resistorInBin['filename'] = fzfilename
+				resistorBin.append(resistorInBin)
 		# Bin file
 		if (config.getboolean('OutputBin', 'outputBin')):
 			sL = {}
