@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name></name>
     <message>
@@ -545,7 +546,7 @@
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="241"/>
         <source>&amp;Import Footprint:</source>
-        <translation type="unfinished">Lötpad &amp;importieren:</translation>
+        <translation>Anschlussbild &amp;importieren:</translation>
     </message>
     <message>
         <location filename="../src/partseditor/mainpartseditorwindow.cpp" line="256"/>
@@ -830,7 +831,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="426"/>
         <source>Fritzing Files (*%1 *%1z);;Fritzing (*%1);;Fritzing Shareable (*%1z)</source>
-        <translation type="unfinished">Fritzing Datei (*%1 *%1z);;Fritzing (*%1);;Fritzing Mitbenutzbar (*%1z)</translation>
+        <translation>Fritzing Datei (*%1 *%1z);;Fritzing (*%1);;Fritzing-Paket (*%1z)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="445"/>
@@ -911,7 +912,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="661"/>
         <source>Save As Shareable...</source>
-        <translation type="unfinished">Speichern als teilbar...</translation>
+        <translation>Speichern als Paket...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="662"/>
@@ -1655,27 +1656,27 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/mainwindow.cpp" line="760"/>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest Du die Bauteile behalten, die mit dem Paket %1 geladen wurden?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="994"/>
         <source>Unable to export %1 to shareable sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Entwurf %1 konnte nicht als Paket exportiert werden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1011"/>
         <source>Unable to open shareable sketch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Paket %1 konnte nicht gelesen werden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1759"/>
         <source>&amp;Create Trace from this Ratsnest Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>In &amp;Leiterbahn umwandeln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1763"/>
         <source>&amp;Create Jumper from this Ratsnest Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>In &amp;Schaltdraht umwandeln</translation>
     </message>
 </context>
 <context>
@@ -1706,22 +1707,22 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="287"/>
         <source>Create Jumper from this Ratsnest Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>In &amp;Schaltdraht umwandeln</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="288"/>
         <source>jumper</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltdraht</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="294"/>
         <source>Create Trace from this Ratsnest Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>In &amp;Leiterbahn umwandeln</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="295"/>
         <source>trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahn</translation>
     </message>
 </context>
 <context>
@@ -2188,7 +2189,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partseditor/svgview.cpp" line="136"/>
         <source>The file %1 is not a Fritzing Footprint XML file.</source>
-        <translation>Die Datei %1 ist keine Fritzing Lötflächen-Datei.</translation>
+        <translation>Die Datei %1 ist keine Fritzing Anschlussbild-Datei.</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="36"/>
@@ -2298,7 +2299,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="61"/>
         <source>Solder mask</source>
-        <translation>Lötmaske</translation>
+        <translation>Lötstoppmaske</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="62"/>
@@ -2313,7 +2314,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="64"/>
         <source>Keep out</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbot</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="65"/>
@@ -2396,12 +2397,12 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
     <message>
         <location filename="../src/partseditor/svgview.cpp" line="105"/>
         <source>Select Footprint XML File</source>
-        <translation>Lötflächen-Datei auswählen</translation>
+        <translation>Anschlussbild-Datei auswählen</translation>
     </message>
     <message>
         <location filename="../src/partseditor/svgview.cpp" line="106"/>
         <source>Fritzing Footprint XML Files (*.fzp);;All Files (*)</source>
-        <translation>Fritzing Lötflächen-Datei (*.fzp);;Alle Dateien (*)</translation>
+        <translation>Fritzing Anschlussbild-Datei (*.fzp);;Alle Dateien (*)</translation>
     </message>
 </context>
 <context>
@@ -2409,7 +2410,7 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="780"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
-        <translation type="unfinished">Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
+        <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
     <message>
         <location filename="../src/schematicsketchwidget.cpp" line="782"/>
