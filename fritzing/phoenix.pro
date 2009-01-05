@@ -30,6 +30,10 @@ win32 {
 	INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
 	DEFINES += _CRT_SECURE_NO_DEPRECATE
 }
+macx {
+	CONFIG += x86 ppc
+	QMAKE_INFO_PLIST = FritzingInfo.plist
+}
 ICON = resources/images/fritzing_icon.icns
 QT += core \
     gui \

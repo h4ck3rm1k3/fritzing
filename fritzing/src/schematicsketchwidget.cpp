@@ -117,7 +117,8 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 		useTo = true;
 	}
 
-	if (useFrom && useTo) {
+	if (useFrom && useTo) {  
+		// plugged part into arduino, for example
 		makeOneRatsnestWire(fromConnectorItem, toConnectorItem, ratsnestCommand);
 		return;
 	}
@@ -125,6 +126,7 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 	if (useFrom && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		ConnectorItem * newTo = tryWire(toConnectorItem, fromConnectorItem);
 		if (newTo != NULL) {
+			// drag a part onto a wire which is already connected to a part at the other end, for example
 			makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
 			return;
 		}
@@ -132,6 +134,7 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 	else if (useTo && fromConnectorItem->attachedToItemType() == ModelPart::Wire) {
 		ConnectorItem * newFrom = tryWire(fromConnectorItem, toConnectorItem);
 		if (newFrom != NULL) {
+			// drew a wire from one part to another, for example
 			makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
 			return;
 		}
@@ -144,7 +147,8 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 	ConnectorItem::collectParts(connectorItems, partsConnectorItems);
 	if (useFrom) {
 		ConnectorItem * newTo = tryParts(fromConnectorItem, toConnectorItem, partsConnectorItems);
-		if (newTo != NULL) {
+		if (newTo != NULL) { 
+			// plugged two parts into breadboard bus, for example
 			makeOneRatsnestWire(fromConnectorItem, newTo, ratsnestCommand);
 			return;
 		}
@@ -152,6 +156,7 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 	else if (useTo) {
 		ConnectorItem * newFrom = tryParts(toConnectorItem, fromConnectorItem, partsConnectorItems);
 		if (newFrom != NULL) {
+			// drawing a wire from a breadboard to a part, with another part already connected to the same bus, for example
 			makeOneRatsnestWire(toConnectorItem, newFrom, ratsnestCommand);
 			return;
 		}
@@ -166,7 +171,8 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 
 				if (alreadyOnBus(ci, cj)) continue;
 				if (alreadyOnBus(cj, ci)) continue;
-
+				// for example, wire hooks up two buses on breadboard, with parts attached to each bus
+				// or wire connects to wire which connects two parts
 				makeOneRatsnestWire(ci, cj, ratsnestCommand);
 				return;
 			}
