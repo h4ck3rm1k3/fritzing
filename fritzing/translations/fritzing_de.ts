@@ -3,11 +3,6 @@
 <context>
     <name></name>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="44"/>
-        <source>Parts</source>
-        <translation type="obsolete">Bauteile</translation>
-    </message>
-    <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="38"/>
         <source>Mismatching Connector IDs</source>
         <translation>Nicht übereinstimmende Verbindungs-IDs</translation>
@@ -348,11 +343,6 @@
         <source>Navigator</source>
         <translation>Navigator</translation>
     </message>
-    <message>
-        <location filename="src/dockmanager.cpp" line="94"/>
-        <source>Console</source>
-        <translation type="obsolete">Konsole</translation>
-    </message>
 </context>
 <context>
     <name>FritzingWindow</name>
@@ -677,11 +667,6 @@
         <translation>%1 speichern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="760"/>
-        <source>Do you want to keep the parts that were loaded with this bundled sketch %1?</source>
-        <translation type="obsolete">Möchtest Du die Bauteile behalten, die mit dem geteilten Entwurf %1 geladen wurden?</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="942"/>
         <source>Specify a file name</source>
         <translation>Dateinamen auswählen</translation>
@@ -697,16 +682,6 @@
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="994"/>
-        <source>Unable to export %1 to bundled</source>
-        <translation type="obsolete">Der Entwurf %1 konnte nicht exportiert werden</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1011"/>
-        <source>Unable to open bundled file %1</source>
-        <translation type="obsolete">Der geteilte Entwurf %1 konnte nicht gelesen werden</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>No connections to route</source>
         <translation>Keine Verbindungen zu routen</translation>
@@ -717,42 +692,12 @@
         <translation>Routing fertiggestellt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1135"/>
-        <source>Routing completed using %1 jumper %2</source>
-        <translation type="unfinished">Routing beendet, mit Hilfe von %1 Schaltdrähten</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1136"/>
-        <source>wire</source>
-        <translation>Kabel</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1136"/>
-        <source>wires</source>
-        <translation>Kabel</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1140"/>
-        <source>%1 of %2 nets routed - %3 %4 still to be routed</source>
-        <translation type="unfinished">%1 von %2 Netzen geroutet - %3 Verbindungen noch zu routen</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1143"/>
-        <source>connector</source>
-        <translation>Verbindung</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1143"/>
-        <source>connectors</source>
-        <translation>Verbindungen</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1268"/>
+        <location filename="../src/mainwindow.cpp" line="1264"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1363"/>
+        <location filename="../src/mainwindow.cpp" line="1359"/>
         <source>View Switcher</source>
         <translation>Ansichtswechsler</translation>
     </message>
@@ -1559,14 +1504,6 @@
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1625"/>
-        <source>This will soon provide the ability to set some preferences. such as your default sketch folder, your fritzing.org login name, etc.
-Please stay tuned.</source>
-        <translation type="obsolete">Hier wird es bald die Möglichkeit geben, Einstellungen zu machen.
-(Z.B. den Standard-Fritzing-Ordner, Deinen fritzing.org-Login, etc.)
-Wir bitten um etwas Geduld.</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow_menu.cpp" line="1623"/>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
         <translation>Entschuldige bitte, &quot;%1&quot; haben wir noch nicht fertig..</translation>
@@ -1588,19 +1525,9 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Autorouting/Entflechtungs-Prozess starten</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1759"/>
-        <source>&amp;Create Trace</source>
-        <translation type="obsolete">&amp;In Leiterbahn umwandeln</translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow_menu.cpp" line="1752"/>
         <source>Create a trace from the selected wire</source>
         <translation>Ausgewählten Draht in eine Leiterbahn umwandeln</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1763"/>
-        <source>&amp;Create Jumper Wire</source>
-        <translation type="obsolete">&amp;In Schaltdraht umwandeln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1756"/>
@@ -1677,6 +1604,22 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <source>&amp;Create Jumper from this Ratsnest Wire</source>
         <translation>In &amp;Schaltdraht umwandeln</translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/mainwindow.cpp" line="1134"/>
+        <source>Routing completed using %n jumper(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/mainwindow.cpp" line="1137"/>
+        <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1698,11 +1641,6 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
 </context>
 <context>
     <name>PCBSketchWidget</name>
-    <message>
-        <location filename="../src/pcbsketchwidget.cpp" line="294"/>
-        <source>Create trace wire</source>
-        <translation type="obsolete">Leiterbahn erstellen</translation>
-    </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="287"/>
         <source>Create Jumper from this Ratsnest Wire</source>
@@ -2061,19 +1999,14 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Sortiment konnte nicht geladen werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1178"/>
+        <location filename="../src/mainwindow.cpp" line="1174"/>
         <source>Part</source>
         <translation>Bauteil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1187"/>
+        <location filename="../src/mainwindow.cpp" line="1183"/>
         <source>Wire</source>
         <translation>Kabel</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1751"/>
-        <source>Autorouting...</source>
-        <translation type="obsolete">Autorouting.  Bitte warten...</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="171"/>
@@ -2480,16 +2413,6 @@ Please stay tuned.</source>
         <location filename="../src/sketchwidget.cpp" line="887"/>
         <source>Deselect</source>
         <translation>Auswahl zurücksetzen</translation>
-    </message>
-    <message>
-        <location filename="../src/sketchwidget.cpp" line="800"/>
-        <source>Duplicate</source>
-        <translation type="obsolete">Duplizieren</translation>
-    </message>
-    <message>
-        <location filename="../src/sketchwidget.cpp" line="901"/>
-        <source>Paste</source>
-        <translation type="obsolete">Einfügen</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1131"/>

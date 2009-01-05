@@ -36,13 +36,10 @@ static QVariant emptyVariant;
 TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* parent)
 : QAbstractListModel(parent) 
 {
-	QLocale * locale = new QLocale("en");
-	m_localeList.append(locale);
-
 	foreach (QFileInfo fileinfo, fileInfoList) {
 		QString name = fileinfo.baseName();
 		name.replace("fritzing_", "");
-		locale = new QLocale(name);
+		QLocale * locale = new QLocale(name);
 		m_localeList.append(locale);
 	}
 }
@@ -87,7 +84,14 @@ int TranslatorListModel::findIndex(const QString & language) {
 		ix++;
 	}
 
+	ix = 0;
+	foreach (QLocale * locale, m_localeList) {
+		if (locale->name().startsWith("en")) return ix;
+		ix++;
+	}
+
 	return 0;
+
 }
 
 /////////////////////////////////////
@@ -95,6 +99,9 @@ int TranslatorListModel::findIndex(const QString & language) {
 PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget *parent)
 	: QDialog(parent)
 {
+
+	// TODO: if no translation files found, don't put up the translation part of this dialog
+
 	m_name = language;
 	m_cleared = false;
 

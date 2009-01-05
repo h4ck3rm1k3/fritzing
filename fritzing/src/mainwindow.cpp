@@ -1131,16 +1131,12 @@ void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connect
 			theText = tr("Routing completed");
 		}
 		else {
-			theText = tr("Routing completed using %1 jumper %2")
-				.arg(jumpers)
-				.arg(makeGrammaticalNumber(jumpers, tr("wire"), tr("wires")));
+			theText = tr("Routing completed using %n jumper(s)", "", jumpers);
 		}
 	} else {
-		theText = tr("%1 of %2 nets routed - %3 %4 still to be routed")
+		theText = tr("%1 of %2 nets routed - %n connector(s) still to be routed", "", connectorsLeftToRoute)
 			.arg(netRoutedCount)
-			.arg(netCount)
-			.arg(connectorsLeftToRoute)
-			.arg(makeGrammaticalNumber(connectorsLeftToRoute, tr("connector"), tr("connectors")));
+			.arg(netCount);
 	}
 	m_routingStatusLabel->setLabelText(theText);
 

@@ -691,42 +691,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1135"/>
-        <source>Routing completed using %1 jumper %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1136"/>
-        <source>wire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1136"/>
-        <source>wires</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1140"/>
-        <source>%1 of %2 nets routed - %3 %4 still to be routed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1143"/>
-        <source>connector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1143"/>
-        <source>connectors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="1268"/>
+        <location filename="../src/mainwindow.cpp" line="1264"/>
         <source>%1 - [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1363"/>
+        <location filename="../src/mainwindow.cpp" line="1359"/>
         <source>View Switcher</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1632,6 +1602,22 @@
         <source>&amp;Create Jumper from this Ratsnest Wire</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/mainwindow.cpp" line="1134"/>
+        <source>Routing completed using %n jumper(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/mainwindow.cpp" line="1137"/>
+        <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2010,12 +1996,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1178"/>
+        <location filename="../src/mainwindow.cpp" line="1174"/>
         <source>Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1187"/>
+        <location filename="../src/mainwindow.cpp" line="1183"/>
         <source>Wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2422,16 +2408,6 @@ Please stay tuned.</source>
         <location filename="../src/sketchwidget.cpp" line="887"/>
         <source>Deselect</source>
         <translation type="unfinished">Désélectionner</translation>
-    </message>
-    <message>
-        <location filename="../src/sketchwidget.cpp" line="800"/>
-        <source>Duplicate</source>
-        <translation type="obsolete">Dupliquer</translation>
-    </message>
-    <message>
-        <location filename="../src/sketchwidget.cpp" line="901"/>
-        <source>Paste</source>
-        <translation type="obsolete">Coller</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1131"/>

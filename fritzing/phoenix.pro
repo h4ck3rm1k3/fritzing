@@ -54,4 +54,5 @@ include(help.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \
-	translations/fritzing_fr.ts
+	translations/fritzing_fr.ts \
+	translations/fritzing_en.ts 

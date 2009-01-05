@@ -31,13 +31,6 @@ $Date$
 #include <QCoreApplication>
 #include <QDir>
 
-
-const QString& makeGrammaticalNumber(int count, const QString& singular, const QString& plural) {
-	if (count == 1) return singular;
-
-	return plural;
-}
-
 // finds the user parts folder based on local desktop (OS) defaults
 QString getUserPartsFolder(){
 	return QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/UserCreatedParts";
