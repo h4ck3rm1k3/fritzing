@@ -180,11 +180,11 @@ bool FApplication::event(QEvent *event)
 }
 
 bool FApplication::findTranslator(const QString & libPath) {
-    QString suffix = QLocale::system().name();	   // Returns the language and country of this locale as a string of the form "language_country", where language is a lowercase, two-letter ISO 639 language code, and country is an uppercase, two-letter ISO 3166 country code.
-    
-	// uncomment and change this to load a translator if it's different from the language your system is running
-	//QLocale other(QLocale::German);  // or for example:  other(QLocale::German, QLocale::Germany);
-	//suffix = other.name();
+	QSettings settings("Fritzing","Fritzing");
+	QString suffix = settings.value("language").toString();
+	if (suffix.isEmpty()) {	
+		suffix = QLocale::system().name();	   // Returns the language and country of this locale as a string of the form "language_country", where language is a lowercase, two-letter ISO 639 language code, and country is an uppercase, two-letter ISO 3166 country code.
+	}
 	
     bool loaded = m_translator.load(QString("fritzing_") + suffix, libPath + "/translations");
 	if (loaded) {
@@ -364,12 +364,19 @@ void FApplication::preferences() {
 	QStringList nameFilters;
 	nameFilters << "*.qm";
     QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
+	QSettings settings("Fritzing","Fritzing");
+	QString language = settings.value("language").toString();
 	
-
-	PrefsDialog prefsDialog(list, NULL);    // TODO: use the topmost MainWindow as parent
+	PrefsDialog prefsDialog(language, list, NULL);			// TODO: use the topmost MainWindow as parent
 	if (QDialog::Accepted == prefsDialog.exec()) {
-	}
-	
+		if (prefsDialog.cleared()) {
+			settings.clear();
+		}
+		else {
+			QString name = prefsDialog.name();
+			settings.setValue("language", name);
+		}
+	}	
 }
 
 void FApplication::initSplash(FSplashScreen & splash, int & progressIndex, QPixmap & pixmap) {

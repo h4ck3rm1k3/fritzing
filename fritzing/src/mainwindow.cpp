@@ -224,9 +224,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_comboboxChanged = false;
 
 	QSettings settings("Fritzing","Fritzing");
-#ifndef QT_NO_DEBUG
-	settings.clear();
-#endif
 	if(!settings.value("main/state").isNull()) {
 		restoreState(settings.value("main/state").toByteArray());
 		restoreGeometry(settings.value("main/geometry").toByteArray());

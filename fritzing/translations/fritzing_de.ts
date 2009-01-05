@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
-<defaultcodec></defaultcodec>
 <context>
     <name></name>
     <message>
@@ -643,27 +642,27 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="557"/>
+        <location filename="../src/mainwindow.cpp" line="554"/>
         <source>Rotate</source>
         <translation>Drehen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="568"/>
+        <location filename="../src/mainwindow.cpp" line="565"/>
         <source>Flip</source>
         <translation>Umdrehen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="577"/>
+        <location filename="../src/mainwindow.cpp" line="574"/>
         <source>Autoroute</source>
         <translation>Autoroute</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="581"/>
         <source>DIY Etching</source>
         <translation>Eigenherstellung</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="785"/>
+        <location filename="../src/mainwindow.cpp" line="782"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
@@ -673,7 +672,7 @@
         <translation>Fertig</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="758"/>
+        <location filename="../src/mainwindow.cpp" line="755"/>
         <source>Save %1</source>
         <translation>%1 speichern</translation>
     </message>
@@ -683,17 +682,17 @@
         <translation type="obsolete">Möchtest Du die Bauteile behalten, die mit dem geteilten Entwurf %1 geladen wurden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="945"/>
+        <location filename="../src/mainwindow.cpp" line="942"/>
         <source>Specify a file name</source>
         <translation>Dateinamen auswählen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="947"/>
+        <location filename="../src/mainwindow.cpp" line="944"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1747"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1739"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
@@ -708,52 +707,52 @@
         <translation type="obsolete">Der geteilte Entwurf %1 konnte nicht gelesen werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1131"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>No connections to route</source>
         <translation>Keine Verbindungen zu routen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1134"/>
+        <location filename="../src/mainwindow.cpp" line="1131"/>
         <source>Routing completed</source>
         <translation>Routing fertiggestellt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1138"/>
+        <location filename="../src/mainwindow.cpp" line="1135"/>
         <source>Routing completed using %1 jumper %2</source>
         <translation type="unfinished">Routing beendet, mit Hilfe von %1 Schaltdrähten</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1139"/>
+        <location filename="../src/mainwindow.cpp" line="1136"/>
         <source>wire</source>
         <translation>Kabel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1139"/>
+        <location filename="../src/mainwindow.cpp" line="1136"/>
         <source>wires</source>
         <translation>Kabel</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1143"/>
+        <location filename="../src/mainwindow.cpp" line="1140"/>
         <source>%1 of %2 nets routed - %3 %4 still to be routed</source>
         <translation type="unfinished">%1 von %2 Netzen geroutet - %3 Verbindungen noch zu routen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1146"/>
+        <location filename="../src/mainwindow.cpp" line="1143"/>
         <source>connector</source>
         <translation>Verbindung</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1146"/>
+        <location filename="../src/mainwindow.cpp" line="1143"/>
         <source>connectors</source>
         <translation>Verbindungen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1271"/>
+        <location filename="../src/mainwindow.cpp" line="1268"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1366"/>
+        <location filename="../src/mainwindow.cpp" line="1363"/>
         <source>View Switcher</source>
         <translation>Ansichtswechsler</translation>
     </message>
@@ -1563,28 +1562,28 @@
         <location filename="../src/mainwindow_menu.cpp" line="1625"/>
         <source>This will soon provide the ability to set some preferences. such as your default sketch folder, your fritzing.org login name, etc.
 Please stay tuned.</source>
-        <translation>Hier wird es bald die Möglichkeit geben, Einstellungen zu machen.
+        <translation type="obsolete">Hier wird es bald die Möglichkeit geben, Einstellungen zu machen.
 (Z.B. den Standard-Fritzing-Ordner, Deinen fritzing.org-Login, etc.)
 Wir bitten um etwas Geduld.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1631"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1623"/>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
         <translation>Entschuldige bitte, &quot;%1&quot; haben wir noch nicht fertig..</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1746"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1738"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
         <translation>Hier wird es bald eine Export-Möglichkeit von Fritzing zur professionellen EAGLE CAD-Software geben.
 Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf uns!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1755"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1747"/>
         <source>&amp;Autoroute</source>
         <translation>&amp;Autoroute</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1756"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1748"/>
         <source>Autoroute...</source>
         <translation>Autorouting/Entflechtungs-Prozess starten</translation>
     </message>
@@ -1594,7 +1593,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation type="obsolete">&amp;In Leiterbahn umwandeln</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1760"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1752"/>
         <source>Create a trace from the selected wire</source>
         <translation>Ausgewählten Draht in eine Leiterbahn umwandeln</translation>
     </message>
@@ -1604,22 +1603,22 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation type="obsolete">&amp;In Schaltdraht umwandeln</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1764"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1756"/>
         <source>Create a jumper wire from the selected wire</source>
         <translation>Ausgewählten Draht in einen Schaltdraht (Jumper Wire) umwandeln</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1767"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1759"/>
         <source>&amp;Exclude from Autoroute</source>
         <translation>Von Autoroute &amp;ausschließen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1768"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1760"/>
         <source>When autorouting, do not rip up this wire</source>
         <translation>Diese Leiterbahn beim Autorouting/Entflechtungs-Prozess nicht berücksichtigen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1774"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1766"/>
         <source>Autorouting...</source>
         <translation>Autorouting, bitte warten...</translation>
     </message>
@@ -1649,32 +1648,32 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Lade %1 (Schaltplan)</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1787"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1779"/>
         <source>Cancel autorouting</source>
         <translation>Autorouting abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="760"/>
+        <location filename="../src/mainwindow.cpp" line="757"/>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
         <translation>Möchtest Du die Bauteile behalten, die mit dem Paket %1 geladen wurden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="994"/>
+        <location filename="../src/mainwindow.cpp" line="991"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation>Der Entwurf %1 konnte nicht als Paket exportiert werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1011"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
         <source>Unable to open shareable sketch %1</source>
         <translation>Das Paket %1 konnte nicht gelesen werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1759"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1751"/>
         <source>&amp;Create Trace from this Ratsnest Wire</source>
         <translation>In &amp;Leiterbahn umwandeln</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1763"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1755"/>
         <source>&amp;Create Jumper from this Ratsnest Wire</source>
         <translation>In &amp;Schaltdraht umwandeln</translation>
     </message>
@@ -2047,12 +2046,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Leiterplatte-Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="109"/>
+        <location filename="../src/fapplication.cpp" line="397"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="116"/>
+        <location filename="../src/fapplication.cpp" line="404"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt;</translation>
     </message>
@@ -2062,12 +2061,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Sortiment konnte nicht geladen werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1181"/>
+        <location filename="../src/mainwindow.cpp" line="1178"/>
         <source>Part</source>
         <translation>Bauteil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1190"/>
+        <location filename="../src/mainwindow.cpp" line="1187"/>
         <source>Wire</source>
         <translation>Kabel</translation>
     </message>
@@ -2077,7 +2076,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation type="obsolete">Autorouting.  Bitte warten...</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="252"/>
+        <location filename="../src/prefsdialog.cpp" line="171"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -2372,6 +2371,38 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
         <location filename="../src/partseditor/hashpopulatewidget.cpp" line="38"/>
         <source>a value</source>
         <translation>ein Wert</translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="101"/>
+        <source>Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="112"/>
+        <source>Choose your preferred language:
+Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="137"/>
+        <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
+Please stay tuned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="151"/>
+        <source>Clear all saved settings and close this dialog (debug mode only).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="154"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="166"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

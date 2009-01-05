@@ -34,6 +34,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QFile>
 #include <QAbstractListModel>
 #include <QFileInfoList>
+#include <QLocale>
 
 class TranslatorListModel : public  QAbstractListModel
 {
@@ -41,9 +42,16 @@ class TranslatorListModel : public  QAbstractListModel
 
 public:
 	TranslatorListModel(QFileInfoList &, QObject* parent = 0);
-	
+	~TranslatorListModel();
+
 	QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
 	int rowCount ( const QModelIndex & parent = QModelIndex() ) const ;
+
+	const QLocale * locale(int index);
+	int findIndex(const QString & language);
+
+protected:
+	QList<QLocale *> m_localeList;
 };
 
 class PrefsDialog : public QDialog
@@ -51,10 +59,20 @@ class PrefsDialog : public QDialog
 	Q_OBJECT
 
 public:
-	PrefsDialog(QFileInfoList & list, QWidget *parent = 0);
+	PrefsDialog(const QString & language, QFileInfoList & list, QWidget *parent = 0);
 	~PrefsDialog();
 
+	const QString & name();
+	bool cleared();
 
+protected slots:
+	void changeLanguage(int);
+	void clear();
+
+protected:
+	QString m_name;
+	TranslatorListModel * m_translatorListModel;
+	bool m_cleared;
 };
 
 #endif 
