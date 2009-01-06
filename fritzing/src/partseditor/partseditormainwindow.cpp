@@ -42,9 +42,17 @@ $Date$
 #include <QRegExp>
 #include <stdlib.h>
 
-const QString ___partsEditorName___ = QObject::tr("Parts Editor");
+
+static QString TITLE_FRESH_START_TEXT;
+static QString  LABEL_FRESH_START_TEXT;
+static QString  DESCRIPTION_FRESH_START_TEXT;
+static QString  TAXONOMY_FRESH_START_TEXT;
+static QString  TAGS_FRESH_START_TEXT;
+static QString  FOOTER_TEXT;
+
+static QString ___partsEditorName___;
 const QString PartsEditorMainWindow::templatePath = "/docs/templates/";
-const QString PartsEditorMainWindow::UntitledPartName = "Untitled Part";
+const QString PartsEditorMainWindow::UntitledPartName = "Untitled Part";   // TODO: maybe this should be translated?
 int PartsEditorMainWindow::UntitledPartIndex = 1;
 PartsEditorMainWindow *PartsEditorMainWindow::m_lastOpened = NULL;
 int PartsEditorMainWindow::m_closedBeforeCount = 0;
@@ -54,6 +62,17 @@ int PartsEditorMainWindow::m_closedBeforeCount = 0;
 #else
 	#define CORE_EDITION_ENABLED true
 #endif
+
+void PartsEditorMainWindow::initText() {
+	TITLE_FRESH_START_TEXT = tr("Please find a name for me!");
+	LABEL_FRESH_START_TEXT = tr("Please provide a label");
+	DESCRIPTION_FRESH_START_TEXT = tr("You could tell a little bit about this part");
+	TAXONOMY_FRESH_START_TEXT = tr("Please clasify this part");
+	TAGS_FRESH_START_TEXT = tr("You can add your tags to find things easier");
+	FOOTER_TEXT = tr("<i>created by</i> %1 <i>on</i> %2");
+	___partsEditorName___ = tr("Parts Editor");
+
+}
 
 PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFlags f, ModelPart *modelPart, bool fromTemplate)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent, f)

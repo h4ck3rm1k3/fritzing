@@ -3350,10 +3350,6 @@ bool SketchWidget::canChainMultiple() {
 	return false;
 }
 
-const QString & SketchWidget::viewName() {
-	return ___emptyString___;
-}
-
 bool SketchWidget::canChainWire(Wire * wire) {
 	if (!this->m_chainDrag) return false;
 	if (wire == NULL) return false;
@@ -3686,4 +3682,8 @@ bool SketchWidget::matchesLayer(ModelPart * modelPart) {
 bool SketchWidget::doRatsnestOnCopy() 
 {
 	return false;
+}
+
+const QString & SketchWidget::viewName() {
+	return m_viewName;
 }

@@ -29,7 +29,19 @@ $Date$
 #include "helper.h"
 #include "../debugdialog.h"
 
-QString Helper::BreadboardHelpText = tr(
+QString Helper::BreadboardHelpText;
+QString Helper::SchematicHelpText;
+QString Helper::PCBHelpText;
+QString Helper::PartsBinHelpText;
+QString Helper::AutorouteHelpText;
+QString Helper::SwitchButtonsHelpText;
+
+void Helper::initText() {
+	PartsBinHelpText = tr("Drag out your <br> parts from here");
+	AutorouteHelpText = tr("When done with arranging, <br> use Autoroute to create <br> your copper traces");
+	SwitchButtonsHelpText = tr("Use these buttons to <br> toggle between views");
+
+	BreadboardHelpText = tr(
         "The <b>Breadboard View</b> is meant to look like a <i>real-life</i> breadboard prototype."
 	"<br/><br/>"
         "Begin by dragging a part from the Parts Bin, which is over at the top right. "
@@ -39,7 +51,7 @@ QString Helper::BreadboardHelpText = tr(
         "After you're finished creating your sketch in the breadboard view, try the other views. "
         "You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. "
         "Because different views have different purposes, parts will look different in the other views.");
-QString Helper::SchematicHelpText = tr(
+	SchematicHelpText = tr(
         "Welcome to the <b>Schematic View</b>"
 	"<br/><br/>"
         "This is a more abstract way to look at components and connections than the Breadboard View. "
@@ -49,7 +61,7 @@ QString Helper::SchematicHelpText = tr(
         "You can press &lt;Shift&gt;-click with the mouse to create bend points and tidy up your connections. "
         "The Schematic View can help you check that you have made the right connections between components. "
         "You can also print out your schematic for documentation.");
-QString Helper::PCBHelpText = tr(
+	PCBHelpText = tr(
         "The <b>PCB View</b> is where you design how the components will appear on a physical PCB (Printed Circuit Board)."
 	"<br/><br/>"
         "PCBs can be made at home or in a small lab using DIY etching processes. "
@@ -60,10 +72,7 @@ QString Helper::PCBHelpText = tr(
         "Once the parts are sorted out, you can right-click on individual connections or use "
         "Autoroute to generate the copper traces between parts. "
         "The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is on the bottom left.");
-
-QString Helper::PartsBinHelpText = tr("Drag out your <br> parts from here");
-QString Helper::AutorouteHelpText = tr("When done with arranging, <br> use Autoroute to create <br> your copper traces");
-QString Helper::SwitchButtonsHelpText = tr("Use these buttons to <br> toggle between views");
+}
 
 
 Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {

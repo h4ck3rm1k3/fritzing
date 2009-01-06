@@ -39,13 +39,17 @@ $Date$
 
 class Helper : public QObject {
 	Q_OBJECT
+	
 	public:
 		Helper(MainWindow *owner, bool doShow);
 		~Helper();
 
-	void toggleHelpVisibility(int ix);
-	void setHelpVisibility(int index, bool show);
-	bool helpVisible(int index);
+		void toggleHelpVisibility(int ix);
+		void setHelpVisibility(int index, bool show);
+		bool helpVisible(int index);
+
+	public:
+		static void initText();
 
 	protected slots:
 		void somethingDroppedIntoView(const QPoint &);

@@ -34,9 +34,6 @@ $Date$
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
 
-#define MISMATCH_CONNS_HEADER tr("Mismatching Connector IDs")
-#define MISMATCH_CONNS_FOOTER tr("These problems need to be fixed in the svg-files directly")
-
 ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent) : QFrame(parent) {
 	m_selected = NULL;
 	m_undoStack = undoStack;
@@ -107,13 +104,13 @@ void ConnectorsInfoWidget::createScrollArea() {
 	m_mismatchersFrame->setLayout(mismatchLayout);
 	m_mismatchersFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-	QLabel *mismatchConnHeader = new QLabel(MISMATCH_CONNS_HEADER);
+	QLabel *mismatchConnHeader = new QLabel(tr("Mismatching Connector IDs"));
 	mismatchConnHeader->setObjectName("mismatchConnsHeader");
 	parentLo->addWidget(mismatchConnHeader,0,0);
 
 	parentLo->addWidget(m_mismatchersFrame,1,0);
 
-	QLabel *mismatchConnFooter = new QLabel(MISMATCH_CONNS_FOOTER);
+	QLabel *mismatchConnFooter = new QLabel(tr("These problems need to be fixed in the svg-files directly"));
 	mismatchConnFooter->setObjectName("mismatchConnsFooter");
 	parentLo->addWidget(mismatchConnFooter,2,0);
 

@@ -42,7 +42,6 @@ public:
 	QString renderToSVG(qreal printerScale);
 	bool canDeleteItem(QGraphicsItem * item);
 	bool canCopyItem(QGraphicsItem * item);
-	const QString & viewName();
 	void createJumper();
 	void createTrace();
 	void excludeFromAutoroute();

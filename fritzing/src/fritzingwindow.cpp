@@ -48,11 +48,12 @@ const QString FritzingWindow::FritzingExtension = ".fz";
 QString FritzingWindow::QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
 QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");
 const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin.fz";
-static const QString ___fritzingTitle___ = QObject::tr("Fritzing");
+static QString ___fritzingTitle___;
 
 FritzingWindow::FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent, Qt::WFlags f)
 	: QMainWindow(parent, f)
 {
+	___fritzingTitle___ = QObject::tr("Fritzing");
 	m_readOnly = false;
 
 	// Let's set the icon

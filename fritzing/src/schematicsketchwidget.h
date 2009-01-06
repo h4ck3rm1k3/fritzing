@@ -51,7 +51,6 @@ public:
 	void addViewLayers();
 	bool canDeleteItem(QGraphicsItem * item);
 	bool canCopyItem(QGraphicsItem * item);
-	const QString & viewName();
 	void addRatnestTarget(SketchWidget * target);
 
 signals:

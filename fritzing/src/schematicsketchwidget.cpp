@@ -32,8 +32,6 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 static int MAX_INT = std::numeric_limits<int>::max();
 
-static const QString ___viewName___ = QObject::tr("Schematic View");
-
 QHash <ConnectorItem *, DistanceThing *> distances;
 
 bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
@@ -64,6 +62,7 @@ bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
+	m_viewName = QObject::tr("Schematic View");
 }
 
 void SchematicSketchWidget::setWireVisible(Wire * wire)
@@ -377,12 +376,6 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 bool SchematicSketchWidget::canChainMultiple() {
 	return true;
 }
-
-
-const QString & SchematicSketchWidget::viewName() {
-	return ___viewName___;
-}
-
 
 bool SchematicSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromDragWire, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand)
 {

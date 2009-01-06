@@ -32,9 +32,6 @@ $Date$
 #include "../debugdialog.h"
 #include "../misc.h"
 
-#define NEW_LABEL_TEXT QObject::tr("a label")
-#define NEW_VALUE_TEXT QObject::tr("a value")
-
 HashLineEdit::HashLineEdit(QUndoStack *undoStack, const QString &text, bool defaultValue, QWidget *parent) : QLineEdit(text, parent) {
 	m_firstText = text;
 	m_isDefaultValue = defaultValue;
@@ -176,11 +173,11 @@ void HashPopulateWidget::addRow(QGridLayout *layout) {
 	}
 
 
-	m_lastLabel = new HashLineEdit(m_undoStack,NEW_LABEL_TEXT,true,this);
+	m_lastLabel = new HashLineEdit(m_undoStack,QObject::tr("a label"),true,this);
 	layout->addWidget(m_lastLabel,m_currRow,0);
 	connect(m_lastLabel,SIGNAL(editingFinished()),this,SLOT(lastRowEditionCompleted()));
 
-	m_lastValue = new HashLineEdit(m_undoStack,NEW_VALUE_TEXT,true,this);
+	m_lastValue = new HashLineEdit(m_undoStack,QObject::tr("a value"),true,this);
 	layout->addWidget(m_lastValue,m_currRow,1,1,2);
 	connect(m_lastValue,SIGNAL(editingFinished()),this,SLOT(lastRowEditionCompleted()));
 

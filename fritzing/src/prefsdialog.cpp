@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1923 $:
-$Author: cohen@irascible.com $:
-$Date: 2008-12-20 03:07:49 +0100 (Sat, 20 Dec 2008) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 

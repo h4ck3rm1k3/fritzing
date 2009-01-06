@@ -29,8 +29,8 @@ $Date$
 #include "singleconnectorinfowidget.h"
 #include "../debugdialog.h"
 
-const QString ConnectorTypeWidget::FemaleSymbol = QObject::tr("%1").arg(QChar(0x2640));
-const QString ConnectorTypeWidget::MaleSymbol = QObject::tr("%1").arg(QChar(0x2642));
+const QString ConnectorTypeWidget::FemaleSymbol = QString("%1").arg(QChar(0x2640));
+const QString ConnectorTypeWidget::MaleSymbol = QString("%1").arg(QChar(0x2642));
 
 ConnectorTypeWidget::ConnectorTypeWidget(Connector::ConnectorType type, QWidget *parent) : QLabel(parent) {
 	m_isSelected = false;
@@ -81,15 +81,16 @@ void ConnectorTypeWidget::toggleValue() {
 	}
 }
 
-#define EMPTY_CONN_NAME QObject::tr("no name yet")
-#define EMPTY_CONN_DESC QObject::tr("no description yet")
-#define EMPTY_CONN_TYPE Connector::Female
 
 
 //TODO Mariano: looks like an abstracteditable, perhaps can be one
 SingleConnectorInfoWidget::SingleConnectorInfoWidget(WaitPushUndoStack *undoStack, Connector* connector, QWidget *parent)
 	: AbstractConnectorInfoWidget(parent)
-{
+{	
+	static QString EMPTY_CONN_NAME = QObject::tr("no name yet");
+	static QString EMPTY_CONN_DESC = QObject::tr("no description yet");
+	static Connector::ConnectorType EMPTY_CONN_TYPE = Connector::Female;
+
 	QString name;
 	QString description;
 	Connector::ConnectorType type;

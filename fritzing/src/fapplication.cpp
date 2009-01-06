@@ -31,6 +31,8 @@ $Date$
 #include "fsplashscreen.h"
 #include "version.h"
 #include "prefsdialog.h"
+#include "help/helper.h"
+#include "partseditor/partseditormainwindow.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -217,6 +219,8 @@ int FApplication::startup(int & argc, char ** argv)
     ModelPart::initNames();
     Connector::initNames();
     ZoomComboBox::loadFactors();
+	Helper::initText();
+	PartsEditorMainWindow::initText();
 	
 	splash.showProgress(progressIndex, 0.1);
 	

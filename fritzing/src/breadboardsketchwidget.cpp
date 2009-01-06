@@ -29,11 +29,10 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "debugdialog.h"
 #include "virtualwire.h"
 
-static const QString ___viewName___ = QObject::tr("Breadboard View");
-
 BreadboardSketchWidget::BreadboardSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
+	m_viewName = QObject::tr("Breadboard View");
 }
 
 void BreadboardSketchWidget::setWireVisible(Wire * wire)
@@ -247,10 +246,6 @@ QPointF BreadboardSketchWidget::calcNewLoc(PaletteItemBase * moveBase, PaletteIt
 			break;
 	}
 	return newPos;
-}
-
-const QString & BreadboardSketchWidget::viewName() {
-	return ___viewName___;
 }
 
 bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & itemBase)

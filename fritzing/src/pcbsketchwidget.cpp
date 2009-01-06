@@ -33,11 +33,10 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "waitpushundostack.h"
 #include "autorouter1.h"
 
-static const QString ___viewName___ = QObject::tr("PCB View");
-
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
+	m_viewName = QObject::tr("PCB View");
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 }
 
@@ -268,10 +267,6 @@ bool PCBSketchWidget::canCopyItem(QGraphicsItem * item)
 	}
 
 	return SketchWidget::canDeleteItem(item);
-}
-
-const QString & PCBSketchWidget::viewName() {
-	return ___viewName___;
 }
 
 bool PCBSketchWidget::canChainWire(Wire * wire) {

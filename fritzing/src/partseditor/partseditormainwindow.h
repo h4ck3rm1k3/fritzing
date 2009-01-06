@@ -55,14 +55,6 @@ QT_FORWARD_DECLARE_CLASS(QGraphicsView)
 QT_FORWARD_DECLARE_CLASS(QLabel)
 QT_FORWARD_DECLARE_CLASS(QSplitter)
 
-#define TITLE_FRESH_START_TEXT tr("Please find a name for me!")
-#define LABEL_FRESH_START_TEXT tr("Please provide a label")
-#define DESCRIPTION_FRESH_START_TEXT tr("You could tell a little bit about this part")
-#define TAXONOMY_FRESH_START_TEXT tr("Please clasify this part")
-#define TAGS_FRESH_START_TEXT tr("You can add your tags to find things easier")
-#define FOOTER_TEXT tr("<i>created by</i> %1 <i>on</i> %2")
-
-
 class PartsEditorMainWindow : public FritzingWindow
 {
 Q_OBJECT
@@ -156,5 +148,6 @@ public:
 	static const QString UntitledPartName;
 	static int UntitledPartIndex;
 	static QGraphicsItem *emptyViewItem(QString iconFile, QString text="");
+	static void initText();
 };
 #endif /* PARTSEDITORMAINWINDOW_H_ */

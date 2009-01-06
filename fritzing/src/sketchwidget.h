@@ -162,7 +162,7 @@ public:
 	const QString &selectedModuleID();
 	virtual bool canDeleteItem(QGraphicsItem * item);
 	virtual bool canCopyItem(QGraphicsItem * item);
-	virtual const QString & viewName();
+	const QString & viewName();
 	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
@@ -409,6 +409,9 @@ protected:
 	QList<QGraphicsProxyWidget*> m_fixedToBottomLeftItems;
 	QList<QGraphicsProxyWidget*> m_fixedToBottomRightItems;
 	QList<QGraphicsProxyWidget*> m_fixedToCenterItems;
+
+protected:
+	QString m_viewName;
 };
 
 #endif
