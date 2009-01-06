@@ -1,182 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
 <context>
-    <name></name>
-    <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="38"/>
-        <source>Mismatching Connector IDs</source>
-        <translation>Nicht übereinstimmende Verbindungs-IDs</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="40"/>
-        <source>These problems need to be fixed in the svg-files directly</source>
-        <translation>Diese Probleme müssen direkt in der SVG-Datei behoben werden.</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/partseditormainwindow.h" line="59"/>
-        <source>Please find a name for me!</source>
-        <translation>Bitte gib mir einen Namen</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/partseditormainwindow.h" line="60"/>
-        <source>Please provide a label</source>
-        <translation>Vergib ein Standard-Kürzel</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/partseditormainwindow.h" line="61"/>
-        <source>You could tell a little bit about this part</source>
-        <translation>Du könntest das Bauteil kurz beschreiben</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/partseditormainwindow.h" line="62"/>
-        <source>Please clasify this part</source>
-        <translation>Klassifiziere dieses Bauteil</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/partseditormainwindow.h" line="63"/>
-        <source>You can add your tags to find things easier</source>
-        <translation>Vergib ein paar Tags um die Suche zu vereinfachen</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/partseditormainwindow.h" line="66"/>
-        <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
-        <translation>&lt;i&gt;erstellt von&lt;/i&gt; %1 &lt;i&gt;am&lt;/i&gt; %2</translation>
-    </message>
-</context>
-<context>
     <name>AboutBox</name>
     <message>
-        <location filename="../src/aboutbox.cpp" line="81"/>
+        <location filename="../src/aboutbox.cpp" line="72"/>
         <source>Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt;</source>
         <translation>Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="92"/>
+        <location filename="../src/aboutbox.cpp" line="83"/>
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="159"/>
+        <location filename="../src/aboutbox.cpp" line="150"/>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
         <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="135"/>
+        <location filename="../src/aboutbox.cpp" line="126"/>
         <source>&lt;p&gt;&lt;br&gt;Fritzing is made by:&lt;br /&gt;</source>
         <translation>&lt;p&gt;&lt;br&gt;Fritzing ist das Ergebnis der gemeinsamen Arbeit von:&lt;br /&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="136"/>
+        <location filename="../src/aboutbox.cpp" line="127"/>
         <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br&gt;</source>
         <translation>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="137"/>
+        <location filename="../src/aboutbox.cpp" line="128"/>
         <source>Zach Eveland, Dirk van Oosterbosch,&lt;br&gt;</source>
         <translation>Zach Eveland, Dirk van Oosterbosch,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="138"/>
+        <location filename="../src/aboutbox.cpp" line="129"/>
         <source>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br&gt;</source>
         <translation>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="139"/>
+        <location filename="../src/aboutbox.cpp" line="130"/>
         <source>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br&gt;</source>
         <translation>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="140"/>
+        <location filename="../src/aboutbox.cpp" line="131"/>
         <source>Mariano Crowe, Johannes Landstorfer,&lt;br&gt;</source>
         <translation>Mariano Crowe, Johannes Landstorfer,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="142"/>
+        <location filename="../src/aboutbox.cpp" line="133"/>
         <source>Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
         <translation>Jenny Chowdhury, Lionel Michel und Jannis Leidel.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="143"/>
+        <location filename="../src/aboutbox.cpp" line="134"/>
         <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;</source>
         <translation>&lt;p&gt;Besonderer Dank geht an:&lt;br /&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="144"/>
+        <location filename="../src/aboutbox.cpp" line="135"/>
         <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br&gt;</source>
         <translation>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="145"/>
+        <location filename="../src/aboutbox.cpp" line="136"/>
         <source>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</source>
         <translation>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="146"/>
+        <location filename="../src/aboutbox.cpp" line="137"/>
         <source>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br&gt;</source>
         <translation>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="147"/>
+        <location filename="../src/aboutbox.cpp" line="138"/>
         <source>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br&gt;</source>
         <translation>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="148"/>
+        <location filename="../src/aboutbox.cpp" line="139"/>
         <source>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br&gt;</source>
         <translation>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="150"/>
+        <location filename="../src/aboutbox.cpp" line="141"/>
         <source>Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
         <translation>Michaela Vieser und Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="151"/>
+        <location filename="../src/aboutbox.cpp" line="142"/>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br&gt;</source>
         <translation>&lt;p&gt;Fritzing wurde möglich gemacht durch die Förderung von&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="152"/>
+        <location filename="../src/aboutbox.cpp" line="143"/>
         <source>MWFK Brandenburg, the sponsorship of the Design&lt;br&gt;</source>
         <translation>MWFK Brandenburg, die Unterstützung der Fakultät&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="153"/>
+        <location filename="../src/aboutbox.cpp" line="144"/>
         <source>Department of Bauhaus-University Weimar and&lt;br&gt;</source>
         <translation>Medien der Bauhaus-Universität Weimar und&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="155"/>
+        <location filename="../src/aboutbox.cpp" line="146"/>
         <source>IxDS.&lt;/p&gt;</source>
         <translation>IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="156"/>
+        <location filename="../src/aboutbox.cpp" line="147"/>
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br&gt;</source>
         <translation>&lt;p&gt;Vielen Dank auch an alle Studierende&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="157"/>
+        <location filename="../src/aboutbox.cpp" line="148"/>
         <source>and alpha testers who were brave enough to give&lt;br&gt;</source>
         <translation>und Alpha-Tester, die mutig genug waren&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="158"/>
+        <location filename="../src/aboutbox.cpp" line="149"/>
         <source>Fritzing a test spin and who stayed with us,&lt;br&gt;</source>
         <translation>Fritzing auszuprobieren und bei uns geblieben sind,&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="159"/>
+        <location filename="../src/aboutbox.cpp" line="150"/>
         <source>throughout our rewrite of the app.&lt;/p&gt;</source>
         <translation>Bugs gefunden und Feedback gegeben haben.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="103"/>
+        <location filename="../src/aboutbox.cpp" line="94"/>
         <source>&lt;b&gt;GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest</source>
         <translation>&lt;b&gt;GNU GPL v3 auf den Quellcode und CreativeCommons:BY-SA auf den Rest</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="121"/>
+        <location filename="../src/aboutbox.cpp" line="112"/>
         <source>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</source>
         <translation>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</translation>
     </message>
@@ -197,19 +154,29 @@
 <context>
     <name>ConnectorsInfoWidget</name>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="82"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="79"/>
         <source>Show Terminal Points</source>
         <translation>Endpunkte anzeigen </translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="131"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="128"/>
         <source>List of Connectors</source>
         <translation>Liste der Verbindungen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="294"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="291"/>
         <source>Loading connectors...</source>
         <translation>Lade Verbindungen...</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="107"/>
+        <source>Mismatching Connector IDs</source>
+        <translation type="unfinished">Nicht übereinstimmende Verbindungs-IDs</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="113"/>
+        <source>These problems need to be fixed in the svg-files directly</source>
+        <translation type="unfinished">Diese Probleme müssen direkt in der SVG-Datei behoben werden.</translation>
     </message>
 </context>
 <context>
@@ -347,68 +314,68 @@
 <context>
     <name>FritzingWindow</name>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="76"/>
+        <location filename="../src/fritzingwindow.cpp" line="77"/>
         <source>&amp;Close Window</source>
         <translation>Fenster s&amp;chließen</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="77"/>
+        <location filename="../src/fritzingwindow.cpp" line="78"/>
         <source>Ctrl+W</source>
         <translation>Strg+W</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="78"/>
+        <location filename="../src/fritzingwindow.cpp" line="79"/>
         <source>Close the current sketch</source>
         <translation>Aktuellen Entwurf schließen</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="84"/>
+        <location filename="../src/fritzingwindow.cpp" line="85"/>
         <source>%1 - %2</source>
         <translation>%1 - %2</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="106"/>
+        <location filename="../src/fritzingwindow.cpp" line="107"/>
         <source>Untitled Sketch</source>
         <translation>Unbenannter Entwurf</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="120"/>
+        <location filename="../src/fritzingwindow.cpp" line="121"/>
         <source>Specify a file name</source>
         <translation>Dateinamen auswählen</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="122"/>
+        <location filename="../src/fritzingwindow.cpp" line="123"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="193"/>
+        <location filename="../src/fritzingwindow.cpp" line="194"/>
         <source>Save &quot;%1&quot;</source>
         <translation>Speichern von &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="195"/>
+        <location filename="../src/fritzingwindow.cpp" line="196"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation>Möchten Sie die Änderungen am Entwurf &quot;%1&quot; speichern?</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="203"/>
+        <location filename="../src/fritzingwindow.cpp" line="204"/>
         <source>Save...</source>
         <translation>Speichern
 ...</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="203"/>
+        <location filename="../src/fritzingwindow.cpp" line="204"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="204"/>
+        <location filename="../src/fritzingwindow.cpp" line="205"/>
         <source>Don&apos;t Save</source>
         <translation>Nicht speichern</translation>
     </message>
     <message>
-        <location filename="../src/fritzingwindow.cpp" line="205"/>
+        <location filename="../src/fritzingwindow.cpp" line="206"/>
         <source>Ctrl+D</source>
         <translation>Strg+D</translation>
     </message>
@@ -416,32 +383,32 @@
 <context>
     <name>Helper</name>
     <message>
-        <location filename="../src/help/helper.cpp" line="64"/>
+        <location filename="../src/help/helper.cpp" line="40"/>
         <source>Drag out your &lt;br&gt; parts from here</source>
         <translation>Bauteile von hier ziehen</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="65"/>
+        <location filename="../src/help/helper.cpp" line="41"/>
         <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
         <translation>Wenn die Bauteile platziert sind, &lt;br&gt;klicke auf Autoroute&lt;br&gt; um die Leiterbahnen zu erstellen.</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="66"/>
+        <location filename="../src/help/helper.cpp" line="42"/>
         <source>Use these buttons to &lt;br&gt; toggle between views</source>
         <translation>Benutze diese Schalter um zwischen &lt;br&gt; den Ansichten zu wechseln</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="41"/>
+        <location filename="../src/help/helper.cpp" line="53"/>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
         <translation>Die &lt;b&gt;Steckplatinen-Ansicht&lt;/b&gt; ähnelt vom Aussehen und Verhalten einem &lt;i&gt;echten&lt;/i&gt; Steckplatinen-Prototypen.&lt;br/&gt;&lt;br/&gt;Beginne, indem Du ein Bauteil aus der Bauteile-Bibliothek (oben rechts) auf diese Ansicht ziehst. Dort findest Du auch die Steckplatine oder ein Arduino. Dann ziehe mehr Teile hinein und verbinde sie durch Kabel oder die Steckplatine. Neue Kabel erstellst Du ganz einfach durch Klicken und Ziehen von einer der Verbindungen (Stecker oder Buchsen). Dieser Vorgang ist ähnlich zu dem in der physischen Welt.&lt;br/&gt;&lt;br/&gt;Wenn Du mit dem Entwurf in der Schaltplatinen-Ansicht fertig bist, probiere auch die anderen Ansichten.</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="51"/>
+        <location filename="../src/help/helper.cpp" line="63"/>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
         <translation>Willkommen in der &lt;b&gt;Schaltplan-Ansicht&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Dies ist eine abstraktere Art der Darstellung von Komponenten und Verbindungen als die Steckplatinen-Ansicht. Es sind dieselben Elemente, sie sehen nur anders aus. Die Steckplatine selbst ist hier nur noch als Verbindungen vorhanden.&lt;br/&gt;&lt;br/&gt; Diese Repräsentation ist näher an den traditionellen Diagrammen wie sie von Ingenieuren benutzt werden. Die Schaltplan-Ansicht kann Dir überprüfen helfen, dass Du die richtigen Verbindungen zwischen Komponenten gemacht hast. Du kannst sie auch zur Dokumentation ausdrucken.</translation>
     </message>
     <message>
-        <location filename="../src/help/helper.cpp" line="62"/>
+        <location filename="../src/help/helper.cpp" line="74"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, first rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
         <translation>In der &lt;b&gt;Leiterplatten-Ansicht&lt;/b&gt; gestaltest Du, wie die Komponenten und Verbindungen auf der Leiterplatte (englisch &quot;PCB&quot;) angeordnet werden.&lt;br/&gt;&lt;br/&gt;Leiterplatten können mit relativ geringem Aufwand zu Hause oder in einem kleinen Labor selber hergestellt werden. Sie können auch bei professionellen Herstellern in Auftrag gegeben werden, falls man höhere Qualität oder Stückzahlen benötigt.&lt;br/&gt;&lt;br/&gt;Um Deine Leiterplatte zu gestalten, arrangiere zunächst alle Bauteile innerhalb der Leiterplattenbegrenzung. Versuche dabei möglichst die Überschneidungen der sogenannten &quot;Luftlinien&quot; gering zu halten. Anschließend kannst Du mit dem Autorouting-Knopf &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; die Leiterbahnen erstellen lassen.</translation>
     </message>
@@ -1642,22 +1609,22 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
 <context>
     <name>PCBSketchWidget</name>
     <message>
-        <location filename="../src/pcbsketchwidget.cpp" line="287"/>
+        <location filename="../src/pcbsketchwidget.cpp" line="282"/>
         <source>Create Jumper from this Ratsnest Wire</source>
         <translation>In &amp;Schaltdraht umwandeln</translation>
     </message>
     <message>
-        <location filename="../src/pcbsketchwidget.cpp" line="288"/>
+        <location filename="../src/pcbsketchwidget.cpp" line="283"/>
         <source>jumper</source>
         <translation>Schaltdraht</translation>
     </message>
     <message>
-        <location filename="../src/pcbsketchwidget.cpp" line="294"/>
+        <location filename="../src/pcbsketchwidget.cpp" line="289"/>
         <source>Create Trace from this Ratsnest Wire</source>
         <translation>In &amp;Leiterbahn umwandeln</translation>
     </message>
     <message>
-        <location filename="../src/pcbsketchwidget.cpp" line="295"/>
+        <location filename="../src/pcbsketchwidget.cpp" line="290"/>
         <source>trace</source>
         <translation>Leiterbahn</translation>
     </message>
@@ -1830,112 +1797,142 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
 <context>
     <name>PartsEditorMainWindow</name>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="79"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="98"/>
         <source>Parts Editor</source>
         <translation>Bauteile-Editor</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="80"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="99"/>
         <source>Error! Cannot create part file.
 </source>
         <translation>Fehler: Die Bauteil-Datei konnte nicht erstellt werden.
 </translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="175"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="194"/>
         <source>Label</source>
         <translation>Bezeichnung</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="178"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="197"/>
         <source>Description</source>
         <translation>Angabe</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="197"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="216"/>
         <source>Properties</source>
         <translation>Eigenschaften</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="200"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="219"/>
         <source>Tags</source>
         <translation>Marken</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="205"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="224"/>
         <source>Author</source>
         <translation>Autor</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="212"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="231"/>
         <source>Created/Updated on</source>
         <translation>Erzeugt/aktualisiert am </translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="241"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="260"/>
         <source>Specifications</source>
         <translation>Technische Daten</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="242"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="261"/>
         <source>Connectors</source>
         <translation>Verbindungen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="269"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="288"/>
         <source>save as new part</source>
         <translation>Als neues Bauteil speichern</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="273"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="292"/>
         <source>save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="285"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="304"/>
         <source>cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="351"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="370"/>
         <source>Open Image</source>
         <translation>Bild öffnen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="351"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="370"/>
         <source>SVG Files (*.fzp)</source>
         <translation>SVG-Dateien  (*.fzp)</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="389"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="408"/>
         <source>Save as new part</source>
         <translation>Als neues Bauteil speichern</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="390"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="409"/>
         <source>Please, specify a new filename</source>
         <translation>Dateinamen auswählen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="419"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="438"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="421"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="440"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Die Datei %1 konnte nicht geschrieben werden: %2.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="439"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="458"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>&apos;%1&apos; gespeichert</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="565"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="584"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="67"/>
+        <source>Please find a name for me!</source>
+        <translation type="unfinished">Bitte gib mir einen Namen</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="68"/>
+        <source>Please provide a label</source>
+        <translation type="unfinished">Vergib ein Standard-Kürzel</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="69"/>
+        <source>You could tell a little bit about this part</source>
+        <translation type="unfinished">Du könntest das Bauteil kurz beschreiben</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="70"/>
+        <source>Please clasify this part</source>
+        <translation type="unfinished">Klassifiziere dieses Bauteil</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="71"/>
+        <source>You can add your tags to find things easier</source>
+        <translation type="unfinished">Vergib ein paar Tags um die Suche zu vereinfachen</translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="72"/>
+        <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
+        <translation type="unfinished">&lt;i&gt;erstellt von&lt;/i&gt; %1 &lt;i&gt;am&lt;/i&gt; %2</translation>
     </message>
 </context>
 <context>
@@ -1954,7 +1951,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/breadboardsketchwidget.cpp" line="32"/>
+        <location filename="../src/breadboardsketchwidget.cpp" line="35"/>
         <source>Breadboard View</source>
         <translation>Steckplatinen-Ansicht</translation>
     </message>
@@ -1984,12 +1981,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Leiterplatte-Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="397"/>
+        <location filename="../src/fapplication.cpp" line="401"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="404"/>
+        <location filename="../src/fapplication.cpp" line="408"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt;</source>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt;</translation>
     </message>
@@ -2009,7 +2006,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Kabel</translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="201"/>
+        <location filename="../src/prefsdialog.cpp" line="205"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -2124,12 +2121,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Die Datei %1 ist keine Fritzing Anschlussbild-Datei.</translation>
     </message>
     <message>
-        <location filename="../src/pcbsketchwidget.cpp" line="36"/>
+        <location filename="../src/pcbsketchwidget.cpp" line="39"/>
         <source>PCB View</source>
         <translation>Leiterplatte-Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="35"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="65"/>
         <source>Schematic View</source>
         <translation>Schaltplan-Ansicht</translation>
     </message>
@@ -2271,22 +2268,17 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich an uns.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="33"/>
-        <source>%1</source>
-        <translation>%1</translation>
-    </message>
-    <message>
-        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="85"/>
+        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="90"/>
         <source>no name yet</source>
         <translation>Noch kein Name</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="86"/>
+        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="91"/>
         <source>no description yet</source>
         <translation>Noch keine Beschreibung</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="245"/>
+        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="246"/>
         <source>Accept</source>
         <translation>OK</translation>
     </message>
@@ -2296,44 +2288,44 @@ Versuche, Fritzing neu zu starten. Falls das Problem bestehen bleibt, wende Dich
         <translation>Vergrößern</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/hashpopulatewidget.cpp" line="36"/>
+        <location filename="../src/partseditor/hashpopulatewidget.cpp" line="176"/>
         <source>a label</source>
         <translation>eine Bezeichnung</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/hashpopulatewidget.cpp" line="38"/>
+        <location filename="../src/partseditor/hashpopulatewidget.cpp" line="180"/>
         <source>a value</source>
         <translation>ein Wert</translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="131"/>
+        <location filename="../src/prefsdialog.cpp" line="134"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="142"/>
+        <location filename="../src/prefsdialog.cpp" line="145"/>
         <source>Choose your preferred language:
 Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="167"/>
+        <location filename="../src/prefsdialog.cpp" line="170"/>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="181"/>
+        <location filename="../src/prefsdialog.cpp" line="184"/>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="184"/>
+        <location filename="../src/prefsdialog.cpp" line="187"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="196"/>
+        <location filename="../src/prefsdialog.cpp" line="199"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2372,12 +2364,12 @@ Please stay tuned.</source>
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="780"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="773"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
         <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="782"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="775"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
         <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
@@ -2572,6 +2564,21 @@ Wir arbeiten daran, diese Nachricht in Zukunft zu vermeiden.</translation>
     <message>
         <location filename="../src/prefsdialog.cpp" line="53"/>
         <source>Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="54"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="55"/>
+        <source>Urdu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="56"/>
+        <source>Hindi</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
