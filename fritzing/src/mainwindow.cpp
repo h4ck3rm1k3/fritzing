@@ -24,8 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
 #include <QtGui>
 #include <QtXml>
 #include <QList>
@@ -866,6 +864,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 		// So this call to processEvents() makes sure m_deleteAct is enabled.
 		QCoreApplication::processEvents();
 	}
+
 	return QMainWindow::eventFilter(object, event);
 }
 
@@ -1307,7 +1306,7 @@ QStatusBar *MainWindow::realStatusBar() {
 
 void MainWindow::moveEvent(QMoveEvent * event) {
 	FritzingWindow::moveEvent(event);
-	DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
+	//DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
 	if (m_tabWindow) {
 		m_tabWindow->parentMoved();
 	}

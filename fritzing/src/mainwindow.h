@@ -274,8 +274,6 @@ protected:
 	bool event(QEvent *);
 	void resizeEvent(QResizeEvent * event);
 
-	//void connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view);
-
 protected:
 	static qreal getSvgWidthInInches(const QString & filename);
 	static qreal getSvgWidthInInches(QFile & file);

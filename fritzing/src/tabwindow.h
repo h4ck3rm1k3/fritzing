@@ -48,6 +48,7 @@ public:
 	bool isDocked();
 	void calcDocked();
 	void parentMoved();
+	void parentStoppedMoving();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);

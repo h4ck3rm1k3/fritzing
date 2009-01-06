@@ -86,13 +86,24 @@ void TabWindow::calcDocked()
 	QRect rt = this->frameGeometry();
 	m_docked = rw.contains(rt);
 	DebugDialog::debug(QString("tabwindow docked %1").arg(m_docked));
-	m_offsetFromParent = rt.topLeft() - rw.topLeft();
+	if (m_docked) {
+		m_offsetFromParent = rt.topLeft() - rw.topLeft();
+	}
 }
 
 void TabWindow::parentMoved() {
 	if (m_docked) {
 		QRect rw = this->parentWidget()->frameGeometry();
 		this->move(rw.topLeft() + m_offsetFromParent);
+	}
+	else {
+		calcDocked();
+	}
+}
+
+void TabWindow::parentStoppedMoving() {
+	if (!m_docked) {
+		calcDocked();
 	}
 }
 
