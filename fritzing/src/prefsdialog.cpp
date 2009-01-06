@@ -51,6 +51,9 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 		m_languages.insert("japanese", tr("Japanese"));
 		m_languages.insert("hebrew", tr("Hebrew"));
 		m_languages.insert("arabic", tr("Arabic"));
+		m_languages.insert("portuguese", tr("Portuguese"));
+		m_languages.insert("urdu", tr("Urdu"));
+		m_languages.insert("hindi", tr("Hindi"));
 	}
 
 	foreach (QFileInfo fileinfo, fileInfoList) {
@@ -195,12 +198,13 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 
 	QPushButton * ok = new QPushButton(QObject::tr("OK"), this);
 	ok->setMaximumWidth(120);
-	gridLayout->addWidget(ok, row, 0, Qt::AlignLeft);	
+	ok->setDefault(true);
+	gridLayout->addWidget(ok, row, 4, Qt::AlignRight);	
 	connect(ok, SIGNAL(clicked()), this, SLOT(accept()));
 	
 	QPushButton * cancel = new QPushButton(QObject::tr("Cancel"), this);
 	cancel->setMaximumWidth(120);
-	gridLayout->addWidget(cancel, row, 4, Qt::AlignRight);
+	gridLayout->addWidget(cancel, row, 0, Qt::AlignLeft);
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
 	row++;
