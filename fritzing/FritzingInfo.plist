@@ -37,7 +37,7 @@ $Date: 2009-01-03 18:55:48 +0100 (Sat, 03 Jan 2009) $
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
-	<string>frtz</string>
+	<string>FRtz</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
