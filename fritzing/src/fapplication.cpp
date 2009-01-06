@@ -237,8 +237,10 @@ int FApplication::startup(int & argc, char ** argv)
 	settings3.setValue(".", "Fritzing");
 	QSettings settings4("HKEY_CLASSES_ROOT\\.fzp", QSettings::NativeFormat);
 	settings4.setValue(".", "Fritzing");
-	QSettings settings5("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
-	settings5.setValue(".", QString("\"%1\" \"%2\"")
+	QSettings settings5("HKEY_CLASSES_ROOT\\.fzz", QSettings::NativeFormat);
+	settings5.setValue(".", "Fritzing");
+	QSettings settings6("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
+	settings6.setValue(".", QString("\"%1\" \"%2\"")
 					   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
 					   .arg("%1") );
 #endif

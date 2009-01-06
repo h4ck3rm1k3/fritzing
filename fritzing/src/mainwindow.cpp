@@ -86,8 +86,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_currentGraphicsView = NULL;
 	m_firstOpen = true;
 
-	m_moveTabWindow = m_firstMove = false;
-
 	m_statusBar = new QStatusBar(this);
 	setStatusBar(m_statusBar);
 	m_statusBar->setSizeGripEnabled(false);
@@ -1307,41 +1305,21 @@ QStatusBar *MainWindow::realStatusBar() {
 	return m_statusBar;
 }
 
-TabWindow * MainWindow::tabWindow() {
-	return m_tabWindow;
-}
-
 void MainWindow::moveEvent(QMoveEvent * event) {
 	FritzingWindow::moveEvent(event);
-	//DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
+	DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
 	if (m_tabWindow) {
-		if (m_firstMove) {
-			m_firstMove = false;
-			QRect rw = this->frameGeometry();
-			QRect rt = m_tabWindow->frameGeometry();
-			m_moveTabWindow = rw.intersects(rt);
-		}
-
-		if (m_moveTabWindow) {
-			m_tabWindow->move(m_tabWindow->pos() + event->pos() - event->oldPos());
-		}
+		m_tabWindow->parentMoved();
 	}
 }
 
 bool MainWindow::event(QEvent * e) {
 	switch (e->type()) {
-		case QEvent::NonClientAreaMouseButtonPress:
-			m_firstMove = true;
-			break;
 		case QEvent::WindowActivate:
 			changeActivation(true);
 			break;
 		case QEvent::WindowDeactivate:
 			changeActivation(false);
-			break;
-		case QEvent::WindowStateChange:
-			//DebugDialog::debug(QString("window state change"));
-			m_moveTabWindow = m_firstMove = false;
 			break;
 		default:
 			break;
@@ -1371,6 +1349,7 @@ void MainWindow::showTabWindow() {
 #endif
 	m_tabWindow->move(this->pos() + initial);
 	m_tabWindow->setMask();
+	m_tabWindow->calcDocked();
 
 	int sep = 0;
 	foreach (QAction * action, m_windowMenu->actions()) {
@@ -1384,7 +1363,6 @@ void MainWindow::showTabWindow() {
 	if (sep < 2) {
 		m_windowMenu->addAction(m_tabWindow->toggleViewAction());
 	}
-	m_firstMove = true;
 	//DebugDialog::debug(QString("tab done"));
 }
 

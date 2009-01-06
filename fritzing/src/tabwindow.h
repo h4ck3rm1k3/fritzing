@@ -45,6 +45,9 @@ public:
 	void saveState();
 	void restoreState();
 	void setMask();
+	bool isDocked();
+	void calcDocked();
+	void parentMoved();
 
 protected:
 	void mousePressEvent(QMouseEvent *event);
@@ -64,6 +67,8 @@ protected:
 	bool m_movedEnough;
 	bool m_state;
 	class ViewSwitcher * m_viewSwitcher;
+	bool m_docked;
+	QPoint m_offsetFromParent;
 	
 protected slots:
 	void toggleMe(bool);

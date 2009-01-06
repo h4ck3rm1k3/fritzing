@@ -77,7 +77,6 @@ public:
 	QAction *raiseWindowAction();
 	QSizeGrip *sizeGrip();
 	QStatusBar *realStatusBar();
-	class TabWindow * tabWindow();
 	void showAllFirstTimeHelp(bool show);
 
 public:
@@ -465,8 +464,6 @@ protected:
 	friend class DockManager;
 
 	class TabWindow * m_tabWindow;
-	bool m_firstMove;
-	bool m_moveTabWindow;
 	bool m_reopenTabWindowAfterParts;
 
 	Helper *m_helper;

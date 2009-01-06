@@ -37,6 +37,7 @@ TabWindow::TabWindow(QWidget *parent)
     : QWidget(parent)
 {
 	m_viewSwitcher = NULL;
+	m_docked = true;
     m_toggleViewAction = new QAction(this);
     m_toggleViewAction->setCheckable(true);
     m_toggleViewAction->setText(windowTitle());
@@ -76,6 +77,23 @@ void TabWindow::mouseReleaseEvent(QMouseEvent *   event )
 	Q_UNUSED(event);
 	m_inDrag = false;
 	m_movedEnough = false;
+	calcDocked();
+}
+
+void TabWindow::calcDocked() 
+{
+	QRect rw = this->parentWidget()->frameGeometry();
+	QRect rt = this->frameGeometry();
+	m_docked = rw.contains(rt);
+	DebugDialog::debug(QString("tabwindow docked %1").arg(m_docked));
+	m_offsetFromParent = rt.topLeft() - rw.topLeft();
+}
+
+void TabWindow::parentMoved() {
+	if (m_docked) {
+		QRect rw = this->parentWidget()->frameGeometry();
+		this->move(rw.topLeft() + m_offsetFromParent);
+	}
 }
 
 void TabWindow::mouseMoveEvent(QMouseEvent *event)
@@ -157,4 +175,8 @@ void TabWindow::enterEvent(QEvent *event) {
 void TabWindow::leaveEvent(QEvent *event) {
 	QWidget::leaveEvent(event);
 	setWindowOpacity(inactiveOpacity);
+}
+
+bool TabWindow::isDocked() {
+	return m_docked;
 }
