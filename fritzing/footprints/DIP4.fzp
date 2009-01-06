@@ -1,0 +1,22 @@
+<Element units="cmil" TScale="100" Name="" SFlags="" TY="0" TSFlags="" Value="" TDir="0" TX="0" MY="173000" MX="57000" Desc="">
+  <Pin units="cmil" Name="" SFlags="square,edge2" rX="-15000" Mask="6600" rY="-5000" Thickness="6000" Drill="2800" Number="1" Clearance="3000">
+  </Pin>
+  <Pin units="cmil" Name="" SFlags="edge2" rX="15000" Mask="6600" rY="5000" Thickness="6000" Drill="2800" Number="3" Clearance="3000">
+  </Pin>
+  <Pin units="cmil" Name="" SFlags="edge2" rX="-15000" Mask="6600" rY="5000" Thickness="6000" Drill="2800" Number="2" Clearance="3000">
+  </Pin>
+  <Pin units="cmil" Name="" SFlags="edge2" rX="15000" Mask="6600" rY="-5000" Thickness="6000" Drill="2800" Number="4" Clearance="3000">
+  </Pin>
+  <ElementLine units="cmil" Y1="-10000" X2="-5000" X1="-20000" Thickness="1000" Y2="-10000">
+  </ElementLine>
+  <ElementLine units="cmil" Y1="-10000" X2="20000" X1="5000" Thickness="1000" Y2="-10000">
+  </ElementLine>
+  <ElementLine units="cmil" Y1="10000" X2="20000" X1="-20000" Thickness="1000" Y2="10000">
+  </ElementLine>
+  <ElementLine units="cmil" Y1="-10000" X2="-20000" X1="-20000" Thickness="1000" Y2="10000">
+  </ElementLine>
+  <ElementLine units="cmil" Y1="-10000" X2="20000" X1="20000" Thickness="1000" Y2="10000">
+  </ElementLine>
+  <ElementArc units="cmil" Height="5000" Width="5000" DeltaAngle="180" StartAngle="0" Y="-10000" X="0" Thickness="1000">
+  </ElementArc>
+</Element>

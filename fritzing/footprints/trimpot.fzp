@@ -1,0 +1,48 @@
+<Element units="mils" TScale="100" Name="P1" SFlags="0x00000000" TY="-50" TSFlags="0x00000000" Value="" TDir="0" TX="175" MY="1200" MX="1000" Desc="">
+  <Pin units="mils" Name="3" SFlags="0x00000001" rX="0" Mask="100" rY="200" Thickness="100" Drill="42" Number="3" Clearance="40">
+  </Pin>
+  <Pin units="mils" Name="1" SFlags="0x00000101" rX="0" Mask="100" rY="0" Thickness="100" Drill="42" Number="1" Clearance="40">
+  </Pin>
+  <Pin units="mils" Name="2" SFlags="0x00000001" rX="400" Mask="100" rY="100" Thickness="100" Drill="42" Number="2" Clearance="40">
+  </Pin>
+  <ElementLine units="mils" Y1="50" X2="150" X1="250" Thickness="5" Y2="150">
+  </ElementLine>
+  <ElementLine units="mils" Y1="225" X2="400" X1="350" Thickness="12" Y2="150">
+  </ElementLine>
+  <ElementLine units="mils" Y1="275" X2="350" X1="300" Thickness="12" Y2="225">
+  </ElementLine>
+  <ElementLine units="mils" Y1="300" X2="300" X1="225" Thickness="12" Y2="275">
+  </ElementLine>
+  <ElementLine units="mils" Y1="300" X2="225" X1="175" Thickness="12" Y2="300">
+  </ElementLine>
+  <ElementLine units="mils" Y1="275" X2="175" X1="100" Thickness="12" Y2="300">
+  </ElementLine>
+  <ElementLine units="mils" Y1="250" X2="100" X1="75" Thickness="12" Y2="275">
+  </ElementLine>
+  <ElementLine units="mils" Y1="-75" X2="175" X1="100" Thickness="12" Y2="-100">
+  </ElementLine>
+  <ElementLine units="mils" Y1="-50" X2="100" X1="75" Thickness="12" Y2="-75">
+  </ElementLine>
+  <ElementLine units="mils" Y1="50" X2="0" X1="0" Thickness="12" Y2="150">
+  </ElementLine>
+  <ElementLine units="mils" Y1="-100" X2="225" X1="175" Thickness="12" Y2="-100">
+  </ElementLine>
+  <ElementLine units="mils" Y1="-100" X2="300" X1="225" Thickness="12" Y2="-75">
+  </ElementLine>
+  <ElementLine units="mils" Y1="-75" X2="350" X1="300" Thickness="12" Y2="-25">
+  </ElementLine>
+  <ElementLine units="mils" Y1="250" X2="75" X1="0" Thickness="12" Y2="250">
+  </ElementLine>
+  <ElementLine units="mils" Y1="-50" X2="75" X1="0" Thickness="12" Y2="-50">
+  </ElementLine>
+  <ElementLine units="mils" Y1="-25" X2="400" X1="350" Thickness="12" Y2="50">
+  </ElementLine>
+  <ElementArc units="mils" Height="75" Width="75" DeltaAngle="90" StartAngle="270" Y="100" X="200" Thickness="5">
+  </ElementArc>
+  <ElementArc units="mils" Height="75" Width="75" DeltaAngle="90" StartAngle="90" Y="100" X="200" Thickness="5">
+  </ElementArc>
+  <ElementArc units="mils" Height="76" Width="76" DeltaAngle="90" StartAngle="180" Y="101" X="199" Thickness="5">
+  </ElementArc>
+  <ElementArc units="mils" Height="74" Width="74" DeltaAngle="90" StartAngle="0" Y="101" X="199" Thickness="5">
+  </ElementArc>
+</Element>
