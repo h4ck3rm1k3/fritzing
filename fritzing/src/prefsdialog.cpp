@@ -32,10 +32,27 @@ $Date: 2008-12-20 03:07:49 +0100 (Sat, 20 Dec 2008) $
 #include <QLocale>
 
 static QVariant emptyVariant;
+QHash<QString, QString> TranslatorListModel::m_languages;
 
 TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* parent)
 : QAbstractListModel(parent) 
 {
+	if (m_languages.count() == 0) {
+		m_languages.insert("english", tr("English"));
+		m_languages.insert("french", tr("French"));
+		m_languages.insert("german", tr("German"));
+
+		// put in extras so if someone does a new translation, we won't have to recompile
+		m_languages.insert("spanish", tr("Spanish"));
+		m_languages.insert("dutch", tr("Dutch"));
+		m_languages.insert("russian", tr("Russian"));
+		m_languages.insert("italian", tr("Italian"));
+		m_languages.insert("chinese", tr("Chinese"));
+		m_languages.insert("japanese", tr("Japanese"));
+		m_languages.insert("hebrew", tr("Hebrew"));
+		m_languages.insert("arabic", tr("Arabic"));
+	}
+
 	foreach (QFileInfo fileinfo, fileInfoList) {
 		QString name = fileinfo.baseName();
 		name.replace("fritzing_", "");
@@ -56,7 +73,13 @@ TranslatorListModel::~TranslatorListModel() {
 QVariant TranslatorListModel::data ( const QModelIndex & index, int role) const 
 {
 	if (role == Qt::DisplayRole && index.row() >= 0 && index.row() < m_localeList.count()) {
-		return QLocale::languageToString(m_localeList.at(index.row())->language());
+		QString languageString = QLocale::languageToString(m_localeList.at(index.row())->language());
+
+		// QLocale::languageToString() only returns an English string, 
+		// so put it through a language-dependent hash table.
+		QString trLanguageString = m_languages.value(languageString.toLower(), "");
+		if (trLanguageString.isEmpty()) return languageString;
+		return trLanguageString;
 	}
 
 	return emptyVariant;

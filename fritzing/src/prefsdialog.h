@@ -29,12 +29,11 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #define PREFSDIALOG_H
 
 #include <QDialog>
-#include <QEvent>
-#include <QTextEdit>
 #include <QFile>
 #include <QAbstractListModel>
 #include <QFileInfoList>
 #include <QLocale>
+#include <QHash>
 
 class TranslatorListModel : public  QAbstractListModel
 {
@@ -52,6 +51,8 @@ public:
 
 protected:
 	QList<QLocale *> m_localeList;
+
+	static QHash<QString, QString> m_languages;
 };
 
 class PrefsDialog : public QDialog
