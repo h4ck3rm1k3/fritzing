@@ -35,5 +35,5 @@ either on your own, or with the help of a manufacturer.
 
 GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest
 
-(c) 2007-2008 Fachhochschule Potsdam
+(c) 2007-2009 Fachhochschule Potsdam
 design.fh-potsdam.de
