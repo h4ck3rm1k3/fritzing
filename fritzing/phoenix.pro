@@ -33,6 +33,7 @@ win32 {
 macx {
 	CONFIG += x86 ppc
 	QMAKE_INFO_PLIST = FritzingInfo.plist
+	DEFINES += QT_NO_DEBUG
 }
 ICON = resources/images/fritzing_icon.icns
 QT += core \

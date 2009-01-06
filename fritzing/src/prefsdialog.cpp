@@ -138,7 +138,7 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	int row = 0;
 	
 	QLabel * languageLabel = new QLabel(this);
-	languageLabel->setMaximumWidth(175);
+	languageLabel->setFixedWidth(195);
 	languageLabel->setWordWrap(true);
 	languageLabel->setText(QObject::tr("Choose your preferred language:\n"
 		"Please note that a new language setting will not take effect "
@@ -179,7 +179,7 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 #ifndef QT_NO_DEBUG
 
 	QLabel * clearLabel = new QLabel(this);
-	clearLabel->setMaximumWidth(175);
+	clearLabel->setFixedWidth(195);
 	clearLabel->setWordWrap(true);
 	clearLabel->setText(QObject::tr("Clear all saved settings and close this dialog (debug mode only)."));	
 	gridLayout->addWidget(clearLabel, row, 0);
