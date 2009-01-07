@@ -85,9 +85,7 @@ class FritzingWindow : public QMainWindow {
 		static QString getRandText();
 
 	public:
-		static QString QtFunkyPlaceholder;  // this is some weird hack Qt uses in window titles as a placeholder to set the modified state
 		static QString ReadOnlyPlaceholder;
-		static const QString FritzingExtension;
 		static const QString CoreBinLocation;
 };
 

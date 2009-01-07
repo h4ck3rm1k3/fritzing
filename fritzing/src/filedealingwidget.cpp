@@ -35,9 +35,8 @@ $Date$
 
 #include "filedealingwidget.h"
 #include "debugdialog.h"
+#include "misc.h"
 
-const QString DirtyFilesManager::FritzingExtension = ".fz";
-QString DirtyFilesManager::QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
 
 DirtyFilesManager::DirtyFilesManager(
 		QString *fileName,
@@ -77,7 +76,7 @@ DirtyFilesManager::DirtyFilesManager(
 	if(untitledFileCount > 1) {
 		*m_fileName += " " + QString::number(untitledFileCount);
 	}
-	*m_fileName += FritzingExtension;
+	*m_fileName += FritzingSketchExtension;
 	*m_fileCount++;
 
 	setTitle();
@@ -131,7 +130,7 @@ bool DirtyFilesManager::saveAs() {
 						m_widgetParent,
                         tr("Specify a file name"),
                         (m_fileName->isNull() || m_fileName->isEmpty()) ? m_defaultSaveFolder : *m_fileName,
-                        tr("Fritzing (*%1)").arg(FritzingExtension),
+                        tr("Fritzing (*%1)").arg(FritzingSketchExtension),
                         &fileExt
                       );
 
@@ -151,7 +150,7 @@ void DirtyFilesManager::undoStackCleanChanged(bool isClean) {
 
 bool DirtyFilesManager::alreadyHasExtension(const QString &fileName) {
 	// TODO: Make something preattier to manage all the supported formats at once
-	return fileName.indexOf(FritzingExtension)  != -1 || fileName.indexOf(".pdf")  != -1 || fileName.indexOf(".ps")  != -1 || fileName.indexOf(".png")  != -1 || fileName.indexOf(".jpg")  != -1;
+	return fileName.indexOf(FritzingSketchExtension)  != -1 || fileName.indexOf(".pdf")  != -1 || fileName.indexOf(".ps")  != -1 || fileName.indexOf(".png")  != -1 || fileName.indexOf(".jpg")  != -1;
 }
 
 /**

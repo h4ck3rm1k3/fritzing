@@ -367,16 +367,16 @@ void PartsEditorMainWindow::loadPcbFootprint(){
 	QString pcbFootprintFile;
 	//this->loadFileIntoView(m_pcbSvgFile, m_pcbView, ItemBase::PCBView, "copper0");
 	pcbFootprintFile = QFileDialog::getOpenFileName(this,
-       tr("Open Image"), QApplication::applicationFilePath(), tr("SVG Files (*.fzp)"));
+       tr("Open Image"), QApplication::applicationFilePath(), tr("SVG Files (*.fzfp)"));
 
     QFile file(pcbFootprintFile);
     QDomDocument doc("footprint");
     if (!file.open(QIODevice::ReadOnly)) {
-    	 DebugDialog::debug("cannot open fzp file");
+    	 DebugDialog::debug("cannot open fzfp file");
          return;
     }
     if (!doc.setContent(&file)) {
-    	DebugDialog::debug("cannot parse fzp xml");
+    	DebugDialog::debug("cannot parse fzfp xml");
         file.close();
         return;
     }
@@ -392,7 +392,7 @@ bool PartsEditorMainWindow::saveAs() {
 	m_moduleId = ___emptyString___;
 	QString title = m_title->text();
 
-	m_fileName = title != ___emptyString___ ? title+FritzingExtension : m_fileName;
+	m_fileName = title != ___emptyString___ ? title+FritzingSketchExtension : m_fileName;
 
 	// TODO Mariano: This folder should be defined in the preferences... some day
 	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
@@ -421,7 +421,7 @@ bool PartsEditorMainWindow::saveAs() {
 
 	QString filename = userPartsFolderPath+m_fileName;
 	if(!alreadyHasExtension(filename)) {
-		filename += FritzingExtension;
+		filename += FritzingSketchExtension;
 	}
 
 	saveAsAux(filename);
@@ -549,7 +549,7 @@ int &PartsEditorMainWindow::untitledFileCount() {
 }
 
 const QString PartsEditorMainWindow::fileExtension() {
-	return FritzingExtension;
+	return FritzingSketchExtension;
 }
 
 const QString PartsEditorMainWindow::defaultSaveFolder() {

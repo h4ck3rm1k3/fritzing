@@ -124,7 +124,7 @@ $Date$
     <file>resources/styles/inviewhelp.qss</file>
     <file>resources/styles/infoview.css</file>
     <file>resources/js/infoview.js</file>
-    <file>resources/bins/bin.fz</file>
+    <file>resources/bins/bin.fzb</file>
     <file>resources/images/helpImageBreadboard.png</file>
     <file>resources/images/helpImageSchematic.png</file>
     <file>resources/images/helpImagePCB.png</file>

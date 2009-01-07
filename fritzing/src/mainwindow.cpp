@@ -897,7 +897,7 @@ int &MainWindow::untitledFileCount() {
 }
 
 const QString MainWindow::fileExtension() {
-	return FritzingExtension;
+	return FritzingSketchExtension;
 }
 
 const QString MainWindow::defaultSaveFolder() {
@@ -938,7 +938,7 @@ void MainWindow::saveBundledSketch() {
 			this,
 			tr("Specify a file name"),
 			path,
-			tr("Fritzing (*%1)").arg(FritzingExtension+"z"),
+			tr("Fritzing (*%1)").arg(FritzingBundleExtension),
 			&fileExt
 		  );
 
@@ -1029,7 +1029,7 @@ void MainWindow::moveToPartsFolderAndLoad(const QString &unzipDirPath) {
 	}
 
 	namefilters.clear();
-	namefilters << "*"+FritzingExtension;
+	namefilters << "*"+FritzingSketchExtension;
 
 	// the sketch itself
 	mw->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false);

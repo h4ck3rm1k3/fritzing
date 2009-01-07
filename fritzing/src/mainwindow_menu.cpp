@@ -110,7 +110,7 @@ void MainWindow::exportDiy(QAction * action) {
 	QString extFmt = fileExtFormats.value(pdfActionType);
 	QString fileName = QFileDialog::getSaveFileName(this,
 		tr("Export for DIY..."),
-		path+"/"+m_fileName.remove(FritzingExtension)+getExtFromFileDialog(extFmt),
+		path+"/"+m_fileName.remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
 		extFmt,
 		&fileExt
 	);
@@ -243,7 +243,7 @@ void MainWindow::doExport(QAction * action) {
 		QString extFmt = fileExtFormats.value(actionType);
 		DebugDialog::debug(QString("file export string %1").arg(extFmt));
 		QString fileName = QFileDialog::getSaveFileName(this,
-			tr("Export..."), path+"/"+m_fileName.remove(FritzingExtension)+getExtFromFileDialog(extFmt),
+			tr("Export..."), path+"/"+m_fileName.remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
 			extFmt,
 			&fileExt
 		);
@@ -423,7 +423,7 @@ void MainWindow::load() {
 			this,
 			"Select a Fritzing File to Open",
 			path,
-			tr("Fritzing Files (*%1 *%1z);;Fritzing (*%1);;Fritzing Shareable (*%1z)").arg(FritzingExtension)
+			tr("Fritzing Files (*%1 *%1z);;Fritzing (*%1);;Fritzing Shareable (*%2)").arg(FritzingSketchExtension).arg(FritzingBundleExtension)
 		);
 	if (fileName.isNull()) return;
 
@@ -461,11 +461,15 @@ void MainWindow::load() {
     file.close();
 
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
-    if(fileName.endsWith(FritzingExtension)) {
+    if(fileName.endsWith(FritzingSketchExtension)) {
     	mw->load(fileName);
-    } else if(fileName.endsWith(FritzingExtension+"z")) {
+    } else if(fileName.endsWith(FritzingBundleExtension)) {
     	mw->loadBundledSketch(fileName);
     }
+	else if (fileName.endsWith(FritzingBinExtension)) {
+	}
+	else if (fileName.endsWith(FritzingPartExtension)) {
+	}
 
 	closeIfEmptySketch(mw);
 }
@@ -726,7 +730,7 @@ void MainWindow::createOpenExampleMenu(QMenu * parentMenu, QString path) {
 				parentMenu->addMenu(currMenu);
 				createOpenExampleMenu(currMenu, currFilePath);
 			} else {
-				QString actionText = currFile.remove(FritzingExtension);
+				QString actionText = currFile.remove(FritzingSketchExtension);
 				m_openExampleActions << actionText;
 				QAction * currAction = new QAction(actionText, this);
 				currAction->setData(currFilePath);

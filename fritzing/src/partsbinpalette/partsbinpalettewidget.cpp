@@ -252,7 +252,7 @@ bool PartsBinPaletteWidget::saveAs() {
 						this,
                         tr("Specify a file name"),
                         (m_fileName.isNull() || m_fileName.isEmpty()) ? m_defaultSaveFolder : m_fileName,
-                        tr("Fritzing (*%1)").arg(FritzingWindow::FritzingExtension),
+                        tr("Fritzing (*%1)").arg(FritzingBinExtension),
                         &fileExt
                       );
 
@@ -271,7 +271,7 @@ void PartsBinPaletteWidget::open() {
 			this,
 			"Select a Fritzing file to open",
 			m_defaultSaveFolder,
-			tr("Fritzing (*%1)").arg(FritzingWindow::FritzingExtension) );
+			tr("Fritzing (*%1)").arg(FritzingBinExtension) );
 	if (fileName.isNull()) return;
 
 	QFile file(fileName);

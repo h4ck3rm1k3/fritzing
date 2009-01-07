@@ -87,4 +87,11 @@ static const QString ___MacStyle___ = " QTabBar::tab {margin-bottom: 10px; min-w
 static const QString ___MacStyle___ = "";
 #endif
 
+
+static const QString FritzingSketchExtension(".fz");
+static const QString FritzingBinExtension(".fzb");
+static const QString FritzingPartExtension(".fzp");
+static const QString FritzingBundleExtension(".fzz");
+static const QString QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
+
 #endif

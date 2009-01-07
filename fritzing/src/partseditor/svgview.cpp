@@ -103,7 +103,7 @@ SVGView::SVGView(const QString &name, QWidget *parent)
 void SVGView::importPCBXML(){
 	QString path = QFileDialog::getOpenFileName(this,
          tr("Select Footprint XML File"), "",
-         tr("Fritzing Footprint XML Files (*.fzp);;All Files (*)"));
+         tr("Fritzing Footprint XML Files (*.fzfp);;All Files (*)"));
 	QFile file(path);
 	if (!file.open(QFile::ReadOnly | QFile::Text)) {
     	QMessageBox::warning(NULL, QObject::tr("Fritzing"),

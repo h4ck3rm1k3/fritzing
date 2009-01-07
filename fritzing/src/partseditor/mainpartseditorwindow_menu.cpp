@@ -45,7 +45,7 @@ void MainPartsEditorWindow::saveAs() {
 						this,
                         tr("Specify a file name"),
                         (m_fileName.isNull() || m_fileName.isEmpty()) ? QDir::currentPath()+"/parts/user/" : m_fileName,
-                        tr("Fritzing (*%1)").arg(MainWindow::FritzingExtension),
+                        tr("Fritzing (*%1)").arg(FritzingSketchExtension),
                         &fileExt
                       );
 

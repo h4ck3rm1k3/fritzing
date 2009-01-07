@@ -90,11 +90,6 @@ class DirtyFilesManager : public QObject {
 		SaveAsAuxFunc m_saveAsFunc;
 		int *m_fileCount;
 
-	protected:
-		static QString QtFunkyPlaceholder;  // this is some weird hack Qt uses in window titles as a placeholder to set the modified state
-
-	public:
-		static const QString FritzingExtension;
 };
 
 
