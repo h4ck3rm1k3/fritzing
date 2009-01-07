@@ -50,7 +50,7 @@ SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, MainWindow *paren
 	layout->addWidget(m_graphicsView);
 	layout->addWidget(m_toolbar);
 	layout->addWidget(m_statusBarArea);
-	m_statusBarArea->setFixedHeight(parent->statusBar()->height());
+	m_statusBarArea->setFixedHeight(parent->statusBar()->height()*3/4);
 }
 
 SketchAreaWidget::~SketchAreaWidget() {
