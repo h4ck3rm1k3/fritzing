@@ -93,6 +93,13 @@
                 </iconView >
              </views>
         </instance>
+        <instance moduleIdRef="1002ACDC0FA" path="/parts/core/basic_thermistor.fz">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
         <instance moduleIdRef="1001AAAB555Timer" path="parts/core/555timer.fz">
 			<views>
 				<iconView layer="icon">

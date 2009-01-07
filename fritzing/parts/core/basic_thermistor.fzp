@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module fritzingVersion="0.1.1201" moduleId="1002ACDC0FA" >
+ <version>1.0</version>
+ <author>Brendan Howell</author>
+ <title>Temperature Sensor (Thermistor)</title>
+ <label>R</label>
+ <date>2009-01-07</date>
+ <tags>
+  <tag>Thermistor</tag>
+  <tag>Temperature Sensor</tag>
+  <tag>fritzing core</tag>
+  <tag>sensor</tag>
+  <tag>heat sensor</tag>
+ </tags>
+ <properties>
+  <property name="family" >Thermistor</property>
+  <property name="Resistance at 25&#176;" >10k &#8486;</property>
+  <property name="Thermistor Type" >NTC (Negative Temperature Coefficient)</property>
+ </properties>
+ <taxonomy>discreteParts.sensor.heat.thermistor</taxonomy>
+ <description>A 10k NTC Thermistor (Temperature Sensor)</description>
+ <views>
+  <iconView>
+   <layers image="icon/ceramic_disk_thermistor.svg" >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView fliphorizontal="true" flipvertical="true" >
+   <layers image="breadboard/ceramic_disk_thermistor.svg" >
+    <layer layerId="breadboard" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers image="schematic/thermistor.svg" >
+    <layer layerId="schematic" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers image="pcb/axial_lay_300mil.svg" >
+    <layer layerId="copper0" />
+    <layer layerId="silkscreen" />
+   </layers>
+  </pcbView>
+ </views>
+ <connectors>
+  <connector type="male" id="connector0" name="pin 0" >
+   <description>pin0</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector0pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="pin 1" >
+   <description>pin1</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pad" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+ </connectors>
+</module>
