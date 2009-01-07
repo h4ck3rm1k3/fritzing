@@ -216,8 +216,8 @@ void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {
 
 void PaletteItem::mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event) {
 	//DebugDialog::debug("layerkinchief got mouse press event");
-	/*  
-	
+	/*
+
 	if (acceptsMousePressConnectorEvent(NULL, event) && isBuriedConnectorHit(event)  ) return;
 	foreach(LayerKinPaletteItem * lkpi, m_layerKin) {
 		if (lkpi->isBuriedConnectorHit(event)) return;
@@ -277,14 +277,44 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
 	bool sameFamily = family() == newModelPart->modelPartStuff()->family();
 	if(sameFamily) {
 		invalidateConnectors();
+
 		m_modelPart->copy(newModelPart);
 		m_modelPart->initConnectors(true);
+
+		QHash<ViewLayer::ViewLayerID,bool> layersVisibility = cleanupLayerKin();
 		renderImage(m_modelPart,m_viewIdentifier,layerHash,m_viewLayerID,true);
+
+		loadLayerKin(layerHash);
+		updateLayerKinVisibility(layersVisibility);
+
 		cleanupConnectors();
 		updateTooltip();
+
 		scene()->update();
 	}
 	return sameFamily;
+}
+
+QHash<ViewLayer::ViewLayerID,bool> PaletteItem::cleanupLayerKin() {
+	QHash<ViewLayer::ViewLayerID,bool> layersVisibility;
+
+	for (int i = 0; i < layerKin().count(); i++) {
+		LayerKinPaletteItem * lkpi = layerKin()[i];
+		layersVisibility[lkpi->viewLayerID()] = lkpi->isVisible();
+		this->scene()->removeItem(lkpi);
+		delete lkpi;
+	}
+	m_layerKin.clear();
+
+	return layersVisibility;
+}
+
+void PaletteItem::updateLayerKinVisibility(QHash<ViewLayer::ViewLayerID,bool> layersVisibility) {
+	for (int i = 0; i < layerKin().count(); i++) {
+		LayerKinPaletteItem * lkpi = layerKin()[i];
+		this->scene()->addItem(lkpi);
+		lkpi->setVisible(layersVisibility[lkpi->viewLayerID()]);
+	}
 }
 
 void PaletteItem::invalidateConnectors() {
@@ -318,10 +348,10 @@ void PaletteItem::cleanupConnectors() {
 			foreach(ConnectorItem* oldConnectedTo, oldOne->connectedToItems()) {
 				oldOne->tempRemove(oldConnectedTo);
 				oldConnectedTo->tempRemove(oldOne);
-				newOne->tempConnectTo(oldConnectedTo);
-				oldConnectedTo->tempConnectTo(newOne);
+				newOne->tempConnectTo(oldConnectedTo, true);
+				oldConnectedTo->tempConnectTo(newOne, true);
 
-				newOne->attachedMoved();
+				//newOne->attachedMoved();
 			}
 			oldOnes.remove(name);
 			scene()->removeItem(oldOne);
@@ -335,10 +365,16 @@ void PaletteItem::cleanupConnectors() {
 	foreach(QString name, oldOnes.keys()) {
 		ConnectorItem *toRemove = oldOnes[name];
 		if(toRemove) {
+			foreach(ConnectorItem* toDisconnect, toRemove->connectedToItems()) {
+				toRemove->tempRemove(toDisconnect, true);
+				toDisconnect->tempRemove(toRemove, true);
+			}
 			scene()->removeItem(toRemove);
 			delete toRemove;
 		}
 	}
+
+	updateConnections();
 }
 
 void PaletteItem::setHidden(bool hide) {
@@ -393,6 +429,6 @@ bool PaletteItem::isLowerLayerVisible(PaletteItemBase * paletteItemBase) {
 			return true;
 		}
 	}
-	
+
 	return false;
 }

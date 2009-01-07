@@ -125,14 +125,18 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	updateTooltip();
 }
 
-void ConnectorItem::tempConnectTo(ConnectorItem * item) {
+void ConnectorItem::tempConnectTo(ConnectorItem * item, bool applyColor) {
 	m_connectedTo.append(item);
 	updateTooltip();
+
+	if(applyColor) restoreColor();
 }
 
-void ConnectorItem::tempRemove(ConnectorItem * item) {
+void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 	m_connectedTo.removeOne(item);
 	updateTooltip();
+
+	if(applyColor) restoreColor();
 }
 
 void ConnectorItem::restoreColor() {
@@ -385,15 +389,15 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 		// no need to save if there's no connection
 		return;
 	}
-	
+
 	writer.writeStartElement("connector");
-	writer.writeAttribute("connectorId", connectorStuffID());	
+	writer.writeAttribute("connectorId", connectorStuffID());
 	writeTopLevelAttributes(writer);
-	writer.writeStartElement("geometry");	
+	writer.writeStartElement("geometry");
 	writer.writeAttribute("x", QString::number(this->pos().x()));
 	writer.writeAttribute("y", QString::number(this->pos().y()));
 	writer.writeEndElement();
-	
+
 	writer.writeStartElement("connects");
 	foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
 		//if (connectorItem->attachedToItemType() == ModelPart::Wire) {
@@ -409,9 +413,9 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 		writer.writeEndElement();
 	}
 	writer.writeEndElement();
-	
+
 	writeOtherElements(writer);
-	
+
 	writer.writeEndElement();
 }
 
@@ -459,10 +463,10 @@ Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags fl
 	return NULL;
 }
 
-bool ConnectorItem::wiredTo(ConnectorItem * target) 
+bool ConnectorItem::wiredTo(ConnectorItem * target)
 {
 	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
-		if (target == toConnectorItem) 
+		if (target == toConnectorItem)
 		{
 			return true;
 		}
@@ -510,7 +514,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 
 		// this one's a keeper
 		connectorItems.append(connectorItem);
-				
+
 		foreach (ConnectorItem * cto, connectorItem->connectedToItems()) {
 			if (tempItems.contains(cto)) continue;
 

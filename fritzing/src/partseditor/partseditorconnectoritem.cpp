@@ -247,7 +247,6 @@ void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 		setFlag(QGraphicsItem::ItemIsMovable,true);
 		m_mousePosition = closeToCorner(event->pos());
 		if(m_mousePosition != Outside) {
-			DebugDialog::debug("<<<<<<<<<<<<<<<<<<<<<< listo apra resize");
 			m_resizing = true;
 		}
 	} else {

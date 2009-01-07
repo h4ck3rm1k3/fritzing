@@ -140,8 +140,6 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 	if(currSketch && mainHelp) {
 		QPointF posAux = currSketch->mapFrom(m_owner,pos);
 		doHide = mainHelp->boundingRect().contains(posAux);
-		DebugDialog::debug(QString("<<<< %1,%2").arg(posAux.x()).arg(posAux.y()));
-		DebugDialog::debug(doHide ? "<<< hide" : "<<< show");
 	}*/
 
 	if(m_stillWaitingFirstDrop) {

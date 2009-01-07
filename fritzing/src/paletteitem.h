@@ -79,6 +79,8 @@ protected:
 	void invalidateConnectors();
 	void cleanupConnectors();
 	void figureHover();
+	QHash<ViewLayer::ViewLayerID,bool> cleanupLayerKin();
+	void updateLayerKinVisibility(QHash<ViewLayer::ViewLayerID,bool>);
 
  protected:
  	QList<class LayerKinPaletteItem *> m_layerKin;

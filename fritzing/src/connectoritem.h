@@ -70,8 +70,8 @@ public:
 	ModelPartStuff * modelPartStuff();
 	ModelPart * modelPart();
 	virtual class Bus * bus();
-	void tempConnectTo(ConnectorItem * item);
-	void tempRemove(ConnectorItem * item);
+	void tempConnectTo(ConnectorItem * item, bool applyColor = false);
+	void tempRemove(ConnectorItem * item, bool applyColor = false);
 	void setCircular(bool);
 	void setOpacity(qreal);
 	Connector::ConnectorType connectorType();
