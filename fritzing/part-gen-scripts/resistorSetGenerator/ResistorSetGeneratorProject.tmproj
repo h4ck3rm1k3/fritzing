@@ -3,59 +3,59 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>resistor_fz.tmpl</string>
+	<string>resistorSetGenerator.py</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
-			<string>resistor_fz.tmpl</string>
+			<string>resistor_fzp.tmpl</string>
 			<key>lastUsed</key>
-			<date>2008-12-17T17:52:44Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2009-01-07T11:04:35Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>resistor_icon_svg.tmpl</string>
 			<key>lastUsed</key>
-			<date>2008-12-14T16:08:03Z</date>
+			<date>2009-01-07T11:04:21Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>valuesAndColors_forResistors.py</string>
 			<key>lastUsed</key>
-			<date>2008-12-14T17:56:27Z</date>
+			<date>2009-01-05T18:14:23Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>resistor_breadboard_svg.tmpl</string>
 			<key>lastUsed</key>
-			<date>2008-12-14T17:56:20Z</date>
+			<date>2009-01-05T15:06:16Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>defaults.cfg</string>
 			<key>lastUsed</key>
-			<date>2008-12-14T17:56:49Z</date>
+			<date>2009-01-05T18:14:23Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>resistorSetGenerator.py</string>
 			<key>lastUsed</key>
-			<date>2008-12-17T17:52:44Z</date>
+			<date>2009-01-07T11:04:35Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
-			<string>bin_fz.tmpl</string>
+			<string>bin_fzb.tmpl</string>
 			<key>lastUsed</key>
-			<date>2008-12-14T17:56:23Z</date>
+			<date>2009-01-07T11:04:07Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>218</integer>
 	<key>metaData</key>
 	<dict>
-		<key>bin_fz.tmpl</key>
+		<key>bin_fzb.tmpl</key>
 		<dict>
 			<key>caret</key>
 			<dict>
@@ -74,9 +74,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>29</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>4</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -88,14 +88,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>33</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>162</integer>
+				<integer>211</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>127</integer>
+			<integer>0</integer>
 		</dict>
 		<key>resistor_breadboard_svg.tmpl</key>
 		<dict>
@@ -111,14 +111,14 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>resistor_fz.tmpl</key>
+		<key>resistor_fzp.tmpl</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>73</integer>
+				<integer>39</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -144,14 +144,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>19</integer>
+				<integer>56</integer>
 				<key>line</key>
-				<integer>96</integer>
+				<integer>43</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>55</integer>
+			<integer>28</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -159,14 +159,14 @@
 		<string>resistorSetGenerator.py</string>
 		<string>defaults.cfg</string>
 		<string>valuesAndColors_forResistors.py</string>
-		<string>bin_fz.tmpl</string>
-		<string>resistor_fz.tmpl</string>
+		<string>bin_fzb.tmpl</string>
+		<string>resistor_fzp.tmpl</string>
 		<string>resistor_breadboard_svg.tmpl</string>
 		<string>resistor_icon_svg.tmpl</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{265, 182}, {802, 996}}</string>
+	<string>{{861, 158}, {1050, 1018}}</string>
 </dict>
 </plist>

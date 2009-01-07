@@ -29,11 +29,11 @@ $Date: 2008-11-21 11:04:36 +0100 (Fri, 21 Nov 2008) $
 
 generator.py
 
-This script generates a svg or fz file for breadboards to be used in Fritzing.
+This script generates a svg or fzp file for breadboards to be used in Fritzing.
 Edit it directly, then run it in the commmand line.
 
 Run it in the commandline with this:
- python generator.py run [svg|fz] > partdescription.xml
+ python generator.py run [svg|fzp] > partdescription.xml
 """
 
 import sys, os, uuid
@@ -102,13 +102,13 @@ This script generates the partdescription.xml code for a breadboard part folder.
 
 Usage:
 	Run it in the commandline and pipe the result to a file:
-	python generator.py run [svg|fz] > partdescription.xml
+	python generator.py run [svg|fzp] > partdescription.xml
 
 Arguments:
 	run
 		Use this to run the script. Without this argument, this help text is displayed.
-	[svg|fz]
-		svg or fz specify what kind of output this script delivers. Default is the svg
+	[svg|fzp]
+		svg or fzp specify what kind of output this script delivers. Default is the svg
 
 If you want to change the type of breadboard which this script generates
 (which is the main reason for this script to be in the Fritzing PDK),
@@ -235,7 +235,7 @@ def main():
 		sizeDict['realHeight'] = "%.4fin" % (totalY / 90.0)
 		sL['size'] = sizeDict
 		
-		if len(sys.argv) >= 3 and sys.argv[2] == 'fz':
+		if len(sys.argv) >= 3 and sys.argv[2] == 'fzp':
 			metaData = {}
 			metaData['moduleID'] = makeUUID()
 			# TODO for the real generator use the UUID
@@ -243,8 +243,8 @@ def main():
 			metaData['date'] = makeDate()
 			metaData['author'] = getUserName()
 			sL['metaData'] = metaData
-			fz = Template(file=getTemplatefile("breadboard_fz.tmpl"), searchList = [sL])
-			print fz
+			fzp = Template(file=getTemplatefile("breadboard_fzp.tmpl"), searchList = [sL])
+			print fzp
 		else:
 			svg = Template(file=getTemplatefile("breadboard_svg.tmpl"), searchList = [sL])
 			print svg

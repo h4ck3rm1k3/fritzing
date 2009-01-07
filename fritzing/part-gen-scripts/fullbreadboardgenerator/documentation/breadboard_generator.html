@@ -18,7 +18,7 @@ version 1.2
 </p>
 <h2 id="usage">Usage</h2>
 
-<p>This script can outputs the image (.svg) or the fritzing part file (.fz) for a breadboard. To run it you use the command line. Go to the folder that contains the scipt and run it with the <code>run</code> and <code>svg</code>. Like this:</p>
+<p>This script can outputs the image (.svg) or the fritzing part file (.fzp) for a breadboard. To run it you use the command line. Go to the folder that contains the scipt and run it with the <code>run</code> and <code>svg</code>. Like this:</p>
 <pre class="commandline">
     % cd FrizingPDK/Tools/BreadboardGenerator
     % python generator.py run svg
@@ -29,7 +29,7 @@ version 1.2
 </pre>
 <p>This will generate an image file <code>myBreadboard.svg</code> in the same location as where you are running the script from.</p>
 
-<p>This is still not very useful to run the script like this, because it is just generating the svg and fz code for the <em>standard</em> breadboard, which already is in your Fritzing library. That's why this tool becomes especially useful if you want to create your own <em>no-so-standard</em> breadboard.</p>
+<p>This is still not very useful to run the script like this, because it is just generating the svg and fzp code for the <em>standard</em> breadboard, which already is in your Fritzing library. That's why this tool becomes especially useful if you want to create your own <em>no-so-standard</em> breadboard.</p>
 
 <p><strong>The way to use this tool is to modify it.</strong> Open the <code>generator.py</code> in your favorite code editor and change the variables. Most useful variables to play with can be found in the <code>setup()</code> method, right below</p>
 <pre class="textmate-source"><span class='linenum'>   50</span> <span class="meta meta_function meta_function_python"><span class="storage storage_type storage_type_function storage_type_function_python">def</span> <span class="entity entity_name entity_name_function entity_name_function_python">setup</span><span class="punctuation punctuation_definition punctuation_definition_parameters punctuation_definition_parameters_begin punctuation_definition_parameters_begin_python">(</span><span class="punctuation punctuation_definition punctuation_definition_parameters punctuation_definition_parameters_end punctuation_definition_parameters_end_python">)</span><span class="punctuation punctuation_section punctuation_section_function punctuation_section_function_begin punctuation_section_function_begin_python">:</span></span>
@@ -74,12 +74,12 @@ version 1.2
 
 <h3 id="choose_your_weapon">Choose your weapon</h3>
 
-<p>This tool can create the image (a <code>.svg</code> file) and the Fritzing part (a <code>.fz</code> file). To choose between these two you have to use a second argument after <code>run</code>: <code>svg</code> or <code>fz</code>.</p>
+<p>This tool can create the image (a <code>.svg</code> file) and the Fritzing part (a <code>.fzp</code> file). To choose between these two you have to use a second argument after <code>run</code>: <code>svg</code> or <code>fzp</code>.</p>
 
 <p>The following commands creates both the image and the part file:</p>
 <pre class="commandline">
 	% python generator.py run svg &gt; myBreadboard.svg
-	% python generator.py run fz &gt; myBreadboard.fz
+	% python generator.py run fzp &gt; myBreadboard.fzp
 </pre>
 
 <h3 id="modify_the_image">Modify the image</h3>
@@ -92,20 +92,20 @@ The trick to solve this nasty dpi scaling problem is that you first <strong>1.</
 <hr />
 <h2 id="full_reference">Full Reference</h2>
 
-<p>This script outputs the image (.svg) or the fritzing part file (.fz) for a breadboard.</p>
+<p>This script outputs the image (.svg) or the fritzing part file (.fzp) for a breadboard.</p>
 <h3>Usage:</h3>
 
 <p>Run it in the commandline and <em>redirect</em> the result to a file:</p>
 <pre class="commandline">
-	python generator.py run [svg|fz] &gt; partdescription.xml
+	python generator.py run [svg|fzp] &gt; partdescription.xml
 </pre>
 
 <h3>Arguments:</h3>
 <dl>
 <dt><strong>run</strong></dt>
 <dd>Use this to run the script. Without this argument, this same help text is displayed.</dd>
-<dt><strong>[svg|fz]</strong></dt>
-<dd>Specify whether the script should generate the .svg file or the .fz file.<br>
+<dt><strong>[svg|fzp]</strong></dt>
+<dd>Specify whether the script should generate the .svg file or the .fzp file.<br>
 If this argument is omitted, it defaults to svg.</dd></dl>
 <h3>Advanced Usage:</h3>
 <p>If you want to change the type of breadboard which this script generates (the main reason for this script to be in the Fritzing PDK), you can easily edit the python file. The setup() method defines most of the parameters of the breadboard. Probably changing values here is enough for you to make the exact breadboard you like.</p>

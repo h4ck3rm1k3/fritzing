@@ -112,7 +112,7 @@ def getExistingResistorsFromBin(filename):
 			if aPart.attributes.has_key("path") and aPart.attributes.has_key("moduleIdRef"):
 				partFilename = os.path.split(aPart.attributes["path"].value)[1]
 				if (partFilename.startswith("resistor_")):
-					# There is a resistor. Strip of the resistor_ and .fz part
+					# There is a resistor. Strip of the resistor_ and .fzp part
 					resistorValueString = os.path.splitext(partFilename)[0][9:]
 					thisResistor = {}
 					thisResistor['value'] = resistorValueString.replace("_", ".")
@@ -160,8 +160,8 @@ def main(argv=None):
 				existingBin = value
 		
 		if(not(namedSet) or not(output)):
-			print >> sys.stderr, "No Resistor Set or Output Dir specified"
-			raise Usage(Exception)
+			# print >> sys.stderr, "No Resistor Set or Output Dir specified"
+			raise Usage("Error: No Resistor Set or Output Dir specified")
 		
 		config = ConfigParser.ConfigParser()
 		config.readfp(open(getConfigFile('defaults.cfg')))
@@ -208,14 +208,13 @@ def main(argv=None):
 				# Icon svg
 				svg = Template(file=getTemplatefile("resistor_icon_svg.tmpl"), searchList = [sL])
 				writeOutFileInSubDirectoryWithData(output, "icon", "resistor_icon_%s.svg" % (resistanceString), svg)
-				# Partfile fz
-				# TODO Part should be a .fzp file
-				fzfilename = "resistor_%s.fz" % valuesAndColors_forResistors.valueStringWithoutDots(r)
-				fz = Template(file=getTemplatefile("resistor_fz.tmpl"), searchList = [sL])
-				writeOutFileInSubDirectoryWithData(output, "fz_files", fzfilename, fz)
+				# Partfile fzp
+				fzpfilename = "resistor_%s.fzp" % valuesAndColors_forResistors.valueStringWithoutDots(r)
+				fzp = Template(file=getTemplatefile("resistor_fzp.tmpl"), searchList = [sL])
+				writeOutFileInSubDirectoryWithData(output, "fzp_files", fzfilename, fzp)
 				# For in the bin
 				resistorInBin['moduleID'] = metaData['moduleID']
-				resistorInBin['filename'] = fzfilename
+				resistorInBin['filename'] = fzpfilename
 				resistorBin.append(resistorInBin)
 		# Bin file
 		if (config.getboolean('OutputBin', 'outputBin')):
@@ -225,9 +224,8 @@ def main(argv=None):
 			for r in resistorBin:
 				r['filepath'] = os.path.join(partsDir, r['filename'])
 			sL['resistors'] = resistorBin
-			fz = Template(file=getTemplatefile("bin_fz.tmpl"), searchList = [sL])
-			# TODO Bin should be a .fzb file
-			writeOutFileInSubDirectoryWithData(output, "bin", "%sBin.fz" % (namedSet), fz)
+			fzb = Template(file=getTemplatefile("bin_fzb.tmpl"), searchList = [sL])
+			writeOutFileInSubDirectoryWithData(output, "bin", "%sBin.fzb" % (namedSet), fzb)
 	
 	except Usage, err:
 		print >> sys.stderr, sys.argv[0].split("/")[-1] + ": " + str(err.msg)
