@@ -2,560 +2,560 @@
 <module fritzingVersion='0.1.b.12.12.1810'>
 	<title>All Parts</title>
 	<instances>
-		<instance moduleIdRef="1001AAAB555Timer" path="/parts/core/555timer.fz">
+		<instance moduleIdRef="1001AAAB555Timer" path="/parts/core/555timer.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDC24diode" path="/parts/core/basic-diode.fz">
+		<instance moduleIdRef="1234ABDC24diode" path="/parts/core/basic-diode.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<!-- instance moduleIdRef="1099ABDE24_ST_relay" path="/parts/core/basic-relay.fz">
+		<!-- instance moduleIdRef="1099ABDE24_ST_relay" path="/parts/core/basic-relay.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance -->
-		<instance moduleIdRef="1238DBDC00-toggle-switch" path="/parts/core/basic-toggle-switch.fz">
+		<instance moduleIdRef="1238DBDC00-toggle-switch" path="/parts/core/basic-toggle-switch.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000AFDF10011" path="/parts/core/battery-AA.fz">
+		<instance moduleIdRef="1000AFDF10011" path="/parts/core/battery-AA.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1238DBDC00-voltage-reg" path="/parts/core/basic-voltage-regulator.fz">
+		<instance moduleIdRef="1238DBDC00-voltage-reg" path="/parts/core/basic-voltage-regulator.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC02A" path="/parts/core/ceramic_capacitor_22pf.fz">
+		<instance moduleIdRef="1001ABDC02A" path="/parts/core/ceramic_capacitor_22pf.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC02" path="/parts/core/ceramic_capacitor_basic_0_01uF.fz.fz">
+		<instance moduleIdRef="1001ABDC02" path="/parts/core/ceramic_capacitor_basic_0_01uF.fz.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000AAAA01" path="/parts/core/ceramic_capacitor_basic_0_1uF.fz">
+		<instance moduleIdRef="1000AAAA01" path="/parts/core/ceramic_capacitor_basic_0_1uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03A" path="/parts/core/electrolytic_capacitor_1uF.fz">
+		<instance moduleIdRef="1001ABDC03A" path="/parts/core/electrolytic_capacitor_1uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03" path="/parts/core/electrolytic_capacitor_basic_10uF.fz">
+		<instance moduleIdRef="1001ABDC03" path="/parts/core/electrolytic_capacitor_basic_10uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03I" path="/parts/core/electrolytic_capacitor_22uF.fz">
+		<instance moduleIdRef="1001ABDC03I" path="/parts/core/electrolytic_capacitor_22uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03B" path="/parts/core/electrolytic_capacitor_47uF.fz">
+		<instance moduleIdRef="1001ABDC03B" path="/parts/core/electrolytic_capacitor_47uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03F" path="/parts/core/electrolytic_capacitor_100uF.fz">
+		<instance moduleIdRef="1001ABDC03F" path="/parts/core/electrolytic_capacitor_100uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03D" path="/parts/core/electrolytic_capacitor_220uF.fz">
+		<instance moduleIdRef="1001ABDC03D" path="/parts/core/electrolytic_capacitor_220uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03E" path="/parts/core/electrolytic_capacitor_470uF.fz">
+		<instance moduleIdRef="1001ABDC03E" path="/parts/core/electrolytic_capacitor_470uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03G" path="/parts/core/electrolytic_capacitor_1000uF.fz">
+		<instance moduleIdRef="1001ABDC03G" path="/parts/core/electrolytic_capacitor_1000uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC03H" path="/parts/core/electrolytic_capacitor_4700uF.fz">
+		<instance moduleIdRef="1001ABDC03H" path="/parts/core/electrolytic_capacitor_4700uF.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC04" path="/parts/core/basic_fet_n.fz">
+		<instance moduleIdRef="1001ABDC04" path="/parts/core/basic_fet_n.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001ABDC27" path="/parts/core/basic_fet_p.fz">
+		<instance moduleIdRef="1001ABDC27" path="/parts/core/basic_fet_p.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000ABDD10011" path="/parts/core/basic_fsr.fz">
+		<instance moduleIdRef="1000ABDD10011" path="/parts/core/basic_fsr.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000ABDD10012" path="/parts/core/basic_ldr.fz">
+		<instance moduleIdRef="1000ABDD10012" path="/parts/core/basic_ldr.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1002ACDC0FA" path="/parts/core/basic_thermistor.fz">
+		<instance moduleIdRef="1002ACDC0FA" path="/parts/core/basic_thermistor.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="3234DBDC00" path="/parts/core/basic_poti.fz">
+		<instance moduleIdRef="3234DBDC00" path="/parts/core/basic_poti.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="3234DFDC00" path="/parts/core/big_pot.fz">
+		<instance moduleIdRef="3234DFDC00" path="/parts/core/big_pot.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1238DBDC00" path="/parts/core/basic_power_transistor_npn.fz">
+		<instance moduleIdRef="1238DBDC00" path="/parts/core/basic_power_transistor_npn.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1237DBDC00" path="/parts/core/basic_power_transistor_pnp.fz">
+		<instance moduleIdRef="1237DBDC00" path="/parts/core/basic_power_transistor_pnp.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1099ABDE24_ST" path="/parts/core/basic_pushbutton.fz">
+		<instance moduleIdRef="1099ABDE24_ST" path="/parts/core/basic_pushbutton.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" path="/parts/core/basic_pushbutton_2lead_horizon.fz">
+		<instance moduleIdRef="1099ABDE24_ST-2leadbutton-horizon" path="/parts/core/basic_pushbutton_2lead_horizon.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="3234DBDC80" path="/parts/core/basic_servo.fz">
+		<instance moduleIdRef="3234DBDC80" path="/parts/core/basic_servo.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234DBDC00" path="/parts/core/basic_transistor_npn.fz">
+		<instance moduleIdRef="1234DBDC00" path="/parts/core/basic_transistor_npn.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234DBDC11" path="/parts/core/basic_transistor_pnp.fz">
+		<instance moduleIdRef="1234DBDC11" path="/parts/core/basic_transistor_pnp.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE24_ST" path="/parts/core/controller_arduino_diecimila.fz">
+		<instance moduleIdRef="1234ABDE24_ST" path="/parts/core/controller_arduino_diecimila.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1900ABDC24" path="/parts/core/LED-blue-5mm.fz">
+		<instance moduleIdRef="1900ABDC24" path="/parts/core/LED-blue-5mm.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1905ABDC24" path="/parts/core/LED-green-5mm.fz">
+		<instance moduleIdRef="1905ABDC24" path="/parts/core/LED-green-5mm.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDC24" path="/parts/core/LED-red-5mm.fz">
+		<instance moduleIdRef="1234ABDC24" path="/parts/core/LED-red-5mm.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1902whiteABDC24" path="/parts/core/LED-white-5mm.fz">
+		<instance moduleIdRef="1902whiteABDC24" path="/parts/core/LED-white-5mm.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1901ABDC24" path="/parts/core/LED-yellow-5mm.fz">
+		<instance moduleIdRef="1901ABDC24" path="/parts/core/LED-yellow-5mm.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1001AAACOptocoupler" path="/parts/core/optocoupler.fz">
+		<instance moduleIdRef="1001AAACOptocoupler" path="/parts/core/optocoupler.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000FADF10011" path="/parts/core/dc_motor.fz">
+		<instance moduleIdRef="1000FADF10011" path="/parts/core/dc_motor.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE27BH" path="/parts/core/pcb-plain-100x160.fz">
+		<instance moduleIdRef="1234ABDE27BH" path="/parts/core/pcb-plain-100x160.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE28BH" path="/parts/core/pcb-plain-150x200.fz">
+		<instance moduleIdRef="1234ABDE28BH" path="/parts/core/pcb-plain-150x200.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE25BH" path="/parts/core/pcb-plain-200x300.fz">
+		<instance moduleIdRef="1234ABDE25BH" path="/parts/core/pcb-plain-200x300.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE29BH" path="/parts/core/pcb-plain-250x250.fz">
+		<instance moduleIdRef="1234ABDE29BH" path="/parts/core/pcb-plain-250x250.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE24BH" path="/parts/core/pcb-plain-60x100.fz">
+		<instance moduleIdRef="1234ABDE24BH" path="/parts/core/pcb-plain-60x100.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1234ABDE26BH" path="/parts/core/pcb-plain-75x100.fz">
+		<instance moduleIdRef="1234ABDE26BH" path="/parts/core/pcb-plain-75x100.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e2d86a6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_10.fz">
+		<instance moduleIdRef="9e2d86a6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_10.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e393f46-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_100.fz">
+		<instance moduleIdRef="9e393f46-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_100.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3cfb7c-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_100k.fz">
+		<instance moduleIdRef="9e3cfb7c-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_100k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3bbe56-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_10k.fz">
+		<instance moduleIdRef="9e3bbe56-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_10k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e38226e-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_15.fz">
+		<instance moduleIdRef="9e38226e-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_15.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e39792a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_150.fz">
+		<instance moduleIdRef="9e39792a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_150.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3d2fb6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_150k.fz">
+		<instance moduleIdRef="9e3d2fb6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_150k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3bfa92-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_15k.fz">
+		<instance moduleIdRef="9e3bfa92-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_15k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3abb64-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_1_5k.fz">
+		<instance moduleIdRef="9e3abb64-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_1_5k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3a8702-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_1k.fz">
+		<instance moduleIdRef="9e3a8702-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_1k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3e33e8-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_1M.fz">
+		<instance moduleIdRef="9e3e33e8-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_1M.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e385b12-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_22.fz">
+		<instance moduleIdRef="9e385b12-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_22.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e39adf0-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_220.fz">
+		<instance moduleIdRef="9e39adf0-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_220.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3d65b2-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_220k.fz">
+		<instance moduleIdRef="9e3d65b2-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_220k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3c2d5a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_22k.fz">
+		<instance moduleIdRef="9e3c2d5a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_22k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3aef76-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_2_2k.fz">
+		<instance moduleIdRef="9e3aef76-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_2_2k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3891c2-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_33.fz">
+		<instance moduleIdRef="9e3891c2-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_33.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e39e220-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_330.fz">
+		<instance moduleIdRef="9e39e220-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_330.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3d994c-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_330k.fz">
+		<instance moduleIdRef="9e3d994c-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_330k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3c61a8-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_33k.fz">
+		<instance moduleIdRef="9e3c61a8-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_33k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3b2504-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_3_3k.fz">
+		<instance moduleIdRef="9e3b2504-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_3_3k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e38cc0a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_47.fz">
+		<instance moduleIdRef="9e38cc0a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_47.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3a1b46-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_470.fz">
+		<instance moduleIdRef="9e3a1b46-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_470.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3dccaa-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_470k.fz">
+		<instance moduleIdRef="9e3dccaa-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_470k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3c95a6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_47k.fz">
+		<instance moduleIdRef="9e3c95a6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_47k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3b58e4-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_4_7k.fz">
+		<instance moduleIdRef="9e3b58e4-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_4_7k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3907b0-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_68.fz">
+		<instance moduleIdRef="9e3907b0-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_68.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3a520a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_680.fz">
+		<instance moduleIdRef="9e3a520a-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_680.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3e00c6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_680k.fz">
+		<instance moduleIdRef="9e3e00c6-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_680k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3cc832-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_68k.fz">
+		<instance moduleIdRef="9e3cc832-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_68k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="9e3b8ad0-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_6_8k.fz">
+		<instance moduleIdRef="9e3b8ad0-ca08-11dd-9c4a-001f5b3a17a4" path="/parts/core/resistor_6_8k.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="BreadboardModuleID" path=":/resources/parts/core/breadboard.fz">
+		<instance moduleIdRef="BreadboardModuleID" path=":/resources/parts/core/breadboard.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="RulerModuleID" path=":/resources/parts/core/cmRuler.fz">
+		<instance moduleIdRef="RulerModuleID" path=":/resources/parts/core/cmRuler.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="WireModuleID" path=":/resources/parts/core/wire.fz">
+		<instance moduleIdRef="WireModuleID" path=":/resources/parts/core/wire.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>

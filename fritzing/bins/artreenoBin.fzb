@@ -2,7 +2,7 @@
 <module fritzingVersion="0.1.b.12.12.1810">
     <title>Artreeno</title>
     <instances>
-        <instance moduleIdRef="angels_we_have_heard_on_high" path="/parts/core/artreeno.fz">
+        <instance moduleIdRef="angels_we_have_heard_on_high" path="/parts/core/artreeno.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
