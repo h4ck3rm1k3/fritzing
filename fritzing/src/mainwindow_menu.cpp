@@ -461,16 +461,7 @@ void MainWindow::load() {
     file.close();
 
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
-    if(fileName.endsWith(FritzingSketchExtension)) {
-    	mw->load(fileName);
-    } else if(fileName.endsWith(FritzingBundleExtension)) {
-    	mw->loadBundledSketch(fileName);
-    }
-	else if (fileName.endsWith(FritzingBinExtension)) {
-	}
-	else if (fileName.endsWith(FritzingPartExtension)) {
-	}
-
+	mw->loadWhich(fileName);
 	closeIfEmptySketch(mw);
 }
 
@@ -488,6 +479,31 @@ void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 	mw->move(x()+cascFactorX,y()+cascFactorY);
 	mw->show();
 }
+
+bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent) 
+{
+	bool result = false;
+    if(fileName.endsWith(FritzingSketchExtension)) {
+    	load(fileName, setAsLastOpened, addToRecent);
+		result = true;
+    } else if(fileName.endsWith(FritzingBundleExtension)) {
+    	loadBundledSketch(fileName);
+		result = true;
+    }
+	else if (fileName.endsWith(FritzingBinExtension)) {
+		m_paletteWidget->load(fileName);
+		result = true;
+	}
+	else if (fileName.endsWith(FritzingPartExtension)) {
+		notYetImplemented(tr("directly loading parts"));
+	}
+	
+	if (result) {
+		this->show();
+	}
+	
+	return result;
+}	
 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
 	this->show();
@@ -1372,7 +1388,7 @@ void MainWindow::updateTraceMenu() {
 void MainWindow::group() {
 	if (m_currentGraphicsView == NULL) return;
 
-	notYetImplemented("Group");
+	notYetImplemented(tr("Group"));
 	//m_currentWidget->group();
 }
 
@@ -1544,7 +1560,7 @@ void MainWindow::createNewSketch() {
 }
 
 void MainWindow::createNewSketchFromTemplate() {
-	notYetImplemented("Create New Sketch From Template");
+	notYetImplemented(tr("Create New Sketch From Template"));
 }
 
 void MainWindow::minimize() {
@@ -1619,7 +1635,7 @@ void MainWindow::updateWindowMenu() {
 }
 
 void MainWindow::pageSetup() {
-	notYetImplemented("Page Setup");
+	notYetImplemented(tr("Page Setup"));
 }
 
 void MainWindow::notYetImplemented(QString action) {
@@ -1698,7 +1714,6 @@ void MainWindow::openRecentOrExampleFile() {
 		mw->setReadOnly(readOnly);
 		mw->load(action->data().toString(),!readOnly,!readOnly);
 		mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
-		mw->show();
 	}
 }
 

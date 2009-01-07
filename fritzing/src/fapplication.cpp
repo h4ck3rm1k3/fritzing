@@ -352,13 +352,14 @@ int FApplication::startup(int & argc, char ** argv)
 
 void FApplication::loadNew(QString path) {
 	MainWindow * mw = new MainWindow(m_paletteBinModel, m_referenceModel);
-	mw->load(path, false);
-	mw->show();
+	if (!mw->loadWhich(path, false)) {
+		mw->close();
+	}
 }	
 
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 	if (loaded == 0) {
-		mw->load(path);
+		mw->loadWhich(path);
 	}
 	else {
 		loadNew(path);

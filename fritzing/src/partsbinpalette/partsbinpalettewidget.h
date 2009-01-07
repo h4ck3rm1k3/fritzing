@@ -74,6 +74,7 @@ class PartsBinPaletteWidget : public QFrame {
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void addPart(const QString& moduleID, int position = -1);
 		void removePart(const QString& moduleID);
+		void load(const QString&);
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -100,7 +101,6 @@ class PartsBinPaletteWidget : public QFrame {
 		void setupButtons();
 
 		void grabTitle(PaletteModel *model);
-		void load(const QString&);
 
 		void setView(PartsBinView *view);
 		void saveAsAux(const QString &filename);

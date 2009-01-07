@@ -72,6 +72,7 @@ public:
     MainWindow(PaletteModel *, ReferenceModel *refModel);
     MainWindow(QFile & fileToLoad);
     void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
+	bool loadWhich(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void doOnce();
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
@@ -181,7 +182,7 @@ protected slots:
 	void excludeFromAutoroute();
 
 	void saveBundledSketch();
-	void loadBundledSketch(QString &fileName);
+	void loadBundledSketch(const QString &fileName);
 
 	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);

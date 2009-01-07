@@ -992,7 +992,7 @@ void MainWindow::saveBundledSketch() {
 	rmdir(dirToRemove);
 }
 
-void MainWindow::loadBundledSketch(QString &fileName) {
+void MainWindow::loadBundledSketch(const QString &fileName) {
 	QDir destFolder = QDir::temp();
 
 	createFolderAnCdIntoIt(destFolder, getRandText());
