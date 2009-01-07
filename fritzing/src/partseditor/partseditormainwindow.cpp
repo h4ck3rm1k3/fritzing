@@ -345,9 +345,9 @@ bool PartsEditorMainWindow::createTemplate(){
 	replicateDir(srcDir,randDir);
 
 	QFile tempFile(QCoreApplication::applicationDirPath() + templatePath);
-	tempFile.copy(randDir.path() + "/core/template.fz");
+	tempFile.copy(randDir.path() + "/core/template" + FritzingPartExtension);
 
-	m_fileName = randDir.path() + "/core/template.fz";
+	m_fileName = randDir.path() + "/core/template" + FritzingPartExtension;
 	DebugDialog::debug("created temp part: " + m_fileName);
 
 	return true;
@@ -392,7 +392,7 @@ bool PartsEditorMainWindow::saveAs() {
 	m_moduleId = ___emptyString___;
 	QString title = m_title->text();
 
-	m_fileName = title != ___emptyString___ ? title+FritzingSketchExtension : m_fileName;
+	m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
 
 	// TODO Mariano: This folder should be defined in the preferences... some day
 	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
@@ -421,7 +421,7 @@ bool PartsEditorMainWindow::saveAs() {
 
 	QString filename = userPartsFolderPath+m_fileName;
 	if(!alreadyHasExtension(filename)) {
-		filename += FritzingSketchExtension;
+		filename += FritzingPartExtension;
 	}
 
 	saveAsAux(filename);
@@ -549,7 +549,7 @@ int &PartsEditorMainWindow::untitledFileCount() {
 }
 
 const QString PartsEditorMainWindow::fileExtension() {
-	return FritzingSketchExtension;
+	return FritzingPartExtension;
 }
 
 const QString PartsEditorMainWindow::defaultSaveFolder() {

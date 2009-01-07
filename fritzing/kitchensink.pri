@@ -36,7 +36,6 @@ HEADERS += src/abstractstatesbutton.h \
     src/fapplication.h \
     src/fdockwidget.h \
     src/fgraphicsscene.h \
-    src/filedealingwidget.h \
     src/fritzingwindow.h \
     src/fsplashscreen.h \
     src/ftabwidget.h \
@@ -103,7 +102,6 @@ SOURCES += src/aboutbox.cpp \
     src/fapplication.cpp \
     src/fdockwidget.cpp \
     src/fgraphicsscene.cpp \
-    src/filedealingwidget.cpp \
     src/fritzingwindow.cpp \
     src/fsplashscreen.cpp \
     src/ftabwidget.cpp \

@@ -55,19 +55,9 @@ $Date$
     <file>resources/images/remove_prop_leave.png</file>
     <file>resources/zoomfactors.txt</file>
     <file>resources/ratsnestcolors.txt</file>
-    <file>resources/part-template/svg/core/icon/icon.svg</file>
-    <file>resources/part-template/svg/core/breadboard/connector/breadboardconnector.svg</file>
-    <file>resources/part-template/svg/core/pcb/outline/outline.svg</file>
-    <file>resources/part-template/svg/core/pcb/copper/copper0.svg</file>
-    <file>resources/part-template/svg/core/pcb/silkscreen/silkscreen.svg</file>
-    <file>resources/part-template/svg/core/pcb/soldermask/soldermask.svg</file>
-    <file>resources/part-template/svg/core/breadboard/part/breadboard.svg</file>
-    <file>resources/part-template/svg/core/schematic/part/schematic.svg</file>
-    <file>resources/part-template/svg/core/schematic/connector/schematicconnector.svg</file>
-    <file>resources/part-template/core/template.fz</file>
-    <file>resources/parts/core/wire.fz</file>
-    <file>resources/parts/core/cmRuler.fz</file>
-    <file>resources/parts/core/tinyBreadboard.fz</file>
+    <file>resources/parts/core/wire.fzp</file>
+    <file>resources/parts/core/cmRuler.fzp</file>
+    <file>resources/parts/core/tinyBreadboard.fzp</file>
     <file>resources/parts/svg/core/icon/wireicon.svg</file>
     <file>resources/parts/svg/core/icon/tinyBreadboardIcon.svg</file>
     <file>resources/parts/svg/core/icon/rulericon.svg</file>

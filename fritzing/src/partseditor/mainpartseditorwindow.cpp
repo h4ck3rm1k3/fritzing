@@ -45,6 +45,7 @@ const QString MainPartsEditorWindow::templatePath = "/docs/templates/";
 MainPartsEditorWindow::MainPartsEditorWindow(long id, QWidget * parent, Qt::WFlags f, ModelPart *modelPart, bool fromTemplate)
 	: QMainWindow(parent, f)
 {
+	Q_UNUSED(fromTemplate);
 	m_id = id;
 
 	m_comboboxChanged = false;
@@ -67,16 +68,16 @@ MainPartsEditorWindow::MainPartsEditorWindow(long id, QWidget * parent, Qt::WFla
 		m_partPath =  modelPart->modelPartStuff()->path();
 	}
 
-	if(!fromTemplate) {
+	//if(!fromTemplate) {
 		m_sketchModel = new SketchModel(true);
-	} else {
-		m_partInfoWidget = new PartInfoWidget(this);
-		m_connWidget = new ConnectorsWidget();
-		connect(m_paletteModel, SIGNAL(newPartLoaded(ModelPart*)), m_connWidget, SLOT(updateInfo(ModelPart*)));
-		connect(m_paletteModel, SIGNAL(newPartLoaded(ModelPart*)), m_partInfoWidget, SLOT(updateInfo(ModelPart*)));
-		modelPart = m_paletteModel->loadPart(m_partPath);
-		m_sketchModel = new SketchModel(modelPart);
-	}
+	//} else {
+	//	m_partInfoWidget = new PartInfoWidget(this);
+	//	m_connWidget = new ConnectorsWidget();
+	//	connect(m_paletteModel, SIGNAL(newPartLoaded(ModelPart*)), m_connWidget, SLOT(updateInfo(ModelPart*)));
+	//	connect(m_paletteModel, SIGNAL(newPartLoaded(ModelPart*)), m_partInfoWidget, SLOT(updateInfo(ModelPart*)));
+	//	modelPart = m_paletteModel->loadPart(m_partPath);
+	//	m_sketchModel = new SketchModel(modelPart);
+	//}
 
 	m_undoStack = new WaitPushUndoStack(this);
 
@@ -165,9 +166,9 @@ bool MainPartsEditorWindow::createTemplate(){
 	replicateDir(srcDir,randDir);
 
 	QFile tempFile(QCoreApplication::applicationDirPath() + templatePath);
-	tempFile.copy(randDir.path() + "/core/template.fz");
+	tempFile.copy(randDir.path() + "/core/template" + FritzingPartExtension);
 
-	m_partPath = randDir.path() + "/core/template.fz";
+	m_partPath = randDir.path() + "/core/template" + FritzingPartExtension;
 	DebugDialog::debug("created temp part: " + m_partPath);
 
 	return true;

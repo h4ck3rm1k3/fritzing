@@ -90,7 +90,7 @@ void PaletteModel::updateOrAddModelPart(const QString & moduleID, ModelPart *new
 
 void PaletteModel::loadParts() {
 	QStringList nameFilters;
-	nameFilters << "*" + FritzingSketchExtension;
+	nameFilters << "*" + FritzingPartExtension;
 
 	if(CreateAllPartsBinFile) writeAllPartsBinHeader();
 
