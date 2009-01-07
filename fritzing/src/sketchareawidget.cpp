@@ -29,11 +29,12 @@ $Date$
 #include <QLabel>
 
 #include "sketchareawidget.h"
+#include "mainwindow.h"
 
 
 const QString SketchAreaWidget::RoutingStateLabelName = "routingStateLabel";
 
-SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QWidget *parent)
+SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, MainWindow *parent)
 	: QFrame(parent)
 {
 	m_graphicsView = graphicsView;
@@ -48,6 +49,8 @@ SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QWidget *parent)
 	layout->setSpacing(0);
 	layout->addWidget(m_graphicsView);
 	layout->addWidget(m_toolbar);
+	layout->addWidget(m_statusBarArea);
+	m_statusBarArea->setFixedHeight(parent->statusBar()->height());
 }
 
 SketchAreaWidget::~SketchAreaWidget() {
@@ -99,6 +102,12 @@ void SketchAreaWidget::createLayout() {
 	toolbarLayout->addWidget(leftButtons);
 	toolbarLayout->addWidget(middleButtons);
 	toolbarLayout->addWidget(rightButtons);
+
+	m_statusBarArea = new QFrame(this);
+	m_statusBarArea->setObjectName("statusBarContainer");
+	QVBoxLayout *statusbarlayout = new QVBoxLayout(m_statusBarArea);
+	statusbarlayout->setMargin(0);
+	statusbarlayout->setSpacing(0);
 }
 
 void SketchAreaWidget::setContent(QList<QWidget*> widgets, ZoomComboBox *zoomComboBox) {
@@ -115,6 +124,10 @@ void SketchAreaWidget::setContent(QList<QWidget*> widgets, ZoomComboBox *zoomCom
 	m_zoomComboBox = zoomComboBox;
 	m_zoomContainer->addWidget(m_zoomComboBox);
 
+}
+
+void SketchAreaWidget::addStatusBar(QStatusBar *statusBar) {
+	m_statusBarArea->layout()->addWidget(statusBar);
 }
 
 QWidget *SketchAreaWidget::separator(QWidget* parent) {

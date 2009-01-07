@@ -648,7 +648,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	QStatusBar *sb = statusBar();
 	connect(sb, SIGNAL(messageChanged(const QString &)), m_statusBar, SLOT(showMessage(const QString &)));
-	widgetParent->layout()->addWidget(m_statusBar);
+	widgetParent->addStatusBar(m_statusBar);
 	if(sb != m_statusBar) sb->hide();
 
 	SketchWidget *widget = widgetParent->graphicsView();
@@ -1374,7 +1374,7 @@ void MainWindow::showInViewHelp() {
 
 	bool toggle = !m_helper->helpVisible(m_tabWidget->currentIndex());
 	showAllFirstTimeHelp(toggle);
-	
+
 	/*
 	m_helper->toggleHelpVisibility(m_tabWidget->currentIndex());
 	*/

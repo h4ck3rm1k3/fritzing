@@ -31,6 +31,9 @@ MainWindow {
 QStatusBar {
 	background-color: rgb(84,24,44);
 }
+#statusBarContainer {
+	background-color: rgb(84,24,44);
+}
 
 /* this separates palettes from each other and is movable */
 MainWindow::separator {

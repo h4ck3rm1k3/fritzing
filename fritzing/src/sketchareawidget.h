@@ -31,14 +31,17 @@ $Date$
 
 #include <QFrame>
 #include <QHBoxLayout>
+#include <QStatusBar>
 
 #include "itembase.h"
 #include "sketchwidget.h"
 #include "zoomcombobox.h"
 
+class MainWindow;
+
 class SketchAreaWidget : public QFrame {
 public:
-	SketchAreaWidget(SketchWidget *graphicsView, QWidget *parent=0);
+	SketchAreaWidget(SketchWidget *graphicsView, MainWindow *parent);
 	virtual ~SketchAreaWidget();
 
 	ItemBase::ViewIdentifier viewIdentifier();
@@ -46,6 +49,7 @@ public:
 	ZoomComboBox *zoomComboBox();
 
 	void setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox);
+	void addStatusBar(QStatusBar *);
 	static QWidget *separator(QWidget* parent);
 
 protected:
@@ -62,6 +66,7 @@ protected:
 	QHBoxLayout *m_buttonsContainer;
 	QVBoxLayout *m_labelContainer;
 	QHBoxLayout *m_zoomContainer;
+	QFrame *m_statusBarArea;
 };
 
 #endif /* SKETCHAREAWIDGET_H_ */
