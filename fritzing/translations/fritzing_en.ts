@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="en">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -434,9 +435,9 @@
     <message numerus="yes">
         <location filename="../src/htmlinfoview.cpp" line="151"/>
         <source>connected to %n item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>connected to %n item</numerusform>
+            <numerusform>connected to %n items</numerusform>
         </translation>
     </message>
     <message>

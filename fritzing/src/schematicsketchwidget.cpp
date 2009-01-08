@@ -359,7 +359,6 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 
 
 		moveItems.insert(end0, end1);
-		clearDistances();
 	}
 
 	if (moveItems.count() > 0) {
@@ -388,12 +387,16 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 
 	foreach (Wire * wire, undeleteWires) {
 		makeDeleteItemCommand(wire, parentCommand);
+		deletedItems.removeOne(wire);
 	}
 
 	foreach (Wire * wire, deleteWires) {
-		if (!deletedItems.contains(wire)) {
-			deletedItems.append(wire);
-		}
+		if (deletedItems.contains(wire)) continue;
+
+		deletedItems.append(wire);
+		ConnectorPairHash * connectorHash = new ConnectorPairHash;
+		wire->collectConnectors(*connectorHash, this->scene());
+		deletedConnections.insert(wire, connectorHash);
 	}
 }
 
