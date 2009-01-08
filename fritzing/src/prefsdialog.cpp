@@ -138,11 +138,8 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	int row = 0;
 	
 	QLabel * languageLabel = new QLabel(this);
-	languageLabel->setFixedWidth(195);
 	languageLabel->setWordWrap(true);
-	languageLabel->setText(QObject::tr("Choose your preferred language:\n"
-		"Please note that a new language setting will not take effect "
-		"until the next time you run Fritzing."));
+	languageLabel->setText(QObject::tr("<b>Language</b>"));
 	gridLayout->addWidget(languageLabel, row, 0, Qt::AlignLeft);
 	
 	gridLayout->setColumnMinimumWidth(1, 10);
@@ -155,6 +152,15 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	comboBox->setCurrentIndex(m_translatorListModel->findIndex(m_name));
 	gridLayout->addWidget(comboBox, row, 4, Qt::AlignRight);	
 	connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeLanguage(int)));
+
+	row++;
+
+	QLabel * ll = new QLabel(this);
+	ll->setFixedWidth(195);
+	ll->setWordWrap(true);
+	ll->setText(QObject::tr("Please note that a new language setting will not take effect "
+		"until the next time you run Fritzing."));
+	gridLayout->addWidget(ll, row, 0, Qt::AlignLeft);
 
 	row++;
 	
@@ -196,15 +202,27 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	row++;
 #endif
 
+	Qt::Alignment okAlign = Qt::AlignLeft;
+	int okCol = 0;
+	Qt::Alignment cancelAlign = Qt::AlignRight;
+	int cancelCol = 4;
+
+#ifdef Q_WS_MAC
+	okAlign = Qt::AlignRight;
+	okCol = 4;
+	cancelAlign = Qt::AlignLeft;
+	cancelCol = 0;
+#endif
+
 	QPushButton * ok = new QPushButton(QObject::tr("OK"), this);
 	ok->setMaximumWidth(120);
 	ok->setDefault(true);
-	gridLayout->addWidget(ok, row, 4, Qt::AlignRight);	
+	gridLayout->addWidget(ok, row, okCol, okAlign);	
 	connect(ok, SIGNAL(clicked()), this, SLOT(accept()));
 	
 	QPushButton * cancel = new QPushButton(QObject::tr("Cancel"), this);
 	cancel->setMaximumWidth(120);
-	gridLayout->addWidget(cancel, row, 0, Qt::AlignLeft);
+	gridLayout->addWidget(cancel, row, cancelCol, cancelAlign);
 	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
 
 	row++;

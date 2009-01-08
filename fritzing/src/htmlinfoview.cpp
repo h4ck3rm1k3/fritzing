@@ -24,8 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
 #include <QWebFrame>
 #include <QBuffer>
 #include <QVBoxLayout>
@@ -149,8 +147,8 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnab
 
 	QString s = appendStuff(item->attachedTo(), swappingEnabled);
 	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>Connections</td></tr>\n");
-	s += QString("<tr><td class='label'>%1</td><td>connected to %2 item(s)</td></tr>\n").arg(tr("conn.")).arg(item->connectionsCount());
+	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Connections"));
+	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("conn.")).arg(tr("connected to %n item(s)", "", item->connectionsCount()));
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("name")).arg(connectorStuff->name());
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("type")).arg(Connector::connectorNameFromType(connector->connectorType()));
 	s += 		 "</table>";
@@ -182,12 +180,12 @@ QString HtmlInfoView::appendViewGeometry(ItemBase * base, bool doLine) {
 	ViewGeometry & viewGeometry = base->getViewGeometry();
 	QString s = "";
 	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>Position</td></tr>\n") +
+	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Position")) +
 		 QString("<tr><td class='label'>x</td><td>%1</td></tr>\n").arg(viewGeometry.loc().x()) +
 		 QString("<tr><td class='label'>y</td><td>%1</td></tr>\n").arg(viewGeometry.loc().y());
 
 	if (doLine) {
-		s +=	QString("<tr><td class='subhead' colspan='2'>line</td></tr>\n") +
+		s +=	QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("line")) +
 				QString("<tr><td class='label'>x1 / y1</td><td>%1 / %2</td></tr>\n").arg(viewGeometry.line().x1()).
 																				   arg(viewGeometry.line().y1());
 				QString("<tr><td class='label'>x2 / y2</td><td>%1 / %2</td></tr>\n").arg(viewGeometry.line().x2()).
@@ -195,7 +193,7 @@ QString HtmlInfoView::appendViewGeometry(ItemBase * base, bool doLine) {
 	}
 
 	s += QString("<tr><td class='label'>z</td><td>%1</td></tr>\n").arg(viewGeometry.z());
-	s += QString("<tr><td class='label'>view</td><td>%1</td></tr>\n").arg(base->viewIdentifierName());
+	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("view")).arg(base->viewIdentifierName());
 	s += 		 "</table>\n";
 
 	return s;
@@ -209,13 +207,13 @@ QString HtmlInfoView::appendCurrentGeometry(ItemBase * item, bool doLine) {
 	QPointF loc = item->pos();
 	QString s = "";
 	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>current geometry</td></tr>\n") +
+	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("current geometry")) +
 		 QString("<tr><td class='label'>x</td><td>%1</td></tr>\n").arg(loc.x()) +
 		 QString("<tr><td class='label'>y</td><td>%1</td></tr>\n").arg(loc.y());
 
 	if (item->hasLine()) {
 		QLineF line = item->line();
-		s += QString("<tr><td class='subhead' colspan='2'>line</td></tr>\n") +
+		s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("line")) +
 			 QString("<tr><td class='label'>x1 / y1</td><td>%1,%2</td></tr>\n").arg(line.x1()).
 		 																	  arg(line.y1());
 		s += QString("<tr><td class='label'>x2 / y2</td><td>%1,%2</td></tr>\n").arg(line.x2()).
@@ -277,7 +275,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	s += 		"</div>\n";
 
 	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>Properties</td></tr>\n");
+	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Properties"));
 #ifndef QT_NO_DEBUG
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
 #else
@@ -291,7 +289,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 
 	if(!modelPart->modelPartStuff()->tags().isEmpty()) {
 		s += 		"<table>\n";
-		s += QString("<tr><td class='subhead' colspan='2'>Tags</td></tr>\n") +
+		s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Tags")) +
 			 QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
 		s += 		"</table>\n";
 	}
@@ -400,7 +398,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	s += 		"</div>\n";
 
 	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>Properties</td></tr>\n");
+	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Properties"));
 #ifndef QT_NO_DEBUG
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
 #else
@@ -427,7 +425,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 //			arg(QString(modelPart->modelPartStuff()->path()).remove(QDir::currentPath()));
 	if(!modelPart->modelPartStuff()->tags().isEmpty()) {
 		s += 		"<table>\n";
-		s += QString("<tr><td class='subhead' colspan='2'>Tags</td></tr>\n") +
+		s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Tags")) +
 			 QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
 		s += 		"</table>\n";
 	}

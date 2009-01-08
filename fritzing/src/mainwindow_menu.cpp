@@ -799,9 +799,11 @@ void MainWindow::updateRecentFileActions() {
 void MainWindow::createEditMenuActions() {
 	m_undoAct = m_undoGroup->createUndoAction(this);
 	m_undoAct->setShortcuts(QKeySequence::Undo);
+	m_undoAct->setText(tr("Undo"));
 
 	m_redoAct = m_undoGroup->createRedoAction(this);
 	m_redoAct->setShortcuts(QKeySequence::Redo);
+	m_redoAct->setText(tr("Redo"));
 
 	m_cutAct = new QAction(tr("&Cut"), this);
 	m_cutAct->setShortcut(tr("Ctrl+X"));

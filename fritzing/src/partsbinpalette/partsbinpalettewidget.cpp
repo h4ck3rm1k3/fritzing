@@ -39,11 +39,12 @@ $Date$
 #include "../debugdialog.h"
 #include "../dockmanager.h"
 
-QString PartsBinPaletteWidget::Title = tr("Parts");
+QString PartsBinPaletteWidget::Title;
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent) :
 	QFrame(parent)
 {
+	Title = tr("Parts");
 	m_refModel = refModel;
 
 	Q_UNUSED(undoStack);
@@ -269,7 +270,7 @@ bool PartsBinPaletteWidget::saveAs() {
 void PartsBinPaletteWidget::open() {
 	QString fileName = QFileDialog::getOpenFileName(
 			this,
-			"Select a Fritzing file to open",
+			tr("Select a Fritzing file to open"),
 			m_defaultSaveFolder,
 			tr("Fritzing (*%1)").arg(FritzingBinExtension) );
 	if (fileName.isNull()) return;
@@ -343,7 +344,7 @@ bool PartsBinPaletteWidget::beforeClosing() {
 		messageBox->setButtonText(QMessageBox::Yes, tr("Save"));
 		messageBox->setButtonText(QMessageBox::No, tr("Don't Save"));
 		messageBox->button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-		messageBox->setInformativeText("Your changes will be lost if you don't save them.");
+		messageBox->setInformativeText(tr("Your changes will be lost if you don't save them."));
 
 		reply = (QMessageBox::StandardButton)messageBox->exec();
 

@@ -1035,3 +1035,27 @@ bool Wire::canChangeColor() {
 
 	return true;
 }
+
+
+void Wire::collectDirectWires(QList<Wire *> & wires) {
+	if (!wires.contains(this)) {
+		wires.append(this);
+	}
+
+	collectDirectWires(m_connector0, wires);
+	collectDirectWires(m_connector1, wires);
+}
+
+void Wire::collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires) {
+	if (connectorItem->connectionsCount() != 1) return;
+
+	ConnectorItem * toConnectorItem = connectorItem->connectedToItems()[0];
+	if (toConnectorItem->attachedToItemType() != ModelPart::Wire) return;
+
+	Wire * nextWire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+	if (wires.contains(nextWire)) return;
+
+	wires.append(nextWire);
+	nextWire->collectDirectWires(nextWire->otherConnector(toConnectorItem), wires);
+}
+

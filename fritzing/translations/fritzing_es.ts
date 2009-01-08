@@ -340,6 +340,16 @@
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/fritzingwindow.cpp" line="207"/>
+        <source>Your changes will be lost if you don&apos;t save them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fritzingwindow.cpp" line="209"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Helper</name>
@@ -377,43 +387,85 @@
 <context>
     <name>HtmlInfoView</name>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="153"/>
+        <location filename="../src/htmlinfoview.cpp" line="151"/>
         <source>conn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="154"/>
+        <location filename="../src/htmlinfoview.cpp" line="152"/>
         <source>name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="155"/>
+        <location filename="../src/htmlinfoview.cpp" line="153"/>
         <source>type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="244"/>
+        <location filename="../src/htmlinfoview.cpp" line="242"/>
         <source>(autoroutable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="245"/>
+        <location filename="../src/htmlinfoview.cpp" line="243"/>
         <source>Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="247"/>
+        <location filename="../src/htmlinfoview.cpp" line="245"/>
         <source>Rat&apos;s nest wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="249"/>
+        <location filename="../src/htmlinfoview.cpp" line="247"/>
         <source>Trace wire %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/htmlinfoview.cpp" line="251"/>
+        <location filename="../src/htmlinfoview.cpp" line="249"/>
         <source>Jumper wire %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/htmlinfoview.cpp" line="150"/>
+        <source>Connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/htmlinfoview.cpp" line="151"/>
+        <source>connected to %n item(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/htmlinfoview.cpp" line="183"/>
+        <source>Position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/htmlinfoview.cpp" line="216"/>
+        <source>line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/htmlinfoview.cpp" line="196"/>
+        <source>view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/htmlinfoview.cpp" line="210"/>
+        <source>current geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/htmlinfoview.cpp" line="401"/>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/htmlinfoview.cpp" line="428"/>
+        <source>Tags</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -610,7 +662,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1758"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1760"/>
         <source>Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -956,613 +1008,623 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="806"/>
+        <location filename="../src/mainwindow_menu.cpp" line="808"/>
         <source>&amp;Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="807"/>
+        <location filename="../src/mainwindow_menu.cpp" line="809"/>
         <source>Ctrl+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="808"/>
+        <location filename="../src/mainwindow_menu.cpp" line="810"/>
         <source>Cut selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="811"/>
+        <location filename="../src/mainwindow_menu.cpp" line="813"/>
         <source>&amp;Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="812"/>
+        <location filename="../src/mainwindow_menu.cpp" line="814"/>
         <source>Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="813"/>
+        <location filename="../src/mainwindow_menu.cpp" line="815"/>
         <source>Copy selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="816"/>
+        <location filename="../src/mainwindow_menu.cpp" line="818"/>
         <source>&amp;Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="817"/>
+        <location filename="../src/mainwindow_menu.cpp" line="819"/>
         <source>Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="818"/>
+        <location filename="../src/mainwindow_menu.cpp" line="820"/>
         <source>Paste clipboard contents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="821"/>
+        <location filename="../src/mainwindow_menu.cpp" line="823"/>
         <source>&amp;Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="822"/>
+        <location filename="../src/mainwindow_menu.cpp" line="824"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="823"/>
+        <location filename="../src/mainwindow_menu.cpp" line="825"/>
         <source>Duplicate selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="826"/>
+        <location filename="../src/mainwindow_menu.cpp" line="828"/>
         <source>&amp;Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="834"/>
+        <location filename="../src/mainwindow_menu.cpp" line="836"/>
         <source>Delete selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="837"/>
+        <location filename="../src/mainwindow_menu.cpp" line="839"/>
         <source>&amp;Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="838"/>
+        <location filename="../src/mainwindow_menu.cpp" line="840"/>
         <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="839"/>
+        <location filename="../src/mainwindow_menu.cpp" line="841"/>
         <source>Select all elements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="842"/>
+        <location filename="../src/mainwindow_menu.cpp" line="844"/>
         <source>&amp;Deselect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="843"/>
+        <location filename="../src/mainwindow_menu.cpp" line="845"/>
         <source>Deselect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="846"/>
+        <location filename="../src/mainwindow_menu.cpp" line="848"/>
         <source>&amp;Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1040"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1042"/>
         <source>Show the application&apos;s about box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="856"/>
+        <location filename="../src/mainwindow_menu.cpp" line="858"/>
         <source>&amp;Create New Part...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="857"/>
+        <location filename="../src/mainwindow_menu.cpp" line="859"/>
         <source>Alt+Ctrl+N</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="858"/>
+        <location filename="../src/mainwindow_menu.cpp" line="860"/>
         <source>Create new part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="861"/>
+        <location filename="../src/mainwindow_menu.cpp" line="863"/>
         <source>&amp;Open in Parts Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="862"/>
+        <location filename="../src/mainwindow_menu.cpp" line="864"/>
         <source>Ctrl+Return</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="863"/>
+        <location filename="../src/mainwindow_menu.cpp" line="865"/>
         <source>Open the old parts editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="866"/>
+        <location filename="../src/mainwindow_menu.cpp" line="868"/>
         <source>&amp;Add to bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="867"/>
+        <location filename="../src/mainwindow_menu.cpp" line="869"/>
         <source>Add selected part to bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="875"/>
+        <location filename="../src/mainwindow_menu.cpp" line="877"/>
         <source>Update InfoView on hover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="888"/>
+        <location filename="../src/mainwindow_menu.cpp" line="890"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="889"/>
+        <location filename="../src/mainwindow_menu.cpp" line="891"/>
         <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="890"/>
+        <location filename="../src/mainwindow_menu.cpp" line="892"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="893"/>
+        <location filename="../src/mainwindow_menu.cpp" line="895"/>
         <source>&amp;Rotate 180&#xb0;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="894"/>
+        <location filename="../src/mainwindow_menu.cpp" line="896"/>
         <source>Rotate the selected parts by 180 degrees</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="897"/>
+        <location filename="../src/mainwindow_menu.cpp" line="899"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="898"/>
+        <location filename="../src/mainwindow_menu.cpp" line="900"/>
         <source>Alt+Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="899"/>
+        <location filename="../src/mainwindow_menu.cpp" line="901"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="902"/>
+        <location filename="../src/mainwindow_menu.cpp" line="904"/>
         <source>&amp;Flip Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="903"/>
+        <location filename="../src/mainwindow_menu.cpp" line="905"/>
         <source>Flip current selection horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="906"/>
+        <location filename="../src/mainwindow_menu.cpp" line="908"/>
         <source>&amp;Flip Vertical</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="907"/>
+        <location filename="../src/mainwindow_menu.cpp" line="909"/>
         <source>Flip current selection vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="910"/>
+        <location filename="../src/mainwindow_menu.cpp" line="912"/>
         <source>Bring to Front</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="911"/>
+        <location filename="../src/mainwindow_menu.cpp" line="913"/>
         <source>Shift+Ctrl+]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="912"/>
+        <location filename="../src/mainwindow_menu.cpp" line="914"/>
         <source>Bring selected object(s) to front of their layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="915"/>
+        <location filename="../src/mainwindow_menu.cpp" line="917"/>
         <source>Bring Forward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="916"/>
+        <location filename="../src/mainwindow_menu.cpp" line="918"/>
         <source>Ctrl+]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="917"/>
+        <location filename="../src/mainwindow_menu.cpp" line="919"/>
         <source>Bring selected object(s) forward in their layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="920"/>
+        <location filename="../src/mainwindow_menu.cpp" line="922"/>
         <source>Send Backward</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="921"/>
+        <location filename="../src/mainwindow_menu.cpp" line="923"/>
         <source>Ctrl+[</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="922"/>
+        <location filename="../src/mainwindow_menu.cpp" line="924"/>
         <source>Send selected object(s) back in their layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="925"/>
+        <location filename="../src/mainwindow_menu.cpp" line="927"/>
         <source>Send to Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="926"/>
+        <location filename="../src/mainwindow_menu.cpp" line="928"/>
         <source>Shift+Ctrl+[</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="927"/>
+        <location filename="../src/mainwindow_menu.cpp" line="929"/>
         <source>Send selected object(s) to the back of their layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="935"/>
+        <location filename="../src/mainwindow_menu.cpp" line="937"/>
         <source>&amp;Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="936"/>
+        <location filename="../src/mainwindow_menu.cpp" line="938"/>
         <source>Ctrl+G</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="937"/>
+        <location filename="../src/mainwindow_menu.cpp" line="939"/>
         <source>Group multiple items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="940"/>
+        <location filename="../src/mainwindow_menu.cpp" line="942"/>
         <source>&amp;Show All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="941"/>
+        <location filename="../src/mainwindow_menu.cpp" line="943"/>
         <source>Show all the available layers for the current view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="944"/>
+        <location filename="../src/mainwindow_menu.cpp" line="946"/>
         <source>&amp;Hide All Layers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="945"/>
+        <location filename="../src/mainwindow_menu.cpp" line="947"/>
         <source>Hide all the layers of the current view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="952"/>
+        <location filename="../src/mainwindow_menu.cpp" line="954"/>
         <source>&amp;Zoom In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="953"/>
+        <location filename="../src/mainwindow_menu.cpp" line="955"/>
         <source>Ctrl++</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="954"/>
+        <location filename="../src/mainwindow_menu.cpp" line="956"/>
         <source>Zoom in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="960"/>
+        <location filename="../src/mainwindow_menu.cpp" line="962"/>
         <source>Ctrl+=</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="964"/>
+        <location filename="../src/mainwindow_menu.cpp" line="966"/>
         <source>&amp;Zoom Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="965"/>
+        <location filename="../src/mainwindow_menu.cpp" line="967"/>
         <source>Ctrl+-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="966"/>
+        <location filename="../src/mainwindow_menu.cpp" line="968"/>
         <source>Zoom out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="969"/>
+        <location filename="../src/mainwindow_menu.cpp" line="971"/>
         <source>&amp;Fit in Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="970"/>
+        <location filename="../src/mainwindow_menu.cpp" line="972"/>
         <source>Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="971"/>
+        <location filename="../src/mainwindow_menu.cpp" line="973"/>
         <source>Fit in window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="974"/>
+        <location filename="../src/mainwindow_menu.cpp" line="976"/>
         <source>&amp;Actual Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="975"/>
+        <location filename="../src/mainwindow_menu.cpp" line="977"/>
         <source>Shift+Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="976"/>
+        <location filename="../src/mainwindow_menu.cpp" line="978"/>
         <source>Actual size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="979"/>
+        <location filename="../src/mainwindow_menu.cpp" line="981"/>
         <source>&amp;Show Breadboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="980"/>
+        <location filename="../src/mainwindow_menu.cpp" line="982"/>
         <source>Ctrl+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="981"/>
+        <location filename="../src/mainwindow_menu.cpp" line="983"/>
         <source>Show the breadboard view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="984"/>
+        <location filename="../src/mainwindow_menu.cpp" line="986"/>
         <source>&amp;Show Schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="985"/>
+        <location filename="../src/mainwindow_menu.cpp" line="987"/>
         <source>Ctrl+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="986"/>
+        <location filename="../src/mainwindow_menu.cpp" line="988"/>
         <source>Show the schematic view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="989"/>
+        <location filename="../src/mainwindow_menu.cpp" line="991"/>
         <source>&amp;Show PCB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="990"/>
+        <location filename="../src/mainwindow_menu.cpp" line="992"/>
         <source>Ctrl+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="991"/>
+        <location filename="../src/mainwindow_menu.cpp" line="993"/>
         <source>Show the PCB view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="996"/>
+        <location filename="../src/mainwindow_menu.cpp" line="998"/>
         <source>&amp;Minimize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="997"/>
+        <location filename="../src/mainwindow_menu.cpp" line="999"/>
         <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="998"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1000"/>
         <source>Minimize current window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1010"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1012"/>
         <source>Debugger Output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1016"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1018"/>
         <source>Learning Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1017"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1019"/>
         <source>Ctrl+?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1018"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1020"/>
         <source>Open Fritzing help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1021"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1023"/>
         <source>Example Projects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1022"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1024"/>
         <source>Open Fritzing examples</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1025"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1027"/>
         <source>Parts Reference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1026"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1028"/>
         <source>Open Parts Reference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1029"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1031"/>
         <source>First Time Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1030"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1032"/>
         <source>Show or Hide First Time Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1035"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1037"/>
         <source>Visit fritzing.org</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1036"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1038"/>
         <source>www.fritzing.org</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1039"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1041"/>
         <source>&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1046"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1048"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1058"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1060"/>
         <source>&amp;Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1073"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1075"/>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1091"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1093"/>
         <source>&amp;Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1115"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1117"/>
         <source>&amp;View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1128"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1130"/>
         <source>&amp;Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1135"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1137"/>
         <source>&amp;Trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1146"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1148"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1391"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1393"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1563"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1565"/>
         <source>Create New Sketch From Template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1638"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1640"/>
         <source>Page Setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1643"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1645"/>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1757"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1759"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1766"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1768"/>
         <source>&amp;Autoroute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1767"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1769"/>
         <source>Autoroute...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1770"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1772"/>
         <source>&amp;Create Trace from this Ratsnest Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1771"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1773"/>
         <source>Create a trace from the selected wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1774"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1776"/>
         <source>&amp;Create Jumper from this Ratsnest Wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1775"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1777"/>
         <source>Create a jumper wire from the selected wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1778"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1780"/>
         <source>&amp;Exclude from Autoroute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1779"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1781"/>
         <source>When autorouting, do not rip up this wire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1785"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1787"/>
         <source>Autorouting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow_menu.cpp" line="1798"/>
+        <location filename="../src/mainwindow_menu.cpp" line="1800"/>
         <source>Cancel autorouting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="802"/>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="806"/>
+        <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1666,109 +1728,119 @@
 <context>
     <name>PartsBinPaletteWidget</name>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="42"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="47"/>
         <source>Parts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="204"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="205"/>
         <source>Show as icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="208"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="209"/>
         <source>Show as list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="212"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="213"/>
         <source>Remove selected part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="217"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="218"/>
         <source>Open bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="222"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="223"/>
         <source>Save bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="227"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="228"/>
         <source>Restore core bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="253"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="254"/>
         <source>Specify a file name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="274"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="275"/>
         <source>Fritzing (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="286"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="287"/>
         <source>Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="281"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="282"/>
         <source>Cannot find file %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="288"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="289"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="334"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="335"/>
         <source>Save &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="336"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="337"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="343"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
         <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="436"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
         <source>Add to bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="438"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="460"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
         <source>Remove from bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="462"/>
         <source>Do you really want to remove the selected part from the bin?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="273"/>
+        <source>Select a Fritzing file to open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="347"/>
+        <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1938,17 +2010,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="308"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="309"/>
         <source>Friting cannot load the parts bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="404"/>
+        <location filename="../src/fapplication.cpp" line="407"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fapplication.cpp" line="411"/>
+        <location filename="../src/fapplication.cpp" line="414"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2089,7 +2161,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="205"/>
+        <location filename="../src/prefsdialog.cpp" line="223"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2132,29 +2204,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="145"/>
-        <source>Choose your preferred language:
-Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/prefsdialog.cpp" line="170"/>
+        <location filename="../src/prefsdialog.cpp" line="176"/>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="184"/>
+        <location filename="../src/prefsdialog.cpp" line="190"/>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="187"/>
+        <location filename="../src/prefsdialog.cpp" line="193"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="199"/>
+        <location filename="../src/prefsdialog.cpp" line="217"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2304,6 +2370,16 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <source>Unknown Layer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="142"/>
+        <source>&lt;b&gt;Language&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="162"/>
+        <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuaZipFile</name>
@@ -2339,12 +2415,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="773"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="799"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="775"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="801"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>

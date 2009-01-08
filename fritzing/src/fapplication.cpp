@@ -373,6 +373,9 @@ void FApplication::preferences() {
     QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
 	QSettings settings("Fritzing","Fritzing");
 	QString language = settings.value("language").toString();
+	if (language.isEmpty()) {
+		language = QLocale::system().name();	   
+	}
 	
 	PrefsDialog prefsDialog(language, list, NULL);			// TODO: use the topmost MainWindow as parent
 	if (QDialog::Accepted == prefsDialog.exec()) {

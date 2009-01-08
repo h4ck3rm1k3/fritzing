@@ -204,8 +204,10 @@ bool FritzingWindow::beforeClosing(bool showCancel) {
 			m_fileName.startsWith(untitledFileName()) ? tr("Save...") : tr("Save"));
 		messageBox->setButtonText(QMessageBox::No, tr("Don't Save"));
 		messageBox->button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-		messageBox->setInformativeText("Your changes will be lost if you don't save them.");
-
+		messageBox->setInformativeText(tr("Your changes will be lost if you don't save them."));
+		if (showCancel) {
+			messageBox->setButtonText(QMessageBox::Cancel, tr("Cancel"));
+		}
 		reply = (QMessageBox::StandardButton)messageBox->exec();
 
      	if (reply == QMessageBox::Yes) {

@@ -261,7 +261,7 @@ bool SchematicSketchWidget::canCopyItem(QGraphicsItem * item)
 
 void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
-	// don't forget to take the virtualwires out of the list:
+	// PCBSchematicSketchWidget::reviewDeletedConnections will remove the virtual wire connections from deletedConnections
 	PCBSchematicSketchWidget::reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
 
 	QSet<Wire *> deleteWires;
@@ -271,9 +271,13 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 		Wire * wire = dynamic_cast<Wire *>(itemBase);
 		if (wire == NULL) continue;
 		if (!wire->getRatsnest()) continue;
+		if (undeleteWires.contains(wire)) continue;
 
-		undeleteWires.insert(wire);
-		m_deleteStash.append(wire);
+		QList <Wire *> directWires;
+		wire->collectDirectWires(directWires);
+		foreach (Wire * directWire, directWires) {
+			undeleteWires.insert(directWire);
+		}
 
 		QList<ConnectorItem *> ends;
 		calcDistances(wire, ends);
@@ -362,8 +366,28 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 		emit schematicDisconnectWireSignal(moveItems, deletedItems, deletedConnections, parentCommand);
 	}
 
+	QList<QString> alreadyList;
 	foreach (Wire * wire, undeleteWires) {
-		deletedItems.removeOne(wire);
+		QList<ConnectorItem *> wireConnectorItems;
+		wireConnectorItems << wire->connector0() << wire->connector1();
+		foreach (ConnectorItem * fromConnectorItem, wireConnectorItems) {
+			foreach(ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				QString already = ((fromConnectorItem->attachedToID() <= toConnectorItem->attachedToID()) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorStuffID())
+					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorStuffID());
+				if (alreadyList.contains(already)) continue;
+
+				alreadyList.append(already);
+				new ChangeConnectionCommand(this, BaseCommand::SingleView,
+											fromConnectorItem->attachedToID(), fromConnectorItem->connectorStuffID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+											false, true, parentCommand);
+			}
+		}
+	}
+
+	foreach (Wire * wire, undeleteWires) {
+		makeDeleteItemCommand(wire, parentCommand);
 	}
 
 	foreach (Wire * wire, deleteWires) {
@@ -591,6 +615,7 @@ int SchematicSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem *
 
 void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand * command)
 {
+	/*
 	if (m_deleteStash.count() > 0) {
 		foreach(Wire * wire, m_deleteStash) {
 			command->addWire(this, wire);
@@ -599,6 +624,7 @@ void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* >
 		m_deleteStash.clear();
 		return;
 	}
+	*/
 
 	PCBSchematicSketchWidget::removeRatsnestWires(allPartConnectorItems, command);
 }

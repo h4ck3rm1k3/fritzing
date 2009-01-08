@@ -28,7 +28,6 @@ $Date$
 #include "commands.h"
 #include "debugdialog.h"
 #include "sketchwidget.h"
-#include <QtDebug>
 
 int SelectItemCommand::selectItemCommandID = 3;
 
