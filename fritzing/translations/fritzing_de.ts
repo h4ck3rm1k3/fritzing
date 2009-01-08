@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -1634,7 +1635,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="424"/>
         <source>Select a Fritzing File to Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing-Entwurf öffnen</translation>
     </message>
 </context>
 <context>
@@ -1855,7 +1856,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="71"/>
         <source>Untitled Bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbenanntes Sortiment</translation>
     </message>
 </context>
 <context>
@@ -2017,22 +2018,22 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/prefsdialog.cpp" line="143"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="144"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="161"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="191"/>
         <source>Coming soon...</source>
-        <translation type="unfinished"></translation>
+        <translation>In Kürze...</translation>
     </message>
 </context>
 <context>
@@ -2673,17 +2674,17 @@ Wir arbeiten daran, diese Nachricht in Zukunft zu vermeiden.</translation>
     <message>
         <location filename="../src/viewswitcher.cpp" line="156"/>
         <source>Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Steckplatine</translation>
     </message>
     <message>
         <location filename="../src/viewswitcher.cpp" line="157"/>
         <source>Schematic</source>
-        <translation type="unfinished">Schaltplan</translation>
+        <translation>Schaltplan</translation>
     </message>
     <message>
         <location filename="../src/viewswitcher.cpp" line="158"/>
         <source>PCB</source>
-        <translation type="unfinished">Leiterplatte</translation>
+        <translation>Leiterplatte</translation>
     </message>
 </context>
 <context>
