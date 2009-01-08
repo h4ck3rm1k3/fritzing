@@ -75,12 +75,17 @@ class PartsEditorConnectorItem: public ConnectorItem {
 
 		void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
 
+		void resize(const QPointF &mousePos);
+		void move(const QPointF &newPos);
+
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;
 		bool m_resizable;
 		volatile bool m_resizing;
+		volatile bool m_moving;
 		volatile Position m_mousePosition;
 		TerminalPointItem *m_terminalPointItem;
+		QPointF m_mousePressedPos;
 	public:
 		static QColor selectedColor;
 		static QColor notSelectedColor;

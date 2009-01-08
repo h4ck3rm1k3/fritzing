@@ -62,6 +62,7 @@ void PartsEditorConnectorItem::init(bool resizable) {
 
 	m_resizable = resizable;
 	m_resizing = false;
+	m_moving = false;
 	m_mousePosition = Outside;
 }
 
@@ -181,50 +182,11 @@ void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) 
 }
 
 void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	if(m_resizable && m_resizing) {
-		if(m_mousePosition < Inside) {
-			prepareGeometryChange();
-
-			qreal oldX1 = boundingRect().x();
-			qreal oldY1 = boundingRect().y();
-			qreal oldX2 = oldX1+boundingRect().width();
-			qreal oldY2 = oldY1+boundingRect().height();
-			qreal newX = event->pos().x();
-			qreal newY = event->pos().y();
-
-			DebugDialog::debug(QString("<<< (%1,%2)  (%3,%4)")
-					.arg(oldX1).arg(oldY1).arg(oldX2).arg(oldY2));
-
-			DebugDialog::debug(QString("<<< mouse (%1,%2)")
-								.arg(newX).arg(newY));
-
-			switch(m_mousePosition) {
-				case TopLeftCorner: 	setRectAux(newX,newY,oldX2,oldY2);
-				DebugDialog::debug(QString("<<< from top left new rect (%1,%2)  (%3,%4)")
-						.arg(newX).arg(newY).arg(oldX2).arg(oldY2));
-				break;
-				case BottomLeftCorner: 	setRectAux(newX,oldY1,oldX1,newY);
-				DebugDialog::debug(QString("<<< from bottom left new rect (%1,%2)  (%3,%4)")
-						.arg(newX).arg(oldY1).arg(oldX1).arg(newY));
-				break;
-				case TopRightCorner: 	setRectAux(oldX1,newY,newX,oldX2);
-				DebugDialog::debug(QString("<<< from top right new rect (%1,%2)  (%3,%4)")
-						.arg(oldX1).arg(newY).arg(newX).arg(oldX2));
-				break;
-				case BottomRightCorner: setRectAux(oldX1,oldY1,newX,newY);
-				DebugDialog::debug(QString("<<< from bottom right new rect (%1,%2)  (%3,%4)")
-						.arg(oldX1).arg(oldY1).arg(newX).arg(newY));
-				break;
-				default: break;
-			}
-
-			DebugDialog::debug("");
-		} else if(m_mousePosition == Inside) {
-			DebugDialog::debug("move it!");
-			QPointF currentParentPos = mapToParent(mapFromScene(event->scenePos()));
-			QPointF  buttonDownParentPos = mapToParent(mapFromScene(event->buttonDownScenePos(Qt::LeftButton)));
-			QPointF aux = currentParentPos - buttonDownParentPos;
-			moveBy(aux.x(),aux.y());
+	if(m_resizable) {
+		if(m_resizing && m_mousePosition < Inside) {
+			resize(event->pos());
+		} else if(m_moving && m_mousePosition == Inside) {
+			move(event->scenePos());
 		} else {
 			ConnectorItem::mouseMoveEvent(event);
 		}
@@ -232,6 +194,62 @@ void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		ConnectorItem::mouseMoveEvent(event);
 	}
 	updateCursor(event->pos());
+}
+
+void PartsEditorConnectorItem::resize(const QPointF &mousePos) {
+	prepareGeometryChange();
+
+	qreal oldX1 = boundingRect().x();
+	qreal oldY1 = boundingRect().y();
+	qreal oldX2 = oldX1+boundingRect().width();
+	qreal oldY2 = oldY1+boundingRect().height();
+	qreal newX = mousePos.x();
+	qreal newY = mousePos.y();
+
+	DebugDialog::debug(QString("<<< (%1,%2)  (%3,%4)")
+			.arg(oldX1).arg(oldY1).arg(oldX2).arg(oldY2));
+
+	DebugDialog::debug(QString("<<< mouse (%1,%2)")
+						.arg(newX).arg(newY));
+
+	switch(m_mousePosition) {
+		case TopLeftCorner: 	setRectAux(newX,newY,oldX2,oldY2);
+		DebugDialog::debug(QString("<<< from top left new rect (%1,%2)  (%3,%4)")
+				.arg(newX).arg(newY).arg(oldX2).arg(oldY2));
+		break;
+		case BottomLeftCorner: 	setRectAux(newX,oldY1,oldX1,newY);
+		DebugDialog::debug(QString("<<< from bottom left new rect (%1,%2)  (%3,%4)")
+				.arg(newX).arg(oldY1).arg(oldX1).arg(newY));
+		break;
+		case TopRightCorner: 	setRectAux(oldX1,newY,newX,oldX2);
+		DebugDialog::debug(QString("<<< from top right new rect (%1,%2)  (%3,%4)")
+				.arg(oldX1).arg(newY).arg(newX).arg(oldX2));
+		break;
+		case BottomRightCorner: setRectAux(oldX1,oldY1,newX,newY);
+		DebugDialog::debug(QString("<<< from bottom right new rect (%1,%2)  (%3,%4)")
+				.arg(oldX1).arg(oldY1).arg(newX).arg(newY));
+		break;
+		default: break;
+	}
+
+	DebugDialog::debug("");
+}
+
+void PartsEditorConnectorItem::move(const QPointF &newPos) {
+	DebugDialog::debug("move it!");
+
+	QPointF currentParentPos = mapToParent(mapFromScene(newPos));
+	QPointF buttonDownParentPos = mapToParent(mapFromScene(m_mousePressedPos));
+	QPointF aux = currentParentPos - buttonDownParentPos;
+	moveBy(aux.x(),aux.y());
+	m_mousePressedPos = newPos;
+
+	/*DebugDialog::debug(QString("original parent pos %1 %2").arg(origPos.x()).arg(origPos.y()));
+	DebugDialog::debug(QString("original mapped pos %1 %2").arg(buttonDownParentPos.x()).arg(buttonDownParentPos.y()));
+	DebugDialog::debug(QString("new parent pos %1 %2").arg(newPos.x()).arg(newPos.y()));
+	DebugDialog::debug(QString("new mapped pos %1 %2").arg(currentParentPos.x()).arg(currentParentPos.y()));
+	*/
+	DebugDialog::debug(QString("move by %1 %2").arg(aux.x()).arg(aux.y()));
 }
 
 void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
@@ -247,7 +265,9 @@ void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 		setFlag(QGraphicsItem::ItemIsMovable,true);
 		m_mousePosition = closeToCorner(event->pos());
 		if(m_mousePosition != Outside) {
-			m_resizing = true;
+			m_resizing = m_mousePosition != Inside;
+			m_moving = !m_resizing;
+			m_mousePressedPos = event->buttonDownScenePos(Qt::LeftButton);
 		}
 	} else {
 		ConnectorItem::mousePressEvent(event);
@@ -257,6 +277,7 @@ void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 void PartsEditorConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_resizable) {
 		m_resizing = false;
+		m_moving = false;
 		setParentDragMode(QGraphicsView::ScrollHandDrag);
 		setCursor(QCursor());
 	}
