@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -318,7 +319,7 @@
     <message>
         <location filename="../src/fritzingwindow.cpp" line="196"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation>Möchten Sie die Änderungen am Entwurf &quot;%1&quot; speichern?</translation>
+        <translation>Möchtest Du die Änderungen am Entwurf &quot;%1&quot; speichern?</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="204"/>
@@ -343,12 +344,12 @@
     <message>
         <location filename="../src/fritzingwindow.cpp" line="207"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deine Änderungen gehen verloren, falls sie nicht gespeichert werden.</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="209"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
@@ -429,45 +430,45 @@
     <message>
         <location filename="../src/htmlinfoview.cpp" line="150"/>
         <source>Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungen</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/htmlinfoview.cpp" line="151"/>
         <source>connected to %n item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Verbunden mit %n Element</numerusform>
+            <numerusform>Verbunden mit %n Elementen</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="183"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="216"/>
         <source>line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linie</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="196"/>
         <source>view</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansicht</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="210"/>
         <source>current geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrie</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="401"/>
         <source>Properties</source>
-        <translation type="unfinished">Eigenschaften</translation>
+        <translation>Eigenschaften</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="428"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Tags</translation>
     </message>
 </context>
 <context>
@@ -1624,12 +1625,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="802"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Rückgängig</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="806"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiederherstellen</translation>
     </message>
 </context>
 <context>
@@ -1795,7 +1796,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="337"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation>Möchten Sie die Änderungen am Dokument &quot;%1&quot; speichern?</translation>
+        <translation>Möchtest Du die Änderungen am Dokument &quot;%1&quot; speichern?</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
@@ -1820,7 +1821,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="438"/>
         <source>Do you really want to add the selected part to the bin?</source>
-        <translation>Möchten Sie das ausgewählte Bauteil zum Sortiment hinzufügen?</translation>
+        <translation>Möchtest Du das ausgewählte Bauteil zum Sortiment hinzufügen?</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
@@ -1830,7 +1831,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="462"/>
         <source>Do you really want to remove the selected part from the bin?</source>
-        <translation>Möchten Sie wirklich das Bauteil aus dem Sortiment entfernen?</translation>
+        <translation>Möchtest Du wirklich das Bauteil aus dem Sortiment entfernen?</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="47"/>
@@ -1840,12 +1841,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="273"/>
         <source>Select a Fritzing file to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing-Entwurf öffnen</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="347"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deine Änderungen gehen verloren, falls sie nicht gespeichert werden.</translation>
     </message>
 </context>
 <context>
@@ -2197,7 +2198,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/sketchwidget.cpp" line="1826"/>
         <source>%1 Layer</source>
-        <translation>%1 Ebene</translation>
+        <translation>%1-Ebene</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2033"/>
@@ -2232,7 +2233,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="47"/>
         <source>Breadboard</source>
-        <translation>Steckplatine</translation>
+        <translation>Steckplatinen</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="52"/>
@@ -2247,17 +2248,17 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="66"/>
         <source>Rulers</source>
-        <translation>Lineale</translation>
+        <translation>Lineal</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="53"/>
         <source>Nets</source>
-        <translation>Netze</translation>
+        <translation>Netz</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="56"/>
         <source>Board</source>
-        <translation>Leiterplatte</translation>
+        <translation>Leiterplatten</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="57"/>
@@ -2282,7 +2283,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="61"/>
         <source>Solder mask</source>
-        <translation>Lötstoppmaske</translation>
+        <translation>Lötstoppmasken</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="62"/>
@@ -2297,12 +2298,12 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/viewlayer.cpp" line="64"/>
         <source>Keep out</source>
-        <translation>Verbot</translation>
+        <translation>Verbots</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="65"/>
         <source>Jumper wires</source>
-        <translation>Schaltdrähte</translation>
+        <translation>Schaltdraht</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="68"/>
@@ -2380,12 +2381,12 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/prefsdialog.cpp" line="142"/>
         <source>&lt;b&gt;Language&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sprache&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="162"/>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
-        <translation type="unfinished"></translation>
+        <translation>(Änderung wird erst nach einem Neustart von Fritzing wirksam)</translation>
     </message>
 </context>
 <context>
@@ -2447,12 +2448,12 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/sketchwidget.cpp" line="637"/>
         <source>%1 %2</source>
-        <translation type="unfinished">%1 %2</translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="640"/>
         <source>%1 %2 items</source>
-        <translation type="unfinished">%1 %2 Teile</translation>
+        <translation>%1 %2 Elemente</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="887"/>
@@ -2517,7 +2518,7 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2322"/>
         <source>%3 %2 (%1)</source>
-        <translation type="unfinished">%3 %2 (%1)</translation>
+        <translation>%3 %2 (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2324"/>
