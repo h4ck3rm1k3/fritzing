@@ -174,8 +174,8 @@ QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list)
 	layout->addRow(languageLabel, comboBox);	
 
 	QLabel * ll = new QLabel(this);
-	ll->setFixedWidth(195);
-	ll->setMinimumHeight(50);
+	ll->setFixedWidth(250);
+	ll->setMinimumHeight(75);
 	ll->setWordWrap(true);
 	ll->setText(QObject::tr("Please note that a new language setting will not take effect "
 		"until the next time you run Fritzing."));
@@ -194,7 +194,7 @@ QWidget* PrefsDialog::createOtherForm()
 	QLabel * textLabel = new QLabel(this);
 	textLabel->setMaximumWidth(250);
 	textLabel->setWordWrap(true);
-	textLabel->setMinimumHeight(75);
+	textLabel->setMinimumHeight(95);
 	textLabel->setText(QObject::tr("This dialog will soon provide the ability to set some other preferences, "
 							  "such as your default sketch folder and your fritzing.org login name\n"
 							  "Please stay tuned."));	
