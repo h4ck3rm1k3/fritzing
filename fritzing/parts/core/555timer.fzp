@@ -10,11 +10,12 @@
   <tag>555 Timer</tag>
   <tag>IC</tag>
   <tag>DIL package</tag>
+  <tag>oscillator</tag>
  </tags>
  <properties>
   <property name="family" >Timer IC</property>
  </properties>
- <description>The 555 timer is one of the most popular and versatile integrated circuits ever produced. It can used in a variety of timer and multivibrator applications.</description>
+ <description>The classic 555 general purpose timer/oscillator.</description>
  <views>
   <iconView>
    <layers image="icon/555timericon.svg" >
@@ -22,7 +23,7 @@
    </layers>
   </iconView>
   <pcbView>
-   <layers image="pcb/DIP8.svg" >
+   <layers image="pcb/DIP8N.svg" >
     <layer layerId="copper0" />
     <layer layerId="keepout" />
     <layer layerId="soldermask" />

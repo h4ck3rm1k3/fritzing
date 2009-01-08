@@ -7,12 +7,12 @@
  <tags>
   <tag>IC</tag>
   <tag>optocoupler</tag>
-  <tag>4n35</tag>
+  <tag>isolator</tag>
  </tags>
  <properties>
-  <property name="family" >PowerBridge</property>
+  <property name="family" >Optocoupler</property>
  </properties>
- <description>An optocoupler is an IC that uses optical transmission to transfer signals between two different parts of a electrically isolated circuit.</description>
+ <description>Optocoupler - keeps you from frying your stuff!</description>
  <views>
   <iconView>
    <layers image="icon/optocoupler4n35_icon.svg" >
@@ -30,7 +30,7 @@
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/DIP6.svg" >
+   <layers image="pcb/DIP6N.svg" >
     <layer layerId="copper0" />
     <layer layerId="keepout" />
     <layer layerId="soldermask" />
