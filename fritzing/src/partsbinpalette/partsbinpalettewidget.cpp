@@ -44,7 +44,7 @@ QString PartsBinPaletteWidget::Title;
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent) :
 	QFrame(parent)
 {
-	Title = tr("Parts");
+	PartsBinPaletteWidget::Title = tr("Parts");
 	m_refModel = refModel;
 
 	Q_UNUSED(undoStack);
@@ -67,9 +67,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	toIconView();
 
-
 	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
-	m_untitledFileName = "Untitled Bin";
+	m_untitledFileName = tr("Untitled Bin");
 
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));

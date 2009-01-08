@@ -154,27 +154,27 @@
 <context>
     <name>ConnectorsInfoWidget</name>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="79"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="80"/>
         <source>Show Terminal Points</source>
         <translation type="unfinished">Montrer les embouts</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="128"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="129"/>
         <source>List of Connectors</source>
         <translation type="unfinished">Liste des connecteurs</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="291"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="292"/>
         <source>Loading connectors...</source>
         <translation type="unfinished">Chargement des connecteurs...</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="107"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="108"/>
         <source>Mismatching Connector IDs</source>
         <translation type="unfinished">Les ID des connecteurs ne correspondent pas</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="113"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="114"/>
         <source>These problems need to be fixed in the svg-files directly</source>
         <translation type="unfinished">Ces problèmes sont à régler directement dans le fichier .svg</translation>
     </message>
@@ -1736,114 +1736,119 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="205"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="204"/>
         <source>Show as icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="209"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="208"/>
         <source>Show as list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="213"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="212"/>
         <source>Remove selected part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="218"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="217"/>
         <source>Open bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="223"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="222"/>
         <source>Save bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="228"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="227"/>
         <source>Restore core bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="254"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="253"/>
         <source>Specify a file name</source>
         <translation type="unfinished">Spécifier un nom de fichier</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="275"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="274"/>
         <source>Fritzing (*%1)</source>
         <translation type="unfinished">Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="287"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="286"/>
         <source>Fritzing</source>
         <translation type="unfinished">Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="282"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="281"/>
         <source>Cannot find file %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="289"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="288"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="335"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="334"/>
         <source>Save &quot;%1&quot;</source>
         <translation type="unfinished">Enregistrer %1</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="337"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="336"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation type="unfinished">Voulez-vous enregistrer les modifications faites dans le document &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="343"/>
         <source>Save</source>
         <translation type="unfinished">Enregistrer</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
         <source>Don&apos;t Save</source>
         <translation type="unfinished">Ne pas enregistrer</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
         <source>Ctrl+D</source>
         <translation type="unfinished">Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="436"/>
         <source>Add to bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="438"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="460"/>
         <source>Remove from bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="462"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="273"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="272"/>
         <source>Select a Fritzing file to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="347"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="71"/>
+        <source>Untitled Bin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2043,7 +2048,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="309"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="308"/>
         <source>Friting cannot load the parts bin</source>
         <translation type="unfinished"></translation>
     </message>
