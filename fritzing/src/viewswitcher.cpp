@@ -27,11 +27,14 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QGraphicsScene>
 #include <QImage>
 #include <QRgb>
+#include <QFontMetrics>
+#include <QPainter>
 
 #include "viewswitcher.h"
 #include "debugdialog.h"
 #include "help/sketchmainhelp.h"
 
+QHash<QString, QPixmap *> ViewSwitcherButton::Pixmaps;
 QString ViewSwitcherButton::ResourcePathPattern = (":/resources/images/icons/segmentedSwitcher%1%2.png");
 QBitmap * ViewSwitcher::m_mask = NULL;
 
@@ -41,9 +44,52 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 	m_active = false;
 	m_hover = false;
 	m_index = index;
-	setText(text);
 	m_resourcePath = ResourcePathPattern.arg(view);
 	m_parent = parent;
+	
+	QFontMetrics fm(this->font());
+
+	QList<QString> actives;
+	actives << "Active" << "Inactive";
+	QList<QString> focuses;
+	focuses << "Focus" << "Dimmed";
+	QList<QString> hovers;
+	hovers << "Hover" << "";
+
+	foreach (QString active, actives) {
+		foreach (QString focus, focuses) {
+			foreach (QString hover, hovers) {
+				if (focus.compare("Dimmed") == 0 && hover.compare("Hover") == 0) {
+					// this state is never visible;
+					continue;
+				}
+
+				QString name = m_resourcePath.arg(active+focus+hover);
+				if (Pixmaps.value(name, NULL) != NULL) {
+					// already set this one up
+					continue;	
+				}
+
+				QString pixmapName = ResourcePathPattern.arg("X").arg(active+focus+hover);
+				QPixmap bgPixmap(pixmapName);
+				if (bgPixmap.isNull()) continue;
+
+				int textWidth = fm.width(text);
+
+				QPixmap * buttonPixmap = new QPixmap(textWidth + bgPixmap.width() - 1, bgPixmap.height());
+				QPainter painter(buttonPixmap);
+				QRect r = bgPixmap.rect();
+				r.setLeft(bgPixmap.width() / 2);
+				r.setWidth(1);
+				painter.drawPixmap(buttonPixmap->rect(), bgPixmap, r);
+				painter.setFont(this->font());
+				painter.drawText(buttonPixmap->rect(), Qt::AlignCenter, text);
+				painter.end();
+
+				Pixmaps.insert(name, buttonPixmap);
+			}
+		}
+	}
 }
 
 void ViewSwitcherButton::setFocus(bool focus) {
@@ -69,7 +115,10 @@ void ViewSwitcherButton::updateImage() {
 	QString activeText = m_active ? "Active" : "Inactive";
 	QString focusText = m_focus ? "Focus" : "Dimmed";
 	QString hoverText = m_hover ? "Hover" : "";
-	setPixmap(QPixmap(m_resourcePath.arg(activeText+focusText+hoverText)));
+	QPixmap * pixmap = Pixmaps.value(m_resourcePath.arg(activeText+focusText+hoverText));
+	if (pixmap != NULL) {
+		setPixmap(*pixmap);
+	}
 }
 
 void ViewSwitcherButton::mousePressEvent(QMouseEvent *event) {
@@ -152,6 +201,9 @@ void ViewSwitcher::viewSwitchedTo(int index) {
 
 void ViewSwitcher::createMask() 
 {
+	
+
+
 	if (m_mask != NULL) return;
 
 	setStyleSheet("ViewSwitcher {border: 0px; background-color: rgb(0,255,255); margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");

@@ -405,3 +405,8 @@ WaitPushUndoStack {
 	background-color: white;
 	color: black;
 }
+
+ViewSwitcherButton {
+	font-size: 9px;
+	font-weight: bold;
+}

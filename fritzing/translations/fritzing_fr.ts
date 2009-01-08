@@ -2011,6 +2011,29 @@
     </message>
 </context>
 <context>
+    <name>PrefsDialog</name>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="143"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="144"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="161"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="191"/>
+        <source>Coming soon...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../src/breadboardsketchwidget.cpp" line="35"/>
@@ -2068,7 +2091,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="223"/>
+        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="253"/>
         <source>Cancel</source>
         <translation type="unfinished">Annuler</translation>
     </message>
@@ -2164,7 +2187,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="222"/>
+        <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="230"/>
         <source>The file %1 is not a Fritzing file (11).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2358,38 +2381,33 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="134"/>
+        <location filename="../src/prefsdialog.cpp" line="136"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="176"/>
+        <location filename="../src/prefsdialog.cpp" line="200"/>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="190"/>
+        <location filename="../src/prefsdialog.cpp" line="208"/>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="193"/>
+        <location filename="../src/prefsdialog.cpp" line="210"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="217"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/prefsdialog.cpp" line="142"/>
+        <location filename="../src/prefsdialog.cpp" line="166"/>
         <source>&lt;b&gt;Language&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="162"/>
+        <location filename="../src/prefsdialog.cpp" line="181"/>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2576,72 +2594,72 @@ Where&apos;re working to avoid this message, and only let you choose between pro
 <context>
     <name>TranslatorListModel</name>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="41"/>
+        <location filename="../src/prefsdialog.cpp" line="43"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="42"/>
+        <location filename="../src/prefsdialog.cpp" line="44"/>
         <source>French</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="43"/>
+        <location filename="../src/prefsdialog.cpp" line="45"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="46"/>
+        <location filename="../src/prefsdialog.cpp" line="48"/>
         <source>Spanish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="47"/>
+        <location filename="../src/prefsdialog.cpp" line="49"/>
         <source>Dutch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="48"/>
+        <location filename="../src/prefsdialog.cpp" line="50"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="49"/>
+        <location filename="../src/prefsdialog.cpp" line="51"/>
         <source>Italian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="50"/>
+        <location filename="../src/prefsdialog.cpp" line="52"/>
         <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="51"/>
+        <location filename="../src/prefsdialog.cpp" line="53"/>
         <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="52"/>
+        <location filename="../src/prefsdialog.cpp" line="54"/>
         <source>Hebrew</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="53"/>
+        <location filename="../src/prefsdialog.cpp" line="55"/>
         <source>Arabic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="54"/>
+        <location filename="../src/prefsdialog.cpp" line="56"/>
         <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="55"/>
+        <location filename="../src/prefsdialog.cpp" line="57"/>
         <source>Urdu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="56"/>
+        <location filename="../src/prefsdialog.cpp" line="58"/>
         <source>Hindi</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2649,17 +2667,17 @@ Where&apos;re working to avoid this message, and only let you choose between pro
 <context>
     <name>ViewSwitcher</name>
     <message>
-        <location filename="../src/viewswitcher.cpp" line="107"/>
+        <location filename="../src/viewswitcher.cpp" line="156"/>
         <source>Breadboard</source>
         <translation type="unfinished">Breadboard</translation>
     </message>
     <message>
-        <location filename="../src/viewswitcher.cpp" line="108"/>
+        <location filename="../src/viewswitcher.cpp" line="157"/>
         <source>Schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewswitcher.cpp" line="109"/>
+        <location filename="../src/viewswitcher.cpp" line="158"/>
         <source>PCB</source>
         <translation type="unfinished">Circuit imprimé</translation>
     </message>

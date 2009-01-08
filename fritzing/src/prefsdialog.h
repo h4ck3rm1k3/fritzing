@@ -66,6 +66,10 @@ public:
 	const QString & name();
 	bool cleared();
 
+protected:
+	QWidget * createLanguageForm(QFileInfoList & list);
+	QWidget* createOtherForm();
+
 protected slots:
 	void changeLanguage(int);
 	void clear();

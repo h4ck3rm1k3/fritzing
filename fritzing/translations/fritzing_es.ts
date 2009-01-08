@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="es">
-<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -155,27 +154,27 @@
 <context>
     <name>ConnectorsInfoWidget</name>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="79"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="80"/>
         <source>Show Terminal Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="107"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="108"/>
         <source>Mismatching Connector IDs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="113"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="114"/>
         <source>These problems need to be fixed in the svg-files directly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="128"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="129"/>
         <source>List of Connectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="291"/>
+        <location filename="../src/partseditor/connectorsinfowidget.cpp" line="292"/>
         <source>Loading connectors...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1631,6 +1630,11 @@
         <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="424"/>
+        <source>Select a Fritzing File to Open</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -1737,114 +1741,119 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="205"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="204"/>
         <source>Show as icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="209"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="208"/>
         <source>Show as list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="213"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="212"/>
         <source>Remove selected part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="218"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="217"/>
         <source>Open bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="223"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="222"/>
         <source>Save bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="228"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="227"/>
         <source>Restore core bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="254"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="253"/>
         <source>Specify a file name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="275"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="274"/>
         <source>Fritzing (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="287"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="286"/>
         <source>Fritzing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="282"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="281"/>
         <source>Cannot find file %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="289"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="288"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="335"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="334"/>
         <source>Save &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="337"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="336"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="343"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="344"/>
         <source>Don&apos;t Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="345"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="436"/>
         <source>Add to bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="438"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="460"/>
         <source>Remove from bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="462"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="273"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="272"/>
         <source>Select a Fritzing file to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="347"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="71"/>
+        <source>Untitled Bin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2002,6 +2011,29 @@
     </message>
 </context>
 <context>
+    <name>PrefsDialog</name>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="143"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="144"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="161"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/prefsdialog.cpp" line="191"/>
+        <source>Coming soon...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../src/breadboardsketchwidget.cpp" line="35"/>
@@ -2014,7 +2046,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="309"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="308"/>
         <source>Friting cannot load the parts bin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2145,7 +2177,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="222"/>
+        <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="230"/>
         <source>The file %1 is not a Fritzing file (11).</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2165,7 +2197,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="223"/>
+        <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="253"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2203,29 +2235,24 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="134"/>
+        <location filename="../src/prefsdialog.cpp" line="136"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="176"/>
+        <location filename="../src/prefsdialog.cpp" line="200"/>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="190"/>
+        <location filename="../src/prefsdialog.cpp" line="208"/>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="193"/>
+        <location filename="../src/prefsdialog.cpp" line="210"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/prefsdialog.cpp" line="217"/>
-        <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2375,12 +2402,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="142"/>
+        <location filename="../src/prefsdialog.cpp" line="166"/>
         <source>&lt;b&gt;Language&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="162"/>
+        <location filename="../src/prefsdialog.cpp" line="181"/>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2419,12 +2446,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="799"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="802"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="801"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="804"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2566,73 +2593,91 @@ Where&apos;re working to avoid this message, and only let you choose between pro
 <context>
     <name>TranslatorListModel</name>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="41"/>
+        <location filename="../src/prefsdialog.cpp" line="43"/>
         <source>English</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="42"/>
+        <location filename="../src/prefsdialog.cpp" line="44"/>
         <source>French</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="43"/>
+        <location filename="../src/prefsdialog.cpp" line="45"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="46"/>
+        <location filename="../src/prefsdialog.cpp" line="48"/>
         <source>Spanish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="47"/>
+        <location filename="../src/prefsdialog.cpp" line="49"/>
         <source>Dutch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="48"/>
+        <location filename="../src/prefsdialog.cpp" line="50"/>
         <source>Russian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="49"/>
+        <location filename="../src/prefsdialog.cpp" line="51"/>
         <source>Italian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="50"/>
+        <location filename="../src/prefsdialog.cpp" line="52"/>
         <source>Chinese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="51"/>
+        <location filename="../src/prefsdialog.cpp" line="53"/>
         <source>Japanese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="52"/>
+        <location filename="../src/prefsdialog.cpp" line="54"/>
         <source>Hebrew</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="53"/>
+        <location filename="../src/prefsdialog.cpp" line="55"/>
         <source>Arabic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="54"/>
+        <location filename="../src/prefsdialog.cpp" line="56"/>
         <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="55"/>
+        <location filename="../src/prefsdialog.cpp" line="57"/>
         <source>Urdu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="56"/>
+        <location filename="../src/prefsdialog.cpp" line="58"/>
         <source>Hindi</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ViewSwitcher</name>
+    <message>
+        <location filename="../src/viewswitcher.cpp" line="156"/>
+        <source>Breadboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewswitcher.cpp" line="157"/>
+        <source>Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewswitcher.cpp" line="158"/>
+        <source>PCB</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -25,11 +25,13 @@ $Date$
 ********************************************************************/
 
 #include "prefsdialog.h"
-#include <QGridLayout>
+#include <QFormLayout>
 #include <QLabel>
 #include <QComboBox>
 #include <QPushButton>
 #include <QLocale>
+#include <QDialogButtonBox>
+#include <QGroupBox>
 
 static QVariant emptyVariant;
 QHash<QString, QString> TranslatorListModel::m_languages;
@@ -132,55 +134,71 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	m_cleared = false;
 
 	this->setWindowTitle(QObject::tr("Preferences"));
-	
-	QGridLayout * gridLayout = new QGridLayout(this);
 
-	int row = 0;
-	
+	QVBoxLayout * vLayout = new QVBoxLayout(this);
+	vLayout->addWidget(createLanguageForm(list));
+	vLayout->addWidget(createOtherForm());
+
+    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
+
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+	vLayout->addWidget(buttonBox);
+
+	this->setLayout(vLayout);
+
+}
+
+PrefsDialog::~PrefsDialog()
+{
+}
+
+QWidget * PrefsDialog::createLanguageForm(QFileInfoList & list) 
+{
+	QGroupBox * formGroupBox = new QGroupBox(tr("Language"));
+    QFormLayout *layout = new QFormLayout();
+
 	QLabel * languageLabel = new QLabel(this);
 	languageLabel->setWordWrap(true);
 	languageLabel->setText(QObject::tr("<b>Language</b>"));
-	gridLayout->addWidget(languageLabel, row, 0, Qt::AlignLeft);
-	
-	gridLayout->setColumnMinimumWidth(1, 10);
-	gridLayout->setColumnMinimumWidth(2, 10);
-	gridLayout->setColumnMinimumWidth(3, 10);
 	
 	QComboBox* comboBox = new QComboBox(this);
 	m_translatorListModel = new TranslatorListModel(list, this);
 	comboBox->setModel(m_translatorListModel);
 	comboBox->setCurrentIndex(m_translatorListModel->findIndex(m_name));
-	gridLayout->addWidget(comboBox, row, 4, Qt::AlignRight);	
 	connect(comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(changeLanguage(int)));
 
-	row++;
+	layout->addRow(languageLabel, comboBox);	
 
 	QLabel * ll = new QLabel(this);
 	ll->setFixedWidth(195);
+	ll->setMinimumHeight(50);
 	ll->setWordWrap(true);
 	ll->setText(QObject::tr("Please note that a new language setting will not take effect "
 		"until the next time you run Fritzing."));
-	gridLayout->addWidget(ll, row, 0, Qt::AlignLeft);
+	layout->addRow(ll);
 
-	row++;
-	
-	gridLayout->setRowMinimumHeight(row, 20);
+	formGroupBox->setLayout(layout);
+	return formGroupBox;
+}
 
-	row++;
-	
+
+QWidget* PrefsDialog::createOtherForm() 
+{
+	QGroupBox * formGroupBox = new QGroupBox(tr("Coming soon..."));
+    QFormLayout *layout = new QFormLayout();
+
 	QLabel * textLabel = new QLabel(this);
 	textLabel->setMaximumWidth(250);
 	textLabel->setWordWrap(true);
+	textLabel->setMinimumHeight(75);
 	textLabel->setText(QObject::tr("This dialog will soon provide the ability to set some other preferences, "
 							  "such as your default sketch folder and your fritzing.org login name\n"
 							  "Please stay tuned."));	
-	gridLayout->addWidget(textLabel, row, 0, 1, 5);
-
-	row++;
-
-	gridLayout->setRowMinimumHeight(row, 20);
-
-	row++;
+	layout->addRow(textLabel);
 
 #ifndef QT_NO_DEBUG
 
@@ -188,50 +206,17 @@ PrefsDialog::PrefsDialog(const QString & language, QFileInfoList & list, QWidget
 	clearLabel->setFixedWidth(195);
 	clearLabel->setWordWrap(true);
 	clearLabel->setText(QObject::tr("Clear all saved settings and close this dialog (debug mode only)."));	
-	gridLayout->addWidget(clearLabel, row, 0);
 
 	QPushButton * clear = new QPushButton(QObject::tr("Clear"), this);
 	clear->setMaximumWidth(220);
-	gridLayout->addWidget(clear, row, 4, Qt::AlignRight);	
 	connect(clear, SIGNAL(clicked()), this, SLOT(clear()));
 
-	row++;
+	layout->addRow(clearLabel, clear);	
 
-	gridLayout->setRowMinimumHeight(row, 20);
-
-	row++;
 #endif
 
-	Qt::Alignment okAlign = Qt::AlignLeft;
-	int okCol = 0;
-	Qt::Alignment cancelAlign = Qt::AlignRight;
-	int cancelCol = 4;
-
-#ifdef Q_WS_MAC
-	okAlign = Qt::AlignRight;
-	okCol = 4;
-	cancelAlign = Qt::AlignLeft;
-	cancelCol = 0;
-#endif
-
-	QPushButton * ok = new QPushButton(QObject::tr("OK"), this);
-	ok->setMaximumWidth(120);
-	ok->setDefault(true);
-	gridLayout->addWidget(ok, row, okCol, okAlign);	
-	connect(ok, SIGNAL(clicked()), this, SLOT(accept()));
-	
-	QPushButton * cancel = new QPushButton(QObject::tr("Cancel"), this);
-	cancel->setMaximumWidth(120);
-	gridLayout->addWidget(cancel, row, cancelCol, cancelAlign);
-	connect(cancel, SIGNAL(clicked()), this, SLOT(reject()));
-
-	row++;
-
-
-}
-
-PrefsDialog::~PrefsDialog()
-{
+	formGroupBox->setLayout(layout);
+	return formGroupBox;
 }
 
 void PrefsDialog::changeLanguage(int index) 

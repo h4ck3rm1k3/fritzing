@@ -32,6 +32,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QBitmap>
+#include <QHash>
 
 class ViewSwitcher;
 
@@ -64,6 +65,7 @@ class ViewSwitcherButton : public QLabel {
 
 	protected:
 		static QString ResourcePathPattern;
+		static QHash<QString, QPixmap *> Pixmaps;
 };
 
 class ViewSwitcher : public QFrame {
