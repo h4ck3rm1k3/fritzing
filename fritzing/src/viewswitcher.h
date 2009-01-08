@@ -33,15 +33,13 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QHBoxLayout>
 #include <QBitmap>
 
-#include "help/inotseeninminiview.h"
-
 class ViewSwitcher;
 
 class ViewSwitcherButton : public QLabel {
 	Q_OBJECT
 
 	public:
-		ViewSwitcherButton(const QString &view, int index, ViewSwitcher *parent);
+		ViewSwitcherButton(const QString &view, const QString & text, int index, ViewSwitcher *parent);
 		void setFocus(bool active);
 		void setActive(bool selected);
 		void setHover(bool hover);
@@ -73,7 +71,7 @@ class ViewSwitcher : public QFrame {
 	public:
 		ViewSwitcher();
 
-		const QBitmap & getMask();
+		const QBitmap * getMask();
 		void connectClose(QObject * target, const char* slot);
 
 	signals:
@@ -90,7 +88,7 @@ class ViewSwitcher : public QFrame {
 		void enterEvent(QEvent *event);
 		void leaveEvent(QEvent *event);
 
-		ViewSwitcherButton *createButton(const QString &view);
+		ViewSwitcherButton *createButton(const QString &view, const QString &text);
 		void createMask();
 
 	protected:
@@ -101,6 +99,8 @@ class ViewSwitcher : public QFrame {
 };
 
 /*
+#include "help/inotseeninminiview.h"
+
 class ViewSwitcher : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
 	ViewSwitcher(QWidget *parent);

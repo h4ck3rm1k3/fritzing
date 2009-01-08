@@ -35,12 +35,13 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 QString ViewSwitcherButton::ResourcePathPattern = (":/resources/images/icons/segmentedSwitcher%1%2.png");
 QBitmap * ViewSwitcher::m_mask = NULL;
 
-ViewSwitcherButton::ViewSwitcherButton(const QString &view, int index, ViewSwitcher *parent) : QLabel(parent)
+ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int index, ViewSwitcher *parent) : QLabel(parent)
 {
 	m_focus = false;
 	m_active = false;
 	m_hover = false;
 	m_index = index;
+	setText(text);
 	m_resourcePath = ResourcePathPattern.arg(view);
 	m_parent = parent;
 }
@@ -103,14 +104,14 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	//m_closeButton = new SketchMainHelpCloseButton("PCB" ,this);
 	//m_layout->addWidget(m_closeButton);
 
-	m_buttons << createButton("Breadboard");
-	m_buttons << createButton("Schematic");
-	m_buttons << createButton("PCB");
+	m_buttons << createButton("Breadboard", tr("Breadboard"));
+	m_buttons << createButton("Schematic", tr("Schematic"));
+	m_buttons << createButton("PCB", tr("PCB"));
 
 }
 
-ViewSwitcherButton *ViewSwitcher::createButton(const QString &view) {
-	ViewSwitcherButton *btn = new ViewSwitcherButton(view, m_buttons.size(), this);
+ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text) {
+	ViewSwitcherButton *btn = new ViewSwitcherButton(view, text, m_buttons.size(), this);
 	connect(btn, SIGNAL(clicked(ViewSwitcherButton*)), this, SLOT(updateState(ViewSwitcherButton*)));
 	m_layout->addWidget(btn);
 	return btn;
@@ -187,12 +188,12 @@ void ViewSwitcher::createMask()
 }
 
 
-const QBitmap & ViewSwitcher::getMask() {
+const QBitmap * ViewSwitcher::getMask() {
 	if (m_mask == NULL) {
 		createMask();
 	}
 
-	return *m_mask;
+	return m_mask;
 }
 
 void ViewSwitcher::connectClose(QObject * target, const char* slot) {

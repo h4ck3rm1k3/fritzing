@@ -175,7 +175,10 @@ void TabWindow::restoreState() {
 }
 
 void TabWindow::setMask() {
-	QWidget::setMask(m_viewSwitcher->getMask());
+	const QBitmap * mask = m_viewSwitcher->getMask();
+	if (mask != NULL) {
+		QWidget::setMask(*mask);
+	}
 }
 
 void TabWindow::enterEvent(QEvent *event) {

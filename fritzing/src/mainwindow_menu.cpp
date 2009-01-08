@@ -421,7 +421,7 @@ void MainWindow::load() {
 
 	QString fileName = QFileDialog::getOpenFileName(
 			this,
-			"Select a Fritzing File to Open",
+			tr("Select a Fritzing File to Open"),
 			path,
 			tr("Fritzing Files (*%1 *%1z);;Fritzing (*%1);;Fritzing Shareable (*%2)").arg(FritzingSketchExtension).arg(FritzingBundleExtension)
 		);

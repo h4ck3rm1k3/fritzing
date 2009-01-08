@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="en">
-<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -1631,6 +1630,11 @@
         <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/mainwindow_menu.cpp" line="424"/>
+        <source>Select a Fritzing File to Open</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MismatchingConnectorWidget</name>
@@ -2424,12 +2428,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="799"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="802"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="801"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="804"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2638,6 +2642,24 @@ Where&apos;re working to avoid this message, and only let you choose between pro
     <message>
         <location filename="../src/prefsdialog.cpp" line="56"/>
         <source>Hindi</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ViewSwitcher</name>
+    <message>
+        <location filename="../src/viewswitcher.cpp" line="107"/>
+        <source>Breadboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewswitcher.cpp" line="108"/>
+        <source>Schematic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewswitcher.cpp" line="109"/>
+        <source>PCB</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
