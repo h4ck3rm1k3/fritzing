@@ -57,6 +57,7 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 	hovers << "Hover" << "";
 
 	foreach (QString active, actives) {
+		bool isActive = (active.compare("Active") == 0);
 		foreach (QString focus, focuses) {
 			foreach (QString hover, hovers) {
 				if (focus.compare("Dimmed") == 0 && hover.compare("Hover") == 0) {
@@ -82,6 +83,14 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				r.setLeft(bgPixmap.width() / 2);
 				r.setWidth(1);
 				painter.drawPixmap(buttonPixmap->rect(), bgPixmap, r);
+				QPen pen = painter.pen();
+				if (isActive) {
+					pen.setColor(QColor(255, 255, 255));
+				}
+				else {
+					pen.setColor(QColor(0,0,0));
+				}
+				painter.setPen(pen);
 				painter.setFont(this->font());
 				painter.drawText(buttonPixmap->rect(), Qt::AlignCenter, text);
 				painter.end();
