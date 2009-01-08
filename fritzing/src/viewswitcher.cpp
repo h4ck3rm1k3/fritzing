@@ -38,7 +38,7 @@ QHash<QString, QPixmap *> ViewSwitcherButton::Pixmaps;
 QString ViewSwitcherButton::ResourcePathPattern = (":/resources/images/icons/segmentedSwitcher%1%2.png");
 QBitmap * ViewSwitcher::m_mask = NULL;
 
-ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int index, ViewSwitcher *parent) : QLabel(parent)
+ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, Qt::Alignment alignment, int index, ViewSwitcher *parent) : QLabel(parent)
 {
 	m_focus = false;
 	m_active = false;
@@ -78,11 +78,47 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				int textWidth = fm.width(text);
 
 				QPixmap * buttonPixmap = new QPixmap(textWidth + bgPixmap.width() - 1, bgPixmap.height());
+				buttonPixmap->fill(Qt::transparent);
 				QPainter painter(buttonPixmap);
 				QRect r = bgPixmap.rect();
 				r.setLeft(bgPixmap.width() / 2);
 				r.setWidth(1);
-				painter.drawPixmap(buttonPixmap->rect(), bgPixmap, r);
+				QRect s(r);
+				switch (alignment) {
+					case Qt::AlignLeft:
+						r.setLeft(0);
+						r.setWidth(bgPixmap.width() / 2);
+						painter.drawPixmap(r, bgPixmap, r);
+						s = buttonPixmap->rect();
+						s.setLeft(r.width());
+						s.setWidth(buttonPixmap->width() - r.width());
+						r.setLeft(bgPixmap.width() / 2);
+						r.setWidth(1);
+						painter.drawPixmap(s, bgPixmap, r);
+						break;
+					case Qt::AlignRight:
+						r.setLeft((bgPixmap.width() / 2) + 1);
+						r.setWidth(bgPixmap.width() / 2);					
+						s.setLeft(buttonPixmap->width() - r.width());
+						s.setWidth(r.width());
+						painter.drawPixmap(s, bgPixmap, r);
+
+						s = buttonPixmap->rect();
+						s.setLeft(0);
+						s.setWidth(buttonPixmap->width() - r.width());
+						r.setLeft(bgPixmap.width() / 2);
+						r.setWidth(1);
+						painter.drawPixmap(s, bgPixmap, r);
+						break;
+					case Qt::AlignCenter:
+						r.setLeft(bgPixmap.width() / 2);
+						r.setWidth(1);
+						painter.drawPixmap(buttonPixmap->rect(), bgPixmap, r);
+						break;
+					default:
+						break;
+				}
+
 				QPen pen = painter.pen();
 				if (isActive) {
 					pen.setColor(QColor(255, 255, 255));
@@ -93,6 +129,9 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				painter.setPen(pen);
 				painter.setFont(this->font());
 				painter.drawText(buttonPixmap->rect(), Qt::AlignCenter, text);
+
+
+
 				painter.end();
 
 				Pixmaps.insert(name, buttonPixmap);
@@ -162,14 +201,14 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	//m_closeButton = new SketchMainHelpCloseButton("PCB" ,this);
 	//m_layout->addWidget(m_closeButton);
 
-	m_buttons << createButton("Breadboard", tr("Breadboard"));
-	m_buttons << createButton("Schematic", tr("Schematic"));
-	m_buttons << createButton("PCB", tr("PCB"));
+	m_buttons << createButton("Breadboard", tr("Breadboard"), Qt::AlignLeft);
+	m_buttons << createButton("Schematic", tr("Schematic"), Qt::AlignCenter);
+	m_buttons << createButton("PCB", tr("PCB"), Qt::AlignRight);
 
 }
 
-ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text) {
-	ViewSwitcherButton *btn = new ViewSwitcherButton(view, text, m_buttons.size(), this);
+ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text, Qt::Alignment alignment) {
+	ViewSwitcherButton *btn = new ViewSwitcherButton(view, text, alignment, m_buttons.size(), this);
 	connect(btn, SIGNAL(clicked(ViewSwitcherButton*)), this, SLOT(updateState(ViewSwitcherButton*)));
 	m_layout->addWidget(btn);
 	return btn;
