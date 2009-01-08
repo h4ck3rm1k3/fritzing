@@ -51,6 +51,8 @@ class PartsEditorPaletteItem : public PaletteItem {
 		void removeFromModel(); // To allow info items to be shown, but not to be persisted
 		void setConnector(const QString &id, Connector *conn);
 
+		void setWithBorder(bool withBorder);
+
 	public slots:
 		void highlightConnectors(const QString &connId);
 
@@ -58,12 +60,14 @@ class PartsEditorPaletteItem : public PaletteItem {
 		void createSvgFile(QString path);
 		bool setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 		virtual ConnectorItem* newConnectorItem(Connector *connector);
+		void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );
 
 		QDomDocument *m_svgDom;
 		QString m_originalSvgPath;
 
 		SvgAndPartFilePath *m_svgStrings;
 		QList<Connector *> *m_connectors;
+		bool m_withBorder;
 };
 
 #endif /* PARTSEDITORPALETTEITEM_H_ */

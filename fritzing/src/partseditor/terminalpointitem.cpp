@@ -33,7 +33,7 @@ TerminalPointItem::TerminalPointItem(ConnectorItem *parent) : QGraphicsRectItem(
 	m_vLine = NULL;
 	m_hLine = NULL;
 	updatePoint();
-	//setFlag(QGraphicsItem::ItemClipsChildrenToShape);
+	setFlag(QGraphicsItem::ItemIsMovable);
 }
 
 QPointF TerminalPointItem::point() {

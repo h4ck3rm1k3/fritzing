@@ -55,6 +55,8 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 
 	setAcceptHoverEvents(false);
 	setSelected(false);
+
+	m_withBorder = false;
 }
 
 PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
@@ -71,6 +73,8 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocume
 
 	setAcceptHoverEvents(false);
 	setSelected(false);
+
+	m_withBorder = false;
 }
 
 PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) :
@@ -80,6 +84,8 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 
 	m_connectors = NULL;
 	m_svgStrings = NULL;
+
+	m_withBorder = false;
 }
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
@@ -119,8 +125,10 @@ void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 const QList<Connector *> &PartsEditorPaletteItem::connectors() {
 	if(!m_connectors) {
 		m_connectors = new QList<Connector*>;
-		foreach(Connector *conn, modelPart()->connectors().values()) {
-			*m_connectors << conn;
+		QList<QString> connNames = modelPart()->connectors().keys();
+		qSort(connNames);
+		foreach(QString connName, connNames) {
+			*m_connectors << modelPart()->connectors()[connName];
 		}
 	}
 	return *m_connectors;
@@ -278,5 +286,31 @@ void PartsEditorPaletteItem::highlightConnectors(const QString &connId) {
 void PartsEditorPaletteItem::removeFromModel() {
 	if(m_modelPart) {
 		m_modelPart->removeViewItem(this);
+	}
+}
+
+void PartsEditorPaletteItem::setWithBorder(bool withBorder) {
+	m_withBorder = withBorder;
+}
+
+void PartsEditorPaletteItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
+	PaletteItem::paint(painter, option, widget);
+
+	if(m_withBorder) {
+		painter->save();
+		int penW = 5;
+
+		QPen pen(QColor::fromRgb(0,0,0));
+		pen.setWidth(penW);
+		pen.setJoinStyle(Qt::MiterJoin);
+		pen.setCapStyle(Qt::SquareCap);
+
+		QRectF rect = boundingRect();
+		painter->setPen(pen);
+		painter->drawRect(
+			rect.x()-2,rect.y()-2,
+			rect.width()+4,rect.height()+4);
+
+		painter->restore();
 	}
 }

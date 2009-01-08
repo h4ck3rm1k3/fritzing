@@ -50,7 +50,8 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void removeFromModel();
 		void setConnector(Connector *connector);
 		void setMismatching(bool isMismatching);
-		void showTerminalPoint(bool show);
+		void setShowTerminalPoint(bool show);
+		bool showingTerminalPoint();
 
 	protected:
 		void init(bool resizable);
@@ -91,6 +92,9 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		static QColor notSelectedColor;
 		static QColor selectedPenColor;
 		static qreal selectedPenWidth;
+
+		static qreal MinWidth;
+		static qreal MinHeight;
 };
 
 #endif /* PARTSEDITORCONNECTORITEM_H_ */

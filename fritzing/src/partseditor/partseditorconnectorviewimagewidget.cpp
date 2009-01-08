@@ -33,8 +33,8 @@ $Date$
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
 
-int PartsEditorConnectorViewImageWidget::ConnDefaultWidth = 20;
-int PartsEditorConnectorViewImageWidget::ConnDefaultHeight = PartsEditorConnectorViewImageWidget::ConnDefaultWidth;
+int PartsEditorConnectorViewImageWidget::ConnDefaultWidth = 5;
+int PartsEditorConnectorViewImageWidget::ConnDefaultHeight = ConnDefaultWidth;
 
 PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
 	: PartsEditorAbstractViewImage(viewId, parent, size)
@@ -95,15 +95,10 @@ void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const
 	Q_ASSERT(m_item);
 	QString connId = conn->connectorStuffID();
 
-	DebugDialog::debug(QString("<<< scale %1  -   size %2")
-		.arg(m_scaleValue)
-		.arg((connSize*m_scaleValue/100).width()))
-		;
-
-	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize*m_scaleValue/100);
+	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize);
 	PartsEditorConnectorItem *connItem = new PartsEditorConnectorItem(conn, m_item, bounds);
 	m_drawnConns << connItem;
-	connItem->showTerminalPoint(showTerminalPoint);
+	connItem->setShowTerminalPoint(showTerminalPoint);
 
 	m_undoStack->push(new QUndoCommand(
 		QString("connector '%1' added to %2 view")
@@ -156,6 +151,7 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 	if(m_item) {
 		m_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 		m_item->setFlag(QGraphicsItem::ItemIsMovable, false);
+		m_item->setFlag(QGraphicsItem::ItemClipsToShape, true);
 		//m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 		m_item->removeFromModel();
 		m_item->highlightConnectors("");
@@ -165,9 +161,9 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 
 		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
 		centerOn(m_item);
-
-		ensureFixedToBottomRight(m_zoomControls);
+		m_item->setWithBorder(true);
 	}
+	ensureFixedToBottomRight(m_zoomControls);
 }
 
 void PartsEditorConnectorViewImageWidget::informConnectorSelection(const QString &connId) {
@@ -284,7 +280,7 @@ void PartsEditorConnectorViewImageWidget::showTerminalPoints(bool show) {
 	foreach(QGraphicsItem *item, items()) {
 		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
 		if(connItem) {
-			connItem->showTerminalPoint(show);
+			connItem->setShowTerminalPoint(show);
 		}
 	}
 }
