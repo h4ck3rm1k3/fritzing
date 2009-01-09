@@ -346,8 +346,11 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 
 FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
 {
-	//QTime t;
-	//t.start();
+#ifndef QT_NO_DEBUG
+	QTime t;
+	t.start();
+#endif
+
     ModelPartStuff * modelPartStuff = modelPart->modelPartStuff();
 
     if (modelPartStuff == NULL) return NULL;
@@ -374,6 +377,8 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 			tempPath = getApplicationSubFolderPath("parts") +"/"+ PaletteItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
 		}
 
+		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));
+
     	QStringList possibleFolders;
     	possibleFolders << "core" << "contrib" << "user";
 		bool gotOne = false;
@@ -386,7 +391,9 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 			}
 		}
 
-		//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
+#ifndef QT_NO_DEBUG
+		DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
+#endif
 
 		if (gotOne) {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
@@ -403,12 +410,16 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 					}
 				}
 				else {
-					//DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
+#ifndef QT_NO_DEBUG
+					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
+#endif
 					// only one layer, just load it directly
 					if (renderer->load(filename)) {
 						gotOne = true;
 					}
-					//DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
+#ifndef QT_NO_DEBUG
+					DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
+#endif
 				}
 				if (!gotOne) {
 					delete renderer;

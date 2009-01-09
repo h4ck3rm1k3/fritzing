@@ -288,7 +288,7 @@ int FApplication::startup(int & argc, char ** argv)
 	doOnceThread.start();
 	while (!doOnceThread.isFinished()) {
 		QApplication::processEvents();
-		mutex.tryLock(10);							// always fails, but effectively sleeps for 10 ms
+		mutex.tryLock(20);							// always fails, but effectively sleeps for 20 ms
 	}
 	mutex.unlock();
 	DebugDialog::debug("ending thread");
@@ -309,7 +309,9 @@ int FApplication::startup(int & argc, char ** argv)
 		if(!settings.value("lastOpenSketch").isNull()) {
 			QString lastSketchPath = settings.value("lastOpenSketch").toString();
 			if(QFileInfo(lastSketchPath).exists()) {
+				settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
 				mainWindow->load(lastSketchPath);
+				settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
 			} else {
 				settings.remove("lastOpenSketch");
 			}
