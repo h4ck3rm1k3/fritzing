@@ -85,43 +85,66 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				QPixmap bgPixmap(pixmapName);
 				if (bgPixmap.isNull()) continue;
 
-				QPixmap * buttonPixmap = new QPixmap(maxWidth + bgPixmap.width() - 1, bgPixmap.height());
+				int cornerWidth = (bgPixmap.width() - 1) / 2;
+				int separatorOffset = cornerWidth;
+				int bgOffset = separatorOffset + 1;
+				int rightCornerOffset = bgOffset + 1;
+				int subtract = (alignment == Qt::AlignCenter) ? 0 : 2;
+				QPixmap * buttonPixmap = new QPixmap(maxWidth + bgPixmap.width() - subtract, bgPixmap.height());
 				buttonPixmap->fill(Qt::transparent);
 				QPainter painter(buttonPixmap);
 				QRect r = bgPixmap.rect();
-				r.setLeft(bgPixmap.width() / 2);
-				r.setWidth(1);
 				QRect s(r);
 				switch (alignment) {
 					case Qt::AlignLeft:
+						// draw left corner
 						r.setLeft(0);
-						r.setWidth(bgPixmap.width() / 2);
+						r.setWidth(cornerWidth);
 						painter.drawPixmap(r, bgPixmap, r);
+
+						// draw background
 						s = buttonPixmap->rect();
-						s.setLeft(r.width());
-						s.setWidth(buttonPixmap->width() - r.width());
-						r.setLeft(bgPixmap.width() / 2);
+						s.setLeft(cornerWidth);
+						s.setWidth(buttonPixmap->width() - cornerWidth);
+						r.setLeft(bgOffset);
 						r.setWidth(1);
 						painter.drawPixmap(s, bgPixmap, r);
 						break;
 					case Qt::AlignRight:
-						r.setLeft((bgPixmap.width() / 2) + 1);
-						r.setWidth(bgPixmap.width() / 2);					
-						s.setLeft(buttonPixmap->width() - r.width());
-						s.setWidth(r.width());
+						// draw right corner
+						r.setLeft(rightCornerOffset);
+						r.setWidth(cornerWidth);					
+						s.setLeft(buttonPixmap->width() - cornerWidth);
+						s.setWidth(cornerWidth);
 						painter.drawPixmap(s, bgPixmap, r);
 
+						// draw background
 						s = buttonPixmap->rect();
 						s.setLeft(0);
-						s.setWidth(buttonPixmap->width() - r.width());
-						r.setLeft(bgPixmap.width() / 2);
+						s.setWidth(buttonPixmap->width() - cornerWidth);
+						r.setLeft(bgOffset);
 						r.setWidth(1);
 						painter.drawPixmap(s, bgPixmap, r);
 						break;
 					case Qt::AlignCenter:
-						r.setLeft(bgPixmap.width() / 2);
+						// draw left separator
+						r.setLeft(separatorOffset);
 						r.setWidth(1);
-						painter.drawPixmap(buttonPixmap->rect(), bgPixmap, r);
+						s.setLeft(0);
+						s.setWidth(1);
+						painter.drawPixmap(s, bgPixmap, r);
+
+						// draw right separator
+						s.setLeft(buttonPixmap->width() - 1);
+						s.setWidth(1);
+						painter.drawPixmap(s, bgPixmap, r);
+
+						// draw background
+						s = buttonPixmap->rect();
+						s.adjust(1, 0, -1, 0);
+						r.setLeft(bgOffset);
+						r.setWidth(1);
+						painter.drawPixmap(s, bgPixmap, r);
 						break;
 					default:
 						break;
