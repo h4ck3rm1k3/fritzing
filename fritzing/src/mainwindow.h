@@ -196,6 +196,7 @@ protected slots:
 	void activateWindowAux();
 	void showTabWindow();
 	void restoreTabWindow();
+	void tabWindowRestored(bool);
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -464,6 +465,7 @@ protected:
 
 	class TabWindow * m_tabWindow;
 	bool m_reopenTabWindowAfterParts;
+	bool m_tabWindowRestored;
 
 	Helper *m_helper;
 

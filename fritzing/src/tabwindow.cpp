@@ -80,7 +80,7 @@ void TabWindow::mouseReleaseEvent(QMouseEvent *   event )
 	calcDocked();
 }
 
-void TabWindow::calcDocked() 
+void TabWindow::calcDocked()
 {
 	QRect rw = this->parentWidget()->frameGeometry();
 	QRect rt = this->frameGeometry();
@@ -119,7 +119,7 @@ void TabWindow::mouseMoveEvent(QMouseEvent *event)
 			m_movedEnough =(d.x() * d.x()) + (d.y() * d.y()) >= 25;
 		}
 	}
-} 
+}
 
 void TabWindow::toggleMe(bool b)
 {
@@ -168,9 +168,11 @@ void TabWindow::saveState() {
 }
 
 void TabWindow::restoreState() {
-	//DebugDialog::debug(QString("tab window restore state %1").arg(m_state));
+	DebugDialog::debug(QString("tab window restore state %1").arg(m_state));
 	if (m_state) {
 		this->setVisible(true);
+		DebugDialog::debug(QString("emit tabwindowrestored(true)"));
+		emit tabWindowRestored(true);
 	}
 }
 

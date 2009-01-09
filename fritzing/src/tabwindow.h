@@ -50,6 +50,9 @@ public:
 	void parentMoved();
 	void parentStoppedMoving();
 
+signals:
+	void tabWindowRestored(bool);
+
 protected:
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
@@ -70,7 +73,7 @@ protected:
 	class ViewSwitcher * m_viewSwitcher;
 	bool m_docked;
 	QPoint m_offsetFromParent;
-	
+
 protected slots:
 	void toggleMe(bool);
 	void viewSwitched(int);
