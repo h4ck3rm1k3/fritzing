@@ -38,7 +38,12 @@ QHash<QString, QPixmap *> ViewSwitcherButton::Pixmaps;
 QString ViewSwitcherButton::ResourcePathPattern = (":/resources/images/icons/segmentedSwitcher%1%2.png");
 QBitmap * ViewSwitcher::m_mask = NULL;
 
-static const int pointSize = 8;
+#ifdef Q_WS_MAC
+	static const int pointSize = 11;
+#else
+	static const int pointSize = 8;
+#endif
+
 static const int extraWidth = 8;
 
 ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment, int index, ViewSwitcher *parent) : QLabel(parent)
