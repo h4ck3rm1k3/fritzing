@@ -9,6 +9,13 @@
 				</iconView>
 			</views>
 		</instance>
+		<instance moduleIdRef="a4f38a10-dd92-11dd-a3e2-001f5b3a17a4" path="/parts/core/h-bridge.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
 		<instance moduleIdRef="1234ABDC24diode" path="/parts/core/basic-diode.fzp">
 			<views>
 				<iconView layer="icon">

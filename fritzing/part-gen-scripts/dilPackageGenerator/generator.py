@@ -377,6 +377,16 @@ def main(argv=None):
 Now your new part is created in %s. Next you will have to install these files into their
 locations in Fritzing. (See the documentation or whatever ... We have to come up with an
 easy install mechanism for this)
+And TEMPORALILY, WHILE WE DON'T YET SUPPORT OUR OWN FONTS IN FRITZING' SVGs, if you dare
+do the following:
+1. open the breadboard, icon & schematic svg files in a texteditor
+2. cut (cmd X) the x,y,width, height and viewbox properties from the svg tag
+3. open the files in illustrator
+4. convert the fonts into outlines
+5. save the files
+6. reload the files in your texteditor
+7. paste the x,y,width, height and viewbox properties back in (cmd V)
+8. sorry for this mess. :-(
 Then finally open the just created part in Fritzings parts editor and change the part
 identification: the correct taxonomy, the right properties and so on.
 Also make the names of the pins specific to your chip, so you can easilily identify them.""" % output
