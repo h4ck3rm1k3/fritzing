@@ -183,12 +183,12 @@ void TabWindow::setMask() {
 
 void TabWindow::enterEvent(QEvent *event) {
 	QWidget::enterEvent(event);
-	setWindowOpacity(activeOpacity);
+	setWindowOpacity(m_docked ? activeOpacity : 1.0);
 }
 
 void TabWindow::leaveEvent(QEvent *event) {
 	QWidget::leaveEvent(event);
-	setWindowOpacity(inactiveOpacity);
+	setWindowOpacity(m_docked ? inactiveOpacity : 1.0);
 }
 
 bool TabWindow::isDocked() {

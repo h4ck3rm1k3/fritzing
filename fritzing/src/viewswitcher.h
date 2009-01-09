@@ -40,7 +40,7 @@ class ViewSwitcherButton : public QLabel {
 	Q_OBJECT
 
 	public:
-		ViewSwitcherButton(const QString &view, const QString & text, Qt::Alignment, int index, ViewSwitcher *parent);
+		ViewSwitcherButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment, int index, ViewSwitcher *parent);
 		void setFocus(bool active);
 		void setActive(bool selected);
 		void setHover(bool hover);
@@ -90,7 +90,7 @@ class ViewSwitcher : public QFrame {
 		void enterEvent(QEvent *event);
 		void leaveEvent(QEvent *event);
 
-		ViewSwitcherButton *createButton(const QString &view, const QString &text, Qt::Alignment);
+		ViewSwitcherButton *createButton(const QString &view, const QString &text, int maxWidth, Qt::Alignment);
 		void createMask();
 
 	protected:

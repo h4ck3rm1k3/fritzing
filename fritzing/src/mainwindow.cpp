@@ -269,14 +269,17 @@ void MainWindow::preloadSlowParts() {
 	t.start();
 	DebugDialog::debug(QString("preload slow parts"));
 	ModelPart * modelPart = m_paletteModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
+	DebugDialog::debug(QString("preload retrieved model"));
 	LayerAttributes layerAttributes;
 	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
+	DebugDialog::debug(QString("preload set up image"));
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
 		connector->setUpConnector(renderer, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
+		DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorStuffID()));
 	}
 	DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
 }

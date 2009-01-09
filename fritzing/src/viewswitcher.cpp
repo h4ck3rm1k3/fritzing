@@ -38,7 +38,10 @@ QHash<QString, QPixmap *> ViewSwitcherButton::Pixmaps;
 QString ViewSwitcherButton::ResourcePathPattern = (":/resources/images/icons/segmentedSwitcher%1%2.png");
 QBitmap * ViewSwitcher::m_mask = NULL;
 
-ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, Qt::Alignment alignment, int index, ViewSwitcher *parent) : QLabel(parent)
+static const int pointSize = 8;
+static const int extraWidth = 8;
+
+ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment, int index, ViewSwitcher *parent) : QLabel(parent)
 {
 	m_focus = false;
 	m_active = false;
@@ -46,9 +49,11 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 	m_index = index;
 	m_resourcePath = ResourcePathPattern.arg(view);
 	m_parent = parent;
-	
-	QFontMetrics fm(this->font());
 
+	QFont font = this->font();
+	font.setPointSize(pointSize);
+	this->setFont(font);
+	
 	QList<QString> actives;
 	actives << "Active" << "Inactive";
 	QList<QString> focuses;
@@ -75,9 +80,7 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				QPixmap bgPixmap(pixmapName);
 				if (bgPixmap.isNull()) continue;
 
-				int textWidth = fm.width(text);
-
-				QPixmap * buttonPixmap = new QPixmap(textWidth + bgPixmap.width() - 1, bgPixmap.height());
+				QPixmap * buttonPixmap = new QPixmap(maxWidth + bgPixmap.width() - 1, bgPixmap.height());
 				buttonPixmap->fill(Qt::transparent);
 				QPainter painter(buttonPixmap);
 				QRect r = bgPixmap.rect();
@@ -201,14 +204,31 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	//m_closeButton = new SketchMainHelpCloseButton("PCB" ,this);
 	//m_layout->addWidget(m_closeButton);
 
-	m_buttons << createButton("Breadboard", tr("Breadboard"), Qt::AlignLeft);
-	m_buttons << createButton("Schematic", tr("Schematic"), Qt::AlignCenter);
-	m_buttons << createButton("PCB", tr("PCB"), Qt::AlignRight);
+	QFont font = this->font();
+	font.setPointSize(pointSize);
+	this->setFont(font);
+	
+	QFontMetrics fm(this->font());
+	int maxWidth = 0;
+	QString bv = tr("Breadboard");
+	QString sv = tr("Schematic");
+	QString pv = tr("PCB");
+	int w = fm.width(bv);
+	if (w > maxWidth) maxWidth = w;
+	w = fm.width(sv);
+	if (w > maxWidth) maxWidth = w;
+	w = fm.width(pv);
+	if (w > maxWidth) maxWidth = w;
+	maxWidth += extraWidth;
+
+	m_buttons << createButton("Breadboard", tr("Breadboard"), maxWidth, Qt::AlignLeft);
+	m_buttons << createButton("Schematic", tr("Schematic"), maxWidth, Qt::AlignCenter);
+	m_buttons << createButton("PCB", tr("PCB"), maxWidth, Qt::AlignRight);
 
 }
 
-ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text, Qt::Alignment alignment) {
-	ViewSwitcherButton *btn = new ViewSwitcherButton(view, text, alignment, m_buttons.size(), this);
+ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment) {
+	ViewSwitcherButton *btn = new ViewSwitcherButton(view, text, maxWidth, alignment, m_buttons.size(), this);
 	connect(btn, SIGNAL(clicked(ViewSwitcherButton*)), this, SLOT(updateState(ViewSwitcherButton*)));
 	m_layout->addWidget(btn);
 	return btn;
