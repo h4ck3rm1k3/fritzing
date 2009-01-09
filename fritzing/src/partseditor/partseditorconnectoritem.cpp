@@ -236,8 +236,6 @@ void PartsEditorConnectorItem::resize(const QPointF &mousePos) {
 }
 
 void PartsEditorConnectorItem::move(const QPointF &newPos) {
-	prepareGeometryChange();
-
 	QPointF currentParentPos = mapToParent(mapFromScene(newPos));
 	QPointF buttonDownParentPos = mapToParent(mapFromScene(m_mousePressedPos));
 	QPointF aux = currentParentPos - buttonDownParentPos;
