@@ -82,13 +82,19 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				}
 
 				QString pixmapName = ResourcePathPattern.arg("X").arg(active+focus+hover);
-				QPixmap bgPixmap(pixmapName);
-				if (bgPixmap.isNull()) continue;
+				QImage bgImage(pixmapName);
+				if (bgImage.isNull()) continue;			
 
-				int cornerWidth = (bgPixmap.width() - 1) / 2;
+				// !!!!!!!!!!!!!!!!!! disgusting hack alert !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				// for some reason, in the "active" images at the top left pixel of the right corner
+				// a white dot shows up.  Slamming that pixel to qrgba(0,0,0,0) seems to remove the white dot
+				int cornerWidth = (bgImage.width() - 1) / 2;
 				int separatorOffset = cornerWidth;
 				int bgOffset = separatorOffset + 1;
 				int rightCornerOffset = bgOffset + 1;
+				bgImage.setPixel(rightCornerOffset, 0, qRgba ( 0, 0, 0, 0));
+				QPixmap bgPixmap = QPixmap::fromImage(bgImage);
+
 				int subtract = (alignment == Qt::AlignCenter) ? 0 : 2;
 				QPixmap * buttonPixmap = new QPixmap(maxWidth + bgPixmap.width() - subtract, bgPixmap.height());
 				buttonPixmap->fill(Qt::transparent);
