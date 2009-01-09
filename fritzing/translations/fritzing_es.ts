@@ -613,27 +613,27 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.cpp" line="550"/>
+        <location filename="../src/mainwindow.cpp" line="553"/>
         <source>Rotate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="561"/>
+        <location filename="../src/mainwindow.cpp" line="564"/>
         <source>Flip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="570"/>
+        <location filename="../src/mainwindow.cpp" line="573"/>
         <source>Autoroute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="577"/>
+        <location filename="../src/mainwindow.cpp" line="580"/>
         <source>DIY Etching</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="778"/>
+        <location filename="../src/mainwindow.cpp" line="781"/>
         <source>%1%</source>
         <translation type="unfinished"></translation>
     </message>
@@ -643,22 +643,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="751"/>
+        <location filename="../src/mainwindow.cpp" line="754"/>
         <source>Save %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="753"/>
+        <location filename="../src/mainwindow.cpp" line="756"/>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="939"/>
+        <location filename="../src/mainwindow.cpp" line="942"/>
         <source>Specify a file name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="941"/>
+        <location filename="../src/mainwindow.cpp" line="944"/>
         <source>Fritzing (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -668,27 +668,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="988"/>
+        <location filename="../src/mainwindow.cpp" line="991"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1005"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
         <source>Unable to open shareable sketch %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1125"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>No connections to route</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1128"/>
+        <location filename="../src/mainwindow.cpp" line="1131"/>
         <source>Routing completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1131"/>
+        <location filename="../src/mainwindow.cpp" line="1134"/>
         <source>Routing completed using %n jumper(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -696,7 +696,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1134"/>
+        <location filename="../src/mainwindow.cpp" line="1137"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation type="unfinished">
             <numerusform></numerusform>
@@ -704,12 +704,12 @@
         </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1261"/>
+        <location filename="../src/mainwindow.cpp" line="1264"/>
         <source>%1 - [%2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1336"/>
+        <location filename="../src/mainwindow.cpp" line="1339"/>
         <source>View Switcher</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2013,22 +2013,22 @@
 <context>
     <name>PrefsDialog</name>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="143"/>
+        <location filename="../src/prefsdialog.cpp" line="145"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="144"/>
+        <location filename="../src/prefsdialog.cpp" line="146"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="161"/>
+        <location filename="../src/prefsdialog.cpp" line="163"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="191"/>
+        <location filename="../src/prefsdialog.cpp" line="193"/>
         <source>Coming soon...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2081,12 +2081,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1171"/>
+        <location filename="../src/mainwindow.cpp" line="1174"/>
         <source>Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1180"/>
+        <location filename="../src/mainwindow.cpp" line="1183"/>
         <source>Wire</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2235,23 +2235,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="136"/>
+        <location filename="../src/prefsdialog.cpp" line="138"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="200"/>
+        <location filename="../src/prefsdialog.cpp" line="202"/>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="208"/>
+        <location filename="../src/prefsdialog.cpp" line="210"/>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="210"/>
+        <location filename="../src/prefsdialog.cpp" line="212"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2402,12 +2402,12 @@ Fritzing still works, but you won&apos;t be able to change parts properties.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="166"/>
+        <location filename="../src/prefsdialog.cpp" line="168"/>
         <source>&lt;b&gt;Language&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="181"/>
+        <location filename="../src/prefsdialog.cpp" line="183"/>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2594,89 +2594,89 @@ Where&apos;re working to avoid this message, and only let you choose between pro
     <name>TranslatorListModel</name>
     <message>
         <location filename="../src/prefsdialog.cpp" line="43"/>
-        <source>English</source>
+        <source>English - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="44"/>
-        <source>French</source>
+        <source>French - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="45"/>
-        <source>German</source>
+        <source>German - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/prefsdialog.cpp" line="48"/>
-        <source>Spanish</source>
+        <location filename="../src/prefsdialog.cpp" line="46"/>
+        <source>Spanish - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="49"/>
-        <source>Dutch</source>
+        <source>Dutch - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="50"/>
-        <source>Russian</source>
+        <source>Russian - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="51"/>
-        <source>Italian</source>
+        <source>Italian - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="52"/>
-        <source>Chinese</source>
+        <source>Chinese Simp. - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="53"/>
-        <source>Japanese</source>
+        <source>Chinese Trad. - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="54"/>
-        <source>Hebrew</source>
+        <source>Japanese - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="55"/>
-        <source>Arabic</source>
+        <source>Hebrew - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="56"/>
-        <source>Portuguese</source>
+        <source>Arabic - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="57"/>
-        <source>Urdu</source>
+        <source>Portuguese - %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="58"/>
-        <source>Hindi</source>
+        <source>Hindi - %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ViewSwitcher</name>
     <message>
-        <location filename="../src/viewswitcher.cpp" line="156"/>
+        <location filename="../src/viewswitcher.cpp" line="229"/>
         <source>Breadboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewswitcher.cpp" line="157"/>
+        <location filename="../src/viewswitcher.cpp" line="230"/>
         <source>Schematic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/viewswitcher.cpp" line="158"/>
+        <location filename="../src/viewswitcher.cpp" line="231"/>
         <source>PCB</source>
         <translation type="unfinished"></translation>
     </message>
