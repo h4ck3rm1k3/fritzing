@@ -40,22 +40,24 @@ TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* 
 : QAbstractListModel(parent) 
 {
 	if (m_languages.count() == 0) {
-		m_languages.insert("english", tr("English"));
-		m_languages.insert("french", tr("French"));
-		m_languages.insert("german", tr("German"));
-		m_languages.insert("spanish", tr("Spanish"));
+                m_languages.insert("english", tr("English - %1").arg("English"));
+                m_languages.insert("french", tr("French - %1").arg("Français"));
+                m_languages.insert("german", tr("German - %1").arg("Deutsch"));
+                m_languages.insert("spanish", tr("Spanish - %1").arg("Español"));
 
 		// put in extras so if someone does a new translation, we won't have to recompile
-		m_languages.insert("dutch", tr("Dutch"));
-		m_languages.insert("russian", tr("Russian"));
-		m_languages.insert("italian", tr("Italian"));
-		m_languages.insert("chinese", tr("Chinese"));
-		m_languages.insert("japanese", tr("Japanese"));
-		m_languages.insert("hebrew", tr("Hebrew"));
-		m_languages.insert("arabic", tr("Arabic"));
-		m_languages.insert("portuguese", tr("Portuguese"));
-		m_languages.insert("urdu", tr("Urdu"));
-		m_languages.insert("hindi", tr("Hindi"));
+                m_languages.insert("dutch", tr("Dutch - %1").arg("Nederlands"));
+                m_languages.insert("russian", tr("Russian - %1").arg("???????"));
+                m_languages.insert("italian", tr("Italian - %1").arg("Italiano"));
+                m_languages.insert("chinese-simplified", tr("Chinese Simp. - %1").arg("?? (??)"));
+                m_languages.insert("chinese-traditional", tr("Chinese Trad. - %1").arg("???? (??)"));
+                m_languages.insert("japanese", tr("Japanese - %1").arg("???"));
+                m_languages.insert("hebrew", tr("Hebrew - %1").arg("?????"));
+                m_languages.insert("arabic", tr("Arabic - %1").arg("????"));
+                m_languages.insert("portuguese", tr("Portuguese - %1").arg("Português"));
+                m_languages.insert("hindi", tr("Hindi - %1").arg("?????? (????)"));
+                // More languages written in their own language can be found
+                // at http://www.mozilla.com/en-US/firefox/all.html
 	}
 
 	foreach (QFileInfo fileinfo, fileInfoList) {
