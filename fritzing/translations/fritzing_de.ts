@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -2600,72 +2601,72 @@ Wir arbeiten daran, diese Nachricht in Zukunft zu vermeiden.</translation>
     <message>
         <location filename="../src/prefsdialog.cpp" line="43"/>
         <source>English - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Englisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="44"/>
         <source>French - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Französisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="45"/>
         <source>German - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="46"/>
         <source>Spanish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="49"/>
         <source>Dutch - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Niederländisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="50"/>
         <source>Russian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Russisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="51"/>
         <source>Italian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Italienisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="52"/>
         <source>Chinese Simp. - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinesisch (vereinfacht) - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="53"/>
         <source>Chinese Trad. - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinesisch (traditionell) - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="54"/>
         <source>Japanese - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Japanisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="55"/>
         <source>Hebrew - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebräisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="56"/>
         <source>Arabic - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="57"/>
         <source>Portuguese - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugiesisch - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="58"/>
         <source>Hindi - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hindi - %1</translation>
     </message>
 </context>
 <context>
