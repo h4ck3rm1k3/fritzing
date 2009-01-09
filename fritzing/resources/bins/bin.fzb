@@ -128,6 +128,13 @@
 				</iconView>
 			</views>
 		</instance>
+		<instance moduleIdRef="f5e8f260-de38-11dd-b332-0022430987e8" path="/parts/core/atmega168.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
 		<!-- instance moduleIdRef="1099ABDE24_ST_relay" path="parts/core/basic-relay.fzp">
 			<views>
 				<iconView layer="icon">
