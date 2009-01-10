@@ -135,7 +135,7 @@ public:
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
 
-	void setItemTooltip(long id, const QString &newTooltip);
+	void partLabelChanged(ItemBase *, const QString &newTooltip);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
@@ -283,7 +283,7 @@ signals:
 	void itemDeletedSignal(long id);
 	void clearSelectionSignal();
 	void itemSelectedSignal(long id, bool state);
-	void tooltipAppliedToItem(long id, const QString &text);
+	void partLabelChangedSignal(long id, const QString &text);
 	void wireDisconnectedSignal(long fromID, QString fromConnectorID);
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
@@ -317,7 +317,7 @@ protected slots:
 	void sketchWidget_itemDeleted(long id);
 	void sketchWidget_clearSelection();
 	void sketchWidget_itemSelected(long id, bool state);
-	void sketchWidget_tooltipAppliedToItem(long id, const QString& text);
+	void partLabelChangedSlot(long id, const QString& text);
 	void scene_selectionChanged();
 	void wire_wireChanged(class Wire*, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
 	void wire_wireSplit(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
@@ -354,6 +354,7 @@ public slots:
 	void swap(long itemId, ModelPart *modelPart, bool doEmit=false);
 	void changeWireColor(const QString newColor);
  	void selectAllItems(bool state, bool doEmit);
+	void setInstanceTitle(long id, const QString & title);
 
 protected:
 	qreal m_scaleValue;

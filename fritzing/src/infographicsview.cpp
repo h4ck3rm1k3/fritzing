@@ -99,8 +99,8 @@ HtmlInfoView * InfoGraphicsView::infoView() {
 void InfoGraphicsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
-void InfoGraphicsView::setItemTooltip(long id, const QString &newTooltip) {
-	Q_UNUSED(id);
+void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &newTooltip) {
+	Q_UNUSED(item);
 	Q_UNUSED(newTooltip);
 }
 

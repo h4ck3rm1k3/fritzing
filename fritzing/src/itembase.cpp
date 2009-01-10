@@ -32,6 +32,7 @@ $Date$
 #include "infographicsview.h"
 #include "connector.h"
 #include "bus.h"
+#include "labels/partlabel.h"
 
 #include <QScrollBar>
 #include <QTimer>
@@ -68,11 +69,12 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 	return c1->zValue() > c2->zValue();
 	
 }
-
+///////////////////////////////////////////////////
 
 ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
+	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_topLevel = topLevel;
 	m_connectorHoverCount = 0;
@@ -606,10 +608,18 @@ QString ItemBase::instanceTitle() {
 }
 
 void ItemBase::setInstanceTitle(const QString &title) {
-	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
-	if (infographics != NULL) {
-		infographics->setItemTooltip(id(),title);
+	if (m_modelPart && m_modelPart->partInstanceStuff()) {
+		m_modelPart->partInstanceStuff()->setTitle(title);
 	}
+	if (m_partLabel) {
+		m_partLabel->setPlainText(title);
+	}
+	setInstanceTitleTooltip(title);
+
+//	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+//	if (infographics != NULL) {
+//		infographics->setItemTooltip(this, title);
+//	}
 }
 
 QString ItemBase::label() {
@@ -617,13 +627,6 @@ QString ItemBase::label() {
 		return m_modelPart->modelPartStuff()->label();
 	}
 	return ___emptyString___;
-}
-
-void ItemBase::setInstanceTitleAndTooltip(const QString &title) {
-	if (m_modelPart) {
-		m_modelPart->partInstanceStuff()->setTitle(title);
-	}
-	setInstanceTitleTooltip(title);
 }
 
 void ItemBase::updateTooltip() {
@@ -741,4 +744,17 @@ void ItemBase::busConnectorItems(class Bus * bus, QList<class ConnectorItem *> &
 
 void ItemBase::clearModelPart() {
 	m_modelPart = NULL;
+}
+
+void ItemBase::showPartLabel(bool showIt) {
+	if (m_partLabel) {
+		m_partLabel->showLabel(showIt);
+	}
+}
+
+void ItemBase::partLabelChanged(const QString &text) {
+	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infographics != NULL) {
+		infographics->partLabelChanged(this, text);
+	}
 }

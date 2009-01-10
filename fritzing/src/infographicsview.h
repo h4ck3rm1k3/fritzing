@@ -62,7 +62,7 @@ public:
 
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
-	virtual void setItemTooltip(long id, const QString &newTooltip);
+	virtual void partLabelChanged(ItemBase *, const QString &newTooltip);
 	virtual ModelPart *selected();
 
 protected:

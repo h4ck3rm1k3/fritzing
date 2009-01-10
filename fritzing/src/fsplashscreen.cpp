@@ -37,6 +37,9 @@ FSplashScreen::~FSplashScreen() {
 	foreach (MessageThing * messageThing, m_messages) {
 		delete messageThing;
 	}
+	foreach (PixmapThing * pixmapThing, m_pixmaps) {
+		delete pixmapThing;
+	}
 }
 
 
@@ -48,7 +51,7 @@ void FSplashScreen::showMessage(const QString &message, QRect rect, int alignmen
 	messageThing->rect = rect;
 	messageThing->message = message;
 	m_messages.append(messageThing);
-    repaint();
+	repaint();
 }
 
 
@@ -58,7 +61,7 @@ int FSplashScreen::showPixmap(const QPixmap & pixmap, QPoint point)
 	pixmapThing->rect = QRect(point, QPoint(-1,-1));
 	pixmapThing->pixmap = pixmap;
 	m_pixmaps.append(pixmapThing);
-    repaint();
+	repaint();
 
 	return m_pixmaps.count() - 1;
 }
@@ -108,3 +111,4 @@ void FSplashScreen::drawContents ( QPainter * painter )
 		}
 	}
 }
+

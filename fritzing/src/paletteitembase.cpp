@@ -391,9 +391,9 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 			}
 		}
 
-#ifndef QT_NO_DEBUG
-		DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
-#endif
+//#ifndef QT_NO_DEBUG
+		//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
+//#endif
 
 		if (gotOne) {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
@@ -410,16 +410,16 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 					}
 				}
 				else {
-#ifndef QT_NO_DEBUG
-					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
-#endif
+//#ifndef QT_NO_DEBUG
+//					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
+//#endif
 					// only one layer, just load it directly
 					if (renderer->load(filename)) {
 						gotOne = true;
 					}
-#ifndef QT_NO_DEBUG
-					DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
-#endif
+//#ifndef QT_NO_DEBUG
+//					DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
+//#endif
 				}
 				if (!gotOne) {
 					delete renderer;

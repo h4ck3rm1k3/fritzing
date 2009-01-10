@@ -24,15 +24,39 @@ $Date$
 
 ********************************************************************/
 
-#include "fapplication.h"
+#ifndef PARTLABEL_H
+#define PARTLABEL_H
 
-int main(int argc, char *argv[])
+#include <QGraphicsTextItem>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QWidget>
+
+class PartLabel : public QGraphicsTextItem
 {
-	FApplication app(argc, argv);
-	int result = app.startup(argc, argv);
-	if (result == 0) {
-		result = app.exec();
-	}
-	app.finish();
-    return result;
-}
+ Q_OBJECT
+
+public:
+	PartLabel(class ItemBase * owner, const QString & text, QGraphicsItem * parent = 0 );   // itembase is not the parent	
+
+	void showLabel(bool showIt);
+	QRectF boundingRect() const;
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	QPainterPath PartLabel::shape() const;
+	void setPlainText(const QString & text);
+	bool initialized();
+	void ownerMoved(QPointF newPos);
+
+protected slots:
+	void contentsChangedSlot();
+
+protected:
+	class ItemBase * m_owner;
+	bool m_initialized;
+	bool  m_doDrag;
+	QPointF m_initialPosition;
+	QPointF m_offset;
+};
+
+#endif

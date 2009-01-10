@@ -82,7 +82,6 @@ public:
 	virtual bool itemMoved() = 0;
 	void setSize(QSize size);
 	QSize size();
-	qint64 id();
 	class ModelPart * modelPart();
 	void setModelPart(class ModelPart *);
 	class ModelPartStuff * modelPartStuff();
@@ -145,11 +144,12 @@ public:
 	virtual void sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
-	virtual void setInstanceTitleAndTooltip(const QString& text);
-
+	virtual void setInstanceTitle(const QString &title);
 
 public slots:
-	void setInstanceTitle(const QString &title);
+	void showPartLabel(bool show);
+	void partLabelChanged(const QString &text);
+	qint64 id();
 
 signals:
 	void posChangedSignal();
@@ -191,6 +191,7 @@ protected:
 	bool m_canFlipHorizontal;
 	bool m_canFlipVertical;
 	bool m_zUninitialized;
+	class PartLabel * m_partLabel;
 
 protected:
 	static long nextID;

@@ -34,6 +34,7 @@ $Date$
 #include "rendererviewthing.h"
 #include "layerattributes.h"
 #include "connectorstuff.h"
+#include "labels/partlabel.h"
 
 #include <math.h>
 
@@ -48,6 +49,8 @@ $Date$
 PaletteItem::PaletteItem( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true)
 {
+	m_partLabel = new PartLabel(this, "", NULL);
+	m_partLabel->setVisible(false);
 }
 
 bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {
@@ -140,6 +143,12 @@ QVariant PaletteItem::itemChange(GraphicsItemChange change, const QVariant &valu
 	    	this->syncKinMoved(this->m_offset, value.toPointF());
 	   	}
    	}
+
+	if (m_partLabel && m_partLabel->initialized()) {
+		if (change == ItemPositionHasChanged) {
+	    	m_partLabel->ownerMoved(value.toPointF());
+	   	}	
+	}
 
     return PaletteItemBase::itemChange(change, value);
 }
@@ -251,10 +260,10 @@ void PaletteItem::syncKinMoved(QPointF offset, QPointF newPos) {
 	//}
 }
 
-void PaletteItem::setInstanceTitleAndTooltip(const QString& title) {
-	ItemBase::setInstanceTitleAndTooltip(title);
+void PaletteItem::setInstanceTitle(const QString& title) {
+	ItemBase::setInstanceTitle(title);
 	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
-		lkpi->setInstanceTitleAndTooltip(title);
+		lkpi->setInstanceTitle(title);
 	}
 }
 

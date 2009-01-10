@@ -251,40 +251,6 @@ void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->addViewLayers();
 }
 
-/*
-void MainWindow::connectSwitcherToView(ViewSwitcher *switcher, SketchWidget* view) {
-	view->addFixedToTopLeftItem(switcher);
-}
-*/
-
-void MainWindow::doOnce() {
-	calcPrinterScale();
-	preloadSlowParts();
-}
-
-void MainWindow::preloadSlowParts() {
-	// loads the part into a renderer and sets up its connectors
-	// so this doesn't have to happen the first time the part is dragged into the sketch
-
-	QTime t;
-	t.start();
-	DebugDialog::debug(QString("preload slow parts"));
-	ModelPart * modelPart = m_paletteModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
-	DebugDialog::debug(QString("preload retrieved model"));
-	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
-	DebugDialog::debug(QString("preload set up image"));
-	foreach (Connector * connector, modelPart->connectors().values()) {
-		if (connector == NULL) continue;
-
-		QRectF connectorRect;
-		QPointF terminalPoint;
-		connector->setUpConnector(renderer, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
-		DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorStuffID()));
-	}
-	DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
-}
-
 void MainWindow::calcPrinterScale() {
 
 	// note: I think that printerScale is probably just 90 dpi, since the calculation
@@ -428,8 +394,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_itemSelected(long, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(selectAllItemsSignal(bool, bool)),
 									 slotter, SLOT(selectAllItems(bool, bool)));
-	succeeded = succeeded && connect(signaller, SIGNAL(tooltipAppliedToItem(long, const QString&)),
-										 slotter, SLOT(sketchWidget_tooltipAppliedToItem(long, const QString&)));
+	succeeded = succeeded && connect(signaller, SIGNAL(partLabelChangedSignal(long, const QString&)),
+										 slotter, SLOT(partLabelChangedSlot(long, const QString&)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireDisconnectedSignal(long, QString)),
 									 slotter, SLOT(sketchWidget_wireDisconnected(long,  QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireConnectedSignal(long,  QString, long,  QString)),
@@ -854,7 +820,6 @@ void MainWindow::changeActivation(bool activate) {
 			}
 		}
 	}
-
 }
 
 void MainWindow::loadPart(QString newPartPath) {
@@ -1422,3 +1387,4 @@ void MainWindow::showAllFirstTimeHelp(bool show) {
 	}
 	m_showInViewHelpAct->setChecked(show);
 }
+

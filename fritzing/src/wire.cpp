@@ -41,6 +41,7 @@ $Date$
 #include "connectorstuff.h"
 #include "layerattributes.h"
 #include "rendererviewthing.h"
+#include "labels/partlabel.h"
 
 #include <stdlib.h>
 
@@ -66,6 +67,7 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, true, itemMenu)
 {
+	m_partLabel = new PartLabel(this, "", NULL);
 	m_canChainMultiple = false;
     setFlags(QGraphicsItem::ItemIsSelectable );
 	m_grabbedMouse = false;

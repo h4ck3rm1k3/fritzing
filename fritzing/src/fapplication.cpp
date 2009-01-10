@@ -33,6 +33,7 @@ $Date$
 #include "prefsdialog.h"
 #include "help/helper.h"
 #include "partseditor/partseditormainwindow.h"
+#include "layerattributes.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -57,27 +58,29 @@ QString FApplication::m_libPath;
 
 static int kBottomOfAlpha = 206;
 
+#ifdef Q_WS_WIN
+#ifndef QT_NO_DEBUG
+#define WIN_DEBUG
+#endif
+#endif
+
 //////////////////////////
 
 class DoOnceThread : public QThread
-	{
-	public:
-		DoOnceThread(MainWindow *);
+{
+public:
+	DoOnceThread();
 		
-		void run();
-		
-	protected:
-		MainWindow * m_mainWindow;
-	};
+	void run();
+};
 
 
-DoOnceThread::DoOnceThread(MainWindow * mainWindow) {
-	m_mainWindow = mainWindow;
+DoOnceThread::DoOnceThread() {
 }
 
 void DoOnceThread::run()
 {
-	m_mainWindow->doOnce();
+	static_cast<FApplication *>(qApp)->preloadSlowParts();
 }
 
 //////////////////////////
@@ -200,9 +203,11 @@ int FApplication::startup(int & argc, char ** argv)
 {
 	int progressIndex;
     QPixmap pixmap(":/resources/images/splash_2010.png");
-    FSplashScreen splash(pixmap);	
+	FSplashScreen splash(pixmap);	
+	processEvents();								// seems to need this (sometimes?) to display the splash screen
+	
 	initSplash(splash, progressIndex, pixmap);
-	QApplication::processEvents();			// seems to need this (sometimes?) to display the splash screen
+	processEvents();								
 	
 	QCoreApplication::setOrganizationName("Fritzing");
 	QCoreApplication::setOrganizationDomain("fritzing.org");
@@ -213,6 +218,7 @@ int FApplication::startup(int & argc, char ** argv)
 	qRegisterMetaType<ViewGeometry>("ViewGeometry");
 	
 	MainWindow::initExportConstants();
+	MainWindow::calcPrinterScale();
 	Wire::initNames();
     ItemBase::initNames();
     ViewLayer::initNames();
@@ -223,8 +229,8 @@ int FApplication::startup(int & argc, char ** argv)
 	PartsEditorMainWindow::initText();
 	
 	splash.showProgress(progressIndex, 0.1);
-	
-	
+	processEvents();			
+
 #ifdef Q_WS_WIN
 	// associate .fz file with fritzing app on windows (xp only--vista is different)
 	// TODO: don't change settings if they're already set?
@@ -257,6 +263,7 @@ int FApplication::startup(int & argc, char ** argv)
 	}
 	
 	splash.showProgress(progressIndex, 0.2);
+	processEvents();			
 	
 	QString binToOpen = settings.value("lastBin").toString();
 	binToOpen = binToOpen.isNull() || binToOpen.isEmpty() ? MainWindow::CoreBinLocation : binToOpen;
@@ -271,39 +278,46 @@ int FApplication::startup(int & argc, char ** argv)
 	}
 	
 	splash.showProgress(progressIndex, 0.4);
-	
-	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
-	MainWindow * mainWindow = new MainWindow(m_paletteBinModel, m_referenceModel);
-	
-	splash.showProgress(progressIndex, 0.7);
-	
-	// on my xp machine in debug mode,
-	// sometimes the activities in doOnce cause the whole machine to peak at 100% cpu for 30 seconds or more
-	// so at least the whole machine doesn't lock up anymore with doOnce in its own thread.
-	
+	processEvents();			
+				
 	DebugDialog::debug("starting thread");
 	QMutex mutex;
 	mutex.lock();
-	DoOnceThread doOnceThread(mainWindow);
+	DoOnceThread doOnceThread;
 	doOnceThread.start();
 	while (!doOnceThread.isFinished()) {
-		QApplication::processEvents();
-		mutex.tryLock(20);							// always fails, but effectively sleeps for 20 ms
+		processEvents();
+		mutex.tryLock(10);							// always fails, but effectively sleeps for 10 ms
 	}
 	mutex.unlock();
+
+	splash.showProgress(progressIndex, 0.7);
+
 	DebugDialog::debug("ending thread");
+
+	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
+	MainWindow * mainWindow = new MainWindow(m_paletteBinModel, m_referenceModel);
 	
+#ifndef WIN_DEBUG
+	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
+	// thought it might be the splashscreen calling QApplication::flush() but eliminating that didn't remove the deadlock
 	splash.showProgress(progressIndex, 0.9);
-	
+	processEvents();
+#endif
+
 	int loaded = 0;
 	for(int i=1; i < argc; i++) {
 		loadOne(mainWindow, argv[i], loaded++);
 	}
 
+	DebugDialog::debug("after argc");
+
 	foreach (QString filename, m_filesToLoad) {
 		loadOne(mainWindow, filename, loaded++);
 	}	
-	
+
+	DebugDialog::debug("after m_files");
+
 	if (loaded == 0) 
 	{
 		if(!settings.value("lastOpenSketch").isNull()) {
@@ -317,39 +331,46 @@ int FApplication::startup(int & argc, char ** argv)
 			}
 		}
 	}
+
+	DebugDialog::debug("after last open sketch");
 	
 	m_started = true;
-	
+
+#ifndef WIN_DEBUG
+	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
 	splash.showProgress(progressIndex, 0.99);
-	
-	
+	processEvents();
+#endif
+
 	mainWindow->show();
 	
 	/*
 	 QDate now = QDate::currentDate();
 	 QDate over = QDate(2009, 1, 7);
 	 if (now < over) {
-	 QString path = getApplicationSubFolderPath("examples") + "/Fritzmas/treeduino.fz";
-	 QFileInfo tree(path);
-	 if (tree.exists()) {
-	 QApplication::processEvents();
-	 MainWindow * treeduino = new MainWindow(paletteBinModel, referenceModel);
-	 treeduino->load(path, false);
-	 treeduino->show();
-	 }
+		 QString path = getApplicationSubFolderPath("examples") + "/Fritzmas/treeduino.fz";
+		 QFileInfo tree(path);
+		 if (tree.exists()) {
+			 MainWindow * treeduino = new MainWindow(paletteBinModel, referenceModel);
+			 treeduino->load(path, false);
+			 treeduino->show();
+		}
 	 }
 	 */
 	
 	splash.finish(mainWindow);
+
+	return 0;
+}
 	
-    int result = exec();
-	
+void FApplication::finish() 
+{
     delete m_paletteBinModel;
     delete m_referenceModel;
 	
-    settings.setValue("version",currVersion);
-	
-	return result;
+	QString currVersion = Version::versionString();
+	QSettings settings("Fritzing","Fritzing");
+    settings.setValue("version", currVersion);
 }
 
 void FApplication::loadNew(QString path) {
@@ -421,3 +442,25 @@ void FApplication::initSplash(FSplashScreen & splash, int & progressIndex, QPixm
     splash.show();
 }
 
+void FApplication::preloadSlowParts() {
+	// loads the part into a renderer and sets up its connectors
+	// so this doesn't have to happen the first time the part is dragged into the sketch
+
+	//QTime t;
+	//t.start();
+	DebugDialog::debug(QString("preload slow parts"));
+	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
+	LayerAttributes layerAttributes;
+	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
+	DebugDialog::debug(QString("preload set up image"));
+	foreach (Connector * connector, modelPart->connectors().values()) {
+		if (connector == NULL) continue;
+
+		QRectF connectorRect;
+		QPointF terminalPoint;
+		connector->setUpConnector(renderer, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
+		DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorStuffID()));
+	}
+	//DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
+	DebugDialog::debug(QString("preload slow parts done") );
+}

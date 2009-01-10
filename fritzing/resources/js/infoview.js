@@ -9,7 +9,7 @@ function fieldEnter(field,evt,idfld) {
 		//remove glow
 		noLight(elem);
 		elem.innerHTML = field.value
-		currentItem.setInstanceTitle(field.value);
+		sketch.setInstanceTitle(currentItem.id(), field.value);
 		changing = false;
 		return false;
 	} else {
@@ -21,7 +21,7 @@ function fieldBlur(field,idfld) {
 	if (field.value!="") {
 		elem = document.getElementById( idfld );
 		elem.innerHTML = field.value
-		currentItem.setInstanceTitle(field.value);
+		sketch.setInstanceTitle(currentItem.id(), field.value);
 		changing = false;
 		return false;
 	}
@@ -95,6 +95,10 @@ function editBox(current) {
 	current.firstChild.focus();
 }
 
+function showPartLabel(current, showIt) {
+    currentItem.showPartLabel(showIt);
+}
+
 //get width of text element
 function widthEl(span){
 	if (document.layers){
@@ -136,10 +140,12 @@ function doSwap(family,name,currValue) {
 		refModel.recordProperty(propName, currProps[propName]);
 	}
 	var moduleID = refModel.retrieveModuleIdWithRecordedProps(family);
-	swapper.swapSelected(moduleID);
+	//swapper.swapSelected(moduleID);
+	sketch.swapSelected(moduleID);
 }
 
 function setWireColor(wireTitle, wireId, newColor) {
-	wireManager.changeWireColor(newColor);
+	//wireManager.changeWireColor(newColor);
+	sketch.changeWireColor(newColor);
 	oldColor = newColor
 }

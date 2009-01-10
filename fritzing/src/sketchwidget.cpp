@@ -162,6 +162,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 }
 
 void SketchWidget::ensureFixedItemsPositions() {
+	DebugDialog::debug("ensure fixed");
 	ensureFixedToBottomLeftItems();
 	ensureFixedToCenterItems();
 	ensureFixedToTopLeftItems();
@@ -1647,13 +1648,12 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	if(pitem) m_lastPaletteItemSelected = pitem;
 }
 
-void SketchWidget::sketchWidget_tooltipAppliedToItem(long id, const QString& text) {
+void SketchWidget::partLabelChangedSlot(long id, const QString& text) {
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		pitem->setInstanceTitleAndTooltip(text);
+		pitem->setInstanceTitle(text);
 	}
 }
-
 
 void SketchWidget::group() {
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
@@ -2998,11 +2998,13 @@ void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, Connect
 	}
 }
 
-void SketchWidget::setItemTooltip(long id, const QString &newTooltip) {
-	ItemBase * pitem = findItem(id);
+void SketchWidget::partLabelChanged(ItemBase * pitem, const QString &newTooltip) {
 	if (pitem != NULL) {
-		pitem->setInstanceTitleAndTooltip(newTooltip);
-		emit tooltipAppliedToItem(id, newTooltip);
+		emit partLabelChangedSignal(pitem->id(), newTooltip);
+	}
+	if (currentlyInfoviewed(pitem))  {
+		// TODO: just change the affected item
+		InfoGraphicsView::viewItemInfo(pitem);
 	}
 }
 
@@ -3686,4 +3688,12 @@ bool SketchWidget::doRatsnestOnCopy()
 
 const QString & SketchWidget::viewName() {
 	return m_viewName;
+}
+
+void SketchWidget::setInstanceTitle(long itemID, const QString & title) {
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase != NULL) {
+		itemBase->setInstanceTitle(title);
+		emit partLabelChangedSignal(itemID, title);
+	}
 }

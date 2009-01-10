@@ -57,7 +57,7 @@ public:
 	void setTransforms();
 	void syncKinMoved(QPointF offset, QPointF loc);
 
-	void setInstanceTitleAndTooltip(const QString&);
+	void setInstanceTitle(const QString&);
 	void updateTooltip();
 
 	bool swap(PaletteItem* other, const LayerHash &layerHash);

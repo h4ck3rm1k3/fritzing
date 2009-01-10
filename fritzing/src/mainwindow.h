@@ -73,7 +73,6 @@ public:
     MainWindow(QFile & fileToLoad);
     void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	bool loadWhich(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
-	void doOnce();
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
 	QSizeGrip *sizeGrip();
@@ -82,6 +81,7 @@ public:
 
 public:
 	static void initExportConstants();
+	static void calcPrinterScale();
 
 signals:
 	void alienPartsDismissed();
@@ -222,8 +222,6 @@ protected:
 	void printAux(QPrinter &printer, QString message, bool removeBackground=true);
 	void exportAux(QString fileName, QImage::Format format);
 	void notYetImplemented(QString action);
-	void calcPrinterScale();
-	void preloadSlowParts();
 	void setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox = NULL);
 	void setCurrentFile(const QString &fileName, bool addToRecent=true);
 	bool eventFilter(QObject *obj, QEvent *event);

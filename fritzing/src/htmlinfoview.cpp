@@ -71,7 +71,7 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 	//m_includes = "\t<link rel'stylesheet' type='text/css' href='/resources/styles/infoview.css' />\n";
 	//m_includes+= "\t<script src=':/resources/js/infoview.js' type='text/javascript'></script>\n";
 
-	setContent("<html></html>");
+	//setContent("<html></html>");
 	m_currentItem = NULL;
 	m_currentSwappingEnabled = false;
 	m_refModel = refModel;
@@ -392,6 +392,13 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap3)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 		delete pixmap3;
 	}
+
+	// TODO:  put this somewhere more reasonable
+	if(!title.isNull() && !title.isEmpty()) {
+		s += QString("<input type='checkbox' id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label");
+	}
+
+
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartStuff()->title())
 											   .arg("&nbsp;"+modelPart->modelPartStuff()->version());
@@ -504,11 +511,14 @@ void HtmlInfoView::registerCurrentAgain() {
 bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 	if(item) {
 		m_currentItem = item;
+		/*
 		if(m_currentItem->itemType() != ModelPart::Wire) {
 			registerJsObjects("swapper");
 		} else {
 			registerJsObjects("wireManager");
 		}
+		*/
+		registerJsObjects("sketch");
 	} else {
 		m_currentItem = NULL;
 	}
