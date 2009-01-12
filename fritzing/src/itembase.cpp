@@ -746,9 +746,9 @@ void ItemBase::clearModelPart() {
 	m_modelPart = NULL;
 }
 
-void ItemBase::showPartLabel(bool showIt) {
+void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer) {
 	if (m_partLabel) {
-		m_partLabel->showLabel(showIt);
+		m_partLabel->showLabel(showIt, viewLayer);
 	}
 }
 
@@ -757,4 +757,10 @@ void ItemBase::partLabelChanged(const QString &text) {
 	if (infographics != NULL) {
 		infographics->partLabelChanged(this, text);
 	}
+}
+
+bool ItemBase::isPartLabelVisible() {
+	if (m_partLabel == NULL) return false;
+	if (!m_partLabel->initialized()) return false;
+	return m_partLabel->isVisible();
 }

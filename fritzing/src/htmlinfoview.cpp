@@ -98,7 +98,7 @@ void HtmlInfoView::registerRefModel() {
 void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
 	m_currentSwappingEnabled = swappingEnabled;
 	QString s = "";
-	s += appendItemStuff(modelPart, 0, swappingEnabled, "");
+	s += appendItemStuff(modelPart, 0, swappingEnabled, "", false);
 	setContent(s);
 }
 
@@ -231,7 +231,7 @@ QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnab
 	QString title; QString instanceTitle; QString defaultTitle;
 	prepareTitleStuff(base, title, instanceTitle, defaultTitle);
 
-	QString retval = appendItemStuff(base->modelPart(), id, swappingEnabled, title);
+	QString retval = appendItemStuff(base->modelPart(), id, swappingEnabled, title, base->isPartLabelVisible());
 	return retval;
 }
 
@@ -269,6 +269,12 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	if(pixmap != NULL) {
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 	}
+
+	// TODO:  put this somewhere more reasonable
+	if(!title.isNull() && !title.isEmpty()) {
+		s += QString("<input type='checkbox' %1 id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label").arg(wire->isPartLabelVisible() ? "checked='true'" : "");
+	}
+
 
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
 											   .arg(modelPart->modelPartStuff()->version());
@@ -355,7 +361,7 @@ int HtmlInfoView::getNextTitle(QList<QGraphicsItem*> items, const QString &title
 	return max;
 }
 
-QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, const QString title) {
+QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, const QString title, bool labelIsVisible) {
 	if (modelPart == NULL) return "missing modelpart";
 	if (modelPart->modelPartStuff() == NULL) return "missing modelpart stuff";
 
@@ -395,7 +401,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 
 	// TODO:  put this somewhere more reasonable
 	if(!title.isNull() && !title.isEmpty()) {
-		s += QString("<input type='checkbox' id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label");
+		s += QString("<input type='checkbox' %1 id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label").arg(labelIsVisible ? "checked='true'" : "");
 	}
 
 

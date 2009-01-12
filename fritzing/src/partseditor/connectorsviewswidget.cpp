@@ -34,9 +34,9 @@ ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchM
 	createViewImageWidget(m_schemView, symbols->m_schemView, sketchModel, undoStack, info, ItemBase::SchematicView, ViewLayer::Schematic);
 	createViewImageWidget(m_pcbView, symbols->m_pcbView, sketchModel, undoStack, info, ItemBase::PCBView, ViewLayer::Copper0);
 
-	m_breadView->setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler);
-	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler);
-	m_pcbView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler);
+	m_breadView->setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel);
+	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel);
+	m_pcbView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SilkscreenLabel);
 
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(m_breadView,1,0);

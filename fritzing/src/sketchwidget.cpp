@@ -61,6 +61,7 @@ $Date$
 #include "fgraphicsscene.h"
 #include "mainwindow.h"
 #include "version.h"
+#include "labels/partlabel.h"
 
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -1225,6 +1226,9 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	if (item == NULL) {
 		return;
 	}
+	if (dynamic_cast<PartLabel *>(item)) {
+		return;
+	}
 
 	QSet<Wire *> wires;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems ()) {
@@ -1996,15 +2000,17 @@ void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible) {
 	viewLayer->setVisible(visible);
 
 	// TODO: replace scene()->items()
-	const QList<QGraphicsItem *> items = scene()->items();
-	for (int i = 0; i < items.size(); i++) {
+	foreach (QGraphicsItem * item, scene()->items()) {
 		// want all items, not just topLevel
-		ItemBase * itemBase = ItemBase::extractItemBase(items[i]);
-		if (itemBase == NULL) continue;
-
-		if (itemBase->viewLayerID() == viewLayer->viewLayerID()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase && (itemBase->viewLayerID() == viewLayer->viewLayerID())) {
 			itemBase->setHidden(!visible);
 			DebugDialog::debug(QString("setting visible %1").arg(viewLayer->visible()) );
+		}
+
+		PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
+		if (partLabel && (partLabel->viewLayerID() == viewLayer->viewLayerID())) {
+			partLabel->setHidden(!visible);
 		}
 	}
 }
@@ -2248,6 +2254,10 @@ ViewLayer::ViewLayerID SketchWidget::getPartViewLayerID() {
 
 ViewLayer::ViewLayerID SketchWidget::getConnectorViewLayerID() {
 	return m_connectorViewLayerID;
+}
+
+ViewLayer::ViewLayerID SketchWidget::getLabelViewLayerID() {
+	return m_labelViewLayerID;
 }
 
 
@@ -2643,11 +2653,12 @@ ItemBase::ViewIdentifier SketchWidget::viewIdentifier() {
 }
 
 
-void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler) {
+void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label) {
 	m_partViewLayerID = part;
 	m_wireViewLayerID = wire;
 	m_connectorViewLayerID = connector;
 	m_rulerViewLayerID = ruler;
+	m_labelViewLayerID = label;
 }
 
 void SketchWidget::dragIsDoneSlot(ItemDrag * itemDrag) {
@@ -3153,30 +3164,30 @@ void SketchWidget::resizeEvent(QResizeEvent * event) {
 }
 
 void SketchWidget::addBreadboardViewLayers() {
-	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler);
+	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel);
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard
-		<< ViewLayer::BreadboardWire << ViewLayer::BreadboardRuler;
+		<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel << ViewLayer::BreadboardRuler;
 
 	addViewLayersAux(layers);
 }
 
 void SketchWidget::addSchematicViewLayers() {
-	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler);
+	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicRuler;
+	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicLabel << ViewLayer::SchematicRuler;
 
 	addViewLayersAux(layers);
 }
 
 void SketchWidget::addPcbViewLayers() {
-	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler);
+	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel);
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::Board << ViewLayer::Ratsnest << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Keepout
-		<< ViewLayer::Vias << ViewLayer::Soldermask << ViewLayer::Silkscreen << ViewLayer::Outline
+		<< ViewLayer::Vias << ViewLayer::Soldermask << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel << ViewLayer::Outline
 		<< ViewLayer::Jumperwires << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);
@@ -3697,3 +3708,13 @@ void SketchWidget::setInstanceTitle(long itemID, const QString & title) {
 		emit partLabelChangedSignal(itemID, title);
 	}
 }
+
+
+void SketchWidget::showPartLabel(long itemID, bool showIt) {
+
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase != NULL) {
+		itemBase->showPartLabel(showIt, m_viewLayers.value(getLabelViewLayerID()));
+	}
+}
+

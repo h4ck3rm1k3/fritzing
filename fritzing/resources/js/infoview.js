@@ -96,7 +96,7 @@ function editBox(current) {
 }
 
 function showPartLabel(current, showIt) {
-    currentItem.showPartLabel(showIt);
+    sketch.showPartLabel(currentItem.id(), showIt);
 }
 
 //get width of text element

@@ -32,6 +32,8 @@ $Date$
 #include <QStyleOptionGraphicsItem>
 #include <QWidget>
 
+#include "../viewlayer.h"
+
 class PartLabel : public QGraphicsTextItem
 {
  Q_OBJECT
@@ -39,7 +41,7 @@ class PartLabel : public QGraphicsTextItem
 public:
 	PartLabel(class ItemBase * owner, const QString & text, QGraphicsItem * parent = 0 );   // itembase is not the parent	
 
-	void showLabel(bool showIt);
+	void showLabel(bool showIt, ViewLayer *);
 	QRectF boundingRect() const;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -47,6 +49,12 @@ public:
 	void setPlainText(const QString & text);
 	bool initialized();
 	void ownerMoved(QPointF newPos);
+	void setHidden(bool hide);
+	bool hidden();
+	ViewLayer::ViewLayerID viewLayerID();
+
+protected:
+	void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
 
 protected slots:
 	void contentsChangedSlot();
@@ -54,9 +62,12 @@ protected slots:
 protected:
 	class ItemBase * m_owner;
 	bool m_initialized;
-	bool  m_doDrag;
+	bool m_doDrag;
+	bool m_preventDrag;
 	QPointF m_initialPosition;
 	QPointF m_offset;
+	ViewLayer::ViewLayerID m_viewLayerID;
+	bool m_hidden;
 };
 
 #endif

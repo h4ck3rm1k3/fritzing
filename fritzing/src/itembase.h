@@ -145,9 +145,10 @@ public:
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
 	virtual void setInstanceTitle(const QString &title);
+	bool isPartLabelVisible();
 
 public slots:
-	void showPartLabel(bool show);
+	void showPartLabel(bool show, ViewLayer *);
 	void partLabelChanged(const QString &text);
 	qint64 id();
 

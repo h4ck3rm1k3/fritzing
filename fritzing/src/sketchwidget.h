@@ -123,7 +123,7 @@ public:
 
  	qreal currentZoom();
 	ItemBase::ViewIdentifier viewIdentifier();
-	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler);
+	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
 	void stickyScoop(ItemBase * stickyOne, QUndoCommand * parentCommand);
 	void checkNewSticky(ItemBase * itemBase);
@@ -205,6 +205,7 @@ protected:
 	ViewLayer::ViewLayerID getPartViewLayerID();
 	ViewLayer::ViewLayerID getRulerViewLayerID();
 	ViewLayer::ViewLayerID getConnectorViewLayerID();
+	ViewLayer::ViewLayerID getLabelViewLayerID();
 	void dragMoveHighlightConnector(QPoint eventPos);
 
 	void addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerID);
@@ -355,6 +356,7 @@ public slots:
 	void changeWireColor(const QString newColor);
  	void selectAllItems(bool state, bool doEmit);
 	void setInstanceTitle(long id, const QString & title);
+	void showPartLabel(long id, bool showIt);
 
 protected:
 	qreal m_scaleValue;
@@ -381,6 +383,7 @@ protected:
 	ViewLayer::ViewLayerID m_partViewLayerID;
 	ViewLayer::ViewLayerID m_rulerViewLayerID;
 	ViewLayer::ViewLayerID m_connectorViewLayerID;
+	ViewLayer::ViewLayerID m_labelViewLayerID;
 	QList<QGraphicsItem *> m_temporaries;
 	bool m_chainDrag;
 	QPointF m_mousePressScenePos;
