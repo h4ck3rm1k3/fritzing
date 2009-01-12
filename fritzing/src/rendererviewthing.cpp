@@ -86,13 +86,13 @@ QPixmap * FSvgRenderer::getPixmap(const QString & moduleID, ViewLayer::ViewLayer
 	// TODO: cache pixmap by size?
 
 	QPixmap *pixmap = NULL;
-	QSvgRenderer * renderer = getByModuleID(moduleID, viewLayerId);
+	FSvgRenderer * renderer = getByModuleID(moduleID, viewLayerId);
 	if (renderer) {
 		pixmap = new QPixmap(size);
 		pixmap->fill(Qt::transparent);
 		QPainter painter(pixmap);
 		// preserve aspect ratio
-		QSize def = renderer->defaultSize();
+		QSizeF def = renderer->defaultSizeF();
 		qreal newW = size.width();
 		qreal newH = newW * def.height() / def.width();
 		if (newH > size.height()) {

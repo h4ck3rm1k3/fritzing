@@ -327,7 +327,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 	this->setZValue(this->z());
 	this->setSharedRenderer(renderer);
 
-	m_size = renderer->defaultSize();
+	m_size = renderer->defaultSizeF();
 
 	m_svg = true;
 

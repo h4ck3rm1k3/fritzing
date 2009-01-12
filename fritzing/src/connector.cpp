@@ -246,7 +246,6 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 			connectorViewThing->setVisibleInView(viewIdentifier, viewLayerID, false);
 						return false;
 		}
-		QSize oldDefaultSize = renderer->defaultSize();
 		QSizeF defaultSizeF = renderer->defaultSizeF();
 		if ((bounds.width()) == defaultSizeF.width() && (bounds.height()) == defaultSizeF.height()) {
 			connectorViewThing->setVisibleInView(viewIdentifier, viewLayerID, false);

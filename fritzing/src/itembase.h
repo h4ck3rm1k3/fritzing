@@ -80,8 +80,7 @@ public:
 	virtual void saveGeometry() = 0;
 	ViewGeometry & getViewGeometry();
 	virtual bool itemMoved() = 0;
-	void setSize(QSize size);
-	QSize size();
+	QSizeF size();
 	class ModelPart * modelPart();
 	void setModelPart(class ModelPart *);
 	class ModelPartStuff * modelPartStuff();
@@ -177,7 +176,7 @@ protected:
 	void setDefaultTooltip();
 
 protected:
- 	QSize m_size;
+ 	QSizeF m_size;
 	qint64 m_id;
 	ViewGeometry m_viewGeometry;
 	class ModelPart* m_modelPart;

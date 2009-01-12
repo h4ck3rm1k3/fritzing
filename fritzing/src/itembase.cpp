@@ -176,13 +176,8 @@ qint64 ItemBase::getNextID(qint64 index) {
 	return temp;
 }
 
-
-QSize ItemBase::size() {
+QSizeF ItemBase::size() {
 	return m_size;
-}
-
-void ItemBase::setSize(QSize size) {
-	m_size = size;
 }
 
 qint64 ItemBase::id() {
