@@ -2,11 +2,11 @@
 <module fritzingVersion="0.1.1255" moduleId="1234DBDC00" >
  <version>1.1</version>
  <author>Stefan Hermann</author>
- <title>npn-Transistor</title>
+ <title>NPN-Transistor</title>
  <label>Q</label>
  <date>2008-10-10</date>
  <tags>
-  <tag>npn</tag>
+  <tag>NPN</tag>
   <tag>transistor</tag>
   <tag>signal transistor</tag>
   <tag>aplifier</tag>
@@ -15,9 +15,9 @@
  <properties>
   <property name="package" >TO92</property>
   <property name="family" >Bipolar Transistor</property>
-  <property name="doping" >npn</property>
+  <property name="doping" >NPN</property>
  </properties>
- <description>A standard npn-transistor</description>
+ <description>A standard NPN-transistor</description>
  <views>
   <iconView>
    <layers image="icon/basic_transistor_npnicon.svg" >
@@ -52,7 +52,7 @@
      <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
     </schematicView>
     <pcbView>
-     <p svgId="connector0pad" layer="copper0" />
+     <p svgId="connector0pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
@@ -66,7 +66,7 @@
      <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
     </schematicView>
     <pcbView>
-     <p svgId="connector1pad" layer="copper0" />
+     <p svgId="connector1pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
@@ -80,7 +80,7 @@
      <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
     </schematicView>
     <pcbView>
-     <p svgId="connector2pad" layer="copper0" />
+     <p svgId="connector2pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
