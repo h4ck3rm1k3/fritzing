@@ -65,6 +65,7 @@ public:
 
 protected slots:
 	void jsRegister();
+	void setBlockVisibility(const QString &blockId, bool value);
 
 protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
@@ -80,6 +81,9 @@ protected:
 	QString propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic);
 	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	QString wireColorsSelect(Wire *wire);
+	QString blockHeader(const QString &title, const QString &blockId);
+	QString blockVisibility(const QString &blockId);
+	QString blockContainer(const QString &blockId);
 
 	void registerJsObjects(const QString &parentName);
 	void registerCurrentAgain();
@@ -96,6 +100,12 @@ protected:
 	int m_maxPropCount;
 
 	QWebView *m_webView;
+	QHash<QString /**/, bool> m_blocksVisibility;
+
+protected:
+	static QString PropsBlockId;
+	static QString TagsBlockId;
+	static QString ConnsBlockId;
 };
 
 #endif

@@ -42,6 +42,9 @@ $Date$
 #define HTML_EOF "</body>\n</html>"
 #define PART_INSTANCE_DEFAULT_TITLE "Part"
 
+QString HtmlInfoView::PropsBlockId = "props_id";
+QString HtmlInfoView::TagsBlockId = "tags_id";
+QString HtmlInfoView::ConnsBlockId = "conns_id";
 
 HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) {
 	QVBoxLayout *lo = new QVBoxLayout(this);
@@ -81,12 +84,22 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 	registerRefModel();
 
 	m_maxPropCount = 0;
+
+	m_blocksVisibility[PropsBlockId] = true;
+	m_blocksVisibility[TagsBlockId] = true;
+	m_blocksVisibility[ConnsBlockId] = true;
 }
 
 void HtmlInfoView::jsRegister() {
 	registerCurrentAgain();
 	registerRefModel();
+	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
+		"infoView", this
+	);
+}
 
+void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
+	m_blocksVisibility[blockId] = value;
 }
 
 void HtmlInfoView::registerRefModel() {
@@ -146,12 +159,14 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnab
 	if (connectorStuff == NULL) return;
 
 	QString s = appendStuff(item->attachedTo(), swappingEnabled);
-	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Connections"));
+	s += "<div class='block'>";
+	s += blockHeader(tr("Connections"),ConnsBlockId);
+	s += blockContainer(ConnsBlockId);
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("conn.")).arg(tr("connected to %n item(s)", "", item->connectionsCount()));
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("name")).arg(connectorStuff->name());
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("type")).arg(Connector::connectorNameFromType(connector->connectorType()));
-	s += 		 "</table>";
+	s += 		 "</table></div>\n";
+	s += "</div>";
 
 	setContent(s);
 
@@ -280,8 +295,9 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 											   .arg(modelPart->modelPartStuff()->version());
 	s += 		"</div>\n";
 
-	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Properties"));
+	s += "<div class='block'>";
+	s += blockHeader(tr("Properties"),PropsBlockId);
+	s += blockContainer(PropsBlockId);
 #ifndef QT_NO_DEBUG
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
 #else
@@ -291,13 +307,16 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("family").arg(properties["family"]);
 	QString select = wireColorsSelect(wire);
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("color").arg(select);
-	s += 		 "</table>\n";
+	s += 		 "</table></div>\n";
+	s += "</div>";
 
 	if(!modelPart->modelPartStuff()->tags().isEmpty()) {
-		s += 		"<table>\n";
-		s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Tags")) +
-			 QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
-		s += 		"</table>\n";
+		s += "<div class='block'>";
+		s += blockHeader(tr("Tags"),TagsBlockId);
+		s += blockContainer(TagsBlockId);
+		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
+		s += 		"</table></div>\n";
+		s += "</div>";
 	}
 
 	//delete pixmap;
@@ -410,8 +429,9 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 											   .arg("&nbsp;"+modelPart->modelPartStuff()->version());
 	s += 		"</div>\n";
 
-	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Properties"));
+	s += "<div class='block'>";
+	s += blockHeader(tr("Properties"),PropsBlockId);
+	s += blockContainer(PropsBlockId);
 #ifndef QT_NO_DEBUG
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("id").arg(id);
 #else
@@ -432,15 +452,18 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	for(int i = 0; i < rowsLeft; i++) {
 		s += "<tr style='height: 35px; '><td style='border-bottom: 0px;' colspan='2'>&nbsp;</td></tr>\n";
 	}
-	s += 		 "</table>\n";
+	s += 		 "</table></div>\n";
+	s += "</div>";
 
 //	s += QString("<tr><td colspan='2'>%1</td></tr>").
 //			arg(QString(modelPart->modelPartStuff()->path()).remove(QDir::currentPath()));
 	if(!modelPart->modelPartStuff()->tags().isEmpty()) {
-		s += 		"<table>\n";
-		s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Tags")) +
-			 QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
-		s += 		"</table>\n";
+		s += "<div class='block'>";
+		s += blockHeader(tr("Tags"),TagsBlockId);
+		s += blockContainer(TagsBlockId);
+		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
+		s += 		"</table></div>\n";
+		s += "</div>";
 	}
 
 	return s;
@@ -565,4 +588,22 @@ void HtmlInfoView::reloadContent() {
 	if(m_currentItem) {
 		viewItemInfo(m_currentItem, m_currentSwappingEnabled);
 	}
+}
+
+QString HtmlInfoView::blockHeader(const QString &title, const QString &blockId) {
+	return QString(
+			"<table><tr><td class='subhead'>%1</td><td class='subhead' align='right'>"
+			"<a class='hideShowControl' href='#' onclick='toggleVisibility(this,\"%2\")'>%3</a></td></tr></table>\n"
+		).arg(title).arg(blockId).arg(m_blocksVisibility[blockId] ? "[-]":"[+]");
+}
+
+QString HtmlInfoView::blockVisibility(const QString &blockId) {
+	if(!m_blocksVisibility[blockId]) {
+		return " style='display: none' ";
+	}
+	return "";
+}
+
+QString HtmlInfoView::blockContainer(const QString &blockId) {
+	return QString("<div id='%1' %2><table>\n").arg(blockId).arg(blockVisibility(blockId));
 }
