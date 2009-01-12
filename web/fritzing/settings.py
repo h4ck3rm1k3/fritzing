@@ -14,8 +14,8 @@ SERVE_MEDIA = DEBUG
 
 ADMINS = (
     ('Jannis Leidel', 'jannis@leidel.info'),
+    ('Andre Knoerig', 'andre.knoerig@gmail.com'),
 )
-
 MANAGERS = ADMINS
 
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
