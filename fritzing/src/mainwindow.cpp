@@ -62,7 +62,6 @@ $Date$
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
-qreal MainWindow::m_printerScale = 1;
 int MainWindow::CascadeFactorX = 21;
 int MainWindow::CascadeFactorY = 19;
 
@@ -251,33 +250,7 @@ void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->addViewLayers();
 }
 
-void MainWindow::calcPrinterScale() {
-
-	// note: I think that printerScale is probably just 90 dpi, since the calculation
-	// result is 89.8407 across all three platforms
-
-	m_printerScale = 90.0;
-	return;
-
 /*
-	m_printerScale = 1;
-	ViewGeometry viewGeometry;
-	ItemBase * itemBase = m_breadboardGraphicsView->addItem(ItemBase::rulerModuleIDName, BaseCommand::SingleView, viewGeometry, ItemBase::getNextID());
-	if (itemBase == NULL) return;
-
-	QSize size = itemBase->size();
-	QString filename = dynamic_cast<PaletteItemBase *>(itemBase)->filename();
-	m_breadboardGraphicsView->deleteItem(itemBase, true, false);
-
-	qreal width = getSvgWidthInInches(filename);
-	if (width <= 0) return;
-
-	m_printerScale = size.width() / width;
-	DebugDialog::debug(QString("printerscale %1").arg(m_printerScale));
-*/
-
-}
-
 qreal MainWindow::getSvgWidthInInches(const QString & filename)
 {
 	qreal result = 0;
@@ -328,7 +301,7 @@ qreal MainWindow::getSvgWidthInInches(QFile & file)
 
 	return result;
 }
-
+*/
 
 void MainWindow::connectPairs() {
 	connectPair(m_breadboardGraphicsView, m_schematicGraphicsView);
@@ -1387,4 +1360,3 @@ void MainWindow::showAllFirstTimeHelp(bool show) {
 	}
 	m_showInViewHelpAct->setChecked(show);
 }
-

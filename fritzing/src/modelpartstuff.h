@@ -28,7 +28,6 @@ $Date$
 #define MODELPARTSTUFF_H
 
 #include <QDomDocument>
-#include <QSvgRenderer>
 #include <QDomElement>
 #include <QList>
 #include <QStringList>

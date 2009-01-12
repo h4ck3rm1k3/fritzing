@@ -34,6 +34,7 @@ $Date$
 #include "help/helper.h"
 #include "partseditor/partseditormainwindow.h"
 #include "layerattributes.h"
+#include "rendererviewthing.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -218,7 +219,7 @@ int FApplication::startup(int & argc, char ** argv)
 	qRegisterMetaType<ViewGeometry>("ViewGeometry");
 	
 	MainWindow::initExportConstants();
-	MainWindow::calcPrinterScale();
+	FSvgRenderer::calcPrinterScale();
 	Wire::initNames();
     ItemBase::initNames();
     ViewLayer::initNames();

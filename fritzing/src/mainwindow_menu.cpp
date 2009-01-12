@@ -41,6 +41,7 @@ $Date$
 #include "eventeater.h"
 #include "virtualwire.h"
 #include "tabwindow.h"
+#include "rendererviewthing.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -132,7 +133,7 @@ void MainWindow::exportDiy(QAction * action) {
 	printer.setOutputFileName(fileName);
 	QPainter painter;
 	if (painter.begin(&printer)) {
-		QString svg = m_pcbGraphicsView->renderToSVG(m_printerScale);
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());   // m_printerScale
 
 #ifndef QT_NO_DEBUG
 		QFile file(fileName + ".svg");
@@ -143,8 +144,8 @@ void MainWindow::exportDiy(QAction * action) {
 #endif
 		QSvgRenderer svgRenderer;
 		svgRenderer.load(svg.toLatin1());
-		qreal trueWidth = m_pcbGraphicsView->scene()->width() / m_printerScale;
-		qreal trueHeight = m_pcbGraphicsView->scene()->height() / m_printerScale;
+		qreal trueWidth = m_pcbGraphicsView->scene()->width() / FSvgRenderer::printerScale();
+		qreal trueHeight = m_pcbGraphicsView->scene()->height() / FSvgRenderer::printerScale();
 		int res = printer.resolution();
 		QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
 		svgRenderer.render(&painter, bounds);
@@ -314,7 +315,7 @@ void MainWindow::printAux(QPrinter &printer, QString /* message */, bool removeB
 		// scale the output
 		int res = printer.resolution();
 
-		qreal scale2 = res / m_printerScale;
+		qreal scale2 = res / FSvgRenderer::printerScale();
 
 		DebugDialog::debug(QString("p.w:%1 p.h:%2 pager.w:%3 pager.h:%4 paperr.w:%5 paperr.h:%6 source.w:%7 source.h:%8")
 			.arg(printer.width()).arg(printer.height()).arg(printer.pageRect().width())
@@ -1730,7 +1731,7 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 }
 
 void MainWindow::exportToGerber() {
-	QString svg = m_pcbGraphicsView->renderToSVG(m_printerScale);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;

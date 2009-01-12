@@ -81,7 +81,6 @@ public:
 
 public:
 	static void initExportConstants();
-	static void calcPrinterScale();
 
 signals:
 	void alienPartsDismissed();
@@ -275,8 +274,8 @@ protected:
 	void resizeEvent(QResizeEvent * event);
 
 protected:
-	static qreal getSvgWidthInInches(const QString & filename);
-	static qreal getSvgWidthInInches(QFile & file);
+	//static qreal getSvgWidthInInches(const QString & filename);
+	//static qreal getSvgWidthInInches(QFile & file);
 	static void removeActionsStartingAt(QMenu *menu, int start=0);
 
 
@@ -470,7 +469,6 @@ protected:
 protected:
 	static const QString UntitledSketchName;
 	static int UntitledSketchIndex;
-	static qreal m_printerScale;
 	static int CascadeFactorX;
 	static int CascadeFactorY;
 };

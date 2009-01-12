@@ -189,7 +189,7 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 	if(m_item) {
 		QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
 		QRectF viewBox = renderer->viewBoxF();
-		QSize defaultSize = renderer->defaultSize();
+		QSizeF defaultSize = renderer->defaultSize();
 		QDomDocument *svgDom = m_item->svgDom();
 
 		if(!m_drawnConns.isEmpty()) {

@@ -246,8 +246,9 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 			connectorViewThing->setVisibleInView(viewIdentifier, viewLayerID, false);
 						return false;
 		}
-		QSize defaultSize = renderer->defaultSize();
-		if (((int) bounds.width()) == defaultSize.width() && ((int) bounds.height()) == defaultSize.height()) {
+		QSize oldDefaultSize = renderer->defaultSize();
+		QSizeF defaultSizeF = renderer->defaultSizeF();
+		if ((bounds.width()) == defaultSizeF.width() && (bounds.height()) == defaultSizeF.height()) {
 			connectorViewThing->setVisibleInView(viewIdentifier, viewLayerID, false);
 			return false;
 		}
@@ -261,10 +262,10 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 							   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
 							   .arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
 							   .arg(viewIdentifier)
-							   .arg(defaultSize.width()).arg(defaultSize.height())
+							   .arg(defaultSizeF.width()).arg(defaultSizeF.height())
 			);
 			*/
-			connectorRect.setRect(bounds.x() * defaultSize.width() / viewBox.width(), bounds.y() * defaultSize.height() / viewBox.height(), bounds.width() * defaultSize.width() / viewBox.width(), bounds.height() * defaultSize.height() / viewBox.height());
+			connectorRect.setRect(bounds.x() * defaultSizeF.width() / viewBox.width(), bounds.y() * defaultSizeF.height() / viewBox.height(), bounds.width() * defaultSizeF.width() / viewBox.width(), bounds.height() * defaultSizeF.height() / viewBox.height());
 		}
 		else {
 			connectorRect = matrix0.mapRect(bounds);
@@ -277,7 +278,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 	return true;
 }
 
-QPointF Connector::calcTerminalPoint(const QString & terminalId, QSvgRenderer * renderer, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID,
+QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * renderer, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID,
 									const QRectF & connectorRect, ConnectorViewThing * connectorViewThing, bool ignoreTerminalPoint,
 									const QRectF & viewBox)
 {
@@ -296,8 +297,8 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, QSvgRenderer * 
 	if (tBounds.isNull()) {
 		return terminalPoint;
 	}
-	QSize defaultSize = renderer->defaultSize();
-	if (((int) tBounds.width()) >= defaultSize.width() && ((int) tBounds.height()) >= defaultSize.height()) {
+	QSizeF defaultSizeF = renderer->defaultSizeF();
+	if (tBounds.width() >= defaultSizeF.width() && tBounds.height() >= defaultSizeF.height()) {
 		return terminalPoint;
 	}
 
@@ -311,7 +312,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, QSvgRenderer * 
 	QMatrix tMatrix = renderer->matrixForElement(terminalId);
 	if (tMatrix.isIdentity()) {
 		QPointF c = tBounds.center();
-		QPointF q(c.x() * defaultSize.width() / viewBox.width(), c.y() * defaultSize.height() / viewBox.height());
+		QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());
 		terminalPoint = q - connectorRect.topLeft();	
 		//QRectF terminalRect = tMatrix.mapRect(tBounds);
 		//QPointF tp = terminalRect.center() - connectorRect.topLeft();

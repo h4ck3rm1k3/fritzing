@@ -77,7 +77,7 @@ protected:
 	void writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID);
 	void writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString connId);
 	void writeTerminalIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString terminalId);
-	QPointF calcTerminalPoint(const QString & terminalId, QSvgRenderer * renderer, 
+	QPointF calcTerminalPoint(const QString & terminalId, class FSvgRenderer * renderer, 
 		ItemBase::ViewIdentifier, ViewLayer::ViewLayerID, 
 		const QRectF & connectorRect, class ConnectorViewThing *, bool ignoreTerminalPoint, const QRectF & viewBox);
 

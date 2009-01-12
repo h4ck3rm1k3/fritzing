@@ -29,6 +29,7 @@ $Date$
 
 #include <QHash>
 #include <QSvgRenderer>
+#include <QXmlStreamReader>
 
 #include "viewlayer.h"
 
@@ -42,16 +43,25 @@ public:
 	bool load(const QString & filename);
 	bool load ( const QByteArray & contents, const QString & filename );     // for SvgSplitter loads
 	const QString & filename();
+	QSizeF defaultSizeF();
 
 public:
 	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);
 	static FSvgRenderer * getByModuleID(const QString & moduleID, ViewLayer::ViewLayerID);
 	static FSvgRenderer * getByFilename(const QString & filename, ViewLayer::ViewLayerID);
 	static QPixmap * getPixmap(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID, QSize size);
+	static void calcPrinterScale();
+	static qreal printerScale();
+
+protected:
+	void parseForWidthAndHeight(QXmlStreamReader & xml);
 
 protected:
 	QString m_filename;
+	QSizeF m_defaultSizeF;
 
+protected:
+	static qreal m_printerScale;
 	static QHash<QString, RendererHash * > m_filenameRendererHash;
 	static QHash<QString, RendererHash * > m_moduleIDRendererHash;
 };

@@ -28,7 +28,6 @@ $Date$
 #define LAYERKINPALETTEITEM_H
 
 #include "paletteitembase.h"
-#include <QSvgRenderer>
 #include <QVariant>
 
 class LayerKinPaletteItem : public PaletteItemBase

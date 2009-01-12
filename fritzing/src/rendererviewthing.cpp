@@ -29,13 +29,23 @@ $Date$
 
 QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
 QHash<QString, RendererHash * > FSvgRenderer::m_filenameRendererHash;
-
+qreal FSvgRenderer::m_printerScale = 1;
 
 FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
 {
+	m_defaultSizeF = QSizeF(0,0);
 }
 
 bool FSvgRenderer::load ( const QString & filename ) {
+    QFile file(filename);
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+		return false;
+	}
+
+	QXmlStreamReader xml(&file);
+	parseForWidthAndHeight(xml);
+	file.close();
+
 	bool result = QSvgRenderer::load(filename);
 	if (result) {
 		m_filename = filename;
@@ -44,6 +54,9 @@ bool FSvgRenderer::load ( const QString & filename ) {
 }
 
 bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename) {
+	QXmlStreamReader xml(contents);
+	parseForWidthAndHeight(xml);
+
 	bool result = QSvgRenderer::load(contents);
 	if (result) {
 		m_filename = filename;
@@ -108,3 +121,66 @@ void FSvgRenderer::set(const QString & moduleID, ViewLayer::ViewLayerID viewLaye
 	rendererHash->insert(viewLayerID, renderer);
 }
 
+void FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml) 
+{
+    xml.setNamespaceProcessing(false);
+	
+	while (!xml.atEnd()) {
+        switch (xml.readNext()) {
+        case QXmlStreamReader::StartElement:
+			if (xml.name().toString().compare("svg") == 0) {
+				QString ws = xml.attributes().value("width").toString();
+				QString hs = xml.attributes().value("height").toString();
+				bool ok;
+				qreal w = convertToInches(ws, &ok);
+				if (!ok) return;
+
+				qreal h = convertToInches(hs, &ok);
+				if (!ok) return;
+
+				m_defaultSizeF = QSizeF(w * m_printerScale, h * m_printerScale);
+
+			}
+			return;
+		}
+	}
+}
+
+QSizeF FSvgRenderer::defaultSizeF() {
+	if (m_defaultSizeF.width() == 0 && m_defaultSizeF.height() == 0) {
+		return defaultSize();
+	}
+
+	return m_defaultSizeF;
+}
+
+void FSvgRenderer::calcPrinterScale() {
+
+	// note: I think that printerScale is probably just 90 dpi, since the calculation
+	// result is 89.8407 across all three platforms
+
+	m_printerScale = 90.0;
+	return;
+
+/*
+	m_printerScale = 1;
+	ViewGeometry viewGeometry;
+	ItemBase * itemBase = m_breadboardGraphicsView->addItem(ItemBase::rulerModuleIDName, BaseCommand::SingleView, viewGeometry, ItemBase::getNextID());
+	if (itemBase == NULL) return;
+
+	QSize size = itemBase->size();
+	QString filename = dynamic_cast<PaletteItemBase *>(itemBase)->filename();
+	m_breadboardGraphicsView->deleteItem(itemBase, true, false);
+
+	qreal width = getSvgWidthInInches(filename);
+	if (width <= 0) return;
+
+	m_printerScale = size.width() / width;
+	DebugDialog::debug(QString("printerscale %1").arg(m_printerScale));
+*/
+
+}
+
+qreal FSvgRenderer::printerScale() {
+	return m_printerScale;
+}

@@ -166,6 +166,8 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 
 	QHash<QString, SvgFileSplitter *> svgHash;
 
+
+
 	foreach (QGraphicsItem * item, scene()->items()) {
 		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
 		if (paletteItem != NULL) {
@@ -224,6 +226,8 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 		else {
 			TraceWire * wire = dynamic_cast<TraceWire *>(item);
 			if (wire == NULL) continue;
+
+
 
 			QLineF line = wire->getPaintLine();
 			QPointF p1 = wire->pos() + line.p1();
