@@ -751,10 +751,10 @@ void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
 void MainWindow::changeActivation(bool activate) {
 	// tried using this->saveState() and this->restoreState() but couldn't get it to work
 
-	DebugDialog::debug(QString("change activation:%2 %1").arg(this->windowTitle()).arg(activate));
+	//DebugDialog::debug(QString("change activation:%2 %1").arg(this->windowTitle()).arg(activate));
 
 	QWidget * activeWindow = QApplication::activeWindow ();
-	DebugDialog::debug(QString("active == null? %1").arg(activeWindow==NULL));
+	//DebugDialog::debug(QString("active == null? %1").arg(activeWindow==NULL));
 
 	if (activeWindow == NULL ) {
 		m_tabWindowRestored = false;
@@ -765,7 +765,7 @@ void MainWindow::changeActivation(bool activate) {
 	if (activate) {
 		if (m_savedState == Saved) {
 			m_savedState = Restored;
-			DebugDialog::debug("restore state", this);
+			//DebugDialog::debug("restore state", this);
 			//restoreState(m_savedStateData, 0);
 			for (int i = 0; i < children().count(); i++) {
 				FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
@@ -775,7 +775,7 @@ void MainWindow::changeActivation(bool activate) {
 			}
 
 			if (m_tabWindow) {
-				DebugDialog::debug("restoring tabwindow");
+				//DebugDialog::debug("restoring tabwindow");
 				// on mac, if using dock to switch views between apps, restore doesn't work without a timer
 				QTimer::singleShot(30, this, SLOT(restoreTabWindow()));
 			}
@@ -783,13 +783,13 @@ void MainWindow::changeActivation(bool activate) {
 	}
 	else {
 		if ((activeWindow != NULL) && (activeWindow == this || activeWindow->parent() == this)) {
-			DebugDialog::debug("skipping save");
+			//DebugDialog::debug("skipping save");
 			return;
 		}
 
 #ifdef Q_WS_X11
 		if (activeWindow == NULL && m_tabWindowRestored) {
-			DebugDialog::debug("skipping save (tw restored)");
+			//DebugDialog::debug("skipping save (tw restored)");
 			m_tabWindowRestored = false;
 			return;
 		}
@@ -800,7 +800,7 @@ void MainWindow::changeActivation(bool activate) {
 			//m_savedStateData = saveState(0);
 			m_savedState = Saved;
 
-			DebugDialog::debug("save state");
+			//DebugDialog::debug("save state");
 			for (int i = 0; i < children().count(); i++) {
 				FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 				if (dock == NULL) continue;

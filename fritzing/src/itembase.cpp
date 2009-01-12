@@ -29,6 +29,7 @@ $Date$
 #include "debugdialog.h"
 #include "modelpart.h"
 #include "connectoritem.h"
+#include "connectorstuff.h"
 #include "infographicsview.h"
 #include "connector.h"
 #include "bus.h"
@@ -67,7 +68,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 	}
 
 	return c1->zValue() > c2->zValue();
-	
+
 }
 ///////////////////////////////////////////////////
 
@@ -143,9 +144,10 @@ void ItemBase::setConnectorTooltips() {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
 
-		QString tt = QString("%1<br />" + ITEMBASE_FONT_PREFIX + "%2" + ITEMBASE_FONT_SUFFIX)
-			.arg(toolTip())
-			.arg(connectorItem->connectorStuffName());
+		QString tt = QString("<b>%1</b> %2<br />" + ITEMBASE_FONT_PREFIX + "%3" + ITEMBASE_FONT_SUFFIX)
+			.arg(connectorItem->connector()->connectorStuff()->description())
+			.arg(connectorItem->connectorStuffName())
+			.arg(toolTip());
 
 		connectorItem->setBaseTooltip(tt);
 	}
