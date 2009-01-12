@@ -81,9 +81,11 @@ protected:
 	QString propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic);
 	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	QString wireColorsSelect(Wire *wire);
+
 	QString blockHeader(const QString &title, const QString &blockId);
 	QString blockVisibility(const QString &blockId);
 	QString blockContainer(const QString &blockId);
+	QString settingsBlockVisibilityName(const QString &blockId);
 
 	void registerJsObjects(const QString &parentName);
 	void registerCurrentAgain();

@@ -85,9 +85,10 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 
 	m_maxPropCount = 0;
 
-	m_blocksVisibility[PropsBlockId] = true;
-	m_blocksVisibility[TagsBlockId] = true;
-	m_blocksVisibility[ConnsBlockId] = true;
+	QSettings settings("Fritzing","Fritzing");
+	m_blocksVisibility[PropsBlockId] = settings.value(settingsBlockVisibilityName(PropsBlockId),true).toBool();
+	m_blocksVisibility[TagsBlockId] = settings.value(settingsBlockVisibilityName(TagsBlockId),true).toBool();
+	m_blocksVisibility[ConnsBlockId] = settings.value(settingsBlockVisibilityName(ConnsBlockId),true).toBool();
 }
 
 void HtmlInfoView::jsRegister() {
@@ -100,6 +101,12 @@ void HtmlInfoView::jsRegister() {
 
 void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
 	m_blocksVisibility[blockId] = value;
+	QSettings settings("Fritzing","Fritzing");
+	settings.setValue(settingsBlockVisibilityName(blockId),QVariant::fromValue(value));
+}
+
+QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
+	return "infoView/"+blockId+"Visibility";
 }
 
 void HtmlInfoView::registerRefModel() {
