@@ -38,6 +38,7 @@ ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 	m_visible = visible;
 	m_action = NULL;
 	m_nextZ = initialZ;
+	m_parentLayer = NULL;
 }
 
 void ViewLayer::initNames() {
@@ -152,3 +153,19 @@ const QString & ViewLayer::viewLayerXmlNameFromID(ViewLayerID viewLayerID) {
 
 	return sp->first;
 }
+
+ViewLayer * ViewLayer::parentLayer() {
+	return m_parentLayer;
+}
+
+void ViewLayer::setParentLayer(ViewLayer * parent) {
+	m_parentLayer = parent;
+	if (parent) {
+		parent->m_childLayers.append(this);
+	}
+}
+
+const QList<ViewLayer *> & ViewLayer::childLayers() {
+	return m_childLayers;
+}
+

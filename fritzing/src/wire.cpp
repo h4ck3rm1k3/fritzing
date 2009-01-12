@@ -427,7 +427,6 @@ void Wire::connectionChange(ConnectorItem * ) {
 			}
 		}
 	}
-	this->setFlag(QGraphicsItem::ItemIsMovable, movable);
 }
 
 void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
@@ -1061,3 +1060,10 @@ void Wire::collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wir
 	nextWire->collectDirectWires(nextWire->otherConnector(toConnectorItem), wires);
 }
 
+QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if (change == ItemSelectedChange) {
+		if (m_partLabel) m_partLabel->update();
+    }
+    return ItemBase::itemChange(change, value);
+}

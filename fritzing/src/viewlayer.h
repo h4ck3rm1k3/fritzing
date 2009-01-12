@@ -78,7 +78,11 @@ public:
 	qreal nextZ();
 	ViewLayerID viewLayerID();
 	qreal incrementZ(qreal);
+	ViewLayer * parentLayer();
+	void setParentLayer(ViewLayer *);
+	const QList<ViewLayer *> & childLayers();
 
+public:
 	static ViewLayerID viewLayerIDFromString(const QString &);
 	static ViewLayerID viewLayerIDFromXmlString(const QString &);
 	static const QString & viewLayerNameFromID(ViewLayerID);
@@ -91,6 +95,8 @@ protected:
 	ViewLayerID m_viewLayerID;
 	QAction* m_action;
 	qreal m_nextZ;
+	QList<ViewLayer *> m_childLayers;
+	ViewLayer * m_parentLayer;
 };
 
 

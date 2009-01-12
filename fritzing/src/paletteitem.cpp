@@ -147,7 +147,10 @@ QVariant PaletteItem::itemChange(GraphicsItemChange change, const QVariant &valu
 	if (m_partLabel && m_partLabel->initialized()) {
 		if (change == ItemPositionHasChanged) {
 	    	m_partLabel->ownerMoved(value.toPointF());
-	   	}	
+	   	}
+		else if (change == ItemSelectedChange) {
+			m_partLabel->update();
+		}
 	}
 
     return PaletteItemBase::itemChange(change, value);

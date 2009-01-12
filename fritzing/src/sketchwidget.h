@@ -272,6 +272,7 @@ protected:
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
 	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual const QColor & getLabelTextColor();
 
 
 protected:

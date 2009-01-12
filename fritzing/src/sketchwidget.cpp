@@ -63,6 +63,8 @@ $Date$
 #include "version.h"
 #include "labels/partlabel.h"
 
+static QColor labelTextColor = Qt::black;
+
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
@@ -126,7 +128,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     //item->setLine(300,300,500,500);
     //this->scene()->addItem(item);
     //item->setZValue(0.5);
-	//item->setFlags(QGraphicsItem::ItemIsSelectable  | QGraphicsItem::ItemIsMovable );
+	//item->setFlags(QGraphicsItem::ItemIsSelectable );
 	//item->setPen(pen);
    	//group->addToGroup(item);
     //
@@ -134,7 +136,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     //item->setLine(500,300,300,500);
     //this->scene()->addItem(item);
     //item->setZValue(10.5);
-	//item->setFlags(QGraphicsItem::ItemIsSelectable  | QGraphicsItem::ItemIsMovable );
+	//item->setFlags(QGraphicsItem::ItemIsSelectable );
 	//item->setPen(pen);
     //group->addToGroup(item);
 
@@ -557,9 +559,6 @@ void SketchWidget::addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerI
 	scene()->addItem(item);
  	item->setSelected(true);
  	item->setHidden(!layerIsVisible(viewLayerID));
-	if (!item->getVirtual()) {
-		item->setFlag(QGraphicsItem::ItemIsMovable, true);
-	}
 }
 
 ItemBase * SketchWidget::findItem(long id) {
@@ -1843,6 +1842,7 @@ void SketchWidget::updateLayerMenu(QMenu * layerMenu, QAction * showAllAction, Q
 	for (int i = 0; i < keys.count(); i++) {
 		ViewLayer * viewLayer = m_viewLayers.value(keys[i]);
     	if (viewLayer != NULL) {
+			if (viewLayer->parentLayer()) continue;
 			layerMenu->addAction(viewLayer->action());
 		}
 	}
@@ -1997,19 +1997,27 @@ void SketchWidget::toggleLayerVisibility(QAction * action) {
 }
 
 void SketchWidget::setLayerVisible(ViewLayer * viewLayer, bool visible) {
+
+	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	viewLayerIDs.append(viewLayer->viewLayerID());
+
 	viewLayer->setVisible(visible);
+	foreach (ViewLayer * childLayer, viewLayer->childLayers()) {
+		childLayer->setVisible(visible);
+		viewLayerIDs.append(childLayer->viewLayerID());
+	}
 
 	// TODO: replace scene()->items()
 	foreach (QGraphicsItem * item, scene()->items()) {
 		// want all items, not just topLevel
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
-		if (itemBase && (itemBase->viewLayerID() == viewLayer->viewLayerID())) {
+		if (itemBase && (viewLayerIDs.contains(itemBase->viewLayerID()))) {
 			itemBase->setHidden(!visible);
-			DebugDialog::debug(QString("setting visible %1").arg(viewLayer->visible()) );
+			//DebugDialog::debug(QString("setting visible %1").arg(viewLayer->visible()));
 		}
 
 		PartLabel * partLabel = dynamic_cast<PartLabel *>(item);
-		if (partLabel && (partLabel->viewLayerID() == viewLayer->viewLayerID())) {
+		if (partLabel && (viewLayerIDs.contains(partLabel->viewLayerID()))) {
 			partLabel->setHidden(!visible);
 		}
 	}
@@ -3191,6 +3199,12 @@ void SketchWidget::addPcbViewLayers() {
 		<< ViewLayer::Jumperwires << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);
+
+	ViewLayer * silkscreen = m_viewLayers.value(ViewLayer::Silkscreen);
+	ViewLayer * silkscreenLabel = m_viewLayers.value(ViewLayer::SilkscreenLabel);
+	if (silkscreen && silkscreenLabel) {
+		silkscreenLabel->setParentLayer(silkscreen);
+	}
 }
 
 
@@ -3714,7 +3728,10 @@ void SketchWidget::showPartLabel(long itemID, bool showIt) {
 
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase != NULL) {
-		itemBase->showPartLabel(showIt, m_viewLayers.value(getLabelViewLayerID()));
+		itemBase->showPartLabel(showIt, m_viewLayers.value(getLabelViewLayerID()), getLabelTextColor());
 	}
 }
 
+const QColor & SketchWidget::getLabelTextColor() {
+	return labelTextColor;
+}

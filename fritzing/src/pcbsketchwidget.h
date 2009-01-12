@@ -58,6 +58,7 @@ protected:
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	bool canChainWire(Wire *);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
+	const QColor & getLabelTextColor();
 
 protected:
 	int m_netCount;

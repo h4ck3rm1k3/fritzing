@@ -133,6 +133,14 @@ void MainWindow::exportDiy(QAction * action) {
 	QPainter painter;
 	if (painter.begin(&printer)) {
 		QString svg = m_pcbGraphicsView->renderToSVG(m_printerScale);
+
+#ifndef QT_NO_DEBUG
+		QFile file(fileName + ".svg");
+		file.open(QIODevice::WriteOnly);
+		QTextStream out(&file);
+		out << svg;
+		file.close();
+#endif
 		QSvgRenderer svgRenderer;
 		svgRenderer.load(svg.toLatin1());
 		qreal trueWidth = m_pcbGraphicsView->scene()->width() / m_printerScale;
@@ -143,16 +151,6 @@ void MainWindow::exportDiy(QAction * action) {
 		painter.end();
 		m_statusBar->showMessage(tr("Sketch exported"), 2000);
 	}
-
-
-/*
-	QFile file(fileName);
-    file.open(QIODevice::WriteOnly);
-
-    QTextStream out(&file);
-    out << svg;
-	file.close();
-*/
 
 
 /*

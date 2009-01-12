@@ -130,6 +130,7 @@ public:
 	bool canFlipVertical();
 	void setCanFlipVertical(bool);
 	virtual void clearModelPart();
+	void clearPartLabel();
 
 public:
 	virtual bool stickyEnabled(ItemBase * stickTo);
@@ -148,7 +149,7 @@ public:
 	bool isPartLabelVisible();
 
 public slots:
-	void showPartLabel(bool show, ViewLayer *);
+	void showPartLabel(bool show, ViewLayer *, const QColor & textColor);
 	void partLabelChanged(const QString &text);
 	qint64 id();
 

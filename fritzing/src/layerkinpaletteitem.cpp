@@ -33,7 +33,7 @@ LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * mo
 
 {
 	m_layerKinChief = chief;
-    setFlags(QGraphicsItem::ItemIsSelectable  | QGraphicsItem::ItemIsMovable );
+    setFlags(QGraphicsItem::ItemIsSelectable);
     m_ok = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, true);
     m_modelPart->removeViewItem(this);  // we don't need to save layerkin
 }

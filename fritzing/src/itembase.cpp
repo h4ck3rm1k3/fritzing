@@ -98,6 +98,11 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 }
 
 ItemBase::~ItemBase() {
+	if (m_partLabel) {
+		delete m_partLabel;
+		m_partLabel = NULL;
+	}
+
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (connectorItem == NULL) continue;
@@ -746,9 +751,9 @@ void ItemBase::clearModelPart() {
 	m_modelPart = NULL;
 }
 
-void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer) {
+void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer, const QColor & textColor) {
 	if (m_partLabel) {
-		m_partLabel->showLabel(showIt, viewLayer);
+		m_partLabel->showLabel(showIt, viewLayer, textColor);
 	}
 }
 
@@ -763,4 +768,9 @@ bool ItemBase::isPartLabelVisible() {
 	if (m_partLabel == NULL) return false;
 	if (!m_partLabel->initialized()) return false;
 	return m_partLabel->isVisible();
+}
+
+
+void ItemBase::clearPartLabel() {
+	m_partLabel = NULL;
 }

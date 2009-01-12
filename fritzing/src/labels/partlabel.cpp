@@ -32,32 +32,39 @@ $Date$
 #include <QTextDocument>
 #include <QTextFrameFormat>
 #include <QTextFrame>
+#include <QStyle>
 
 // TODO:
-//		selection: coordinate with part selection: it's a layerkin
-//		select a part, highlight its label; click a label, highlight its part
-//		viewinfo (& hover?) update when selected
+//		** selection: coordinate with part selection: it's a layerkin
+//		** select a part, highlight its label; click a label, highlight its part
+//		** viewinfo update when selected
+//		hover?
 //		show = autoselect?
-//		* viewinfo for wires
-//		* graphics (esp. drag area vs. edit area) 
+//		** viewinfo for wires
+//		** graphics (esp. drag area vs. edit area) 
 //		html info box needs to update when view switches
-//		multiple selection
-//		undo
-//		layers and z order
-//		hide and show layer
-//		tools (bold, italic, color, ...)
-//		* sync hide/show checkbox with visibility state
+//		multiple selection?
+//		undo delete
+//		undo select
+//		undo change text
+//		** layers and z order
+//		** hide and show layer
+//		tools (bold, italic, color, size)?
+//		** sync hide/show checkbox with visibility state
 //		export to svg for export diy
 //		save and load
-//		delete owner: remove label
+//		** text color needs to be separate in separate views
+//		** hide silkscreen should hide silkscreen label
+//		** delete owner: delete label
+//		rotate/flip (where is the control?)--heads up?
 
 PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * parent)
 	: QGraphicsTextItem(text, parent)
 {
 	m_owner = owner;
 	m_hidden = m_initialized = false;
-	setFlag(QGraphicsItem::ItemIsSelectable, false);
-	setFlag(QGraphicsItem::ItemIsMovable, false);
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
 	setTextInteractionFlags(Qt::TextEditorInteraction);
 	setVisible(false);
 	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()));
@@ -65,7 +72,13 @@ PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * par
 	setAcceptHoverEvents(true);
 }
 
-void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
+PartLabel::~PartLabel() {
+	if (m_owner) {
+		m_owner->clearPartLabel();
+	}
+}
+
+void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer, const QColor & textColor) {
 	if (showIt == this->isVisible()) return;
 
 	if (showIt && !m_initialized) {
@@ -78,6 +91,7 @@ void PartLabel::showLabel(bool showIt, ViewLayer * viewLayer) {
 		QPointF initial = m_owner->pos() + QPointF(br.width(), -QGraphicsTextItem::boundingRect().height());
 		this->setPos(initial);
 		m_offset = initial - m_owner->pos();
+		setDefaultTextColor(textColor);
 		m_initialized = true;
 	}
 
@@ -101,7 +115,10 @@ QPainterPath PartLabel::shape() const
 
 void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	m_doDrag = m_preventDrag = false;
+    scene()->clearSelection();
+    m_owner->setSelected(true);
+
+	m_doDrag = false;
 	QRectF br = QGraphicsTextItem::boundingRect();
 	QPointF p = event->pos();
 	if (!br.contains(p)) {
@@ -109,21 +126,6 @@ void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 		m_initialPosition = pos();
 		return;
 	}
-
-	// borrowed from QGraphicsItemPrivate::_q_mouseOnEdge
-    QPainterPath path;
-    path.addRect(boundingRect());
-
-    QPainterPath docPath;
-    const QTextFrameFormat format = document()->rootFrame()->frameFormat();
-    docPath.addRect(
-        boundingRect().adjusted(
-            format.leftMargin(),
-            format.topMargin(),
-            -format.rightMargin(),
-            -format.bottomMargin()));
-
-    m_preventDrag = path.subtracted(docPath).contains(event->pos());
 
 	QGraphicsTextItem::mousePressEvent(event);
 }
@@ -135,11 +137,6 @@ void PartLabel::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		QPointF buttonDownParentPos = mapToParent(mapFromScene(event->buttonDownScenePos(Qt::LeftButton)));
 		setPos(m_initialPosition + currentParentPos - buttonDownParentPos);
 		m_offset = this->pos() - m_owner->pos();
-		return;
-	}
-
-	if (m_preventDrag) {
-		// don't want the item to be dragged using QGraphicsTextItem::mouseMoveEvent
 		return;
 	}
 
@@ -171,15 +168,22 @@ void PartLabel::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 {
 	if (m_hidden) return;
 
-	painter->save();
-	QRectF r = boundingRect();
-	QPen pen = painter->pen();
-	pen.setColor(Qt::gray);
-	painter->drawRect(r);
-	r.setHeight(-r.top());
-	painter->fillRect(r, QBrush(Qt::gray));
-	painter->restore();
-	QGraphicsTextItem::paint(painter, option, widget);
+
+	if (m_owner->isSelected()) {
+		painter->save();
+		QRectF r = boundingRect();
+		QPen pen = painter->pen();
+		pen.setWidth(1);
+		pen.setColor(Qt::gray);
+		painter->drawRect(r);
+		r.setHeight(-r.top());
+		painter->fillRect(r, QBrush(Qt::gray));
+		painter->restore();
+	}
+
+	QStyleOptionGraphicsItem newOption(*option);
+	newOption.state &= ~(QStyle::State_Selected | QStyle::State_HasFocus);
+	QGraphicsTextItem::paint(painter, &newOption, widget);
 }
 
 void PartLabel::setHidden(bool hide) {

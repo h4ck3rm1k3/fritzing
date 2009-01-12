@@ -33,6 +33,8 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "waitpushundostack.h"
 #include "autorouter1.h"
 
+static QColor labelTextColor = Qt::white;
+
 PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
@@ -480,5 +482,9 @@ void PCBSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCoun
 	m_connectorsLeftToRoute = connectorsLeftToRoute;
 	m_jumperCount = jumperCount;
 	SketchWidget::forwardRoutingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+}
+
+const QColor & PCBSketchWidget::getLabelTextColor() {
+	return labelTextColor;
 }
 

@@ -40,8 +40,9 @@ class PartLabel : public QGraphicsTextItem
 
 public:
 	PartLabel(class ItemBase * owner, const QString & text, QGraphicsItem * parent = 0 );   // itembase is not the parent
+	~PartLabel();
 
-	void showLabel(bool showIt, ViewLayer *);
+	void showLabel(bool showIt, ViewLayer *, const QColor & textColor);
 	QRectF boundingRect() const;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -63,7 +64,6 @@ protected:
 	class ItemBase * m_owner;
 	bool m_initialized;
 	bool m_doDrag;
-	bool m_preventDrag;
 	QPointF m_initialPosition;
 	QPointF m_offset;
 	ViewLayer::ViewLayerID m_viewLayerID;

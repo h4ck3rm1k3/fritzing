@@ -65,6 +65,8 @@ protected:
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 	bool parsePath(const QString & data, const char * slot, PathUserData &);
 	void setStrokeOrFill(QDomElement & element);
+	void fixStyleAttribute(QDomElement & element);
+	void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);

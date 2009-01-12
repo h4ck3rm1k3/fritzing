@@ -30,8 +30,6 @@ $Date$
 VirtualWire::VirtualWire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
-	setFlag(QGraphicsItem::ItemIsMovable, false);
-
 	if (!getRatsnest()) {
 		setAcceptedMouseButtons(Qt::NoButton);
 		setFlag(QGraphicsItem::ItemIsSelectable, false);
