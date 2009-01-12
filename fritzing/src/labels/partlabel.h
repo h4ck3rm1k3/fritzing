@@ -39,13 +39,13 @@ class PartLabel : public QGraphicsTextItem
  Q_OBJECT
 
 public:
-	PartLabel(class ItemBase * owner, const QString & text, QGraphicsItem * parent = 0 );   // itembase is not the parent	
+	PartLabel(class ItemBase * owner, const QString & text, QGraphicsItem * parent = 0 );   // itembase is not the parent
 
 	void showLabel(bool showIt, ViewLayer *);
 	QRectF boundingRect() const;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	QPainterPath PartLabel::shape() const;
+	QPainterPath shape() const;
 	void setPlainText(const QString & text);
 	bool initialized();
 	void ownerMoved(QPointF newPos);
