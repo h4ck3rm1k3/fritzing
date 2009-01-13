@@ -2,7 +2,7 @@
 <module fritzingVersion="0.1.1255" moduleId="1238DBDC00-voltage-reg_lm317" >
  <version>1.1</version>
  <author>Jenny</author>
- <title>Voltage Regulator - Variable(lm317)</title>
+ <title>Voltage Regulator - Variable</title>
  <label>U</label>
  <date>2009-1-13</date>
  <tags>
