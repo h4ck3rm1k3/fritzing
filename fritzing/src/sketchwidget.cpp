@@ -165,7 +165,6 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 }
 
 void SketchWidget::ensureFixedItemsPositions() {
-	DebugDialog::debug("ensure fixed");
 	ensureFixedToBottomLeftItems();
 	ensureFixedToCenterItems();
 	ensureFixedToTopLeftItems();
