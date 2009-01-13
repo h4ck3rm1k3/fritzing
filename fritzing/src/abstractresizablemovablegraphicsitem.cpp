@@ -30,8 +30,11 @@ $Date: 2009-01-09 12:26:13 +0100 (Fri, 09 Jan 2009) $
 #include "abstractresizablemovablegraphicsitem.h"
 
 AbstractResizableMovableGraphicsItem::AbstractResizableMovableGraphicsItem() {
-	m_moving = false;
+	m_resizable = false;
 	m_resizing = false;
+
+	m_movable = false;
+	m_moving = false;
 }
 
 void AbstractResizableMovableGraphicsItem::setResizable(bool resizable) {
@@ -45,10 +48,10 @@ void AbstractResizableMovableGraphicsItem::setMovable(bool movable) {
 void AbstractResizableMovableGraphicsItem::resize(const QPointF &mousePos) {
 	prepareForChange();
 
-	qreal oldX1 = rect().x();
-	qreal oldY1 = rect().y();
-	qreal oldX2 = oldX1+rect().width();
-	qreal oldY2 = oldY1+rect().height();
+	qreal oldX1 = rectAux().x();
+	qreal oldY1 = rectAux().y();
+	qreal oldX2 = oldX1+rectAux().width();
+	qreal oldY2 = oldY1+rectAux().height();
 	qreal newX = mousePos.x();
 	qreal newY = mousePos.y();
 
@@ -115,10 +118,10 @@ AbstractResizableMovableGraphicsItem::Position AbstractResizableMovableGraphicsI
 
 
 AbstractResizableMovableGraphicsItem::Position AbstractResizableMovableGraphicsItem::closeToCorner(const QPointF &pos) {
-	qreal x1 = rect().x();
-	qreal y1 = rect().y();
-	qreal x2 = x1+rect().width();
-	qreal y2 = y1+rect().height();
+	qreal x1 = rectAux().x();
+	qreal y1 = rectAux().y();
+	qreal x2 = x1+rectAux().width();
+	qreal y2 = y1+rectAux().height();
 
 	bool mouseOutOfRect = pos.x() < x1 || pos.y() < y1 || pos.x() > x2 || pos.y() > y2;
 
@@ -135,4 +138,9 @@ AbstractResizableMovableGraphicsItem::Position AbstractResizableMovableGraphicsI
 		return min.second;
 	else if(mouseOutOfRect) return Outside;
 	else return Inside;
+}
+
+
+void AbstractResizableMovableGraphicsItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
+
 }

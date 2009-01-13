@@ -18,35 +18,31 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1886 $:
+$Revision: 2102 $:
 $Author: merunga $:
-$Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
+$Date: 2009-01-07 17:51:32 +0100 (Wed, 07 Jan 2009) $
 
 ********************************************************************/
 
+#include "resizablemovablegraphicsrectitem.h"
 
-#ifndef TERMINALPOINTITEM_H_
-#define TERMINALPOINTITEM_H_
+ResizableMovableGraphicsRectItem::ResizableMovableGraphicsRectItem(QGraphicsItem *parent)
+	: QGraphicsRectItem(parent), AbstractResizableMovableGraphicsItem()
+{
+}
 
-#include <QGraphicsRectItem>
-#include "../connectoritem.h"
-
-class TerminalPointItem : public ResizableMovableGraphicsRectItem {
-public:
-	TerminalPointItem(ConnectorItem *parent);
-	QPointF point();
-	void updatePoint();
-
-protected:
-	void initPen();
-	void drawCross();
-
-	QPointF m_point;
-	QPen m_linePen;
-	QGraphicsLineItem *m_hLine;
-	QGraphicsLineItem *m_vLine;
-
-	static const qreal size;
-};
-
-#endif /* TERMINALPOINTITEM_H_ */
+QPointF ResizableMovableGraphicsRectItem::map(const QPointF &point) const {
+	return mapToParent(mapFromScene(point));
+}
+QRectF ResizableMovableGraphicsRectItem::rectAux() const {
+	return boundingRect();
+}
+void ResizableMovableGraphicsRectItem::doMoveBy(qreal dx, qreal dy) {
+	moveBy(dx,dy);
+}
+void ResizableMovableGraphicsRectItem::prepareForChange() {
+	prepareGeometryChange();
+}
+void ResizableMovableGraphicsRectItem::setCursorAux(const QCursor &cursor) {
+	setCursor(cursor);
+}

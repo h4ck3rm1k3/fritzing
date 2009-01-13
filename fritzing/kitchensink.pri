@@ -84,7 +84,8 @@ HEADERS += src/abstractstatesbutton.h \
     src/viewswitcher.h \
     src/abstractimagebutton.h \
     src/fsizegrip.h \
-    src/abstractresizablemovablegraphicsitem.h
+    src/abstractresizablemovablegraphicsitem.h \
+    src/resizablemovablegraphicsrectitem.h
 SOURCES += src/aboutbox.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
@@ -149,4 +150,5 @@ SOURCES += src/aboutbox.cpp \
     src/dockmanager.cpp \
     src/viewswitcher.cpp \
     src/fsizegrip.cpp \
-    src/abstractresizablemovablegraphicsitem.cpp
+    src/abstractresizablemovablegraphicsitem.cpp \
+    src/resizablemovablegraphicsrectitem.cpp

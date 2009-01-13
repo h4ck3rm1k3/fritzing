@@ -58,8 +58,8 @@ protected:
 	virtual void doMoveBy(qreal dx, qreal dy) = 0;
 	virtual QPointF map(const QPointF &point) const = 0;
 	virtual void prepareForChange() = 0;
-	virtual QRectF rect() const = 0;
-	virtual void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) = 0;
+	virtual QRectF rectAux() const = 0;
+	virtual void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
 	virtual void setCursorAux(const QCursor &cursor) = 0;
 
 protected:

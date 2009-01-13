@@ -32,10 +32,9 @@ $Date$
 #include <QGraphicsView>
 #include "terminalpointitem.h"
 #include "../connectoritem.h"
-#include "../abstractresizablemovablegraphicsitem.h"
 
 
-class PartsEditorConnectorItem: public ConnectorItem, public AbstractResizableMovableGraphicsItem {
+class PartsEditorConnectorItem: public ConnectorItem {
 	public:
 		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo);
 		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds);
@@ -65,12 +64,7 @@ class PartsEditorConnectorItem: public ConnectorItem, public AbstractResizableMo
 
 		void setParentDragMode(QGraphicsView::DragMode);
 
-		QPointF map(const QPointF &point) const;
 		void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
-		QRectF rect() const;
-		void doMoveBy(qreal dx, qreal dy);
-		void prepareForChange();
-		void setCursorAux(const QCursor &cursor);
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;

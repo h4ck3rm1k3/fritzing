@@ -28,7 +28,9 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 const qreal TerminalPointItem::size = 3;
 
-TerminalPointItem::TerminalPointItem(ConnectorItem *parent) : QGraphicsRectItem(parent) {
+TerminalPointItem::TerminalPointItem(ConnectorItem *parent)
+	: ResizableMovableGraphicsRectItem(parent)
+{
 	initPen();
 	m_vLine = NULL;
 	m_hLine = NULL;

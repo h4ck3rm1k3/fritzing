@@ -43,7 +43,7 @@ QBrush ConnectorItem::hoverBrush(QColor(0,0,255));
 QBrush ConnectorItem::connectedBrush(QColor(0,255,0));
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
-	: QGraphicsRectItem(attachedTo)
+	: ResizableMovableGraphicsRectItem(attachedTo)
 {
 	m_dirty = false;
 	m_opacity = 0.4;
@@ -589,4 +589,10 @@ void ConnectorItem::updateTooltip() {
 void ConnectorItem::setBaseTooltip(const QString & tooltip) {
 	m_baseTooltip = tooltip;
 	setToolTip(tooltip);
+}
+
+void ConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
+	qreal width = x2-x1;
+	qreal height = y2-y1;
+	setRect(x1,y1,width,height);
 }

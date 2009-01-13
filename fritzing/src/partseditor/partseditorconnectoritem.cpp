@@ -37,7 +37,7 @@ qreal PartsEditorConnectorItem::MinWidth = 2;
 qreal PartsEditorConnectorItem::MinHeight = MinWidth;
 
 PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo)
-	: ConnectorItem(conn, attachedTo), AbstractResizableMovableGraphicsItem()
+	: ConnectorItem(conn, attachedTo)
 {
 	init(false,false);
 	m_terminalPointItem = NULL;
@@ -199,19 +199,6 @@ void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	scene()->update();
 }
 
-void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
-	qreal width = x2-x1 < MinWidth ? MinWidth : x2-x1;
-	qreal height = y2-y1 < MinHeight ? MinHeight : y2-y1;
-
-	if(width != this->boundingRect().width()
-	   && height != this->boundingRect().height()) {
-		setRect(x1,y1,width,height);
-		if(m_terminalPointItem) {
-			m_terminalPointItem->updatePoint();
-		}
-	}
-}
-
 void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	setParentDragMode(QGraphicsView::NoDrag);
 	if(m_resizable || m_movable) {
@@ -257,19 +244,15 @@ bool PartsEditorConnectorItem::showingTerminalPoint() {
 	}
 }
 
+void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
+	qreal width = x2-x1 < MinWidth ? MinWidth : x2-x1;
+	qreal height = y2-y1 < MinHeight ? MinHeight : y2-y1;
 
-QPointF PartsEditorConnectorItem::map(const QPointF &point) const {
-	return mapToParent(mapFromScene(point));
-}
-QRectF PartsEditorConnectorItem::rect() const {
-	return boundingRect();
-}
-void PartsEditorConnectorItem::doMoveBy(qreal dx, qreal dy) {
-	moveBy(dx,dy);
-}
-void PartsEditorConnectorItem::prepareForChange() {
-	prepareGeometryChange();
-}
-void PartsEditorConnectorItem::setCursorAux(const QCursor &cursor) {
-	setCursor(cursor);
+	if(width != this->boundingRect().width()
+	   && height != this->boundingRect().height()) {
+		setRect(x1,y1,width,height);
+		if(m_terminalPointItem) {
+			m_terminalPointItem->updatePoint();
+		}
+	}
 }

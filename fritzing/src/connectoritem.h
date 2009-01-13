@@ -35,8 +35,9 @@ $Date$
 
 #include "connector.h"
 #include "itembase.h"
+#include "resizablemovablegraphicsrectitem.h"
 
-class ConnectorItem : public QGraphicsRectItem
+class ConnectorItem : public ResizableMovableGraphicsRectItem
 {
 
 public:
@@ -98,6 +99,8 @@ protected:
 	virtual void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	virtual void writeOtherElements(QXmlStreamWriter & writer);
 	void updateTooltip();
+
+	virtual void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
 
 protected:
 	Connector * m_connector;

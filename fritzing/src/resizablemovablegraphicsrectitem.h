@@ -18,35 +18,28 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1886 $:
+$Revision: 2102 $:
 $Author: merunga $:
-$Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
+$Date: 2009-01-07 17:51:32 +0100 (Wed, 07 Jan 2009) $
 
 ********************************************************************/
 
-
-#ifndef TERMINALPOINTITEM_H_
-#define TERMINALPOINTITEM_H_
+#ifndef RESIZABLEMOVABLEGRAPHICSRECTITEM_H_
+#define RESIZABLEMOVABLEGRAPHICSRECTITEM_H_
 
 #include <QGraphicsRectItem>
-#include "../connectoritem.h"
+#include "abstractresizablemovablegraphicsitem.h"
 
-class TerminalPointItem : public ResizableMovableGraphicsRectItem {
+class ResizableMovableGraphicsRectItem : public QGraphicsRectItem, public AbstractResizableMovableGraphicsItem {
 public:
-	TerminalPointItem(ConnectorItem *parent);
-	QPointF point();
-	void updatePoint();
+	ResizableMovableGraphicsRectItem(QGraphicsItem *parent=0);
 
 protected:
-	void initPen();
-	void drawCross();
-
-	QPointF m_point;
-	QPen m_linePen;
-	QGraphicsLineItem *m_hLine;
-	QGraphicsLineItem *m_vLine;
-
-	static const qreal size;
+	QPointF map(const QPointF &point) const;
+	QRectF rectAux() const;
+	void doMoveBy(qreal dx, qreal dy);
+	void prepareForChange();
+	void setCursorAux(const QCursor &cursor);
 };
 
-#endif /* TERMINALPOINTITEM_H_ */
+#endif /* RESIZABLEMOVABLEGRAPHICSRECTITEM_H_ */
