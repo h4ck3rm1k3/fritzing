@@ -47,8 +47,8 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 	layout->addWidget(m_toolsContainter,2,0);
 	layout->setContentsMargins(3, 10, 3, 10);
 
-	// non-finished features hiding
-	m_toolsContainter->hide();
+	// TODO: non-finished features hiding
+	//m_toolsContainter->hide();
 
 	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	setFocusPolicy(Qt::StrongFocus);

@@ -25,7 +25,6 @@ $Date$
 ********************************************************************/
 
 
-#include <QLineF>
 #include "partseditorconnectoritem.h"
 #include "../debugdialog.h"
 
@@ -38,16 +37,16 @@ qreal PartsEditorConnectorItem::MinWidth = 2;
 qreal PartsEditorConnectorItem::MinHeight = MinWidth;
 
 PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo)
-	: ConnectorItem(conn, attachedTo)
+	: ConnectorItem(conn, attachedTo), AbstractResizableMovableGraphicsItem()
 {
-	init(false);
+	init(false,false);
 	m_terminalPointItem = NULL;
 }
 
 PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds)
 	: ConnectorItem(conn, attachedTo)
 {
-	init(true);
+	init(true,true);
 
 	setRect(bounds);
 	removeBorder();
@@ -57,15 +56,15 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 	m_terminalPointItem = new TerminalPointItem(this);
 }
 
-void PartsEditorConnectorItem::init(bool resizable) {
+void PartsEditorConnectorItem::init(bool resizable, bool movable) {
 	setAcceptsHoverEvents(resizable);
 	setAcceptHoverEvents(resizable);
 	m_withBorder = false;
 	m_errorIcon = NULL;
 
-	m_resizable = resizable;
-	m_resizing = false;
-	m_moving = false;
+	setResizable(resizable);
+	setMovable(movable);
+
 	m_mousePosition = Outside;
 }
 
@@ -167,7 +166,7 @@ void PartsEditorConnectorItem::paint( QPainter * painter, const QStyleOptionGrap
 }
 
 void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-	if(m_resizable) {
+	if(m_resizable || m_movable) {
 		grabMouse();
 		updateCursor(event->pos(),QCursor(Qt::SizeAllCursor));
 	} else {
@@ -176,7 +175,7 @@ void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) 
 }
 
 void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-	if(m_resizable) {
+	if(m_resizable || m_movable) {
 		updateCursor(event->pos());
 		ungrabMouse();
 	} else {
@@ -185,10 +184,10 @@ void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) 
 }
 
 void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	if(m_resizable && !showingTerminalPoint()) {
-		if(m_resizing && m_mousePosition < Inside) {
+	if((m_resizable || m_movable) && !showingTerminalPoint()) {
+		if(m_resizable && m_resizing && m_mousePosition < Inside) {
 			resize(event->pos());
-		} else if(m_moving && m_mousePosition == Inside) {
+		} else if(m_movable && m_moving && m_mousePosition == Inside) {
 			move(event->scenePos());
 		} else {
 			ConnectorItem::mouseMoveEvent(event);
@@ -198,49 +197,6 @@ void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	}
 	updateCursor(event->pos());
 	scene()->update();
-}
-
-void PartsEditorConnectorItem::resize(const QPointF &mousePos) {
-	prepareGeometryChange();
-
-	qreal oldX1 = boundingRect().x();
-	qreal oldY1 = boundingRect().y();
-	qreal oldX2 = oldX1+boundingRect().width();
-	qreal oldY2 = oldY1+boundingRect().height();
-	qreal newX = mousePos.x();
-	qreal newY = mousePos.y();
-
-	switch(m_mousePosition) {
-		case TopLeftCorner:
-			setRectAux(newX,newY,oldX2,oldY2);
-//			DebugDialog::debug(QString("<<< from top left new rect (%1,%2)  (%3,%4)")
-//				.arg(newX).arg(newY).arg(oldX2).arg(oldY2));
-			break;
-		case BottomLeftCorner:
-			setRectAux(newX,oldY1,oldX1,newY);
-//			DebugDialog::debug(QString("<<< from bottom left new rect (%1,%2)  (%3,%4)")
-//				.arg(newX).arg(oldY1).arg(oldX1).arg(newY));
-			break;
-		case TopRightCorner:
-			setRectAux(oldX1,newY,newX,oldX2);
-//			DebugDialog::debug(QString("<<< from top right new rect (%1,%2)  (%3,%4)")
-//				.arg(oldX1).arg(newY).arg(newX).arg(oldX2));
-			break;
-		case BottomRightCorner:
-			setRectAux(oldX1,oldY1,newX,newY);
-//			DebugDialog::debug(QString("<<< from bottom right new rect (%1,%2)  (%3,%4)")
-//				.arg(oldX1).arg(oldY1).arg(newX).arg(newY));
-			break;
-		default: break;
-	}
-}
-
-void PartsEditorConnectorItem::move(const QPointF &newPos) {
-	QPointF currentParentPos = mapToParent(mapFromScene(newPos));
-	QPointF buttonDownParentPos = mapToParent(mapFromScene(m_mousePressedPos));
-	QPointF aux = currentParentPos - buttonDownParentPos;
-	moveBy(aux.x(),aux.y());
-	m_mousePressedPos = newPos;
 }
 
 void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
@@ -258,8 +214,7 @@ void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2
 
 void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	setParentDragMode(QGraphicsView::NoDrag);
-	if(m_resizable) {
-		setFlag(QGraphicsItem::ItemIsMovable,true);
+	if(m_resizable || m_movable) {
 		m_mousePosition = closeToCorner(event->pos());
 		if(m_mousePosition != Outside) {
 			m_resizing = m_mousePosition != Inside;
@@ -272,64 +227,13 @@ void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 }
 
 void PartsEditorConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	if(m_resizable) {
+	if(m_resizable || m_movable) {
 		m_resizing = false;
 		m_moving = false;
 		setParentDragMode(QGraphicsView::ScrollHandDrag);
 		setCursor(QCursor());
 	}
 	ConnectorItem::mouseReleaseEvent(event);
-}
-
-PartsEditorConnectorItem::Position PartsEditorConnectorItem::updateCursor(const QPointF &mousePos, const QCursor &defaultCursor) {
-	QCursor cursor;
-	m_mousePosition = closeToCorner(mousePos);
-	switch(m_mousePosition) {
-		case TopLeftCorner:
-			cursor = QCursor(Qt::SizeFDiagCursor);
-			break;
-		case BottomRightCorner:
-			cursor = QCursor(Qt::SizeFDiagCursor);
-			break;
-		case TopRightCorner:
-			cursor = QCursor(Qt::SizeBDiagCursor);
-			break;
-		case BottomLeftCorner:
-			cursor = QCursor(Qt::SizeBDiagCursor);
-			break;
-		case Inside:
-			cursor = QCursor(Qt::SizeAllCursor);
-			break;
-		case Outside:
-			cursor = defaultCursor;
-			break;
-	}
-	setCursor(cursor);
-	return m_mousePosition;
-}
-
-
-PartsEditorConnectorItem::Position PartsEditorConnectorItem::closeToCorner(const QPointF &pos) {
-	qreal x1 = boundingRect().x();
-	qreal y1 = boundingRect().y();
-	qreal x2 = x1+boundingRect().width();
-	qreal y2 = y1+boundingRect().height();
-
-	bool mouseOutOfRect = pos.x() < x1 || pos.y() < y1 || pos.x() > x2 || pos.y() > y2;
-
-	QPair<qreal,Position> tl(QLineF(QPointF(x1,y1),pos).length(), TopLeftCorner);
-	QPair<qreal,Position> tr(QLineF(QPointF(x2,y1),pos).length(), TopRightCorner);
-	QPair<qreal,Position> br(QLineF(QPointF(x2,y2),pos).length(), BottomRightCorner);
-	QPair<qreal,Position> bl(QLineF(QPointF(x1,y2),pos).length(), BottomLeftCorner);
-
-	QPair<qreal,Position> min = tl.first < tr.first ? tl : tr;
-	min = min.first < br.first ? min : br;
-	min = min.first < bl.first ? min : bl;
-
-	if(min.first <= 3)
-		return min.second;
-	else if(mouseOutOfRect) return Outside;
-	else return Inside;
 }
 
 
@@ -351,4 +255,21 @@ bool PartsEditorConnectorItem::showingTerminalPoint() {
 	} else {
 		return false;
 	}
+}
+
+
+QPointF PartsEditorConnectorItem::map(const QPointF &point) const {
+	return mapToParent(mapFromScene(point));
+}
+QRectF PartsEditorConnectorItem::rect() const {
+	return boundingRect();
+}
+void PartsEditorConnectorItem::doMoveBy(qreal dx, qreal dy) {
+	moveBy(dx,dy);
+}
+void PartsEditorConnectorItem::prepareForChange() {
+	prepareGeometryChange();
+}
+void PartsEditorConnectorItem::setCursorAux(const QCursor &cursor) {
+	setCursor(cursor);
 }

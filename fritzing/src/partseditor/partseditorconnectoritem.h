@@ -32,17 +32,10 @@ $Date$
 #include <QGraphicsView>
 #include "terminalpointitem.h"
 #include "../connectoritem.h"
+#include "../abstractresizablemovablegraphicsitem.h"
 
 
-class PartsEditorConnectorItem: public ConnectorItem {
-	enum Position {
-		TopLeftCorner = 0x00000,
-		TopRightCorner = 0x00001,
-		BottomLeftCorner = 0x00002,
-		BottomRightCorner = 0x00003,
-		Inside = 0x00004,
-		Outside = 0x00005,
-	};
+class PartsEditorConnectorItem: public ConnectorItem, public AbstractResizableMovableGraphicsItem {
 	public:
 		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo);
 		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds);
@@ -54,7 +47,7 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		bool showingTerminalPoint();
 
 	protected:
-		void init(bool resizable);
+		void init(bool resizable, bool movable);
 
 		void setSelectedColor(const QColor &color = selectedColor);
 		void setNotSelectedColor(const QColor &color = notSelectedColor);
@@ -70,23 +63,18 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void mousePressEvent(QGraphicsSceneMouseEvent *event);
 		void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-		PartsEditorConnectorItem::Position updateCursor(const QPointF &mousePos, const QCursor &defaultCursor=QCursor());
-		PartsEditorConnectorItem::Position closeToCorner(const QPointF &pos);
 		void setParentDragMode(QGraphicsView::DragMode);
 
+		QPointF map(const QPointF &point) const;
 		void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
-
-		void resize(const QPointF &mousePos);
-		void move(const QPointF &newPos);
+		QRectF rect() const;
+		void doMoveBy(qreal dx, qreal dy);
+		void prepareForChange();
+		void setCursorAux(const QCursor &cursor);
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;
-		bool m_resizable;
-		volatile bool m_resizing;
-		volatile bool m_moving;
-		volatile Position m_mousePosition;
 		TerminalPointItem *m_terminalPointItem;
-		QPointF m_mousePressedPos;
 	public:
 		static QColor selectedColor;
 		static QColor notSelectedColor;
