@@ -227,6 +227,7 @@ protected:
 	void setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2);
 	void exportToEagle();
 	void exportToGerber();
+        void exportBOM();
 
 	QList<QWidget*> getButtonsForView(ItemBase::ViewIdentifier viewId);
 
@@ -358,6 +359,7 @@ protected:
 	QAction *m_exportEagleAct;
 	QAction *m_exportGerberAct;
 	QAction *m_exportDiyAct;
+        QAction *m_exportBomAct;
 
     // Edit Menu
     QMenu *m_editMenu;

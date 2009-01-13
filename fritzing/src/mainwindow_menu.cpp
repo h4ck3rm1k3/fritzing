@@ -50,6 +50,7 @@ static QString psActionType = ".ps";
 static QString pdfActionType = ".pdf";
 static QString pngActionType = ".png";
 static QString svgActionType = ".svg";
+static QString bomActionType = ".bom.pdf";
 
 static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
@@ -76,6 +77,7 @@ void MainWindow::initExportConstants()
 	fileExtFormats[pngActionType] = tr("PNG Image (*.png)")+colons;
 	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)")+colons;
 	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)")+colons;
+        fileExtFormats[bomActionType] = tr("BOM PDF (*.bom.pdf)")+colons;
 }
 
 void MainWindow::print() {
@@ -236,6 +238,11 @@ void MainWindow::doExport(QAction * action) {
 		exportToGerber();
 		return;
 	}
+
+        if (actionType.compare(bomActionType) == 0) {
+            exportBOM();
+            return;
+        }
 
 	#ifndef QT_NO_PRINTER
 		QString fileExt;
@@ -702,6 +709,11 @@ void MainWindow::createFileMenuActions() {
 	m_exportPdfAct->setStatusTip(tr("Export the current sketch as a PDF image"));
 	connect(m_exportPdfAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
+        m_exportBomAct = new BetterTriggerAction(tr("PDF &Bill of Materials"), this);
+        m_exportBomAct->setData(bomActionType);
+        m_exportBomAct->setStatusTip(tr("Save a PDF Bill of Materials (BOM)/Shopping List"));
+        connect(m_exportBomAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+
 	m_exportEagleAct = new BetterTriggerAction(tr("to &Eagle..."), this);
 	m_exportEagleAct->setData(eagleActionType);
 	m_exportEagleAct->setStatusTip(tr("Export the current sketch to Eagle CAD"));
@@ -1067,6 +1079,7 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportPngAct);
 	m_exportMenu->addAction(m_exportJpgAct);
 	m_exportMenu->addSeparator();
+        m_exportMenu->addAction(m_exportBomAct);
 	m_exportMenu->addAction(m_exportDiyAct);
 	m_exportMenu->addAction(m_exportEagleAct);
 	m_exportMenu->addAction(m_exportGerberAct);
@@ -1757,6 +1770,13 @@ void MainWindow::exportToEagle() {
 		"software. If you'd like to have more exports to your favourite EDA tool, please let "
 		"us know, or contribute.");
 	QMessageBox::information(this, tr("Fritzing"), text);
+}
+
+void MainWindow::exportBOM() {
+    QString text =
+                tr("This will soon provide an export of the parts list of your Fritzing sketch, "
+                   "also known as a Bill of Materials (BOM).  Quite useful for shopping!");
+        QMessageBox::information(this, tr("Fritzing"), text);
 }
 
 void MainWindow::hideShowTraceMenu() {
