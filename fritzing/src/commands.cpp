@@ -182,19 +182,22 @@ ChangeConnectionCommand::ChangeConnectionCommand(SketchWidget * sketchWidget, Ba
     m_toConnectorID = toConnectorID;
 	m_connect = connect;
 	m_seekLayerKin = seekLayerKin;
-
+	m_updateConnections = true;
 }
 
 void ChangeConnectionCommand::undo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, !m_connect, m_crossViewType == CrossView, m_seekLayerKin);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, !m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_updateConnections);
 }
 
 void ChangeConnectionCommand::redo()
 {
-    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, m_crossViewType == CrossView, m_seekLayerKin);
+    m_sketchWidget->changeConnection(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, m_crossViewType == CrossView, m_seekLayerKin, m_updateConnections);
 }
 
+void ChangeConnectionCommand::setUpdateConnections(bool updatem) {
+	m_updateConnections = updatem;
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

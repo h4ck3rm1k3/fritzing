@@ -140,6 +140,7 @@ public:
 							QUndoCommand * parent);
 	void undo();
 	void redo();
+	void setUpdateConnections(bool updatem);
 
 protected:
     long m_fromID;
@@ -148,6 +149,7 @@ protected:
     QString m_fromConnectorID;
     QString m_toConnectorID;
 	bool m_connect;
+	bool m_updateConnections;
 
 };
 

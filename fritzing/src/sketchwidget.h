@@ -117,7 +117,8 @@ public:
 	void changeConnection(long fromID,
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
-						  bool connect, bool doEmit, bool seekLayerKin);
+						  bool connect, bool doEmit, bool seekLayerKin,
+						  bool updateConnections);
 
  	ItemCount calcItemCount();
 
@@ -217,7 +218,7 @@ protected:
 	long createWire(ConnectorItem * from, ConnectorItem * to, ViewGeometry::WireFlags, bool addItNow, bool doRatsnest, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	void changeConnectionAux(long fromID, const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
-						  bool connect, bool seekLayerKin);
+						  bool connect, bool seekLayerKin, bool updateConnections);
 
 
 	void cutDeleteAux(QString undoStackMessage);
@@ -291,7 +292,7 @@ signals:
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
 								long toID, QString toConnectorID,
-								bool connect);
+								bool connect, bool updateConnections);
 	void zoomChanged(qreal zoom);
 	void zoomOutOfRange(qreal zoom);
 	void zoomIn(int amountSteps);
@@ -328,7 +329,7 @@ protected slots:
 	void toggleLayerVisibility(QAction *);
 	void sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID);
 	void sketchWidget_wireDisconnected(long fromID, QString fromConnectorID);
-	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect);
+	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect, bool updateConnections);
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
 	void item_connectionChanged(ConnectorItem * from, ConnectorItem * to, bool connect);

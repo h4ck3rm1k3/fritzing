@@ -198,14 +198,16 @@ void Autorouter1::start()
 	int edgesDone = 0;
 	int jumperCount = 0;
 	foreach (Edge * edge, edges) {
-		/*
-		DebugDialog::debug(QString("edge from %1 %2 to %3 %4, %5")
+		
+		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
 			.arg(edge->from->attachedToTitle())
+			.arg(edge->from->attachedToID())
 			.arg(edge->from->connectorStuffID())
 			.arg(edge->to->attachedToTitle())
+			.arg(edge->to->attachedToID())
 			.arg(edge->to->connectorStuffID())
 			.arg(edge->distance) );
-	*/
+	
 		// if both connections are stuck to or attached to the same part
 		// then use that part's boundary to constrain the path
 		ItemBase * partForBounds = NULL;
@@ -234,13 +236,15 @@ void Autorouter1::start()
 			QRectF boundingRect = partForBounds->boundingRect();
 			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
 			jumperCount += drawTrace(edge->from, edge->to, partForBounds->mapToScene(boundingRect), wires);
-			//foreach (Wire * wire, wires) {
+			foreach (Wire * wire, wires) {
 				//wire->addSticky(partForBounds, true);
 				//partForBounds->addSticky(wire, true);
-			//}
+				DebugDialog::debug(QString("added wire %1").arg(wire->id()));
+			}
 		}
 
 		emit setProgressValue(++edgesDone);
+
 		for (int i = 0; i < m_allPartConnectorItems.count(); i++) {
 			if (m_allPartConnectorItems[i]->contains(edge->from)) {
 				netCounters[i] -= 2;
@@ -1073,15 +1077,17 @@ void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connec
 	foreach (Wire * wire, wires) {
 		ConnectorItem * connector1 = wire->connector1();
 		foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
-			new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-				wire->id(), connector1->connectorStuffID(),
-				connect, true, parentCommand);
+			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+												wire->id(), connector1->connectorStuffID(),
+												connect, true, parentCommand);
+			ccc->setUpdateConnections(false);
 		}
 		ConnectorItem * connector0 = wire->connector0();
 		foreach (ConnectorItem * toConnectorItem, connector0->connectedToItems()) {
-			new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-				wire->id(), connector0->connectorStuffID(),
-				connect, true, parentCommand);
+			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+												wire->id(), connector0->connectorStuffID(),
+												connect, true, parentCommand);
+			ccc->setUpdateConnections(false);
 		}
 	}
 }

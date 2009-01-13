@@ -2512,17 +2512,17 @@ void SketchWidget::sketchWidget_wireDisconnected(long fromID, QString fromConnec
 
 void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool doEmit, bool seekLayerKin)
+									bool connect, bool doEmit, bool seekLayerKin, bool updateConnections)
 {
-	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin);
+	changeConnectionAux(fromID, fromConnectorID, toID, toConnectorID, connect, seekLayerKin, updateConnections);
 	if (doEmit) {
-		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect);
+		emit changeConnectionSignal(fromID, fromConnectorID, toID, toConnectorID, connect, updateConnections);
 	}
 }
 
 void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
-									bool connect, bool seekLayerKin)
+									bool connect, bool seekLayerKin, bool updateConnections)
 {
 	DebugDialog::debug(QString("changeConnection: from %1 %2; to %3 %4 con:%5 v:%6")
 				.arg(fromID).arg(fromConnectorID)
@@ -2569,9 +2569,10 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 
 	chainVisible(fromConnectorItem, toConnectorItem, connect);
 
-	fromConnectorItem->attachedTo()->updateConnections(fromConnectorItem);
-	toConnectorItem->attachedTo()->updateConnections(toConnectorItem);
-
+	if (updateConnections) {
+		fromConnectorItem->attachedTo()->updateConnections(fromConnectorItem);
+		toConnectorItem->attachedTo()->updateConnections(toConnectorItem);
+	}
 }
 
 void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to) {
@@ -2586,11 +2587,11 @@ void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorI
 
 void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
 												 long toID, QString toConnectorID,
-												 bool connect)
+												 bool connect, bool updateConnections)
 {
 	changeConnection(fromID, fromConnectorID,
 					 toID, toConnectorID,
-					 connect, false, true);
+					 connect, false, true, updateConnections);
 }
 
 void SketchWidget::navigatorScrollChange(double x, double y) {
