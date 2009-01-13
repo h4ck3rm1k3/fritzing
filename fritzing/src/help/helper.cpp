@@ -189,7 +189,7 @@ void Helper::autorouted() {
 		m_stillWaitingFirstAutoroute = false;
 		removeAutorouteHelp();
 	} else {
-		disconnect(m_owner, SIGNAL(autorouteSignal()), this, SLOT(autorouted()));
+		disconnect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 	}
 }
 

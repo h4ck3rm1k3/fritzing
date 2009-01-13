@@ -15,7 +15,7 @@
   <circle fill="none" cx="6000" cy="26000" stroke="rgb(255, 191, 0)" r="2200" id="connector2pad" stroke-width="1600" />
   <circle fill="none" cx="36000" cy="26000" stroke="rgb(255, 191, 0)" r="2200" id="connector3pad" stroke-width="1600" />
   <circle fill="none" cx="36000" cy="16000" stroke="rgb(255, 191, 0)" r="2200" id="connector4pad" stroke-width="1600" />
-  <circle fill="none" cx="36000" cy="6000" stroke="rgb(255, 191, 0)" r="2200" id="connector5padn" stroke-width="1600" />
+  <circle fill="none" cx="36000" cy="6000" stroke="rgb(255, 191, 0)" r="2200" id="connector5pad" stroke-width="1600" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />
