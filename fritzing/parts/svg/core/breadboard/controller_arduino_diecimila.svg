@@ -230,11 +230,6 @@
 	<polygon fill="#5E5B43" points="45.9,118.455 47.54,118.455 48.316,119.231 45.124,119.231 	"/>
 	<polygon fill="#9A916C" points="45.124,116.038 45.9,116.813 45.9,118.455 45.124,119.231 	"/>
 	
-		<image overflow="visible" enable-background="new    " width="4" height="4" xlink:href="864673E9.png"  transform="matrix(1 0 0 1 44.5 95.5)">
-	</image>
-	
-		<image overflow="visible" enable-background="new    " width="4" height="4" xlink:href="864673EB.png"  transform="matrix(1 0 0 1 44.5 105.5)">
-	</image>
 	<path d="M41.881,92.804v19.662h9.662V92.804H41.881z M48.317,109.231h-3.191v-3.193h3.191V109.231z M48.316,99.231h-3.191v-3.193
 		h3.191V99.231z"/>
 	<rect x="44.364" y="95.694" fill="#746A39" width="0.76" height="13.81"/>

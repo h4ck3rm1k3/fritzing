@@ -3734,3 +3734,12 @@ void SketchWidget::showPartLabel(long itemID, bool showIt) {
 const QColor & SketchWidget::getLabelTextColor() {
 	return labelTextColor;
 }
+
+void SketchWidget::collectParts(QList<ItemBase *> & partList) {
+	foreach (QGraphicsItem * item, scene()->items()) {
+		PaletteItem * pitem = dynamic_cast<PaletteItem *>(item);
+		if (pitem == NULL) continue;
+
+		partList.append(pitem);
+	}
+}

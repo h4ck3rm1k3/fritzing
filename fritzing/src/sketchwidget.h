@@ -180,6 +180,7 @@ public:
 	void ensureFixedToBottomLeftItems();
 	void ensureFixedToBottomRightItems();
 	void ensureFixedToCenterItems();
+	void collectParts(QList<ItemBase *> & partList);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

@@ -135,15 +135,18 @@ void MainWindow::exportDiy(QAction * action) {
 	printer.setOutputFileName(fileName);
 	QPainter painter;
 	if (painter.begin(&printer)) {
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());   // m_printerScale
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());   
 
-#ifndef QT_NO_DEBUG
-		QFile file(fileName + ".svg");
+		// as a bonus feature, save the svg as a file
+		QString svgFileName = fileName;
+		svgFileName.replace(fileExt, ".svg");
+		QFile file(svgFileName);
 		file.open(QIODevice::WriteOnly);
 		QTextStream out(&file);
 		out << svg;
 		file.close();
-#endif
+
+		// now convert to pdf
 		QSvgRenderer svgRenderer;
 		svgRenderer.load(svg.toLatin1());
 		qreal trueWidth = m_pcbGraphicsView->scene()->width() / FSvgRenderer::printerScale();
