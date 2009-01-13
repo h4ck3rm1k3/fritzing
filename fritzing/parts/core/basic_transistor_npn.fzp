@@ -42,14 +42,14 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="emmitter" >
-   <description>emitter</description>
+  <connector type="male" id="connector0" name="collector" >
+   <description>collector</description>
    <views>
     <breadboardView>
      <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector0pin" layer="copper0" />
@@ -63,15 +63,15 @@
      <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector1pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector2" name="collector" >
-   <description>collector</description>
+  <connector type="male" id="connector2" name="emitter" >
+   <description>emitter</description>
    <views>
     <breadboardView>
      <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
