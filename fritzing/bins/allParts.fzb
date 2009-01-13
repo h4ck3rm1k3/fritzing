@@ -44,7 +44,21 @@
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1238DBDC00-voltage-reg" path="/parts/core/basic-voltage-regulator.fzp">
+		<instance moduleIdRef="1238DBDC00-voltage-reg_7805" path="/parts/core/voltage_regulator_7805.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+		<instance moduleIdRef="1238DBDC00-voltage-reg_7833" path="/parts/core/voltage_regulator_7833.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+		<instance moduleIdRef="1238DBDC00-voltage-reg_lm317" path="/parts/core/voltage_regulator_lm317.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
