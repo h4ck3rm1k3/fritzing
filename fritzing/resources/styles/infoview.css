@@ -92,6 +92,10 @@ tr:hover .subhead, tr:hover td {
 	background-color: transparent;
 }
 
-hideShowControl {
-	
+a.hideShowControl:link,
+a.hideShowControl:visited,
+a.hideShowControl:active,
+a.hideShowControl:hover {
+	color: black;
+	text-decoration: none;
 }
