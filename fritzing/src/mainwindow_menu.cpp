@@ -1800,7 +1800,7 @@ void MainWindow::exportBOM() {
         qSort(partList.begin(), partList.end(), sortPartList);
         for(int i=0; i < partList.size(); i++){
             bom += partList.at(i)->instanceTitle() + "\t" +
-                   partList.at(i)->modelPartStuff()->description() + "\n";
+                   partList.at(i)->modelPartStuff()->title() + "\n";
         }
 
         QFile fp( "/tmp/bom.txt" );
