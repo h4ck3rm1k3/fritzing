@@ -65,6 +65,8 @@ class Helper;
 class DockManager;
 class FSizeGrip;
 
+bool sortPartList(ItemBase * b1, ItemBase * b2);
+
 class MainWindow : public FritzingWindow
 {
     Q_OBJECT

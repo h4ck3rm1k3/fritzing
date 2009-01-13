@@ -57,6 +57,10 @@ static QHash<QString, QImage::Format> fileExportFormats;
 static QHash<QString, QString> fileExtFormats;
 
 
+bool sortPartList(ItemBase * b1, ItemBase * b2){
+    return b1->instanceTitle().toLower() < b2->instanceTitle().toLower();
+}
+
 void MainWindow::initExportConstants()
 {
 	#ifndef QT_NO_PRINTER
@@ -1780,6 +1784,30 @@ void MainWindow::exportBOM() {
                 tr("This will soon provide an export of the parts list of your Fritzing sketch, "
                    "also known as a Bill of Materials (BOM).  Quite useful for shopping!");
         QMessageBox::information(this, tr("Fritzing"), text);
+
+        QList <ItemBase*> partList;
+
+        // bail out if something is wrong
+        // TODO: show an error in QMessageBox
+        if(m_currentWidget == NULL) {
+            return;
+        }
+
+        QString bom = "Fritzing Bill of Materials\n\n";
+
+        m_currentGraphicsView->collectParts(partList);
+
+        qSort(partList.begin(), partList.end(), sortPartList);
+        for(int i=0; i < partList.size(); i++){
+            bom += partList.at(i)->instanceTitle() + "\t" +
+                   partList.at(i)->modelPartStuff()->description() + "\n";
+        }
+
+        QFile fp( "/tmp/bom.txt" );
+        fp.open(QIODevice::WriteOnly);
+        fp.write(bom.toAscii(),bom.length());
+        fp.close();
+
 }
 
 void MainWindow::hideShowTraceMenu() {
