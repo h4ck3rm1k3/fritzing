@@ -1796,19 +1796,49 @@ void MainWindow::exportBOM() {
             return;
         }
 
-        QString bom = "Fritzing Bill of Materials\n\n";
+        QString bom = tr("Fritzing Bill of Materials\n\n");
 
         m_currentGraphicsView->collectParts(partList);
 
         qSort(partList.begin(), partList.end(), sortPartList);
+
+        int maxLabelWidth = 0;
+        QHash<QString, int> shoppingList;
+
         for(int i=0; i < partList.size(); i++){
-            bom += partList.at(i)->instanceTitle() + "\t" +
+            QString label = partList.at(i)->instanceTitle();
+            QString desc = partList.at(i)->modelPartStuff()->title();
+            if(label.length() > maxLabelWidth) {
+                maxLabelWidth = label.length();
+            }
+            if(!shoppingList.contains(desc)){
+                shoppingList.insert(desc, 1);
+            }
+            else {
+                shoppingList[desc]++;
+            }
+        }
+
+
+        for(int i=0; i < partList.size(); i++){
+            QString spacer = "   ";
+            QString label = partList.at(i)->instanceTitle();
+
+            spacer += QString(maxLabelWidth - label.length(), QChar(' '));
+            bom += label + spacer +
                    partList.at(i)->modelPartStuff()->title() + "\n";
+        }
+
+        bom += tr("\n\nShopping List\n\nQuantity\tPart\n\n");
+        QHashIterator<QString, int> i(shoppingList);
+        while (i.hasNext()) {
+            i.next();
+            bom += QString::number(i.value()) + "\t\t" + i.key() + "\n";
         }
 
         QFile fp( "/tmp/bom.txt" );
         fp.open(QIODevice::WriteOnly);
-        fp.write(bom.toAscii(),bom.length());
+        fp.write(bom.toUtf8(),bom.length());
         fp.close();
 
 }
