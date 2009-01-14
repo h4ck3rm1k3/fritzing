@@ -42,7 +42,7 @@ $Date$
 //		show = autoselect?
 //		** viewinfo for wires
 //		** graphics (esp. drag area vs. edit area) 
-//		html info box needs to update when view switches
+//		** html info box needs to update when view switches
 //		multiple selection?
 //		undo delete
 //		undo select
@@ -51,12 +51,14 @@ $Date$
 //		** hide and show layer
 //		tools (bold, italic, color, size)?
 //		** sync hide/show checkbox with visibility state
-//		export to svg for export diy
+//		** skip: export to svg for export diy (silkscreen layer is not exported)
 //		save and load
 //		** text color needs to be separate in separate views
 //		** hide silkscreen should hide silkscreen label
 //		** delete owner: delete label
-//		rotate/flip (where is the control?)--heads up?
+//		rotate/flip (where is the control?)--heads up?  label menu for the time being
+//		copy/paste?
+//		z-order manipulation?
 
 PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * parent)
 	: QGraphicsTextItem(text, parent)
@@ -67,7 +69,7 @@ PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * par
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
 	setTextInteractionFlags(Qt::TextEditorInteraction);
 	setVisible(false);
-	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()));
+	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 	m_viewLayerID = ViewLayer::UnknownLayer;
 	setAcceptHoverEvents(true);
 }
@@ -153,7 +155,9 @@ void PartLabel::setPlainText(const QString & text) {
 	// prevent unnecessary contentsChanged signals
 	if (text.compare(document()->toPlainText()) == 0) return;
 
+	disconnect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()));
 	QGraphicsTextItem::setPlainText(text);
+	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 }
 
 bool PartLabel::initialized() {
@@ -201,4 +205,43 @@ ViewLayer::ViewLayerID PartLabel::viewLayerID() {
 
 bool PartLabel::hidden() {
 	return m_hidden;
+}
+
+void PartLabel::saveInstance(QXmlStreamWriter & streamWriter) {
+	if (!m_initialized) return;
+
+	streamWriter.writeStartElement("titleGeometry");
+	streamWriter.writeAttribute("visible", isVisible() ? "true" : "false");
+	streamWriter.writeAttribute("x", QString::number(pos().x()));
+	streamWriter.writeAttribute("y", QString::number(pos().y()));
+	streamWriter.writeAttribute("z", QString::number(zValue()));
+	streamWriter.writeAttribute("xOffset", QString::number(m_offset.x()));
+	streamWriter.writeAttribute("yOffset", QString::number(m_offset.y()));
+	streamWriter.writeAttribute("textColor", defaultTextColor().name());
+	streamWriter.writeEndElement();
+}
+
+void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID viewLayerID) 
+{
+	m_viewLayerID = viewLayerID;
+	m_initialized = true;
+	m_owner->scene()->addItem(this);
+	setVisible(labelGeometry.attribute("visible").compare("true") == 0);
+	QPointF p = pos();
+	bool ok = false;
+	qreal x = labelGeometry.attribute("x").toDouble(&ok);
+	if (ok) p.setX(x);
+	qreal y = labelGeometry.attribute("y").toDouble(&ok);
+	if (ok) p.setY(y);
+	setPos(p);
+	x = labelGeometry.attribute("xOffset").toDouble(&ok);
+	if (ok) m_offset.setX(x);
+	y = labelGeometry.attribute("yOffset").toDouble(&ok);
+	if (ok) m_offset.setY(y);
+	qreal z = labelGeometry.attribute("z").toDouble(&ok);
+	if (ok) this->setZValue(z);
+
+	QColor c;
+	c.setNamedColor(labelGeometry.attribute("textColor"));
+	setDefaultTextColor(c);
 }

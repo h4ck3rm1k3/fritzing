@@ -183,6 +183,8 @@ public:
 	void ensureFixedToCenterItems();
 	void collectParts(QList<ItemBase *> & partList);
 
+	void updateInfoView();
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
 	bool dragEnterEventAux(QDragEnterEvent *event);
@@ -241,7 +243,6 @@ protected:
 	virtual void findConnectorsUnder(ItemBase * item);
 
 	bool currentlyInfoviewed(ItemBase *item);
-	void updateInfoView();
 	void resizeEvent(QResizeEvent *);
 
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);

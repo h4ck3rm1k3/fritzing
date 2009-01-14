@@ -234,6 +234,9 @@ void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 	this->saveGeometry();
 	writeGeometry(streamWriter);
+	if (m_partLabel) {
+		m_partLabel->saveInstance(streamWriter);
+	}
 
 	bool saveConnectorItems = false;
 	foreach (QGraphicsItem * childItem, childItems()) {
@@ -770,4 +773,14 @@ bool ItemBase::isPartLabelVisible() {
 
 void ItemBase::clearPartLabel() {
 	m_partLabel = NULL;
+}
+
+void ItemBase::restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID viewLayerID)
+{
+	if (m_partLabel) {
+		m_partLabel->setPlainText(m_modelPart->partInstanceStuff()->title());
+		if (!labelGeometry.isNull()) {
+			m_partLabel->restoreLabel(labelGeometry, viewLayerID);
+		}
+	}
 }

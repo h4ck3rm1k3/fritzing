@@ -31,6 +31,8 @@ $Date$
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QWidget>
+#include <QXmlStreamWriter>
+#include <QDomElement>
 
 #include "../viewlayer.h"
 
@@ -53,6 +55,9 @@ public:
 	void setHidden(bool hide);
 	bool hidden();
 	ViewLayer::ViewLayerID viewLayerID();
+	void saveInstance(QXmlStreamWriter & streamWriter);
+	void restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
+
 
 protected:
 	void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);

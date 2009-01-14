@@ -223,12 +223,15 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 
 		ViewGeometry viewGeometry(geometry);
 
+		QDomElement labelGeometry = view.firstChildElement("titleGeometry");
+
 		long newID = ItemBase::getNextID(mp->modelIndex());
 		if (parentCommand == NULL) {
 			// use a function of the model index to ensure the same parts have the same ID across views
 			ItemBase * item = addItemAux(mp, viewGeometry, newID, NULL, true);
 			if (item != NULL) {
 				PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
+
 				if (paletteItem) {
 					// wires don't have transforms
 					paletteItem->setTransforms();
@@ -244,6 +247,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
 				newItems.insert(mp->modelIndex(), item);
 				itemDoms.insert(item, new QDomElement(view));
+				item->restorePartLabel(labelGeometry, getLabelViewLayerID());
 			}
 		}
 		else {

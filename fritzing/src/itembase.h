@@ -146,6 +146,7 @@ public:
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
 	virtual void setInstanceTitle(const QString &title);
 	bool isPartLabelVisible();
+	void restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
 
 public slots:
 	void showPartLabel(bool show, ViewLayer *, const QColor & textColor);

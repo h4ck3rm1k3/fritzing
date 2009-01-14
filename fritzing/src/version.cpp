@@ -21,7 +21,7 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 $Revision$:
 $Author$:
 $Date$
-
+		
 ********************************************************************/
 
 #include "version.h"
@@ -30,7 +30,7 @@ $Date$
 #include <QStringList>
 	
 QString Version::m_majorVersion("0");
-QString Version::m_minorVersion("11");
+QString Version::m_minorVersion("1.11");
 QString Version::m_modifier("b");
 QString Version::m_svnRevision("$Revision$:");
 QString Version::m_svnDate("$Date$");

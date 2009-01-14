@@ -123,6 +123,12 @@ void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
 }
 
 void HtmlInfoView::viewItemInfo(ItemBase* item, bool swappingEnabled) {
+	if (item == NULL) {
+		// TODO: it would be nice to do something reasonable in this case
+		return;
+	}
+
+		
 	m_currentSwappingEnabled = swappingEnabled;
 
 	QString s = appendStuff(item,swappingEnabled);
