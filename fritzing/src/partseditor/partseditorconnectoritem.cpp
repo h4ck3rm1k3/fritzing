@@ -166,20 +166,28 @@ void PartsEditorConnectorItem::paint( QPainter * painter, const QStyleOptionGrap
 }
 
 void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-	if(m_resizable || m_movable) {
-		grabMouse();
-		updateCursor(event->pos(),QCursor(Qt::SizeAllCursor));
+	if(!showingTerminalPoint()) {
+		if(m_resizable || m_movable) {
+			grabMouse();
+			updateCursor(event->pos(),QCursor(Qt::SizeAllCursor));
+		} else {
+			//QGraphicsItem::hoverEnterEvent(event);
+		}
 	} else {
-		//QGraphicsItem::hoverEnterEvent(event);
+		ResizableMovableGraphicsRectItem::hoverEnterEvent(event);
 	}
 }
 
 void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-	if(m_resizable || m_movable) {
-		updateCursor(event->pos());
-		ungrabMouse();
+	if(!showingTerminalPoint()) {
+		if(m_resizable || m_movable) {
+			updateCursor(event->pos());
+			ungrabMouse();
+		} else {
+			//QGraphicsItem::hoverEnterEvent(event);
+		}
 	} else {
-		//QGraphicsItem::hoverEnterEvent(event);
+		ResizableMovableGraphicsRectItem::hoverLeaveEvent(event);
 	}
 }
 
@@ -193,28 +201,32 @@ void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			ConnectorItem::mouseMoveEvent(event);
 		}
 	} else {
-		ConnectorItem::mouseMoveEvent(event);
+		ResizableMovableGraphicsRectItem::mouseMoveEvent(event);
 	}
 	updateCursor(event->pos());
 	scene()->update();
 }
 
 void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	setParentDragMode(QGraphicsView::NoDrag);
-	if(m_resizable || m_movable) {
-		m_mousePosition = closeToCorner(event->pos());
-		if(m_mousePosition != Outside) {
-			m_resizing = m_mousePosition != Inside;
-			m_moving = !m_resizing;
-			m_mousePressedPos = event->buttonDownScenePos(Qt::LeftButton);
+	if(!showingTerminalPoint()) {
+		setParentDragMode(QGraphicsView::NoDrag);
+		if(m_resizable || m_movable) {
+			m_mousePosition = closeToCorner(event->pos());
+			if(m_mousePosition != Outside) {
+				m_resizing = m_mousePosition != Inside;
+				m_moving = !m_resizing;
+				m_mousePressedPos = event->buttonDownScenePos(Qt::LeftButton);
+			}
+		} else {
+			ConnectorItem::mousePressEvent(event);
 		}
 	} else {
-		ConnectorItem::mousePressEvent(event);
+		ResizableMovableGraphicsRectItem::mousePressEvent(event);
 	}
 }
 
 void PartsEditorConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	if(m_resizable || m_movable) {
+	if(!showingTerminalPoint() && (m_resizable || m_movable)) {
 		m_resizing = false;
 		m_moving = false;
 		setParentDragMode(QGraphicsView::ScrollHandDrag);

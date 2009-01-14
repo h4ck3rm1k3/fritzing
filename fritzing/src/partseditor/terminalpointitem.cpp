@@ -25,6 +25,7 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 ********************************************************************/
 
 #include "terminalpointitem.h"
+#include "../debugdialog.h"
 
 const qreal TerminalPointItem::size = 3;
 
@@ -36,6 +37,9 @@ TerminalPointItem::TerminalPointItem(ConnectorItem *parent)
 	m_hLine = NULL;
 	updatePoint();
 	setFlag(QGraphicsItem::ItemIsMovable);
+
+	setResizable(false);
+	setMovable(true);
 }
 
 QPointF TerminalPointItem::point() {
@@ -65,4 +69,55 @@ void TerminalPointItem::drawCross() {
 
 	if(!m_hLine) m_hLine = new QGraphicsLineItem(this);
 	m_hLine->setLine(QLineF(leftPoint,rightPoint));
+}
+
+void TerminalPointItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+	if(isVisible() && m_movable) {
+		grabMouse();
+		updateCursor(event->pos(),QCursor(Qt::SizeAllCursor));
+	} else {
+		//QGraphicsItem::hoverEnterEvent(event);
+	}
+}
+
+void TerminalPointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+	if(isVisible() && m_movable) {
+		updateCursor(event->pos());
+		ungrabMouse();
+	} else {
+		//QGraphicsItem::hoverEnterEvent(event);
+	}
+}
+
+void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+	if(isVisible() && m_movable && m_moving && m_mousePosition == Inside) {
+		move(event->scenePos());
+		updateCursor(event->pos());
+		scene()->update();
+		DebugDialog::debug("<<< moving terminal point");
+	} else {
+		ResizableMovableGraphicsRectItem::mouseMoveEvent(event);
+	}
+}
+
+void TerminalPointItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	//setParentDragMode(QGraphicsView::NoDrag);
+	if(isVisible() && m_movable) {
+		m_mousePosition = closeToCorner(event->pos());
+		m_moving = m_mousePosition == Inside;
+		if(m_mousePosition != Outside) {
+			m_mousePressedPos = event->buttonDownScenePos(Qt::LeftButton);
+		}
+	} else {
+		ResizableMovableGraphicsRectItem::mousePressEvent(event);
+	}
+}
+
+void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+	if(isVisible() && m_movable) {
+		m_moving = false;
+		//setParentDragMode(QGraphicsView::ScrollHandDrag);
+		setCursor(QCursor());
+	}
+	ResizableMovableGraphicsRectItem::mouseReleaseEvent(event);
 }

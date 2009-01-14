@@ -41,6 +41,13 @@ protected:
 	void initPen();
 	void drawCross();
 
+	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+
 	QPointF m_point;
 	QPen m_linePen;
 	QGraphicsLineItem *m_hLine;
