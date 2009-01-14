@@ -25,13 +25,17 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 ********************************************************************/
 
 #include "terminalpointitem.h"
+#include "partseditorconnectoritem.h"
 #include "../debugdialog.h"
 
 const qreal TerminalPointItem::size = 3;
 
-TerminalPointItem::TerminalPointItem(ConnectorItem *parent)
+TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent)
 	: ResizableMovableGraphicsRectItem(parent)
 {
+	Q_ASSERT(parent);
+	m_parent = parent;
+
 	initPen();
 	m_vLine = NULL;
 	m_hLine = NULL;
@@ -40,10 +44,6 @@ TerminalPointItem::TerminalPointItem(ConnectorItem *parent)
 
 	setResizable(false);
 	setMovable(true);
-}
-
-QPointF TerminalPointItem::point() {
-	return m_point;
 }
 
 void TerminalPointItem::updatePoint() {
@@ -62,7 +62,7 @@ void TerminalPointItem::drawCross() {
 	QPointF bottomPoint(pRect.x()+pRect.width()/2,pRect.y()+pRect.height()/2+size);
 	QPointF rightPoint(pRect.x()+pRect.width()/2+size,pRect.y()+pRect.height()/2);
 	QPointF leftPoint(pRect.x()+pRect.width()/2-size,pRect.y()+pRect.height()/2);
-	m_point = QPointF(pRect.x()+pRect.width()/2,pRect.y()+pRect.height()/2);
+	//m_point = QPointF(pRect.x()+pRect.width()/2,pRect.y()+pRect.height()/2);
 
 	if(!m_vLine) m_vLine = new QGraphicsLineItem(this);
 	m_vLine->setLine(QLineF(topPoint,bottomPoint));
@@ -90,11 +90,14 @@ void TerminalPointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 }
 
 void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible() && m_movable && m_moving && m_mousePosition == Inside) {
+	if(isVisible() && m_movable && m_moving && m_mousePosition != Outside) {
 		move(event->scenePos());
-		updateCursor(event->pos());
+		if(isOutSideConnector()) {
+			setCursor(QCursor(Qt::ForbiddenCursor));
+		} else {
+			updateCursor(event->pos());
+		}
 		scene()->update();
-		DebugDialog::debug("<<< moving terminal point");
 	} else {
 		ResizableMovableGraphicsRectItem::mouseMoveEvent(event);
 	}
@@ -104,8 +107,8 @@ void TerminalPointItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	//setParentDragMode(QGraphicsView::NoDrag);
 	if(isVisible() && m_movable) {
 		m_mousePosition = closeToCorner(event->pos());
-		m_moving = m_mousePosition == Inside;
-		if(m_mousePosition != Outside) {
+		m_moving = m_mousePosition != Outside;
+		if(m_moving) {
 			m_mousePressedPos = event->buttonDownScenePos(Qt::LeftButton);
 		}
 	} else {
@@ -118,6 +121,29 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 		m_moving = false;
 		//setParentDragMode(QGraphicsView::ScrollHandDrag);
 		setCursor(QCursor());
+		if(isOutSideConnector()) {
+			moveBackToConnectorCenter();
+			return;
+		}
 	}
 	ResizableMovableGraphicsRectItem::mouseReleaseEvent(event);
+}
+
+bool TerminalPointItem::isOutSideConnector() {
+	QPointF myCenter = point();
+	QRectF pRect = m_parent->boundingRect();
+
+	DebugDialog::debug(QString("<<<< center %1 %2").arg(myCenter.x()).arg(myCenter.y()));
+	DebugDialog::debug(QString("<<<< parent %1 %2").arg(pRect.width()).arg(pRect.height()));
+	return myCenter.x()<0 || myCenter.y()<0
+		|| myCenter.x()>pRect.width() || myCenter.y()>pRect.height();
+}
+
+void TerminalPointItem::moveBackToConnectorCenter() {
+	m_parent->initTerminalPoint();
+}
+
+QPointF TerminalPointItem::point() {
+	qreal aux = m_linePen.widthF()*3; //both borders, and the cross in the center
+	return QPointF((pos().x()+rect().width()-aux)/2,(pos().y()+rect().height()-aux)/2);
 }

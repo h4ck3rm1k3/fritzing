@@ -53,7 +53,9 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 
 	setFlag(QGraphicsItem::ItemIsSelectable);
 	setFlag(QGraphicsItem::ItemIsMovable);
-	m_terminalPointItem = new TerminalPointItem(this);
+
+	m_terminalPointItem = NULL;
+	initTerminalPoint();
 }
 
 void PartsEditorConnectorItem::init(bool resizable, bool movable) {
@@ -267,4 +269,13 @@ void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2
 			m_terminalPointItem->updatePoint();
 		}
 	}
+}
+
+
+void PartsEditorConnectorItem::initTerminalPoint() {
+	if(m_terminalPointItem) {
+		scene()->removeItem(m_terminalPointItem);
+		delete m_terminalPointItem;
+	}
+	m_terminalPointItem = new TerminalPointItem(this);
 }

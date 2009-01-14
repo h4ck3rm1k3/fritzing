@@ -29,13 +29,19 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 #define TERMINALPOINTITEM_H_
 
 #include <QGraphicsRectItem>
-#include "../connectoritem.h"
+#include <QPen>
+#include "../resizablemovablegraphicsrectitem.h"
+
+class PartsEditorConnectorItem;
 
 class TerminalPointItem : public ResizableMovableGraphicsRectItem {
 public:
-	TerminalPointItem(ConnectorItem *parent);
+	TerminalPointItem(PartsEditorConnectorItem *parent);
 	QPointF point();
 	void updatePoint();
+
+	bool isOutSideConnector();
+	void moveBackToConnectorCenter();
 
 protected:
 	void initPen();
@@ -47,11 +53,11 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-
-	QPointF m_point;
 	QPen m_linePen;
 	QGraphicsLineItem *m_hLine;
 	QGraphicsLineItem *m_vLine;
+
+	PartsEditorConnectorItem *m_parent;
 
 	static const qreal size;
 };

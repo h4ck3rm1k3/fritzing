@@ -45,6 +45,8 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void setShowTerminalPoint(bool show);
 		bool showingTerminalPoint();
 
+		void initTerminalPoint();
+
 	protected:
 		void init(bool resizable, bool movable);
 
