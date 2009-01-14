@@ -1263,6 +1263,14 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	foreach (Wire * wire, wires) {
 		if (m_savedItems.contains(wire)) continue;
 
+		// if wire is stuck to a board, then it just gets dragged
+		ItemBase * stuckTo = wire->stuckTo();
+		if (stuckTo != NULL && m_savedItems.contains(stuckTo)) {
+			m_savedItems.insert(wire);
+			continue;
+		}
+
+		// if wire is connected between parts that are moving then move it, otherwise stretch it
 		wire->connectsWithin(m_savedItems, m_savedWires);
 	}
 

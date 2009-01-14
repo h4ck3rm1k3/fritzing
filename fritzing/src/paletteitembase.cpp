@@ -252,7 +252,7 @@ void PaletteItemBase::findConnectorsUnder() {
 
 void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	ItemBase::mouseReleaseEvent(event);
-	updateConnections();
+	//updateConnections();   // jrc:13 jan 2009:  I think updateConnections here is no longer necesary
 	for (int i = 0; i < childItems().count(); i++) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
 		if (connectorItem == NULL) continue;

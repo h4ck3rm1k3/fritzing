@@ -1751,6 +1751,9 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 }
 
 void MainWindow::exportToGerber() {
+	notYetImplemented(tr("Gerber export"));
+	return;
+
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());
 	if (svg.isEmpty()) {
 		// tell the user something reasonable

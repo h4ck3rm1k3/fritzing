@@ -237,9 +237,9 @@ void Autorouter1::start()
 			boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
 			jumperCount += drawTrace(edge->from, edge->to, partForBounds->mapToScene(boundingRect), wires);
 			foreach (Wire * wire, wires) {
-				//wire->addSticky(partForBounds, true);
-				//partForBounds->addSticky(wire, true);
-				DebugDialog::debug(QString("added wire %1").arg(wire->id()));
+				wire->addSticky(partForBounds, true);
+				partForBounds->addSticky(wire, true);
+				//DebugDialog::debug(QString("added wire %1").arg(wire->id()));
 			}
 		}
 
@@ -462,6 +462,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		}
 	}
 
+	bool backwards = false;
 	bool result = drawTrace(fromPos, toPos, from, to, wires, boundingPoly);
 	if (m_cancelled) {
 		return 0;
@@ -469,6 +470,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	if (!result) {
 		result = drawTrace(toPos, fromPos, to, from, wires, boundingPoly);
 		if (result) {
+			backwards = true;
 			DebugDialog::debug("backwards");
 		}
 	}
@@ -476,6 +478,11 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		return 0;
 	}
 	if (result) {
+		if (backwards) {
+			ConnectorItem * temp = from;
+			from = to;
+			to = temp;
+		}
 		// hook everyone up
 		from->tempConnectTo(wires[0]->connector0());
 		wires[0]->connector0()->tempConnectTo(from);

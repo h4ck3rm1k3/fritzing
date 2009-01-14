@@ -476,6 +476,24 @@ void Wire::simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to)
 	QPointF p1, p2;
 	calcNewLine(from, to, p1, p2);
 
+	/*
+	QPointF oldPos = this->pos();
+	QPointF newPos = p1;
+	QLineF oldLine = this->line();
+	QLineF newLine(0, 0,  p2.x() - p1.x(), p2.y() - p1.y());
+	if (qAbs(oldPos.x() - newPos.x()) > 1.75 ||  
+		qAbs(oldPos.y() - newPos.y()) > 1.75 ||
+		qAbs(oldLine.x1() - newLine.x1()) > 1.75 || 
+		qAbs(oldLine.x2() - newLine.x2()) > 1.75 || 
+		qAbs(oldLine.y1() - newLine.y1()) > 1.75 || 
+		qAbs(oldLine.y2() - newLine.y2()) > 1.75
+		) 
+	{
+		DebugDialog::debug("line changed");
+		calcNewLine(from,to,p1,p2);
+	}
+	*/
+
 	this->setPos(p1);
 	this->setLine(0,0, p2.x() - p1.x(), p2.y() - p1.y() );
 	//DebugDialog::debug(QString("set line %5: %1 %2, %3 %4, vis:%6 lyr:%7").arg(p1.x()).arg(p1.y()).arg(p2.x()).arg(p2.y()).arg(id()).arg(isVisible()).arg(m_viewIdentifier) );
@@ -496,9 +514,6 @@ void Wire::calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, Q
 	}
 	else {
 		p2 = from->sceneAdjustedTerminalPoint();
-		QPointF temp = from->adjustedTerminalPoint();
-		//DebugDialog::debug(QString("from tp %1 %2, %3 %4").arg(p2.x()).arg(p2.y()).arg(temp.x()).arg(temp.y()) );
-
 		ConnectorItem * otherFrom = m_connector0->firstConnectedToIsh();
 		if (otherFrom == NULL) {
 			p1 = m_connector0->mapToScene(m_connector0->rect().center());
