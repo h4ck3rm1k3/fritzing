@@ -5,8 +5,6 @@
 #   2. currently this parser assumes proper line breaks - this may choke on 
 #      some poorly formatted files - need to use a different tokenizer than string.splitlines()
 
-#TODO: stripping blank lines does not work
-
 import re
 import pcbkeys
 import sys
