@@ -50,7 +50,7 @@ static QString psActionType = ".ps";
 static QString pdfActionType = ".pdf";
 static QString pngActionType = ".png";
 static QString svgActionType = ".svg";
-static QString bomActionType = ".bom.pdf";
+static QString bomActionType = ".bom.txt";
 
 static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
@@ -81,7 +81,7 @@ void MainWindow::initExportConstants()
 	fileExtFormats[pngActionType] = tr("PNG Image (*.png)")+colons;
 	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)")+colons;
 	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)")+colons;
-        fileExtFormats[bomActionType] = tr("BOM PDF (*.bom.pdf)")+colons;
+        fileExtFormats[bomActionType] = tr("BoM Text File (*.bom.txt)")+colons;
 }
 
 void MainWindow::print() {
@@ -716,9 +716,9 @@ void MainWindow::createFileMenuActions() {
 	m_exportPdfAct->setStatusTip(tr("Export the current sketch as a PDF image"));
 	connect(m_exportPdfAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
-        m_exportBomAct = new BetterTriggerAction(tr("PDF &Bill of Materials"), this);
+        m_exportBomAct = new BetterTriggerAction(tr("&Bill of Materials"), this);
         m_exportBomAct->setData(bomActionType);
-        m_exportBomAct->setStatusTip(tr("Save a PDF Bill of Materials (BOM)/Shopping List"));
+        m_exportBomAct->setStatusTip(tr("Save a text Bill of Materials (BoM)/Shopping List"));
         connect(m_exportBomAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
 	m_exportEagleAct = new BetterTriggerAction(tr("to &Eagle..."), this);
@@ -1783,12 +1783,12 @@ void MainWindow::exportToEagle() {
 }
 
 void MainWindow::exportBOM() {
-    QString text =
-                tr("This will soon provide an export of the parts list of your Fritzing sketch, "
-                   "also known as a Bill of Materials (BOM).  Quite useful for shopping!");
-        QMessageBox::information(this, tr("Fritzing"), text);
-
         QList <ItemBase*> partList;
+        QMap<QString, int> shoppingList;
+
+        int maxLabelWidth = 0;
+
+        QString bom = tr("Fritzing Bill of Materials\n\n");
 
         // bail out if something is wrong
         // TODO: show an error in QMessageBox
@@ -1796,21 +1796,69 @@ void MainWindow::exportBOM() {
             return;
         }
 
+<<<<<<< .mine
+=======
         QString bom = "Fritzing Bill of Materials\n\n";
 
+>>>>>>> .r2172
         m_currentGraphicsView->collectParts(partList);
 
         qSort(partList.begin(), partList.end(), sortPartList);
+<<<<<<< .mine
+
+=======
+>>>>>>> .r2172
         for(int i=0; i < partList.size(); i++){
             bom += partList.at(i)->instanceTitle() + "\t" +
                    partList.at(i)->modelPartStuff()->description() + "\n";
         }
 
-        QFile fp( "/tmp/bom.txt" );
+<<<<<<< .mine
+        for(int i=0; i < partList.size(); i++){
+            QString spacer = "   ";
+            QString label = partList.at(i)->instanceTitle();
+
+            spacer += QString(maxLabelWidth - label.length(), QChar(' '));
+            bom += label + spacer +
+                   partList.at(i)->modelPartStuff()->title() + "\n";
+        }
+
+        bom += tr("\n\nShopping List\n\nQuantity\tPart\n\n");
+        QMapIterator<QString, int> it(shoppingList);
+        while (it.hasNext()) {
+            it.next();
+            bom += QString::number(it.value()) + "\t\t" + it.key() + "\n";
+        }
+
+=======
+>>>>>>> .r2172
+        QString path = defaultSaveFolder();
+
+        QString fileExt;
+        QString extFmt = fileExtFormats.value(bomActionType);
+        QString fileName = QFileDialog::getSaveFileName(this,
+                tr("Export Bill of Materials (BoM)..."),
+                path+"/"+m_fileName.remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
+                extFmt,
+                &fileExt
+        );
+
+        if (fileName.isEmpty()) {
+                return; //Cancel pressed
+        }
+
+        DebugDialog::debug(fileExt+" selected to export");
+        //fileExt = getExtFromFileDialog(fileExt);
+        //#ifdef Q_WS_X11
+//                if(!alreadyHasExtension(fileName)) {
+//                        fileName += fileExt;
+//                }
+//        #endif
+
+        QFile fp( fileName );
         fp.open(QIODevice::WriteOnly);
         fp.write(bom.toAscii(),bom.length());
         fp.close();
-
 }
 
 void MainWindow::hideShowTraceMenu() {
