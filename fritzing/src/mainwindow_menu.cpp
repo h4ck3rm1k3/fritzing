@@ -1796,24 +1796,24 @@ void MainWindow::exportBOM() {
             return;
         }
 
-<<<<<<< .mine
-=======
-        QString bom = "Fritzing Bill of Materials\n\n";
-
->>>>>>> .r2172
         m_currentGraphicsView->collectParts(partList);
 
         qSort(partList.begin(), partList.end(), sortPartList);
-<<<<<<< .mine
 
-=======
->>>>>>> .r2172
         for(int i=0; i < partList.size(); i++){
-            bom += partList.at(i)->instanceTitle() + "\t" +
-                   partList.at(i)->modelPartStuff()->description() + "\n";
+            QString label = partList.at(i)->instanceTitle();
+            QString desc = partList.at(i)->modelPartStuff()->title();
+            if(label.length() > maxLabelWidth) {
+                maxLabelWidth = label.length();
+            }
+            if(!shoppingList.contains(desc)){
+                shoppingList.insert(desc, 1);
+            }
+            else {
+                shoppingList[desc]++;
+            }
         }
 
-<<<<<<< .mine
         for(int i=0; i < partList.size(); i++){
             QString spacer = "   ";
             QString label = partList.at(i)->instanceTitle();
@@ -1830,8 +1830,6 @@ void MainWindow::exportBOM() {
             bom += QString::number(it.value()) + "\t\t" + it.key() + "\n";
         }
 
-=======
->>>>>>> .r2172
         QString path = defaultSaveFolder();
 
         QString fileExt;
@@ -1857,7 +1855,7 @@ void MainWindow::exportBOM() {
 
         QFile fp( fileName );
         fp.open(QIODevice::WriteOnly);
-        fp.write(bom.toAscii(),bom.length());
+        fp.write(bom.toUtf8(),bom.length());
         fp.close();
 }
 
