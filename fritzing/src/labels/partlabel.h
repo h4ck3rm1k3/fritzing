@@ -33,8 +33,30 @@ $Date$
 #include <QWidget>
 #include <QXmlStreamWriter>
 #include <QDomElement>
+#include <QTextDocument>
 
 #include "../viewlayer.h"
+
+class PartLabelTextDocument : public QTextDocument
+{
+public:
+	PartLabelTextDocument(long id, QObject * parent = 0);
+
+	void addRef();
+	void decRef();
+
+protected:
+	int m_refCount;
+	long m_id;
+
+
+protected:
+	static QHash<long, PartLabelTextDocument *> AllTextDocuments;
+
+
+	friend class PartLabel;
+};
+
 
 class PartLabel : public QGraphicsTextItem
 {
@@ -57,6 +79,7 @@ public:
 	ViewLayer::ViewLayerID viewLayerID();
 	void saveInstance(QXmlStreamWriter & streamWriter);
 	void restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
+	void moveLabel(QPointF newPos, QPointF newOffset);
 
 
 protected:

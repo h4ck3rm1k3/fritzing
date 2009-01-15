@@ -136,7 +136,7 @@ public:
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
 
-	void partLabelChanged(ItemBase *, const QString &newTooltip);
+	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
@@ -181,9 +181,13 @@ public:
 	void ensureFixedToBottomLeftItems();
 	void ensureFixedToBottomRightItems();
 	void ensureFixedToCenterItems();
+
 	void collectParts(QList<ItemBase *> & partList);
 
+	void movePartLabel(long itemID, QPointF newPos, QPointF newOffset); 
+
 	void updateInfoView();
+	void setCurrent(bool current);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -276,7 +280,7 @@ protected:
 	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QColor & getLabelTextColor();
-
+	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -288,7 +292,7 @@ signals:
 	void itemDeletedSignal(long id);
 	void clearSelectionSignal();
 	void itemSelectedSignal(long id, bool state);
-	void partLabelChangedSignal(long id, const QString &text);
+	void partLabelChangedSignal(long id, const QString &text, bool isUndoable);
 	void wireDisconnectedSignal(long fromID, QString fromConnectorID);
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
@@ -322,7 +326,6 @@ protected slots:
 	void sketchWidget_itemDeleted(long id);
 	void sketchWidget_clearSelection();
 	void sketchWidget_itemSelected(long id, bool state);
-	void partLabelChangedSlot(long id, const QString& text);
 	void scene_selectionChanged();
 	void wire_wireChanged(class Wire*, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
 	void wire_wireSplit(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
@@ -359,7 +362,7 @@ public slots:
 	void swap(long itemId, ModelPart *modelPart, bool doEmit=false);
 	void changeWireColor(const QString newColor);
  	void selectAllItems(bool state, bool doEmit);
-	void setInstanceTitle(long id, const QString & title);
+	void setInstanceTitle(long id, const QString & title, bool isUndoable);
 	void showPartLabel(long id, bool showIt);
 
 protected:
@@ -410,7 +413,7 @@ protected:
 	QHash<Wire *, ConnectorItem *> m_savedWires;
 	QList<ItemBase *> m_additionalSavedItems;
 	bool m_ignoreSelectionChangeEvents;
-	QHash<ConnectorItem *, ConnectorItem *> m_disconnectors;
+	bool m_current;
 
 	QList<QGraphicsProxyWidget*> m_fixedToTopLeftItems;
 	QList<QGraphicsProxyWidget*> m_fixedToTopRightItems;

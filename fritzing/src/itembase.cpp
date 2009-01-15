@@ -613,11 +613,16 @@ QString ItemBase::instanceTitle() {
 }
 
 void ItemBase::setInstanceTitle(const QString &title) {
-	if (m_modelPart && m_modelPart->partInstanceStuff()) {
-		m_modelPart->partInstanceStuff()->setTitle(title);
-	}
+	setInstanceTitleAux(title);
 	if (m_partLabel) {
 		m_partLabel->setPlainText(title);
+	}
+}
+
+void ItemBase::setInstanceTitleAux(const QString &title) 
+{
+	if (m_modelPart && m_modelPart->partInstanceStuff()) {
+		m_modelPart->partInstanceStuff()->setTitle(title);
 	}
 	setInstanceTitleTooltip(title);
 
@@ -757,10 +762,13 @@ void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer, const QColor & t
 	}
 }
 
-void ItemBase::partLabelChanged(const QString &text) {
+void ItemBase::partLabelChanged(const QString & newText) {
+	// sent from part label after inline edit
 	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	QString oldText = modelPart()->partInstanceStuff()->title();
+	setInstanceTitleAux(newText);
 	if (infographics != NULL) {
-		infographics->partLabelChanged(this, text);
+		infographics->partLabelChanged(this, oldText, newText);
 	}
 }
 
@@ -782,5 +790,11 @@ void ItemBase::restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLaye
 		if (!labelGeometry.isNull()) {
 			m_partLabel->restoreLabel(labelGeometry, viewLayerID);
 		}
+	}
+}
+
+void ItemBase::movePartLabel(QPointF newPos, QPointF newOffset) {
+	if (m_partLabel) {
+		m_partLabel->moveLabel(newPos, newOffset);
 	}
 }

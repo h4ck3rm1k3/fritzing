@@ -30,6 +30,7 @@ $Date$
 #include "sketchwidget.h"
 
 int SelectItemCommand::selectItemCommandID = 3;
+int ChangeLabelTextCommand::changeLabelTextCommandID = 4;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -554,5 +555,67 @@ void RoutingStatusCommand::redo() {
 	m_sketchWidget->forwardRoutingStatusSignal(m_newNetCount, m_newNetRoutedCount, m_newConnectorsLeftToRoute, m_newJumpers);
 }
 
+///////////////////////////////////////////////
 
+MoveLabelCommand::MoveLabelCommand(class SketchWidget *sketchWidget, long id, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_oldPos = oldPos;
+    m_newPos = newPos;
+    m_oldOffset = oldOffset;
+    m_newOffset = newOffset;
+}
 
+void MoveLabelCommand::undo()
+{
+    m_sketchWidget->movePartLabel(m_itemID, m_oldPos, m_oldOffset);
+}
+
+void MoveLabelCommand::redo()
+{
+    m_sketchWidget->movePartLabel(m_itemID, m_newPos, m_newOffset);
+}
+
+///////////////////////////////////////////////
+
+ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QUndoCommand *parent)
+	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_oldText = oldText;
+    m_newText = newText;
+	m_firstTime = true;
+}
+
+void ChangeLabelTextCommand::undo() {
+    m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, false);
+}
+
+void ChangeLabelTextCommand::redo() {
+	if (m_firstTime) {
+		m_firstTime = false;
+		return;
+	}
+
+    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, false);
+}
+
+int ChangeLabelTextCommand::id() const {
+	return changeLabelTextCommandID;
+}
+
+bool ChangeLabelTextCommand::mergeWith(const QUndoCommand *other)
+{
+	// "this" is earlier; "other" is later
+
+    if (other->id() != id()) {
+        return false;
+   	}
+
+    const ChangeLabelTextCommand * sother = dynamic_cast<const ChangeLabelTextCommand *>(other);
+    if (sother == NULL) return false;
+
+	m_newText = sother->m_newText;
+    return true;
+}

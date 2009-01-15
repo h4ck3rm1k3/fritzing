@@ -68,6 +68,7 @@ static QColor labelTextColor = Qt::black;
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_current = false;
 	m_ignoreSelectionChangeEvents = false;
 	m_droppingItem = NULL;
 	m_chainDrag = false;
@@ -1662,13 +1663,6 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	if(pitem) m_lastPaletteItemSelected = pitem;
 }
 
-void SketchWidget::partLabelChangedSlot(long id, const QString& text) {
-	ItemBase * pitem = findItem(id);
-	if (pitem != NULL) {
-		pitem->setInstanceTitle(text);
-	}
-}
-
 void SketchWidget::group() {
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
 	if (sitems.size() < 2) return;
@@ -3020,7 +3014,7 @@ void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, Connect
 	foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 		connectionState.insert(fromConnectorItem, toConnectorItem);
 		fromConnectorItem->tempRemove(toConnectorItem);
-		toConnectorItem->tempRemove(fromConnectorItem);
+ 		toConnectorItem->tempRemove(fromConnectorItem);
 		//DebugDialog::debug(QString("temp dis %1 %2 %3 %4")
 			//.arg(fromConnectorItem->attachedToID())
 			//.arg(fromConnectorItem->connectorStuffID())
@@ -3029,14 +3023,31 @@ void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, Connect
 	}
 }
 
-void SketchWidget::partLabelChanged(ItemBase * pitem, const QString &newTooltip) {
-	if (pitem != NULL) {
-		emit partLabelChangedSignal(pitem->id(), newTooltip);
+void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, const QString &newText) {
+	// partLabelChanged triggered from inline editing the label
+
+	if (!m_current) {
+		// all three views get the partLabelChanged call, but only need to act on this once
+		return;
 	}
+	
+
+
 	if (currentlyInfoviewed(pitem))  {
-		// TODO: just change the affected item
+		// TODO: just change the affected item in the info view
 		InfoGraphicsView::viewItemInfo(pitem);
 	}
+
+	partLabelChangedAux(pitem, oldText, newText);
+}
+
+void SketchWidget::partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText)
+{
+	if (pitem == NULL) return;
+
+	ChangeLabelTextCommand * command = new ChangeLabelTextCommand(this, pitem->id(), oldText, newText, NULL);
+	command->setText(tr("Change %1 label to '%2'").arg(pitem->title()).arg(newText));
+	m_undoStack->push(command);
 }
 
 void SketchWidget::setInfoViewOnHover(bool infoViewOnHover) {
@@ -3727,14 +3738,20 @@ const QString & SketchWidget::viewName() {
 	return m_viewName;
 }
 
-void SketchWidget::setInstanceTitle(long itemID, const QString & title) {
+void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool isUndoable) {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase != NULL) {
-		itemBase->setInstanceTitle(title);
-		emit partLabelChangedSignal(itemID, title);
+		QString oldText = itemBase->instanceTitle();
+		itemBase->setInstanceTitle(newText);
+		if (currentlyInfoviewed(itemBase))  {
+			// TODO: just change the affected item in the info view
+			InfoGraphicsView::viewItemInfo(itemBase);
+		}
+		if (isUndoable) {
+			partLabelChangedAux(itemBase, oldText, newText);
+		}
 	}
 }
-
 
 void SketchWidget::showPartLabel(long itemID, bool showIt) {
 
@@ -3755,4 +3772,16 @@ void SketchWidget::collectParts(QList<ItemBase *> & partList) {
 
 		partList.append(pitem);
 	}
+}
+
+void SketchWidget::movePartLabel(long itemID, QPointF newPos, QPointF newOffset) 
+{
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return;
+
+	item->movePartLabel(newPos, newOffset);
+}
+
+void SketchWidget::setCurrent(bool current) {
+	m_current = current;
 }

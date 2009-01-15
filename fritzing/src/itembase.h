@@ -147,10 +147,11 @@ public:
 	virtual void setInstanceTitle(const QString &title);
 	bool isPartLabelVisible();
 	void restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
+	void movePartLabel(QPointF newPos, QPointF newOffset);
 
 public slots:
 	void showPartLabel(bool show, ViewLayer *, const QColor & textColor);
-	void partLabelChanged(const QString &text);
+	void partLabelChanged(const QString &newText);
 	qint64 id();
 
 signals:
@@ -175,6 +176,7 @@ protected:
 
 	void setInstanceTitleTooltip(const QString& text);
 	void setDefaultTooltip();
+	void setInstanceTitleAux(const QString & title);
 
 protected:
  	QSizeF m_size;

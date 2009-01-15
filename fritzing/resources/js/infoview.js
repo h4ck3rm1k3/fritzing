@@ -9,7 +9,7 @@ function fieldEnter(field,evt,idfld) {
 		//remove glow
 		noLight(elem);
 		elem.innerHTML = field.value
-		sketch.setInstanceTitle(currentItem.id(), field.value);
+		sketch.setInstanceTitle(currentItem.id(), field.value, true);
 		changing = false;
 		return false;
 	} else {
@@ -21,7 +21,7 @@ function fieldBlur(field,idfld) {
 	if (field.value!="") {
 		elem = document.getElementById( idfld );
 		elem.innerHTML = field.value
-		sketch.setInstanceTitle(currentItem.id(), field.value);
+		sketch.setInstanceTitle(currentItem.id(), field.value, true);
 		changing = false;
 		return false;
 	}

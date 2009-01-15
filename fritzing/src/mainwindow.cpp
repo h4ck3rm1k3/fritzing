@@ -367,8 +367,6 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_itemSelected(long, bool)));
 	succeeded = succeeded && connect(signaller, SIGNAL(selectAllItemsSignal(bool, bool)),
 									 slotter, SLOT(selectAllItems(bool, bool)));
-	succeeded = succeeded && connect(signaller, SIGNAL(partLabelChangedSignal(long, const QString&)),
-										 slotter, SLOT(partLabelChangedSlot(long, const QString&)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireDisconnectedSignal(long, QString)),
 									 slotter, SLOT(sketchWidget_wireDisconnected(long,  QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(wireConnectedSignal(long,  QString, long,  QString)),
@@ -594,6 +592,10 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	widgetParent->addStatusBar(m_statusBar);
 	if(sb != m_statusBar) sb->hide();
 
+	if (m_breadboardGraphicsView) m_breadboardGraphicsView->setCurrent(false); 
+	if (m_schematicGraphicsView) m_schematicGraphicsView->setCurrent(false); 
+	if (m_pcbGraphicsView) m_pcbGraphicsView->setCurrent(false); 
+
 	SketchWidget *widget = widgetParent->graphicsView();
 
 	if(m_currentGraphicsView) {
@@ -614,6 +616,8 @@ void MainWindow::tabWidget_currentChanged(int index) {
 		SLOT(updateTransformationActions())
 	);
 
+
+	m_currentGraphicsView->setCurrent(true);
 
 	//  TODO:  should be a cleaner way to do this
 	switch( index ) {

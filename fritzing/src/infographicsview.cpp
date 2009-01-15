@@ -99,18 +99,10 @@ HtmlInfoView * InfoGraphicsView::infoView() {
 void InfoGraphicsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
-void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &newTooltip) {
+void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText) {
 	Q_UNUSED(item);
-	Q_UNUSED(newTooltip);
-}
-
-ModelPart *InfoGraphicsView::selected() {
-	PaletteItem* pi =  dynamic_cast<PaletteItem*>(selectedAux());
-	if(pi) {
-		return pi->modelPart();
-	} else {
-		return NULL;
-	}
+	Q_UNUSED(oldText);
+	Q_UNUSED(newText);
 }
 
 QGraphicsItem *InfoGraphicsView::selectedAux() {

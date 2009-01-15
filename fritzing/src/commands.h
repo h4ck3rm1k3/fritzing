@@ -359,5 +359,39 @@ protected:
 
 };
 
+class MoveLabelCommand : public BaseCommand
+{
+public:
+    MoveLabelCommand(class SketchWidget *sketchWidget, long id, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+    long m_itemID;
+    QPointF m_oldPos;
+    QPointF m_newPos;
+    QPointF m_oldOffset;
+    QPointF m_newOffset;
+};
+
+
+class ChangeLabelTextCommand : public BaseCommand
+{
+public:
+    ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QUndoCommand *parent);
+    void undo();
+    void redo();
+	int id() const;
+	bool mergeWith(const QUndoCommand *other);
+
+protected:
+    long m_itemID;
+    QString m_oldText;
+    QString m_newText;
+	bool m_firstTime;
+
+	static int changeLabelTextCommandID;
+};
+
 
 #endif // COMMANDS_H

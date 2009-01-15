@@ -43,16 +43,17 @@ $Date$
 //		** viewinfo for wires
 //		** graphics (esp. drag area vs. edit area) 
 //		** html info box needs to update when view switches
-//		multiple selection?
+//		-- multiple selection?
 //		undo delete
-//		undo select
+//		-- undo select
 //		undo change text
+//		undo move
 //		** layers and z order
 //		** hide and show layer
 //		tools (bold, italic, color, size)?
 //		** sync hide/show checkbox with visibility state
-//		** skip: export to svg for export diy (silkscreen layer is not exported)
-//		save and load
+//		-- export to svg for export diy (silkscreen layer is not exported)
+//		** save and load
 //		** text color needs to be separate in separate views
 //		** hide silkscreen should hide silkscreen label
 //		** delete owner: delete label
@@ -60,21 +61,59 @@ $Date$
 //		copy/paste?
 //		z-order manipulation?
 
+/////////////////////////////////////////////
+
+PartLabelTextDocument::PartLabelTextDocument(long id, QObject * parent) : QTextDocument(parent) 
+{
+	m_id = id;
+	m_refCount = 0;
+}
+
+void PartLabelTextDocument::addRef() {
+	m_refCount++;
+}
+
+void PartLabelTextDocument::decRef() {
+	if (--m_refCount <= 0) {
+		AllTextDocuments.remove(m_id);
+		deleteLater();
+	}
+}
+
+QHash<long, PartLabelTextDocument *> PartLabelTextDocument::AllTextDocuments;
+
+///////////////////////////////////////////
+
 PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * parent)
 	: QGraphicsTextItem(text, parent)
 {
 	m_owner = owner;
+
+	PartLabelTextDocument * doc = PartLabelTextDocument::AllTextDocuments.value(owner->id());
+	if (doc == NULL) {
+		doc = new PartLabelTextDocument(owner->id(), NULL);
+		PartLabelTextDocument::AllTextDocuments.insert(owner->id(), doc);
+		doc->setUndoRedoEnabled(true);							
+	}
+	doc->addRef();
+	setDocument(doc);
+	connect(doc, SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
+
 	m_hidden = m_initialized = false;
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
 	setFlag(QGraphicsItem::ItemIsMovable, false);					// don't move this in the standard QGraphicsItem way
 	setTextInteractionFlags(Qt::TextEditorInteraction);
 	setVisible(false);
-	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 	m_viewLayerID = ViewLayer::UnknownLayer;
 	setAcceptHoverEvents(true);
 }
 
-PartLabel::~PartLabel() {
+PartLabel::~PartLabel() 
+{
+	PartLabelTextDocument * doc = dynamic_cast<PartLabelTextDocument *>(document());
+	if (doc) {
+		doc->decRef();
+	}
 	if (m_owner) {
 		m_owner->clearPartLabel();
 	}
@@ -151,13 +190,14 @@ void PartLabel::contentsChangedSlot() {
 	}
 }
 
-void PartLabel::setPlainText(const QString & text) {
+void PartLabel::setPlainText(const QString & text) 
+{
 	// prevent unnecessary contentsChanged signals
 	if (text.compare(document()->toPlainText()) == 0) return;
 
-	disconnect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()));
+	document()->blockSignals(true);
 	QGraphicsTextItem::setPlainText(text);
-	connect(document(), SIGNAL(contentsChanged()), this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
+	document()->blockSignals(false);
 }
 
 bool PartLabel::initialized() {
@@ -245,3 +285,12 @@ void PartLabel::restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID
 	c.setNamedColor(labelGeometry.attribute("textColor"));
 	setDefaultTextColor(c);
 }
+
+void PartLabel::moveLabel(QPointF newPos, QPointF newOffset) 
+{
+	this->setPos(newPos);
+	m_offset = newOffset;
+}
+
+///////////////////////////////////////////
+

@@ -62,8 +62,7 @@ public:
 
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
-	virtual void partLabelChanged(ItemBase *, const QString &newTooltip);
-	virtual ModelPart *selected();
+	virtual void partLabelChanged(ItemBase *, const QString &oldText, const QString & newText);
 
 protected:
 	QGraphicsItem *selectedAux();
