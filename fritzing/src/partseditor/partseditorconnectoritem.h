@@ -45,7 +45,8 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void setShowTerminalPoint(bool show);
 		bool showingTerminalPoint();
 
-		void initTerminalPoint();
+		void resetTerminalPoint();
+		void updateTerminalPoint();
 
 	protected:
 		void init(bool resizable, bool movable);
@@ -70,7 +71,9 @@ class PartsEditorConnectorItem: public ConnectorItem {
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;
+
 		TerminalPointItem *m_terminalPointItem;
+		bool m_geometryHasChanged;
 	public:
 		static QColor selectedColor;
 		static QColor notSelectedColor;

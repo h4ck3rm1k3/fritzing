@@ -36,12 +36,11 @@ class PartsEditorConnectorItem;
 
 class TerminalPointItem : public ResizableMovableGraphicsRectItem {
 public:
-	TerminalPointItem(PartsEditorConnectorItem *parent);
+	TerminalPointItem(PartsEditorConnectorItem *parent, bool movable=true);
 	QPointF point();
 	void updatePoint();
 
 	bool isOutSideConnector();
-	void moveBackToConnectorCenter();
 
 protected:
 	void initPen();

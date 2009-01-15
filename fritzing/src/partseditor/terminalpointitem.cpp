@@ -30,7 +30,7 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 const qreal TerminalPointItem::size = 3;
 
-TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent)
+TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent, bool movable)
 	: ResizableMovableGraphicsRectItem(parent)
 {
 	Q_ASSERT(parent);
@@ -43,12 +43,23 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent)
 	setFlag(QGraphicsItem::ItemIsMovable);
 
 	setResizable(false);
-	setMovable(true);
+	setMovable(movable);
 }
 
 void TerminalPointItem::updatePoint() {
-	setRect(parentItem()->boundingRect());
+	/*QPointF newPos = mapToParent(pos());
+	QRectF pRect = parentItem()->boundingRect();
+	QRectF newRect(newPos.x(),newPos.y(),pRect.width(),pRect.height());*/
+
+	// this maps a moved tpoint correctly to its parent, after a
+	// transformation of the later, but breaks the back-to-center-if-outside behaviour
+	//setTransform(m_parent->transform());
+
+	setRect(m_parent->boundingRect());
 	drawCross();
+
+	//after transformation, move back to center
+	//moveBackToConnectorCenter();
 }
 
 void TerminalPointItem::initPen() {
@@ -122,7 +133,7 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 		//setParentDragMode(QGraphicsView::ScrollHandDrag);
 		setCursor(QCursor());
 		if(isOutSideConnector()) {
-			moveBackToConnectorCenter();
+			m_parent->resetTerminalPoint();
 			return;
 		}
 	}
@@ -131,19 +142,23 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 bool TerminalPointItem::isOutSideConnector() {
 	QPointF myCenter = point();
-	QRectF pRect = m_parent->boundingRect();
+	QPointF pPos = m_parent->mapToScene(m_parent->pos());
+	QRectF pRectAux = m_parent->boundingRect();
+	qreal magicNumber = 2; //?
+	QRectF pRect(pPos.x()-magicNumber,pPos.y()-magicNumber,pPos.x()+pRectAux.width(),pPos.y()+pRectAux.height());
 
 	DebugDialog::debug(QString("<<<< center %1 %2").arg(myCenter.x()).arg(myCenter.y()));
-	DebugDialog::debug(QString("<<<< parent %1 %2").arg(pRect.width()).arg(pRect.height()));
-	return myCenter.x()<0 || myCenter.y()<0
+	DebugDialog::debug(QString("<<<< parent %1 %2 - %3 %4")
+			.arg(pRect.x()).arg(pRect.y()).arg(pRect.width()).arg(pRect.height()));
+	DebugDialog::debug("");
+	return myCenter.x()<pRect.x() || myCenter.y()<pRect.y()
 		|| myCenter.x()>pRect.width() || myCenter.y()>pRect.height();
 }
 
-void TerminalPointItem::moveBackToConnectorCenter() {
-	m_parent->initTerminalPoint();
-}
-
 QPointF TerminalPointItem::point() {
-	qreal aux = m_linePen.widthF()*3; //both borders, and the cross in the center
-	return QPointF((pos().x()+rect().width()-aux)/2,(pos().y()+rect().height()-aux)/2);
+	scene()->update();
+	QPointF pos = mapToScene(this->pos());
+	QPointF size = mapToScene(QPointF(boundingRect().width(),boundingRect().height()));
+	qreal lineWx2 = m_linePen.widthF()*2;
+	return QPointF((pos.x()+size.x()-lineWx2)/2,(pos.y()+size.y()-lineWx2)/2);
 }

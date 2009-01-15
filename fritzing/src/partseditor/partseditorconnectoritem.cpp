@@ -54,8 +54,9 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 	setFlag(QGraphicsItem::ItemIsSelectable);
 	setFlag(QGraphicsItem::ItemIsMovable);
 
+	m_geometryHasChanged = false;
 	m_terminalPointItem = NULL;
-	initTerminalPoint();
+	updateTerminalPoint();
 }
 
 void PartsEditorConnectorItem::init(bool resizable, bool movable) {
@@ -246,16 +247,25 @@ void PartsEditorConnectorItem::setParentDragMode(QGraphicsView::DragMode dragMod
 
 void PartsEditorConnectorItem::setShowTerminalPoint(bool show) {
 	if(m_terminalPointItem) {
-		m_terminalPointItem->setVisible(show);
+		DebugDialog::debug("set show tponts");
+		if(!m_geometryHasChanged) {
+			DebugDialog::debug("set visible");
+			m_terminalPointItem->setVisible(show);
+		} else if(show) {
+			DebugDialog::debug("update");
+			resetTerminalPoint();
+			m_geometryHasChanged = false;
+		}
+		DebugDialog::debug("fin set show tponts\n");
 	}
+
 }
 
 bool PartsEditorConnectorItem::showingTerminalPoint() {
 	if(m_terminalPointItem) {
 		return m_terminalPointItem->isVisible();
-	} else {
-		return false;
 	}
+	return false;
 }
 
 void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
@@ -265,17 +275,27 @@ void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2
 	if(width != this->boundingRect().width()
 	   && height != this->boundingRect().height()) {
 		setRect(x1,y1,width,height);
-		if(m_terminalPointItem) {
-			m_terminalPointItem->updatePoint();
+		if(showingTerminalPoint()) {
+			updateTerminalPoint();
+		} else {
+			m_geometryHasChanged = true;
 		}
 	}
 }
 
+void PartsEditorConnectorItem::resetTerminalPoint() {
+	scene()->removeItem(m_terminalPointItem);
+	//delete m_terminalPointItem; // already deleted or what?
+	m_terminalPointItem = NULL;
+	updateTerminalPoint();
+}
 
-void PartsEditorConnectorItem::initTerminalPoint() {
-	if(m_terminalPointItem) {
-		scene()->removeItem(m_terminalPointItem);
-		delete m_terminalPointItem;
+
+void PartsEditorConnectorItem::updateTerminalPoint() {
+	if(!m_terminalPointItem) {
+		m_terminalPointItem = new TerminalPointItem(this);
+	} else {
+		m_terminalPointItem->setParentItem(this);
+		m_terminalPointItem->updatePoint();
 	}
-	m_terminalPointItem = new TerminalPointItem(this);
 }
