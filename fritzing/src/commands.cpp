@@ -55,20 +55,20 @@ SketchWidget* BaseCommand::sketchWidget() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, QUndoCommand *parent)
+AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
     : BaseCommand(crossViewType, sketchWidget, parent)
 {
     m_moduleID = moduleID;
     m_viewGeometry = viewGeometry;
     m_itemID = id;
+	m_modelIndex = modelIndex;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent)
-    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, parent)
+    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, modelIndex, parent)
 {
-	m_modelIndex = modelIndex;
 	m_doFirstRedo = m_firstRedo = true;
 	m_updateInfoView = updateInfoView;
 }
@@ -93,14 +93,14 @@ void AddItemCommand::turnOffFirstRedo() {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, ViewGeometry & viewGeometry, qint64 id, QUndoCommand *parent)
-    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, parent)
+DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
+    : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, modelIndex, parent)
 {
 }
 
 void DeleteItemCommand::undo()
 {
-    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, -1);
+    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex);
 }
 
 void DeleteItemCommand::redo()
@@ -402,7 +402,7 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 				wire->id(), "connector1", false, true, NULL));
 	}
 
-	m_commands.append(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), NULL));
+	m_commands.append(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
 }
 
 

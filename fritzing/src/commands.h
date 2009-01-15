@@ -58,12 +58,13 @@ protected:
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
-    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent);
+    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
 
 protected:
     QString m_moduleID;
     long m_itemID;
     ViewGeometry m_viewGeometry;
+	long m_modelIndex;
 
 };
 
@@ -79,14 +80,13 @@ protected:
 	bool m_updateInfoView;
 	bool m_firstRedo;
 	bool m_doFirstRedo;
-	long m_modelIndex;
 
 };
 
 class DeleteItemCommand : public AddDeleteItemCommand
 {
 public:
-    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, QUndoCommand *parent);
+    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
     void undo();
     void redo();
 

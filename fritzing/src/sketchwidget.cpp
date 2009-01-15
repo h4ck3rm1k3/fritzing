@@ -679,8 +679,11 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		delete connectorHash;
 	}
 
-	for (int i = 0; i < deletedItems.count(); i++) {
-		ItemBase * itemBase = deletedItems[i];
+	foreach (ItemBase * itemBase, deletedItems) {
+		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
+	}
+
+	foreach (ItemBase * itemBase, deletedItems) {
 		makeDeleteItemCommand(itemBase, parentCommand);
 		emit deleteItemSignal(itemBase->id(), parentCommand);			// let the other views add the command
 	}
@@ -869,12 +872,7 @@ void SketchWidget::selectItem(long id, bool state, bool updateInfoView, bool doE
 		item->setSelected(state);
 		if(updateInfoView) {
 			// show something in the info view, even if it's not selected
-			Wire *wire = dynamic_cast<Wire*>(item);
-			if(!wire) {
-				InfoGraphicsView::viewItemInfo(item);
-			} else {
-				InfoGraphicsView::viewItemInfo(wire);
-			}
+			InfoGraphicsView::viewItemInfo(item);
 		}
 		if (doEmit) {
 			emit itemSelectedSignal(id, state);
@@ -1229,8 +1227,16 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	if (item == NULL) {
 		return;
 	}
-	if (dynamic_cast<PartLabel *>(item)) {
+
+	PartLabel * partLabel =  dynamic_cast<PartLabel *>(item);
+	if (partLabel != NULL) {
+		InfoGraphicsView::viewItemInfo(partLabel->owner());
 		return;
+	}
+
+	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+	if (itemBase) {
+		InfoGraphicsView::viewItemInfo(itemBase);
 	}
 
 	QSet<Wire *> wires;
@@ -2659,7 +2665,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * par
 		new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	}
-	new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), parentCommand);
+	new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), parentCommand);
 }
 
 ItemBase::ViewIdentifier SketchWidget::viewIdentifier() {

@@ -80,6 +80,7 @@ public:
 	void saveInstance(QXmlStreamWriter & streamWriter);
 	void restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
 	void moveLabel(QPointF newPos, QPointF newOffset);
+	class ItemBase * owner();
 
 
 protected:

@@ -44,9 +44,9 @@ $Date$
 //		** graphics (esp. drag area vs. edit area) 
 //		** html info box needs to update when view switches
 //		-- multiple selection?
-//		undo delete
+//		undo delete (text and show?)
 //		-- undo select
-//		undo change text
+//		** undo change text
 //		undo move
 //		** layers and z order
 //		** hide and show layer
@@ -292,5 +292,8 @@ void PartLabel::moveLabel(QPointF newPos, QPointF newOffset)
 	m_offset = newOffset;
 }
 
-///////////////////////////////////////////
+ItemBase * PartLabel::owner() {
+	return m_owner;
+}
+
 
