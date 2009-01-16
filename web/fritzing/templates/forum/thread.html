@@ -13,7 +13,7 @@
 {% for post in post_list %}
     <div class="boardCommentComplete {% cycle 'odd' 'even' %}">
         <div class="classCommentBody">
-            {{ post.body|force_escape|markdown|urlize|safe }}
+            {{ post.body|markdown|urlize|safe }}
             <div class='boardCommentDetails' id='post{{ post.id }}'>Posted {{ post.time|timesince }} ago 
             by <strong>{% firstof post.author.get_full_name post.author %}</strong></div>
         </div>
@@ -30,7 +30,8 @@
 </ul>
 {% endif %}
 
-<h3>Post a Reply</h3>
+<p>
+    <h2>Post a Reply</h2>
 {% if thread.closed %}
 <p>Sorry, this thread is closed. No further replies are permitted.</p>
 {% else %}
@@ -43,4 +44,5 @@
 <p>Please login to post a reply.</p>
 {% endif %}
 {% endif %}
+</p>
 {% endblock %}
