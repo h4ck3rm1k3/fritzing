@@ -28,8 +28,14 @@ div.boardComment {
   border-top: 1px solid #CCC;
 }
 div.boardCommentDetails {
-  margin-bottom: 0.5em;
   color: #666;
+}
+div.boardCommentComplete {
+	padding: 0.4em 0.5em;
+}
+
+div.boardCommentComplete.odd {
+	background-color: #f9f9f9
 }
 div.boardCommentActions form {
   width: auto;

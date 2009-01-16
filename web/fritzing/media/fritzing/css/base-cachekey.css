@@ -2835,3 +2835,8 @@ dl.portlet dd {
 }
 
 }
+
+
+table.listing tbody tr.odd {
+	background: #f9f9f9;
+}
