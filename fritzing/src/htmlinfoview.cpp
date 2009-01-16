@@ -34,7 +34,7 @@ $Date$
 #include "connectorstuff.h"
 #include "connector.h"
 #include "mainwindow.h"
-#include "rendererviewthing.h"
+#include "fsvgrenderer.h"
 #include "layerattributes.h"
 #include "dockmanager.h"
 
@@ -128,7 +128,7 @@ void HtmlInfoView::viewItemInfo(ItemBase* item, bool swappingEnabled) {
 		return;
 	}
 
-		
+
 	m_currentSwappingEnabled = swappingEnabled;
 
 	QString s = appendStuff(item,swappingEnabled);

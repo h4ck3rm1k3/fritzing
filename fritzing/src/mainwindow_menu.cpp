@@ -41,7 +41,7 @@ $Date$
 #include "eventeater.h"
 #include "virtualwire.h"
 #include "tabwindow.h"
-#include "rendererviewthing.h"
+#include "fsvgrenderer.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -139,7 +139,7 @@ void MainWindow::exportDiy(QAction * action) {
 	printer.setOutputFileName(fileName);
 	QPainter painter;
 	if (painter.begin(&printer)) {
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());   
+		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());
 
 		// as a bonus feature, save the svg as a file
 		QString svgFileName = fileName;
@@ -493,7 +493,7 @@ void MainWindow::closeIfEmptySketch(MainWindow* mw) {
 	mw->show();
 }
 
-bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent) 
+bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent)
 {
 	bool result = false;
     if(fileName.endsWith(FritzingSketchExtension)) {
@@ -510,13 +510,13 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 	else if (fileName.endsWith(FritzingPartExtension)) {
 		notYetImplemented(tr("directly loading parts"));
 	}
-	
+
 	if (result) {
 		this->show();
 	}
-	
+
 	return result;
-}	
+}
 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
 	this->show();

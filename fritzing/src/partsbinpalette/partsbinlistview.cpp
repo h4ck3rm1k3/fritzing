@@ -29,7 +29,7 @@ $Date$
 #include "../htmlinfoview.h"
 #include "../paletteitembase.h"
 #include "../layerattributes.h"
-#include "../rendererviewthing.h"
+#include "../fsvgrenderer.h"
 
 #include "partsbinlistview.h"
 

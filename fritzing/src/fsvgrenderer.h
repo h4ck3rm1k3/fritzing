@@ -24,8 +24,8 @@ $Date$
 
 ********************************************************************/
 
-#ifndef RENDERERVIEWTHING_H
-#define RENDERERVIEWTHING_H
+#ifndef FSVGRENDERER_H
+#define FSVGRENDERER_H
 
 #include <QHash>
 #include <QSvgRenderer>

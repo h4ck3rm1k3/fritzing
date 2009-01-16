@@ -39,6 +39,7 @@ HEADERS += src/abstractstatesbutton.h \
     src/fritzingwindow.h \
     src/fsplashscreen.h \
     src/ftabwidget.h \
+    src/fsvgrenderer.h \
     src/graphicssvglineitem.h \
     src/groupitem.h \
     src/htmlinfoview.h \
@@ -61,7 +62,6 @@ HEADERS += src/abstractstatesbutton.h \
     src/pcbsketchwidget.h \
     src/pcbschematicsketchwidget.h \
     src/prefsdialog.h \
-    src/rendererviewthing.h \
     src/schematicsketchwidget.h \
     src/sketchareawidget.h \
     src/sketchmodel.h \
@@ -107,6 +107,7 @@ SOURCES += src/aboutbox.cpp \
     src/fritzingwindow.cpp \
     src/fsplashscreen.cpp \
     src/ftabwidget.cpp \
+    src/fsvgrenderer.cpp \
     src/graphicssvglineitem.cpp \
     src/groupitem.cpp \
     src/htmlinfoview.cpp \
@@ -131,7 +132,6 @@ SOURCES += src/aboutbox.cpp \
     src/pcbsketchwidget.cpp \
     src/pcbschematicsketchwidget.cpp \
     src/prefsdialog.cpp \
-    src/rendererviewthing.cpp \
     src/schematicsketchwidget.cpp \
     src/sketchareawidget.cpp \
     src/sketchmodel.cpp \

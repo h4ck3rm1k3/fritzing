@@ -306,3 +306,8 @@ void PartsEditorConnectorItem::updateTerminalPoint() {
 		m_terminalPointItem->updatePoint();
 	}
 }
+
+
+TerminalPointItem *PartsEditorConnectorItem::terminalPointItem() {
+	return m_terminalPointItem;
+}

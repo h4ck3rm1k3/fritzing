@@ -31,7 +31,7 @@ $Date$
 
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectoritem.h"
-#include "../rendererviewthing.h"
+#include "../fsvgrenderer.h"
 #include "../debugdialog.h"
 #include "../layerattributes.h"
 #include "../layerkinpaletteitem.h"

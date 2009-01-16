@@ -40,7 +40,7 @@ $Date$
 #include "connectoritem.h"
 #include "connectorstuff.h"
 #include "layerattributes.h"
-#include "rendererviewthing.h"
+#include "fsvgrenderer.h"
 #include "labels/partlabel.h"
 
 #include <stdlib.h>
@@ -206,7 +206,7 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 		case ItemBase::SchematicView:
 		default:
 			// assumes all wires in these views are selectable: jumper, ratsnest, trace
-			ItemBase::paint(painter, option, widget);	
+			ItemBase::paint(painter, option, widget);
 			break;
 	}
 
@@ -368,7 +368,7 @@ void Wire::writeGeometry(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeEndElement();
 }
 
-void Wire::setExtras(QDomElement & element) 
+void Wire::setExtras(QDomElement & element)
 {
 	if (element.isNull()) return;
 
@@ -481,13 +481,13 @@ void Wire::simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to)
 	QPointF newPos = p1;
 	QLineF oldLine = this->line();
 	QLineF newLine(0, 0,  p2.x() - p1.x(), p2.y() - p1.y());
-	if (qAbs(oldPos.x() - newPos.x()) > 1.75 ||  
+	if (qAbs(oldPos.x() - newPos.x()) > 1.75 ||
 		qAbs(oldPos.y() - newPos.y()) > 1.75 ||
-		qAbs(oldLine.x1() - newLine.x1()) > 1.75 || 
-		qAbs(oldLine.x2() - newLine.x2()) > 1.75 || 
-		qAbs(oldLine.y1() - newLine.y1()) > 1.75 || 
+		qAbs(oldLine.x1() - newLine.x1()) > 1.75 ||
+		qAbs(oldLine.x2() - newLine.x2()) > 1.75 ||
+		qAbs(oldLine.y1() - newLine.y1()) > 1.75 ||
 		qAbs(oldLine.y2() - newLine.y2()) > 1.75
-		) 
+		)
 	{
 		DebugDialog::debug("line changed");
 		calcNewLine(from,to,p1,p2);
@@ -787,7 +787,7 @@ int Wire::width() {
 }
 
 void Wire::setColorString(QString colorName, qreal op) {
-	// sets a color using the name (.e. "red") 
+	// sets a color using the name (.e. "red")
 	// note: colorName is associated with a Fritzing color, not a Qt color
 
 	QString colorString = colors.value(colorName, "");
@@ -825,7 +825,7 @@ void Wire::initNames() {
 	colorNames.append(tr("grey"));
 	colorNames.append(tr("white"));
 	colorNames.append(tr("orange"));
-	
+
 	// need this hash table to translate from user's language to internal color name
     colorTrans.insert(tr("blue"), "blue");
 	colorTrans.insert(tr("red"), "red");
@@ -835,7 +835,7 @@ void Wire::initNames() {
 	colorTrans.insert(tr("grey"), "grey");
 	colorTrans.insert(tr("white"), "white");
 	colorTrans.insert(tr("orange"), "orange");
-	
+
     colors.insert("blue",	"#418dd9");
 	colors.insert("red",	"#cc1414");
     colors.insert("black",	"#404040");
@@ -850,7 +850,7 @@ void Wire::initNames() {
 	colors.insert("routed", "#7d7d7d");
 	colors.insert("purple", "#b673e6");
 	colors.insert("brown", "#8c3b00");
-	
+
     shadowColors.insert("blue",		"#1b5bb3");
 	shadowColors.insert("red",		"#8c0000");
     shadowColors.insert("black",	"#000000");
@@ -863,7 +863,7 @@ void Wire::initNames() {
 	shadowColors.insert("trace",	"#ffbf00");
 	shadowColors.insert("unrouted", "#000000");
 	shadowColors.insert("routed",	"#7d7d7d");
-	
+
 	netColorIndex.insert(ItemBase::BreadboardView, 0);
 	netColorIndex.insert(ItemBase::SchematicView, 0);
 	netColorIndex.insert(ItemBase::PCBView, 0);
@@ -924,17 +924,17 @@ bool Wire::hasAnyFlag(ViewGeometry::WireFlags flags)
 }
 
 Wire * Wire::findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends) {
-	QList<Wire *> chainedWires;	
+	QList<Wire *> chainedWires;
 	QList<ConnectorItem *> uniqueEnds;
 	this->collectChained(chainedWires, ends, uniqueEnds);
 	if (ends.count() != 2) {
 		DebugDialog::debug(QString("wire in jumper or trace must have two ends") );
 		return NULL;
 	}
-	
+
 	return ends[0]->wiredTo(ends[1], flags);
 }
-	
+
 QRgb Wire::getRgb(const QString & name) {
 	QString str = colors.value(name);
 	QColor c;
@@ -998,7 +998,7 @@ void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> 
 			out.insert(this, m_connector0);
 			return;
 		}
-		
+
 		out.insert(this, m_connector1);
 		return;
 	}
@@ -1023,7 +1023,7 @@ void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> 
 			return;
 		}
 	}
-		
+
 	if (c0) out.insert(this, m_connector0);
 	else if (c1) out.insert(this, m_connector1);
 

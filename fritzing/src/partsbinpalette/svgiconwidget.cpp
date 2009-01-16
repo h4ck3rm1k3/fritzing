@@ -32,7 +32,7 @@ $Date$
 #include "../infographicsview.h"
 #include "../debugdialog.h"
 #include "../misc.h"
-#include "../rendererviewthing.h"
+#include "../fsvgrenderer.h"
 
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #BEBEBE;"

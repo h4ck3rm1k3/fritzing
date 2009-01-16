@@ -30,8 +30,9 @@ $Date$
 #include <QInputDialog>
 
 #include "partseditorconnectorviewimagewidget.h"
-#include "../debugdialog.h"
+#include "../fsvgrenderer.h"
 #include "../fritzingwindow.h"
+#include "../debugdialog.h"
 
 int PartsEditorConnectorViewImageWidget::ConnDefaultWidth = 5;
 int PartsEditorConnectorViewImageWidget::ConnDefaultHeight = ConnDefaultWidth;
@@ -187,7 +188,11 @@ void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifie
 
 void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 	if(m_item) {
-		QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
+		//QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
+
+		FSvgRenderer *renderer = new FSvgRenderer();
+		renderer->load(m_item->flatSvgFilePath());
+
 		QRectF viewBox = renderer->viewBoxF();
 		QSizeF defaultSize = renderer->defaultSize();
 		QDomDocument *svgDom = m_item->svgDom();
@@ -202,29 +207,24 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 
 			foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
 				QRectF rectAux = drawnConn->boundingRect();;
-				qreal xAux = drawnConn->pos().x();
-				qreal yAux = drawnConn->pos().y();
+				QPointF mappedPos = drawnConn->mapToScene(drawnConn->pos());
+				qreal xAux = mappedPos.x();
+				qreal yAux = mappedPos.y();
 				bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
 				connId = drawnConn->connectorStuffID();
 
-				qreal x = bounds.x() * defaultSize.width() / viewBox.width();
-				qreal y = bounds.y() * defaultSize.height() / viewBox.height();
-				qreal width = bounds.width() * defaultSize.width() / viewBox.width();
-				qreal height = bounds.height() * defaultSize.height() / viewBox.height();
-
-
+				QRectF svgRect = mapFromSceneToSvg(bounds,defaultSize,viewBox);
 				DebugDialog::debug(QString("<<<< x %1  y %2  width %3  height %4")
-					.arg(x).arg(y).arg(width).arg(height));
+					.arg(svgRect.x()).arg(svgRect.y()).arg(svgRect.width()).arg(svgRect.height()));
+				addRectToSvg(svgDom,connId/*+"pin"*/,svgRect);
 
-				QDomElement connElem = svgDom->createElement("rect");
-				connElem.setAttribute("id",connId /*+"pin"*/ );
-				connElem.setAttribute("x",x);
-				connElem.setAttribute("y",y);
-				connElem.setAttribute("width",width);
-				connElem.setAttribute("height",height);
-				connElem.setAttribute("fill","none");
-				Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
-				svgDom->firstChildElement("svg").appendChild(connElem);
+				/*TerminalPointItem *tp = drawnConn->terminalPointItem();
+				if(tp && tp->hasBeenMoved()) {
+					QPointF tpoint = tp->point();
+					QRectF tpointRect(tpoint.x()-2,tpoint.y()-2,tpoint.x()+4,tpoint.y()+4);
+					QRectF svgTpRect = mapFromSceneToSvg(tpointRect,defaultSize,viewBox);
+					addRectToSvg(svgDom,connId+"terminal",svgTpRect);
+				}*/
 			}
 		}
 
@@ -261,9 +261,31 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 		out << svgDom->toString();
 		file.close();
 
-		svgFileLoadNeeded(tempFile);
+		emit svgFileLoadNeeded(tempFile);
 		QFile::remove(tempFile);
 	}
+}
+
+QRectF PartsEditorConnectorViewImageWidget::mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox) {
+	qreal relation = defaultSize.width() / viewBox.width();
+	qreal x = sceneRect.x() * relation;
+	qreal y = sceneRect.y() * relation;
+	qreal width = sceneRect.width() * relation;
+	qreal height = sceneRect.height() * relation;
+
+	return QRectF(x,y,width,height);
+}
+
+void PartsEditorConnectorViewImageWidget::addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect) {
+	QDomElement connElem = svgDom->createElement("rect");
+	connElem.setAttribute("id",id);
+	connElem.setAttribute("x",rect.x());
+	connElem.setAttribute("y",rect.y());
+	connElem.setAttribute("width",rect.width());
+	connElem.setAttribute("height",rect.height());
+	connElem.setAttribute("fill","none");
+	Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
+	svgDom->firstChildElement("svg").appendChild(connElem);
 }
 
 

@@ -34,7 +34,7 @@ $Date$
 #include "help/helper.h"
 #include "partseditor/partseditormainwindow.h"
 #include "layerattributes.h"
-#include "rendererviewthing.h"
+#include "fsvgrenderer.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -71,7 +71,7 @@ class DoOnceThread : public QThread
 {
 public:
 	DoOnceThread();
-		
+
 	void run();
 };
 
@@ -90,16 +90,16 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
 	m_started = false;
 	installEventFilter(this);
-	
+
 #ifdef Q_WS_MAC
 	QString lib = "/../lib";
 #else
 	QString lib = "/lib";
 #endif
-	
+
 	m_libPath = applicationDirPath() + lib;   // applicationDirPath() doesn't work until after QApplication is instantiated
 	addLibraryPath(m_libPath);							// tell app where to search for plugins (jpeg export and sql lite)
-	
+
 	// !!! translator must be installed before any widgets are created !!!
 	findTranslator(m_libPath);
 
@@ -170,14 +170,14 @@ bool FApplication::event(QEvent *event)
     switch (event->type()) {
 		case QEvent::FileOpen:
 			{
-				QString path = static_cast<QFileOpenEvent *>(event)->file();  
+				QString path = static_cast<QFileOpenEvent *>(event)->file();
 				if (m_started) {
 					loadNew(path);
 				}
 				else {
 					m_filesToLoad.append(path);
 				}
-				
+
 			}
 			return true;
 		default:
@@ -188,10 +188,10 @@ bool FApplication::event(QEvent *event)
 bool FApplication::findTranslator(const QString & libPath) {
 	QSettings settings("Fritzing","Fritzing");
 	QString suffix = settings.value("language").toString();
-	if (suffix.isEmpty()) {	
+	if (suffix.isEmpty()) {
 		suffix = QLocale::system().name();	   // Returns the language and country of this locale as a string of the form "language_country", where language is a lowercase, two-letter ISO 639 language code, and country is an uppercase, two-letter ISO 3166 country code.
 	}
-	
+
     bool loaded = m_translator.load(QString("fritzing_") + suffix, libPath + "/translations");
 	if (loaded) {
 		this->installTranslator(&m_translator);
@@ -200,24 +200,24 @@ bool FApplication::findTranslator(const QString & libPath) {
 	return loaded;
 }
 
-int FApplication::startup(int & argc, char ** argv) 
+int FApplication::startup(int & argc, char ** argv)
 {
 	int progressIndex;
     QPixmap pixmap(":/resources/images/splash_2010.png");
-	FSplashScreen splash(pixmap);	
+	FSplashScreen splash(pixmap);
 	processEvents();								// seems to need this (sometimes?) to display the splash screen
-	
+
 	initSplash(splash, progressIndex, pixmap);
-	processEvents();								
-	
+	processEvents();
+
 	QCoreApplication::setOrganizationName("Fritzing");
 	QCoreApplication::setOrganizationDomain("fritzing.org");
 	QCoreApplication::setApplicationName("Fritzing");
 	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
-	
+
 	// so we can use ViewGeometry in a Qt::QueueConnection signal
 	qRegisterMetaType<ViewGeometry>("ViewGeometry");
-	
+
 	MainWindow::initExportConstants();
 	FSvgRenderer::calcPrinterScale();
 	Wire::initNames();
@@ -228,9 +228,9 @@ int FApplication::startup(int & argc, char ** argv)
     ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
-	
+
 	splash.showProgress(progressIndex, 0.1);
-	processEvents();			
+	processEvents();
 
 #ifdef Q_WS_WIN
 	// associate .fz file with fritzing app on windows (xp only--vista is different)
@@ -251,24 +251,24 @@ int FApplication::startup(int & argc, char ** argv)
 					   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
 					   .arg("%1") );
 #endif
-	
-	
+
+
 	m_referenceModel = new CurrentReferenceModel();
 	m_paletteBinModel = new PaletteModel(true, false);
-	
+
 	QSettings settings("Fritzing","Fritzing");
 	QString prevVersion = settings.value("version").toString();
 	QString currVersion = Version::versionString();
 	if(prevVersion != currVersion) {
 		settings.clear();
 	}
-	
+
 	splash.showProgress(progressIndex, 0.2);
-	processEvents();			
-	
+	processEvents();
+
 	QString binToOpen = settings.value("lastBin").toString();
 	binToOpen = binToOpen.isNull() || binToOpen.isEmpty() ? MainWindow::CoreBinLocation : binToOpen;
-	
+
 	if (!m_paletteBinModel->load(binToOpen, m_referenceModel)) {
 		if(binToOpen == MainWindow::CoreBinLocation
 		   || !m_paletteBinModel->load(MainWindow::CoreBinLocation, m_referenceModel)) {
@@ -277,10 +277,10 @@ int FApplication::startup(int & argc, char ** argv)
 			return -1;
 		}
 	}
-	
+
 	splash.showProgress(progressIndex, 0.4);
-	processEvents();			
-				
+	processEvents();
+
 	DebugDialog::debug("starting thread");
 	QMutex mutex;
 	mutex.lock();
@@ -298,7 +298,7 @@ int FApplication::startup(int & argc, char ** argv)
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = new MainWindow(m_paletteBinModel, m_referenceModel);
-	
+
 #ifndef WIN_DEBUG
 	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
 	// thought it might be the splashscreen calling QApplication::flush() but eliminating that didn't remove the deadlock
@@ -315,11 +315,11 @@ int FApplication::startup(int & argc, char ** argv)
 
 	foreach (QString filename, m_filesToLoad) {
 		loadOne(mainWindow, filename, loaded++);
-	}	
+	}
 
 	DebugDialog::debug("after m_files");
 
-	if (loaded == 0) 
+	if (loaded == 0)
 	{
 		if(!settings.value("lastOpenSketch").isNull()) {
 			QString lastSketchPath = settings.value("lastOpenSketch").toString();
@@ -334,7 +334,7 @@ int FApplication::startup(int & argc, char ** argv)
 	}
 
 	DebugDialog::debug("after last open sketch");
-	
+
 	m_started = true;
 
 #ifndef WIN_DEBUG
@@ -344,7 +344,7 @@ int FApplication::startup(int & argc, char ** argv)
 #endif
 
 	mainWindow->show();
-	
+
 	/*
 	 QDate now = QDate::currentDate();
 	 QDate over = QDate(2009, 1, 7);
@@ -358,17 +358,17 @@ int FApplication::startup(int & argc, char ** argv)
 		}
 	 }
 	 */
-	
+
 	splash.finish(mainWindow);
 
 	return 0;
 }
-	
-void FApplication::finish() 
+
+void FApplication::finish()
 {
     delete m_paletteBinModel;
     delete m_referenceModel;
-	
+
 	QString currVersion = Version::versionString();
 	QSettings settings("Fritzing","Fritzing");
     settings.setValue("version", currVersion);
@@ -379,7 +379,7 @@ void FApplication::loadNew(QString path) {
 	if (!mw->loadWhich(path, false)) {
 		mw->close();
 	}
-}	
+}
 
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 	if (loaded == 0) {
@@ -398,9 +398,9 @@ void FApplication::preferences() {
 	QSettings settings("Fritzing","Fritzing");
 	QString language = settings.value("language").toString();
 	if (language.isEmpty()) {
-		language = QLocale::system().name();	   
+		language = QLocale::system().name();
 	}
-	
+
 	PrefsDialog prefsDialog(language, list, NULL);			// TODO: use the topmost MainWindow as parent
 	if (QDialog::Accepted == prefsDialog.exec()) {
 		if (prefsDialog.cleared()) {
@@ -410,19 +410,19 @@ void FApplication::preferences() {
 			QString name = prefsDialog.name();
 			settings.setValue("language", name);
 		}
-	}	
+	}
 }
 
 void FApplication::initSplash(FSplashScreen & splash, int & progressIndex, QPixmap & pixmap) {
 	QPixmap logo(":/resources/images/fhp_logo_small.png");
 	QPixmap progress(":/resources/images/splash_progressbar.png");
-	
+
 	progressIndex = splash.showPixmap(progress, QPoint(0, pixmap.height() - progress.height()));
 	splash.showProgress(progressIndex, 0);
-	
+
 	// put this above the progress indicator
 	splash.showPixmap(logo, QPoint(5, pixmap.height() - 12));
-	
+
 	QColor w(0xea, 0xf4, 0xed);
 	QRect r1(45, kBottomOfAlpha, pixmap.width() - 45, 20);
 	QString msg1 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
@@ -430,7 +430,7 @@ void FApplication::initSplash(FSplashScreen & splash, int & progressIndex, QPixm
 							   "</font>")
 	.arg(Version::year());
 	splash.showMessage(msg1, r1, Qt::AlignLeft | Qt::AlignTop, w);
-	
+
 	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
 	QString msg2 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
 							   "Version %1.%2 (%3%4)"

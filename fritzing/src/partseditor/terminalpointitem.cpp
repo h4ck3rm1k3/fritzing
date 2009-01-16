@@ -35,6 +35,7 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent, bool visi
 {
 	Q_ASSERT(parent);
 	m_parent = parent;
+	m_hasBeenMoved = false;
 
 	initPen();
 	m_vLine = NULL;
@@ -54,6 +55,7 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent, bool visi
 {
 	Q_ASSERT(parent);
 	m_parent = parent;
+	m_hasBeenMoved = false;
 
 	initPen();
 	m_vLine = NULL;
@@ -135,8 +137,9 @@ void TerminalPointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 
 void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if(isVisible() && m_movable && m_moving && m_mouseRelativePosition != Outside) {
+		m_hasBeenMoved = true;
 		move(event->scenePos());
-		if(isOutSideConnector()) {
+		if(isOutsideConnector()) {
 			setCursor(QCursor(Qt::ForbiddenCursor));
 		} else {
 			updateCursor(event->pos());
@@ -165,7 +168,7 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 		m_moving = false;
 		//setParentDragMode(QGraphicsView::ScrollHandDrag);
 		setCursor(QCursor());
-		if(isOutSideConnector()) {
+		if(isOutsideConnector()) {
 			m_parent->resetTerminalPoint();
 			return;
 		}
@@ -173,7 +176,7 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	ResizableMovableGraphicsRectItem::mouseReleaseEvent(event);
 }
 
-bool TerminalPointItem::isOutSideConnector() {
+bool TerminalPointItem::isOutsideConnector() {
 	QPointF myCenter = point();
 	QPointF pPos = m_parent->mapToScene(m_parent->pos());
 	QRectF pRectAux = m_parent->boundingRect();
@@ -194,4 +197,8 @@ QPointF TerminalPointItem::point() {
 	QPointF size = mapToScene(QPointF(boundingRect().width(),boundingRect().height()));
 	qreal lineWx2 = m_linePen.widthF()*2;
 	return QPointF((pos.x()+size.x()-lineWx2)/2,(pos.y()+size.y()-lineWx2)/2);
+}
+
+bool TerminalPointItem::hasBeenMoved() {
+	return m_hasBeenMoved;
 }

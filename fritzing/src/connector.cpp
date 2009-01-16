@@ -31,7 +31,7 @@ $Date$
 #include "modelpart.h"
 #include "bus.h"
 #include "connectorviewthing.h"
-#include "rendererviewthing.h"
+#include "fsvgrenderer.h"
 
 
 QHash <Connector::ConnectorType, QString > Connector::names;
@@ -312,7 +312,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * 
 	if (tMatrix.isIdentity()) {
 		QPointF c = tBounds.center();
 		QPointF q(c.x() * defaultSizeF.width() / viewBox.width(), c.y() * defaultSizeF.height() / viewBox.height());
-		terminalPoint = q - connectorRect.topLeft();	
+		terminalPoint = q - connectorRect.topLeft();
 		//QRectF terminalRect = tMatrix.mapRect(tBounds);
 		//QPointF tp = terminalRect.center() - connectorRect.topLeft();
 		//if (qAbs(tp.x() - terminalPoint.x()) > 1 || (qAbs(tp.y() - terminalPoint.y()) > 1)) {

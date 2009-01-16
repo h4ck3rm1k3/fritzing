@@ -41,7 +41,8 @@ public:
 	QPointF point();
 	void updatePoint();
 
-	bool isOutSideConnector();
+	bool isOutsideConnector();
+	bool hasBeenMoved();
 
 protected:
 	void initPen();
@@ -56,7 +57,9 @@ protected:
 	QPen m_linePen;
 	QGraphicsLineItem *m_hLine;
 	QGraphicsLineItem *m_vLine;
+
 	QPointF m_point;
+	bool m_hasBeenMoved;
 
 	PartsEditorConnectorItem *m_parent;
 

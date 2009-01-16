@@ -49,6 +49,8 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void resetTerminalPoint();
 		void updateTerminalPoint();
 
+		TerminalPointItem *terminalPointItem();
+
 	protected:
 		void init(bool resizable, bool movable);
 

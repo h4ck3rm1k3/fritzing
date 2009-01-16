@@ -62,6 +62,9 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void setItemProperties();
 		bool isSupposedToBeRemoved(const QString& id);
 
+		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
+		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect);
+
 		QRubberBand *m_connRubberBand;
 		QPoint m_connRubberBandOrigin;
 		bool m_connFreeDrawingEnabled;

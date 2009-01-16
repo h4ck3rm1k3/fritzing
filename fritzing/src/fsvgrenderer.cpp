@@ -24,7 +24,7 @@ $Date$
 
 ********************************************************************/
 
-#include "rendererviewthing.h"
+#include "fsvgrenderer.h"
 #include <QPainter>
 
 QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
@@ -121,10 +121,10 @@ void FSvgRenderer::set(const QString & moduleID, ViewLayer::ViewLayerID viewLaye
 	rendererHash->insert(viewLayerID, renderer);
 }
 
-void FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml) 
+void FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 {
     xml.setNamespaceProcessing(false);
-	
+
 	while (!xml.atEnd()) {
         switch (xml.readNext()) {
         case QXmlStreamReader::StartElement:

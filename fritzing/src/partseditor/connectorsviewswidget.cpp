@@ -59,10 +59,10 @@ void ConnectorsViewsWidget::createViewImageWidget(
 		sister, SIGNAL(itemAddedToSymbols(ModelPart*, StringPair*)),
 		viw, SLOT(addItemInPartsEditor(ModelPart *, StringPair*))
 	);
-	/*connect(
+	connect(
 		viw, SIGNAL(svgFileLoadNeeded(const QString&)),
 		sister, SLOT(loadSvgFile(const QString&))
-	);*/
+	);
 	connect(
 		info, SIGNAL(connectorSelected(const QString&)),
 		viw, SLOT(informConnectorSelection(const QString&))

@@ -31,7 +31,7 @@ $Date$
 #include "viewgeometry.h"
 #include "infographicsview.h"
 #include "layerkinpaletteitem.h"
-#include "rendererviewthing.h"
+#include "fsvgrenderer.h"
 #include "layerattributes.h"
 #include "connectorstuff.h"
 #include "labels/partlabel.h"
