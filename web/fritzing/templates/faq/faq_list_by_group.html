@@ -18,9 +18,8 @@
             <dt style="color:black;">{{ question.text }}</dt>
             <dd>
                 {% autoescape off %}
-                {{ question.answer }}
+                {{ question.answer|urlize }}
                 {% endautoescape %}
-            <br />
             </dd>
         {% endif %}
     {% endif %}
