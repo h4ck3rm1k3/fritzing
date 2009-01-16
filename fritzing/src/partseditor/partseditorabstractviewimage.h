@@ -36,7 +36,7 @@ class PartsEditorAbstractViewImage : public SketchWidget {
 	Q_OBJECT
 
 	public:
-		PartsEditorAbstractViewImage(ItemBase::ViewIdentifier, QWidget *parent=0, int size=150);
+		PartsEditorAbstractViewImage(ItemBase::ViewIdentifier, bool showsTerminalPoints, QWidget *parent=0, int size=150);
 
 	public slots:
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
@@ -58,6 +58,8 @@ class PartsEditorAbstractViewImage : public SketchWidget {
 		const QStringList getLayers(const QString &path);
 
 		PartsEditorPaletteItem *m_item; // just one item per view
+
+		bool m_showsTerminalPoints;
 };
 
 #endif /* PARTSEDITORABSTRACTVIEWIMAGE_H_ */

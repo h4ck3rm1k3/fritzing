@@ -36,14 +36,16 @@ qreal PartsEditorConnectorItem::selectedPenWidth = 1.5;
 qreal PartsEditorConnectorItem::MinWidth = 2;
 qreal PartsEditorConnectorItem::MinHeight = MinWidth;
 
-PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo)
+PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints)
 	: ConnectorItem(conn, attachedTo)
 {
 	init(false,false);
 	m_terminalPointItem = NULL;
+	m_showsTerminalPoint = showsTerminalPoints;
+	m_showingTerminalPoint = false;
 }
 
-PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds)
+PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, const QRectF &bounds)
 	: ConnectorItem(conn, attachedTo)
 {
 	init(true,true);
@@ -56,6 +58,8 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 
 	m_geometryHasChanged = false;
 	m_terminalPointItem = NULL;
+	m_showsTerminalPoint = showsTerminalPoints;
+	m_showingTerminalPoint = false;
 	updateTerminalPoint();
 }
 
@@ -68,7 +72,7 @@ void PartsEditorConnectorItem::init(bool resizable, bool movable) {
 	setResizable(resizable);
 	setMovable(movable);
 
-	m_mousePosition = Outside;
+	m_mouseRelativePosition = Outside;
 }
 
 void PartsEditorConnectorItem::setSelectedColor(const QColor &color) {
@@ -196,9 +200,9 @@ void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) 
 
 void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if((m_resizable || m_movable) && !showingTerminalPoint()) {
-		if(m_resizable && m_resizing && m_mousePosition < Inside) {
+		if(m_resizable && m_resizing && m_mouseRelativePosition < Inside) {
 			resize(event->pos());
-		} else if(m_movable && m_moving && m_mousePosition == Inside) {
+		} else if(m_movable && m_moving && m_mouseRelativePosition == Inside) {
 			move(event->scenePos());
 		} else {
 			ConnectorItem::mouseMoveEvent(event);
@@ -214,9 +218,9 @@ void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 	if(!showingTerminalPoint()) {
 		setParentDragMode(QGraphicsView::NoDrag);
 		if(m_resizable || m_movable) {
-			m_mousePosition = closeToCorner(event->pos());
-			if(m_mousePosition != Outside) {
-				m_resizing = m_mousePosition != Inside;
+			m_mouseRelativePosition = closeToCorner(event->pos());
+			if(m_mouseRelativePosition != Outside) {
+				m_resizing = m_mouseRelativePosition != Inside;
 				m_moving = !m_resizing;
 				m_mousePressedPos = event->buttonDownScenePos(Qt::LeftButton);
 			}
@@ -246,26 +250,29 @@ void PartsEditorConnectorItem::setParentDragMode(QGraphicsView::DragMode dragMod
 
 
 void PartsEditorConnectorItem::setShowTerminalPoint(bool show) {
-	if(m_terminalPointItem) {
-		DebugDialog::debug("set show tponts");
-		if(!m_geometryHasChanged) {
-			DebugDialog::debug("set visible");
-			m_terminalPointItem->setVisible(show);
-		} else if(show) {
-			DebugDialog::debug("update");
-			resetTerminalPoint();
-			m_geometryHasChanged = false;
+	if(m_showsTerminalPoint) {
+		m_showingTerminalPoint = show;
+		if(m_terminalPointItem) {
+			if(!m_geometryHasChanged) {
+				m_terminalPointItem->setVisible(show);
+			} else if(show) {
+				resetTerminalPoint();
+				m_geometryHasChanged = false;
+			}
 		}
-		DebugDialog::debug("fin set show tponts\n");
 	}
-
 }
 
 bool PartsEditorConnectorItem::showingTerminalPoint() {
-	if(m_terminalPointItem) {
-		return m_terminalPointItem->isVisible();
+	if(m_showsTerminalPoint) {
+		return m_showingTerminalPoint;
 	}
 	return false;
+}
+
+void PartsEditorConnectorItem::setTerminalPoint(QPointF point) {
+	ConnectorItem::setTerminalPoint(point);
+	m_terminalPointItem = new TerminalPointItem(this,m_showsTerminalPoint&&m_showingTerminalPoint,point);
 }
 
 void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
@@ -293,7 +300,7 @@ void PartsEditorConnectorItem::resetTerminalPoint() {
 
 void PartsEditorConnectorItem::updateTerminalPoint() {
 	if(!m_terminalPointItem) {
-		m_terminalPointItem = new TerminalPointItem(this);
+		m_terminalPointItem = new TerminalPointItem(this,m_showsTerminalPoint&&m_showingTerminalPoint);
 	} else {
 		m_terminalPointItem->setParentItem(this);
 		m_terminalPointItem->updatePoint();

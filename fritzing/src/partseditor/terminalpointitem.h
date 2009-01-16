@@ -36,7 +36,8 @@ class PartsEditorConnectorItem;
 
 class TerminalPointItem : public ResizableMovableGraphicsRectItem {
 public:
-	TerminalPointItem(PartsEditorConnectorItem *parent, bool movable=true);
+	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, bool movable=true);
+	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, const QPointF &point);
 	QPointF point();
 	void updatePoint();
 
@@ -55,6 +56,7 @@ protected:
 	QPen m_linePen;
 	QGraphicsLineItem *m_hLine;
 	QGraphicsLineItem *m_vLine;
+	QPointF m_point;
 
 	PartsEditorConnectorItem *m_parent;
 

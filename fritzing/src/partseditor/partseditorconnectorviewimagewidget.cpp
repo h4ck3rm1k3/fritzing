@@ -37,7 +37,7 @@ int PartsEditorConnectorViewImageWidget::ConnDefaultWidth = 5;
 int PartsEditorConnectorViewImageWidget::ConnDefaultHeight = ConnDefaultWidth;
 
 PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
-	: PartsEditorAbstractViewImage(viewId, parent, size)
+	: PartsEditorAbstractViewImage(viewId, true /*show terminal points*/, parent, size)
 {
 	m_connRubberBandOrigin = QPoint(-1,-1);
 	m_connRubberBand = NULL;
@@ -96,7 +96,7 @@ void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const
 	QString connId = conn->connectorStuffID();
 
 	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize);
-	PartsEditorConnectorItem *connItem = new PartsEditorConnectorItem(conn, m_item, bounds);
+	PartsEditorConnectorItem *connItem = new PartsEditorConnectorItem(conn, m_item, m_showsTerminalPoints, bounds);
 	m_drawnConns << connItem;
 	connItem->setShowTerminalPoint(showTerminalPoint);
 

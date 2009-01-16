@@ -55,7 +55,7 @@ void AbstractResizableMovableGraphicsItem::resize(const QPointF &mousePos) {
 	qreal newX = mousePos.x();
 	qreal newY = mousePos.y();
 
-	switch(m_mousePosition) {
+	switch(m_mouseRelativePosition) {
 		case TopLeftCorner:
 			setRectAux(newX,newY,oldX2,oldY2);
 //			DebugDialog::debug(QString("<<< from top left new rect (%1,%2)  (%3,%4)")
@@ -91,8 +91,8 @@ void AbstractResizableMovableGraphicsItem::move(const QPointF &newPos) {
 
 AbstractResizableMovableGraphicsItem::Position AbstractResizableMovableGraphicsItem::updateCursor(const QPointF &mousePos, const QCursor &defaultCursor) {
 	QCursor cursor;
-	m_mousePosition = closeToCorner(mousePos);
-	switch(m_mousePosition) {
+	m_mouseRelativePosition = closeToCorner(mousePos);
+	switch(m_mouseRelativePosition) {
 		case TopLeftCorner:
 			cursor = QCursor(Qt::SizeFDiagCursor);
 			break;
@@ -113,7 +113,7 @@ AbstractResizableMovableGraphicsItem::Position AbstractResizableMovableGraphicsI
 			break;
 	}
 	setCursorAux(cursor);
-	return m_mousePosition;
+	return m_mouseRelativePosition;
 }
 
 

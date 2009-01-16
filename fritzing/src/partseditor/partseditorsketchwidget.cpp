@@ -43,7 +43,7 @@ void PartsEditorSketchWidget::mousePressConnectorEvent(ConnectorItem *, QGraphic
 }
 
 void PartsEditorSketchWidget::loadSvgFile(StringPair *path, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, QString layer) {
-	PartsEditorPaletteItem * item = new PartsEditorPaletteItem(modelPart, viewIdentifier, path, layer);
+	PartsEditorPaletteItem * item = new PartsEditorPaletteItem(modelPart, viewIdentifier, path, layer, false);
 	//if(item->connectors().size() > 0) {
 		//emit connectorsFound(this->m_viewIdentifier,item->connectors());
 	//}
@@ -53,7 +53,7 @@ void PartsEditorSketchWidget::loadSvgFile(StringPair *path, ModelPart * modelPar
 ItemBase * PartsEditorSketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors)
 {
 	if(paletteItem == NULL) {
-		paletteItem = new PartsEditorPaletteItem(modelPart, m_viewIdentifier);
+		paletteItem = new PartsEditorPaletteItem(modelPart, m_viewIdentifier, false);
 	}
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 	return addPartItem(modelPart, paletteItem, doConnectors);

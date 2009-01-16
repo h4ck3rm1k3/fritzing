@@ -36,7 +36,7 @@ $Date$
 #include "../layerattributes.h"
 #include "../layerkinpaletteitem.h"
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	QString pathAux = path->first;
@@ -57,9 +57,11 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 	setSelected(false);
 
 	m_withBorder = false;
+
+	m_showsTerminalPoints = showsTerminalPoints;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_svgDom = svgFile;
@@ -75,9 +77,11 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocume
 	setSelected(false);
 
 	m_withBorder = false;
+
+	m_showsTerminalPoints = showsTerminalPoints;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, bool showsTerminalPoints) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_svgDom = NULL;
@@ -86,6 +90,8 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 	m_svgStrings = NULL;
 
 	m_withBorder = false;
+
+	m_showsTerminalPoints = showsTerminalPoints;
 }
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
@@ -271,7 +277,7 @@ QString PartsEditorPaletteItem::flatSvgFilePath() {
 }
 
 ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {
-	return new PartsEditorConnectorItem(connector,this);
+	return new PartsEditorConnectorItem(connector,this, m_showsTerminalPoints);
 }
 
 void PartsEditorPaletteItem::highlightConnectors(const QString &connId) {

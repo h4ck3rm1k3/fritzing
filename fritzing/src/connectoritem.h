@@ -53,7 +53,7 @@ public:
 	ConnectorItem * removeConnection(ItemBase *);
 	void removeConnection(ConnectorItem *, bool emitChange);
 	ConnectorItem * firstConnectedToIsh();
-	void setTerminalPoint(QPointF);
+	virtual void setTerminalPoint(QPointF);
 	QPointF terminalPoint();
 	QPointF adjustedTerminalPoint();
 	QPointF sceneAdjustedTerminalPoint();

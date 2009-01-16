@@ -36,14 +36,15 @@ $Date$
 
 class PartsEditorConnectorItem: public ConnectorItem {
 	public:
-		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo);
-		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, const QRectF &bounds);
+		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints);
+		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, const QRectF &bounds);
 		void highlight(const QString &connId);
 		void removeFromModel();
 		void setConnector(Connector *connector);
 		void setMismatching(bool isMismatching);
 		void setShowTerminalPoint(bool show);
 		bool showingTerminalPoint();
+		void setTerminalPoint(QPointF);
 
 		void resetTerminalPoint();
 		void updateTerminalPoint();
@@ -71,6 +72,9 @@ class PartsEditorConnectorItem: public ConnectorItem {
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;
+
+		bool m_showsTerminalPoint;
+		bool m_showingTerminalPoint; // important only if m_showsTerminalPoints == true
 
 		TerminalPointItem *m_terminalPointItem;
 		bool m_geometryHasChanged;

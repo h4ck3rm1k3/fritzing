@@ -36,9 +36,9 @@ $Date$
 class PartsEditorPaletteItem : public PaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer);
-		PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer);
-		PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier);
+		PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints);
+		PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints);
+		PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, bool showsTerminalPoints);
 		virtual void writeXml(QXmlStreamWriter &);
 		virtual void writeXmlLocation(QXmlStreamWriter & streamWriter);
 		const QList<Connector *> &connectors();
@@ -68,6 +68,8 @@ class PartsEditorPaletteItem : public PaletteItem {
 		SvgAndPartFilePath *m_svgStrings;
 		QList<Connector *> *m_connectors;
 		bool m_withBorder;
+
+		bool m_showsTerminalPoints;
 };
 
 #endif /* PARTSEDITORPALETTEITEM_H_ */

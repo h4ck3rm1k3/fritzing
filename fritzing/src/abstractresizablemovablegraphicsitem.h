@@ -63,11 +63,11 @@ protected:
 	virtual void setCursorAux(const QCursor &cursor) = 0;
 
 protected:
-	bool m_resizable;
-	bool m_movable;
+	volatile bool m_resizable;
+	volatile bool m_movable;
 	volatile bool m_resizing;
 	volatile bool m_moving;
-	volatile Position m_mousePosition;
+	volatile Position m_mouseRelativePosition;
 	QPointF m_mousePressedPos;
 };
 

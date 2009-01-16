@@ -41,7 +41,7 @@ $Date$
 QT_BEGIN_NAMESPACE
 
 PartsEditorViewImageWidget::PartsEditorViewImageWidget(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
-	: PartsEditorAbstractViewImage(viewId, parent, size)
+	: PartsEditorAbstractViewImage(viewId, false /*don't show terminal points*/, parent, size)
 {
 	m_svgFilePath = new StringPair;
 	m_tempFolder = tempDir;
