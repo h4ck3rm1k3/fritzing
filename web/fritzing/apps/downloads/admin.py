@@ -5,7 +5,6 @@ from downloads.models import Platform, Release, Download
 
 class PlatformAdmin(admin.ModelAdmin):
     list_display = ('name', 'releases')
-    search_fields = ('slug', 'name', 'description', 'tags')
     prepopulated_fields = {'slug': ('name',)}
 
     def releases(self, obj):
@@ -30,7 +29,7 @@ class ReleaseAdmin(admin.ModelAdmin):
     )
 
     list_display = ('version', 'release_date', 'active', 'downloads')
-    list_filter = ('release_date', 'version', 'known_issues')
+    list_filter = ('release_date', 'version')
     search_fields = ['changelog']
     inlines = [DownloadInline]
 
