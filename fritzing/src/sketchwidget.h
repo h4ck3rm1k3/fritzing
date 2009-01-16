@@ -188,6 +188,7 @@ public:
 
 	void updateInfoView();
 	void setCurrent(bool current);
+	void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

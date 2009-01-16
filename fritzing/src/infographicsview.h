@@ -63,6 +63,7 @@ public:
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
 	virtual void partLabelChanged(ItemBase *, const QString &oldText, const QString & newText);
+	virtual void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
 
 protected:
 	QGraphicsItem *selectedAux();

@@ -44,7 +44,8 @@ $Date$
 //		** graphics (esp. drag area vs. edit area) 
 //		** html info box needs to update when view switches
 //		-- multiple selection?
-//		undo delete (text and show?)
+//		** undo delete text
+//		undo delete show?
 //		-- undo select
 //		** undo change text
 //		undo move
@@ -58,6 +59,8 @@ $Date$
 //		** hide silkscreen should hide silkscreen label
 //		** delete owner: delete label
 //		rotate/flip (where is the control?)--heads up?  label menu for the time being
+//		make label single-line (ignore or trigger edit-done on pressing enter)
+//		undo rotate/flip
 //		copy/paste?
 //		z-order manipulation?
 
@@ -165,6 +168,7 @@ void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	if (!br.contains(p)) {
 		m_doDrag = true;
 		m_initialPosition = pos();
+		m_initialOffset = m_offset;
 		return;
 	}
 
@@ -182,6 +186,13 @@ void PartLabel::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 	}
 
 	QGraphicsTextItem::mouseMoveEvent(event);
+}
+
+void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+	if (m_doDrag) {
+		m_owner->partLabelMoved(m_initialPosition, m_initialOffset, pos(), m_offset);
+	}
 }
 
 void PartLabel::contentsChangedSlot() {

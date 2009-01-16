@@ -113,3 +113,12 @@ QGraphicsItem *InfoGraphicsView::selectedAux() {
 		return selItems[0];
 	}
 }
+
+void InfoGraphicsView::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset) 
+{
+	Q_UNUSED(itemBase);
+	Q_UNUSED(oldPos);
+	Q_UNUSED(oldOffset);
+	Q_UNUSED(newPos);
+	Q_UNUSED(newOffset);
+}

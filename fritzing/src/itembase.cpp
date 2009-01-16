@@ -798,3 +798,11 @@ void ItemBase::movePartLabel(QPointF newPos, QPointF newOffset) {
 		m_partLabel->moveLabel(newPos, newOffset);
 	}
 }
+
+
+void ItemBase::partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset) {
+	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->partLabelMoved(this, oldPos, oldOffset, newPos, newOffset);
+	}
+}

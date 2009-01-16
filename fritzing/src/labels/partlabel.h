@@ -70,6 +70,7 @@ public:
 	QRectF boundingRect() const;
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	QPainterPath shape() const;
 	void setPlainText(const QString & text);
 	bool initialized();
@@ -94,6 +95,7 @@ protected:
 	bool m_initialized;
 	bool m_doDrag;
 	QPointF m_initialPosition;
+	QPointF m_initialOffset;
 	QPointF m_offset;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	bool m_hidden;

@@ -3791,3 +3791,11 @@ void SketchWidget::movePartLabel(long itemID, QPointF newPos, QPointF newOffset)
 void SketchWidget::setCurrent(bool current) {
 	m_current = current;
 }
+
+void SketchWidget::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset) 
+{
+	MoveLabelCommand * command = new MoveLabelCommand(this, itemBase->id(), oldPos, oldOffset, newPos, newOffset, NULL);
+	command->setText(tr("Move label '%1'").arg(itemBase->title()));
+	m_undoStack->push(command);
+}
+

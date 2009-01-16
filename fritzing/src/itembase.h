@@ -130,6 +130,10 @@ public:
 	void setCanFlipVertical(bool);
 	virtual void clearModelPart();
 	void clearPartLabel();
+	bool isPartLabelVisible();
+	void restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
+	void movePartLabel(QPointF newPos, QPointF newOffset);
+	void partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
 
 public:
 	virtual bool stickyEnabled(ItemBase * stickTo);
@@ -145,9 +149,6 @@ public:
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
 	virtual void setInstanceTitle(const QString &title);
-	bool isPartLabelVisible();
-	void restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
-	void movePartLabel(QPointF newPos, QPointF newOffset);
 
 public slots:
 	void showPartLabel(bool show, ViewLayer *, const QColor & textColor);
