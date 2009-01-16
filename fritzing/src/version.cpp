@@ -25,10 +25,10 @@ $Date$
 ********************************************************************/
 
 #include "version.h"
-			
+	
 #include <QString>
 #include <QStringList>
-	
+
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("1.11");
 QString Version::m_modifier("b");

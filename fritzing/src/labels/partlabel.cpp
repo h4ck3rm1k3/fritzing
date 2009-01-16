@@ -400,5 +400,29 @@ void PartLabel::temporaryMenuEvent(QGraphicsSceneMouseEvent * event) {
 }
 
 void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
+	if (degrees != 0) {
+		transformLabel(QTransform().rotate(degrees));
+	}
+	else {
+		int xScale, yScale;
+		if (orientation == Qt::Vertical) {
+			xScale = 1;
+			yScale = -1;
+		} 
+		else if(orientation == Qt::Horizontal) {
+			xScale = -1;
+			yScale = 1;
+		}
+		else return;
+		transformLabel(QTransform().scale(xScale,yScale));
+	}
+}
 
+void PartLabel::transformLabel(QTransform currTransf) 
+{
+	QRectF rect = this->boundingRect();
+	qreal x = rect.width() / 2;
+	qreal y = rect.height() / 2;
+	QTransform transf = transform() * QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
+	setTransform(transf);
 }

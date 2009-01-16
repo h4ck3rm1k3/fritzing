@@ -98,6 +98,7 @@ protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void temporaryMenuEvent(QGraphicsSceneMouseEvent * event);
+	void transformLabel(QTransform currTransf);
 
 protected slots:
 	void contentsChangedSlot();
