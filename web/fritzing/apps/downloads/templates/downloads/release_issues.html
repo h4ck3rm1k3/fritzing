@@ -6,13 +6,11 @@
 <p class="documentDescription">
 <span class="" id="parent-fieldname-description">Problems with the current release that we know of</span></p>
 <div class="" id="parent-fieldname-text">
-<p>
-    We try to take greatest care in creating new releases but shit just happens. If we discover major problems with releases we list them here so you can take caution. More detailed descriptions of defects are listed in our <a href="http://code.google.com/p/fritzing/issues/list">issue tracker</a>. If you discover new problems, please <a href="http://fritzing.org/forum/bugs">let us know in the bugs forum</a>.
-</p>
+<p>We try to take greatest care in creating new releases but shit just happens. If we discover major problems with releases we list them here so you can take caution. More detailed descriptions of defects are listed in our <a href="http://code.google.com/p/fritzing/issues/list">issue tracker</a>. If you discover new problems, please <a href="http://fritzing.org/forum/bugs">let us know in the bugs forum</a>.</p>
 {% for release in object_list %}
     {% if release.known_issues %}
         <h2>{{ release.version }} | {{ release.release_date|date }}</h2>
-        <p>{{ release.known_issues|urlize|safe }}</p>
+        <p>{{ release.known_issues|safe|urlize }}</p>
     {% endif %}
 {% endfor %}
 </div>
