@@ -122,3 +122,9 @@ void InfoGraphicsView::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPoin
 	Q_UNUSED(newPos);
 	Q_UNUSED(newOffset);
 }
+
+void InfoGraphicsView::rotateFlipPartLabel(ItemBase * itemBase, qreal degrees, Qt::Orientations flipDirection) {
+	Q_UNUSED(itemBase);
+	Q_UNUSED(degrees);
+	Q_UNUSED(flipDirection);
+}

@@ -53,6 +53,27 @@ SketchWidget* BaseCommand::sketchWidget() {
 	return m_sketchWidget;
 }
 
+QString BaseCommand::getDebugString() const {
+	return QString("%1 %2").arg(getParamString()).arg(text());
+}
+
+QString BaseCommand::getParamString() const {
+	return QString("%1 %2")
+		.arg(m_sketchWidget->viewName())
+		.arg((m_crossViewType == BaseCommand::SingleView) ? "single-view" : "cross-view");
+}
+
+int BaseCommand::subCommandCount() const {
+	return m_commands.count();
+}
+
+const BaseCommand * BaseCommand::subCommand(int ix) const {
+	if (ix < 0) return NULL;
+	if (ix >= m_commands.count()) return NULL;
+
+	return m_commands.at(ix);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
@@ -62,6 +83,14 @@ AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseComma
     m_viewGeometry = viewGeometry;
     m_itemID = id;
 	m_modelIndex = modelIndex;
+}
+
+QString AddDeleteItemCommand::getParamString() const {
+	return BaseCommand::getParamString() + 
+		QString(" moduleid:%1 id:%2 modelindex:%3")
+		.arg(m_moduleID)
+		.arg(m_itemID)
+		.arg(m_modelIndex);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,6 +120,10 @@ void AddItemCommand::turnOffFirstRedo() {
 	m_doFirstRedo = false;
 }
 
+QString AddItemCommand::getParamString() const {
+	return "AddItemCommand " + AddDeleteItemCommand::getParamString();
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
@@ -106,6 +139,10 @@ void DeleteItemCommand::undo()
 void DeleteItemCommand::redo()
 {
     m_sketchWidget->deleteItem(m_itemID, true, true);
+}
+
+QString DeleteItemCommand::getParamString() const {
+	return "DeleteItemCommand " + AddDeleteItemCommand::getParamString();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +165,13 @@ void MoveItemCommand::redo()
     m_sketchWidget->moveItem(m_itemID, m_new);
 }
 
+QString MoveItemCommand::getParamString() const {
+	return QString("MoveItemCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1")
+		.arg(m_itemID);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 RotateItemCommand::RotateItemCommand(SketchWidget* sketchWidget, long itemID, qreal degrees, QUndoCommand *parent)
@@ -147,6 +191,14 @@ void RotateItemCommand::redo()
     m_sketchWidget->rotateItem(m_itemID, m_degrees);
 }
 
+QString RotateItemCommand::getParamString() const {
+	return QString("RotateItemCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 by:%2")
+		.arg(m_itemID)
+		.arg(m_degrees);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 FlipItemCommand::FlipItemCommand(SketchWidget* sketchWidget, long itemID, Qt::Orientations orientation, QUndoCommand *parent)
@@ -159,12 +211,20 @@ FlipItemCommand::FlipItemCommand(SketchWidget* sketchWidget, long itemID, Qt::Or
 void FlipItemCommand::undo()
 {
     redo();
-    //m_sketchWidget->flipItem(m_itemID, m_direction);
 }
 
 void FlipItemCommand::redo()
 {
     m_sketchWidget->flipItem(m_itemID, m_orientation);
+}
+
+
+QString FlipItemCommand::getParamString() const {
+	return QString("FlipItemCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 by:%2")
+		.arg(m_itemID)
+		.arg(m_orientation);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -200,6 +260,19 @@ void ChangeConnectionCommand::setUpdateConnections(bool updatem) {
 	m_updateConnections = updatem;
 }
 
+
+QString ChangeConnectionCommand::getParamString() const {
+	return QString("ChangeConnectionCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1 connid:%2 toid:%3 connid:%4 connect:%5")
+		.arg(m_fromID)
+		.arg(m_fromConnectorID)
+		.arg(m_toID)
+		.arg(m_toConnectorID)
+		.arg(m_connect);
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeWireCommand::ChangeWireCommand(SketchWidget* sketchWidget, long fromID,
@@ -223,6 +296,13 @@ void ChangeWireCommand::undo()
 void ChangeWireCommand::redo()
 {
     m_sketchWidget->changeWire(m_fromID, m_newLine, m_newPos, m_useLine);
+}
+
+QString ChangeWireCommand::getParamString() const {
+	return QString("ChangeWireCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" fromid:%1")
+		.arg(m_fromID);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,6 +393,14 @@ void SelectItemCommand::addRedo(long id) {
 	}
 }
 
+QString SelectItemCommand::getParamString() const {
+	return QString("SelectItemCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" type:%1")
+		.arg(m_type);
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ChangeZCommand::ChangeZCommand(SketchWidget* sketchWidget, QUndoCommand *parent)
@@ -342,6 +430,11 @@ qreal ChangeZCommand::second(RealPair * pair) {
 	return pair->second;
 }
 
+QString ChangeZCommand::getParamString() const {
+	return QString("ChangeZCommand ") 
+		+ BaseCommand::getParamString();
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 StickyCommand::StickyCommand(SketchWidget* sketchWidget, long stickTargetID, long stickSourceID, bool stick, QUndoCommand *parent)
@@ -360,6 +453,13 @@ void StickyCommand::undo()
 void StickyCommand::redo()
 {
 	m_sketchWidget->stickem(m_stickTargetID, m_stickSourceID, m_stick);
+}
+
+QString StickyCommand::getParamString() const {
+	return QString("StickyCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString("target:%1 src:%2 sticks:%3") 
+			.arg(m_stickTargetID).arg(m_stickSourceID).arg(m_stick);
 }
 
 
@@ -413,6 +513,11 @@ void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, int oldN
 										   newNetCount, newNetRoutedCount, newConnectorsLeftToRoute, newJumpers, NULL));
 }
 
+QString CleanUpWiresCommand::getParamString() const {
+	return QString("CleanUpWiresCommand ") 
+		+ BaseCommand::getParamString();
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 SwapCommand::SwapCommand(SketchWidget* sketchWidget, long itemId, const QString &oldModID, const QString &newModID, QUndoCommand *parent)
@@ -431,6 +536,12 @@ void SwapCommand::redo() {
 	m_sketchWidget->swap(m_itemId, m_newModuleID, true);
 }
 
+QString SwapCommand::getParamString() const {
+	return QString("SwapCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 oldModule:%2 newModule:%3") 
+			.arg(m_itemId).arg(m_oldModuleID).arg(m_newModuleID);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -452,6 +563,14 @@ void WireColorChangeCommand::redo() {
 	m_sketchWidget->changeWireColor(m_wireId, m_newColor, m_newOpacity);
 }
 
+QString WireColorChangeCommand::getParamString() const {
+	return QString("WireColorChangeCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 oldcolor:%2 oldop:%3 newcolor:%4 newop:%5") 
+			.arg(m_wireId).arg(m_oldColor).arg(m_oldOpacity).arg(m_newColor).arg(m_newOpacity);
+
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 WireWidthChangeCommand::WireWidthChangeCommand(SketchWidget* sketchWidget, long wireId, int oldWidth, int newWidth, QUndoCommand *parent)
@@ -470,6 +589,15 @@ void WireWidthChangeCommand::redo() {
 	m_sketchWidget->changeWireWidth(m_wireId, m_newWidth);
 }
 
+
+QString WireWidthChangeCommand::getParamString() const {
+	return QString("WireWidthChangeCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 oldw:%2 neww:%3") 
+			.arg(m_wireId).arg(m_oldWidth).arg(m_newWidth);
+
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 WireFlagChangeCommand::WireFlagChangeCommand(SketchWidget* sketchWidget, long wireId, ViewGeometry::WireFlags oldFlags, ViewGeometry::WireFlags newFlags, QUndoCommand *parent)
@@ -486,6 +614,15 @@ void WireFlagChangeCommand::undo() {
 
 void WireFlagChangeCommand::redo() {
 	m_sketchWidget->changeWireFlags(m_wireId, m_newFlags);
+}
+
+
+QString WireFlagChangeCommand::getParamString() const {
+	return QString("WireFlagChangeCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 old:%2 new:%3") 
+			.arg(m_wireId).arg(m_oldFlags).arg(m_newFlags);
+
 }
 
 //////////////////////////////////////////
@@ -531,6 +668,12 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 
 }
 
+QString RatsnestCommand::getParamString() const {
+	return QString("RatsnestCommand ") 
+		+ BaseCommand::getParamString();
+
+}
+
 ///////////////////////////////////////////
 
 RoutingStatusCommand::RoutingStatusCommand(class SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
@@ -555,6 +698,15 @@ void RoutingStatusCommand::redo() {
 	m_sketchWidget->forwardRoutingStatusSignal(m_newNetCount, m_newNetRoutedCount, m_newConnectorsLeftToRoute, m_newJumpers);
 }
 
+QString RoutingStatusCommand::getParamString() const {
+	return QString("RoutingStatusCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" oldnet:%1 oldnetrouted:%2 oldconnectors:%3 oldjumpers:%4 newnet:%51 newnetrouted:%6 newconnectors:%7 newjumpers:%8 ") 
+			.arg(m_oldNetCount).arg(m_oldNetRoutedCount).arg(m_oldConnectorsLeftToRoute).arg(m_oldJumpers)
+			.arg(m_newNetCount).arg(m_newNetRoutedCount).arg(m_newConnectorsLeftToRoute).arg(m_newJumpers);
+
+}
+
 ///////////////////////////////////////////////
 
 MoveLabelCommand::MoveLabelCommand(class SketchWidget *sketchWidget, long id, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset, QUndoCommand *parent)
@@ -575,6 +727,15 @@ void MoveLabelCommand::undo()
 void MoveLabelCommand::redo()
 {
     m_sketchWidget->movePartLabel(m_itemID, m_newPos, m_newOffset);
+}
+
+
+QString MoveLabelCommand::getParamString() const {
+	return QString("MoveLabelCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1") 
+			.arg(m_itemID);
+
 }
 
 ///////////////////////////////////////////////
@@ -618,4 +779,40 @@ bool ChangeLabelTextCommand::mergeWith(const QUndoCommand *other)
 
 	m_newText = sother->m_newText;
     return true;
+}
+
+QString ChangeLabelTextCommand::getParamString() const {
+	return QString("ChangeLabelTextCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 old:%2 new:%3") 
+			.arg(m_itemID).arg(m_oldText).arg(m_newText);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+RotateFlipLabelCommand::RotateFlipLabelCommand(SketchWidget* sketchWidget, long itemID, qreal degrees, Qt::Orientations orientation, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = itemID;
+    m_degrees = degrees;
+	m_orientation = orientation;
+}
+
+void RotateFlipLabelCommand::undo()
+{
+    m_sketchWidget->rotateFlipPartLabel(m_itemID, -m_degrees, m_orientation);
+}
+
+void RotateFlipLabelCommand::redo()
+{
+    m_sketchWidget->rotateFlipPartLabel(m_itemID, m_degrees, m_orientation);
+}
+
+QString RotateFlipLabelCommand::getParamString() const {
+	return QString("RotateFlipLabelCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 degrees:%2 orientation:%3") 
+			.arg(m_itemID).arg(m_degrees).arg(m_orientation);
+
 }

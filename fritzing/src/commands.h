@@ -49,16 +49,26 @@ public:
 	BaseCommand::CrossViewType crossViewType() const;
 	void setCrossViewType(BaseCommand::CrossViewType);
 	class SketchWidget* sketchWidget();
+	int subCommandCount() const;
+	const BaseCommand * subCommand(int index) const;
+	virtual QString getDebugString() const;
+
+protected:
+	virtual QString getParamString() const;
 
 protected:
 	BaseCommand::CrossViewType m_crossViewType;
     class SketchWidget *m_sketchWidget;
+	QList<BaseCommand *> m_commands;
 };
 
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
     AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
+
+protected:
+	QString getParamString() const;
 
 protected:
     QString m_moduleID;
@@ -77,6 +87,9 @@ public:
 	void turnOffFirstRedo();
 
 protected:
+	QString getParamString() const;
+
+protected:
 	bool m_updateInfoView;
 	bool m_firstRedo;
 	bool m_doFirstRedo;
@@ -90,6 +103,9 @@ public:
     void undo();
     void redo();
 
+protected:
+	QString getParamString() const;
+
 };
 
 class MoveItemCommand : public BaseCommand
@@ -98,6 +114,9 @@ public:
     MoveItemCommand(class SketchWidget *sketchWidget, long id, ViewGeometry & oldG, ViewGeometry & newG, QUndoCommand *parent);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
 
 protected:
     long m_itemID;
@@ -113,6 +132,9 @@ public:
     void redo();
 
 protected:
+	virtual QString getParamString() const;
+
+protected:
     long m_itemID;
     qreal m_degrees;
 };
@@ -124,6 +146,9 @@ public:
     FlipItemCommand(class SketchWidget *sketchWidget, long id, Qt::Orientations orientation, QUndoCommand *parent);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
 
 protected:
     long m_itemID;
@@ -141,6 +166,9 @@ public:
 	void undo();
 	void redo();
 	void setUpdateConnections(bool updatem);
+
+protected:
+	QString getParamString() const;
 
 protected:
     long m_fromID;
@@ -162,6 +190,9 @@ public:
     					QUndoCommand *parent);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
 
 protected:
     long m_fromID;
@@ -197,11 +228,14 @@ public:
 
 protected:
 	void selectAllFromStack(QList<long> & stack);
+	QString getParamString() const;
 
+protected:
     QList<long> m_undoIDs;
     QList<long> m_redoIDs;
     SelectItemType m_type;
 
+protected:
     static int selectItemCommandID;
 };
 
@@ -214,6 +248,10 @@ public:
     void undo();
     void redo();
 
+protected:
+	QString getParamString() const;
+
+protected:
     static qreal first(RealPair *);
     static qreal second(RealPair *);
 
@@ -228,6 +266,9 @@ public:
 	StickyCommand(class SketchWidget *sketchWidget, long stickTargetID, long stickSourceID, bool stick, QUndoCommand *parent);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
 
 protected:
 	long m_stickTargetID;
@@ -246,9 +287,11 @@ public:
 										  int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers);
 
 protected:
+	QString getParamString() const;
+
+protected:
 
 	bool m_firstTime;
-	QList<BaseCommand *> m_commands;
 };
 
 
@@ -261,6 +304,9 @@ public:
 		QUndoCommand *parent=0);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
 
 protected:
 	long m_itemId;
@@ -278,6 +324,10 @@ public:
 		QUndoCommand *parent=0);
     void undo();
     void redo();
+
+
+protected:
+	QString getParamString() const;
 
 protected:
 	long m_wireId;
@@ -299,6 +349,9 @@ public:
     void redo();
 
 protected:
+	QString getParamString() const;
+
+protected:
 	long m_wireId;
 	int m_oldWidth;
 	int m_newWidth;
@@ -314,6 +367,9 @@ public:
 		QUndoCommand *parent);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
 
 protected:
 	long m_wireId;
@@ -334,7 +390,9 @@ public:
 	void addWire(class SketchWidget *, class Wire *, class ConnectorItem * source, class ConnectorItem * dest);
 
 protected:
-	QList<BaseCommand *> m_commands;
+	QString getParamString() const;
+
+protected:
 	bool m_firstTime;
 
 };
@@ -346,6 +404,9 @@ public:
 						int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers, QUndoCommand * parent);
     void undo();
     void redo();
+
+protected:
+	QString getParamString() const;
 
 protected:
 	int m_oldNetCount;
@@ -367,6 +428,9 @@ public:
     void redo();
 
 protected:
+	QString getParamString() const;
+
+protected:
     long m_itemID;
     QPointF m_oldPos;
     QPointF m_newPos;
@@ -385,12 +449,31 @@ public:
 	bool mergeWith(const QUndoCommand *other);
 
 protected:
+	QString getParamString() const;
+
+protected:
     long m_itemID;
     QString m_oldText;
     QString m_newText;
 	bool m_firstTime;
 
 	static int changeLabelTextCommandID;
+};
+
+class RotateFlipLabelCommand : public BaseCommand
+{
+public:
+	RotateFlipLabelCommand(class SketchWidget *sketchWidget, long id, qreal degrees, Qt::Orientations, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    qreal m_degrees;
+	Qt::Orientations m_orientation;
 };
 
 

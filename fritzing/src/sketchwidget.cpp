@@ -3799,3 +3799,17 @@ void SketchWidget::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPointF o
 	m_undoStack->push(command);
 }
 
+
+void SketchWidget::rotateFlipPartLabel(ItemBase * itemBase, qreal degrees, Qt::Orientations flipDirection) {
+	RotateFlipLabelCommand * command = new RotateFlipLabelCommand(this, itemBase->id(), degrees, flipDirection, NULL);
+	command->setText(tr("%1 label '%2'").arg((degrees != 0) ? tr("Rotate") : tr("Flip")).arg(itemBase->title()));
+	m_undoStack->push(command);
+}
+
+
+void SketchWidget::rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientations flipDirection) {
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase == NULL) return;
+
+	itemBase->doRotateFlipPartLabel(degrees, flipDirection);
+}

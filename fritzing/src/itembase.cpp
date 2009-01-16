@@ -806,3 +806,19 @@ void ItemBase::partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos,
 		infoGraphicsView->partLabelMoved(this, oldPos, oldOffset, newPos, newOffset);
 	}
 }
+
+void ItemBase::rotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
+{	
+	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->rotateFlipPartLabel(this, degrees, orientation);
+	}
+}
+
+
+void ItemBase::doRotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
+{	
+	if (m_partLabel) {
+		m_partLabel->rotateFlipLabel(degrees, orientation);
+	}
+}

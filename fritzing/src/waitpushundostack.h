@@ -24,15 +24,13 @@ $Date$
 
 ********************************************************************/
 
-
-
 #ifndef WAITPUSHUNDOSTACK_H
 #define WAITPUSHUNDOSTACK_H
 
 #include <QUndoStack>
 #include <QTimer>
 #include <QMutex>
-
+#include <QFile>
 
 class WaitPushUndoStack : public QUndoStack
 {
@@ -40,6 +38,14 @@ public:
 	WaitPushUndoStack(QObject * parent = 0);
 	void waitPush(QUndoCommand *, int delayMS);
 	void deleteTimer(QTimer *);
+
+#ifndef QT_NO_DEBUG
+public:
+	void push(QUndoCommand *);
+	void writeUndo(const QUndoCommand *, int indent);
+protected:
+	QFile m_file;
+#endif
 
 protected:
 	QList<QTimer *> m_deadTimers;

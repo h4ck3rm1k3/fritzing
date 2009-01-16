@@ -34,6 +34,7 @@ $Date$
 #include <QXmlStreamWriter>
 #include <QDomElement>
 #include <QTextDocument>
+#include <QKeyEvent>
 
 #include "../viewlayer.h"
 
@@ -48,7 +49,6 @@ public:
 protected:
 	int m_refCount;
 	long m_id;
-
 
 protected:
 	static QHash<long, PartLabelTextDocument *> AllTextDocuments;
@@ -68,9 +68,6 @@ public:
 
 	void showLabel(bool showIt, ViewLayer *, const QColor & textColor);
 	QRectF boundingRect() const;
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	QPainterPath shape() const;
 	void setPlainText(const QString & text);
 	bool initialized();
@@ -82,10 +79,25 @@ public:
 	void restoreLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID);
 	void moveLabel(QPointF newPos, QPointF newOffset);
 	class ItemBase * owner();
+	void rotateFlipLabel(qreal degrees, Qt::Orientations orientation);
 
+protected:
+	enum PartLabelTransformation {
+		PartLabelRotate90CW = 1,
+		PartLabelRotate180,
+		PartLabelRotate90CCW,
+		PartLabelFlipHorizontal,
+		PartLabelFlipVertical
+	};
 
 protected:
 	void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
+	void keyPressEvent(QKeyEvent * event);
+	void keyReleaseEvent(QKeyEvent * event);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+	void temporaryMenuEvent(QGraphicsSceneMouseEvent * event);
 
 protected slots:
 	void contentsChangedSlot();

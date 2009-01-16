@@ -33,36 +33,43 @@ $Date$
 #include <QTextFrameFormat>
 #include <QTextFrame>
 #include <QStyle>
+#include <QMenu>
 
 // TODO:
 //		** selection: coordinate with part selection: it's a layerkin
 //		** select a part, highlight its label; click a label, highlight its part
 //		** viewinfo update when selected
-//		hover?
-//		show = autoselect?
 //		** viewinfo for wires
 //		** graphics (esp. drag area vs. edit area) 
 //		** html info box needs to update when view switches
-//		-- multiple selection?
 //		** undo delete text
-//		undo delete show?
-//		-- undo select
 //		** undo change text
-//		undo move
+//		** undo move
 //		** layers and z order
 //		** hide and show layer
-//		tools (bold, italic, color, size)?
 //		** sync hide/show checkbox with visibility state
-//		-- export to svg for export diy (silkscreen layer is not exported)
 //		** save and load
 //		** text color needs to be separate in separate views
 //		** hide silkscreen should hide silkscreen label
 //		** delete owner: delete label
-//		rotate/flip (where is the control?)--heads up?  label menu for the time being
-//		make label single-line (ignore or trigger edit-done on pressing enter)
+//		** make label single-line (ignore enter key)
+
+//		rotate/flip 
 //		undo rotate/flip
+//		format: bold, italic, color?, size (small normal large huge)
+//		undo format
+//		heads-up controls
+
 //		copy/paste?
 //		z-order manipulation?
+//		hover?
+//		show = autoselect?
+//		undo delete show?
+//		close focus on enter/return?
+
+//		-- multiple selection?
+//		-- undo select
+//		-- export to svg for export diy (silkscreen layer is not exported)
 
 /////////////////////////////////////////////
 
@@ -163,6 +170,14 @@ void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
     m_owner->setSelected(true);
 
 	m_doDrag = false;
+
+	// don't seem to get a contextMenuEvent in the drag area of the label, so fake it for now
+	// (since this is all only temporary anyway)
+	if (event->button() == Qt::RightButton && event->pos().y() <= 0) {
+		temporaryMenuEvent(event);
+		return;
+	}
+
 	QRectF br = QGraphicsTextItem::boundingRect();
 	QPointF p = event->pos();
 	if (!br.contains(p)) {
@@ -193,6 +208,8 @@ void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 	if (m_doDrag) {
 		m_owner->partLabelMoved(m_initialPosition, m_initialOffset, pos(), m_offset);
 	}
+
+	QGraphicsTextItem::mouseReleaseEvent(event);
 }
 
 void PartLabel::contentsChangedSlot() {
@@ -307,4 +324,81 @@ ItemBase * PartLabel::owner() {
 	return m_owner;
 }
 
+void PartLabel::keyPressEvent(QKeyEvent * event)
+{
+	switch (event->key()) {
+		case Qt::Key_Return:
+		case Qt::Key_Enter:
+			event->ignore();
+			return;
+		default:
+			QGraphicsTextItem::keyPressEvent(event);
+			break;
+	}
+}
 
+void PartLabel::keyReleaseEvent(QKeyEvent * event)
+{
+	switch (event->key()) {
+		case Qt::Key_Return:
+		case Qt::Key_Enter:
+			event->ignore();
+			return;
+		default:
+			QGraphicsTextItem::keyPressEvent(event);
+			break;
+	}
+}
+
+void PartLabel::temporaryMenuEvent(QGraphicsSceneMouseEvent * event) {
+
+	QMenu menu;
+    QAction *rotate90cwAct = menu.addAction(tr("&Rotate 90\x00B0 Clockwise"));
+	rotate90cwAct->setData(QVariant(PartLabelRotate90CW));
+	rotate90cwAct->setStatusTip(tr("Rotate the selected parts by 90 degrees clockwise"));
+
+ 	QAction *rotate180Act = menu.addAction(tr("&Rotate 180\x00B0"));
+	rotate180Act->setData(QVariant(PartLabelRotate180));
+	rotate180Act->setStatusTip(tr("Rotate the selected parts by 180 degrees"));
+   
+	QAction *rotate90ccwAct = menu.addAction(tr("&Rotate 90\x00B0 Counter Clockwise"));
+	rotate90ccwAct->setData(QVariant(PartLabelRotate90CCW));
+	rotate90ccwAct->setStatusTip(tr("Rotate current selection 90 degrees counter clockwise"));
+	
+	QAction *flipHorizontalAct = menu.addAction(tr("&Flip Horizontal"));
+	flipHorizontalAct->setData(QVariant(PartLabelFlipHorizontal));
+	flipHorizontalAct->setStatusTip(tr("Flip current selection horizontally"));
+
+	QAction *flipVerticalAct = menu.addAction(tr("&Flip Vertical"));
+	flipVerticalAct->setData(QVariant(PartLabelFlipVertical));
+	flipVerticalAct->setStatusTip(tr("Flip current selection vertically"));
+	
+	QAction *selectedAction = menu.exec(event->screenPos());
+	if (selectedAction == NULL) return;
+
+	Qt::Orientations orientation = 0;
+	qreal degrees = 0;
+	switch ((PartLabelTransformation) selectedAction->data().toInt()) {
+		case PartLabelRotate90CW:
+			degrees = 90;
+			break;
+		case PartLabelRotate90CCW:
+			degrees = 270;
+			break;
+		case PartLabelRotate180:
+			degrees = 180;
+			break;
+		case PartLabelFlipHorizontal:
+			orientation = Qt::Horizontal;
+			break;
+		case PartLabelFlipVertical:
+			orientation = Qt::Vertical;
+			break;
+	}
+
+	m_owner->rotateFlipPartLabel(degrees, orientation);
+}
+
+void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
+
+}

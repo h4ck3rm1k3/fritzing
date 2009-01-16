@@ -189,6 +189,8 @@ public:
 	void updateInfoView();
 	void setCurrent(bool current);
 	void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
+	void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
+	void rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientations flipDirection);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

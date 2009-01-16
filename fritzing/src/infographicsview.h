@@ -64,6 +64,7 @@ public:
 
 	virtual void partLabelChanged(ItemBase *, const QString &oldText, const QString & newText);
 	virtual void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
+	virtual void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
 
 protected:
 	QGraphicsItem *selectedAux();

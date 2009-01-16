@@ -24,9 +24,12 @@ $Date$
 
 ********************************************************************/
 
-
-
 #include "waitpushundostack.h"
+#include "misc.h"
+#include "commands.h"
+
+#include <QCoreApplication>
+#include <QTextStream>
 
 CommandTimer::CommandTimer(QUndoCommand * command, int delayMS, WaitPushUndoStack * undoStack) : QTimer()
 {
@@ -43,10 +46,27 @@ void CommandTimer::timedout() {
 	m_undoStack->deleteTimer(this);
 }
 
+/////////////////////////////////
+
 WaitPushUndoStack::WaitPushUndoStack(QObject * parent) :
 	QUndoStack(parent)
 {
+#ifndef QT_NO_DEBUG
+	QString path = QCoreApplication::applicationDirPath();
+    path += "/undoStack.txt";
+
+	m_file.setFileName(path);
+	m_file.remove();
+#endif
 }
+
+#ifndef QT_NO_DEBUG
+void WaitPushUndoStack::push(QUndoCommand * cmd) 
+{
+	writeUndo(cmd, 0);
+	QUndoStack::push(cmd);
+}
+#endif
 
 void WaitPushUndoStack::waitPush(QUndoCommand * command, int delayMS) {
 	QMutexLocker locker(&m_mutex);
@@ -62,3 +82,34 @@ void WaitPushUndoStack::deleteTimer(QTimer * timer) {
 	QMutexLocker locker(&m_mutex);
 	m_deadTimers.append(timer);
 }
+
+#ifndef QT_NO_DEBUG
+void WaitPushUndoStack::writeUndo(const QUndoCommand * cmd, int indent) 
+{
+	const BaseCommand * bcmd = dynamic_cast<const BaseCommand *>(cmd);
+	QString cmdString; 
+	if (bcmd == NULL) {
+		cmdString = cmd->text();
+	}
+	else {
+		cmdString = bcmd->getDebugString();
+	}
+
+   	if (m_file.open(QIODevice::Append | QIODevice::Text)) {
+   		QTextStream out(&m_file);
+		QString indentString(indent, QChar(' '));
+   		out << indentString << cmdString << "\n";
+		m_file.close();
+	}
+
+	for (int i = 0; i < cmd->childCount(); i++) {
+		writeUndo(cmd->child(i), indent + 4);
+	}
+
+	if (bcmd) {
+		for (int i = 0; i < bcmd->subCommandCount(); i++) {
+			writeUndo(bcmd->subCommand(i), indent + 4);
+		}
+	}
+}
+#endif
