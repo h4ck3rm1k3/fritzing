@@ -376,7 +376,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 					// leave the distance at zero
 					// do not autoroute--user says leave it alone
 				}
-				else if (ci->attachedTo() == cj->attachedTo() && ci->bus() == cj->bus()) {
+				else if ((ci->attachedTo() == cj->attachedTo()) && ci->bus() && (ci->bus() == cj->bus())) {
 					// leave the distance at zero
 					// if connections are on the same bus on a given part
 				}
