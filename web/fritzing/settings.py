@@ -6,7 +6,7 @@ import os
 PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../pinax/"))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # tells Pinax to serve media through django.views.static.serve.
