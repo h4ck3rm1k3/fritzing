@@ -1,0 +1,22 @@
+{% extends "downloads/downloads_base.html" %}
+
+{% block content %}
+    <h2>Release version {{ version }}</h2>
+    {% for release in releases %}
+    <p>
+    <div class="release_date">
+        <a name="{{ release.release_date|date:"%Y-%m-%d" }}"></a>
+        <h4>{{ release.release_date|date }}</h4>
+    </div>
+    {% if release.download_set.count %}
+    {% for download in release.download_set.all %}
+        <a href="{{ download.get_absolute_url }}">{{ download.platform }}</a>
+    {% endfor %}
+    {% endif %}
+    <p>{{ release.description|safe }}</p>
+    {% if release.changelog %}
+        <p>{{ release.changelog|safe }}</p>
+    {% endif %}
+    </p>
+    {% endfor %}
+{% endblock %}

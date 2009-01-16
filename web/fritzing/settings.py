@@ -149,6 +149,7 @@ INSTALLED_APPS = (
     'misc',
     'tools',
     'partslib',
+    'downloads',
 )
 
 ABSOLUTE_URL_OVERRIDES = {

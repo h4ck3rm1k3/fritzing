@@ -1,0 +1,258 @@
+[
+    {
+        "pk": 3, 
+        "model": "downloads.platform", 
+        "fields": {
+            "name": "Linux (32-bit)", 
+            "slug": "linux-32bit"
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "downloads.platform", 
+        "fields": {
+            "name": "Linux (64-bit)", 
+            "slug": "linux-64bit"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "downloads.platform", 
+        "fields": {
+            "name": "Mac OS X", 
+            "slug": "mac"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "downloads.platform", 
+        "fields": {
+            "name": "Windows", 
+            "slug": "windows"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "downloads.release", 
+        "fields": {
+            "description": "", 
+            "changelog": "<p>Maintenance release</p><ul><li>Fixed a nasty copy/paste bug that could destroy your sketch (<a href=\"http://code.google.com/p/fritzing/issues/detail?id=409\">issue 409</a>)</li><li>Fritzing in your language! Starting with German, more to follow.</li><li>Preferences dialog, currently just for language setting</li><li>New parts: H-Bridge, ATmega168, Temperature Sensor</li><li>IC part generator (so far only for experts, <a href=\"http://code.google.com/p/fritzing/source/browse/trunk/fritzing/part-gen-scripts/dilPackageGenerator/generator.py\">in the SVN</a>)</li><li>...and a number of further fixes and enhancements</li></ul>", 
+            "release_date": "2009-01-09 12:00:00", 
+            "version": "0.1.1b", 
+            "active": true, 
+            "known_issues": ""
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "downloads.release", 
+        "fields": {
+            "description": "", 
+            "changelog": "First preview release of the all-newly programmed Fritzing.", 
+            "release_date": "2008-11-12 12:00:00", 
+            "version": "0.1b", 
+            "active": true, 
+            "known_issues": ""
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "downloads.release", 
+        "fields": {
+            "description": "", 
+            "changelog": "Lots of improvements :)", 
+            "release_date": "2008-11-24 12:00:00", 
+            "version": "0.1b", 
+            "active": true, 
+            "known_issues": ""
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "downloads.release", 
+        "fields": {
+            "description": "", 
+            "changelog": "<p>The \"Fritzmas\" release is the first version of the new Fritzing that we tend to call stable. We put a lot of effort into polishing, bug fixing, performance improvements and future-proofness (which also means that sketches created with older versions are not compatible with the new one).<br />We intend to circulate it on a wider base and are encouraging you to try it out on more serious projects.</p><ul><li>(Hopefully) clearer UI:&#160;We put some effort in making the \"three views\"-concept more understandable, with a new view switcher, miniature views in the navigator, cross-view icons in the inspector, and a new help text on opening Fritzing for the first time.</li><li>New website:&nbsp;Based on a new underlying web framework (Django), the new website is the foundation for the upcoming social features. Soon you will be able to share projects and custom parts.</li><li>Refined .fz file format that is (more likely) future-compatible</li><li>New parts (big potentiometer, batteries, dc motor) and lots of clean-up</li><li>Five new example sketches, including a Fritzmas surprise</li><li>Improved synchronization of views (especially for schematic view)</li><li>New overall design and styling, with much more space for your sketch</li><li>Big speed-up for the breadboard</li><li>Export DIY is now vector-based and faster</li><li>Improved autorouter</li><li>Breadboard parts resized to be closer to actual size</li><li>Parts editor connectors view allows for zooming and panning</li><li>Connectors, connections, buses, and wires \r\ncleaned up</li><li>Autorouting can now be undone</li><li>..and many more big and small bug fixes&nbsp;</li></ul>", 
+            "release_date": "2008-12-23 12:00:00", 
+            "version": "0.1b", 
+            "active": true, 
+            "known_issues": ""
+        }
+    }, 
+    {
+        "pk": 4, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 6, 
+            "platform": 1, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2009.01.09.pc.zip"
+        }
+    }, 
+    {
+        "pk": 1, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 1, 
+            "platform": 1, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.1471.pc.zip"
+        }
+    }, 
+    {
+        "pk": 5, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 1, 
+            "platform": 2, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.1471.mac.zip"
+        }
+    }, 
+    {
+        "pk": 6, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 1, 
+            "platform": 3, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.1471.linux.i386.tar.bz2"
+        }
+    }, 
+    {
+        "pk": 7, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 1, 
+            "platform": 4, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.1471.linux.AMD64.tar.bz2"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 5, 
+            "platform": 1, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.11.24.pc.zip"
+        }
+    }, 
+    {
+        "pk": 8, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 5, 
+            "platform": 2, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.11.24.mac.zip"
+        }
+    }, 
+    {
+        "pk": 9, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 5, 
+            "platform": 3, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.11.24.linux.i386.tar.bz2"
+        }
+    }, 
+    {
+        "pk": 10, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 5, 
+            "platform": 4, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.11.24.linux.AMD64.tar.bz2"
+        }
+    }, 
+    {
+        "pk": 11, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 4, 
+            "platform": 1, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.12.23.pc.zip"
+        }
+    },
+    {
+        "pk": 12, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 4, 
+            "platform": 2, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.12.23.mac.zip"
+        }
+    },
+    {
+        "pk": 13, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 4, 
+            "platform": 3, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.12.23.linux.i386.tar.bz2"
+        }
+    },
+    {
+        "pk": 14, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 4, 
+            "platform": 4, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2008.12.23.linux.AMD64.tar.bz2"
+        }
+    },
+    {
+        "pk": 15, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 6, 
+            "platform": 2, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2009.01.09.mac.zip"
+        }
+    }, 
+    {
+        "pk": 16, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 6, 
+            "platform": 3, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2009.01.09.linux.i386.tar.bz2"
+        }
+    }, 
+    {
+        "pk": 17, 
+        "model": "downloads.download", 
+        "fields": {
+            "release": 6, 
+            "platform": 4, 
+            "counter": 0, 
+            "mime_type": null, 
+            "filename": "downloads/fritzing.2009.01.09.linux.AMD64.tar.bz2"
+        }
+    }
+]

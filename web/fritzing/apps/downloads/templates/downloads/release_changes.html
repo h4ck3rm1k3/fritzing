@@ -1,0 +1,19 @@
+{% extends "downloads/downloads_base.html" %}
+{% load downloads_tags %}
+
+{% block content %}
+<h1>History of changes</h1>
+<p class="documentDescription">
+<span class="" id="parent-fieldname-description">List of changes between releases</span></p>
+<div class="" id="parent-fieldname-text">
+<p>
+    This is a high-level summary of changes between each release. If you're interested in the detailed changes, take a look at the <a href="http://code.google.com/p/fritzing/source/list">individual code changes</a>.
+</p>
+{% for release in object_list %}
+    {% if release.changelog %}
+        <h2>{{ release.version }} | {{ release.release_date|date }}</h2>
+        <p>{{ release.changelog|safe|urlize }}</p>
+    {% endif %}
+{% endfor %}
+</div>
+{% endblock %}
