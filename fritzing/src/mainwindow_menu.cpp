@@ -965,7 +965,10 @@ void MainWindow::createPartMenuActions() {
 	m_hideAllLayersAct->setStatusTip(tr("Hide all the layers of the current view"));
 	connect(m_hideAllLayersAct, SIGNAL(triggered()), this, SLOT(hideAllLayers()));
 
-
+	m_showPartLabelAct = new QAction(tr("&Show part label"), this);
+	m_showPartLabelAct->setStatusTip(tr("Show or hide the label for the selected parts"));
+	m_showPartLabelAct->setCheckable(true);
+	connect(m_showPartLabelAct, SIGNAL(triggered()), this, SLOT(showPartLabels()));
 }
 
 void MainWindow::createViewMenuActions() {
@@ -1130,6 +1133,8 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_bringForwardAct);
 	m_partMenu->addAction(m_sendBackwardAct);
 	m_partMenu->addAction(m_sendToBackAct);
+	m_partMenu->addSeparator();	
+	m_partMenu->addAction(m_showPartLabelAct);
 	//m_partMenu->addSeparator();
 	//m_partMenu->addAction(m_groupAct);
 
@@ -1256,6 +1261,9 @@ void MainWindow::updatePartMenu() {
 	m_bringForwardAct->setEnabled(enable);
 	m_sendBackwardAct->setEnabled(enable);
 	m_sendToBackAct->setEnabled(enable);
+
+	m_showPartLabelAct->setEnabled(itemCount.selCount > 0);
+	m_showPartLabelAct->setChecked(itemCount.labelCount == itemCount.selCount);
 
 	enable = (itemCount.selRotatable > 0);
 
@@ -1942,4 +1950,10 @@ void MainWindow::notClosableForAWhile() {
 
 void MainWindow::ensureClosable() {
 	m_dontClose = false;
+}
+
+void MainWindow::showPartLabels() {
+	if (m_currentGraphicsView == NULL) return;
+
+	m_currentGraphicsView->showPartLabels(m_showPartLabelAct->isChecked());
 }

@@ -82,15 +82,6 @@ public:
 	void rotateFlipLabel(qreal degrees, Qt::Orientations orientation);
 
 protected:
-	enum PartLabelTransformation {
-		PartLabelRotate90CW = 1,
-		PartLabelRotate180,
-		PartLabelRotate90CCW,
-		PartLabelFlipHorizontal,
-		PartLabelFlipVertical
-	};
-
-protected:
 	void paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget);
 	void keyPressEvent(QKeyEvent * event);
 	void keyReleaseEvent(QKeyEvent * event);

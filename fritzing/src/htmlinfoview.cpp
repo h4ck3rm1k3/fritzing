@@ -298,11 +298,12 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
 	}
 
+	/*
 	// TODO:  put this somewhere more reasonable
 	if(!title.isNull() && !title.isEmpty()) {
 		s += QString("<input type='checkbox' %1 id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label").arg(wire->isPartLabelVisible() ? "checked='true'" : "");
 	}
-
+	*/
 
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
 											   .arg(modelPart->modelPartStuff()->version());
@@ -394,6 +395,8 @@ int HtmlInfoView::getNextTitle(QList<QGraphicsItem*> items, const QString &title
 }
 
 QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, const QString title, bool labelIsVisible) {
+	Q_UNUSED(labelIsVisible);
+
 	if (modelPart == NULL) return "missing modelpart";
 	if (modelPart->modelPartStuff() == NULL) return "missing modelpart stuff";
 
@@ -431,11 +434,12 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		delete pixmap3;
 	}
 
+	/*
 	// TODO:  put this somewhere more reasonable
 	if(!title.isNull() && !title.isEmpty()) {
 		s += QString("<input type='checkbox' %1 id='show_part_label' onclick='showPartLabel(this, this.checked)'>show label").arg(labelIsVisible ? "checked='true'" : "");
 	}
-
+	*/
 
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartStuff()->title())

@@ -168,20 +168,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 		setStyleSheet(styleSheet.readAll()+___MacStyle___);
 	}
 
-	m_itemMenu = new QMenu(QObject::tr("Part"), this);
-	m_itemMenu->addAction(m_rotate90cwAct);
-	m_itemMenu->addAction(m_rotate180Act);
-	m_itemMenu->addAction(m_rotate90ccwAct);
-	m_itemMenu->addAction(m_flipHorizontalAct);
-	m_itemMenu->addAction(m_flipVerticalAct);
-	m_itemMenu->addAction(m_bringToFrontAct);
-	m_itemMenu->addAction(m_bringForwardAct);
-	m_itemMenu->addAction(m_sendBackwardAct);
-	m_itemMenu->addAction(m_sendToBackAct);
-	m_itemMenu->addAction(m_openInPartsEditorAct);
-	m_itemMenu->addAction(m_deleteAct);
-	m_itemMenu->addAction(m_addToBinAct);
-
 	QMenu *breadItemMenu = breadboardItemMenu();
     m_breadboardGraphicsView->setItemMenu(breadItemMenu);
     m_breadboardGraphicsView->setWireMenu(breadItemMenu);
@@ -1178,7 +1164,8 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addSeparator();
 	menu->addAction(m_openInPartsEditorAct);
 	menu->addAction(m_addToBinAct);
-
+	menu->addSeparator();
+	menu->addAction(m_showPartLabelAct);
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);

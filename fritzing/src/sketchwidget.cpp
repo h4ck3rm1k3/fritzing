@@ -1933,6 +1933,7 @@ ItemCount SketchWidget::calcItemCount() {
 	QList<QGraphicsItem *> items = scene()->items();
 	QList<QGraphicsItem *> selItems = scene()->selectedItems();
 
+	itemCount.labelCount = 0;
 	itemCount.selCount = 0;
 	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable = 0;
 	itemCount.itemsCount = 0;
@@ -1941,6 +1942,11 @@ ItemCount SketchWidget::calcItemCount() {
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(selItems[i]);
 		if (itemBase != NULL) {
 			itemCount.selCount++;
+
+			if (itemBase->isPartLabelVisible()) {
+				itemCount.labelCount++;
+			}
+
 			// can't rotate a wire
 			if (dynamic_cast<PaletteItemBase *>(itemBase) != NULL) {
 
@@ -3813,3 +3819,15 @@ void SketchWidget::rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientati
 
 	itemBase->doRotateFlipPartLabel(degrees, flipDirection);
 }
+
+
+void SketchWidget::showPartLabels(bool show) 
+{
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
+		if (itemBase == NULL) continue;
+
+		itemBase->showPartLabel(show, m_viewLayers.value(getLabelViewLayerID()), getLabelTextColor());
+	}
+}
+

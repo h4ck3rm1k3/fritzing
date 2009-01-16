@@ -54,6 +54,7 @@ QT_END_NAMESPACE
 
 struct ItemCount {
 	int selCount;
+	int labelCount;
 	int itemsCount;
 	int selRotatable;
 	int selHFlipable;
@@ -191,6 +192,7 @@ public:
 	void partLabelMoved(ItemBase *, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);
 	void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
 	void rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientations flipDirection);
+	void showPartLabels(bool show);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

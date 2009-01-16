@@ -198,6 +198,7 @@ protected slots:
 	void showTabWindow();
 	void restoreTabWindow();
 	void tabWindowRestored(bool);
+	void showPartLabels();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -229,7 +230,7 @@ protected:
 	void setShowViewActionsIcons(QAction * active, QAction * inactive1, QAction * inactive2);
 	void exportToEagle();
 	void exportToGerber();
-        void exportBOM();
+    void exportBOM();
 
 	QList<QWidget*> getButtonsForView(ItemBase::ViewIdentifier viewId);
 
@@ -396,6 +397,7 @@ protected:
 	QAction *m_sendBackwardAct;
 	QAction *m_sendToBackAct;
 	QAction *m_groupAct;
+	QAction *m_showPartLabelAct;
 
     QAction *m_showAllLayersAct;
 	QAction *m_hideAllLayersAct;
@@ -436,8 +438,6 @@ protected:
     QAction *m_partsRefAct;
     QAction *m_showInViewHelpAct;;
     QAction *m_visitFritzingDotOrgAct;
-
-	QMenu *m_itemMenu;
 
     // Dot icons
     QIcon m_dotIcon;

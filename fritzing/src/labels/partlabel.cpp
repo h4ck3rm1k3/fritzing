@@ -54,12 +54,13 @@ $Date$
 //		** delete owner: delete label
 //		** make label single-line (ignore enter key)
 
-//		rotate/flip 
-//		undo rotate/flip
-//		format: bold, italic, color?, size (small normal large huge)
+//		** rotate/flip 
+//		** undo rotate/flip
+//		format: bold, italic, size (small normal large huge), color?, 
 //		undo format
 //		heads-up controls
 
+//		rotate/flip may need to be relative to part?
 //		copy/paste?
 //		z-order manipulation?
 //		hover?
@@ -70,6 +71,15 @@ $Date$
 //		-- multiple selection?
 //		-- undo select
 //		-- export to svg for export diy (silkscreen layer is not exported)
+
+
+enum PartLabelTransformation {
+	PartLabelRotate90CW = 1,
+	PartLabelRotate180,
+	PartLabelRotate90CCW,
+	PartLabelFlipHorizontal,
+	PartLabelFlipVertical	
+};
 
 /////////////////////////////////////////////
 
@@ -372,6 +382,10 @@ void PartLabel::temporaryMenuEvent(QGraphicsSceneMouseEvent * event) {
 	QAction *flipVerticalAct = menu.addAction(tr("&Flip Vertical"));
 	flipVerticalAct->setData(QVariant(PartLabelFlipVertical));
 	flipVerticalAct->setStatusTip(tr("Flip current selection vertically"));
+
+	//menu.addSeparator();
+
+
 	
 	QAction *selectedAction = menu.exec(event->screenPos());
 	if (selectedAction == NULL) return;
