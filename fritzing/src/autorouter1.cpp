@@ -112,7 +112,7 @@ void tangent_PointPoly( QPointF P, QPolygonF & poly, int & rightTangent, int & l
 Autorouter1::Autorouter1(PCBSketchWidget * sketchWidget)
 {
 	m_sketchWidget = sketchWidget;
-	m_cancelled = false;
+	m_cancelTrace = m_cancelled = false;
 }
 
 Autorouter1::~Autorouter1()
@@ -121,6 +121,11 @@ Autorouter1::~Autorouter1()
 
 void Autorouter1::cancel() {
 	m_cancelled = true;
+}
+
+
+void Autorouter1::cancelTrace() {
+	m_cancelTrace = true;
 }
 
 void Autorouter1::start()
@@ -227,6 +232,26 @@ void Autorouter1::start()
 			// TODO:  if we're stuck on two boards, use the union as the constraint?
 		}
 
+		// find the ratsnest connecting the two connectors
+		Wire * ratsnest = NULL;
+		foreach (ConnectorItem * fromToConnectorItem, edge->from->connectedToItems()) {
+			Wire * wire = dynamic_cast<Wire *>(fromToConnectorItem->attachedTo());
+			if (wire == NULL) continue;
+			if (!wire->getRatsnest()) continue;
+
+			ConnectorItem * otherConnectorItem = wire->otherConnector(fromToConnectorItem);
+			if (otherConnectorItem->connectedToItems().contains(edge->to)) {
+				ratsnest = wire;
+				break;
+			}
+		}
+
+		int ratsnestWidth = 0;
+		if (ratsnest) {
+			ratsnestWidth = ratsnest->width();
+			ratsnest->setWidth(5);
+		};
+
 		QList<Wire *> wires;
 		if (partForBounds == NULL) {
 			// connection between parts is not across a single board
@@ -242,6 +267,10 @@ void Autorouter1::start()
 				partForBounds->addSticky(wire, true);
 				//DebugDialog::debug(QString("added wire %1").arg(wire->id()));
 			}
+		}
+		
+		if (ratsnest) {
+			ratsnest->setWidth(ratsnestWidth);
 		}
 
 		emit setProgressValue(++edgesDone);
@@ -463,21 +492,29 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		}
 	}
 
+	bool shortcut = false;
 	bool backwards = false;
-	bool result = drawTrace(fromPos, toPos, from, to, wires, boundingPoly);
+	bool result = drawTrace(fromPos, toPos, from, to, wires, boundingPoly, 0, toPos, true, shortcut);
 	if (m_cancelled) {
 		return 0;
 	}
-	if (!result) {
-		result = drawTrace(toPos, fromPos, to, from, wires, boundingPoly);
+
+	if (m_cancelTrace) {
+		// clear the cancel flag so the next trace can proceed
+		m_cancelTrace = false;
+	}
+	else if (!result) {
+		DebugDialog::debug("backwards?");
+		result = drawTrace(toPos, fromPos, to, from, wires, boundingPoly, 0, fromPos, true, shortcut);
 		if (result) {
 			backwards = true;
-			DebugDialog::debug("backwards");
+			DebugDialog::debug("backwards.");
 		}
 	}
 	if (m_cancelled) {
 		return 0;
 	}
+
 	if (result) {
 		if (backwards) {
 			ConnectorItem * temp = from;
@@ -540,11 +577,15 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	wires.append(jumperWire);
  }
 
-bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly)
+bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool recurse, bool & shortcut)
 {
 	QApplication::processEvents();
-	DebugDialog::debug(QString("drawtrace from:%1 %2, to:%3 %4").arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()) );
+	DebugDialog::debug(QString("%5drawtrace from:%1 %2, to:%3 %4")
+		.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );
 	if (m_cancelled) {
+		return false;
+	}
+	if (m_cancelTrace) {
 		return false;
 	}
 
@@ -715,9 +756,19 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 	m_sketchWidget->deleteItem(trace, true, false);
 
+	if (!recurse) return false;
+
+	if (toPos != endPos) {
+		// just for grins, try a direct line to the end point
+		if (drawTrace(fromPos, endPos, from, to, wires, boundingPoly, level + 1, endPos, false, shortcut)) {
+			shortcut = true;
+			return true;
+		}
+	}
+
 	if (!inBounds) {
 		if ((nearestObstacle == NULL) || (nearestObstacleDistance > nearestBoundsIntersectionDistance)) {
-			return tryOne(fromPos, toPos, from, to, nearestBoundsIntersection, wires, boundingPoly);
+			return tryOne(fromPos, toPos, from, to, nearestBoundsIntersection, wires, boundingPoly, level, endPos, shortcut);
 		}
 	}
 
@@ -745,7 +796,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 			.arg(rightPoint.x()).arg(rightPoint.y()) );
 			*/
 
-		return tryLeftAndRight(fromPos, toPos, from, to, leftPoint, rightPoint, wires, boundingPoly);
+		return tryLeftAndRight(fromPos, toPos, from, to, leftPoint, rightPoint, wires, boundingPoly, level, endPos, shortcut);
 	}
 	else {
 		// if the obstacle is a wire, then it's a trace, so find tangents to the objects the obstacle wire is connected to
@@ -758,13 +809,13 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		wireObstacle->collectChained(chainedWires, ends, uniqueEnds);
 
 		foreach (ConnectorItem * end, ends) {
-			if (tryWithWires(fromPos, toPos, from, to, wires, end, chainedWires, boundingPoly)) {
+			if (tryWithWires(fromPos, toPos, from, to, wires, end, chainedWires, boundingPoly, level, endPos, shortcut)) {
 				return true;
 			}
 		}
 
 		foreach (ConnectorItem * end, uniqueEnds) {
-			if (tryWithWires(fromPos, toPos, from, to, wires, end, chainedWires, boundingPoly)) {
+			if (tryWithWires(fromPos, toPos, from, to, wires, end, chainedWires, boundingPoly, level, endPos, shortcut)) {
 				return true;
 			}
 		}
@@ -793,20 +844,21 @@ void Autorouter1::calcDistance(QGraphicsItem * & nearestObstacle, double & neare
 
 bool Autorouter1::tryWithWires(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to,
 							   QList<Wire *> & wires, ConnectorItem * end, QList<Wire *> & chainedWires,
-							   const QPolygonF & boundingPoly) {
+							   const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut) {
 	QPointF leftPoint, rightPoint;
 
 	bool prePolyResult = prePoly(end, fromPos, toPos, leftPoint, rightPoint);
 	if (!prePolyResult) return false;
 
-	bool result = tryWithWire(fromPos, toPos, from, to, wires, leftPoint, chainedWires, boundingPoly);
+	bool result = tryWithWire(fromPos, toPos, from, to, wires, leftPoint, chainedWires, boundingPoly, level, endPos, shortcut);
 	if (result) return result;
 
-	return tryWithWire(fromPos, toPos, from, to, wires, rightPoint, chainedWires, boundingPoly);
+	return tryWithWire(fromPos, toPos, from, to, wires, rightPoint, chainedWires, boundingPoly, level, endPos, shortcut);
 }
 
 bool Autorouter1::tryWithWire(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to,
-							  QList<Wire *> & wires, QPointF midPoint, QList<Wire *> & chainedWires, const QPolygonF & boundingPoly)
+							  QList<Wire *> & wires, QPointF midPoint, QList<Wire *> & chainedWires, const QPolygonF & boundingPoly,
+							  int level, QPointF endPos, bool & shortcut)
 {
 
 	QLineF l(fromPos, midPoint);
@@ -820,7 +872,7 @@ bool Autorouter1::tryWithWire(QPointF fromPos, QPointF toPos, ConnectorItem * fr
 		}
 	}
 
-	return tryOne(fromPos, toPos, from, to, midPoint, wires, boundingPoly);
+	return tryOne(fromPos, toPos, from, to, midPoint, wires, boundingPoly, level, endPos, shortcut);
 }
 
 
@@ -912,7 +964,7 @@ bool Autorouter1::prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPoi
 }
 
 bool Autorouter1::tryLeftAndRight(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QPointF left, QPointF right,
-								  QList<Wire *> & wires, const QPolygonF & boundingPoly)
+								  QList<Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut)
 {
 	double dl = ((left.x() - toPos.x()) * (left.x() - toPos.x())) +
 				((left.y() - toPos.y()) * (left.y() - toPos.y()));
@@ -930,24 +982,23 @@ bool Autorouter1::tryLeftAndRight(QPointF fromPos, QPointF toPos, ConnectorItem 
 		second = right;
 	}
 
-	bool result = tryOne(fromPos, toPos, from, to, first, wires, boundingPoly);
+	bool result = tryOne(fromPos, toPos, from, to, first, wires, boundingPoly, level, endPos, shortcut);
 	if (result) return result;
 
 	if (left == right) return result;
 
-	return tryOne(fromPos, toPos, from, to, second, wires, boundingPoly);
+	return tryOne(fromPos, toPos, from, to, second, wires, boundingPoly, level, endPos, shortcut);
 }
 
 bool Autorouter1::tryOne(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QPointF midPos,
-						 QList<Wire *> & wires, const QPolygonF & boundingPoly)
+						 QList<Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut)
 {
 	if (fromPos == midPos) return false;
 
 	QList<Wire *> localWires;
-	bool result = drawTrace(fromPos, midPos, from, to, localWires, boundingPoly);
+	bool result = drawTrace(fromPos, midPos, from, to, localWires, boundingPoly, level + 1, endPos, true, shortcut);
 	if (result) {
-		result = drawTrace(midPos, toPos, from, to, localWires, boundingPoly);
-		if (result) {
+		if (shortcut || drawTrace(midPos, toPos, from, to, localWires, boundingPoly, level + 1, endPos, true, shortcut)) {
 			foreach (Wire * wire, localWires) {
 				wires.append(wire);
 			}
