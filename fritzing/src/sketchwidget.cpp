@@ -1221,10 +1221,11 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	m_holdingSelectItemCommand = stackSelectionState(false, NULL);
 	m_mousePressScenePos = mapToScene(event->pos());
 
-	QGraphicsItem* item = this->itemAt(event->pos());
-
+	QGraphicsItem* wasItem = this->itemAt(event->pos());
 	QGraphicsView::mousePressEvent(event);
-	if (item == NULL) {
+	QGraphicsItem* item = this->itemAt(event->pos());
+	if (item == NULL || (item != wasItem)) {	
+		// if you clicked on the sketch itself, or the item was deleted during mousePressEvent (for example, by shift-clicking a connectorItem)
 		return;
 	}
 

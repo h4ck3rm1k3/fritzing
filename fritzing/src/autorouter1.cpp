@@ -229,6 +229,7 @@ void Autorouter1::start()
 
 		QList<Wire *> wires;
 		if (partForBounds == NULL) {
+			// connection between parts is not across a single board
 			drawJumper(edge->from, edge->to, wires);
 			jumperCount++;
 		}
@@ -483,6 +484,9 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 			from = to;
 			to = temp;
 		}
+
+		reduceWires(wires, from, to, boundingPoly);
+
 		// hook everyone up
 		from->tempConnectTo(wires[0]->connector0());
 		wires[0]->connector0()->tempConnectTo(from);
@@ -1096,5 +1100,110 @@ void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connec
 												connect, true, parentCommand);
 			ccc->setUpdateConnections(false);
 		}
+	}
+}
+
+void Autorouter1::reduceWires(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly)
+{
+	if (wires.count() < 2) return;
+
+	for (int i = 0; i < wires.count() - 1; i++) {
+		Wire * w0 = wires[i];
+		Wire * w1 = wires[i + 1];
+
+		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint();
+		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint();
+
+		long newID = ItemBase::getNextID();
+		ViewGeometry viewGeometry;
+		viewGeometry.setLoc(fromPos);
+		QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
+
+		bool insidePoly = true;
+		if (!boundingPoly.isEmpty()) {
+			int count = boundingPoly.count();
+			for (int i = 0; i < count; i++) {
+				QLineF l2(boundingPoly[i], boundingPoly[(i + 1) % count]);
+				QPointF intersectingPoint;
+				if (line.intersect(l2, &intersectingPoint) == QLineF::BoundedIntersection) {
+					insidePoly = false;
+					break;
+				}
+			}
+		}
+		if (!insidePoly) continue;
+
+		viewGeometry.setLine(line);
+		viewGeometry.setTrace(true);
+		viewGeometry.setAutoroutable(true);
+
+		ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
+												BaseCommand::SingleView, viewGeometry, newID, -1, NULL);
+		if (trace == NULL) {
+			// we're in trouble
+			return;
+		}
+
+		// addItemAux calls trace->setSelected(true) so unselect it
+		// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
+		trace->setSelected(false);
+
+		TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
+		traceWire->setClipEnds(false);
+		traceWire->setColorString("trace", UNROUTED_OPACITY);
+		traceWire->setWidth(5);										// set extra width to deal with keepout
+
+		bool intersects = false;
+		foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(trace)) {
+			if (item == from) continue;
+			if (item == to) continue;
+
+			Wire * candidateWire = dynamic_cast<Wire *>(item);
+			if (candidateWire) {
+				if (!candidateWire->getTrace()) {
+					continue;
+				}
+
+				if (candidateWire->viewLayerID() != traceWire->viewLayerID()) {
+					// needs to be on the same layer (shouldn't get here until we have traces on multiple layers)
+					continue;
+				}
+
+				if (wires.contains(candidateWire)) continue;
+
+				// eventually check if intersecting wire has the same potential
+
+				intersects = true;
+				break;
+			}
+
+			ConnectorItem * candidateConnectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (candidateConnectorItem) {
+				candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
+				if (candidateWire != NULL) {
+					// handle this from the wire rather than the connector
+					continue;
+				}
+
+				if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+					// needs to be on the same layer
+					continue;
+				}
+
+				intersects = true;
+				break;
+			}
+		}	
+		if (intersects) {
+			m_sketchWidget->deleteItem(trace, true, false);
+			continue;
+		}
+
+		traceWire->setWidth(3);									// restore normal width
+		m_sketchWidget->deleteItem(wires[i], true, false);
+		m_sketchWidget->deleteItem(wires[i + 1], true, false);
+		wires[i] = traceWire;
+		wires.removeAt(i + 1);
+		i--;								// don't forget to check the new wire
 	}
 }
