@@ -218,13 +218,13 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 					.arg(svgRect.x()).arg(svgRect.y()).arg(svgRect.width()).arg(svgRect.height()));
 				addRectToSvg(svgDom,connId/*+"pin"*/,svgRect);
 
-				/*TerminalPointItem *tp = drawnConn->terminalPointItem();
+				TerminalPointItem *tp = drawnConn->terminalPointItem();
 				if(tp && tp->hasBeenMoved()) {
 					QPointF tpoint = tp->point();
 					QRectF tpointRect(tpoint.x()-2,tpoint.y()-2,tpoint.x()+4,tpoint.y()+4);
 					QRectF svgTpRect = mapFromSceneToSvg(tpointRect,defaultSize,viewBox);
 					addRectToSvg(svgDom,connId+"terminal",svgTpRect);
-				}*/
+				}
 			}
 		}
 
