@@ -329,5 +329,5 @@ void PartsEditorPaletteItem::paint( QPainter * painter, const QStyleOptionGraphi
 }
 
 bool PartsEditorPaletteItem::showingTerminalPoints() {
-	m_owner->showingTerminalPoints();
+	return m_owner->showingTerminalPoints();
 }
