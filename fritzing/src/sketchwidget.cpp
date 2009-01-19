@@ -295,7 +295,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 						alreadyConnected.append(already);
 						if (parentCommand == NULL) {
 							ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
-							ItemBase * toBase = newItems.value(modelIndex, NULL);					
+							ItemBase * toBase = newItems.value(modelIndex, NULL);
 							if (fromBase != NULL && toBase != NULL) {
 								// TODO: make sure layerkin are searched for connectors
 								ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
@@ -307,7 +307,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 									if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 										fromConnectorItem->setHidden(false);
 										toConnectorItem->setHidden(false);
-									}				
+									}
 								}
 							}
 						}
@@ -352,7 +352,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 	m_ignoreSelectionChangeEvents = false;
 }
 
-void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand) 
+void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand)
 {
 	QDomElement extras = view.firstChildElement("wireExtras");
 	if (extras.isNull()) return;
@@ -390,13 +390,13 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 }
 
 ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, PaletteItem* partsEditorPaletteItem) {
-	
+
 	ModelPart * mp = NULL;
 	if (modelIndex >= 0) {
 		// used only with Paste, so far--this assures that parts created across views will share the same ModelPart
 		mp = m_sketchModel->findModelPart(modelPart->moduleID(), id);
 	}
-	if (mp == NULL) {	
+	if (mp == NULL) {
 		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
 	}
 	else {
@@ -1224,7 +1224,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	QGraphicsItem* wasItem = this->itemAt(event->pos());
 	QGraphicsView::mousePressEvent(event);
 	QGraphicsItem* item = this->itemAt(event->pos());
-	if (item == NULL || (item != wasItem)) {	
+	if (item == NULL || (item != wasItem)) {
 		// if you clicked on the sketch itself, or the item was deleted during mousePressEvent (for example, by shift-clicking a connectorItem)
 		return;
 	}
@@ -3043,7 +3043,7 @@ void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, co
 		// all three views get the partLabelChanged call, but only need to act on this once
 		return;
 	}
-	
+
 
 
 	if (currentlyInfoviewed(pitem))  {
@@ -3702,7 +3702,15 @@ void SketchWidget::ensureFixedToCenter(QGraphicsProxyWidget* item) {
 	qreal x = (width()-item->widget()->width())/2;
 	qreal y = (height()-item->widget()->height())/2;
 
-	item->setPos(mapToScene(x,y));
+	DebugDialog::debug(QString("fixed to center pos x=%1 y=%2").arg(x).arg(y));
+	QPointF pos = mapToScene(x,y);
+	DebugDialog::debug(QString("fixed to center mapped pos x=%1 y=%2").arg(pos.x()).arg(pos.y()));
+	DebugDialog::debug(QString("fixed to center scen size w=%1 h=%2").arg(scene()->width()).arg(scene()->height()));
+	DebugDialog::debug("");
+
+	if(pos.x() < scene()->width() && pos.y() < scene()->height()) {
+		item->setPos(pos);
+	}
 }
 
 void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect)
@@ -3716,7 +3724,7 @@ void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem
 bool SketchWidget::matchesLayer(ModelPart * modelPart) {
 	QDomDocument * domDocument = modelPart->modelPartStuff()->domDocument();
 	if (domDocument->isNull()) return false;
-	
+
 	QDomElement views = domDocument->documentElement().firstChildElement("views");
 	if(views.isNull()) return false;
 
@@ -3742,7 +3750,7 @@ bool SketchWidget::matchesLayer(ModelPart * modelPart) {
 	return false;
 }
 
-bool SketchWidget::doRatsnestOnCopy() 
+bool SketchWidget::doRatsnestOnCopy()
 {
 	return false;
 }
@@ -3787,7 +3795,7 @@ void SketchWidget::collectParts(QList<ItemBase *> & partList) {
 	}
 }
 
-void SketchWidget::movePartLabel(long itemID, QPointF newPos, QPointF newOffset) 
+void SketchWidget::movePartLabel(long itemID, QPointF newPos, QPointF newOffset)
 {
 	ItemBase * item = findItem(itemID);
 	if (item == NULL) return;
@@ -3799,7 +3807,7 @@ void SketchWidget::setCurrent(bool current) {
 	m_current = current;
 }
 
-void SketchWidget::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset) 
+void SketchWidget::partLabelMoved(ItemBase * itemBase, QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset)
 {
 	MoveLabelCommand * command = new MoveLabelCommand(this, itemBase->id(), oldPos, oldOffset, newPos, newOffset, NULL);
 	command->setText(tr("Move label '%1'").arg(itemBase->title()));
@@ -3822,7 +3830,7 @@ void SketchWidget::rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientati
 }
 
 
-void SketchWidget::showPartLabels(bool show) 
+void SketchWidget::showPartLabels(bool show)
 {
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		ItemBase * itemBase = ItemBase::extractTopLevelItemBase(item);
