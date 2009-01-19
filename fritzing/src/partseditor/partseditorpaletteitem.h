@@ -33,12 +33,14 @@ $Date$
 #include "../misc.h"
 #include "../svgandpartfilepath.h"
 
+class PartsEditorAbstractViewImage;
+
 class PartsEditorPaletteItem : public PaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints);
-		PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints);
-		PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, bool showsTerminalPoints);
+		PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints);
+		PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints);
+		PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, bool showsTerminalPoints);
 		virtual void writeXml(QXmlStreamWriter &);
 		virtual void writeXmlLocation(QXmlStreamWriter & streamWriter);
 		const QList<Connector *> &connectors();
@@ -61,6 +63,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 		bool setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 		virtual ConnectorItem* newConnectorItem(Connector *connector);
 		void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );
+		bool showingTerminalPoints();
 
 		QDomDocument *m_svgDom;
 		QString m_originalSvgPath;
@@ -70,6 +73,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 		bool m_withBorder;
 
 		bool m_showsTerminalPoints;
+		PartsEditorAbstractViewImage *m_owner;
 };
 
 #endif /* PARTSEDITORPALETTEITEM_H_ */

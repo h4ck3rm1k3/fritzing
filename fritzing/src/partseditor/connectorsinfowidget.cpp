@@ -77,12 +77,6 @@ void ConnectorsInfoWidget::createToolsArea() {
 	lo->addWidget(addBtn);
 	lo->addWidget(removeBtn);
 	lo->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
-
-	m_showTerminalPointsCheckBox = new QCheckBox(this);
-	m_showTerminalPointsCheckBox->setText(tr("Show Terminal Points"));
-	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(emitShowHideTerminalPoints(int)));
-
-	lo->addWidget(m_showTerminalPointsCheckBox);
 }
 
 void ConnectorsInfoWidget::createScrollArea() {
@@ -463,18 +457,9 @@ Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
 	return NULL;
 }
 
-
-void ConnectorsInfoWidget::emitShowHideTerminalPoints(int checkState) {
-	if(checkState == Qt::Checked) {
-		emit showTerminalPoints(true);
-	} else if(checkState == Qt::Unchecked) {
-		emit showTerminalPoints(false);
-	}
-}
-
 void ConnectorsInfoWidget::addConnector() {
 	QString connId = QString("connector%1").arg(nextConnId());
-	emit drawConnector(addConnectorInfo(connId),m_showTerminalPointsCheckBox->isChecked());
+	emit drawConnector(addConnectorInfo(connId));
 }
 
 void ConnectorsInfoWidget::removeSelectedConnector() {
@@ -507,8 +492,4 @@ int ConnectorsInfoWidget::nextConnId() {
 		}
 	}
 	return max;
-}
-
-QCheckBox *ConnectorsInfoWidget::showTerminalPointsCheckBox() {
-	return m_showTerminalPointsCheckBox;
 }

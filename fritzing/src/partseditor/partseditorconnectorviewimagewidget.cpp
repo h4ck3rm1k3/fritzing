@@ -37,8 +37,8 @@ $Date$
 int PartsEditorConnectorViewImageWidget::ConnDefaultWidth = 5;
 int PartsEditorConnectorViewImageWidget::ConnDefaultHeight = ConnDefaultWidth;
 
-PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
-	: PartsEditorAbstractViewImage(viewId, true /*show terminal points*/, parent, size)
+PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, bool showingTerminalPoint, QWidget *parent, int size)
+	: PartsEditorAbstractViewImage(viewId, true /*show terminal points*/, showingTerminalPoint, parent, size)
 {
 	m_connRubberBandOrigin = QPoint(-1,-1);
 	m_connRubberBand = NULL;
@@ -60,30 +60,13 @@ void PartsEditorConnectorViewImageWidget::wheelEvent(QWheelEvent* event) {
 
 void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
 	PartsEditorAbstractViewImage::mousePressEvent(event);
-	/*if(m_connFreeDrawingEnabled && m_item) {
-		m_connRubberBandOrigin = event->pos();
-		if (!m_connRubberBand) {
-			m_connRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-		}
-
-		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, QSize()));
-		m_connRubberBand->show();
-	}*/
 }
 
 void PartsEditorConnectorViewImageWidget::mouseMoveEvent(QMouseEvent *event) {
 	QGraphicsView::mouseMoveEvent(event);
-	/*if(m_connFreeDrawingEnabled && m_item && m_connRubberBandOrigin != QPoint(-1,-1)) {
-		m_connRubberBand->setGeometry(QRect(m_connRubberBandOrigin, event->pos()).normalized());
-	}*/
 }
 
 void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) {
-	/*if(m_connFreeDrawingEnabled && m_item) {
-		m_connRubberBand->hide();
-		createConnector(m_connRubberBand->geometry());
-		m_connRubberBandOrigin = QPoint(-1,-1);
-	}*/
 	PartsEditorAbstractViewImage::mouseReleaseEvent(event);
 }
 
@@ -97,7 +80,7 @@ void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const
 	QString connId = conn->connectorStuffID();
 
 	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize);
-	PartsEditorConnectorItem *connItem = new PartsEditorConnectorItem(conn, m_item, m_showsTerminalPoints, bounds);
+	PartsEditorConnectorItem *connItem = new PartsEditorConnectorItem(conn, m_item, m_showsTerminalPoints, m_showingTerminalPoints, bounds);
 	m_drawnConns << connItem;
 	connItem->setShowTerminalPoint(showTerminalPoint);
 
@@ -157,10 +140,10 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 		m_item->removeFromModel();
 		m_item->highlightConnectors("");
 
-		//qreal size = 500; // just make sure the user get enough place to play
-		//setSceneRect(0,0,size,size);
+		qreal size = 500; // just make sure the user get enough place to play
+		setSceneRect(0,0,size,size);
 
-		//m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
+		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
 		centerOn(m_item);
 		m_item->setWithBorder(true);
 	}
@@ -318,13 +301,4 @@ bool PartsEditorConnectorViewImageWidget::isSupposedToBeRemoved(const QString& i
 		}
 	}
 	return false;
-}
-
-void PartsEditorConnectorViewImageWidget::showTerminalPoints(bool show) {
-	foreach(QGraphicsItem *item, items()) {
-		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
-		if(connItem) {
-			connItem->setShowTerminalPoint(show);
-		}
-	}
 }

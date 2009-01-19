@@ -31,14 +31,17 @@ $Date$
 
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectoritem.h"
+#include "partseditorabstractviewimage.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
 #include "../layerattributes.h"
 #include "../layerkinpaletteitem.h"
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
+	m_owner = owner;
+
 	QString pathAux = path->first;
 	if(path->second != ___emptyString___) {
 		pathAux += "/"+path->second;
@@ -61,9 +64,11 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::
 	m_showsTerminalPoints = showsTerminalPoints;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
+	m_owner = owner;
+
 	m_svgDom = svgFile;
 	m_svgStrings = new SvgAndPartFilePath();
 
@@ -81,9 +86,11 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, QDomDocume
 	m_showsTerminalPoints = showsTerminalPoints;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, bool showsTerminalPoints) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, bool showsTerminalPoints) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
+	m_owner = owner;
+
 	m_svgDom = NULL;
 
 	m_connectors = NULL;
@@ -277,7 +284,7 @@ QString PartsEditorPaletteItem::flatSvgFilePath() {
 }
 
 ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {
-	return new PartsEditorConnectorItem(connector,this, m_showsTerminalPoints);
+	return new PartsEditorConnectorItem(connector,this, m_showsTerminalPoints, showingTerminalPoints());
 }
 
 void PartsEditorPaletteItem::highlightConnectors(const QString &connId) {
@@ -319,4 +326,8 @@ void PartsEditorPaletteItem::paint( QPainter * painter, const QStyleOptionGraphi
 
 		painter->restore();
 	}
+}
+
+bool PartsEditorPaletteItem::showingTerminalPoints() {
+	m_owner->showingTerminalPoints();
 }

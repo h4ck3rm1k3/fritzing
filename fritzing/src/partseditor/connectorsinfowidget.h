@@ -50,7 +50,6 @@ class ConnectorsInfoWidget : public QFrame{
 		void informEditionCompleted();
 		void syncNewConnectors(ItemBase::ViewIdentifier viewId, const QList<Connector*> &conns);
 		void emitPaintNeeded();
-		void emitShowHideTerminalPoints(int checkState);
 		void addConnector();
 		void removeSelectedConnector();
 
@@ -61,7 +60,7 @@ class ConnectorsInfoWidget : public QFrame{
 		void setMismatching(ItemBase::ViewIdentifier viewId, const QString &connId, bool mismatching);
 		void repaintNeeded();
 		void showTerminalPoints(bool show);
-		void drawConnector(Connector*, bool showTerminalPoint);
+		void drawConnector(Connector*);
 		void removeConnectorFrom(const QString &connId, ItemBase::ViewIdentifier view);
 
 	protected slots:
@@ -113,7 +112,6 @@ class ConnectorsInfoWidget : public QFrame{
 		QStringList m_connIds;
 
 		WaitPushUndoStack *m_undoStack;
-		QCheckBox *m_showTerminalPointsCheckBox;
 };
 
 #endif /* CONNECTORSINFOWIDGET_H_ */

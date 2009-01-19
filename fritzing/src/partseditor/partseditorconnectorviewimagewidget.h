@@ -36,11 +36,10 @@ $Date$
 class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 	Q_OBJECT
 	public:
-		PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=150);
+		PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier, bool showingTerminalPoint, QWidget *parent=0, int size=150);
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void updateDomIfNeeded();
-		void showTerminalPoints(bool show);
 
 	public slots:
 		void informConnectorSelection(const QString& connId);

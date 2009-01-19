@@ -41,12 +41,13 @@ class ConnectorsViewsWidget : public QFrame {
 	public:
 		ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchModel *sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent=0);
 		void aboutToSave();
+		QCheckBox *showTerminalPointsCheckBox();
 
 	public slots:
 		void repaint();
-		void drawConnector(Connector*, bool showTerminalPoint);
+		void drawConnector(Connector*);
 		void removeConnectorFrom(const QString&,ItemBase::ViewIdentifier);
-		void showTerminalPoints(bool);
+		void showHideTerminalPoints(int checkState);
 
 	protected:
 		void createViewImageWidget(
@@ -54,9 +55,14 @@ class ConnectorsViewsWidget : public QFrame {
 				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
 				ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId);
 
+		bool showingTerminalPoints();
+		bool checkStateToBool(int checkState);
+
 		PartsEditorConnectorViewImageWidget *m_breadView;
 		PartsEditorConnectorViewImageWidget *m_schemView;
 		PartsEditorConnectorViewImageWidget *m_pcbView;
+
+		QCheckBox *m_showTerminalPointsCheckBox;
 };
 
 #endif /* CONNECTORSVIEWSWIDGET_H_ */

@@ -25,11 +25,15 @@ $Date$
 ********************************************************************/
 
 
-#include <QGridLayout>
+#include <QHBoxLayout>
 
 #include "connectorsviewswidget.h"
 
 ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchModel *sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent) : QFrame(parent) {
+	m_showTerminalPointsCheckBox = new QCheckBox(this);
+	m_showTerminalPointsCheckBox->setText(tr("Show Terminal Points"));
+	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(showHideTerminalPoints(int)));
+
 	createViewImageWidget(m_breadView, symbols->m_breadView, sketchModel, undoStack, info, ItemBase::BreadboardView, ViewLayer::Breadboard);
 	createViewImageWidget(m_schemView, symbols->m_schemView, sketchModel, undoStack, info, ItemBase::SchematicView, ViewLayer::Schematic);
 	createViewImageWidget(m_pcbView, symbols->m_pcbView, sketchModel, undoStack, info, ItemBase::PCBView, ViewLayer::Copper0);
@@ -38,14 +42,26 @@ ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchM
 	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel);
 	m_pcbView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SilkscreenLabel);
 
-	QGridLayout *layout = new QGridLayout();
-	layout->addWidget(m_breadView,1,0);
-	layout->addWidget(m_schemView,1,1);
-	layout->addWidget(m_pcbView,1,2);
+	QFrame *viewsContainter = new QFrame(this);
+	QHBoxLayout *layout1 = new QHBoxLayout(viewsContainter);
+	layout1->addWidget(m_breadView);
+	layout1->addWidget(m_schemView);
+	layout1->addWidget(m_pcbView);
 
-	this->setLayout(layout);
+	QFrame *toolsContainer = new QFrame(this);
+	QHBoxLayout *layout2 = new QHBoxLayout(toolsContainer);
+	layout2->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	layout2->addWidget(m_showTerminalPointsCheckBox);
+	layout2->setMargin(1);
+	layout2->setSpacing(1);
 
-	this->setFixedHeight(170);
+	QVBoxLayout *lo = new QVBoxLayout(this);
+	lo->addWidget(viewsContainter);
+	lo->addWidget(toolsContainer);
+	lo->setMargin(1);
+	lo->setSpacing(1);
+
+	this->setFixedHeight(220);
 	this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
 }
 
@@ -53,7 +69,7 @@ void ConnectorsViewsWidget::createViewImageWidget(
 		PartsEditorConnectorViewImageWidget *&viw, PartsEditorViewImageWidget* sister,
 		SketchModel* sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
 		ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId) {
-	viw = new PartsEditorConnectorViewImageWidget(viewId,this);
+	viw = new PartsEditorConnectorViewImageWidget(viewId,showingTerminalPoints(),this);
 	connect(sister,SIGNAL(loadedFromModel(PaletteModel*, ModelPart*)),viw,SLOT(loadFromModel(PaletteModel*, ModelPart*)));
 	connect(
 		sister, SIGNAL(itemAddedToSymbols(ModelPart*, StringPair*)),
@@ -91,10 +107,11 @@ void ConnectorsViewsWidget::repaint() {
 	m_pcbView->scene()->update();
 }
 
-void ConnectorsViewsWidget::drawConnector(Connector* conn, bool showTerminalPoints) {
-	m_breadView->drawConector(conn,showTerminalPoints);
-	m_schemView->drawConector(conn,showTerminalPoints);
-	m_pcbView->drawConector(conn,showTerminalPoints);
+void ConnectorsViewsWidget::drawConnector(Connector* conn) {
+	bool showing = showingTerminalPoints();
+	m_breadView->drawConector(conn,showing);
+	m_schemView->drawConector(conn,showing);
+	m_pcbView->drawConector(conn,showing);
 }
 
 void ConnectorsViewsWidget::aboutToSave() {
@@ -125,8 +142,27 @@ void ConnectorsViewsWidget::removeConnectorFrom(const QString &connId, ItemBase:
 }
 
 
-void ConnectorsViewsWidget::showTerminalPoints(bool show) {
+void ConnectorsViewsWidget::showHideTerminalPoints(int checkState) {
+	bool show = checkStateToBool(checkState);
+
 	m_breadView->showTerminalPoints(show);
 	m_schemView->showTerminalPoints(show);
 	m_pcbView->showTerminalPoints(show);
+}
+
+bool ConnectorsViewsWidget::showingTerminalPoints() {
+	return checkStateToBool(m_showTerminalPointsCheckBox->checkState());
+}
+
+bool ConnectorsViewsWidget::checkStateToBool(int checkState) {
+	if(checkState == Qt::Checked) {
+		return true;
+	} else if(checkState == Qt::Unchecked) {
+		return false;
+	}
+	return false;
+}
+
+QCheckBox *ConnectorsViewsWidget::showTerminalPointsCheckBox() {
+	return m_showTerminalPointsCheckBox;
 }

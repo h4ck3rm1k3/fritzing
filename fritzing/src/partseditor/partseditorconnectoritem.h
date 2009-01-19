@@ -36,8 +36,8 @@ $Date$
 
 class PartsEditorConnectorItem: public ConnectorItem {
 	public:
-		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints);
-		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, const QRectF &bounds);
+		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint);
+		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint, const QRectF &bounds);
 		void highlight(const QString &connId);
 		void removeFromModel();
 		void setConnector(Connector *connector);

@@ -36,16 +36,16 @@ qreal PartsEditorConnectorItem::selectedPenWidth = 1.5;
 qreal PartsEditorConnectorItem::MinWidth = 2;
 qreal PartsEditorConnectorItem::MinHeight = MinWidth;
 
-PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints)
+PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint)
 	: ConnectorItem(conn, attachedTo)
 {
 	init(false,false);
 	m_terminalPointItem = NULL;
 	m_showsTerminalPoint = showsTerminalPoints;
-	m_showingTerminalPoint = false;
+	m_showingTerminalPoint = showingTerminalPoint;
 }
 
-PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, const QRectF &bounds)
+PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint, const QRectF &bounds)
 	: ConnectorItem(conn, attachedTo)
 {
 	init(true,true);
@@ -59,7 +59,7 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 	m_geometryHasChanged = false;
 	m_terminalPointItem = NULL;
 	m_showsTerminalPoint = showsTerminalPoints;
-	m_showingTerminalPoint = false;
+	m_showingTerminalPoint = showingTerminalPoint;
 	updateTerminalPoint();
 }
 

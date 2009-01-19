@@ -31,7 +31,7 @@ $Date$
 #include "../debugdialog.h"
 
 
-PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentifier viewId, bool showsTerminalPoints, QWidget *parent, int size)
+PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentifier viewId, bool showsTerminalPoints, bool showingTerminalPoints, QWidget *parent, int size)
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
@@ -40,12 +40,13 @@ PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentif
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	m_showsTerminalPoints = showsTerminalPoints;
+	m_showingTerminalPoints = showingTerminalPoints;
 }
 
 void PartsEditorAbstractViewImage::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
 	Q_ASSERT(modelPart);
 	clearScene();
-	m_item = new PartsEditorPaletteItem(modelPart, m_viewIdentifier, svgFilePath, ItemBase::viewIdentifierNaturalName(m_viewIdentifier), m_showsTerminalPoints);
+	m_item = new PartsEditorPaletteItem(this,modelPart, m_viewIdentifier, svgFilePath, ItemBase::viewIdentifierNaturalName(m_viewIdentifier), m_showsTerminalPoints);
 	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, m_item);
 	fitCenterAndDeselect();
 }
@@ -60,7 +61,7 @@ void PartsEditorAbstractViewImage::loadFromModel(PaletteModel *paletteModel, Mod
 
 ItemBase * PartsEditorAbstractViewImage::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors) {
 	if(paletteItem == NULL) {
-		paletteItem = new PartsEditorPaletteItem(modelPart, m_viewIdentifier, m_showsTerminalPoints);
+		paletteItem = new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier, m_showsTerminalPoints);
 	}
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 	return addPartItem(modelPart, paletteItem, doConnectors);
@@ -251,4 +252,18 @@ const QStringList PartsEditorAbstractViewImage::getLayers(const QString &path) {
 	}
 
 	return retval;
+}
+
+void PartsEditorAbstractViewImage::showTerminalPoints(bool show) {
+	m_showingTerminalPoints = show;
+	foreach(QGraphicsItem *item, items()) {
+		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
+		if(connItem) {
+			connItem->setShowTerminalPoint(show);
+		}
+	}
+}
+
+bool PartsEditorAbstractViewImage::showingTerminalPoints() {
+	return m_showingTerminalPoints;
 }
