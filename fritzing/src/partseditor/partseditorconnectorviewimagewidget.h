@@ -62,6 +62,8 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void setItemProperties();
 		bool isSupposedToBeRemoved(const QString& id);
 
+		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox);
+		bool removeConnectorsIfNeeded(QDomDocument *svgDom);
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
 		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect);
 
