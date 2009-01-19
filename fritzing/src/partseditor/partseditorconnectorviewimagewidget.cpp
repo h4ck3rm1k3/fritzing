@@ -206,8 +206,10 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 			QString connId;
 
 			foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
-				QRectF rectAux = drawnConn->boundingRect();;
+				QRectF rectAux = drawnConn->boundingRect();
 				QPointF mappedPos = drawnConn->mapToScene(drawnConn->pos());
+				DebugDialog::debug(QString("<<<< mapped pos x=%1  y=%2)")
+						.arg(mappedPos.x()).arg(mappedPos.y()));
 				qreal xAux = mappedPos.x();
 				qreal yAux = mappedPos.y();
 				bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
@@ -268,6 +270,7 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 
 QRectF PartsEditorConnectorViewImageWidget::mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox) {
 	qreal relation = defaultSize.width() / viewBox.width();
+	DebugDialog::debug(QString("<<< relation %1").arg(relation));
 	qreal x = sceneRect.x() * relation;
 	qreal y = sceneRect.y() * relation;
 	qreal width = sceneRect.width() * relation;
