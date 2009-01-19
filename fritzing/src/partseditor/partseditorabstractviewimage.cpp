@@ -45,10 +45,21 @@ PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentif
 
 void PartsEditorAbstractViewImage::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
 	Q_ASSERT(modelPart);
+	bool takePrevTransform = false;
+	QTransform prevTrans;
+	if(m_item) {
+		takePrevTransform = true;
+		prevTrans = m_item->transform();
+	}
 	clearScene();
 	m_item = new PartsEditorPaletteItem(this,modelPart, m_viewIdentifier, svgFilePath, ItemBase::viewIdentifierNaturalName(m_viewIdentifier), m_showsTerminalPoints);
 	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, m_item);
-	fitCenterAndDeselect();
+
+	if(takePrevTransform) {
+		m_item->setTransform(prevTrans);
+	} else {
+		fitCenterAndDeselect();
+	}
 }
 
 
