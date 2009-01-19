@@ -237,7 +237,7 @@ bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ConnectorItem * on
 	return result;
 }
 
-void PCBSchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+void PCBSchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(deletedItems);

@@ -594,6 +594,9 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	if (m_infoView != NULL) {
 		m_infoView->unregisterCurrentItemIf(itemBase->id());
 	}
+	if (itemBase == this->m_lastPaletteItemSelected) {
+		m_lastPaletteItemSelected = NULL;
+	}
 	m_lastSelected.removeOne(itemBase);
 
 	long id = itemBase->id();
@@ -624,12 +627,13 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
     // because selectedItems will return an empty list
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
 
-	QList<ItemBase *> deletedItems;
+	QSet<ItemBase *> deletedItems;
 
 	foreach (QGraphicsItem * sitem, sitems) {
 		if (!canDeleteItem(sitem)) continue;
 
-		deletedItems.append(dynamic_cast<ItemBase *>(sitem)->layerKinChief());
+		// canDeleteItem insures dynamic_cast<ItemBase *>(sitem)->layerKinChief() won't break
+		deletedItems.insert(dynamic_cast<ItemBase *>(sitem)->layerKinChief());
 	}
 
 	if (deletedItems.count() <= 0) {
@@ -639,7 +643,8 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	QString string;
 
 	if (deletedItems.count() == 1) {
-		string = tr("%1 %2").arg(undoStackMessage).arg(deletedItems[0]->modelPart()->title());
+		ItemBase * firstItem = *(deletedItems.begin());
+		string = tr("%1 %2").arg(undoStackMessage).arg(firstItem->modelPart()->title());
 	}
 	else {
 		string = tr("%1 %2 items").arg(undoStackMessage).arg(QString::number(deletedItems.count()));
@@ -696,7 +701,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 }
 
-void SketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
+void SketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(deletedConnections);
 	Q_UNUSED(deletedItems);
@@ -930,12 +935,11 @@ void SketchWidget::copy() {
 	streamWriter.writeEndElement();
 
 	// only preserve connections for copied items that connect to each other
-	removeOutsideConnections(itemData, modelIndexes);
-
+	QByteArray newItemData = removeOutsideConnections(itemData, modelIndexes);
 
     QMimeData *mimeData = new QMimeData;
-    mimeData->setData("application/x-dnditemsdata", itemData);
-	mimeData->setData("text/plain", itemData);
+    mimeData->setData("application/x-dnditemsdata", newItemData);
+	mimeData->setData("text/plain", newItemData);
 
 	QClipboard *clipboard = QApplication::clipboard();
 	if (clipboard == NULL) {
@@ -947,7 +951,7 @@ void SketchWidget::copy() {
 	clipboard->setMimeData(mimeData, QClipboard::Clipboard);
 }
 
-void SketchWidget::removeOutsideConnections(QByteArray & itemData, QList<long> & modelIndexes) {
+QByteArray SketchWidget::removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes) {
 	// now have to remove each connection that points to a part outside of the set of parts being copied
 
 	QDomDocument domDocument;
@@ -955,15 +959,15 @@ void SketchWidget::removeOutsideConnections(QByteArray & itemData, QList<long> &
 	int errorLine;
 	int errorColumn;
 	bool result = domDocument.setContent(itemData, &errorStr, &errorLine, &errorColumn);
-	if (!result) return;
+	if (!result) return ___emptyByteArray___;
 
 	QDomElement root = domDocument.documentElement();
    	if (root.isNull()) {
-   		return;
+   		return ___emptyByteArray___;
 	}
 
 	QDomElement instances = root.firstChildElement("instances");
-	if (instances.isNull()) return;
+	if (instances.isNull()) return ___emptyByteArray___;
 
 	QDomElement instance = instances.firstChildElement("instance");
 	while (!instance.isNull()) {
@@ -989,7 +993,10 @@ void SketchWidget::removeOutsideConnections(QByteArray & itemData, QList<long> &
 							}
 
 							foreach (QDomElement connect, toDelete) {
-								connects.removeChild(connect);
+								QDomNode removed = connects.removeChild(connect);
+								if (removed.isNull()) {
+									DebugDialog::debug("shit");
+								}
 							}
 						}
 						connector = connector.nextSiblingElement("connector");
@@ -1003,8 +1010,7 @@ void SketchWidget::removeOutsideConnections(QByteArray & itemData, QList<long> &
 		instance = instance.nextSiblingElement("instance");
 	}
 
-	// does this cause a leak?
-	itemData = domDocument.toByteArray();
+	return domDocument.toByteArray();
 }
 
 
@@ -1588,10 +1594,7 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 void SketchWidget::sketchWidget_itemDeleted(long id) {
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		DebugDialog::debug(QString("really deleting %1 %2").arg(id).arg(m_viewIdentifier) );
-		pitem->removeLayerKin();
-		this->scene()->removeItem(pitem);
-		delete pitem;
+		deleteItem(pitem, false, false);
 	}
 }
 
@@ -3212,7 +3215,7 @@ void SketchWidget::addBreadboardViewLayers() {
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard
-		<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel << ViewLayer::BreadboardRuler;
+		<< ViewLayer::BreadboardWire << ViewLayer::BreadboardLabel << ViewLayer::BreadboardNote << ViewLayer::BreadboardRuler;
 
 	addViewLayersAux(layers);
 }
@@ -3221,7 +3224,7 @@ void SketchWidget::addSchematicViewLayers() {
 	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicLabel << ViewLayer::SchematicRuler;
+	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
 
 	addViewLayersAux(layers);
 }
@@ -3232,7 +3235,7 @@ void SketchWidget::addPcbViewLayers() {
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::Board << ViewLayer::Ratsnest << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Keepout
 		<< ViewLayer::Vias << ViewLayer::Soldermask << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel << ViewLayer::Outline
-		<< ViewLayer::Jumperwires << ViewLayer::PcbRuler;
+		<< ViewLayer::Jumperwires << ViewLayer::PcbNote << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);
 

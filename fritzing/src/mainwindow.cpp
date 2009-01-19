@@ -324,8 +324,8 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QList<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
-						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QList<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
+						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
 						Qt::DirectConnection);
 
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
@@ -792,7 +792,7 @@ void MainWindow::loadPart(QString newPartPath) {
 	if(modelPart && modelPart->isValid()) {
 		//ModelPart * modelPart = m_paletteModel->addPart(newPartPath, true, true);
 		m_paletteWidget->addPart(modelPart);
-		m_infoView->reloadContent();
+		m_infoView->reloadContent(m_currentGraphicsView);
 	}
 }
 

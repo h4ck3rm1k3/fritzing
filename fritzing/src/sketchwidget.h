@@ -263,7 +263,7 @@ protected:
 	void moveItems(QPoint globalPos);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
-	virtual void reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	virtual void reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
@@ -280,7 +280,7 @@ protected:
 	void ensureFixedToBottomLeft(QGraphicsProxyWidget* item);
 	void ensureFixedToBottomRight(QGraphicsProxyWidget* item);
 	void ensureFixedToCenter(QGraphicsProxyWidget* item);
-	void removeOutsideConnections(QByteArray & itemData, QList<long> & modelIndexes);
+	QByteArray removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes);
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
 	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);

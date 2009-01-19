@@ -48,9 +48,9 @@ public:
 	void setContent(const QString& html);
 
 	ItemBase *currentItem();
-	void reloadContent();
+	void reloadContent(class InfoGraphicsView *);
 
-	void viewItemInfo(ItemBase* item, bool swappingEnabled);
+	void viewItemInfo(class InfoGraphicsView *, ItemBase* item, bool swappingEnabled);
 	void hoverEnterItem(ModelPart *, bool swappingEnabled);
 	void hoverLeaveItem(ModelPart *);
 	void hoverEnterItem(class InfoGraphicsView *, QGraphicsSceneHoverEvent * event, ItemBase * item, bool swappingEnabled);
@@ -91,6 +91,8 @@ protected:
 	void registerCurrentAgain();
 	void registerRefModel();
 	bool registerAsCurrentItem(ItemBase *item);
+	void registerInfoGraphicsView(class InfoGraphicsView *, const QString & parentName);
+	void setNullContent();
 
 protected:
 	QString m_includes;

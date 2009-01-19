@@ -89,7 +89,7 @@ BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 	return BaseCommand::CrossView;
 }
 
-void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
 	// translate the foreign items into local ones
 	QMultiHash<PaletteItemBase *, ConnectorItem *> bases;
@@ -164,7 +164,7 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 							tempWire->collectChained(chained, ends, uniqueEnds);
 							if (ends.contains(fromConnectorItem) || ends.contains(toConnectorItem)) {
 								// is this good enough or do we need more confirmation that it's the right wire?
-								deletedItems.append(tempWire);
+								deletedItems.insert(tempWire);
 								ConnectorPairHash * connectorHash = new ConnectorPairHash;
 								tempWire->collectConnectors(*connectorHash, this->scene());
 								deletedConnections.insert(tempWire, connectorHash);	

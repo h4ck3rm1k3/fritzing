@@ -42,7 +42,7 @@ InfoGraphicsView::InfoGraphicsView( QWidget * parent )
 void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->viewItemInfo(item, swappingEnabled());
+	m_infoView->viewItemInfo(this, item, swappingEnabled());
 }
 
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {

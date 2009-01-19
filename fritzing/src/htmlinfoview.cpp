@@ -33,7 +33,6 @@ $Date$
 #include "debugdialog.h"
 #include "connectorstuff.h"
 #include "connector.h"
-#include "mainwindow.h"
 #include "fsvgrenderer.h"
 #include "layerattributes.h"
 #include "dockmanager.h"
@@ -92,11 +91,14 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 }
 
 void HtmlInfoView::jsRegister() {
+	// prevent recursion, particularly when setting content to NULL
+	disconnect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 	registerCurrentAgain();
 	registerRefModel();
 	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
 		"infoView", this
 	);
+	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 }
 
 void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
@@ -122,12 +124,14 @@ void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
 	setContent(s);
 }
 
-void HtmlInfoView::viewItemInfo(ItemBase* item, bool swappingEnabled) {
+void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
+	
+	registerInfoGraphicsView(infoGraphicsView, "sketch");
 	if (item == NULL) {
 		// TODO: it would be nice to do something reasonable in this case
+		setNullContent();
 		return;
 	}
-
 
 	m_currentSwappingEnabled = swappingEnabled;
 
@@ -148,8 +152,8 @@ QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
 	}
 }
 
-void HtmlInfoView::hoverEnterItem(InfoGraphicsView * , QGraphicsSceneHoverEvent *, ItemBase * item, bool swappingEnabled) {
-	viewItemInfo(item, swappingEnabled);
+void HtmlInfoView::hoverEnterItem(InfoGraphicsView * infoGraphicsView, QGraphicsSceneHoverEvent *, ItemBase * item, bool swappingEnabled) {
+	viewItemInfo(infoGraphicsView, item, swappingEnabled);
 }
 
 
@@ -567,23 +571,16 @@ bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 		registerJsObjects("sketch");
 	} else {
 		m_currentItem = NULL;
+		setNullContent();
 	}
 	return m_currentItem != NULL;
 }
 
 void HtmlInfoView::registerJsObjects(const QString &parentName) {
+	Q_UNUSED(parentName);
 	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
 		"currentItem", m_currentItem
 	);
-
-	if (m_currentItem->scene()) {   // jrc: got a crash without this check, but haven't been able to replicate it.  Actually it turns out that item in m_currentItem was deleted, so m_currentItem is invalid
-		SketchWidget *sketch = dynamic_cast<SketchWidget*>(m_currentItem->scene()->parent());
-		if(sketch) {
-			m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
-				parentName, sketch
-			);
-		}
-	}
 }
 
 void HtmlInfoView::unregisterCurrentItem() {
@@ -591,7 +588,9 @@ void HtmlInfoView::unregisterCurrentItem() {
 }
 
 void HtmlInfoView::unregisterCurrentItemIf(long id) {
-	if (m_currentItem == NULL) return;
+	if (m_currentItem == NULL) {
+		return;
+	}
 	if (m_currentItem->id() == id) {
 		registerAsCurrentItem(NULL);
 	}
@@ -601,9 +600,9 @@ ItemBase *HtmlInfoView::currentItem() {
 	return m_currentItem;
 }
 
-void HtmlInfoView::reloadContent() {
+void HtmlInfoView::reloadContent(InfoGraphicsView * infoGraphicsView) {
 	if(m_currentItem) {
-		viewItemInfo(m_currentItem, m_currentSwappingEnabled);
+		viewItemInfo(infoGraphicsView, m_currentItem, m_currentSwappingEnabled);
 	}
 }
 
@@ -623,4 +622,17 @@ QString HtmlInfoView::blockVisibility(const QString &blockId) {
 
 QString HtmlInfoView::blockContainer(const QString &blockId) {
 	return QString("<div id='%1' %2><table>\n").arg(blockId).arg(blockVisibility(blockId));
+}
+
+void HtmlInfoView::registerInfoGraphicsView(InfoGraphicsView * infoGraphicsView, const QString & parentName) {
+	if(infoGraphicsView) {
+		m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
+			parentName, infoGraphicsView
+		);
+	}
+}
+
+void HtmlInfoView::setNullContent() 
+{
+	setContent("<html></html>");
 }

@@ -259,7 +259,7 @@ bool SchematicSketchWidget::canCopyItem(QGraphicsItem * item)
 	return SketchWidget::canDeleteItem(item);
 }
 
-void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+void SchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
 	// PCBSchematicSketchWidget::reviewDeletedConnections will remove the virtual wire connections from deletedConnections
 	PCBSchematicSketchWidget::reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
@@ -387,13 +387,13 @@ void SchematicSketchWidget::reviewDeletedConnections(QList<ItemBase *> & deleted
 
 	foreach (Wire * wire, undeleteWires) {
 		makeDeleteItemCommand(wire, parentCommand);
-		deletedItems.removeOne(wire);
+		deletedItems.remove(wire);
 	}
 
 	foreach (Wire * wire, deleteWires) {
 		if (deletedItems.contains(wire)) continue;
 
-		deletedItems.append(wire);
+		deletedItems.insert(wire);
 		ConnectorPairHash * connectorHash = new ConnectorPairHash;
 		wire->collectConnectors(*connectorHash, this->scene());
 		deletedConnections.insert(wire, connectorHash);

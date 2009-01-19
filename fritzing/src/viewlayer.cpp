@@ -49,11 +49,13 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Breadboard, new StringPair("breadboard", QObject::tr("Parts")));
 		names.insert(ViewLayer::BreadboardWire,  new StringPair("breadboardWire", QObject::tr("Wires")));
 		names.insert(ViewLayer::BreadboardLabel,  new StringPair("breadboardLabel", QObject::tr("Part Labels")));
+		names.insert(ViewLayer::BreadboardNote,  new StringPair("breadboardNote", QObject::tr("Notes")));
 		names.insert(ViewLayer::BreadboardRuler,  new StringPair("breadboardRuler", QObject::tr("Rulers")));
 
 		names.insert(ViewLayer::Schematic,  new StringPair("schematic", QObject::tr("Parts")));
 		names.insert(ViewLayer::SchematicWire,  new StringPair("schematicWire",QObject::tr("Nets")));
 		names.insert(ViewLayer::SchematicLabel,  new StringPair("schematicLabel", QObject::tr("Part Labels")));
+		names.insert(ViewLayer::SchematicNote,  new StringPair("schematicNote", QObject::tr("Notes")));
 		names.insert(ViewLayer::SchematicRuler,  new StringPair("schematicRuler", QObject::tr("Rulers")));
 
 		names.insert(ViewLayer::Board,  new StringPair("board", QObject::tr("Board")));
@@ -67,6 +69,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Vias, new StringPair("vias", QObject::tr("Vias")));
 		names.insert(ViewLayer::Keepout, new StringPair("keepout", QObject::tr("Keep out")));
 		names.insert(ViewLayer::Jumperwires, new StringPair("jumperwires", QObject::tr("Jumper wires")));
+		names.insert(ViewLayer::PcbNote,  new StringPair("pcbNote", QObject::tr("Notes")));
 		names.insert(ViewLayer::PcbRuler,  new StringPair("pcbRuler", QObject::tr("Rulers")));
 
 		names.insert(ViewLayer::UnknownLayer,  new StringPair("unknown", QObject::tr("Unknown Layer")));

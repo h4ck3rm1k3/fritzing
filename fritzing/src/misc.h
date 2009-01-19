@@ -71,6 +71,7 @@ static QDomElement ___emptyElement___;
 static QStringList ___emptyStringList___;
 static QHash<QString, QString> ___emptyStringHash___;
 static QDir ___emptyDir___;
+static QByteArray ___emptyByteArray___;
 
 static QString ITEMBASE_FONT_PREFIX = "<font size='2'>";
 static QString ITEMBASE_FONT_SUFFIX = "</font>";
