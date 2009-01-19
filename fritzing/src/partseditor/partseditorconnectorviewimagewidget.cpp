@@ -157,10 +157,10 @@ void PartsEditorConnectorViewImageWidget::setItemProperties() {
 		m_item->removeFromModel();
 		m_item->highlightConnectors("");
 
-		qreal size = 500; // just make sure the user get enough place to play
-		setSceneRect(0,0,size,size);
+		//qreal size = 500; // just make sure the user get enough place to play
+		//setSceneRect(0,0,size,size);
 
-		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
+		//m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
 		centerOn(m_item);
 		m_item->setWithBorder(true);
 	}
@@ -188,93 +188,101 @@ void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifie
 
 void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 	if(m_item) {
-		//QSvgRenderer *renderer = new QSvgRenderer(m_item->flatSvgFilePath());
-
 		FSvgRenderer *renderer = new FSvgRenderer();
-		renderer->load(m_item->flatSvgFilePath());
+		if(renderer->load(m_item->flatSvgFilePath())) {
+			QRectF viewBox = renderer->viewBoxF();
+			QSizeF defaultSize = renderer->defaultSizeF();
+			QDomDocument *svgDom = m_item->svgDom();
 
-		QRectF viewBox = renderer->viewBoxF();
-		QSizeF defaultSize = renderer->defaultSize();
-		QDomDocument *svgDom = m_item->svgDom();
+			if(!m_drawnConns.isEmpty()) {
+				DebugDialog::debug(QString("<<<< dsW %1  dsH %2  vbW %3  vbH %4")
+						.arg(defaultSize.width()).arg(defaultSize.height())
+						.arg(viewBox.width()).arg(viewBox.height()));
 
-		if(!m_drawnConns.isEmpty()) {
-			DebugDialog::debug(QString("<<<< dsW %1  vwH %2  vbW %3  vbH %4")
-					.arg(defaultSize.width()).arg(defaultSize.height())
-					.arg(viewBox.width()).arg(viewBox.height()));
+				QRectF bounds;
+				QString connId;
 
-			QRectF bounds;
-			QString connId;
+				foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
+					QRectF rectAux = drawnConn->boundingRect();
+					QPointF posAux = QPointF(rectAux.x(),rectAux.y());
+					DebugDialog::debug(QString("<<<< rect pos x=%1  y=%2 w=%3 h=%4")
+							.arg(rectAux.x()).arg(rectAux.y()).arg(rectAux.width()).arg(rectAux.height()));
+					qreal xAux = posAux.x();
+					qreal yAux = posAux.y();
+					bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
+					connId = drawnConn->connectorStuffID();
 
-			foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
-				QRectF rectAux = drawnConn->boundingRect();
-				QPointF mappedPos = drawnConn->mapToScene(drawnConn->pos());
-				DebugDialog::debug(QString("<<<< mapped pos x=%1  y=%2)")
-						.arg(mappedPos.x()).arg(mappedPos.y()));
-				qreal xAux = mappedPos.x();
-				qreal yAux = mappedPos.y();
-				bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
-				connId = drawnConn->connectorStuffID();
+					QRectF svgRect = mapFromSceneToSvg(bounds,defaultSize,viewBox);
+					addRectToSvg(svgDom,connId/*+"pin"*/,svgRect);
 
-				QRectF svgRect = mapFromSceneToSvg(bounds,defaultSize,viewBox);
-				DebugDialog::debug(QString("<<<< x %1  y %2  width %3  height %4")
-					.arg(svgRect.x()).arg(svgRect.y()).arg(svgRect.width()).arg(svgRect.height()));
-				addRectToSvg(svgDom,connId/*+"pin"*/,svgRect);
-
-				TerminalPointItem *tp = drawnConn->terminalPointItem();
-				if(tp && tp->hasBeenMoved()) {
-					QPointF tpoint = tp->point();
-					QRectF tpointRect(tpoint.x()-2,tpoint.y()-2,tpoint.x()+4,tpoint.y()+4);
-					QRectF svgTpRect = mapFromSceneToSvg(tpointRect,defaultSize,viewBox);
-					addRectToSvg(svgDom,connId+"terminal",svgTpRect);
+					TerminalPointItem *tp = drawnConn->terminalPointItem();
+					if(tp && tp->hasBeenMoved()) {
+						QRectF rectTPAux = tp->boundingRect();
+						QPointF posTPAux = QPointF(
+							rectTPAux.x()+rectTPAux.width()/2,
+							rectTPAux.y()+rectTPAux.height()/2
+						);
+						qreal halfTPSize = 0.001; // a tiny rectangle
+						QRectF tpointRect(
+							tp->mapToParent(posTPAux).x()-halfTPSize,
+							tp->mapToParent(posTPAux).y()-halfTPSize,
+							halfTPSize*2, halfTPSize*2
+						);
+						QRectF svgTpRect = mapFromSceneToSvg(tpointRect,defaultSize,viewBox);
+						addRectToSvg(svgDom,connId+"terminal",svgTpRect);
+					}
 				}
 			}
-		}
 
-		if(!m_removedConnIds.isEmpty()) {
-			QDomElement docEle = svgDom->documentElement();
-			if (docEle.tagName() != "svg") return;
-			QString result;
-			QList<QDomNode> nodesToRemove;
-			for (int i = 0; i < docEle.childNodes().count(); ++i) {
-				QDomNode n = docEle.childNodes().at(i);
-				if (n.nodeType() == QDomNode::ElementNode) {
-					if (isSupposedToBeRemoved(n.toElement().attribute("id"))) {
-						docEle.removeChild(n);
-						continue;
-					}
-
-					QDomNodeList children = n.toElement().childNodes();
-					for (int c = 0; c < children.count(); ++c) {
-						QDomNode child = children.at(c);
-						if (child.nodeType() == QDomNode::ElementNode
-							&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
-							n.removeChild(child);
+			if(!m_removedConnIds.isEmpty()) {
+				QDomElement docEle = svgDom->documentElement();
+				if (docEle.tagName() != "svg") return;
+				QString result;
+				QList<QDomNode> nodesToRemove;
+				for (int i = 0; i < docEle.childNodes().count(); ++i) {
+					QDomNode n = docEle.childNodes().at(i);
+					if (n.nodeType() == QDomNode::ElementNode) {
+						if (isSupposedToBeRemoved(n.toElement().attribute("id"))) {
+							docEle.removeChild(n);
 							continue;
+						}
+
+						QDomNodeList children = n.toElement().childNodes();
+						for (int c = 0; c < children.count(); ++c) {
+							QDomNode child = children.at(c);
+							if (child.nodeType() == QDomNode::ElementNode
+								&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
+								n.removeChild(child);
+								continue;
+							}
 						}
 					}
 				}
 			}
+
+			QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
+			QFile file(tempFile);
+			Q_ASSERT(file.open(QFile::WriteOnly));
+			QTextStream out(&file);
+			out << svgDom->toString();
+			file.close();
+
+			emit svgFileLoadNeeded(tempFile);
+			QFile::remove(tempFile);
+		} else {
+			DebugDialog::debug("<<< <ould not load file "+m_item->flatSvgFilePath());
 		}
-
-		QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
-		QFile file(tempFile);
-		Q_ASSERT(file.open(QFile::WriteOnly));
-		QTextStream out(&file);
-		out << svgDom->toString();
-		file.close();
-
-		emit svgFileLoadNeeded(tempFile);
-		QFile::remove(tempFile);
 	}
 }
 
 QRectF PartsEditorConnectorViewImageWidget::mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox) {
-	qreal relation = defaultSize.width() / viewBox.width();
-	DebugDialog::debug(QString("<<< relation %1").arg(relation));
-	qreal x = sceneRect.x() * relation;
-	qreal y = sceneRect.y() * relation;
-	qreal width = sceneRect.width() * relation;
-	qreal height = sceneRect.height() * relation;
+	qreal relationW = defaultSize.width() / viewBox.width();
+	qreal relationH = defaultSize.height() / viewBox.height();
+	DebugDialog::debug(QString("<<< relation w=%1 h=%2").arg(relationW).arg(relationH));
+	qreal x = sceneRect.x() * relationW;
+	qreal y = sceneRect.y() * relationH;
+	qreal width = sceneRect.width() * relationW;
+	qreal height = sceneRect.height() * relationH;
 
 	return QRectF(x,y,width,height);
 }
