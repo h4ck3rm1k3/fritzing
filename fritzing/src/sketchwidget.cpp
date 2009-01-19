@@ -3702,11 +3702,11 @@ void SketchWidget::ensureFixedToCenter(QGraphicsProxyWidget* item) {
 	qreal x = (width()-item->widget()->width())/2;
 	qreal y = (height()-item->widget()->height())/2;
 
-	DebugDialog::debug(QString("fixed to center pos x=%1 y=%2").arg(x).arg(y));
+	//DebugDialog::debug(QString("fixed to center pos x=%1 y=%2").arg(x).arg(y));
 	QPointF pos = mapToScene(x,y);
-	DebugDialog::debug(QString("fixed to center mapped pos x=%1 y=%2").arg(pos.x()).arg(pos.y()));
-	DebugDialog::debug(QString("fixed to center scen size w=%1 h=%2").arg(scene()->width()).arg(scene()->height()));
-	DebugDialog::debug("");
+	//DebugDialog::debug(QString("fixed to center mapped pos x=%1 y=%2").arg(pos.x()).arg(pos.y()));
+	//DebugDialog::debug(QString("fixed to center scen size w=%1 h=%2").arg(scene()->width()).arg(scene()->height()));
+	//DebugDialog::debug("");
 
 	if(pos.x() < scene()->width() && pos.y() < scene()->height()) {
 		item->setPos(pos);
