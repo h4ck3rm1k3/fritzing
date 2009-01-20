@@ -126,10 +126,10 @@ void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
 
 void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
 	
-	registerInfoGraphicsView(infoGraphicsView, "sketch");
 	if (item == NULL) {
 		// TODO: it would be nice to do something reasonable in this case
 		setNullContent();
+		registerInfoGraphicsView(infoGraphicsView, "sketch");
 		return;
 	}
 
@@ -141,6 +141,7 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	//s += appendCurrentGeometry(item, false); //probably not used in alpha -andre/johannes
 	setContent(s);
 	registerAsCurrentItem(item);
+	registerInfoGraphicsView(infoGraphicsView, "sketch");
 }
 
 QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
@@ -559,6 +560,7 @@ void HtmlInfoView::registerCurrentAgain() {
 }
 
 bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
+	// note: must take place after setContent()
 	if(item) {
 		m_currentItem = item;
 		/*
@@ -625,6 +627,7 @@ QString HtmlInfoView::blockContainer(const QString &blockId) {
 }
 
 void HtmlInfoView::registerInfoGraphicsView(InfoGraphicsView * infoGraphicsView, const QString & parentName) {
+	// note: must take place after setContent()
 	if(infoGraphicsView) {
 		m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
 			parentName, infoGraphicsView
