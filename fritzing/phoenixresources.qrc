@@ -138,5 +138,26 @@ $Date$
     <file>resources/images/icons/partsEditorConnectorRemoveEnabled_icon.png</file>
     <file>resources/images/icons/partsEditorConnectorRemoveDisabled_icon.png</file>
     <file>resources/images/icons/partsEditorConnectorRemovePressed_icon.png</file>
+    
+    <!-- Item Selection images -->
+    <file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
+    <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
+    <file>resources/images/itemselection/cornerHandlerActiveTopLeftpng</file>
+    <file>resources/images/itemselection/cornerHandlerActiveTopRight.png</file>
+    <file>resources/images/itemselection/cornerHandlerDarkBottomLeft.png</file>
+    <file>resources/images/itemselection/cornerHandlerDarkBottomRight.png</file>
+    <file>resources/images/itemselection/cornerHandlerDarkTopLeft.png</file>
+    <file>resources/images/itemselection/cornerHandlerDarkTopRight.png</file>
+    <file>resources/images/itemselection/crosshairHandlerActive.png</file>
+    <file>resources/images/itemselection/crosshairHandlerHover.png</file>
+    <file>resources/images/itemselection/crosshairHandlerNormal.png</file>
+    <file>resources/images/itemselection/selectionRingBottom.png</file>
+    <file>resources/images/itemselection/selectionRingBottomLeft.png</file>
+    <file>resources/images/itemselection/selectionRingBottomRight.png</file>
+    <file>resources/images/itemselection/selectionRingLeft.png</file>
+    <file>resources/images/itemselection/selectionRingRight.png</file>
+    <file>resources/images/itemselection/selectionRingTop.png</file>
+    <file>resources/images/itemselection/selectionRingTopLeft.png</file>
+    <file>resources/images/itemselection/selectionRingTopRight.png</file>   
 </qresource>
 </RCC>
