@@ -142,6 +142,8 @@ void FSvgRenderer::parseForWidthAndHeight(QXmlStreamReader & xml)
 
 			}
 			return;
+		default:
+			break;
 		}
 	}
 }

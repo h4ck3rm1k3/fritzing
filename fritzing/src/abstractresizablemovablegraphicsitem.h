@@ -44,6 +44,7 @@ public:
 	};
 
 	AbstractResizableMovableGraphicsItem();
+	virtual ~AbstractResizableMovableGraphicsItem() {}
 
 	void setResizable(bool resizable);
 	void setMovable(bool movable);
