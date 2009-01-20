@@ -142,5 +142,8 @@ AbstractResizableMovableGraphicsItem::Position AbstractResizableMovableGraphicsI
 
 
 void AbstractResizableMovableGraphicsItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
-
+	Q_UNUSED(x1);
+	Q_UNUSED(x2);
+	Q_UNUSED(y1);
+	Q_UNUSED(y2);
 }
