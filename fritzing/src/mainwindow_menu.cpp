@@ -1904,7 +1904,7 @@ void MainWindow::autoroute() {
 	QProgressBar progressBar;
 	m_statusBar->addPermanentWidget (&progressBar);
 	QPushButton cancelTraceButton;
-	cancelTraceButton.setText(tr("stop this trace"));
+	cancelTraceButton.setText(tr("Skip this trace"));
 	m_statusBar->addPermanentWidget(&cancelTraceButton);
 	QPushButton cancelButton;
 	cancelButton.setText(tr("Cancel autorouting"));
