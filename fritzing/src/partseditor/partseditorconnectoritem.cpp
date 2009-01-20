@@ -26,6 +26,7 @@ $Date$
 
 
 #include "partseditorconnectoritem.h"
+#include "../itemselection/connectorrectangle.h"
 #include "../debugdialog.h"
 
 QColor PartsEditorConnectorItem::selectedColor(131,224,179);
@@ -69,10 +70,7 @@ void PartsEditorConnectorItem::init(bool resizable, bool movable) {
 	m_withBorder = false;
 	m_errorIcon = NULL;
 
-	setResizable(resizable);
-	setMovable(movable);
-
-	m_mouseRelativePosition = Outside;
+	if(resizable) new ConnectorRectangle(this);
 }
 
 void PartsEditorConnectorItem::setSelectedColor(const QColor &color) {
@@ -170,76 +168,7 @@ void PartsEditorConnectorItem::paint( QPainter * painter, const QStyleOptionGrap
 
 	painter->restore();
 	//this->scene()->update();  // calling update here puts you in an infinite paint loop
-}
-
-void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-	if(!showingTerminalPoint()) {
-		if(m_resizable || m_movable) {
-			grabMouse();
-			updateCursor(event->pos(),QCursor(Qt::SizeAllCursor));
-		} else {
-			//QGraphicsItem::hoverEnterEvent(event);
-		}
-	} else {
-		ResizableMovableGraphicsRectItem::hoverEnterEvent(event);
-	}
-}
-
-void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-	if(!showingTerminalPoint()) {
-		if(m_resizable || m_movable) {
-			updateCursor(event->pos());
-			ungrabMouse();
-		} else {
-			//QGraphicsItem::hoverEnterEvent(event);
-		}
-	} else {
-		ResizableMovableGraphicsRectItem::hoverLeaveEvent(event);
-	}
-}
-
-void PartsEditorConnectorItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	if((m_resizable || m_movable) && !showingTerminalPoint()) {
-		if(m_resizable && m_resizing && m_mouseRelativePosition < Inside) {
-			resize(event->pos());
-		} else if(m_movable && m_moving && m_mouseRelativePosition == Inside) {
-			move(event->scenePos());
-		} else {
-			ConnectorItem::mouseMoveEvent(event);
-		}
-	} else {
-		ResizableMovableGraphicsRectItem::mouseMoveEvent(event);
-	}
-	updateCursor(event->pos());
-	scene()->update();
-}
-
-void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if(!showingTerminalPoint()) {
-		setParentDragMode(QGraphicsView::NoDrag);
-		if(m_resizable || m_movable) {
-			m_mouseRelativePosition = closeToCorner(event->pos());
-			if(m_mouseRelativePosition != Outside) {
-				m_resizing = m_mouseRelativePosition != Inside;
-				m_moving = !m_resizing;
-				m_mousePressedPos = event->buttonDownScenePos(Qt::LeftButton);
-			}
-		} else {
-			ConnectorItem::mousePressEvent(event);
-		}
-	} else {
-		ResizableMovableGraphicsRectItem::mousePressEvent(event);
-	}
-}
-
-void PartsEditorConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	if(!showingTerminalPoint() && (m_resizable || m_movable)) {
-		m_resizing = false;
-		m_moving = false;
-		setParentDragMode(QGraphicsView::ScrollHandDrag);
-		setCursor(QCursor());
-	}
-	ConnectorItem::mouseReleaseEvent(event);
+	//ConnectorItem::paint(painter, option, widget);
 }
 
 
@@ -275,18 +204,12 @@ void PartsEditorConnectorItem::setTerminalPoint(QPointF point) {
 	m_terminalPointItem = new TerminalPointItem(this,m_showsTerminalPoint&&m_showingTerminalPoint,point);
 }
 
-void PartsEditorConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
-	qreal width = x2-x1 < MinWidth ? MinWidth : x2-x1;
-	qreal height = y2-y1 < MinHeight ? MinHeight : y2-y1;
-
-	if(width != this->boundingRect().width()
-	   && height != this->boundingRect().height()) {
-		setRect(x1,y1,width,height);
-		if(showingTerminalPoint()) {
-			updateTerminalPoint();
-		} else {
-			m_geometryHasChanged = true;
-		}
+void PartsEditorConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
+	setRect(x,y,width,height);
+	if(showingTerminalPoint()) {
+		updateTerminalPoint();
+	} else {
+		m_geometryHasChanged = true;
 	}
 }
 

@@ -142,7 +142,7 @@ $Date$
     <!-- Item Selection images -->
     <file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
     <file>resources/images/itemselection/cornerHandlerActiveBottomRight.png</file>
-    <file>resources/images/itemselection/cornerHandlerActiveTopLeftpng</file>
+    <file>resources/images/itemselection/cornerHandlerActiveTopLeft.png</file>
     <file>resources/images/itemselection/cornerHandlerActiveTopRight.png</file>
     <file>resources/images/itemselection/cornerHandlerDarkBottomLeft.png</file>
     <file>resources/images/itemselection/cornerHandlerDarkBottomRight.png</file>

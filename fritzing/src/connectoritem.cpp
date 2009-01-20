@@ -43,7 +43,7 @@ QBrush ConnectorItem::hoverBrush(QColor(0,0,255));
 QBrush ConnectorItem::connectedBrush(QColor(0,255,0));
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
-	: ResizableMovableGraphicsRectItem(attachedTo)
+	: ResizableRectItem(attachedTo)
 {
 	m_dirty = false;
 	m_opacity = 0.4;

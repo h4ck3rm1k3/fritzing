@@ -62,15 +62,9 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void removeBorder();
 		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-		void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-		void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
-		void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-		void mousePressEvent(QGraphicsSceneMouseEvent *event);
-		void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-
 		void setParentDragMode(QGraphicsView::DragMode);
 
-		void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
+		void resizeRect(qreal x, qreal y, qreal width, qreal height);
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;

@@ -1,0 +1,68 @@
+/*******************************************************************
+
+Part of the Fritzing project - http://fritzing.org
+Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
+
+Fritzing is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fritzing is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************
+
+$Revision: 2148 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
+
+********************************************************************/
+
+#ifndef CONNECTORRECTANGLE_H_
+#define CONNECTORRECTANGLE_H_
+
+#include "cornerhandler.h"
+#include "rectangleside.h"
+#include "resizablerectitem.h"
+
+class ConnectorRectangle : public QGraphicsRectItem {
+public:
+	enum State {
+		None = 0x00000,
+		Highlighted = 0x00001,
+		Hover = 0x00002,
+		Selected = 0x00003
+	};
+
+	ConnectorRectangle(ResizableRectItem* owner);
+	void prepareForChange();
+	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);
+	QRectF itemRect();
+	bool isResizable();
+	void setState(State state);
+
+	ResizableRectItem *m_owner;
+
+protected:
+
+
+	CornerHandler *m_topLeftHandler;
+	CornerHandler *m_topRightHandler;
+	CornerHandler *m_bottomRightHandler;
+	CornerHandler *m_bottomLeftHandler;
+
+	RectangleSide *m_topSide;
+	RectangleSide *m_rightSide;
+	RectangleSide *m_leftSide;
+	RectangleSide *m_bottomSide;
+
+	State m_state;
+};
+
+#endif /* CONNECTORRECTANGLE_H_ */

@@ -53,6 +53,7 @@ include(referencemodel.pri)
 include(svg.pri)
 include(help.pri)
 include(labels.pri)
+include(itemselection.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

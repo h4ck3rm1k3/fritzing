@@ -35,9 +35,9 @@ $Date$
 
 #include "connector.h"
 #include "itembase.h"
-#include "resizablemovablegraphicsrectitem.h"
+#include "itemselection/resizablerectitem.h"
 
-class ConnectorItem : public ResizableMovableGraphicsRectItem
+class ConnectorItem : public ResizableRectItem
 {
 
 public:
