@@ -144,7 +144,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	if(!settings.value("peditor/state").isNull()) {
 		restoreState(settings.value("peditor/state").toByteArray());
 		restoreGeometry(settings.value("peditor/geometry").toByteArray());
@@ -530,7 +530,7 @@ void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
 		event->ignore();
 	}
 
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	settings.setValue("peditor/state",saveState());
 	settings.setValue("peditor/geometry",saveGeometry());
 }

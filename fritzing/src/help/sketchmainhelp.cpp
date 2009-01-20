@@ -185,13 +185,13 @@ void SketchMainHelp::setTransparent() {
 }
 
 void SketchMainHelp::saveState() {
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	QString prop = objectName()+"Visibility";
 	settings.setValue(prop,QVariant::fromValue(m_visible));
 }
 
 void SketchMainHelp::loadState() {
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	QString prop = objectName()+"Visibility";
 	bool visible = settings.contains(prop)
 		? settings.value(prop).toBool()

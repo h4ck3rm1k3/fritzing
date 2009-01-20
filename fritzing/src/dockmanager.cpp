@@ -41,6 +41,7 @@ DockManager::DockManager(MainWindow *mainWindow)
 
 	m_topDock = NULL;
 	m_bottomDock = NULL;
+	m_dontKeepMargins = true;
 
 	m_oldTopDockStyle = ___emptyString___;
 	m_oldBottomDockStyle = ___emptyString___;
@@ -169,6 +170,8 @@ FDockWidget *DockManager::newBottomWidget() {
 }
 
 void DockManager::keepMargins() {
+	if (m_dontKeepMargins) return;
+
 	/*FDockWidget* newTopWidget = this->newTopWidget();
 	if(m_topDock != newTopWidget) {
 		removeMargin(m_topDock);
@@ -222,4 +225,8 @@ void DockManager::dockMarginAux(FDockWidget* dock, const QString &name, const QS
 	dock->widget()->setStyleSheet(style);
 	dock->setStyleSheet(dock->styleSheet());
 
+}
+
+void DockManager::dontKeepMargins() {
+	m_dontKeepMargins = true;
 }

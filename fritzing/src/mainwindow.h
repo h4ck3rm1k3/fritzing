@@ -73,6 +73,8 @@ class MainWindow : public FritzingWindow
 public:
     MainWindow(PaletteModel *, ReferenceModel *refModel);
     MainWindow(QFile & fileToLoad);
+	~MainWindow();
+
     void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	bool loadWhich(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void notClosableForAWhile();
@@ -469,6 +471,8 @@ protected:
 	bool m_tabWindowRestored;
 
 	Helper *m_helper;
+	QTimer m_setUpDockManagerTimer;
+	class DockManager * m_dockManager;
 
 protected:
 	static const QString UntitledSketchName;

@@ -555,7 +555,7 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	QApplication::processEvents();
 
 	if(setAsLastOpened) {
-		QSettings settings("Fritzing","Fritzing");
+		QSettings settings;
 		settings.setValue("lastOpenSketch",fileName);
 	}
 
@@ -793,7 +793,7 @@ void MainWindow::createOpenRecentMenu() {
 }
 
 void MainWindow::updateRecentFileActions() {
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	QStringList files = settings.value("recentFileList").toStringList();
 	if(files.size() > 0) {
 		m_openRecentFileMenu->setEnabled(true);
@@ -1584,7 +1584,7 @@ void MainWindow::createNewSketch() {
     mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
     mw->show();
 
-    QSettings settings("Fritzing","Fritzing");
+    QSettings settings;
     settings.remove("lastOpenSketch");
 }
 

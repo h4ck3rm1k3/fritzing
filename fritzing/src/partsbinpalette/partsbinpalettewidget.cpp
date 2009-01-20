@@ -364,7 +364,7 @@ bool PartsBinPaletteWidget::beforeClosing() {
 }
 
 void PartsBinPaletteWidget::saveAsLastBin() {
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	settings.setValue("lastBin",m_fileName);
 }
 

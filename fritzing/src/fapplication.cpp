@@ -89,6 +89,11 @@ void DoOnceThread::run()
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
 	m_started = false;
+
+	QCoreApplication::setOrganizationName("Fritzing");
+	QCoreApplication::setOrganizationDomain("fritzing.org");
+	QCoreApplication::setApplicationName("Fritzing");
+
 	installEventFilter(this);
 
 #ifdef Q_WS_MAC
@@ -186,7 +191,7 @@ bool FApplication::event(QEvent *event)
 }
 
 bool FApplication::findTranslator(const QString & libPath) {
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	QString suffix = settings.value("language").toString();
 	if (suffix.isEmpty()) {
 		suffix = QLocale::system().name();	   // Returns the language and country of this locale as a string of the form "language_country", where language is a lowercase, two-letter ISO 639 language code, and country is an uppercase, two-letter ISO 3166 country code.
@@ -210,9 +215,6 @@ int FApplication::startup(int & argc, char ** argv)
 	initSplash(splash, progressIndex, pixmap);
 	processEvents();
 
-	QCoreApplication::setOrganizationName("Fritzing");
-	QCoreApplication::setOrganizationDomain("fritzing.org");
-	QCoreApplication::setApplicationName("Fritzing");
 	// DebugDialog::debug("Data Location: "+QDesktopServices::storageLocation(QDesktopServices::DataLocation));
 
 	// so we can use ViewGeometry in a Qt::QueueConnection signal
@@ -256,7 +258,7 @@ int FApplication::startup(int & argc, char ** argv)
 	m_referenceModel = new CurrentReferenceModel();
 	m_paletteBinModel = new PaletteModel(true, false);
 
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	QString prevVersion = settings.value("version").toString();
 	QString currVersion = Version::versionString();
 	if(prevVersion != currVersion) {
@@ -370,7 +372,7 @@ void FApplication::finish()
     delete m_referenceModel;
 
 	QString currVersion = Version::versionString();
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
     settings.setValue("version", currVersion);
 }
 
@@ -395,7 +397,7 @@ void FApplication::preferences() {
 	QStringList nameFilters;
 	nameFilters << "*.qm";
     QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	QString language = settings.value("language").toString();
 	if (language.isEmpty()) {
 		language = QLocale::system().name();

@@ -38,6 +38,7 @@ class DockManager : public QObject {
 		DockManager(MainWindow *mainWindow);
 		void createBinAndInfoViewDocks();
 		void createDockWindows();
+		void dontKeepMargins();
 
 	public slots:
 		void keepMargins();
@@ -63,6 +64,7 @@ class DockManager : public QObject {
 		FDockWidget* m_bottomDock;
 		QString m_oldTopDockStyle;
 		QString m_oldBottomDockStyle;
+		bool m_dontKeepMargins;
 
 	public:
 		static const int PartsBinDefaultHeight = 220;

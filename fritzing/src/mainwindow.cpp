@@ -138,15 +138,15 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     m_undoView->setGroup(m_undoGroup);
     m_undoGroup->setActiveStack(m_breadboardGraphicsView->undoStack());
 
-    DockManager *dockManager = new DockManager(this);
-    dockManager->createBinAndInfoViewDocks();
+    m_dockManager = new DockManager(this);
+    m_dockManager->createBinAndInfoViewDocks();
     createActions();
     createSketchButtons();
     createMenus();
     createToolBars();
     createStatusBar();
 
-    dockManager->createDockWindows();
+    m_dockManager->createDockWindows();
 
     m_breadboardWidget->setContent(
     	getButtonsForView(m_breadboardWidget->viewIdentifier()),
@@ -205,7 +205,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_comboboxChanged = false;
 
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	if(!settings.value("main/state").isNull()) {
 		restoreState(settings.value("main/state").toByteArray());
 		restoreGeometry(settings.value("main/geometry").toByteArray());
@@ -224,8 +224,17 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_helper = new Helper(this, true);
 
 	QTimer::singleShot(65, this, SLOT(showTabWindow()));
-	QTimer::singleShot(1000, dockManager, SLOT(keepMargins()));
+	m_setUpDockManagerTimer.setSingleShot(true);
+	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
+	m_setUpDockManagerTimer.start(1000);
 }
+
+MainWindow::~MainWindow() 
+{
+	m_dockManager->dontKeepMargins();
+	m_setUpDockManagerTimer.stop();
+}
+
 
 void MainWindow::initSketchWidget(SketchWidget * sketchWidget) {
 	sketchWidget->setPaletteModel(m_paletteModel);
@@ -391,7 +400,7 @@ void MainWindow::setCurrentFile(const QString &fileName, bool addToRecent) {
 	setTitle();
 
 	if(addToRecent) {
-		QSettings settings("Fritzing","Fritzing");
+		QSettings settings;
 		QStringList files = settings.value("recentFileList").toStringList();
 		files.removeAll(fileName);
 		files.prepend(fileName);
@@ -673,7 +682,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		DebugDialog::closeDebug();
 	}
 
-	QSettings settings("Fritzing","Fritzing");
+	QSettings settings;
 	settings.setValue("main/state",saveState());
 	settings.setValue("main/geometry",saveGeometry());
 
