@@ -53,6 +53,16 @@ QList<QString> Wire::colorNames;
 QList<QColor *> ratsnestColors;
 QColor schematicColor;
 
+struct ConnectThing {
+	Wire * wire;
+	bool hasNone0;
+	bool hasNone1;
+	bool connectedIn0;
+	bool connectedIn1;
+	bool connectedOut0;
+	bool connectedOut1;
+};
+
 ////////////////////////////////////////////////////////////
 
 static QHash<ItemBase::ViewIdentifier, int> netColorIndex;
@@ -982,16 +992,6 @@ void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> 
 	QList<ConnectorItem *> uniqueEnds;
 	collectChained(chained, ends, uniqueEnds);
 	bool selected = false;
-	
-	struct ConnectThing {
-		Wire * wire;
-		bool hasNone0;
-		bool hasNone1;
-		bool connectedIn0;
-		bool connectedIn1;
-		bool connectedOut0;
-		bool connectedOut1;
-	};
 	
 	QVector<ConnectThing> connectThings(chained.count());
 
