@@ -24,8 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -91,6 +89,7 @@ signals:
 	void aboutToClose();
 	void autorouted();
 	void viewSwitched(int);
+	void mainWindowMoved(QWidget *);
 
 public slots:
 	void ensureClosable();
@@ -197,9 +196,6 @@ protected slots:
 
 	void raiseAndActivate();
 	void activateWindowAux();
-	void showTabWindow();
-	void restoreTabWindow();
-	void tabWindowRestored(bool);
 	void showPartLabels();
 
 protected:
@@ -466,9 +462,7 @@ protected:
 	friend class Helper;
 	friend class DockManager;
 
-	class TabWindow * m_tabWindow;
-	bool m_reopenTabWindowAfterParts;
-	bool m_tabWindowRestored;
+	class ViewSwitcher * m_viewSwitcher;
 
 	Helper *m_helper;
 	QTimer m_setUpDockManagerTimer;

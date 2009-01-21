@@ -93,6 +93,8 @@ void MiniViewContainer::resizeEvent ( QResizeEvent * event )
 void MiniViewContainer::updateFrame()
 {
 	QGraphicsView * view = m_miniView->view();
+	if (view == NULL) return;
+
 	QSize vSize = view->size();
 
 	bool vVis = false;

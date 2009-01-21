@@ -30,6 +30,11 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #include "dockmanager.h"
 #include "triplenavigator.h"
 #include "fsizegrip.h"
+#include "viewswitcherdockwidget.h"
+
+FDockWidget * makeViewSwitcherDock(const QString & title, QWidget * parent) {
+	return new ViewSwitcherDockWidget(title, parent);
+}
 
 DockManager::DockManager(MainWindow *mainWindow)
 	: QObject(mainWindow)
@@ -71,6 +76,18 @@ void DockManager::createBinAndInfoViewDocks() {
 
 void DockManager::createDockWindows()
 {
+	QWidget * widget = new QWidget();
+	widget->setMinimumHeight(0);
+	widget->setMaximumHeight(0);
+	FDockWidget * dock = makeDock(tr("view switcher"), widget, 0,  0, Qt::RightDockWidgetArea, makeViewSwitcherDock);	
+	static_cast<ViewSwitcherDockWidget *>(dock)->setViewSwitcher(m_mainWindow->m_viewSwitcher);
+	connect(m_mainWindow, SIGNAL(mainWindowMoved(QWidget *)), dock, SLOT(windowMoved(QWidget *)));
+
+#ifndef QT_NO_DEBUG
+	//dock->setStyleSheet("background-color: red;");
+	//m_mainWindow->m_viewSwitcher->setStyleSheet("background-color: blue;");
+#endif
+
 	makeDock(PartsBinPaletteWidget::Title, m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
     makeDock(tr("Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
@@ -112,8 +129,8 @@ void DockManager::createDockWindows()
     m_mainWindow->m_windowMenu->addSeparator();
 }
 
-FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area) {
-    FDockWidget * dock = new FDockWidget(title, m_mainWindow);
+FDockWidget * DockManager::makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area, DockFactory dockFactory) {
+	FDockWidget * dock = ((dockFactory) ? dockFactory(title, m_mainWindow) : new FDockWidget(title, m_mainWindow));
     dock->setObjectName(title);
     dock->setWidget(widget);
     widget->setParent(dock);

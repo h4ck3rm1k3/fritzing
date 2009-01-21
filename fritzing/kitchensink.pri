@@ -16,8 +16,11 @@
 # $Author: andre.knoerig $:
 # $Date: 2008-11-15 16:16:14 +0100 (Sat, 15 Nov 2008) $
 # ********************************************************************/
-HEADERS += src/abstractstatesbutton.h \
+HEADERS += \
     src/aboutbox.h \
+    src/abstractimagebutton.h \
+    src/abstractresizablemovablegraphicsitem.h \
+    src/abstractstatesbutton.h \
     src/autorouter1.h \
     src/bettertimer.h \
     src/bettertriggeraction.h \
@@ -31,18 +34,21 @@ HEADERS += src/abstractstatesbutton.h \
     src/connectorviewthing.h \
     src/console.h \
     src/debugdialog.h \
+    src/dockmanager.h \
     src/eventeater.h \
     src/expandinglabel.h \
     src/fapplication.h \
     src/fdockwidget.h \
     src/fgraphicsscene.h \
     src/fritzingwindow.h \
+    src/fsizegrip.h \
     src/fsplashscreen.h \
     src/ftabwidget.h \
     src/fsvgrenderer.h \
     src/graphicssvglineitem.h \
     src/groupitem.h \
     src/htmlinfoview.h \
+    src/idockablewidget.h \
     src/infographicsview.h \
     src/itembase.h \
     src/itemdrag.h \
@@ -62,31 +68,28 @@ HEADERS += src/abstractstatesbutton.h \
     src/pcbsketchwidget.h \
     src/pcbschematicsketchwidget.h \
     src/prefsdialog.h \
+    src/resizablemovablegraphicsrectitem.h \
     src/schematicsketchwidget.h \
     src/sketchareawidget.h \
     src/sketchmodel.h \
     src/sketchtoolbutton.h \
     src/sketchwidget.h \
     src/svgandpartfilepath.h \
-    src/tabwindow.h \
     src/tracewire.h \
     src/triplenavigator.h \
     src/version.h \
     src/viewgeometry.h \
     src/viewlayer.h \
+    src/viewswitcher.h \
+    src/viewswitcherdockwidget.h \
     src/viewthing.h \
     src/virtualwire.h \
     src/waitpushundostack.h \
     src/wire.h \
-    src/zoomcombobox.h \
-    src/dockmanager.h \
-    src/idockablewidget.h \
-    src/viewswitcher.h \
-    src/abstractimagebutton.h \
-    src/fsizegrip.h \
-    src/abstractresizablemovablegraphicsitem.h \
-    src/resizablemovablegraphicsrectitem.h
-SOURCES += src/aboutbox.cpp \
+    src/zoomcombobox.h 
+SOURCES += \
+    src/aboutbox.cpp \
+    src/abstractresizablemovablegraphicsitem.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
     src/bettertimer.cpp \
@@ -100,11 +103,13 @@ SOURCES += src/aboutbox.cpp \
     src/connectorviewthing.cpp \
     src/console.cpp \
     src/debugdialog.cpp \
+    src/dockmanager.cpp \
     src/eventeater.cpp \
     src/fapplication.cpp \
     src/fdockwidget.cpp \
     src/fgraphicsscene.cpp \
     src/fritzingwindow.cpp \
+    src/fsizegrip.cpp \
     src/fsplashscreen.cpp \
     src/ftabwidget.cpp \
     src/fsvgrenderer.cpp \
@@ -132,23 +137,20 @@ SOURCES += src/aboutbox.cpp \
     src/pcbsketchwidget.cpp \
     src/pcbschematicsketchwidget.cpp \
     src/prefsdialog.cpp \
+    src/resizablemovablegraphicsrectitem.cpp \
     src/schematicsketchwidget.cpp \
     src/sketchareawidget.cpp \
     src/sketchmodel.cpp \
     src/sketchtoolbutton.cpp \
     src/sketchwidget.cpp \
-    src/tabwindow.cpp \
     src/tracewire.cpp \
     src/triplenavigator.cpp \
     src/version.cpp \
     src/viewgeometry.cpp \
     src/viewlayer.cpp \
-    src/virtualwire.cpp \
-    src/wire.cpp \
-    src/waitpushundostack.cpp \
-    src/zoomcombobox.cpp \
-    src/dockmanager.cpp \
     src/viewswitcher.cpp \
-    src/fsizegrip.cpp \
-    src/abstractresizablemovablegraphicsitem.cpp \
-    src/resizablemovablegraphicsrectitem.cpp
+    src/viewswitcherdockwidget.cpp \
+    src/virtualwire.cpp \
+    src/waitpushundostack.cpp \
+    src/wire.cpp \
+    src/zoomcombobox.cpp 

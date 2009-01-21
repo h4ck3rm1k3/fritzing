@@ -167,14 +167,13 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				painter.setFont(this->font());
 				painter.drawText(buttonPixmap->rect(), Qt::AlignCenter, text);
 
-
-
 				painter.end();
 
 				Pixmaps.insert(name, buttonPixmap);
 			}
 		}
 	}
+
 }
 
 void ViewSwitcherButton::setFocus(bool focus) {
@@ -234,7 +233,7 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	m_layout = new QHBoxLayout(this);
 	m_layout->setSpacing(0);
 	m_layout->setMargin(0);
-
+	
 	//m_closeButton = new SketchMainHelpCloseButton("PCB" ,this);
 	//m_layout->addWidget(m_closeButton);
 
@@ -255,10 +254,17 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	if (w > maxWidth) maxWidth = w;
 	maxWidth += extraWidth;
 
+	m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	m_buttons << createButton("Breadboard", tr("Breadboard"), maxWidth, Qt::AlignLeft);
 	m_buttons << createButton("Schematic", tr("Schematic"), maxWidth, Qt::AlignCenter);
 	m_buttons << createButton("PCB", tr("PCB"), maxWidth, Qt::AlignRight);
+	m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 
+#ifndef QT_NO_DEBUG
+	//foreach (ViewSwitcherButton * b, m_buttons) {
+		//b->setStyleSheet("background-color: green;");
+	//}
+#endif
 }
 
 ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment) {
@@ -303,18 +309,17 @@ void ViewSwitcher::viewSwitchedTo(int index) {
 
 void ViewSwitcher::createMask() 
 {
-	
-
-
 	if (m_mask != NULL) return;
 
 	setStyleSheet("ViewSwitcher {border: 0px; background-color: rgb(0,255,255); margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
-	QPixmap pixmap(this->size());
+	QSize size = this->size();
+	DebugDialog::debug(QString("vs size %1 %2").arg(size.width()).arg(size.height()));
+	QPixmap pixmap(size);
 	this->render(&pixmap);
 	QImage image = pixmap.toImage();
 
-	QBitmap bitmap(this->size());
+	QBitmap bitmap(size);
 	bitmap.fill(Qt::white);
 	QImage bImage = bitmap.toImage();
 

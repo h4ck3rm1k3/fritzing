@@ -32,6 +32,8 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 
 #include "mainwindow.h"
 
+typedef class FDockWidget * (*DockFactory)(const QString & title, QWidget * parent);
+
 class DockManager : public QObject {
 	Q_OBJECT
 	public:
@@ -47,7 +49,7 @@ class DockManager : public QObject {
 		void dockChangeActivation(bool activate);
 
 	protected:
-		class FDockWidget * makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
+		class FDockWidget * makeDock(const QString & title, QWidget * widget, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea, DockFactory dockFactory = NULL);
 		class FDockWidget * dockIt(FDockWidget* dock, int dockMinHeight, int dockDefaultHeight, Qt::DockWidgetArea area = Qt::RightDockWidgetArea);
 		FDockWidget *newTopWidget();
 		FDockWidget *newBottomWidget();

@@ -40,7 +40,6 @@ $Date$
 #include "autorouter1.h"
 #include "eventeater.h"
 #include "virtualwire.h"
-#include "tabwindow.h"
 #include "fsvgrenderer.h"
 
 static QString eagleActionType = ".eagle";
@@ -1530,14 +1529,6 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 		id = paletteItem->id();
 	}
 
-	if (m_partsEditorWindows.count() == 0) {
-		m_reopenTabWindowAfterParts = false;
-		if (m_tabWindow->isVisible()) {
-			m_reopenTabWindowAfterParts = true;
-			m_tabWindow->hide();
-		}
-	}
-
 	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(id,this,0,modelPart,modelPart!=NULL);
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
@@ -1551,9 +1542,6 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 
 void MainWindow::partsEditorClosed(long id) {
 	m_partsEditorWindows.remove(id);
-	if (m_partsEditorWindows.count() == 0 && m_reopenTabWindowAfterParts) {
-		m_tabWindow->show();
-	}
 }
 
 void MainWindow::openInOldPartsEditor() {

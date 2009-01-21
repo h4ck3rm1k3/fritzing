@@ -56,7 +56,6 @@ $Date$
 #include "help/helper.h"
 #include "dockmanager.h"
 
-#include "tabwindow.h"
 #include "fsizegrip.h"
 
 
@@ -70,8 +69,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 {
 	QFile styleSheet(":/resources/styles/fritzing.qss");
 
-	m_tabWindow = NULL;
-	m_tabWindowRestored = false;
 	m_helper = NULL;
 
 	resize(740,600);
@@ -145,6 +142,11 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     createMenus();
     createToolBars();
     createStatusBar();
+
+	m_viewSwitcher = new ViewSwitcher();
+	connect(m_viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
+	connect(this, SIGNAL(viewSwitched(int)), m_viewSwitcher, SLOT(viewSwitchedTo(int)));
+	m_viewSwitcher->viewSwitchedTo(0);
 
     m_dockManager->createDockWindows();
 
@@ -223,7 +225,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	m_helper = new Helper(this, true);
 
-	QTimer::singleShot(65, this, SLOT(showTabWindow()));
 	m_setUpDockManagerTimer.setSingleShot(true);
 	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
 	m_setUpDockManagerTimer.start(1000);
@@ -730,12 +731,6 @@ void MainWindow::changeActivation(bool activate) {
 	QWidget * activeWindow = QApplication::activeWindow ();
 	//DebugDialog::debug(QString("active == null? %1").arg(activeWindow==NULL));
 
-	if (activeWindow == NULL ) {
-		m_tabWindowRestored = false;
-		return;
-	}
-
-
 	if (activate) {
 		if (m_savedState == Saved) {
 			m_savedState = Restored;
@@ -748,11 +743,6 @@ void MainWindow::changeActivation(bool activate) {
 				dock->restoreState();
 			}
 
-			if (m_tabWindow) {
-				//DebugDialog::debug("restoring tabwindow");
-				// on mac, if using dock to switch views between apps, restore doesn't work without a timer
-				QTimer::singleShot(30, this, SLOT(restoreTabWindow()));
-			}
 		}
 	}
 	else {
@@ -760,14 +750,6 @@ void MainWindow::changeActivation(bool activate) {
 			//DebugDialog::debug("skipping save");
 			return;
 		}
-
-#ifdef Q_WS_X11
-		if (activeWindow == NULL && m_tabWindowRestored) {
-			//DebugDialog::debug("skipping save (tw restored)");
-			m_tabWindowRestored = false;
-			return;
-		}
-#endif
 
 		if (!(m_savedState == Saved)) {
 
@@ -783,13 +765,6 @@ void MainWindow::changeActivation(bool activate) {
 
 				if (dock->isFloating() && dock->isVisible()) {
 					dock->hide();
-				}
-			}
-
-			if (m_tabWindow) {
-				m_tabWindow->saveState();
-				if (m_tabWindow->isVisible()) {
-					m_tabWindow->hide();
 				}
 			}
 		}
@@ -1264,10 +1239,7 @@ QStatusBar *MainWindow::realStatusBar() {
 
 void MainWindow::moveEvent(QMoveEvent * event) {
 	FritzingWindow::moveEvent(event);
-	//DebugDialog::debug(QString("move event %1 %2").arg(event->pos().x()).arg(event->pos().y()));
-	if (m_tabWindow) {
-		m_tabWindow->parentMoved();
-	}
+	emit mainWindowMoved(this);
 }
 
 bool MainWindow::event(QEvent * e) {
@@ -1289,45 +1261,6 @@ void MainWindow::resizeEvent(QResizeEvent * event) {
 	FritzingWindow::resizeEvent(event);
 }
 
-void MainWindow::showTabWindow() {
-	m_tabWindow = new TabWindow(this);
-	m_tabWindow->setWindowTitle(tr("View Switcher"));
-	ViewSwitcher * viewSwitcher = new ViewSwitcher();
-	connect(viewSwitcher, SIGNAL(viewSwitched(int)), this, SLOT(viewSwitchedTo(int)));
-	connect(this, SIGNAL(viewSwitched(int)), viewSwitcher, SLOT(viewSwitchedTo(int)));
-	connect(m_tabWindow, SIGNAL(tabWindowRestored(bool)), this, SLOT(tabWindowRestored(bool)), Qt::DirectConnection);
-
-	m_tabWindow->addViewSwitcher(viewSwitcher);
-	viewSwitcher->viewSwitchedTo(0);
-	viewSwitcher->connectClose(m_tabWindow, SLOT(hide()));
-	m_tabWindow->show();
-	QPoint initial(10,50);
-#ifdef Q_WS_MAC
-	initial.setY(34);
-#else
-	#ifdef Q_WS_X11
-		initial.setY(60);
-	#endif
-#endif
-	m_tabWindow->move(this->pos() + initial);
-	m_tabWindow->setMask();
-	m_tabWindow->calcDocked();
-
-	int sep = 0;
-	foreach (QAction * action, m_windowMenu->actions()) {
-		if (action->isSeparator()) {
-			if (++sep == 2) {
-				m_windowMenu->insertAction(action, m_tabWindow->toggleViewAction());
-				break;
-			}
-		}
-	}
-	if (sep < 2) {
-		m_windowMenu->addAction(m_tabWindow->toggleViewAction());
-	}
-	//DebugDialog::debug(QString("tab done"));
-}
-
 void MainWindow::showInViewHelp() {
 	//delete m_helper;
 	if (m_helper == NULL) {
@@ -1345,14 +1278,6 @@ void MainWindow::showInViewHelp() {
 	m_showInViewHelpAct->setChecked(m_helper->helpVisible(m_tabWidget->currentIndex()));
 }
 
-void MainWindow::restoreTabWindow() {
-	m_tabWindow->restoreState();
-}
-
-void MainWindow::tabWindowRestored(bool restored) {
-	DebugDialog::debug(QString("slot tabwindowrestored(%1)").arg(restored?"true":"false"));
-	m_tabWindowRestored = restored;
-}
 
 void MainWindow::showAllFirstTimeHelp(bool show) {
 	if (m_helper) {
