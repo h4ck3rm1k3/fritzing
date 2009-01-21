@@ -1,1 +1,7 @@
-{{ obj.release.description }}
+{% if obj.release.description %}
+{{ obj.release.description|safe }}
+{% endif %}
+{% if obj.release.changelog %}
+Changelog:
+{{ obj.release.changelog|safe }}
+{% endif %}

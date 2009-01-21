@@ -30,9 +30,6 @@ class PlatformRssFeed(Feed):
             return obj.current_download().release.get_absolute_url()
         return reverse('downloads_release_list')
 
-    def description(self, obj):
-        return obj.release.changelog
-
     def item_link(self, obj):
         return '%s#%s' % (
             obj.release.get_absolute_url(),
@@ -41,13 +38,14 @@ class PlatformRssFeed(Feed):
     def item_enclosure_url(self, obj):
         "Use the filename of the release as the enclosure url."
         domain = Site.objects.get_current().domain
-        url = 'http://%s%s' % (domain, obj.get_absolute_url())
+        url = 'http://%s%s' % (domain, obj.get_update_url())
         if not url:
             url = None
         return url
 
     def item_enclosure_length(self, obj):
         "Use the file size"
+        return 1
         return obj.filename.size
 
     def item_enclosure_mime_type(self, obj):

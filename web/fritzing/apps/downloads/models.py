@@ -88,6 +88,7 @@ class Download(models.Model):
     filename = models.FileField(_('file'), upload_to='downloads', blank=True, null=True)
     mime_type = models.CharField(_('mime type'), max_length=255, blank=True, null=True)
     counter = models.IntegerField(_('counter'), default=0)
+    updated = models.IntegerField(_('updated'), default=0)
 
     objects = DownloadManager()
 
@@ -110,4 +111,8 @@ class Download(models.Model):
         filename = self.filename.path.split('/')[-1]
         return ('downloads_release_download',
             [self.release.version, self.platform.slug, filename])
+    get_absolute_url = models.permalink(get_absolute_url)
+
+    def get_update_url(self):
+        return ('downloads_release_update', [self.pk])
     get_absolute_url = models.permalink(get_absolute_url)

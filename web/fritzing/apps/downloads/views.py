@@ -1,5 +1,5 @@
 import os
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, get_list_or_404, render_to_response
 from django.template import RequestContext
 from django.views.generic import list_detail
@@ -28,4 +28,13 @@ def release_download(request, version, slug, filename):
     if os.path.exists(download.filename.path):
         download.counter += 1
         download.save()
-    return HttpResponseRedirect(download.filename.url)
+        return HttpResponseRedirect(download.filename.url)
+    raise HttpResponseRedirect('/')
+
+def update_download(request, download_id):
+    download = get_object_or_404(Download, pk=download_id)
+    if os.path.exists(download.filename.path):
+        download.updated += 1
+        download.save()
+        return HttpResponseRedirect(download.filename.url)
+    return HttpResponseNotFound('File not found')
