@@ -45,7 +45,6 @@ class PlatformRssFeed(Feed):
 
     def item_enclosure_length(self, obj):
         "Use the file size"
-        return 1
         return obj.filename.size
 
     def item_enclosure_mime_type(self, obj):
@@ -57,6 +56,9 @@ class PlatformRssFeed(Feed):
 
     def item_author_email(self, obj):
         return 'info@fritzing.org'
+
+    def item_description(self, obj):
+        return self.changelog
 
     def item_pubdate(self, obj):
         return obj.release.release_date

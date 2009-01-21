@@ -6,7 +6,7 @@ import os
 PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../pinax/"))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # tells Pinax to serve media through django.views.static.serve.
@@ -150,6 +150,7 @@ INSTALLED_APPS = (
     'tools',
     'partslib',
     'downloads',
+#    'south',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -191,6 +192,7 @@ FILEBROWSER_EXTENSIONS = {
     'Sound':['.mp3','.mp4','.wav','.aiff','.midi'],
     'Code':['.html','.py','.js','.css'],
     'Achives':['.tgz','.tar', '.zip', '.rar', '.dmg', '.gz', '.bz2'],
+    'Fritzing':['.fz', '.fzb', '.fzp', '.ts'],
 }
 
 INTERNAL_IPS = ('127.0.0.1',)
