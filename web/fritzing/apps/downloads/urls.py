@@ -6,7 +6,7 @@ from django.contrib.syndication.views import feed
 from downloads.models import Release
 from downloads.feeds import PlatformRssFeed, PlatformAtomFeed
 from downloads.views import (release_list, release_download,
-                             release_detail, release_update)
+                             release_detail, update_download)
 
 release_args = {
     'queryset': Release.objects.active()
@@ -32,7 +32,7 @@ urlpatterns = patterns('',
         feed, {'feed_dict': feeds}, name='downloads_feeds'),
 
     url(r'^api/1.0/update/(?P<download_id>[^/]+)$',
-        release_update, name='downloads_release_update'),
+        update_download, name='downloads_release_update'),
 
     url(r'(?P<version>[^/]+)/(?P<slug>[^/]*)/(?P<filename>.*)$',
         release_download, name='downloads_release_download'),
