@@ -10,8 +10,8 @@ from downloads.views import release_list, release_download, release_detail
 release_args = {'queryset': Release.objects.active()}
 
 feeds = {
-    'atom': PlatformRssFeed,
-    'rss': PlatformAtomFeed,
+    'rss': PlatformRssFeed,
+    'atom': PlatformAtomFeed,
 }
 
 urlpatterns = patterns('',

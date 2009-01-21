@@ -58,7 +58,7 @@ class PlatformRssFeed(Feed):
         return 'info@fritzing.org'
 
     def item_description(self, obj):
-        return self.changelog
+        return obj.release.changelog
 
     def item_pubdate(self, obj):
         return obj.release.release_date
