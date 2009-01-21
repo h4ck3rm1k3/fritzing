@@ -122,4 +122,4 @@ class Download(models.Model):
 
     def get_update_url(self):
         return ('downloads_release_update', [self.pk])
-    get_absolute_url = models.permalink(get_absolute_url)
+    get_update_url = models.permalink(get_update_url)
