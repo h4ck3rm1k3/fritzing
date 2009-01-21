@@ -40,7 +40,7 @@ qreal PartsEditorConnectorItem::MinHeight = MinWidth;
 PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint)
 	: ConnectorItem(conn, attachedTo)
 {
-	init(false,false);
+	init(false);
 	m_terminalPointItem = NULL;
 	m_showsTerminalPoint = showsTerminalPoints;
 	m_showingTerminalPoint = showingTerminalPoint;
@@ -49,7 +49,7 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint, const QRectF &bounds)
 	: ConnectorItem(conn, attachedTo)
 {
-	init(true,true);
+	init(true);
 
 	setRect(bounds);
 	removeBorder();
@@ -64,13 +64,16 @@ PartsEditorConnectorItem::PartsEditorConnectorItem(Connector * conn, ItemBase* a
 	updateTerminalPoint();
 }
 
-void PartsEditorConnectorItem::init(bool resizable, bool movable) {
+void PartsEditorConnectorItem::init(bool resizable) {
 	setAcceptsHoverEvents(resizable);
 	setAcceptHoverEvents(resizable);
 	m_withBorder = false;
 	m_errorIcon = NULL;
 
-	if(resizable) new ConnectorRectangle(this);
+	setResizable(resizable);
+	if(m_resizable) {
+		m_handlers = new ConnectorRectangle(this);
+	}
 }
 
 void PartsEditorConnectorItem::setSelectedColor(const QColor &color) {
@@ -155,28 +158,79 @@ void PartsEditorConnectorItem::paint( QPainter * painter, const QStyleOptionGrap
 	if (m_hidden  || !m_paint) return;
 
 	painter->save();
-	painter->setPen(pen());
-	painter->setBrush(brush());
+	drawDottedRect(painter,QColor("black"),QColor("white"),this->rect());
+	painter->restore();
+}
 
-	QRectF rect = this->rect();
-	qreal pw = selectedPenWidth;
-	if(m_withBorder) {
-		painter->drawRect(rect.x()-pw/2,rect.y()-pw/2,rect.width()+pw,rect.height()+pw);
+void PartsEditorConnectorItem::drawDottedRect(QPainter *painter, const QColor &color1, const QColor &color2, const QRectF &rect) {
+	QPen pen1(color1);
+	QPen pen2(color2);
+
+	qreal x1 = rect.x();
+	qreal y1 = rect.y();
+	qreal x2 = x1+rect.width();
+	qreal y2 = y1+rect.height();
+
+	QPen lastPen = drawDottedLine(Qt::Horizontal,painter,pen1,pen2,x1,x2,y1);
+	lastPen = drawDottedLine(Qt::Vertical,painter,pen2,pen1,y1,y2,x1,lastPen);
+	lastPen = drawDottedLine(Qt::Horizontal,painter,pen1,pen2,x1,x2,y2,lastPen);
+	drawDottedLine(Qt::Vertical,painter,pen2,pen1,y1,y2,x2,lastPen);
+
+}
+
+QPen PartsEditorConnectorItem::drawDottedLine(
+		Qt::Orientations orientation, QPainter *painter, const QPen &pen1, const QPen &pen2,
+		qreal pos1, qreal pos2, qreal fixedAxis, const QPen &lastUsedPen
+) {
+	qreal dotSize = 1.5;
+	qreal lineSize = pos2-pos1;
+	qreal aux = pos1;
+	int dotCount = 0;
+
+	QPen firstPen;
+	QPen secondPen;
+	if(pen1.color() == lastUsedPen.color()) {
+		firstPen = pen2;
+		secondPen = pen1;
 	} else {
-		painter->drawRect(this->rect());
+		firstPen = pen1;
+		secondPen = pen2;
 	}
 
-	painter->restore();
-	//this->scene()->update();  // calling update here puts you in an infinite paint loop
-	//ConnectorItem::paint(painter, option, widget);
+	QPen currentPen;
+	while(lineSize > dotSize) {
+		currentPen = drawDottedLineAux(
+			orientation, painter, firstPen, secondPen,
+			aux, fixedAxis, dotSize, dotCount
+		);
+		dotCount++;
+		aux+=dotSize;
+		lineSize-=dotSize;
+	}
+	if(lineSize > 0) {
+		currentPen = drawDottedLineAux(
+			orientation, painter, firstPen, secondPen,
+			aux, fixedAxis, lineSize, dotCount
+		);
+	}
+
+	return currentPen;
 }
 
+QPen PartsEditorConnectorItem::drawDottedLineAux(
+		Qt::Orientations orientation, QPainter *painter, const QPen &firstPen, const QPen &secondPen,
+		qreal pos, qreal fixedAxis, qreal dotSize, int dotCount
+) {
+	QPen currentPen = dotCount%2 == 0? firstPen: secondPen;
+	painter->setPen(currentPen);
+	if(orientation == Qt::Horizontal) {
+		painter->drawLine(pos,fixedAxis,pos+dotSize,fixedAxis);
+	} else if(orientation == Qt::Vertical) {
+		painter->drawLine(fixedAxis,pos,fixedAxis,pos+dotSize);
+	}
 
-void PartsEditorConnectorItem::setParentDragMode(QGraphicsView::DragMode dragMode) {
-	QGraphicsView *prnt = dynamic_cast<QGraphicsView*>(scene()->parent());
-	if(prnt) prnt->setDragMode(dragMode);
+	return currentPen;
 }
-
 
 void PartsEditorConnectorItem::setShowTerminalPoint(bool show) {
 	if(m_showsTerminalPoint) {
@@ -213,6 +267,14 @@ void PartsEditorConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal h
 	}
 }
 
+qreal PartsEditorConnectorItem::minWidth() {
+	return MinWidth;
+}
+
+qreal PartsEditorConnectorItem::minHeight() {
+	return MinHeight;
+}
+
 void PartsEditorConnectorItem::resetTerminalPoint() {
 	scene()->removeItem(m_terminalPointItem);
 	//delete m_terminalPointItem; // already deleted or what?
@@ -234,3 +296,16 @@ void PartsEditorConnectorItem::updateTerminalPoint() {
 TerminalPointItem *PartsEditorConnectorItem::terminalPointItem() {
 	return m_terminalPointItem;
 }
+
+void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+	ResizableRectItem::hoverEnterEvent(event);
+}
+
+void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+	ResizableRectItem::hoverLeaveEvent(event);
+}
+
+void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	ResizableRectItem::mousePressEvent(event);
+}
+

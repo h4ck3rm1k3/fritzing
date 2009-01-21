@@ -29,21 +29,25 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 ResizableRectItem::ResizableRectItem(QGraphicsItem *parent)
 	: QGraphicsRectItem(parent)
 {
-
+	m_resizable = false;
 }
 
 qreal ResizableRectItem::minWidth() {
-	return 0;
+	return boundingRect().width();
 }
 
 qreal ResizableRectItem::minHeight() {
-	return 0;
+	return boundingRect().height();
 }
 
 void ResizableRectItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
 	setRect(x,y,width,height);
 }
 
+void ResizableRectItem::setResizable(bool resizable) {
+	m_resizable = resizable;
+}
+
 bool ResizableRectItem::isResizable() {
-	return true; // not resizable by default
+	return m_resizable; // not resizable by default
 }

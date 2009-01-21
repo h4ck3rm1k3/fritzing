@@ -29,6 +29,8 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 
 #include <QGraphicsRectItem>
 
+class ConnectorRectangle;
+
 class ResizableRectItem : public QGraphicsRectItem {
 friend class ConnectorRectangle;
 public:
@@ -36,9 +38,14 @@ public:
 
 	virtual qreal minWidth();
 	virtual qreal minHeight();
-
 	virtual void resizeRect(qreal x, qreal y, qreal width, qreal height);
-	virtual bool isResizable();
+
+	void setResizable(bool resizable);
+	bool isResizable();
+
+protected:
+	ConnectorRectangle *m_handlers;
+	bool m_resizable;
 };
 
 #endif /* RESIZABLERECTITEM_H_ */

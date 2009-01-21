@@ -51,8 +51,11 @@ class PartsEditorConnectorItem: public ConnectorItem {
 
 		TerminalPointItem *terminalPointItem();
 
+		qreal minWidth();
+		qreal minHeight();
+
 	protected:
-		void init(bool resizable, bool movable);
+		void init(bool resizable);
 
 		void setSelectedColor(const QColor &color = selectedColor);
 		void setNotSelectedColor(const QColor &color = notSelectedColor);
@@ -62,9 +65,20 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		void removeBorder();
 		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-		void setParentDragMode(QGraphicsView::DragMode);
-
 		void resizeRect(qreal x, qreal y, qreal width, qreal height);
+		void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+		void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+		void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+		void drawDottedRect(QPainter *painter, const QColor &color1, const QColor &color2, const QRectF &rect);
+		QPen drawDottedLine(
+			Qt::Orientations orientation, QPainter *painter, const QPen &pen1, const QPen &pen2,
+			qreal pos1, qreal pos2, qreal fixedAxis, const QPen &lastUsedPen = QPen()
+		);
+		QPen drawDottedLineAux(
+			Qt::Orientations orientation, QPainter *painter, const QPen &firstPen, const QPen &secondPen,
+			qreal pos, qreal fixedAxis, qreal dotSize, int dotCount
+		);
 
 		QGraphicsSvgItem *m_errorIcon;
 		bool m_withBorder;
@@ -79,6 +93,7 @@ class PartsEditorConnectorItem: public ConnectorItem {
 		static QColor notSelectedColor;
 		static QColor selectedPenColor;
 		static qreal selectedPenWidth;
+		static QPen myPen;
 
 		static qreal MinWidth;
 		static qreal MinHeight;
