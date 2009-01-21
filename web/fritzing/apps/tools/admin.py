@@ -9,5 +9,5 @@ class PostInlineAdmin(admin.TabularInline):
 class InlineThreadAdmin(ThreadAdmin):
     inlines = (PostInlineAdmin,)
 
-admin.site.unregister(ThreadAdmin)
+admin.site.unregister(Thread)
 admin.site.register(Thread, InlineThreadAdmin)
