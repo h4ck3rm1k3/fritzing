@@ -81,7 +81,7 @@ class Release(models.Model):
         counter = 0
         for download in self.download_set.all():
             counter += download.updated
-        return updated
+        return counter
     downloads.short_description = 'Updates'
 
 class DownloadManager(models.Manager):
