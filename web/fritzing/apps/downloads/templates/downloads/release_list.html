@@ -12,18 +12,36 @@ it, it is not yet near the intended final version.
 <div class="" id="parent-fieldname-text">
 </div>
 <img src="/media/uploads/download_screenshot_jpg_versions/small_download_screenshot.jpg" />
+<p class="latest_release">
 <h2>Latest version</h2>
-{% for release in object_list %}
-    {% if forloop.first %}
-        <h3>{{ release.version }} | {{ release.release_date|date }}</h3>
+{% if latest_release %}
+    <h3><a href="{{ latest_release.get_absolute_url }}">{{ latest_release.version }}</a> | {{ latest_release.release_date|date }}</h3>
+    {% for download in latest_release.download_set.all reversed %}
+    <img src="{{ MEDIA_URL }}fritzing/img/arrow-down.gif" alt="Arrow down" />
+        <strong><a href="{{  download.get_absolute_url }}" 
+            title="{{ download.counter }} downloads">
+            {{ download.platform }}</a></strong>
+    {% endfor %}
+{% endif %}
+</p>
+{% if interim_releases %}
+<div class="interim_releases">
+    Interim releases since the latest version:
+    {% for release in interim_releases %}
+    {% if release.download_set.count %}
+    <div class="interim_release">
+        <a href="{{ release.get_absolute_url }}">{{ release.version }}</a>
+        released {{ release.release_date|timesince }} ago:
         {% for download in release.download_set.all reversed %}
-        <img src="{{ MEDIA_URL }}fritzing/img/arrow-down.gif" alt="Arrow down" />
-            <strong><a href="{{  download.get_absolute_url }}" 
-                title="{{ download.counter }} downloads">
-                {{ download.platform }}</a></strong>
+        <a href="{{  download.get_absolute_url }}" 
+            title="{{ download.counter }} downloads">{{ download.platform }}</a>
         {% endfor %}
+    </div>
     {% endif %}
-{% endfor %}
+    
+    {% endfor %}
+</div>
+{% endif %}
 <br style="clear:both;">
 
 <p>See the&#160;<a href="/download/history-changes/" title="History of Changes">History of Changes</a>&nbsp;and the currently&nbsp;<a href="/download/known-issues/" title="Known Issues">Known Issues</a></p>

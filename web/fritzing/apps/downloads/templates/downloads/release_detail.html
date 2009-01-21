@@ -4,14 +4,20 @@
     <h2>Release version {{ version }}</h2>
     {% for release in releases %}
     <p>
+    <a name="{{ release.release_date|date:"%Y-%m-%d" }}"></a>
     <div class="release_date">
-        <a name="{{ release.release_date|date:"%Y-%m-%d" }}"></a>
         <h4>{{ release.release_date|date }}</h4>
     </div>
+    {% ifequal release.type release.INTERIM  %}
+        Interim release
+    {% endifequal %}
+    {% ifequal release.type release.MAIN  %}
+        Main release
+    {% endifequal %}
     {% if release.download_set.count %}
-    {% for download in release.download_set.all %}
-        <a href="{{ download.get_absolute_url }}">{{ download.platform }}</a>
-    {% endfor %}
+        {% for download in release.download_set.all %}
+            <a href="{{ download.get_absolute_url }}">{{ download.platform }}</a>
+        {% endfor %}
     {% endif %}
     <p>{{ release.description|safe }}</p>
     {% if release.changelog %}

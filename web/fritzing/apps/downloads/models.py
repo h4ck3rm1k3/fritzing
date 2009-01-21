@@ -26,23 +26,42 @@ class Platform(models.Model):
         return None
 
 class ReleaseManager(models.Manager):
+
     def active(self):
         return self.filter(active=True)
 
+    def interim(self):
+        return self.active().filter(type=Release.INTERIM)
+
+    def main(self):
+        return self.active().filter(type=Release.MAIN)
+
 class Release(models.Model):
-    version = models.CharField(_('version'), max_length=64)
+    INTERIM = 1
+    MAIN = 2
+    TYPE_CHOICES = (
+        (INTERIM, 'interim'),
+        (MAIN, 'main')
+    )
+    version = models.CharField(_('version'), max_length=64,
+        help_text=_("The version string used in the URL and on the download page. Please don't use spaces here."))
     description = models.TextField(_('description'), blank=True)
-    changelog = models.TextField(_('changelog'), blank=True)
-    known_issues = models.TextField(_('known issues'), blank=True)
+    changelog = models.TextField(_('changelog'), blank=True,
+        help_text=_("The changelog displayed at http://fritzing.org/downloads/history-changes/. HTML is allowed."))
+    known_issues = models.TextField(_('known issues'), blank=True,
+        help_text=_("The known issues displayed at http://fritzing.org/downloads/known-issues/. HTML is allowed."))
     release_date = models.DateTimeField(_('date released'), default=datetime.now)
     active = models.BooleanField(_('active'), default=True)
+    type = models.IntegerField(_('type'), choices=TYPE_CHOICES, default=INTERIM,
+        help_text=_('Depending on the "use it at your own risk" level.'))
 
     objects = ReleaseManager()
 
     class Meta:
-        ordering = ('version', 'release_date')
+        ordering = ('-release_date',)
         verbose_name = _('release')
         verbose_name_plural = _('releases')
+        get_latest_by = 'release_date'
 
     def __unicode__(self):
         return self.version
@@ -58,12 +77,19 @@ class Release(models.Model):
         return counter
     downloads.short_description = 'Downloads'
 
+class DownloadManager(models.Manager):
+
+    def active(self):
+        return self.filter(release__active=True)
+
 class Download(models.Model):
     release = models.ForeignKey(Release, verbose_name=_('release'))
     platform = models.ForeignKey(Platform, verbose_name=_('platform'))
     filename = models.FileField(_('file'), upload_to='downloads', blank=True, null=True)
     mime_type = models.CharField(_('mime type'), max_length=255, blank=True, null=True)
     counter = models.IntegerField(_('counter'), default=0)
+
+    objects = DownloadManager()
 
     class Meta:
         ordering = ('release', 'platform')

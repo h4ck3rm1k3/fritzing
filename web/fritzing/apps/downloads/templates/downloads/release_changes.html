@@ -9,7 +9,10 @@
 <p>This is a high-level summary of changes between each release. If you're interested in the detailed changes, take a look at the <a href="http://code.google.com/p/fritzing/source/list">individual code changes</a>.</p>
 {% for release in object_list %}
     {% if release.changelog %}
-        <h2>{{ release.version }} | {{ release.release_date|date }}</h2>
+        <h4>{{ release.release_date|date }}</h4>
+        {% ifequal release.type release.INTERIM  %}Interim release{% endifequal %}
+        {% ifequal release.type release.MAIN  %}Main release{% endifequal %}
+        <a href="{{ release.get_absolute_url }}">{{ release.version }}</a>
         <p>{{ release.changelog|safe|urlize }}</p>
     {% endif %}
 {% endfor %}

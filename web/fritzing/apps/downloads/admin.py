@@ -21,15 +21,15 @@ class ReleaseAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields':
-                (('version', 'active'), 'description', 'release_date'),
+                ('active', 'version', 'description', 'type', 'release_date'),
         }),
         (_('Details'), {
             'fields': ('changelog', 'known_issues'),
         }),
     )
 
-    list_display = ('version', 'release_date', 'active', 'downloads')
-    list_filter = ('release_date', 'version')
+    list_display = ('version', 'release_date', 'type', 'active', 'downloads')
+    list_filter = ('release_date', 'version', 'type', 'active')
     search_fields = ['changelog']
     inlines = [DownloadInline]
 

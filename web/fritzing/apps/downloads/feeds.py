@@ -12,10 +12,14 @@ from downloads.models import Platform, Release, Download
 class PlatformRssFeed(Feed):
     title_template = 'downloads/platform_feed_title.html'
     description_template = 'downloads/platform_feed_description.html'
+    _release_type = None
 
     def get_object(self, bits):
         if len(bits) < 1:
             raise ObjectDoesNotExist
+        if len(bits) > 1:
+            if bits[1] in dict(Release.TYPE_CHOICES).values():
+                self._release_type = bits[1]
         return Platform.objects.get(slug=bits[0])
 
     def title(self, obj):
@@ -41,6 +45,7 @@ class PlatformRssFeed(Feed):
 
     def item_enclosure_length(self, obj):
         "Use the file size"
+        return 1
         return obj.filename.size
 
     def item_enclosure_mime_type(self, obj):
@@ -57,9 +62,14 @@ class PlatformRssFeed(Feed):
         return obj.release.release_date
 
     def items(self, obj):
-        qs = Download.objects.filter(release__active=True)
+        qs = Download.objects.active()
         if obj:
             qs = qs.filter(platform__id__exact=obj.id)
+        if self._release_type:
+            types = dict([(v, k) for k, v in Release.TYPE_CHOICES])
+            release_type = types.get(self._release_type, None)
+            if release_type:
+                qs = qs.filter(release__type=release_type)
         return qs.order_by('-release__release_date')
 
 class PlatformAtomFeed(PlatformRssFeed):

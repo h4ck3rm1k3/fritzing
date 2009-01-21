@@ -17,5 +17,5 @@ def platform_list():
 def release_history():
     """Show a list of the active releases for a platform
     """
-    releases = Release.objects.active().order_by('-release_date')
+    releases = Release.objects.main()
     return {'releases': releases[1:HISTORY_LEN]}
