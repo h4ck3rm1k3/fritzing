@@ -30,6 +30,9 @@ class PlatformRssFeed(Feed):
             return obj.current_download().release.get_absolute_url()
         return reverse('downloads_release_list')
 
+    def description(self, obj):
+        return obj.release.changelog
+
     def item_link(self, obj):
         return '%s#%s' % (
             obj.release.get_absolute_url(),
@@ -56,9 +59,6 @@ class PlatformRssFeed(Feed):
 
     def item_author_email(self, obj):
         return 'info@fritzing.org'
-
-    def item_description(self, obj):
-        return obj.release.changelog
 
     def item_pubdate(self, obj):
         return obj.release.release_date
