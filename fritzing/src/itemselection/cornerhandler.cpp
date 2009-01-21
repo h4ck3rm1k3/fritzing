@@ -32,7 +32,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "connectorrectangle.h"
 #include "../debugdialog.h"
 
-QHash<Qt::Corner,QPixmap> CornerHandler::m_pixmapHash;
+QHash<Qt::Corner,QPixmap> CornerHandler::pixmapHash;
 
 CornerHandler::CornerHandler(ConnectorRectangle* parent, Qt::Corner corner)
 	: QGraphicsPixmapItem(parent)
@@ -44,18 +44,18 @@ CornerHandler::CornerHandler(ConnectorRectangle* parent, Qt::Corner corner)
 	initPixmapHash();
 
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	setPixmap(m_pixmapHash[m_corner]);
+	setPixmap(pixmapHash[m_corner]);
 }
 
 void CornerHandler::initPixmapHash() {
-	if(m_pixmapHash.isEmpty()) {
-		m_pixmapHash[Qt::TopLeftCorner] =
+	if(pixmapHash.isEmpty()) {
+		pixmapHash[Qt::TopLeftCorner] =
 			QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png");
-		m_pixmapHash[Qt::TopRightCorner] =
+		pixmapHash[Qt::TopRightCorner] =
 		 	QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png");
-		m_pixmapHash[Qt::BottomRightCorner] =
+		pixmapHash[Qt::BottomRightCorner] =
 		 	QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png");
-		m_pixmapHash[Qt::BottomLeftCorner] =
+		pixmapHash[Qt::BottomLeftCorner] =
 		 	QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png");
 	}
 }
@@ -87,6 +87,10 @@ void CornerHandler::resize(const QPointF &mousePos) {
 	}
 }
 
+Qt::Corner CornerHandler::corner() {
+	return m_corner;
+}
+
 void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable() && m_resizing) {
 		resize(event->pos());
@@ -99,6 +103,7 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable()) {
 		m_resizing = true;
+		setPixmap(0);
 		m_mousePressedPos = event->pos();
 	} else {
 		QGraphicsPixmapItem::mousePressEvent(event);
@@ -107,8 +112,14 @@ void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable()) {
+		QRectF rect = m_parent->boundingRect();
+		setPos(rect.x(),rect.y());
+		setPixmap(pixmapHash[m_corner]);
 		m_resizing = false;
 	}
 	QGraphicsPixmapItem::mouseReleaseEvent(event);
 }
 
+bool CornerHandler::isBeingDragged() {
+	return m_resizing;
+}

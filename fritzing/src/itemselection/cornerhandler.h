@@ -35,6 +35,8 @@ class CornerHandler : public QGraphicsPixmapItem {
 public:
 	CornerHandler(ConnectorRectangle* parent, Qt::Corner corner);
 	void resize(const QPointF &mousePos);
+	Qt::Corner corner();
+	bool isBeingDragged();
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -48,7 +50,8 @@ protected:
 	volatile bool m_resizing;
 	QPointF m_mousePressedPos;
 
-	static QHash<Qt::Corner,QPixmap> m_pixmapHash;
+public:
+	static QHash<Qt::Corner,QPixmap> pixmapHash;
 };
 
 #endif /* CORNERHANDLER_H_ */

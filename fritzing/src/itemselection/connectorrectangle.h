@@ -47,10 +47,14 @@ public:
 	bool isResizable();
 	void setState(State state);
 
-	ResizableRectItem *m_owner;
+	qreal offsetX();
+	qreal offsetY();
 
 protected:
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
+	qreal currentScale();
 
+	ResizableRectItem *m_owner;
 
 	CornerHandler *m_topLeftHandler;
 	CornerHandler *m_topRightHandler;
@@ -63,6 +67,7 @@ protected:
 	RectangleSide *m_bottomSide;
 
 	State m_state;
+	bool m_firstPaint;
 };
 
 #endif /* CONNECTORRECTANGLE_H_ */

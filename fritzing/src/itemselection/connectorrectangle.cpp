@@ -23,14 +23,18 @@ $Author: cohen@irascible.com $:
 $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 
 ********************************************************************/
+#include <QPainter>
+#include <QHash>
 
 #include "connectorrectangle.h"
+#include "../sketchwidget.h"
 #include "../debugdialog.h"
 
 ConnectorRectangle::ConnectorRectangle(ResizableRectItem* owner)
 	: QGraphicsRectItem(owner)
 {
 	m_owner = owner;
+	m_firstPaint = true;
 
 	m_topLeftHandler = new CornerHandler(this, Qt::TopLeftCorner);
 	//m_topLeftHandler->setOffset(QPointF(width(),height()));
@@ -76,10 +80,36 @@ void ConnectorRectangle::setState(State state) {
 	m_state = state;
 }
 
-/*qreal ConnectorRectangle::width() {
-	return QGraphicsPixmapItem(QPixmap("resources/images/itemselection/selectionRingLeft.png")).boundingRect().width();
+void ConnectorRectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	QRectF rect = m_owner->boundingRect();
+	if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
+		m_topLeftHandler->setPos(rect.x(),rect.y());
+		m_firstPaint = false;
+	}
+
+	QGraphicsRectItem::paint(painter,option,widget);
+
+	if(m_topLeftHandler->isBeingDragged()) {
+		prepareForChange();
+		painter->save();
+		Qt::Corner corner = m_topLeftHandler->corner();
+		QPixmap pm = CornerHandler::pixmapHash[corner];
+		qreal scale = currentScale();
+		painter->drawPixmap(rect.x(),rect.y(),pm.width()/scale,pm.height()/scale,pm);
+		painter->restore();
+	}
 }
 
-qreal ConnectorRectangle::height() {
-	return QGraphicsPixmapItem(QPixmap("resources/images/itemselection/selectionRingTop.png")).boundingRect().height();
-}*/
+qreal ConnectorRectangle::offsetX() {
+	//return QPixmap("resources/images/itemselection/selectionRingLeft.png").width()/currentScale();
+	return 4/currentScale();
+}
+
+qreal ConnectorRectangle::offsetY() {
+	//return QPixmap("resources/images/itemselection/selectionRingTop.png").height()/currentScale();
+	return offsetX();
+}
+
+qreal ConnectorRectangle::currentScale() {
+	return dynamic_cast<SketchWidget*>(scene()->parent())->currentZoom()/100;
+}
