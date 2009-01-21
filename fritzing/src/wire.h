@@ -138,7 +138,8 @@ protected:
 	void setConnector1Rect();
 	void collectWiresAux(QList<Wire *> & wires, ConnectorItem * start);
 	void setShadowColor(QColor &);
-	bool connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires);
+	void connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires,
+		bool & hasNone, bool & connectedIn, bool & connectedOut);
 	void calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2);
 	void collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
