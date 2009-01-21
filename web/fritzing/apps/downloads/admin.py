@@ -28,7 +28,7 @@ class ReleaseAdmin(admin.ModelAdmin):
         }),
     )
 
-    list_display = ('version', 'release_date', 'type', 'active', 'downloads')
+    list_display = ('version', 'release_date', 'type', 'active', 'downloads', 'updates')
     list_filter = ('release_date', 'version', 'type', 'active')
     search_fields = ['changelog']
     inlines = [DownloadInline]
