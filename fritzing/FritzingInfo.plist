@@ -34,6 +34,8 @@ $Date: 2009-01-03 18:55:48 +0100 (Sat, 03 Jan 2009) $
 	<string>Fritzing 0.1 (b01.03)</string>
 	<key>CFBundleIconFile</key>
 	<string>fritzing_icon.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>org.fritzing.Fritzing</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
