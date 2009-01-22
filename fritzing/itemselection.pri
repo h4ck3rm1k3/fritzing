@@ -28,11 +28,13 @@ HEADERS += \
     src/itemselection/connectorrectangle.h \
     src/itemselection/cornerhandler.h \
     src/itemselection/rectangleside.h \
-    src/itemselection/resizablerectitem.h
+    src/itemselection/resizablerectitem.h \
+    src/itemselection/terminalpointitem.h
     
 SOURCES += \
     src/itemselection/connectorrectangle.cpp \
     src/itemselection/cornerhandler.cpp \
     src/itemselection/rectangleside.cpp \
-    src/itemselection/resizablerectitem.cpp
+    src/itemselection/resizablerectitem.cpp \
+    src/itemselection/terminalpointitem.cpp
     

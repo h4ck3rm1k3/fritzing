@@ -30,7 +30,7 @@ $Date$
 #define PARTSEDITORCONNECTORITEM_H_
 
 #include <QGraphicsView>
-#include "terminalpointitem.h"
+#include "../itemselection/terminalpointitem.h"
 #include "../connectoritem.h"
 
 

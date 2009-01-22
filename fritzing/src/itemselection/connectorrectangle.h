@@ -34,7 +34,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 class ConnectorRectangle : public QGraphicsRectItem {
 public:
 	enum State {
-		None = 0x00000,
+		Normal = 0x00000,
 		Highlighted = 0x00001,
 		Hover = 0x00002,
 		Selected = 0x00003

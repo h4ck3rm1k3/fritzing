@@ -29,12 +29,11 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 #define TERMINALPOINTITEM_H_
 
 #include <QGraphicsRectItem>
-#include <QPen>
-#include "../resizablemovablegraphicsrectitem.h"
+#include "connectorrectangle.h"
 
 class PartsEditorConnectorItem;
 
-class TerminalPointItem : public ResizableMovableGraphicsRectItem {
+class TerminalPointItem : public ResizableRectItem {
 public:
 	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, bool movable=true);
 	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, const QPointF &point);
@@ -45,7 +44,8 @@ public:
 	bool hasBeenMoved();
 
 protected:
-	void initPen();
+	void init(bool visible, bool movable);
+	void initPixmapHash();
 	void drawCross();
 
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -54,16 +54,14 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-	QPen m_linePen;
-	QGraphicsLineItem *m_hLine;
-	QGraphicsLineItem *m_vLine;
-
 	QPointF m_point;
 	bool m_hasBeenMoved;
+	bool m_movable;
 
+	QGraphicsPixmapItem *m_cross;
 	PartsEditorConnectorItem *m_parent;
 
-	static const qreal size;
+	static QHash<ConnectorRectangle::State, QPixmap> m_pixmapHash;
 };
 
 #endif /* TERMINALPOINTITEM_H_ */
