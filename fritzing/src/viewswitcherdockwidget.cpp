@@ -47,6 +47,7 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	initial.setY(34);
 #else
 	#ifdef Q_WS_X11
+		setFloating(false);
 		initial.setY(60);
 	#endif
 #endif
