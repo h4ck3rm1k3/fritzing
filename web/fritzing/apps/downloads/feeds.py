@@ -45,7 +45,8 @@ class PlatformRssFeed(Feed):
 
     def item_enclosure_length(self, obj):
         "Use the file size"
-        return 1
+        if settings.DEBUG:
+            return 1
         return obj.filename.size
 
     def item_enclosure_mime_type(self, obj):
