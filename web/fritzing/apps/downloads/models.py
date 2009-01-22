@@ -21,7 +21,8 @@ class Platform(models.Model):
     get_absolute_url = models.permalink(get_absolute_url)
 
     def current_download(self):
-        if self.download_set.count():
+        downloads = self.download_set.all()
+        if downloads:
             return self.download_set.all()[0]
         return None
 
@@ -65,6 +66,9 @@ class Release(models.Model):
 
     def __unicode__(self):
         return self.version
+
+    def get_type_name(self):
+        return dict(self.TYPE_CHOICES).get(self.type)
 
     def get_absolute_url(self):
         return ('downloads_release_detail', [self.version])

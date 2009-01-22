@@ -4,7 +4,7 @@
     <h2>Release version {{ version }}</h2>
     {% for release in releases %}
     <p>
-    <a name="{{ release.release_date|date:"%Y-%m-%d" }}"></a>
+    <a name="{{ release.pk }}-{{ release.release_date|date:"%Y-%m-%d" }}"></a>
     <div class="release_date">
         <h4>{{ release.release_date|date }}</h4>
     </div>

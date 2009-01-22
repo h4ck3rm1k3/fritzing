@@ -31,8 +31,8 @@ class PlatformRssFeed(Feed):
         return reverse('downloads_release_list')
 
     def item_link(self, obj):
-        return '%s#%s' % (
-            obj.release.get_absolute_url(),
+        return '%s#%s-%s' % (
+            obj.release.get_absolute_url(), obj.release.pk,
             obj.release.release_date.strftime('%Y-%m-%d'))
 
     def item_enclosure_url(self, obj):
@@ -45,6 +45,7 @@ class PlatformRssFeed(Feed):
 
     def item_enclosure_length(self, obj):
         "Use the file size"
+        return 1
         return obj.filename.size
 
     def item_enclosure_mime_type(self, obj):
@@ -59,6 +60,12 @@ class PlatformRssFeed(Feed):
 
     def item_pubdate(self, obj):
         return obj.release.release_date
+
+    def item_guid(self, obj):
+        return "%s" % obj.pk
+
+    def item_categories(self, obj):
+        return (obj.release.get_type_name(),)
 
     def items(self, obj):
         qs = Download.objects.active()
