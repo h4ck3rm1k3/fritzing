@@ -34,12 +34,15 @@ class Version {
 public:
 	static const QString & majorVersion();
 	static const QString & minorVersion();
+	static const QString & minorSubVersion();
 	static const QString & modifier();
 	static const QString & revision();
 	static const QString & versionString();
 	static const QString & date();
 	static const QString & shortDate();
 	static const QString & year();
+	static bool candidateGreaterThan(const QString & candidate, bool & ok);
+	static bool candidateModifierGreaterThan(const QString & yourReleaseModifier);
 
 protected:
 	Version();
@@ -48,6 +51,7 @@ protected:
 
 	static QString m_majorVersion;
 	static QString m_minorVersion;
+	static QString m_minorSubVersion;
 	static QString m_svnRevision;
 	static QString m_revision;
 	static QString m_modifier;

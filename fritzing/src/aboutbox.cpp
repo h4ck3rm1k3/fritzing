@@ -68,9 +68,10 @@ AboutBox::AboutBox(QWidget *parent)
 
 	// Version String
 	QLabel *versionMain = new QLabel(this);
-	versionMain->setText(tr("Version %1.%2 <small>(%3%4 %5)</small>")
+	versionMain->setText(tr("Version %1.%2.%3 <small>(%4%5 %6)</small>")
 						 .arg(Version::majorVersion())
 						 .arg(Version::minorVersion())
+						 .arg(Version::minorSubVersion())
 						 .arg(Version::modifier())
 						 .arg(Version::revision())
 						 .arg(Version::date()) );

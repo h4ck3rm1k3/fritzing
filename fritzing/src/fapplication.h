@@ -44,6 +44,7 @@ public:
 	int startup(int & argc, char ** argv);
 	void finish();
 	void preloadSlowParts();
+	void checkVersion();
 
 	static void setOpenSaveFolder(const QString& path);
 	static const QString openSaveFolder();
@@ -54,6 +55,10 @@ signals:
 	
 public slots:
 	void preferences();
+
+
+protected slots:
+	void notifyReleasesAvailable();
 
 
 protected:
@@ -73,6 +78,8 @@ protected:
 	static bool m_started;
 	static QList<QString> m_filesToLoad;
 	static QString m_libPath;
+	static class VersionChecker * m_versionChecker;
+
 
 };
 

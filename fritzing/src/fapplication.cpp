@@ -35,6 +35,7 @@ $Date$
 #include "partseditor/partseditormainwindow.h"
 #include "layerattributes.h"
 #include "fsvgrenderer.h"
+#include "versionchecker.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -56,6 +57,7 @@ PaletteModel * FApplication::m_paletteBinModel = NULL;
 bool FApplication::m_started = false;
 QList<QString> FApplication::m_filesToLoad;
 QString FApplication::m_libPath;
+VersionChecker * FApplication::m_versionChecker = NULL;
 
 static int kBottomOfAlpha = 206;
 
@@ -63,6 +65,19 @@ static int kBottomOfAlpha = 206;
 #ifndef QT_NO_DEBUG
 #define WIN_DEBUG
 #endif
+#endif
+
+#ifdef LINUX_32
+#define PLATFORM_NAME "linux-32bit"
+#endif
+#ifdef LINUX_64
+#define PLATFORM_NAME "linux-64bit"
+#endif
+#ifdef Q_WS_WIN
+#define PLATFORM_NAME "windows"
+#endif
+#ifdef Q_WS_MAC
+#define PLATFORM_NAME "mac"
 #endif
 
 //////////////////////////
@@ -83,6 +98,20 @@ void DoOnceThread::run()
 {
 	static_cast<FApplication *>(qApp)->preloadSlowParts();
 }
+
+///////////////////////////
+
+class CheckVersionThread : public QThread
+{
+public:
+
+	void run();
+};
+
+void CheckVersionThread::run() {
+	static_cast<FApplication *>(qApp)->checkVersion();
+}
+
 
 //////////////////////////
 
@@ -231,6 +260,12 @@ int FApplication::startup(int & argc, char ** argv)
 	Helper::initText();
 	PartsEditorMainWindow::initText();
 
+	m_versionChecker = new VersionChecker();
+	m_versionChecker->setUrl(QString("http://fritzing.org/download/feed/atom/%1/").arg(PLATFORM_NAME));
+	connect(m_versionChecker, SIGNAL(releasesAvailable()), this, SLOT(notifyReleasesAvailable()));
+	CheckVersionThread checkVersionThread;
+	checkVersionThread.start();
+	
 	splash.showProgress(progressIndex, 0.1);
 	processEvents();
 
@@ -435,10 +470,11 @@ void FApplication::initSplash(FSplashScreen & splash, int & progressIndex, QPixm
 
 	QRect r2(0, kBottomOfAlpha, pixmap.width() - 12, 20);
 	QString msg2 = QObject::tr("<font face='Lucida Grande, Tahoma, Sans Serif' size='2' color='#eaf4ed'>"
-							   "Version %1.%2 (%3%4)"
+							   "Version %1.%2.%3 (%4%5)"
 							   "</font>")
 	.arg(Version::majorVersion())
 	.arg(Version::minorVersion())
+	.arg(Version::minorSubVersion())
 	.arg(Version::modifier())
 	.arg(Version::shortDate());
 	splash.showMessage(msg2, r2, Qt::AlignRight | Qt::AlignTop, w);
@@ -466,4 +502,16 @@ void FApplication::preloadSlowParts() {
 	}
 	//DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
 	DebugDialog::debug(QString("preload slow parts done") );
+}
+
+void FApplication::checkVersion() {
+	if (m_versionChecker) {
+		m_versionChecker->fetch();
+	}
+}
+
+void FApplication::notifyReleasesAvailable() {
+	// put up a modal dialog?
+
+	DebugDialog::debug("got releases available");
 }

@@ -40,18 +40,19 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	m_bitmap = NULL;
 	m_viewSwitcher = NULL;
 
-	setFloating(true);
+	bool floatFlag = true;
 	QPoint initial(10,50);
 
 #ifdef Q_WS_MAC
 	initial.setY(34);
 #else
 	#ifdef Q_WS_X11
-		setFloating(false);
+		float = false;
 		initial.setY(60);
 	#endif
 #endif
 
+	setFloating(floatFlag);
 	m_offsetFromParent.setX(initial.x());
 	m_offsetFromParent.setY(initial.y());
 }

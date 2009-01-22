@@ -27,10 +27,11 @@ $Date$
 #include "version.h"
 								
 #include <QString>
-#include <QStringList>
+#include <QStringList>	
 											
 QString Version::m_majorVersion("0");
-QString Version::m_minorVersion("1.14");
+QString Version::m_minorVersion("1");
+QString Version::m_minorSubVersion("14");
 QString Version::m_modifier("b");
 QString Version::m_svnRevision("$Revision$:");
 QString Version::m_svnDate("$Date$");
@@ -58,7 +59,7 @@ Version::Version() {
 		}
 	}
 
-	m_versionString = QString("%1.%2.%3.%4.%5").arg(m_majorVersion).arg(m_minorVersion).arg(m_modifier).arg(m_shortDate).arg(m_revision);
+	m_versionString = QString("%1.%2.%3.%4.%5.%6").arg(m_majorVersion).arg(m_minorVersion).arg(m_minorSubVersion).arg(m_modifier).arg(m_shortDate).arg(m_revision);
 }
 
 const QString & Version::majorVersion() {
@@ -67,6 +68,10 @@ const QString & Version::majorVersion() {
 
 const QString & Version::minorVersion() {
 	return m_minorVersion;
+}
+
+const QString & Version::minorSubVersion() {
+	return m_minorSubVersion;
 }
 
 const QString & Version::revision() {
@@ -91,4 +96,60 @@ const QString & Version::shortDate() {
 
 const QString & Version::year() {
 	return m_year;
+}
+
+bool Version::candidateGreaterThan(const QString & candidate, bool & ok) 
+{
+	ok = true;
+
+	QStringList strings = candidate.split('.');
+	if (strings.count() != 3) {
+		ok = false;
+		return false;
+	}
+
+	QRegExp sw("([\\d]+)");
+	if (sw.indexIn(strings[2]) != 0) {
+		// needs to be a minorSubVersion number followed by an optional string (a, b, rc)
+		ok = false;
+		return false;				
+	}
+
+	int yourMajorVersion = strings[0].toInt();
+	int yourMinorVersion = strings[1].toInt();
+	int yourMinorSubVersion = sw.cap(1).toInt();
+	QString yourReleaseModifier = strings[2].right(strings[2].size() - sw.cap(1).size());
+
+	int myMajorVersion = majorVersion().toInt();
+	int myMinorVersion = minorVersion().toInt();
+	int myMinorSubVersion = minorSubVersion().toInt();
+
+	bool newOne = false;
+	if (yourMajorVersion > myMajorVersion) {
+		newOne = true;
+	}
+	else if (yourMajorVersion == myMajorVersion) {
+		if (yourMinorVersion > myMinorVersion) {
+			newOne = true;
+		}
+		else if (yourMinorVersion == myMinorVersion) {
+			if (yourMinorSubVersion > myMinorSubVersion) {
+				newOne = true;
+			}
+			else if (yourMinorSubVersion == myMinorSubVersion) {
+				newOne = candidateModifierGreaterThan(yourReleaseModifier);
+			}
+		}
+	}
+
+	return newOne;
+}
+
+bool Version::candidateModifierGreaterThan(const QString & yourReleaseModifier) {
+	QStringList modifiers;
+	modifiers << "a" << "b" << "rc" << "";
+
+	int yourIndex = modifiers.indexOf(yourReleaseModifier);
+	int myIndex = modifiers.indexOf(modifier());
+	return yourIndex > myIndex;
 }

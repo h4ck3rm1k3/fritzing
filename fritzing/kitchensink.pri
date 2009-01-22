@@ -78,6 +78,7 @@ HEADERS += \
     src/tracewire.h \
     src/triplenavigator.h \
     src/version.h \
+    src/versionchecker.h \
     src/viewgeometry.h \
     src/viewlayer.h \
     src/viewswitcher.h \
@@ -146,6 +147,7 @@ SOURCES += \
     src/tracewire.cpp \
     src/triplenavigator.cpp \
     src/version.cpp \
+    src/versionchecker.cpp \
     src/viewgeometry.cpp \
     src/viewlayer.cpp \
     src/viewswitcher.cpp \
