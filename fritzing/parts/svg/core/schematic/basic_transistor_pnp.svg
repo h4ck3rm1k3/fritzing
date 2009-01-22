@@ -40,8 +40,8 @@
        id="perspective3906" />
   </defs>
   <sodipodi:namedview
-     inkscape:window-height="726"
-     inkscape:window-width="645"
+     inkscape:window-height="775"
+     inkscape:window-width="1012"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      guidetolerance="10.0"
@@ -53,31 +53,31 @@
      id="base"
      showgrid="false"
      inkscape:zoom="7.6234564"
-     inkscape:cx="26.099998"
+     inkscape:cx="35.193434"
      inkscape:cy="32.400002"
      inkscape:window-x="100"
      inkscape:window-y="25"
      inkscape:current-layer="svg2" />
   <rect
-     id="connector1pin"
+     id="connector2pin"
      x="42.632999"
      y="1.237"
      width="1.893"
      height="9.783" />
   <rect
-     id="connector1terminal"
+     id="connector2terminal"
      x="43.140999"
      y="0.87599999"
      width="0.86699998"
      height="0.68400002" />
   <rect
-     id="connector2pin"
+     id="connector1pin"
      x="42"
      y="52.569004"
      width="1.893"
      height="9.7810001" />
   <rect
-     id="connector2terminal"
+     id="connector1terminal"
      x="43"
      y="62.131001"
      width="0.86699998"
@@ -132,7 +132,7 @@
     </g>
     <g
        id="g28"
-       transform="matrix(-0.9999614,8.7865628e-3,-8.7865628e-3,-0.9999614,36.855457,75.976177)">
+       transform="matrix(0,0.7099862,-1.0297267,0,58.7496,10.788261)">
       <g
          id="g30">
         <path
@@ -143,19 +143,20 @@
          id="g34">
         <polygon
            points="10.339,32.678 11.657,31.172 19.455,37.998 18.139,39.502 10.339,32.678 "
-           id="polygon36" />
+           id="polygon36"
+           transform="matrix(1.4256113,0,0,1.2446815,-3.2918603,-7.8819855)" />
       </g>
       <g
          id="g38">
         <polygon
            points="20.024,35.706 25.265,44.41 15.942,40.371 20.024,35.706 "
            id="polygon40"
-           transform="translate(-1.4324862,-1.1931995)" />
+           transform="matrix(1.7264212,0.2098908,-0.3181973,1.2442444,-1.6662008,-15.637073)" />
       </g>
     </g>
     <g
        id="g42"
-       transform="matrix(0.9262699,0,0,0.9314558,2.4549511,0.5210538)">
+       transform="matrix(0,0.7132717,-1.0489602,0,45.677399,26.264345)">
       <polygon
          points="10.168,30.921 24.929,19.084 26.18,20.644 11.419,32.48 10.168,30.921 "
          id="polygon44" />
