@@ -96,6 +96,14 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 
 	installEventFilter(this);
 
+#ifdef LINUX_64
+	DebugDialog::debug("<<<<<<<<<<<<<<< is 64");
+#endif
+
+#ifdef LINUX_32
+	DebugDialog::debug("<<<<<<<<<<<<<<< is 32");
+#endif
+
 #ifdef Q_WS_MAC
 	QString lib = "/../lib";
 #else

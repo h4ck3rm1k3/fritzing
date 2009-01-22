@@ -35,6 +35,16 @@ macx {
 	QMAKE_INFO_PLIST = FritzingInfo.plist
 	DEFINES += QT_NO_DEBUG
 }
+unix {
+    HARDWARE_PLATFORM = $$system(uname -m)
+    contains( HARDWARE_PLATFORM, x86_64 ) {
+        DEFINES += LINUX_64
+        message( LINUX_64 )
+    } else {
+        DEFINES += LINUX_32
+        message( LINUX_32 )
+    }
+}
 ICON = resources/images/fritzing_icon.icns
 QT += core \
     gui \
