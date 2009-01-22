@@ -103,7 +103,7 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable()) {
 		m_resizing = true;
-		setPixmap(0);
+		m_parent->resizingStarted();
 		m_mousePressedPos = event->pos();
 	} else {
 		QGraphicsPixmapItem::mousePressEvent(event);
@@ -112,9 +112,7 @@ void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable()) {
-		QRectF rect = m_parent->boundingRect();
-		setPos(rect.x(),rect.y());
-		setPixmap(pixmapHash[m_corner]);
+		m_parent->resizingFinished();
 		m_resizing = false;
 	}
 	QGraphicsPixmapItem::mouseReleaseEvent(event);

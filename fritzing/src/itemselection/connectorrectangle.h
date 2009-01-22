@@ -47,12 +47,19 @@ public:
 	bool isResizable();
 	void setState(State state);
 
-	qreal offsetX();
-	qreal offsetY();
+	void resizingStarted();
+	void resizingFinished();
+
+	QPointF posForHandlerIn(Qt::Corner corner, const QRectF &rect);
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
+
 	qreal currentScale();
+	void placeHandlersInto(const QRectF &rect);
+
+	qreal offsetX();
+	qreal offsetY();
 
 	ResizableRectItem *m_owner;
 
@@ -60,6 +67,7 @@ protected:
 	CornerHandler *m_topRightHandler;
 	CornerHandler *m_bottomRightHandler;
 	CornerHandler *m_bottomLeftHandler;
+	QList<CornerHandler*> m_cornerHandlers;
 
 	RectangleSide *m_topSide;
 	RectangleSide *m_rightSide;
