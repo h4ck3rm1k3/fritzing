@@ -30,6 +30,7 @@ ResizableRectItem::ResizableRectItem(QGraphicsItem *parent)
 	: QGraphicsRectItem(parent)
 {
 	m_resizable = false;
+	m_handlers = NULL;
 }
 
 qreal ResizableRectItem::minWidth() {

@@ -46,7 +46,9 @@ public:
 protected:
 	void init(bool visible, bool movable);
 	void initPixmapHash();
-	void drawCross();
+	void posCross();
+
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);

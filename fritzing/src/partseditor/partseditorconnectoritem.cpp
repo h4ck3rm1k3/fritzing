@@ -189,7 +189,7 @@ QPen PartsEditorConnectorItem::drawDottedLine(
 
 	QPen firstPen;
 	QPen secondPen;
-	if(pen1.color() == lastUsedPen.color()) {
+	if(pen1.color() != lastUsedPen.color()) {
 		firstPen = pen2;
 		secondPen = pen1;
 	} else {

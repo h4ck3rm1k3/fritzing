@@ -40,7 +40,7 @@ public:
 		Selected = 0x00003
 	};
 
-	ConnectorRectangle(ResizableRectItem* owner);
+	ConnectorRectangle(ResizableRectItem* owner, bool withHandlers = true);
 	void prepareForChange();
 	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);
 	QRectF itemRect();
@@ -51,11 +51,10 @@ public:
 	void resizingFinished();
 
 	QPointF posForHandlerIn(Qt::Corner corner, const QRectF &rect);
+	qreal currentScale();
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
-
-	qreal currentScale();
 	void placeHandlersInto(const QRectF &rect);
 
 	qreal offsetX();

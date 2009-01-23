@@ -30,20 +30,25 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "../sketchwidget.h"
 #include "../debugdialog.h"
 
-ConnectorRectangle::ConnectorRectangle(ResizableRectItem* owner)
+ConnectorRectangle::ConnectorRectangle(ResizableRectItem* owner, bool withHandlers)
 	: QGraphicsRectItem(owner)
 {
 	m_owner = owner;
 	m_firstPaint = true;
 
-	m_topLeftHandler = new CornerHandler(this, Qt::TopLeftCorner);
-	m_topRightHandler = new CornerHandler(this, Qt::TopRightCorner);
-	m_bottomRightHandler = new CornerHandler(this, Qt::BottomRightCorner);
-	m_bottomLeftHandler = new CornerHandler(this, Qt::BottomLeftCorner);
+	if(withHandlers) {
+		m_topLeftHandler = new CornerHandler(this, Qt::TopLeftCorner);
+		m_topRightHandler = new CornerHandler(this, Qt::TopRightCorner);
+		m_bottomRightHandler = new CornerHandler(this, Qt::BottomRightCorner);
+		m_bottomLeftHandler = new CornerHandler(this, Qt::BottomLeftCorner);
 
-	m_cornerHandlers
-		<< m_topLeftHandler << m_topRightHandler
-		<< m_bottomRightHandler << m_bottomLeftHandler;
+		m_cornerHandlers
+			<< m_topLeftHandler << m_topRightHandler
+			<< m_bottomRightHandler << m_bottomLeftHandler;
+	} else {
+		m_topLeftHandler = m_topRightHandler =
+		m_bottomRightHandler = m_bottomLeftHandler = NULL;
+	}
 
 }
 
@@ -159,5 +164,11 @@ qreal ConnectorRectangle::offsetY() {
 }
 
 qreal ConnectorRectangle::currentScale() {
-	return dynamic_cast<SketchWidget*>(scene()->parent())->currentZoom()/100;
+	if(scene()) {
+		SketchWidget *sw = dynamic_cast<SketchWidget*>(scene()->parent());
+		if(sw) {
+			return sw->currentZoom()/100;
+		}
+	}
+	return 1;
 }

@@ -53,6 +53,14 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent, bool visi
 
 void TerminalPointItem::init(bool visible, bool movable) {
 	initPixmapHash();
+
+	m_handlers = new ConnectorRectangle(this,false);
+
+	QPen pen = QPen();
+	pen.setWidth(0);
+	pen.setBrush(QBrush());
+	setPen(pen);
+
 	m_cross = NULL;
 	m_movable = movable;
 	setFlag(QGraphicsItem::ItemIsMovable, movable);
@@ -73,24 +81,28 @@ void TerminalPointItem::initPixmapHash() {
 
 void TerminalPointItem::updatePoint() {
 	setRect(m_parent->boundingRect());
-	drawCross();
+	posCross();
 }
 
-void TerminalPointItem::drawCross() {
+void TerminalPointItem::posCross() {
 	if(!m_cross) {
 		m_cross = new QGraphicsPixmapItem(this);
 		m_cross->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 	}
 
-	if(isVisible()) {
-		m_cross->setPixmap(QPixmap(":/resources/images/itemselection/crosshairHandlerNormal.png"));
-	}
+	m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Normal]);
 
 	QRectF pRect = parentItem()->boundingRect();
-	QPointF crossCenter = !m_movable? m_point: pRect.center();
+	QPointF crossCenter = pRect.center();
 
-	qreal x = crossCenter.x() -m_cross->boundingRect().width()/2;
-	qreal y = crossCenter.y() -m_cross->boundingRect().height()/2;
+	DebugDialog::debug(QString("<<< cross size %1 %2")
+			.arg(m_cross->boundingRect().width()).arg(m_cross->boundingRect().height()));
+	DebugDialog::debug(QString("<<< connector center %1 %2")
+				.arg(crossCenter.x()).arg(crossCenter.y()));
+
+	qreal transf = 2*m_handlers->currentScale();
+	qreal x = crossCenter.x() -m_cross->boundingRect().width()/transf;
+	qreal y = crossCenter.y() -m_cross->boundingRect().height()/transf;
 	//QPointF pos = mapToScene(x,y);
 
 	m_cross->setPos(x,y);
@@ -124,7 +136,7 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if(isVisible()) {
 		if(isOutsideConnector()) {
 			m_parent->resetTerminalPoint();
-			scene()->update();
+			//scene()->update();
 			return;
 		} else {
 			m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Hover]);
@@ -160,4 +172,9 @@ QPointF TerminalPointItem::point() {
 
 bool TerminalPointItem::hasBeenMoved() {
 	return m_hasBeenMoved;
+}
+
+void TerminalPointItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	posCross();
+	QGraphicsRectItem::paint(painter,option,widget);
 }
