@@ -81,10 +81,10 @@ void TerminalPointItem::initPixmapHash() {
 
 void TerminalPointItem::updatePoint() {
 	setRect(m_parent->boundingRect());
-	posCross();
+	drawCross();
 }
 
-void TerminalPointItem::posCross() {
+void TerminalPointItem::drawCross() {
 	if(!m_cross) {
 		m_cross = new QGraphicsPixmapItem(this);
 		m_cross->setFlag(QGraphicsItem::ItemIgnoresTransformations);
@@ -92,8 +92,14 @@ void TerminalPointItem::posCross() {
 
 	m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Normal]);
 
+
+}
+
+void TerminalPointItem::posCross() {
 	QRectF pRect = parentItem()->boundingRect();
-	QPointF crossCenter = pRect.center();
+	QPointF crossCenter = m_point == QPointF()?
+							pRect.center():
+							QPointF(pRect.x(),pRect.y()) + m_point;
 
 	DebugDialog::debug(QString("<<< cross size %1 %2")
 			.arg(m_cross->boundingRect().width()).arg(m_cross->boundingRect().height()));
@@ -117,8 +123,6 @@ void TerminalPointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 	if(isVisible()) m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Normal]);
 	ResizableRectItem::hoverLeaveEvent(event);
 }
-
-
 
 void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if(isVisible() && isOutsideConnector()) {

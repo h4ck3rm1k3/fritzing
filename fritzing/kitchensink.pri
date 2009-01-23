@@ -19,7 +19,6 @@
 HEADERS += \
     src/aboutbox.h \
     src/abstractimagebutton.h \
-    src/abstractresizablemovablegraphicsitem.h \
     src/abstractstatesbutton.h \
     src/autorouter1.h \
     src/bettertimer.h \
@@ -68,7 +67,6 @@ HEADERS += \
     src/pcbsketchwidget.h \
     src/pcbschematicsketchwidget.h \
     src/prefsdialog.h \
-    src/resizablemovablegraphicsrectitem.h \
     src/schematicsketchwidget.h \
     src/sketchareawidget.h \
     src/sketchmodel.h \
@@ -90,7 +88,6 @@ HEADERS += \
     src/zoomcombobox.h 
 SOURCES += \
     src/aboutbox.cpp \
-    src/abstractresizablemovablegraphicsitem.cpp \
     src/autorouter1.cpp \
     src/bettertriggeraction.cpp \
     src/bettertimer.cpp \
@@ -138,7 +135,6 @@ SOURCES += \
     src/pcbsketchwidget.cpp \
     src/pcbschematicsketchwidget.cpp \
     src/prefsdialog.cpp \
-    src/resizablemovablegraphicsrectitem.cpp \
     src/schematicsketchwidget.cpp \
     src/sketchareawidget.cpp \
     src/sketchmodel.cpp \
