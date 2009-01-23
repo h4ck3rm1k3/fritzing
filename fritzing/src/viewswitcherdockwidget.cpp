@@ -47,7 +47,7 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	initial.setY(34);
 #else
 	#ifdef Q_WS_X11
-		float = false;
+		floatFlag = false;
 		initial.setY(60);
 	#endif
 #endif
@@ -97,7 +97,7 @@ bool ViewSwitcherDockWidget::event(QEvent *event)
 	return result;
 }
 
-void ViewSwitcherDockWidget::setViewSwitcher(ViewSwitcher * viewSwitcher) 
+void ViewSwitcherDockWidget::setViewSwitcher(ViewSwitcher * viewSwitcher)
 {
 	m_viewSwitcher = viewSwitcher;
 	setTitleBarWidget(viewSwitcher);
