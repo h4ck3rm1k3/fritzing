@@ -101,10 +101,11 @@ void TerminalPointItem::posCross() {
 							pRect.center():
 							QPointF(pRect.x(),pRect.y()) + m_point;
 
-	DebugDialog::debug(QString("<<< cross size %1 %2")
+	/*DebugDialog::debug(QString("<<< cross size %1 %2")
 			.arg(m_cross->boundingRect().width()).arg(m_cross->boundingRect().height()));
 	DebugDialog::debug(QString("<<< connector center %1 %2")
 				.arg(crossCenter.x()).arg(crossCenter.y()));
+	*/
 
 	qreal transf = 2*m_handlers->currentScale();
 	qreal x = crossCenter.x() -m_cross->boundingRect().width()/transf;
@@ -125,8 +126,12 @@ void TerminalPointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 }
 
 void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible() && isOutsideConnector()) {
-		setCursor(QCursor(Qt::ForbiddenCursor));
+	if(isVisible()) {
+		if(isOutsideConnector()) {
+			setCursor(QCursor(Qt::ForbiddenCursor));
+		} else {
+			setCursor(QCursor());
+		}
 	}
 	ResizableRectItem::mouseMoveEvent(event);
 }
@@ -141,6 +146,7 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 		if(isOutsideConnector()) {
 			m_parent->resetTerminalPoint();
 			//scene()->update();
+			setCursor(QCursor());
 			return;
 		} else {
 			m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Hover]);
@@ -150,28 +156,54 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 bool TerminalPointItem::isOutsideConnector() {
-	QPointF myCenter = point();
-	QPointF pPos = m_parent->mapToScene(m_parent->pos());
-	QRectF pRectAux = m_parent->boundingRect();
-	qreal magicNumber = 2; //?
-	QRectF pRect(pPos.x()-magicNumber,pPos.y()-magicNumber,pPos.x()+pRectAux.width(),pPos.y()+pRectAux.height());
+	/*QPointF myCenter = mapToItem(m_handlers,mappedToScenePoint());
+	QPointF pPos = m_handlers->mapToScene(m_handlers->pos());
+	QRectF pRectAux = m_handlers->boundingRect();
+	QRectF pRect(pPos.x(),pPos.y(),pRectAux.width(),pRectAux.height());
+	*/
 
+	QPointF myCenter = point();
+	QPointF newCenter = mapToItem(m_parent,m_cross->boundingRect().center());
+	QRectF pRect = m_parent->boundingRect();
+	QPointF pPos = mapToScene(QPointF(pRect.x(),pRect.y()));
+	//QPolygonF pRect = mapToScene(m_parent->boundingRect());
 	DebugDialog::debug(QString("<<<< center %1 %2").arg(myCenter.x()).arg(myCenter.y()));
+	DebugDialog::debug(QString("<<<< pos %1 %2").arg(pPos.x()).arg(pPos.y()));
 	DebugDialog::debug(QString("<<<< parent %1 %2 - %3 %4")
 			.arg(pRect.x()).arg(pRect.y()).arg(pRect.width()).arg(pRect.height()));
+	DebugDialog::debug(QString("<<<< newCenter %1 %2").arg(newCenter.x()).arg(newCenter.y()));
+	DebugDialog::debug(QString("<<<< newCenter scale %1 %2").arg(newCenter.x()/m_handlers->currentScale()).arg(newCenter.y()/m_handlers->currentScale()));
+	//DebugDialog::debug(QString("<<<< pospos %1 %2").arg(newCenter.x()).arg(newCenter.y()));
+
+	DebugDialog::debug(mapToScene(m_parent->boundingRect()).contains(myCenter)?"true":"false");
+
 	DebugDialog::debug("");
-	return myCenter.x()<pRect.x() || myCenter.y()<pRect.y()
-		|| myCenter.x()>pRect.width() || myCenter.y()>pRect.height();
+	return m_parent->boundingRect().contains(myCenter);
+
+	/*return myCenter.x()<pRect.x()
+		|| myCenter.y()<pRect.y()
+		|| myCenter.x()>pRect.x()+pRect.width()
+		|| myCenter.y()>pRect.y()+pRect.height();*/
 }
 
-QPointF TerminalPointItem::point() {
+QPointF TerminalPointItem::mappedToScenePoint() {
 	/*scene()->update();
 	QPointF pos = mapToScene(this->pos());
 	QPointF size = mapToScene(QPointF(boundingRect().width(),boundingRect().height()));
 	qreal lineWx2 = m_linePen.widthF()*2;
 	return QPointF((pos.x()+size.x()-lineWx2)/2,(pos.y()+size.y()-lineWx2)/2);
 	*/
-	return mapToScene(m_cross->boundingRect().center());
+	return mapToScene(point());
+}
+
+QPointF TerminalPointItem::point() {
+	scene()->update();
+	QPointF center = m_cross->boundingRect().center();
+	QPointF pos = mapToScene(this->pos());
+	//QPointF size = mapToScene(QPointF(boundingRect().width(),boundingRect().height()));
+	return QPointF(pos.x()+center.x(),pos.y()+center.y());
+
+	//return m_cross->boundingRect().center();
 }
 
 bool TerminalPointItem::hasBeenMoved() {

@@ -37,6 +37,7 @@ class TerminalPointItem : public ResizableRectItem {
 public:
 	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, bool movable=true);
 	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, const QPointF &point);
+
 	QPointF point();
 	void updatePoint();
 
@@ -44,6 +45,8 @@ public:
 	bool hasBeenMoved();
 
 protected:
+	QPointF mappedToScenePoint();
+
 	void init(bool visible, bool movable);
 	void initPixmapHash();
 	void drawCross();
