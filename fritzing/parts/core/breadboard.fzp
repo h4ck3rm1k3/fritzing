@@ -11,6 +11,7 @@
  </tags>
  <properties>
   <property name="family" >Breadboard</property>
+  <property name="size" >full</property>
  </properties>
  <taxonomy>prototyping.breadboard.breadboard.breadboard0</taxonomy>
  <description>A breadboard for easily prototyping circuits</description>
