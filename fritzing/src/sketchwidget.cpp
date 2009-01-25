@@ -60,7 +60,7 @@ $Date$
 #include "autorouter1.h"
 #include "fgraphicsscene.h"
 #include "mainwindow.h"
-#include "version.h"
+#include "version/version.h"
 #include "labels/partlabel.h"
 
 static QColor labelTextColor = Qt::black;

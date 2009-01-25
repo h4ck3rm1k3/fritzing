@@ -29,7 +29,7 @@ $Date$
 #include "connectorstuff.h"
 #include "busstuff.h"
 #include "bus.h"
-#include "version.h"
+#include "version/version.h"
 
 #include <QDomElement>
 

@@ -33,7 +33,7 @@ $Date$
 
 #include "debugdialog.h"
 #include "modelpart.h"
-#include "version.h"
+#include "version/version.h"
 
 #ifndef QT_NO_DEBUG
 bool PaletteModel::CreateAllPartsBinFile = true;

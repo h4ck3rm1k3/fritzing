@@ -29,13 +29,14 @@ $Date$
 #include "misc.h"
 #include "mainwindow.h"
 #include "fsplashscreen.h"
-#include "version.h"
+#include "version/version.h"
 #include "prefsdialog.h"
 #include "help/helper.h"
 #include "partseditor/partseditormainwindow.h"
 #include "layerattributes.h"
 #include "fsvgrenderer.h"
-#include "versionchecker.h"
+#include "version/versionchecker.h"
+#include "version/updatedialog.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -57,7 +58,8 @@ PaletteModel * FApplication::m_paletteBinModel = NULL;
 bool FApplication::m_started = false;
 QList<QString> FApplication::m_filesToLoad;
 QString FApplication::m_libPath;
-VersionChecker * FApplication::m_versionChecker = NULL;
+UpdateDialog * FApplication::m_updateDialog = NULL;
+
 
 static int kBottomOfAlpha = 206;
 
@@ -99,25 +101,12 @@ void DoOnceThread::run()
 	static_cast<FApplication *>(qApp)->preloadSlowParts();
 }
 
-///////////////////////////
-
-class CheckVersionThread : public QThread
-{
-public:
-
-	void run();
-};
-
-void CheckVersionThread::run() {
-	static_cast<FApplication *>(qApp)->checkVersion();
-}
-
-
 //////////////////////////
 
 FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 {
 	m_started = false;
+	m_updateDialog = NULL;
 
 	QCoreApplication::setOrganizationName("Fritzing");
 	QCoreApplication::setOrganizationDomain("fritzing.org");
@@ -131,8 +120,8 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	QString lib = "/lib";
 #endif
 
-	m_libPath = applicationDirPath() + lib;   // applicationDirPath() doesn't work until after QApplication is instantiated
-	addLibraryPath(m_libPath);							// tell app where to search for plugins (jpeg export and sql lite)
+	m_libPath = applicationDirPath() + lib;		// applicationDirPath() doesn't work until after QApplication is instantiated
+	addLibraryPath(m_libPath);					// tell app where to search for plugins (jpeg export and sql lite)
 
 	// !!! translator must be installed before any widgets are created !!!
 	findTranslator(m_libPath);
@@ -225,6 +214,9 @@ bool FApplication::findTranslator(const QString & libPath) {
 	if (suffix.isEmpty()) {
 		suffix = QLocale::system().name();	   // Returns the language and country of this locale as a string of the form "language_country", where language is a lowercase, two-letter ISO 639 language code, and country is an uppercase, two-letter ISO 3166 country code.
 	}
+	else {
+		QLocale::setDefault(QLocale(suffix));
+	}
 
     bool loaded = m_translator.load(QString("fritzing_") + suffix, libPath + "/translations");
 	if (loaded) {
@@ -259,12 +251,6 @@ int FApplication::startup(int & argc, char ** argv)
     ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
-
-	m_versionChecker = new VersionChecker();
-	m_versionChecker->setUrl(QString("http://fritzing.org/download/feed/atom/%1/").arg(PLATFORM_NAME));
-	connect(m_versionChecker, SIGNAL(releasesAvailable()), this, SLOT(notifyReleasesAvailable()));
-	CheckVersionThread checkVersionThread;
-	checkVersionThread.start();
 	
 	splash.showProgress(progressIndex, 0.1);
 	processEvents();
@@ -329,9 +315,15 @@ int FApplication::startup(int & argc, char ** argv)
 	}
 	mutex.unlock();
 
-	splash.showProgress(progressIndex, 0.7);
+	splash.showProgress(progressIndex, 0.65);
 
 	DebugDialog::debug("ending thread");
+
+	m_updateDialog = new UpdateDialog();
+	connect(m_updateDialog, SIGNAL(enableAgainSignal(bool)), this, SLOT(enableCheckUpdates(bool)));
+	checkForUpdates(false);
+
+	splash.showProgress(progressIndex, 0.70);
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = new MainWindow(m_paletteBinModel, m_referenceModel);
@@ -504,14 +496,47 @@ void FApplication::preloadSlowParts() {
 	DebugDialog::debug(QString("preload slow parts done") );
 }
 
-void FApplication::checkVersion() {
-	if (m_versionChecker) {
-		m_versionChecker->fetch();
+void FApplication::checkForUpdates() {
+	checkForUpdates(true);
+}
+
+void FApplication::checkForUpdates(bool atUserRequest)
+{
+	if (atUserRequest) {
+		enableCheckUpdates(false);
+	}
+
+	VersionChecker * versionChecker = new VersionChecker();
+
+	if (!atUserRequest) {
+		// if I've already been notified about these updates, don't bug me again
+		QSettings settings;
+		QString lastMainVersionChecked = settings.value("lastMainVersionChecked").toString();
+		if (!lastMainVersionChecked.isEmpty()) {
+			versionChecker->ignore(lastMainVersionChecked, false);
+		}
+		QString lastInterimVersionChecked = settings.value("lastInterimVersionChecked").toString();
+		if (!lastInterimVersionChecked.isEmpty()) {
+			versionChecker->ignore(lastInterimVersionChecked, true);
+		}
+	}
+
+	versionChecker->setUrl(QString("http://fritzing.org/download/feed/atom/%1/").arg(PLATFORM_NAME));
+	m_updateDialog->setAtUserRequest(atUserRequest);
+	m_updateDialog->setVersionChecker(versionChecker);
+
+	if (atUserRequest) {
+		m_updateDialog->show();
 	}
 }
 
-void FApplication::notifyReleasesAvailable() {
-	// put up a modal dialog?
-
-	DebugDialog::debug("got releases available");
+void FApplication::enableCheckUpdates(bool enabled)
+{
+    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+        MainWindow *mainWindow = qobject_cast<MainWindow *>(widget);
+		if (mainWindow) {
+			mainWindow->enableCheckUpdates(enabled);
+		}
+	}
 }
+

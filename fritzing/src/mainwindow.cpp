@@ -1287,3 +1287,9 @@ void MainWindow::showAllFirstTimeHelp(bool show) {
 	}
 	m_showInViewHelpAct->setChecked(show);
 }
+
+void MainWindow::enableCheckUpdates(bool enabled)
+{
+	m_checkForUpdatesAct->setEnabled(enabled);
+}
+

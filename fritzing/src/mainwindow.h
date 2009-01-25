@@ -80,6 +80,7 @@ public:
 	QSizeGrip *sizeGrip();
 	QStatusBar *realStatusBar();
 	void showAllFirstTimeHelp(bool show);
+	void enableCheckUpdates(bool enabled);
 
 public:
 	static void initExportConstants();
@@ -436,6 +437,7 @@ protected:
     QAction *m_partsRefAct;
     QAction *m_showInViewHelpAct;;
     QAction *m_visitFritzingDotOrgAct;
+    QAction *m_checkForUpdatesAct;
 
     // Dot icons
     QIcon m_dotIcon;

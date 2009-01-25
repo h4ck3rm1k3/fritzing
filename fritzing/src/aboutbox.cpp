@@ -36,7 +36,7 @@ $Date$
 
 #include "aboutbox.h"
 #include "debugdialog.h"
-#include "version.h"
+#include "version/version.h"
 
 AboutBox* AboutBox::singleton = NULL;
 

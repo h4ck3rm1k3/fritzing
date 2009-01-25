@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2249 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-22 20:49:15 +0100 (Thu, 22 Jan 2009) $
 
 ********************************************************************/
 
@@ -28,6 +28,14 @@ $Date$
 #define VERSION_H
 
 #include <QString>
+
+struct VersionThing {
+	int majorVersion;
+	int minorVersion;
+	int minorSubVersion;
+	QString releaseModifier;
+	bool ok;
+};
 
 class Version {
 
@@ -41,8 +49,10 @@ public:
 	static const QString & date();
 	static const QString & shortDate();
 	static const QString & year();
-	static bool candidateGreaterThan(const QString & candidate, bool & ok);
-	static bool candidateModifierGreaterThan(const QString & yourReleaseModifier);
+	static bool candidateGreaterThanCurrent(const VersionThing &);
+	static bool greaterThan(const VersionThing & myVersionThing, const VersionThing & yourVersionThing);
+	static bool modifierGreaterThan(const QString & myReleaseModifier, const QString & yourReleaseModifier);
+	static void toVersionThing(const QString & candidate, VersionThing & versionThing);
 
 protected:
 	Version();
@@ -61,6 +71,7 @@ protected:
 	static QString m_shortDate;
 	static QString m_year;
 	static Version * m_singleton;
+	static QStringList m_modifiers;
 
 };
 

@@ -28,7 +28,7 @@ $Date: 2009-01-21 11:33:16 +0100 (Wed, 21 Jan 2009) $
 
 #include "versionchecker.h"	
 #include "version.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 #include <QUrl>
 								
@@ -40,7 +40,8 @@ VersionChecker::VersionChecker() : QObject()
 		this, SLOT(finished(int, bool)));
 
 	m_depth = 0;
-	m_inTitle = m_inEntry = false;
+	m_inUpdated = m_inTitle = m_inEntry = false;
+	m_ignoreInterimVersion.ok = m_ignoreMainVersion.ok = false;
 }
 
 VersionChecker::~VersionChecker() {
@@ -53,6 +54,7 @@ VersionChecker::~VersionChecker() {
 
 void VersionChecker::fetch()
 {
+	m_statusCode = 200;
     m_xml.clear();
     QUrl url(m_urlString);
     m_http.setHost(url.host());
@@ -62,6 +64,7 @@ void VersionChecker::fetch()
 
 void VersionChecker::readData(const QHttpResponseHeader &resp)
 {
+	m_statusCode = resp.statusCode();
 	if (resp.statusCode() != 200) {
         m_http.abort();
 		return;
@@ -78,15 +81,14 @@ void VersionChecker::finished(int id, bool error)
 		return;
 	}
 
-	if (m_availableReleases.count() > 0) {
-		emit releasesAvailable();
-		return;
+	if (error) {
+		if (m_statusCode != 200) {
+			emit httpError(m_http.error());
+			return;
+		}
 	}
 
-	if (error) {
-		emit retrievalFailure(m_http.error());
-		return;
-	}
+	emit releasesAvailable();
 }
 
 void VersionChecker::parseXml()
@@ -97,9 +99,11 @@ void VersionChecker::parseXml()
 			QString elementName = m_xml.name().toString();
 			if (elementName.compare("entry") == 0) {
 				m_inEntry = true;
+				m_inTitle = m_inUpdated = false;
 				m_currentLinkHref = "";
 				m_currentCategoryTerm = "";
 				m_currentTitle = "";
+				m_currentUpdated = "";
 			}
 			else if (m_inEntry && elementName.compare("title") == 0) {
 				m_inTitle = true;
@@ -112,12 +116,15 @@ void VersionChecker::parseXml()
 			else if (m_inEntry && elementName.compare("category") == 0) {
 				m_currentCategoryTerm = m_xml.attributes().value("term").toString();
 			}
+			else if (m_inEntry && elementName.compare("updated") == 0) {
+				m_inUpdated = true;
+			}
 
 			DebugDialog::debug(QString("%1<%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
 			m_depth++;
-			//foreach (QXmlStreamAttribute attribute, m_xml.attributes()) {
-				//DebugDialog::debug(QString("%1%2: %3").arg(QString((m_depth + 1) * 4, ' ')).arg(attribute.name().toString()).arg(attribute.value().toString()));
-			//}
+			foreach (QXmlStreamAttribute attribute, m_xml.attributes()) {
+				DebugDialog::debug(QString("%1%2: %3").arg(QString((m_depth + 1) * 4, ' ')).arg(attribute.name().toString()).arg(attribute.value().toString()));
+			}
 		} 
 		else if (m_xml.isEndElement()) {
 			QString elementName = m_xml.name().toString();
@@ -128,20 +135,27 @@ void VersionChecker::parseXml()
 			else if (m_inTitle && elementName.compare("title") == 0) {
 				m_inTitle = false;
 			}
+			else if (m_inUpdated && elementName.compare("updated") == 0) {
+				m_inUpdated = false;
+			}
 			m_depth--;
 			DebugDialog::debug(QString("%1</%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
         } 
 		else if (m_xml.isCharacters() && !m_xml.isWhitespace()) {
-			//QString t = m_xml.text().toString();
-			//t.replace(QRegExp("[\\s]+"), " ");
-			//DebugDialog::debug(QString("%1%2").arg(QString((m_depth + 1) * 4, ' ')).arg(t));
+			QString t = m_xml.text().toString();
+			t.replace(QRegExp("[\\s]+"), " ");
+			DebugDialog::debug(QString("%1%2").arg(QString((m_depth + 1) * 4, ' ')).arg(t));
 			if (m_inTitle) {
 				m_currentTitle = m_xml.text().toString();
+			}
+			else if (m_inUpdated) {
+				m_currentUpdated = m_xml.text().toString();
+
 			}
         }
     }
     if (m_xml.error() && m_xml.error() != QXmlStreamReader::PrematureEndOfDocumentError) {
-		emit xmlFailure(m_xml.error());
+		emit xmlError(m_xml.error());
         m_http.abort();
 		return;
     }
@@ -156,21 +170,77 @@ void VersionChecker::setUrl(const QString & url)
 void VersionChecker::parseEntry() {
 	if (m_currentLinkHref.isEmpty()) return;
 	if (m_currentCategoryTerm.isEmpty()) return;
+	if (m_currentUpdated.isEmpty()) return;
 
-	bool ok;
-	bool result = Version::candidateGreaterThan(m_currentTitle, ok);
-	if (!ok || !result) {
+#ifndef QT_NO_DEBUG
+	// hack for testing
+	if (m_currentCategoryTerm.compare("main") == 0) {
+		if (m_currentTitle.compare("0.11b") == 0) {
+			m_currentTitle = "0.1.11b";
+		}
+		else if (m_currentTitle.compare("0.1b") == 0) {
+			m_currentTitle = "0.1.1b";
+		}
+	}
+#endif
+
+	VersionThing entryVersionThing;
+	Version::toVersionThing(m_currentTitle, entryVersionThing);
+	if (!entryVersionThing.ok) {
 		// older versions that don't conform, bail
-		// older versions that do conform, bail
 		m_http.abort();
 		return;
 	}
 
+	if (!Version::candidateGreaterThanCurrent(entryVersionThing)) {
+		m_http.abort();
+		return;
+	}
+
+	bool interim = (m_currentCategoryTerm.compare("interim") == 0);
+	if (interim) {
+		if (m_ignoreInterimVersion.ok) {
+			if (!Version::greaterThan(m_ignoreInterimVersion, entryVersionThing)) {
+				return;						// candidate version is earlier or the same as interim version already in prefs
+			}
+		}
+	}
+	else {
+		if (m_ignoreMainVersion.ok) {
+			if (!Version::greaterThan(m_ignoreMainVersion, entryVersionThing)) {
+				return;						// candidate version is earlier or the same as main version already in prefs
+			}
+		}
+	}
 
 	AvailableRelease * availableRelease = new AvailableRelease();
 	availableRelease->versionString = m_currentTitle;
 	availableRelease->link = m_currentLinkHref;
-	availableRelease->interim = (m_currentCategoryTerm.compare("interim") == 0);
+	availableRelease->interim = interim;
+	QStringList temp = m_currentUpdated.split('+');											// conversion is confused by the +timezone suffix from the site xml
+	availableRelease->dateTime = QDateTime::fromString(temp[0], "yyyy-MM-ddThh:mm:ss");     
 	m_availableReleases.append(availableRelease);
 }
 
+const QList<AvailableRelease *> & VersionChecker::availableReleases()
+{
+	return m_availableReleases;
+}
+
+void VersionChecker::stop() {
+    disconnect(&m_http, SIGNAL(readyRead(const QHttpResponseHeader &)), 
+		this, SLOT(readData(const QHttpResponseHeader &)));
+    disconnect(&m_http, SIGNAL(requestFinished(int, bool)), 
+		this, SLOT(finished(int, bool)));
+	m_http.abort();
+
+}
+
+void VersionChecker::ignore(const QString & version, bool interim) {
+	if (interim) {
+		Version::toVersionThing(version, m_ignoreInterimVersion);
+	}
+	else {
+		Version::toVersionThing(version, m_ignoreMainVersion);
+	}
+}

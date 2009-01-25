@@ -34,7 +34,6 @@ $Date$
 #include "waitpushundostack.h"
 #include "partseditor/mainpartseditorwindow.h"
 #include "partseditor/partseditormainwindow.h"
-#include "version.h"
 #include "bettertriggeraction.h"
 #include "aboutbox.h"
 #include "autorouter1.h"
@@ -1058,6 +1057,10 @@ void MainWindow::createHelpMenuActions() {
 	m_visitFritzingDotOrgAct->setStatusTip(tr("www.fritzing.org"));
 	connect(m_visitFritzingDotOrgAct, SIGNAL(triggered(bool)), this, SLOT(visitFritzingDotOrg()));
 
+	m_checkForUpdatesAct = new QAction(tr("Check for updates..."), this);
+	m_checkForUpdatesAct->setStatusTip(tr("Check whether a newer version of Fritzing is available for download"));
+	connect(m_checkForUpdatesAct, SIGNAL(triggered()), QApplication::instance(), SLOT(checkForUpdates()));
+
 	m_aboutAct = new QAction(tr("&About"), this);
 	m_aboutAct->setStatusTip(tr("Show the application's about box"));
 	connect(m_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
@@ -1174,6 +1177,7 @@ void MainWindow::createMenus()
     m_helpMenu->addAction(m_partsRefAct);
     m_helpMenu->addAction(m_showInViewHelpAct);
     m_helpMenu->addAction(m_visitFritzingDotOrgAct);
+	m_helpMenu->addAction(m_checkForUpdatesAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
 }

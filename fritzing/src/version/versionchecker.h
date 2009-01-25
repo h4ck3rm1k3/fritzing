@@ -29,6 +29,9 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 #include <QHttp>
 #include <QXmlStreamReader>
+#include <QDateTime>
+
+#include "version.h"
 
 // much code borrowed from Qt's rsslisting example
 
@@ -36,6 +39,7 @@ struct AvailableRelease {
 	bool interim;
 	QString versionString;
 	QString link;
+	QDateTime dateTime;
 };
 
 
@@ -47,10 +51,13 @@ public:
 	~VersionChecker();
 
 	void setUrl(const QString & url);
+	const QList<AvailableRelease *> & availableReleases();
+	void stop();
+	void ignore(const QString & version, bool interim);
 
 signals:
-	void retrievalFailure(int statusCode);
-	void xmlFailure(int errorCode);
+	void httpError(QHttp::Error statusCode);
+	void xmlError(QXmlStreamReader::Error errorCode);
 	void releasesAvailable();
 
 public slots:
@@ -71,10 +78,15 @@ protected:
 	int m_depth;
 	bool m_inEntry;
 	bool m_inTitle;
+	bool m_inUpdated;
 	QList<AvailableRelease *> m_availableReleases;
 	QString m_currentLinkHref;
 	QString m_currentCategoryTerm;
 	QString m_currentTitle;
+	QString m_currentUpdated;
+	VersionThing m_ignoreMainVersion;
+	VersionThing m_ignoreInterimVersion;
+	int m_statusCode;
 };
 
 #endif
