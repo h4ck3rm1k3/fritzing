@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/aboutbox.cpp" line="72"/>
         <source>Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt;</source>
-        <translation>Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt;</translation>
+        <translation>Versión %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="83"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../src/aboutbox.cpp" line="94"/>
         <source>&lt;b&gt;GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest</source>
-        <translation>&lt;b&gt;GNU GPL v3 en el código y  CreativeCommons:BY-SA  en el resto</translation>
+        <translation>&lt;b&gt;GNU GPL v3 para el código y  CreativeCommons:BY-SA para el resto</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="112"/>
@@ -126,17 +126,17 @@
     <message>
         <location filename="../src/aboutbox.cpp" line="148"/>
         <source>and alpha testers who were brave enough to give&lt;br&gt;</source>
-        <translation>Y alpha testers que tuvieron el valor de darle&lt;br&gt;</translation>
+        <translation>Y alpha testers que tuvieron el valor de probar&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="149"/>
         <source>Fritzing a test spin and who stayed with us,&lt;br&gt;</source>
-        <translation>un giro a testing de Fritzing y para aquellos que se quedaron con nosotros,&lt;br&gt;</translation>
+        <translation>Fritzing y para aquellos que se quedaron con nosotros,&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="150"/>
         <source>throughout our rewrite of the app.&lt;/p&gt;</source>
-        <translation>a travez de toda la recodificación de la aplicacion&lt;/p&gt;</translation>
+        <translation>a travéz de la recodificación de la aplicación&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -157,7 +157,7 @@
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="104"/>
         <source>Mismatching Connector IDs</source>
-        <translation>Las IDs de los conectores no corresponden</translation>
+        <translation>Los IDs de los conectores no corresponden</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="110"/>
@@ -347,7 +347,7 @@
     <message>
         <location filename="../src/fritzingwindow.cpp" line="207"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
-        <translation>Los Cambios se perderan si no se guardan.</translation>
+        <translation>Los cambios se perderan si no se guardan.</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="209"/>
@@ -375,18 +375,17 @@
     <message>
         <location filename="../src/help/helper.cpp" line="53"/>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation>La &lt;b&gt; vista de Protoboard (Placa de prototipos) &lt;/b&gt; esta diseñada para verse como una &lt;i&gt;protoboard real&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Inicia por arrastrar una parte del compartimiento de partes, el cual se encuentra en el extremo superior derecho, continua agregando partes y conectandolas dando click en los conectores y arrastrando los cables. El proceso es similar a como lo harías en la vida real&lt;br/&gt;&lt;br/&gt;Una vez que termines tu prototipo/bosquejo en la Protoboard(placa de prototipos), prueba las otras vistas, a las cuales puedes acceder dando click sobre el cambiador de vistas o en el navegador que se encuentra en el extremo inferior derecho, ya que cada vista tiene un proposito diferente las partes se veran distintas, dependiendo de la vista elegida.</translation>
+        <translation>La &lt;b&gt; vista de Protoboard (Placa de prototipos) &lt;/b&gt; esta diseñada para verse como una &lt;i&gt;protoboard real&lt;/i&gt;&lt;br/&gt;&lt;br/&gt;Comienza arrastrando una parte desde el compartimiento de partes, el cual se encuentra en el extremo superior derecho. Continúa agregando partes y conectándolas haciendo click en los conectores y arrastrando los cables. El proceso es similar a cómo lo harías en la vida real.&lt;br/&gt;&lt;br/&gt;Una vez que termines tu prototipo/bosquejo en la Protoboard(placa de prototipos), prueba las otras vistas, a las cuales puedes acceder haciendo click sobre el cambiador de vistas o en el navegador que se encuentra en el extremo inferior derecho. Como cada vista tiene un propósito diferente, las partes se veran distintas, dependiendo de la vista elegida.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="63"/>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
-        <translation>Bienvenido a la &lt;b&gt;Vista de Esquema&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Este es una forma mas abstracta de ver los componentes y las conexiones, comparada con la vista de Protoboard (placa de prototipos).
-Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos), solo se ven diferentes. Esta representacion es similar a los diagramas utilizados por los ingenieros.&lt;br/&gt;&lt;br/&gt;Puedes presionar &amp;lt;Shift&amp;gt;-click con el ratón para crear dobleces dando un mejor aspecto a tus conexiones.Esta vista puede ayudarte a verificar que los componentes esten correctamente conectados, de igual forma puedes imprimir el esquema para documentar el proyecto.</translation>
+        <translation>Bienvenido a la &lt;b&gt;Vista de Esquema&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;Este es una forma mas abstracta de ver los componentes y las conexiones, comparada con la vista de Protoboard (placa de prototipos). Tienes los mismos elementos que utilizaste en tu protoboard, sólo que se ven diferentes. Esta representacion es similar a los diagramas utilizados por los ingenieros.&lt;br/&gt;&lt;br/&gt;Puedes presionar &amp;lt;Shift&amp;gt;-click con el ratón para crear dobleces dando un mejor aspecto a tus conexiones.Esta vista puede ayudarte a verificar que los componentes esten correctamente conectados, de igual forma puedes imprimir el esquema para documentar el proyecto.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="74"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, first rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation>La &lt;b&gt;Vista de PCB&lt;/b&gt; es donde puedes diseñar como los componentes van a aparecer en la PCB (Circuito Impreso)&lt;br/&gt;&lt;br/&gt; Las PCBs pueden ser elaboradas en casa (placas fenolicas), o tambien pueden ser mandadas a un fabricante profesional de circuitos impresos para un mejor acabado&lt;br/&gt;&lt;br/&gt;Para definir el diseño del circuito impreso, primero acomoda los componentes para que quepan de forma ordenada dentro de la placa, despues intenta cambiarlas para reducir la distancia y la complejidad de las conexiones. Una vez que las partes esten acomodadas, puedes generar las lineas de cobre manualmente o utilizar la funcion de Autoruteo para generarlas automaticamente, el boton de autoruteo &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; se encuentra en el extremo inferior izquierdo.</translation>
+        <translation>La &lt;b&gt;Vista de PCB&lt;/b&gt; es donde puedes diseñar cómo los componentes van a aparecer en la PCB (Circuito Impreso)&lt;br/&gt;&lt;br/&gt; Las PCBs pueden ser elaboradas en casa (placas fenólicas), o también pueden ser mandadas a un fabricante profesional de circuitos impresos para un mejor acabado.&lt;br/&gt;&lt;br/&gt;Para definir el diseño del circuito impreso, primero acomoda los componentes para que quepan de forma ordenada dentro de la placa, despues intenta cambiarlas para reducir la distancia y la complejidad de las conexiones. Una vez que las partes esten acomodadas, puedes generar las lineas de cobre manualmente o utilizar la funcion de Autoruteo para generarlas automáticamente, el boton de autoruteo &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; se encuentra en el extremo inferior izquierdo.</translation>
     </message>
 </context>
 <context>
@@ -473,7 +472,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/htmlinfoview.cpp" line="483"/>
         <source>Tags</source>
-        <translation>Etiquetas</translation>
+        <translation>Tags</translation>
     </message>
 </context>
 <context>
@@ -631,7 +630,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow.cpp" line="497"/>
         <source>Autoroute</source>
-        <translation>Autoruteador</translation>
+        <translation>Autorutear</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="504"/>
@@ -717,7 +716,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow.cpp" line="1285"/>
         <source>View Switcher</source>
-        <translation>Ver el cambiador</translation>
+        <translation>Cambiador de vistas</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="79"/>
@@ -804,7 +803,8 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
         <location filename="../src/mainwindow_menu.cpp" line="469"/>
         <source>Cannot read file  1 %1:
 %2.</source>
-        <translation>Imposible leer archivo %1:%2.</translation>
+        <translation>Imposible leer archivo %1:
+%2.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="511"/>
@@ -869,7 +869,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="679"/>
         <source>&amp;Open Example</source>
-        <translation>&amp;Abrir un ejemplo</translation>
+        <translation>&amp;Abrir ejemplo</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="684"/>
@@ -899,7 +899,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="694"/>
         <source>Save As Shareable...</source>
-        <translation>Guardar como Portable...</translation>
+        <translation>Guardar Como Portable...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="695"/>
@@ -1059,7 +1059,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="838"/>
         <source>Paste clipboard contents</source>
-        <translation>Pegar contenido del Clipboard</translation>
+        <translation>Pegar contenido del portapapeles</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="841"/>
@@ -1134,7 +1134,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="878"/>
         <source>Create new part</source>
-        <translation>Crear una parte nueva</translation>
+        <translation>Crear nueva parte</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="881"/>
@@ -1154,12 +1154,12 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="886"/>
         <source>&amp;Add to bin</source>
-        <translation>&amp;Agregar al catalogo de partes</translation>
+        <translation>&amp;Agregar al catálogo de partes</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="887"/>
         <source>Add selected part to bin</source>
-        <translation>Agregar la parte seleccionada al catalogo de partes</translation>
+        <translation>Agregar la parte seleccionada al catálogo</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="895"/>
@@ -1169,7 +1169,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="908"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
-        <translation>&amp;Girar 90° a la derecha</translation>
+        <translation>&amp;Girar 90° en sentido horario</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="909"/>
@@ -1179,7 +1179,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="910"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation>Girar las partes seleccionadas 90 grados a la derecha</translation>
+        <translation>Girar las partes seleccionadas 90 grados en sentido horario</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="913"/>
@@ -1194,7 +1194,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="917"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
-        <translation>&amp;Girar 90° a la izquierda</translation>
+        <translation>&amp;Girar 90° en sentido antihorario</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="918"/>
@@ -1204,7 +1204,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="919"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation>Girar la seleccion actual 90 grados a la izquierda</translation>
+        <translation>Girar la seleccion actual 90 grados en sentido antihorario</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="922"/>
@@ -1214,7 +1214,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="923"/>
         <source>Flip current selection horizontally</source>
-        <translation>Invertir horizontalmente la selección actual</translation>
+        <translation>Invertir la selección actual horizontalmente</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="926"/>
@@ -1224,7 +1224,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="927"/>
         <source>Flip current selection vertically</source>
-        <translation>Invertir la seleccion actual verticalmente</translation>
+        <translation>Invertir la selección actual verticalmente</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="930"/>
@@ -1309,7 +1309,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="961"/>
         <source>Show all the available layers for the current view</source>
-        <translation>Ocultar todas las capas disponibles de la vista actual</translation>
+        <translation>Ocultar todas las capas disponibles para la vista actual</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="964"/>
@@ -1449,7 +1449,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1033"/>
         <source>Debugger Output</source>
-        <translation>Salida/Resultado del depurador</translation>
+        <translation>Salida del depurador</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1039"/>
@@ -1489,7 +1489,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1052"/>
         <source>First Time Help</source>
-        <translation>Ayda de primera vez</translation>
+        <translation>Ayuda de primera vez</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1053"/>
@@ -1559,12 +1559,12 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1592"/>
         <source>Create New Sketch From Template</source>
-        <translation>Crear un bosquejo nuevo basado en un Templete</translation>
+        <translation>Crear un bosquejo desde una plantilla</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1667"/>
         <source>Page Setup</source>
-        <translation>Configurar Pagina</translation>
+        <translation>Configurar Página</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1672"/>
@@ -1574,7 +1574,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1789"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
-        <translation>Proximamente aquí te ofreceremos una forma de exportar tu bosquejo de Fritzing a EAGLE, si deseas tener mas opciones para exportar a tu herramienta favorita de EDA, aporta en el foro de la pagina.</translation>
+        <translation>Proximamente aquí te ofreceremos una forma de exportar tu bosquejo de Fritzing a EAGLE, si deseas tener mas opciones para exportar a tu herramienta favorita de EDA, por favor háznoslo saber, o contribuye.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1875"/>
@@ -1589,22 +1589,22 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1879"/>
         <source>&amp;Create Trace from this Ratsnest Wire</source>
-        <translation>&amp;Crear una traza de este cable del nido de ratas</translation>
+        <translation>&amp;Crear una traza a partir de este cable del nido de ratas</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1880"/>
         <source>Create a trace from the selected wire</source>
-        <translation>Crear una traza de este cable del nido de ratas</translation>
+        <translation>Crear una traza a partir del cable seleccionado</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1883"/>
         <source>&amp;Create Jumper from this Ratsnest Wire</source>
-        <translation>&amp;Crear un Jumper de este cable del nido de ratas</translation>
+        <translation>&amp;Crear un Jumper a partir de este cable del nido de ratas</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1884"/>
         <source>Create a jumper wire from the selected wire</source>
-        <translation>Crear un Jumper del cable seleccionado</translation>
+        <translation>Crear un Jumper a partir del cable seleccionado</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1887"/>
@@ -1634,7 +1634,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="824"/>
         <source>Redo</source>
-        <translation>Re hacer</translation>
+        <translation>Rehacer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="437"/>
@@ -1669,7 +1669,7 @@ Tienes los mismos elementos que utilizaste en tu protoboard (placa de prototipos
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1762"/>
         <source>Gerber export</source>
-        <translation>Exportar para Gerber</translation>
+        <translation>Exportar a Gerber</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1799"/>
@@ -1689,7 +1689,7 @@ Shopping List
 Quantity<byte value="x9"/>Part
 
 </source>
-        <translation>￼￼Lista de compras
+        <translation type="unfinished">￼￼Lista de compras
 ￼
 Cantidad<byte value="x9"/>Parte
 
@@ -1711,17 +1711,17 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/mismatchingconnectorwidget.cpp" line="118"/>
         <source>In </source>
-        <translation>En</translation>
+        <translation>Solamente en las vistas </translation>
     </message>
     <message>
         <location filename="../src/partseditor/mismatchingconnectorwidget.cpp" line="124"/>
         <source>and </source>
-        <translation>Y</translation>
+        <translation>y</translation>
     </message>
     <message>
         <location filename="../src/partseditor/mismatchingconnectorwidget.cpp" line="130"/>
         <source>view only</source>
-        <translation>Solo Ver</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1729,7 +1729,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="288"/>
         <source>Create Jumper from this Ratsnest Wire</source>
-        <translation>Crear un Jumper de este cable del nido de ratas</translation>
+        <translation>Crear un Jumper a partir de este cable del nido de ratas</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="289"/>
@@ -1739,12 +1739,12 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="295"/>
         <source>Create Trace from this Ratsnest Wire</source>
-        <translation>Crear una traza de este cable del nido de ratas</translation>
+        <translation>Crear una traza a partir de este cable del nido de ratas</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="296"/>
         <source>trace</source>
-        <translation>Traza</translation>
+        <translation>traza</translation>
     </message>
 </context>
 <context>
@@ -1752,7 +1752,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="46"/>
         <source>Tags</source>
-        <translation>Etiquetas</translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="47"/>
@@ -1795,12 +1795,12 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/labels/partlabel.cpp" line="366"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
-        <translation>&amp;Girar 90° a la derecha</translation>
+        <translation>&amp;Girar 90° en sentido horario</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="368"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation>Girar las partes seleccionadas 90 grados a la derecha</translation>
+        <translation>Girar las partes seleccionadas 90 grados en sentido horario</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="370"/>
@@ -1815,12 +1815,12 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/labels/partlabel.cpp" line="374"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
-        <translation>&amp;Girar 90° a la izquierda</translation>
+        <translation>&amp;Girar 90° en sentido horario</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="376"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation>Girar la selección actual 90 grados a la izquierda</translation>
+        <translation>Girar la selección actual 90 grados en sentido antihorario</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="378"/>
@@ -1830,7 +1830,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/labels/partlabel.cpp" line="380"/>
         <source>Flip current selection horizontally</source>
-        <translation>Invertir horizontalmente la selección actual</translation>
+        <translation>Invertir la selección actual horizontalmente</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="382"/>
@@ -1876,22 +1876,22 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="212"/>
         <source>Remove selected part</source>
-        <translation>Borrar la parte seleccionada</translation>
+        <translation>Quitar la parte seleccionada</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="217"/>
         <source>Open bin</source>
-        <translation>Abrir catalogo</translation>
+        <translation>Abrir catálogo</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="222"/>
         <source>Save bin</source>
-        <translation>Guardar catalogo</translation>
+        <translation>Guardar catálogo</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="227"/>
         <source>Restore core bin</source>
-        <translation>Restaurar el catalogo base</translation>
+        <translation>Restaurar el catálogo base</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="253"/>
@@ -1927,7 +1927,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="336"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation>¿Deseas Salvar los cambios realizados al documento &quot;%1&quot;?</translation>
+        <translation>¿Deseas guardar los cambios realizados al documento &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="343"/>
@@ -1947,22 +1947,22 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="436"/>
         <source>Add to bin</source>
-        <translation>Agregar al catalogo de partes</translation>
+        <translation>Agregar al catálogo</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
         <source>Do you really want to add the selected part to the bin?</source>
-        <translation>¿Realmente quieres agregar la parte seleccionada al catalogo de partes?</translation>
+        <translation>¿Realmente quieres agregar la parte seleccionada al catálogo?</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="460"/>
         <source>Remove from bin</source>
-        <translation>Borrar del catalogo de partes</translation>
+        <translation>Quitar del catálogo</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
         <source>Do you really want to remove the selected part from the bin?</source>
-        <translation>¿Realmente quieres borrar la parte seleccionada del catalogo de partes?</translation>
+        <translation>¿Realmente quieres quitar la parte seleccionada del catálogo?</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="272"/>
@@ -1972,12 +1972,12 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="346"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
-        <translation>Los Cambios se perderan si no se guardan.</translation>
+        <translation>Los cambios se perderán si no se guardan.</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="71"/>
         <source>Untitled Bin</source>
-        <translation>Catalogo de partes sin nombre</translation>
+        <translation>Catalogo Sin Nombre</translation>
     </message>
 </context>
 <context>
@@ -1985,32 +1985,32 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="67"/>
         <source>Please find a name for me!</source>
-        <translation>¡Favor de nombrar esta parte!</translation>
+        <translation>¡Por favor dame un nombre!</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="68"/>
         <source>Please provide a label</source>
-        <translation>Favor de proveer una etiqueta </translation>
+        <translation>Por favor provee una etiqueta </translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="69"/>
         <source>You could tell a little bit about this part</source>
-        <translation>Favor de dar una breve descripción sobre la parte</translation>
+        <translation>Podrías dar una breve descripción sobre esta parte</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="70"/>
         <source>Please clasify this part</source>
-        <translation>Favor de clasificar esta parte</translation>
+        <translation>Por favor, clasifica esta parte</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="71"/>
         <source>You can add your tags to find things easier</source>
-        <translation>Por favor agrega etiquetas para facilitar la busqueda</translation>
+        <translation>Puedes agregar tus tags para facilitar las búsquedas</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="72"/>
         <source>&lt;i&gt;created by&lt;/i&gt; %1 &lt;i&gt;on&lt;/i&gt; %2</source>
-        <translation>&lt;i&gt;creada por&lt;/i&gt; %1 &lt;i&gt;en&lt;/i&gt; %2</translation>
+        <translation>&lt;i&gt;creada por&lt;/i&gt; %1 &lt;i&gt;el&lt;/i&gt; %2</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="98"/>
@@ -2041,7 +2041,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="219"/>
         <source>Tags</source>
-        <translation>Etiquetas</translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="224"/>
@@ -2051,7 +2051,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="231"/>
         <source>Created/Updated on</source>
-        <translation>Creada/Actualizada en</translation>
+        <translation>Creada/Actualizada el</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="259"/>
@@ -2091,7 +2091,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="407"/>
         <source>Save as new part</source>
-        <translation>Guardar como parte Nueva</translation>
+        <translation>Guardar como parte nueva</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="408"/>
@@ -2125,7 +2125,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/partseditorviewimagewidget.cpp" line="74"/>
         <source>Open Image</source>
-        <translation>Abrir Imangen</translation>
+        <translation>Abrir Imagen</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditorviewimagewidget.cpp" line="77"/>
@@ -2148,7 +2148,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/prefsdialog.cpp" line="163"/>
         <source>Language</source>
-        <translation>Lenguaje</translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="193"/>
@@ -2181,7 +2181,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/fapplication.cpp" line="438"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt;</source>
-        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt;</translation>
+        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Versión %1.%2 (%3%4)&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../src/itembase.cpp" line="225"/>
@@ -2250,27 +2250,27 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/modelpart.cpp" line="92"/>
         <source>part</source>
-        <translation>Parte</translation>
+        <translation>parte</translation>
     </message>
     <message>
         <location filename="../src/modelpart.cpp" line="93"/>
         <source>wire</source>
-        <translation>Cable</translation>
+        <translation>wable</translation>
     </message>
     <message>
         <location filename="../src/modelpart.cpp" line="94"/>
         <source>breadboard</source>
-        <translation>Protoboard (placa de Prototipos)</translation>
+        <translation>protoboard (placa de prototipos)</translation>
     </message>
     <message>
         <location filename="../src/modelpart.cpp" line="95"/>
         <source>board</source>
-        <translation>Placa</translation>
+        <translation>placa</translation>
     </message>
     <message>
         <location filename="../src/modelpart.cpp" line="96"/>
         <source>module</source>
-        <translation>Módulo</translation>
+        <translation>módulo</translation>
     </message>
     <message>
         <location filename="../src/palettemodel.cpp" line="63"/>
@@ -2287,7 +2287,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/palettemodel.cpp" line="242"/>
         <source>The part &apos;%1&apos; at &apos;%2&apos; does not have a unique module id &apos;%3&apos;.</source>
-        <translation>La parte &apos;%1&apos; en &apos;%2&apos; no tiene un identificador unico de modulo &apos;%3&apos;.</translation>
+        <translation>La parte &apos;%1&apos; en &apos;%2&apos; no tiene un identificador único de módulo &apos;%3&apos;.</translation>
     </message>
     <message>
         <location filename="../src/partseditor/hashpopulatewidget.cpp" line="176"/>
@@ -2302,17 +2302,17 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/partseditor/partseditorpaletteitem.cpp" line="243"/>
         <source>The file %1 is not a Fritzing file (11).</source>
-        <translation>Este Archivo %1 no es un archivo valido de Fritzing(11).</translation>
+        <translation>Este Archivo %1 no es un archivo válido de Fritzing(11).</translation>
     </message>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="90"/>
         <source>no name yet</source>
-        <translation>Aún sin Nombre</translation>
+        <translation>aún sin nombre</translation>
     </message>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="91"/>
         <source>no description yet</source>
-        <translation>Aún sin descripción</translation>
+        <translation>aún sin descripción</translation>
     </message>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="246"/>
@@ -2366,12 +2366,12 @@ Cantidad<byte value="x9"/>Parte
         <location filename="../src/prefsdialog.cpp" line="202"/>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
-        <translation>En un futuro este dialogo te dará la oportunidad de modificar más preferencias, tales como tu folder preferido y tu usuario de fritzing.org.</translation>
+        <translation>Proximamente desde este diálogo podrás modificar más preferencias, tales como el directorio por defecto para tus bosquejos y tu usuario de fritzing.org</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="210"/>
         <source>Clear all saved settings and close this dialog (debug mode only).</source>
-        <translation>Limpar todas las configuraciones guardads y cerrar este dialogo (modo de depuración unicamente).</translation>
+        <translation>Limpar todas las configuraciones guardadas y cerrar este diálogo (modo de depuración unicamente).</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="212"/>
@@ -2403,7 +2403,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/sketchwidget.cpp" line="548"/>
         <source>The file %1 is not a Fritzing file (1).</source>
-        <translation>Este Archivo %1 no es un archivo valido de Fritzing(1).</translation>
+        <translation>El archivo %1 no es un archivo valido de Fritzing(1).</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1748"/>
@@ -2418,12 +2418,12 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/sketchwidget.cpp" line="2068"/>
         <source>Bring forward</source>
-        <translation>Traer al frente</translation>
+        <translation>Traer hacia adelante</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2060"/>
         <source>Send backward</source>
-        <translation>Enviar al fondo</translation>
+        <translation>Enviar hacia atrás</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2077"/>
@@ -2493,7 +2493,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/viewlayer.cpp" line="66"/>
         <source>Copper 1</source>
-        <translation>Cobre</translation>
+        <translation>Cobre 1</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="67"/>
@@ -2513,7 +2513,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/viewlayer.cpp" line="70"/>
         <source>Keep out</source>
-        <translation>Cuidado</translation>
+        <translation>Mantente fuera</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="71"/>
@@ -2528,12 +2528,12 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/prefsdialog.cpp" line="168"/>
         <source>&lt;b&gt;Language&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Lenguaje&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Idioma&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="183"/>
         <source>Please note that a new language setting will not take effect until the next time you run Fritzing.</source>
-        <translation>Recuerda que los cambios de en la configuración del lenguaje no surtiran efecto hasta la proxima vez que inicies Fritzing.</translation>
+        <translation>Recuerda que los cambios de en la configuración del idioma no surtirán efecto hasta la próxima vez que inicies Fritzing.</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="57"/>
@@ -2600,12 +2600,12 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/sketchwidget.cpp" line="383"/>
         <source>loading part</source>
-        <translation>Cargando Parte</translation>
+        <translation>cargando parte</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="385"/>
         <source>done loading</source>
-        <translation>Carga Terminada</translation>
+        <translation>carga terminada</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="647"/>
@@ -2705,7 +2705,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/sketchwidget.cpp" line="3091"/>
         <source>Swapped %1 with module %2</source>
-        <translation>Se cambio %1 con modulo %2</translation>
+        <translation>Se intercambió %1 por módulo %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3103"/>
@@ -2716,13 +2716,13 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <location filename="../src/sketchwidget.cpp" line="3107"/>
         <source>No part with those characteristics.
 Where&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation>No hay una parte con dichas caracteristicas
-Estamos trabajando para evitar este mensaje y permitirte seleccionar entre las propiedades que existen</translation>
+        <translation>No hay partes con esas características
+Estamos trabajando para evitar este mensaje y permitirte seleccionar entre propiedades que si existen.</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3156"/>
         <source>Change %1 color from %2 to %3</source>
-        <translation>Cambiar %1 color de %2 a %3</translation>
+        <translation>Cambiar el color de %1 de %2 a %3</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3162"/>
@@ -2732,17 +2732,17 @@ Estamos trabajando para evitar este mensaje y permitirte seleccionar entre las p
     <message>
         <location filename="../src/sketchwidget.cpp" line="3065"/>
         <source>Change %1 label to &apos;%2&apos;</source>
-        <translation>Cambiar %1 Etiqueta a &apos;%2&apos;</translation>
+        <translation>Cambiar la etiqueta %1 a &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3816"/>
         <source>Move label &apos;%1&apos;</source>
-        <translation>Mover etiquetal &apos;%1&apos;</translation>
+        <translation>Mover etiqueta &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3823"/>
         <source>%1 label &apos;%2&apos;</source>
-        <translation>%1 Etiqueta &apos;%2&apos;</translation>
+        <translation>%1 etiqueta &apos;%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -2750,17 +2750,17 @@ Estamos trabajando para evitar este mensaje y permitirte seleccionar entre las p
     <message>
         <location filename="../src/prefsdialog.cpp" line="43"/>
         <source>English - %1</source>
-        <translation>Ingles - %1</translation>
+        <translation>Inglés - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="44"/>
         <source>French - %1</source>
-        <translation>Frances - %1</translation>
+        <translation>Francés - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="45"/>
         <source>German - %1</source>
-        <translation>Aleman - %1</translation>
+        <translation>Alemán - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="46"/>
@@ -2770,7 +2770,7 @@ Estamos trabajando para evitar este mensaje y permitirte seleccionar entre las p
     <message>
         <location filename="../src/prefsdialog.cpp" line="49"/>
         <source>Dutch - %1</source>
-        <translation>Holandes- %1</translation>
+        <translation>Holandés- %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="50"/>
@@ -2795,7 +2795,7 @@ Estamos trabajando para evitar este mensaje y permitirte seleccionar entre las p
     <message>
         <location filename="../src/prefsdialog.cpp" line="54"/>
         <source>Japanese - %1</source>
-        <translation>Japonez - %1</translation>
+        <translation>Japonés - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="55"/>
@@ -2805,17 +2805,17 @@ Estamos trabajando para evitar este mensaje y permitirte seleccionar entre las p
     <message>
         <location filename="../src/prefsdialog.cpp" line="56"/>
         <source>Arabic - %1</source>
-        <translation>Arabe - %1</translation>
+        <translation>Árabe - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="57"/>
         <source>Portuguese - %1</source>
-        <translation>Portugues - %1</translation>
+        <translation>Portugués - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="58"/>
         <source>Hindi - %1</source>
-        <translation>Hindu - %1</translation>
+        <translation>Hindú - %1</translation>
     </message>
 </context>
 <context>
@@ -2841,42 +2841,42 @@ Estamos trabajando para evitar este mensaje y permitirte seleccionar entre las p
     <message>
         <location filename="../src/wire.cpp" line="830"/>
         <source>blue</source>
-        <translation>Azul</translation>
+        <translation>azul</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="831"/>
         <source>red</source>
-        <translation>Rojo</translation>
+        <translation>rojo</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="832"/>
         <source>black</source>
-        <translation>Negro</translation>
+        <translation>negro</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="833"/>
         <source>yellow</source>
-        <translation>Amarillo</translation>
+        <translation>amarillo</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="834"/>
         <source>green</source>
-        <translation>Verde</translation>
+        <translation>verde</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="835"/>
         <source>grey</source>
-        <translation>Gris</translation>
+        <translation>gris</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="836"/>
         <source>white</source>
-        <translation>Blanco</translation>
+        <translation>blanco</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="837"/>
         <source>orange</source>
-        <translation>Anaranjado</translation>
+        <translation>naranja</translation>
     </message>
 </context>
 </TS>
