@@ -729,7 +729,7 @@ void MainWindow::createFileMenuActions() {
 	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber"));
 	connect(m_exportGerberAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
-	m_exportDiyAct = new BetterTriggerAction(tr("for &DIY production..."), this);
+	m_exportDiyAct = new BetterTriggerAction(tr("Etchable PDF..."), this);
 	m_exportDiyAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
 	connect(m_exportDiyAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiy(QAction *)));
 

@@ -201,8 +201,8 @@ QString PCBSketchWidget::renderToSVG(qreal printerScale) {
 					.arg(transform.m12())
 					.arg(transform.m21())
 					.arg(transform.m22())
-					.arg(transform.dx())
-					.arg(transform.dy())
+					.arg(0.0)  // transform.dx()			// don't understand why but SVG doesn't like this transform
+					.arg(0.0)  // transform.dy()			// don't understand why but SVG doesn't like this transform
 					.append(itemSvg)
 					.append("</g>");
 			}

@@ -511,7 +511,7 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 
 SketchToolButton *MainWindow::createExportDiyButton(SketchAreaWidget *parent) {
 	SketchToolButton *exportDiyButton = new SketchToolButton("Diy",parent, m_exportDiyAct);
-	exportDiyButton->setText(tr("DIY Etching"));
+	exportDiyButton->setText(tr("Export Etchable PDF"));
 
 	return exportDiyButton;
 }
