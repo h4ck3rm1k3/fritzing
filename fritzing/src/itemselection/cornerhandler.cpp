@@ -69,20 +69,24 @@ void CornerHandler::resize(const QPointF &mousePos) {
 	qreal oldY1 = rect.y();
 	qreal oldX2 = oldX1+rect.width();
 	qreal oldY2 = oldY1+rect.height();
-	qreal newX = mousePos.x();
-	qreal newY = mousePos.y();
+	qreal newX = mapToItem(m_parent,mousePos).x();
+	qreal newY = mapToItem(m_parent,mousePos).y();
 
-	DebugDialog::debug(QString("mouse pos x=%1 y=%2").arg(newX).arg(newY));
+	/*DebugDialog::debug(QString("mouse pos x=%1 y=%2").arg(newX).arg(newY));
+
+	DebugDialog::debug(QString("prev rect x1=%1 y1=%2  x2=%3 y2=%4")
+			.arg(oldX1).arg(oldY1).arg(oldX2).arg(oldY2)
+		);*/
 
 	switch(m_corner) {
 		case Qt::TopLeftCorner:
 			m_parent->resizeRect(newX,newY,oldX2,oldY2); break;
-		case Qt::BottomLeftCorner:
-			m_parent->resizeRect(newX,oldY1,oldX1,newY); break;
 		case Qt::TopRightCorner:
-			m_parent->resizeRect(oldX1,newY,newX,oldX2); break;
+			m_parent->resizeRect(oldX1,newY,newX,oldY2); break;
 		case Qt::BottomRightCorner:
 			m_parent->resizeRect(oldX1,oldY1,newX,newY); break;
+		case Qt::BottomLeftCorner:
+			m_parent->resizeRect(newX,oldY1,oldX2,newY); break;
 		default: break;
 	}
 }
@@ -93,6 +97,7 @@ Qt::Corner CornerHandler::corner() {
 
 void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable() && m_resizing) {
+		m_parent->resizingStarted();
 		resize(event->pos());
 		scene()->update();
 	} else {
@@ -103,7 +108,6 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable()) {
 		m_resizing = true;
-		m_parent->resizingStarted();
 		m_mousePressedPos = event->pos();
 	} else {
 		QGraphicsPixmapItem::mousePressEvent(event);
@@ -111,7 +115,7 @@ void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	if(m_parent->isResizable()) {
+	if(m_parent->isResizable() && m_resizing) {
 		m_parent->resizingFinished();
 		m_resizing = false;
 	}
