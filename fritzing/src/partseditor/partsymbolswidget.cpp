@@ -75,6 +75,7 @@ void PartSymbolsWidget::createViewImageWidget(
 	viw = new PartsEditorViewImageWidget(viewId,tempDir(),0,this);
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
+	viw->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
 	switch( viewId ) {
 		case ItemBase::BreadboardView: viw->addBreadboardViewLayers(); break;

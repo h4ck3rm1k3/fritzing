@@ -162,28 +162,32 @@ bool TerminalPointItem::isOutsideConnector() {
 	QRectF pRect(pPos.x(),pPos.y(),pRectAux.width(),pRectAux.height());
 	*/
 
-	QPointF myCenter = point();
-	QPointF newCenter = mapToItem(m_parent,m_cross->boundingRect().center());
-	QRectF pRect = m_parent->boundingRect();
+	QPointF myCenter = mapToItem(m_parent,m_cross->boundingRect().center());
+	QPointF newCenter = mapToItem(m_handlers,m_cross->boundingRect().center());
+	QRectF pRect = m_parent->rect();
 	QPointF pPos = mapToScene(QPointF(pRect.x(),pRect.y()));
+	QPointF pPos2 = mapToScene(QPointF(pRect.x()+pRect.width(),pRect.y()+pRect.height()));
 	//QPolygonF pRect = mapToScene(m_parent->boundingRect());
 	DebugDialog::debug(QString("<<<< center %1 %2").arg(myCenter.x()).arg(myCenter.y()));
 	DebugDialog::debug(QString("<<<< pos %1 %2").arg(pPos.x()).arg(pPos.y()));
+	DebugDialog::debug(QString("<<<< pos2 %1 %2").arg(pPos2.x()).arg(pPos2.y()));
 	DebugDialog::debug(QString("<<<< parent %1 %2 - %3 %4")
-			.arg(pRect.x()).arg(pRect.y()).arg(pRect.width()).arg(pRect.height()));
+		.arg(pRect.x()).arg(pRect.y())
+		.arg(pRect.width()).arg(pRect.height())
+	);
 	DebugDialog::debug(QString("<<<< newCenter %1 %2").arg(newCenter.x()).arg(newCenter.y()));
-	DebugDialog::debug(QString("<<<< newCenter scale %1 %2").arg(newCenter.x()/m_handlers->currentScale()).arg(newCenter.y()/m_handlers->currentScale()));
+	//DebugDialog::debug(QString("<<<< newCenter scale %1 %2").arg(newCenter.x()/m_handlers->currentScale()).arg(newCenter.y()/m_handlers->currentScale()));
 	//DebugDialog::debug(QString("<<<< pospos %1 %2").arg(newCenter.x()).arg(newCenter.y()));
 
 	DebugDialog::debug(mapToScene(m_parent->boundingRect()).contains(myCenter)?"true":"false");
 
 	DebugDialog::debug("");
-	return m_parent->boundingRect().contains(myCenter);
+	//return m_parent->boundingRect().contains(myCenter);
 
-	/*return myCenter.x()<pRect.x()
+	return myCenter.x()<pRect.x()
 		|| myCenter.y()<pRect.y()
 		|| myCenter.x()>pRect.x()+pRect.width()
-		|| myCenter.y()>pRect.y()+pRect.height();*/
+		|| myCenter.y()>pRect.y()+pRect.height();
 }
 
 QPointF TerminalPointItem::mappedToScenePoint() {

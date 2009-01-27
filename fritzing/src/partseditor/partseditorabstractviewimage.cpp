@@ -35,7 +35,7 @@ PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentif
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
-	setFixedSize(size,size);
+	//setFixedSize(size,size);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 

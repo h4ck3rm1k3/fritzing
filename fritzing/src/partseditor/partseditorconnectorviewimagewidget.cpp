@@ -52,6 +52,8 @@ PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBas
 	//} else {
 		setDragMode(QGraphicsView::ScrollHandDrag);
 	//}
+
+	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 }
 
 void PartsEditorConnectorViewImageWidget::wheelEvent(QWheelEvent* event) {

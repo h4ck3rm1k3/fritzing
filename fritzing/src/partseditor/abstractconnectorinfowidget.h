@@ -38,7 +38,6 @@ class AbstractConnectorInfoWidget : public QFrame {
 		AbstractConnectorInfoWidget(QWidget *parent=0);
 		virtual void setSelected(bool selected, bool doEmitChange=true);
 		bool isSelected();
-		QSize sizeHint();
 
 	signals:
 		void tellSistersImNewSelected(AbstractConnectorInfoWidget*); // Meant to be used in the info context
@@ -49,6 +48,8 @@ class AbstractConnectorInfoWidget : public QFrame {
 		void reapplyStyle();
 
 		volatile bool m_isSelected;
+
+		static int SingleConnectorHeight;
 };
 
 #endif /* ABSTRACTCONNECTORINFOWIDGET_H_ */

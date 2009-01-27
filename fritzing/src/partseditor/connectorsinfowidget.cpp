@@ -34,7 +34,9 @@ $Date$
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
 
-ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent) : QFrame(parent) {
+ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent)
+	: QFrame(parent)
+{
 	m_selected = NULL;
 	m_undoStack = undoStack;
 
@@ -86,25 +88,21 @@ void ConnectorsInfoWidget::createScrollArea() {
 
 	m_mismatchersFrameParent = new QFrame(this);
 	m_mismatchersFrameParent->setObjectName("mismatchConns");
-	//m_mismatchersFrameParent->setFixedWidth(500);
 	m_mismatchersFrameParent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-	QGridLayout *parentLo = new QGridLayout();
+	QGridLayout *parentLo = new QGridLayout(m_mismatchersFrameParent);
 	parentLo->setMargin(1);
-	m_mismatchersFrameParent->setLayout(parentLo);
 
 	m_mismatchersFrame = new QFrame(m_mismatchersFrameParent);
 	//m_mismatchersFrame->resize(this->width(),m_mismatchersFrame->height());
-	QGridLayout *mismatchLayout = new QGridLayout();
+	QGridLayout *mismatchLayout = new QGridLayout(m_mismatchersFrame);
 	mismatchLayout->setMargin(0);
 	mismatchLayout->setSpacing(0);
-	m_mismatchersFrame->setLayout(mismatchLayout);
 	m_mismatchersFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 	QLabel *mismatchConnHeader = new QLabel(tr("Mismatching Connector IDs"));
 	mismatchConnHeader->setObjectName("mismatchConnsHeader");
 	parentLo->addWidget(mismatchConnHeader,0,0);
-
 	parentLo->addWidget(m_mismatchersFrame,1,0);
 
 	QLabel *mismatchConnFooter = new QLabel(tr("These problems need to be fixed in the svg-files directly"));
@@ -119,8 +117,10 @@ void ConnectorsInfoWidget::createScrollArea() {
 	scrollLayout->setSpacing(0);
 	scrollContentLayout()->addWidget(m_mismatchersFrameParent,0,0);
 
-	m_scrollArea = new QScrollArea();
+
+	m_scrollArea = new QScrollArea(this);
 	m_scrollArea->setWidget(m_scrollContent);
+	m_scrollArea->setWidgetResizable(true);
 
 	m_title = new QLabel("  "+tr("List of Connectors"));
 	m_title->setObjectName("title");

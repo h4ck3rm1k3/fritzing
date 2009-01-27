@@ -158,7 +158,9 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_headerFrame->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
 	m_headerFrame->setObjectName("header");
 
-	m_iconViewImage = new PartsEditorViewImageWidget(ItemBase::IconView, createTempFolderIfNecessary(), 0, m_headerFrame, 50);
+	int iconViewSize = 50;
+	m_iconViewImage = new PartsEditorViewImageWidget(ItemBase::IconView, createTempFolderIfNecessary(), 0, m_headerFrame, iconViewSize);
+	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);
 	m_iconViewImage->setObjectName("iconImage");
 	m_iconViewImage->setSketchModel(m_sketchModel);
 	m_iconViewImage->setUndoStack(m_undoStack);
@@ -255,21 +257,18 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	connsWidgets << m_connsViews << m_connsInfo;
 
 	m_tabWidget = new QTabWidget(m_centerFrame);
-	m_tabWidget->setSizePolicy(QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding));
+	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	m_tabWidget->addTab(new PartSpecificationsWidget(specWidgets,this),tr("Specifications"));
 	m_tabWidget->addTab(new PartConnectorsWidget(connsWidgets,this),tr("Connectors"));
 
-	QGridLayout *tabLayout = new QGridLayout();
+	QGridLayout *tabLayout = new QGridLayout(m_tabWidget);
 	tabLayout->setMargin(0);
 	tabLayout->setSpacing(0);
-	m_tabWidget->setLayout(tabLayout);
 
-	QGridLayout *mainLayout = new QGridLayout();
+	QGridLayout *mainLayout = new QGridLayout(m_centerFrame);
 	mainLayout->setMargin(0);
 	mainLayout->setSpacing(0);
 	mainLayout->addWidget(m_tabWidget,0,0,1,1);
-	m_centerFrame->setLayout(mainLayout);
-
 }
 
 void PartsEditorMainWindow::connectWidgetsToSave(const QList<QWidget*> &widgets) {

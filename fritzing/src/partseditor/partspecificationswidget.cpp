@@ -33,11 +33,17 @@ $Date$
 #include "partspecificationswidget.h"
 #include "../debugdialog.h"
 
-PartSpecificationsWidget::PartSpecificationsWidget(QList<QWidget*> widgets, QWidget *parent) : QScrollArea(parent) {
-	QGridLayout *layout = new QGridLayout();
+PartSpecificationsWidget::PartSpecificationsWidget(QList<QWidget*> widgets, QWidget *parent)
+	: QScrollArea(parent)
+{
+	m_scrollContent = new QFrame(this);
+	m_scrollContent->setObjectName("scroll");
+	//m_scrollContent->setSizePolicy(QSizePolicy::M,QSizePolicy::Expanding);
+
+	QGridLayout *layout = new QGridLayout(m_scrollContent);
 	for(int i=0; i < widgets.size(); i++) {
 		//widgets[i]->setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
-		//widgets[i]->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
+		widgets[i]->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 		layout->addWidget(widgets[i],i,0);
 		if(widgets[i]->metaObject()->indexOfSignal(QMetaObject::normalizedSignature("editionStarted()")) > -1) {
 			connect(widgets[i],SIGNAL(editionStarted()),this,SLOT(updateLayout()));
@@ -49,23 +55,15 @@ PartSpecificationsWidget::PartSpecificationsWidget(QList<QWidget*> widgets, QWid
 	layout->setMargin(0);
 	layout->setSpacing(10);
 
-	m_scrollContent = new QFrame(this);
-	m_scrollContent->setObjectName("scroll");
-	m_scrollContent->setLayout(layout);
-
-
-	//m_scrollContent->setSizePolicy(QSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed));
-
 	setWidget(m_scrollContent);
 	setMinimumWidth(m_scrollContent->width()+15);
+	setWidgetResizable(true);
 
-	QGridLayout *mylayout = new QGridLayout();
+	QGridLayout *mylayout = new QGridLayout(this);
 	mylayout->setMargin(0);
 	mylayout->setSpacing(0);
-	setLayout(mylayout);
 
-	resize(sizeHint());
-	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	//resize(sizeHint());
 }
 
 void PartSpecificationsWidget::updateLayout() {
@@ -73,6 +71,7 @@ void PartSpecificationsWidget::updateLayout() {
 }
 
 QSize PartSpecificationsWidget::sizeHint() {
-	return QSize(width(),600);
+	//return QSize(width(),600);
+	return QScrollArea::sizeHint();
 }
 

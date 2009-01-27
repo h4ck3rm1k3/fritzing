@@ -30,14 +30,13 @@ $Date$
 
 #include <QVariant>
 
-AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(QWidget *parent) : QFrame(parent) {
-	resize(sizeHint());
-	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Maximum);
-	setMinimumHeight(30);
-}
+int AbstractConnectorInfoWidget::SingleConnectorHeight = 40;
 
-QSize AbstractConnectorInfoWidget::sizeHint() {
-	return QSize(480,30);
+AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(QWidget *parent)
+	: QFrame(parent)
+{
+	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+	setMinimumHeight(SingleConnectorHeight);
 }
 
 void AbstractConnectorInfoWidget::setSelected(bool selected, bool doEmitChange) {

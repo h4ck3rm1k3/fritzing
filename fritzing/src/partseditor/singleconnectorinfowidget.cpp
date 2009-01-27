@@ -32,7 +32,9 @@ $Date$
 const QString ConnectorTypeWidget::FemaleSymbol = QString("%1").arg(QChar(0x2640));
 const QString ConnectorTypeWidget::MaleSymbol = QString("%1").arg(QChar(0x2642));
 
-ConnectorTypeWidget::ConnectorTypeWidget(Connector::ConnectorType type, QWidget *parent) : QLabel(parent) {
+ConnectorTypeWidget::ConnectorTypeWidget(Connector::ConnectorType type, QWidget *parent)
+	: QLabel(parent)
+{
 	m_isSelected = false;
 	setType(type);
 }
@@ -86,7 +88,7 @@ void ConnectorTypeWidget::toggleValue() {
 //TODO Mariano: looks like an abstracteditable, perhaps can be one
 SingleConnectorInfoWidget::SingleConnectorInfoWidget(WaitPushUndoStack *undoStack, Connector* connector, QWidget *parent)
 	: AbstractConnectorInfoWidget(parent)
-{	
+{
 	static QString EMPTY_CONN_NAME = QObject::tr("no name yet");
 	static QString EMPTY_CONN_DESC = QObject::tr("no description yet");
 	static Connector::ConnectorType EMPTY_CONN_TYPE = Connector::Female;
@@ -220,7 +222,8 @@ void SingleConnectorInfoWidget::toStandardMode() {
 	layout->setColumnStretch(3,1);
 	layout->setColumnStretch(4,1);
 
-	resize(width(),40);
+	resize(width(),SingleConnectorHeight);
+	setMaximumHeight(SingleConnectorHeight);
 	updateGeometry();
 
 	show();
@@ -259,7 +262,8 @@ void SingleConnectorInfoWidget::toEditionMode() {
 	layout->setMargin(6);
 	layout->setSpacing(4);
 
-	resize(width(),120);
+	resize(width(),SingleConnectorHeight*3);
+	setMaximumHeight(SingleConnectorHeight*3);
 	updateGeometry();
 
 	show();

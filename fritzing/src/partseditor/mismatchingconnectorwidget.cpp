@@ -69,6 +69,7 @@ MismatchingConnectorWidget::MismatchingConnectorWidget(ItemBase::ViewIdentifier 
 	this->setLayout(lo);
 
 	updateGeometry();
+	setMaximumHeight(SingleConnectorHeight);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }
 
