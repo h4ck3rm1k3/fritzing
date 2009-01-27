@@ -91,6 +91,13 @@ div.poweredBy {
 	padding: 4px 6px;
 	background: #eee;
 }
+#content ul.djangoForumPagination li.active_page {
+	background-color: #93294e;
+	color: #fff;
+}
+#content ul.djangoForumPagination li.active_page a{
+    color: #fff;
+}
 #content ul.djangoForumPagination li a {
     text-decoration: none;
     border: none;
