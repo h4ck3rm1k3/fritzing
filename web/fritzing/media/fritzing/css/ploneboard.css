@@ -1,62 +1,97 @@
 /* @override http://fritzing.org/media/fritzing/css/ploneboard.css */
 
 /* Readability */
+
 table td.forumTitleCell {
-  width: 65%;
+    width: 65%;
 }
-table .discreet, /* temporary*/
+
+table .discreet, 
+
+/* temporary*/
 table td.forumTitleCell .discreet {
-  float: right;
+    float: right;
 }
-table td.listingCheckbox, /* temporary*/
+
+table td.listingCheckbox, 
+
+/* temporary*/
 table td.forumConversationsCell {
-  width: 10%;
-  text-align: center;
+    width: 10%;
+    text-align: center;
 }
+
 table td.forumMostRecentCell {
-  width: 25%;
+    width: 25%;
 }
+
 table.listing a {
-  border-bottom: 1px solid transparent !important;
+    border-bottom: 1px solid transparent !important;
 }
+
 table.listing th {
-  padding: 0;
+    padding: 0;
 }
+
 #content ul.discreet li {
-  display: inline;
-  margin-left: 1em;
+    display: inline;
+    margin-left: 1em;
 }
+
 div.boardComment {
-  border-top: 1px solid #ccc;
+    border-top: 1px solid #ccc;
 }
+
 div.boardCommentDetails {
-  color: #666;
+    color: #666;
 }
+
 div.boardCommentComplete {
-  padding: 0.4em 0.6em;
-  border-top: 1px solid #e7e7e7;
+    margin-left: -0.6em;
+    padding: 0.4em 0.6em;
+    border-top: 1px solid #e7e7e7;
 }
 
 div.boardCommentComplete.odd {
-  background-color: #f9f9f9
+    background-color: #f9f9f9
 }
+
 div.boardCommentActions form {
-  width: auto;
-  float: left;
+    width: auto;
+    float: left;
 }
+
 form {
-  float:right;
+    float: right;
 }
+
 input.inputLabelActive {
-  width: auto;
+    width: auto;
 }
 
 /* Hiding confusing elements */
+
 body.template-conversation_view #region-content div.documentByLine,
 body.template-conversation_view div.documentDescription,
 div.boardCommentHeaderTitleBlock h3,
 div.boardCommentReplyActions,
 img.portraitPhoto,
 div.poweredBy {
-  display: none;
+    display: none;
+}
+
+#content ul.djangoForumPagination {
+	padding: 0px;
+	margin: 20px 0px;
+}
+
+#content ul.djangoForumPagination li {
+    display: inline;
+    list-style: none;
+	padding: 4px 6px;
+	background: #eee;
+}
+#content ul.djangoForumPagination li a {
+    text-decoration: none;
+    border: none;
 }

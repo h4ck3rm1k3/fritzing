@@ -27,6 +27,7 @@
   <li class="numbers"><a href="?page={{ page_number }}">{{ page_number }}</a></li>
 {% endfor %}
   <li class="last"><a href="?page={{ paginator.num_pages }}">{% trans "Last" %}</a></li>
+  <li class="all"><a href="?page=all">{% trans "Show all" %}</a></li>
 </ul>
 {% endif %}
 
