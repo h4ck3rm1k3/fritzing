@@ -442,7 +442,7 @@ protected:
 class ChangeLabelTextCommand : public BaseCommand
 {
 public:
-    ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QUndoCommand *parent);
+    ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, QUndoCommand *parent);
     void undo();
     void redo();
 	int id() const;
@@ -455,6 +455,8 @@ protected:
     long m_itemID;
     QString m_oldText;
     QString m_newText;
+	QSizeF m_oldSize;
+	QSizeF m_newSize;
 	bool m_firstTime;
 
 	static int changeLabelTextCommandID;
@@ -474,6 +476,19 @@ protected:
     long m_itemID;
     qreal m_degrees;
 	Qt::Orientations m_orientation;
+};
+
+class ResizeNoteCommand : public BaseCommand
+{
+public:
+	ResizeNoteCommand(class SketchWidget *sketchWidget, long id, const QSizeF & oldSize, const QSizeF & newSize, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+    long m_itemID;
+    QSizeF m_oldSize;
+	QSizeF m_newSize;
 };
 
 

@@ -134,6 +134,12 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
    			modelPart->partInstanceStuff()->setTitle(instanceTitle);
    		}
 
+   		QString instanceText = instance.firstChildElement("text").text();
+   		if(!instanceText.isNull() && !instanceText.isEmpty()) {
+   			if(!modelPart->partInstanceStuff()) modelPart->setPartInstanceStuff(new PartInstanceStuff());
+   			modelPart->partInstanceStuff()->setText(instanceText);
+   		}
+
    		bool ok;
    		long index = instance.attribute("modelIndex").toLong(&ok);
    		if (ok) {

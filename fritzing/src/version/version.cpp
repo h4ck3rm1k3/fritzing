@@ -25,7 +25,7 @@ $Date: 2009-01-22 20:49:15 +0100 (Thu, 22 Jan 2009) $
 ********************************************************************/
 
 #include "version.h"
-								
+											
 #include <QString>
 #include <QStringList>	
 											

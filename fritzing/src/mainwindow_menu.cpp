@@ -24,8 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
 #include <QtGui>
 #include <QSvgGenerator>
 
@@ -40,6 +38,7 @@ $Date$
 #include "eventeater.h"
 #include "virtualwire.h"
 #include "fsvgrenderer.h"
+#include "labels/note.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -861,6 +860,10 @@ void MainWindow::createEditMenuActions() {
 	m_deselectAct->setStatusTip(tr("Deselect"));
 	connect(m_deselectAct, SIGNAL(triggered()), this, SLOT(deselect()));
 
+	m_addNoteAct = new QAction(tr("Add Note"), this);
+	m_addNoteAct->setStatusTip(tr("Add a note"));
+	connect(m_addNoteAct, SIGNAL(triggered()), this, SLOT(addNote()));
+
 	m_preferencesAct = new QAction(tr("&Preferences..."), this);
 	m_preferencesAct->setStatusTip(tr("Show the application's about box"));
 	connect(m_preferencesAct, SIGNAL(triggered()), QApplication::instance(), SLOT(preferences()));
@@ -1109,6 +1112,8 @@ void MainWindow::createMenus()
     m_editMenu->addAction(m_selectAllAct);
     m_editMenu->addAction(m_deselectAct);
     m_editMenu->addSeparator();
+    m_editMenu->addAction(m_addNoteAct);
+    m_editMenu->addSeparator();
     m_editMenu->addAction(m_preferencesAct);
     updateEditMenu();
     connect(m_editMenu, SIGNAL(aboutToShow()), this, SLOT(updateEditMenu()));
@@ -1265,7 +1270,7 @@ void MainWindow::updatePartMenu() {
 	m_sendBackwardAct->setEnabled(enable);
 	m_sendToBackAct->setEnabled(enable);
 
-	m_showPartLabelAct->setEnabled(itemCount.selCount > 0);
+	m_showPartLabelAct->setEnabled((itemCount.selCount > 0)  && (itemCount.selCount > itemCount.noteCount));
 	m_showPartLabelAct->setChecked(itemCount.labelCount == itemCount.selCount);
 
 	enable = (itemCount.selRotatable > 0);
@@ -1956,3 +1961,22 @@ void MainWindow::showPartLabels() {
 
 	m_currentGraphicsView->showPartLabels(m_showPartLabelAct->isChecked());
 }
+
+void MainWindow::addNote() {
+	if (m_currentGraphicsView == NULL) return;
+
+	ViewGeometry vg;
+	vg.setRect(0, 0, Note::emptyMinWidth, Note::emptyMinHeight);
+	QPointF tl = m_currentGraphicsView->mapToScene(QPoint(0, 0));
+	QSizeF vpSize = m_currentGraphicsView->viewport()->size();
+	tl.setX(tl.x() + ((vpSize.width() - Note::emptyMinWidth) / 2));
+	tl.setY(tl.y() + ((vpSize.height() - Note::emptyMinHeight) / 2));
+	vg.setLoc(tl);
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
+	m_currentGraphicsView->stackSelectionState(false, parentCommand);
+	m_currentGraphicsView->scene()->clearSelection();
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, Note::moduleIDName, vg, ItemBase::getNextID(), false, -1, parentCommand);
+	m_undoStack->push(parentCommand);
+}
+

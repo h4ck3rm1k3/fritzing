@@ -230,6 +230,9 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (properties.text().contains("plain pcb", Qt::CaseInsensitive)) {
 		type = ModelPart::Board;
 	}
+	else if (properties.text().contains("note", Qt::CaseInsensitive)) {
+		type = ModelPart::Note;
+	}
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);
 	if (modelPart == NULL) return NULL;
 

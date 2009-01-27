@@ -58,6 +58,7 @@ $Date$
     <file>resources/parts/core/wire.fzp</file>
     <file>resources/parts/core/cmRuler.fzp</file>
     <file>resources/parts/core/tinyBreadboard.fzp</file>
+    <file>resources/parts/core/note.fzp</file>
     <file>resources/parts/svg/core/icon/wireicon.svg</file>
     <file>resources/parts/svg/core/icon/tinyBreadboardIcon.svg</file>
     <file>resources/parts/svg/core/icon/rulericon.svg</file>
@@ -92,6 +93,9 @@ $Date$
     <file>resources/images/icons/toolbarDiyEnabled_icon.png</file>
     <file>resources/images/icons/toolbarDiyDisabled_icon.png</file>
     <file>resources/images/icons/toolbarDiyPressed_icon.png</file>
+    <file>resources/images/icons/toolbarNotesEnabled_icon.png</file>
+    <file>resources/images/icons/toolbarNotesDisabled_icon.png</file>
+    <file>resources/images/icons/toolbarNotesPressed_icon.png</file>
     <file>resources/images/icons/toolbarRotateEnabled_icon.png</file>
     <file>resources/images/icons/toolbarRotateDisabled_icon.png</file>
     <file>resources/images/icons/toolbarRotatePressed_icon.png</file>
@@ -109,6 +113,7 @@ $Date$
     <file>resources/images/icons/dockWidgetCollapseNormal_icon.png</file>
     <file>resources/images/icons/dockWidgetCollapseHover_icon.png</file>
     <file>resources/images/icons/dockWidgetCollapsePressed_icon.png</file>
+    <file>resources/images/icons/noteResizeGrip.png</file>
     <file>resources/styles/fritzing.qss</file>
     <file>resources/styles/partseditor.qss</file>
     <file>resources/styles/inviewhelp.qss</file>

@@ -177,6 +177,14 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			if(!title.isNull() && !title.isEmpty()) {
 				writeTag(streamWriter,"title",m_partInstanceStuff->title());
 			}
+
+			QString text = m_partInstanceStuff->text();
+			if(!text.isNull() && !text.isEmpty()) {
+				streamWriter.writeStartElement("text");
+				streamWriter.writeCharacters(text);
+				streamWriter.writeEndElement();
+			}
+
 		}
 
 		// tell the views to write themselves out

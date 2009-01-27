@@ -72,6 +72,8 @@ public:
 	bool selected();
 	void setSelected(bool);
 	QRectF rect() const;
+	void setRect(qreal x, qreal y, qreal width, qreal height);
+	void setRect(const QRectF &);
 	void setTransform(QTransform);
 	QTransform transform() const;
 	void set(const ViewGeometry &);

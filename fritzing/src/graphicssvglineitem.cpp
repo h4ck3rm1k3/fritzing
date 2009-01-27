@@ -30,7 +30,6 @@ $Date$
 // note: copied most of this code directly from Qt's QGraphicsLineItem code
 // so it may need updated with new versions > 4.4.0
 
-static void qt_graphicsItem_highlightSelected(GraphicsSvgLineItem *item, QPainter *painter, const QStyleOptionGraphicsItem *option);
 static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier);
 
 ////////////////////////////////////////
@@ -172,7 +171,7 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	if (m_hasLine) {
 	    if (option->state & QStyle::State_Selected) {	
 			// draw this first because otherwise it seems to draw a dashed line down the middle
-	        qt_graphicsItem_highlightSelected(this, painter, option);
+	        qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
         }
 	    painter->setPen(m_pen);
 	    painter->drawLine(getPaintLine());
@@ -189,7 +188,7 @@ const QLineF & GraphicsSvgLineItem::getPaintLine() {
 
 /////////////////////////////////
 
-static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier)
+QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen, int multiplier)
 {
     // We unfortunately need this hack as QPainterPathStroker will set a width of 1.0
     // if we pass a value of 0.0 to QPainterPathStroker::setWidth()
@@ -212,9 +211,7 @@ static QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, cons
     return p;
 }
 
-
-static void qt_graphicsItem_highlightSelected(
-    GraphicsSvgLineItem *item, QPainter *painter, const QStyleOptionGraphicsItem *option)
+void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path)
 {
 	/*
 	QLineF l1 = item->line();
@@ -254,7 +251,7 @@ static void qt_graphicsItem_highlightSelected(
     if (qFuzzyCompare(qMax(murect.width(), murect.height()) + 1, 1))
         return;
 
-    const QRectF mbrect = painter->transform().mapRect(item->boundingRect());
+    const QRectF mbrect = painter->transform().mapRect(boundingRect);
     if (qMin(mbrect.width(), mbrect.height()) < qreal(1.0))
         return;
 
@@ -267,8 +264,6 @@ static void qt_graphicsItem_highlightSelected(
         fgcolor.red()   > 127 ? 0 : 255,
         fgcolor.green() > 127 ? 0 : 255,
         fgcolor.blue()  > 127 ? 0 : 255);
-	
-	QPainterPath path = item->hoverShape();
 
     painter->setPen(QPen(bgcolor, penWidth, Qt::SolidLine));
     painter->setBrush(Qt::NoBrush);

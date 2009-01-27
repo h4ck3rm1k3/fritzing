@@ -299,9 +299,10 @@ void ItemBase::setViewLayerID(ViewLayer::ViewLayerID viewLayerID, const LayerHas
    		ViewLayer * viewLayer = viewLayers.value(m_viewLayerID);
    		if (viewLayer != NULL) {
 			m_zUninitialized = false;
-   			m_viewGeometry.setZ(viewLayer->nextZ());
+			if (!viewLayer->alreadyInLayer(m_viewGeometry.z())) {
+   				m_viewGeometry.setZ(viewLayer->nextZ());
+			}
   		}
-
   	}
 
     //DebugDialog::debug(QString("using z: %1 z:%2 lid:%3").arg(modelPart()->modelPartStuff()->title()).arg(m_viewGeometry.z()).arg(m_viewLayerID) );
@@ -768,7 +769,7 @@ void ItemBase::partLabelChanged(const QString & newText) {
 	QString oldText = modelPart()->partInstanceStuff()->title();
 	setInstanceTitleAux(newText);
 	if (infographics != NULL) {
-		infographics->partLabelChanged(this, oldText, newText);
+		infographics->partLabelChanged(this, oldText, newText, QSizeF(), QSizeF());
 	}
 }
 

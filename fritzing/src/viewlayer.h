@@ -84,6 +84,7 @@ public:
 	ViewLayer * parentLayer();
 	void setParentLayer(ViewLayer *);
 	const QList<ViewLayer *> & childLayers();
+	bool alreadyInLayer(qreal z);
 
 public:
 	static ViewLayerID viewLayerIDFromString(const QString &);
@@ -98,6 +99,7 @@ protected:
 	ViewLayerID m_viewLayerID;
 	QAction* m_action;
 	qreal m_nextZ;
+	qreal m_initialZ;
 	QList<ViewLayer *> m_childLayers;
 	ViewLayer * m_parentLayer;
 };

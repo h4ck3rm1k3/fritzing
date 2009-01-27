@@ -62,6 +62,7 @@ $Date$
 #include "mainwindow.h"
 #include "version/version.h"
 #include "labels/partlabel.h"
+#include "labels/note.h"
 
 static QColor labelTextColor = Qt::black;
 
@@ -243,6 +244,12 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 						QDomElement extras = view.firstChildElement("wireExtras");
 						wire->setExtras(extras);
 					}
+					else {
+						Note * note = dynamic_cast<Note *>(item);
+						if (note != NULL && mp->partInstanceStuff() != NULL) {
+							note->setText(mp->partInstanceStuff()->text());
+						}
+					}
 				}
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
@@ -420,58 +427,71 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 	}
 
-	if (modelPart->itemType() == ModelPart::Wire ) {
-		bool virtualWire = viewGeometry.getVirtual();
-		Wire * wire = NULL;
-		if (virtualWire) {
-			wire = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
-             			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
+	switch (modelPart->itemType()) {
+		case ModelPart::Wire:
+		{
+			bool virtualWire = viewGeometry.getVirtual();
+			Wire * wire = NULL;
+			if (virtualWire) {
+				wire = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+             				wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 
-			// prevents virtual wires from flashing up on screen
-			wire->setCanChainMultiple(canChainMultiple());
-		}
-		else {
-			if (viewGeometry.getTrace()) {
-				wire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+				// prevents virtual wires from flashing up on screen
+				wire->setCanChainMultiple(canChainMultiple());
 			}
 			else {
-				wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
-				if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
-					wire->setNormal(true);
+				if (viewGeometry.getTrace()) {
+					wire = new TraceWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
 				}
+				else {
+					wire = new Wire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+					if (!wire->hasAnyFlag(ViewGeometry::RatsnestFlag)) {
+						wire->setNormal(true);
+					}
+				}
+				wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 			}
-			wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
+
+			setWireVisible(wire);
+
+			bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
+					this, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
+					Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
+			succeeded = succeeded && connect(wire, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, QLineF)),
+					this, SLOT(wire_wireSplit(Wire*, QPointF, QPointF, QLineF)));
+			succeeded = succeeded && connect(wire, SIGNAL(wireJoinSignal(Wire*, ConnectorItem *)),
+					this, SLOT(wire_wireJoin(Wire*, ConnectorItem*)));
+			if (!succeeded) {
+				DebugDialog::debug("wire signal connect failed");
+			}
+
+			addToScene(wire, wire->viewLayerID());
+			DebugDialog::debug(QString("adding wire %1 %2 %3")
+				.arg(wire->id())
+				.arg(m_viewIdentifier)
+				.arg(viewGeometry.flagsAsInt())
+				);
+
+			checkNewSticky(wire);
+			return wire;
 		}
-
-		setWireVisible(wire);
-
-		bool succeeded = connect(wire, SIGNAL(wireChangedSignal(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)	),
-				this, SLOT(wire_wireChanged(Wire*, QLineF, QLineF, QPointF, QPointF, ConnectorItem *, ConnectorItem *)),
-				Qt::DirectConnection);		// DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-		succeeded = succeeded && connect(wire, SIGNAL(wireSplitSignal(Wire*, QPointF, QPointF, QLineF)),
-				this, SLOT(wire_wireSplit(Wire*, QPointF, QPointF, QLineF)));
-		succeeded = succeeded && connect(wire, SIGNAL(wireJoinSignal(Wire*, ConnectorItem *)),
-				this, SLOT(wire_wireJoin(Wire*, ConnectorItem*)));
-		if (!succeeded) {
-			DebugDialog::debug("wire signal connect failed");
+		case ModelPart::Note:
+		{
+			Note * note = new Note(modelPart, m_viewIdentifier, viewGeometry, id, NULL);
+			note->setViewLayerID(getNoteViewLayerID(), m_viewLayers);
+			note->setZValue(note->z());
+			note->setVisible(true);
+			addToScene(note, getNoteViewLayerID());
+			return note;
 		}
-
-		addToScene(wire, wire->viewLayerID());
-		DebugDialog::debug(QString("adding wire %1 %2 %3")
-			.arg(wire->id())
-			.arg(m_viewIdentifier)
-			.arg(viewGeometry.flagsAsInt())
-			);
-
-		checkNewSticky(wire);
-		return wire;
-	}
-	else {
-    	PaletteItem* paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
-		DebugDialog::debug(QString("adding part %1 %2 %3").arg(id).arg(paletteItem->title()).arg(m_viewIdentifier) );
-    	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors);
-		setNewPartVisible(itemBase);
-		return itemBase;
+		default:
+		{
+    		PaletteItem* paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			DebugDialog::debug(QString("adding part %1 %2 %3").arg(id).arg(paletteItem->title()).arg(m_viewIdentifier) );
+    		ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors);
+			setNewPartVisible(itemBase);
+			return itemBase;
+		}
 	}
 
 }
@@ -685,7 +705,13 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	}
 
 	foreach (ItemBase * itemBase, deletedItems) {
-		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), parentCommand);
+		Note * note = dynamic_cast<Note *>(itemBase);
+		if (note != NULL) {
+			new ChangeLabelTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
+		}
+		else {
+			new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), parentCommand);
+		}
 	}
 
 	foreach (ItemBase * itemBase, deletedItems) {
@@ -1208,6 +1234,8 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
  		 selectItemCommand->addUndo(base->id());
     }
 
+	selectItemCommand->setText(tr("Selection"));
+
     if (pushIt) {
      	m_undoStack->push(selectItemCommand);
     }
@@ -1238,6 +1266,12 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	PartLabel * partLabel =  dynamic_cast<PartLabel *>(item);
 	if (partLabel != NULL) {
 		InfoGraphicsView::viewItemInfo(partLabel->owner());
+		return;
+	}
+
+	// Note's child items (at the moment) are the resize grip and the text editor
+	Note * note = dynamic_cast<Note *>(item->parentItem());
+	if (note != NULL)  {
 		return;
 	}
 
@@ -1274,8 +1308,10 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		}
 
 		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(chief);
-		collectFemaleConnectees(paletteItem);
-		paletteItem->collectWireConnectees(wires);
+		if (paletteItem) {
+			collectFemaleConnectees(paletteItem);
+			paletteItem->collectWireConnectees(wires);
+		}
 	}
 
 	foreach (Wire * wire, wires) {
@@ -1938,6 +1974,7 @@ ItemCount SketchWidget::calcItemCount() {
 	QList<QGraphicsItem *> selItems = scene()->selectedItems();
 
 	itemCount.labelCount = 0;
+	itemCount.noteCount = 0;
 	itemCount.selCount = 0;
 	itemCount.selHFlipable = itemCount.selVFlipable = itemCount.selRotatable = 0;
 	itemCount.itemsCount = 0;
@@ -1969,6 +2006,9 @@ ItemCount SketchWidget::calcItemCount() {
 				if (itemBase->canFlipVertical()) {
 					itemCount.selVFlipable++;
 				}
+			}
+			else if (dynamic_cast<Note *>(itemBase) != NULL) {
+				itemCount.noteCount++;
 			}
 		}
 	}
@@ -2287,6 +2327,10 @@ ViewLayer::ViewLayerID SketchWidget::getConnectorViewLayerID() {
 
 ViewLayer::ViewLayerID SketchWidget::getLabelViewLayerID() {
 	return m_labelViewLayerID;
+}
+
+ViewLayer::ViewLayerID SketchWidget::getNoteViewLayerID() {
+	return m_noteViewLayerID;
 }
 
 
@@ -2683,12 +2727,13 @@ ItemBase::ViewIdentifier SketchWidget::viewIdentifier() {
 }
 
 
-void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label) {
+void SketchWidget::setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note) {
 	m_partViewLayerID = part;
 	m_wireViewLayerID = wire;
 	m_connectorViewLayerID = connector;
 	m_rulerViewLayerID = ruler;
 	m_labelViewLayerID = label;
+	m_noteViewLayerID = note;
 }
 
 void SketchWidget::dragIsDoneSlot(ItemDrag * itemDrag) {
@@ -3039,7 +3084,7 @@ void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, Connect
 	}
 }
 
-void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, const QString &newText) {
+void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize) {
 	// partLabelChanged triggered from inline editing the label
 
 	if (!m_current) {
@@ -3054,14 +3099,14 @@ void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, co
 		InfoGraphicsView::viewItemInfo(pitem);
 	}
 
-	partLabelChangedAux(pitem, oldText, newText);
+	partLabelChangedAux(pitem, oldText, newText, oldSize, newSize);
 }
 
-void SketchWidget::partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText)
+void SketchWidget::partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize)
 {
 	if (pitem == NULL) return;
 
-	ChangeLabelTextCommand * command = new ChangeLabelTextCommand(this, pitem->id(), oldText, newText, NULL);
+	ChangeLabelTextCommand * command = new ChangeLabelTextCommand(this, pitem->id(), oldText, newText, oldSize, newSize, NULL);
 	command->setText(tr("Change %1 label to '%2'").arg(pitem->title()).arg(newText));
 	m_undoStack->push(command);
 }
@@ -3211,7 +3256,7 @@ void SketchWidget::resizeEvent(QResizeEvent * event) {
 }
 
 void SketchWidget::addBreadboardViewLayers() {
-	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel);
+	setViewLayerIDs(ViewLayer::Breadboard, ViewLayer::BreadboardWire, ViewLayer::Breadboard, ViewLayer::BreadboardRuler, ViewLayer::BreadboardLabel, ViewLayer::BreadboardNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard
@@ -3221,7 +3266,7 @@ void SketchWidget::addBreadboardViewLayers() {
 }
 
 void SketchWidget::addSchematicViewLayers() {
-	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel);
+	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
@@ -3230,7 +3275,7 @@ void SketchWidget::addSchematicViewLayers() {
 }
 
 void SketchWidget::addPcbViewLayers() {
-	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel);
+	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
 	layers << ViewLayer::Board << ViewLayer::Ratsnest << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Keepout
@@ -3765,6 +3810,12 @@ const QString & SketchWidget::viewName() {
 void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool isUndoable) {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase != NULL) {
+		Note * note = dynamic_cast<Note *>(itemBase);
+		if (note != NULL) {
+			note->setText(newText);
+			return;
+		}
+
 		QString oldText = itemBase->instanceTitle();
 		itemBase->setInstanceTitle(newText);
 		if (currentlyInfoviewed(itemBase))  {
@@ -3772,7 +3823,7 @@ void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool i
 			InfoGraphicsView::viewItemInfo(itemBase);
 		}
 		if (isUndoable) {
-			partLabelChangedAux(itemBase, oldText, newText);
+			partLabelChangedAux(itemBase, oldText, newText, QSizeF(), QSizeF());
 		}
 	}
 }
@@ -3843,3 +3894,18 @@ void SketchWidget::showPartLabels(bool show)
 	}
 }
 
+void SketchWidget::noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize) 
+{
+	ResizeNoteCommand * command = new ResizeNoteCommand(this, itemBase->id(), oldSize, newSize, NULL);
+	command->setText(tr("Resize Note"));
+	m_undoStack->push(command);
+	clearHoldingSelectItem();
+}
+
+void SketchWidget::resizeNote(long itemID, const QSizeF & size) 
+{
+	Note * note = dynamic_cast<Note *>(findItem(itemID));
+	if (note == NULL) return;
+
+	note->setSize(size);
+}

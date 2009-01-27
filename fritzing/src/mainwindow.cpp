@@ -509,6 +509,13 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 	return autorouteButton;
 }
 
+SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent) {
+	SketchToolButton *noteButton = new SketchToolButton("Notes",parent, m_addNoteAct);
+	noteButton->setText(tr("Add a note"));
+	noteButton->setEnabledIcon();
+	return noteButton;
+}
+
 SketchToolButton *MainWindow::createExportDiyButton(SketchAreaWidget *parent) {
 	SketchToolButton *exportDiyButton = new SketchToolButton("Diy",parent, m_exportDiyAct);
 	exportDiyButton->setText(tr("Export Etchable PDF"));
@@ -536,7 +543,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	/*if(viewId != ItemBase::PCBView) {
 		retval << createExportToPdfButton(parent);
 	}*/
-	retval << createRotateButton(parent);
+	retval << createNoteButton(parent) << createRotateButton(parent);
 	if(viewId == ItemBase::BreadboardView) {
 		retval << createFlipButton(parent);
 	} else if(viewId == ItemBase::PCBView) {

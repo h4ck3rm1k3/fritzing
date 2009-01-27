@@ -120,11 +120,11 @@ void VersionChecker::parseXml()
 				m_inUpdated = true;
 			}
 
-			DebugDialog::debug(QString("%1<%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
+			//DebugDialog::debug(QString("%1<%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
 			m_depth++;
-			foreach (QXmlStreamAttribute attribute, m_xml.attributes()) {
-				DebugDialog::debug(QString("%1%2: %3").arg(QString((m_depth + 1) * 4, ' ')).arg(attribute.name().toString()).arg(attribute.value().toString()));
-			}
+			//foreach (QXmlStreamAttribute attribute, m_xml.attributes()) {
+				//DebugDialog::debug(QString("%1%2: %3").arg(QString((m_depth + 1) * 4, ' ')).arg(attribute.name().toString()).arg(attribute.value().toString()));
+			//}
 		} 
 		else if (m_xml.isEndElement()) {
 			QString elementName = m_xml.name().toString();
@@ -139,12 +139,12 @@ void VersionChecker::parseXml()
 				m_inUpdated = false;
 			}
 			m_depth--;
-			DebugDialog::debug(QString("%1</%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
+			//DebugDialog::debug(QString("%1</%2>").arg(QString(m_depth * 4, ' ')).arg(elementName));
         } 
 		else if (m_xml.isCharacters() && !m_xml.isWhitespace()) {
 			QString t = m_xml.text().toString();
 			t.replace(QRegExp("[\\s]+"), " ");
-			DebugDialog::debug(QString("%1%2").arg(QString((m_depth + 1) * 4, ' ')).arg(t));
+			//DebugDialog::debug(QString("%1%2").arg(QString((m_depth + 1) * 4, ' ')).arg(t));
 			if (m_inTitle) {
 				m_currentTitle = m_xml.text().toString();
 			}

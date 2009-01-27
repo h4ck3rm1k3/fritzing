@@ -31,6 +31,7 @@ $Date$
 PartInstanceStuff::PartInstanceStuff() {
 	m_domDocument = NULL;
 	m_title = QString::null;
+	m_text = QString::null;
 }
 
 PartInstanceStuff::PartInstanceStuff(QDomDocument * domDocument, const QString & path) {
@@ -38,7 +39,7 @@ PartInstanceStuff::PartInstanceStuff(QDomDocument * domDocument, const QString &
 	Q_UNUSED(path);
 }
 
-void PartInstanceStuff::loadText(QDomElement parent, QString tagName, QString &field) {
+void PartInstanceStuff::loadTagText(QDomElement parent, QString tagName, QString &field) {
 	QDomElement tagElement = parent.firstChildElement(tagName);
 	if (!tagElement.isNull()) {
 		field = tagElement.text();
@@ -51,3 +52,11 @@ const QString & PartInstanceStuff::title() {
 void PartInstanceStuff::setTitle(QString title) {
 	m_title = title;
 }
+
+const QString & PartInstanceStuff::text() {
+	return m_text;
+}
+void PartInstanceStuff::setText(QString text) {
+	m_text = text;
+}
+

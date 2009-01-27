@@ -165,7 +165,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_iconViewImage->setSketchModel(m_sketchModel);
 	m_iconViewImage->setUndoStack(m_undoStack);
 	m_iconViewImage->addViewLayer(new ViewLayer(ViewLayer::Icon, true, 2.5));
-	m_iconViewImage->setViewLayerIDs(ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon);
+	m_iconViewImage->setViewLayerIDs(ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon, ViewLayer::Icon);
 	if(modelPart) {
 		m_iconViewImage->loadFromModel(m_paletteModel, modelPart);
 	}

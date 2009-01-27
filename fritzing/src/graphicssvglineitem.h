@@ -62,10 +62,16 @@ public:
 protected:
 	virtual const QLineF & getPaintLine();
 
+public:
+	static void qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path);
+
+
 protected:
 	QLineF	m_line;
 	QPen	m_pen;	
 	bool	m_hasLine;
 };
+
+
 
 #endif

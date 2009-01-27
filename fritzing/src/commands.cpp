@@ -740,17 +740,24 @@ QString MoveLabelCommand::getParamString() const {
 
 ///////////////////////////////////////////////
 
-ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, const QString & oldText, const QString & newText, QUndoCommand *parent)
+ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, 
+											   const QString & oldText, const QString & newText, 
+											   QSizeF oldSize, QSizeF newSize, QUndoCommand *parent)
 	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
     m_itemID = id;
     m_oldText = oldText;
     m_newText = newText;
+	m_oldSize = oldSize;
+	m_newSize = newSize;
 	m_firstTime = true;
 }
 
 void ChangeLabelTextCommand::undo() {
     m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, false);
+	if (m_oldSize != m_newSize) {
+		m_sketchWidget->resizeNote(m_itemID, m_oldSize);
+	}
 }
 
 void ChangeLabelTextCommand::redo() {
@@ -760,6 +767,10 @@ void ChangeLabelTextCommand::redo() {
 	}
 
     m_sketchWidget->setInstanceTitle(m_itemID, m_newText, false);
+	if (m_oldSize != m_newSize) {
+		m_sketchWidget->resizeNote(m_itemID, m_newSize);
+	}
+
 }
 
 int ChangeLabelTextCommand::id() const {
@@ -777,6 +788,12 @@ bool ChangeLabelTextCommand::mergeWith(const QUndoCommand *other)
     const ChangeLabelTextCommand * sother = dynamic_cast<const ChangeLabelTextCommand *>(other);
     if (sother == NULL) return false;
 
+	if (sother->m_itemID != m_itemID) {
+		// this is not the same label so don't merge
+		return false;
+	}
+
+	m_newSize = sother->m_newSize;
 	m_newText = sother->m_newText;
     return true;
 }
@@ -816,3 +833,24 @@ QString RotateFlipLabelCommand::getParamString() const {
 			.arg(m_itemID).arg(m_degrees).arg(m_orientation);
 
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ResizeNoteCommand::ResizeNoteCommand(SketchWidget* sketchWidget, long itemID, const QSizeF & oldSize, const QSizeF & newSize, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = itemID;
+    m_oldSize = oldSize;
+	m_newSize = newSize;
+}
+
+void ResizeNoteCommand::undo()
+{
+    m_sketchWidget->resizeNote(m_itemID, m_oldSize);
+}
+
+void ResizeNoteCommand::redo()
+{
+    m_sketchWidget->resizeNote(m_itemID, m_newSize);
+}
+

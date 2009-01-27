@@ -54,6 +54,7 @@ public:
 		 Breadboard,
 		 Board,
 		 Module,
+		 Note,
 		 Unknown
 	};
 

@@ -37,7 +37,7 @@ ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 	m_viewLayerID = viewLayerID;
 	m_visible = visible;
 	m_action = NULL;
-	m_nextZ = initialZ;
+	m_initialZ = m_nextZ = initialZ;	
 	m_parentLayer = NULL;
 }
 
@@ -172,3 +172,7 @@ const QList<ViewLayer *> & ViewLayer::childLayers() {
 	return m_childLayers;
 }
 
+
+bool ViewLayer::alreadyInLayer(qreal z) {
+	return (z >= m_initialZ && z <= m_nextZ);
+}

@@ -140,6 +140,16 @@ QRectF ViewGeometry::rect() const {
 	return m_rect;
 }
 
+void ViewGeometry::setRect(qreal x, qreal y, qreal width, qreal height) 
+{
+	m_rect.setRect(x, y, width, height);
+}
+
+void ViewGeometry::setRect(const QRectF & r) 
+{
+	setRect(r.x(), r.y(), r.width(), r.height());
+}
+
 void ViewGeometry::setTransform(QTransform transform) {
 	m_transform = transform;
 }
@@ -154,6 +164,7 @@ void ViewGeometry::set(const ViewGeometry & that) {
 	m_loc = that.m_loc;
 	m_transform = that.m_transform;
 	m_wireFlags = that.m_wireFlags;
+	m_rect = that.m_rect;
 }
 
 void ViewGeometry::setVirtual(bool virt) {

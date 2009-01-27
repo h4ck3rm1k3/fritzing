@@ -198,6 +198,7 @@ protected slots:
 	void raiseAndActivate();
 	void activateWindowAux();
 	void showPartLabels();
+	void addNote();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -265,6 +266,7 @@ protected:
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
 	SketchToolButton *createExportDiyButton(SketchAreaWidget *parent);
+	SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent);
 	QWidget *createToolbarSpacer(SketchAreaWidget *parent);
 
 	SketchAreaWidget *currentSketchArea();
@@ -374,6 +376,7 @@ protected:
     QAction *m_deleteAct;
     QAction *m_selectAllAct;
     QAction *m_deselectAct;
+	QAction *m_addNoteAct;
 
     // Part Menu
     QMenu *m_partMenu;

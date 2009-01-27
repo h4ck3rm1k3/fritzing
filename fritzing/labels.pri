@@ -17,5 +17,9 @@
 # $Date$
 # ********************************************************************/
 
-HEADERS += src/labels/partlabel.h 
-SOURCES += src/labels/partlabel.cpp
+HEADERS += src/labels/partlabel.h \
+	src/labels/note.h
+ 
+SOURCES += src/labels/partlabel.cpp \
+	src/labels/note.cpp
+

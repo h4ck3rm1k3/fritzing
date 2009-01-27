@@ -59,6 +59,7 @@ struct ItemCount {
 	int selRotatable;
 	int selHFlipable;
 	int selVFlipable;
+	int noteCount;
 };
 
 class SketchWidget : public InfoGraphicsView
@@ -125,7 +126,7 @@ public:
 
  	qreal currentZoom();
 	ItemBase::ViewIdentifier viewIdentifier();
-	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label);
+	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
 	void stickyScoop(ItemBase * stickyOne, QUndoCommand * parentCommand);
 	void checkNewSticky(ItemBase * itemBase);
@@ -137,7 +138,7 @@ public:
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
 
-	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext);
+	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext, QSizeF oldSize, QSizeF newSize);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
@@ -193,6 +194,9 @@ public:
 	void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
 	void rotateFlipPartLabel(long itemID, qreal degrees, Qt::Orientations flipDirection);
 	void showPartLabels(bool show);
+	void noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize);
+	void resizeNote(long itemID, const QSizeF & );
+	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -206,7 +210,6 @@ protected:
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
 	virtual void wheelEvent(QWheelEvent* event);
-	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
     PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors);
 	ItemBase * findItem(long id);
 	void clearHoldingSelectItem();
@@ -219,6 +222,7 @@ protected:
 	ViewLayer::ViewLayerID getRulerViewLayerID();
 	ViewLayer::ViewLayerID getConnectorViewLayerID();
 	ViewLayer::ViewLayerID getLabelViewLayerID();
+	ViewLayer::ViewLayerID getNoteViewLayerID();
 	void dragMoveHighlightConnector(QPoint eventPos);
 
 	void addToScene(ItemBase * item, ViewLayer::ViewLayerID viewLayerID);
@@ -285,7 +289,7 @@ protected:
 	virtual bool doRatsnestOnCopy();
 	virtual const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QColor & getLabelTextColor();
-	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText);
+	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -396,6 +400,7 @@ protected:
 	ViewLayer::ViewLayerID m_rulerViewLayerID;
 	ViewLayer::ViewLayerID m_connectorViewLayerID;
 	ViewLayer::ViewLayerID m_labelViewLayerID;
+	ViewLayer::ViewLayerID m_noteViewLayerID;
 	QList<QGraphicsItem *> m_temporaries;
 	bool m_chainDrag;
 	QPointF m_mousePressScenePos;

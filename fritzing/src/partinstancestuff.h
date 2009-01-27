@@ -41,15 +41,19 @@ public:
 	const QString & title();
 	void setTitle(QString title);
 
+	const QString & text();
+	void setText(QString text);
+
 	const QHash<QString,QString> & properties();
 	void setProperties(const QHash<QString,QString> &properties);
 
 protected:
-	void loadText(QDomElement parent, QString tagName, QString &field);
+	void loadTagText(QDomElement parent, QString tagName, QString &field);
 
 	QDomDocument* m_domDocument;
 
 	QString m_title;
+	QString m_text;
 	QHash<QString,QString> m_properties;
 };
 #endif /* PARTINSTANCESTUFF_H_ */

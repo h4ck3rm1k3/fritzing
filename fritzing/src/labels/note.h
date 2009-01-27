@@ -1,0 +1,91 @@
+/*******************************************************************
+
+Part of the Fritzing project - http://fritzing.org
+Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
+
+Fritzing is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fritzing is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************
+
+$Revision: 2195 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-16 23:25:09 +0100 (Fri, 16 Jan 2009) $
+
+********************************************************************/
+
+#ifndef NOTE_H
+#define NOTE_H
+
+#include <QGraphicsTextItem>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QWidget>
+#include <QXmlStreamWriter>
+#include <QDomElement>
+#include <QTextDocument>
+#include <QKeyEvent>
+
+#include "../itembase.h"
+
+class Note : public ItemBase
+{
+Q_OBJECT
+
+public:
+	Note(class ModelPart*, ItemBase::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
+	
+	void saveGeometry();
+	bool itemMoved();
+	void saveInstanceLocation(QXmlStreamWriter &);
+	void moveItem(ViewGeometry &);
+	void rotateItem(qreal degrees);
+	ItemBase * layerKinChief();
+	void findConnectorsUnder();
+	bool resizing();
+	void setText(const QString & text);
+	void setText(const QDomElement & textElement);
+	QString text();
+	void setSize(const QSizeF & size);
+	void setHidden(bool hide) ;
+
+protected:
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	QRectF boundingRect() const;
+	QPainterPath shape() const;
+	void positionGrip();
+	void mousePressEvent ( QGraphicsSceneMouseEvent * event );
+	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
+	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+
+protected slots:
+	void contentsChangedSlot();
+
+public:
+	static QString moduleIDName;
+	static const int emptyMinWidth;
+	static const int emptyMinHeight;
+	static QString initialTextString;
+
+protected:
+	QRectF m_rect;
+    QPen m_pen;
+    QBrush m_brush;
+	QGraphicsPixmapItem * m_resizeGrip;
+	bool m_inResize;
+	QPointF m_resizePos;
+	QGraphicsTextItem * m_graphicsTextItem;
+
+};
+
+#endif

@@ -55,13 +55,13 @@ ModelPartStuff::ModelPartStuff(QDomDocument * domDocument, const QString & path)
 		return;
 	}
 
-	loadText(root, "title", m_title);
-	loadText(root, "label", m_label);
-	loadText(root, "version", m_version);
-	loadText(root, "author", m_author);
-	loadText(root, "description", m_description);
-	loadText(root, "taxonomy", m_taxonomy);
-	loadText(root, "date", m_date);
+	loadTagText(root, "title", m_title);
+	loadTagText(root, "label", m_label);
+	loadTagText(root, "version", m_version);
+	loadTagText(root, "author", m_author);
+	loadTagText(root, "description", m_description);
+	loadTagText(root, "taxonomy", m_taxonomy);
+	loadTagText(root, "date", m_date);
 
 	populateTagCollection(root, m_tags, "tags");
 	populateTagCollection(root, m_properties, "properties", "name");
@@ -69,7 +69,7 @@ ModelPartStuff::ModelPartStuff(QDomDocument * domDocument, const QString & path)
 	m_moduleID = root.attribute("moduleId", "");
 }
 
-void ModelPartStuff::loadText(QDomElement parent, QString tagName, QString &field) {
+void ModelPartStuff::loadTagText(QDomElement parent, QString tagName, QString &field) {
 	QDomElement tagElement = parent.firstChildElement(tagName);
 	if (!tagElement.isNull()) {
 		field = tagElement.text();

@@ -99,10 +99,12 @@ HtmlInfoView * InfoGraphicsView::infoView() {
 void InfoGraphicsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
-void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText) {
+void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
 	Q_UNUSED(item);
 	Q_UNUSED(oldText);
 	Q_UNUSED(newText);
+	Q_UNUSED(oldSize);
+	Q_UNUSED(newSize);
 }
 
 QGraphicsItem *InfoGraphicsView::selectedAux() {
@@ -127,4 +129,10 @@ void InfoGraphicsView::rotateFlipPartLabel(ItemBase * itemBase, qreal degrees, Q
 	Q_UNUSED(itemBase);
 	Q_UNUSED(degrees);
 	Q_UNUSED(flipDirection);
+}
+
+void InfoGraphicsView::noteSizeChanged(ItemBase * itemBase, const QRectF & oldRect, const QRectF & newRect) {
+	Q_UNUSED(itemBase);
+	Q_UNUSED(oldRect);
+	Q_UNUSED(newRect);
 }

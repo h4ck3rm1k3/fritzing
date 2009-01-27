@@ -90,7 +90,7 @@ public:
 	bool ignoreTerminalPoints();
 
 protected:
-	void loadText(QDomElement parent, QString tagName, QString &field);
+	void loadTagText(QDomElement parent, QString tagName, QString &field);
 	// used to populate de StringList that contains both the <tags> and the <properties> values
 	void populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName);
 	void populateTagCollection(QDomElement parent, QMultiHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
