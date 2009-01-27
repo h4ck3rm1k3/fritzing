@@ -30,11 +30,12 @@ $Date$
 #define HASHPOPULATEWIDGET_H_
 
 #include <QFrame>
-#include <QLabel>
 #include <QHash>
 #include <QLineEdit>
 #include <QGridLayout>
 #include <QUndoStack>
+
+#include "baseremovebutton.h"
 
 class HashLineEdit : public QLineEdit {
 	Q_OBJECT
@@ -56,15 +57,14 @@ class HashLineEdit : public QLineEdit {
 		QUndoStack *m_undoStack;
 };
 
-class HashRemoveButton : public QLabel {
+class HashRemoveButton : public BaseRemoveButton {
 	Q_OBJECT
 	public:
-		HashRemoveButton(HashLineEdit* label, HashLineEdit* value, QWidget *parent) : QLabel(parent) {
-			m_enterIcon = QPixmap(":/resources/images/remove_prop_enter.png");
-			m_leaveIcon = QPixmap(":/resources/images/remove_prop_leave.png");
+		HashRemoveButton(HashLineEdit* label, HashLineEdit* value, QWidget *parent)
+			: BaseRemoveButton(parent)
+		{
 			m_label = label;
 			m_value = value;
-			setPixmap(m_leaveIcon);
 		}
 
 		HashLineEdit *label() {return m_label;}
@@ -74,27 +74,11 @@ class HashRemoveButton : public QLabel {
 		void clicked(HashRemoveButton*);
 
 	protected:
-		void mousePressEvent(QMouseEvent * event) {
+		void clicked() {
 			emit clicked(this);
-			QLabel::mousePressEvent(event);
 		}
-
-		void enterEvent(QEvent * event) {
-			setPixmap(m_enterIcon);
-			QLabel::enterEvent(event);
-		}
-
-		void leaveEvent(QEvent * event) {
-			setPixmap(m_leaveIcon);
-			QLabel::leaveEvent(event);
-		}
-
-	protected:
 		HashLineEdit *m_label;
 		HashLineEdit *m_value;
-
-		QPixmap m_enterIcon;
-		QPixmap m_leaveIcon;
 };
 
 class HashPopulateWidget : public QFrame {
