@@ -29,11 +29,11 @@ $Date$
 #include "editablelabel.h"
 
 EditableLabel::EditableLabel(QWidget *parent) : QLabel(parent) {
-
+	setWordWrap(true);
 }
 
 EditableLabel::EditableLabel(const QString &text, QWidget *parent) : QLabel(text,parent) {
-
+	setWordWrap(true);
 }
 
 void EditableLabel::editionCompleted(QString newText) {
