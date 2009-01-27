@@ -32,6 +32,8 @@ $Date$
 #include <QFrame>
 #include <QFile>
 
+class ConnectorInfoRemoveButton;
+
 class AbstractConnectorInfoWidget : public QFrame {
 	Q_OBJECT
 	public:
@@ -48,7 +50,10 @@ class AbstractConnectorInfoWidget : public QFrame {
 		void reapplyStyle();
 
 		ConnectorsInfoWidget *m_topLevelContainer;
+		ConnectorInfoRemoveButton *m_removeButton;
+
 		volatile bool m_isSelected;
+
 
 		static int SingleConnectorHeight;
 };

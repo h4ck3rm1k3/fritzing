@@ -27,6 +27,7 @@ $Date$
 
 
 #include "singleconnectorinfowidget.h"
+#include "connectorinforemovebutton.h"
 #include "../debugdialog.h"
 
 const QString ConnectorTypeWidget::FemaleSymbol = QString("%1").arg(QChar(0x2640));
@@ -85,7 +86,6 @@ void ConnectorTypeWidget::toggleValue() {
 
 
 
-//TODO Mariano: looks like an abstracteditable, perhaps can be one
 SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLevelContainer, WaitPushUndoStack *undoStack, Connector* connector, QWidget *parent)
 	: AbstractConnectorInfoWidget(topLevelContainer,parent)
 {
@@ -120,13 +120,15 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 	m_descEdit = NULL;
 
 	m_noEditFrame = new QFrame(this);
-	QHBoxLayout *hbLayout = new QHBoxLayout;
+	QHBoxLayout *hbLayout = new QHBoxLayout(m_noEditFrame);
 	hbLayout->addWidget(m_type);
 	hbLayout->addSpacerItem(new QSpacerItem(10,0));
 	hbLayout->addWidget(m_nameLabel);
 	hbLayout->addWidget(new QLabel(" - ",m_noEditFrame));
 	hbLayout->addWidget(m_descLabel);
-	m_noEditFrame->setLayout(hbLayout);
+	hbLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	hbLayout->addWidget(m_removeButton);
+	m_noEditFrame->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 
 	m_acceptButton = NULL;
 	m_cancelButton = NULL;
@@ -135,9 +137,8 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 	setInEditionMode(false);
 
 
-	QGridLayout * layout = new QGridLayout();
+	QGridLayout * layout = new QGridLayout(this);
 	layout->addWidget(m_type,0,0);
-	setLayout(layout);
 
 	toStandardMode();
 }
@@ -192,25 +193,10 @@ void SingleConnectorInfoWidget::toStandardMode() {
 	setInEditionMode(false);
 	QGridLayout *layout = (QGridLayout*)this->layout();
 
-	if(m_nameEdit) {
-		m_nameEdit->hide();
-		layout->removeWidget(m_nameEdit);
-	}
-
-	if(m_descEdit) {
-		m_descEdit->hide();
-		layout->removeWidget(m_descEdit);
-	}
-
-	if(m_acceptButton) {
-		m_acceptButton->hide();
-		layout->removeWidget(m_acceptButton);
-	}
-
-	if(m_cancelButton) {
-		m_cancelButton->hide();
-		layout->removeWidget(m_cancelButton);
-	}
+	hideAndRemoveIfNeeded(m_nameEdit,layout);
+	hideAndRemoveIfNeeded(m_descEdit,layout);
+	hideAndRemoveIfNeeded(m_acceptButton,layout);
+	hideAndRemoveIfNeeded(m_cancelButton,layout);
 
 	m_noEditFrame->show();
 	layout->addWidget(m_noEditFrame,0,0);
@@ -229,13 +215,19 @@ void SingleConnectorInfoWidget::toStandardMode() {
 	show();
 }
 
+void SingleConnectorInfoWidget::hideAndRemoveIfNeeded(QWidget* w, QLayout *l) {
+	if(w) {
+		w->hide();
+		l->removeWidget(w);
+	}
+}
+
 void SingleConnectorInfoWidget::toEditionMode() {
 	hide();
 	setInEditionMode(true);
 	QGridLayout *layout = (QGridLayout*)this->layout();
 
-	m_noEditFrame->hide();
-	layout->removeWidget(m_noEditFrame);
+	hideAndRemoveIfNeeded(m_noEditFrame,layout);
 
 	if(!m_nameEdit) m_nameEdit = new QLineEdit(this);
 	layout->addWidget(m_nameEdit,0,1,1,2);
@@ -283,9 +275,9 @@ QSize SingleConnectorInfoWidget::minimumSizeHint() const {
 QSize SingleConnectorInfoWidget::sizeHint() const {
 	QSize retval;
 	if(m_isInEditionMode) {
-		retval = QSize(width(),120);
+		retval = QSize(width(),SingleConnectorHeight*3);
 	} else {
-		retval = QSize(width(),40);
+		retval = QSize(width(),SingleConnectorHeight);
 	}
 
 	return retval;

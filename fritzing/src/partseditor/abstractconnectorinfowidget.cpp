@@ -27,6 +27,8 @@ $Date$
 
 
 #include "abstractconnectorinfowidget.h"
+#include "connectorinforemovebutton.h"
+#include "connectorsinfowidget.h"
 
 #include <QVariant>
 
@@ -36,6 +38,13 @@ AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(ConnectorsInfoWidget *t
 	: QFrame(parent)
 {
 	m_topLevelContainer = topLevelContainer;
+	m_removeButton = new ConnectorInfoRemoveButton(this);
+
+	connect(
+		m_removeButton, SIGNAL(clicked(AbstractConnectorInfoWidget*)),
+		topLevelContainer, SLOT(removeConnector(AbstractConnectorInfoWidget*))
+	);
+
 	setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
 	setMinimumHeight(SingleConnectorHeight);
 }

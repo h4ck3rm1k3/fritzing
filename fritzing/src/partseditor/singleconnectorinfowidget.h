@@ -93,6 +93,8 @@ class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 
 		void mousePressEvent(QMouseEvent * event);
 
+		void hideAndRemoveIfNeeded(QWidget* w, QLayout *l);
+
 		QFrame *m_noEditFrame;
 		QLabel *m_nameLabel;
 		QLabel *m_descLabel;

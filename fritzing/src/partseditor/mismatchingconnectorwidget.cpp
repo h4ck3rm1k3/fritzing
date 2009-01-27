@@ -28,6 +28,7 @@ $Date$
 
 #include <QGridLayout>
 #include "mismatchingconnectorwidget.h"
+#include "connectorinforemovebutton.h"
 #include "../debugdialog.h"
 
 QList<ItemBase::ViewIdentifier> MismatchingConnectorWidget::AllViews;
@@ -64,7 +65,8 @@ MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *top
 	lo->addSpacerItem(new QSpacerItem(5,0));
 	lo->addWidget(m_connIdLabel);
 	lo->addWidget(m_connMsgLabel);
-	lo->addStretch();
+	lo->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Expanding));
+	lo->addWidget(m_removeButton);
 	lo->setMargin(3);
 	lo->setSpacing(3);
 	this->setLayout(lo);

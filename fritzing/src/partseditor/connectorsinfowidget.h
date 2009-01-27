@@ -37,7 +37,7 @@ $Date$
 #include "singleconnectorinfowidget.h"
 #include "mismatchingconnectorwidget.h"
 
-class ConnectorsInfoWidget : public QFrame{
+class ConnectorsInfoWidget : public QFrame {
 	Q_OBJECT
 	public:
 		ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent=0);
@@ -67,6 +67,7 @@ class ConnectorsInfoWidget : public QFrame{
 	protected slots:
 		void updateLayout();
 		void selectionChanged(AbstractConnectorInfoWidget* selected);
+		void deleteAux();
 
 	protected:
 		void createScrollArea();
@@ -113,6 +114,8 @@ class ConnectorsInfoWidget : public QFrame{
 		QStringList m_connIds;
 
 		WaitPushUndoStack *m_undoStack;
+
+		QObject *m_objToDelete;
 };
 
 #endif /* CONNECTORSINFOWIDGET_H_ */

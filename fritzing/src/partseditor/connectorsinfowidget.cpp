@@ -37,6 +37,7 @@ $Date$
 ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent)
 	: QFrame(parent)
 {
+	m_objToDelete = NULL;
 	m_selected = NULL;
 	m_undoStack = undoStack;
 
@@ -431,7 +432,8 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 		m_selected = NULL;
 	}
 
-	delete mcw;
+	m_objToDelete = mcw;
+	QTimer::singleShot(100, this, SLOT(deleteAux()));
 }
 
 void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool alsoDeleteFromView) {
@@ -446,7 +448,8 @@ void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, b
 		emit removeConnectorFrom(sci->connector()->connectorStuffID(), ItemBase::AllViews);
 	}
 
-	delete sci;
+	m_objToDelete = sci;
+	QTimer::singleShot(100, this, SLOT(deleteAux()));
 }
 
 Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
@@ -465,15 +468,7 @@ void ConnectorsInfoWidget::addConnector() {
 
 void ConnectorsInfoWidget::removeSelectedConnector() {
 	if(!m_selected) return;
-	MismatchingConnectorWidget* mismatch = dynamic_cast<MismatchingConnectorWidget*>(m_selected);
-	if(mismatch) {
-		removeMismatchingConnectorInfo(mismatch, true);
-	} else {
-		SingleConnectorInfoWidget *single = dynamic_cast<SingleConnectorInfoWidget*>(m_selected);
-		if(single) {
-			removeConnectorInfo(single, true);
-		}
-	}
+	removeConnector(m_selected);
 }
 
 void ConnectorsInfoWidget::removeConnector(AbstractConnectorInfoWidget* connInfo) {
@@ -505,4 +500,11 @@ int ConnectorsInfoWidget::nextConnId() {
 		}
 	}
 	return max;
+}
+
+void ConnectorsInfoWidget::deleteAux() {
+	if(m_objToDelete) {
+		delete m_objToDelete;
+		m_objToDelete = NULL;
+	}
 }

@@ -33,10 +33,10 @@ $Date: 2009-01-27 18:56:45 +0100 (Tue, 27 Jan 2009) $
 class ConnectorInfoRemoveButton : public BaseRemoveButton {
 	Q_OBJECT
 	public:
-		ConnectorInfoRemoveButton(AbstractConnectorInfoWidget* connInfo, QWidget *parent)
+		ConnectorInfoRemoveButton(AbstractConnectorInfoWidget* parent)
 			: BaseRemoveButton(parent)
 		{
-			m_connInfo = connInfo;
+			m_connInfo = parent;
 		}
 
 	signals:
