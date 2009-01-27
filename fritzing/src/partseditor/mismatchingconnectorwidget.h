@@ -36,7 +36,7 @@ $Date$
 class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 	Q_OBJECT
 	public:
-		MismatchingConnectorWidget(ItemBase::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView = true, Connector* conn = NULL);
+		MismatchingConnectorWidget(class ConnectorsInfoWidget *topLevelContainer, ItemBase::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView = true, Connector* conn = NULL);
 		void setSelected(bool selected, bool doEmitChange=true);
 		bool onlyMissingThisView(ItemBase::ViewIdentifier viewId);
 		void addViewPresence(ItemBase::ViewIdentifier viewId);

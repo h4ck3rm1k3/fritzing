@@ -60,7 +60,7 @@ class ConnectorTypeWidget : public QLabel {
 class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 	Q_OBJECT
 	public:
-		SingleConnectorInfoWidget(WaitPushUndoStack *undoStack, Connector* connector=0, QWidget *parent=0);
+		SingleConnectorInfoWidget(ConnectorsInfoWidget *topLevelContainer, WaitPushUndoStack *undoStack, Connector* connector=0, QWidget *parent=0);
 		void setSelected(bool selected, bool doEmitChange=true);
 		void setInEditionMode(bool inEditionMode);
 		bool isInEditionMode();

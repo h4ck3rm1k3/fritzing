@@ -52,6 +52,7 @@ class ConnectorsInfoWidget : public QFrame{
 		void emitPaintNeeded();
 		void addConnector();
 		void removeSelectedConnector();
+		void removeConnector(AbstractConnectorInfoWidget* connInfo);
 
 	signals:
 		void connectorSelected(const QString &);

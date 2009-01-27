@@ -33,8 +33,8 @@ $Date$
 QList<ItemBase::ViewIdentifier> MismatchingConnectorWidget::AllViews;
 
 //TODO Mariano: looks like an abstracteditable, perhaps can be one
-MismatchingConnectorWidget::MismatchingConnectorWidget(ItemBase::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView, Connector* conn)
-	: AbstractConnectorInfoWidget(parent)
+MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *topLevelContainer, ItemBase::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView, Connector* conn)
+	: AbstractConnectorInfoWidget(topLevelContainer, parent)
 {
 	if(AllViews.size() == 0) {
 		AllViews << ItemBase::BreadboardView << ItemBase::SchematicView << ItemBase::PCBView;

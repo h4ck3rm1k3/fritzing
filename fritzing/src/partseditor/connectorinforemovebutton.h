@@ -18,39 +18,37 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2275 $:
+$Author: merunga $:
+$Date: 2009-01-27 18:56:45 +0100 (Tue, 27 Jan 2009) $
 
 ********************************************************************/
 
+#ifndef CONNECTORINFOREMOVEBUTTON_H_
+#define CONNECTORINFOREMOVEBUTTON_H_
 
+#include "baseremovebutton.h"
+#include "abstractconnectorinfowidget.h"
 
-#ifndef ABSTRACTCONNECTORINFOWIDGET_H_
-#define ABSTRACTCONNECTORINFOWIDGET_H_
-
-#include <QFrame>
-#include <QFile>
-
-class AbstractConnectorInfoWidget : public QFrame {
+class ConnectorInfoRemoveButton : public BaseRemoveButton {
 	Q_OBJECT
 	public:
-		AbstractConnectorInfoWidget(class ConnectorsInfoWidget *topLevelContainer, QWidget *parent=0);
-		virtual void setSelected(bool selected, bool doEmitChange=true);
-		bool isSelected();
+		ConnectorInfoRemoveButton(AbstractConnectorInfoWidget* connInfo, QWidget *parent)
+			: BaseRemoveButton(parent)
+		{
+			m_connInfo = connInfo;
+		}
 
 	signals:
-		void tellSistersImNewSelected(AbstractConnectorInfoWidget*); // Meant to be used in the info context
-		void tellViewsMyConnectorIsNewSelected(const QString&); // Meant to be used in the info context
-		void repaintNeeded();
+		void clicked(AbstractConnectorInfoWidget*);
 
 	protected:
-		void reapplyStyle();
+		void clicked() {
+			emit clicked(m_connInfo);
+		}
 
-		ConnectorsInfoWidget *m_topLevelContainer;
-		volatile bool m_isSelected;
-
-		static int SingleConnectorHeight;
+		AbstractConnectorInfoWidget *m_connInfo;
 };
 
-#endif /* ABSTRACTCONNECTORINFOWIDGET_H_ */
+
+#endif /* CONNECTORINFOREMOVEBUTTON_H_ */

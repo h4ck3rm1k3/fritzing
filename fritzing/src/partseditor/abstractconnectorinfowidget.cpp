@@ -32,9 +32,10 @@ $Date$
 
 int AbstractConnectorInfoWidget::SingleConnectorHeight = 40;
 
-AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(QWidget *parent)
+AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(ConnectorsInfoWidget *topLevelContainer, QWidget *parent)
 	: QFrame(parent)
 {
+	m_topLevelContainer = topLevelContainer;
 	setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
 	setMinimumHeight(SingleConnectorHeight);
 }

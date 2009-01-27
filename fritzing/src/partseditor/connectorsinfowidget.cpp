@@ -243,7 +243,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 	m_connIds << conn->connectorStuffID();
 
 	int connCount = m_connsInfo.size();
-	SingleConnectorInfoWidget *sci = new SingleConnectorInfoWidget(m_undoStack,conn,m_scrollContent);
+	SingleConnectorInfoWidget *sci = new SingleConnectorInfoWidget(this, m_undoStack, conn, m_scrollContent);
 	scrollContentLayout()->insertWidget(connCount+1,sci);
 	m_connsInfo << sci;
 	connect(sci,SIGNAL(editionStarted()),this,SLOT(updateLayout()));
@@ -256,7 +256,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewId, QString connId) {
 	m_connIds << connId;
-	addMismatchingConnectorInfo(new MismatchingConnectorWidget(viewId,connId,m_mismatchersFrame));
+	addMismatchingConnectorInfo(new MismatchingConnectorWidget(this,viewId,connId,m_mismatchersFrame));
 }
 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidget *mcw) {
@@ -470,6 +470,18 @@ void ConnectorsInfoWidget::removeSelectedConnector() {
 		removeMismatchingConnectorInfo(mismatch, true);
 	} else {
 		SingleConnectorInfoWidget *single = dynamic_cast<SingleConnectorInfoWidget*>(m_selected);
+		if(single) {
+			removeConnectorInfo(single, true);
+		}
+	}
+}
+
+void ConnectorsInfoWidget::removeConnector(AbstractConnectorInfoWidget* connInfo) {
+	MismatchingConnectorWidget* mismatch = dynamic_cast<MismatchingConnectorWidget*>(connInfo);
+	if(mismatch) {
+		removeMismatchingConnectorInfo(mismatch, true);
+	} else {
+		SingleConnectorInfoWidget *single = dynamic_cast<SingleConnectorInfoWidget*>(connInfo);
 		if(single) {
 			removeConnectorInfo(single, true);
 		}

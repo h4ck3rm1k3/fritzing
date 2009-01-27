@@ -86,8 +86,8 @@ void ConnectorTypeWidget::toggleValue() {
 
 
 //TODO Mariano: looks like an abstracteditable, perhaps can be one
-SingleConnectorInfoWidget::SingleConnectorInfoWidget(WaitPushUndoStack *undoStack, Connector* connector, QWidget *parent)
-	: AbstractConnectorInfoWidget(parent)
+SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLevelContainer, WaitPushUndoStack *undoStack, Connector* connector, QWidget *parent)
+	: AbstractConnectorInfoWidget(topLevelContainer,parent)
 {
 	static QString EMPTY_CONN_NAME = QObject::tr("no name yet");
 	static QString EMPTY_CONN_DESC = QObject::tr("no description yet");
@@ -323,7 +323,7 @@ Connector *SingleConnectorInfoWidget::connector() {
 }
 
 MismatchingConnectorWidget *SingleConnectorInfoWidget::toMismatching(ItemBase::ViewIdentifier missingViewId) {
-	MismatchingConnectorWidget *mcw = new MismatchingConnectorWidget(missingViewId, m_connector->connectorStuffID(), (QWidget*)parent(), false, m_connector);
+	MismatchingConnectorWidget *mcw = new MismatchingConnectorWidget(m_topLevelContainer,missingViewId, m_connector->connectorStuffID(), (QWidget*)parent(), false, m_connector);
 	return mcw;
 }
 
