@@ -222,7 +222,7 @@ void SingleConnectorInfoWidget::toStandardMode() {
 	layout->setColumnStretch(3,1);
 	layout->setColumnStretch(4,1);
 
-	resize(width(),SingleConnectorHeight);
+	//resize(width(),SingleConnectorHeight);
 	setMaximumHeight(SingleConnectorHeight);
 	updateGeometry();
 

@@ -35,7 +35,7 @@ int AbstractConnectorInfoWidget::SingleConnectorHeight = 40;
 AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(QWidget *parent)
 	: QFrame(parent)
 {
-	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+	setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
 	setMinimumHeight(SingleConnectorHeight);
 }
 
