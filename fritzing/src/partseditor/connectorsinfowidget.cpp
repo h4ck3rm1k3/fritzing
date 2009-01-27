@@ -90,32 +90,33 @@ void ConnectorsInfoWidget::createScrollArea() {
 	m_mismatchersFrameParent->setObjectName("mismatchConns");
 	m_mismatchersFrameParent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-	QGridLayout *parentLo = new QGridLayout(m_mismatchersFrameParent);
+	QVBoxLayout *parentLo = new QVBoxLayout(m_mismatchersFrameParent);
 	parentLo->setMargin(1);
 
 	m_mismatchersFrame = new QFrame(m_mismatchersFrameParent);
 	//m_mismatchersFrame->resize(this->width(),m_mismatchersFrame->height());
-	QGridLayout *mismatchLayout = new QGridLayout(m_mismatchersFrame);
+	QVBoxLayout *mismatchLayout = new QVBoxLayout(m_mismatchersFrame);
 	mismatchLayout->setMargin(0);
 	mismatchLayout->setSpacing(0);
 	m_mismatchersFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 	QLabel *mismatchConnHeader = new QLabel(tr("Mismatching Connector IDs"));
 	mismatchConnHeader->setObjectName("mismatchConnsHeader");
-	parentLo->addWidget(mismatchConnHeader,0,0);
-	parentLo->addWidget(m_mismatchersFrame,1,0);
+	parentLo->addWidget(mismatchConnHeader);
+	parentLo->addWidget(m_mismatchersFrame);
 
 	QLabel *mismatchConnFooter = new QLabel(tr("These problems need to be fixed in the svg-files directly"));
 	mismatchConnFooter->setObjectName("mismatchConnsFooter");
-	parentLo->addWidget(mismatchConnFooter,2,0);
+	parentLo->addWidget(mismatchConnFooter);
 
 	m_mismatchersFrameParent->hide();
 
 
-	QGridLayout *scrollLayout = new QGridLayout(m_scrollContent);
+	QVBoxLayout *scrollLayout = new QVBoxLayout(m_scrollContent);
 	scrollLayout->setMargin(0);
 	scrollLayout->setSpacing(0);
-	scrollContentLayout()->addWidget(m_mismatchersFrameParent,0,0);
+	scrollContentLayout()->addWidget(m_mismatchersFrameParent);
+	scrollContentLayout()->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Expanding));
 
 
 	m_scrollArea = new QScrollArea(this);
@@ -243,7 +244,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 
 	int connCount = m_connsInfo.size();
 	SingleConnectorInfoWidget *sci = new SingleConnectorInfoWidget(m_undoStack,conn,m_scrollContent);
-	scrollContentLayout()->addWidget(sci,connCount+1,0);
+	scrollContentLayout()->insertWidget(connCount+1,sci);
 	m_connsInfo << sci;
 	connect(sci,SIGNAL(editionStarted()),this,SLOT(updateLayout()));
 	connect(sci,SIGNAL(editionFinished()),this,SLOT(updateLayout()));
@@ -261,7 +262,7 @@ void ConnectorsInfoWidget::addMismatchingConnectorInfo(ItemBase::ViewIdentifier 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidget *mcw) {
 	int connCount = m_mismatchConnsInfo.size();
 
-	((QGridLayout*)m_mismatchersFrame->layout())->addWidget(mcw,connCount,0);
+	((QVBoxLayout*)m_mismatchersFrame->layout())->insertWidget(connCount,mcw);
 	m_mismatchConnsInfo << mcw;
 	connect(mcw,SIGNAL(tellSistersImNewSelected(AbstractConnectorInfoWidget*)),this,SLOT(selectionChanged(AbstractConnectorInfoWidget*)));
 	connect(mcw,SIGNAL(tellViewsMyConnectorIsNewSelected(const QString &)),this,SLOT(informConnectorSelection(const QString &)));
@@ -278,8 +279,8 @@ void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidge
 	}
 }
 
-QGridLayout *ConnectorsInfoWidget::scrollContentLayout() {
-	return (QGridLayout*)m_scrollContent->layout();
+QVBoxLayout *ConnectorsInfoWidget::scrollContentLayout() {
+	return (QVBoxLayout*)m_scrollContent->layout();
 }
 
 void ConnectorsInfoWidget::connectorsFound(QList<Connector *> conns) {

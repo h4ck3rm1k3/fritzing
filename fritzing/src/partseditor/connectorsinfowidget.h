@@ -76,7 +76,7 @@ class ConnectorsInfoWidget : public QFrame{
 		void addConnectorInfo(Connector *conn);
 		void addMismatchingConnectorInfo(MismatchingConnectorWidget *mcw);
 		void addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewID, QString connId);
-		QGridLayout *scrollContentLayout();
+		QVBoxLayout *scrollContentLayout();
 		bool eventFilter(QObject *obj, QEvent *event);
 		void setSelected(AbstractConnectorInfoWidget * newSelected);
 		void selectNext();
