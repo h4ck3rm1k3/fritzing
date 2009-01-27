@@ -34,11 +34,11 @@ div.boardCommentDetails {
 }
 div.boardCommentComplete {
   padding: 0.4em 0.6em;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #e7e7e7;
 }
 
 div.boardCommentComplete.odd {
-	background-color: #f9f9f9
+  background-color: #f9f9f9
 }
 div.boardCommentActions form {
   width: auto;
