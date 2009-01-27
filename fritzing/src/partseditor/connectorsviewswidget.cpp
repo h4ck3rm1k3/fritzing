@@ -61,7 +61,7 @@ ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchM
 	lo->setMargin(1);
 	lo->setSpacing(1);
 
-	this->setFixedHeight(220);
+	this->resize(width(),220);
 	this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
 }
 
