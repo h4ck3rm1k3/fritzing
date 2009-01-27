@@ -222,8 +222,8 @@ void SingleConnectorInfoWidget::toStandardMode() {
 	layout->setColumnStretch(3,1);
 	layout->setColumnStretch(4,1);
 
-	//resize(width(),SingleConnectorHeight);
 	setMaximumHeight(SingleConnectorHeight);
+	setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
 	updateGeometry();
 
 	show();

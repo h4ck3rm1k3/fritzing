@@ -34,7 +34,8 @@ QList<ItemBase::ViewIdentifier> MismatchingConnectorWidget::AllViews;
 
 //TODO Mariano: looks like an abstracteditable, perhaps can be one
 MismatchingConnectorWidget::MismatchingConnectorWidget(ItemBase::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView, Connector* conn)
-		: AbstractConnectorInfoWidget(parent) {
+	: AbstractConnectorInfoWidget(parent)
+{
 	if(AllViews.size() == 0) {
 		AllViews << ItemBase::BreadboardView << ItemBase::SchematicView << ItemBase::PCBView;
 	}
@@ -68,9 +69,8 @@ MismatchingConnectorWidget::MismatchingConnectorWidget(ItemBase::ViewIdentifier 
 	lo->setSpacing(3);
 	this->setLayout(lo);
 
-	updateGeometry();
+	//updateGeometry();
 	setMaximumHeight(SingleConnectorHeight);
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }
 
 void MismatchingConnectorWidget::setSelected(bool selected, bool doEmitChange) {
