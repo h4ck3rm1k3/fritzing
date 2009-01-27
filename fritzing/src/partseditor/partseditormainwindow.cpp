@@ -240,7 +240,6 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	specWidgets << m_symbols << m_label << m_description /*<< m_taxonomy*/ << m_properties << m_tags << m_author << m_createdOn << m_createdByText;
 
-	QList<QWidget*> connsWidgets;
 	m_connsInfo = new ConnectorsInfoWidget(m_undoStack,this);
 	m_connsViews = new ConnectorsViewsWidget(m_symbols, m_sketchModel, m_undoStack, m_connsInfo, this);
 
@@ -254,12 +253,11 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 		m_symbols, SIGNAL(connectorsFound(QList<Connector*>)),
 		m_connsInfo, SLOT(connectorsFound(QList<Connector*>))
 	);
-	connsWidgets << m_connsViews << m_connsInfo;
 
 	m_tabWidget = new QTabWidget(m_centerFrame);
 	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	m_tabWidget->addTab(new PartSpecificationsWidget(specWidgets,this),tr("Specifications"));
-	m_tabWidget->addTab(new PartConnectorsWidget(connsWidgets,this),tr("Connectors"));
+	m_tabWidget->addTab(new PartConnectorsWidget(m_connsViews, m_connsInfo,this),tr("Connectors"));
 
 	QGridLayout *tabLayout = new QGridLayout(m_tabWidget);
 	tabLayout->setMargin(0);

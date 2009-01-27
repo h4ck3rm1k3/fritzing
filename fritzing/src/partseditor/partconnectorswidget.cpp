@@ -31,12 +31,10 @@ $Date$
 
 #include "partconnectorswidget.h"
 
-PartConnectorsWidget::PartConnectorsWidget(QList<QWidget*> widgets, QWidget *parent) : QFrame(parent) {
-	QGridLayout *layout = new QGridLayout();
-	for(int i=0; i < widgets.size(); i++) {
-		layout->addWidget(widgets[i],i,0);
-	}
+PartConnectorsWidget::PartConnectorsWidget(QWidget* views, QWidget* info, QWidget *parent) : QFrame(parent) {
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->addWidget(views);
+	layout->addWidget(info);
 	layout->setMargin(4);
 	layout->setSpacing(10);
-	setLayout(layout);
 }
