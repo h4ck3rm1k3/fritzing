@@ -49,6 +49,9 @@ bool edgeGreaterThan(Edge * e1, Edge * e2)
 static int keepOut = 4;
 static int boundingKeepOut = 4;
 
+static const int StandardTraceWidth = 3;
+static const int StandardJumperWidth = 3;
+
 ////////////////////////////////////////////////////////////////////
 
 // tangent to polygon code adapted from http://www.geometryalgorithms.com/Archive/algorithm_0201/algorithm_0201.htm
@@ -591,7 +594,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 
 	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
 	jumperWire->setColorString("jumper", UNROUTED_OPACITY);
-	jumperWire->setWidth(3);
+	jumperWire->setWidth(StandardJumperWidth);
 	jumperWire->setSelected(false);
 
 	from->tempConnectTo(jumperWire->connector0());
@@ -656,7 +659,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	traceWire->setClipEnds(false);
 	traceWire->setColorString("trace", UNROUTED_OPACITY);
-	traceWire->setWidth(3);
+	traceWire->setWidth(StandardTraceWidth + 1);
 
 	QGraphicsItem * nearestObstacle = NULL;
 	double nearestObstacleDistance = -1;
@@ -1147,6 +1150,7 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 		if (wire != NULL) {
 			wire->setClipEnds(true);
 			wire->update();
+			wire->setWidth(StandardTraceWidth);
 			addToUndo(wire, parentCommand);
 			wires.append(wire);
 		}
@@ -1292,6 +1296,6 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 		return NULL;
 	}
 
-	traceWire->setWidth(3);									// restore normal width
+	traceWire->setWidth(StandardTraceWidth);									// restore normal width
 	return traceWire;
 }
