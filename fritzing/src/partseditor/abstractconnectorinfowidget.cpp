@@ -45,6 +45,8 @@ AbstractConnectorInfoWidget::AbstractConnectorInfoWidget(ConnectorsInfoWidget *t
 		topLevelContainer, SLOT(removeConnector(AbstractConnectorInfoWidget*))
 	);
 
+	setMinimumWidth(100);
+
 	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 	setMinimumHeight(SingleConnectorHeight);
 }

@@ -56,7 +56,7 @@ PartSpecificationsWidget::PartSpecificationsWidget(QList<QWidget*> widgets, QWid
 	layout->setSpacing(10);
 
 	setWidget(m_scrollContent);
-	setMinimumWidth(m_scrollContent->width()+15);
+	setMinimumWidth(m_scrollContent->width()+15); //scrollbar
 	setWidgetResizable(true);
 
 	QGridLayout *mylayout = new QGridLayout(this);

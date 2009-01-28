@@ -206,13 +206,7 @@ void SingleConnectorInfoWidget::toStandardMode() {
 	updateGeometry();
 
 	show();
-}
-
-void SingleConnectorInfoWidget::hideIfNeeded(QWidget* w) {
-	if(w) {
-		w->hide();
-		layout()->removeWidget(w);
-	}
+	setFocus();
 }
 
 void SingleConnectorInfoWidget::toEditionMode() {
@@ -265,15 +259,21 @@ void SingleConnectorInfoWidget::toEditionMode() {
 	layout->addLayout(thirdRowLayout);
 
 
-	//resize(width(),SingleConnectorHeight*3);
 	setFixedHeight(SingleConnectorHeight*3);
-	resize(width()-m_topLevelContainer->scrollBarWidth(),height());
-	setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Expanding);
+	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	updateGeometry();
 
 	show();
+	setFocus();
 
 	emit editionStarted();
+}
+
+void SingleConnectorInfoWidget::hideIfNeeded(QWidget* w) {
+	if(w) {
+		w->hide();
+		layout()->removeWidget(w);
+	}
 }
 
 
