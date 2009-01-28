@@ -266,7 +266,7 @@ protected:
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
 	SketchToolButton *createExportDiyButton(SketchAreaWidget *parent);
-	SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent);
+	SketchToolButton *createNoteButton(SketchAreaWidget *parent);
 	QWidget *createToolbarSpacer(SketchAreaWidget *parent);
 
 	SketchAreaWidget *currentSketchArea();
