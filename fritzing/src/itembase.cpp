@@ -119,6 +119,12 @@ ItemBase::~ItemBase() {
 	if (m_modelPart != NULL) {
 		m_modelPart->removeViewItem(this);
 	}
+
+	clearBusConnectorItems();
+}
+
+void ItemBase::clearBusConnectorItems()
+{
 	foreach (QList<ConnectorItem *> * list, m_busConnectorItems) {
 		delete list;
 	}

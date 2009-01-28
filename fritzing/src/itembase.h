@@ -109,6 +109,7 @@ public:
 	bool getVirtual();
 	const QHash<QString, class Bus *> & buses();
 	void addBusConnectorItem(class Bus *, class ConnectorItem *);
+	void clearBusConnectorItems();
 	int itemType();					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
 	bool sticky();
 	void addSticky(ItemBase *, bool stickem);

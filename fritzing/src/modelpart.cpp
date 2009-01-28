@@ -299,7 +299,11 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 void ModelPart::initConnectors(bool force) {
 	if(m_modelPartStuff == NULL) return;
 	if(force) {
-		m_connectorHash.clear();
+		m_connectorHash.clear();				
+		foreach (Bus * bus, m_busHash.values()) {
+			delete bus;
+		}
+		m_busHash.clear();
 		m_modelPartStuff->resetConnectorsInitialization();
 	}
 	if(m_connectorHash.count() > 0) return;		// already done

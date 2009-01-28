@@ -289,6 +289,7 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
 	bool sameFamily = family() == newModelPart->modelPartStuff()->family();
 	if(sameFamily) {
 		invalidateConnectors();
+		clearBusConnectorItems();
 
 		m_modelPart->copy(newModelPart);
 		m_modelPart->initConnectors(true);
