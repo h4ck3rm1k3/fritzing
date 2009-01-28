@@ -36,9 +36,9 @@ $Date$
 #include "partseditormainwindow.h"
 #include "partsymbolswidget.h"
 
-#define EMPTY_BREAD_VIEW_TEXT "How does this part look like on the breadboard?"
-#define EMPTY_SCHEM_VIEW_TEXT "How does this part look like in a schematic view?"
-#define EMPTY_PCB_VIEW_TEXT "How does this part look like on a PCB?"
+#define EMPTY_BREAD_VIEW_TEXT "How does this\npart look like on\nthe breadboard?"
+#define EMPTY_SCHEM_VIEW_TEXT "How does this\npart look like in\na schematic view?"
+#define EMPTY_PCB_VIEW_TEXT "How does this\npart look like\non a PCB?"
 
 PartSymbolsWidget::PartSymbolsWidget(SketchModel *sketchModel, WaitPushUndoStack *undoStack, QWidget *parent) : QFrame(parent) {
 	createViewImageWidget(sketchModel, undoStack, m_breadView, ItemBase::BreadboardView, "breadboard_icon.png", EMPTY_BREAD_VIEW_TEXT);
@@ -69,10 +69,7 @@ void PartSymbolsWidget::createViewImageWidget(
 		ItemBase::ViewIdentifier viewId, QString iconFileName, QString startText
 	) {
 
-	Q_UNUSED(iconFileName);
-	Q_UNUSED(startText);
-	//viw = new PartsEditorViewImageWidget(viewId,tempDir(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
-	viw = new PartsEditorViewImageWidget(viewId,tempDir(),0,this);
+	viw = new PartsEditorViewImageWidget(viewId,tempDir(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
 	viw->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -92,12 +89,15 @@ void PartSymbolsWidget::copySvgFilesToDestiny() {
 }
 
 void PartSymbolsWidget::loadViewsImagesFromModel(PaletteModel *paletteModel, ModelPart *modelPart) {
+	m_breadView->scene()->clear();
 	m_breadView->setPaletteModel(paletteModel);
 	m_breadView->loadFromModel(paletteModel, modelPart);
 
+	m_schemView->scene()->clear();
 	m_schemView->setPaletteModel(paletteModel);
 	m_schemView->loadFromModel(paletteModel, modelPart);
 
+	m_pcbView->scene()->clear();
 	m_pcbView->setPaletteModel(paletteModel);
 	m_pcbView->loadFromModel(paletteModel, modelPart);
 

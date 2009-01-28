@@ -30,6 +30,7 @@ $Date$
 #include <QFrame>
 #include <QBuffer>
 #include <QSvgGenerator>
+#include <QGraphicsProxyWidget>
 
 #include "partseditorviewimagewidget.h"
 #include "../layerkinpaletteitem.h"
@@ -40,13 +41,15 @@ $Date$
 
 QT_BEGIN_NAMESPACE
 
-PartsEditorViewImageWidget::PartsEditorViewImageWidget(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
+PartsEditorViewImageWidget::PartsEditorViewImageWidget(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsProxyWidget *startItem, QWidget *parent, int size)
 	: PartsEditorAbstractViewImage(viewId, false /*don't show terminal points*/, false, parent, size)
 {
 	m_svgFilePath = new StringPair;
 	m_tempFolder = tempDir;
 	if(startItem) {
 		scene()->addItem(startItem);
+		addFixedToCenterItem(startItem);
+		ensureFixedToCenterItems();
 	}
 }
 
@@ -84,6 +87,7 @@ void PartsEditorViewImageWidget::loadFile() {
 			origPath = createSvgFromImage(origPath);
 		}
 		if(origPath != ___emptyString___) {
+			scene()->clear();
 			loadSvgFile(origPath);
 		}
 	}

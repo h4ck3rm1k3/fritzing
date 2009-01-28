@@ -317,17 +317,41 @@ void PartsEditorMainWindow::createFooter() {
 }
 
 
-QGraphicsItem *PartsEditorMainWindow::emptyViewItem(QString iconFile, QString text) {
-	QGraphicsItem * parentITem = new QGraphicsSvgItem();
-	QPixmap pixmap = QPixmap("resources/images/"+iconFile);
-	QGraphicsItem *iconItem = new QGraphicsPixmapItem(pixmap,parentITem);
-	qreal scaleFactor = 20.0/*px*/ / pixmap.width();
-	iconItem->scale(scaleFactor,scaleFactor);
+QGraphicsProxyWidget *PartsEditorMainWindow::emptyViewItem(QString iconFile, QString text) {
+	QLabel *icon = new QLabel();
+	icon->setPixmap(QPixmap(":/resources/images/"+iconFile));
+	icon->setAlignment(Qt::AlignHCenter);
+
+	QLabel *label = NULL;
 	if(!text.isNull() && !text.isEmpty()) {
-		QGraphicsTextItem *textItem = new QGraphicsTextItem(text,parentITem);
-		Q_UNUSED(textItem)
+		label = new QLabel(text);
+		label->setAlignment(Qt::AlignHCenter);
 	}
-	return parentITem;
+
+	QFrame *container = new QFrame();
+	container->setStyleSheet("background-color: transparent;");
+	QVBoxLayout *mainLo = new QVBoxLayout(container);
+	mainLo->setMargin(0);
+	mainLo->setSpacing(0);
+
+	QHBoxLayout *lo1 = new QHBoxLayout();
+	lo1->addWidget(icon);
+	lo1->setMargin(0);
+	lo1->setSpacing(0);
+	mainLo->addLayout(lo1);
+
+	if(label) {
+		QHBoxLayout *lo2 = new QHBoxLayout();
+		lo2->addWidget(label);
+		lo2->setMargin(0);
+		lo2->setSpacing(0);
+		mainLo->addLayout(lo2);
+	}
+
+	QGraphicsProxyWidget *item = new QGraphicsProxyWidget();
+	item->setWidget(container);
+
+	return item;
 }
 
 // creates a temp directory and copies all template .fz and .svg files
