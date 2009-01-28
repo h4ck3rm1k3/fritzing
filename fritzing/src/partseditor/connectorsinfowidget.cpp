@@ -28,11 +28,13 @@ $Date$
 #include <QKeyEvent>
 #include <QProgressDialog>
 #include <QApplication>
+#include <QScrollBar>
 
 #include "connectorsinfowidget.h"
 #include "addremoveconnectorbutton.h"
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
+
 
 ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent)
 	: QFrame(parent)
@@ -117,7 +119,7 @@ void ConnectorsInfoWidget::createScrollArea() {
 	scrollLayout->setMargin(0);
 	scrollLayout->setSpacing(0);
 	scrollContentLayout()->addWidget(m_mismatchersFrameParent);
-	scrollContentLayout()->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Expanding));
+	scrollContentLayout()->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::MinimumExpanding));
 
 
 	m_scrollArea = new QScrollArea(this);
@@ -507,4 +509,8 @@ void ConnectorsInfoWidget::deleteAux() {
 		delete m_objToDelete;
 		m_objToDelete = NULL;
 	}
+}
+
+int ConnectorsInfoWidget::scrollBarWidth() {
+	return m_scrollArea->verticalScrollBar()->width();
 }

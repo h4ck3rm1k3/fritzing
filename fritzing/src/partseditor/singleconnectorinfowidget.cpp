@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 
-
+#include "connectorsinfowidget.h"
 #include "singleconnectorinfowidget.h"
 #include "connectorinforemovebutton.h"
 #include "../debugdialog.h"
@@ -112,6 +112,7 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 	}
 
 	m_nameLabel = new QLabel(name,this);
+	m_nameDescSeparator = new QLabel(" - ",this);
 	m_descLabel = new QLabel(description,this);
 	m_descLabel->setObjectName("description");
 
@@ -119,26 +120,14 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 	m_nameEdit = NULL;
 	m_descEdit = NULL;
 
-	m_noEditFrame = new QFrame(this);
-	QHBoxLayout *hbLayout = new QHBoxLayout(m_noEditFrame);
-	hbLayout->addWidget(m_type);
-	hbLayout->addSpacerItem(new QSpacerItem(10,0));
-	hbLayout->addWidget(m_nameLabel);
-	hbLayout->addWidget(new QLabel(" - ",m_noEditFrame));
-	hbLayout->addWidget(m_descLabel);
-	hbLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
-	hbLayout->addWidget(m_removeButton);
-	m_noEditFrame->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
-
 	m_acceptButton = NULL;
 	m_cancelButton = NULL;
 
 	setSelected(false);
-	setInEditionMode(false);
 
 
-	QGridLayout * layout = new QGridLayout(this);
-	layout->addWidget(m_type,0,0);
+	QLayout *layout = new QVBoxLayout(this);
+	layout->setMargin(1);
 
 	toStandardMode();
 }
@@ -191,71 +180,95 @@ void SingleConnectorInfoWidget::toStandardMode() {
 	hide();
 
 	setInEditionMode(false);
-	QGridLayout *layout = (QGridLayout*)this->layout();
 
-	hideAndRemoveIfNeeded(m_nameEdit,layout);
-	hideAndRemoveIfNeeded(m_descEdit,layout);
-	hideAndRemoveIfNeeded(m_acceptButton,layout);
-	hideAndRemoveIfNeeded(m_cancelButton,layout);
+	hideIfNeeded(m_nameEdit);
+	hideIfNeeded(m_descEdit);
+	hideIfNeeded(m_acceptButton);
+	hideIfNeeded(m_cancelButton);
 
-	m_noEditFrame->show();
-	layout->addWidget(m_noEditFrame,0,0);
+	QHBoxLayout *hbLayout = new QHBoxLayout();
+	hbLayout->addWidget(m_type);
+	hbLayout->addSpacerItem(new QSpacerItem(10,0));
+	hbLayout->addWidget(m_nameLabel);
+	m_nameLabel->show();
+	hbLayout->addWidget(m_nameDescSeparator);
+	m_nameDescSeparator->show();
+	hbLayout->addWidget(m_descLabel);
+	m_descLabel->show();
+	hbLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	hbLayout->addWidget(m_removeButton);
 
-	layout->setMargin(1);
+	QVBoxLayout *layout = (QVBoxLayout*)this->layout();
+	layout->addLayout(hbLayout);
 
-	layout->setColumnStretch(1,1);
-	layout->setColumnStretch(2,1);
-	layout->setColumnStretch(3,1);
-	layout->setColumnStretch(4,1);
-
-	setMaximumHeight(SingleConnectorHeight);
-	setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Preferred);
+	setFixedHeight(SingleConnectorHeight);
+	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
 	updateGeometry();
 
 	show();
 }
 
-void SingleConnectorInfoWidget::hideAndRemoveIfNeeded(QWidget* w, QLayout *l) {
+void SingleConnectorInfoWidget::hideIfNeeded(QWidget* w) {
 	if(w) {
 		w->hide();
-		l->removeWidget(w);
+		layout()->removeWidget(w);
 	}
 }
 
 void SingleConnectorInfoWidget::toEditionMode() {
 	hide();
+
 	setInEditionMode(true);
-	QGridLayout *layout = (QGridLayout*)this->layout();
 
-	hideAndRemoveIfNeeded(m_noEditFrame,layout);
+	hideIfNeeded(m_nameLabel);
+	hideIfNeeded(m_nameDescSeparator);
+	hideIfNeeded(m_descLabel);
 
+	// first row
+	QHBoxLayout *firstRowLayout = new QHBoxLayout();
+	firstRowLayout->addWidget(m_type);
+	firstRowLayout->addSpacerItem(new QSpacerItem(10,0));
 	if(!m_nameEdit) m_nameEdit = new QLineEdit(this);
-	layout->addWidget(m_nameEdit,0,1,1,2);
+	firstRowLayout->addWidget(m_nameEdit);
+	firstRowLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	firstRowLayout->addWidget(m_removeButton);
 	m_nameEdit->show();
 
+
+	// second row
 	if(!m_descEdit) m_descEdit = new QTextEdit(this);
-	layout->addWidget(m_descEdit,1,0,1,6);
 	m_descEdit->show();
 
+
+	// third row
 	if(!m_acceptButton) {
 		m_acceptButton = new QPushButton(QObject::tr("Accept"),this);
 		connect(m_acceptButton,SIGNAL(clicked()),this,SLOT(editionCompleted()));
 	}
-	layout->addWidget(m_acceptButton,2,4);
 	m_acceptButton->show();
 
 	if(!m_cancelButton) {
 		m_cancelButton = new QPushButton(QObject::tr("Cancel"),this);
 		connect(m_cancelButton,SIGNAL(clicked()),this,SLOT(editionCanceled()));
 	}
-	layout->addWidget(m_cancelButton,2,5);
 	m_cancelButton->show();
 
-	layout->setMargin(6);
-	layout->setSpacing(4);
+	QHBoxLayout *thirdRowLayout = new QHBoxLayout();
+	thirdRowLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	thirdRowLayout->addWidget(m_acceptButton);
+	thirdRowLayout->addWidget(m_cancelButton);
 
-	resize(width(),SingleConnectorHeight*3);
-	setMaximumHeight(SingleConnectorHeight*3);
+
+	QVBoxLayout *layout = (QVBoxLayout*)this->layout();
+	layout->addLayout(firstRowLayout);
+	layout->addWidget(m_descEdit);
+	layout->addLayout(thirdRowLayout);
+
+
+	//resize(width(),SingleConnectorHeight*3);
+	setFixedHeight(SingleConnectorHeight*3);
+	resize(width()-m_topLevelContainer->scrollBarWidth(),height());
+	setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Expanding);
 	updateGeometry();
 
 	show();

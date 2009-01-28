@@ -43,6 +43,7 @@ class ConnectorsInfoWidget : public QFrame {
 		ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget *parent=0);
 		const QList<ConnectorStuff *> connectorsStuffs();
 		QCheckBox *showTerminalPointsCheckBox();
+		int scrollBarWidth();
 
 	public slots:
 		void connectorsFound(QList<Connector *>);
