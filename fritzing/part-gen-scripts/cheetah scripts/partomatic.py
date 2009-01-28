@@ -21,12 +21,12 @@ from Cheetah.Template import Template
 def usage():
     print """
 usage:
-    partomatic.py -c [Config File] -o [Output Dir] -t [Template File]
+    partomatic.py -c [Config File] -o [Output Dir] -t [Template File] -s [file suffix]
     
     Config File - the name of the file containing a list of variables and values
                    specified on separate lines separated by colons.  
                    ex:
-                      [file1.fz]
+                      [file1]
                       value: 12345
                       color1: #C1D1D1
 
@@ -46,7 +46,7 @@ def makeDate():
     
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "ho:c:t:", ["help", "output="])
+        opts, args = getopt.getopt(sys.argv[1:], "ho:c:t:s:", ["help", "output="])
     except getopt.GetoptError, err:
         # print help information and exit:
         print str(err) # will print something like "option -a not recognized"
@@ -57,6 +57,7 @@ def main():
     configFile = None
     outputDir = None
     templateFile = None
+    suffix = ""
     
     for o, a in opts:
         if o in ("-c", "--config"):
@@ -68,6 +69,8 @@ def main():
             outputDir = a
         elif o in ("-t", "--template"):
             templateFile = a
+        elif o in ("-s", "--suffix"):
+            suffix = a
         else:
             assert False, "unhandled option"
     
@@ -80,8 +83,9 @@ def main():
     cfgParser.readfp(open(configFile))
     
     for section in cfgParser.sections():
-        outfile = open(os.path.join(outputDir, section), "w")
-        cfgDict={}
+        nameStub = section + "." + suffix
+        outfile = open(os.path.join(outputDir, nameStub), "w")
+        cfgDict = {}
         #populate the dictionary
         for cfgItem, cfgValue in cfgParser.items(section):
             if(cfgValue == "$UUID"):
