@@ -43,6 +43,11 @@ class ConnectorInfoRemoveButton : public BaseRemoveButton {
 		void clicked(AbstractConnectorInfoWidget*);
 
 	protected:
+		void mousePressEvent(QMouseEvent * event) {
+			Q_UNUSED(event)
+			clicked();
+			//QLabel::mousePressEvent(event);
+		}
 		void clicked() {
 			emit clicked(m_connInfo);
 		}

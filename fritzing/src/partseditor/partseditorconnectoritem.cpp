@@ -87,10 +87,12 @@ void PartsEditorConnectorItem::setNotSelectedColor(const QColor &color) {
 void PartsEditorConnectorItem::highlight(const QString &connId) {
 	if(m_connector->connectorStuffID() == connId) {
 		//setSelectedColor(color);
-		addBorder();
+		//addBorder();
+		if(m_resizable) m_handlers->setHandlersVisible(true);
 	} else {
 		//setNotSelectedColor();
-		removeBorder();
+		//removeBorder();
+		if(m_resizable) m_handlers->setHandlersVisible(false);
 	}
 }
 

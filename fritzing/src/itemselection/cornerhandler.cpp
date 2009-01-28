@@ -99,6 +99,9 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable() && m_resizing) {
 		m_parent->resizingStarted();
 		resize(event->pos());
+		//DebugDialog::debug(QString("<<<< evt pos %1 %2").arg(event->pos().x()).arg(event->pos().y()));
+		//DebugDialog::debug(QString("<<<< scene pos %1 %2").arg(event->scenePos().x()).arg(event->scenePos().y()));
+		//DebugDialog::debug(QString("<<<< scene pos %1 %2").arg(event->scenePos().x()).arg(event->scenePos().y()));
 		scene()->update();
 	} else {
 		QGraphicsPixmapItem::mouseMoveEvent(event);

@@ -71,16 +71,12 @@ void ConnectorsInfoWidget::createToolsArea() {
 	m_toolsContainter = new QFrame(this);
 	QHBoxLayout *lo = new QHBoxLayout(m_toolsContainter);
 
-	AddRemoveConnectorButton *addBtn = new AddRemoveConnectorButton("Add",this);
+	QPushButton *addBtn = new QPushButton(QObject::tr("Add connector"),this);
 	connect(addBtn, SIGNAL(clicked()), this, SLOT(addConnector()));
-
-	AddRemoveConnectorButton *removeBtn = new AddRemoveConnectorButton("Remove",this);
-	connect(removeBtn, SIGNAL(clicked()), this, SLOT(removeSelectedConnector()));
 
 	lo->setMargin(2);
 	lo->setSpacing(2);
 	lo->addWidget(addBtn);
-	lo->addWidget(removeBtn);
 	lo->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 }
 
@@ -506,8 +502,12 @@ int ConnectorsInfoWidget::nextConnId() {
 
 void ConnectorsInfoWidget::deleteAux() {
 	if(m_objToDelete) {
+		if(m_selected == m_objToDelete) {
+			m_selected = NULL;
+		}
 		delete m_objToDelete;
 		m_objToDelete = NULL;
+
 	}
 }
 

@@ -45,11 +45,18 @@ ConnectorRectangle::ConnectorRectangle(ResizableRectItem* owner, bool withHandle
 		m_cornerHandlers
 			<< m_topLeftHandler << m_topRightHandler
 			<< m_bottomRightHandler << m_bottomLeftHandler;
+
+		setHandlersVisible(false);
 	} else {
 		m_topLeftHandler = m_topRightHandler =
 		m_bottomRightHandler = m_bottomLeftHandler = NULL;
 	}
+}
 
+void ConnectorRectangle::setHandlersVisible(bool visible) {
+	foreach(CornerHandler* handler, m_cornerHandlers) {
+		handler->setVisible(visible);
+	}
 }
 
 void ConnectorRectangle::prepareForChange() {
@@ -64,11 +71,11 @@ void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
 	qreal width = x2-x1 < minWidth ? minWidth : x2-x1;
 	qreal height = y2-y1 < minHeight ? minHeight : y2-y1;
 
-	if(width != m_owner->boundingRect().width()
-	   && height != m_owner->boundingRect().height()) {
+	//if(width != m_owner->boundingRect().width()
+	//   && height != m_owner->boundingRect().height()) {
 		m_owner->resizeRect(x1,y1,width,height);
 		setRect(x1,y1,width,height);
-	}
+	//}
 }
 
 QRectF ConnectorRectangle::itemRect() {

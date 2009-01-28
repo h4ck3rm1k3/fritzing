@@ -53,6 +53,8 @@ public:
 	QPointF posForHandlerIn(Qt::Corner corner, const QRectF &rect);
 	qreal currentScale();
 
+	void setHandlersVisible(bool visible);
+
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 	void placeHandlersInto(const QRectF &rect);
