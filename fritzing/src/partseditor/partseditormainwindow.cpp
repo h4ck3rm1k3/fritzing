@@ -43,16 +43,17 @@ $Date$
 #include <stdlib.h>
 
 
-static QString TITLE_FRESH_START_TEXT;
-static QString  LABEL_FRESH_START_TEXT;
-static QString  DESCRIPTION_FRESH_START_TEXT;
-static QString  TAXONOMY_FRESH_START_TEXT;
-static QString  TAGS_FRESH_START_TEXT;
-static QString  FOOTER_TEXT;
+QString PartsEditorMainWindow::TitleFreshStartText;
+QString PartsEditorMainWindow::LabelFreshStartText;
+QString PartsEditorMainWindow::DescriptionFreshStartText;
+QString PartsEditorMainWindow::TaxonomyFreshStartText;
+QString PartsEditorMainWindow::TagsFreshStartText;
+QString PartsEditorMainWindow::FooterText;
+QString PartsEditorMainWindow::UntitledPartName;
+QString PartsEditorMainWindow::___partsEditorName___;
 
-static QString ___partsEditorName___;
 const QString PartsEditorMainWindow::templatePath = "/docs/templates/";
-const QString PartsEditorMainWindow::UntitledPartName = "Untitled Part";   // TODO: maybe this should be translated?
+
 int PartsEditorMainWindow::UntitledPartIndex = 1;
 PartsEditorMainWindow *PartsEditorMainWindow::m_lastOpened = NULL;
 int PartsEditorMainWindow::m_closedBeforeCount = 0;
@@ -64,12 +65,13 @@ int PartsEditorMainWindow::m_closedBeforeCount = 0;
 #endif
 
 void PartsEditorMainWindow::initText() {
-	TITLE_FRESH_START_TEXT = tr("Please find a name for me!");
-	LABEL_FRESH_START_TEXT = tr("Please provide a label");
-	DESCRIPTION_FRESH_START_TEXT = tr("You could tell a little bit about this part");
-	TAXONOMY_FRESH_START_TEXT = tr("Please clasify this part");
-	TAGS_FRESH_START_TEXT = tr("You can add your tags to find things easier");
-	FOOTER_TEXT = tr("<i>created by</i> %1 <i>on</i> %2");
+	UntitledPartName = tr("Untitled Part");
+	TitleFreshStartText = tr("Please find a name for me!");
+	LabelFreshStartText = tr("Please provide a label");
+	DescriptionFreshStartText = tr("You could tell a little bit about this part");
+	TaxonomyFreshStartText = tr("Please clasify this part");
+	TagsFreshStartText = tr("You can add your tags to find things easier");
+	FooterText = tr("<i>created by</i> %1 <i>on</i> %2");
 	___partsEditorName___ = tr("Parts Editor");
 
 }
@@ -170,7 +172,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 		m_iconViewImage->loadFromModel(m_paletteModel, modelPart);
 	}
 
-	QString title = modelPart ? modelPart->modelPartStuff()->title() : TITLE_FRESH_START_TEXT;
+	QString title = modelPart ? modelPart->modelPartStuff()->title() : TitleFreshStartText;
 	m_title = new EditableLineWidget(title,m_undoStack,m_headerFrame,"",modelPart,true);
 	m_title->setObjectName("partTitle");
 	m_title->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
@@ -192,10 +194,10 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	QList<QWidget*> specWidgets;
 	m_symbols = new PartSymbolsWidget(m_sketchModel, m_undoStack, this);
 
-	QString label = modelPart ? modelPart->modelPartStuff()->label() : LABEL_FRESH_START_TEXT;
+	QString label = modelPart ? modelPart->modelPartStuff()->label() : LabelFreshStartText;
 	m_label = new EditableLineWidget(label,m_undoStack,this,tr("Label"),modelPart);
 
-	QString description = modelPart ? modelPart->modelPartStuff()->description() : DESCRIPTION_FRESH_START_TEXT;
+	QString description = modelPart ? modelPart->modelPartStuff()->description() : DescriptionFreshStartText;
 	m_description = new EditableTextWidget(description,m_undoStack,this,tr("Description"),modelPart);
 
 	/*QString taxonomy = modelPart ? modelPart->modelPartStuff()->taxonomy() : TAXONOMY_FRESH_START_TEXT;
@@ -217,7 +219,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	m_properties = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,this);
 
-	QString tags = modelPart ? modelPart->modelPartStuff()->tags().join(", ") : TAGS_FRESH_START_TEXT;
+	QString tags = modelPart ? modelPart->modelPartStuff()->tags().join(", ") : TagsFreshStartText;
 	m_tags = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
 
 
@@ -235,7 +237,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 		m_createdOn,SIGNAL(editionCompleted(QString)),
 		this,SLOT(updateDateAndAuthor()));
 
-	m_createdByText = new QLabel(FOOTER_TEXT.arg(m_author->text()).arg(m_createdOn->text()));
+	m_createdByText = new QLabel(FooterText.arg(m_author->text()).arg(m_createdOn->text()));
 	m_createdByText->setObjectName("createdBy");
 
 	specWidgets << m_symbols << m_label << m_description /*<< m_taxonomy*/ << m_properties << m_tags << m_author << m_createdOn << m_createdByText;
@@ -488,7 +490,7 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
 }
 
 void PartsEditorMainWindow::updateDateAndAuthor() {
-	m_createdByText->setText(FOOTER_TEXT.arg(m_author->text()).arg(m_createdOn->text()));
+	m_createdByText->setText(FooterText.arg(m_author->text()).arg(m_createdOn->text()));
 }
 
 ModelPartStuff* PartsEditorMainWindow::modelPartStuff() {

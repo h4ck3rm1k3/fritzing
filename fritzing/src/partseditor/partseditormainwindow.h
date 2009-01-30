@@ -143,10 +143,19 @@ protected:
 
     static PartsEditorMainWindow *m_lastOpened;
     static int m_closedBeforeCount;
+    static QString ___partsEditorName___;
 
 public:
-	static const QString UntitledPartName;
+	static QString TitleFreshStartText;
+	static QString LabelFreshStartText;
+	static QString DescriptionFreshStartText;
+	static QString TaxonomyFreshStartText;
+	static QString TagsFreshStartText;
+	static QString FooterText;
+
+	static QString UntitledPartName;
 	static int UntitledPartIndex;
+
 	static QGraphicsProxyWidget *emptyViewItem(QString iconFile, QString text="");
 	static void initText();
 };

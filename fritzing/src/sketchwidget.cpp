@@ -3779,6 +3779,14 @@ qreal SketchWidget::fixedItemHeight(QGraphicsItem* item) {
 	}
 }
 
+void SketchWidget::clearFixedItems() {
+	m_fixedToBottomLeftItems.clear();
+	m_fixedToBottomRightItems.clear();
+	m_fixedToCenterItems.clear();
+	m_fixedToTopLeftItems.clear();
+	m_fixedToTopRightItems.clear();
+}
+
 void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect)
 {
 	Q_UNUSED(fromConnectorItem);

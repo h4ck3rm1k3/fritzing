@@ -288,6 +288,8 @@ protected:
 	qreal fixedItemWidth(QGraphicsItem* item);
 	qreal fixedItemHeight(QGraphicsItem* item);
 
+	void clearFixedItems();
+
 	QByteArray removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes);
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
 	virtual bool doRatsnestOnCopy();
