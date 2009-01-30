@@ -36,14 +36,16 @@ $Date$
 #include "partseditormainwindow.h"
 #include "partsymbolswidget.h"
 
-#define EMPTY_BREAD_VIEW_TEXT "How does this\npart look like on\nthe breadboard?"
-#define EMPTY_SCHEM_VIEW_TEXT "How does this\npart look like in\na schematic view?"
-#define EMPTY_PCB_VIEW_TEXT "How does this\npart look like\non a PCB?"
+QString PartSymbolsWidget::EmptyBreadViewText = ___emptyString___;
+QString PartSymbolsWidget::EmptySchemViewText = ___emptyString___;
+QString PartSymbolsWidget::EmptyPcbViewText = ___emptyString___;
 
 PartSymbolsWidget::PartSymbolsWidget(SketchModel *sketchModel, WaitPushUndoStack *undoStack, QWidget *parent) : QFrame(parent) {
-	createViewImageWidget(sketchModel, undoStack, m_breadView, ItemBase::BreadboardView, "breadboard_icon.png", EMPTY_BREAD_VIEW_TEXT);
-	createViewImageWidget(sketchModel, undoStack, m_schemView, ItemBase::SchematicView, "schematic_icon.png", EMPTY_SCHEM_VIEW_TEXT);
-	createViewImageWidget(sketchModel, undoStack, m_pcbView, ItemBase::PCBView, "pcb_icon.png", EMPTY_PCB_VIEW_TEXT);
+	init();
+
+	createViewImageWidget(sketchModel, undoStack, m_breadView, ItemBase::BreadboardView, "breadboard_icon.png", EmptyBreadViewText);
+	createViewImageWidget(sketchModel, undoStack, m_schemView, ItemBase::SchematicView, "schematic_icon.png", EmptySchemViewText);
+	createViewImageWidget(sketchModel, undoStack, m_pcbView, ItemBase::PCBView, "pcb_icon.png", EmptyPcbViewText);
 
 	m_guidelines = new QLabel(tr("Please refer to the <a style='color: #52182C' href='http://new.fritzing.org/learning/tutorials/making-parts/'>guidelines</a> before modifying or creating parts"), this);
 	m_guidelines->setOpenExternalLinks(true);
@@ -62,6 +64,18 @@ PartSymbolsWidget::PartSymbolsWidget(SketchModel *sketchModel, WaitPushUndoStack
 	this->setLayout(layout);
 
 	this->setFixedHeight(225);
+}
+
+void PartSymbolsWidget::init() {
+	if(EmptyBreadViewText == ___emptyString___) {
+		EmptyBreadViewText = tr("How does this\npart look like on\nthe breadboard?");
+	}
+	if(EmptySchemViewText == ___emptyString___) {
+		EmptySchemViewText = tr("How does this\npart look like in\na schematic view?");
+	}
+	if(EmptyPcbViewText == ___emptyString___) {
+		EmptyPcbViewText = tr("How does this\npart look like on\nthe breadboard?");
+	}
 }
 
 void PartSymbolsWidget::createViewImageWidget(

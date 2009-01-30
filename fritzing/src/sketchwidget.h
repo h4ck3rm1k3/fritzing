@@ -172,11 +172,11 @@ public:
 								  bool connect, class RatsnestCommand *, bool doEmit);
 	virtual void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 
-	void addFixedToTopLeftItem(QGraphicsProxyWidget *item);
-	void addFixedToTopRightItem(QGraphicsProxyWidget *item);
-	void addFixedToBottomLeftItem(QGraphicsProxyWidget *item);
-	void addFixedToCenterItem(QGraphicsProxyWidget *item);
-	void addFixedToBottomRightItem(QGraphicsProxyWidget *item);
+	void addFixedToTopLeftItem(QGraphicsItem *item);
+	void addFixedToTopRightItem(QGraphicsItem *item);
+	void addFixedToBottomLeftItem(QGraphicsItem *item);
+	void addFixedToCenterItem(QGraphicsItem *item);
+	void addFixedToBottomRightItem(QGraphicsItem *item);
 
 	void ensureFixedToTopLeftItems();
 	void ensureFixedToTopRightItems();
@@ -186,7 +186,7 @@ public:
 
 	void collectParts(QList<ItemBase *> & partList);
 
-	void movePartLabel(long itemID, QPointF newPos, QPointF newOffset); 
+	void movePartLabel(long itemID, QPointF newPos, QPointF newOffset);
 
 	void updateInfoView();
 	void setCurrent(bool current);
@@ -279,11 +279,15 @@ protected:
 	virtual void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
 	bool matchesLayer(ModelPart * modelPart);
 
-	void ensureFixedToTopLeft(QGraphicsProxyWidget* item);
-	void ensureFixedToTopRight(QGraphicsProxyWidget* item);
-	void ensureFixedToBottomLeft(QGraphicsProxyWidget* item);
-	void ensureFixedToBottomRight(QGraphicsProxyWidget* item);
-	void ensureFixedToCenter(QGraphicsProxyWidget* item);
+	void ensureFixedToTopLeft(QGraphicsItem* item);
+	void ensureFixedToTopRight(QGraphicsItem* item);
+	void ensureFixedToBottomLeft(QGraphicsItem* item);
+	void ensureFixedToBottomRight(QGraphicsItem* item);
+	void ensureFixedToCenter(QGraphicsItem* item);
+
+	qreal fixedItemWidth(QGraphicsItem* item);
+	qreal fixedItemHeight(QGraphicsItem* item);
+
 	QByteArray removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes);
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
 	virtual bool doRatsnestOnCopy();
@@ -425,11 +429,11 @@ protected:
 	bool m_ignoreSelectionChangeEvents;
 	bool m_current;
 
-	QList<QGraphicsProxyWidget*> m_fixedToTopLeftItems;
-	QList<QGraphicsProxyWidget*> m_fixedToTopRightItems;
-	QList<QGraphicsProxyWidget*> m_fixedToBottomLeftItems;
-	QList<QGraphicsProxyWidget*> m_fixedToBottomRightItems;
-	QList<QGraphicsProxyWidget*> m_fixedToCenterItems;
+	QList<QGraphicsItem*> m_fixedToTopLeftItems;
+	QList<QGraphicsItem*> m_fixedToTopRightItems;
+	QList<QGraphicsItem*> m_fixedToBottomLeftItems;
+	QList<QGraphicsItem*> m_fixedToBottomRightItems;
+	QList<QGraphicsItem*> m_fixedToCenterItems;
 
 protected:
 	QString m_viewName;

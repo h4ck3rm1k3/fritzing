@@ -82,7 +82,7 @@ void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
 	m_item->setSelected(false);
 	m_item->setHidden(false);
 
-	QRectF viewRect = rect();
+	/*QRectF viewRect = rect();
 
 	int zoomCorrection;
 	if(m_viewIdentifier != ItemBase::IconView) {
@@ -106,7 +106,8 @@ void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
 	}
 
 	absoluteZoom(m_scaleValue-zoomCorrection);
-	centerOn(itemsRect.center());
+	centerOn(itemsRect.center());*/
+	addFixedToCenterItem(m_item);
 }
 
 void PartsEditorAbstractViewImage::wheelEvent(QWheelEvent* /*event*/) {

@@ -50,6 +50,7 @@ Q_OBJECT
 				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, PartsEditorViewImageWidget *&viw,
 				ItemBase::ViewIdentifier viewId, QString iconFileName, QString startText
 			);
+		void init();
 
 		friend class ConnectorsViewsWidget;
 		PartsEditorViewImageWidget *m_breadView;
@@ -57,6 +58,11 @@ Q_OBJECT
 		PartsEditorViewImageWidget *m_pcbView;
 
 		QLabel *m_guidelines;
+
+	protected:
+		static QString EmptyBreadViewText;
+		static QString EmptySchemViewText;
+		static QString EmptyPcbViewText;
 };
 
 #endif /* PARTSYMBOLSWIDGET_H_ */
