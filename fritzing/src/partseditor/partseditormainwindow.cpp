@@ -161,7 +161,10 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_headerFrame->setObjectName("header");
 
 	int iconViewSize = 50;
-	m_iconViewImage = new PartsEditorViewImageWidget(ItemBase::IconView, createTempFolderIfNecessary(), 0, m_headerFrame, iconViewSize);
+	QGraphicsItem *startItem = modelPart? NULL: PartsEditorMainWindow::emptyViewItem("icon_icon.png",___emptyString___);
+	m_iconViewImage = new PartsEditorViewImageWidget(
+		ItemBase::IconView, createTempFolderIfNecessary(), startItem, m_headerFrame, iconViewSize
+	);
 	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);
 	m_iconViewImage->setObjectName("iconImage");
 	m_iconViewImage->setSketchModel(m_sketchModel);
@@ -319,7 +322,7 @@ void PartsEditorMainWindow::createFooter() {
 }
 
 
-QGraphicsProxyWidget *PartsEditorMainWindow::emptyViewItem(QString iconFile, QString text) {
+QGraphicsItem *PartsEditorMainWindow::emptyViewItem(QString iconFile, QString text) {
 	QLabel *icon = new QLabel();
 	icon->setPixmap(QPixmap(":/resources/images/"+iconFile));
 	icon->setAlignment(Qt::AlignHCenter);

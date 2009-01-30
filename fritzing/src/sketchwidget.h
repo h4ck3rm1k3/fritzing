@@ -288,6 +288,7 @@ protected:
 	qreal fixedItemWidth(QGraphicsItem* item);
 	qreal fixedItemHeight(QGraphicsItem* item);
 
+	void removeIfFixedPos(QGraphicsItem *item);
 	void clearFixedItems();
 
 	QByteArray removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes);

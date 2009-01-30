@@ -44,22 +44,21 @@ PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentif
 }
 
 void PartsEditorAbstractViewImage::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
-	Q_ASSERT(modelPart);
-	bool takePrevTransform = false;
+	/*bool takePrevTransform = false;
 	QTransform prevTrans;
 	if(m_item) {
 		takePrevTransform = true;
 		prevTrans = m_item->transform();
-	}
+	}*/
 	clearScene();
 	m_item = new PartsEditorPaletteItem(this,modelPart, m_viewIdentifier, svgFilePath, ItemBase::viewIdentifierNaturalName(m_viewIdentifier), m_showsTerminalPoints);
 	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, m_item);
 
-	if(takePrevTransform) {
+	/*if(takePrevTransform) {
 		m_item->setTransform(prevTrans);
-	} else {
+	} else {*/
 		fitCenterAndDeselect();
-	}
+	//}
 }
 
 
@@ -82,7 +81,7 @@ void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
 	m_item->setSelected(false);
 	m_item->setHidden(false);
 
-	/*QRectF viewRect = rect();
+	QRectF viewRect = rect();
 
 	int zoomCorrection;
 	if(m_viewIdentifier != ItemBase::IconView) {
@@ -106,8 +105,7 @@ void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
 	}
 
 	absoluteZoom(m_scaleValue-zoomCorrection);
-	centerOn(itemsRect.center());*/
-	addFixedToCenterItem(m_item);
+	centerOn(itemsRect.center());
 }
 
 void PartsEditorAbstractViewImage::wheelEvent(QWheelEvent* /*event*/) {

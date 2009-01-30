@@ -156,7 +156,7 @@ public:
 	static QString UntitledPartName;
 	static int UntitledPartIndex;
 
-	static QGraphicsProxyWidget *emptyViewItem(QString iconFile, QString text="");
+	static QGraphicsItem *emptyViewItem(QString iconFile, QString text="");
 	static void initText();
 };
 #endif /* PARTSEDITORMAINWINDOW_H_ */

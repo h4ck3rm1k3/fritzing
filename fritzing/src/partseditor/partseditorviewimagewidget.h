@@ -37,7 +37,7 @@ class PartsEditorViewImageWidget : public PartsEditorAbstractViewImage
 Q_OBJECT
 
 public:
-	PartsEditorViewImageWidget(ItemBase::ViewIdentifier, QDir tempDir, QGraphicsProxyWidget *startItem=0, QWidget *parent=0, int size=150);
+	PartsEditorViewImageWidget(ItemBase::ViewIdentifier, QDir tempDir, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void loadSvgFile(ModelPart * modelPart);
 	void loadFile();
@@ -60,6 +60,8 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void fitCenterAndDeselect();
 	QString createSvgFromImage(const QString &filePath);
+
+	QGraphicsItem *m_startItem;
 
 	StringPair *m_svgFilePath;
 	QString m_originalSvgFilePath;

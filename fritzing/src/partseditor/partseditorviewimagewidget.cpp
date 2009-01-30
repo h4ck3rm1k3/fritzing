@@ -41,12 +41,13 @@ $Date$
 
 QT_BEGIN_NAMESPACE
 
-PartsEditorViewImageWidget::PartsEditorViewImageWidget(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsProxyWidget *startItem, QWidget *parent, int size)
+PartsEditorViewImageWidget::PartsEditorViewImageWidget(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
 	: PartsEditorAbstractViewImage(viewId, false /*don't show terminal points*/, false, parent, size)
 {
 	m_svgFilePath = new StringPair;
 	m_tempFolder = tempDir;
-	if(startItem) {
+	m_startItem = startItem;
+	if(m_startItem) {
 		scene()->addItem(startItem);
 		addFixedToCenterItem(startItem);
 		ensureFixedToCenterItems();
@@ -87,7 +88,12 @@ void PartsEditorViewImageWidget::loadFile() {
 			origPath = createSvgFromImage(origPath);
 		}
 		if(origPath != ___emptyString___) {
-			scene()->clear();
+			if(m_startItem) {
+				m_fixedToCenterItems.removeAll(m_startItem);
+				scene()->removeItem(m_startItem);
+				delete m_startItem;
+				m_startItem = NULL;
+			}
 			loadSvgFile(origPath);
 		}
 	}
@@ -193,6 +199,7 @@ const StringPair& PartsEditorViewImageWidget::svgFileSplit() {
 void PartsEditorViewImageWidget::fitCenterAndDeselect() {
 	scene()->setSceneRect(0,0,width(),height());
 	PartsEditorAbstractViewImage::fitCenterAndDeselect();
+	addFixedToCenterItem(m_item);
 }
 
 QString PartsEditorViewImageWidget::createSvgFromImage(const QString &origFilePath) {

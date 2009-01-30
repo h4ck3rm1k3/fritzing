@@ -3669,13 +3669,6 @@ void SketchWidget::ensureFixedToTopRight(QGraphicsItem* item) {
 	qreal y = 0;
 
 	item->setPos(mapToScene(x,y));
-
-	/*DebugDialog::debug(QString("<<< %1 %2 %3 %4")
-		.arg(x)
-		.arg(y)
-		.arg(mapToScene(x,y).x())
-		.arg(mapToScene(x,y).y())
-	);*/
 }
 
 void SketchWidget::ensureFixedToBottomLeftItems() {
@@ -3750,11 +3743,7 @@ void SketchWidget::ensureFixedToCenter(QGraphicsItem* item) {
 	qreal x = (width()-fixedItemWidth(item))/2;
 	qreal y = (height()-fixedItemHeight(item))/2;
 
-	//DebugDialog::debug(QString("fixed to center pos x=%1 y=%2").arg(x).arg(y));
 	QPointF pos = mapToScene(x,y);
-	//DebugDialog::debug(QString("fixed to center mapped pos x=%1 y=%2").arg(pos.x()).arg(pos.y()));
-	//DebugDialog::debug(QString("fixed to center scen size w=%1 h=%2").arg(scene()->width()).arg(scene()->height()));
-	//DebugDialog::debug("");
 
 	if(pos.x() < scene()->width() && pos.y() < scene()->height()) {
 		item->setPos(pos);
@@ -3777,6 +3766,14 @@ qreal SketchWidget::fixedItemHeight(QGraphicsItem* item) {
 	} else {
 		return item->boundingRect().height();
 	}
+}
+
+void SketchWidget::removeIfFixedPos(QGraphicsItem *item) {
+	m_fixedToBottomLeftItems.removeAll(item);
+	m_fixedToBottomRightItems.removeAll(item);
+	m_fixedToCenterItems.removeAll(item);
+	m_fixedToTopLeftItems.removeAll(item);
+	m_fixedToTopRightItems.removeAll(item);
 }
 
 void SketchWidget::clearFixedItems() {
