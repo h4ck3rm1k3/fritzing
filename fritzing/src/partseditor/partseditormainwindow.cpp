@@ -32,7 +32,7 @@ $Date$
 #include "../fdockwidget.h"
 #include "../waitpushundostack.h"
 #include "editabletextwidget.h"
-#include "partseditorviewimagewidget.h"
+#include "partseditorspecificationsview.h"
 #include "partsymbolswidget.h"
 #include "partspecificationswidget.h"
 
@@ -162,7 +162,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 
 	int iconViewSize = 50;
 	QGraphicsItem *startItem = modelPart? NULL: PartsEditorMainWindow::emptyViewItem("icon_icon.png",___emptyString___);
-	m_iconViewImage = new PartsEditorViewImageWidget(
+	m_iconViewImage = new PartsEditorSpecificationsView(
 		ItemBase::IconView, createTempFolderIfNecessary(), startItem, m_headerFrame, iconViewSize
 	);
 	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);

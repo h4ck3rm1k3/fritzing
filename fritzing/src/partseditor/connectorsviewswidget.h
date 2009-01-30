@@ -32,8 +32,8 @@ $Date$
 #include <QFrame>
 #include <QUndoStack>
 
-#include "partseditorconnectorviewimagewidget.h"
-#include "partseditorviewimagewidget.h"
+#include "partseditorconnectorsview.h"
+#include "partseditorspecificationsview.h"
 #include "partsymbolswidget.h"
 
 class ConnectorsViewsWidget : public QFrame {
@@ -51,16 +51,16 @@ class ConnectorsViewsWidget : public QFrame {
 
 	protected:
 		void createViewImageWidget(
-				PartsEditorConnectorViewImageWidget *&viw, PartsEditorViewImageWidget* sister,
+				PartsEditorConnectorsView *&viw, PartsEditorSpecificationsView* sister,
 				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
 				ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId);
 
 		bool showingTerminalPoints();
 		bool checkStateToBool(int checkState);
 
-		PartsEditorConnectorViewImageWidget *m_breadView;
-		PartsEditorConnectorViewImageWidget *m_schemView;
-		PartsEditorConnectorViewImageWidget *m_pcbView;
+		PartsEditorConnectorsView *m_breadView;
+		PartsEditorConnectorsView *m_schemView;
+		PartsEditorConnectorsView *m_pcbView;
 
 		QCheckBox *m_showTerminalPointsCheckBox;
 };

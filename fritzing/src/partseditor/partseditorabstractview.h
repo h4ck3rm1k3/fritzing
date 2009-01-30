@@ -25,26 +25,27 @@ $Date$
 ********************************************************************/
 
 
-#ifndef PARTSEDITORABSTRACTVIEWIMAGE_H_
-#define PARTSEDITORABSTRACTVIEWIMAGE_H_
+#ifndef PARTSEDITORABSTRACTVIEW_H_
+#define PARTSEDITORABSTRACTVIEW_H_
 
 #include "../sketchwidget.h"
 #include "../connectorstuff.h"
 #include "partseditorpaletteitem.h"
 
-class PartsEditorAbstractViewImage : public SketchWidget {
+class PartsEditorAbstractView : public SketchWidget {
 	Q_OBJECT
 
 	public:
-		PartsEditorAbstractViewImage(ItemBase::ViewIdentifier, bool showsTerminalPoints, bool showingTerminalPoints, QWidget *parent=0, int size=150);
-		void showTerminalPoints(bool show);
-		bool showingTerminalPoints();
+		PartsEditorAbstractView(ItemBase::ViewIdentifier, QWidget *parent=0, int size=150);
 
 	public slots:
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
 		virtual void addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath);
 
 	protected:
+		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
+		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path);
+
 		void clearScene();
 		virtual void fitCenterAndDeselect();
 		void removeConnectors();
@@ -60,9 +61,6 @@ class PartsEditorAbstractViewImage : public SketchWidget {
 		const QStringList getLayers(const QString &path);
 
 		PartsEditorPaletteItem *m_item; // just one item per view
-
-		bool m_showsTerminalPoints;
-		bool m_showingTerminalPoints;
 };
 
-#endif /* PARTSEDITORABSTRACTVIEWIMAGE_H_ */
+#endif /* PARTSEDITORABSTRACTVIEW_H_ */

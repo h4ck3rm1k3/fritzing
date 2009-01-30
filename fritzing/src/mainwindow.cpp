@@ -230,7 +230,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_setUpDockManagerTimer.start(1000);
 }
 
-MainWindow::~MainWindow() 
+MainWindow::~MainWindow()
 {
 	m_dockManager->dontKeepMargins();
 	m_setUpDockManagerTimer.stop();
@@ -595,9 +595,9 @@ void MainWindow::tabWidget_currentChanged(int index) {
 	widgetParent->addStatusBar(m_statusBar);
 	if(sb != m_statusBar) sb->hide();
 
-	if (m_breadboardGraphicsView) m_breadboardGraphicsView->setCurrent(false); 
-	if (m_schematicGraphicsView) m_schematicGraphicsView->setCurrent(false); 
-	if (m_pcbGraphicsView) m_pcbGraphicsView->setCurrent(false); 
+	if (m_breadboardGraphicsView) m_breadboardGraphicsView->setCurrent(false);
+	if (m_schematicGraphicsView) m_schematicGraphicsView->setCurrent(false);
+	if (m_pcbGraphicsView) m_pcbGraphicsView->setCurrent(false);
 
 	SketchWidget *widget = widgetParent->graphicsView();
 
@@ -679,7 +679,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	foreach (QWidget *widget, QApplication::topLevelWidgets()) {
 		if (widget == this) continue;
 		if (dynamic_cast<QMainWindow *>(widget) == NULL) continue;
-		if (dynamic_cast<MainPartsEditorWindow *>(widget) != NULL) continue;
+		// TODO Brendan: please remove all the references and the source code
+		// of the old parts editor
+		//if (dynamic_cast<MainPartsEditorWindow *>(widget) != NULL) continue;
 
 		count++;
 	}

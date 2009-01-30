@@ -31,7 +31,7 @@ $Date$
 
 #include <QWidget>
 
-#include "partseditorviewimagewidget.h"
+#include "partseditorspecificationsview.h"
 #include "connectorsinfowidget.h"
 
 class PartSymbolsWidget : public QFrame {
@@ -47,15 +47,15 @@ Q_OBJECT
 
 	protected:
 		void createViewImageWidget(
-				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, PartsEditorViewImageWidget *&viw,
+				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, PartsEditorSpecificationsView *&viw,
 				ItemBase::ViewIdentifier viewId, QString iconFileName, QString startText
 			);
 		void init();
 
 		friend class ConnectorsViewsWidget;
-		PartsEditorViewImageWidget *m_breadView;
-		PartsEditorViewImageWidget *m_schemView;
-		PartsEditorViewImageWidget *m_pcbView;
+		PartsEditorSpecificationsView *m_breadView;
+		PartsEditorSpecificationsView *m_schemView;
+		PartsEditorSpecificationsView *m_pcbView;
 
 		QLabel *m_guidelines;
 

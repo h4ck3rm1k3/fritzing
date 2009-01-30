@@ -25,12 +25,12 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 ********************************************************************/
 
 #include "terminalpointitem.h"
-#include "../partseditor/partseditorconnectoritem.h"
+#include "../partseditor/partseditorconnectorsconnectoritem.h"
 #include "../debugdialog.h"
 
 QHash<ConnectorRectangle::State, QPixmap> TerminalPointItem::m_pixmapHash;
 
-TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, bool movable)
+TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool movable)
 	: ResizableRectItem(parent)
 {
 	Q_ASSERT(parent);
@@ -40,7 +40,7 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent, bool visi
 	init(visible, movable);
 }
 
-TerminalPointItem::TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, const QPointF &point)
+TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point)
 	: ResizableRectItem(parent)
 {
 	Q_ASSERT(parent);

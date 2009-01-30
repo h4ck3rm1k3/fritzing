@@ -66,10 +66,10 @@ ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchM
 }
 
 void ConnectorsViewsWidget::createViewImageWidget(
-		PartsEditorConnectorViewImageWidget *&viw, PartsEditorViewImageWidget* sister,
+		PartsEditorConnectorsView *&viw, PartsEditorSpecificationsView* sister,
 		SketchModel* sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
 		ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId) {
-	viw = new PartsEditorConnectorViewImageWidget(viewId,showingTerminalPoints(),this);
+	viw = new PartsEditorConnectorsView(viewId,showingTerminalPoints(),this);
 	connect(sister,SIGNAL(loadedFromModel(PaletteModel*, ModelPart*)),viw,SLOT(loadFromModel(PaletteModel*, ModelPart*)));
 	connect(
 		sister, SIGNAL(itemAddedToSymbols(ModelPart*, StringPair*)),

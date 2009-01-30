@@ -26,18 +26,18 @@ $Date$
 
 
 
-#ifndef PARTSEDITORVIEWIMAGEWIDGET_H_
-#define PARTSEDITORVIEWIMAGEWIDGET_H_
+#ifndef PARTSEDITORSPECIFICATIONSVIEW_H_
+#define PARTSEDITORSPECIFICATIONSVIEW_H_
 
-#include "partseditorabstractviewimage.h"
+#include "partseditorabstractview.h"
 #include "partseditorpaletteitem.h"
 
-class PartsEditorViewImageWidget : public PartsEditorAbstractViewImage
+class PartsEditorSpecificationsView : public PartsEditorAbstractView
 {
 Q_OBJECT
 
 public:
-	PartsEditorViewImageWidget(ItemBase::ViewIdentifier, QDir tempDir, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
+	PartsEditorSpecificationsView(ItemBase::ViewIdentifier, QDir tempDir, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void loadSvgFile(ModelPart * modelPart);
 	void loadFile();
@@ -67,4 +67,4 @@ protected:
 	QString m_originalSvgFilePath;
 	QDir m_tempFolder;
 };
-#endif /* PARTSEDITORVIEWIMAGEWIDGET_H_ */
+#endif /* PARTSEDITORSPECIFICATIONSVIEW_H_ */

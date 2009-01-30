@@ -26,20 +26,25 @@ $Date$
 
 
 
-#ifndef PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_
-#define PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_
+#ifndef PARTSEDITORCONNECTORSVIEW_H_
+#define PARTSEDITORCONNECTORSVIEW_H_
 
 #include "partseditorconnectoritem.h"
-#include "partseditorabstractviewimage.h"
+#include "partseditorabstractview.h"
+#include "partseditorconnectorspaletteitem.h"
+#include "partseditorconnectorsconnectoritem.h"
 #include "zoomcontrols.h"
 
-class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
+class PartsEditorConnectorsView: public PartsEditorAbstractView {
 	Q_OBJECT
 	public:
-		PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier, bool showingTerminalPoint, QWidget *parent=0, int size=150);
+		PartsEditorConnectorsView(ItemBase::ViewIdentifier, bool showingTerminalPoint, QWidget *parent=0, int size=150);
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void updateDomIfNeeded();
+
+		void showTerminalPoints(bool show);
+		bool showingTerminalPoints();
 
 	public slots:
 		void informConnectorSelection(const QString& connId);
@@ -52,6 +57,9 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		void svgFileLoadNeeded(const QString &filepath);
 
 	protected:
+		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
+		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path);
+
 		void wheelEvent(QWheelEvent* event);
 		void mousePressEvent(QMouseEvent *event);
 		void mouseMoveEvent(QMouseEvent *event);
@@ -66,18 +74,19 @@ class PartsEditorConnectorViewImageWidget: public PartsEditorAbstractViewImage {
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
 		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect);
 
-		QRubberBand *m_connRubberBand;
-		QPoint m_connRubberBandOrigin;
-		bool m_connFreeDrawingEnabled;
+		PartsEditorConnectorsPaletteItem *myItem();
+
 		ZoomControls *m_zoomControls;
 
-		QList<PartsEditorConnectorItem*> m_drawnConns;
+		QList<PartsEditorConnectorsConnectorItem*> m_drawnConns;
 		QStringList m_removedConnIds;
+
+		bool m_showingTerminalPoints;
 
 	protected:
 		static int ConnDefaultWidth;
 		static int ConnDefaultHeight;
 };
 
-#endif /* PARTSEDITORCONNECTORVIEWIMAGEWIDGET_H_ */
+#endif /* PARTSEDITORCONNECTORSVIEW_H_ */
 

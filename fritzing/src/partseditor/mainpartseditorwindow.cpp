@@ -31,7 +31,7 @@ $Date$
 #include "../waitpushundostack.h"
 
 #include "editabletextwidget.h"
-#include "partseditorviewimagewidget.h"
+#include "partseditorspecificationsview.h"
 #include "partsymbolswidget.h"
 
 

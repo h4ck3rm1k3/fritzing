@@ -32,7 +32,7 @@ $Date$
 #include <QSvgGenerator>
 #include <QGraphicsProxyWidget>
 
-#include "partseditorviewimagewidget.h"
+#include "partseditorspecificationsview.h"
 #include "../layerkinpaletteitem.h"
 #include "../debugdialog.h"
 #include "../waitpushundostack.h"
@@ -41,8 +41,8 @@ $Date$
 
 QT_BEGIN_NAMESPACE
 
-PartsEditorViewImageWidget::PartsEditorViewImageWidget(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
-	: PartsEditorAbstractViewImage(viewId, false /*don't show terminal points*/, false, parent, size)
+PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
+	: PartsEditorAbstractView(viewId, parent, size)
 {
 	m_svgFilePath = new StringPair;
 	m_tempFolder = tempDir;
@@ -54,12 +54,12 @@ PartsEditorViewImageWidget::PartsEditorViewImageWidget(ItemBase::ViewIdentifier 
 	}
 }
 
-void PartsEditorViewImageWidget::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *){
+void PartsEditorSpecificationsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *){
 	DebugDialog::debug("got connector mouse press.  not yet implemented...");
 	return;
 }
 
-void PartsEditorViewImageWidget::copySvgFileToDestiny() {
+void PartsEditorSpecificationsView::copySvgFileToDestiny() {
 	// if the svg file is in the temp folder, then copy it to destiny
 	if(!m_svgFilePath->first.isEmpty() && !m_svgFilePath->second.isEmpty() && m_svgFilePath->first == m_tempFolder.path()) {
 		QFile tempFile(svgFilePath());
@@ -68,12 +68,12 @@ void PartsEditorViewImageWidget::copySvgFileToDestiny() {
 	}
 }
 
-void PartsEditorViewImageWidget::mousePressEvent(QMouseEvent *event) {
+void PartsEditorSpecificationsView::mousePressEvent(QMouseEvent *event) {
 	Q_UNUSED(event);
 	loadFile();
 }
 
-void PartsEditorViewImageWidget::loadFile() {
+void PartsEditorSpecificationsView::loadFile() {
 	QString origPath = QFileDialog::getOpenFileName(this,
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
@@ -91,7 +91,7 @@ void PartsEditorViewImageWidget::loadFile() {
 			if(m_startItem) {
 				m_fixedToCenterItems.removeAll(m_startItem);
 				scene()->removeItem(m_startItem);
-				delete m_startItem;
+				//delete m_startItem;
 				m_startItem = NULL;
 			}
 			loadSvgFile(origPath);
@@ -99,7 +99,7 @@ void PartsEditorViewImageWidget::loadFile() {
 	}
 }
 
-void PartsEditorViewImageWidget::loadSvgFile(const QString& origPath) {
+void PartsEditorSpecificationsView::loadSvgFile(const QString& origPath) {
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
 	ModelPart * mp = static_cast<ModelPart *>(m_sketchModel->root());
 
@@ -109,7 +109,7 @@ void PartsEditorViewImageWidget::loadSvgFile(const QString& origPath) {
 	loadSvgFile(mp);
 }
 
-void PartsEditorViewImageWidget::loadSvgFile(ModelPart * modelPart) {
+void PartsEditorSpecificationsView::loadSvgFile(ModelPart * modelPart) {
 	addItemInPartsEditor(modelPart, m_svgFilePath);
 	emit itemAddedToSymbols(0, m_svgFilePath);
 
@@ -118,8 +118,8 @@ void PartsEditorViewImageWidget::loadSvgFile(ModelPart * modelPart) {
 	m_item->setSvgFilePath(m_svgFilePath);
 }
 
-void PartsEditorViewImageWidget::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
-	PartsEditorAbstractViewImage::loadFromModel(paletteModel, modelPart);
+void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
+	PartsEditorAbstractView::loadFromModel(paletteModel, modelPart);
 
 	StringPair *sp = m_item->svgFilePath();
 	copyToTempAndRenameIfNecessary(sp);
@@ -129,7 +129,7 @@ void PartsEditorViewImageWidget::loadFromModel(PaletteModel *paletteModel, Model
 	emit loadedFromModel(paletteModel, modelPart);
 }
 
-void PartsEditorViewImageWidget::copyToTempAndRenameIfNecessary(StringPair *filePathOrig) {
+void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(StringPair *filePathOrig) {
 	m_originalSvgFilePath = filePathOrig->first+(!filePathOrig->second.isEmpty()?"/"+filePathOrig->second:"");
 	QString svgFolderPath = getApplicationSubFolderPath("parts")+"/svg";
 
@@ -158,7 +158,7 @@ void PartsEditorViewImageWidget::copyToTempAndRenameIfNecessary(StringPair *file
 	}
 }
 
-void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
+void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
 	m_originalSvgFilePath = filePath;
 	QString folder = getApplicationSubFolderPath("parts")+"/svg";
 
@@ -188,21 +188,21 @@ void PartsEditorViewImageWidget::setSvgFilePath(const QString &filePath) {
 }
 
 
-const QString PartsEditorViewImageWidget::svgFilePath() {
+const QString PartsEditorSpecificationsView::svgFilePath() {
 	return m_svgFilePath->first+"/"+m_svgFilePath->second;
 }
 
-const StringPair& PartsEditorViewImageWidget::svgFileSplit() {
+const StringPair& PartsEditorSpecificationsView::svgFileSplit() {
 	return *m_svgFilePath;
 }
 
-void PartsEditorViewImageWidget::fitCenterAndDeselect() {
+void PartsEditorSpecificationsView::fitCenterAndDeselect() {
 	scene()->setSceneRect(0,0,width(),height());
-	PartsEditorAbstractViewImage::fitCenterAndDeselect();
+	PartsEditorAbstractView::fitCenterAndDeselect();
 	addFixedToCenterItem(m_item);
 }
 
-QString PartsEditorViewImageWidget::createSvgFromImage(const QString &origFilePath) {
+QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFilePath) {
 	QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
 
 	if(!QFileInfo(m_tempFolder.path()+"/"+viewFolder).exists()) {

@@ -31,12 +31,12 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 #include <QGraphicsRectItem>
 #include "connectorrectangle.h"
 
-class PartsEditorConnectorItem;
+class PartsEditorConnectorsConnectorItem;
 
 class TerminalPointItem : public ResizableRectItem {
 public:
-	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, bool movable=true);
-	TerminalPointItem(PartsEditorConnectorItem *parent, bool visible, const QPointF &point);
+	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool movable=true);
+	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
 
 	QPointF point();
 	void updatePoint();
@@ -65,7 +65,7 @@ protected:
 	bool m_movable;
 
 	QGraphicsPixmapItem *m_cross;
-	PartsEditorConnectorItem *m_parent;
+	PartsEditorConnectorsConnectorItem *m_parent;
 
 	static QHash<ConnectorRectangle::State, QPixmap> m_pixmapHash;
 };

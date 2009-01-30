@@ -31,13 +31,13 @@ $Date$
 
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectoritem.h"
-#include "partseditorabstractviewimage.h"
+#include "partseditorabstractview.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
 #include "../layerattributes.h"
 #include "../layerkinpaletteitem.h"
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_owner = owner;
@@ -58,13 +58,9 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *own
 
 	setAcceptHoverEvents(false);
 	setSelected(false);
-
-	m_withBorder = false;
-
-	m_showsTerminalPoints = showsTerminalPoints;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer, bool showsTerminalPoints) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_owner = owner;
@@ -80,13 +76,9 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *own
 
 	setAcceptHoverEvents(false);
 	setSelected(false);
-
-	m_withBorder = false;
-
-	m_showsTerminalPoints = showsTerminalPoints;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, bool showsTerminalPoints) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_owner = owner;
@@ -95,10 +87,6 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractViewImage *own
 
 	m_connectors = NULL;
 	m_svgStrings = NULL;
-
-	m_withBorder = false;
-
-	m_showsTerminalPoints = showsTerminalPoints;
 }
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
@@ -150,34 +138,6 @@ const QList<Connector *> &PartsEditorPaletteItem::connectors() {
 void PartsEditorPaletteItem::setConnector(const QString &id, Connector *connector) {
 	Q_UNUSED(id);
 	Q_UNUSED(connector);
-/*delete modelPart()->connectors()[id];
-	modelPart()->connectors()[id] = conn;*/
-
-	/*ConnectorItem * connectorItem = newConnectorItem(connector);
-
-	RendererViewThing * viewThing = dynamic_cast<RendererViewThing *>(modelPartStuff()->viewThing());
-	QSvgRenderer * renderer = viewThing->get((long)m_viewIdentifier);
-
-	if (connector == NULL) return;
-
-	QRectF connectorRect;
-	QPointF terminalPoint;
-	bool result = connector->setUpConnector(renderer, m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, true);
-	if (!result) return;*/
-
-	//ConnectorItem * connectorItem = newConnectorItem(connector);
-
-/*	for (int i = 0; i < childItems().count(); i++) {
-		PartsEditorConnectorItem * connectorItem = dynamic_cast<PartsEditorConnectorItem *>(childItems()[i]);
-		if (connectorItem == NULL) continue;
-
-		if(!connectorItem->connector() || (connectorItem->connector() && connectorItem->connector()->connectorStuffID() == id)) {
-			if(connectorItem->connector() && connectorItem->connector()->connectorStuffID() == id) {
-				delete connectorItem->connector();
-			}
-			connectorItem->setConnector(conn);
-		}
-	}*/
 }
 
 bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
@@ -284,50 +244,11 @@ QString PartsEditorPaletteItem::flatSvgFilePath() {
 }
 
 ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {
-	return new PartsEditorConnectorItem(connector,this, m_showsTerminalPoints, showingTerminalPoints());
-}
-
-void PartsEditorPaletteItem::highlightConnectors(const QString &connId) {
-	for (int i = 0; i < childItems().count(); i++) {
-		PartsEditorConnectorItem * connectorItem = dynamic_cast<PartsEditorConnectorItem *>(childItems()[i]);
-		if (connectorItem == NULL) continue;
-
-		connectorItem->highlight(connId);
-	}
+	return new PartsEditorConnectorItem(connector,this);
 }
 
 void PartsEditorPaletteItem::removeFromModel() {
 	if(m_modelPart) {
 		m_modelPart->removeViewItem(this);
 	}
-}
-
-void PartsEditorPaletteItem::setWithBorder(bool withBorder) {
-	m_withBorder = withBorder;
-}
-
-void PartsEditorPaletteItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
-	PaletteItem::paint(painter, option, widget);
-
-	if(m_withBorder) {
-		painter->save();
-		int penW = 5;
-
-		QPen pen(QColor::fromRgb(0,0,0));
-		pen.setWidth(penW);
-		pen.setJoinStyle(Qt::MiterJoin);
-		pen.setCapStyle(Qt::SquareCap);
-
-		QRectF rect = boundingRect();
-		painter->setPen(pen);
-		painter->drawRect(
-			rect.x()-2,rect.y()-2,
-			rect.width()+4,rect.height()+4);
-
-		painter->restore();
-	}
-}
-
-bool PartsEditorPaletteItem::showingTerminalPoints() {
-	return m_owner->showingTerminalPoints();
 }

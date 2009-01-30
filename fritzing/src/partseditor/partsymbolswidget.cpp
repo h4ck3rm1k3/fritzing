@@ -79,11 +79,11 @@ void PartSymbolsWidget::init() {
 }
 
 void PartSymbolsWidget::createViewImageWidget(
-		SketchModel* sketchModel, WaitPushUndoStack *undoStack, PartsEditorViewImageWidget *&viw,
+		SketchModel* sketchModel, WaitPushUndoStack *undoStack, PartsEditorSpecificationsView *&viw,
 		ItemBase::ViewIdentifier viewId, QString iconFileName, QString startText
 	) {
 
-	viw = new PartsEditorViewImageWidget(viewId,tempDir(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
+	viw = new PartsEditorSpecificationsView(viewId,tempDir(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
 	viw->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);

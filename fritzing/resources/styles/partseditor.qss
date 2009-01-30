@@ -24,8 +24,9 @@ PartConnectorsWidget {
 	background-color: #7F7F7F;
 }
 
-PartsEditorViewImageWidget {
+PartsEditorSpecificationsView {
 	border-radius: 5px;
+	background-color: #D8D8D8;
 }
 
 SingleConnectorInfoWidget[selected="true"]{
@@ -97,10 +98,6 @@ AbstractEditableLabelWidget QLabel {
 	font-weight: normal;
 	font-style: normal;
 	padding-top: 5px;
-}
-
-PartsEditorViewImageWidget {
-	background-color: #D8D8D8;
 }
 
 #iconImage, #partTitle {

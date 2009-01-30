@@ -37,7 +37,7 @@ $Date$
 #include "connectorsviewswidget.h"
 #include "connectorsinfowidget.h"
 #include "partconnectorswidget.h"
-#include "partseditorviewimagewidget.h"
+#include "partseditorspecificationsview.h"
 #include "editabletextwidget.h"
 #include "editablelinewidget.h"
 #include "editabledatewidget.h"
@@ -109,7 +109,7 @@ protected:
 	PaletteModel *m_paletteModel;
 	SketchModel *m_sketchModel;
 
-	PartsEditorViewImageWidget *m_iconViewImage;
+	PartsEditorSpecificationsView *m_iconViewImage;
 	EditableLineWidget *m_title;
 	PartSymbolsWidget *m_symbols;
 	EditableLineWidget *m_label;

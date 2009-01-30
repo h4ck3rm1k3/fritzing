@@ -2123,12 +2123,12 @@ Cantidad<byte value="x9"/>Parte
 <context>
     <name>PartsEditorViewImageWidget</name>
     <message>
-        <location filename="../src/partseditor/partseditorviewimagewidget.cpp" line="74"/>
+        <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="74"/>
         <source>Open Image</source>
         <translation>Abrir Imagen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorviewimagewidget.cpp" line="77"/>
+        <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="77"/>
         <source>SVG Files (*.svg)</source>
         <translation>Archivos SVG (*.svg)</translation>
     </message>

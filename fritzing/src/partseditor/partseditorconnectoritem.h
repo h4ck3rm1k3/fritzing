@@ -36,67 +36,13 @@ $Date$
 
 class PartsEditorConnectorItem: public ConnectorItem {
 	public:
-		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint);
-		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo, bool showsTerminalPoints, bool showingTerminalPoint, const QRectF &bounds);
-		void highlight(const QString &connId);
+		PartsEditorConnectorItem(Connector * conn, ItemBase* attachedTo);
 		void removeFromModel();
-		void setConnector(Connector *connector);
-		void setMismatching(bool isMismatching);
-		void setShowTerminalPoint(bool show);
-		bool showingTerminalPoint();
-		void setTerminalPoint(QPointF);
-
-		void resetTerminalPoint();
-		void updateTerminalPoint();
-
-		TerminalPointItem *terminalPointItem();
-
-		qreal minWidth();
-		qreal minHeight();
 
 	protected:
-		void init(bool resizable);
-
-		void setSelectedColor(const QColor &color = selectedColor);
-		void setNotSelectedColor(const QColor &color = notSelectedColor);
-		void removeErrorIcon();
-		void addErrorIcon();
-		void addBorder();
-		void removeBorder();
-		void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-		void resizeRect(qreal x, qreal y, qreal width, qreal height);
 		void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 		void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 		void mousePressEvent(QGraphicsSceneMouseEvent *event);
-
-		void drawDottedRect(QPainter *painter, const QColor &color1, const QColor &color2, const QRectF &rect);
-		QPen drawDottedLine(
-			Qt::Orientations orientation, QPainter *painter, const QPen &pen1, const QPen &pen2,
-			qreal pos1, qreal pos2, qreal fixedAxis, const QPen &lastUsedPen = QPen()
-		);
-		QPen drawDottedLineAux(
-			Qt::Orientations orientation, QPainter *painter, const QPen &firstPen, const QPen &secondPen,
-			qreal pos, qreal fixedAxis, qreal dotSize, int dotCount
-		);
-
-		QGraphicsSvgItem *m_errorIcon;
-		bool m_withBorder;
-
-		bool m_showsTerminalPoint;
-		bool m_showingTerminalPoint; // important only if m_showsTerminalPoints == true
-
-		TerminalPointItem *m_terminalPointItem;
-		bool m_geometryHasChanged;
-	public:
-		static QColor selectedColor;
-		static QColor notSelectedColor;
-		static QColor selectedPenColor;
-		static qreal selectedPenWidth;
-		static QPen myPen;
-
-		static qreal MinWidth;
-		static qreal MinHeight;
 };
 
 #endif /* PARTSEDITORCONNECTORITEM_H_ */

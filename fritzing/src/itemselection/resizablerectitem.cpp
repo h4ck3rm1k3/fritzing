@@ -29,7 +29,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 ResizableRectItem::ResizableRectItem(QGraphicsItem *parent)
 	: QGraphicsRectItem(parent)
 {
-	m_resizable = false;
+	m_resizable = false; // not resizable by default
 	m_handlers = NULL;
 }
 
@@ -50,5 +50,5 @@ void ResizableRectItem::setResizable(bool resizable) {
 }
 
 bool ResizableRectItem::isResizable() {
-	return m_resizable; // not resizable by default
+	return m_resizable;
 }

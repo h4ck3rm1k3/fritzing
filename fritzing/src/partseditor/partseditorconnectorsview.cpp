@@ -25,64 +25,56 @@ $Date$
 ********************************************************************/
 
 
-
-//#include <QXmlQuery>
 #include <QInputDialog>
 
-#include "partseditorconnectorviewimagewidget.h"
+#include "partseditorconnectorsview.h"
 #include "../fsvgrenderer.h"
 #include "../fritzingwindow.h"
 #include "../debugdialog.h"
 
-int PartsEditorConnectorViewImageWidget::ConnDefaultWidth = 5;
-int PartsEditorConnectorViewImageWidget::ConnDefaultHeight = ConnDefaultWidth;
+int PartsEditorConnectorsView::ConnDefaultWidth = 5;
+int PartsEditorConnectorsView::ConnDefaultHeight = ConnDefaultWidth;
 
-PartsEditorConnectorViewImageWidget::PartsEditorConnectorViewImageWidget(ItemBase::ViewIdentifier viewId, bool showingTerminalPoint, QWidget *parent, int size)
-	: PartsEditorAbstractViewImage(viewId, true /*show terminal points*/, showingTerminalPoint, parent, size)
+PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier viewId, bool showingTerminalPoints, QWidget *parent, int size)
+	: PartsEditorAbstractView(viewId, parent, size)
 {
-	m_connRubberBandOrigin = QPoint(-1,-1);
-	m_connRubberBand = NULL;
+	m_showingTerminalPoints = showingTerminalPoints;
 
 	m_zoomControls = new ZoomControls(this);
 	addFixedToBottomRightItem(m_zoomControls);
 
-	//m_connFreeDrawingEnabled = false;
-	//if(m_connFreeDrawingEnabled) {
-		//setDragMode(QGraphicsView::RubberBandDrag);
-	//} else {
-		setDragMode(QGraphicsView::ScrollHandDrag);
-	//}
+	setDragMode(QGraphicsView::ScrollHandDrag);
 
 	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 }
 
-void PartsEditorConnectorViewImageWidget::wheelEvent(QWheelEvent* event) {
+void PartsEditorConnectorsView::wheelEvent(QWheelEvent* event) {
 	SketchWidget::wheelEvent(event);
 }
 
-void PartsEditorConnectorViewImageWidget::mousePressEvent(QMouseEvent *event) {
-	PartsEditorAbstractViewImage::mousePressEvent(event);
+void PartsEditorConnectorsView::mousePressEvent(QMouseEvent *event) {
+	PartsEditorAbstractView::mousePressEvent(event);
 }
 
-void PartsEditorConnectorViewImageWidget::mouseMoveEvent(QMouseEvent *event) {
+void PartsEditorConnectorsView::mouseMoveEvent(QMouseEvent *event) {
 	QGraphicsView::mouseMoveEvent(event);
 }
 
-void PartsEditorConnectorViewImageWidget::mouseReleaseEvent(QMouseEvent *event) {
-	PartsEditorAbstractViewImage::mouseReleaseEvent(event);
+void PartsEditorConnectorsView::mouseReleaseEvent(QMouseEvent *event) {
+	PartsEditorAbstractView::mouseReleaseEvent(event);
 }
 
-void PartsEditorConnectorViewImageWidget::drawConector(Connector *conn, bool showTerminalPoint) {
+void PartsEditorConnectorsView::drawConector(Connector *conn, bool showTerminalPoint) {
 	QSize size(ConnDefaultWidth,ConnDefaultHeight);
 	createConnector(conn,size,showTerminalPoint);
 }
 
-void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const QSize &connSize, bool showTerminalPoint) {
+void PartsEditorConnectorsView::createConnector(Connector *conn, const QSize &connSize, bool showTerminalPoint) {
 	Q_ASSERT(m_item);
 	QString connId = conn->connectorStuffID();
 
 	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize);
-	PartsEditorConnectorItem *connItem = new PartsEditorConnectorItem(conn, m_item, m_showsTerminalPoints, m_showingTerminalPoints, bounds);
+	PartsEditorConnectorsConnectorItem *connItem = new PartsEditorConnectorsConnectorItem(conn, m_item, m_showingTerminalPoints, bounds);
 	m_drawnConns << connItem;
 	connItem->setShowTerminalPoint(showTerminalPoint);
 
@@ -92,7 +84,7 @@ void PartsEditorConnectorViewImageWidget::createConnector(Connector *conn, const
 	));
 }
 
-void PartsEditorConnectorViewImageWidget::removeConnector(const QString &connId) {
+void PartsEditorConnectorsView::removeConnector(const QString &connId) {
 	PartsEditorConnectorItem *connToRemove = NULL;
 	foreach(QGraphicsItem *item, items()) {
 		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
@@ -113,18 +105,18 @@ void PartsEditorConnectorViewImageWidget::removeConnector(const QString &connId)
 	}
 }
 
-void PartsEditorConnectorViewImageWidget::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
-	PartsEditorAbstractViewImage::loadFromModel(paletteModel, modelPart);
+void PartsEditorConnectorsView::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
+	PartsEditorAbstractView::loadFromModel(paletteModel, modelPart);
 	setItemProperties();
 }
 
-void PartsEditorConnectorViewImageWidget::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
+void PartsEditorConnectorsView::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
 	QString imagePath = svgFilePath->first+(svgFilePath->second != ___emptyString___ ? "/" : "")+svgFilePath->second;
 	if(!modelPart) {
 		modelPart = createFakeModelPart(imagePath, svgFilePath->second);
 	}
 
-	PartsEditorAbstractViewImage::addItemInPartsEditor(modelPart,svgFilePath);
+	PartsEditorAbstractView::addItemInPartsEditor(modelPart,svgFilePath);
 	setItemProperties();
 	//m_item->removeFromModel();
 
@@ -133,35 +125,35 @@ void PartsEditorConnectorViewImageWidget::addItemInPartsEditor(ModelPart * model
 	//m_item->highlightConnectors("");
 }
 
-void PartsEditorConnectorViewImageWidget::setItemProperties() {
+void PartsEditorConnectorsView::setItemProperties() {
 	if(m_item) {
 		m_item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 		m_item->setFlag(QGraphicsItem::ItemIsMovable, false);
 		m_item->setFlag(QGraphicsItem::ItemClipsToShape, true);
 		//m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 		m_item->removeFromModel();
-		m_item->highlightConnectors("");
+		myItem()->highlightConnectors("");
 
 		qreal size = 500; // just make sure the user get enough place to play
 		setSceneRect(0,0,size,size);
 
 		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
 		centerOn(m_item);
-		m_item->setWithBorder(true);
 	}
 	ensureFixedToBottomRight(m_zoomControls);
 }
 
-void PartsEditorConnectorViewImageWidget::informConnectorSelection(const QString &connId) {
+void PartsEditorConnectorsView::informConnectorSelection(const QString &connId) {
 	if(m_item) {
-		m_item->highlightConnectors(connId);
+		myItem()->highlightConnectors(connId);
 	}
 }
 
-void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifier viewId, const QString &id, bool mismatching) {
+void PartsEditorConnectorsView::setMismatching(ItemBase::ViewIdentifier viewId, const QString &id, bool mismatching) {
 	if(m_item && viewId == m_viewIdentifier) {
 		for (int i = 0; i < m_item->childItems().count(); i++) {
-			PartsEditorConnectorItem * connectorItem = dynamic_cast<PartsEditorConnectorItem *>(m_item->childItems()[i]);
+			PartsEditorConnectorsConnectorItem * connectorItem
+				= dynamic_cast<PartsEditorConnectorsConnectorItem *>(m_item->childItems()[i]);
 			if(connectorItem == NULL) continue;
 
 			if(connectorItem->connector()->connectorStuffID() == id) {
@@ -171,7 +163,7 @@ void PartsEditorConnectorViewImageWidget::setMismatching(ItemBase::ViewIdentifie
 	}
 }
 
-void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
+void PartsEditorConnectorsView::updateDomIfNeeded() {
 	if(m_item) {
 		FSvgRenderer *renderer = new FSvgRenderer();
 		if(renderer->load(m_item->flatSvgFilePath())) {
@@ -199,7 +191,7 @@ void PartsEditorConnectorViewImageWidget::updateDomIfNeeded() {
 	}
 }
 
-bool PartsEditorConnectorViewImageWidget::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox) {
+bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox) {
 	if(!m_drawnConns.isEmpty()) {
 		DebugDialog::debug(QString("<<<< dsW %1  dsH %2  vbW %3  vbH %4")
 				.arg(defaultSize.width()).arg(defaultSize.height())
@@ -208,7 +200,7 @@ bool PartsEditorConnectorViewImageWidget::addConnectorsIfNeeded(QDomDocument *sv
 		QRectF bounds;
 		QString connId;
 
-		foreach(PartsEditorConnectorItem* drawnConn, m_drawnConns) {
+		foreach(PartsEditorConnectorsConnectorItem* drawnConn, m_drawnConns) {
 			QRectF rectAux = drawnConn->boundingRect();
 			QPointF posAux = QPointF(rectAux.x(),rectAux.y());
 			qreal xAux = posAux.x();
@@ -241,7 +233,7 @@ bool PartsEditorConnectorViewImageWidget::addConnectorsIfNeeded(QDomDocument *sv
 	return false;
 }
 
-bool PartsEditorConnectorViewImageWidget::removeConnectorsIfNeeded(QDomDocument *svgDom) {
+bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomDocument *svgDom) {
 	if(!m_removedConnIds.isEmpty()) {
 		QDomElement docEle = svgDom->documentElement();
 		Q_ASSERT(docEle.tagName() == "svg");
@@ -271,7 +263,7 @@ bool PartsEditorConnectorViewImageWidget::removeConnectorsIfNeeded(QDomDocument 
 	return false;
 }
 
-QRectF PartsEditorConnectorViewImageWidget::mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox) {
+QRectF PartsEditorConnectorsView::mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox) {
 	qreal relationW = defaultSize.width() / viewBox.width();
 	qreal relationH = defaultSize.height() / viewBox.height();
 
@@ -283,7 +275,7 @@ QRectF PartsEditorConnectorViewImageWidget::mapFromSceneToSvg(const QRectF &scen
 	return QRectF(x,y,width,height);
 }
 
-void PartsEditorConnectorViewImageWidget::addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect) {
+void PartsEditorConnectorsView::addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect) {
 	QDomElement connElem = svgDom->createElement("rect");
 	connElem.setAttribute("id",id);
 	connElem.setAttribute("x",rect.x());
@@ -296,11 +288,38 @@ void PartsEditorConnectorViewImageWidget::addRectToSvg(QDomDocument* svgDom, con
 }
 
 
-bool PartsEditorConnectorViewImageWidget::isSupposedToBeRemoved(const QString& id) {
+bool PartsEditorConnectorsView::isSupposedToBeRemoved(const QString& id) {
 	foreach(QString toBeRemoved, m_removedConnIds) {
 		if(id.startsWith(toBeRemoved)) {
 			return true;
 		}
 	}
 	return false;
+}
+
+PartsEditorConnectorsPaletteItem *PartsEditorConnectorsView::myItem() {
+	return dynamic_cast<PartsEditorConnectorsPaletteItem*>(m_item);
+}
+
+void PartsEditorConnectorsView::showTerminalPoints(bool show) {
+	m_showingTerminalPoints = show;
+	foreach(QGraphicsItem *item, items()) {
+		PartsEditorConnectorsConnectorItem *connItem
+			= dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
+		if(connItem) {
+			connItem->setShowTerminalPoint(show);
+		}
+	}
+}
+
+bool PartsEditorConnectorsView::showingTerminalPoints() {
+	return m_showingTerminalPoints;
+}
+
+PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart *modelPart) {
+	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier);
+}
+
+PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path) {
+	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
 }

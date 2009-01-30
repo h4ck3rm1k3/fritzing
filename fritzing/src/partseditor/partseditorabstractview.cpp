@@ -26,24 +26,21 @@ $Date$
 
 
 
-#include "partseditorabstractviewimage.h"
+#include "partseditorabstractview.h"
 #include "partseditorconnectoritem.h"
 #include "../debugdialog.h"
 
 
-PartsEditorAbstractViewImage::PartsEditorAbstractViewImage(ItemBase::ViewIdentifier viewId, bool showsTerminalPoints, bool showingTerminalPoints, QWidget *parent, int size)
+PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
 	//setFixedSize(size,size);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-	m_showsTerminalPoints = showsTerminalPoints;
-	m_showingTerminalPoints = showingTerminalPoints;
 }
 
-void PartsEditorAbstractViewImage::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
+void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
 	/*bool takePrevTransform = false;
 	QTransform prevTrans;
 	if(m_item) {
@@ -51,7 +48,7 @@ void PartsEditorAbstractViewImage::addItemInPartsEditor(ModelPart * modelPart, S
 		prevTrans = m_item->transform();
 	}*/
 	clearScene();
-	m_item = new PartsEditorPaletteItem(this,modelPart, m_viewIdentifier, svgFilePath, ItemBase::viewIdentifierNaturalName(m_viewIdentifier), m_showsTerminalPoints);
+	m_item = newPartsEditorPaletteItem(modelPart, svgFilePath);
 	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, m_item);
 
 	/*if(takePrevTransform) {
@@ -62,22 +59,22 @@ void PartsEditorAbstractViewImage::addItemInPartsEditor(ModelPart * modelPart, S
 }
 
 
-void PartsEditorAbstractViewImage::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
+void PartsEditorAbstractView::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
 	ViewGeometry viewGeometry;
 	this->setPaletteModel(paletteModel);
 	m_item = (PartsEditorPaletteItem*)SketchWidget::loadFromModel(modelPart, viewGeometry);
 	fitCenterAndDeselect();
 }
 
-ItemBase * PartsEditorAbstractViewImage::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors) {
+ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors) {
 	if(paletteItem == NULL) {
-		paletteItem = new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier, m_showsTerminalPoints);
+		paletteItem = newPartsEditorPaletteItem(modelPart);
 	}
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 	return addPartItem(modelPart, paletteItem, doConnectors);
 }
 
-void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
+void PartsEditorAbstractView::fitCenterAndDeselect() {
 	m_item->setSelected(false);
 	m_item->setHidden(false);
 
@@ -108,11 +105,11 @@ void PartsEditorAbstractViewImage::fitCenterAndDeselect() {
 	centerOn(itemsRect.center());
 }
 
-void PartsEditorAbstractViewImage::wheelEvent(QWheelEvent* /*event*/) {
+void PartsEditorAbstractView::wheelEvent(QWheelEvent* /*event*/) {
 	return;
 }
 
-void PartsEditorAbstractViewImage::clearScene() {
+void PartsEditorAbstractView::clearScene() {
 	if(m_item) {
 		m_item->removeLayerKin();
 		m_item->removeFromModel();
@@ -125,7 +122,7 @@ void PartsEditorAbstractViewImage::clearScene() {
 	}
 }
 
-void PartsEditorAbstractViewImage::removeConnectors() {
+void PartsEditorAbstractView::removeConnectors() {
 	QList<PartsEditorConnectorItem*> list;
 	for (int i = m_item->childItems().count()-1; i >= 0; i--) {
 		PartsEditorConnectorItem * connectorItem = dynamic_cast<PartsEditorConnectorItem *>(m_item->childItems()[i]);
@@ -140,7 +137,7 @@ void PartsEditorAbstractViewImage::removeConnectors() {
 	}
 }
 
-ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QString &svgpath, const QString &relativepath) {
+ModelPart *PartsEditorAbstractView::createFakeModelPart(const QString &svgpath, const QString &relativepath) {
 	const QHash<QString,StringPair*> connIds = getConnectorIds(svgpath);
 	const QStringList layers = getLayers(svgpath);
 
@@ -148,7 +145,7 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QString &svgp
 	return createFakeModelPart(connIds, layers, path);
 }
 
-ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
+ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
 	//DebugDialog::debug("<<< SVFfILEpAYH = "+svgFilePath);
 	QString fakePath = svgFilePath.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
 	//DebugDialog::debug("<<< fakePath = "+fakePath);
@@ -187,7 +184,7 @@ ModelPart *PartsEditorAbstractViewImage::createFakeModelPart(const QHash<QString
 	return retval;
 }
 
-const QHash<QString,StringPair*> PartsEditorAbstractViewImage::getConnectorIds(const QString &path) {
+const QHash<QString,StringPair*> PartsEditorAbstractView::getConnectorIds(const QString &path) {
 	QDomDocument *dom = new QDomDocument();
 	QFile file(path);
 	dom->setContent(&file);
@@ -200,7 +197,7 @@ const QHash<QString,StringPair*> PartsEditorAbstractViewImage::getConnectorIds(c
 	return retval;
 }
 
-void PartsEditorAbstractViewImage::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair*> &retval, QDomElement &docElem) {
+void PartsEditorAbstractView::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair*> &retval, QDomElement &docElem) {
 	QDomNode n = docElem.firstChild();
 	while(!n.isNull()) {
 	QDomElement e = n.toElement(); // try to convert the node to an element.
@@ -226,7 +223,7 @@ void PartsEditorAbstractViewImage::getConnectorIdsAux(QHash<QString/*connectorId
 	}
 }
 
-const QStringList PartsEditorAbstractViewImage::getLayers(const QString &path) {
+const QStringList PartsEditorAbstractView::getLayers(const QString &path) {
 	/*QStringList result;
 
 	QXmlQuery query;
@@ -264,16 +261,10 @@ const QStringList PartsEditorAbstractViewImage::getLayers(const QString &path) {
 	return retval;
 }
 
-void PartsEditorAbstractViewImage::showTerminalPoints(bool show) {
-	m_showingTerminalPoints = show;
-	foreach(QGraphicsItem *item, items()) {
-		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
-		if(connItem) {
-			connItem->setShowTerminalPoint(show);
-		}
-	}
+PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart *modelPart) {
+	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier);
 }
 
-bool PartsEditorAbstractViewImage::showingTerminalPoints() {
-	return m_showingTerminalPoints;
+PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path) {
+	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
 }

@@ -1,0 +1,82 @@
+/*******************************************************************
+
+Part of the Fritzing project - http://fritzing.org
+Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
+
+Fritzing is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fritzing is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************
+
+$Revision: 2248 $:
+$Author: merunga $:
+$Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
+
+********************************************************************/
+
+
+#ifndef PARTSEDITORCONNECTORSCONNECTORITEM_H_
+#define PARTSEDITORCONNECTORSCONNECTORITEM_H_
+
+#include "partseditorconnectoritem.h"
+
+class PartsEditorConnectorsConnectorItem : public PartsEditorConnectorItem {
+public:
+	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint);
+	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds);
+
+	void highlight(const QString &connId);
+	void setConnector(Connector *connector);
+	void setMismatching(bool isMismatching);
+
+	void setShowTerminalPoint(bool show);
+	bool showingTerminalPoint();
+	void setTerminalPoint(QPointF);
+	void resetTerminalPoint();
+	void updateTerminalPoint();
+	TerminalPointItem *terminalPointItem();
+
+	qreal minWidth();
+	qreal minHeight();
+
+protected:
+	void init(bool resizable);
+
+	void resizeRect(qreal x, qreal y, qreal width, qreal height);
+
+	void removeErrorIcon();
+	void addErrorIcon();
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	void drawDottedRect(QPainter *painter, const QColor &color1, const QColor &color2, const QRectF &rect);
+	QPen drawDottedLine(
+		Qt::Orientations orientation, QPainter *painter, const QPen &pen1, const QPen &pen2,
+		qreal pos1, qreal pos2, qreal fixedAxis, const QPen &lastUsedPen = QPen()
+	);
+	QPen drawDottedLineAux(
+		Qt::Orientations orientation, QPainter *painter, const QPen &firstPen, const QPen &secondPen,
+		qreal pos, qreal fixedAxis, qreal dotSize, int dotCount
+	);
+
+	QGraphicsSvgItem *m_errorIcon;
+
+	bool m_showingTerminalPoint; // important only if m_showsTerminalPoints == true
+
+	TerminalPointItem *m_terminalPointItem;
+	bool m_geometryHasChanged;
+
+	static qreal MinWidth;
+	static qreal MinHeight;
+};
+
+#endif /* PARTSEDITORCONNECTORSCONNECTORITEM_H_ */

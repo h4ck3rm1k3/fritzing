@@ -1140,7 +1140,7 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_bringForwardAct);
 	m_partMenu->addAction(m_sendBackwardAct);
 	m_partMenu->addAction(m_sendToBackAct);
-	m_partMenu->addSeparator();	
+	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_showPartLabelAct);
 	//m_partMenu->addSeparator();
 	//m_partMenu->addAction(m_groupAct);
@@ -1510,7 +1510,7 @@ void MainWindow::createNewPart() {
 }
 
 void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
-	static long nextId = -1;
+	/*static long nextId = -1;
 	ModelPart *modelPart = NULL;
 	long id = nextId--;
 
@@ -1524,7 +1524,7 @@ void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
 
 	mainPartsEditorWindow->show();
-	mainPartsEditorWindow->raise();
+	mainPartsEditorWindow->raise();*/
 }
 
 // TODO PARTS EDITOR REMOVE
