@@ -365,25 +365,7 @@ void SchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedI
 		emit schematicDisconnectWireSignal(moveItems, deletedItems, deletedConnections, parentCommand);
 	}
 
-	QList<QString> alreadyList;
-	foreach (Wire * wire, undeleteWires) {
-		QList<ConnectorItem *> wireConnectorItems;
-		wireConnectorItems << wire->connector0() << wire->connector1();
-		foreach (ConnectorItem * fromConnectorItem, wireConnectorItems) {
-			foreach(ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-				QString already = ((fromConnectorItem->attachedToID() <= toConnectorItem->attachedToID()) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
-					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorStuffID())
-					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorStuffID());
-				if (alreadyList.contains(already)) continue;
-
-				alreadyList.append(already);
-				new ChangeConnectionCommand(this, BaseCommand::SingleView,
-											fromConnectorItem->attachedToID(), fromConnectorItem->connectorStuffID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-											false, true, parentCommand);
-			}
-		}
-	}
+	makeWiresChangeConnectionCommands(undeleteWires.values(), parentCommand);
 
 	foreach (Wire * wire, undeleteWires) {
 		makeDeleteItemCommand(wire, parentCommand);
@@ -793,7 +775,7 @@ void SchematicSketchWidget::clearDistances() {
 	distances.clear();
 }
 
-const QString & SchematicSketchWidget::hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
+const QString & SchematicSketchWidget::hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
 {
 	Q_UNUSED(event);
 	Q_UNUSED(item);

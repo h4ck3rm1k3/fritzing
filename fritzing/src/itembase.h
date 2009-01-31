@@ -137,6 +137,7 @@ public:
 	void partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset);			// coming up from the label
 	void rotateFlipPartLabel(qreal degrees, Qt::Orientations);				// coming up from the label
 	void doRotateFlipPartLabel(qreal degrees, Qt::Orientations);			// coming down from the command object
+	bool isSwappable();
 
 public:
 	virtual bool stickyEnabled(ItemBase * stickTo);

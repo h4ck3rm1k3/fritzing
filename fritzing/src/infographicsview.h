@@ -51,7 +51,7 @@ public:
 	virtual void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	virtual void hoverLeaveItem(ModelPart * modelPart);
 
-	virtual bool swappingEnabled() = 0;
+	virtual bool swappingEnabled(ItemBase *) = 0;
 
 	void viewConnectorItemInfo(ConnectorItem * item);
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);

@@ -183,6 +183,8 @@ protected slots:
 	void createTrace();
 	void createJumper();
 	void excludeFromAutoroute();
+	void selectAllTraces();
+	void selectAllJumpers();
 
 	void saveBundledSketch();
 	void loadBundledSketch(const QString &fileName);
@@ -431,6 +433,8 @@ protected:
 	QAction *m_createTraceAct;
 	QAction *m_createJumperAct;
 	QAction *m_excludeFromAutorouteAct;
+	QAction *m_selectAllTracesAct;
+	QAction *m_selectAllJumpersAct;
 
 
 	// Help Menu

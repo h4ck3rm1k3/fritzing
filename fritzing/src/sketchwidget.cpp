@@ -714,14 +714,16 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		}
 	}
 
-	foreach (ItemBase * itemBase, deletedItems) {
-		makeDeleteItemCommand(itemBase, parentCommand);
-		emit deleteItemSignal(itemBase->id(), parentCommand);			// let the other views add the command
-	}
 
 	emit ratsnestChangeSignal(this, parentCommand);
 
 	new CleanUpWiresCommand(this, parentCommand);
+
+	// actual delete commands must come last for undo to work properly
+	foreach (ItemBase * itemBase, deletedItems) {
+		makeDeleteItemCommand(itemBase, parentCommand);
+		emit deleteItemSignal(itemBase->id(), parentCommand);			// let the other views add the command
+	}
    	m_undoStack->push(parentCommand);
 
 
@@ -3017,20 +3019,35 @@ void SketchWidget::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, Con
 		viewConnectorItemInfo(item);
 	}
 
-	if (!this->m_chainDrag) return;
-	if (!item->chained()) return;
+	if (item->attachedToItemType() == ModelPart::Wire) {
+		if (!this->m_chainDrag) return;
+		if (!item->chained()) return;
 
-	QString msg = hoverEnterConnectorMessage(event, item);
-	statusMessage(msg);
+		QString msg = hoverEnterWireConnectorMessage(event, item);
+		statusMessage(msg);
+	}
+	else {
+		QString msg = hoverEnterPartConnectorMessage(event, item);
+		statusMessage(msg);
+	}
 
 }
-const QString & SketchWidget::hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
+const QString & SketchWidget::hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
 {
 	Q_UNUSED(event);
 	Q_UNUSED(item);
 
 	static QString message = tr("Shift-click to delete this bend point");
 	return message;
+}
+
+
+const QString & SketchWidget::hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item)
+{
+	Q_UNUSED(event);
+	Q_UNUSED(item);
+
+	return ___emptyString___;
 }
 
 void SketchWidget::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item){
@@ -3045,10 +3062,15 @@ void SketchWidget::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, Con
 		attachedTo->hoverLeaveConnectorItem(event, item);
 	}
 
-	if (!this->m_chainDrag) return;
-	if (!item->chained()) return;
+	if (attachedTo->itemType() == ModelPart::Wire) {
+		if (!this->m_chainDrag) return;
+		if (!item->chained()) return;
 
-	statusMessage(QString());
+		statusMessage(QString());
+	}
+	else {
+		statusMessage(QString());
+	}
 }
 
 bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
@@ -3246,8 +3268,12 @@ PaletteModel * SketchWidget::paletteModel() {
 	return m_paletteModel;
 }
 
-bool SketchWidget::swappingEnabled() {
-	return m_refModel->swapEnabled();
+bool SketchWidget::swappingEnabled(ItemBase * itemBase) {
+	if (itemBase == NULL) {
+		return m_refModel->swapEnabled();
+	}
+
+	return (m_refModel->swapEnabled() && itemBase->isSwappable());
 }
 
 void SketchWidget::resizeEvent(QResizeEvent * event) {

@@ -145,7 +145,7 @@ public:
     virtual ItemBase * addItemAux(ModelPart *, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors);
 
     void viewItemInfo(long id);
-    bool swappingEnabled();
+    bool swappingEnabled(ItemBase *);
 
 	virtual void addViewLayers();
 	void addPcbViewLayers();
@@ -294,7 +294,8 @@ protected:
 	QByteArray removeOutsideConnections(const QByteArray & itemData, QList<long> & modelIndexes);
 	void addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand);
 	virtual bool doRatsnestOnCopy();
-	virtual const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QColor & getLabelTextColor();
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize);
 

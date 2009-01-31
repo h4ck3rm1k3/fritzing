@@ -54,7 +54,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void addPart(ModelPart * model, int position = -1);
 		void removePart(const QString &moduleID);
 
-		bool swappingEnabled();
+		bool swappingEnabled(ItemBase *);
 
 		ModelPart *selected();
 		int selectedIndex();

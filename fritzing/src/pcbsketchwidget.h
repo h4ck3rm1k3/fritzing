@@ -44,12 +44,14 @@ public:
 	bool canCopyItem(QGraphicsItem * item);
 	void createJumper();
 	void createTrace();
-	void excludeFromAutoroute();
+	void excludeFromAutoroute(bool exclude);
 	bool ratsAllRouted();
+	void selectAllWires(ViewGeometry::WireFlag);
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
 	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
 	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
+
 
 protected:
 	void setWireVisible(Wire * wire);
@@ -58,7 +60,13 @@ protected:
 	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	bool canChainWire(Wire *);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
+	void createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
+								QUndoCommand * & parentCommand, const QString & commandString, const QString & colorString);
 	const QColor & getLabelTextColor();
+	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
+
+
 
 protected:
 	int m_netCount;

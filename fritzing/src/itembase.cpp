@@ -829,3 +829,17 @@ void ItemBase::doRotateFlipPartLabel(qreal degrees, Qt::Orientations orientation
 		m_partLabel->rotateFlipLabel(degrees, orientation);
 	}
 }
+
+bool ItemBase::isSwappable() {
+	if (itemType() == ModelPart::Breadboard || itemType() == ModelPart::Board) {
+		foreach (QGraphicsItem * item, childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+			if (connectorItem == NULL) continue;
+
+			if (connectorItem->connectionsCount() > 0) return false;
+		}
+	}
+
+	return true;
+}
+

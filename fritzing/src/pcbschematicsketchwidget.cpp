@@ -168,8 +168,10 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 	foreach (QGraphicsItem * item, scene()->items()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
 		if (wire == NULL) continue;
-		if (!wire->getRatsnest()) continue;
 		if (visitedWires.contains(wire)) continue;
+
+		ViewGeometry::WireFlags flag = wire->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		if (flag == 0) continue;
 
 		// if a ratsnest is connecting two items that aren't connected any longer
 		// delete the ratsnest
@@ -190,11 +192,13 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 					if (tci->attachedToItemType() != ModelPart::Wire) continue;
 
 					Wire * w = dynamic_cast<Wire *>(tci->attachedTo());
-					if (!w->getRatsnest()) continue;
 					if (!wires.contains(w)) continue;  // already been tested and removed so keep going
 
+					ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+					if (wflag != flag) continue;
+
 					// assumes one end is connected to a part, checks to see if the other end is also, possibly indirectly, connected
-					bothEndsConnected(w, tci, wires, *list);
+					bothEndsConnected(w, flag, tci, wires, *list);
 				}
 			}
 			if (wires.count() == 0) break;
@@ -212,7 +216,7 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 	}
 }
 
-bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems)
+bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems)
 {
 	bool result = false;
 	ConnectorItem * otherEnd = wire->otherConnector(oneEnd);
@@ -225,9 +229,10 @@ bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ConnectorItem * on
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) continue;
 
 		Wire * w = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
-		if (!w->getRatsnest()) continue;
+		ViewGeometry::WireFlags wflag = w->wireFlags() & (ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+		if (wflag != flag) continue;
 
-		result = bothEndsConnected(w, toConnectorItem, wires, partConnectorItems) || result;   // let it recurse
+		result = bothEndsConnected(w, flag, toConnectorItem, wires, partConnectorItems) || result;   // let it recurse
 	}
 
 	if (result) {
@@ -335,3 +340,25 @@ bool PCBSchematicSketchWidget::doRatsnestOnCopy()
 	return true;
 }
 
+void PCBSchematicSketchWidget::makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand)
+{
+	QList<QString> alreadyList;
+	foreach (Wire * wire, wires) {
+		QList<ConnectorItem *> wireConnectorItems;
+		wireConnectorItems << wire->connector0() << wire->connector1();
+		foreach (ConnectorItem * fromConnectorItem, wireConnectorItems) {
+			foreach(ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				QString already = ((fromConnectorItem->attachedToID() <= toConnectorItem->attachedToID()) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorStuffID())
+					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorStuffID());
+				if (alreadyList.contains(already)) continue;
+
+				alreadyList.append(already);
+				new ChangeConnectionCommand(this, BaseCommand::SingleView,
+											fromConnectorItem->attachedToID(), fromConnectorItem->connectorStuffID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+											false, true, parentCommand);
+			}
+		}
+	}
+}

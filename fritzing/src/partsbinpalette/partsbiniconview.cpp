@@ -246,7 +246,8 @@ void PartsBinIconView::setSelected(int position, bool doEmit) {
 	}
 }
 
-bool PartsBinIconView::swappingEnabled() {
+bool PartsBinIconView::swappingEnabled(ItemBase * itemBase) {
+	Q_UNUSED(itemBase);
 	return false;
 }
 

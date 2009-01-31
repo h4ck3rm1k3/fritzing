@@ -1170,6 +1170,8 @@ void MainWindow::createMenus()
 	m_traceMenu->addAction(m_createTraceAct);
 	m_traceMenu->addAction(m_createJumperAct);
 	m_traceMenu->addAction(m_excludeFromAutorouteAct);
+	m_traceMenu->addAction(m_selectAllTracesAct);
+	m_traceMenu->addAction(m_selectAllJumpersAct);
 	updateTraceMenu();
 	connect(m_traceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
 
@@ -1398,27 +1400,61 @@ void MainWindow::updateEditMenu() {
 }
 
 void MainWindow::updateTraceMenu() {
-	bool enabled = false;
-
-	m_autorouteAct->setEnabled(false);
-	m_exportDiyAct->setEnabled(false);
+	bool rEnabled = false;
+	bool jEnabled = false;
+	bool tEnabled = false;
+	bool ctEnabled = false;
+	bool cjEnabled = false;
+	bool exEnabled = false;
+	bool exChecked = true;
 
 	if (m_currentGraphicsView != NULL) {
 		if (m_currentGraphicsView == this->m_pcbGraphicsView) {
 			QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
 			foreach (QGraphicsItem * item, items) {
-				VirtualWire * vw = dynamic_cast<VirtualWire *>(item);
-				if (vw && vw->getRatsnest()) {
-					enabled = true;
-					break;
+				Wire * wire = dynamic_cast<Wire *>(item);
+				if (wire == NULL) continue;
+
+				if (wire->getRatsnest()) {
+					rEnabled = true;
+					if (wire->isSelected()) {
+						ctEnabled = true;
+						cjEnabled = true;
+					}
+				}
+				else if (wire->getJumper()) {
+					jEnabled = true;
+					if (wire->isSelected()) {
+						ctEnabled = true;
+						exEnabled = true;
+						if (wire->getAutoroutable()) {
+							exChecked = false;
+						}
+					}
+				}
+				else if (wire->getTrace()) {
+					tEnabled = true;
+					if (wire->isSelected()) {
+						cjEnabled = true;
+						exEnabled = true;
+						if (wire->getAutoroutable()) {
+							exChecked = false;
+						}
+					}
 				}
 			}
 		}
 	}
 
-	m_autorouteAct->setEnabled(enabled);
-	m_exportDiyAct->setEnabled(true);				// enabled
-	updateWireMenu();
+	m_createTraceAct->setEnabled(ctEnabled);
+	m_createJumperAct->setEnabled(cjEnabled);
+	m_excludeFromAutorouteAct->setEnabled(exEnabled);
+	m_excludeFromAutorouteAct->setChecked(exChecked);
+	m_autorouteAct->setEnabled(rEnabled);
+	m_exportDiyAct->setEnabled(true);			
+	m_selectAllTracesAct->setEnabled(tEnabled);
+	m_selectAllJumpersAct->setEnabled(jEnabled);
+
 }
 
 
@@ -1510,6 +1546,7 @@ void MainWindow::createNewPart() {
 }
 
 void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
+	Q_UNUSED(paletteItem);
 	/*static long nextId = -1;
 	ModelPart *modelPart = NULL;
 	long id = nextId--;
@@ -1873,11 +1910,11 @@ void MainWindow::createTraceMenuActions() {
 	m_autorouteAct->setStatusTip(tr("Autoroute..."));
 	connect(m_autorouteAct, SIGNAL(triggered()), this, SLOT(autoroute()));
 
-	m_createTraceAct = new QAction(tr("&Create Trace from this Ratsnest Wire"), this);
+	m_createTraceAct = new QAction(tr("&Create Trace from Selected Wire(s)"), this);
 	m_createTraceAct->setStatusTip(tr("Create a trace from the selected wire"));
 	connect(m_createTraceAct, SIGNAL(triggered()), this, SLOT(createTrace()));
 
-	m_createJumperAct = new QAction(tr("&Create Jumper from this Ratsnest Wire"), this);
+	m_createJumperAct = new QAction(tr("&Create Jumper from Selected Wire(s)"), this);
 	m_createJumperAct->setStatusTip(tr("Create a jumper wire from the selected wire"));
 	connect(m_createJumperAct, SIGNAL(triggered()), this, SLOT(createJumper()));
 
@@ -1885,6 +1922,15 @@ void MainWindow::createTraceMenuActions() {
 	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this wire"));
 	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 	m_excludeFromAutorouteAct->setCheckable(true);
+
+	m_selectAllTracesAct = new QAction(tr("Select All Traces"), this);
+	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
+	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
+
+	m_selectAllJumpersAct = new QAction(tr("Select All Jumper Wires"), this);
+	m_selectAllJumpersAct->setStatusTip(tr("Select all jumper wires"));
+	connect(m_selectAllJumpersAct, SIGNAL(triggered()), this, SLOT(selectAllJumpers()));
+
 }
 
 void MainWindow::autoroute() {
@@ -1940,7 +1986,15 @@ void MainWindow::createJumper() {
 }
 
 void MainWindow::excludeFromAutoroute() {
-	m_pcbGraphicsView->excludeFromAutoroute();
+	m_pcbGraphicsView->excludeFromAutoroute(m_excludeFromAutorouteAct->isChecked());
+}
+
+void MainWindow::selectAllTraces() {
+	m_pcbGraphicsView->selectAllWires(ViewGeometry::TraceFlag);
+}
+
+void MainWindow::selectAllJumpers() {
+	m_pcbGraphicsView->selectAllWires(ViewGeometry::JumperFlag);
 }
 
 void MainWindow::notClosableForAWhile() {

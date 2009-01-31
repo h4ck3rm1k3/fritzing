@@ -42,19 +42,19 @@ InfoGraphicsView::InfoGraphicsView( QWidget * parent )
 void InfoGraphicsView::viewItemInfo(ItemBase * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->viewItemInfo(this, item, swappingEnabled());
+	m_infoView->viewItemInfo(this, item, swappingEnabled(item));
 }
 
 void InfoGraphicsView::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterItem(this, event, item, swappingEnabled());
+	m_infoView->hoverEnterItem(this, event, item, swappingEnabled(item));
 }
 
 void InfoGraphicsView::hoverEnterItem(ModelPart* modelPart) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterItem(modelPart, swappingEnabled());
+	m_infoView->hoverEnterItem(modelPart, swappingEnabled(NULL));
 }
 
 void InfoGraphicsView::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
@@ -72,13 +72,13 @@ void InfoGraphicsView::hoverLeaveItem(ModelPart* modelPart) {
 void InfoGraphicsView::viewConnectorItemInfo(ConnectorItem * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->viewConnectorItemInfo(item, swappingEnabled());
+	m_infoView->viewConnectorItemInfo(item, swappingEnabled(item->attachedTo()));
 }
 
 void InfoGraphicsView::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
 	if (m_infoView == NULL) return;
 
-	m_infoView->hoverEnterConnectorItem(this, event, item, swappingEnabled());
+	m_infoView->hoverEnterConnectorItem(this, event, item, swappingEnabled(item->attachedTo()));
 }
 
 void InfoGraphicsView::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item){

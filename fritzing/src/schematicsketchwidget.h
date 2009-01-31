@@ -90,7 +90,7 @@ protected:
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
 	void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
 	void clearDistances();
-	const QString & hoverEnterConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
 protected:
 	QList<Wire *> m_deleteStash;
