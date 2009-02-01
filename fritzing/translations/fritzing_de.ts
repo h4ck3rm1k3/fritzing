@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -135,7 +136,7 @@
     <message>
         <location filename="../src/aboutbox.cpp" line="72"/>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
-        <translation type="unfinished">Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt; {1.%2.%3 ?} {4%5 %6)?}</translation>
+        <translation>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
     </message>
 </context>
 <context>
@@ -156,7 +157,7 @@
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="125"/>
         <source>List of Connectors</source>
-        <translation>Liste der Verbindungen</translation>
+        <translation>Verbindungen</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="288"/>
@@ -179,7 +180,7 @@
     <message>
         <location filename="../src/partseditor/connectorsviewswidget.cpp" line="34"/>
         <source>Show Terminal Points</source>
-        <translation type="unfinished">Endpunkte anzeigen </translation>
+        <translation>Ankerpunkte anzeigen </translation>
     </message>
 </context>
 <context>
@@ -278,7 +279,7 @@
     <message>
         <location filename="../src/dockmanager.cpp" line="82"/>
         <source>view switcher</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansichtswechsler</translation>
     </message>
 </context>
 <context>
@@ -1482,39 +1483,41 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="81"/>
         <source>BoM Text File (*.bom.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Materialliste (*.bom.txt)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="716"/>
         <source>&amp;Bill of Materials</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Materialliste...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="718"/>
         <source>Save a text Bill of Materials (BoM)/Shopping List</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere eine Material-/Einkaufsliste (Bill of Materials)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="969"/>
         <source>&amp;Show part label</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteilbezeichnung anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="970"/>
         <source>Show or hide the label for the selected parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung des Bauteils anzeigen/verstecken</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1796"/>
         <source>Gerber export</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerber-Export</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1833"/>
         <source>Fritzing Bill of Materials
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing Materialliste
+
+</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1868"/>
@@ -1525,77 +1528,83 @@ Shopping List
 Quantity<byte value="x9"/>Part
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+Einkaufsliste
+
+Menge<byte value="x9"/>Bauteil
+
+</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1880"/>
         <source>Export Bill of Materials (BoM)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Materialliste (BoM) exportieren...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1950"/>
         <source>Skip this trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Leiterbahn überspringen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="864"/>
         <source>Add a note</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiz hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="521"/>
         <source>Export Etchable PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbares PDF</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="731"/>
         <source>Etchable PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbares PDF...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2030"/>
         <source>Add Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiz hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1063"/>
         <source>Check for updates...</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Updates suchen...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1064"/>
         <source>Check whether a newer version of Fritzing is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfen, ob eine neuere Fritzing-Version zum Download bereit steht</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1913"/>
         <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählten Draht in Leiterbahn umwandeln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1917"/>
         <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählten Draht in Schaltdraht umwandeln</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1926"/>
         <source>Select All Traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Leiterbahnen auswählen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1927"/>
         <source>Select all trace wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Leiterbahnen auswählen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1930"/>
         <source>Select All Jumper Wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Schaltdrähte auswählen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1931"/>
         <source>Select all jumper wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Schaltdrähte (Jumper) auswählen</translation>
     </message>
 </context>
 <context>
@@ -1621,7 +1630,7 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/labels/note.cpp" line="73"/>
         <source>[write your note here]</source>
-        <translation type="unfinished"></translation>
+        <translation>Notiz</translation>
     </message>
 </context>
 <context>
@@ -1639,17 +1648,17 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="288"/>
         <source>Create Jumper from this Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Diesen Draht in Schaltdraht umwandeln</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="295"/>
         <source>Create Trace from this Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Diesen Draht in Leiterbahn umwandeln</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="564"/>
         <source>Shift-click to drag out a new trace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalttaste halten und klicken, um eine neue Leiterbahn zu erzeugen</translation>
     </message>
 </context>
 <context>
@@ -1700,52 +1709,52 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/labels/partlabel.cpp" line="366"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° im Uhrzeigersinn</translation>
+        <translation>&amp;Rotieren um 90° im Uhrzeigersinn</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="368"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation type="unfinished">Auswahl um 90° im Uhrzeigersinn rotieren</translation>
+        <translation>Auswahl um 90° im Uhrzeigersinn rotieren</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="370"/>
         <source>&amp;Rotate 180&#xb0;</source>
-        <translation type="unfinished">&amp;Rotieren um 180°</translation>
+        <translation>&amp;Rotieren um 180°</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="372"/>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation type="unfinished">Auswahl um 180° rotieren</translation>
+        <translation>Auswahl um 180° rotieren</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="374"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
-        <translation type="unfinished">&amp;Rotieren um 90° gegen den Uhrzeigersinn</translation>
+        <translation>&amp;Rotieren um 90° gegen den Uhrzeigersinn</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="376"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished">Auswahl um 90° gegen den Uhrzeigersinn rotieren</translation>
+        <translation>Auswahl um 90° gegen den Uhrzeigersinn rotieren</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="378"/>
         <source>&amp;Flip Horizontal</source>
-        <translation type="unfinished">&amp;Horizontal umdrehen</translation>
+        <translation>&amp;Horizontal umdrehen</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="380"/>
         <source>Flip current selection horizontally</source>
-        <translation type="unfinished">Auswahl horizontal umdrehen</translation>
+        <translation>Auswahl horizontal umdrehen</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="382"/>
         <source>&amp;Flip Vertical</source>
-        <translation type="unfinished">&amp;Vertikal umdrehen</translation>
+        <translation>&amp;Vertikal umdrehen</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="384"/>
         <source>Flip current selection vertically</source>
-        <translation type="unfinished">Auswahl vertikal umdrehen</translation>
+        <translation>Auswahl vertikal umdrehen</translation>
     </message>
 </context>
 <context>
@@ -1765,14 +1774,18 @@ Quantity<byte value="x9"/>Part
         <source>How does this
 part look like on
 the breadboard?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie sieht dieses
+Bauteil auf der Steck-
+platine aus?</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partsymbolswidget.cpp" line="74"/>
         <source>How does this
 part look like in
 a schematic view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie sieht dieses
+Bauteil im Schalt-
+plan aus?</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1944,7 @@ a schematic view?</source>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="226"/>
         <source>Tags</source>
-        <translation>Marken</translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="231"/>
@@ -2037,12 +2050,12 @@ a schematic view?</source>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="395"/>
         <source>SVG Files (*.fzfp)</source>
-        <translation type="unfinished">SVG-Dateien (*.fzfp)</translation>
+        <translation>SVG-Dateien (*.fzfp)</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="68"/>
         <source>Untitled Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbenanntes Bauteil</translation>
     </message>
 </context>
 <context>
@@ -2050,12 +2063,12 @@ a schematic view?</source>
     <message>
         <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="78"/>
         <source>Open Image</source>
-        <translation type="unfinished">Bild öffnen</translation>
+        <translation>Bild öffnen</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="81"/>
         <source>SVG Files (*.svg)</source>
-        <translation type="unfinished">SVG-Datei (*.svg)</translation>
+        <translation>SVG-Datei (*.svg)</translation>
     </message>
 </context>
 <context>
@@ -2459,47 +2472,47 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/viewlayer.cpp" line="57"/>
         <source>Part Labels</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnungs</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="72"/>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Notizen</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="64"/>
         <source>Part Labels (Silkscreen)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnungen (Siebdruck)</translation>
     </message>
     <message>
         <location filename="../src/fapplication.cpp" line="467"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)&lt;/font&gt;</source>
-        <translation type="unfinished">&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2 (%3%4)&lt;/font&gt; {2&apos;?} {4e?} {1.%2.%3 ?} {4%5)?}</translation>
+        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;Version %1.%2.%3 (%4%5)&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="74"/>
         <source>Add connector</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindung hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="542"/>
         <source>Trace wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Leiterbahnen</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="545"/>
         <source>Ratsnest wires</source>
-        <translation type="unfinished"></translation>
+        <translation>Luftlinien</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="547"/>
         <source>Select all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles auswählen %1</translation>
     </message>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="43"/>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Nach Updates suchen...</translation>
     </message>
 </context>
 <context>
@@ -2683,27 +2696,27 @@ Wir arbeiten daran, diese Nachricht in Zukunft zu vermeiden.</translation>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3132"/>
         <source>Change %1 label to &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung von &apos;%1&apos; nach &apos;%2&apos; ändern</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3916"/>
         <source>Move label &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezeichnung &apos;%1&apos; verschieben</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3923"/>
         <source>%1 label &apos;%2&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Bezeichnung &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1239"/>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3949"/>
         <source>Resize Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Notizgröße ändern</translation>
     </message>
 </context>
 <context>
@@ -2784,22 +2797,22 @@ Wir arbeiten daran, diese Nachricht in Zukunft zu vermeiden.</translation>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="54"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="84"/>
         <source>No new versions found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine neue Version gefunden.</translation>
     </message>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="141"/>
         <source>Checking...</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfe...</translation>
     </message>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="169"/>
         <source>Sorry, unable to retrieve update info</source>
-        <translation type="unfinished"></translation>
+        <translation>Leider kann momentan keine Verbindung hergestellt werden.</translation>
     </message>
 </context>
 <context>
