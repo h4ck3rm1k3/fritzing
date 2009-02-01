@@ -286,14 +286,14 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 
 void PCBSketchWidget::createJumper() {
 	QString commandString = tr("Create Jumper from this Wire");
-	QString colorString = tr("jumper");
+	QString colorString = "jumper";
 	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, colorString);
 	ensureLayerVisible(ViewLayer::Jumperwires);
 }
 
 void PCBSketchWidget::createTrace() {
 	QString commandString = tr("Create Trace from this Wire");
-	QString colorString = tr("trace");
+	QString colorString = "trace";
 	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, colorString);
 	ensureLayerVisible(ViewLayer::Copper0);
 }
