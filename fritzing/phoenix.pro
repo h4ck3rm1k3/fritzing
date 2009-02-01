@@ -36,11 +36,13 @@ macx {
 	DEFINES += QT_NO_DEBUG
 }
 unix {
-    HARDWARE_PLATFORM = $$system(uname -m)
-    contains( HARDWARE_PLATFORM, x86_64 ) {
-        DEFINES += LINUX_64
-    } else {
-        DEFINES += LINUX_32
+    !macx {						# unix is defined on mac
+        HARDWARE_PLATFORM = $$system(uname -m)
+        contains( HARDWARE_PLATFORM, x86_64 ) {
+            DEFINES += LINUX_64
+        } else {
+            DEFINES += LINUX_32
+	}
     }
 }
 ICON = resources/images/fritzing_icon.icns
