@@ -286,14 +286,14 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 
 void PCBSketchWidget::createJumper() {
 	QString commandString = tr("Create Jumper from this Wire");
-	QString colorString = "jumper";
+	QString colorString = ("jumper");
 	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, colorString);
 	ensureLayerVisible(ViewLayer::Jumperwires);
 }
 
 void PCBSketchWidget::createTrace() {
 	QString commandString = tr("Create Trace from this Wire");
-	QString colorString = "trace";
+	QString colorString = ("trace");
 	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, colorString);
 	ensureLayerVisible(ViewLayer::Copper0);
 }
@@ -575,7 +575,7 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 		QList<Wire *> done;
 		dragWire->connector0()->tempConnectTo(fromConnectorItem);
 		dragWire->connector1()->tempConnectTo(toConnectorItem);
-		createOneJumperOrTrace(dragWire, ViewGeometry::TraceFlag, true, done, parentCommand, ___emptyString___, tr("trace"));
+		createOneJumperOrTrace(dragWire, ViewGeometry::TraceFlag, true, done, parentCommand, ___emptyString___, "trace");
 		dragWire->connector0()->tempRemove(fromConnectorItem);
 		dragWire->connector1()->tempRemove(toConnectorItem);
 	}
