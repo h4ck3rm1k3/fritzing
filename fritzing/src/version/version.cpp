@@ -18,9 +18,9 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 			
 ********************************************************************
 																		
-$Revision: 2249 $:
-$Author: cohen@irascible.com $:
-$Date: 2009-01-22 20:49:15 +0100 (Thu, 22 Jan 2009) $
+$Revision$:
+$Author$:
+$Date$
 		
 ********************************************************************/
 
@@ -33,8 +33,8 @@ QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("1");
 QString Version::m_minorSubVersion("15");
 QString Version::m_modifier("b");
-QString Version::m_svnRevision("$Revision: 2249 $:");
-QString Version::m_svnDate("$Date: 2009-01-22 20:49:15 +0100 (Thu, 22 Jan 2009) $");
+QString Version::m_svnRevision("$Revision$:");
+QString Version::m_svnDate("$Date$");
 QString Version::m_revision;
 QString Version::m_date;
 QString Version::m_shortDate;
