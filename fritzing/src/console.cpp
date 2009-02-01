@@ -32,10 +32,10 @@ Console::Console( QWidget * parent )
 	: QTextEdit(parent)
 {
 	// TODO: need to hook this up to more useful stuff
-	//DebugDialog::connectToBroadcast(this, SLOT(receiveDebugBroadcast(const QString &, QObject *)));
+	//DebugDialog::connectToBroadcast(this, SLOT(receiveDebugBroadcast(const QString &, DebugDialog::DebugLevel, QObject *)));
 }
 
-void Console::receiveDebugBroadcast(const QString & message, QObject * ancestor) {
+void Console::receiveDebugBroadcast(const QString & message, DebugDialog::DebugLevel debugLevel, QObject * ancestor) {
 	bool gotOne = false;
 	if (ancestor == NULL) {
 		gotOne = this->isActiveWindow();

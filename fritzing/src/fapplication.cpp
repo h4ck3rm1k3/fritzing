@@ -328,12 +328,13 @@ int FApplication::startup(int & argc, char ** argv)
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = new MainWindow(m_paletteBinModel, m_referenceModel);
 
-#ifndef WIN_DEBUG
+//#ifndef WIN_DEBUG
 	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
 	// thought it might be the splashscreen calling QApplication::flush() but eliminating that didn't remove the deadlock
+	// now thinking that it may have something to do with DebugDialog::debug, as the bottleneck seems to disappear when DebugLevel is set to Error
 	splash.showProgress(progressIndex, 0.9);
 	processEvents();
-#endif
+//#endif
 
 	int loaded = 0;
 	for(int i=1; i < argc; i++) {
@@ -479,21 +480,21 @@ void FApplication::preloadSlowParts() {
 
 	//QTime t;
 	//t.start();
-	DebugDialog::debug(QString("preload slow parts"));
+	//DebugDialog::debug(QString("preload slow parts"));
 	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
 	LayerAttributes layerAttributes;
 	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
-	DebugDialog::debug(QString("preload set up image"));
+	//DebugDialog::debug(QString("preload set up image"));
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
 		connector->setUpConnector(renderer, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
-		DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorStuffID()));
+		//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorStuffID()));
 	}
 	//DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );
-	DebugDialog::debug(QString("preload slow parts done") );
+	//DebugDialog::debug(QString("preload slow parts done") );
 }
 
 void FApplication::checkForUpdates() {

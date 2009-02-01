@@ -42,12 +42,21 @@ private:
 	~DebugDialog();
 
 public:
-	static void debug(QString, QObject * ancestor = 0);
+	enum DebugLevel {
+		Debug,
+		Info,
+		Warning,
+		Error
+	};
+
+public:
+	static void debug(QString, DebugLevel = Debug, QObject * ancestor = 0);
 	static void hideDebug();
 	static void showDebug();
 	static void closeDebug();
 	static bool visible();
 	static bool connectToBroadcast(QObject * receiver, const char* slot); 
+	static void setDebugLevel(DebugLevel);
 
 protected:
 	bool event ( QEvent * e ); 
@@ -58,9 +67,10 @@ protected:
 	static QFile m_file;
 	
 	QTextEdit* m_textEdit;
+	DebugLevel m_debugLevel;
 	
 signals:
-	void debugBroadcast(const QString & message, QObject * ancestor);
+	void debugBroadcast(const QString & message, DebugLevel, QObject * ancestor);
 };
 
 #endif 

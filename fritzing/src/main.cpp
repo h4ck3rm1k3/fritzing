@@ -25,10 +25,12 @@ $Date$
 ********************************************************************/
 
 #include "fapplication.h"
+#include "debugdialog.h"
 
 int main(int argc, char *argv[])
 {
 	FApplication app(argc, argv);
+	//DebugDialog::setDebugLevel(DebugDialog::Error);
 	int result = app.startup(argc, argv);
 	if (result == 0) {
 		result = app.exec();

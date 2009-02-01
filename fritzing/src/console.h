@@ -28,6 +28,7 @@ $Date$
 #define CONSOLE_H
 
 #include <QTextEdit>
+#include "debugdialog.h"
 
 class Console : public QTextEdit
 {
@@ -36,7 +37,7 @@ public:
 	Console(QWidget * parent = 0);
 	
 public slots:
-	void receiveDebugBroadcast(const QString & message, QObject * ancestor);
+	void receiveDebugBroadcast(const QString & message, DebugDialog::DebugLevel, QObject * ancestor);
 };
 
 #endif

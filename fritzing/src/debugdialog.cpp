@@ -45,10 +45,12 @@ class DebugEvent : public QEvent
 public:
 	QString m_message;
 	QObject * m_ancestor;
+	DebugDialog::DebugLevel m_debugLevel;
 
-	DebugEvent(QString message, QObject * ancestor) : QEvent(DebugEventType) {
+	DebugEvent(QString message, DebugDialog::DebugLevel debugLevel, QObject * ancestor) : QEvent(DebugEventType) {
 		this->m_message = message;
 		this->m_ancestor = ancestor;
+		this->m_debugLevel = debugLevel;
 	}
 };
 
@@ -59,6 +61,7 @@ DebugDialog::DebugDialog(QWidget *parent)
 	this->setWindowIcon(QIcon(QPixmap(":resources/images/fritzing_icon.png")));
 
 	singleton = this;
+	m_debugLevel = DebugDialog::Debug;
 	setWindowTitle(tr("for debugging"));
 	resize(400, 300);
 	m_textEdit = new QTextEdit(this);
@@ -78,7 +81,7 @@ DebugDialog::~DebugDialog()
 bool DebugDialog::event(QEvent *e) {
 	if (e->type() == DebugEventType) {
 		this->m_textEdit->append(((DebugEvent *) e)->m_message);
-		emit debugBroadcast(((DebugEvent *) e)->m_message, ((DebugEvent *) e)->m_ancestor);
+		emit debugBroadcast(((DebugEvent *) e)->m_message, ((DebugEvent *) e)->m_debugLevel,((DebugEvent *) e)->m_ancestor);
 		// need to delete these events at some point...
 		// but it's tricky if the message is being used elsewhere
 		return true;
@@ -100,7 +103,7 @@ void DebugDialog::resizeEvent(QResizeEvent *e) {
 }
 
 
-void DebugDialog::debug(QString message, QObject * ancestor) {
+void DebugDialog::debug(QString message, DebugLevel debugLevel, QObject * ancestor) {
 #ifdef QT_NO_DEBUG
 	return;
 #endif
@@ -110,6 +113,10 @@ void DebugDialog::debug(QString message, QObject * ancestor) {
 		//singleton->show();
 	}
 
+	if (debugLevel < singleton->m_debugLevel) {
+		return;
+	}
+
 	qDebug() << message;
 
    	if (m_file.open(QIODevice::Append | QIODevice::Text)) {
@@ -117,7 +124,7 @@ void DebugDialog::debug(QString message, QObject * ancestor) {
    		out << message << "\n";
 		m_file.close();
 	}
-	DebugEvent* de = new DebugEvent(message, ancestor);
+	DebugEvent* de = new DebugEvent(message, debugLevel, ancestor);
 	QCoreApplication::postEvent(singleton, de);
 }
 
@@ -154,4 +161,13 @@ bool DebugDialog::connectToBroadcast(QObject * receiver, const char* slot) {
 	}
 
 	return connect(singleton, SIGNAL(debugBroadcast(const QString &, QObject *)), receiver, slot );
+}
+
+void DebugDialog::setDebugLevel(DebugLevel debugLevel) {
+	if (singleton == NULL) {
+		new DebugDialog();
+
+	}
+
+	singleton->m_debugLevel = debugLevel;
 }
