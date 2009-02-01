@@ -52,6 +52,7 @@ public:
 	int subCommandCount() const;
 	const BaseCommand * subCommand(int index) const;
 	virtual QString getDebugString() const;
+	const QUndoCommand * parentCommand() const;
 
 protected:
 	virtual QString getParamString() const;
@@ -60,12 +61,15 @@ protected:
 	BaseCommand::CrossViewType m_crossViewType;
     class SketchWidget *m_sketchWidget;
 	QList<BaseCommand *> m_commands;
+	QUndoCommand * m_parentCommand;
 };
 
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
     AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
+
+	long itemID();
 
 protected:
 	QString getParamString() const;

@@ -561,13 +561,14 @@ const QString & PCBSketchWidget::hoverEnterPartConnectorMessage(QGraphicsSceneHo
 	Q_UNUSED(event);
 	Q_UNUSED(item);
 
-	static QString message = tr("Shift-click to drag out a new wire.");
+	static QString message = tr("Shift-click to drag out a new trace.");
 
 	return message;
 }
 
 bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromDragWire, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand)
-{
+{	
+	Q_UNUSED(fromDragWire);
 	if (fromConnectorItem->attachedToItemType() != ModelPart::Wire && 
 		toConnectorItem->attachedToItemType() != ModelPart::Wire)
 	{

@@ -39,6 +39,7 @@ BaseCommand::BaseCommand(BaseCommand::CrossViewType crossViewType, SketchWidget*
 {
 	m_crossViewType = crossViewType;
 	m_sketchWidget = sketchWidget;
+	m_parentCommand = parent;
 }
 
 BaseCommand::CrossViewType BaseCommand::crossViewType() const {
@@ -74,6 +75,10 @@ const BaseCommand * BaseCommand::subCommand(int ix) const {
 	return m_commands.at(ix);
 }
 
+const QUndoCommand * BaseCommand::parentCommand() const {
+	return m_parentCommand;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
@@ -91,6 +96,10 @@ QString AddDeleteItemCommand::getParamString() const {
 		.arg(m_moduleID)
 		.arg(m_itemID)
 		.arg(m_modelIndex);
+}
+
+long AddDeleteItemCommand::itemID() {
+	return m_itemID;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
