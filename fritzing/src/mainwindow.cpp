@@ -1176,7 +1176,8 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 }
 
 void MainWindow::applyReadOnlyChange(bool isReadOnly) {
-	m_saveAct->setDisabled(isReadOnly);
+	Q_UNUSED(isReadOnly);
+	//m_saveAct->setDisabled(isReadOnly);
 }
 
 void MainWindow::currentNavigatorChanged(MiniViewContainer * miniView)

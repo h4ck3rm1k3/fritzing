@@ -88,6 +88,8 @@ void FritzingWindow::setTitle() {
 bool FritzingWindow::save() {
 	if (isEmptyFileName(m_fileName,untitledFileName())) {
 		return saveAs();
+	} else if (m_readOnly) {
+		return saveAs();
 	} else {
 		saveAsAux(m_fileName);
 		return true;
@@ -123,6 +125,14 @@ bool FritzingWindow::saveAs() {
                       );
 
     if (fileName.isEmpty()) return false; // Cancel pressed
+
+	if (m_readOnly && (fileName.compare(m_fileName, Qt::CaseInsensitive) == 0)) {
+        QMessageBox::warning(NULL, QObject::tr("Fritzing"),
+                     QObject::tr("The file '%1' is read-only; please use a different filename.")
+                     .arg(fileName) );
+		return false;
+
+	}
 
     if(!alreadyHasExtension(fileName)) {
 		fileExt = getExtFromFileDialog(fileExt);
