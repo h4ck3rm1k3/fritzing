@@ -39,6 +39,7 @@ PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier vi
 	: PartsEditorAbstractView(viewId, parent, size)
 {
 	m_showingTerminalPoints = showingTerminalPoints;
+	m_lastSelectedConnId = "";
 
 	m_zoomControls = new ZoomControls(this);
 	addFixedToBottomRightItem(m_zoomControls);
@@ -133,7 +134,7 @@ void PartsEditorConnectorsView::setItemProperties() {
 		m_item->setFlag(QGraphicsItem::ItemClipsToShape, true);
 		//m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 		m_item->removeFromModel();
-		myItem()->highlightConnectors("");
+		myItem()->highlightConnectors(m_lastSelectedConnId);
 
 		qreal size = 500; // just make sure the user get enough place to play
 		setSceneRect(0,0,size,size);
@@ -146,6 +147,7 @@ void PartsEditorConnectorsView::setItemProperties() {
 
 void PartsEditorConnectorsView::informConnectorSelection(const QString &connId) {
 	if(m_item) {
+		m_lastSelectedConnId = connId;
 		myItem()->highlightConnectors(connId);
 	}
 }

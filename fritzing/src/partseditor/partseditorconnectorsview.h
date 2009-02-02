@@ -83,6 +83,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		QList<PartsEditorConnectorsConnectorItem*> m_drawnConns;
 		QStringList m_removedConnIds;
 
+		QString m_lastSelectedConnId;
 		bool m_showingTerminalPoints;
 
 	protected:
