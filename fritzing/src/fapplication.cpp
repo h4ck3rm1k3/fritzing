@@ -58,6 +58,7 @@ PaletteModel * FApplication::m_paletteBinModel = NULL;
 bool FApplication::m_started = false;
 QList<QString> FApplication::m_filesToLoad;
 QString FApplication::m_libPath;
+QString FApplication::m_translationPath;
 UpdateDialog * FApplication::m_updateDialog = NULL;
 
 
@@ -124,7 +125,12 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	addLibraryPath(m_libPath);					// tell app where to search for plugins (jpeg export and sql lite)
 
 	// !!! translator must be installed before any widgets are created !!!
-	findTranslator(m_libPath);
+	m_translationPath = m_libPath + "/translations";
+	bool loaded = findTranslator(m_translationPath);
+	if (!loaded) {
+		m_translationPath = getApplicationSubFolderPath("translations");
+		loaded = findTranslator(m_translationPath);
+	}
 
 	Q_INIT_RESOURCE(phoenixresources);
 }
@@ -208,7 +214,7 @@ bool FApplication::event(QEvent *event)
     }
 }
 
-bool FApplication::findTranslator(const QString & libPath) {
+bool FApplication::findTranslator(const QString & translationsPath) {
 	QSettings settings;
 	QString suffix = settings.value("language").toString();
 	if (suffix.isEmpty()) {
@@ -218,7 +224,7 @@ bool FApplication::findTranslator(const QString & libPath) {
 		QLocale::setDefault(QLocale(suffix));
 	}
 
-    bool loaded = m_translator.load(QString("fritzing_") + suffix, libPath + "/translations");
+    bool loaded = m_translator.load(QString("fritzing_") + suffix, translationsPath);
 	if (loaded) {
 		this->installTranslator(&m_translator);
 	}
@@ -423,7 +429,7 @@ void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 }
 
 void FApplication::preferences() {
-	QDir dir(m_libPath + "/translations");
+	QDir dir(m_translationPath);
 	QStringList nameFilters;
 	nameFilters << "*.qm";
     QFileInfoList list = dir.entryInfoList(nameFilters, QDir::Files | QDir::NoSymLinks);

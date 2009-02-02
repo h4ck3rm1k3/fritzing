@@ -36,6 +36,7 @@ Console::Console( QWidget * parent )
 }
 
 void Console::receiveDebugBroadcast(const QString & message, DebugDialog::DebugLevel debugLevel, QObject * ancestor) {
+	Q_UNUSED(debugLevel);
 	bool gotOne = false;
 	if (ancestor == NULL) {
 		gotOne = this->isActiveWindow();

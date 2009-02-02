@@ -61,7 +61,7 @@ public slots:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 	bool event(QEvent *event);
-	bool findTranslator(const QString & libPath);
+	bool findTranslator(const QString & translationsPath);
 	void loadNew(QString path);
 	void loadOne(class MainWindow *, QString path, int loaded);
 	void initSplash(class FSplashScreen & splash, int & progressIndex, QPixmap & pixmap);
@@ -75,6 +75,7 @@ protected:
 	static bool m_started;
 	static QList<QString> m_filesToLoad;
 	static QString m_libPath;
+	static QString m_translationPath;
 	static class UpdateDialog * m_updateDialog;
 
 
