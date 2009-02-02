@@ -145,9 +145,11 @@ function doSwap(family,name,currValue) {
 }
 
 function setWireColor(wireTitle, wireId, newColor) {
-	//wireManager.changeWireColor(newColor);
 	sketch.changeWireColor(newColor);
-	oldColor = newColor
+}
+
+function setWireWidth(wireTitle, wireId, newWidth) {
+    sketch.changeWireWidth(newWidth);
 }
 
 function toggleVisibility(emitter,idToAffect) {

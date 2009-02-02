@@ -50,6 +50,8 @@ QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
 QList<QString> Wire::colorNames;
+QHash<QString, qreal> Wire::widthTrans;
+QList<QString> Wire::widthNames;
 QList<QColor *> ratsnestColors;
 QColor schematicColor;
 
@@ -836,6 +838,14 @@ QString Wire::colorString() {
 void Wire::initNames() {
 	if (colors.count() > 0) return;
 
+	widthNames.append(tr("thin"));
+	widthNames.append(tr("medium"));
+	widthNames.append(tr("wide"));
+
+	widthTrans.insert(tr("thin"), 1);
+	widthTrans.insert(tr("medium"), 3);
+	widthTrans.insert(tr("wide"), 5);
+
     // need a list because a hash table doesn't guarantee order
     colorNames.append(tr("blue"));
 	colorNames.append(tr("red"));
@@ -1217,6 +1227,10 @@ bool Wire::canChangeColor() {
 	if (getTrace() || getRatsnest()) return false;
 
 	return true;
+}
+
+bool Wire::canChangeWidth() {
+	return getTrace();
 }
 
 

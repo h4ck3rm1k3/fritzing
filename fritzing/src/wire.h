@@ -116,6 +116,7 @@ public:
 	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setCanChainMultiple(bool);
 	bool canChangeColor();
+	bool canChangeWidth();
 	void collectDirectWires(QList<Wire *> & wires);
 
 public:
@@ -165,6 +166,9 @@ protected:
 public:
 	static QList<QString> colorNames;
 	static QHash<QString, QString> colorTrans;
+	static QList<QString> widthNames;
+	static QHash<QString, qreal> widthTrans;
+
 
 protected:
 	static QHash<QString, QString> shadowColors;

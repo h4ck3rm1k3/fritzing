@@ -378,6 +378,7 @@ public slots:
 	void swap(long itemId, const QString &moduleID, bool doEmit=false);
 	void swap(long itemId, ModelPart *modelPart, bool doEmit=false);
 	void changeWireColor(const QString newColor);
+	void changeWireWidth(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);
 	void setInstanceTitle(long id, const QString & title, bool isUndoable);
 	void showPartLabel(long id, bool showIt);

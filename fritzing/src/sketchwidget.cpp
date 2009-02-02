@@ -3205,6 +3205,7 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 	}
 }
 
+
 void SketchWidget::changeWireColor(const QString newColor)
 {
 	QList <Wire *> wires;
@@ -3243,6 +3244,54 @@ void SketchWidget::changeWireColor(const QString newColor)
 					newColor,
 					subWire->opacity(),
 					subWire->opacity(),
+					parentCommand);
+		}
+	}
+
+	m_undoStack->push(parentCommand);
+}
+
+void SketchWidget::changeWireWidth(const QString newWidthStr)
+{
+	bool ok = false;
+	int newWidth = newWidthStr.toInt(&ok);
+	if (!ok) return;
+
+	QList <Wire *> wires;
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+		if (!wire->getTrace()) continue;
+
+		wires.append(wire);
+	}
+
+	if (wires.count() <= 0) return;
+
+	QString commandString;
+	if (wires.count() == 1) {
+		commandString = tr("Change %1 width from %2 to %3")
+			.arg(wires[0]->instanceTitle())
+			.arg(wires[0]->width())
+			.arg(newWidth);
+	}
+	else {
+		commandString = tr("Change width of %1 wires to %2")
+			.arg(wires.count())
+			.arg(newWidth);
+	}
+
+	QUndoCommand* parentCommand = new QUndoCommand(commandString);
+	foreach (Wire * wire, wires) {
+		QList<Wire *> subWires;
+		wire->collectWires(subWires);
+
+		foreach (Wire * subWire, subWires) {
+			new WireWidthChangeCommand(
+					this,
+					subWire->id(),
+					subWire->width(),
+					newWidth,
 					parentCommand);
 		}
 	}

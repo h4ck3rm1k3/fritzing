@@ -326,6 +326,11 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("family").arg(properties["family"]);
 	QString select = wireColorsSelect(wire);
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("color").arg(select);
+	select = wireWidthSelect(wire);
+	if (!select.isEmpty()) {
+		s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("width").arg(select);
+	}
+
 	s += 		 "</table></div>\n";
 	s += "</div>";
 
@@ -509,6 +514,24 @@ QString HtmlInfoView::wireColorsSelect(Wire *wire) {
 	else {
 		return currColor;
 	}
+}
+
+QString HtmlInfoView::wireWidthSelect(Wire *wire) {
+	if (!wire->canChangeWidth()) {
+		return ___emptyString___;
+	}
+
+	QString retval = QString("<script language='JavaScript'>var oldWidth = '%1'</script>\n").arg(wire->width());
+	retval += QString("<select onchange='setWireWidth(\"%1\",%2,this.value)'>\n")
+				.arg(wire->instanceTitle())
+				.arg(wire->id());
+	foreach(QString widthName, Wire::widthNames) {
+		qreal widthValue = Wire::widthTrans.value(widthName);
+		QString selected = (widthValue == wire->width()) ? " selected='selected' " : "";
+		retval += QString("\t<option value='%2' %3>%1</option>\n").arg(widthName).arg(widthValue).arg(selected);
+	}
+	retval += "</select>\n";
+	return retval;
 }
 
 QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic) {
