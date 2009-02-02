@@ -91,8 +91,6 @@ void TerminalPointItem::drawCross() {
 	}
 
 	m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Normal]);
-
-
 }
 
 void TerminalPointItem::posCross() {

@@ -41,7 +41,9 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		PartsEditorConnectorsView(ItemBase::ViewIdentifier, bool showingTerminalPoint, QWidget *parent=0, int size=150);
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
+		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
 		void updateDomIfNeeded();
+
 
 		void showTerminalPoints(bool show);
 		bool showingTerminalPoints();

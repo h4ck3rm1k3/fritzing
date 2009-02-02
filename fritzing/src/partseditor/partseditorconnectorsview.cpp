@@ -85,9 +85,9 @@ void PartsEditorConnectorsView::createConnector(Connector *conn, const QSize &co
 }
 
 void PartsEditorConnectorsView::removeConnector(const QString &connId) {
-	PartsEditorConnectorItem *connToRemove = NULL;
+	PartsEditorConnectorsConnectorItem *connToRemove = NULL;
 	foreach(QGraphicsItem *item, items()) {
-		PartsEditorConnectorItem *connItem = dynamic_cast<PartsEditorConnectorItem*>(item);
+		PartsEditorConnectorsConnectorItem *connItem = dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
 		if(connItem && connItem->connector()->connectorStuffID() == connId) {
 			connToRemove = connItem;
 			break;
@@ -101,6 +101,7 @@ void PartsEditorConnectorsView::removeConnector(const QString &connId) {
 			QString("connector '%1' removed from %2 view")
 			.arg(connId).arg(ItemBase::viewIdentifierName(m_viewIdentifier))
 		));
+		m_drawnConns.removeAll(connToRemove);
 		m_removedConnIds << connId;
 	}
 }
@@ -171,8 +172,8 @@ void PartsEditorConnectorsView::updateDomIfNeeded() {
 			QSizeF defaultSize = renderer->defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
 
-			bool somethingChanged = addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
-			somethingChanged |=  removeConnectorsIfNeeded(svgDom);
+			bool somethingChanged = removeConnectorsIfNeeded(svgDom);
+			somethingChanged |= addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
 
 			if(somethingChanged) {
 				QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
@@ -322,4 +323,9 @@ PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(Mod
 
 PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path) {
 	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
+}
+
+void PartsEditorConnectorsView::inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem) {
+	m_drawnConns << connItem;
+	m_removedConnIds << connItem->connector()->connectorStuffID();
 }

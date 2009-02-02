@@ -74,6 +74,8 @@ protected:
 
 	TerminalPointItem *m_terminalPointItem;
 	bool m_geometryHasChanged;
+	bool m_inFileDefined;
+	bool m_centerHasChanged;
 
 	static qreal MinWidth;
 	static qreal MinHeight;

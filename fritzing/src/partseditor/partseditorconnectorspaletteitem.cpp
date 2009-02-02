@@ -29,22 +29,16 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #include "partseditorconnectorsconnectoritem.h"
 #include "partseditorconnectorsview.h"
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier, path, layer )
 {
-
+	m_showsTerminalPoints = owner->showingTerminalPoints();
 }
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer)
-	: PartsEditorPaletteItem(owner, modelPart, svgFile, viewIdentifier, path, layer )
-{
-
-}
-
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
 {
-
+	m_showsTerminalPoints = owner->showingTerminalPoints();
 }
 
 void PartsEditorConnectorsPaletteItem::highlightConnectors(const QString &connId) {

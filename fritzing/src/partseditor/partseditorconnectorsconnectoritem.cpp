@@ -26,6 +26,7 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 
 
 #include "partseditorconnectorsconnectoritem.h"
+#include "partseditorconnectorsview.h"
 
 
 qreal PartsEditorConnectorsConnectorItem::MinWidth = 20;
@@ -34,7 +35,9 @@ qreal PartsEditorConnectorsConnectorItem::MinHeight = MinWidth;
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint)
 	: PartsEditorConnectorItem(conn, attachedTo)
 {
-	init(false);
+	init(true);
+
+	m_inFileDefined = true;
 	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
 }
@@ -49,7 +52,8 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	setFlag(QGraphicsItem::ItemIsSelectable);
 	setFlag(QGraphicsItem::ItemIsMovable);
 
-	m_geometryHasChanged = false;
+	m_inFileDefined = false;
+	m_centerHasChanged = false;
 	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
 	updateTerminalPoint();
@@ -57,10 +61,16 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 
 void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
 	setRect(x,y,width,height);
+	if(m_inFileDefined) {
+		PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
+		if(gv) {
+			gv->inFileDefinedConnectorChanged(this);
+		}
+	}
 	if(showingTerminalPoint()) {
 		updateTerminalPoint();
 	} else {
-		m_geometryHasChanged = true;
+		m_centerHasChanged = true;
 	}
 }
 
@@ -68,10 +78,13 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 	setAcceptsHoverEvents(resizable);
 	setAcceptHoverEvents(resizable);
 	m_errorIcon = NULL;
+	m_geometryHasChanged = false;
 
 	setResizable(resizable);
 	if(m_resizable) {
 		m_handlers = new ConnectorRectangle(this);
+	} else {
+		m_handlers = NULL;
 	}
 }
 
@@ -202,11 +215,11 @@ QPen PartsEditorConnectorsConnectorItem::drawDottedLineAux(
 void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 	m_showingTerminalPoint = show;
 	if(m_terminalPointItem) {
-		if(!m_geometryHasChanged) {
+		if(!m_centerHasChanged) {
 			m_terminalPointItem->setVisible(show);
 		} else if(show) {
 			resetTerminalPoint();
-			m_geometryHasChanged = false;
+			m_centerHasChanged = false;
 		}
 	}
 }

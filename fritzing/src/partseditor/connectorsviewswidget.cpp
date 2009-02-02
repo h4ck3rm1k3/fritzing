@@ -31,7 +31,7 @@ $Date$
 
 ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchModel *sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent) : QFrame(parent) {
 	m_showTerminalPointsCheckBox = new QCheckBox(this);
-	m_showTerminalPointsCheckBox->setText(tr("Show Terminal Points"));
+	m_showTerminalPointsCheckBox->setText(tr("Show Anchor Points"));
 	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(showHideTerminalPoints(int)));
 
 	createViewImageWidget(m_breadView, symbols->m_breadView, sketchModel, undoStack, info, ItemBase::BreadboardView, ViewLayer::Breadboard);
