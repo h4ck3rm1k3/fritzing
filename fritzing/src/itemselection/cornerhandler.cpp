@@ -27,6 +27,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include <QHash>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QPainter>
 
 #include "cornerhandler.h"
 #include "connectorrectangle.h"
@@ -111,6 +112,7 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable()) {
 		m_resizing = true;
+		setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
 		m_mousePressedPos = event->pos();
 	} else {
 		QGraphicsPixmapItem::mousePressEvent(event);
@@ -121,6 +123,7 @@ void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable() && m_resizing) {
 		m_parent->resizingFinished();
 		m_resizing = false;
+		setFlag(QGraphicsItem::ItemIgnoresTransformations,true);
 	}
 	QGraphicsPixmapItem::mouseReleaseEvent(event);
 }

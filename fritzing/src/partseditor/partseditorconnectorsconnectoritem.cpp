@@ -29,7 +29,7 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #include "partseditorconnectorsview.h"
 
 
-qreal PartsEditorConnectorsConnectorItem::MinWidth = 20;
+qreal PartsEditorConnectorsConnectorItem::MinWidth = 3;
 qreal PartsEditorConnectorsConnectorItem::MinHeight = MinWidth;
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint)

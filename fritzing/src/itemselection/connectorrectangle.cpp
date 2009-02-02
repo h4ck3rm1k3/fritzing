@@ -91,7 +91,7 @@ void ConnectorRectangle::setState(State state) {
 }
 
 void ConnectorRectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	QRectF rect = m_owner->boundingRect();
+	QRectF rect = itemRect();
 
 	if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
 		placeHandlersInto(rect);
@@ -144,8 +144,8 @@ void ConnectorRectangle::placeHandlersInto(const QRectF &rect) {
 }
 
 QPointF ConnectorRectangle::posForHandlerIn(Qt::Corner corner, const QRectF &rect) {
-	qreal xaux = offsetX();
-	qreal yaux = offsetY();
+	qreal xaux = 0;//offsetX();
+	qreal yaux = 0;//offsetY();
 	switch(corner) {
 		case Qt::TopLeftCorner:
 			return QPointF(rect.x()-xaux,rect.y()-yaux);
