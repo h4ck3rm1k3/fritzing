@@ -866,6 +866,7 @@ void MainWindow::createEditMenuActions() {
 
 	m_preferencesAct = new QAction(tr("&Preferences..."), this);
 	m_preferencesAct->setStatusTip(tr("Show the application's about box"));
+	m_preferencesAct->setMenuRole(QAction::PreferencesRole);						// make sure this is added to the correct menu on mac
 	connect(m_preferencesAct, SIGNAL(triggered()), QApplication::instance(), SLOT(preferences()));
 }
 
@@ -1938,6 +1939,7 @@ void MainWindow::autoroute() {
 	m_dontClose = true;
 	EventEater eater(this);
 	qApp->installEventFilter(&eater);
+	menuBar()->setEnabled(false);
 
 	emit autorouted();
 
@@ -1971,6 +1973,7 @@ void MainWindow::autoroute() {
 	autorouter1->start();
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
 	qApp->removeEventFilter(&eater);
+	menuBar()->setEnabled(true);
 	m_statusBar->removeWidget(&progressBar);
 	m_statusBar->removeWidget(&cancelButton);
 	m_statusBar->removeWidget(&cancelTraceButton);
