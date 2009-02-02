@@ -98,11 +98,7 @@ Qt::Corner CornerHandler::corner() {
 
 void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable() && m_resizing) {
-		m_parent->resizingStarted();
 		resize(event->pos());
-		//DebugDialog::debug(QString("<<<< evt pos %1 %2").arg(event->pos().x()).arg(event->pos().y()));
-		//DebugDialog::debug(QString("<<<< scene pos %1 %2").arg(event->scenePos().x()).arg(event->scenePos().y()));
-		//DebugDialog::debug(QString("<<<< scene pos %1 %2").arg(event->scenePos().x()).arg(event->scenePos().y()));
 		scene()->update();
 	} else {
 		QGraphicsPixmapItem::mouseMoveEvent(event);
@@ -111,9 +107,9 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 
 void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable()) {
+		m_parent->resizingStarted();
 		m_resizing = true;
 		setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
-		m_mousePressedPos = event->pos();
 	} else {
 		QGraphicsPixmapItem::mousePressEvent(event);
 	}
@@ -121,9 +117,9 @@ void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	if(m_parent->isResizable() && m_resizing) {
-		m_parent->resizingFinished();
-		m_resizing = false;
 		setFlag(QGraphicsItem::ItemIgnoresTransformations,true);
+		m_resizing = false;
+		m_parent->resizingFinished();
 	}
 	QGraphicsPixmapItem::mouseReleaseEvent(event);
 }

@@ -48,7 +48,6 @@ protected:
 	ConnectorRectangle *m_parent;
 	Qt::Corner m_corner;
 	volatile bool m_resizing;
-	QPointF m_mousePressedPos;
 
 public:
 	static QHash<Qt::Corner,QPixmap> pixmapHash;

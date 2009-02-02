@@ -30,7 +30,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "../sketchwidget.h"
 #include "../debugdialog.h"
 
-ConnectorRectangle::ConnectorRectangle(ResizableRectItem* owner, bool withHandlers)
+ConnectorRectangle::ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers)
 	: QGraphicsRectItem(owner)
 {
 	m_owner = owner;
@@ -61,19 +61,19 @@ void ConnectorRectangle::setHandlersVisible(bool visible) {
 
 void ConnectorRectangle::prepareForChange() {
 	prepareGeometryChange();
-	m_owner->prepareGeometryChange();
+	//m_owner->prepareGeometryChange();
 }
 
 void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
-	qreal minWidth = m_owner->minWidth();
-	qreal minHeight = m_owner->minHeight();
+	qreal minWidth = resizableOwner()->minWidth();
+	qreal minHeight = resizableOwner()->minHeight();
 
 	qreal width = x2-x1 < minWidth ? minWidth : x2-x1;
 	qreal height = y2-y1 < minHeight ? minHeight : y2-y1;
 
 	//if(width != m_owner->boundingRect().width()
 	//   && height != m_owner->boundingRect().height()) {
-		m_owner->resizeRect(x1,y1,width,height);
+		resizableOwner()->resizeRect(x1,y1,width,height);
 		setRect(x1,y1,width,height);
 	//}
 }
@@ -83,7 +83,7 @@ QRectF ConnectorRectangle::itemRect() {
 }
 
 bool ConnectorRectangle::isResizable() {
-	return m_owner->isResizable();
+	return resizableOwner()->isResizable();
 }
 
 void ConnectorRectangle::setState(State state) {
@@ -144,8 +144,8 @@ void ConnectorRectangle::placeHandlersInto(const QRectF &rect) {
 }
 
 QPointF ConnectorRectangle::posForHandlerIn(Qt::Corner corner, const QRectF &rect) {
-	qreal xaux = 0;//offsetX();
-	qreal yaux = 0;//offsetY();
+	qreal xaux = offsetX();
+	qreal yaux = offsetY();
 	switch(corner) {
 		case Qt::TopLeftCorner:
 			return QPointF(rect.x()-xaux,rect.y()-yaux);
@@ -178,4 +178,8 @@ qreal ConnectorRectangle::currentScale() {
 		}
 	}
 	return 1;
+}
+
+ResizableRectItem* ConnectorRectangle::resizableOwner() {
+	return dynamic_cast<ResizableRectItem*>(m_owner);
 }

@@ -29,8 +29,9 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #define PARTSEDITORCONNECTORSCONNECTORITEM_H_
 
 #include "partseditorconnectoritem.h"
+#include "../itemselection/resizablerectitem.h"
 
-class PartsEditorConnectorsConnectorItem : public PartsEditorConnectorItem {
+class PartsEditorConnectorsConnectorItem : public PartsEditorConnectorItem, public ResizableRectItem {
 public:
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint);
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds);
@@ -49,6 +50,8 @@ public:
 	qreal minWidth();
 	qreal minHeight();
 
+	QRectF mappedRect();
+
 protected:
 	void init(bool resizable);
 
@@ -57,6 +60,7 @@ protected:
 	void removeErrorIcon();
 	void addErrorIcon();
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 	void drawDottedRect(QPainter *painter, const QColor &color1, const QColor &color2, const QRectF &rect);
 	QPen drawDottedLine(
@@ -68,11 +72,15 @@ protected:
 		qreal pos, qreal fixedAxis, qreal dotSize, int dotCount
 	);
 
+	void informChange();
+
 	QGraphicsSvgItem *m_errorIcon;
 
 	bool m_showingTerminalPoint; // important only if m_showsTerminalPoints == true
 
 	TerminalPointItem *m_terminalPointItem;
+
+	QRectF m_resizedRect;
 	bool m_geometryHasChanged;
 	bool m_inFileDefined;
 	bool m_centerHasChanged;

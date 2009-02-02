@@ -35,9 +35,8 @@ $Date$
 
 #include "connector.h"
 #include "itembase.h"
-#include "itemselection/resizablerectitem.h"
 
-class ConnectorItem : public ResizableRectItem
+class ConnectorItem : public QGraphicsRectItem
 {
 
 public:

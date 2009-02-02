@@ -39,13 +39,13 @@ void PartsEditorConnectorItem::removeFromModel() {
 }
 
 void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-	ResizableRectItem::hoverEnterEvent(event);
+	QGraphicsRectItem::hoverEnterEvent(event);
 }
 
 void PartsEditorConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-	ResizableRectItem::hoverLeaveEvent(event);
+	QGraphicsRectItem::hoverLeaveEvent(event);
 }
 
 void PartsEditorConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	ResizableRectItem::mousePressEvent(event);
+	QGraphicsRectItem::mousePressEvent(event);
 }

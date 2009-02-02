@@ -31,7 +31,7 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 QHash<ConnectorRectangle::State, QPixmap> TerminalPointItem::m_pixmapHash;
 
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool movable)
-	: ResizableRectItem(parent)
+	: QGraphicsRectItem(parent), ResizableRectItem()
 {
 	Q_ASSERT(parent);
 	m_parent = parent;
@@ -41,7 +41,7 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent,
 }
 
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point)
-	: ResizableRectItem(parent)
+	: QGraphicsRectItem(parent), ResizableRectItem()
 {
 	Q_ASSERT(parent);
 	m_parent = parent;
@@ -115,12 +115,12 @@ void TerminalPointItem::posCross() {
 
 void TerminalPointItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
 	if(isVisible()) m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Hover]);
-	ResizableRectItem::hoverEnterEvent(event);
+	QGraphicsItem::hoverEnterEvent(event);
 }
 
 void TerminalPointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 	if(isVisible()) m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Normal]);
-	ResizableRectItem::hoverLeaveEvent(event);
+	QGraphicsItem::hoverLeaveEvent(event);
 }
 
 void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
@@ -131,12 +131,12 @@ void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			setCursor(QCursor());
 		}
 	}
-	ResizableRectItem::mouseMoveEvent(event);
+	QGraphicsItem::mouseMoveEvent(event);
 }
 
 void TerminalPointItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	if(isVisible()) m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Selected]);
-	ResizableRectItem::mousePressEvent(event);
+	QGraphicsItem::mousePressEvent(event);
 }
 
 void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
@@ -150,7 +150,7 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Hover]);
 		}
 	}
-	ResizableRectItem::mouseReleaseEvent(event);
+	QGraphicsItem::mouseReleaseEvent(event);
 }
 
 bool TerminalPointItem::isOutsideConnector() {
@@ -215,4 +215,16 @@ bool TerminalPointItem::hasBeenMoved() {
 void TerminalPointItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	posCross();
 	QGraphicsRectItem::paint(painter,option,widget);
+}
+
+qreal TerminalPointItem::minHeight() {
+	return 1;
+}
+
+qreal TerminalPointItem::minWidth() {
+	return 1;
+}
+
+void TerminalPointItem::resizeRect(qreal x, qreal y, qreal w, qreal h) {
+	setRect(x,y,w,h);
 }

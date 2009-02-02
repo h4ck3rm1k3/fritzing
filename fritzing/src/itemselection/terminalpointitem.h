@@ -33,7 +33,7 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 class PartsEditorConnectorsConnectorItem;
 
-class TerminalPointItem : public ResizableRectItem {
+class TerminalPointItem : public QGraphicsRectItem, public ResizableRectItem {
 public:
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool movable=true);
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
@@ -43,6 +43,9 @@ public:
 
 	bool isOutsideConnector();
 	bool hasBeenMoved();
+
+	qreal minHeight();
+	qreal minWidth();
 
 protected:
 	QPointF mappedToScenePoint();
@@ -59,6 +62,8 @@ protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+	void resizeRect(qreal x, qreal y, qreal w, qreal h);
 
 	QPointF m_point;
 	bool m_hasBeenMoved;

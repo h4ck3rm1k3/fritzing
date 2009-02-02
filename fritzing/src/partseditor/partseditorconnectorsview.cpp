@@ -174,8 +174,9 @@ void PartsEditorConnectorsView::updateDomIfNeeded() {
 			QSizeF defaultSize = renderer->defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
 
-			bool somethingChanged = removeConnectorsIfNeeded(svgDom);
-			somethingChanged |= addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
+			bool somethingChanged = addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
+			//bool somethingChanged = removeConnectorsIfNeeded(svgDom);
+			//somethingChanged |= addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
 
 			if(somethingChanged) {
 				QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
@@ -204,17 +205,24 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 		QString connId;
 
 		foreach(PartsEditorConnectorsConnectorItem* drawnConn, m_drawnConns) {
-			QRectF rectAux = drawnConn->boundingRect();
-			QPointF posAux = QPointF(rectAux.x(),rectAux.y());
+			/*QRectF rectAux = drawnConn->mapToParent(drawnConn->boundingRect()).boundingRect();
+			QPointF posAux = drawnConn->m_handlers->mapToItem(m_item,QPointF(rectAux.x(),rectAux.y()));
+			QPointF posAux2 = posAux;
+			DebugDialog::debug(QString("<<<<< pos %1 %2 \n").arg(posAux2.x()).arg(posAux2.y()));
 			qreal xAux = posAux.x();
 			qreal yAux = posAux.y();
-			bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());
+			bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());*/
+
+			bounds = drawnConn->mappedRect();//mapToParent(drawnConn->boundingRect()).boundingRect();
+			DebugDialog::debug(QString("<<< x=%1 y=%2 w=%3 h=%4")
+					.arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
+			);
 			connId = drawnConn->connectorStuffID();
 
 			QRectF svgRect = mapFromSceneToSvg(bounds,defaultSize,viewBox);
 			addRectToSvg(svgDom,connId/*+"pin"*/,svgRect);
 
-			TerminalPointItem *tp = drawnConn->terminalPointItem();
+			/*TerminalPointItem *tp = drawnConn->terminalPointItem();
 			if(tp && tp->hasBeenMoved()) {
 				QRectF rectTPAux = tp->boundingRect();
 				QPointF posTPAux = QPointF(
@@ -229,7 +237,7 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 				);
 				QRectF svgTpRect = mapFromSceneToSvg(tpointRect,defaultSize,viewBox);
 				addRectToSvg(svgDom,connId+"terminal",svgTpRect);
-			}
+			}*/
 		}
 		return true;
 	}

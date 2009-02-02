@@ -27,13 +27,14 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 
 #include "partseditorconnectorsconnectoritem.h"
 #include "partseditorconnectorsview.h"
+#include "../debugdialog.h"
 
 
 qreal PartsEditorConnectorsConnectorItem::MinWidth = 3;
 qreal PartsEditorConnectorsConnectorItem::MinHeight = MinWidth;
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint)
-	: PartsEditorConnectorItem(conn, attachedTo)
+	: PartsEditorConnectorItem(conn, attachedTo), ResizableRectItem()
 {
 	init(true);
 
@@ -43,7 +44,7 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 }
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds)
-	: PartsEditorConnectorItem(conn, attachedTo)
+	: PartsEditorConnectorItem(conn, attachedTo), ResizableRectItem()
 {
 	init(true);
 
@@ -61,12 +62,11 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 
 void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
 	setRect(x,y,width,height);
-	if(m_inFileDefined) {
-		PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
-		if(gv) {
-			gv->inFileDefinedConnectorChanged(this);
-		}
-	}
+	DebugDialog::debug(QString("<<< x=%1 y=%2 w=%3 h=%4")
+			.arg(x).arg(y).arg(width).arg(height)
+	);
+	m_resizedRect = QRectF(x,y,width,height);
+	informChange();
 	if(showingTerminalPoint()) {
 		updateTerminalPoint();
 	} else {
@@ -75,10 +75,13 @@ void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal widt
 }
 
 void PartsEditorConnectorsConnectorItem::init(bool resizable) {
+	setFlag(QGraphicsItem::ItemIsMovable);
+
 	setAcceptsHoverEvents(resizable);
 	setAcceptHoverEvents(resizable);
 	m_errorIcon = NULL;
 	m_geometryHasChanged = false;
+	m_resizedRect = QRectF();
 
 	setResizable(resizable);
 	if(m_resizable) {
@@ -134,8 +137,6 @@ void PartsEditorConnectorsConnectorItem::removeErrorIcon() {
 void PartsEditorConnectorsConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
 	Q_UNUSED(option)
 	Q_UNUSED(widget)
-
-	if (m_hidden  || !m_paint) return;
 
 	painter->save();
 	drawDottedRect(painter,QColor("black"),QColor("white"),this->rect());
@@ -261,4 +262,30 @@ void PartsEditorConnectorsConnectorItem::updateTerminalPoint() {
 
 TerminalPointItem *PartsEditorConnectorsConnectorItem::terminalPointItem() {
 	return m_terminalPointItem;
+}
+
+QVariant PartsEditorConnectorsConnectorItem::itemChange(GraphicsItemChange change, const QVariant &value) {
+	if(change == QGraphicsItem::ItemPositionChange) {
+		informChange();
+	}
+	return ConnectorItem::itemChange(change,value);
+}
+
+
+void PartsEditorConnectorsConnectorItem::informChange() {
+	if(m_inFileDefined && !m_geometryHasChanged) {
+		PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
+		if(gv) {
+			gv->inFileDefinedConnectorChanged(this);
+		}
+	}
+	m_geometryHasChanged = true;
+}
+
+QRectF PartsEditorConnectorsConnectorItem::mappedRect() {
+	if(m_geometryHasChanged) {
+		return m_resizedRect;
+	} else {
+		return mapToParent(boundingRect()).boundingRect();
+	}
 }
