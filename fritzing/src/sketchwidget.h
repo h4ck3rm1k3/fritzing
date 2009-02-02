@@ -440,6 +440,8 @@ protected:
 	QList<QGraphicsItem*> m_fixedToBottomRightItems;
 	QList<QGraphicsItem*> m_fixedToCenterItems;
 
+	QString m_lastColorSelected;
+
 protected:
 	QString m_viewName;
 };

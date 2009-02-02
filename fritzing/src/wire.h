@@ -157,7 +157,6 @@ protected:
 	class ConnectorItem *m_connectorHover;
 	class ConnectorItem *m_connector0;
 	class ConnectorItem *m_connector1;
-	bool m_grabbedMouse;
 	QString m_colorName;
 	QPen m_shadowPen;
 	qreal m_opacity;

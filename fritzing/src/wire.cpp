@@ -82,7 +82,6 @@ Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_partLabel = new PartLabel(this, "", NULL);
 	m_canChainMultiple = false;
     setFlags(QGraphicsItem::ItemIsSelectable );
-	m_grabbedMouse = false;
 	m_connectorHover = NULL;
 	m_opacity = UNROUTED_OPACITY;
 
@@ -335,8 +334,7 @@ void Wire::setConnector1Rect() {
 }
 
 void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	if (m_grabbedMouse) {
-		m_grabbedMouse = false;
+	if (this->scene()->mouseGrabberItem() == this) {
 		this->ungrabMouse();
 	}
 
@@ -481,7 +479,6 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 	initDragEnd(connectorItem);
 
 	// connector item currently has the mouse, so call grab mouse to get mouse events to wire
-	m_grabbedMouse = true;
 	this->grabMouse();
 }
 

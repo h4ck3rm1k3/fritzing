@@ -747,6 +747,8 @@ void MainWindow::createFileMenuActions() {
 	m_quitAct->setStatusTip(tr("Quit the application"));
 	//connect(m_quitAct, SIGNAL(triggered()), this, SLOT(close()));
 	connect(m_quitAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
+	m_quitAct->setMenuRole(QAction::QuitRole);
+
 }
 
 void MainWindow::createOpenExampleMenu(QMenu * parentMenu, QString path) {
@@ -1068,6 +1070,7 @@ void MainWindow::createHelpMenuActions() {
 	m_aboutAct = new QAction(tr("&About"), this);
 	m_aboutAct->setStatusTip(tr("Show the application's about box"));
 	connect(m_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+	m_aboutAct->setMenuRole(QAction::AboutRole);
 }
 
 void MainWindow::createMenus()

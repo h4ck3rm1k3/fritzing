@@ -1180,6 +1180,10 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		}
 		new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, parentCommand);
 
+		if (modelPart->itemType() == ModelPart::Wire && !m_lastColorSelected.isEmpty()) {
+			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, UNROUTED_OPACITY, UNROUTED_OPACITY, parentCommand);
+		}
+
 		bool gotConnector = false;
 		foreach (QGraphicsItem * childItem, m_droppingItem->childItems()) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
@@ -1426,7 +1430,10 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	QGraphicsView::mouseReleaseEvent(event);
 
 	if (m_connectorDragWire != NULL) {
-		m_connectorDragWire->ungrabMouse();
+		if (scene()->mouseGrabberItem() == m_connectorDragWire) {
+			// probably already ungrabbed by the wire, but just in case
+			m_connectorDragWire->ungrabMouse();
+		}
 
 		// remove again (may not have been removed earlier)
 		if (m_connectorDragWire->scene() != NULL) {
@@ -1860,6 +1867,10 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		if (to != NULL) {
 			extendChangeConnectionCommand(fromOnWire, to, true, false, parentCommand);
 			doEmit = true;
+		}
+
+		if (!this->m_lastColorSelected.isEmpty()) {
+			new WireColorChangeCommand(this, wire->id(), m_lastColorSelected, m_lastColorSelected, wire->opacity(), wire->opacity(), parentCommand);
 		}
 	}
 
@@ -2370,6 +2381,9 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	m_connectorDragWire->setVisible(true);
 	m_connectorDragWire->grabMouse();
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
+	if (!m_lastColorSelected.isEmpty()) {
+		m_connectorDragWire->setColorString(m_lastColorSelected, m_connectorDragWire->opacity());
+	}
 }
 
 
@@ -3208,6 +3222,7 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
 
 void SketchWidget::changeWireColor(const QString newColor)
 {
+	m_lastColorSelected = newColor;
 	QList <Wire *> wires;
 	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		Wire * wire = dynamic_cast<Wire *>(item);
