@@ -290,7 +290,7 @@ bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * fr
 	return ((from != NULL) && (to != NULL));
 }
 
-Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand * ratsnestCommand) {
+Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand * ratsnestCommand, bool select) {
 	long newID = ItemBase::getNextID();
 
 	ViewGeometry viewGeometry;
@@ -310,7 +310,10 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
-	ratsnestCommand->addWire(this, wire, source, dest);
+	if (!select) {
+		wire->setSelected(false);
+	}
+	ratsnestCommand->addWire(this, wire, source, dest, select);
 	return wire ;
 }
 

@@ -304,6 +304,8 @@ int FApplication::startup(int & argc, char ** argv)
 	splash.showProgress(progressIndex, 0.4);
 	processEvents();
 
+	QTime t;
+	t.start();
 	DebugDialog::debug("starting thread");
 	QMutex mutex;
 	mutex.lock();
@@ -314,10 +316,10 @@ int FApplication::startup(int & argc, char ** argv)
 		mutex.tryLock(10);							// always fails, but effectively sleeps for 10 ms
 	}
 	mutex.unlock();
+	DebugDialog::debug(QString("ending thread %1").arg(t.elapsed()));
 
 	splash.showProgress(progressIndex, 0.65);
 
-	DebugDialog::debug("ending thread");
 
 	m_updateDialog = new UpdateDialog();
 	connect(m_updateDialog, SIGNAL(enableAgainSignal(bool)), this, SLOT(enableCheckUpdates(bool)));

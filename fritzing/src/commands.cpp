@@ -367,14 +367,17 @@ bool SelectItemCommand::mergeWith(const QUndoCommand *other)
 
 void SelectItemCommand::undo()
 {
-	selectAllFromStack(m_undoIDs);
+	selectAllFromStack(m_undoIDs, true, true);
 }
 
 void SelectItemCommand::redo()
 {
 	switch( m_type ){
 		case NormalSelect:
-			selectAllFromStack(m_redoIDs);
+			selectAllFromStack(m_redoIDs, true, true);
+			break;
+		case NormalDeselect:
+			selectAllFromStack(m_redoIDs, false, false);
 			break;
 		case SelectAll: 
 			m_sketchWidget->selectAllItems(true, m_crossViewType == BaseCommand::CrossView); 
@@ -385,10 +388,10 @@ void SelectItemCommand::redo()
 	}
 }
 
-void SelectItemCommand::selectAllFromStack(QList<long> & stack) {
+void SelectItemCommand::selectAllFromStack(QList<long> & stack, bool select, bool updateInfoView) {
 	m_sketchWidget->clearSelection();
 	for (int i = 0; i < stack.size(); i++) {
-		m_sketchWidget->selectItem(stack[i], true, true, m_crossViewType == BaseCommand::CrossView);
+		m_sketchWidget->selectItem(stack[i], select, updateInfoView, m_crossViewType == BaseCommand::CrossView);
 	}
 }
 
@@ -665,7 +668,7 @@ void RatsnestCommand::redo() {
 	}
 }
 
-void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest) 
+void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest, bool select) 
 {
 	m_commands.append(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), true, -1, NULL));
 	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
@@ -674,6 +677,11 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 			wire->id(), "connector0", true, true, NULL));
 	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorStuffID(),
 			wire->id(), "connector1", true, true, NULL));
+	if (!select) {
+		SelectItemCommand * sic = new SelectItemCommand(sketchWidget, SelectItemCommand::NormalDeselect, NULL);
+		sic->addRedo(wire->id());
+		m_commands.append(sic);
+	}
 
 }
 

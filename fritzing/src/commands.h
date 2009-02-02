@@ -213,6 +213,7 @@ class SelectItemCommand : public BaseCommand
 public:
 	enum SelectItemType {
 		NormalSelect,
+		NormalDeselect,
 		SelectAll,
 		DeselectAll
 	};
@@ -231,7 +232,7 @@ public:
 	void setSelectItemType(SelectItemType);
 
 protected:
-	void selectAllFromStack(QList<long> & stack);
+	void selectAllFromStack(QList<long> & stack, bool select, bool updateInfoView);
 	QString getParamString() const;
 
 protected:
@@ -391,7 +392,7 @@ public:
 					QUndoCommand * parent);
     void undo();
     void redo();
-	void addWire(class SketchWidget *, class Wire *, class ConnectorItem * source, class ConnectorItem * dest);
+	void addWire(class SketchWidget *, class Wire *, class ConnectorItem * source, class ConnectorItem * dest, bool select);
 
 protected:
 	QString getParamString() const;

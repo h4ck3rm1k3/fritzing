@@ -21,14 +21,14 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 $Revision$:
 $Author$:
 $Date$
-		
+	
 ********************************************************************/
 
 #include "version.h"
-											
+				
 #include <QString>
-#include <QStringList>	
-											
+#include <QStringList>
+			
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("1");
 QString Version::m_minorSubVersion("16");
@@ -43,8 +43,7 @@ QString Version::m_year;
 QStringList Version::m_modifiers;
 
 Version * Version::m_singleton = new Version();
-
-									
+							
 Version::Version() {
 	if (m_modifiers.count() == 0) {
 		m_modifiers << "a" << "b" << "rc" << "";

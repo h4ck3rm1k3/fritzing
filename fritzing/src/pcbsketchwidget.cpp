@@ -70,7 +70,7 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 			// if you can't get from i to j via wires, then add a virtual ratsnest wire
 			Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
 			if (tempWire == NULL) {
-				Wire * newWire = makeOneRatsnestWire(source, dest, ratsnestCommand);
+				Wire * newWire = makeOneRatsnestWire(source, dest, ratsnestCommand, source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag) == NULL);
 				ratsnestWires.append(newWire);
 				if (source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
 					newWire->setRouted(true);
@@ -309,6 +309,8 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 
 		createOneJumperOrTrace(wire, flag, false, done, parentCommand, commandString, colorString);
 	}
+
+	if (parentCommand == NULL) return;
 
 	new CleanUpWiresCommand(this, parentCommand);
 	m_undoStack->push(parentCommand);

@@ -314,7 +314,7 @@ void ViewSwitcher::createMask()
 	setStyleSheet("ViewSwitcher {border: 0px; background-color: rgb(0,255,255); margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
 	QSize size = this->size();
-	DebugDialog::debug(QString("vs size %1 %2").arg(size.width()).arg(size.height()));
+	//DebugDialog::debug(QString("vs size %1 %2").arg(size.width()).arg(size.height()));
 	QPixmap pixmap(size);
 	this->render(&pixmap);
 	QImage image = pixmap.toImage();

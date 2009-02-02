@@ -201,6 +201,7 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 	if (m_hidden) return;
 
 	painter->setOpacity(m_opacity);
+	/*
 	switch (m_viewIdentifier) {
 		case ItemBase::BreadboardView:
 			{
@@ -219,7 +220,16 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 			ItemBase::paint(painter, option, widget);
 			break;
 	}
+	*/
 
+	if (!getRatsnest() && !getTrace()) {
+		painter->save();
+		painter->setPen(m_shadowPen);
+		QLineF line = this->line();
+		painter->drawLine(line);
+		painter->restore();
+	}
+	ItemBase::paint(painter, option, widget);
 }
 
 void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
