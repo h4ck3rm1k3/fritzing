@@ -139,7 +139,8 @@ void PartsEditorConnectorsConnectorItem::paint( QPainter * painter, const QStyle
 	Q_UNUSED(widget)
 
 	painter->save();
-	drawDottedRect(painter,QColor("black"),QColor("white"),this->rect());
+	drawDottedRect(painter,Qt::black,Qt::white,this->rect());
+	m_handlers->paint(painter);
 	painter->restore();
 }
 
@@ -283,15 +284,14 @@ void PartsEditorConnectorsConnectorItem::informChange() {
 }
 
 QRectF PartsEditorConnectorsConnectorItem::mappedRect() {
-	if(m_geometryHasChanged) {
-		return m_resizedRect;
-	} else {
+//	if(m_geometryHasChanged) {
+//		return m_resizedRect;
+//	} else {
 		return mapToParent(boundingRect()).boundingRect();
-	}
+//	}
 }
 
 void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	//setSelected(true);
 	highlight(connectorStuffID());
 	PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
 	if(gv) {

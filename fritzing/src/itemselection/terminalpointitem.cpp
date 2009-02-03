@@ -161,7 +161,7 @@ bool TerminalPointItem::isOutsideConnector() {
 	*/
 
 	QPointF myCenter = mapToItem(m_parent,m_cross->boundingRect().center());
-	QPointF newCenter = mapToItem(m_handlers,m_cross->boundingRect().center());
+	QPointF newCenter = mapToItem(m_handlers->owner(),m_cross->boundingRect().center());
 	QRectF pRect = m_parent->rect();
 	QPointF pPos = mapToScene(QPointF(pRect.x(),pRect.y()));
 	QPointF pPos2 = mapToScene(QPointF(pRect.x()+pRect.width(),pRect.y()+pRect.height()));

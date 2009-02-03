@@ -31,7 +31,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "rectangleside.h"
 #include "resizablerectitem.h"
 
-class ConnectorRectangle : public QGraphicsRectItem {
+class ConnectorRectangle {
 public:
 	enum State {
 		Normal = 0x00000,
@@ -41,9 +41,9 @@ public:
 	};
 
 	ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers = true);
+	QGraphicsRectItem *owner();
 	void prepareForChange();
 	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);
-	QRectF itemRect();
 	bool isResizable();
 	void setState(State state);
 
@@ -54,9 +54,9 @@ public:
 	qreal currentScale();
 
 	void setHandlersVisible(bool visible);
+	void paint(QPainter *painter);
 
 protected:
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 	void placeHandlersInto(const QRectF &rect);
 	ResizableRectItem* resizableOwner();
 

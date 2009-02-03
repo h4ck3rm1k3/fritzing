@@ -179,9 +179,9 @@ void PartsEditorConnectorsView::updateDomIfNeeded() {
 			QSizeF defaultSize = renderer->defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
 
-			bool somethingChanged = addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
-			//bool somethingChanged = removeConnectorsIfNeeded(svgDom);
-			//somethingChanged |= addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
+			//bool somethingChanged = addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
+			bool somethingChanged = removeConnectorsIfNeeded(svgDom);
+			somethingChanged |= addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
 
 			if(somethingChanged) {
 				QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";

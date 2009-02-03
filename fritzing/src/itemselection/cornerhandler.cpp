@@ -35,8 +35,8 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 
 QHash<Qt::Corner,QPixmap> CornerHandler::pixmapHash;
 
-CornerHandler::CornerHandler(ConnectorRectangle* parent, Qt::Corner corner)
-	: QGraphicsPixmapItem(parent)
+CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* parentItem, Qt::Corner corner)
+	: QGraphicsPixmapItem(parentItem)
 {
 	m_parent = parent;
 	m_corner = corner;
@@ -64,14 +64,14 @@ void CornerHandler::initPixmapHash() {
 
 void CornerHandler::resize(const QPointF &mousePos) {
 	m_parent->prepareForChange();
-	QRectF rect = m_parent->itemRect();
+	QRectF rect = parentItem()->boundingRect();
 
 	qreal oldX1 = rect.x();
 	qreal oldY1 = rect.y();
 	qreal oldX2 = oldX1+rect.width();
 	qreal oldY2 = oldY1+rect.height();
-	qreal newX = mapToItem(m_parent,mousePos).x();
-	qreal newY = mapToItem(m_parent,mousePos).y();
+	qreal newX = mapToItem(parentItem(),mousePos).x();
+	qreal newY = mapToItem(parentItem(),mousePos).y();
 
 	/*DebugDialog::debug(QString("mouse pos x=%1 y=%2").arg(newX).arg(newY));
 

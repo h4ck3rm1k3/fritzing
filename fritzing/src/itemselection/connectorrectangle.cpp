@@ -31,16 +31,15 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "../debugdialog.h"
 
 ConnectorRectangle::ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers)
-	: QGraphicsRectItem(owner)
 {
 	m_owner = owner;
 	m_firstPaint = true;
 
 	if(withHandlers) {
-		m_topLeftHandler = new CornerHandler(this, Qt::TopLeftCorner);
-		m_topRightHandler = new CornerHandler(this, Qt::TopRightCorner);
-		m_bottomRightHandler = new CornerHandler(this, Qt::BottomRightCorner);
-		m_bottomLeftHandler = new CornerHandler(this, Qt::BottomLeftCorner);
+		m_topLeftHandler     = new CornerHandler(this, owner, Qt::TopLeftCorner);
+		m_topRightHandler    = new CornerHandler(this, owner, Qt::TopRightCorner);
+		m_bottomRightHandler = new CornerHandler(this, owner, Qt::BottomRightCorner);
+		m_bottomLeftHandler  = new CornerHandler(this, owner, Qt::BottomLeftCorner);
 
 		m_cornerHandlers
 			<< m_topLeftHandler << m_topRightHandler
@@ -53,6 +52,10 @@ ConnectorRectangle::ConnectorRectangle(QGraphicsRectItem* owner, bool withHandle
 	}
 }
 
+QGraphicsRectItem *ConnectorRectangle::owner() {
+	return m_owner;
+}
+
 void ConnectorRectangle::setHandlersVisible(bool visible) {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
 		handler->setVisible(visible);
@@ -60,7 +63,6 @@ void ConnectorRectangle::setHandlersVisible(bool visible) {
 }
 
 void ConnectorRectangle::prepareForChange() {
-	prepareGeometryChange();
 	//m_owner->prepareGeometryChange();
 }
 
@@ -74,12 +76,7 @@ void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
 	//if(width != m_owner->boundingRect().width()
 	//   && height != m_owner->boundingRect().height()) {
 		resizableOwner()->resizeRect(x1,y1,width,height);
-		setRect(x1,y1,width,height);
 	//}
-}
-
-QRectF ConnectorRectangle::itemRect() {
-	return m_owner->boundingRect();
 }
 
 bool ConnectorRectangle::isResizable() {
@@ -90,15 +87,13 @@ void ConnectorRectangle::setState(State state) {
 	m_state = state;
 }
 
-void ConnectorRectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	QRectF rect = itemRect();
+void ConnectorRectangle::paint(QPainter *painter) {
+	QRectF rect = m_owner->boundingRect();
 
 	if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
 		placeHandlersInto(rect);
 		m_firstPaint = false;
 	}
-
-	QGraphicsRectItem::paint(painter,option,widget);
 
 	bool beingResized = false;
 	foreach(CornerHandler* handler, m_cornerHandlers) {
@@ -130,7 +125,7 @@ void ConnectorRectangle::resizingStarted() {
 
 void ConnectorRectangle::resizingFinished() {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		QRectF rect = boundingRect();
+		QRectF rect = m_owner->boundingRect();
 		Qt::Corner corner = handler->corner();
 		handler->setPos(posForHandlerIn(corner,rect));
 		handler->setPixmap(CornerHandler::pixmapHash[corner]);
@@ -171,8 +166,8 @@ qreal ConnectorRectangle::offsetY() {
 }
 
 qreal ConnectorRectangle::currentScale() {
-	if(scene()) {
-		SketchWidget *sw = dynamic_cast<SketchWidget*>(scene()->parent());
+	if(m_owner->scene()) {
+		SketchWidget *sw = dynamic_cast<SketchWidget*>(m_owner->scene()->parent());
 		if(sw) {
 			return sw->currentZoom()/100;
 		}

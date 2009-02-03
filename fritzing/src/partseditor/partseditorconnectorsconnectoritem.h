@@ -32,6 +32,7 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #include "../itemselection/resizablerectitem.h"
 
 class PartsEditorConnectorsConnectorItem : public PartsEditorConnectorItem, public ResizableRectItem {
+friend class ConnectorRectangle;
 public:
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint);
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds);
