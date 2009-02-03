@@ -512,14 +512,14 @@ SketchToolButton *MainWindow::createAutorouteButton(SketchAreaWidget *parent) {
 SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent) {
 	SketchToolButton *noteButton = new SketchToolButton("Notes",parent, m_addNoteAct);
 	noteButton->setText(tr("Add a note"));
-	noteButton->setEnabledIcon();
+	noteButton->setEnabledIcon();					// seems to need this to display button icon first time
 	return noteButton;
 }
 
 SketchToolButton *MainWindow::createExportDiyButton(SketchAreaWidget *parent) {
 	SketchToolButton *exportDiyButton = new SketchToolButton("Diy",parent, m_exportDiyAct);
 	exportDiyButton->setText(tr("Export Etchable PDF"));
-
+	exportDiyButton->setEnabledIcon();				// seems to need this to display button icon first time
 	return exportDiyButton;
 }
 
@@ -735,28 +735,29 @@ void MainWindow::setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox) {
 void MainWindow::changeActivation(bool activate) {
 	// tried using this->saveState() and this->restoreState() but couldn't get it to work
 
-	//DebugDialog::debug(QString("change activation:%2 %1").arg(this->windowTitle()).arg(activate));
+	DebugDialog::debug(QString("change activation:%2 %1").arg(this->windowTitle()).arg(activate));
 
 	QWidget * activeWindow = QApplication::activeWindow ();
-	//DebugDialog::debug(QString("active == null? %1").arg(activeWindow==NULL));
+	DebugDialog::debug(QString("active %1").arg(activeWindow == NULL ? "NULL" : activeWindow->windowTitle()));
 
 	if (activate) {
 		if (m_savedState == Saved) {
 			m_savedState = Restored;
-			//DebugDialog::debug("restore state", this);
+			DebugDialog::debug("restore state");
 			//restoreState(m_savedStateData, 0);
 			for (int i = 0; i < children().count(); i++) {
 				FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 				if (dock == NULL) continue;
 
-				dock->restoreState();
+				dock->restoreStateSoon();
+				DebugDialog::debug(QString("restoring dock %1").arg(dock->windowTitle()));
 			}
 
 		}
 	}
 	else {
 		if ((activeWindow != NULL) && (activeWindow == this || activeWindow->parent() == this)) {
-			//DebugDialog::debug("skipping save");
+			DebugDialog::debug("skipping save");
 			return;
 		}
 
@@ -765,14 +766,16 @@ void MainWindow::changeActivation(bool activate) {
 			//m_savedStateData = saveState(0);
 			m_savedState = Saved;
 
-			//DebugDialog::debug("save state");
+			DebugDialog::debug("save state");
 			for (int i = 0; i < children().count(); i++) {
 				FDockWidget * dock = dynamic_cast<FDockWidget *>(children()[i]);
 				if (dock == NULL) continue;
 
 				dock->saveState();
+				DebugDialog::debug(QString("saving dock %1").arg(dock->windowTitle()));
 
 				if (dock->isFloating() && dock->isVisible()) {
+					DebugDialog::debug(QString("hiding dock %1").arg(dock->windowTitle()));
 					dock->hide();
 				}
 			}

@@ -25,6 +25,7 @@ $Date$
 ********************************************************************/
 
 #include <QtGui>
+#include <QTimer>
 
 #include "fdockwidget.h"
 #include "debugdialog.h"
@@ -41,9 +42,14 @@ void FDockWidget::saveState() {
 }
 
 void FDockWidget::restoreState() {
+	DebugDialog::debug(QString("dock restore state %1 %2").arg(windowTitle()).arg(m_state));
 	if (m_state) {
 		this->setVisible(true);
 	}
+}
+
+void FDockWidget::restoreStateSoon() {
+	QTimer::singleShot(10, this, SLOT(restoreState()));
 }
 
 bool FDockWidget::event(QEvent * e) {

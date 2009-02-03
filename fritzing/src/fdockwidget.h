@@ -40,6 +40,9 @@ public:
 	//QSize sizeHint() const;
 
 	void saveState();
+	void restoreStateSoon();
+	
+public slots:
 	void restoreState();
 
 protected:

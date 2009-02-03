@@ -1049,9 +1049,9 @@ void SketchWidget::dragEnterEvent(QDragEnterEvent *event)
 		event->acceptProposedAction();
 	}
 	else {
-		event->ignore();
 		// subclass seems to call acceptProposedAction so don't invoke it
-		//QGraphicsView::dragEnterEvent(event);
+		// QGraphicsView::dragEnterEvent(event);
+		event->ignore();
 	}
 }
 
