@@ -92,15 +92,22 @@ QString ZoomComboBox::editText() {
 
 void ZoomComboBox::setEditText(QString newText) {
 	// hack to avoid delay
+	disconnect(this,SIGNAL(editTextChanged(QString)),this,SLOT(inputTextChanged()));	
+	disconnect(this,SIGNAL(currentIndexChanged(int)),this,SLOT(updateBackupFieldsIfOptionSelected(int)));
+
 	int prevKeyPressed = m_lastKeyPressed;
 	m_lastKeyPressed = Qt::Key_Escape;
 
 	m_indexBackup = itemIndex(newText);
 	m_valueBackup = newText;
 	setCurrentIndex(m_indexBackup);
+		
 	lineEdit()->insert(m_valueBackup);
 
 	m_lastKeyPressed = prevKeyPressed;
+	
+	connect(this,SIGNAL(editTextChanged(QString)),this,SLOT(inputTextChanged()));
+	connect(this,SIGNAL(currentIndexChanged(int)),this,SLOT(updateBackupFieldsIfOptionSelected(int)));
 }
 
 void ZoomComboBox::inputTextChanged() {
@@ -137,16 +144,6 @@ void ZoomComboBox::addPercentageToInputText() {
 	}
 }
 
-void ZoomComboBox::focusOutEvent ( QFocusEvent * event ) {
-	if(lineEdit()->text().trimmed() == "") {
-		setPreviousValue();
-	} else {
-		addPercentageToInputText();
-		updateBackupFields();
-		QComboBox::focusOutEvent(event);
-	}
-}
-
 void ZoomComboBox::updateBackupFieldsIfOptionSelected(int index) {
 	if(index != -1) {
 		updateBackupFields();
@@ -157,11 +154,17 @@ void ZoomComboBox::updateBackupFields() {
 	QString newText = editText();
 	m_valueBackup = newText;
 	m_indexBackup = itemIndex(newText);
+	
+	disconnect(this,SIGNAL(currentIndexChanged(int)),this,SLOT(updateBackupFieldsIfOptionSelected(int)));
+	disconnect(this,SIGNAL(editTextChanged(QString)),this,SLOT(inputTextChanged()));	
 	setCurrentIndex(m_indexBackup);
+	
 	if(m_indexBackup == -1) {
 		// setCurrentIndex erases the input text value if the index is -1
 		setEditText(m_valueBackup);
 	}
+	connect(this,SIGNAL(currentIndexChanged(int)),this,SLOT(updateBackupFieldsIfOptionSelected(int)));
+	connect(this,SIGNAL(editTextChanged(QString)),this,SLOT(inputTextChanged()));
 }
 
 void ZoomComboBox::keyPressEvent ( QKeyEvent * event ) {

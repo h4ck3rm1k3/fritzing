@@ -48,7 +48,6 @@ protected slots:
 
 protected:
 	void addPercentageToInputText();
-	void focusOutEvent ( QFocusEvent * event );
 	void keyPressEvent ( QKeyEvent * event );
 	void setPreviousValue();
 	int itemIndex(QString value);
