@@ -874,11 +874,8 @@ void MainWindow::swapSelected() {
 
 void MainWindow::saveBundledSketch() {
 	QString fileExt;
-	QString path;
-
-	path = defaultSaveFolder() + "/" + m_fileName+"z";
-
-	QString bundledFileName = QFileDialog::getSaveFileName(
+	QString path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName()+"z";
+	QString bundledFileName = FApplication::getSaveFileName(
 			this,
 			tr("Specify a file name"),
 			path,

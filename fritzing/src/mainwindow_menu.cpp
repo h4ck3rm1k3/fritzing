@@ -39,6 +39,7 @@ $Date$
 #include "virtualwire.h"
 #include "fsvgrenderer.h"
 #include "labels/note.h"
+#include "fapplication.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -121,9 +122,9 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 
 	QString fileExt;
 	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
-	QString fileName = QFileDialog::getSaveFileName(this,
+	QString fileName = FApplication::getSaveFileName(this,
 		tr("Export for DIY..."),
-		path+"/"+m_fileName.remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
+		path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
 		extFmt,
 		&fileExt
 	);
@@ -264,8 +265,9 @@ void MainWindow::doExport(QAction * action) {
 		QString fileExt;
 		QString extFmt = fileExtFormats.value(actionType);
 		DebugDialog::debug(QString("file export string %1").arg(extFmt));
-		QString fileName = QFileDialog::getSaveFileName(this,
-			tr("Export..."), path+"/"+m_fileName.remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
+		QString fileName = FApplication::getSaveFileName(this,
+			tr("Export..."), 
+			path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
 			extFmt,
 			&fileExt
 		);
@@ -417,7 +419,7 @@ void MainWindow::saveAsAux(const QString & fileName) {
     file.close();
 
     setReadOnly(false);
-    FritzingWindow::saveAsAux(fileName);
+    //FritzingWindow::saveAsAux(fileName);
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 	m_sketchModel->save(fileName);
@@ -441,7 +443,7 @@ void MainWindow::load() {
 		path = "";
 	}
 
-	QString fileName = QFileDialog::getOpenFileName(
+	QString fileName = FApplication::getOpenFileName(
 			this,
 			tr("Select a Fritzing File to Open"),
 			path,
@@ -1895,14 +1897,13 @@ void MainWindow::exportBOM() {
         }
 
         QString path = defaultSaveFolder();
-	
-	
+		
 		QString fileExt;
 		QString extFmt = fileExtFormats.value(bomActionType);		
-		QString fname = path+"/"+m_fileName.remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
+		QString fname = path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
 		DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
-        QString fileName = QFileDialog::getSaveFileName(this,
+        QString fileName = FApplication::getSaveFileName(this,
                 tr("Export Bill of Materials (BoM)..."),
                 fname,
                 extFmt,

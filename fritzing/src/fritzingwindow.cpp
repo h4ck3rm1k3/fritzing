@@ -103,20 +103,23 @@ bool FritzingWindow::isEmptyFileName(const QString &fileName, const QString &unt
 bool FritzingWindow::saveAs() {
 	DebugDialog::debug(QString("current path: %1").arg(QDir::currentPath()));
 	QString fileExt;
-        QString path;
-        QString untitledBase = tr("Untitled Sketch");
+    QString path;
+    QString untitledBase = untitledFileName();
 
 	if(m_readOnly) {
 		path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName();
-        } else if(m_fileName.contains(untitledBase, Qt::CaseInsensitive)){
+    } 
+	else if(m_fileName.startsWith(untitledBase, Qt::CaseInsensitive)) {
 		path = defaultSaveFolder() + "/" + m_fileName;
-	} else if(m_fileName.isNull() || m_fileName.isEmpty()){
+	} 
+	else if(m_fileName.isNull() || m_fileName.isEmpty()) {
 		path = defaultSaveFolder();
-	} else {
+	} 
+	else {
 		path = m_fileName;
 	}
 	DebugDialog::debug(QString("current file: %1").arg(m_fileName));
-    QString fileName = QFileDialog::getSaveFileName(
+    QString fileName = FApplication::getSaveFileName(
 						this,
                         tr("Specify a file name"),
                         path,
@@ -142,9 +145,9 @@ bool FritzingWindow::saveAs() {
     return true;
 }
 
-void FritzingWindow::saveAsAux(const QString & fileName) {
-	FApplication::setOpenSaveFolder(fileName);
-}
+//void FritzingWindow::saveAsAux(const QString & fileName) {
+	//FApplication::setOpenSaveFolder(fileName);
+//}
 
 void FritzingWindow::undoStackCleanChanged(bool isClean) {
 	setWindowModified(!isClean);

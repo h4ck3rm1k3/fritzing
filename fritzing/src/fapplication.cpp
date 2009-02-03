@@ -145,7 +145,7 @@ bool FApplication::spaceBarIsPressed() {
 
 void FApplication::setOpenSaveFolder(const QString& path) {
 	QFileInfo fileInfo(path);
-	if(fileInfo.isFile()) {
+	if(fileInfo.isDir()) {
 		m_openSaveFolder = path;
 	} else {
 		m_openSaveFolder = fileInfo.path().remove(fileInfo.fileName());
@@ -549,3 +549,21 @@ void FApplication::enableCheckUpdates(bool enabled)
 	}
 }
 
+QString FApplication::getOpenFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
+{
+	QString result = QFileDialog::getOpenFileName(parent, caption, dir, filter, selectedFilter, options);
+	if (!result.isNull()) {
+		setOpenSaveFolder(result);
+	}
+	return result;
+}
+
+QString FApplication::getSaveFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options ) 
+{
+	QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
+	if (!result.isNull()) {
+		setOpenSaveFolder(result);
+	}
+	return result;
+
+}
