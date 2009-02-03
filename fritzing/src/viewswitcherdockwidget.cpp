@@ -39,6 +39,7 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 {
 	m_bitmap = NULL;
 	m_viewSwitcher = NULL;
+	m_within = true;
 
 	bool floatFlag = true;
 	QPoint initial(10,50);
