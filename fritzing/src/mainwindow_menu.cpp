@@ -47,7 +47,7 @@ static QString psActionType = ".ps";
 static QString pdfActionType = ".pdf";
 static QString pngActionType = ".png";
 static QString svgActionType = ".svg";
-static QString bomActionType = ".bom.txt";
+static QString bomActionType = ".txt";
 
 static QHash<QString, QPrinter::OutputFormat> filePrintFormats;
 static QHash<QString, QImage::Format> fileExportFormats;
@@ -78,7 +78,7 @@ void MainWindow::initExportConstants()
 	fileExtFormats[pngActionType] = tr("PNG Image (*.png)")+colons;
 	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)")+colons;
 	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)")+colons;
-        fileExtFormats[bomActionType] = tr("BoM Text File (*.bom.txt)")+colons;
+	fileExtFormats[bomActionType] = tr("BoM Text File (*.txt)")+colons;
 }
 
 void MainWindow::print() {
@@ -170,7 +170,7 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 		painter.end();			
 	}
 
-m_statusBar->showMessage(tr("Sketch exported"), 2000);
+	m_statusBar->showMessage(tr("Sketch exported"), 2000);
 
 /*
 
@@ -255,10 +255,10 @@ void MainWindow::doExport(QAction * action) {
 		return;
 	}
 
-        if (actionType.compare(bomActionType) == 0) {
-            exportBOM();
-            return;
-        }
+	if (actionType.compare(bomActionType) == 0) {
+		exportBOM();
+		return;
+	}
 
 	#ifndef QT_NO_PRINTER
 		QString fileExt;
@@ -1895,12 +1895,16 @@ void MainWindow::exportBOM() {
         }
 
         QString path = defaultSaveFolder();
+	
+	
+		QString fileExt;
+		QString extFmt = fileExtFormats.value(bomActionType);		
+		QString fname = path+"/"+m_fileName.remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
+		DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
-        QString fileExt;
-        QString extFmt = fileExtFormats.value(bomActionType);
         QString fileName = QFileDialog::getSaveFileName(this,
                 tr("Export Bill of Materials (BoM)..."),
-                path+"/"+m_fileName.remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
+                fname,
                 extFmt,
                 &fileExt
         );
