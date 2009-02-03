@@ -70,7 +70,7 @@ def main():
         elif o in ("-t", "--template"):
             templateFile = a
         elif o in ("-s", "--suffix"):
-            suffix = a
+            suffix = a.lstrip(".")
         else:
             assert False, "unhandled option"
     

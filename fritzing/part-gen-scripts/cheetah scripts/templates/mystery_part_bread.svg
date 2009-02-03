@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 #set $width = ((int($pins)-1) * 10) + 12
-#set $widthin = $width / 100
+#set $widthin = $width / 100.0
 #set $rectwidth = $width - 1.4
 #set $bodyright1 = $width - 0.75
 #set $bodyright2 = $width - 2.15
