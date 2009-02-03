@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   width="69.321533"
+   height="200.957275"
+   id="svg2">
+  <defs
+     id="defs4" />
+  <g
+     transform="translate(-187.45993,-457.15125)"
+     id="schematic">
+    <g
+       id="g2462">
+      <path
+         d="M 231.20976,488.42239 C 231.39291,488.38169 231.58623,488.39187 231.78975,488.45292 C 232.31885,488.59537 232.6648,488.94133 232.82761,489.49079 C 232.84795,489.57219 232.85813,489.69429 232.85814,489.85709 C 232.85813,490.01989 232.84795,490.142 232.82761,490.2234 C 232.6648,490.77286 232.30867,491.12899 231.75922,491.29179 C 231.67781,491.31215 231.55571,491.32232 231.39291,491.32232 C 231.25045,491.32232 231.13853,491.31215 231.05713,491.29179 C 230.67047,491.16969 230.38556,490.96619 230.20242,490.68129 C 230.03961,490.43708 229.95821,490.16235 229.95822,489.85709 C 229.95821,489.65359 229.99891,489.46027 230.08032,489.27711 C 230.28381,488.78871 230.66029,488.5038 231.20976,488.42239 M 233.32607,463.95858 C 233.71272,463.89755 234.05867,463.96878 234.36394,464.17226 C 234.42498,464.21298 238.46983,467.65849 239.45165,468.56385 C 240.61726,469.63775 241.37845,470.14766 241.43581,470.33087 L 241.49686,470.68547 L 241.49686,472.19639 L 241.49686,473.66161 L 241.43581,473.81424 C 241.37474,473.99741 241.19179,474.03333 241.06971,474.19611 C 241.00864,474.27753 239.79739,475.25995 236.97909,477.96571 L 232.85814,481.47614 L 232.85814,482.42243 C 232.85813,483.1347 232.8276,485.27827 232.76656,485.46142 C 232.7055,485.62423 232.60375,485.78703 232.46131,485.94983 C 232.23745,486.19404 231.96272,486.33649 231.63712,486.37718 C 231.25045,486.45859 230.89432,486.38736 230.56873,486.16351 C 230.24311,485.91931 230.03961,485.60388 229.95822,485.21721 C 229.93786,485.11547 229.92768,482.92102 229.92769,482.0256 C 229.94803,481.1302 229.95821,480.63161 229.95822,480.52985 C 230.01926,480.24495 230.16171,479.99057 230.38557,479.76671 C 230.48732,479.66497 231.88131,478.47447 234.56757,476.19523 L 238.56641,472.74585 L 238.56641,472.19639 L 238.56641,471.64693 L 238.23063,471.34167 L 233.93658,467.65217 L 233.57028,467.31639 L 229.69353,470.61315 C 227.10903,472.83135 228.03394,472.02271 227.97289,472.0634 C 227.52518,472.34831 227.04694,472.36867 226.53819,472.12445 C 226.00908,471.85991 225.74452,471.43255 225.74453,470.84238 C 225.74452,470.41503 225.89715,470.05891 226.20241,469.77399 C 226.2431,469.7333 225.41996,470.45036 228.22831,468.049 C 231.057,465.62733 232.5324,464.36561 232.65451,464.26384 C 232.858,464.10106 233.08186,463.99931 233.32607,463.95858"
+         id="questionmark"
+         style="font-size:144px;font-style:normal;font-weight:bold;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Sans Bold" transform="translate(0,80.4786375)" />
+      <line
+         x1="210.70993"
+         y1="476.55231"
+         x2="188.45993"
+         y2="476.55231"
+         id="connector0pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="475.39526"
+         id="connector0terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="496.55231"
+         x2="188.45993"
+         y2="496.55231"
+         id="connector1pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="495.39526"
+         id="connector1terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="516.55231"
+         x2="188.45993"
+         y2="516.55231"
+         id="connector2pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="515.39526"
+         id="connector2terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="536.55231"
+         x2="188.45993"
+         y2="536.55231"
+         id="connector3pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="535.39526"
+         id="connector3terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="556.55231"
+         x2="188.45993"
+         y2="556.55231"
+         id="connector4pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="555.39526"
+         id="connector4terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="576.55231"
+         x2="188.45993"
+         y2="576.55231"
+         id="connector5pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="575.39526"
+         id="connector5terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="596.55231"
+         x2="188.45993"
+         y2="596.55231"
+         id="connector6pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="595.39526"
+         id="connector6terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="616.55231"
+         x2="188.45993"
+         y2="616.55231"
+         id="connector7pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="615.39526"
+         id="connector7terminal"
+         style="fill:none" />
+      <line
+         x1="210.70993"
+         y1="636.55231"
+         x2="188.45993"
+         y2="636.55231"
+         id="connector8pin"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      <rect
+         width="1"
+         height="2"
+         x="187.45993"
+         y="635.39526"
+         id="connector8terminal"
+         style="fill:none" />
+
+      <rect
+         width="43.957275"
+         height="198.957275"
+         x="211.52861"
+         y="458.15125"
+         id="box"
+         style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
+    </g>
+  </g>
+</svg>

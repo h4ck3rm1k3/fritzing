@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="32"
+   height="32"
+   id="svg2471"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="mystery_part_icon.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <metadata
+     id="metadata2486">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     inkscape:window-height="726"
+     inkscape:window-width="645"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showgrid="false"
+     inkscape:zoom="15.4375"
+     inkscape:cx="16"
+     inkscape:cy="16"
+     inkscape:window-x="503"
+     inkscape:window-y="83"
+     inkscape:current-layer="svg2471" />
+  <defs
+     id="defs2473">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 16 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="32 : 16 : 1"
+       inkscape:persp3d-origin="16 : 10.666667 : 1"
+       id="perspective2488" />
+  </defs>
+  <g
+     id="icon">
+    <path
+       d="M 13.589065,26.7925 C 13.772215,26.7518 13.965535,26.76198 14.169055,26.82303 C 14.698155,26.96548 15.044105,27.31144 15.206915,27.8609 C 15.227255,27.9423 15.237435,28.0644 15.237445,28.2272 C 15.237435,28.39 15.227255,28.51211 15.206915,28.59351 C 15.044105,29.14297 14.687975,29.4991 14.138525,29.6619 C 14.057115,29.68226 13.935015,29.69243 13.772215,29.69243 C 13.629755,29.69243 13.517835,29.68226 13.436435,29.6619 C 13.049775,29.5398 12.764865,29.3363 12.581725,29.0514 C 12.418915,28.80719 12.337515,28.53246 12.337525,28.2272 C 12.337515,28.0237 12.378215,27.83038 12.459625,27.64722 C 12.663115,27.15882 13.039595,26.87391 13.589065,26.7925 M 15.705375,2.3286909 C 16.092025,2.2676609 16.437975,2.3388909 16.743245,2.5423709 C 16.804285,2.5830909 20.849135,6.0286009 21.830955,6.9339609 C 22.996565,8.0078609 23.757755,8.5177709 23.815115,8.7009805 L 23.876165,9.0555805 L 23.876165,10.5665 L 23.876165,12.03172 L 23.815115,12.18435 C 23.754045,12.36752 23.571095,12.40344 23.449015,12.56622 C 23.387945,12.64764 22.176695,13.63006 19.358395,16.33582 L 15.237445,19.84625 L 15.237445,20.79254 C 15.237435,21.50481 15.206905,23.64838 15.145865,23.83153 C 15.084805,23.99434 14.983055,24.15714 14.840615,24.31994 C 14.616755,24.56415 14.342025,24.7066 14.016425,24.74729 C 13.629755,24.8287 13.273625,24.75747 12.948035,24.53362 C 12.622415,24.28942 12.418915,23.97399 12.337525,23.58732 C 12.317165,23.48558 12.306985,21.29113 12.306995,20.39571 C 12.327335,19.50031 12.337515,19.00172 12.337525,18.89996 C 12.398565,18.61506 12.541015,18.36068 12.764875,18.13682 C 12.866625,18.03508 14.260615,16.84458 16.946875,14.56534 L 20.945715,11.11596 L 20.945715,10.5665 L 20.945715,10.01704 L 20.609935,9.7117805 L 16.315885,6.0222809 L 15.949585,5.6865009 L 12.072835,8.9832605 C 9.4883351,11.20146 10.413245,10.39282 10.352195,10.43351 C 9.9044851,10.71842 9.4262451,10.73878 8.9174951,10.49456 C 8.3883851,10.23002 8.1238251,9.8026605 8.1238351,9.2124905 C 8.1238251,8.7851405 8.2764551,8.4290209 8.5817151,8.1441009 C 8.6224051,8.1034109 7.7992651,8.8204705 10.607615,6.4191109 C 13.436305,3.9974409 14.911705,2.7357209 15.033815,2.6339509 C 15.237305,2.4711709 15.461165,2.3694209 15.705375,2.3286909"
+       id="text2383"
+       style="font-size:144px;font-style:normal;font-weight:bold;line-height:125%;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans;-inkscape-font-specification:Sans Bold" />
+  </g>
+</svg>
