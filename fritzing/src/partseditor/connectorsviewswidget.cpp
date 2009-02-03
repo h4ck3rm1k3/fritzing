@@ -42,6 +42,14 @@ ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchM
 	m_schemView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 	m_pcbView->setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
+	connectPair(m_breadView,m_schemView);
+	connectPair(m_schemView,m_pcbView);
+	connectPair(m_pcbView,m_breadView);
+
+	connectToThis(m_breadView);
+	connectToThis(m_schemView);
+	connectToThis(m_pcbView);
+
 	QFrame *viewsContainter = new QFrame(this);
 	QHBoxLayout *layout1 = new QHBoxLayout(viewsContainter);
 	layout1->addWidget(m_breadView);
@@ -99,6 +107,24 @@ void ConnectorsViewsWidget::createViewImageWidget(
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
 	viw->addViewLayer(new ViewLayer(viewLayerId, true, 2.5));
+}
+
+void ConnectorsViewsWidget::connectPair(PartsEditorConnectorsView *v1, PartsEditorConnectorsView *v2) {
+	connect(
+		v1, SIGNAL(connectorSelected(const QString &)),
+		v2, SLOT(informConnectorSelection(const QString &))
+	);
+	connect(
+		v2, SIGNAL(connectorSelected(const QString &)),
+		v1, SLOT(informConnectorSelection(const QString &))
+	);
+}
+
+void ConnectorsViewsWidget::connectToThis(PartsEditorConnectorsView *v) {
+	connect(
+		v, SIGNAL(connectorSelected(const QString &)),
+		this, SLOT(informConnectorSelection(const QString &))
+	);
 }
 
 void ConnectorsViewsWidget::repaint() {
@@ -165,4 +191,8 @@ bool ConnectorsViewsWidget::checkStateToBool(int checkState) {
 
 QCheckBox *ConnectorsViewsWidget::showTerminalPointsCheckBox() {
 	return m_showTerminalPointsCheckBox;
+}
+
+void ConnectorsViewsWidget::informConnectorSelection(const QString &connId) {
+	emit connectorSelectedInView(connId);
 }

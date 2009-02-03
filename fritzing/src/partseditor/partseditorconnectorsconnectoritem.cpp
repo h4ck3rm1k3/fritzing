@@ -289,3 +289,13 @@ QRectF PartsEditorConnectorsConnectorItem::mappedRect() {
 		return mapToParent(boundingRect()).boundingRect();
 	}
 }
+
+void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	//setSelected(true);
+	highlight(connectorStuffID());
+	PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
+	if(gv) {
+		gv->informConnectorSelectionFromView(connectorStuffID());
+	}
+	ConnectorItem::mousePressEvent(event);
+}

@@ -152,6 +152,11 @@ void PartsEditorConnectorsView::informConnectorSelection(const QString &connId) 
 	}
 }
 
+void PartsEditorConnectorsView::informConnectorSelectionFromView(const QString &connId) {
+	informConnectorSelection(connId);
+	emit connectorSelected(connId);
+}
+
 void PartsEditorConnectorsView::setMismatching(ItemBase::ViewIdentifier viewId, const QString &id, bool mismatching) {
 	if(m_item && viewId == m_viewIdentifier) {
 		for (int i = 0; i < m_item->childItems().count(); i++) {

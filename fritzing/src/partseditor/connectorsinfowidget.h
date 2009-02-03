@@ -69,6 +69,7 @@ class ConnectorsInfoWidget : public QFrame {
 		void updateLayout();
 		void selectionChanged(AbstractConnectorInfoWidget* selected);
 		void deleteAux();
+		void connectorSelectedInView(const QString &connId);
 
 	protected:
 		void createScrollArea();
@@ -98,7 +99,6 @@ class ConnectorsInfoWidget : public QFrame {
 
 		QHash<QString /*connId*/, QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
 
-
 		QLabel *m_title;
 		QScrollArea *m_scrollArea;
 
@@ -112,6 +112,8 @@ class ConnectorsInfoWidget : public QFrame {
 
 		QList<SingleConnectorInfoWidget*> m_connsInfo;
 		QList<MismatchingConnectorWidget*> m_mismatchConnsInfo;
+		QHash<QString /*connId*/, AbstractConnectorInfoWidget*> m_allConnsInfo;
+
 		QStringList m_connIds;
 
 		WaitPushUndoStack *m_undoStack;

@@ -48,6 +48,10 @@ class ConnectorsViewsWidget : public QFrame {
 		void drawConnector(Connector*);
 		void removeConnectorFrom(const QString&,ItemBase::ViewIdentifier);
 		void showHideTerminalPoints(int checkState);
+		void informConnectorSelection(const QString &connId);
+
+	signals:
+		void connectorSelectedInView(const QString& connId);
 
 	protected:
 		void createViewImageWidget(
@@ -57,6 +61,9 @@ class ConnectorsViewsWidget : public QFrame {
 
 		bool showingTerminalPoints();
 		bool checkStateToBool(int checkState);
+
+		void connectPair(PartsEditorConnectorsView *v1, PartsEditorConnectorsView *v2);
+		void connectToThis(PartsEditorConnectorsView *v);
 
 		PartsEditorConnectorsView *m_breadView;
 		PartsEditorConnectorsView *m_schemView;

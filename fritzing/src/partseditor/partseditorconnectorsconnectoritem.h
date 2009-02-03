@@ -54,6 +54,7 @@ public:
 
 protected:
 	void init(bool resizable);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 	void resizeRect(qreal x, qreal y, qreal width, qreal height);
 

@@ -239,12 +239,14 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 }
 
 void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
-	m_connIds << conn->connectorStuffID();
+	QString connId = conn->connectorStuffID();
+	m_connIds << connId;
 
 	int connCount = m_connsInfo.size();
 	SingleConnectorInfoWidget *sci = new SingleConnectorInfoWidget(this, m_undoStack, conn, m_scrollContent);
 	scrollContentLayout()->insertWidget(connCount+1,sci);
 	m_connsInfo << sci;
+	m_allConnsInfo[connId] = sci;
 	connect(sci,SIGNAL(editionStarted()),this,SLOT(updateLayout()));
 	connect(sci,SIGNAL(editionFinished()),this,SLOT(updateLayout()));
 	connect(sci,SIGNAL(tellSistersImNewSelected(AbstractConnectorInfoWidget*)),this,SLOT(selectionChanged(AbstractConnectorInfoWidget*)));
@@ -263,6 +265,7 @@ void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidge
 
 	((QVBoxLayout*)m_mismatchersFrame->layout())->insertWidget(connCount,mcw);
 	m_mismatchConnsInfo << mcw;
+	m_allConnsInfo[mcw->connId()] = mcw;
 	connect(mcw,SIGNAL(tellSistersImNewSelected(AbstractConnectorInfoWidget*)),this,SLOT(selectionChanged(AbstractConnectorInfoWidget*)));
 	connect(mcw,SIGNAL(tellViewsMyConnectorIsNewSelected(const QString &)),this,SLOT(informConnectorSelection(const QString &)));
 	if(m_mismatchConnsInfo.size()==1) {
@@ -346,8 +349,9 @@ void ConnectorsInfoWidget::clearMismatchingForView(ItemBase::ViewIdentifier view
 void ConnectorsInfoWidget::singleToMismatchingNotInView(ItemBase::ViewIdentifier viewId, const QStringList &connIds) {
 	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
 		if(connIds.indexOf(sci->connector()->connectorStuffID()) == -1) {
-			addMismatchingConnectorInfo(sci->toMismatching(viewId));
+			MismatchingConnectorWidget *mcw = sci->toMismatching(viewId);
 			removeConnectorInfo(sci);
+			addMismatchingConnectorInfo(mcw);
 		}
 	}
 	m_mismatchersFrame->adjustSize();
@@ -413,6 +417,7 @@ MismatchingConnectorWidget* ConnectorsInfoWidget::existingMismatchingConnector(c
 void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool alsoDeleteFromView) {
 	m_mismatchersFrame->layout()->removeWidget(mcw);
 	m_mismatchConnsInfo.removeOne(mcw);
+	m_allConnsInfo.remove(mcw->connId());
 	if(m_mismatchConnsInfo.size()==0) {
 		m_mismatchersFrameParent->hide();
 		updateLayout();
@@ -437,6 +442,7 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool alsoDeleteFromView) {
 	scrollContentLayout()->removeWidget(sci);
 	m_connsInfo.removeOne(sci);
+	m_allConnsInfo.remove(sci->connector()->connectorStuffID());
 
 	if(m_selected == sci) {
 		m_selected = NULL;
@@ -513,4 +519,9 @@ void ConnectorsInfoWidget::deleteAux() {
 
 int ConnectorsInfoWidget::scrollBarWidth() {
 	return m_scrollArea->verticalScrollBar()->width();
+}
+
+
+void ConnectorsInfoWidget::connectorSelectedInView(const QString &connId) {
+	setSelected(m_allConnsInfo[connId]);
 }
