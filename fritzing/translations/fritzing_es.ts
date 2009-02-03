@@ -1659,7 +1659,7 @@ Cantidad<byte value="x9"/>Parte
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="566"/>
         <source>Shift-click to drag out a new trace.</source>
-        <translation>Shift-click para crear una nueva traza</translation>
+        <translation>Shift-click para crear una nueva traza.</translation>
     </message>
 </context>
 <context>
@@ -2299,7 +2299,8 @@ en el esquema?</translation>
         <location filename="../src/prefsdialog.cpp" line="202"/>
         <source>This dialog will soon provide the ability to set some other preferences, such as your default sketch folder and your fritzing.org login name
 Please stay tuned.</source>
-        <translation>Proximamente desde este diálogo podrás modificar más preferencias, tales como el directorio por defecto para tus bosquejos y tu usuario de fritzing.org</translation>
+        <translation>Proximamente desde este diálogo podrás modificar más preferencias, tales como el directorio por defecto para tus bosquejos y tu usuario de fritzing.org.
+Mantente al tanto.</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="210"/>
@@ -2516,7 +2517,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="../src/fritzingwindow.cpp" line="132"/>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
-        <translation>El archivo &apos;%1&apos; es de sólo lectura; por favor, selecciona otro nombre</translation>
+        <translation>El archivo &apos;%1&apos; es de sólo lectura; por favor, selecciona otro nombre.</translation>
     </message>
 </context>
 <context>
@@ -2684,8 +2685,8 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <location filename="../src/sketchwidget.cpp" line="3188"/>
         <source>No part with those characteristics.
 Where&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation>No hay partes con esas características
-Estamos trabajando para evitar este mensaje y permitirte seleccionar entre propiedades que si existen.</translation>
+        <translation>No hay partes con esas características.
+Estamos trabajando para evitar este mensaje, y sólo permitirte seleccionar entre propiedades que existan.</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3239"/>
@@ -2892,7 +2893,7 @@ Estamos trabajando para evitar este mensaje y permitirte seleccionar entre propi
     <message>
         <location filename="../src/wire.cpp" line="842"/>
         <source>thin</source>
-        <translation>fino</translation>
+        <translation>delgado</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="843"/>
