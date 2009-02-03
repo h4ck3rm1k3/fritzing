@@ -134,12 +134,12 @@ void PartsEditorConnectorsConnectorItem::removeErrorIcon() {
 	}
 }
 
-void PartsEditorConnectorsConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
+void PartsEditorConnectorsConnectorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	Q_UNUSED(option)
 	Q_UNUSED(widget)
 
 	painter->save();
-	drawDottedRect(painter,Qt::black,Qt::white,this->rect());
+	drawDottedRect(painter,Qt::black,Qt::white,rect());
 	m_handlers->paint(painter);
 	painter->restore();
 }
@@ -284,11 +284,7 @@ void PartsEditorConnectorsConnectorItem::informChange() {
 }
 
 QRectF PartsEditorConnectorsConnectorItem::mappedRect() {
-//	if(m_geometryHasChanged) {
-//		return m_resizedRect;
-//	} else {
-		return mapToParent(boundingRect()).boundingRect();
-//	}
+	return mapToParent(rect()).boundingRect();
 }
 
 void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {

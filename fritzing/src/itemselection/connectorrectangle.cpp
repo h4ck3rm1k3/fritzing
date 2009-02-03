@@ -105,7 +105,6 @@ void ConnectorRectangle::paint(QPainter *painter) {
 
 	if(beingResized) {
 		prepareForChange();
-		painter->save();
 		foreach(CornerHandler* handler, m_cornerHandlers) {
 			Qt::Corner corner = handler->corner();
 			QPixmap pm = CornerHandler::pixmapHash[corner];
@@ -113,7 +112,6 @@ void ConnectorRectangle::paint(QPainter *painter) {
 			QPointF hPos = posForHandlerIn(corner, rect);
 			painter->drawPixmap(hPos.x(),hPos.y(),pm.width()/scale,pm.height()/scale,pm);
 		}
-		painter->restore();
 	}
 }
 

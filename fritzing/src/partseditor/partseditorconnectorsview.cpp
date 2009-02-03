@@ -136,7 +136,7 @@ void PartsEditorConnectorsView::setItemProperties() {
 		m_item->removeFromModel();
 		myItem()->highlightConnectors(m_lastSelectedConnId);
 
-		qreal size = 500; // just make sure the user get enough place to play
+		qreal size = 500; // just make sure the user get enough space to play
 		setSceneRect(0,0,size,size);
 
 		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
@@ -175,13 +175,13 @@ void PartsEditorConnectorsView::updateDomIfNeeded() {
 	if(m_item) {
 		FSvgRenderer *renderer = new FSvgRenderer();
 		if(renderer->load(m_item->flatSvgFilePath())) {
-			QRectF viewBox = renderer->viewBoxF();
-			QSizeF defaultSize = renderer->defaultSizeF();
+			QRectF svgViewBox = renderer->viewBoxF();
+			QSizeF sceneViewBox = renderer->defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
 
 			//bool somethingChanged = addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
 			bool somethingChanged = removeConnectorsIfNeeded(svgDom);
-			somethingChanged |= addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
+			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox);
 
 			if(somethingChanged) {
 				QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
@@ -200,31 +200,20 @@ void PartsEditorConnectorsView::updateDomIfNeeded() {
 	}
 }
 
-bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox) {
+bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox) {
 	if(!m_drawnConns.isEmpty()) {
 		DebugDialog::debug(QString("<<<< dsW %1  dsH %2  vbW %3  vbH %4")
-				.arg(defaultSize.width()).arg(defaultSize.height())
-				.arg(viewBox.width()).arg(viewBox.height()));
+				.arg(sceneViewBox.width()).arg(sceneViewBox.height())
+				.arg(svgViewBox.width()).arg(svgViewBox.height()));
 
 		QRectF bounds;
 		QString connId;
 
 		foreach(PartsEditorConnectorsConnectorItem* drawnConn, m_drawnConns) {
-			/*QRectF rectAux = drawnConn->mapToParent(drawnConn->boundingRect()).boundingRect();
-			QPointF posAux = drawnConn->m_handlers->mapToItem(m_item,QPointF(rectAux.x(),rectAux.y()));
-			QPointF posAux2 = posAux;
-			DebugDialog::debug(QString("<<<<< pos %1 %2 \n").arg(posAux2.x()).arg(posAux2.y()));
-			qreal xAux = posAux.x();
-			qreal yAux = posAux.y();
-			bounds = QRectF(xAux, yAux, rectAux.width(), rectAux.height());*/
-
-			bounds = drawnConn->mappedRect();//mapToParent(drawnConn->boundingRect()).boundingRect();
-			DebugDialog::debug(QString("<<< x=%1 y=%2 w=%3 h=%4")
-					.arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
-			);
+			bounds = drawnConn->mappedRect();
 			connId = drawnConn->connectorStuffID();
 
-			QRectF svgRect = mapFromSceneToSvg(bounds,defaultSize,viewBox);
+			QRectF svgRect = mapFromSceneToSvg(bounds,sceneViewBox,svgViewBox);
 			addRectToSvg(svgDom,connId/*+"pin"*/,svgRect);
 
 			/*TerminalPointItem *tp = drawnConn->terminalPointItem();
@@ -279,14 +268,14 @@ bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomDocument *svgDom) {
 	return false;
 }
 
-QRectF PartsEditorConnectorsView::mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox) {
-	qreal relationW = defaultSize.width() / viewBox.width();
-	qreal relationH = defaultSize.height() / viewBox.height();
+QRectF PartsEditorConnectorsView::mapFromSceneToSvg(const QRectF &itemRect, const QSizeF &sceneViewBox, const QRectF &svgViewBox) {
+	qreal relationW = svgViewBox.width() / sceneViewBox.width();
+	qreal relationH = svgViewBox.height() / sceneViewBox.height();
 
-	qreal x = sceneRect.x() * relationW;
-	qreal y = sceneRect.y() * relationH;
-	qreal width = sceneRect.width() * relationW;
-	qreal height = sceneRect.height() * relationH;
+	qreal x = itemRect.x() * relationW;
+	qreal y = itemRect.y() * relationH;
+	qreal width = itemRect.width() * relationW;
+	qreal height = itemRect.height() * relationH;
 
 	return QRectF(x,y,width,height);
 }
