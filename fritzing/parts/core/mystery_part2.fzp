@@ -1,21 +1,21 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module uri="http://fritzing.org/modules/mysterypart1" moduleId="1e03b5a3-ed62-11dd-b332-001a4d5c439f" >
+<module uri="http://fritzing.org/modules/mysterypart2" moduleId="3a761a44-f1ff-11dd-b332-001a4d5c439f" >
  <version>1.0</version>
  <author>Fritzing Part-o-matic</author>
- <title>Mystery Part - 1 pins</title>
+ <title>Mystery Part - 2 pins</title>
  <label>U</label>
- <date>2009-01-28</date>
+ <date>2009-02-03</date>
  <tags>
   <tag>mystery part</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
   <property name="family" >Mystery Part</property>
-  <property name="pins">1</property>
+  <property name="pins">2</property>
   <property name="footprint">100 mil jumper</property>
  </properties>
- <taxonomy>part.mystery.magical.1pins</taxonomy>
- <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With 1 pin on a 100 mil inline pin header footprint.</description>
+ <taxonomy>part.mystery.magical.2pins</taxonomy>
+ <description>A dummy, proxy, ersatz, stand-in part for whatever you want.  With 2 pins on a 100 mil inline pin header footprint.</description>
  <views>
   <iconView>
    <layers image="icon/mystery_part_icon.svg" >
@@ -23,17 +23,17 @@
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/mystery_part1.svg" >
+   <layers image="breadboard/mystery_part2.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/mystery_part1.svg" >
+   <layers image="schematic/mystery_part2.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>
   <pcbView>
-   <layers image="pcb/jumper1.svg" >
+   <layers image="pcb/jumper2.svg" >
     <layer layerId="silkscreen" />
     <layer layerId="copper0" />
    </layers>
@@ -51,6 +51,20 @@
     </schematicView>
     <pcbView>
      <p svgId="connector0pin" layer="copper0" />
+    </pcbView>
+   </views>
+  </connector>
+  <connector type="male" id="connector1" name="leg2" >
+   <description>pin 2</description>
+   <views>
+    <breadboardView>
+     <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
+    </breadboardView>
+    <schematicView>
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+    </schematicView>
+    <pcbView>
+     <p svgId="connector1pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
