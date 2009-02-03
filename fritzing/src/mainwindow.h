@@ -102,6 +102,7 @@ protected slots:
     void print();
     void doExport(QAction *);
 	void exportDiy(QAction * action = NULL);
+	void exportDiySvg(QAction * action = NULL);
     void about();
     void copy();
     void cut();
@@ -233,7 +234,8 @@ protected:
 	void exportToEagle();
 	void exportToGerber();
     void exportBOM();
-
+	void exportDiy(bool wantPDF, bool wantSVG);
+	
 	QList<QWidget*> getButtonsForView(ItemBase::ViewIdentifier viewId);
 
 	const QString untitledFileName();
@@ -365,7 +367,8 @@ protected:
 	QAction *m_exportEagleAct;
 	QAction *m_exportGerberAct;
 	QAction *m_exportDiyAct;
-        QAction *m_exportBomAct;
+	QAction *m_exportDiySvgAct;
+	QAction *m_exportBomAct;
 
     // Edit Menu
     QMenu *m_editMenu;

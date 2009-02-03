@@ -97,7 +97,16 @@ void MainWindow::print() {
 
 void MainWindow::exportDiy(QAction * action) {
 	Q_UNUSED(action);
+	exportDiy(true, false);
+}
 
+void MainWindow::exportDiySvg(QAction * action) {
+	Q_UNUSED(action);
+	exportDiy(false, true);
+}
+
+void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
+{
 	if (!m_pcbGraphicsView->ratsAllRouted()) {
 		QMessageBox msgBox(this);
 		msgBox.setText("All traces have not yet been routed.");
@@ -111,7 +120,7 @@ void MainWindow::exportDiy(QAction * action) {
 	QString path = defaultSaveFolder();
 
 	QString fileExt;
-	QString extFmt = fileExtFormats.value(pdfActionType);
+	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
 	QString fileName = QFileDialog::getSaveFileName(this,
 		tr("Export for DIY..."),
 		path+"/"+m_fileName.remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
@@ -131,14 +140,8 @@ void MainWindow::exportDiy(QAction * action) {
 		}
 	#endif
 
-	QPrinter printer(QPrinter::HighResolution);
-	printer.setOutputFormat(filePrintFormats[fileExt]);
-	printer.setOutputFileName(fileName);
-	QPainter painter;
-	if (painter.begin(&printer)) {
-		QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());
-
-		// as a bonus feature, save the svg as a file
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());
+	if (wantSVG) {
 		QString svgFileName = fileName;
 		svgFileName.replace(fileExt, ".svg");
 		QFile file(svgFileName);
@@ -146,19 +149,28 @@ void MainWindow::exportDiy(QAction * action) {
 		QTextStream out(&file);
 		out << svg;
 		file.close();
-
-		// now convert to pdf
-		QSvgRenderer svgRenderer;
-		svgRenderer.load(svg.toLatin1());
-		qreal trueWidth = m_pcbGraphicsView->scene()->width() / FSvgRenderer::printerScale();
-		qreal trueHeight = m_pcbGraphicsView->scene()->height() / FSvgRenderer::printerScale();
-		int res = printer.resolution();
-		QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
-		svgRenderer.render(&painter, bounds);
-		painter.end();
-		m_statusBar->showMessage(tr("Sketch exported"), 2000);
+	}
+	else {		
+		QPrinter printer(QPrinter::HighResolution);
+		printer.setOutputFormat(filePrintFormats[fileExt]);
+		printer.setOutputFileName(fileName);
+		QPainter painter;
+		if (painter.begin(&printer)) 
+		{
+			// now convert to pdf
+			QSvgRenderer svgRenderer;
+			svgRenderer.load(svg.toLatin1());
+			qreal trueWidth = m_pcbGraphicsView->scene()->width() / FSvgRenderer::printerScale();
+			qreal trueHeight = m_pcbGraphicsView->scene()->height() / FSvgRenderer::printerScale();
+			int res = printer.resolution();
+			QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
+			svgRenderer.render(&painter, bounds);
+		}
+			
+		painter.end();			
 	}
 
+m_statusBar->showMessage(tr("Sketch exported"), 2000);
 
 /*
 
@@ -731,7 +743,11 @@ void MainWindow::createFileMenuActions() {
 	m_exportDiyAct = new BetterTriggerAction(tr("Etchable PDF..."), this);
 	m_exportDiyAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
 	connect(m_exportDiyAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiy(QAction *)));
-
+	
+	m_exportDiySvgAct = new BetterTriggerAction(tr("Etchable SVG..."), this);
+	m_exportDiySvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY production"));
+	connect(m_exportDiySvgAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiySvg(QAction *)));
+	
 	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
 	m_pageSetupAct->setShortcut(tr("Shift+Ctrl+P"));
 	m_pageSetupAct->setStatusTip(tr("Setup the current sketch page"));
@@ -1100,6 +1116,7 @@ void MainWindow::createMenus()
 	m_exportMenu->addSeparator();
         m_exportMenu->addAction(m_exportBomAct);
 	m_exportMenu->addAction(m_exportDiyAct);
+	m_exportMenu->addAction(m_exportDiySvgAct);
 	m_exportMenu->addAction(m_exportEagleAct);
 	m_exportMenu->addAction(m_exportGerberAct);
 
@@ -1456,6 +1473,7 @@ void MainWindow::updateTraceMenu() {
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_autorouteAct->setEnabled(rEnabled);
 	m_exportDiyAct->setEnabled(true);			
+	m_exportDiySvgAct->setEnabled(true);			
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllJumpersAct->setEnabled(jEnabled);
 
