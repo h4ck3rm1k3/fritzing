@@ -34,9 +34,24 @@ const QString ConnectorTypeWidget::FemaleSymbol = QString("%1").arg(QChar(0x2640
 const QString ConnectorTypeWidget::MaleSymbol = QString("%1").arg(QChar(0x2642));
 
 ConnectorTypeWidget::ConnectorTypeWidget(Connector::ConnectorType type, QWidget *parent)
-	: QLabel(parent)
+	: QFrame(parent)
 {
 	m_isSelected = false;
+	m_noEditionModeWidget = new QLabel(this);
+	m_editionModeWidget = new QPushButton(this);
+	connect(
+		m_editionModeWidget, SIGNAL(clicked()),
+		this, SLOT(toggleValue())
+	);
+	m_noEditionModeWidget->setFixedWidth(30);
+	m_editionModeWidget->setFixedWidth(30);
+
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->setMargin(2);
+	layout->setSpacing(0);
+	layout->addWidget(m_noEditionModeWidget);
+	layout->addWidget(m_editionModeWidget);
+
 	setType(type);
 }
 
@@ -65,13 +80,28 @@ void ConnectorTypeWidget::setType(Connector::ConnectorType type) {
 	setToolTip(Connector::connectorNameFromType(type));
 }
 
-void ConnectorTypeWidget::cancel() {
-	setType(m_typeBackUp);
+void ConnectorTypeWidget::setSelected(bool selected) {
+	m_isSelected = selected;
 }
 
-void ConnectorTypeWidget::mousePressEvent(QMouseEvent * event) {
-	toggleValue();
-	QLabel::mousePressEvent(event);
+void ConnectorTypeWidget::setText(const QString &text) {
+	m_text = text;
+	m_noEditionModeWidget->setText(text);
+	m_editionModeWidget->setText(text);
+}
+
+const QString &ConnectorTypeWidget::text() {
+	return m_text;
+}
+
+void ConnectorTypeWidget::setInEditionMode(bool edition) {
+	m_isInEditionMode = edition;
+	m_noEditionModeWidget->setVisible(!edition);
+	m_editionModeWidget->setVisible(edition);
+}
+
+void ConnectorTypeWidget::cancel() {
+	setType(m_typeBackUp);
 }
 
 void ConnectorTypeWidget::toggleValue() {
@@ -298,7 +328,7 @@ QSize SingleConnectorInfoWidget::sizeHint() const {
 
 void SingleConnectorInfoWidget::setSelected(bool selected, bool doEmitChange) {
 	AbstractConnectorInfoWidget::setSelected(selected, doEmitChange);
-	m_type->m_isSelected = selected;
+	m_type->setSelected(selected);
 
 	if(selected && m_connector) {
 		emit tellViewsMyConnectorIsNewSelected(m_connector->connectorStuffID());
@@ -307,7 +337,7 @@ void SingleConnectorInfoWidget::setSelected(bool selected, bool doEmitChange) {
 
 void SingleConnectorInfoWidget::setInEditionMode(bool inEditionMode) {
 	m_isInEditionMode = inEditionMode;
-	m_type->m_isInEditionMode = inEditionMode;
+	m_type->setInEditionMode(inEditionMode);
 }
 
 bool SingleConnectorInfoWidget::isInEditionMode() {

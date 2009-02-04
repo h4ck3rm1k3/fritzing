@@ -36,19 +36,28 @@ $Date$
 #include "editabletextwidget.h"
 #include "mismatchingconnectorwidget.h"
 
-class ConnectorTypeWidget : public QLabel {
+class ConnectorTypeWidget : public QFrame {
+	Q_OBJECT
 	public:
 		ConnectorTypeWidget(Connector::ConnectorType type = Connector::Female, QWidget *parent=0);
 		Connector::ConnectorType type();
 		const QString &typeAsStr();
 		void setType(Connector::ConnectorType type);
-
-	friend class SingleConnectorInfoWidget;
-	protected:
-		void mousePressEvent(QMouseEvent *);
-		void toggleValue();
+		void setSelected(bool selected);
+		void setInEditionMode(bool edition);
 		void cancel();
 
+	protected slots:
+		void toggleValue();
+
+	protected:
+		void setText(const QString &text);
+		const QString &text();
+
+		QLabel *m_noEditionModeWidget;
+		QPushButton *m_editionModeWidget;
+
+		QString m_text;
 		bool m_isSelected;
 		volatile bool m_isInEditionMode;
 		Connector::ConnectorType m_typeBackUp;
