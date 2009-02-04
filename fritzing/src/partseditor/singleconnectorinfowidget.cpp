@@ -147,8 +147,21 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 	m_descLabel->setObjectName("description");
 
 	m_type = new ConnectorTypeWidget(type, this);
+
 	m_nameEdit = NULL;
 	m_descEdit = NULL;
+
+	m_nameEditContainer = new QFrame(this);
+	QHBoxLayout *nameLO = new QHBoxLayout(m_nameEditContainer);
+	nameLO->setSpacing(0);
+	nameLO->setMargin(0);
+	m_nameEditContainer->hide();
+
+	m_descEditContainer = new QFrame(this);
+	QVBoxLayout *descLO = new QVBoxLayout(m_descEditContainer);
+	descLO->setSpacing(0);
+	descLO->setMargin(0);
+	m_descEditContainer->hide();
 
 	m_acceptButton = NULL;
 	m_cancelButton = NULL;
@@ -178,13 +191,26 @@ QString SingleConnectorInfoWidget::type() {
 }
 
 void SingleConnectorInfoWidget::startEdition() {
-	if(!m_nameEdit) m_nameEdit = new QLineEdit(this);
+	createInputs();
+
 	m_nameEdit->setText(m_nameLabel->text());
-	if(!m_descEdit) m_descEdit = new QTextEdit(this);
 	m_descEdit->setText(m_descLabel->text());
 	toEditionMode();
 
 	emit editionStarted();
+}
+
+void SingleConnectorInfoWidget::createInputs() {
+	if(!m_nameEdit) {
+		m_nameEdit = new QLineEdit(this);
+		m_nameEditContainer->layout()->addWidget(new QLabel(tr("Name: "),this));
+		m_nameEditContainer->layout()->addWidget(m_nameEdit);
+	}
+	if(!m_descEdit) {
+		m_descEdit = new QTextEdit(this);
+		m_descEditContainer->layout()->addWidget(new QLabel(tr("Description:"),this));
+		m_descEditContainer->layout()->addWidget(m_descEdit);
+	}
 }
 
 void SingleConnectorInfoWidget::editionCompleted() {
@@ -211,8 +237,8 @@ void SingleConnectorInfoWidget::toStandardMode() {
 
 	setInEditionMode(false);
 
-	hideIfNeeded(m_nameEdit);
-	hideIfNeeded(m_descEdit);
+	hideIfNeeded(m_nameEditContainer);
+	hideIfNeeded(m_descEditContainer);
 	hideIfNeeded(m_acceptButton);
 	hideIfNeeded(m_cancelButton);
 
@@ -248,21 +274,19 @@ void SingleConnectorInfoWidget::toEditionMode() {
 	hideIfNeeded(m_nameDescSeparator);
 	hideIfNeeded(m_descLabel);
 
+	createInputs();
+
 	// first row
 	QHBoxLayout *firstRowLayout = new QHBoxLayout();
 	firstRowLayout->addWidget(m_type);
 	firstRowLayout->addSpacerItem(new QSpacerItem(10,0));
-	if(!m_nameEdit) m_nameEdit = new QLineEdit(this);
-	firstRowLayout->addWidget(m_nameEdit);
+	firstRowLayout->addWidget(m_nameEditContainer);
 	firstRowLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	firstRowLayout->addWidget(m_removeButton);
-	m_nameEdit->show();
-
+	m_nameEditContainer->show();
 
 	// second row
-	if(!m_descEdit) m_descEdit = new QTextEdit(this);
-	m_descEdit->show();
-
+	m_descEditContainer->show();
 
 	// third row
 	if(!m_acceptButton) {
@@ -285,11 +309,11 @@ void SingleConnectorInfoWidget::toEditionMode() {
 
 	QVBoxLayout *layout = (QVBoxLayout*)this->layout();
 	layout->addLayout(firstRowLayout);
-	layout->addWidget(m_descEdit);
+	layout->addWidget(m_descEditContainer);
 	layout->addLayout(thirdRowLayout);
 
 
-	setFixedHeight(SingleConnectorHeight*3);
+	setFixedHeight(SingleConnectorHeight*4);
 	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	updateGeometry();
 
@@ -318,7 +342,7 @@ QSize SingleConnectorInfoWidget::minimumSizeHint() const {
 QSize SingleConnectorInfoWidget::sizeHint() const {
 	QSize retval;
 	if(m_isInEditionMode) {
-		retval = QSize(width(),SingleConnectorHeight*3);
+		retval = QSize(width(),SingleConnectorHeight*4);
 	} else {
 		retval = QSize(width(),SingleConnectorHeight);
 	}

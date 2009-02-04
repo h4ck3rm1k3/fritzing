@@ -99,6 +99,7 @@ class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 		void toStandardMode();
 		void toEditionMode();
 		void startEdition();
+		void createInputs();
 
 		void mousePressEvent(QMouseEvent * event);
 
@@ -110,7 +111,9 @@ class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 		QLabel *m_descLabel;
 		ConnectorTypeWidget *m_type;
 
+		QFrame *m_nameEditContainer;
 		QLineEdit *m_nameEdit;
+		QFrame *m_descEditContainer;
 		QTextEdit *m_descEdit;
 
 		QPushButton *m_acceptButton;
