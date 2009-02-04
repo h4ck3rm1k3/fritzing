@@ -42,7 +42,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
-		void updateDomIfNeeded();
+		void aboutToClose();
 
 
 		void showTerminalPoints(bool show);
@@ -73,12 +73,16 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void setItemProperties();
 		bool isSupposedToBeRemoved(const QString& id);
 
-		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox);
+		QString findConnectorLayerId(QDomDocument *svgDom);
+		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem);
+		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox, const QString &connectorsLayerId);
 		bool removeConnectorsIfNeeded(QDomDocument *svgDom);
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
-		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect);
+		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId);
+		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);
 
 		PartsEditorConnectorsPaletteItem *myItem();
+		QTransform m_prevTransform;
 
 		ZoomControls *m_zoomControls;
 

@@ -139,8 +139,12 @@ void PartsEditorConnectorsView::setItemProperties() {
 		qreal size = 500; // just make sure the user get enough space to play
 		setSceneRect(0,0,size,size);
 
-		m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
-		centerOn(m_item);
+		if(m_prevTransform.isIdentity()) {
+			m_item->setPos((size-m_item->size().width())/2,(size-m_item->size().height())/2);
+			centerOn(m_item);
+		} else {
+			m_item->setTransform(m_prevTransform);
+		}
 	}
 	ensureFixedToBottomRight(m_zoomControls);
 }
@@ -171,17 +175,18 @@ void PartsEditorConnectorsView::setMismatching(ItemBase::ViewIdentifier viewId, 
 	}
 }
 
-void PartsEditorConnectorsView::updateDomIfNeeded() {
+void PartsEditorConnectorsView::aboutToClose() {
 	if(m_item) {
+		m_prevTransform = m_item->transform();
 		FSvgRenderer *renderer = new FSvgRenderer();
 		if(renderer->load(m_item->flatSvgFilePath())) {
 			QRectF svgViewBox = renderer->viewBoxF();
 			QSizeF sceneViewBox = renderer->defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
 
-			//bool somethingChanged = addConnectorsIfNeeded(svgDom, defaultSize, viewBox);
+			QString connectorsLayerId = findConnectorLayerId(svgDom);
 			bool somethingChanged = removeConnectorsIfNeeded(svgDom);
-			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox);
+			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 
 			if(somethingChanged) {
 				QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
@@ -200,7 +205,39 @@ void PartsEditorConnectorsView::updateDomIfNeeded() {
 	}
 }
 
-bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox) {
+QString PartsEditorConnectorsView::findConnectorLayerId(QDomDocument *svgDom) {
+	QString result = ___emptyString___;
+	QDomElement docElem = svgDom->documentElement();
+	if(findConnectorLayerIdAux(result, docElem)) {
+		return result;
+	} else {
+		return ___emptyString___; // top level layer
+	}
+}
+
+bool PartsEditorConnectorsView::findConnectorLayerIdAux(QString &result, QDomElement &docElem) {
+	QDomNode n = docElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement();
+		if(!e.isNull()) {
+			QString id = e.attribute("id");
+			if(id.startsWith("connector")) {
+				// the id is the one from the previous iteration
+				return true;
+			} else if(n.hasChildNodes()) {
+				// potencial solution, if the next iteration returns true
+				result = id;
+				if(findConnectorLayerIdAux(result, e)) {
+					return true;
+				}
+			}
+		}
+		n = n.nextSibling();
+	}
+	return false;
+}
+
+bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
 	if(!m_drawnConns.isEmpty()) {
 		DebugDialog::debug(QString("<<<< dsW %1  dsH %2  vbW %3  vbH %4")
 				.arg(sceneViewBox.width()).arg(sceneViewBox.height())
@@ -214,7 +251,7 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 			connId = drawnConn->connectorStuffID();
 
 			QRectF svgRect = mapFromSceneToSvg(bounds,sceneViewBox,svgViewBox);
-			addRectToSvg(svgDom,connId/*+"pin"*/,svgRect);
+			addRectToSvg(svgDom,connId/*+"pin"*/,svgRect, connectorsLayerId);
 
 			/*TerminalPointItem *tp = drawnConn->terminalPointItem();
 			if(tp && tp->hasBeenMoved()) {
@@ -280,7 +317,7 @@ QRectF PartsEditorConnectorsView::mapFromSceneToSvg(const QRectF &itemRect, cons
 	return QRectF(x,y,width,height);
 }
 
-void PartsEditorConnectorsView::addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect) {
+void PartsEditorConnectorsView::addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId) {
 	QDomElement connElem = svgDom->createElement("rect");
 	connElem.setAttribute("id",id);
 	connElem.setAttribute("x",rect.x());
@@ -288,8 +325,33 @@ void PartsEditorConnectorsView::addRectToSvg(QDomDocument* svgDom, const QString
 	connElem.setAttribute("width",rect.width());
 	connElem.setAttribute("height",rect.height());
 	connElem.setAttribute("fill","none");
-	Q_ASSERT(!svgDom->firstChildElement("svg").isNull());
-	svgDom->firstChildElement("svg").appendChild(connElem);
+
+	if(connectorsLayerId == ___emptyString___) {
+		svgDom->firstChildElement("svg").appendChild(connElem);
+	} else {
+		QDomElement docElem = svgDom->documentElement();
+		Q_ASSERT(addRectToSvgAux(docElem, connectorsLayerId, connElem));
+	}
+}
+
+bool PartsEditorConnectorsView::addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem) {
+	QDomNode n = docElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement();
+		if(!e.isNull()) {
+			QString id = e.attribute("id");
+			if(id == connectorsLayerId) {
+				e.appendChild(rectElem);
+				return true;
+			} else if(n.hasChildNodes()) {
+				if(addRectToSvgAux(e, connectorsLayerId, rectElem)) {
+					return true;
+				}
+			}
+		}
+		n = n.nextSibling();
+	}
+	return false;
 }
 
 

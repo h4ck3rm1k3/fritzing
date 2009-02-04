@@ -200,26 +200,26 @@ const QHash<QString,StringPair*> PartsEditorAbstractView::getConnectorIds(const 
 void PartsEditorAbstractView::getConnectorIdsAux(QHash<QString/*connectorId*/,StringPair*> &retval, QDomElement &docElem) {
 	QDomNode n = docElem.firstChild();
 	while(!n.isNull()) {
-	QDomElement e = n.toElement(); // try to convert the node to an element.
-	if(!e.isNull()) {
-		QString id = e.attribute("id");
-		if(id.startsWith("connector") && id.endsWith("terminal")) {
-			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
-			StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
-			pair->second = id;
-			retval[conn] = pair;
+		QDomElement e = n.toElement(); // try to convert the node to an element.
+		if(!e.isNull()) {
+			QString id = e.attribute("id");
+			if(id.startsWith("connector") && id.endsWith("terminal")) {
+				QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
+				StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
+				pair->second = id;
+				retval[conn] = pair;
+			}
+			else if(id.startsWith("connector") /*&& id.endsWith("pin") */ ) {
+				QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
+				StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
+				pair->first = id;
+				retval[conn] = pair;
+			}
+			else if(n.hasChildNodes()) {
+				getConnectorIdsAux(retval, e);
+			}
 		}
-		else if(id.startsWith("connector") /*&& id.endsWith("pin") */ ) {
-			QString conn = id.left(id.lastIndexOf(QRegExp("\\d"))+1);
-			StringPair *pair = retval.contains(conn) ? retval[conn] : new StringPair();
-			pair->first = id;
-			retval[conn] = pair;
-		}
-		else if(n.hasChildNodes()) {
-			getConnectorIdsAux(retval, e);
-		}
-	}
-	n = n.nextSibling();
+		n = n.nextSibling();
 	}
 }
 

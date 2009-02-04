@@ -34,6 +34,9 @@ ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchM
 	m_showTerminalPointsCheckBox->setText(tr("Show Anchor Points"));
 	connect(m_showTerminalPointsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(showHideTerminalPoints(int)));
 
+	// TODO: PARTS-EDITOR
+	m_showTerminalPointsCheckBox->hide();
+
 	createViewImageWidget(m_breadView, symbols->m_breadView, sketchModel, undoStack, info, ItemBase::BreadboardView, ViewLayer::Breadboard);
 	createViewImageWidget(m_schemView, symbols->m_schemView, sketchModel, undoStack, info, ItemBase::SchematicView, ViewLayer::Schematic);
 	createViewImageWidget(m_pcbView, symbols->m_pcbView, sketchModel, undoStack, info, ItemBase::PCBView, ViewLayer::Copper0);
@@ -141,9 +144,9 @@ void ConnectorsViewsWidget::drawConnector(Connector* conn) {
 }
 
 void ConnectorsViewsWidget::aboutToSave() {
-	m_breadView->updateDomIfNeeded();
-	m_schemView->updateDomIfNeeded();
-	m_pcbView->updateDomIfNeeded();
+	m_breadView->aboutToClose();
+	m_schemView->aboutToClose();
+	m_pcbView->aboutToClose();
 }
 
 
