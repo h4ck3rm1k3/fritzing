@@ -82,7 +82,7 @@ protected:
 	QHash<ViewLayer::ViewLayerID,bool> cleanupLayerKin();
 	void updateLayerKinVisibility(QHash<ViewLayer::ViewLayerID,bool>);
 
- protected:
+protected:
  	QList<class LayerKinPaletteItem *> m_layerKin;
 
 };

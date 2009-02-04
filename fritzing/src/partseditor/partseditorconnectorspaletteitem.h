@@ -42,10 +42,15 @@ class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 		void highlightConnectors(const QString &connId);
 
 	protected:
+		void highlightConnsAux(PaletteItemBase* item, const QString &connId);
 		ConnectorItem* newConnectorItem(Connector *connector);
+		LayerKinPaletteItem * newLayerKinPaletteItem(
+			PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+			const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers
+		);
 		bool showingTerminalPoints();
 
-		bool m_showsTerminalPoints;
+		bool m_showingTerminalPoints;
 };
 
 #endif /* PARTSEDITORCONNECTORSPALETTEITEM_H_ */

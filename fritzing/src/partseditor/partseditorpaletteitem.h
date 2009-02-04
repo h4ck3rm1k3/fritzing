@@ -57,7 +57,11 @@ class PartsEditorPaletteItem : public PaletteItem {
 	protected:
 		void createSvgFile(QString path);
 		bool setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
-		virtual ConnectorItem* newConnectorItem(Connector *connector);
+		ConnectorItem* newConnectorItem(Connector *connector);
+		LayerKinPaletteItem * newLayerKinPaletteItem(
+			PaletteItemBase * chief, ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id,
+			ViewLayer::ViewLayerID viewLayer, QMenu * itemMenu, const LayerHash & viewLayers
+		);
 
 
 		QDomDocument *m_svgDom;

@@ -37,6 +37,8 @@ $Date$
 #include "graphicssvglineitem.h"
 #include "viewlayer.h"
 
+class LayerKinPaletteItem;
+
 class PaletteItemBase : public ItemBase
 {
 	Q_OBJECT
@@ -70,7 +72,7 @@ public:
 	QRectF boundingRect() const;
 	virtual bool isLowerLayerVisible(PaletteItemBase *);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-	
+
 	/*
 	// for debugging
 	void setPos(const QPointF & pos);
@@ -92,6 +94,11 @@ protected:
 	void transformItem(QTransform currTransf);
 	void findConnectorsUnder();
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+
+	virtual LayerKinPaletteItem * newLayerKinPaletteItem(
+		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers
+	);
 
 protected:
  	bool m_blockItemSelectedChange;

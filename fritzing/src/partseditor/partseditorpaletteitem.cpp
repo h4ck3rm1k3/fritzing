@@ -32,6 +32,7 @@ $Date$
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectoritem.h"
 #include "partseditorabstractview.h"
+#include "partseditorlayerkinpaletteitem.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
 #include "../layerattributes.h"
@@ -245,6 +246,16 @@ QString PartsEditorPaletteItem::flatSvgFilePath() {
 
 ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {
 	return new PartsEditorConnectorItem(connector,this);
+}
+
+LayerKinPaletteItem * PartsEditorPaletteItem::newLayerKinPaletteItem(
+		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
+{
+	LayerKinPaletteItem *lk = new
+		PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers);
+	lk->init();
+	return lk;
 }
 
 void PartsEditorPaletteItem::removeFromModel() {

@@ -56,7 +56,9 @@ HEADERS += \
     src/partseditor/baseremovebutton.h \
     src/partseditor/connectorinforemovebutton.h \
     src/partseditor/partseditorconnectorspaletteitem.h \
-    src/partseditor/partseditorconnectorsconnectoritem.h
+    src/partseditor/partseditorconnectorsconnectoritem.h \
+    src/partseditor/partseditorlayerkinpaletteitem.h \
+    src/partseditor/partseditorconnectorslayerkinpaletteitem.h \
 
 SOURCES += \
     src/partseditor/editabledatewidget.cpp \

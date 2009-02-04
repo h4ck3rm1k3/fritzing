@@ -18,43 +18,30 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2189 $:
+$Author: merunga $:
+$Date: 2009-01-16 17:12:45 +0100 (Fri, 16 Jan 2009) $
 
 ********************************************************************/
 
-#ifndef LAYERKINPALETTEITEM_H
-#define LAYERKINPALETTEITEM_H
+#ifndef PARTSEDITORLAYERKINPALETTEITEM_H_
+#define PARTSEDITORLAYERKINPALETTEITEM_H_
 
-#include "paletteitembase.h"
-#include <QVariant>
+#include "partseditorconnectoritem.h"
+#include "../layerkinpaletteitem.h"
 
-class LayerKinPaletteItem : public PaletteItemBase
-{
-Q_OBJECT
+class PartsEditorLayerKinPaletteItem : public LayerKinPaletteItem {
 public:
-	LayerKinPaletteItem(PaletteItemBase * chief, ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id,
-						ViewLayer::ViewLayerID viewLayer, QMenu * itemMenu, const LayerHash & viewLayers);
-	void setOffset(qreal x, qreal y);
-	ItemBase * layerKinChief();
-	bool ok();
-	void setHidden(bool hidden);
-	void clearModelPart();
-	bool isLowerLayerVisible(PaletteItemBase * paletteItemBase);
-	void init();
-
+	PartsEditorLayerKinPaletteItem(
+		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,const ViewGeometry & viewGeometry,
+		long id, ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
+		: LayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers)
+	{
+	}
 protected:
-	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-	void updateConnections();
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void figureHover();
-
-protected:
-	PaletteItemBase * m_layerKinChief;
-	bool m_ok;
-	ViewLayer::ViewLayerID m_viewLayerID;
-	LayerHash m_viewLayers;
+	ConnectorItem* newConnectorItem(Connector *connector) {
+		return new PartsEditorConnectorItem(connector,this);
+	}
 };
 
-#endif
+#endif /* PARTSEDITORLAYERKINPALETTEITEM_H_ */

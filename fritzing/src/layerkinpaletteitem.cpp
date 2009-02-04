@@ -34,8 +34,13 @@ LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * mo
 {
 	m_layerKinChief = chief;
     setFlags(QGraphicsItem::ItemIsSelectable);
-    m_ok = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, true);
     m_modelPart->removeViewItem(this);  // we don't need to save layerkin
+    m_viewLayers = viewLayers;
+    m_viewLayerID = viewLayerID;
+}
+
+void LayerKinPaletteItem::init() {
+	m_ok = setUpImage(m_modelPart, m_viewIdentifier, m_viewLayers, m_viewLayerID, true);
 }
 
 QVariant LayerKinPaletteItem::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -106,4 +111,3 @@ void LayerKinPaletteItem::clearModelPart() {
 bool LayerKinPaletteItem::isLowerLayerVisible(PaletteItemBase * paletteItemBase) {
 	return m_layerKinChief->isLowerLayerVisible(paletteItemBase);
 }
-

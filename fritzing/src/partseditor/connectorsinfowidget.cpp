@@ -468,6 +468,10 @@ Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
 void ConnectorsInfoWidget::addConnector() {
 	QString connId = QString("connector%1").arg(nextConnId());
 	emit drawConnector(addConnectorInfo(connId));
+
+	if(m_allConnsInfo[connId]) {
+		setSelected(m_allConnsInfo[connId]);
+	}
 }
 
 void ConnectorsInfoWidget::removeSelectedConnector() {

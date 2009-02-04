@@ -32,6 +32,7 @@ $Date$
 #include "svg/svgfilesplitter.h"
 #include "connectorstuff.h"
 #include "layerattributes.h"
+#include "layerkinpaletteitem.h"
 
 #include <math.h>
 #include <QBrush>
@@ -545,6 +546,16 @@ void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
 	ItemBase::contextMenuEvent(event);
 }
 
+
+LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(
+	PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+	const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
+{
+	LayerKinPaletteItem *lk = new
+		LayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers);
+	lk->init();
+	return lk;
+}
 
 /*
 

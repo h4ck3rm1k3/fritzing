@@ -78,7 +78,7 @@ void PaletteItem::loadLayerKin( const LayerHash & viewLayers) {
 	foreach (ViewLayer::ViewLayerID viewLayerID, viewLayers.keys()) {
 		if (viewLayerID == m_viewLayerID) continue;
 
-		LayerKinPaletteItem * lkpi = new LayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, m_itemMenu, viewLayers);
+		LayerKinPaletteItem * lkpi = newLayerKinPaletteItem(this, m_modelPart, m_viewIdentifier, viewGeometry, id, viewLayerID, m_itemMenu, viewLayers);
 		if (lkpi->ok()) {
 			DebugDialog::debug(QString("add layer kin %1 %2").arg(id).arg(m_viewIdentifier) );
 			addLayerKin(lkpi);

@@ -28,23 +28,31 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #include "partseditorconnectorspaletteitem.h"
 #include "partseditorconnectorsconnectoritem.h"
 #include "partseditorconnectorsview.h"
+#include "partseditorconnectorslayerkinpaletteitem.h"
 
 PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier, path, layer )
 {
-	m_showsTerminalPoints = owner->showingTerminalPoints();
+	m_showingTerminalPoints = owner->showingTerminalPoints();
 }
 
 PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
 {
-	m_showsTerminalPoints = owner->showingTerminalPoints();
+	m_showingTerminalPoints = owner->showingTerminalPoints();
 }
 
 void PartsEditorConnectorsPaletteItem::highlightConnectors(const QString &connId) {
-	for (int i = 0; i < childItems().count(); i++) {
+	highlightConnsAux(this,connId);
+	foreach(LayerKinPaletteItem* item, m_layerKin) {
+		highlightConnsAux(item,connId);
+	}
+}
+
+void PartsEditorConnectorsPaletteItem::highlightConnsAux(PaletteItemBase* item, const QString &connId) {
+	foreach(QGraphicsItem * child, item->childItems()) {
 		PartsEditorConnectorsConnectorItem * connectorItem
-			= dynamic_cast<PartsEditorConnectorsConnectorItem *>(childItems()[i]);
+			= dynamic_cast<PartsEditorConnectorsConnectorItem *>(child);
 		if (connectorItem == NULL) continue;
 
 		connectorItem->highlight(connId);
@@ -56,5 +64,15 @@ bool PartsEditorConnectorsPaletteItem::showingTerminalPoints() {
 }
 
 ConnectorItem* PartsEditorConnectorsPaletteItem::newConnectorItem(Connector *connector) {
-	return new PartsEditorConnectorsConnectorItem(connector,this,m_showsTerminalPoints);
+	return new PartsEditorConnectorsConnectorItem(connector,this,m_showingTerminalPoints);
+}
+
+LayerKinPaletteItem * PartsEditorConnectorsPaletteItem::newLayerKinPaletteItem(
+		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
+{
+	LayerKinPaletteItem *lk = new
+		PartsEditorConnectorsLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers, m_showingTerminalPoints);
+	lk->init();
+	return lk;
 }
