@@ -31,6 +31,11 @@ $Date: 2009-01-09 18:26:29 +0100 (Fri, 09 Jan 2009) $
 #include "debugdialog.h"
 #include "viewswitcher.h"
 
+#ifdef Q_WS_WIN
+#include "windows.h"
+#endif
+
+
 const double inactiveOpacity = 0.6;
 const double activeOpacity = 1.0;
 
@@ -50,6 +55,18 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	#ifdef Q_WS_X11
 		floatFlag = false;
 		initial.setY(60);
+	#else
+		#ifdef Q_WS_WIN
+			OSVERSIONINFO OSversion;	
+			OSversion.dwOSVersionInfoSize=sizeof(OSVERSIONINFO);
+			::GetVersionEx(&OSversion);
+			DebugDialog::debug(QString("windows os version %1 %2")
+				.arg(OSversion.dwMajorVersion).arg(OSversion.dwMinorVersion));
+			if (OSversion.dwMajorVersion > 5) {
+				// vista and win 7 major version is 6
+				initial.setY(75);
+			}
+		#endif
 	#endif
 #endif
 
