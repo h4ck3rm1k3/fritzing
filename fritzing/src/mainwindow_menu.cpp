@@ -830,7 +830,7 @@ void MainWindow::updateRecentFileActions() {
 		m_openRecentFileActs[j]->setVisible(false);
 	}
 	
-	m_openRecentFileMenu->setEnabled(ix > 1);
+	m_openRecentFileMenu->setEnabled(ix > 0);
 }
 
 void MainWindow::createEditMenuActions() {
