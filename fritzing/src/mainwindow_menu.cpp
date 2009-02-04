@@ -812,23 +812,25 @@ void MainWindow::createOpenRecentMenu() {
 void MainWindow::updateRecentFileActions() {
 	QSettings settings;
 	QStringList files = settings.value("recentFileList").toStringList();
-	if(files.size() > 0) {
-		m_openRecentFileMenu->setEnabled(true);
-		int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
-
-		for (int i = 0; i < numRecentFiles; ++i) {
-			QString text = tr("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
-			m_openRecentFileActs[i]->setText(text);
-			m_openRecentFileActs[i]->setData(files[i]);
-			m_openRecentFileActs[i]->setVisible(true);
+	int ix = 0;
+	for (int i = 0; i < files.size(); ++i) {
+		QFileInfo finfo(files[i]);
+		if (!finfo.exists()) continue;
+		
+		QString text = tr("&%1 %2").arg(ix + 1).arg(finfo.fileName());
+		m_openRecentFileActs[ix]->setText(text);
+		m_openRecentFileActs[ix]->setData(files[i]);
+		m_openRecentFileActs[ix]->setVisible(true);
+		if (++ix >= (int) MaxRecentFiles) {
+			break;
 		}
-
-		for (int j = numRecentFiles; j < MaxRecentFiles; ++j) {
-			m_openRecentFileActs[j]->setVisible(false);
-		}
-	} else {
-		m_openRecentFileMenu->setEnabled(false);
 	}
+
+	for (int j = ix; j < MaxRecentFiles; ++j) {
+		m_openRecentFileActs[j]->setVisible(false);
+	}
+	
+	m_openRecentFileMenu->setEnabled(ix > 1);
 }
 
 void MainWindow::createEditMenuActions() {
@@ -1110,13 +1112,15 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_printAct);
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
+    connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateRecentFileActions()));
+
 
 	m_exportMenu->addAction(m_exportPdfAct);
 	m_exportMenu->addAction(m_exportPsAct);
 	m_exportMenu->addAction(m_exportPngAct);
 	m_exportMenu->addAction(m_exportJpgAct);
 	m_exportMenu->addSeparator();
-        m_exportMenu->addAction(m_exportBomAct);
+	m_exportMenu->addAction(m_exportBomAct);
 	m_exportMenu->addAction(m_exportDiyAct);
 	m_exportMenu->addAction(m_exportDiySvgAct);
 	m_exportMenu->addAction(m_exportEagleAct);

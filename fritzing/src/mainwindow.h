@@ -126,6 +126,7 @@ protected slots:
     void updatePartMenu();
     void updateWireMenu();
     void updateTransformationActions();
+	void updateRecentFileActions();
 	void updateTraceMenu();
     void tabWidget_currentChanged(int index);
     // TODO PARTS EDITOR REMOVE
@@ -210,7 +211,6 @@ protected:
     void createFileMenuActions();
     void createOpenExampleMenu(QMenu * parentMenu, QString directory);
     void createOpenRecentMenu();
-    void updateRecentFileActions();
     void createEditMenuActions();
     void createPartMenuActions();
     void createViewMenuActions();
