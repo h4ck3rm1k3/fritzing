@@ -265,12 +265,6 @@ FDockWidget::float-button:pressed {
 HtmlInfoView {
 	border: 1px solid rgb(117,117,117);
 	border-top: 0px;
-	background-color: rgb(179,179,179);
-	color: rgb(0,0,0,);
-}
-
-HtmlInfoView QWebView {
-	background-color: rgb(179,179,179);
 }
 
 QTabWidget#palette_tabs QTabBar::tab {
