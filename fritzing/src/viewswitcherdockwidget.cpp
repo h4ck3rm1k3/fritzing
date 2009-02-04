@@ -64,7 +64,8 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 				.arg(OSversion.dwMajorVersion).arg(OSversion.dwMinorVersion));
 			if (OSversion.dwMajorVersion > 5) {
 				// vista and win 7 major version is 6
-				initial.setY(75);
+                                initial.setX(12);
+                                initial.setY(60);
 			}
 		#endif
 	#endif
