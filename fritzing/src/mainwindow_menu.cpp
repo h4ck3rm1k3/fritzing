@@ -151,12 +151,12 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 		out << svg;
 		file.close();
 	}
-	else {		
+	else {
 		QPrinter printer(QPrinter::HighResolution);
 		printer.setOutputFormat(filePrintFormats[fileExt]);
 		printer.setOutputFileName(fileName);
 		QPainter painter;
-		if (painter.begin(&printer)) 
+		if (painter.begin(&printer))
 		{
 			// now convert to pdf
 			QSvgRenderer svgRenderer;
@@ -167,8 +167,8 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 			QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
 			svgRenderer.render(&painter, bounds);
 		}
-			
-		painter.end();			
+
+		painter.end();
 	}
 
 	m_statusBar->showMessage(tr("Sketch exported"), 2000);
@@ -266,7 +266,7 @@ void MainWindow::doExport(QAction * action) {
 		QString extFmt = fileExtFormats.value(actionType);
 		DebugDialog::debug(QString("file export string %1").arg(extFmt));
 		QString fileName = FApplication::getSaveFileName(this,
-			tr("Export..."), 
+			tr("Export..."),
 			path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
 			extFmt,
 			&fileExt
@@ -745,11 +745,11 @@ void MainWindow::createFileMenuActions() {
 	m_exportDiyAct = new BetterTriggerAction(tr("Etchable PDF..."), this);
 	m_exportDiyAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
 	connect(m_exportDiyAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiy(QAction *)));
-	
+
 	m_exportDiySvgAct = new BetterTriggerAction(tr("Etchable SVG..."), this);
 	m_exportDiySvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY production"));
 	connect(m_exportDiySvgAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiySvg(QAction *)));
-	
+
 	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
 	m_pageSetupAct->setShortcut(tr("Shift+Ctrl+P"));
 	m_pageSetupAct->setStatusTip(tr("Setup the current sketch page"));
@@ -816,7 +816,7 @@ void MainWindow::updateRecentFileActions() {
 	for (int i = 0; i < files.size(); ++i) {
 		QFileInfo finfo(files[i]);
 		if (!finfo.exists()) continue;
-		
+
 		QString text = tr("&%1 %2").arg(ix + 1).arg(finfo.fileName());
 		m_openRecentFileActs[ix]->setText(text);
 		m_openRecentFileActs[ix]->setData(files[i]);
@@ -829,7 +829,7 @@ void MainWindow::updateRecentFileActions() {
 	for (int j = ix; j < MaxRecentFiles; ++j) {
 		m_openRecentFileActs[j]->setVisible(false);
 	}
-	
+
 	m_openRecentFileMenu->setEnabled(ix > 0);
 }
 
@@ -1478,8 +1478,8 @@ void MainWindow::updateTraceMenu() {
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_autorouteAct->setEnabled(rEnabled);
-	m_exportDiyAct->setEnabled(true);			
-	m_exportDiySvgAct->setEnabled(true);			
+	m_exportDiyAct->setEnabled(true);
+	m_exportDiySvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllJumpersAct->setEnabled(jEnabled);
 
@@ -1606,7 +1606,7 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(id,this,0,modelPart,modelPart!=NULL);
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
-	connect(this, SIGNAL(aboutToSave()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
+	connect(this, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
 	connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), this, SLOT(changeActivation(bool)));
 
 	m_partsEditorWindows.insert(id, mainPartsEditorWindow);
@@ -1901,9 +1901,9 @@ void MainWindow::exportBOM() {
         }
 
         QString path = defaultSaveFolder();
-		
+
 		QString fileExt;
-		QString extFmt = fileExtFormats.value(bomActionType);		
+		QString extFmt = fileExtFormats.value(bomActionType);
 		QString fname = path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
 		DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
