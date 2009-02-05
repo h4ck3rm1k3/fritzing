@@ -136,6 +136,7 @@ var currProps = {};
 function doSwap(family,name,currValue) {
 	var value = document.getElementById(name).value;
 	currProps[name] = value;
+	//alert("refmodel " + refModel);
 	for(propName in currProps) {
 		refModel.recordProperty(propName, currProps[propName]);
 	}

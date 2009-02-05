@@ -134,6 +134,7 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 		// TODO: it would be nice to do something reasonable in this case
 		setNullContent();
 		registerInfoGraphicsView(infoGraphicsView, "sketch");
+		registerRefModel();
 		return;
 	}
 
@@ -146,6 +147,7 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	setContent(s);
 	registerAsCurrentItem(item);
 	registerInfoGraphicsView(infoGraphicsView, "sketch");
+	registerRefModel();
 }
 
 QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
@@ -194,6 +196,7 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnab
 
 	if (item->attachedTo() && item->attachedTo() != m_currentItem) {
 		registerAsCurrentItem(item->attachedTo());
+		registerRefModel();
 	}
 }
 
