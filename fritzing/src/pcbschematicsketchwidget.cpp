@@ -313,6 +313,12 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	if (!select) {
 		wire->setSelected(false);
 	}
+
+	Wire * tempWire = source->wiredTo(dest, ViewGeometry::TraceFlag);
+	if (tempWire) {
+		wire->setOpacity(ROUTED_OPACITY);
+	}
+
 	ratsnestCommand->addWire(this, wire, source, dest, select);
 	return wire ;
 }
