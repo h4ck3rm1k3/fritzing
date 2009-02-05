@@ -32,6 +32,7 @@ $Date$
 #include <QFrame>
 #include <QWebView>
 #include <QGraphicsSceneHoverEvent>
+#include <QMutex>
 
 #include "itembase.h"
 #include "wire.h"
@@ -103,6 +104,7 @@ protected:
 	ItemBase *m_currentItem;
 	bool m_currentSwappingEnabled;
 	int m_maxPropCount;
+	QMutex m_setContentMutex;
 
 	QWebView *m_webView;
 	QHash<QString /**/, bool> m_blocksVisibility;

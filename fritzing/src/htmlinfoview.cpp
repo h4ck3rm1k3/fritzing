@@ -91,6 +91,10 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 }
 
 void HtmlInfoView::jsRegister() {
+	if (!m_setContentMutex.tryLock()) return;
+
+	m_setContentMutex.unlock();
+
 	// prevent recursion, particularly when setting content to NULL
 	disconnect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 	registerCurrentAgain();
@@ -563,9 +567,17 @@ QString HtmlInfoView::toHtmlImage(QPixmap *pixmap, const char* format) {
 }
 
 void HtmlInfoView::setContent(const QString &html) {
+
+	// using a mutex because setContent can trigger jsRegister which can cause another call to setContent
+	if (!m_setContentMutex.tryLock()) {
+		return;
+	}
+
 	QString fileContent = QString(QString("<html>\n%1<body>\n%2")+HTML_EOF).arg(m_includes).arg(html);
 	m_webView->setHtml(fileContent);
 
+	m_setContentMutex.unlock();
+	
 	/*QFile file("/tmp/infoview.html");
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 	         return;
