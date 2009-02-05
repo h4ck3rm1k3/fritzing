@@ -228,6 +228,10 @@ void ConnectorsInfoWidget::addConnectorInfo(MismatchingConnectorWidget* mcw) {
 Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 	ConnectorStuff *connStuff = new ConnectorStuff();
 	connStuff->setId(id);
+	// TODO Mariano: find out the real layer, instead of the default one
+	connStuff->addPin(ItemBase::BreadboardView,id,ItemBase::defaultConnectorLayer(ItemBase::BreadboardView),"");
+	connStuff->addPin(ItemBase::SchematicView,id,ItemBase::defaultConnectorLayer(ItemBase::SchematicView),"");
+	connStuff->addPin(ItemBase::PCBView,id,ItemBase::defaultConnectorLayer(ItemBase::PCBView),"");
 	Connector *conn = new Connector(connStuff,0); // modelPart =? null
 	addConnectorInfo(conn);
 	return conn;
@@ -315,7 +319,7 @@ const QList<ConnectorStuff *> ConnectorsInfoWidget::connectorsStuffs() {
 		cs->setDescription(sci->description());
 		cs->setConnectorType(sci->type());
 
-		foreach(ItemBase::ViewIdentifier viewId, m_connectorsPins[id].keys()) {
+		/*foreach(ItemBase::ViewIdentifier viewId, m_connectorsPins[id].keys()) {
 			cs->removePins(viewId);
 			foreach(SvgIdLayer *pin, m_connectorsPins[id].values(viewId)) { // Multihash
 				// TODO Mariano: change this layer if the connectors aren't in the default layer
@@ -324,7 +328,7 @@ const QList<ConnectorStuff *> ConnectorsInfoWidget::connectorsStuffs() {
 					: pin->m_viewLayerID;
 				cs->addPin(viewId, pin->m_svgId, viewLayerId, pin->m_terminalId);
 			}
-		}
+		}*/
 
 		connectorsStuff << cs;
 	}
@@ -360,18 +364,18 @@ void ConnectorsInfoWidget::syncNewConnectors(ItemBase::ViewIdentifier viewId, co
 	clearMismatchingForView(viewId);
 
 	// clean the old pins for this view
-	foreach(QString oldId, m_connectorsPins.keys()) {
+	/*foreach(QString oldId, m_connectorsPins.keys()) {
 		m_connectorsPins[oldId].remove(viewId);
-	}
+	}*/
 
 	QStringList connIds;
 	foreach(Connector *conn, conns) {
 		QString connId = conn->connectorStuffID();
 		connIds << connId;
 
-		foreach(SvgIdLayer* pin, conn->connectorStuff()->pins().values(viewId)) {
+		/*foreach(SvgIdLayer* pin, conn->connectorStuff()->pins().values(viewId)) {
 			m_connectorsPins[connId].insert(viewId,pin);
-		}
+		}*/
 
 		if(existingConnId(connId)) {
 			emit existingConnector(viewId, connId, findConnector(connId));

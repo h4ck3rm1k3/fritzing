@@ -97,7 +97,7 @@ class ConnectorsInfoWidget : public QFrame {
 
 		int nextConnId();
 
-		QHash<QString /*connId*/, QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
+		//QHash<QString /*connId*/, QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> > m_connectorsPins;
 
 		QLabel *m_title;
 		QScrollArea *m_scrollArea;
