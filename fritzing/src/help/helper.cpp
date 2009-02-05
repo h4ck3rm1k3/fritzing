@@ -79,13 +79,13 @@ void Helper::initText() {
 Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {
 	m_owner = owner;
 	m_breadMainHelp = new SketchMainHelp("Breadboard", BreadboardHelpText, doShow);
-	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removePartsBinHelp()));
-	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeSwitchButtonsHelp()));
+	connect(m_breadMainHelp->widget(), SIGNAL(aboutToSave()), this, SLOT(removePartsBinHelp()));
+	connect(m_breadMainHelp->widget(), SIGNAL(aboutToSave()), this, SLOT(removeSwitchButtonsHelp()));
 
 	m_schemMainHelp = new SketchMainHelp("Schematic", SchematicHelpText, doShow);
 
 	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpText, doShow);
-	connect(m_pcbMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeAutorouteHelp()));
+	connect(m_pcbMainHelp->widget(), SIGNAL(aboutToSave()), this, SLOT(removeAutorouteHelp()));
 
 	m_partsBinHelp = new ToolHelp(PartsBinHelpText, QString("PartsBin"));
 	m_autorouteHelp = new ToolHelp(AutorouteHelpText, QString("Autoroute"), QBoxLayout::RightToLeft);

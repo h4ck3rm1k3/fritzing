@@ -175,7 +175,7 @@ void PartsEditorConnectorsView::setMismatching(ItemBase::ViewIdentifier viewId, 
 	}
 }
 
-void PartsEditorConnectorsView::aboutToClose() {
+void PartsEditorConnectorsView::aboutToSave() {
 	if(m_item) {
 		m_prevTransform = m_item->transform();
 		FSvgRenderer *renderer = new FSvgRenderer();

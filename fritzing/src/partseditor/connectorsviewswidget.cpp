@@ -88,7 +88,7 @@ void ConnectorsViewsWidget::createViewImageWidget(
 	);
 	connect(
 		viw, SIGNAL(svgFileLoadNeeded(const QString&)),
-		sister, SLOT(loadSvgFile(const QString&))
+		sister, SLOT(updateModelPart(const QString&))
 	);
 	connect(
 		info, SIGNAL(connectorSelected(const QString&)),
@@ -144,9 +144,9 @@ void ConnectorsViewsWidget::drawConnector(Connector* conn) {
 }
 
 void ConnectorsViewsWidget::aboutToSave() {
-	m_breadView->aboutToClose();
-	m_schemView->aboutToClose();
-	m_pcbView->aboutToClose();
+	m_breadView->aboutToSave();
+	m_schemView->aboutToSave();
+	m_pcbView->aboutToSave();
 }
 
 

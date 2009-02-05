@@ -254,7 +254,7 @@ LayerKinPaletteItem * PartsEditorPaletteItem::newLayerKinPaletteItem(
 {
 	LayerKinPaletteItem *lk = new
 		PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers);
-	lk->init();
+	lk->init(viewLayerID, viewLayers);
 	return lk;
 }
 

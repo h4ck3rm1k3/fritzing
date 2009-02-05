@@ -49,6 +49,7 @@ public:
 public slots:
 	void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
 	void loadSvgFile(const QString& origPath);
+	void updateModelPart(const QString& origPath);
 
 signals:
 	void loadedFromModel(PaletteModel *paletteModel, ModelPart * modelPart);

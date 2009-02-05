@@ -42,7 +42,7 @@ public:
 	void setHidden(bool hidden);
 	void clearModelPart();
 	bool isLowerLayerVisible(PaletteItemBase * paletteItemBase);
-	void init();
+	void init(ViewLayer::ViewLayerID viewLayerID, const LayerHash &viewLayers);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
@@ -53,8 +53,6 @@ protected:
 protected:
 	PaletteItemBase * m_layerKinChief;
 	bool m_ok;
-	ViewLayer::ViewLayerID m_viewLayerID;
-	LayerHash m_viewLayers;
 };
 
 #endif

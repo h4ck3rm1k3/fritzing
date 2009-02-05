@@ -1606,7 +1606,7 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(id,this,0,modelPart,modelPart!=NULL);
 	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
 	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
-	connect(this, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
+	connect(this, SIGNAL(aboutToSave()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
 	connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), this, SLOT(changeActivation(bool)));
 
 	m_partsEditorWindows.insert(id, mainPartsEditorWindow);

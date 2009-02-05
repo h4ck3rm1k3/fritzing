@@ -99,6 +99,18 @@ void PartsEditorSpecificationsView::loadFile() {
 	}
 }
 
+void PartsEditorSpecificationsView::updateModelPart(const QString& origPath) {
+	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
+	ModelPart * mp = static_cast<ModelPart *>(m_sketchModel->root());
+
+	setSvgFilePath(origPath);
+
+	mp = createFakeModelPart(origPath, m_svgFilePath->second);
+	m_item->setModelPart(mp);
+	copyToTempAndRenameIfNecessary(m_svgFilePath);
+	m_item->setSvgFilePath(m_svgFilePath);
+}
+
 void PartsEditorSpecificationsView::loadSvgFile(const QString& origPath) {
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
 	ModelPart * mp = static_cast<ModelPart *>(m_sketchModel->root());

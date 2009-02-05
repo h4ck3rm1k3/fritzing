@@ -42,7 +42,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
-		void aboutToClose();
+		void aboutToSave();
 
 
 		void showTerminalPoints(bool show);
