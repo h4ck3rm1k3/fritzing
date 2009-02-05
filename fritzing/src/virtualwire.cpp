@@ -39,7 +39,7 @@ VirtualWire::VirtualWire( ModelPart * modelPart, ItemBase::ViewIdentifier viewId
 void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {	
 	if (m_hidden) return;
 	
-	m_connectorHoverCount = 0;			// kills any highlighting
+	m_hoverCount = m_connectorHoverCount = 0;			// kills any highlighting
 	Wire::paint(painter, option, widget);
 }
 

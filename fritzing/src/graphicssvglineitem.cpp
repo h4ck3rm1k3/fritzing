@@ -171,7 +171,7 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	if (m_hasLine) {
 	    if (option->state & QStyle::State_Selected) {	
 			// draw this first because otherwise it seems to draw a dashed line down the middle
-	        qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape());
+	        qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape(), NULL);
         }
 	    painter->setPen(m_pen);
 	    painter->drawLine(getPaintLine());
@@ -211,7 +211,8 @@ QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen 
     return p;
 }
 
-void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path)
+void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path,
+															HighlightSelectedCallback callback)
 {
 	/*
 	QLineF l1 = item->line();
@@ -255,8 +256,8 @@ void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, c
     if (qMin(mbrect.width(), mbrect.height()) < qreal(1.0))
         return;
 
-    //qreal itemPenWidth = item->pen().widthF();
-
+    qreal itemPenWidth = 1.0;
+	const qreal pad = itemPenWidth / 2;
     const qreal penWidth = 0; // cosmetic pen
 
     const QColor fgcolor = option->palette.windowText().color();
@@ -267,15 +268,32 @@ void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, c
 
     painter->setPen(QPen(bgcolor, penWidth, Qt::SolidLine));
     painter->setBrush(Qt::NoBrush);
-    //painter->drawRect(item->boundingRect().adjusted(pad, pad, -pad, -pad));
-	painter->drawPath(path);
+	if (callback) {
+		(*callback)(painter, 0);
+	}
+	if (path.isEmpty()) {
+		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));
+	}
+	else {
+		painter->drawPath(path);
+	}
 
-	painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
+	QPen p(option->palette.windowText(), 0, Qt::DashLine);
+	QVector<qreal> pattern;
+	pattern << 1 << 4 << 1;
+	p.setDashPattern(pattern);
+	painter->setPen(p);
+	//painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
     painter->setBrush(Qt::NoBrush);
-    //painter->drawRect(item->boundingRect().adjusted(pad, pad, -pad, -pad));
-	painter->drawPath(path);
-	 
-	 
+	if (callback) {
+		(*callback)(painter, 1);
+	}
+	if (path.isEmpty()) {
+		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));
+	}
+	else {
+		painter->drawPath(path);
+	} 
 }
 
 bool GraphicsSvgLineItem::hasLine() {

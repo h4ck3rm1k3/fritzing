@@ -37,6 +37,7 @@ $Date$
 
 #include <QScrollBar>
 #include <QTimer>
+#include <QVector>
 
 long ItemBase::nextID = 0;
 QHash <ItemBase::ViewIdentifier, StringTriple * > ItemBase::names;
@@ -70,6 +71,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 	return c1->zValue() > c2->zValue();
 
 }
+
 ///////////////////////////////////////////////////
 
 ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu )
@@ -78,7 +80,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_topLevel = topLevel;
-	m_connectorHoverCount = 0;
+	m_hoverCount = m_connectorHoverCount = 0;
 	m_viewIdentifier = viewIdentifier;
 	m_modelPart = modelPart;
 	if (m_modelPart) {
@@ -418,6 +420,8 @@ ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
 }
 
 void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
+	m_hoverCount++;
+	update();
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverEnterItem(event, this);
@@ -425,6 +429,8 @@ void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 }
 
 void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
+	m_hoverCount--;
+	update();
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveItem(event, this);
@@ -524,14 +530,21 @@ int ItemBase::itemType() {
 }
 
 void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	if (m_connectorHoverCount > 0) {
-		painter->save();
-		painter->setOpacity(0.25);
-		painter->fillPath(this->hoverShape(), QBrush(ConnectorItem::hoverPen.color()));
-		painter->restore();
+	if (m_connectorHoverCount > 0 || m_hoverCount > 0) {
+		paintHover(painter, option, widget);
 	}
 
 	GraphicsSvgLineItem::paint(painter, option, widget);
+}
+
+void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
+{
+	Q_UNUSED(widget);
+	painter->save();
+	//painter->setOpacity(0.25);
+	//painter->fillPath(this->hoverShape(), QBrush(ConnectorItem::hoverPen.color()));
+	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), QPainterPath(), dotHighlightSelectedCallback);
+	painter->restore();
 }
 
 void ItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event) {
@@ -841,5 +854,23 @@ bool ItemBase::isSwappable() {
 	}
 
 	return true;
+}
+
+void ItemBase::dotHighlightSelectedCallback(QPainter * painter, int step) 
+{
+	static QVector<qreal> dotPattern;
+	if (dotPattern.size() == 0) {
+		dotPattern << 1 << 7;
+	}
+
+	QPen pen = painter->pen();
+	pen.setDashPattern(dotPattern);
+	if (step == 0) {
+		pen.setDashOffset(0);
+	}
+	else {
+		pen.setDashOffset(6);
+	}
+	painter->setPen(pen);
 }
 

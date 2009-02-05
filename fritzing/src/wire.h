@@ -130,6 +130,7 @@ protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
+	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
 	void initEnds(const ViewGeometry &, QRectF defaultRect);
 	void connectionChange(ConnectorItem *);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);

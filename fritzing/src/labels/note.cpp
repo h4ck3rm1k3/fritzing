@@ -153,7 +153,7 @@ void Note::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     painter->drawRect(m_rect);
 
 	if (option->state & QStyle::State_Selected) {	
-		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), shape());
+		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(painter, option, boundingRect(), QPainterPath(), NULL);
     }
 }
 

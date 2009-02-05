@@ -167,6 +167,8 @@ public:
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
 
+protected:
+	static void dotHighlightSelectedCallback(QPainter * painter, int step);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -177,6 +179,7 @@ protected:
 	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
 	ConnectorItem * findConnectorUnder(ConnectorItem* , ConnectorItem * lastUnderConnector, bool useTerminalPoint);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 	void setInstanceTitleTooltip(const QString& text);
@@ -191,6 +194,7 @@ protected:
 	ViewIdentifier m_viewIdentifier;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	int m_connectorHoverCount;
+	int m_hoverCount;
 	bool m_topLevel;
 	bool m_hidden;
 	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
