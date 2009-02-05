@@ -360,9 +360,24 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
 	new WireColorChangeCommand(this, newID, colorString, colorString, UNROUTED_OPACITY, UNROUTED_OPACITY, parentCommand);
 	new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
-	if (wire != jumperOrTrace) {
-		makeChangeRoutedCommand(wire, true, ROUTED_OPACITY, parentCommand);
+	Wire* rat = NULL;
+	if (wire->getRatsnest()) {
+		rat = wire;
 	}
+	else {
+		rat = ends[0]->wiredTo(ends[1], ViewGeometry::RatsnestFlag);
+	}
+
+	if (rat != NULL) {
+		QList<ConnectorItem *> ends;
+		QList<Wire *> rats;
+		QList<ConnectorItem *> uniqueEnds;
+		rat->collectChained(rats, ends, uniqueEnds);
+		foreach (Wire * r, rats) {
+			makeChangeRoutedCommand(r, true, ROUTED_OPACITY, parentCommand);
+		}
+	}
+
 }
 
 

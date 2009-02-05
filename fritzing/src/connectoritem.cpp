@@ -494,7 +494,7 @@ bool ConnectorItem::isDirty() {
 }
 
 
-void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems) {
+void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags) {
 	// collects all the connectors at the same potential
 	// allows direct connections or wired connections
 	// but not ratsnest, jumpers or trace wire connections
@@ -507,7 +507,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 		//DebugDialog::debug(QString("testing %1 %2 %3").arg(connectorItem->attachedToID()).arg(connectorItem->attachedToTitle()).arg(connectorItem->connectorStuffID()) );
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
-		if (fromWire != NULL && fromWire->hasAnyFlag(ViewGeometry::TraceJumperRatsnestFlags)) {
+		if (fromWire != NULL && fromWire->hasAnyFlag(skipFlags)) {
 			// don't add this kind of wire
 			continue;
 		}
