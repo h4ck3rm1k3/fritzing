@@ -39,7 +39,7 @@ PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
+void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
 	clearScene();
 
 	m_item = newPartsEditorPaletteItem(modelPart, svgFilePath);
@@ -252,6 +252,6 @@ PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(Model
 	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier);
 }
 
-PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path) {
+PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path) {
 	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
 }

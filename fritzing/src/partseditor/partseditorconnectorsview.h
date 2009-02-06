@@ -52,7 +52,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void informConnectorSelection(const QString& connId);
 		void informConnectorSelectionFromView(const QString& connId);
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
-		virtual void addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath);
+		virtual void addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath);
 		void setMismatching(ItemBase::ViewIdentifier viewId, const QString &id, bool mismatching);
 
 	signals:
@@ -62,7 +62,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 
 	protected:
 		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
-		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path);
+		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path);
 
 		void wheelEvent(QWheelEvent* event);
 		void mousePressEvent(QMouseEvent *event);

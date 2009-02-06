@@ -38,22 +38,13 @@ $Date$
 #include "../layerattributes.h"
 #include "../layerkinpaletteitem.h"
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL, false)
 {
 	m_owner = owner;
 
-	QString pathAux = path->first;
-	if(path->second != ___emptyString___) {
-		pathAux += "/"+path->second;
-	}
-
-	createSvgFile(pathAux);
-	m_svgStrings = new SvgAndPartFilePath();
-
-	m_svgStrings->setPartFolderPath(layer);
-	m_svgStrings->setCoreContribOrUser(path->first);
-	m_svgStrings->setFileRelativePath(path->second);
+	createSvgFile(path->absolutePath());
+	m_svgStrings = path;
 
 	m_connectors = NULL;
 
@@ -61,17 +52,15 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 	setSelected(false);
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_owner = owner;
 
 	m_svgDom = svgFile;
-	m_svgStrings = new SvgAndPartFilePath();
 
-	m_svgStrings->setPartFolderPath(layer);
-	m_svgStrings->setCoreContribOrUser(path->first);
-	m_svgStrings->setFileRelativePath(path->second);
+	createSvgFile(path->absolutePath());
+	m_svgStrings = path;
 
 	m_connectors = NULL;
 
@@ -111,7 +100,7 @@ void PartsEditorPaletteItem::writeXmlLocation(QXmlStreamWriter & /*streamWriter*
 void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeStartElement(names[m_viewIdentifier]->first);
 	streamWriter.writeStartElement("layers");
-	streamWriter.writeAttribute("image",m_svgStrings->fileRelativePath());
+	streamWriter.writeAttribute("image",m_svgStrings->relativePath());
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 		streamWriter.writeEndElement();
@@ -170,9 +159,9 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 		for(int i=0; i < possibleFolders.size(); i++) {
 			if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
 				m_svgStrings = new SvgAndPartFilePath();
-				m_svgStrings->setPartFolderPath(layerAttributes.layerName());
+				m_svgStrings->setAbsolutePath(layerAttributes.layerName());
 				m_svgStrings->setCoreContribOrUser(tempPath.first);
-				m_svgStrings->setFileRelativePath(tempPath.second.arg(possibleFolders[i]));
+				m_svgStrings->setRelativePath(tempPath.second.arg(possibleFolders[i]));
 				gotOne = true;
 				break;
 			}
@@ -196,13 +185,13 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 	//FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartStuff->moduleID(), viewLayerID);
 	FSvgRenderer * renderer = NULL;
 	if (renderer == NULL) {
-		QString fn = m_svgStrings->coreContribOrUser()+(!m_svgStrings->fileRelativePath().isEmpty()?"/"+m_svgStrings->fileRelativePath():"");
+		QString fn = m_svgStrings->coreContribOrUser()+(!m_svgStrings->relativePath().isEmpty()?"/"+m_svgStrings->relativePath():"");
 		renderer = FSvgRenderer::getByFilename(fn, viewLayerID);
 		if (renderer == NULL) {
 			renderer = new FSvgRenderer();
 			if (!renderer->load(fn)) {
 				QMessageBox::information( NULL, QObject::tr("Fritzing"),
-						QObject::tr("The file %1 is not a Fritzing file (11).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->fileRelativePath()));
+						QObject::tr("The file %1 is not a Fritzing file (11).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->relativePath()));
 				delete renderer;
 				return false;
 			}
@@ -228,13 +217,12 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 
 	return true;
 }
-StringPair* PartsEditorPaletteItem::svgFilePath() {
-	return new StringPair(m_svgStrings->coreContribOrUser(), m_svgStrings->fileRelativePath());
+SvgAndPartFilePath* PartsEditorPaletteItem::svgFilePath() {
+	return m_svgStrings;
 }
 
-void PartsEditorPaletteItem::setSvgFilePath(StringPair *sp) {
-	m_svgStrings->setCoreContribOrUser(sp->first);
-	m_svgStrings->setFileRelativePath(sp->second);
+void PartsEditorPaletteItem::setSvgFilePath(SvgAndPartFilePath *path) {
+	m_svgStrings = path;
 }
 
 QDomDocument *PartsEditorPaletteItem::svgDom() {

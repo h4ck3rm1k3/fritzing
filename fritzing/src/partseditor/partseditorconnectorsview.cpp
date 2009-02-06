@@ -113,10 +113,10 @@ void PartsEditorConnectorsView::loadFromModel(PaletteModel *paletteModel, ModelP
 	setItemProperties();
 }
 
-void PartsEditorConnectorsView::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
-	QString imagePath = svgFilePath->first+(svgFilePath->second != ___emptyString___ ? "/" : "")+svgFilePath->second;
+void PartsEditorConnectorsView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
+	QString imagePath = svgFilePath->absolutePath();
 	if(!modelPart) {
-		modelPart = createFakeModelPart(imagePath, svgFilePath->second);
+		modelPart = createFakeModelPart(imagePath, svgFilePath->relativePath());
 	}
 
 	PartsEditorAbstractView::addItemInPartsEditor(modelPart,svgFilePath);
@@ -388,7 +388,7 @@ PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(Mod
 	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier);
 }
 
-PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart * modelPart, StringPair *path) {
+PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path) {
 	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
 }
 

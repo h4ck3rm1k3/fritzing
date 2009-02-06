@@ -35,21 +35,23 @@ $Date$
  * (core, contrib and user), this structure let us keep truck of this structure,
  * without the need to deal with substrings creation.
  * So, for example, if an svg file is in "/fritzing/parts/svg/core/breadboard/svg_file.svg" then
- * partFolderPath == "/fritzing/parts/svg"
+ * absolutePath == "/fritzing/parts/svg/core/breadboard/svg_file.svg"
  * coreContribOrUser == "core"
- * fileRelativePath == "breadboard/svg_file.svg"
+ * relativePath == "breadboard/svg_file.svg"
  */
 
 class SvgAndPartFilePath : public StringTriple {
 public:
 	SvgAndPartFilePath() : StringTriple() {}
-	SvgAndPartFilePath(QString partsPath, QString folderInParts, QString relativeFilePath)
-		: StringTriple(partsPath, folderInParts, relativeFilePath) {}
+	SvgAndPartFilePath(QString absolutePath, QString relativeFilePath)
+		: StringTriple(absolutePath, "", relativeFilePath) {}
+	SvgAndPartFilePath(QString absolutePath, QString folderInParts, QString relativeFilePath)
+		: StringTriple(absolutePath, folderInParts, relativeFilePath) {}
 
-	const QString &partFolderPath() {
+	const QString &absolutePath() {
 		return first;
 	}
-	void setPartFolderPath(const QString &partFolderPath) {
+	void setAbsolutePath(const QString &partFolderPath) {
 		first = partFolderPath;
 	}
 
@@ -60,16 +62,11 @@ public:
 		second = coreContribOrUser;
 	}
 
-	const QString &fileRelativePath() {
+	const QString &relativePath() {
 		return third;
 	}
-	void setFileRelativePath(const QString &fileRelativePath) {
+	void setRelativePath(const QString &fileRelativePath) {
 		third = fileRelativePath;
-	}
-
-	QString absolutePath() {
-		QString sep = "/";
-		return first+sep+second+sep+third;
 	}
 };
 

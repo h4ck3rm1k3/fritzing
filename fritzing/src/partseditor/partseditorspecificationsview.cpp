@@ -44,7 +44,7 @@ QT_BEGIN_NAMESPACE
 PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
 	: PartsEditorAbstractView(viewId, parent, size)
 {
-	m_svgFilePath = new StringPair;
+	m_svgFilePath = new SvgAndPartFilePath;
 	m_tempFolder = tempDir;
 	m_startItem = startItem;
 	if(m_startItem) {
@@ -155,7 +155,7 @@ void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, Mo
 
 	PartsEditorAbstractView::loadFromModel(paletteModel, modelPart);
 
-	StringPair *sp = m_item->svgFilePath();
+	SvgAndPartFilePath *sp = m_item->svgFilePath();
 	copyToTempAndRenameIfNecessary(sp);
 	delete sp;
 	m_item->setSvgFilePath(m_svgFilePath);
@@ -163,7 +163,7 @@ void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, Mo
 	emit loadedFromModel(paletteModel, modelPart);
 }
 
-void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(StringPair *filePathOrig) {
+void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePathOrig) {
 	m_originalSvgFilePath = filePathOrig->first+(!filePathOrig->second.isEmpty()?"/"+filePathOrig->second:"");
 	QString svgFolderPath = getApplicationSubFolderPath("parts")+"/svg";
 
@@ -196,8 +196,8 @@ void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
 	m_originalSvgFilePath = filePath;
 	QString folder = getApplicationSubFolderPath("parts")+"/svg";
 
-	QString first;
-	QString second;
+	QString abs;
+	QString relative;
 
 	Qt::CaseSensitivity cs = Qt::CaseSensitive;
 #ifdef Q_WS_WIN
@@ -209,24 +209,24 @@ void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
 		//DebugDialog::debug("<<< is in core");
 		QString filePathAux = filePath;
 		QString svgFile = filePathAux.remove(folder+"/", cs);
-		first = folder;
-		second = svgFile;
+		abs = folder;
+		relative = svgFile;
 	} else {
 		//DebugDialog::debug("<<< isn't in core");
-		first = filePath;
-		second = "";
+		abs = filePath;
+		relative = "";
 	}
 
 	delete m_svgFilePath;
-	m_svgFilePath = new StringPair(first,second);
+	m_svgFilePath = new SvgAndPartFilePath(abs,"",relative);
 }
 
 
 const QString PartsEditorSpecificationsView::svgFilePath() {
-	return m_svgFilePath->first+"/"+m_svgFilePath->second;
+	return m_svgFilePath->absolutePath();
 }
 
-const StringPair& PartsEditorSpecificationsView::svgFileSplit() {
+const SvgAndPartFilePath& PartsEditorSpecificationsView::svgFileSplit() {
 	return *m_svgFilePath;
 }
 

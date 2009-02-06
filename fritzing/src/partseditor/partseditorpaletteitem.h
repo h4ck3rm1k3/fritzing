@@ -38,15 +38,15 @@ class PartsEditorAbstractView;
 class PartsEditorPaletteItem : public PaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer);
-		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer);
+		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer);
+		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer);
 		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier);
 
 		virtual void writeXml(QXmlStreamWriter &);
 		virtual void writeXmlLocation(QXmlStreamWriter & streamWriter);
 		const QList<Connector *> &connectors();
-		StringPair* svgFilePath();
-		void setSvgFilePath(StringPair *sp);
+		SvgAndPartFilePath* svgFilePath();
+		void setSvgFilePath(SvgAndPartFilePath *sp);
 
 		QDomDocument *svgDom();
 		QString flatSvgFilePath();

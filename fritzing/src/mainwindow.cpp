@@ -916,7 +916,7 @@ void MainWindow::saveBundledSketch() {
 		foreach(SvgAndPartFilePath view, views) {
 			if(view.coreContribOrUser() != "core") {
 				QFile file(view.absolutePath());
-				QString svgRelativePath = view.fileRelativePath();
+				QString svgRelativePath = view.relativePath();
 				file.copy(destFolder.path()+"/"+ZIP_SVG+svgRelativePath.replace("/","."));
 			}
 		}

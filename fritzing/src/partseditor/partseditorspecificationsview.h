@@ -44,7 +44,7 @@ public:
 	void copySvgFileToDestiny();
 
 	const QString svgFilePath();
-	const StringPair& svgFileSplit();
+	const SvgAndPartFilePath& svgFileSplit();
 
 public slots:
 	void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
@@ -53,18 +53,18 @@ public slots:
 
 signals:
 	void loadedFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
-	void itemAddedToSymbols(ModelPart * modelPart, StringPair *svgFilePath);
+	void itemAddedToSymbols(ModelPart * modelPart, SvgAndPartFilePath *svgFilePath);
 
 protected:
 	void setSvgFilePath(const QString &filePath);
-	void copyToTempAndRenameIfNecessary(StringPair *filePathOrig);
+	void copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePathOrig);
 	void mousePressEvent(QMouseEvent *event);
 	void fitCenterAndDeselect();
 	QString createSvgFromImage(const QString &filePath);
 
 	QGraphicsItem *m_startItem;
 
-	StringPair *m_svgFilePath;
+	SvgAndPartFilePath *m_svgFilePath;
 	QString m_originalSvgFilePath;
 	QDir m_tempFolder;
 };
