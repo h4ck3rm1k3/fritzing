@@ -278,12 +278,7 @@ void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, c
 		painter->drawPath(path);
 	}
 
-	QPen p(option->palette.windowText(), 0, Qt::DashLine);
-	QVector<qreal> pattern;
-	pattern << 1 << 4 << 1;
-	p.setDashPattern(pattern);
-	painter->setPen(p);
-	//painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
+	painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
     painter->setBrush(Qt::NoBrush);
 	if (callback) {
 		(*callback)(painter, 1);
