@@ -303,6 +303,8 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
 		cleanupConnectors();
 		updateTooltip();
 
+		figureHover();
+
 		scene()->update();
 	}
 	return sameFamily;
