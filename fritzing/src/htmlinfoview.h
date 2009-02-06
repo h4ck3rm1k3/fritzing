@@ -76,9 +76,7 @@ protected:
 	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
 	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
 
-	void prepareTitleStuff(ItemBase *base, QString &title, QString &instanceTitle, QString &defaultTitle);
-	void ensureUniqueTitle(ItemBase* item, QString &title);
-	int getNextTitle(QList<QGraphicsItem*> items, const QString &title);
+	void prepareTitleStuff(ItemBase *base, QString &title);
 	QString propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic);
 	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	QString wireColorsSelect(Wire *wire);

@@ -44,6 +44,9 @@ QHash <ItemBase::ViewIdentifier, StringTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
+QString ItemBase::partInstanceDefaultTitle;
+
+static QVector<qreal> dotPattern;
 
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {
@@ -86,7 +89,6 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	if (m_modelPart) {
 		m_modelPart->addViewItem(this);
 	}
-	setTooltip();
 	m_id = id;
 	m_hidden = false;
 	m_sticky = false;
@@ -97,7 +99,6 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
    	m_viewGeometry.set(viewGeometry);
 	setAcceptHoverEvents ( true );
 	m_zUninitialized = true;
-
 }
 
 ItemBase::~ItemBase() {
@@ -234,6 +235,10 @@ void ItemBase::initNames() {
 		names.insert(ItemBase::BreadboardView, new StringTriple("breadboardView", QObject::tr("breadboard view"), "breadboard"));
 		names.insert(ItemBase::SchematicView, new StringTriple("schematicView", QObject::tr("schematic view"), "schematic"));
 		names.insert(ItemBase::PCBView, new StringTriple("pcbView", QObject::tr("pcb view"), "pcb"));
+		partInstanceDefaultTitle = tr("Part");
+	}
+	if (dotPattern.size() == 0) {
+		dotPattern << 1 << 7;
 	}
 }
 
@@ -669,11 +674,27 @@ void ItemBase::setInstanceTitleTooltip(const QString &text) {
 
 void ItemBase::setDefaultTooltip() {
 	if (m_modelPart) {
-		QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
-		if(m_modelPart->itemType() != ModelPart::Wire) {
-			this->setToolTip(base.arg(m_modelPart->title()));
-		} else {
-			this->setToolTip(base.arg(m_modelPart->modelPartStuff()->title() + " (" + m_modelPart->modelPartStuff()->moduleID() + ")"));
+		if (m_modelPart->partInstanceStuff()) {
+			QString title = ItemBase::partInstanceDefaultTitle;
+			QString inst = instanceTitle();
+			if(!inst.isNull() && !inst.isEmpty()) {
+				title = inst;
+			} else {
+				QString defaultTitle = label();
+				if(!defaultTitle.isNull() && !defaultTitle.isEmpty()) {
+					title = defaultTitle;
+				}
+			}
+			ensureUniqueTitle(title);
+			setInstanceTitleTooltip(m_modelPart->partInstanceStuff()->title());
+		}
+		else {
+			QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
+			if(m_modelPart->itemType() != ModelPart::Wire) {
+				this->setToolTip(base.arg(m_modelPart->title()));
+			} else {
+				this->setToolTip(base.arg(m_modelPart->modelPartStuff()->title() + " (" + m_modelPart->modelPartStuff()->moduleID() + ")"));
+			}
 		}
 	}
 }
@@ -858,11 +879,6 @@ bool ItemBase::isSwappable() {
 
 void ItemBase::dotHighlightSelectedCallback(QPainter * painter, int step) 
 {
-	static QVector<qreal> dotPattern;
-	if (dotPattern.size() == 0) {
-		dotPattern << 1 << 7;
-	}
-
 	QPen pen = painter->pen();
 	pen.setDashPattern(dotPattern);
 	if (step == 0) {
@@ -874,3 +890,58 @@ void ItemBase::dotHighlightSelectedCallback(QPainter * painter, int step)
 	painter->setPen(pen);
 }
 
+void ItemBase::ensureUniqueTitle(QString &title) {
+	if(instanceTitle().isEmpty() || instanceTitle().isNull()) {
+		int count;
+
+		QList<QGraphicsItem*> items = scene()->items();
+		// If someone ends up with 1000 parts in the sketch, this for sure is not the best solution
+		count = getNextTitle(items, title);
+
+		title = QString(title+"%1").arg(count);
+		setInstanceTitle(title);
+	}
+}
+
+int ItemBase::getNextTitle(QList<QGraphicsItem*> & items, const QString &title) {
+	int max = 1;
+	foreach(QGraphicsItem* gitem, items) {
+		ItemBase* item = dynamic_cast<ItemBase*>(gitem);
+		if(item) {
+			QString currTitle = item->instanceTitle();
+			if(currTitle.isEmpty() || currTitle.isNull()) {
+				currTitle = item->label();
+				if(currTitle.isEmpty() || currTitle.isNull()) {
+					currTitle = title;
+				}
+			}
+
+			if(currTitle.startsWith(title)) {
+				QString helpStr = currTitle.remove(title);
+				if(!helpStr.isEmpty()) {
+					bool isInt;
+					int helpInt = helpStr.toInt(&isInt);
+					if(isInt && max <= helpInt) {
+						max = ++helpInt;
+					}
+				}
+			}
+		}
+	}
+	return max;
+}
+
+QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
+{
+	switch (change) {
+		case QGraphicsItem::ItemSceneHasChanged:
+			if (this->scene() && instanceTitle().isEmpty()) {
+				setTooltip();
+			}
+			break;
+		default:
+			break;
+	}
+
+	return GraphicsSvgLineItem::itemChange(change, value);
+}

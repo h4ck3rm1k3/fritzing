@@ -89,7 +89,7 @@ QVariant PaletteItemBase::itemChange(GraphicsItemChange change, const QVariant &
         //newPos.setY(ny);
         //return newPos;
      }
-     return QGraphicsItem::itemChange(change, value);
+     return ItemBase::itemChange(change, value);
 }
 
 void PaletteItemBase::saveGeometry() {

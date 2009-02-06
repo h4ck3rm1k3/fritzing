@@ -39,7 +39,6 @@ $Date$
 
 
 #define HTML_EOF "</body>\n</html>"
-#define PART_INSTANCE_DEFAULT_TITLE "Part"
 
 QString HtmlInfoView::PropsBlockId = "props_id";
 QString HtmlInfoView::TagsBlockId = "tags_id";
@@ -268,8 +267,8 @@ QString HtmlInfoView::appendCurrentGeometry(ItemBase * item, bool doLine) {
 QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnabled) {
 	if (base == NULL) return "missing base";
 
-	QString title; QString instanceTitle; QString defaultTitle;
-	prepareTitleStuff(base, title, instanceTitle, defaultTitle);
+	QString title;
+	prepareTitleStuff(base, title);
 
 	QString retval = appendItemStuff(base->modelPart(), id, swappingEnabled, title, base->isPartLabelVisible());
 	return retval;
@@ -289,8 +288,8 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 		nameString = tr("Jumper wire %1").arg(autoroutable);
 	}
 
-	QString title; QString instanceTitle; QString defaultTitle;
-	prepareTitleStuff(wire, title, instanceTitle, defaultTitle);
+	QString title;
+	prepareTitleStuff(wire, title);
 
 
 	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
@@ -354,62 +353,16 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	return s;
 }
 
-void HtmlInfoView::prepareTitleStuff(ItemBase *base, QString &title, QString &instanceTitle, QString &defaultTitle) {
-	title = PART_INSTANCE_DEFAULT_TITLE;
+void HtmlInfoView::prepareTitleStuff(ItemBase *base, QString &title) {
+	
 	if(base) {
-		instanceTitle = base->instanceTitle();
-		if(!instanceTitle.isNull() && !instanceTitle.isEmpty()) {
-			title = instanceTitle;
-		} else {
-			defaultTitle = base->label();
-			if(!defaultTitle.isNull() && !defaultTitle.isEmpty()) {
-				title = defaultTitle;
-			}
-		}
-		ensureUniqueTitle(base, title);
+		title = base->instanceTitle();
+	}
+	else {
+		title = ItemBase::partInstanceDefaultTitle;
 	}
 }
 
-void HtmlInfoView::ensureUniqueTitle(ItemBase* item, QString &title) {
-	if(item->instanceTitle().isEmpty() || item->instanceTitle().isNull()) {
-		int count;
-
-		QList<QGraphicsItem*> items = item->scene()->items();
-		// If someone ends up with 1000 parts in the sketch, this for sure is not the best solution
-		count = getNextTitle(items,title);
-
-		title = QString(title+"%1").arg(count);
-		item->setInstanceTitle(title);
-	}
-}
-
-int HtmlInfoView::getNextTitle(QList<QGraphicsItem*> items, const QString &title) {
-	int max = 1;
-	foreach(QGraphicsItem* gitem, items) {
-		ItemBase* item = dynamic_cast<ItemBase*>(gitem);
-		if(item) {
-			QString currTitle = item->instanceTitle();
-			if(currTitle.isEmpty() || currTitle.isNull()) {
-				currTitle = item->label();
-				if(currTitle.isEmpty() || currTitle.isNull()) {
-					currTitle = title;
-				}
-			}
-
-			if(currTitle.startsWith(title)) {
-				QString helpStr = currTitle.remove(title);
-				if(!helpStr.isEmpty()) {
-					bool isInt;
-					int helpInt = helpStr.toInt(&isInt);
-					if(isInt && max <= helpInt) {
-						max = ++helpInt;
-					}
-				}
-			}
-		}
-	}
-	return max;
-}
 
 QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swappingEnabled, const QString title, bool labelIsVisible) {
 	Q_UNUSED(labelIsVisible);

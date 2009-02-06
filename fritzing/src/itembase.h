@@ -70,6 +70,7 @@ public:
 	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
 	static ItemBase * extractItemBase(QGraphicsItem * item);
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ItemBase::ViewIdentifier viewId);
+	static QString partInstanceDefaultTitle;
 
 
 public:
@@ -181,10 +182,15 @@ protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
+
 
 	void setInstanceTitleTooltip(const QString& text);
 	void setDefaultTooltip();
 	void setInstanceTitleAux(const QString & title);
+	void ensureUniqueTitle(QString &title);
+	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
+
 
 protected:
  	QSizeF m_size;
