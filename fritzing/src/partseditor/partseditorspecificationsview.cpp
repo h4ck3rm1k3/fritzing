@@ -77,8 +77,8 @@ void PartsEditorSpecificationsView::loadFile() {
 	QString origPath = QFileDialog::getOpenFileName(this,
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
-		//tr("SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)"));
-		tr("SVG Files (*.svg)"));
+		tr("SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)"));
+		//tr("SVG Files (*.svg)"));
 
 	if(origPath.isEmpty()) {
 		return; // Cancel pressed
@@ -113,11 +113,10 @@ void PartsEditorSpecificationsView::updateModelPart(const QString& origPath) {
 
 void PartsEditorSpecificationsView::loadSvgFile(const QString& origPath) {
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
-	ModelPart * mp = static_cast<ModelPart *>(m_sketchModel->root());
 
 	setSvgFilePath(origPath);
 
-	mp = createFakeModelPart(origPath, m_svgFilePath->second);
+	ModelPart * mp = createFakeModelPart(origPath, m_svgFilePath->second);
 	loadSvgFile(mp);
 }
 
@@ -131,6 +130,11 @@ void PartsEditorSpecificationsView::loadSvgFile(ModelPart * modelPart) {
 }
 
 void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
+	if(m_startItem) {
+		m_fixedToCenterItems.removeAll(m_startItem);
+		m_startItem = NULL;
+	}
+
 	PartsEditorAbstractView::loadFromModel(paletteModel, modelPart);
 
 	StringPair *sp = m_item->svgFilePath();
@@ -211,7 +215,7 @@ const StringPair& PartsEditorSpecificationsView::svgFileSplit() {
 void PartsEditorSpecificationsView::fitCenterAndDeselect() {
 	scene()->setSceneRect(0,0,width(),height());
 	PartsEditorAbstractView::fitCenterAndDeselect();
-	addFixedToCenterItem(m_item);
+	//addFixedToCenterItem(m_item);
 }
 
 QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFilePath) {

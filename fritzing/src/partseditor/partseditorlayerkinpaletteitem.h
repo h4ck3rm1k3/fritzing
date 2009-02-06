@@ -34,8 +34,8 @@ class PartsEditorLayerKinPaletteItem : public LayerKinPaletteItem {
 public:
 	PartsEditorLayerKinPaletteItem(
 		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,const ViewGeometry & viewGeometry,
-		long id, ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
-		: LayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers)
+                long id, QMenu* itemMenu)
+                : LayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 	{
 	}
 protected:

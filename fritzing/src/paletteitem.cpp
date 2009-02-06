@@ -46,11 +46,15 @@ $Date$
 #include <QDir>
 #include <QMessageBox>
 
-PaletteItem::PaletteItem( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu)
+PaletteItem::PaletteItem( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true)
 {
-	m_partLabel = new PartLabel(this, "", NULL);
-	m_partLabel->setVisible(false);
+	if(doLabel) {
+		m_partLabel = new PartLabel(this, "", NULL);
+		m_partLabel->setVisible(false);
+	} else {
+		m_partLabel = NULL;
+	}
 }
 
 bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {

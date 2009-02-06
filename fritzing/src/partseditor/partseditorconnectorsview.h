@@ -84,7 +84,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		PartsEditorConnectorsPaletteItem *myItem();
 		QTransform m_prevTransform;
 
-		ZoomControls *m_zoomControls;
+		//ZoomControls *m_zoomControls;
 
 		QList<PartsEditorConnectorsConnectorItem*> m_drawnConns;
 		QStringList m_removedConnIds;

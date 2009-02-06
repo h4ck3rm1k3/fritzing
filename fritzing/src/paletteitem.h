@@ -39,7 +39,7 @@ $Date$
 class PaletteItem : public PaletteItemBase {
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <reanderImage>
-	PaletteItem(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
+	PaletteItem(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
 
 	void removeLayerKin();
 	void addLayerKin(class LayerKinPaletteItem * lkpi);

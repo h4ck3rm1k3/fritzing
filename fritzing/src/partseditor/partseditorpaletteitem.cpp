@@ -39,7 +39,7 @@ $Date$
 #include "../layerkinpaletteitem.h"
 
 PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, StringPair *path, QString layer) :
-	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
+	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL, false)
 {
 	m_owner = owner;
 
@@ -92,6 +92,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
     m_svgDom = new QDomDocument();
+    //DebugDialog::debug("<<< creando svg "+path);
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
         return;
@@ -253,7 +254,7 @@ LayerKinPaletteItem * PartsEditorPaletteItem::newLayerKinPaletteItem(
 		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new
-		PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers);
+                PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu);
 	lk->init(viewLayerID, viewLayers);
 	return lk;
 }

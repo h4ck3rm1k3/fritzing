@@ -554,7 +554,7 @@ LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(
 	const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new
-		LayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers);
+                LayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu);
 	lk->init(viewLayerID, viewLayers);
 	return lk;
 }

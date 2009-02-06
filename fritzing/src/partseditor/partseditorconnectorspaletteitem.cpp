@@ -72,7 +72,7 @@ LayerKinPaletteItem * PartsEditorConnectorsPaletteItem::newLayerKinPaletteItem(
 		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new
-		PartsEditorConnectorsLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers, m_showingTerminalPoints);
+                PartsEditorConnectorsLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu, m_showingTerminalPoints);
 	lk->init(viewLayerID, viewLayers);
 	return lk;
 }

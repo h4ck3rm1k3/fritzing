@@ -28,11 +28,11 @@ $Date$
 #include "infographicsview.h"
 #include "debugdialog.h"
 
-LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers  )
+LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu, false)
 
 {
-	m_layerKinChief = chief;
+    m_layerKinChief = chief;
     setFlags(QGraphicsItem::ItemIsSelectable);
     m_modelPart->removeViewItem(this);  // we don't need to save layerkin
 }

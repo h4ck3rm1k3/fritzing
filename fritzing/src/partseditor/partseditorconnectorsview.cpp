@@ -41,8 +41,8 @@ PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier vi
 	m_showingTerminalPoints = showingTerminalPoints;
 	m_lastSelectedConnId = "";
 
-	m_zoomControls = new ZoomControls(this);
-	addFixedToBottomRightItem(m_zoomControls);
+	//m_zoomControls = new ZoomControls(this);
+	//addFixedToBottomRightItem(m_zoomControls);
 
 	setDragMode(QGraphicsView::ScrollHandDrag);
 
@@ -108,6 +108,7 @@ void PartsEditorConnectorsView::removeConnector(const QString &connId) {
 }
 
 void PartsEditorConnectorsView::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
+	clearScene();
 	PartsEditorAbstractView::loadFromModel(paletteModel, modelPart);
 	setItemProperties();
 }
@@ -146,7 +147,7 @@ void PartsEditorConnectorsView::setItemProperties() {
 			m_item->setTransform(m_prevTransform);
 		}
 	}
-	ensureFixedToBottomRight(m_zoomControls);
+	//ensureFixedToBottomRight(m_zoomControls);
 }
 
 void PartsEditorConnectorsView::informConnectorSelection(const QString &connId) {

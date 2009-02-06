@@ -618,6 +618,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 		m_lastPaletteItemSelected = NULL;
 	}
 	m_lastSelected.removeOne(itemBase);
+	removeIfFixedPos(itemBase);
 
 	long id = itemBase->id();
 	itemBase->removeLayerKin();

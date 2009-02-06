@@ -35,27 +35,17 @@ PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
-	//setFixedSize(size,size);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, StringPair * svgFilePath) {
-	/*bool takePrevTransform = false;
-	QTransform prevTrans;
-	if(m_item) {
-		takePrevTransform = true;
-		prevTrans = m_item->transform();
-	}*/
 	clearScene();
+
 	m_item = newPartsEditorPaletteItem(modelPart, svgFilePath);
 	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, m_item);
 
-	/*if(takePrevTransform) {
-		m_item->setTransform(prevTrans);
-	} else {*/
-		fitCenterAndDeselect();
-	//}
+	fitCenterAndDeselect();
 }
 
 
@@ -111,13 +101,9 @@ void PartsEditorAbstractView::wheelEvent(QWheelEvent* /*event*/) {
 
 void PartsEditorAbstractView::clearScene() {
 	if(m_item) {
-		m_item->removeLayerKin();
-		m_item->removeFromModel();
+		deleteItem(m_item, false, true);
 
-		removeConnectors();
-
-		scene()->removeItem(m_item);
-		delete m_item;
+		//delete m_item;
 		m_item = NULL;
 	}
 }
@@ -146,9 +132,8 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QString &svgpath, 
 }
 
 ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
-	//DebugDialog::debug("<<< SVFfILEpAYH = "+svgFilePath);
 	QString fakePath = svgFilePath.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
-	//DebugDialog::debug("<<< fakePath = "+fakePath);
+
 	QDomDocument *domDoc = new QDomDocument();
 	QString errorStr;
 	int errorLine;
@@ -178,8 +163,9 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
 
   	domDoc->setContent(fakeFzFile, &errorStr, &errorLine, &errorColumn);
 
-  	ModelPart *retval = m_sketchModel->root();
+  	ModelPart *retval = new ModelPart();
   	retval->modelPartStuff()->setDomDocument(domDoc);
+  	//retval->setParent(m_sketchModel->root());
   	retval->initConnectors(true /*redo connectors*/);
 	return retval;
 }

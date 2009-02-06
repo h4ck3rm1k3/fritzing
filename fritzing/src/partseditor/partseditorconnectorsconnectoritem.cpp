@@ -293,5 +293,5 @@ void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEven
 	if(gv) {
 		gv->informConnectorSelectionFromView(connectorStuffID());
 	}
-	ConnectorItem::mousePressEvent(event);
+	//ConnectorItem::mousePressEvent(event);
 }

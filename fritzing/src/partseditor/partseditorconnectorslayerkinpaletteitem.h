@@ -34,8 +34,8 @@ class PartsEditorConnectorsLayerKinPaletteItem : public PartsEditorLayerKinPalet
 public:
 	PartsEditorConnectorsLayerKinPaletteItem(
 			PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,const ViewGeometry & viewGeometry,
-			long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers, bool showingTerminalPoints)
-		: PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, viewLayerID, itemMenu, viewLayers)
+                        long id, QMenu* itemMenu, bool showingTerminalPoints)
+                : PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 	{
 		m_showingTerminalPoints = showingTerminalPoints;
 	}
