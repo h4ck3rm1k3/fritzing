@@ -171,7 +171,7 @@ void GraphicsSvgLineItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 	if (m_hasLine) {
 	    if (option->state & QStyle::State_Selected) {	
 			// draw this first because otherwise it seems to draw a dashed line down the middle
-	        qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape(), NULL);
+	        qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), NULL);
         }
 	    painter->setPen(m_pen);
 	    painter->drawLine(getPaintLine());
@@ -211,7 +211,7 @@ QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen 
     return p;
 }
 
-void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path,
+void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QGraphicsItem * item, QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path,
 															HighlightSelectedCallback callback)
 {
 	/*
@@ -269,7 +269,7 @@ void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, c
     painter->setPen(QPen(bgcolor, penWidth, Qt::SolidLine));
     painter->setBrush(Qt::NoBrush);
 	if (callback) {
-		(*callback)(painter, 0);
+		(*callback)(item, painter, 0);
 	}
 	if (path.isEmpty()) {
 		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));
@@ -281,7 +281,7 @@ void GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(QPainter *painter, c
 	painter->setPen(QPen(option->palette.windowText(), 0, Qt::DashLine));
     painter->setBrush(Qt::NoBrush);
 	if (callback) {
-		(*callback)(painter, 1);
+		(*callback)(item, painter, 1);
 	}
 	if (path.isEmpty()) {
 		painter->drawRect(boundingRect.adjusted(pad, pad, -pad, -pad));

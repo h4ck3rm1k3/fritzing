@@ -239,7 +239,7 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 	painter->save();
 	//painter->setOpacity(0.25);
 	//painter->fillPath(this->hoverShape(), QBrush(ConnectorItem::hoverPen.color()));
-	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), hoverShape(), dotHighlightSelectedCallback);
+	qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), dotHighlightSelectedCallback);  
 	painter->restore();
 }
 

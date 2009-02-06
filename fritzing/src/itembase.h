@@ -169,7 +169,7 @@ public:
 	static qint64 getNextID(qint64 fromIndex);
 
 protected:
-	static void dotHighlightSelectedCallback(QPainter * painter, int step);
+	static void dotHighlightSelectedCallback(QGraphicsItem *, QPainter * painter, int step);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);

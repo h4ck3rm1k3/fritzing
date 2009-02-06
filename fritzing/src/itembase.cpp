@@ -47,6 +47,7 @@ QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
 QString ItemBase::partInstanceDefaultTitle;
 
 static QVector<qreal> dotPattern;
+static qreal DashWidth = 3;
 
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {
@@ -238,7 +239,7 @@ void ItemBase::initNames() {
 		partInstanceDefaultTitle = tr("Part");
 	}
 	if (dotPattern.size() == 0) {
-		dotPattern << 1 << 7;
+		dotPattern << (3 / DashWidth) << (3 / DashWidth);
 	}
 }
 
@@ -548,7 +549,7 @@ void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	painter->save();
 	//painter->setOpacity(0.25);
 	//painter->fillPath(this->hoverShape(), QBrush(ConnectorItem::hoverPen.color()));
-	qt_graphicsItem_highlightSelected(painter, option, boundingRect(), QPainterPath(), dotHighlightSelectedCallback);
+	qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), dotHighlightSelectedCallback);   
 	painter->restore();
 }
 
@@ -877,15 +878,20 @@ bool ItemBase::isSwappable() {
 	return true;
 }
 
-void ItemBase::dotHighlightSelectedCallback(QPainter * painter, int step) 
+void ItemBase::dotHighlightSelectedCallback(QGraphicsItem * item, QPainter * painter, int step) 
 {
-	QPen pen = painter->pen();
-	pen.setDashPattern(dotPattern);
+	QPen pen;
+	pen.setWidth(DashWidth);
 	if (step == 0) {
-		pen.setDashOffset(0);
 	}
 	else {
-		pen.setDashOffset(4);
+		QColor c = item->scene()->backgroundBrush().color();
+		c.setRed(255 - c.red());
+		c.setGreen(255 - c.green());
+		c.setBlue(255 - c.blue());
+		pen.setDashPattern(dotPattern);
+		//pen.setDashOffset(0);
+		pen.setColor(c);
 	}
 	painter->setPen(pen);
 }

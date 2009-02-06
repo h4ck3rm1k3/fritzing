@@ -33,7 +33,7 @@ $Date$
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
-typedef void (*HighlightSelectedCallback)(QPainter * painter, int step);
+typedef void (*HighlightSelectedCallback)(QGraphicsItem *, QPainter * painter, int step);
 
 // combines QGraphicsLineItem and QGraphicsSvgItem so all parts and wires can inherit from the same class
 
@@ -64,7 +64,7 @@ protected:
 	virtual const QLineF & getPaintLine();
 
 public:
-	static void qt_graphicsItem_highlightSelected(QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path, HighlightSelectedCallback);
+	static void qt_graphicsItem_highlightSelected(QGraphicsItem *, QPainter *painter, const QStyleOptionGraphicsItem *option, const QRectF & boundingRect, const QPainterPath & path, HighlightSelectedCallback);
 
 
 protected:
