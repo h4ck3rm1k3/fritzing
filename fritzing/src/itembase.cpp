@@ -869,7 +869,7 @@ void ItemBase::dotHighlightSelectedCallback(QPainter * painter, int step)
 		pen.setDashOffset(0);
 	}
 	else {
-		pen.setDashOffset(6);
+		pen.setDashOffset(4);
 	}
 	painter->setPen(pen);
 }
