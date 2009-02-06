@@ -44,6 +44,17 @@ QString HtmlInfoView::PropsBlockId = "props_id";
 QString HtmlInfoView::TagsBlockId = "tags_id";
 QString HtmlInfoView::ConnsBlockId = "conns_id";
 
+static QRegExp NumberMatcher("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMpµ]))?");
+static QHash<QString, qreal> NumberMatcherValues;
+
+
+bool valueLessThan(QString v1, QString v2)
+{
+	return NumberMatcherValues.value(v1, 0) <= NumberMatcherValues.value(v2, 0);
+}
+
+//////////////////////////////////////
+
 HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) {
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(0);
@@ -503,9 +514,43 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 		QString options = "";
 		QString jsCode = "<script language='JavaScript'>\n";
 		jsCode += QString("currProps['%1'] = '%2'; \n").arg(name).arg(value);
+		int ix = NumberMatcher.indexIn(values.at(0));
+		if (ix >= 0) {
+			// sort values numerically
+			NumberMatcherValues.clear();
+			bool ok = true;
+			foreach(QString opt, values) {
+				ix = NumberMatcher.indexIn(opt);
+				if (ix < 0) {
+					ok = false;
+					break;
+				}
+				qreal n = NumberMatcher.cap(1).toDouble(&ok);
+				if (!ok) break;
+
+				QString unit = NumberMatcher.cap(5);
+				if (unit.contains('k')) {
+					n *= 1000;
+				}
+				else if (unit.contains('M')) {
+					n *= 1000000;
+				}
+				else if (unit.contains('p')) {
+					n *= 0.000000000001;
+				}
+				else if (unit.contains('µ')) {
+					n *= 0.000001;
+				}
+				NumberMatcherValues.insert(opt, n);
+			}
+			if (ok) {
+				qSort(values.begin(), values.end(), valueLessThan);
+			}
+		}
+
 		foreach(QString opt, values) {
 			options += QString("<option value='%1' %2>%1</option> \n")
-				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);
+				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);			
 		}
 		jsCode += "</script>\n";
 
