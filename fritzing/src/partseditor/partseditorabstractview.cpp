@@ -104,6 +104,7 @@ void PartsEditorAbstractView::clearScene() {
 		deleteItem(m_item, false, true);
 
 		//delete m_item;
+		scene()->clear();
 		m_item = NULL;
 	}
 }

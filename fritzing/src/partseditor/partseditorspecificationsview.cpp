@@ -60,11 +60,29 @@ void PartsEditorSpecificationsView::mousePressConnectorEvent(ConnectorItem *, QG
 }
 
 void PartsEditorSpecificationsView::copySvgFileToDestiny() {
+	QString origFile = "";
+	QString destFile = "";
+	bool doIt = false;
 	// if the svg file is in the temp folder, then copy it to destiny
 	if(!m_svgFilePath->first.isEmpty() && !m_svgFilePath->second.isEmpty() && m_svgFilePath->first == m_tempFolder.path()) {
-		QFile tempFile(svgFilePath());
-                DebugDialog::debug(QString("copying to %1").arg(getApplicationSubFolderPath("parts")+ "/parts/svg/user/"+m_svgFilePath->second));
-                tempFile.copy(getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->second);
+		origFile = svgFilePath();
+		destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->second;
+		doIt = true;
+	}
+
+	// jpeg / png turned into svg (is in temp )
+	if(m_svgFilePath->second.isEmpty() && m_svgFilePath->first.startsWith(m_tempFolder.path())) {
+		origFile = m_svgFilePath->first;
+		destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->first.remove(m_tempFolder.path()+"/");
+		doIt = true;
+	}
+
+	if(doIt) {
+		QFile tempFile(origFile);
+		DebugDialog::debug(QString("copying from %1 to %2")
+				.arg(origFile)
+				.arg(destFile));
+		tempFile.copy(destFile);
 	}
 }
 
