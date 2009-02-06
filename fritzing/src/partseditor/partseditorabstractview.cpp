@@ -163,7 +163,7 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
 
   	domDoc->setContent(fakeFzFile, &errorStr, &errorLine, &errorColumn);
 
-  	ModelPart *retval = new ModelPart();
+  	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartStuff()->setDomDocument(domDoc);
   	//retval->setParent(m_sketchModel->root());
   	retval->initConnectors(true /*redo connectors*/);
