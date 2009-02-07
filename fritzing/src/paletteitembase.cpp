@@ -523,14 +523,14 @@ bool PaletteItemBase::isBuriedConnectorHit(QGraphicsSceneMouseEvent *event) {
 }
 */
 
-bool PaletteItemBase::isLowerLayerVisible(PaletteItemBase * paletteItemBase) {
+bool PaletteItemBase::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase) {
 	Q_UNUSED(paletteItemBase);
 	return false;
 }
 
 
 void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
-	if (isLowerLayerVisible(this)) {
+	if (isLowerConnectorLayerVisible(this)) {
 		event->ignore();
 		return;
 	}
@@ -540,7 +540,7 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 
 
 void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
-	if (isLowerLayerVisible(this)) {
+	if (isLowerConnectorLayerVisible(this)) {
 		event->ignore();
 		return;
 	}

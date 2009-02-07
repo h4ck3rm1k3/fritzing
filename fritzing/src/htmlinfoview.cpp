@@ -514,40 +514,36 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 		QString options = "";
 		QString jsCode = "<script language='JavaScript'>\n";
 		jsCode += QString("currProps['%1'] = '%2'; \n").arg(name).arg(value);
-		int ix = NumberMatcher.indexIn(values.at(0));
-		if (ix >= 0) {
-			// sort values numerically
-			NumberMatcherValues.clear();
-			bool ok = true;
-			foreach(QString opt, values) {
-				ix = NumberMatcher.indexIn(opt);
-				if (ix < 0) {
-					ok = false;
-					break;
-				}
-				qreal n = NumberMatcher.cap(1).toDouble(&ok);
-				if (!ok) break;
+		// sort values numerically
+		NumberMatcherValues.clear();
+		bool ok = true;
+		foreach(QString opt, values) {
+			int ix = NumberMatcher.indexIn(opt);
+			if (ix < 0) {
+				ok = false;
+				break;
+			}
+			qreal n = NumberMatcher.cap(1).toDouble(&ok);
+			if (!ok) break;
 
-				QString unit = NumberMatcher.cap(5);
-				if (unit.contains('k')) {
-					n *= 1000;
-				}
-				else if (unit.contains('M')) {
-					n *= 1000000;
-				}
-				else if (unit.contains('p')) {
-					n *= 0.000000000001;
-				}
-				else if (unit.contains('µ')) {
-					n *= 0.000001;
-				}
-				NumberMatcherValues.insert(opt, n);
+			QString unit = NumberMatcher.cap(5);
+			if (unit.contains('k')) {
+				n *= 1000;
 			}
-			if (ok) {
-				qSort(values.begin(), values.end(), valueLessThan);
+			else if (unit.contains('M')) {
+				n *= 1000000;
 			}
+			else if (unit.contains('p')) {
+				n *= 0.000000000001;
+			}
+			else if (unit.contains('µ')) {
+				n *= 0.000001;
+			}
+			NumberMatcherValues.insert(opt, n);
 		}
-
+		if (ok) {
+			qSort(values.begin(), values.end(), valueLessThan);
+		}
 		foreach(QString opt, values) {
 			options += QString("<option value='%1' %2>%1</option> \n")
 				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);			

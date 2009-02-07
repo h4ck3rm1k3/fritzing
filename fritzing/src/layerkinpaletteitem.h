@@ -40,7 +40,7 @@ public:
 	bool ok();
 	void setHidden(bool hidden);
 	void clearModelPart();
-	bool isLowerLayerVisible(PaletteItemBase * paletteItemBase);
+	bool isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase);
 	void init(ViewLayer::ViewLayerID viewLayerID, const LayerHash &viewLayers);
 
 protected:

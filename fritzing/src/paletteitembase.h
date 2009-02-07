@@ -70,7 +70,7 @@ public:
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	virtual void figureHover() = 0;
 	QRectF boundingRect() const;
-	virtual bool isLowerLayerVisible(PaletteItemBase *);
+	virtual bool isLowerConnectorLayerVisible(PaletteItemBase *);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 	/*

@@ -245,7 +245,7 @@ void PaletteItem::mousePressEvent(PaletteItemBase * originalItem, QGraphicsScene
 
 void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	if (isLowerLayerVisible(this)) {
+	if (isLowerConnectorLayerVisible(this)) {
 		event->ignore();
 		return;
 	}
@@ -434,17 +434,25 @@ void PaletteItem::clearModelPart() {
 	ItemBase::clearModelPart();
 }
 
-bool PaletteItem::isLowerLayerVisible(PaletteItemBase * paletteItemBase) {
+bool PaletteItem::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase) {
 	if (m_layerKin.count() == 0) return false;
 
-	if (paletteItemBase != this && this->isVisible() && this->zValue() < paletteItemBase->zValue()) {
+	if ((paletteItemBase != this) 
+		&& this->isVisible() 
+		&& (!this->hidden()) && (this->zValue() < paletteItemBase->zValue())
+		&& this->hasConnectors()) 
+	{
 		return true;
 	}
 
 	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
 		if (lkpi == paletteItemBase) continue;
 
-		if (lkpi->zValue() < paletteItemBase->zValue() && lkpi->isVisible()) {
+		if (lkpi->isVisible() 
+			&& (!lkpi->hidden()) 
+			&& (lkpi->zValue() < paletteItemBase->zValue()) 
+			&& lkpi->hasConnectors() ) 
+		{
 			return true;
 		}
 	}

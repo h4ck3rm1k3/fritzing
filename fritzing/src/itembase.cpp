@@ -326,16 +326,20 @@ void ItemBase::removeLayerKin() {
 }
 
 void ItemBase::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
+	DebugDialog::debug(QString("hover enter c %1").arg(instanceTitle()));
 	m_connectorHoverCount++;
 	this->update();
 }
 
 void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
+	DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
 	m_connectorHoverCount--;
 	this->update();
 }
 
 void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
+	DebugDialog::debug(QString("hover c %1 %2").arg(hovering).arg(instanceTitle()));
+
 	if (hovering) {
 		m_connectorHoverCount++;
 		this->update();
@@ -426,6 +430,8 @@ ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
 }
 
 void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
+	DebugDialog::debug(QString("hover enter %1").arg(instanceTitle()));
+
 	m_hoverCount++;
 	update();
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
@@ -435,6 +441,7 @@ void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 }
 
 void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
+	DebugDialog::debug(QString("hover leave %1").arg(instanceTitle()));
 	m_hoverCount--;
 	update();
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
@@ -444,6 +451,7 @@ void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 }
 
 void ItemBase::hoverMoveEvent ( QGraphicsSceneHoverEvent *  ) {
+	//DebugDialog::debug(QString("hover move %1 %2").arg(instanceTitle()).arg(QTime::currentTime().msec()));
 }
 
 ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, ConnectorItem * lastUnderConnector, bool useTerminalPoint)
