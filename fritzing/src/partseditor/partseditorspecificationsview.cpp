@@ -127,7 +127,7 @@ void PartsEditorSpecificationsView::updateModelPart(const QString& origPath) {
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
 	setSvgFilePath(origPath);
 
-	ModelPart *mp = createFakeModelPart(origPath, m_svgFilePath->relativePath());
+	ModelPart *mp = createFakeModelPart(origPath);
 	m_item->setModelPart(mp);
 	copyToTempAndRenameIfNecessary(m_svgFilePath);
 	m_item->setSvgFilePath(m_svgFilePath);
@@ -138,7 +138,7 @@ void PartsEditorSpecificationsView::loadSvgFile(const QString& origPath) {
 
 	setSvgFilePath(origPath);
 
-	ModelPart * mp = createFakeModelPart(origPath, m_svgFilePath->relativePath());
+	ModelPart * mp = createFakeModelPart(origPath);
 	loadSvgFile(mp);
 }
 

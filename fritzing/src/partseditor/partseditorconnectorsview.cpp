@@ -117,7 +117,7 @@ void PartsEditorConnectorsView::loadFromModel(PaletteModel *paletteModel, ModelP
 void PartsEditorConnectorsView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
 	QString imagePath = svgFilePath->absolutePath();
 	if(!modelPart) {
-		modelPart = createFakeModelPart(imagePath, svgFilePath->relativePath());
+		modelPart = createFakeModelPart(imagePath);
 	}
 
 	PartsEditorAbstractView::addItemInPartsEditor(modelPart,svgFilePath);

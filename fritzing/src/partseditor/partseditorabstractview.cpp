@@ -125,7 +125,7 @@ void PartsEditorAbstractView::removeConnectors() {
 	}
 }
 
-ModelPart *PartsEditorAbstractView::createFakeModelPart(const QString &absPath, const QString &relativePath) {
+ModelPart *PartsEditorAbstractView::createFakeModelPart(const QString &absPath) {
 	const QHash<QString,StringPair*> connIds = getConnectorIds(absPath);
 	const QStringList layers = getLayers(absPath);
 
