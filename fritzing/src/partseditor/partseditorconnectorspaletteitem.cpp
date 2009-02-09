@@ -36,12 +36,6 @@ PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorCo
 	m_showingTerminalPoints = owner->showingTerminalPoints();
 }
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier)
-	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
-{
-	m_showingTerminalPoints = owner->showingTerminalPoints();
-}
-
 void PartsEditorConnectorsPaletteItem::highlightConnectors(const QString &connId) {
 	highlightConnsAux(this,connId);
 	foreach(LayerKinPaletteItem* item, m_layerKin) {

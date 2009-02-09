@@ -28,7 +28,7 @@ $Date$
 #define SVGANDPARTFILEPATH_H_
 
 #include "misc.h"
-
+#include "debugdialog.h"
 
 /*
  * While the svg and parts files, are loaded dynamically from different folders
@@ -52,6 +52,7 @@ public:
 		return first;
 	}
 	void setAbsolutePath(const QString &partFolderPath) {
+		DebugDialog::debug("<<<<<aaa "+partFolderPath);
 		first = partFolderPath;
 	}
 
@@ -66,6 +67,7 @@ public:
 		return third;
 	}
 	void setRelativePath(const QString &fileRelativePath) {
+		DebugDialog::debug("<<<<<bbbb "+fileRelativePath);
 		third = fileRelativePath;
 	}
 };

@@ -42,10 +42,9 @@ $Date$
 QT_BEGIN_NAMESPACE
 
 PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
-	: PartsEditorAbstractView(viewId, parent, size)
+	: PartsEditorAbstractView(viewId, tempDir, parent, size)
 {
 	m_svgFilePath = new SvgAndPartFilePath;
-	m_tempFolder = tempDir;
 	m_startItem = startItem;
 	if(m_startItem) {
 		scene()->addItem(startItem);
@@ -63,19 +62,28 @@ void PartsEditorSpecificationsView::copySvgFileToDestiny() {
 	QString origFile = "";
 	QString destFile = "";
 	bool doIt = false;
+
+	Qt::CaseSensitivity cs = Qt::CaseSensitive;
+
+#ifdef Q_WS_WIN
+	// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
+	// but the file dialog returns a string beginning with "C:"
+	cs = Qt::CaseInsensitive;
+#endif
+
 	// if the svg file is in the temp folder, then copy it to destiny
-	if(!m_svgFilePath->first.isEmpty() && !m_svgFilePath->second.isEmpty() && m_svgFilePath->first == m_tempFolder.path()) {
+	if(m_svgFilePath->absolutePath().startsWith(QDir::tempPath(),cs)) {
 		origFile = svgFilePath();
-		destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->second;
+		destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
 		doIt = true;
 	}
 
 	// jpeg / png turned into svg (is in temp )
-	if(m_svgFilePath->second.isEmpty() && m_svgFilePath->first.startsWith(m_tempFolder.path())) {
+	/*if(m_svgFilePath->second.isEmpty() && m_svgFilePath->first.startsWith(m_tempFolder.path())) {
 		origFile = m_svgFilePath->first;
 		destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->first.remove(m_tempFolder.path()+"/");
 		doIt = true;
-	}
+	}*/
 
 	if(doIt) {
 		QFile tempFile(origFile);
@@ -96,13 +104,11 @@ void PartsEditorSpecificationsView::loadFile() {
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
 		tr("SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)"));
-		//tr("SVG Files (*.svg)"));
 
 	if(origPath.isEmpty()) {
 		return; // Cancel pressed
 	} else {
 		if(!origPath.endsWith(".svg")) {
-			//DebugDialog::debug("<<< no es svg");
 			origPath = createSvgFromImage(origPath);
 		}
 		if(origPath != ___emptyString___) {
@@ -119,11 +125,9 @@ void PartsEditorSpecificationsView::loadFile() {
 
 void PartsEditorSpecificationsView::updateModelPart(const QString& origPath) {
 	m_undoStack->push(new QUndoCommand("Dummy parts editor command"));
-	ModelPart * mp = static_cast<ModelPart *>(m_sketchModel->root());
-
 	setSvgFilePath(origPath);
 
-	mp = createFakeModelPart(origPath, m_svgFilePath->second);
+	ModelPart *mp = createFakeModelPart(origPath, m_svgFilePath->relativePath());
 	m_item->setModelPart(mp);
 	copyToTempAndRenameIfNecessary(m_svgFilePath);
 	m_item->setSvgFilePath(m_svgFilePath);
@@ -134,7 +138,7 @@ void PartsEditorSpecificationsView::loadSvgFile(const QString& origPath) {
 
 	setSvgFilePath(origPath);
 
-	ModelPart * mp = createFakeModelPart(origPath, m_svgFilePath->second);
+	ModelPart * mp = createFakeModelPart(origPath, m_svgFilePath->relativePath());
 	loadSvgFile(mp);
 }
 
@@ -156,6 +160,7 @@ void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, Mo
 	PartsEditorAbstractView::loadFromModel(paletteModel, modelPart);
 
 	SvgAndPartFilePath *sp = m_item->svgFilePath();
+
 	copyToTempAndRenameIfNecessary(sp);
 	delete sp;
 	m_item->setSvgFilePath(m_svgFilePath);
@@ -164,10 +169,10 @@ void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, Mo
 }
 
 void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePathOrig) {
-	m_originalSvgFilePath = filePathOrig->first+(!filePathOrig->second.isEmpty()?"/"+filePathOrig->second:"");
+	m_originalSvgFilePath = filePathOrig->absolutePath();
 	QString svgFolderPath = getApplicationSubFolderPath("parts")+"/svg";
 
-	if(filePathOrig->first != svgFolderPath) {
+	if(!filePathOrig->absolutePath().startsWith(svgFolderPath)) { // it's outside the parts folder
 		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
 		QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
 
@@ -180,45 +185,49 @@ void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFil
 		tempFile.copy(m_tempFolder.path()+"/"+destFilePath);
 
 		if(!m_tempFolder.cd("..")) return; // out of view folder
-		m_svgFilePath->first = m_tempFolder.path();
 
-		m_svgFilePath->second = viewFolder+"/"+destFilePath;
+		m_svgFilePath->setRelativePath(viewFolder+"/"+destFilePath);
+		m_svgFilePath->setAbsolutePath(m_tempFolder.path()+"/"+m_svgFilePath->relativePath());
+
 	} else {
-		m_svgFilePath->first = svgFolderPath;
-		m_svgFilePath->second = filePathOrig->second.right(// remove user/core/contrib
-									filePathOrig->second.size() -
-									filePathOrig->second.indexOf("/") - 1
-								);
+		QString relPathAux = filePathOrig->relativePath();
+		m_svgFilePath->setAbsolutePath(m_originalSvgFilePath);
+		m_svgFilePath->setRelativePath(
+				relPathAux.right(// remove user/core/contrib
+						relPathAux.size() -
+						relPathAux.indexOf("/") - 1
+				)
+		);
 	}
 }
 
 void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
 	m_originalSvgFilePath = filePath;
-	QString folder = getApplicationSubFolderPath("parts")+"/svg";
+	QString svgFolder = getApplicationSubFolderPath("parts")+"/svg";
+	QString tempFolder = m_tempFolder.path();
 
-	QString abs;
 	QString relative;
-
 	Qt::CaseSensitivity cs = Qt::CaseSensitive;
+	QString filePathAux = filePath;
+
 #ifdef Q_WS_WIN
 	// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
 	// but the file dialog returns a string beginning with "C:"
 	cs = Qt::CaseInsensitive;
 #endif
-	if(filePath.contains(folder, cs)) {
-		//DebugDialog::debug("<<< is in core");
-		QString filePathAux = filePath;
-		QString svgFile = filePathAux.remove(folder+"/", cs);
-		abs = folder;
-		relative = svgFile;
+	if(filePath.contains(svgFolder, cs)) {
+		// is core file
+		relative = filePathAux.remove(svgFolder+"/", cs);
+	} else if(filePath.startsWith(tempFolder,cs)) {
+		// is generated file that currently lives inside the temp folder
+		relative = filePathAux.remove(tempFolder+"/", cs);
 	} else {
-		//DebugDialog::debug("<<< isn't in core");
-		abs = filePath;
-		relative = "";
+		// generated jpeg/png
+		relative = m_svgFilePath->relativePath();
 	}
 
 	delete m_svgFilePath;
-	m_svgFilePath = new SvgAndPartFilePath(abs,"",relative);
+	m_svgFilePath = new SvgAndPartFilePath(filePath,relative);
 }
 
 
@@ -233,18 +242,15 @@ const SvgAndPartFilePath& PartsEditorSpecificationsView::svgFileSplit() {
 void PartsEditorSpecificationsView::fitCenterAndDeselect() {
 	scene()->setSceneRect(0,0,width(),height());
 	PartsEditorAbstractView::fitCenterAndDeselect();
-	//addFixedToCenterItem(m_item);
 }
 
 QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFilePath) {
-	QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
-
-	if(!QFileInfo(m_tempFolder.path()+"/"+viewFolder).exists()) {
-		if(!m_tempFolder.mkdir(viewFolder)) return ___emptyString___;
-	}
+	QString viewFolder = getOrCreateViewFolderInTemp();
 
 	QString newFilePath = m_tempFolder.path()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
 	QImage imgOrig(origFilePath);
+
+	DebugDialog::debug("creando svg en "+newFilePath);
 
 	QSvgGenerator svgGenerator;
 	svgGenerator.setFileName(newFilePath);
@@ -254,34 +260,4 @@ QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFil
 	svgPainter.end();
 
 	return newFilePath;
-
-	/*
-
-	QImage newImg(imgOrig.size(),QImage::Format_ARGB32);
-
-	QByteArray bytes;
-	QBuffer buffer(&bytes);
-	buffer.open(QIODevice::WriteOnly);
-	imgOrig.convertToFormat(QImage::Format_ARGB32).save(&buffer);
-	QSvgRenderer renderer(bytes.toBase64());
-
-	QPainter painter;
-	painter.begin(&newImg);
-	renderer.render(&painter);
-	painter.end();
-
-
-	QString newFilePath = m_tempFolder.path()+"/"+FritzingWindow::getRandText()+".svg";
-	DebugDialog::debug("<<< nueva imagen "+newFilePath);
-
-	bool result = newImg.save(newFilePath);
-	if(!result) {
-		DebugDialog::debug("<<< failed");
-		return ___emptyString___;
-	} else {
-		DebugDialog::debug("<<< succes");
-		return newFilePath;
-	}
-
-	*/
 }

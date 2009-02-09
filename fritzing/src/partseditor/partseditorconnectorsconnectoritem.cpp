@@ -62,9 +62,6 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 
 void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
 	setRect(x,y,width,height);
-	DebugDialog::debug(QString("<<< x=%1 y=%2 w=%3 h=%4")
-			.arg(x).arg(y).arg(width).arg(height)
-	);
 	m_resizedRect = QRectF(x,y,width,height);
 	informChange();
 	if(showingTerminalPoint()) {

@@ -52,7 +52,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 	setSelected(false);
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer) :
+/*PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_owner = owner;
@@ -77,11 +77,10 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 
 	m_connectors = NULL;
 	m_svgStrings = NULL;
-}
+}*/
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
     m_svgDom = new QDomDocument();
-    //DebugDialog::debug("<<< creando svg "+path);
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
         return;
@@ -158,10 +157,6 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 		bool gotOne = false;
 		for(int i=0; i < possibleFolders.size(); i++) {
 			if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
-				m_svgStrings = new SvgAndPartFilePath();
-				m_svgStrings->setAbsolutePath(layerAttributes.layerName());
-				m_svgStrings->setCoreContribOrUser(tempPath.first);
-				m_svgStrings->setRelativePath(tempPath.second.arg(possibleFolders[i]));
 				gotOne = true;
 				break;
 			}
@@ -189,7 +184,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 		renderer = FSvgRenderer::getByFilename(fn, viewLayerID);
 		if (renderer == NULL) {
 			renderer = new FSvgRenderer();
-			if (!renderer->load(fn)) {
+			if (!renderer->load(m_svgStrings->absolutePath())) {
 				QMessageBox::information( NULL, QObject::tr("Fritzing"),
 						QObject::tr("The file %1 is not a Fritzing file (11).").arg(m_svgStrings->coreContribOrUser()+"/"+m_svgStrings->relativePath()));
 				delete renderer;
@@ -197,9 +192,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 			}
 		}
 
-		createSvgFile(fn);
-		//FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
-
+		createSvgFile(m_svgStrings->absolutePath());
 	}
 
 	this->setZValue(this->z());
@@ -230,7 +223,7 @@ QDomDocument *PartsEditorPaletteItem::svgDom() {
 }
 
 QString PartsEditorPaletteItem::flatSvgFilePath() {
-	return m_originalSvgPath;
+	return m_svgStrings->absolutePath();
 }
 
 ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {

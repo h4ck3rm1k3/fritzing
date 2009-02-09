@@ -37,6 +37,10 @@ FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
 }
 
 bool FSvgRenderer::load ( const QString & filename ) {
+	if (!QFileInfo(filename).exists() || !QFileInfo(filename).isFile()) {
+		return false;
+	}
+
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
 		return false;

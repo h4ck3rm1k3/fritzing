@@ -263,8 +263,8 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 			streamWriter.writeStartElement("views");
 		}
 		for (int i = 0; i < m_viewItems.size(); i++) {
-				ItemBase * item = m_viewItems[i];
-				item->writeXml(streamWriter);
+			ItemBase * item = m_viewItems[i];
+			item->writeXml(streamWriter);
 		}
 
 		if(startDocument) {
@@ -299,7 +299,7 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 void ModelPart::initConnectors(bool force) {
 	if(m_modelPartStuff == NULL) return;
 	if(force) {
-		m_connectorHash.clear();				
+		m_connectorHash.clear();
 		foreach (Bus * bus, m_busHash.values()) {
 			delete bus;
 		}

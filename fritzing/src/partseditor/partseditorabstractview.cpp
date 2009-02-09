@@ -31,10 +31,11 @@ $Date$
 #include "../debugdialog.h"
 
 
-PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId, QWidget *parent, int size)
+PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId, QDir tempDir, QWidget *parent, int size)
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
+	m_tempFolder = tempDir;
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
@@ -57,9 +58,10 @@ void PartsEditorAbstractView::loadFromModel(PaletteModel *paletteModel, ModelPar
 }
 
 ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors) {
-	if(paletteItem == NULL) {
+	/*if(paletteItem == NULL) {
 		paletteItem = newPartsEditorPaletteItem(modelPart);
-	}
+	}*/
+	Q_ASSERT(paletteItem);
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 	return addPartItem(modelPart, paletteItem, doConnectors);
 }
@@ -124,12 +126,11 @@ void PartsEditorAbstractView::removeConnectors() {
 	}
 }
 
-ModelPart *PartsEditorAbstractView::createFakeModelPart(const QString &svgpath, const QString &relativepath) {
-	const QHash<QString,StringPair*> connIds = getConnectorIds(svgpath);
-	const QStringList layers = getLayers(svgpath);
+ModelPart *PartsEditorAbstractView::createFakeModelPart(const QString &absPath, const QString &relativePath) {
+	const QHash<QString,StringPair*> connIds = getConnectorIds(absPath);
+	const QStringList layers = getLayers(absPath);
 
-	QString path = relativepath == ___emptyString___ ? svgpath : relativepath;
-	return createFakeModelPart(connIds, layers, path);
+	return createFakeModelPart(connIds, layers, absPath);
 }
 
 ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
@@ -211,18 +212,6 @@ void PartsEditorAbstractView::getConnectorIdsAux(QHash<QString/*connectorId*/,St
 }
 
 const QStringList PartsEditorAbstractView::getLayers(const QString &path) {
-	/*QStringList result;
-
-	QXmlQuery query;
-	query.setQuery(QString("doc('%1')/svg/g").arg(path));
-	if(query.isValid()) {
-		query.evaluateTo(&result);
-
-		foreach(QString str, result) {
-			DebugDialog::debug("<<< "+str);
-		}
-	}*/
-
 	QDomDocument *dom = new QDomDocument();
 	QFile file(path);
 	dom->setContent(&file);
@@ -248,10 +237,20 @@ const QStringList PartsEditorAbstractView::getLayers(const QString &path) {
 	return retval;
 }
 
-PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart *modelPart) {
-	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier);
-}
-
 PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path) {
 	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
+}
+
+QDir PartsEditorAbstractView::tempFolder() {
+	return m_tempFolder;
+}
+
+QString PartsEditorAbstractView::getOrCreateViewFolderInTemp() {
+	QString retval = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
+
+	if(!QFileInfo(m_tempFolder.path()+"/"+retval).exists()) {
+		Q_ASSERT(m_tempFolder.mkdir(retval));
+	}
+
+	return retval;
 }

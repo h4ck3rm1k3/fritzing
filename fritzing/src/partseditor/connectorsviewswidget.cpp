@@ -80,11 +80,11 @@ void ConnectorsViewsWidget::createViewImageWidget(
 		PartsEditorConnectorsView *&viw, PartsEditorSpecificationsView* sister,
 		SketchModel* sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
 		ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId) {
-	viw = new PartsEditorConnectorsView(viewId,showingTerminalPoints(),this);
+	viw = new PartsEditorConnectorsView(viewId,sister->tempFolder(),showingTerminalPoints(),this);
 	connect(sister,SIGNAL(loadedFromModel(PaletteModel*, ModelPart*)),viw,SLOT(loadFromModel(PaletteModel*, ModelPart*)));
 	connect(
-		sister, SIGNAL(itemAddedToSymbols(ModelPart*, StringPair*)),
-		viw, SLOT(addItemInPartsEditor(ModelPart *, StringPair*))
+		sister, SIGNAL(itemAddedToSymbols(ModelPart*, SvgAndPartFilePath*)),
+		viw, SLOT(addItemInPartsEditor(ModelPart *, SvgAndPartFilePath*))
 	);
 	connect(
 		viw, SIGNAL(svgFileLoadNeeded(const QString&)),

@@ -36,14 +36,14 @@ class PartsEditorAbstractView : public SketchWidget {
 	Q_OBJECT
 
 	public:
-		PartsEditorAbstractView(ItemBase::ViewIdentifier, QWidget *parent=0, int size=150);
+		PartsEditorAbstractView(ItemBase::ViewIdentifier, QDir tempDir, QWidget *parent=0, int size=150);
+		QDir tempFolder();
 
 	public slots:
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
 		virtual void addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath);
 
 	protected:
-		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
 		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path);
 
 		void clearScene();
@@ -60,7 +60,10 @@ class PartsEditorAbstractView : public SketchWidget {
 		void getConnectorIdsAux(QHash<QString,StringPair*> &retval, QDomElement &docElem);
 		const QStringList getLayers(const QString &path);
 
+		QString getOrCreateViewFolderInTemp();
+
 		PartsEditorPaletteItem *m_item; // just one item per view
+		QDir m_tempFolder;
 };
 
 #endif /* PARTSEDITORABSTRACTVIEW_H_ */

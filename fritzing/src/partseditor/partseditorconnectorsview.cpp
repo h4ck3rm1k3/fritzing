@@ -35,8 +35,8 @@ $Date$
 int PartsEditorConnectorsView::ConnDefaultWidth = 5;
 int PartsEditorConnectorsView::ConnDefaultHeight = ConnDefaultWidth;
 
-PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier viewId, bool showingTerminalPoints, QWidget *parent, int size)
-	: PartsEditorAbstractView(viewId, parent, size)
+PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier viewId, QDir tempDir, bool showingTerminalPoints, QWidget *parent, int size)
+	: PartsEditorAbstractView(viewId, tempDir, parent, size)
 {
 	m_showingTerminalPoints = showingTerminalPoints;
 	m_lastSelectedConnId = "";
@@ -71,10 +71,11 @@ void PartsEditorConnectorsView::drawConector(Connector *conn, bool showTerminalP
 }
 
 void PartsEditorConnectorsView::createConnector(Connector *conn, const QSize &connSize, bool showTerminalPoint) {
-	Q_ASSERT(m_item);
 	QString connId = conn->connectorStuffID();
 
-	QRectF bounds = QRectF(m_item->boundingRect().center(),connSize);
+	QRectF bounds = m_item
+			? QRectF(m_item->boundingRect().center(),connSize)
+			: QRectF(scene()->itemsBoundingRect().center(),connSize);
 	PartsEditorConnectorsConnectorItem *connItem = new PartsEditorConnectorsConnectorItem(conn, m_item, m_showingTerminalPoints, bounds);
 	m_drawnConns << connItem;
 	connItem->setShowTerminalPoint(showTerminalPoint);
@@ -190,7 +191,9 @@ void PartsEditorConnectorsView::aboutToSave() {
 			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 
 			if(somethingChanged) {
-				QString tempFile = QDir::tempPath()+"/"+FritzingWindow::getRandText()+".svg";
+				QString viewFolder = getOrCreateViewFolderInTemp();
+
+				QString tempFile = m_tempFolder.path()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
 				QFile file(tempFile);
 				Q_ASSERT(file.open(QFile::WriteOnly));
 				QTextStream out(&file);
@@ -198,7 +201,6 @@ void PartsEditorConnectorsView::aboutToSave() {
 				file.close();
 
 				emit svgFileLoadNeeded(tempFile);
-				QFile::remove(tempFile);
 			}
 		} else {
 			DebugDialog::debug("updating part view svg file: could not load file "+m_item->flatSvgFilePath());
@@ -240,10 +242,6 @@ bool PartsEditorConnectorsView::findConnectorLayerIdAux(QString &result, QDomEle
 
 bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
 	if(!m_drawnConns.isEmpty()) {
-		DebugDialog::debug(QString("<<<< dsW %1  dsH %2  vbW %3  vbH %4")
-				.arg(sceneViewBox.width()).arg(sceneViewBox.height())
-				.arg(svgViewBox.width()).arg(svgViewBox.height()));
-
 		QRectF bounds;
 		QString connId;
 
@@ -384,9 +382,9 @@ bool PartsEditorConnectorsView::showingTerminalPoints() {
 	return m_showingTerminalPoints;
 }
 
-PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart *modelPart) {
+/*PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart *modelPart) {
 	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier);
-}
+}*/
 
 PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path) {
 	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));

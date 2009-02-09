@@ -38,7 +38,7 @@ $Date$
 class PartsEditorConnectorsView: public PartsEditorAbstractView {
 	Q_OBJECT
 	public:
-		PartsEditorConnectorsView(ItemBase::ViewIdentifier, bool showingTerminalPoint, QWidget *parent=0, int size=150);
+		PartsEditorConnectorsView(ItemBase::ViewIdentifier, QDir tempDir, bool showingTerminalPoint, QWidget *parent=0, int size=150);
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
@@ -61,7 +61,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void connectorSelected(const QString& connId);
 
 	protected:
-		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
+		//PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
 		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path);
 
 		void wheelEvent(QWheelEvent* event);

@@ -66,6 +66,5 @@ protected:
 
 	SvgAndPartFilePath *m_svgFilePath;
 	QString m_originalSvgFilePath;
-	QDir m_tempFolder;
 };
 #endif /* PARTSEDITORSPECIFICATIONSVIEW_H_ */
