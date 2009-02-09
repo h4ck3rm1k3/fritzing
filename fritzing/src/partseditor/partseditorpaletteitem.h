@@ -60,6 +60,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 			PaletteItemBase * chief, ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id,
 			ViewLayer::ViewLayerID viewLayer, QMenu * itemMenu, const LayerHash & viewLayers
 		);
+		QString xmlViewLayerID();
 
 
 		QDomDocument *m_svgDom;

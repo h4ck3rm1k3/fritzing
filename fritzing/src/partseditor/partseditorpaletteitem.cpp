@@ -101,7 +101,7 @@ void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 	streamWriter.writeStartElement("layers");
 	streamWriter.writeAttribute("image",m_svgStrings->relativePath());
 		streamWriter.writeStartElement("layer");
-		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
+		streamWriter.writeAttribute("layerId",xmlViewLayerID());
 		streamWriter.writeEndElement();
 	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
 		streamWriter.writeStartElement("layer");
@@ -244,4 +244,12 @@ void PartsEditorPaletteItem::removeFromModel() {
 	if(m_modelPart) {
 		m_modelPart->removeViewItem(this);
 	}
+}
+
+
+QString PartsEditorPaletteItem::xmlViewLayerID() {
+	ViewLayer::ViewLayerID viewLayerIDAux = m_viewLayerID == ViewLayer::UnknownLayer
+		? ItemBase::defaultConnectorLayer(m_viewIdentifier)
+		: m_viewLayerID;
+	return ViewLayer::viewLayerXmlNameFromID(viewLayerIDAux);
 }

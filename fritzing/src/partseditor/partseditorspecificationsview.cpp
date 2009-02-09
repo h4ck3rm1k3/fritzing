@@ -250,7 +250,6 @@ QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFil
 	QString newFilePath = m_tempFolder.path()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
 	QImage imgOrig(origFilePath);
 
-	DebugDialog::debug("creando svg en "+newFilePath);
 
 	QSvgGenerator svgGenerator;
 	svgGenerator.setFileName(newFilePath);

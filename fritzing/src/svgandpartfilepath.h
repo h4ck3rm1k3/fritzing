@@ -52,7 +52,6 @@ public:
 		return first;
 	}
 	void setAbsolutePath(const QString &partFolderPath) {
-		DebugDialog::debug("<<<<<aaa "+partFolderPath);
 		first = partFolderPath;
 	}
 
@@ -67,7 +66,6 @@ public:
 		return third;
 	}
 	void setRelativePath(const QString &fileRelativePath) {
-		DebugDialog::debug("<<<<<bbbb "+fileRelativePath);
 		third = fileRelativePath;
 	}
 };

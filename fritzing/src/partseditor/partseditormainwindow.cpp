@@ -446,7 +446,16 @@ bool PartsEditorMainWindow::saveAs() {
 		}
 	}
 
-	QString filename = userPartsFolderPath+m_fileName;
+	Qt::CaseSensitivity cs = Qt::CaseSensitive;
+#ifdef Q_WS_WIN
+	// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
+	// but the file dialog returns a string beginning with "C:"
+	cs = Qt::CaseInsensitive;
+#endif
+
+	QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
+			? userPartsFolderPath+m_fileName
+			: m_fileName;
 	if(!alreadyHasExtension(filename)) {
 		filename += FritzingPartExtension;
 	}
