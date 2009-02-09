@@ -382,12 +382,12 @@ bool PartsEditorConnectorsView::showingTerminalPoints() {
 	return m_showingTerminalPoints;
 }
 
-/*PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart *modelPart) {
+PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart *modelPart) {
 	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier);
-}*/
+}
 
 PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path) {
-	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
+	return new PartsEditorConnectorsPaletteItem(this, modelPart, m_viewIdentifier, path);
 }
 
 void PartsEditorConnectorsView::inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem) {

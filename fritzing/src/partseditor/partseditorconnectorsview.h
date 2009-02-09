@@ -61,7 +61,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void connectorSelected(const QString& connId);
 
 	protected:
-		//PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
+		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
 		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path);
 
 		void wheelEvent(QWheelEvent* event);

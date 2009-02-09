@@ -30,8 +30,15 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #include "partseditorconnectorsview.h"
 #include "partseditorconnectorslayerkinpaletteitem.h"
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer)
-	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier, path, layer )
+
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier)
+	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
+{
+	m_showingTerminalPoints = owner->showingTerminalPoints();
+}
+
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
+	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier, path)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
 }

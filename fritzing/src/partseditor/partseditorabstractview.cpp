@@ -58,10 +58,9 @@ void PartsEditorAbstractView::loadFromModel(PaletteModel *paletteModel, ModelPar
 }
 
 ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors) {
-	/*if(paletteItem == NULL) {
+	if(paletteItem == NULL) {
 		paletteItem = newPartsEditorPaletteItem(modelPart);
-	}*/
-	Q_ASSERT(paletteItem);
+	}
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 	return addPartItem(modelPart, paletteItem, doConnectors);
 }
@@ -237,8 +236,12 @@ const QStringList PartsEditorAbstractView::getLayers(const QString &path) {
 	return retval;
 }
 
-PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path) {
-	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier, path, ItemBase::viewIdentifierNaturalName(m_viewIdentifier));
+PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart *modelPart) {
+	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier);
+}
+
+PartsEditorPaletteItem *PartsEditorAbstractView::newPartsEditorPaletteItem(ModelPart *modelPart, SvgAndPartFilePath *path) {
+	return new PartsEditorPaletteItem(this, modelPart, m_viewIdentifier, path);
 }
 
 QDir PartsEditorAbstractView::tempFolder() {

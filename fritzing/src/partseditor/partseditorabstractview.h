@@ -44,6 +44,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		virtual void addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath);
 
 	protected:
+		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
 		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path);
 
 		void clearScene();

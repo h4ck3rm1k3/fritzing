@@ -35,8 +35,8 @@ class PartsEditorConnectorsView;
 class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart *modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer);
-		//PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart *modelPart, ItemBase::ViewIdentifier viewIdentifier);
+		PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart *modelPart, ItemBase::ViewIdentifier viewIdentifier);
+		PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart *modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
 
 	public slots:
 		void highlightConnectors(const QString &connId);

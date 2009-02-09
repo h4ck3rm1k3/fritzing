@@ -38,7 +38,19 @@ $Date$
 #include "../layerattributes.h"
 #include "../layerkinpaletteitem.h"
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer) :
+
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) :
+	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
+{
+	m_owner = owner;
+
+	m_svgDom = NULL;
+
+	m_connectors = NULL;
+	m_svgStrings = NULL;
+}
+
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL, false)
 {
 	m_owner = owner;
@@ -51,33 +63,6 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 	setAcceptHoverEvents(false);
 	setSelected(false);
 }
-
-/*PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, QDomDocument *svgFile, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path, QString layer) :
-	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
-{
-	m_owner = owner;
-
-	m_svgDom = svgFile;
-
-	createSvgFile(path->absolutePath());
-	m_svgStrings = path;
-
-	m_connectors = NULL;
-
-	setAcceptHoverEvents(false);
-	setSelected(false);
-}
-
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) :
-	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
-{
-	m_owner = owner;
-
-	m_svgDom = NULL;
-
-	m_connectors = NULL;
-	m_svgStrings = NULL;
-}*/
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
     m_svgDom = new QDomDocument();
@@ -157,6 +142,9 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 		bool gotOne = false;
 		for(int i=0; i < possibleFolders.size(); i++) {
 			if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
+				m_svgStrings = new SvgAndPartFilePath();
+				m_svgStrings->setAbsolutePath(tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]));
+				m_svgStrings->setRelativePath(tempPath.second.arg(possibleFolders[i]));
 				gotOne = true;
 				break;
 			}
