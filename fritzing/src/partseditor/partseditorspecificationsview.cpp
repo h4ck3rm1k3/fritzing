@@ -59,33 +59,16 @@ void PartsEditorSpecificationsView::mousePressConnectorEvent(ConnectorItem *, QG
 }
 
 void PartsEditorSpecificationsView::copySvgFileToDestiny() {
-	QString origFile = "";
-	QString destFile = "";
-	bool doIt = false;
-
 	Qt::CaseSensitivity cs = Qt::CaseSensitive;
-
 #ifdef Q_WS_WIN
-	// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
-	// but the file dialog returns a string beginning with "C:"
 	cs = Qt::CaseInsensitive;
 #endif
 
 	// if the svg file is in the temp folder, then copy it to destiny
-	if(m_svgFilePath->absolutePath().startsWith(QDir::tempPath(),cs)) {
-		origFile = svgFilePath();
-		destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
-		doIt = true;
-	}
+	if(m_svgFilePath->absolutePath().startsWith(m_tempFolder,cs)) {
+		QString origFile = svgFilePath();
+		QString destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
 
-	// jpeg / png turned into svg (is in temp )
-	/*if(m_svgFilePath->second.isEmpty() && m_svgFilePath->first.startsWith(m_tempFolder.path())) {
-		origFile = m_svgFilePath->first;
-		destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->first.remove(m_tempFolder.path()+"/");
-		doIt = true;
-	}*/
-
-	if(doIt) {
 		QFile tempFile(origFile);
 		DebugDialog::debug(QString("copying from %1 to %2")
 				.arg(origFile)
