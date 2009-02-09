@@ -11,9 +11,9 @@
  </g>
  <g id="copper0" >
   <rect width="48" x="46" y="46" fill="none" height="48" stroke="rgb(255, 191, 0)" stroke-width="11" />
-  <circle fill="none" cx="70" cy="70" stroke="rgb(255, 191, 0)" r="24" id="connector0pad" stroke-width="11" />
-  <circle fill="none" cx="70" cy="170" stroke="rgb(255, 191, 0)" r="24" id="connector1pad" stroke-width="11" />
-  <circle fill="none" cx="70" cy="270" stroke="rgb(255, 191, 0)" r="24" id="connector2pad" stroke-width="11" />
+  <circle fill="none" cx="70" cy="70" stroke="rgb(255, 191, 0)" r="24" id="connector0pin" stroke-width="11" />
+  <circle fill="none" cx="70" cy="170" stroke="rgb(255, 191, 0)" r="24" id="connector1pin" stroke-width="11" />
+  <circle fill="none" cx="70" cy="270" stroke="rgb(255, 191, 0)" r="24" id="connector2pin" stroke-width="11" />
  </g>
  <g id="keepout" />
  <g id="soldermask" />

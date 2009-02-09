@@ -48,7 +48,7 @@
      <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
     </schematicView>
     <pcbView>
-     <p svgId="connector0pad" layer="copper0" />
+     <p svgId="connector0pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
@@ -62,7 +62,7 @@
      <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
     </schematicView>
     <pcbView>
-     <p svgId="connector1pad" layer="copper0" />
+     <p svgId="connector1pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
@@ -76,7 +76,7 @@
      <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
     </schematicView>
     <pcbView>
-     <p svgId="connector2pad" layer="copper0" />
+     <p svgId="connector2pin" layer="copper0" />
     </pcbView>
    </views>
   </connector>
