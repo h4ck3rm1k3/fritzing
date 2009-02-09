@@ -266,6 +266,7 @@ void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			connectorItem->setOverConnectorItem(NULL);   // clean up
 			this->layerKinChief()->sendConnectionChangedSignal(connectorItem, to, true);
 		}
+		connectorItem->clearConnectorHover();
 	}
 }
 

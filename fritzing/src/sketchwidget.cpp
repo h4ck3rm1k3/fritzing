@@ -1198,6 +1198,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 				extendChangeConnectionCommand(connectorItem, to, true, false, parentCommand);
 				gotConnector = true;
 			}
+			connectorItem->clearConnectorHover();
 		}
 
 		clearTemporaries();

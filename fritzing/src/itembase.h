@@ -145,6 +145,7 @@ public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	virtual void connectorHover(class ConnectorItem *, ItemBase *, bool hovering);
+	void clearConnectorHover();
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void connectionChange(ConnectorItem *);
@@ -167,9 +168,6 @@ public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
-
-protected:
-	static void dotHighlightSelectedCallback(QGraphicsItem *, QPainter * painter, int step);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -200,6 +198,7 @@ protected:
 	ViewIdentifier m_viewIdentifier;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	int m_connectorHoverCount;
+	int m_connectorHoverCount2;
 	int m_hoverCount;
 	bool m_topLevel;
 	bool m_hidden;
@@ -215,6 +214,10 @@ protected:
 protected:
 	static long nextID;
 	static QHash <ViewIdentifier, StringTriple * > names;
+	const static QColor hoverColor;
+	const static qreal hoverOpacity;
+	const static QColor connectorHoverColor;
+	const static qreal connectorHoverOpacity;
 
 };
 #endif

@@ -46,6 +46,8 @@ public:
 	Connector * connector();
 	ItemBase * attachedTo();
 	void connectorHover(class ItemBase *, bool hovering);
+	bool connectorHovering();
+	void clearConnectorHover();
 	void connectTo(ConnectorItem *);
 	int connectionsCount();
 	void attachedMoved();
@@ -113,9 +115,10 @@ protected:
 	bool m_circular;
 	bool m_dirty;
 	QString m_baseTooltip;
+	bool m_connectorHovering;
 
 public:
-	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);
+	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags, bool wiresOnly = false);
 	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
 

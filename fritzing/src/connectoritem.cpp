@@ -46,9 +46,10 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
 	m_dirty = false;
-	m_opacity = 0.4;
+	m_opacity = 0.3;
 	m_circular = false;
 	m_overConnectorItem = NULL;
+	m_connectorHovering = false;
 	m_hidden = false;
 	m_attachedTo = attachedTo;
 	m_connector = connector;
@@ -100,7 +101,16 @@ ItemBase * ConnectorItem::attachedTo() {
 	return m_attachedTo;
 }
 
+void ConnectorItem::clearConnectorHover() {
+	m_connectorHovering = false;
+	restoreColor();
+	if (this->m_attachedTo != NULL) {
+		m_attachedTo->clearConnectorHover();
+	}
+}
+
 void ConnectorItem::connectorHover(ItemBase * itemBase, bool hovering) {
+	m_connectorHovering = hovering;
 	if (hovering) {
 		setHoverColor();
 	}
@@ -110,6 +120,10 @@ void ConnectorItem::connectorHover(ItemBase * itemBase, bool hovering) {
 	if (this->m_attachedTo != NULL) {
 		m_attachedTo->connectorHover(this, itemBase, hovering);
 	}
+}
+
+bool ConnectorItem::connectorHovering() {
+	return m_connectorHovering;
 }
 
 void ConnectorItem::connectTo(ConnectorItem * connected) {
@@ -494,10 +508,9 @@ bool ConnectorItem::isDirty() {
 }
 
 
-void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags) {
+void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags, bool wiresOnly) {
 	// collects all the connectors at the same potential
 	// allows direct connections or wired connections
-	// but not ratsnest, jumpers or trace wire connections
 
 	QList<ConnectorItem *> tempItems = connectorItems;
 	connectorItems.clear();
@@ -517,17 +530,20 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 
 		foreach (ConnectorItem * cto, connectorItem->connectedToItems()) {
 			if (tempItems.contains(cto)) continue;
+			if (wiresOnly && cto->attachedToItemType() != ModelPart::Wire) continue;
 
 			tempItems.append(cto);
 		}
 
-		Bus * bus = connectorItem->bus();
-		if (bus != NULL) {
-			QList<ConnectorItem *> busConnectedItems;
-			connectorItem->attachedTo()->busConnectorItems(bus, busConnectedItems);
-			foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
-				if (!tempItems.contains(busConnectedItem)) {
-					tempItems.append(busConnectedItem);
+		if (!wiresOnly) {
+			Bus * bus = connectorItem->bus();
+			if (bus != NULL) {
+				QList<ConnectorItem *> busConnectedItems;
+				connectorItem->attachedTo()->busConnectorItems(bus, busConnectedItems);
+				foreach (ConnectorItem * busConnectedItem, busConnectedItems) {
+					if (!tempItems.contains(busConnectedItem)) {
+						tempItems.append(busConnectedItem);
+					}
 				}
 			}
 		}

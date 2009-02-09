@@ -236,10 +236,16 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
 {
 	Q_UNUSED(widget);
+	Q_UNUSED(option);
 	painter->save();
-	//painter->setOpacity(0.25);
-	//painter->fillPath(this->hoverShape(), QBrush(ConnectorItem::hoverPen.color()));
-	qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), hoverShape(), dotHighlightSelectedCallback);  
+	if ((m_connectorHoverCount > 0 && !m_dragEnd) || m_connectorHoverCount2 > 0) {
+		painter->setOpacity(.40);
+		painter->fillPath(this->hoverShape(), QBrush(connectorHoverColor));
+	}
+	else {
+		painter->setOpacity(hoverOpacity);
+		painter->fillPath(this->hoverShape(), QBrush(hoverColor));
+	}
 	painter->restore();
 }
 
@@ -359,7 +365,9 @@ void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 			// clean up
 			from->setOverConnectorItem(NULL);
+			from->clearConnectorHover();
 		}
+
 
 		QLineF newLine = this->line();
 		QLineF oldLine = m_viewGeometry.line();

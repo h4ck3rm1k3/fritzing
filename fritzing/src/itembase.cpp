@@ -46,8 +46,10 @@ QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
 QString ItemBase::partInstanceDefaultTitle;
 
-static QVector<qreal> dotPattern;
-static qreal DashWidth = 3;
+const QColor ItemBase::hoverColor(0,0,0);
+const qreal ItemBase::hoverOpacity = .20;
+const QColor ItemBase::connectorHoverColor(0,0,255);
+const qreal ItemBase::connectorHoverOpacity = .40;
 
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {
@@ -84,7 +86,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_topLevel = topLevel;
-	m_hoverCount = m_connectorHoverCount = 0;
+	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;
 	m_viewIdentifier = viewIdentifier;
 	m_modelPart = modelPart;
 	if (m_modelPart) {
@@ -238,9 +240,6 @@ void ItemBase::initNames() {
 		names.insert(ItemBase::PCBView, new StringTriple("pcbView", QObject::tr("pcb view"), "pcb"));
 		partInstanceDefaultTitle = tr("Part");
 	}
-	if (dotPattern.size() == 0) {
-		dotPattern << (3 / DashWidth) << (3 / DashWidth);
-	}
 }
 
 void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
@@ -328,24 +327,38 @@ void ItemBase::removeLayerKin() {
 void ItemBase::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
 	DebugDialog::debug(QString("hover enter c %1").arg(instanceTitle()));
 	m_connectorHoverCount++;
-	this->update();
+	if (itemType() != ModelPart::Breadboard) {
+		this->update();
+	}
 }
 
 void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
 	DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
 	m_connectorHoverCount--;
-	this->update();
+	if (itemType() != ModelPart::Breadboard) {
+		this->update();
+	}
+}
+
+void ItemBase::clearConnectorHover() 
+{
+	m_connectorHoverCount2 = 0;
+	if (itemType() != ModelPart::Breadboard) {
+		update();
+	}
 }
 
 void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
 	DebugDialog::debug(QString("hover c %1 %2").arg(hovering).arg(instanceTitle()));
 
 	if (hovering) {
-		m_connectorHoverCount++;
-		this->update();
+		m_connectorHoverCount2++;
 	}
 	else {
-		m_connectorHoverCount--;
+		m_connectorHoverCount2--;
+	}
+	DebugDialog::debug(QString("m_connectorHoverCount2 %1 %2").arg(instanceTitle()).arg(m_connectorHoverCount2));
+	if (itemType() != ModelPart::Breadboard) {
 		this->update();
 	}
 }
@@ -433,7 +446,9 @@ void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	DebugDialog::debug(QString("hover enter %1").arg(instanceTitle()));
 
 	m_hoverCount++;
-	update();
+	if (itemType() != ModelPart::Breadboard) {
+		update();
+	}
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverEnterItem(event, this);
@@ -443,7 +458,9 @@ void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	DebugDialog::debug(QString("hover leave %1").arg(instanceTitle()));
 	m_hoverCount--;
-	update();
+	if (itemType() != ModelPart::Breadboard) {
+		update();
+	}
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveItem(event, this);
@@ -495,6 +512,17 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 
 	lastUnderConnector = candidate;
 
+	if (candidate == NULL) {
+		if (connectorItemOver->connectorHovering()) {
+			connectorItemOver->connectorHover(NULL, false);
+		}
+	}
+	else {
+		if (!connectorItemOver->connectorHovering()) {
+			connectorItemOver->connectorHover(NULL, true);
+		}
+	}
+
 	return lastUnderConnector;
 }
 
@@ -544,7 +572,7 @@ int ItemBase::itemType() {
 }
 
 void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	if (m_connectorHoverCount > 0 || m_hoverCount > 0) {
+	if (m_connectorHoverCount > 0 || m_hoverCount > 0 || m_connectorHoverCount2 > 0) {
 		paintHover(painter, option, widget);
 	}
 
@@ -554,10 +582,16 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
 {
 	Q_UNUSED(widget);
+	Q_UNUSED(option);
 	painter->save();
-	//painter->setOpacity(0.25);
-	//painter->fillPath(this->hoverShape(), QBrush(ConnectorItem::hoverPen.color()));
-	qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), dotHighlightSelectedCallback);   
+	if (m_connectorHoverCount > 0 || m_connectorHoverCount2 > 0) {
+		painter->setOpacity(connectorHoverOpacity);
+		painter->fillPath(this->hoverShape(), QBrush(connectorHoverColor));
+	}
+	else {
+		painter->setOpacity(hoverOpacity);
+		painter->fillPath(this->hoverShape(), QBrush(hoverColor));
+	}
 	painter->restore();
 }
 
@@ -884,24 +918,6 @@ bool ItemBase::isSwappable() {
 	}
 
 	return true;
-}
-
-void ItemBase::dotHighlightSelectedCallback(QGraphicsItem * item, QPainter * painter, int step) 
-{
-	QPen pen;
-	pen.setWidth(DashWidth);
-	if (step == 0) {
-	}
-	else {
-		QColor c = item->scene()->backgroundBrush().color();
-		c.setRed(255 - c.red());
-		c.setGreen(255 - c.green());
-		c.setBlue(255 - c.blue());
-		pen.setDashPattern(dotPattern);
-		//pen.setDashOffset(0);
-		pen.setColor(c);
-	}
-	painter->setPen(pen);
 }
 
 void ItemBase::ensureUniqueTitle(QString &title) {
