@@ -65,7 +65,7 @@ void PartsEditorSpecificationsView::copySvgFileToDestiny() {
 #endif
 
 	// if the svg file is in the temp folder, then copy it to destiny
-	if(m_svgFilePath->absolutePath().startsWith(m_tempFolder,cs)) {
+	if(m_svgFilePath->absolutePath().startsWith(m_tempFolder.path(),cs)) {
 		QString origFile = svgFilePath();
 		QString destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
 
