@@ -125,11 +125,12 @@ void PartsEditorAbstractView::removeConnectors() {
 	}
 }
 
-ModelPart *PartsEditorAbstractView::createFakeModelPart(const QString &absPath) {
-	const QHash<QString,StringPair*> connIds = getConnectorIds(absPath);
-	const QStringList layers = getLayers(absPath);
+ModelPart *PartsEditorAbstractView::createFakeModelPart(SvgAndPartFilePath *svgpath) {
+	const QHash<QString,StringPair*> connIds = getConnectorIds(svgpath->absolutePath());
+	const QStringList layers = getLayers(svgpath->absolutePath());
 
-	return createFakeModelPart(connIds, layers, absPath);
+	QString path = svgpath->relativePath() == ___emptyString___ ? svgpath->absolutePath() : svgpath->relativePath();
+	return createFakeModelPart(connIds, layers, path);
 }
 
 ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
