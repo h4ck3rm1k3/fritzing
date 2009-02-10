@@ -1860,6 +1860,12 @@ void MainWindow::exportBOM() {
 
         QString bom = tr("Fritzing Bill of Materials\n\n");
 
+        bom += tr("Sketch: \t") + QFileInfo(m_fileName).fileName() + "\n";
+        //TODO:  add the Author ID - system specific crap
+        //bom += tr("Printed by: ") +
+
+        bom += tr("Date: \t") + QDateTime::currentDateTime().toString() + "\n\n";
+
         // bail out if something is wrong
         // TODO: show an error in QMessageBox
         if(m_currentWidget == NULL) {
