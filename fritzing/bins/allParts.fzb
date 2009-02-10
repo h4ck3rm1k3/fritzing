@@ -268,6 +268,13 @@
 				</iconView>
 			</views>
 		</instance>
+		<instance moduleIdRef="a59353bd0db0225dc22770e292c622f3" path="parts/core/lm358.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
 		<instance moduleIdRef="1900ABDC24" path="/parts/core/LED-blue-5mm.fzp">
 			<views>
 				<iconView layer="icon">
