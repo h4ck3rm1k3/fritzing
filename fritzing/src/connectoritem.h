@@ -118,7 +118,7 @@ protected:
 	bool m_connectorHovering;
 
 public:
-	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags, bool wiresOnly = false);
+	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);
 	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
 

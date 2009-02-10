@@ -136,7 +136,7 @@ public:
 	void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
-	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *);
+	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *, bool skipMe);
 
 	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext, QSizeF oldSize, QSizeF newSize);
 
@@ -266,7 +266,7 @@ protected:
 	void moveItems(QPoint globalPos);
 	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
-	virtual void reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();
 	virtual bool canChainWire(Wire *);
 	virtual bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);

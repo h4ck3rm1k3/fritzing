@@ -69,7 +69,7 @@ class AddDeleteItemCommand : public BaseCommand
 public:
     AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
 
-	long itemID();
+	long itemID() const;
 
 protected:
 	QString getParamString() const;
@@ -284,7 +284,7 @@ protected:
 class CleanUpWiresCommand : public BaseCommand
 {
 public:
-	CleanUpWiresCommand(class SketchWidget * sketchWidget, QUndoCommand * parent);
+	CleanUpWiresCommand(class SketchWidget * sketchWidget, bool skipMe, QUndoCommand * parent);
     void undo();
     void redo();
 	void addWire(SketchWidget *, class Wire *);
@@ -297,6 +297,7 @@ protected:
 protected:
 
 	bool m_firstTime;
+	bool m_skipMe;
 };
 
 

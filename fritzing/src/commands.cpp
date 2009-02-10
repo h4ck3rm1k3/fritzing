@@ -98,7 +98,7 @@ QString AddDeleteItemCommand::getParamString() const {
 		.arg(m_modelIndex);
 }
 
-long AddDeleteItemCommand::itemID() {
+long AddDeleteItemCommand::itemID() const {
 	return m_itemID;
 }
 
@@ -477,10 +477,11 @@ QString StickyCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, QUndoCommand *parent)
+CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, bool skipMe, QUndoCommand *parent)
 : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
 	m_firstTime = true;
+	m_skipMe = skipMe;
 }
 
 void CleanUpWiresCommand::undo()
@@ -496,12 +497,22 @@ void CleanUpWiresCommand::redo()
 		command->redo();
 	}
 
-	m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL);
+	m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL, m_skipMe);
 	m_firstTime = false;
 }
 
 void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire) 
 {
+	for (int i = 0; i < m_parentCommand->childCount(); i++) {
+		const DeleteItemCommand * command = dynamic_cast<const DeleteItemCommand *>(m_parentCommand->child(i));
+
+		if (command == NULL) continue;
+		if (command->itemID() == wire->id()) {
+			return;
+		}		
+	}
+
+
 	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	

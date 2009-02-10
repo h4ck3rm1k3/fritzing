@@ -86,6 +86,7 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 	return result;
 }
 
+
 BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 {
 	return BaseCommand::CrossView;
@@ -93,38 +94,29 @@ BaseCommand::CrossViewType BreadboardSketchWidget::wireSplitCrossView()
 
 void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & foreignMoveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
-	// translate the foreign items into local ones
+	Q_UNUSED(deletedConnections);
+	Q_UNUSED(deletedItems);
+
 	QMultiHash<PaletteItemBase *, ConnectorItem *> bases;
 	ConnectorPairHash moveItems;
-	foreach (ConnectorItem * foreignFromConnectorItem, foreignMoveItems.uniqueKeys()) {
-		qint64 fromItemID = foreignFromConnectorItem->attachedToID();
-		ItemBase * fromItemBase = findItem(fromItemID);
-		if (fromItemBase == NULL) continue;
-
-		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(fromItemBase);
-		if (paletteItemBase == NULL) {
-			// shouldn't be here: want parts not wires
-			continue;
-		}
-
-		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorStuffID(), true);
-		if (fromConnectorItem == NULL) continue;
-
-		foreach (ConnectorItem * foreignToConnectorItem, foreignMoveItems.values(foreignFromConnectorItem)) {
-			qint64 toItemID = foreignToConnectorItem->attachedToID();
-			ItemBase * toItemBase = findItem(toItemID);
-			if (toItemBase == NULL) continue;
-
-			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorStuffID(), true);
-			if (toConnectorItem == NULL) continue;
-
-			moveItems.insert(fromConnectorItem, toConnectorItem);
-		}
-		bases.insert(paletteItemBase, fromConnectorItem);
-	}
+	translateToLocalItems(foreignMoveItems, moveItems, bases);
 
 	QHash<PaletteItemBase *, ItemBase *> detachItems;
+	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
+		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
+			if (fromConnectorItem->connectorType() == Connector::Female) {
+				// SchematicSketchWidget moveItems may have both A-hashed-to-B connectorItems, 
+				// and B-hashed-to-A connectorItems.  We ignore the hash pair starting with the
+				// female connector
+				continue;
+			}
+			foreach (ConnectorItem * toConnectorItem, moveItems.values(fromConnectorItem)) {
+				detachItems.insert(paletteItemBase, toConnectorItem->attachedTo());
+			}
+		}
+	}
 
+	/*
 	foreach (PaletteItemBase * paletteItemBase, bases.uniqueKeys()) {
 		foreach (ConnectorItem * fromConnectorItem, bases.values(paletteItemBase)) {
 			int femaleCount = 0;
@@ -180,6 +172,7 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 			}
 		}
 	}
+	*/
 
 	foreach (PaletteItemBase * detachee, detachItems.keys()) {
 		ItemBase * detachFrom = detachItems.value(detachee);
@@ -209,6 +202,36 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, true, BaseCommand::CrossView, parentCommand);
 			}
 		}
+	}
+}
+
+void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases)
+{
+	foreach (ConnectorItem * foreignFromConnectorItem, foreignMoveItems.uniqueKeys()) {
+		qint64 fromItemID = foreignFromConnectorItem->attachedToID();
+		ItemBase * fromItemBase = findItem(fromItemID);
+		if (fromItemBase == NULL) continue;
+
+		PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(fromItemBase);
+		if (paletteItemBase == NULL) {
+			// shouldn't be here: want parts not wires
+			continue;
+		}
+
+		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorStuffID(), true);
+		if (fromConnectorItem == NULL) continue;
+
+		foreach (ConnectorItem * foreignToConnectorItem, foreignMoveItems.values(foreignFromConnectorItem)) {
+			qint64 toItemID = foreignToConnectorItem->attachedToID();
+			ItemBase * toItemBase = findItem(toItemID);
+			if (toItemBase == NULL) continue;
+
+			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorStuffID(), true);
+			if (toConnectorItem == NULL) continue;
+
+			moveItems.insert(fromConnectorItem, toConnectorItem);
+		}
+		bases.insert(paletteItemBase, fromConnectorItem);
 	}
 }
 

@@ -51,7 +51,7 @@ protected:
 	bool canDropModelPart(ModelPart * modelPart);
 	virtual void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *) = 0;
 	virtual void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
-	void reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
 	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
 	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);

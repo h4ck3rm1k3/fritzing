@@ -34,6 +34,10 @@ static int MAX_INT = std::numeric_limits<int>::max();
 
 QHash <ConnectorItem *, DistanceThing *> distances;
 
+bool bySize(QList<ConnectorItem *> * l1, QList<ConnectorItem *> * l2) {
+	return l1->count() >= l2->count();
+}
+
 bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 	if (end0->connectorType() == Connector::Male && end1->connectorType() == Connector::Female) {
 		return true;
@@ -259,14 +263,350 @@ bool SchematicSketchWidget::canCopyItem(QGraphicsItem * item)
 	return SketchWidget::canDeleteItem(item);
 }
 
-void SchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+bool SchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
-	// PCBSchematicSketchWidget::reviewDeletedConnections will remove the virtual wire connections from deletedConnections
-	PCBSchematicSketchWidget::reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
 
+	QList<ConnectorItem *> affectedEnds;
+	QSet<Wire *> insertAfter;
+	// first, if there are schematic ratsnest wires that directly correspond to breadboard (normal) wires
+	// delete the normal wires
+	foreach (ItemBase * item, deletedItems) {
+		if (!item->getVirtual()) continue;
+
+		Wire * wire = dynamic_cast<Wire *>(item);
+		QList<ConnectorItem *> ends;
+		QList<ConnectorItem *> uniqueEnds;
+		QList<Wire *> wires;
+		wire->collectChained(wires, ends, uniqueEnds);
+		if (ends.count() != 2) {
+			foreach (ConnectorItem * ci, ends) { affectedEnds.append(ci); }
+			continue;
+		}
+		
+		Wire * normalWire = ends[0]->wiredTo(ends[1], ViewGeometry::NormalFlag);
+		if (normalWire == NULL) {
+			foreach (ConnectorItem * ci, ends) { affectedEnds.append(ci); }
+			continue;
+		}
+
+		QList<ConnectorItem *> ends2;
+		QList<ConnectorItem *> uniqueEnds2;
+		QList<Wire *> wires2;
+		normalWire->collectChained(wires2, ends2, uniqueEnds2);
+		if (ends2.count() != 2) {
+			foreach (ConnectorItem * ci, ends) { affectedEnds.append(ci); }
+			continue;
+		}
+
+		foreach (Wire * w, wires2) {
+			insertAfter.insert(w);
+		}
+
+		foreach (Wire * w, wires) {
+			deletedConnections.remove(w);
+			deletedItems.remove(w);						
+			insertAfter.insert(w);
+		}
+	}
+
+	if (deletedConnections.count() > 0) {
+		// note: will need to do this when deleting a connection
+		reviewDeletedConnectionsAux(deletedItems, deletedConnections, affectedEnds, parentCommand);
+	}
+
+	foreach (Wire * w, insertAfter) {
+		// add these "normal" wires to the deleted list; don't forget the connections
+		deletedItems.insert(w);
+		ConnectorPairHash * connectorHash = new ConnectorPairHash;
+		w->collectConnectors(*connectorHash, this->scene());
+		deletedConnections.insert(w, connectorHash);
+	}
+
+	return true;
+}
+
+void SchematicSketchWidget::reviewDeletedConnectionsAux(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, 
+														QList<ConnectorItem *> & affectedEnds, QUndoCommand * parentCommand)
+{
+	// disconnect all the rats affected by the delete
+	foreach (ConnectorPairHash * connectorHash, deletedConnections.values()) {
+		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
+			bool removeAll = fromConnectorItem->attachedTo()->getVirtual();
+			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
+				if (toConnectorItem->attachedTo()->getVirtual() || removeAll) {
+					fromConnectorItem->tempRemove(toConnectorItem, false);
+					toConnectorItem->tempRemove(fromConnectorItem, false);
+				}
+			}
+		}
+	}
+
+	// make a list of the new nets
+	// this is not an efficient way to do it, but it will do for now
+
+	// first find all the parts connected by ratsnest wires
+	QList< QList<ConnectorItem *> *> allEnds;
+	QList<Wire *> visitedWires;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+		if (!wire->getVirtual()) continue;
+		if (visitedWires.contains(wire)) continue;
+
+		QList<Wire *> wires;
+		QList<ConnectorItem *> * ends = new QList<ConnectorItem *>;
+		QList<ConnectorItem *> uniqueEnds;
+		wire->collectChained(wires, *ends, uniqueEnds);
+		if (ends->count() > 0) {
+			allEnds.append(ends);
+		}
+		foreach (Wire * w, wires) {
+			visitedWires.append(w);
+		}
+	}
+
+	// now combine them into nets
+	for (int i = allEnds.count() - 1; i >= 1; i--) {
+		QList<ConnectorItem *> * endsi = allEnds[i];
+		for (int j = i - 1; j >= 0; j--) {
+			QList<ConnectorItem *> * endsj = allEnds[j];
+			foreach (ConnectorItem * ci, *endsi) {
+				if (endsj->contains(ci)) {
+					foreach (ConnectorItem * cj, *endsj) {
+						endsi->append(cj);
+					}
+					endsj->clear();
+					break;
+				}
+			}
+		}
+	}
+
+	// now remove the combined-out subnets
+	for (int i = allEnds.count() - 1; i >= 0; i--) {
+		if (allEnds[i]->count() == 0) {
+			allEnds.removeAt(i);
+		}
+	}
+
+	// now for each of the nets, we only need the ones that have been affected by the deletions
+	QList< QList<ConnectorItem *> * > newNets;
+	foreach (ConnectorPairHash * connectorHash, deletedConnections.values()) {
+		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
+			if (!fromConnectorItem->attachedTo()->getVirtual()) {
+				checkInNet(fromConnectorItem, allEnds, newNets);
+			}
+
+			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
+				if (!toConnectorItem->attachedTo()->getVirtual()) {
+					checkInNet(toConnectorItem, allEnds, newNets);
+				}
+			}
+		}
+	}
+
+	foreach (ConnectorItem * ci, affectedEnds) {
+		checkInNet(ci, allEnds, newNets);
+	}
+
+	foreach (QList<ConnectorItem *> * net, newNets) {
+		DebugDialog::debug("collected net");
+		foreach (ConnectorItem * ci, *net) {
+			DebugDialog::debug(QString("\t%1 %2").arg(ci->attachedToTitle()).arg(ci->connectorStuffID()));
+		}
+	}
+
+	// order by size:
+	qSort(newNets.begin(), newNets.end(), bySize);
+
+	// again, not the most efficient approach, but it will do for now
+	QHash<ConnectorItem *, int> indexer;
+	QList< QList<ConnectorItem *>* > oldNets;
+	Autorouter1::collectAllNets(this, indexer, oldNets);
+
+	QList< QList<ConnectorItem *> * > visitedOldNets;
+	QList< QList<ConnectorItem *> * > netsToChange;
+	QList< QList<ConnectorItem *> * > netsToLeave;
+
+	// figure out which old net the new net used to be part of
+	// if the newnet is the first (biggest) net, then we don't have move its parts
+	foreach (QList<ConnectorItem *> * newNet, newNets) {
+		foreach(QList<ConnectorItem *> * oldNet, oldNets) {
+			if (oldNet->contains(newNet->at(0))) {
+				if (visitedOldNets.contains(oldNet)) {
+					netsToChange.append(newNet);
+				}
+				else {
+					visitedOldNets.append(oldNet);
+					netsToLeave.append(newNet);
+				}
+				break;
+			}
+		}
+	}
+
+	ConnectorPairHash tempDisconnectItems;
+	ConnectorPairHash moveItems;
+	QSet<Wire *> possibleOrphans;
+	foreach (QList<ConnectorItem *> * net, netsToChange) {
+		reviewNet(*net, false, tempDisconnectItems, moveItems, possibleOrphans, deletedItems, parentCommand);
+	}
+	foreach (QList<ConnectorItem *> * net, netsToLeave) {
+		reviewNet(*net, true, tempDisconnectItems, moveItems, possibleOrphans, deletedItems, parentCommand);
+	}
+
+	// get ready to restore any nets we've broken
+	foreach (ConnectorItem * fromConnectorItem, tempDisconnectItems.uniqueKeys()) {
+		foreach (ConnectorItem * toConnectorItem, tempDisconnectItems.values(fromConnectorItem)) {
+			fromConnectorItem->tempRemove(toConnectorItem, false);
+			toConnectorItem->tempRemove(fromConnectorItem, false);
+		}
+	}
+
+	foreach (QList<ConnectorItem *> * net, netsToChange) {
+		restoreNet(*net, parentCommand);
+	}
+	foreach (QList<ConnectorItem *> * net, netsToLeave) {
+		restoreNet(*net, parentCommand);
+	}
+	
+
+	// go through each net to change
+	// for each connector
+	//		for each connectedto
+	//			if it's attached to a bus, collect the other bus connectors
+	//			if it's a bus, disconnect part and reconnect other connectors, if necessary
+
+	// clean up
+	foreach (QList<ConnectorItem *> * net, allEnds) {
+		delete net;
+	}
+	foreach (QList<ConnectorItem *> * net, oldNets) {
+		delete net;
+	}
+
+	// check which wires are no longer connected to parts, and delete them
+	foreach (Wire * wire, possibleOrphans) {
+		QList<ConnectorItem *> ends;
+		QList<ConnectorItem *> uniqueEnds;
+		QList<Wire *> wires;
+		wire->collectChained(wires, ends, uniqueEnds);
+		if (ends.count() <= 0) {
+			foreach (Wire * w, wires) {
+				deletedItems.insert(w);
+			}
+		}
+	}
+
+	if (moveItems.count() > 0) {
+		emit schematicDisconnectWireSignal(moveItems, deletedItems, deletedConnections, parentCommand);
+	}
+}
+
+
+void SchematicSketchWidget::checkInNet(ConnectorItem * connectorItem, QList< QList<ConnectorItem *> * >  & allEnds, QList< QList<ConnectorItem *> * >  & newNets)
+{
+	foreach (QList<ConnectorItem *> * net, allEnds) {
+		if (net->contains(connectorItem)) {
+			if (!newNets.contains(net)) {
+				newNets.append(net);
+			}
+			return;
+		}
+	}
+
+	QList<ConnectorItem *> * net = new QList<ConnectorItem *>;
+	net->append(connectorItem);
+	allEnds.append(net);
+	newNets.append(net);
+}
+
+void SchematicSketchWidget::restoreNet(QList<ConnectorItem *> & net, QUndoCommand * parentCommand) {
+	QSet<ConnectorItem *> connected;
+	for (int i = 0; i < net.count(); i++) {
+		ConnectorItem * fromConnectorItem = net[i];
+		if (connected.contains(fromConnectorItem)) continue;
+
+		QList<ConnectorItem *> peers;
+		peers.append(fromConnectorItem);
+		ConnectorItem::collectEqualPotential(peers);
+		foreach (ConnectorItem * peer, peers) {
+			connected.insert(peer);
+		}
+
+		// connect this sub-net to the next subnet
+		for (int j = i + 1; j < net.count(); j++) {
+			ConnectorItem * toConnectorItem = net[j];
+			if (!connected.contains(toConnectorItem)) {
+				createWire(fromConnectorItem, toConnectorItem, ViewGeometry::NoFlag, false, false, BaseCommand::CrossView, parentCommand);
+				break;
+			}
+		}
+	}
+}
+
+void SchematicSketchWidget::reviewNet(QList<ConnectorItem *> & net, bool leaveAlone, ConnectorPairHash & tempDisconnectItems, 
+					ConnectorPairHash & moveItems, QSet<Wire *> & possibleOrphans, QSet<ItemBase *> & deletedItems,
+					QUndoCommand * parentCommand)
+{
+	foreach (ConnectorItem * fromConnectorItem, net) {
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			if (net.contains(toConnectorItem)) continue;
+			if (deletedItems.contains(toConnectorItem->attachedTo())) continue;
+
+			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				Wire * wire = dynamic_cast<Wire *>(toConnectorItem->attachedTo());
+				QList<ConnectorItem *> ends;
+				QList<ConnectorItem *> uniqueEnds;
+				QList<Wire *> wires;
+				wire->collectChained(wires, ends, uniqueEnds);
+				bool outOfNet = false;
+				foreach (ConnectorItem * end, ends) {
+					if (!net.contains(end)) {
+						outOfNet = true;
+						break;
+					}
+				}
+				if (!outOfNet) continue;
+
+				new ChangeConnectionCommand(this, BaseCommand::CrossView,
+											fromConnectorItem->attachedToID(), fromConnectorItem->connectorStuffID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+											false, true, parentCommand);
+				
+				possibleOrphans.insert(wire);
+				tempDisconnectItems.insert(fromConnectorItem, toConnectorItem);
+			}
+			else {
+				DebugDialog::debug(QString("leave alone %1 %2 %3 %4")
+					.arg(fromConnectorItem->attachedToTitle())
+					.arg(fromConnectorItem->connectorStuffID())
+					.arg(toConnectorItem->attachedToTitle())
+					.arg(toConnectorItem->connectorStuffID())
+					);
+
+				if (leaveAlone) {
+					if (toConnectorItem->attachedToItemType() == ModelPart::Breadboard) {
+						continue;
+					}
+				}
+
+				tempDisconnectItems.insert(fromConnectorItem, toConnectorItem);
+				moveItems.insert(fromConnectorItem, toConnectorItem);
+			}
+
+			// ratsnests are already disconnected at this point
+
+		}
+	}
+}
+
+void SchematicSketchWidget::obsolete(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand) 
+{
+	ConnectorPairHash moveItems;
 	QSet<Wire *> deleteWires;
 	QSet<Wire *> undeleteWires;
-	ConnectorPairHash moveItems;
+	//ConnectorPairHash moveItems;
 	foreach (ItemBase * itemBase, deletedItems) {
 		Wire * wire = dynamic_cast<Wire *>(itemBase);
 		if (wire == NULL) continue;

@@ -349,12 +349,12 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 
 		m_pasteCount = 0;
 		this->scene()->clearSelection();
-		cleanUpWires(false, NULL);
+		cleanUpWires(false, NULL, false);
 	}
 	else {
 		m_pasteCount++;								// used for offsetting paste items, not a count of how many items are pasted
 		//emit ratsnestChangeSignal(this, parentCommand);
-		new CleanUpWiresCommand(this, parentCommand);
+		new CleanUpWiresCommand(this, false, parentCommand);
 	}
 
 	m_ignoreSelectionChangeEvents = false;
@@ -682,7 +682,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		deletedConnections.insert(itemBase, connectorHash);
 	}
 
-	reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
+	bool skipMe = reviewDeletedConnections(deletedItems, deletedConnections, parentCommand);
 
 	foreach ( ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
@@ -715,7 +715,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	emit ratsnestChangeSignal(this, parentCommand);
 
-	new CleanUpWiresCommand(this, parentCommand);
+	new CleanUpWiresCommand(this, skipMe, parentCommand);
 
 	// actual delete commands must come last for undo to work properly
 	foreach (ItemBase * itemBase, deletedItems) {
@@ -727,10 +727,12 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 }
 
-void SketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
+bool SketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(deletedConnections);
 	Q_UNUSED(deletedItems);
+
+	return false;
 }
 
 void SketchWidget::extendChangeConnectionCommand(long fromID, const QString & fromConnectorID,
@@ -1203,7 +1205,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		killDroppingItem();
 
 		emit ratsnestChangeSignal(this, parentCommand);
-		new CleanUpWiresCommand(this, parentCommand);
+		new CleanUpWiresCommand(this, false, parentCommand);
         m_undoStack->waitPush(parentCommand, 10);
 
 
@@ -1562,7 +1564,7 @@ bool SketchWidget::checkMoved()
 		emit movingSignal(this, parentCommand);
 	}
 
-	new CleanUpWiresCommand(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 
 	return true;
@@ -1834,7 +1836,7 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	clearTemporaries();
 
-	new CleanUpWiresCommand(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -1898,7 +1900,7 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 	// remove the temporary wire
 	this->scene()->removeItem(m_connectorDragWire);
 
-	new CleanUpWiresCommand(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 
 }
@@ -2466,7 +2468,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		emit rotatingFlippingSignal(this, parentCommand);		// eventually, don't send signal when rotating board
 	}
 
-	new CleanUpWiresCommand(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 
 }
@@ -2916,7 +2918,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	//checkSticky(wire, parentCommand);
 
-	new CleanUpWiresCommand(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 
@@ -3093,8 +3095,10 @@ bool SketchWidget::currentlyInfoviewed(ItemBase *item) {
 	return false;
 }
 
-void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command) {
-	updateRatsnestStatus(command, NULL);
+void SketchWidget::cleanUpWires(bool doEmit, CleanUpWiresCommand * command, bool skipMe) {
+	if (!skipMe) {
+		updateRatsnestStatus(command, NULL);
+	}
 
 	if (doEmit) {
 		emit cleanUpWiresSignal(command);

@@ -65,7 +65,7 @@ protected:
 								  bool connect, class RatsnestCommand *, bool doEmit);
 	ConnectorItem * tryWire(ConnectorItem * wireConnectorItem, ConnectorItem * otherConnectorItem);
 	ConnectorItem * tryParts(ConnectorItem * otherConnectorItem, ConnectorItem * wireConnectorItem, QList<ConnectorItem *> partsConnectorItems);
-	void reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	bool canChainMultiple();
 	bool alreadyOnBus(ConnectorItem * busCandidate, ConnectorItem * otherCandidate);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
@@ -77,8 +77,6 @@ protected:
 						 ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
 						 QUndoCommand * parentCommand);
 	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
-	int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0);
-	int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 	void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
 	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
 	void chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, bool connect);
@@ -88,9 +86,22 @@ protected:
 		ConnectorItem * originalFromConnectorItem, ConnectorItem * newFromConnectorItem, 
 		ConnectorItem * originalToConnectorItem, ConnectorItem * newToConnectorItem, QUndoCommand * parentCommand);
 	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
-	void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
-	void clearDistances();
 	const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	void obsolete(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand); 
+	void reviewNet(QList<ConnectorItem *> & net, bool leaveAlone, ConnectorPairHash & tempDisconnectItems, 
+				   ConnectorPairHash & moveItems, QSet<Wire *> & possibleOrphans, QSet<ItemBase *> & deletedItems,
+				   QUndoCommand * parentCommand);
+	void restoreNet(QList<ConnectorItem *> & net, QUndoCommand * parentCommand);
+	void checkInNet(ConnectorItem * connectorItem, QList< QList<ConnectorItem *> * >  & allEnds, QList< QList<ConnectorItem *> * >  & newNets);
+	void reviewDeletedConnectionsAux(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, 
+								QList<ConnectorItem *> & affectedEnds, QUndoCommand * parentCommand);
+
+
+protected:
+	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
+	static void clearDistances();
+	static int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0);
+	static int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 
 protected:
 	QList<Wire *> m_deleteStash;

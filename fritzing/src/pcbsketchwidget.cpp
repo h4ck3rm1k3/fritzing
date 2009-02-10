@@ -312,7 +312,7 @@ void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeo
 
 	if (parentCommand == NULL) return;
 
-	new CleanUpWiresCommand(this, parentCommand);
+	new CleanUpWiresCommand(this, false, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 

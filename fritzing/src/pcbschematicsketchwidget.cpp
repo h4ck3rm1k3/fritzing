@@ -254,7 +254,7 @@ bool PCBSchematicSketchWidget::bothEndsConnected(Wire * wire, ViewGeometry::Wire
 	return result;
 }
 
-void PCBSchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
+bool PCBSchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(deletedItems);
@@ -282,6 +282,8 @@ void PCBSchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & delet
 			connectorHash->remove(fromConnectorItem);
 		}
 	}
+
+	return false;
 }
 
 bool PCBSchematicSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to)
