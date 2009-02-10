@@ -65,6 +65,7 @@ $Date$
 #include "labels/note.h"
 
 static QColor labelTextColor = Qt::black;
+QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
@@ -1392,9 +1393,9 @@ void SketchWidget::moveItems(QPoint globalPos)
 */
 
 	if (m_moveEventCount == 0) {
-		// first time 
+		// first time
 		m_moveDisconnectedFromFemale.clear();
-		foreach (ItemBase * item, m_savedItems) {			
+		foreach (ItemBase * item, m_savedItems) {
 			if (item->itemType() == ModelPart::Wire) continue;
 
 			DebugDialog::debug(QString("disconnecting from female %1").arg(item->instanceTitle()));
@@ -4008,4 +4009,12 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 	if (note == NULL) return;
 
 	note->setSize(size);
+}
+
+void SketchWidget::init() {
+	if(m_bgcolors.isEmpty()) {
+		m_bgcolors[ItemBase::BreadboardView] = QColor(204,204,204);
+		m_bgcolors[ItemBase::SchematicView] = QColor(255,255,255);
+		m_bgcolors[ItemBase::PCBView] = QColor(160,168,179); // QColor(137,144,153)
+	}
 }

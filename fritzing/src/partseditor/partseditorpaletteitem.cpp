@@ -241,3 +241,11 @@ QString PartsEditorPaletteItem::xmlViewLayerID() {
 		: m_viewLayerID;
 	return ViewLayer::viewLayerXmlNameFromID(viewLayerIDAux);
 }
+
+void PartsEditorPaletteItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+	GraphicsSvgLineItem::hoverEnterEvent(event);
+}
+
+void PartsEditorPaletteItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+	GraphicsSvgLineItem::hoverLeaveEvent(event);
+}

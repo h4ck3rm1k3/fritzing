@@ -31,13 +31,15 @@ $Date$
 #include "../debugdialog.h"
 
 
-PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId, QDir tempDir, QWidget *parent, int size)
+PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId, QDir tempDir, bool deleteModelPartOnSceneClear, QWidget *parent, int size)
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
+	m_deleteModelPartOnSceneClear = deleteModelPartOnSceneClear;
 	m_tempFolder = tempDir;
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setDefaultBackground();
 }
 
 void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
@@ -100,9 +102,17 @@ void PartsEditorAbstractView::wheelEvent(QWheelEvent* /*event*/) {
 	return;
 }
 
+void PartsEditorAbstractView::setDefaultBackground() {
+	QString bgColor = " background-color: rgb(%1,%2,%3) ";
+	if(m_bgcolors.contains(m_viewIdentifier)) {
+		QColor c = m_bgcolors[m_viewIdentifier];
+		setStyleSheet(styleSheet()+bgColor.arg(c.red()).arg(c.green()).arg(c.blue()));
+	}
+}
+
 void PartsEditorAbstractView::clearScene() {
 	if(m_item) {
-		deleteItem(m_item, false, true);
+		deleteItem(m_item, m_deleteModelPartOnSceneClear, true);
 
 		//delete m_item;
 		scene()->clear();
@@ -136,6 +146,23 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(SvgAndPartFilePath *svgp
 ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
 	QString fakePath = svgFilePath.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
 
+/*	QList<ModelPart*> mpsToRemove;
+
+	QList<QObject *>::const_iterator i;
+    for (i = m_sketchModel->root()->children().constBegin(); i != m_sketchModel->root()->children().constEnd(); ++i) {
+		ModelPart* mp = qobject_cast<ModelPart *>(*i);
+		if (mp == NULL) continue;
+
+		// was the one previously shown
+		mpsToRemove << mp;
+	}
+
+    foreach(ModelPart* mp, mpsToRemove) {
+    	mp->setParent(NULL);
+    	delete mp;
+    }
+*/
+
 	QDomDocument *domDoc = new QDomDocument();
 	QString errorStr;
 	int errorLine;
@@ -162,9 +189,12 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
 				QString("</views></connector>\n");
 	}
 	fakeFzFile += QString("</connectors></module>\n");
-
   	domDoc->setContent(fakeFzFile, &errorStr, &errorLine, &errorColumn);
 
+  	/*
+  	ModelPart *retval = new ModelPart(domDoc,svgFilePath,ModelPart::Part);
+  	retval = m_sketchModel->addModelPart(m_sketchModel->root(),retval);
+  	*/
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartStuff()->setDomDocument(domDoc);
   	//retval->setParent(m_sketchModel->root());

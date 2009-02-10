@@ -42,7 +42,7 @@ $Date$
 QT_BEGIN_NAMESPACE
 
 PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
-	: PartsEditorAbstractView(viewId, tempDir, parent, size)
+	: PartsEditorAbstractView(viewId, tempDir, false/*true*/, parent, size)
 {
 	m_svgFilePath = new SvgAndPartFilePath;
 	m_startItem = startItem;
@@ -128,7 +128,7 @@ void PartsEditorSpecificationsView::loadSvgFile(const QString& origPath) {
 
 void PartsEditorSpecificationsView::loadSvgFile(ModelPart * modelPart) {
 	addItemInPartsEditor(modelPart, m_svgFilePath);
-	emit itemAddedToSymbols(0, m_svgFilePath);
+	emit itemAddedToSymbols(modelPart, m_svgFilePath);
 
 	copyToTempAndRenameIfNecessary(m_svgFilePath);
 

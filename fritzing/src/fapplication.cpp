@@ -254,10 +254,11 @@ int FApplication::startup(int & argc, char ** argv)
     ViewLayer::initNames();
     ModelPart::initNames();
     Connector::initNames();
+    SketchWidget::init();
     ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
-	
+
 	splash.showProgress(progressIndex, 0.1);
 	processEvents();
 
@@ -558,7 +559,7 @@ QString FApplication::getOpenFileName( QWidget * parent, const QString & caption
 	return result;
 }
 
-QString FApplication::getSaveFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options ) 
+QString FApplication::getSaveFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
 {
 	QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
 	if (!result.isNull()) {

@@ -36,7 +36,7 @@ class PartsEditorAbstractView : public SketchWidget {
 	Q_OBJECT
 
 	public:
-		PartsEditorAbstractView(ItemBase::ViewIdentifier, QDir tempDir, QWidget *parent=0, int size=150);
+		PartsEditorAbstractView(ItemBase::ViewIdentifier, QDir tempDir, bool deleteModelPartOnSceneClear, QWidget *parent=0, int size=150);
 		QDir tempFolder();
 
 	public slots:
@@ -47,6 +47,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
 		virtual PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path);
 
+		void setDefaultBackground();
 		void clearScene();
 		virtual void fitCenterAndDeselect();
 		void removeConnectors();
@@ -65,6 +66,7 @@ class PartsEditorAbstractView : public SketchWidget {
 
 		PartsEditorPaletteItem *m_item; // just one item per view
 		QDir m_tempFolder;
+		bool m_deleteModelPartOnSceneClear;
 };
 
 #endif /* PARTSEDITORABSTRACTVIEW_H_ */

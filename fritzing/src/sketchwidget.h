@@ -441,9 +441,14 @@ protected:
 
 	ConnectorPairHash m_moveDisconnectedFromFemale;
 
-
 protected:
 	QString m_viewName;
+
+public:
+	static void init();
+
+protected:
+	static QHash<ItemBase::ViewIdentifier,QColor> m_bgcolors;
 };
 
 #endif

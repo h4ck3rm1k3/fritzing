@@ -36,7 +36,7 @@ int PartsEditorConnectorsView::ConnDefaultWidth = 5;
 int PartsEditorConnectorsView::ConnDefaultHeight = ConnDefaultWidth;
 
 PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier viewId, QDir tempDir, bool showingTerminalPoints, QWidget *parent, int size)
-	: PartsEditorAbstractView(viewId, tempDir, parent, size)
+	: PartsEditorAbstractView(viewId, tempDir, false, parent, size)
 {
 	m_showingTerminalPoints = showingTerminalPoints;
 	m_lastSelectedConnId = "";
@@ -115,9 +115,7 @@ void PartsEditorConnectorsView::loadFromModel(PaletteModel *paletteModel, ModelP
 }
 
 void PartsEditorConnectorsView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
-	if(!modelPart) {
-		modelPart = createFakeModelPart(svgFilePath);
-	}
+	Q_ASSERT(modelPart);
 
 	PartsEditorAbstractView::addItemInPartsEditor(modelPart,svgFilePath);
 	setItemProperties();

@@ -63,6 +63,9 @@ class PartsEditorPaletteItem : public PaletteItem {
 		);
 		QString xmlViewLayerID();
 
+		void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+		void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
 
 		QDomDocument *m_svgDom;
 		QString m_originalSvgPath;
