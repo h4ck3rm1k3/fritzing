@@ -151,7 +151,6 @@ public:
 	virtual void connectionChange(ConnectorItem *);
 	virtual void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	virtual ItemBase * layerKinChief() = 0;
-	virtual void sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
 	virtual void setInstanceTitle(const QString &title);

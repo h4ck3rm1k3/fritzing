@@ -554,10 +554,6 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * pale
 			lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
 		}
 
-		connect(paletteItem, SIGNAL(connectionChangedSignal(ConnectorItem *, ConnectorItem *, bool)	),
-				this, SLOT(item_connectionChanged(ConnectorItem *, ConnectorItem *, bool)),
-				Qt::DirectConnection);   // DirectConnection means call the slot directly like a subroutine, without waiting for a thread or queue
-
 		checkNewSticky(paletteItem);
 		return paletteItem;
 	}
@@ -694,8 +690,8 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
 											  false, false, parentCommand);
-				fromConnectorItem->tempRemove(toConnectorItem);
-				toConnectorItem->tempRemove(fromConnectorItem);
+				fromConnectorItem->tempRemove(toConnectorItem, false);
+				toConnectorItem->tempRemove(fromConnectorItem, false);
 			}
 		}
    	}
@@ -1259,7 +1255,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
-	m_needToConnectItems.clear();
 	m_moveEventCount = 0;
 	m_holdingSelectItemCommand = stackSelectionState(false, NULL);
 	m_mousePressScenePos = mapToScene(event->pos());
@@ -1395,6 +1390,18 @@ void SketchWidget::moveItems(QPoint globalPos)
 		.arg(q.x()).arg(q.y())
 		);
 */
+
+	if (m_moveEventCount == 0) {
+		// first time 
+		m_moveDisconnectedFromFemale.clear();
+		foreach (ItemBase * item, m_savedItems) {			
+			if (item->itemType() == ModelPart::Wire) continue;
+
+			DebugDialog::debug(QString("disconnecting from female %1").arg(item->instanceTitle()));
+			disconnectFromFemale(item, m_savedItems, m_moveDisconnectedFromFemale, false, NULL);
+		}
+	}
+
 	foreach (ItemBase * item, m_savedItems) {
        QPointF currentParentPos = item->mapToParent(item->mapFromScene(scenePos));
        QPointF buttonDownParentPos = item->mapToParent(item->mapFromScene(m_mousePressScenePos));
@@ -1518,29 +1525,33 @@ bool SketchWidget::checkMoved()
 		}
 
 		checkSticky(item, parentCommand);
+	}
 
-		if (item->itemType() == ModelPart::Wire) continue;
-
-		ConnectorPairHash ch;
-		if (disconnectFromFemale(item, m_savedItems, ch, parentCommand)) {
+	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {
+		foreach (ConnectorItem * toConnectorItem, m_moveDisconnectedFromFemale.values(fromConnectorItem)) {
+			extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
 			doEmit = true;
 		}
 	}
 
-	QList<ConnectorItem *> keys = m_needToConnectItems.keys();
-	for (int i = 0; i < keys.count(); i++) {
-		ConnectorItem * from = keys[i];
-		if (from == NULL) continue;
+	foreach (ItemBase * item, m_savedItems) {
+		if (item->itemType() == ModelPart::Wire) continue;
 
-		ConnectorItem * to = m_needToConnectItems[from];
-		if (to == NULL) continue;
+		foreach (QGraphicsItem * childItem, item->childItems()) {
+			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
+			if (fromConnectorItem == NULL) continue;
 
-		extendChangeConnectionCommand(from, to, true, false, parentCommand);
-		doEmit = true;
+			ConnectorItem * toConnectorItem = fromConnectorItem->overConnectorItem();
+			if (toConnectorItem != NULL) {
+				toConnectorItem->connectorHover(item, false);
+				fromConnectorItem->setOverConnectorItem(NULL);   // clean up
+				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, true, true, parentCommand);
+			}
+			fromConnectorItem->clearConnectorHover();
+		}
 	}
 
 	clearTemporaries();
-	m_needToConnectItems.clear();
 
 	if (doEmit) {
 		emit ratsnestChangeSignal(this, parentCommand);
@@ -1805,8 +1816,8 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 			foreach (ConnectorItem * formerConnectorItem, former) {
 				extendChangeConnectionCommand(from, formerConnectorItem, false, false, parentCommand);
 				doEmit = true;
-				from->tempRemove(formerConnectorItem);
-				formerConnectorItem->tempRemove(from);
+				from->tempRemove(formerConnectorItem, false);
+				formerConnectorItem->tempRemove(from, false);
 			}
 
 		}
@@ -2431,7 +2442,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
 	foreach (PaletteItem * item, targets) {
-		if (disconnectFromFemale(item, emptyList, connectorHash, parentCommand)) doEmit = true;
+		if (disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand)) doEmit = true;
 
 		if (item->sticky()) {
 			//TODO: apply transformation to stuck items
@@ -2662,12 +2673,12 @@ void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnecto
 
 void SketchWidget::tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to) {
 	ConnectorItem * connector0 = wire->connector0();
-	from->tempConnectTo(connector0);
-	connector0->tempConnectTo(from);
+	from->tempConnectTo(connector0, false);
+	connector0->tempConnectTo(from, false);
 
 	ConnectorItem * connector1 = wire->connector1();
-	to->tempConnectTo(connector1);
-	connector1->tempConnectTo(to);
+	to->tempConnectTo(connector1, false);
+	connector1->tempConnectTo(to, false);
 }
 
 void SketchWidget::sketchWidget_changeConnection(long fromID, QString fromConnectorID,
@@ -2689,23 +2700,6 @@ void SketchWidget::navigatorScrollChange(double x, double y) {
 
    	h->setValue((int) ((xmax - xmin) * x) + xmin);
    	v->setValue((int) ((ymax - ymin) * y) + ymin);
-}
-
-void SketchWidget::item_connectionChanged(ConnectorItem * from, ConnectorItem * to, bool connect)
-{
-	if (connect) {
-		this->m_needToConnectItems.insert(from, to);
-		DebugDialog::debug(QString("need to connect %1 %2 %3, %4 %5 %6")
-				.arg(from->attachedToID())
-				.arg(from->attachedToTitle())
-				.arg(from->connectorStuffID())
-				.arg(to->attachedToID())
-				.arg(to->attachedToTitle())
-				.arg(to->connectorStuffID()) );
-	}
-	else {
-		//this->m_needToDisconnectItems.insert(from, to);
-	}
 }
 
 void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
@@ -3110,19 +3104,6 @@ void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
 	updateRatsnestStatus(command, NULL);
 }
 
-void SketchWidget::tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState) {
-	foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-		connectionState.insert(fromConnectorItem, toConnectorItem);
-		fromConnectorItem->tempRemove(toConnectorItem);
- 		toConnectorItem->tempRemove(fromConnectorItem);
-		//DebugDialog::debug(QString("temp dis %1 %2 %3 %4")
-			//.arg(fromConnectorItem->attachedToID())
-			//.arg(fromConnectorItem->connectorStuffID())
-			//.arg(toConnectorItem->attachedToID())
-			//.arg(toConnectorItem->connectorStuffID()) );
-	}
-}
-
 void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize) {
 	// partLabelChanged triggered from inline editing the label
 
@@ -3442,12 +3423,15 @@ void SketchWidget::changeWireFlags(long wireId, ViewGeometry::WireFlags wireFlag
 	}
 }
 
-bool SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, QUndoCommand * parentCommand)
+bool SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
 {
+	// schematic and pcb view connections are always via wires so this is a no-op.  breadboard view has it's own version.
+
 	Q_UNUSED(item);
 	Q_UNUSED(savedItems);
 	Q_UNUSED(parentCommand);
 	Q_UNUSED(connectorHash);
+	Q_UNUSED(doCommand);
 	return false;
 }
 

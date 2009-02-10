@@ -239,7 +239,7 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 	Q_UNUSED(option);
 	painter->save();
 	if ((m_connectorHoverCount > 0 && !m_dragEnd) || m_connectorHoverCount2 > 0) {
-		painter->setOpacity(.40);
+		painter->setOpacity(.50);
 		painter->fillPath(this->hoverShape(), QBrush(connectorHoverColor));
 	}
 	else {

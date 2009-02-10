@@ -590,11 +590,11 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 		toConnectorItem->attachedToItemType() != ModelPart::Wire)
 	{
 		QList<Wire *> done;
-		dragWire->connector0()->tempConnectTo(fromConnectorItem);
-		dragWire->connector1()->tempConnectTo(toConnectorItem);
+		dragWire->connector0()->tempConnectTo(fromConnectorItem, false);
+		dragWire->connector1()->tempConnectTo(toConnectorItem, false);
 		createOneJumperOrTrace(dragWire, ViewGeometry::TraceFlag, true, done, parentCommand, ___emptyString___, "trace");
-		dragWire->connector0()->tempRemove(fromConnectorItem);
-		dragWire->connector1()->tempRemove(toConnectorItem);
+		dragWire->connector0()->tempRemove(fromConnectorItem, false);
+		dragWire->connector1()->tempRemove(toConnectorItem, false);
 	}
 
 	return false;

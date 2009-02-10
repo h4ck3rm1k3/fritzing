@@ -115,7 +115,7 @@ ItemBase::~ItemBase() {
 		if (connectorItem == NULL) continue;
 
 		foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
-			toConnectorItem->tempRemove(connectorItem);
+			toConnectorItem->tempRemove(connectorItem, true);
 		}
 	}
 
@@ -325,7 +325,7 @@ void ItemBase::removeLayerKin() {
 }
 
 void ItemBase::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
-	DebugDialog::debug(QString("hover enter c %1").arg(instanceTitle()));
+	//DebugDialog::debug(QString("hover enter c %1").arg(instanceTitle()));
 	m_connectorHoverCount++;
 	if (itemType() != ModelPart::Breadboard) {
 		this->update();
@@ -333,7 +333,7 @@ void ItemBase::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * , ConnectorIte
 }
 
 void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorItem * ) {
-	DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
+	//DebugDialog::debug(QString("hover leave c %1").arg(instanceTitle()));
 	m_connectorHoverCount--;
 	if (itemType() != ModelPart::Breadboard) {
 		this->update();
@@ -349,7 +349,7 @@ void ItemBase::clearConnectorHover()
 }
 
 void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
-	DebugDialog::debug(QString("hover c %1 %2").arg(hovering).arg(instanceTitle()));
+	//DebugDialog::debug(QString("hover c %1 %2").arg(hovering).arg(instanceTitle()));
 
 	if (hovering) {
 		m_connectorHoverCount2++;
@@ -357,7 +357,7 @@ void ItemBase::connectorHover(ConnectorItem *, ItemBase *, bool hovering) {
 	else {
 		m_connectorHoverCount2--;
 	}
-	DebugDialog::debug(QString("m_connectorHoverCount2 %1 %2").arg(instanceTitle()).arg(m_connectorHoverCount2));
+	// DebugDialog::debug(QString("m_connectorHoverCount2 %1 %2").arg(instanceTitle()).arg(m_connectorHoverCount2));
 	if (itemType() != ModelPart::Breadboard) {
 		this->update();
 	}
@@ -443,7 +443,7 @@ ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
 }
 
 void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
-	DebugDialog::debug(QString("hover enter %1").arg(instanceTitle()));
+	//DebugDialog::debug(QString("hover enter %1").arg(instanceTitle()));
 
 	m_hoverCount++;
 	if (itemType() != ModelPart::Breadboard) {
@@ -456,7 +456,7 @@ void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 }
 
 void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
-	DebugDialog::debug(QString("hover leave %1").arg(instanceTitle()));
+	//DebugDialog::debug(QString("hover leave %1").arg(instanceTitle()));
 	m_hoverCount--;
 	if (itemType() != ModelPart::Breadboard) {
 		update();
@@ -524,13 +524,6 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 	}
 
 	return lastUnderConnector;
-}
-
-
-void ItemBase::sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect) {
-	Q_UNUSED(from);
-	Q_UNUSED(connect);
-	Q_UNUSED(to);
 }
 
 void ItemBase::updateConnections() {

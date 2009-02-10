@@ -204,11 +204,6 @@ ItemBase * PaletteItem::layerKinChief() {
 	return this;
 }
 
-void PaletteItem::sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect) {
-	Q_UNUSED(connect);
-	emit connectionChangedSignal(from, to, true);
-}
-
 void PaletteItem::updateConnections() {
 	updateConnectionsAux();
 	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
@@ -365,8 +360,8 @@ void PaletteItem::cleanupConnectors() {
 		ConnectorItem *oldOne = oldOnes[name];
 		if(oldOne) {
 			foreach(ConnectorItem* oldConnectedTo, oldOne->connectedToItems()) {
-				oldOne->tempRemove(oldConnectedTo);
-				oldConnectedTo->tempRemove(oldOne);
+				oldOne->tempRemove(oldConnectedTo, true);
+				oldConnectedTo->tempRemove(oldOne, true);
 				newOne->tempConnectTo(oldConnectedTo, true);
 				oldConnectedTo->tempConnectTo(newOne, true);
 

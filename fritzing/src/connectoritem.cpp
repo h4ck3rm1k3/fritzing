@@ -67,7 +67,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 
 ConnectorItem::~ConnectorItem() {
 	for (int i = 0; i < m_connectedTo.count(); i++) {
-		m_connectedTo[i]->tempRemove(this);
+		m_connectedTo[i]->tempRemove(this, true);
 	}
 	if (this->connector() != NULL) {
 		this->connector()->removeViewItem(this);

@@ -82,9 +82,6 @@ public:
 public:
 	static class FSvgRenderer * setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
 
-signals:
-	void connectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
-
 protected:
 	QPainterPath shape() const;
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

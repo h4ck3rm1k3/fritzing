@@ -50,7 +50,6 @@ public:
 	void moveItem(ViewGeometry & viewGeometry);
 	void setItemPos(QPointF & pos);
 	ItemBase * layerKinChief();
-	void sendConnectionChangedSignal(ConnectorItem * from, ConnectorItem * to, bool connect);
 
 	bool renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 

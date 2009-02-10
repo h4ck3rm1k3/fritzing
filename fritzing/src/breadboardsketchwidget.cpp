@@ -53,7 +53,7 @@ void BreadboardSketchWidget::addViewLayers() {
 	addBreadboardViewLayers();
 }
 
-bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, QUndoCommand * parentCommand)
+bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash & connectorHash, bool doCommand, QUndoCommand * parentCommand)
 {
 	// if item is attached to a virtual wire or a female connector in breadboard view
 	// then disconnect it
@@ -72,9 +72,11 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 				}
 
 				result = true;
-				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
-				fromConnectorItem->tempRemove(toConnectorItem);
-				toConnectorItem->tempRemove(fromConnectorItem);
+				fromConnectorItem->tempRemove(toConnectorItem, true);
+				toConnectorItem->tempRemove(fromConnectorItem, true);
+				if (doCommand) {
+					extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
+				}
 				connectorHash.insert(fromConnectorItem, toConnectorItem);
 
 			}
@@ -192,7 +194,7 @@ void BreadboardSketchWidget::schematicDisconnectWireSlot(ConnectorPairHash & for
 		new MoveItemCommand(this, detachee->id(), detachee->getViewGeometry(), vg, parentCommand);
 		QSet<ItemBase *> tempItems;
 		ConnectorPairHash connectorHash;
-		disconnectFromFemale(detachee, tempItems, connectorHash, parentCommand);
+		disconnectFromFemale(detachee, tempItems, connectorHash, true, parentCommand);
 		foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
 			if (moveItems.uniqueKeys().contains(fromConnectorItem)) {
 				// don't need to reconnect

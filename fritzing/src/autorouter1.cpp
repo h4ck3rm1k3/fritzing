@@ -557,16 +557,16 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		reduceWires(wires, from, to, boundingPoly);
 
 		// hook everyone up
-		from->tempConnectTo(wires[0]->connector0());
-		wires[0]->connector0()->tempConnectTo(from);
+		from->tempConnectTo(wires[0]->connector0(), false);
+		wires[0]->connector0()->tempConnectTo(from, false);
 		int last = wires.count() - 1;
-		to->tempConnectTo(wires[last]->connector1());
-		wires[last]->connector1()->tempConnectTo(to);
+		to->tempConnectTo(wires[last]->connector1(), false);
+		wires[last]->connector1()->tempConnectTo(to, false);
 		for (int i = 0; i < last; i++) {
 			ConnectorItem * c1 = wires[i]->connector1();
 			ConnectorItem * c0 = wires[i + 1]->connector0();
-			c1->tempConnectTo(c0);
-			c0->tempConnectTo(c1);
+			c1->tempConnectTo(c0, false);
+			c0->tempConnectTo(c1, false);
 		}
 		return true;
 	}
@@ -597,10 +597,10 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	jumperWire->setWidth(StandardJumperWidth);
 	jumperWire->setSelected(false);
 
-	from->tempConnectTo(jumperWire->connector0());
-	jumperWire->connector0()->tempConnectTo(from);
-	to->tempConnectTo(jumperWire->connector1());
-	jumperWire->connector1()->tempConnectTo(to);
+	from->tempConnectTo(jumperWire->connector0(), false);
+	jumperWire->connector0()->tempConnectTo(from, false);
+	to->tempConnectTo(jumperWire->connector1(), false);
+	jumperWire->connector1()->tempConnectTo(to, false);
 
 	if (partForBounds) {
 		jumperWire->addSticky(partForBounds, true);

@@ -250,7 +250,6 @@ protected:
 	void killDroppingItem();
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
 	ItemBase * overSticky(ItemBase *);
-	void tempDisconnectWire(ConnectorItem * fromConnectorItem, ConnectorPairHash & connectionState);
 	virtual void setNewPartVisible(ItemBase *);
 	virtual void collectFemaleConnectees(PaletteItem *);
 	virtual void findConnectorsUnder(ItemBase * item);
@@ -261,7 +260,7 @@ protected:
 	void addViewLayersAux(const QList<ViewLayer::ViewLayerID> &layers, float startZ = 1.5);
 	void tempConnectWire(Wire * wire, ConnectorItem * from, ConnectorItem * to);
 	void rotateFlip(qreal degrees, Qt::Orientations orientation);
-	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, QUndoCommand * parentCommand);
+	virtual bool disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & savedItems, ConnectorPairHash &, bool doCommand, QUndoCommand * parentCommand);
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
@@ -353,7 +352,6 @@ protected slots:
 	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect, bool updateConnections);
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
-	void item_connectionChanged(ConnectorItem * from, ConnectorItem * to, bool connect);
 	void sketchWidget_copyItem(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
 	void sketchWidget_deleteItem(long itemID, QUndoCommand * parentCommand);
 	void dragIsDoneSlot(class ItemDrag *);
@@ -402,7 +400,6 @@ protected:
 	QPointF m_droppingOffset;
 	ItemBase * m_droppingItem;
 	int m_moveEventCount;
-	QHash<ConnectorItem *, ConnectorItem *> m_needToConnectItems;
 	QList<QGraphicsItem *> m_lastSelected;
 	ViewLayer::ViewLayerID m_wireViewLayerID;
 	ViewLayer::ViewLayerID m_partViewLayerID;
@@ -441,6 +438,9 @@ protected:
 	QList<QGraphicsItem*> m_fixedToCenterItems;
 
 	QString m_lastColorSelected;
+
+	ConnectorPairHash m_moveDisconnectedFromFemale;
+
 
 protected:
 	QString m_viewName;
