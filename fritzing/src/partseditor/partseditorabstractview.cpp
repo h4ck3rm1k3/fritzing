@@ -103,7 +103,7 @@ void PartsEditorAbstractView::wheelEvent(QWheelEvent* /*event*/) {
 }
 
 void PartsEditorAbstractView::setDefaultBackground() {
-	QString bgColor = " background-color: rgb(%1,%2,%3) ";
+	QString bgColor = " PartsEditorAbstractView {background-color: rgb(%1,%2,%3);} ";
 	if(m_bgcolors.contains(m_viewIdentifier)) {
 		QColor c = m_bgcolors[m_viewIdentifier];
 		setStyleSheet(styleSheet()+bgColor.arg(c.red()).arg(c.green()).arg(c.blue()));
