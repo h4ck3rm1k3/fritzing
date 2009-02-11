@@ -68,13 +68,13 @@ PartSymbolsWidget::PartSymbolsWidget(SketchModel *sketchModel, WaitPushUndoStack
 
 void PartSymbolsWidget::init() {
 	if(EmptyBreadViewText == ___emptyString___) {
-		EmptyBreadViewText = tr("How does this\npart look like on\nthe breadboard?");
+		EmptyBreadViewText = tr("What does this\npart look like on\nthe breadboard?");
 	}
 	if(EmptySchemViewText == ___emptyString___) {
-		EmptySchemViewText = tr("How does this\npart look like in\na schematic view?");
+		EmptySchemViewText = tr("What does this\npart look like in\na schematic view?");
 	}
 	if(EmptyPcbViewText == ___emptyString___) {
-		EmptyPcbViewText = tr("How does this\npart look like on\nthe breadboard?");
+		EmptyPcbViewText = tr("What does this\npart look like on\nthe breadboard?");
 	}
 }
 

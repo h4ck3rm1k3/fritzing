@@ -64,7 +64,21 @@ ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const View
 		paletteItem = newPartsEditorPaletteItem(modelPart);
 	}
 	modelPart->initConnectors();    // is a no-op if connectors already in place
-	return addPartItem(modelPart, paletteItem, doConnectors);
+
+	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart);
+
+	if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+		addToScene(paletteItem, paletteItem->viewLayerID());
+		paletteItem->loadLayerKin(m_viewLayers);
+		/*for (int i = 0; i < paletteItem->layerKin().count(); i++) {
+			LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
+			this->scene()->addItem(lkpi);
+			lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+		}*/
+		return paletteItem;
+	} else {
+		return NULL;
+	}
 }
 
 void PartsEditorAbstractView::fitCenterAndDeselect() {
@@ -146,23 +160,6 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(SvgAndPartFilePath *svgp
 ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
 	QString fakePath = svgFilePath.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
 
-/*	QList<ModelPart*> mpsToRemove;
-
-	QList<QObject *>::const_iterator i;
-    for (i = m_sketchModel->root()->children().constBegin(); i != m_sketchModel->root()->children().constEnd(); ++i) {
-		ModelPart* mp = qobject_cast<ModelPart *>(*i);
-		if (mp == NULL) continue;
-
-		// was the one previously shown
-		mpsToRemove << mp;
-	}
-
-    foreach(ModelPart* mp, mpsToRemove) {
-    	mp->setParent(NULL);
-    	delete mp;
-    }
-*/
-
 	QDomDocument *domDoc = new QDomDocument();
 	QString errorStr;
 	int errorLine;
@@ -191,13 +188,8 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
 	fakeFzFile += QString("</connectors></module>\n");
   	domDoc->setContent(fakeFzFile, &errorStr, &errorLine, &errorColumn);
 
-  	/*
-  	ModelPart *retval = new ModelPart(domDoc,svgFilePath,ModelPart::Part);
-  	retval = m_sketchModel->addModelPart(m_sketchModel->root(),retval);
-  	*/
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartStuff()->setDomDocument(domDoc);
-  	//retval->setParent(m_sketchModel->root());
   	retval->initConnectors(true /*redo connectors*/);
 	return retval;
 }
