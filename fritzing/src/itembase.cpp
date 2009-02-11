@@ -901,6 +901,7 @@ void ItemBase::doRotateFlipPartLabel(qreal degrees, Qt::Orientations orientation
 }
 
 bool ItemBase::isSwappable() {
+	/*
 	if (itemType() == ModelPart::Breadboard || itemType() == ModelPart::Board) {
 		foreach (QGraphicsItem * item, childItems()) {
 			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
@@ -909,6 +910,8 @@ bool ItemBase::isSwappable() {
 			if (connectorItem->connectionsCount() > 0) return false;
 		}
 	}
+	*/
+
 
 	return true;
 }
