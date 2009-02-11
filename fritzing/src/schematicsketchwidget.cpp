@@ -265,13 +265,35 @@ bool SchematicSketchWidget::canCopyItem(QGraphicsItem * item)
 
 bool SchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand)
 {
+	// delete any wires connected to non-wire items
+	foreach (ItemBase * item, deletedItems) {
+		if (item->itemType() == ModelPart::Wire) continue;
+
+		foreach (QGraphicsItem * childItem, item->childItems()) {
+			ConnectorItem * fci = dynamic_cast<ConnectorItem *>(childItem);
+			if (fci == NULL) continue;
+
+			foreach (ConnectorItem * tci, fci->connectedToItems()) {
+				if (!tci->attachedTo()->getVirtual()) continue;
+				if (deletedItems.contains(tci->attachedTo())) continue;
+
+				Wire * wire = dynamic_cast<Wire *>(tci->attachedTo());
+				deletedItems.insert(wire);
+				ConnectorPairHash * cph = new ConnectorPairHash;
+				wire->collectConnectors(*cph, wire->scene());
+				deletedConnections.insert(wire, cph);
+			}
+		}
+	}
 
 	QList<ConnectorItem *> affectedEnds;
 	QSet<Wire *> insertAfter;
-	// first, if there are schematic ratsnest wires that directly correspond to breadboard (normal) wires
+	// if there are schematic ratsnest wires that directly correspond to breadboard (normal) wires
 	// delete the normal wires
 	foreach (ItemBase * item, deletedItems) {
-		if (!item->getVirtual()) continue;
+		if (!item->getVirtual()) {
+			continue;
+		}
 
 		Wire * wire = dynamic_cast<Wire *>(item);
 		QList<ConnectorItem *> ends;
