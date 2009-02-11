@@ -35,6 +35,7 @@ $Date$
 #include "layerattributes.h"
 #include "connectorstuff.h"
 #include "labels/partlabel.h"
+#include "commands.h"
 
 #include <math.h>
 
@@ -280,11 +281,7 @@ QString PaletteItem::family() {
 	return modelPartStuff()->family();
 }
 
-bool PaletteItem::swap(PaletteItem* other, const LayerHash &layerHash) {
-	return swap(other->modelPart(), layerHash);
-}
-
-bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
+bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, SwapCommand * swapCommand) {
 	bool sameFamily = family() == newModelPart->modelPartStuff()->family();
 	if(sameFamily) {
 		invalidateConnectors();
@@ -299,7 +296,7 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash) {
 		loadLayerKin(layerHash);
 		updateLayerKinVisibility(layersVisibility);
 
-		cleanupConnectors();
+		cleanupConnectors(swapCommand);
 		updateTooltip();
 
 		figureHover();
@@ -340,7 +337,7 @@ void PaletteItem::invalidateConnectors() {
 	}
 }
 
-void PaletteItem::cleanupConnectors() {
+void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 	QList<ConnectorItem*> newOnes;
 	QHash<QString /*name*/, ConnectorItem*> oldOnes;
 
@@ -376,16 +373,27 @@ void PaletteItem::cleanupConnectors() {
 	}
 
 	// not working old ones
+	bool removed = false;
 	foreach(QString name, oldOnes.keys()) {
 		ConnectorItem *toRemove = oldOnes[name];
 		if(toRemove) {
 			foreach(ConnectorItem* toDisconnect, toRemove->connectedToItems()) {
-				toRemove->tempRemove(toDisconnect, true);
-				toDisconnect->tempRemove(toRemove, true);
+				if (swapCommand != NULL) {
+					swapCommand->addDisconnect(toRemove, toDisconnect);
+					removed = true;
+				}
+				else {
+					//toRemove->tempRemove(toDisconnect, true);
+					//toDisconnect->tempRemove(toRemove, true);
+				}
 			}
 			scene()->removeItem(toRemove);
 			delete toRemove;
 		}
+	}
+
+	if (removed) {
+		swapCommand->addAfterDisconnect();
 	}
 
 	updateConnections();

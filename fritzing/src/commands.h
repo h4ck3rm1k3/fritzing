@@ -53,6 +53,7 @@ public:
 	const BaseCommand * subCommand(int index) const;
 	virtual QString getDebugString() const;
 	const QUndoCommand * parentCommand() const;
+	void addSubCommand(BaseCommand * subCommand);
 
 protected:
 	virtual QString getParamString() const;
@@ -307,9 +308,13 @@ public:
 	SwapCommand(
 		SketchWidget* sketchWidget,
 		long itemId, const QString &oldModID, const QString &newModID,
-		QUndoCommand *parent=0);
+		QUndoCommand *parent);
     void undo();
     void redo();
+
+public:
+	void addDisconnect(class ConnectorItem * from, class ConnectorItem * to);
+	void addAfterDisconnect();
 
 protected:
 	QString getParamString() const;
@@ -318,6 +323,7 @@ protected:
 	long m_itemId;
 	QString m_oldModuleID;
 	QString m_newModuleID;
+	bool m_firstTime;
 };
 
 class WireColorChangeCommand : public BaseCommand

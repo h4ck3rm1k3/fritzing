@@ -59,8 +59,7 @@ public:
 	void setInstanceTitle(const QString&);
 	void updateTooltip();
 
-	bool swap(PaletteItem* other, const LayerHash &layerHash);
-	bool swap(ModelPart* newModelPart, const LayerHash &layerHash);
+	bool swap(ModelPart* newModelPart, const LayerHash &layerHash, class SwapCommand *);
 	QString family();
 	void setHidden(bool hidden);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
@@ -76,7 +75,7 @@ protected:
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void invalidateConnectors();
-	void cleanupConnectors();
+	void cleanupConnectors(class SwapCommand *);
 	void figureHover();
 	QHash<ViewLayer::ViewLayerID,bool> cleanupLayerKin();
 	void updateLayerKinVisibility(QHash<ViewLayer::ViewLayerID,bool>);

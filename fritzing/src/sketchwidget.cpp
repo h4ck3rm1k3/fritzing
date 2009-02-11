@@ -3182,28 +3182,28 @@ void SketchWidget::swapSelected(PaletteItem* other) {
 	swapSelected(other->modelPart());
 }
 
-void SketchWidget::swap(PaletteItem* from, ModelPart *to) {
+void SketchWidget::swap(PaletteItem* from, ModelPart *to, SwapCommand * swapCommand) {
 	if(from && to) {
-		from->swap(to, m_viewLayers);
+		from->swap(to, m_viewLayers, swapCommand);
 		updateInfoView();
 	}
 }
 
-void SketchWidget::swap(long itemId, const QString &moduleID, bool doEmit) {
-	swap(itemId, m_refModel->retrieveModelPart(moduleID), doEmit);
+void SketchWidget::swap(long itemId, const QString &moduleID, bool doEmit, SwapCommand * swapCommand) {
+	swap(itemId, m_refModel->retrieveModelPart(moduleID), doEmit, swapCommand);
 }
 
-void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit) {
+void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit, SwapCommand * swapCommand) {
 	PaletteItem *from = dynamic_cast<PaletteItem*>(findItem(itemId));
 	if(from && to) {
-		swap(from,to);
+		swap(from,to, swapCommand);
 
 		// let's make sure that the icon pixmap will be available for the infoview
 		LayerAttributes layerAttributes;
 		from->setUpImage(from->modelPart(), ItemBase::IconView, ViewLayer::Icon, layerAttributes);
 
 		if(doEmit) {
-			emit swapped(itemId, to);
+			emit swapped(itemId, to, false, NULL);
 		}
 	}
 }

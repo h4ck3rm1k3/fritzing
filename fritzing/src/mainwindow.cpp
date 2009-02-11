@@ -378,8 +378,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal(CleanUpWiresCommand *)),
 									 slotter, SLOT(sketchWidget_cleanUpWires(CleanUpWiresCommand *)) );
-	succeeded = succeeded && connect(signaller, SIGNAL(swapped(long, ModelPart*)),
-									 slotter, SLOT(swap(long, ModelPart*)) );
+	succeeded = succeeded && connect(signaller, SIGNAL(swapped(long, ModelPart*, bool, SwapCommand *)),
+									 slotter, SLOT(swap(long, ModelPart*, bool, SwapCommand *)) );
 
 	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &,
 																			  long, const QString &,

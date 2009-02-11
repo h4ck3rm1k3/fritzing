@@ -324,7 +324,7 @@ signals:
 	void cleanUpWiresSignal(CleanUpWiresCommand *);
 	void selectionChangedSignal();
 
-	void swapped(long itemId, ModelPart *with);
+	void swapped(long itemId, ModelPart *with, bool doEmit, SwapCommand *);
 	void resizeSignal();
 	void dropSignal(const QPoint &pos);
 	void wheelSignal();
@@ -372,9 +372,9 @@ public slots:
 	void swapSelected(const QString &moduleId);
 	void swapSelected(PaletteItem* other);
 	void swapSelected(ModelPart* other);
-	void swap(PaletteItem* from, ModelPart *to);
-	void swap(long itemId, const QString &moduleID, bool doEmit=false);
-	void swap(long itemId, ModelPart *modelPart, bool doEmit=false);
+	void swap(PaletteItem* from, ModelPart *to, SwapCommand *);
+	void swap(long itemId, const QString &moduleID, bool doEmit, SwapCommand *);
+	void swap(long itemId, ModelPart *modelPart, bool doEmit, SwapCommand *);
 	void changeWireColor(const QString newColor);
 	void changeWireWidth(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);

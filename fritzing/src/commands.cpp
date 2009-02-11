@@ -75,6 +75,10 @@ const BaseCommand * BaseCommand::subCommand(int ix) const {
 	return m_commands.at(ix);
 }
 
+void BaseCommand::addSubCommand(BaseCommand * subCommand) {
+	m_commands.append(subCommand);
+}
+
 const QUndoCommand * BaseCommand::parentCommand() const {
 	return m_parentCommand;
 }
@@ -503,15 +507,16 @@ void CleanUpWiresCommand::redo()
 
 void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire) 
 {
-	for (int i = 0; i < m_parentCommand->childCount(); i++) {
-		const DeleteItemCommand * command = dynamic_cast<const DeleteItemCommand *>(m_parentCommand->child(i));
+	if (m_parentCommand) {
+		for (int i = 0; i < m_parentCommand->childCount(); i++) {
+			const DeleteItemCommand * command = dynamic_cast<const DeleteItemCommand *>(m_parentCommand->child(i));
 
-		if (command == NULL) continue;
-		if (command->itemID() == wire->id()) {
-			return;
-		}		
+			if (command == NULL) continue;
+			if (command->itemID() == wire->id()) {
+				return;
+			}		
+		}
 	}
-
 
 	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
@@ -549,15 +554,42 @@ SwapCommand::SwapCommand(SketchWidget* sketchWidget, long itemId, const QString 
 	m_itemId = itemId;
 	m_oldModuleID = oldModID;
 	m_newModuleID = newModID;
+	m_firstTime = true;
 }
 
 void SwapCommand::undo() {
-	m_sketchWidget->swap(m_itemId, m_oldModuleID, true);
+	m_sketchWidget->swap(m_itemId, m_oldModuleID, true, NULL);
+
+	// reconnect everyone, if necessary
+	for (int i = m_commands.count() - 1; i >= 0; i--) { 
+		m_commands[i]->undo();
+	}
 }
 
 void SwapCommand::redo() {
-	m_sketchWidget->swap(m_itemId, m_newModuleID, true);
+	// disconnect everyone, if necessary
+	foreach (BaseCommand * command, m_commands) {
+		command->redo();
+	}
+
+	m_sketchWidget->swap(m_itemId, m_newModuleID, true, m_firstTime ? this : NULL);
+	m_firstTime = false;
 }
+
+void SwapCommand::addDisconnect(class ConnectorItem * from, class ConnectorItem * to) 
+{
+	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(m_sketchWidget, BaseCommand::CrossView, from->attachedToID(), from->connectorStuffID(),
+																to->attachedToID(), to->connectorStuffID(), false, true, NULL);
+	m_commands.append(ccc);
+	ccc->redo();
+}
+
+void SwapCommand::addAfterDisconnect() {
+	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(m_sketchWidget, false, NULL);
+	m_commands.append(cuw);
+	cuw->redo();
+}
+
 
 QString SwapCommand::getParamString() const {
 	return QString("SwapCommand ") 
