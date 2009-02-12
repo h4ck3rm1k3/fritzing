@@ -302,12 +302,14 @@ bool SchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedI
 		wire->collectChained(wires, ends, uniqueEnds);
 		if (ends.count() != 2) {
 			foreach (ConnectorItem * ci, ends) { affectedEnds.append(ci); }
+			foreach (Wire * w, wires) { insertAfter.insert(w); }
 			continue;
 		}
 		
 		Wire * normalWire = ends[0]->wiredTo(ends[1], ViewGeometry::NormalFlag);
 		if (normalWire == NULL) {
 			foreach (ConnectorItem * ci, ends) { affectedEnds.append(ci); }
+			foreach (Wire * w, wires) { insertAfter.insert(w); }
 			continue;
 		}
 
@@ -317,6 +319,7 @@ bool SchematicSketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedI
 		normalWire->collectChained(wires2, ends2, uniqueEnds2);
 		if (ends2.count() != 2) {
 			foreach (ConnectorItem * ci, ends) { affectedEnds.append(ci); }
+			foreach (Wire * w, wires) { insertAfter.insert(w); }
 			continue;
 		}
 
