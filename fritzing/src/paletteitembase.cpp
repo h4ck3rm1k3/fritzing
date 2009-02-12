@@ -63,8 +63,16 @@ QRectF PaletteItemBase::boundingRect() const
 
 QPainterPath PaletteItemBase::shape() const
 {
-	// figure out real shape of svg
+	// TODO: figure out real shape of svg
     QPainterPath path;
+
+	if ((m_viewLayerID == ViewLayer::Copper0) && (itemType() == ModelPart::Board)) {
+		// hack for testing click through on the arduino
+		path.addRect(m_size.width() * 0.25, 0, 3 * m_size.width() / 4, m_size.height() / 10);
+		path.addRect(m_size.width() * 0.5, 9 * m_size.height() / 10, m_size.width() * 0.5, m_size.height() / 10);
+		return path;
+	}
+
     path.addRect(0, 0, m_size.width(), m_size.height());
     return path;
 }
@@ -224,6 +232,10 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 		}
 	}
 
+	saveStickyOffsets(event);
+}
+
+void PaletteItemBase::saveStickyOffsets(QGraphicsSceneMouseEvent *event) {
 	if (m_sticky) {
 		m_stickyPos = event->scenePos();
 		foreach (ItemBase * itemBase, m_stickyList.keys()) {
@@ -310,7 +322,7 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 	m_canFlipHorizontal = layerAttributes.canFlipHorizontal();
 	m_filename = layerAttributes.filename();
 	//DebugDialog::debug(QString("filename %1").arg(m_filename) );
-	m_sticky = layerAttributes.sticky();
+	setSticky(layerAttributes.sticky());
 	QString elementID = layerAttributes.layerName();
 	setViewLayerID(elementID, viewLayers);
 

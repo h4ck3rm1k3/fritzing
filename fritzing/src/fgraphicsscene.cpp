@@ -25,6 +25,10 @@ $Date$
 ********************************************************************/
 
 #include "fgraphicsscene.h"
+#include "paletteitembase.h"
+#include "connectoritem.h"
+
+#include <QToolTip>
 
 FGraphicsScene::FGraphicsScene( QObject * parent) : QGraphicsScene(parent)
 {
@@ -35,5 +39,49 @@ void FGraphicsScene::drawItems ( QPainter * painter, int numItems, QGraphicsItem
 	QGraphicsScene::drawItems(painter, numItems, items, options, widget);
 }
 
+void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
+{
+	// more-or-less copied from QGraphicsScene::helpEvent() because QGraphicsItem::toolTip() is not virtual
+	// I hope they fix this in 4.5!
+
+    // Find the first item that does tooltips
+    QList<QGraphicsItem *> itemsAtPos = items(helpEvent->scenePos());
+    QString text;
+    QPoint point;
+    for (int i = 0; i < itemsAtPos.size(); ++i) {
+        QGraphicsItem *tmp = itemsAtPos.at(i);
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(tmp);
+		if (itemBase == NULL) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(tmp);
+			if (connectorItem && connectorItem->attachedTo()->hidden()) continue;
+
+			if (!tmp->toolTip().isEmpty()) {
+				text = tmp->toolTip();
+				point = helpEvent->screenPos();
+				break;
+			}
+		}
+		else {
+			if (itemBase->hidden()) continue;
+
+			PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(itemBase);
+			if (paletteItemBase != NULL) {
+				if (paletteItemBase->isLowerConnectorLayerVisible(paletteItemBase)) {
+					continue;
+				}
+			}			
+
+			if (!itemBase->toolTip2().isEmpty()) {
+				text = itemBase->toolTip2();
+				point = helpEvent->screenPos();
+				break;
+			}
+		}
+    }
+
+    // Show or hide the tooltip
+    QToolTip::showText(point, text);
+
+}
 
 

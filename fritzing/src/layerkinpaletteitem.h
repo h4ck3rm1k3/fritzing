@@ -33,8 +33,9 @@ $Date$
 class LayerKinPaletteItem : public PaletteItemBase
 {
 Q_OBJECT
-public:
-        LayerKinPaletteItem(PaletteItemBase * chief, ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
+
+public:       
+	LayerKinPaletteItem(PaletteItemBase * chief, ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 	void setOffset(qreal x, qreal y);
 	ItemBase * layerKinChief();
 	bool ok();
@@ -42,6 +43,16 @@ public:
 	void clearModelPart();
 	bool isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase);
 	void init(ViewLayer::ViewLayerID viewLayerID, const LayerHash &viewLayers);
+	QString toolTip2();
+	bool sticky();
+	void setSticky(bool);
+	void addSticky(ItemBase *, bool stickem);
+	ItemBase * stuckTo();
+	QHash<ItemBase *, QPointF> & sticking();
+	bool alreadySticking(ItemBase * itemBase);
+	bool stickyEnabled(ItemBase * stickTo);
+	void saveStickyOffsets(QGraphicsSceneMouseEvent *event);
+
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

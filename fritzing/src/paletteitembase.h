@@ -72,6 +72,8 @@ public:
 	QRectF boundingRect() const;
 	virtual bool isLowerConnectorLayerVisible(PaletteItemBase *);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	virtual void saveStickyOffsets(QGraphicsSceneMouseEvent *event);
+
 
 	/*
 	// for debugging

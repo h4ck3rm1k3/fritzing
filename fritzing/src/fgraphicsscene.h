@@ -29,6 +29,7 @@ $Date$
 
 #include <QGraphicsScene>
 #include <QPainter>
+#include <QGraphicsSceneHelpEvent>
 
 class FGraphicsScene : public QGraphicsScene
 {
@@ -38,6 +39,7 @@ public:
 	FGraphicsScene(QObject * parent = 0);
 	void drawItems ( QPainter * painter, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget * widget = 0 );
 
+	void helpEvent(QGraphicsSceneHelpEvent * event);
 };
 
 #endif

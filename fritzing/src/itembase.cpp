@@ -122,6 +122,7 @@ ItemBase::~ItemBase() {
 	foreach (ItemBase * itemBase, m_stickyList.keys()) {
 		itemBase->addSticky(this, false);
 	}
+
 	if (m_modelPart != NULL) {
 		m_modelPart->removeViewItem(this);
 	}
@@ -558,7 +559,8 @@ void ItemBase::addBusConnectorItem(Bus * bus, ConnectorItem * item) {
 	busConnectorItems->append(item);
 }
 
-int ItemBase::itemType() {
+int ItemBase::itemType() const 
+{
 	if (m_modelPart == NULL) return ModelPart::Unknown;
 
 	return m_modelPart->itemType();
@@ -614,23 +616,38 @@ void ItemBase::setItemPos(QPointF & loc) {
 	setPos(loc);
 }
 
+bool ItemBase::stickyEnabled(ItemBase * stickTo) {
+	Q_UNUSED(stickTo);
+
+	return true;
+}
+
 bool ItemBase::sticky() {
 	return m_sticky;
 }
 
+void ItemBase::setSticky(bool s) 
+{
+	m_sticky = s;
+}
 
 void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
 	if (stickem) {
 		if (!m_sticky) {
 			foreach (ItemBase * oldStuckTo, m_stickyList.keys()) {
+				if (oldStuckTo == sticky->layerKinChief()) continue;
+
 				oldStuckTo->addSticky(this, false);
 			}
 			m_stickyList.clear();
 		}
-		m_stickyList.insert(sticky, QPointF());
+		m_stickyList.insert(sticky->layerKinChief(), QPointF());
 	}
 	else {
-		m_stickyList.remove(sticky);
+		int result = m_stickyList.remove(sticky);
+		if (result <= 0) {
+			m_stickyList.remove(sticky->layerKinChief());
+		}
 	}
 }
 
@@ -640,6 +657,10 @@ ItemBase * ItemBase::stuckTo() {
 
 	if (m_stickyList.count() < 1) return NULL;
 
+	if (m_stickyList.count() > 1) {
+		DebugDialog::debug(QString("error: sticky list > 1 %1").arg(title()));
+	}
+
 	return m_stickyList.keys()[0];
 }
 
@@ -648,7 +669,7 @@ QHash<ItemBase *, QPointF> & ItemBase::sticking() {
 }
 
 bool ItemBase::alreadySticking(ItemBase * itemBase) {
-	return m_stickyList.keys().contains(itemBase);
+	return m_stickyList.keys().contains(itemBase->layerKinChief());
 }
 
 ConnectorItem* ItemBase::newConnectorItem(Connector *connector) {
@@ -748,12 +769,6 @@ bool ItemBase::isConnectedTo(ItemBase * other) {
 	return false;
 }
 
-
-bool ItemBase::stickyEnabled(ItemBase * stickTo) {
-	Q_UNUSED(stickTo);
-
-	return true;
-}
 
 void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
@@ -901,18 +916,6 @@ void ItemBase::doRotateFlipPartLabel(qreal degrees, Qt::Orientations orientation
 }
 
 bool ItemBase::isSwappable() {
-	/*
-	if (itemType() == ModelPart::Breadboard || itemType() == ModelPart::Board) {
-		foreach (QGraphicsItem * item, childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (connectorItem == NULL) continue;
-
-			if (connectorItem->connectionsCount() > 0) return false;
-		}
-	}
-	*/
-
-
 	return true;
 }
 
@@ -970,4 +973,14 @@ QVariant ItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QV
 	}
 
 	return GraphicsSvgLineItem::itemChange(change, value);
+}
+
+QString ItemBase::toolTip2() {
+	// because QGraphicsItem::toolTip() isn't virtual
+	QString tt = toolTip();
+	if (!tt.isEmpty()) return tt;
+
+	// because the tooltip may not have been initialized for this view
+	setTooltip();
+	return toolTip();
 }

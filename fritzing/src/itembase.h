@@ -111,12 +111,14 @@ public:
 	const QHash<QString, class Bus *> & buses();
 	void addBusConnectorItem(class Bus *, class ConnectorItem *);
 	void clearBusConnectorItems();
-	int itemType();					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
-	bool sticky();
-	void addSticky(ItemBase *, bool stickem);
-	ItemBase * stuckTo();
-	QHash<ItemBase *, QPointF> & sticking();
-	bool alreadySticking(ItemBase * itemBase);
+	int itemType() const;					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
+	virtual bool sticky();
+	virtual void setSticky(bool);
+	virtual void addSticky(ItemBase *, bool stickem);
+	virtual ItemBase * stuckTo();
+	virtual QHash<ItemBase *, QPointF> & sticking();
+	virtual bool alreadySticking(ItemBase * itemBase);
+	virtual bool stickyEnabled(ItemBase * stickTo);
 	ConnectorItem * anyConnectorItem();
 	bool isConnectedTo(ItemBase * other);
 	QString instanceTitle();
@@ -139,9 +141,9 @@ public:
 	void rotateFlipPartLabel(qreal degrees, Qt::Orientations);				// coming up from the label
 	void doRotateFlipPartLabel(qreal degrees, Qt::Orientations);			// coming down from the command object
 	bool isSwappable();
+	virtual QString toolTip2();
 
 public:
-	virtual bool stickyEnabled(ItemBase * stickTo);
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	virtual void connectorHover(class ConnectorItem *, ItemBase *, bool hovering);

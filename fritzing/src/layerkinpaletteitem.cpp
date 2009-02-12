@@ -39,6 +39,7 @@ LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * mo
 
 void LayerKinPaletteItem::init(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers) {
 	m_ok = setUpImage(m_modelPart, m_viewIdentifier, viewLayers, viewLayerID, true);
+	//DebugDialog::debug(QString("lk accepts hover %1 %2 %3 %4 %5").arg(m_modelPart->title()).arg(m_viewIdentifier).arg(m_id).arg(viewLayerID).arg(this->acceptHoverEvents()));
 }
 
 QVariant LayerKinPaletteItem::itemChange(GraphicsItemChange change, const QVariant &value)
@@ -108,4 +109,41 @@ void LayerKinPaletteItem::clearModelPart() {
 
 bool LayerKinPaletteItem::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase) {
 	return m_layerKinChief->isLowerConnectorLayerVisible(paletteItemBase);
+}
+
+QString LayerKinPaletteItem::toolTip2() {
+	return m_layerKinChief->toolTip2();
+}
+
+bool LayerKinPaletteItem::stickyEnabled(ItemBase * stickTo) {
+	return m_layerKinChief->stickyEnabled(stickTo);
+}
+
+bool LayerKinPaletteItem::sticky() {
+	return m_layerKinChief->sticky();
+}
+
+void LayerKinPaletteItem::setSticky(bool s) 
+{
+	m_layerKinChief->setSticky(s);
+}
+
+void LayerKinPaletteItem::addSticky(ItemBase * sticky, bool stickem) {
+	m_layerKinChief->addSticky(sticky, stickem);
+}
+
+void LayerKinPaletteItem::saveStickyOffsets(QGraphicsSceneMouseEvent *event) {
+	m_layerKinChief->saveStickyOffsets(event);
+}
+
+ItemBase * LayerKinPaletteItem::stuckTo() {
+	return m_layerKinChief->stuckTo();
+}
+
+QHash<ItemBase *, QPointF> & LayerKinPaletteItem::sticking() {
+	return m_layerKinChief->sticking();
+}
+
+bool LayerKinPaletteItem::alreadySticking(ItemBase * itemBase) {
+	return m_layerKinChief->alreadySticking(itemBase);
 }

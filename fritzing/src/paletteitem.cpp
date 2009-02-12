@@ -405,12 +405,39 @@ void PaletteItem::setHidden(bool hide) {
 }
 
 void PaletteItem::figureHover() {
-	QList<PaletteItemBase *> allKin;
+	// if a layer contains connectors, make it the one that accepts hover events
+	// if you make all layers accept hover events, then the topmost layer will get the event
+	// and lower layers won't
+
+	QList<ItemBase *> allKin;
 	allKin.append(this);
 	foreach(LayerKinPaletteItem * lkpi, m_layerKin) {
 		allKin.append(lkpi);
 	}
 
+	qSort(allKin.begin(), allKin.end(), ItemBase::zLessThan);
+	foreach (ItemBase * base, allKin) {
+		base->setAcceptHoverEvents(false);
+	}
+
+	int ix = 0;
+	foreach (ItemBase * base, allKin) {
+		if (!base->hidden() && base->hasConnectors()) {
+			base->setAcceptHoverEvents(true);
+			break;
+		}
+		ix++;
+	}
+
+	for (int i = 0; i < ix; i++) {
+		ItemBase * base = allKin[i];
+		if (!base->hidden()) {
+			base->setAcceptHoverEvents(true);
+			return;
+		}
+	}
+
+	/* 
 	foreach (PaletteItemBase * base, allKin) {
 		base->setAcceptHoverEvents(false);
 	}
@@ -428,6 +455,8 @@ void PaletteItem::figureHover() {
 			return;
 		}
 	}
+	*/
+
 }
 
 void PaletteItem::clearModelPart() {

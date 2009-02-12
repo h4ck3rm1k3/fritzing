@@ -534,6 +534,7 @@ void SketchWidget::checkNewSticky(ItemBase * itemBase) {
 	else {
 		ItemBase * stickyOne = overSticky(itemBase);
 		if (stickyOne != NULL) {
+			// TODO: make a deferred command object
 			// would prefer to handle this via command object, but it's tricky because an item dropped in a given view
 			// would only need to stick in a different view
 			stickyOne->addSticky(itemBase, true);
@@ -2819,7 +2820,7 @@ ItemBase * SketchWidget::overSticky(ItemBase * itemBase) {
 			if (s == connectorItem->attachedTo()) continue;
 			if (!s->sticky()) continue;
 
-			return s;
+			return s->layerKinChief();
 		}
 	}
 
@@ -2843,25 +2844,23 @@ void SketchWidget::setChainDrag(bool chainDrag) {
 }
 
 void SketchWidget::stickyScoop(ItemBase * stickyOne, QUndoCommand * parentCommand) {
-	foreach (QGraphicsItem * item, scene()->collidingItems(stickyOne)) {
-		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+	// TODO: use the shape rather than the rect
+	// need to find the best layerkin to use in that case
+	//foreach (QGraphicsItem * item, scene()->collidingItems(stickyOne)) {
+
+	QList<ItemBase *> added;
+	QPolygonF poly = stickyOne->mapToScene(stickyOne->boundingRect());
+	foreach (QGraphicsItem * item, scene()->items(poly)) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+
+		ItemBase * itemBase = connectorItem->attachedTo();
 		if (itemBase == NULL) continue;
+		if (added.contains(itemBase)) continue;
+
 		if (itemBase->sticky()) continue;
 		if (stickyOne->alreadySticking(itemBase)) continue;
 		if (!stickyOne->stickyEnabled(itemBase)) continue;
-
-		bool gotOne = false;
-		foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (connectorItem == NULL) continue;
-
-			QPointF p = connectorItem->sceneAdjustedTerminalPoint();
-			if (stickyOne->contains(stickyOne->mapFromScene(p))) {
-				gotOne = true;
-				break;
-			}
-		}
-		if (!gotOne) continue;
 
 		if (parentCommand == NULL) {
 			stickyOne->addSticky(itemBase, true);
@@ -2870,7 +2869,7 @@ void SketchWidget::stickyScoop(ItemBase * stickyOne, QUndoCommand * parentComman
 		else {
 			new StickyCommand(this, stickyOne->id(), itemBase->id(), true, parentCommand);
 		}
-
+		added.append(itemBase);
 	}
 }
 
