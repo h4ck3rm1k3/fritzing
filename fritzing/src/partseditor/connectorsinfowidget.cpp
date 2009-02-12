@@ -339,7 +339,7 @@ const QList<ConnectorStuff *> ConnectorsInfoWidget::connectorsStuffs() {
 void ConnectorsInfoWidget::clearMismatchingForView(ItemBase::ViewIdentifier viewId) {
 	foreach(MismatchingConnectorWidget* mcw, m_mismatchConnsInfo) {
 		if(mcw->views().size()==1 &&  mcw->views()[0] == viewId) {
-			removeMismatchingConnectorInfo(mcw);
+			removeMismatchingConnectorInfo(mcw, false);
 		}
 	}
 }
@@ -349,7 +349,7 @@ void ConnectorsInfoWidget::singleToMismatchingNotInView(ItemBase::ViewIdentifier
 	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
 		if(connIds.indexOf(sci->connector()->connectorStuffID()) == -1) {
 			MismatchingConnectorWidget *mcw = sci->toMismatching(viewId);
-			removeConnectorInfo(sci);
+			removeConnectorInfo(sci,false);
 			addMismatchingConnectorInfo(mcw);
 		}
 	}
@@ -383,7 +383,7 @@ void ConnectorsInfoWidget::syncNewConnectors(ItemBase::ViewIdentifier viewId, co
 			MismatchingConnectorWidget *mcw;
 			if(( mcw = existingMismatchingConnector(connId) )) {
 				if(mcw->onlyMissingThisView(viewId)) {
-					removeMismatchingConnectorInfo(mcw);
+					removeMismatchingConnectorInfo(mcw, false);
 					addConnectorInfo(mcw);
 					emit existingConnector(viewId, connId, findConnector(connId));
 				} else {
@@ -413,7 +413,7 @@ MismatchingConnectorWidget* ConnectorsInfoWidget::existingMismatchingConnector(c
 	return NULL;
 }
 
-void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool alsoDeleteFromView) {
+void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool singleShot, bool alsoDeleteFromView) {
 	m_mismatchersFrame->layout()->removeWidget(mcw);
 	m_mismatchConnsInfo.removeOne(mcw);
 	m_allConnsInfo.remove(mcw->connId());
@@ -435,10 +435,14 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 	}
 
 	m_objToDelete = mcw;
-	QTimer::singleShot(100, this, SLOT(deleteAux()));
+	if(singleShot) {
+		QTimer::singleShot(100, this, SLOT(deleteAux()));
+	} else {
+		deleteAux();
+	}
 }
 
-void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool alsoDeleteFromView) {
+void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool singleShot, bool alsoDeleteFromView) {
 	scrollContentLayout()->removeWidget(sci);
 	m_connsInfo.removeOne(sci);
 	m_allConnsInfo.remove(sci->connector()->connectorStuffID());
@@ -452,7 +456,11 @@ void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, b
 	}
 
 	m_objToDelete = sci;
-	QTimer::singleShot(100, this, SLOT(deleteAux()));
+	if(singleShot) {
+		QTimer::singleShot(100, this, SLOT(deleteAux()));
+	} else {
+		deleteAux();
+	}
 }
 
 Connector* ConnectorsInfoWidget::findConnector(const QString &id) {
@@ -481,11 +489,11 @@ void ConnectorsInfoWidget::removeSelectedConnector() {
 void ConnectorsInfoWidget::removeConnector(AbstractConnectorInfoWidget* connInfo) {
 	MismatchingConnectorWidget* mismatch = dynamic_cast<MismatchingConnectorWidget*>(connInfo);
 	if(mismatch) {
-		removeMismatchingConnectorInfo(mismatch, true);
+		removeMismatchingConnectorInfo(mismatch, true, true);
 	} else {
 		SingleConnectorInfoWidget *single = dynamic_cast<SingleConnectorInfoWidget*>(connInfo);
 		if(single) {
-			removeConnectorInfo(single, true);
+			removeConnectorInfo(single, true, true);
 		}
 	}
 }

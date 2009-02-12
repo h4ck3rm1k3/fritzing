@@ -91,8 +91,8 @@ class ConnectorsInfoWidget : public QFrame {
 
 		bool existingConnId(const QString &id);
 		MismatchingConnectorWidget* existingMismatchingConnector(const QString &id);
-		void removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool alsoDeleteFromView = false);
-		void removeConnectorInfo(SingleConnectorInfoWidget *sci, bool alsoDeleteFromView = false);
+		void removeMismatchingConnectorInfo(MismatchingConnectorWidget* mcw, bool singleShot = true, bool alsoDeleteFromView = false);
+		void removeConnectorInfo(SingleConnectorInfoWidget *sci, bool singleShot = true, bool alsoDeleteFromView = false);
 		Connector* findConnector(const QString &id);
 
 		int nextConnId();
