@@ -414,7 +414,7 @@ void PartsEditorMainWindow::loadPcbFootprint(){
 
 bool PartsEditorMainWindow::save() {
 	if(validateMinRequirements()) {
-		FritzingWindow::save();
+		return FritzingWindow::save();
 	} else {
 		return false;
 	}
