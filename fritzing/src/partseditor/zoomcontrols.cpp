@@ -110,5 +110,5 @@ ZoomControls::ZoomControls(SketchWidget *view, QWidget *parent)
 }
 
 void ZoomControls::updateLabel(qreal zoom) {
-	m_zoomLabel->setText(QString("%1\%").arg((int)zoom));
+	m_zoomLabel->setText(QString("%1%").arg((int)zoom));
 }
