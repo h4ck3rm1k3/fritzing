@@ -44,7 +44,7 @@ class FritzingWindow : public QMainWindow {
 		void readOnlyChanged(bool isReadOnly);
 
 	protected slots:
-		bool save();
+		virtual bool save();
 		virtual bool saveAs();
 		void undoStackCleanChanged(bool isClean);
 

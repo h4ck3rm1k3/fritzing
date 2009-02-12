@@ -412,60 +412,72 @@ void PartsEditorMainWindow::loadPcbFootprint(){
     DebugDialog::debug(footprint->getSvgFile());
 }
 
+bool PartsEditorMainWindow::save() {
+	if(validateMinRequirements()) {
+		FritzingWindow::save();
+	} else {
+		return false;
+	}
+}
+
 bool PartsEditorMainWindow::saveAs() {
-	QString fileNameBU = m_fileName;
-	QString moduleIdBU = m_moduleId;
+	if(validateMinRequirements()) {
+		QString fileNameBU = m_fileName;
+		QString moduleIdBU = m_moduleId;
 
-	m_moduleId = ___emptyString___;
-	QString title = m_title->text();
+		m_moduleId = ___emptyString___;
+		QString title = m_title->text();
 
-	m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
+		m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
 
-	// TODO Mariano: This folder should be defined in the preferences... some day
-	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
+		// TODO Mariano: This folder should be defined in the preferences... some day
+		QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
 
-	bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
-	while(m_fileName.isEmpty()
-		  || QFileInfo(userPartsFolderPath+m_fileName).exists()
-		  || (isEmptyFileName(m_fileName,untitledFileName()) && firstTime)
-		) {
-		bool ok;
-		m_fileName = QInputDialog::getText(
-			this,
-			tr("Save as new part"),
-			tr("Please, specify a new filename"),
-			QLineEdit::Normal,
-			m_fileName,
-			&ok
-		);
-		firstTime = false;
-		if (!ok) {
-			m_moduleId = moduleIdBU;
-			m_fileName = fileNameBU;
-			return false;
+		bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
+		while(m_fileName.isEmpty()
+			  || QFileInfo(userPartsFolderPath+m_fileName).exists()
+			  || (isEmptyFileName(m_fileName,untitledFileName()) && firstTime)
+			) {
+			bool ok;
+			m_fileName = QInputDialog::getText(
+				this,
+				tr("Save as new part"),
+				tr("Please, specify a new filename"),
+				QLineEdit::Normal,
+				m_fileName,
+				&ok
+			);
+			firstTime = false;
+			if (!ok) {
+				m_moduleId = moduleIdBU;
+				m_fileName = fileNameBU;
+				return false;
+			}
 		}
+
+		Qt::CaseSensitivity cs = Qt::CaseSensitive;
+	#ifdef Q_WS_WIN
+		// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
+		// but the file dialog returns a string beginning with "C:"
+		cs = Qt::CaseInsensitive;
+	#endif
+
+		QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
+				? userPartsFolderPath+m_fileName
+				: m_fileName;
+		if(!alreadyHasExtension(filename)) {
+			filename += FritzingPartExtension;
+		}
+
+		saveAsAux(filename);
+
+		m_updateEnabled = true;
+		updateSaveButton();
+
+		return true;
+	} else {
+		return false;
 	}
-
-	Qt::CaseSensitivity cs = Qt::CaseSensitive;
-#ifdef Q_WS_WIN
-	// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
-	// but the file dialog returns a string beginning with "C:"
-	cs = Qt::CaseInsensitive;
-#endif
-
-	QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
-			? userPartsFolderPath+m_fileName
-			: m_fileName;
-	if(!alreadyHasExtension(filename)) {
-		filename += FritzingPartExtension;
-	}
-
-	saveAsAux(filename);
-
-	m_updateEnabled = true;
-	updateSaveButton();
-
-	return true;
 }
 
 void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
@@ -634,4 +646,11 @@ bool PartsEditorMainWindow::event(QEvent * e) {
 	return FritzingWindow::event(e);
 }
 
-
+bool PartsEditorMainWindow::validateMinRequirements() {
+	if(!m_iconViewImage->isEmpty()) {
+		return true;
+	} else {
+		QMessageBox::information(this, tr("Icon needed"), tr("Please, provide an icon image for this part"));
+		return false;
+	}
+}

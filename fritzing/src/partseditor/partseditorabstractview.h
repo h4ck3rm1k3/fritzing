@@ -38,6 +38,7 @@ class PartsEditorAbstractView : public SketchWidget {
 	public:
 		PartsEditorAbstractView(ItemBase::ViewIdentifier, QDir tempDir, bool deleteModelPartOnSceneClear, QWidget *parent=0, int size=150);
 		QDir tempFolder();
+		bool isEmpty();
 
 	public slots:
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);

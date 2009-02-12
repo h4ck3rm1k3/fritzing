@@ -280,3 +280,7 @@ QString PartsEditorAbstractView::getOrCreateViewFolderInTemp() {
 
 	return retval;
 }
+
+bool PartsEditorAbstractView::isEmpty() {
+	return m_item == NULL;
+}
