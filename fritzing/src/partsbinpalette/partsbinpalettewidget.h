@@ -73,6 +73,7 @@ class PartsBinPaletteWidget : public QFrame {
 
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void addPart(const QString& moduleID, int position = -1);
+		void addNewPart(ModelPart *modelPart);
 		void removePart(const QString& moduleID);
 		void load(const QString&);
 

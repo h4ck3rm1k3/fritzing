@@ -390,6 +390,20 @@ void PartsBinPaletteWidget::addPart(const QString& moduleID, int position) {
 	addPart(modelPart, position);
 }
 
+void PartsBinPaletteWidget::addNewPart(ModelPart *modelPart) {
+	addPart(modelPart);
+
+	if(currentBinIsCore()) {
+		m_binTitle->setText(tr("My parts bin"));
+		QDateTime now = QDateTime::currentDateTime();
+		QString binPath = getApplicationSubFolderPath("bins")+
+			QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));
+		saveAsAux(binPath);
+	} else {
+		save();
+	}
+}
+
 void PartsBinPaletteWidget::removePart(const QString& moduleID) {
 	m_iconView->removePart(moduleID);
 	m_listView->removePart(moduleID);

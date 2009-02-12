@@ -786,8 +786,7 @@ void MainWindow::changeActivation(bool activate) {
 void MainWindow::loadPart(QString newPartPath) {
 	ModelPart * modelPart = ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
 	if(modelPart && modelPart->isValid()) {
-		//ModelPart * modelPart = m_paletteModel->addPart(newPartPath, true, true);
-		m_paletteWidget->addPart(modelPart);
+		m_paletteWidget->addNewPart(modelPart);
 		m_infoView->reloadContent(m_currentGraphicsView);
 	}
 }
