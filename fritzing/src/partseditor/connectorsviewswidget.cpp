@@ -55,9 +55,9 @@ ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchM
 
 	QFrame *viewsContainter = new QFrame(this);
 	QHBoxLayout *layout1 = new QHBoxLayout(viewsContainter);
-	layout1->addWidget(m_breadView);
-	layout1->addWidget(m_schemView);
-	layout1->addWidget(m_pcbView);
+	layout1->addWidget(addZoomControls(m_breadView));
+	layout1->addWidget(addZoomControls(m_schemView));
+	layout1->addWidget(addZoomControls(m_pcbView));
 
 	QFrame *toolsContainer = new QFrame(this);
 	QHBoxLayout *layout2 = new QHBoxLayout(toolsContainer);
@@ -198,4 +198,15 @@ QCheckBox *ConnectorsViewsWidget::showTerminalPointsCheckBox() {
 
 void ConnectorsViewsWidget::informConnectorSelection(const QString &connId) {
 	emit connectorSelectedInView(connId);
+}
+
+QWidget *ConnectorsViewsWidget::addZoomControls(PartsEditorConnectorsView *view) {
+	QFrame *container = new QFrame(this);
+	QVBoxLayout *lo = new QVBoxLayout(container);
+	lo->setSpacing(1);
+	lo->setMargin(0);
+	lo->addWidget(view);
+	lo->addWidget(new ZoomControls(view,container));
+
+	return container;
 }

@@ -136,8 +136,10 @@ $Date$
     <file>resources/images/icons/segmentedSwitcherXInactiveDimmed.png</file>
     <file>resources/images/icons/segmentedSwitcherXInactiveFocus.png</file>
     <file>resources/images/icons/segmentedSwitcherXInactiveFocusHover.png</file>
-    <file>resources/images/icons/partsEditorZoomInButton.png</file>
-    <file>resources/images/icons/partsEditorZoomOutButton.png</file>
+    <file>resources/images/icons/partsEditorZoomInVerButton.png</file>
+    <file>resources/images/icons/partsEditorZoomOutVerButton.png</file>
+    <file>resources/images/icons/partsEditorZoomInHorButton.png</file>
+    <file>resources/images/icons/partsEditorZoomOutHorButton.png</file>
     <file>resources/images/icons/partsEditorConnectorAddEnabled_icon.png</file>
     <file>resources/images/icons/partsEditorConnectorAddDisabled_icon.png</file>
     <file>resources/images/icons/partsEditorConnectorAddPressed_icon.png</file>

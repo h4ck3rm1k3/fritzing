@@ -58,6 +58,7 @@ class ConnectorsViewsWidget : public QFrame {
 				PartsEditorConnectorsView *&viw, PartsEditorSpecificationsView* sister,
 				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
 				ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId);
+		QWidget *addZoomControls(PartsEditorConnectorsView *view);
 
 		bool showingTerminalPoints();
 		bool checkStateToBool(int checkState);

@@ -24,22 +24,23 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 
 ********************************************************************/
 
-#include <QVBoxLayout>
-
 #include "zoomcontrols.h"
 #include "../zoomcombobox.h"
 #include "../debugdialog.h"
 
-ZoomButton::ZoomButton(ZoomControls::ZoomType type, SketchWidget* view, QWidget *parent) : QLabel(parent)
+ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, SketchWidget* view, QWidget *parent) : QLabel(parent)
 {
-	QString imgPath = ":/resources/images/icons/partsEditorZoom%1Button.png";
-	if(type == ZoomControls::ZoomIn) {
-		imgPath = imgPath.arg("In");
-		m_step = 5*ZoomComboBox::ZoomStep;
-	} else if(type == ZoomControls::ZoomOut) {
-		imgPath = imgPath.arg("Out");
-		m_step = -5*ZoomComboBox::ZoomStep;
+	QString imgPath = ":/resources/images/icons/partsEditorZoom%1%2Button.png";
+	QString typeStr = type==GraphicsZoomControls::ZoomIn? "In": "Out";
+	QString dirStr;
+	if(dir == QBoxLayout::LeftToRight || dir == QBoxLayout::RightToLeft) {
+		dirStr = "Hor";
+	} else if(dir == QBoxLayout::TopToBottom || dir == QBoxLayout::BottomToTop) {
+		dirStr = "Ver";
 	}
+	imgPath = imgPath.arg(typeStr).arg(dirStr);
+	m_step = 5*ZoomComboBox::ZoomStep;
+	m_type = type;
 
 	m_owner = view;
 	connect(this, SIGNAL(clicked()), this, SLOT(zoom()) );
@@ -47,7 +48,8 @@ ZoomButton::ZoomButton(ZoomControls::ZoomType type, SketchWidget* view, QWidget 
 }
 
 void ZoomButton::zoom() {
-	m_owner->relativeZoom(m_step);
+	int inOrOut = m_type == GraphicsZoomControls::ZoomIn? 1: -1;
+	m_owner->relativeZoom(inOrOut*m_step);
 	m_owner->ensureFixedToBottomRightItems();
 }
 
@@ -68,25 +70,25 @@ void ZoomButton::leaveEvent(QEvent *event) {
 
 ///////////////////////////////////////////////////////////
 
-ZoomControlsPrivate::ZoomControlsPrivate(SketchWidget* view) : QFrame()
+ZoomControlsPrivate::ZoomControlsPrivate(SketchWidget* view, QBoxLayout::Direction dir, QWidget *parent) : QFrame(parent)
 {
 	//setObjectName("zoomControls");
 
-	m_zoomInButton = new ZoomButton(ZoomControls::ZoomIn, view, this);
-	m_zoomOutButton = new ZoomButton(ZoomControls::ZoomOut, view, this);
+	m_zoomInButton = new ZoomButton(dir, GraphicsZoomControls::ZoomIn, view, this);
+	m_zoomOutButton = new ZoomButton(dir, GraphicsZoomControls::ZoomOut, view, this);
 
-	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->addWidget(m_zoomInButton);
-	lo->addWidget(m_zoomOutButton);
-	lo->setMargin(2);
-	lo->setSpacing(2);
+	m_boxLayout = new QBoxLayout(dir,this);
+	m_boxLayout->addWidget(m_zoomInButton);
+	m_boxLayout->addWidget(m_zoomOutButton);
+	m_boxLayout->setMargin(2);
+	m_boxLayout->setSpacing(2);
 
 	setStyleSheet("background-color: transparent;");
 }
 
 ///////////////////////////////////////////////////////////
 
-ZoomControls::ZoomControls(SketchWidget *view) : QGraphicsProxyWidget()
+GraphicsZoomControls::GraphicsZoomControls(SketchWidget *view) : QGraphicsProxyWidget()
 {
 	ZoomControlsPrivate *d = new ZoomControlsPrivate(view);
 	setFlags(QGraphicsItem::ItemIgnoresTransformations);
@@ -94,3 +96,19 @@ ZoomControls::ZoomControls(SketchWidget *view) : QGraphicsProxyWidget()
 	setZValue(10000);
 }
 
+///////////////////////////////////////////////////////////
+
+ZoomControls::ZoomControls(SketchWidget *view, QWidget *parent)
+	: ZoomControlsPrivate(view, QBoxLayout::RightToLeft, parent)
+{
+	m_zoomLabel = new QLabel(this);
+	m_zoomLabel->setFixedWidth(35);
+	connect(view, SIGNAL(zoomChanged(qreal)),this,SLOT(updateLabel(qreal)));
+	m_boxLayout->insertWidget(1,m_zoomLabel); // in the middle
+	m_boxLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum)); // at the beginning
+	updateLabel(view->currentZoom());
+}
+
+void ZoomControls::updateLabel(qreal zoom) {
+	m_zoomLabel->setText(QString("%1\%").arg((int)zoom));
+}
