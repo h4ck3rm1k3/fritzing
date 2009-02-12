@@ -70,4 +70,5 @@ TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \
 	translations/fritzing_fr.ts \
 	translations/fritzing_en.ts \
-	translations/fritzing_es.ts
+	translations/fritzing_es.ts \
+	translations/fritzing_pt.ts
