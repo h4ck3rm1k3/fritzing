@@ -39,6 +39,7 @@ void PartsEditorConnectorItem::removeFromModel() {
 }
 
 void PartsEditorConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+	setCursor(QCursor(Qt::ArrowCursor));
 	QGraphicsRectItem::hoverEnterEvent(event);
 }
 
