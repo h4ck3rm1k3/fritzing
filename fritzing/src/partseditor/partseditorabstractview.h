@@ -66,6 +66,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		const QStringList getLayers(const QString &path);
 
 		QString getOrCreateViewFolderInTemp();
+		bool ensureFilePath(const QString &filePath);
 
 		PartsEditorPaletteItem *m_item; // just one item per view
 		QDir m_tempFolder;

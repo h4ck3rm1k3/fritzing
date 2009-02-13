@@ -558,10 +558,10 @@ void PartsEditorMainWindow::cleanUp() {
 			m_closedBeforeCount++;
 		}
 	}
-	if(m_tempDir.path() != ".") {
+	/*if(m_tempDir.path() != ".") {
 		rmdir(m_tempDir);
 		m_tempDir = QDir();
-	}
+	}*/
 }
 
 void PartsEditorMainWindow::parentAboutToClose() {

@@ -26,6 +26,8 @@ $Date$
 
 
 #include <QInputDialog>
+#include <QMessageBox>
+#include <QtDebug>
 
 #include "partseditorconnectorsview.h"
 #include "../fsvgrenderer.h"
@@ -190,9 +192,19 @@ void PartsEditorConnectorsView::aboutToSave() {
 			if(somethingChanged) {
 				QString viewFolder = getOrCreateViewFolderInTemp();
 
-				QString tempFile = m_tempFolder.path()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
+				QString tempFile = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
+
+				ensureFilePath(tempFile);
+
 				QFile file(tempFile);
-				Q_ASSERT(file.open(QFile::WriteOnly));
+				if(!file.open(QFile::WriteOnly)) {
+					/*QMessageBox::information(this,"",
+						QString("Couldn't open file for update, after drawing connectors: '%1'")
+							.arg(tempFile)
+					);*/
+					qDebug() << QString("Couldn't open file for update, after drawing connectors: '%1'")
+						.arg(tempFile);
+				}
 				QTextStream out(&file);
 				out << svgDom->toString();
 				file.close();

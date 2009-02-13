@@ -24,7 +24,8 @@ $Date$
 
 ********************************************************************/
 
-
+#include <QMessageBox>
+#include <QtDebug>
 
 #include "partseditorabstractview.h"
 #include "partseditorconnectoritem.h"
@@ -272,15 +273,32 @@ QDir PartsEditorAbstractView::tempFolder() {
 }
 
 QString PartsEditorAbstractView::getOrCreateViewFolderInTemp() {
-	QString retval = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
+	QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
 
-	if(!QFileInfo(m_tempFolder.path()+"/"+retval).exists()) {
-		Q_ASSERT(m_tempFolder.mkdir(retval));
+	DebugDialog::debug("<<< "+m_tempFolder.absolutePath());
+
+	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
+		Q_ASSERT(m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder));
 	}
 
-	return retval;
+	return viewFolder;
 }
 
 bool PartsEditorAbstractView::isEmpty() {
 	return m_item == NULL;
+}
+
+bool PartsEditorAbstractView::ensureFilePath(const QString &filePath) {
+	QString svgFolder = getApplicationSubFolderPath("parts")+"/svg";
+
+	Qt::CaseSensitivity cs = Qt::CaseSensitive;
+#ifdef Q_WS_WIN
+	cs = Qt::CaseInsensitive;
+#endif
+	if(!filePath.contains(svgFolder, cs)) {
+		// This has to be here in order of all this, to work in release mode
+		qDebug() << QString("Ensuring the existance of %1").arg(QFileInfo(filePath).absoluteDir().path());
+		m_tempFolder.mkpath(QFileInfo(filePath).absoluteDir().path());
+	}
+	return true;
 }

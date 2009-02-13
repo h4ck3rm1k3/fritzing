@@ -31,6 +31,8 @@ $Date$
 #include <QBuffer>
 #include <QSvgGenerator>
 #include <QGraphicsProxyWidget>
+#include <QMessageBox>
+#include <QtDebug>
 
 #include "partseditorspecificationsview.h"
 #include "../layerkinpaletteitem.h"
@@ -65,10 +67,11 @@ void PartsEditorSpecificationsView::copySvgFileToDestiny() {
 #endif
 
 	// if the svg file is in the temp folder, then copy it to destiny
-	if(m_svgFilePath->absolutePath().startsWith(m_tempFolder.path(),cs)) {
+	if(m_svgFilePath->absolutePath().startsWith(m_tempFolder.absolutePath(),cs)) {
 		QString origFile = svgFilePath();
 		QString destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
 
+		ensureFilePath(origFile);
 		QFile tempFile(origFile);
 		DebugDialog::debug(QString("copying from %1 to %2")
 				.arg(origFile)
@@ -164,31 +167,36 @@ void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFil
 		if(!m_tempFolder.cd(viewFolder)) return;
 
 		QString destFilePath = FritzingWindow::getRandText()+".svg";
-		DebugDialog::debug(QString("dest file: %1").arg(m_tempFolder.path()+"/"+destFilePath));
+		DebugDialog::debug(QString("dest file: %1").arg(m_tempFolder.absolutePath()+"/"+destFilePath));
+
+		ensureFilePath(m_tempFolder.absolutePath()+"/"+destFilePath);
+
 		QFile tempFile(m_originalSvgFilePath);
-		tempFile.copy(m_tempFolder.path()+"/"+destFilePath);
+		tempFile.copy(m_tempFolder.absolutePath()+"/"+destFilePath);
 
 		if(!m_tempFolder.cd("..")) return; // out of view folder
 
 		m_svgFilePath->setRelativePath(viewFolder+"/"+destFilePath);
-		m_svgFilePath->setAbsolutePath(m_tempFolder.path()+"/"+m_svgFilePath->relativePath());
+		m_svgFilePath->setAbsolutePath(m_tempFolder.absolutePath()+"/"+m_svgFilePath->relativePath());
 
 	} else {
 		QString relPathAux = filePathOrig->relativePath();
 		m_svgFilePath->setAbsolutePath(m_originalSvgFilePath);
 		m_svgFilePath->setRelativePath(
-				relPathAux.right(// remove user/core/contrib
-						relPathAux.size() -
-						relPathAux.indexOf("/") - 1
-				)
+			relPathAux.right(// remove user/core/contrib
+				relPathAux.size() -
+				relPathAux.indexOf("/") - 1
+			)
 		);
 	}
 }
 
 void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
+	ensureFilePath(filePath);
 	m_originalSvgFilePath = filePath;
+
 	QString svgFolder = getApplicationSubFolderPath("parts")+"/svg";
-	QString tempFolder = m_tempFolder.path();
+	QString tempFolder = m_tempFolder.absolutePath();
 
 	QString relative;
 	Qt::CaseSensitivity cs = Qt::CaseSensitive;
@@ -231,16 +239,60 @@ void PartsEditorSpecificationsView::fitCenterAndDeselect() {
 QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFilePath) {
 	QString viewFolder = getOrCreateViewFolderInTemp();
 
-	QString newFilePath = m_tempFolder.path()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
-	QImage imgOrig(origFilePath);
+	QString newFilePath = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
 
+/* %1=witdh in mm
+ * %2=height in mm
+ * %3=width in local coords
+ * %4=height in local coords
+ * %5=binary data
+ */
+	QString svgTemplate =
+"<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
+"	<svg width='%1mm' height='%2mm' viewBox='0 0 %3 %4' xmlns='http://www.w3.org/2000/svg'\n"
+"		xmlns:xlink='http://www.w3.org/1999/xlink' version='1.2' baseProfile='tiny'>\n"
+"		<g fill='none' stroke='black' vector-effect='non-scaling-stroke' stroke-width='1'\n"
+"			fill-rule='evenodd' stroke-linecap='square' stroke-linejoin='bevel' >\n"
+"			<image x='0' y='0' width='%3' height='%4'\n"
+"				xlink:href='data:image/png;base64,%5' />\n"
+"		</g>\n"
+"	</svg>";
+
+	QPixmap pixmap(origFilePath);
+	QByteArray bytes;
+	QBuffer buffer(&bytes);
+	buffer.open(QIODevice::WriteOnly);
+	pixmap.save(&buffer,"png"); // writes pixmap into bytes in PNG format
+
+	QString svgDom = svgTemplate
+		.arg(pixmap.widthMM()).arg(pixmap.heightMM())
+		.arg(pixmap.width()).arg(pixmap.height())
+		.arg(QString("data:image/png;base64,%2").arg(QString(bytes.toBase64())));
+
+
+	ensureFilePath(newFilePath);
+
+	QFile destFile(newFilePath);
+	if(!destFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		QMessageBox::information(this, "", "file not created");
+		if(!destFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+				QMessageBox::information(this, "", "file not created 2");
+			}
+	}
+	QTextStream out(&destFile);
+	out << svgDom;
+	destFile.close();
+	qDebug() << newFilePath;
+	Q_ASSERT(QFileInfo(newFilePath).exists());
+
+	/*QImage imgOrig(origFilePath);
 
 	QSvgGenerator svgGenerator;
 	svgGenerator.setFileName(newFilePath);
     svgGenerator.setSize(imgOrig.size());
 	QPainter svgPainter(&svgGenerator);
 	svgPainter.drawImage(QPoint(0,0), imgOrig);
-	svgPainter.end();
+	svgPainter.end();*/
 
 	return newFilePath;
 }
