@@ -76,7 +76,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		QString findConnectorLayerId(QDomDocument *svgDom);
 		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem);
 		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox, const QString &connectorsLayerId);
-		bool removeConnectorsIfNeeded(QDomDocument *svgDom);
+		bool removeConnectorsIfNeeded(QDomElement &docEle);
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
 		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId);
 		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);

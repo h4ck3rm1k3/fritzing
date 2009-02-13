@@ -89,9 +89,9 @@ void PartsEditorConnectorsView::createConnector(Connector *conn, const QSize &co
 }
 
 void PartsEditorConnectorsView::removeConnector(const QString &connId) {
-	PartsEditorConnectorsConnectorItem *connToRemove = NULL;
+	ConnectorItem *connToRemove = NULL;
 	foreach(QGraphicsItem *item, items()) {
-		PartsEditorConnectorsConnectorItem *connItem = dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
+		ConnectorItem *connItem = dynamic_cast<ConnectorItem*>(item);
 		if(connItem && connItem->connector()->connectorStuffID() == connId) {
 			connToRemove = connItem;
 			break;
@@ -105,7 +105,9 @@ void PartsEditorConnectorsView::removeConnector(const QString &connId) {
 			QString("connector '%1' removed from %2 view")
 			.arg(connId).arg(ItemBase::viewIdentifierName(m_viewIdentifier))
 		));
-		m_drawnConns.removeAll(connToRemove);
+		// TODO Mariano: quick hack
+		PartsEditorConnectorsConnectorItem *connToRemoveAux = dynamic_cast<PartsEditorConnectorsConnectorItem*>(connToRemove);
+		m_drawnConns.removeAll(connToRemoveAux);
 		m_removedConnIds << connId;
 	}
 }
@@ -186,7 +188,8 @@ void PartsEditorConnectorsView::aboutToSave() {
 			QDomDocument *svgDom = m_item->svgDom();
 
 			QString connectorsLayerId = findConnectorLayerId(svgDom);
-			bool somethingChanged = removeConnectorsIfNeeded(svgDom);
+			QDomElement elem = svgDom->documentElement();
+			bool somethingChanged = removeConnectorsIfNeeded(elem);
 			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 
 			if(somethingChanged) {
@@ -283,13 +286,34 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 	return false;
 }
 
-bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomDocument *svgDom) {
+bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomElement &docElem) {
 	if(!m_removedConnIds.isEmpty()) {
-		QDomElement docEle = svgDom->documentElement();
-		Q_ASSERT(docEle.tagName() == "svg");
-		QString result;
-		QList<QDomNode> nodesToRemove;
-		for (int i = 0; i < docEle.childNodes().count(); ++i) {
+		//Q_ASSERT(docElem.tagName() == "svg");
+
+		QDomNode n = docElem.firstChild();
+		while(!n.isNull()) {
+			bool doRemove = false;
+			QDomElement e = n.toElement();
+			if(!e.isNull()) {
+				QString id = e.attribute("id");
+				if(isSupposedToBeRemoved(id)) {
+					doRemove = true;
+				} else if(n.hasChildNodes()) {
+					removeConnectorsIfNeeded(e);
+				}
+			}
+			QDomNode n2;
+			if(doRemove) {
+				n2 = n;
+			}
+			n = n.nextSibling();
+			if(doRemove) {
+				docElem.removeChild(n2);
+			}
+		}
+		return true;
+
+		/*for (int i = 0; i < docEle.childNodes().count(); ++i) {
 			QDomNode n = docEle.childNodes().at(i);
 			if (n.nodeType() == QDomNode::ElementNode) {
 				if (isSupposedToBeRemoved(n.toElement().attribute("id"))) {
@@ -304,11 +328,21 @@ bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomDocument *svgDom) {
 						&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
 						n.removeChild(child);
 						continue;
+					} else {
+						QDomNodeList children2 = child.toElement().childNodes();
+						for (int c = 0; c < children2.count(); ++c) {
+							QDomNode child2 = children2.at(c);
+							if (child2.nodeType() == QDomNode::ElementNode
+								&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
+								n.removeChild(child2);
+								continue;
+							}
+						}
 					}
 				}
 			}
 		}
-		return true;
+		return true;*/
 	}
 	return false;
 }
