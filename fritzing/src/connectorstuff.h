@@ -31,7 +31,6 @@ $Date$
 #include <QDomElement>
 #include <QMultiHash>
 
-#include "viewthing.h"
 #include "itembase.h"
 #include "connector.h"
 

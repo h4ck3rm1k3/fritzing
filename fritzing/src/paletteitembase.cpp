@@ -28,7 +28,6 @@ $Date$
 #include "infographicsview.h"
 #include "debugdialog.h"
 #include "fsvgrenderer.h"
-#include "connectorviewthing.h"
 #include "svg/svgfilesplitter.h"
 #include "connectorstuff.h"
 #include "layerattributes.h"
@@ -435,8 +434,6 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 				FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
 			}
     	}
-
-		//viewThing->set(viewLayerID, renderer);
 	}
 
 	if (renderer) {

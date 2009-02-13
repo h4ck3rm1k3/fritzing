@@ -34,7 +34,6 @@ $Date$
 
 
 QHash <Connector::ConnectorType, QString > Connector::names;
-QHash<QString, class ConnectorViewThing *> Connector::connectorViewThingHash;
 
 Connector::Connector( ConnectorStuff * connectorStuff, ModelPart * modelPart)
 {

@@ -78,7 +78,7 @@ protected:
 	void writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString connId);
 	void writeTerminalIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString terminalId);
 	QPointF calcTerminalPoint(const QString & terminalId, class FSvgRenderer * renderer, 
-							  const QRectF & connectorRect, class SvgIdLayer *, bool ignoreTerminalPoint, const QRectF & viewBox);
+							  const QRectF & connectorRect, struct SvgIdLayer *, bool ignoreTerminalPoint, const QRectF & viewBox);
 
 protected:
 	class ConnectorStuff * m_connectorStuff;
@@ -88,7 +88,6 @@ protected:
 	class Bus * m_bus;
 
 protected:
-	static QHash<QString, class ConnectorViewThing *> connectorViewThingHash;
 	static QHash<ConnectorType, QString> names;
 };
 
