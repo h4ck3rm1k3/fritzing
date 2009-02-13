@@ -240,6 +240,7 @@ QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFil
 	QString viewFolder = getOrCreateViewFolderInTemp();
 
 	QString newFilePath = m_tempFolder.absolutePath()+"/"+viewFolder+"/"+FritzingWindow::getRandText()+".svg";
+	ensureFilePath(newFilePath);
 
 /* %1=witdh in mm
  * %2=height in mm
@@ -247,7 +248,7 @@ QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFil
  * %4=height in local coords
  * %5=binary data
  */
-	QString svgTemplate =
+/*	QString svgTemplate =
 "<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n"
 "	<svg width='%1mm' height='%2mm' viewBox='0 0 %3 %4' xmlns='http://www.w3.org/2000/svg'\n"
 "		xmlns:xlink='http://www.w3.org/1999/xlink' version='1.2' baseProfile='tiny'>\n"
@@ -269,9 +270,6 @@ QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFil
 		.arg(pixmap.width()).arg(pixmap.height())
 		.arg(QString("data:image/png;base64,%2").arg(QString(bytes.toBase64())));
 
-
-	ensureFilePath(newFilePath);
-
 	QFile destFile(newFilePath);
 	if(!destFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		QMessageBox::information(this, "", "file not created");
@@ -284,15 +282,16 @@ QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFil
 	destFile.close();
 	qDebug() << newFilePath;
 	Q_ASSERT(QFileInfo(newFilePath).exists());
+*/
 
-	/*QImage imgOrig(origFilePath);
+	QImage imgOrig(origFilePath);
 
 	QSvgGenerator svgGenerator;
 	svgGenerator.setFileName(newFilePath);
     svgGenerator.setSize(imgOrig.size());
 	QPainter svgPainter(&svgGenerator);
 	svgPainter.drawImage(QPoint(0,0), imgOrig);
-	svgPainter.end();*/
+	svgPainter.end();
 
 	return newFilePath;
 }
