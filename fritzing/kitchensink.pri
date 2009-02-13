@@ -30,7 +30,6 @@ HEADERS += \
     src/connector.h \
     src/connectoritem.h \
     src/connectorstuff.h \
-    src/connectorviewthing.h \
     src/console.h \
     src/debugdialog.h \
     src/dockmanager.h \
@@ -79,7 +78,6 @@ HEADERS += \
     src/viewlayer.h \
     src/viewswitcher.h \
     src/viewswitcherdockwidget.h \
-    src/viewthing.h \
     src/virtualwire.h \
     src/waitpushundostack.h \
     src/wire.h \
@@ -96,7 +94,6 @@ SOURCES += \
     src/connector.cpp \
     src/connectoritem.cpp \
     src/connectorstuff.cpp \
-    src/connectorviewthing.cpp \
     src/console.cpp \
     src/debugdialog.cpp \
     src/dockmanager.cpp \

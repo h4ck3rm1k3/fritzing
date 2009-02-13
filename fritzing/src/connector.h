@@ -64,7 +64,7 @@ public:
 	const QString & busID();
 	class Bus * bus();
 	void setBus(class Bus *);
-	bool setUpConnector(class FSvgRenderer * renderer, ItemBase::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint);
+	bool setUpConnector(class FSvgRenderer * renderer, const QString & moduleID, ItemBase::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint);
 	long modelIndex();
 	ModelPart * modelPart();
 
@@ -78,8 +78,7 @@ protected:
 	void writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString connId);
 	void writeTerminalIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString terminalId);
 	QPointF calcTerminalPoint(const QString & terminalId, class FSvgRenderer * renderer, 
-		ItemBase::ViewIdentifier, ViewLayer::ViewLayerID, 
-		const QRectF & connectorRect, class ConnectorViewThing *, bool ignoreTerminalPoint, const QRectF & viewBox);
+							  const QRectF & connectorRect, class SvgIdLayer *, bool ignoreTerminalPoint, const QRectF & viewBox);
 
 protected:
 	class ConnectorStuff * m_connectorStuff;
@@ -88,6 +87,8 @@ protected:
 	class ModelPart * m_modelPart;
 	class Bus * m_bus;
 
+protected:
+	static QHash<QString, class ConnectorViewThing *> connectorViewThingHash;
 	static QHash<ConnectorType, QString> names;
 };
 

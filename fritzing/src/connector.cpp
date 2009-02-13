@@ -30,11 +30,11 @@ $Date$
 #include "debugdialog.h"
 #include "modelpart.h"
 #include "bus.h"
-#include "connectorviewthing.h"
 #include "fsvgrenderer.h"
 
 
 QHash <Connector::ConnectorType, QString > Connector::names;
+QHash<QString, class ConnectorViewThing *> Connector::connectorViewThingHash;
 
 Connector::Connector( ConnectorStuff * connectorStuff, ModelPart * modelPart)
 {
@@ -213,42 +213,40 @@ void Connector::setBus(Bus * bus) {
 	m_bus = bus;
 }
 
-bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint) {
+bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint) {
 	// this code is a bit more viewish than modelish...
 
+	Q_UNUSED(moduleID);
+	
 	if (m_connectorStuff == NULL) return false;
-
-	ConnectorViewThing * connectorViewThing = dynamic_cast<ConnectorViewThing *>(m_connectorStuff->viewThing());
-	if (connectorViewThing == NULL) {
-		connectorViewThing = new ConnectorViewThing();
-		m_connectorStuff->setViewThing(connectorViewThing);
+	
+	SvgIdLayer * svgIdLayer = m_connectorStuff->fullPinInfo(viewIdentifier, viewLayerID);
+	if (svgIdLayer == NULL) {
+		return false;
 	}
-
-	if (connectorViewThing->processed(viewIdentifier,viewLayerID)) {
-		if (!connectorViewThing->visibleInView(viewIdentifier, viewLayerID)) return false;
-
-		connectorRect = connectorViewThing->rectInView(viewIdentifier, viewLayerID);
-		terminalPoint = connectorViewThing->terminalPointInView(viewIdentifier, viewLayerID);
+	
+	
+	if (svgIdLayer->m_processed) {
+		if (!svgIdLayer->m_visible) return false;
+	
+		connectorRect = svgIdLayer->m_rect;
+		terminalPoint = svgIdLayer->m_point;
 	}
 	else {
-		connectorViewThing->setProcessed(viewIdentifier, viewLayerID, true);
-
-		const SvgIdLayer * svgIdLayer = m_connectorStuff->fullPinInfo(viewIdentifier, viewLayerID);
-		if (svgIdLayer == NULL) {
-			return false;
-		}
-
+	
+		svgIdLayer->m_processed = true;
+	
 		QString connectorID = svgIdLayer->m_svgId; // + "pin" ;
 
 		//DebugDialog::debug(QString("bounds on element %1").arg(connectorID) );
 		QRectF bounds = renderer->boundsOnElement(connectorID);
 		if (bounds.isNull()) {
-			connectorViewThing->setVisibleInView(viewIdentifier, viewLayerID, false);
-						return false;
+			svgIdLayer->m_visible = false;
+			return false;
 		}
 		QSizeF defaultSizeF = renderer->defaultSizeF();
 		if ((bounds.width()) == defaultSizeF.width() && (bounds.height()) == defaultSizeF.height()) {
-			connectorViewThing->setVisibleInView(viewIdentifier, viewLayerID, false);
+			svgIdLayer->m_visible = false;
 			return false;
 		}
 
@@ -269,22 +267,21 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, ItemBase::ViewIdentifier
 		else {
 			connectorRect = matrix0.mapRect(bounds);
 		}
-		connectorViewThing->setRectInView(viewIdentifier, viewLayerID, connectorRect);
-		connectorViewThing->setTerminalPointInView(viewIdentifier, viewLayerID, connectorRect.center() - connectorRect.topLeft());		// default spot is centered
-		terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, viewIdentifier, viewLayerID, connectorRect, connectorViewThing, ignoreTerminalPoint, viewBox);
+		svgIdLayer->m_visible = true;
+		svgIdLayer->m_rect = connectorRect;
+		svgIdLayer->m_point = terminalPoint = calcTerminalPoint(svgIdLayer->m_terminalId, renderer, connectorRect, svgIdLayer, ignoreTerminalPoint, viewBox);
 	}
 
 	return true;
 }
 
-QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * renderer, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID,
-									const QRectF & connectorRect, ConnectorViewThing * connectorViewThing, bool ignoreTerminalPoint,
+QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * renderer,
+									const QRectF & connectorRect, SvgIdLayer * svgIdLayer, bool ignoreTerminalPoint,
 									const QRectF & viewBox)
 {
 	// this code is a bit more viewish than modelish...
 
-	QPointF terminalPoint = connectorRect.center() - connectorRect.topLeft();
-	connectorViewThing->setTerminalPointInView(viewIdentifier, viewLayerID, terminalPoint);
+	QPointF terminalPoint = connectorRect.center() - connectorRect.topLeft();    // default spot is centered
 	if (ignoreTerminalPoint) {
 		return terminalPoint;
 	}
@@ -323,7 +320,7 @@ QPointF Connector::calcTerminalPoint(const QString & terminalId, FSvgRenderer * 
 		QRectF terminalRect = tMatrix.mapRect(tBounds);
 		terminalPoint = terminalRect.center() - connectorRect.topLeft();
 	}
-	connectorViewThing->setTerminalPointInView(viewIdentifier, viewLayerID, terminalPoint);
+	svgIdLayer->m_point = terminalPoint;
 	//DebugDialog::debug(	QString("terminalagain %3 rect %1,%2 ").arg(terminalPoint.x()).
 										//arg(terminalPoint.y()).
 										//arg(terminalID) );

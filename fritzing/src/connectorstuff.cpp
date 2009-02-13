@@ -36,7 +36,6 @@ ConnectorStuff::ConnectorStuff()
 	m_typeString = "";
 	m_type = Connector::Unknown;
 	m_description = "";
-	m_viewThing = NULL;
 	m_bus = NULL;
 }
 
@@ -48,7 +47,6 @@ ConnectorStuff::ConnectorStuff( const QDomElement & domElement )
 	m_type = Connector::connectorTypeFromName(m_typeString);
 	m_description = domElement.firstChildElement("description").text();
 	loadPins(domElement);
-	m_viewThing = NULL;
 	m_bus = NULL;
 }
 
@@ -95,6 +93,7 @@ void ConnectorStuff::addPin(ItemBase::ViewIdentifier layer, QString connectorId,
 	svgIdLayer->m_viewLayerID = viewLayerID;
 	svgIdLayer->m_svgId = connectorId;
 	svgIdLayer->m_terminalId = terminalId;
+	svgIdLayer->m_processed = false;
 	m_pins.insert(layer, svgIdLayer);
 }
 
@@ -126,7 +125,7 @@ const QString ConnectorStuff::terminal(ItemBase::ViewIdentifier viewId, ViewLaye
 
 }
 
-const SvgIdLayer * ConnectorStuff::fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+SvgIdLayer * ConnectorStuff::fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
 		if (svgIdLayer->m_viewLayerID == viewLayerID) {
@@ -154,6 +153,7 @@ void ConnectorStuff::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) 
 		//svgId = svgId.left(svgId.lastIndexOf(QRegExp("\\d"))+1);
 		QString layer = pinElem.attribute("layer");
 		SvgIdLayer * svgIdLayer = new SvgIdLayer();
+		svgIdLayer->m_processed = false;
 		svgIdLayer->m_svgId = svgId;
 		svgIdLayer->m_viewLayerID = ViewLayer::viewLayerIDFromXmlString(layer);
 
@@ -164,14 +164,6 @@ void ConnectorStuff::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) 
 
 		pinElem = pinElem.nextSiblingElement("p");
 	}
-}
-
-void ConnectorStuff::setViewThing(ViewThing * viewThing) {
-	m_viewThing = viewThing;
-}
-
-ViewThing * ConnectorStuff::viewThing() {
-	return m_viewThing;
 }
 
 void ConnectorStuff::setBus(BusStuff * bus) {

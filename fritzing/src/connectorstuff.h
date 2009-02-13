@@ -40,6 +40,10 @@ struct SvgIdLayer {
 	QString m_svgId;
 	QString m_terminalId;
 	ViewLayer::ViewLayerID m_viewLayerID;
+	bool m_visible;
+	bool m_processed;
+	QRectF m_rect;		
+	QPointF m_point;		
 };
 
 
@@ -63,12 +67,10 @@ public:
 	const QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer *> &pins();
 	const QString pin(ItemBase::ViewIdentifier, ViewLayer::ViewLayerID viewLayerID);
 	const QString terminal(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
-	const SvgIdLayer * fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
+	SvgIdLayer * fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
 	void addPin(ItemBase::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID, QString terminalId);
 	void removePins(ItemBase::ViewIdentifier layer);
 
-	ViewThing * viewThing();
-	void setViewThing(ViewThing *);
 	class BusStuff * bus();
 	void setBus(class BusStuff *);
 	const QString & busID();
@@ -89,7 +91,6 @@ protected:
 	 */
 	QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> m_pins;
 
-	ViewThing * m_viewThing;
 	class BusStuff * m_bus;
 };
 

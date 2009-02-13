@@ -499,7 +499,7 @@ void FApplication::preloadSlowParts() {
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
-		connector->setUpConnector(renderer, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
+		connector->setUpConnector(renderer, modelPart->moduleID(), ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
 		//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorStuffID()));
 	}
 	//DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );

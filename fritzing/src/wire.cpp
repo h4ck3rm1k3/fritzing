@@ -623,7 +623,7 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdenti
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
-		bool result = connector->setUpConnector(renderer, m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, false);
+		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, false);
 		if (!result) continue;
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);
