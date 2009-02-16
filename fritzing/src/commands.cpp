@@ -42,6 +42,13 @@ BaseCommand::BaseCommand(BaseCommand::CrossViewType crossViewType, SketchWidget*
 	m_parentCommand = parent;
 }
 
+BaseCommand::~BaseCommand() {
+	foreach (BaseCommand * baseCommand, m_commands) {
+		delete baseCommand;
+	}
+	m_commands.clear();
+}
+
 BaseCommand::CrossViewType BaseCommand::crossViewType() const {
 	return m_crossViewType;
 }

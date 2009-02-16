@@ -176,3 +176,10 @@ const QList<ViewLayer *> & ViewLayer::childLayers() {
 bool ViewLayer::alreadyInLayer(qreal z) {
 	return (z >= m_initialZ && z <= m_nextZ);
 }
+
+void ViewLayer::cleanup() {
+	foreach (StringPair * sp, names.values()) {
+		delete sp;
+	}
+	names.clear();
+}

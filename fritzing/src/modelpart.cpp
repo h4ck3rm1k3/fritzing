@@ -46,6 +46,8 @@ ModelPart::ModelPart(ItemType type)
 	m_index = m_nextIndex++;
 	m_core = false;
 	m_alien = false;
+	m_originalModelPartStuff = false;
+
 }
 
 ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)
@@ -53,7 +55,8 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 {
 	m_type = type;
 	m_modelPartStuff = new ModelPartStuff(domDocument, path);
-	m_partInstanceStuff = new PartInstanceStuff(domDocument, path);
+	m_originalModelPartStuff = true;
+	m_partInstanceStuff = new PartInstanceStuff(path);
 	m_core = false;
 	m_alien = false;
 
@@ -70,6 +73,24 @@ ModelPart::~ModelPart() {
 	foreach (ItemBase * itemBase, m_viewItems) {
 		itemBase->clearModelPart();
 	}
+	if (m_partInstanceStuff) {
+		delete m_partInstanceStuff;
+	}
+	if (m_originalModelPartStuff) {
+		if (m_modelPartStuff) {
+			delete m_modelPartStuff;
+		}
+	}
+
+	foreach (Connector * connector, m_connectorHash.values()) {
+		delete connector;
+	}
+	m_connectorHash.clear();
+
+	foreach (Bus* bus, m_busHash.values()) {
+		delete bus;
+	}
+	m_busHash.clear();
 }
 
 const QString & ModelPart::moduleID() {
@@ -119,6 +140,7 @@ void ModelPart::copyStuff(ModelPart * modelPart) {
 ModelPartStuff * ModelPart::modelPartStuff() {
 	if(!m_modelPartStuff) {
 		m_modelPartStuff = new ModelPartStuff();
+		m_originalModelPartStuff = true;
 	}
 	return m_modelPartStuff;
 }
@@ -298,13 +320,17 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 
 void ModelPart::initConnectors(bool force) {
 	if(m_modelPartStuff == NULL) return;
+
 	if(force) {
-		m_connectorHash.clear();
+		m_connectorHash.clear();						// TODO: not deleting old connectors here causes a memory leak; but deleting them here causes a crash		
 		foreach (Bus * bus, m_busHash.values()) {
 			delete bus;
 		}
 		m_busHash.clear();
-		m_modelPartStuff->resetConnectorsInitialization();
+
+		// TODO: this is probably incorrect
+		// instead, find the modelPartStuff for the part being swapped to and use that
+		//m_modelPartStuff->resetConnectorsInitialization();
 	}
 	if(m_connectorHash.count() > 0) return;		// already done
 

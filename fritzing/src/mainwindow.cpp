@@ -232,6 +232,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 MainWindow::~MainWindow()
 {
+	delete m_sketchModel;
 	m_dockManager->dontKeepMargins();
 	m_setUpDockManagerTimer.stop();
 }
@@ -379,7 +380,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal(CleanUpWiresCommand *)),
 									 slotter, SLOT(sketchWidget_cleanUpWires(CleanUpWiresCommand *)) );
 	succeeded = succeeded && connect(signaller, SIGNAL(swapped(long, ModelPart*, bool, SwapCommand *)),
-									 slotter, SLOT(swap(long, ModelPart*, bool, SwapCommand *)) );
+									 slotter, SLOT(swap(long, ModelPart*, bool, SwapCommand *)),
+									 Qt::DirectConnection );
 
 	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &,
 																			  long, const QString &,

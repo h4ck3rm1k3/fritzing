@@ -61,6 +61,12 @@ UpdateDialog::UpdateDialog(QWidget *parent) : QDialog(parent)
 
 }
 
+UpdateDialog::~UpdateDialog() {
+	if (m_versionChecker) {
+		delete m_versionChecker;
+	}
+}
+
 void UpdateDialog::setAvailableReleases(const QList<AvailableRelease *> & availableReleases) 
 {
 	AvailableRelease * interimRelease = NULL;

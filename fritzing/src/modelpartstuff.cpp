@@ -69,6 +69,25 @@ ModelPartStuff::ModelPartStuff(QDomDocument * domDocument, const QString & path)
 	m_moduleID = root.attribute("moduleId", "");
 }
 
+ModelPartStuff::~ModelPartStuff() {
+	foreach (ConnectorStuff * connectorStuff, m_connectorStuffHash.values()) {
+		
+		delete connectorStuff;
+	}
+	m_connectorStuffHash.clear();
+
+	foreach (BusStuff * busStuff, m_buses.values()) {
+		delete busStuff;
+	}
+	m_buses.clear();
+
+	if (m_domDocument) {
+		delete m_domDocument;
+		m_domDocument = NULL;
+	}
+
+}
+
 void ModelPartStuff::loadTagText(QDomElement parent, QString tagName, QString &field) {
 	QDomElement tagElement = parent.firstChildElement(tagName);
 	if (!tagElement.isNull()) {

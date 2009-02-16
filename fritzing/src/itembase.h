@@ -67,6 +67,7 @@ public:
 	static QString & viewIdentifierXmlName(ViewIdentifier);
 	static QString & viewIdentifierNaturalName(ViewIdentifier);
 	static void initNames();
+	static void cleanup();
 	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
 	static ItemBase * extractItemBase(QGraphicsItem * item);
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ItemBase::ViewIdentifier viewId);

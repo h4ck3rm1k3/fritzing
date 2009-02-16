@@ -41,6 +41,8 @@ class ModelPartStuff
 public:
 	ModelPartStuff();
 	ModelPartStuff(QDomDocument *, const QString & path);
+	~ModelPartStuff();
+
 	void setDomDocument(QDomDocument *);
 	QDomDocument * domDocument();
 

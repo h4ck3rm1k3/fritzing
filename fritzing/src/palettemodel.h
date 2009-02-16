@@ -53,11 +53,13 @@ public:
 	ModelPart * addPart(QString newPartPath, bool addToReference, bool updateIdAlreadyExists=false);
 	void removePart(const QString &moduleID);
 
+	void clearPartHash();
+
 signals:
 	void newPartLoaded(ModelPart *);
 
 protected:
-	QHash<QString, ModelPart *> partHash;
+	QHash<QString, ModelPart *> m_partHash;
 	bool m_loadedFromFile;
 	QString m_loadedFrom; // The file this was loaded from, only if m_loadedFromFile == true
 

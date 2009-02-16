@@ -24,17 +24,46 @@ $Date$
 
 ********************************************************************/
 
+
+
 #include "fapplication.h"
 #include "debugdialog.h"
 
+#ifdef Q_WS_WIN
+#ifndef QT_NO_DEBUG
+#include "windows.h"
+#endif
+#endif
+
 int main(int argc, char *argv[])
 {
-	FApplication app(argc, argv);
+
+#ifdef Q_WS_WIN
+#ifndef QT_NO_DEBUG
+	HANDLE hLogFile;
+	hLogFile = CreateFile(L"c:\\fritzing2\\fritzing_log.txt", GENERIC_WRITE, 
+		  FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, 
+		  FILE_ATTRIBUTE_NORMAL, NULL);
+	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_ERROR, hLogFile);
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_WARN, hLogFile);
+	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_ASSERT, hLogFile);
+	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+	//_CrtSetBreakAlloc(1359880);
+#endif
+#endif
+
+	FApplication * app = new FApplication(argc, argv);
 	//DebugDialog::setDebugLevel(DebugDialog::Error);
-	int result = app.startup(argc, argv);
+	int result = app->startup(argc, argv);
 	if (result == 0) {
-		result = app.exec();
+		result = app->exec();
 	}
-	app.finish();
-    return result;
+	app->finish();
+
+	delete app;
+	
+	return result;
 }

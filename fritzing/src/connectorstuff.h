@@ -52,6 +52,7 @@ class ConnectorStuff
 public:
 	ConnectorStuff();
 	ConnectorStuff(const QDomElement & domElement);
+	~ConnectorStuff();
 
 	const QString & id();
 	void setId(QString id);

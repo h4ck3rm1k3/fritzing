@@ -1279,3 +1279,11 @@ QVariant Wire::itemChange(GraphicsItemChange change, const QVariant &value)
     }
     return ItemBase::itemChange(change, value);
 }
+
+void Wire::cleanup() {
+	foreach (QColor * color, ratsnestColors) {
+		delete color;
+	}
+
+	ratsnestColors.clear();
+}

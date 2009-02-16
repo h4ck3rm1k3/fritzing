@@ -71,6 +71,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ItemBase::ViewIdentifier vie
 SvgIconWidget::~SvgIconWidget() {
 	// should delete it
 	//delete m_container;
+	delete m_paletteItem;
 }
 
 ModelPart *SvgIconWidget::modelPart() const {

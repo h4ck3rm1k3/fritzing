@@ -318,6 +318,8 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 
 	if(pixmap != NULL) {
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
+		delete pixmap;
+		pixmap = NULL;
 	}
 
 	/*
@@ -360,7 +362,6 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 		s += "</div>";
 	}
 
-	//delete pixmap;
 	return s;
 }
 
@@ -405,6 +406,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	s += 		 "<div class='parttitle'>\n";
 	if(pixmap1 != NULL) {
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap1)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);
+		delete pixmap1;
 	}
 	if(pixmap2 != NULL) {
 		s += QString("<img src='%1' width='%2' height='%3' />\n").arg(toHtmlImage(pixmap2)).arg(STANDARD_ICON_IMG_WIDTH).arg(STANDARD_ICON_IMG_HEIGHT);

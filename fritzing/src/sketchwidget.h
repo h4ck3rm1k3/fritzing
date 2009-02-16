@@ -68,6 +68,7 @@ class SketchWidget : public InfoGraphicsView
 
 public:
     SketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=600, int minSize=400);
+	~SketchWidget();
 
     QUndoStack* undoStack();
     ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, PaletteItem* item);
@@ -372,7 +373,7 @@ public slots:
 	void swapSelected(const QString &moduleId);
 	void swapSelected(PaletteItem* other);
 	void swapSelected(ModelPart* other);
-	void swap(PaletteItem* from, ModelPart *to, SwapCommand *);
+	void swap(PaletteItem* from, ModelPart *to, bool doEmit, SwapCommand *);
 	void swap(long itemId, const QString &moduleID, bool doEmit, SwapCommand *);
 	void swap(long itemId, ModelPart *modelPart, bool doEmit, SwapCommand *);
 	void changeWireColor(const QString newColor);

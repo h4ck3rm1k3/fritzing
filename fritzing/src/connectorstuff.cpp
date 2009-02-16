@@ -50,6 +50,14 @@ ConnectorStuff::ConnectorStuff( const QDomElement & domElement )
 	m_bus = NULL;
 }
 
+ConnectorStuff::~ConnectorStuff() {
+	foreach (SvgIdLayer * svgIdLayer, m_pins.values()) {
+		delete svgIdLayer;
+	}
+	 m_pins.clear();
+}
+
+
 const QString & ConnectorStuff::id() {
 	return m_id;
 }

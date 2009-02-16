@@ -118,6 +118,11 @@ Helper::~Helper() {
 	//m_breadMainHelp->doClose();
 	//m_schemMainHelp->doClose();
 	//m_pcbMainHelp->doClose();
+
+	delete m_partsBinHelp;
+	delete m_autorouteHelp;
+	delete m_switchButtonsHelp;
+
 }
 
 void Helper::connectToView(SketchWidget* view) {

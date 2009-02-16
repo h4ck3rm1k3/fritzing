@@ -984,3 +984,11 @@ QString ItemBase::toolTip2() {
 	setTooltip();
 	return toolTip();
 }
+
+void ItemBase::cleanup() {
+	foreach (StringTriple * stringTriple, names) {
+		delete stringTriple;
+	}
+	names.clear();
+}
+

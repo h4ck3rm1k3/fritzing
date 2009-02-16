@@ -167,6 +167,14 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 	timer->start(400);
 }
 
+SketchWidget::~SketchWidget() {
+	foreach (ViewLayer * viewLayer, m_viewLayers.values()) {
+		delete viewLayer;
+	}
+	m_viewLayers.clear();
+}
+
+
 void SketchWidget::ensureFixedItemsPositions() {
 	ensureFixedToBottomLeftItems();
 	ensureFixedToCenterItems();
@@ -205,7 +213,6 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 	}
 
 	QHash<long, ItemBase *> newItems;
-	QHash<ItemBase *, QDomElement *> itemDoms;
 	m_ignoreSelectionChangeEvents = true;
 
 	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
@@ -255,7 +262,6 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
 				newItems.insert(mp->modelIndex(), item);
-				itemDoms.insert(item, new QDomElement(view));
 				item->restorePartLabel(labelGeometry, getLabelViewLayerID());
 			}
 		}
@@ -3181,9 +3187,9 @@ void SketchWidget::swapSelected(PaletteItem* other) {
 	swapSelected(other->modelPart());
 }
 
-void SketchWidget::swap(PaletteItem* from, ModelPart *to, SwapCommand * swapCommand) {
+void SketchWidget::swap(PaletteItem* from, ModelPart *to, bool doEmit, SwapCommand * swapCommand) {
 	if(from && to) {
-		from->swap(to, m_viewLayers, swapCommand);
+		from->swap(to, m_viewLayers, doEmit, swapCommand);
 		updateInfoView();
 	}
 }
@@ -3195,7 +3201,7 @@ void SketchWidget::swap(long itemId, const QString &moduleID, bool doEmit, SwapC
 void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit, SwapCommand * swapCommand) {
 	PaletteItem *from = dynamic_cast<PaletteItem*>(findItem(itemId));
 	if(from && to) {
-		swap(from,to, swapCommand);
+		swap(from,to, doEmit, swapCommand);
 
 		// let's make sure that the icon pixmap will be available for the infoview
 		LayerAttributes layerAttributes;
@@ -3204,6 +3210,8 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit, SwapCommand * s
 		if(doEmit) {
 			emit swapped(itemId, to, false, NULL);
 		}
+
+
 	}
 }
 

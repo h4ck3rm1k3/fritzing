@@ -52,6 +52,7 @@ public:
 	static QPixmap * getPixmap(const QString & moduleID, ViewLayer::ViewLayerID viewLayerID, QSize size);
 	static void calcPrinterScale();
 	static qreal printerScale();
+	static void cleanup();
 
 protected:
 	void parseForWidthAndHeight(QXmlStreamReader & xml);

@@ -134,6 +134,7 @@ protected:
 	bool m_core;
 	bool m_valid;
 	bool m_alien;
+	bool m_originalModelPartStuff;
 
 	static QHash<ItemType, QString> itemTypeNames;
 	static long m_nextIndex;

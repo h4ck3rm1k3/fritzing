@@ -58,6 +58,12 @@ PaletteItem::PaletteItem( ModelPart * modelPart, ItemBase::ViewIdentifier viewId
 	}
 }
 
+PaletteItem::~PaletteItem() {
+	if (m_partLabel) {
+		delete m_partLabel;
+	}
+}
+
 bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {
 	Q_UNUSED(viewLayerID);
 
@@ -281,14 +287,16 @@ QString PaletteItem::family() {
 	return modelPartStuff()->family();
 }
 
-bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, SwapCommand * swapCommand) {
+bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, bool reinit, SwapCommand * swapCommand) {
 	bool sameFamily = family() == newModelPart->modelPartStuff()->family();
 	if(sameFamily) {
 		invalidateConnectors();
 		clearBusConnectorItems();
 
-		m_modelPart->copy(newModelPart);
-		m_modelPart->initConnectors(true);
+		if (reinit) {
+			m_modelPart->copy(newModelPart);
+			m_modelPart->initConnectors(true);
+		}
 
 		QHash<ViewLayer::ViewLayerID,bool> layersVisibility = cleanupLayerKin();
 		renderImage(m_modelPart,m_viewIdentifier,layerHash,m_viewLayerID,true);
@@ -298,6 +306,7 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, Swap
 
 		cleanupConnectors(swapCommand);
 		updateTooltip();
+		setConnectorTooltips();
 
 		figureHover();
 
@@ -345,7 +354,7 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 		ConnectorItem *conn = dynamic_cast<ConnectorItem*>(child);
 		if(conn) {
 			if(conn->isDirty()) {
-				oldOnes[conn->connector()->connectorStuff()->name()] = conn;
+				oldOnes.insert(conn->connector()->connectorStuff()->name(), conn);
 			} else {
 				newOnes << conn;
 			}
@@ -354,7 +363,7 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 
 	foreach(ConnectorItem* newOne, newOnes) {
 		QString name = newOne->connector()->connectorStuff()->name();
-		ConnectorItem *oldOne = oldOnes[name];
+		ConnectorItem *oldOne = oldOnes.value(name, NULL);
 		if(oldOne) {
 			foreach(ConnectorItem* oldConnectedTo, oldOne->connectedToItems()) {
 				oldOne->tempRemove(oldConnectedTo, true);
@@ -364,9 +373,6 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 
 				//newOne->attachedMoved();
 			}
-			oldOnes.remove(name);
-			scene()->removeItem(oldOne);
-			delete oldOne;
 		} else {
 			// nothing to do with this one
 		}
@@ -375,7 +381,7 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 	// not working old ones
 	bool removed = false;
 	foreach(QString name, oldOnes.keys()) {
-		ConnectorItem *toRemove = oldOnes[name];
+		ConnectorItem *toRemove = oldOnes.value(name, NULL);
 		if(toRemove) {
 			foreach(ConnectorItem* toDisconnect, toRemove->connectedToItems()) {
 				if (swapCommand != NULL) {
@@ -387,10 +393,20 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 					//toDisconnect->tempRemove(toRemove, true);
 				}
 			}
-			scene()->removeItem(toRemove);
-			delete toRemove;
 		}
 	}
+
+	foreach (ConnectorItem * oldOne, oldOnes.values()) {
+		scene()->removeItem(oldOne);
+		Connector * connector = oldOne->connector();
+		delete oldOne;
+		if (connector->connectorItemCount() == 0) {
+			// delete the connector if all connectorItems being deleted are deleted
+			// each connectorItem will remove itself from the connector's list of connectorItems
+			delete connector;
+		}
+	}
+
 
 	if (removed) {
 		swapCommand->addAfterDisconnect();

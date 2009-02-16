@@ -60,6 +60,10 @@ WaitPushUndoStack::WaitPushUndoStack(QObject * parent) :
 #endif
 }
 
+WaitPushUndoStack::~WaitPushUndoStack() {
+	clearDeadTimers();
+}
+
 #ifndef QT_NO_DEBUG
 void WaitPushUndoStack::push(QUndoCommand * cmd) 
 {
@@ -69,14 +73,18 @@ void WaitPushUndoStack::push(QUndoCommand * cmd)
 #endif
 
 void WaitPushUndoStack::waitPush(QUndoCommand * command, int delayMS) {
+	clearDeadTimers();
+	new CommandTimer(command, delayMS, this);
+}
+
+void WaitPushUndoStack::clearDeadTimers() {
 	QMutexLocker locker(&m_mutex);
 	foreach (QTimer * timer, m_deadTimers) {
 		delete timer;
 	}
 	m_deadTimers.clear();
-
-	new CommandTimer(command, delayMS, this);
 }
+
 
 void WaitPushUndoStack::deleteTimer(QTimer * timer) {
 	QMutexLocker locker(&m_mutex);

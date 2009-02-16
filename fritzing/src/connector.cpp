@@ -42,6 +42,12 @@ Connector::Connector( ConnectorStuff * connectorStuff, ModelPart * modelPart)
 	m_bus = NULL;
 }
 
+Connector::~Connector() {
+	foreach (ConnectorItem * connectorItem, m_connectorItems) {
+		connectorItem->clearConnector();
+	}
+}
+
 void Connector::initNames() {
 	if (names.count() == 0) {
 		names.insert(Connector::Male, "male");
@@ -339,3 +345,6 @@ ModelPart * Connector::modelPart() {
 	return m_modelPart;
 }
 
+int Connector::connectorItemCount() {
+	return m_connectorItems.count();
+}

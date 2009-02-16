@@ -121,7 +121,7 @@ bool SqliteReferenceModel::createConnection() {
 			"END; "
 		);
 
-		foreach(ModelPart* mp, partHash.values()) {
+		foreach(ModelPart* mp, m_partHash.values()) {
 			addPartAux(mp);
 		}
 
@@ -144,7 +144,7 @@ ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &moduleID) {
 	if(moduleID == ___emptyString___) {
 		return NULL;
 	}
-	return partHash[moduleID];
+	return m_partHash[moduleID];
 }
 
 ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &family, const QMultiHash<QString, QString> &properties) {

@@ -48,6 +48,7 @@ public:
 
 public:
 	Connector(class ConnectorStuff *, class ModelPart * modelPart);
+	~Connector();
 
 	Connector::ConnectorType connectorType();
 	void addViewItem(class ConnectorItem *);
@@ -67,6 +68,7 @@ public:
 	bool setUpConnector(class FSvgRenderer * renderer, const QString & moduleID, ItemBase::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint);
 	long modelIndex();
 	ModelPart * modelPart();
+	int connectorItemCount();
 
 public:
 	static void initNames();

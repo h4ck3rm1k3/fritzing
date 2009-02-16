@@ -609,3 +609,7 @@ void ConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
 	qreal height = y2-y1;
 	setRect(x1,y1,width,height);
 }
+
+void ConnectorItem::clearConnector() {
+	m_connector = NULL;
+}

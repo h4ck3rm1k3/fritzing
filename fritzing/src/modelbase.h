@@ -32,6 +32,7 @@ $Date$
 
 class ModelBase : public QObject
 {
+Q_OBJECT
 
 public:
 	ModelBase(bool makeRoot);

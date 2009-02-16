@@ -37,6 +37,7 @@ class UpdateDialog : public QDialog {
 
 public:
 	UpdateDialog(QWidget *parent = 0);
+	~UpdateDialog();
 
 	void setVersionChecker(class VersionChecker *);
 	void setAtUserRequest(bool);

@@ -137,6 +137,23 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 
 FApplication::~FApplication(void)
 {
+	FSvgRenderer::cleanup();
+	ViewLayer::cleanup();
+	ItemBase::cleanup();
+	Wire::cleanup();
+
+	if (m_paletteBinModel) {
+		m_paletteBinModel->clearPartHash();
+		delete m_paletteBinModel;
+	}
+	if (m_referenceModel) {
+		m_referenceModel->clearPartHash();
+		delete m_referenceModel;
+	}
+	if (m_updateDialog) {
+		delete m_updateDialog;
+	}
+
 }
 
 bool FApplication::spaceBarIsPressed() {
@@ -405,9 +422,6 @@ int FApplication::startup(int & argc, char ** argv)
 
 void FApplication::finish()
 {
-    delete m_paletteBinModel;
-    delete m_referenceModel;
-
 	QString currVersion = Version::versionString();
 	QSettings settings;
     settings.setValue("version", currVersion);

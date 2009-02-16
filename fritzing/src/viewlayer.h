@@ -93,6 +93,7 @@ public:
 	static const QString & viewLayerXmlNameFromID(ViewLayerID);
 	static void initNames();
 	static qreal getZIncrement();
+	static void cleanup();
 
 protected:
 	bool m_visible;

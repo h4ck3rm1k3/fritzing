@@ -36,6 +36,8 @@ class WaitPushUndoStack : public QUndoStack
 {
 public:
 	WaitPushUndoStack(QObject * parent = 0);
+	~WaitPushUndoStack();
+
 	void waitPush(QUndoCommand *, int delayMS);
 	void deleteTimer(QTimer *);
 
@@ -46,6 +48,9 @@ public:
 protected:
 	QFile m_file;
 #endif
+
+protected:
+	void clearDeadTimers();
 
 protected:
 	QList<QTimer *> m_deadTimers;

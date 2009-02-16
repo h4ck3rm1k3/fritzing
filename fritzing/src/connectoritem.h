@@ -85,6 +85,7 @@ public:
 	void setDirty(bool dirty);
 	bool isDirty();
 	void setBaseTooltip(const QString &);
+	void clearConnector();
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

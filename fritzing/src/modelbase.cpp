@@ -36,7 +36,9 @@ ModelBase::ModelBase( bool makeRoot )
 }
 
 ModelBase::~ModelBase() {
-	// seems to get rid of a bunch of compiler warnings
+	if (m_root) {
+		delete m_root;
+	}
 }
 
 
@@ -64,9 +66,9 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
     QString errorStr;
     int errorLine;
     int errorColumn;
-    QDomDocument* domDocument = new QDomDocument();
+    QDomDocument domDocument;
 
-    if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+    if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
         QMessageBox::information(NULL, QObject::tr("Fritzing"),
                                  QObject::tr("Parse error (1) at line %1, column %2:\n%3\n%4")
                                  .arg(errorLine)
@@ -76,7 +78,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
         return false;
     }
 
-    QDomElement root = domDocument->documentElement();
+    QDomElement root = domDocument.documentElement();
    	if (root.isNull()) {
         QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file (2).").arg(fileName));
    		return false;

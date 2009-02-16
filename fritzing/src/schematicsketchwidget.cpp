@@ -1120,7 +1120,7 @@ void SchematicSketchWidget::calcDistances(Wire * wire, QList<ConnectorItem *> & 
 		bool fromConnector0;
 		QList<Wire *> distanceWires;
 		int distance = calcDistance(wire, end, 0, distanceWires, fromConnector0);
-		DistanceThing * dt = new DistanceThing();
+		DistanceThing * dt = new DistanceThing;
 		dt->distance = distance;
 		dt->fromConnector0 = fromConnector0;
 		DebugDialog::debug(QString("distance %1 %2 %3, %4 %5")

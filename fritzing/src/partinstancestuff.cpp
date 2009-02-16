@@ -29,21 +29,12 @@ $Date$
 #include "partinstancestuff.h"
 
 PartInstanceStuff::PartInstanceStuff() {
-	m_domDocument = NULL;
 	m_title = QString::null;
 	m_text = QString::null;
 }
 
-PartInstanceStuff::PartInstanceStuff(QDomDocument * domDocument, const QString & path) {
-	m_domDocument = domDocument;
+PartInstanceStuff::PartInstanceStuff(const QString & path) {
 	Q_UNUSED(path);
-}
-
-void PartInstanceStuff::loadTagText(QDomElement parent, QString tagName, QString &field) {
-	QDomElement tagElement = parent.firstChildElement(tagName);
-	if (!tagElement.isNull()) {
-		field = tagElement.text();
-	}
 }
 
 const QString & PartInstanceStuff::title() {

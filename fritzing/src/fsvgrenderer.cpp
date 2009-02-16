@@ -36,6 +36,21 @@ FSvgRenderer::FSvgRenderer(QObject * parent) : QSvgRenderer(parent)
 	m_defaultSizeF = QSizeF(0,0);
 }
 
+void FSvgRenderer::cleanup() {
+	foreach (RendererHash * rendererHash, m_filenameRendererHash.values()) {
+		foreach (FSvgRenderer * renderer, rendererHash->values()) {
+			delete renderer;
+		}
+		delete rendererHash;
+	}
+	m_filenameRendererHash.clear();
+	foreach (RendererHash * rendererHash, m_moduleIDRendererHash.values()) {
+		delete rendererHash;
+	}
+	m_moduleIDRendererHash.clear();
+
+}
+
 bool FSvgRenderer::load ( const QString & filename ) {
 	if (!QFileInfo(filename).exists() || !QFileInfo(filename).isFile()) {
 		return false;

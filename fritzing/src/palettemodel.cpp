@@ -65,7 +65,7 @@ void PaletteModel::init() {
 }
 
 ModelPart * PaletteModel::retrieveModelPart(const QString & moduleID) {
-	ModelPart * modelPart = partHash[moduleID];
+	ModelPart * modelPart = m_partHash[moduleID];
 	if (modelPart != NULL) return modelPart;
 
 	if (m_referenceModel != NULL) {
@@ -76,15 +76,15 @@ ModelPart * PaletteModel::retrieveModelPart(const QString & moduleID) {
 }
 
 bool PaletteModel::containsModelPart(const QString & moduleID) {
-	return partHash.contains(moduleID);
+	return m_partHash.contains(moduleID);
 }
 
 void PaletteModel::updateOrAddModelPart(const QString & moduleID, ModelPart *newOne) {
-	ModelPart *oldOne = partHash[moduleID];
+	ModelPart *oldOne = m_partHash[moduleID];
 	if(oldOne) {
 		oldOne->copy(newOne);
 	} else {
-		partHash.insert(moduleID, newOne);
+		m_partHash.insert(moduleID, newOne);
 	}
 }
 
@@ -238,7 +238,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 
 	modelPart->setCore(m_loadingCore);
 
-	if (partHash.contains(moduleID) && partHash[moduleID]) {
+	if (m_partHash.contains(moduleID) && m_partHash[moduleID]) {
 		if(!update) {
 			QMessageBox::warning(NULL, QObject::tr("Fritzing"),
 							 QObject::tr("The part '%1' at '%2' does not have a unique module id '%3'.")
@@ -247,10 +247,10 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 							 .arg(moduleID));
 			return NULL;
 		} else {
-			partHash[moduleID]->copyStuff(modelPart);
+			m_partHash[moduleID]->copyStuff(modelPart);
 		}
 	} else {
-		partHash.insert(moduleID, modelPart);
+		m_partHash.insert(moduleID, modelPart);
 	}
 
     if (m_root == NULL) {
@@ -322,4 +322,11 @@ void PaletteModel::removePart(const QString &moduleID) {
 		mpToRemove->setParent(NULL);
 		delete mpToRemove;
 	}
+}
+
+void PaletteModel::clearPartHash() {
+	foreach (ModelPart * modelPart, m_partHash.values()) {
+		delete modelPart;
+	}
+	m_partHash.clear();
 }

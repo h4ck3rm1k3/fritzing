@@ -38,7 +38,6 @@ $Date$
 #include <QWidget>
 #include <QHash>
 
-#include "modelpart.h"
 #include "itembase.h"
 #include "viewgeometry.h"
 #include "viewlayer.h"
@@ -51,7 +50,7 @@ class Wire : public ItemBase
 Q_OBJECT
 
 public:
-	Wire(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
+	Wire(class ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	virtual ~Wire();
 
 	void saveGeometry();
@@ -124,6 +123,7 @@ public:
 	static void initNames();
 	static QRgb getRgb(const QString & name);
 	static const QColor * netColor(ItemBase::ViewIdentifier);
+	static void cleanup();
 
 protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
