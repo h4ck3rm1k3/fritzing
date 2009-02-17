@@ -148,7 +148,10 @@ ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &moduleID) {
 }
 
 ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &family, const QMultiHash<QString, QString> &properties) {
-	return retrieveModelPart(Part::from(family, properties));
+	Part *part = Part::from(family, properties);
+	ModelPart *retval = retrieveModelPart(part);
+	delete part;
+	return retval;
 }
 
 ModelPart *SqliteReferenceModel::retrieveModelPart(const Part *examplePart) {
@@ -222,7 +225,10 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart) {
 }
 
 bool SqliteReferenceModel::addPartAux(ModelPart * newModel) {
-	return addPart(Part::from(newModel));
+	Part *part = Part::from(newModel);
+	bool result = addPart(part);
+	delete part;
+	return result;
 }
 
 bool SqliteReferenceModel::addPart(ModelPart * newModel, bool update) {

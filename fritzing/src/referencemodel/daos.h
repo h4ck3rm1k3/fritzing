@@ -114,6 +114,11 @@ public:
 		m_moduleID = ___emptyString___;
 		setFamily(family);
 	}
+	~Part() {
+		foreach(PartProperty *pp, m_properties) {
+			delete pp;
+		}
+	}
 
 	qlonglong id() const {return m_id;}
 	void setId(qlonglong id) {m_id = id;}
