@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 svn export http://fritzing.googlecode.com/svn/trunk/fritzing compile_folder
 cd compile_folder
 qmake CONFIG+=release -unix
@@ -13,8 +13,10 @@ fi
 date=`date +%Y.%m.%d`
 release_folder="fritzing.$date.linux.$arch"
 
-echo "making release folder and copying release files"
+echo "making release folder: $release_folder"
 mkdir ../$release_folder
+
+echo "copying release files"
 cp -rf bins/ parts/ examples/ Fritzing Fritzing.sh README.txt LICENSE.GPL2 LICENSE.GPL3 ../$release_folder/
 cd ../$release_folder
 chmod +x Fritzing.sh
@@ -27,21 +29,31 @@ mkdir lib/translations
 
 cd lib
 echo "copying libraries"
-cp /usr/lib/libQtCore.so.4 /usr/lib/libQtCore.so.4.4.3 /usr/lib/libQtGui.so.4 /usr/lib/libQtGui.so.4.4.3 /usr/lib/libQtNetwork.so.4 /usr/lib/libQtNetwork.so.4.4.3 /usr/lib/libQtSql.so.4 /usr/lib/libQtSql.so.4.4.3 /usr/lib/libQtSvg.so.4 /usr/lib/libQtSvg.so.4.4.3 /usr/lib/libQtWebKit.so.4 /usr/lib/libQtWebKit.so.4.4.3 /usr/lib/libQtXml.so.4 /usr/lib/libQtXml.so.4.4.3 .
+cp /usr/lib/libQtCore.so.4 /usr/lib/libQtGui.so.4 /usr/lib/libQtNetwork.so.4 /usr/lib/libQtSql.so.4 /usr/lib/libQtSvg.so.4 /usr/lib/libQtWebKit.so.4 /usr/lib/libQtXml.so.4 .
+
 
 # if is i368 copy the libaudio
 if [ $arch == 'i386' ]
 	then 
 	    cp /usr/lib/libaudio.so /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 .
 	    echo "copying libaudio files"
+	else
+	    echo "skipping libaudio files"
 fi
 
-echo "copying image format libs"
+echo "copying plugins"
 cp /usr/lib/qt4/plugins/imageformats/libqjpeg.so imageformats
 cp /usr/lib/qt4/plugins/sqldrivers/libqsqlite.so sqldrivers
 
+echo "copying translations"
 cp ../../compile_folder/translations/*.qm translations
 cd ../../
+
+echo "compressing...."
 tar -cjf ./$release_folder.tar.bz2 $release_folder
+
+echo "cleaning up"
 rm -rf $release_folder
 rm -rf compile_folder
+
+echo "done!"
