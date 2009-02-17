@@ -243,8 +243,8 @@ void Note::contentsChangedSlot() {
 	InfoGraphicsView *infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
 		QString oldText;
-		if (m_modelPart && m_modelPart->partInstanceStuff()) {
-			oldText = m_modelPart->partInstanceStuff()->text();
+		if (m_modelPart) {
+			oldText = m_modelPart->instanceText();
 		}
 
 		QSizeF oldSize = m_rect.size();
@@ -261,8 +261,8 @@ void Note::contentsChangedSlot() {
 
 		infoGraphicsView->partLabelChanged(this, oldText, m_graphicsTextItem->document()->toPlainText(), oldSize, newSize);
 	}
-	if (m_modelPart && m_modelPart->partInstanceStuff()) {
-		m_modelPart->partInstanceStuff()->setText(m_graphicsTextItem->document()->toPlainText());
+	if (m_modelPart) {
+		m_modelPart->setInstanceText(m_graphicsTextItem->document()->toPlainText());
 	}
 }
 

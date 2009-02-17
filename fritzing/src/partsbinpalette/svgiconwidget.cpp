@@ -33,6 +33,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../misc.h"
 #include "../fsvgrenderer.h"
+#include "iconwidgetpaletteitem.h"
 
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #BEBEBE;"
@@ -42,7 +43,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ItemBase::ViewIdentifier vie
 	setFlags(QGraphicsItem::ItemIsSelectable);
 	m_moduleId = modelPart->moduleID();
 
-	m_paletteItem = new PaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
+	m_paletteItem = new IconWidgetPaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
 	m_paletteItem->renderImage(modelPart, ItemBase::IconView, viewLayers,ViewLayer::Icon, false);
 
 	m_container = new SvgIconWidgetContainer(m_paletteItem, this);
@@ -65,6 +66,7 @@ SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ItemBase::ViewIdentifier vie
 
 	setWidget(m_container);
 
+	m_paletteItem->setTooltip();
 	setToolTip(m_paletteItem->toolTip());
 }
 

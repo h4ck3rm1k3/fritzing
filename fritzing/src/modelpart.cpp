@@ -42,7 +42,6 @@ ModelPart::ModelPart(ItemType type)
 {
 	m_type = type;
 	m_modelPartStuff = NULL;
-	m_partInstanceStuff = NULL;
 	m_index = m_nextIndex++;
 	m_core = false;
 	m_alien = false;
@@ -56,7 +55,6 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	m_type = type;
 	m_modelPartStuff = new ModelPartStuff(domDocument, path);
 	m_originalModelPartStuff = true;
-	m_partInstanceStuff = new PartInstanceStuff(path);
 	m_core = false;
 	m_alien = false;
 
@@ -72,9 +70,6 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 ModelPart::~ModelPart() {
 	foreach (ItemBase * itemBase, m_viewItems) {
 		itemBase->clearModelPart();
-	}
-	if (m_partInstanceStuff) {
-		delete m_partInstanceStuff;
 	}
 	if (m_originalModelPartStuff) {
 		if (m_modelPartStuff) {
@@ -148,16 +143,6 @@ void ModelPart::setModelPartStuff(ModelPartStuff * modelPartStuff) {
 	m_modelPartStuff = modelPartStuff;
 }
 
-PartInstanceStuff * ModelPart::partInstanceStuff() {
-	if(!m_partInstanceStuff) {
-		m_partInstanceStuff = new PartInstanceStuff();
-	}
-	return m_partInstanceStuff;
-}
-void ModelPart::setPartInstanceStuff(PartInstanceStuff * partInstanceStuff) {
-	m_partInstanceStuff = partInstanceStuff;
-}
-
 void ModelPart::addViewItem(ItemBase * item) {
 	m_viewItems.append(item);
 }
@@ -194,19 +179,16 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
 			streamWriter.writeAttribute("path", m_modelPartStuff->path());
 		}
-		if (m_partInstanceStuff != NULL) {
-			QString title = m_partInstanceStuff->title();
-			if(!title.isNull() && !title.isEmpty()) {
-				writeTag(streamWriter,"title",m_partInstanceStuff->title());
-			}
+		QString title = instanceTitle();
+		if(!title.isNull() && !title.isEmpty()) {
+			writeTag(streamWriter,"title",title);
+		}
 
-			QString text = m_partInstanceStuff->text();
-			if(!text.isNull() && !text.isEmpty()) {
-				streamWriter.writeStartElement("text");
-				streamWriter.writeCharacters(text);
-				streamWriter.writeEndElement();
-			}
-
+		QString text = instanceText();
+		if(!text.isNull() && !text.isEmpty()) {
+			streamWriter.writeStartElement("text");
+			streamWriter.writeCharacters(text);
+			streamWriter.writeEndElement();
 		}
 
 		// tell the views to write themselves out
@@ -495,3 +477,20 @@ bool ModelPart::hasViewID(long id) {
 
 	return false;
 }
+
+const QString & ModelPart::instanceTitle() {
+	return m_instanceTitle;
+}
+
+const QString & ModelPart::instanceText() {
+	return m_instanceText;
+}
+
+void ModelPart::setInstanceText(QString text) {
+	m_instanceText = text;
+}
+
+void ModelPart::setInstanceTitle(QString title) {
+	m_instanceTitle = title;
+}
+

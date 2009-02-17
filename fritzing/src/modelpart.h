@@ -71,8 +71,6 @@ public:
 	void copyStuff(ModelPart * modelPart);
 	ModelPartStuff * modelPartStuff();
 	void setModelPartStuff(ModelPartStuff *modelPartStuff);
-	PartInstanceStuff *partInstanceStuff();
-	void setPartInstanceStuff(PartInstanceStuff *partInstanceStuff);
 	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument);
 	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
 	void addViewItem(ItemBase *);
@@ -106,6 +104,11 @@ public:
 	QList<SvgAndPartFilePath> getAvailableViewFiles();
 	bool hasViewID(long id);
 
+	const QString & instanceTitle();
+	const QString & instanceText();
+	void setInstanceTitle(QString);
+	void setInstanceText(QString);
+
 public:
 	static const QString & itemTypeName(ModelPart::ItemType);
 	static const QString & itemTypeName(int);
@@ -125,7 +128,6 @@ protected:
 
 	ItemType m_type;
 	ModelPartStuff *m_modelPartStuff;
-	PartInstanceStuff *m_partInstanceStuff;
 	QHash<QString, Connector *> m_connectorHash;
 	QHash<QString, class Bus *> m_busHash;
 	long m_index;						// only used at save time to identify model parts in the xml
@@ -135,6 +137,9 @@ protected:
 	bool m_valid;
 	bool m_alien;
 	bool m_originalModelPartStuff;
+
+	QString m_instanceTitle;
+	QString m_instanceText;
 
 	static QHash<ItemType, QString> itemTypeNames;
 	static long m_nextIndex;

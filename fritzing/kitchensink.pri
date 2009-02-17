@@ -62,7 +62,6 @@ HEADERS += \
     src/paletteitem.h \
     src/paletteitembase.h \
     src/palettemodel.h \
-    src/partinstancestuff.h \
     src/pcbsketchwidget.h \
     src/pcbschematicsketchwidget.h \
     src/prefsdialog.h \
@@ -126,7 +125,6 @@ SOURCES += \
     src/paletteitem.cpp \
     src/paletteitembase.cpp \
     src/palettemodel.cpp \
-    src/partinstancestuff.cpp \
     src/pcbsketchwidget.cpp \
     src/pcbschematicsketchwidget.cpp \
     src/prefsdialog.cpp \

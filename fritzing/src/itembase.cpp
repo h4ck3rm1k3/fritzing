@@ -140,10 +140,10 @@ void ItemBase::clearBusConnectorItems()
 }
 
 void ItemBase::setTooltip() {
-	if(m_modelPart && m_modelPart->partInstanceStuff()) {
-		QString title = m_modelPart->partInstanceStuff()->title();
+	if(m_modelPart) {
+		QString title = m_modelPart->instanceTitle();
 		if(!title.isNull() && !title.isEmpty()) {
-			setInstanceTitleTooltip(m_modelPart->partInstanceStuff()->title());
+			setInstanceTitleTooltip(m_modelPart->instanceTitle());
 		} else {
 			setDefaultTooltip();
 		}
@@ -688,8 +688,8 @@ ConnectorItem * ItemBase::anyConnectorItem() {
 
 
 QString ItemBase::instanceTitle() {
-	if(m_modelPart && m_modelPart->partInstanceStuff()) {
-		return m_modelPart->partInstanceStuff()->title();
+	if(m_modelPart) {
+		return m_modelPart->instanceTitle();
 	}
 	return ___emptyString___;
 }
@@ -703,8 +703,8 @@ void ItemBase::setInstanceTitle(const QString &title) {
 
 void ItemBase::setInstanceTitleAux(const QString &title) 
 {
-	if (m_modelPart && m_modelPart->partInstanceStuff()) {
-		m_modelPart->partInstanceStuff()->setTitle(title);
+	if (m_modelPart) {
+		m_modelPart->setInstanceTitle(title);
 	}
 	setInstanceTitleTooltip(title);
 
@@ -731,28 +731,18 @@ void ItemBase::setInstanceTitleTooltip(const QString &text) {
 
 void ItemBase::setDefaultTooltip() {
 	if (m_modelPart) {
-		if (m_modelPart->partInstanceStuff()) {
-			QString title = ItemBase::partInstanceDefaultTitle;
-			QString inst = instanceTitle();
-			if(!inst.isNull() && !inst.isEmpty()) {
-				title = inst;
-			} else {
-				QString defaultTitle = label();
-				if(!defaultTitle.isNull() && !defaultTitle.isEmpty()) {
-					title = defaultTitle;
-				}
-			}
-			ensureUniqueTitle(title);
-			setInstanceTitleTooltip(m_modelPart->partInstanceStuff()->title());
-		}
-		else {
-			QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
-			if(m_modelPart->itemType() != ModelPart::Wire) {
-				this->setToolTip(base.arg(m_modelPart->title()));
-			} else {
-				this->setToolTip(base.arg(m_modelPart->modelPartStuff()->title() + " (" + m_modelPart->modelPartStuff()->moduleID() + ")"));
+		QString title = ItemBase::partInstanceDefaultTitle;
+		QString inst = instanceTitle();
+		if(!inst.isNull() && !inst.isEmpty()) {
+			title = inst;
+		} else {
+			QString defaultTitle = label();
+			if(!defaultTitle.isNull() && !defaultTitle.isEmpty()) {
+				title = defaultTitle;
 			}
 		}
+		ensureUniqueTitle(title);
+		setInstanceTitleTooltip(m_modelPart->instanceTitle());
 	}
 }
 
@@ -857,7 +847,7 @@ void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer, const QColor & t
 void ItemBase::partLabelChanged(const QString & newText) {
 	// sent from part label after inline edit
 	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
-	QString oldText = modelPart()->partInstanceStuff()->title();
+	QString oldText = modelPart()->instanceTitle();
 	setInstanceTitleAux(newText);
 	if (infographics != NULL) {
 		infographics->partLabelChanged(this, oldText, newText, QSizeF(), QSizeF());
@@ -878,7 +868,7 @@ void ItemBase::clearPartLabel() {
 void ItemBase::restorePartLabel(QDomElement & labelGeometry, ViewLayer::ViewLayerID viewLayerID)
 {
 	if (m_partLabel) {
-		m_partLabel->setPlainText(m_modelPart->partInstanceStuff()->title());
+		m_partLabel->setPlainText(m_modelPart->instanceTitle());
 		if (!labelGeometry.isNull()) {
 			m_partLabel->restoreLabel(labelGeometry, viewLayerID);
 		}

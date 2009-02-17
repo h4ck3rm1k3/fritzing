@@ -41,9 +41,6 @@ void FGraphicsScene::drawItems ( QPainter * painter, int numItems, QGraphicsItem
 
 void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
 {
-	// more-or-less copied from QGraphicsScene::helpEvent() because QGraphicsItem::toolTip() is not virtual
-	// I hope they fix this in 4.5!
-
     // Find the first item that does tooltips
     QList<QGraphicsItem *> itemsAtPos = items(helpEvent->scenePos());
     QString text;

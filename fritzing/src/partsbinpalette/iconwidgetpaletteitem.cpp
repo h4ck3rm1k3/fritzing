@@ -18,36 +18,29 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2398 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-02-17 00:53:10 +0100 (Tue, 17 Feb 2009) $
 
 ********************************************************************/
 
 
 
-#include "partinstancestuff.h"
 
-PartInstanceStuff::PartInstanceStuff() {
-	m_title = QString::null;
-	m_text = QString::null;
-}
 
-PartInstanceStuff::PartInstanceStuff(const QString & path) {
-	Q_UNUSED(path);
+#include "iconwidgetpaletteitem.h"
+
+IconWidgetPaletteItem::IconWidgetPaletteItem(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel) {
 }
 
-const QString & PartInstanceStuff::title() {
-	return m_title;
+void IconWidgetPaletteItem::setDefaultTooltip() {
+	if (m_modelPart) {
+		QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
+		if(m_modelPart->itemType() != ModelPart::Wire) {
+			this->setToolTip(base.arg(m_modelPart->title()));
+		} else {
+			this->setToolTip(base.arg(m_modelPart->modelPartStuff()->title() + " (" + m_modelPart->modelPartStuff()->moduleID() + ")"));
+		}
+	}
 }
-void PartInstanceStuff::setTitle(QString title) {
-	m_title = title;
-}
-
-const QString & PartInstanceStuff::text() {
-	return m_text;
-}
-void PartInstanceStuff::setText(QString text) {
-	m_text = text;
-}
-

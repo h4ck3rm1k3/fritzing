@@ -254,8 +254,8 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 					}
 					else {
 						Note * note = dynamic_cast<Note *>(item);
-						if (note != NULL && mp->partInstanceStuff() != NULL) {
-							note->setText(mp->partInstanceStuff()->text());
+						if (note != NULL) {
+							note->setText(mp->instanceText());
 						}
 					}
 				}

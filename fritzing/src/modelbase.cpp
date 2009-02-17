@@ -132,14 +132,12 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
    		// TODO Mariano: i think this is not the way
    		QString instanceTitle = instance.firstChildElement("title").text();
    		if(!instanceTitle.isNull() && !instanceTitle.isEmpty()) {
-   			if(!modelPart->partInstanceStuff()) modelPart->setPartInstanceStuff(new PartInstanceStuff());
-   			modelPart->partInstanceStuff()->setTitle(instanceTitle);
+   			modelPart->setInstanceTitle(instanceTitle);
    		}
 
    		QString instanceText = instance.firstChildElement("text").text();
    		if(!instanceText.isNull() && !instanceText.isEmpty()) {
-   			if(!modelPart->partInstanceStuff()) modelPart->setPartInstanceStuff(new PartInstanceStuff());
-   			modelPart->partInstanceStuff()->setText(instanceText);
+   			modelPart->setInstanceText(instanceText);
    		}
 
    		bool ok;

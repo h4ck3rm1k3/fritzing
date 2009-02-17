@@ -42,7 +42,6 @@ $Date$
 #include "viewlayer.h"
 #include "misc.h"
 #include "graphicssvglineitem.h"
-#include "partinstancestuff.h"
 
 typedef QMultiHash<class ConnectorItem *, class ConnectorItem *> ConnectorPairHash;
 
@@ -186,7 +185,7 @@ protected:
 
 
 	void setInstanceTitleTooltip(const QString& text);
-	void setDefaultTooltip();
+	virtual void setDefaultTooltip();
 	void setInstanceTitleAux(const QString & title);
 	void ensureUniqueTitle(QString &title);
 	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);

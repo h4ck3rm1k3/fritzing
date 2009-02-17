@@ -38,6 +38,7 @@ $Date$
 #include "../paletteitem.h"
 #include "../debugdialog.h"
 
+
 PartsBinIconView::PartsBinIconView(QWidget *parent)
     : InfoGraphicsView(parent)
 {

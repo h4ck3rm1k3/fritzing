@@ -32,6 +32,7 @@ HEADERS += \
     src/partsbinpalette/partsbiniconview.h \
     src/partsbinpalette/graphicsflowlayout.h \
     src/partsbinpalette/svgiconwidget.h \
+    src/partsbinpalette/iconwidgetpaletteitem.h \
     src/partsbinpalette/partsbincommands.h
 
 SOURCES += \
@@ -41,6 +42,7 @@ SOURCES += \
     src/partsbinpalette/partsbinlistview.cpp \
     src/partsbinpalette/partsbiniconview.cpp \
     src/partsbinpalette/graphicsflowlayout.cpp \
+    src/partsbinpalette/iconwidgetpaletteitem.cpp \
     src/partsbinpalette/svgiconwidget.cpp \
     src/partsbinpalette/partsbincommands.cpp
  
