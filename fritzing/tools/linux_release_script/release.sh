@@ -4,8 +4,9 @@ cd compile_folder
 qmake CONFIG+=release -unix
 make
 
-#let's define some variables that we'll need to in the future
+#let's define some variables that we'll need in the future
 arch_aux=`uname -m`
+arch=''
 if arch_aux=='x86_64'
 	then arch='AMD64'
 	else arch='i386'
@@ -28,7 +29,9 @@ cp /usr/lib/libQtCore.so.4 /usr/lib/libQtCore.so.4.4.3 /usr/lib/libQtGui.so.4 /u
 
 # if is i368 copy the libaudio
 if arch=='i386'
-	then cp /usr/lib/libaudio.so /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 .
+	then 
+		echo "coping libaudio libs"
+		cp /usr/lib/libaudio.so /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 .
 fi
 
 cp /usr/lib/qt4/plugins/imageformats/libqjpeg.so imageformats
