@@ -40,7 +40,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 	public:
 		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier);
 		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
-		PartsEditorPaletteItem::~PartsEditorPaletteItem();
+		~PartsEditorPaletteItem();
 
 		virtual void writeXml(QXmlStreamWriter &);
 		virtual void writeXmlLocation(QXmlStreamWriter & streamWriter);
