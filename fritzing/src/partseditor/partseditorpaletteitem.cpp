@@ -64,6 +64,22 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 	setSelected(false);
 }
 
+PartsEditorPaletteItem::~PartsEditorPaletteItem() 
+{
+	if (m_svgDom) {
+		delete m_svgDom;
+	}
+	if (m_connectors) {
+		delete m_connectors;
+	}
+	if (m_svgStrings) {
+		//delete m_svgStrings;			causes a crash
+	}
+	if (this->renderer()) {
+		delete this->renderer();
+	}
+}
+
 void PartsEditorPaletteItem::createSvgFile(QString path) {
     m_svgDom = new QDomDocument();
     QFile file(path);

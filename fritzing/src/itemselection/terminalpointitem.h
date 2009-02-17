@@ -37,6 +37,7 @@ class TerminalPointItem : public QGraphicsRectItem, public ResizableRectItem {
 public:
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool movable=true);
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
+	~TerminalPointItem();
 
 	QPointF point();
 	void updatePoint();

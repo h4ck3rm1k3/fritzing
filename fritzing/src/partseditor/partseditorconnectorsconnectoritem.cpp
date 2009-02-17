@@ -60,6 +60,13 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	updateTerminalPoint();
 }
 
+PartsEditorConnectorsConnectorItem::~PartsEditorConnectorsConnectorItem()
+{
+	if (m_handlers) {
+		delete m_handlers;
+	}
+}
+
 void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal width, qreal height) {
 	setRect(x,y,width,height);
 	m_resizedRect = QRectF(x,y,width,height);

@@ -155,6 +155,13 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 	installEventFilter(this);
 }
 
+PartsEditorMainWindow::~PartsEditorMainWindow()
+{
+	if (m_sketchModel) {
+		//delete m_sketchModel;				// causes a crash because this deletes a modelpart that some
+	}
+}
+
 void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_headerFrame = new QFrame();
 	m_headerFrame->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));

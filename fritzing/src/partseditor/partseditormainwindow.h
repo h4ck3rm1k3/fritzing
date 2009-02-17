@@ -61,6 +61,8 @@ Q_OBJECT
 
 public:
 	PartsEditorMainWindow(long id, QWidget * parent = 0, Qt::WFlags f = 0, ModelPart * modelPart=0, bool fromTemplate = false);
+	~PartsEditorMainWindow();
+
 	static const QString templatePath;
 	const QDir& tempDir();
 

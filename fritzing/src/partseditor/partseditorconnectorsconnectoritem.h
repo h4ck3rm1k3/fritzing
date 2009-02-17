@@ -36,6 +36,7 @@ friend class ConnectorRectangle;
 public:
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint);
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds);
+	~PartsEditorConnectorsConnectorItem();
 
 	void highlight(const QString &connId);
 	void setConnector(Connector *connector);
