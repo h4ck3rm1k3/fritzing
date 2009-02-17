@@ -910,7 +910,7 @@ void MainWindow::saveBundledSketch() {
 
 	QList<ModelPart*> partsToSave = m_sketchModel->root()->getAllNonCoreParts();
 	foreach(ModelPart* mp, partsToSave) {
-		QString partPath = mp->modelPartStuff()->path();
+		QString partPath = mp->modelPartShared()->path();
 		QFile file(partPath);
 		file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
 		QList<SvgAndPartFilePath> views = mp->getAvailableViewFiles();

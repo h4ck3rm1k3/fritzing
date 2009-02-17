@@ -1878,7 +1878,7 @@ void MainWindow::exportBOM() {
 
         for(int i=0; i < partList.size(); i++){
             QString label = partList.at(i)->instanceTitle();
-            QString desc = partList.at(i)->modelPartStuff()->title();
+            QString desc = partList.at(i)->modelPartShared()->title();
             if(label.length() > maxLabelWidth) {
                 maxLabelWidth = label.length();
             }
@@ -1896,7 +1896,7 @@ void MainWindow::exportBOM() {
 
             spacer += QString(maxLabelWidth - label.length(), QChar(' '));
             bom += label + spacer +
-                   partList.at(i)->modelPartStuff()->title() + "\n";
+                   partList.at(i)->modelPartShared()->title() + "\n";
         }
 
         bom += tr("\n\nShopping List\n\nQuantity\tPart\n\n");

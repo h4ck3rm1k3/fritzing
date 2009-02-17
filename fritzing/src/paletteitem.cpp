@@ -33,7 +33,7 @@ $Date$
 #include "layerkinpaletteitem.h"
 #include "fsvgrenderer.h"
 #include "layerattributes.h"
-#include "connectorstuff.h"
+#include "connectorshared.h"
 #include "labels/partlabel.h"
 #include "commands.h"
 
@@ -77,9 +77,9 @@ void PaletteItem::loadLayerKin( const LayerHash & viewLayers) {
 
 	if (m_modelPart == NULL) return;
 
-	ModelPartStuff * modelPartStuff = m_modelPart->modelPartStuff();
-	if (modelPartStuff == NULL) return;
-	if (modelPartStuff->domDocument() == NULL) return;
+	ModelPartShared * modelPartShared = m_modelPart->modelPartShared();
+	if (modelPartShared == NULL) return;
+	if (modelPartShared->domDocument() == NULL) return;
 
 	qint64 id = m_id + 1;
 	ViewGeometry viewGeometry = m_viewGeometry;
@@ -284,11 +284,11 @@ void PaletteItem::updateTooltip() {
 }
 
 QString PaletteItem::family() {
-	return modelPartStuff()->family();
+	return modelPartShared()->family();
 }
 
 bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, bool reinit, SwapCommand * swapCommand) {
-	bool sameFamily = family() == newModelPart->modelPartStuff()->family();
+	bool sameFamily = family() == newModelPart->modelPartShared()->family();
 	if(sameFamily) {
 		invalidateConnectors();
 		clearBusConnectorItems();
@@ -354,7 +354,7 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 		ConnectorItem *conn = dynamic_cast<ConnectorItem*>(child);
 		if(conn) {
 			if(conn->isDirty()) {
-				oldOnes.insert(conn->connector()->connectorStuff()->name(), conn);
+				oldOnes.insert(conn->connector()->connectorShared()->name(), conn);
 			} else {
 				newOnes << conn;
 			}
@@ -362,7 +362,7 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 	}
 
 	foreach(ConnectorItem* newOne, newOnes) {
-		QString name = newOne->connector()->connectorStuff()->name();
+		QString name = newOne->connector()->connectorShared()->name();
 		ConnectorItem *oldOne = oldOnes.value(name, NULL);
 		if(oldOne) {
 			foreach(ConnectorItem* oldConnectedTo, oldOne->connectedToItems()) {

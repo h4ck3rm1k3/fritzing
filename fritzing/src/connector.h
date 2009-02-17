@@ -47,21 +47,21 @@ public:
 	};
 
 public:
-	Connector(class ConnectorStuff *, class ModelPart * modelPart);
+	Connector(class ConnectorShared *, class ModelPart * modelPart);
 	~Connector();
 
 	Connector::ConnectorType connectorType();
 	void addViewItem(class ConnectorItem *);
 	void removeViewItem(class ConnectorItem *);
-	class ConnectorStuff * connectorStuff();
+	class ConnectorShared * connectorShared();
 	void connectTo(Connector *);
 	void disconnectFrom(Connector *);
 	void saveAsPart(QXmlStreamWriter & writer);
 	const QList<Connector *> & toConnectors();
 	ConnectorItem * connectorItem(QGraphicsScene *);
 	bool connectionIsAllowed(Connector* that);
-	const QString & connectorStuffID();
-	const QString & connectorStuffName();
+	const QString & connectorSharedID();
+	const QString & connectorSharedName();
 	const QString & busID();
 	class Bus * bus();
 	void setBus(class Bus *);
@@ -83,7 +83,7 @@ protected:
 							  const QRectF & connectorRect, struct SvgIdLayer *, bool ignoreTerminalPoint, const QRectF & viewBox);
 
 protected:
-	class ConnectorStuff * m_connectorStuff;
+	class ConnectorShared * m_connectorShared;
 	QList<class ConnectorItem *> m_connectorItems;
 	QList<Connector *> m_toConnectors;
 	class ModelPart * m_modelPart;

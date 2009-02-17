@@ -29,7 +29,7 @@ $Date$
 #define PARTSEDITORABSTRACTVIEW_H_
 
 #include "../sketchwidget.h"
-#include "../connectorstuff.h"
+#include "../connectorshared.h"
 #include "partseditorpaletteitem.h"
 
 class PartsEditorAbstractView : public SketchWidget {

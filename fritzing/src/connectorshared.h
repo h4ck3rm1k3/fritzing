@@ -24,8 +24,8 @@ $Date$
 
 ********************************************************************/
 
-#ifndef CONNECTORSTUFF_H
-#define CONNECTORSTUFF_H
+#ifndef CONNECTORSHARED_H
+#define CONNECTORSHARED_H
 
 #include <QString>
 #include <QDomElement>
@@ -46,13 +46,13 @@ struct SvgIdLayer {
 };
 
 
-class ConnectorStuff
+class ConnectorShared
 {
 
 public:
-	ConnectorStuff();
-	ConnectorStuff(const QDomElement & domElement);
-	~ConnectorStuff();
+	ConnectorShared();
+	ConnectorShared(const QDomElement & domElement);
+	~ConnectorShared();
 
 	const QString & id();
 	void setId(QString id);
@@ -71,8 +71,8 @@ public:
 	void addPin(ItemBase::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID, QString terminalId);
 	void removePins(ItemBase::ViewIdentifier layer);
 
-	class BusStuff * bus();
-	void setBus(class BusStuff *);
+	class BusShared * bus();
+	void setBus(class BusShared *);
 	const QString & busID();
 
 protected:
@@ -91,9 +91,9 @@ protected:
 	 */
 	QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> m_pins;
 
-	class BusStuff * m_bus;
+	class BusShared * m_bus;
 };
 
-static QList<ConnectorStuff *> ___emptyConnectorStuffList___;
+static QList<ConnectorShared *> ___emptyConnectorSharedList___;
 
 #endif

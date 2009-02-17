@@ -31,7 +31,7 @@ $Date$
 #include "htmlinfoview.h"
 #include "infographicsview.h"
 #include "debugdialog.h"
-#include "connectorstuff.h"
+#include "connectorshared.h"
 #include "connector.h"
 #include "fsvgrenderer.h"
 #include "layerattributes.h"
@@ -189,15 +189,15 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnab
 	Connector * connector = item->connector();
 	if (connector == NULL) return;
 
-	ConnectorStuff * connectorStuff = connector->connectorStuff();
-	if (connectorStuff == NULL) return;
+	ConnectorShared * connectorShared = connector->connectorShared();
+	if (connectorShared == NULL) return;
 
 	QString s = appendStuff(item->attachedTo(), swappingEnabled);
 	s += "<div class='block'>";
 	s += blockHeader(tr("Connections"),ConnsBlockId);
 	s += blockContainer(ConnsBlockId);
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("conn.")).arg(tr("connected to %n item(s)", "", item->connectionsCount()));
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("name")).arg(connectorStuff->name());
+	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("name")).arg(connectorShared->name());
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("type")).arg(Connector::connectorNameFromType(connector->connectorType()));
 	s += 		 "</table></div>\n";
 	s += "</div>";
@@ -308,7 +308,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 
 	ModelPart *modelPart = wire->modelPart();
 	if (modelPart == NULL) return "missing modelpart";
-	if (modelPart->modelPartStuff() == NULL) return "missing modelpart stuff";
+	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
 
 	QString s = "";
 	if(!title.isNull() && !title.isEmpty()) {
@@ -330,7 +330,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	*/
 
 	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(nameString)
-											   .arg(modelPart->modelPartStuff()->version());
+											   .arg(modelPart->modelPartShared()->version());
 	s += 		"</div>\n";
 
 	s += "<div class='block'>";
@@ -341,7 +341,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 #else
 	Q_UNUSED(id);
 #endif
-	QHash<QString,QString> properties = modelPart->modelPartStuff()->properties();
+	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("family").arg(properties["family"]);
 	QString select = wireColorsSelect(wire);
 	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("color").arg(select);
@@ -353,11 +353,11 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	s += 		 "</table></div>\n";
 	s += "</div>";
 
-	if(!modelPart->modelPartStuff()->tags().isEmpty()) {
+	if(!modelPart->modelPartShared()->tags().isEmpty()) {
 		s += "<div class='block'>";
 		s += blockHeader(tr("Tags"),TagsBlockId);
 		s += blockContainer(TagsBlockId);
-		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
+		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartShared()->tags().join(", "));
 		s += 		"</table></div>\n";
 		s += "</div>";
 	}
@@ -380,7 +380,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	Q_UNUSED(labelIsVisible);
 
 	if (modelPart == NULL) return "missing modelpart";
-	if (modelPart->modelPartStuff() == NULL) return "missing modelpart stuff";
+	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
 
 	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
 	QPixmap *pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
@@ -425,8 +425,8 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	*/
 
 	s += 		"<div class='parttitle' style='padding-top: 8px; height: 25px;'>\n";
-	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartStuff()->title())
-											   .arg("&nbsp;"+modelPart->modelPartStuff()->version());
+	s += 	QString("<h2>%1</h2>\n<p>%2</p>\n").arg(modelPart->modelPartShared()->title())
+											   .arg("&nbsp;"+modelPart->modelPartShared()->version());
 	s += 		"</div>\n";
 
 	s += "<div class='block'>";
@@ -437,7 +437,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 #else
 	Q_UNUSED(id)
 #endif
-	QHash<QString,QString> properties = modelPart->modelPartStuff()->properties();
+	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
 	QString family = properties["family"].toLower();
 
 	m_maxPropCount = properties.keys().size() > m_maxPropCount ? properties.keys().size() : m_maxPropCount;
@@ -456,12 +456,12 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	s += "</div>";
 
 //	s += QString("<tr><td colspan='2'>%1</td></tr>").
-//			arg(QString(modelPart->modelPartStuff()->path()).remove(QDir::currentPath()));
-	if(!modelPart->modelPartStuff()->tags().isEmpty()) {
+//			arg(QString(modelPart->modelPartShared()->path()).remove(QDir::currentPath()));
+	if(!modelPart->modelPartShared()->tags().isEmpty()) {
 		s += "<div class='block'>";
 		s += blockHeader(tr("Tags"),TagsBlockId);
 		s += blockContainer(TagsBlockId);
-		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartStuff()->tags().join(", "));
+		s += QString("<tr><td colspan='2'>%1</td></tr>\n").arg(modelPart->modelPartShared()->tags().join(", "));
 		s += 		"</table></div>\n";
 		s += "</div>";
 	}

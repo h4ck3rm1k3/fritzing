@@ -76,8 +76,8 @@ PartInfoWidget::PartInfoWidget(QWidget *parent) : QWidget(parent) {
 	setLayout(layout);
 }
 
-ModelPartStuff* PartInfoWidget::modelPartStuff() {
-	ModelPartStuff* mps = new ModelPartStuff();
+ModelPartShared* PartInfoWidget::modelPartShared() {
+	ModelPartShared* mps = new ModelPartShared();
 	mps->setVersion(m_version->text());
 	mps->setAuthor(m_author->text());
 	mps->setTitle(m_title->text());
@@ -93,7 +93,7 @@ ModelPartStuff* PartInfoWidget::modelPartStuff() {
 }
 
 void PartInfoWidget::updateInfo(ModelPart * modelPart) {
-	ModelPartStuff* mps = modelPart->modelPartStuff();
+	ModelPartShared* mps = modelPart->modelPartShared();
 	m_version->setText(mps->version());
 	m_author->setText(mps->author());
 	m_title->setText(mps->title());

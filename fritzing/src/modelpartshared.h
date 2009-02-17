@@ -24,8 +24,8 @@ $Date$
 
 ********************************************************************/
 
-#ifndef MODELPARTSTUFF_H
-#define MODELPARTSTUFF_H
+#ifndef MODELPARTSHARED_H
+#define MODELPARTSHARED_H
 
 #include <QDomDocument>
 #include <QDomElement>
@@ -35,18 +35,18 @@ $Date$
 #include <QDate>
 
 
-class ModelPartStuff
+class ModelPartShared
 {
 
 public:
-	ModelPartStuff();
-	ModelPartStuff(QDomDocument *, const QString & path);
-	~ModelPartStuff();
+	ModelPartShared();
+	ModelPartShared(QDomDocument *, const QString & path);
+	~ModelPartShared();
 
 	void setDomDocument(QDomDocument *);
 	QDomDocument * domDocument();
 
-	void copy(ModelPartStuff* other);
+	void copy(ModelPartShared* other);
 
 	const QString & uri();
 	void setUri(QString uri);
@@ -72,8 +72,8 @@ public:
 	const QString & taxonomy();
 	void setTaxonomy(QString taxonomy);
 
-	const QList<class ConnectorStuff *> connectors();
-	void setConnectorsStuff(QList<class ConnectorStuff *> connectors);
+	const QList<class ConnectorShared *> connectors();
+	void setConnectorsStuff(QList<class ConnectorShared *> connectors);
 
 	const QStringList &tags();
 	void setTags(const QStringList &tags);
@@ -86,9 +86,9 @@ public:
 
 	void initConnectors();
 	void resetConnectorsInitialization();
-	const QHash<QString, class BusStuff *> & buses();
-	ConnectorStuff * getConnectorStuff(const QString & id);
-	BusStuff * bus(const QString & busID);
+	const QHash<QString, class BusShared *> & buses();
+	ConnectorShared * getConnectorShared(const QString & id);
+	BusShared * bus(const QString & busID);
 	bool ignoreTerminalPoints();
 
 protected:
@@ -114,8 +114,8 @@ protected:
 	QStringList m_tags;
 	QMultiHash<QString,QString> m_properties;
 
-	QHash<QString, class ConnectorStuff *> m_connectorStuffHash;
-	QHash<QString, class BusStuff *> m_buses;
+	QHash<QString, class ConnectorShared *> m_connectorSharedHash;
+	QHash<QString, class BusShared *> m_buses;
 
 	bool m_connectorsInitialized;
 	bool m_ignoreTerminalPoints;

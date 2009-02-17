@@ -29,7 +29,7 @@ $Date$
 #include "debugdialog.h"
 #include "modelpart.h"
 #include "connectoritem.h"
-#include "connectorstuff.h"
+#include "connectorshared.h"
 #include "infographicsview.h"
 #include "connector.h"
 #include "bus.h"
@@ -158,8 +158,8 @@ void ItemBase::setConnectorTooltips() {
 		if (connectorItem == NULL) continue;
 
 		QString tt = QString("<b>%1</b> %2<br />" + ITEMBASE_FONT_PREFIX + "%3" + ITEMBASE_FONT_SUFFIX)
-			.arg(connectorItem->connector()->connectorStuff()->description())
-			.arg(connectorItem->connectorStuffName())
+			.arg(connectorItem->connector()->connectorShared()->description())
+			.arg(connectorItem->connectorSharedName())
 			.arg(toolTip());
 
 		connectorItem->setBaseTooltip(tt);
@@ -209,10 +209,10 @@ void ItemBase::setModelPart(ModelPart * modelPart) {
 	m_modelPart = modelPart;
 }
 
-ModelPartStuff * ItemBase::modelPartStuff() {
+ModelPartShared * ItemBase::modelPartShared() {
 	if (m_modelPart == NULL) return NULL;
 
-	return m_modelPart->modelPartStuff();
+	return m_modelPart->modelPartShared();
 }
 
 QString & ItemBase::viewIdentifierName(ItemBase::ViewIdentifier viewIdentifier) {
@@ -319,7 +319,7 @@ void ItemBase::setViewLayerID(ViewLayer::ViewLayerID viewLayerID, const LayerHas
   		}
   	}
 
-    //DebugDialog::debug(QString("using z: %1 z:%2 lid:%3").arg(modelPart()->modelPartStuff()->title()).arg(m_viewGeometry.z()).arg(m_viewLayerID) );
+    //DebugDialog::debug(QString("using z: %1 z:%2 lid:%3").arg(modelPart()->modelPartShared()->title()).arg(m_viewGeometry.z()).arg(m_viewLayerID) );
 }
 
 void ItemBase::removeLayerKin() {
@@ -435,7 +435,7 @@ ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);
 		if (connectorItem == NULL) continue;
 
-		if (connectorID.compare(connectorItem->connectorStuffID()) == 0) {
+		if (connectorID.compare(connectorItem->connectorSharedID()) == 0) {
 			return connectorItem;
 		}
 	}
@@ -715,8 +715,8 @@ void ItemBase::setInstanceTitleAux(const QString &title)
 }
 
 QString ItemBase::label() {
-	if(m_modelPart && m_modelPart->modelPartStuff()) {
-		return m_modelPart->modelPartStuff()->label();
+	if(m_modelPart && m_modelPart->modelPartShared()) {
+		return m_modelPart->modelPartShared()->label();
 	}
 	return ___emptyString___;
 }
@@ -726,7 +726,7 @@ void ItemBase::updateTooltip() {
 }
 
 void ItemBase::setInstanceTitleTooltip(const QString &text) {
-	setToolTip("<b>"+text+"</b><br></br>" + ITEMBASE_FONT_PREFIX + modelPartStuff()->title()+ ITEMBASE_FONT_SUFFIX);
+	setToolTip("<b>"+text+"</b><br></br>" + ITEMBASE_FONT_PREFIX + modelPartShared()->title()+ ITEMBASE_FONT_SUFFIX);
 }
 
 void ItemBase::setDefaultTooltip() {

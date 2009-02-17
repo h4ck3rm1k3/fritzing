@@ -36,13 +36,13 @@ $Date$
 
 #include "addremovelistwidget.h"
 #include "../modelpart.h"
-#include "../modelpartstuff.h"
+#include "../modelpartshared.h"
 
 class PartInfoWidget : public QWidget {
 	Q_OBJECT
 	public:
 		PartInfoWidget(QWidget *parent = 0);
-		ModelPartStuff* modelPartStuff();
+		ModelPartShared* modelPartShared();
 
 	public slots:
 		void updateInfo(ModelPart *);

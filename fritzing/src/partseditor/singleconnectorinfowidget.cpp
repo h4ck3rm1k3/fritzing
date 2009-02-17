@@ -130,8 +130,8 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 	m_undoStack = undoStack;
 	m_connector = connector;
 
-	if(connector && connector->connectorStuff()) {
-		ConnectorStuff *connStuff = connector->connectorStuff();
+	if(connector && connector->connectorShared()) {
+		ConnectorShared *connStuff = connector->connectorShared();
 		name = connStuff->name().isNull() || connStuff->name().isEmpty() ? EMPTY_CONN_NAME : connStuff->name();
 		description = connStuff->description().isNull() || connStuff->description().isEmpty()? EMPTY_CONN_DESC : connStuff->description();
 		type = connStuff->connectorType() == Connector::Unknown ? EMPTY_CONN_TYPE : connStuff->connectorType();
@@ -176,7 +176,7 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 }
 
 QString SingleConnectorInfoWidget::id() {
-	return m_connector->connectorStuffID();
+	return m_connector->connectorSharedID();
 }
 QString SingleConnectorInfoWidget::name() {
 	return m_nameLabel->text();
@@ -355,7 +355,7 @@ void SingleConnectorInfoWidget::setSelected(bool selected, bool doEmitChange) {
 	m_type->setSelected(selected);
 
 	if(selected && m_connector) {
-		emit tellViewsMyConnectorIsNewSelected(m_connector->connectorStuffID());
+		emit tellViewsMyConnectorIsNewSelected(m_connector->connectorSharedID());
 	}
 }
 
@@ -382,7 +382,7 @@ Connector *SingleConnectorInfoWidget::connector() {
 }
 
 MismatchingConnectorWidget *SingleConnectorInfoWidget::toMismatching(ItemBase::ViewIdentifier missingViewId) {
-	MismatchingConnectorWidget *mcw = new MismatchingConnectorWidget(m_topLevelContainer,missingViewId, m_connector->connectorStuffID(), (QWidget*)parent(), false, m_connector);
+	MismatchingConnectorWidget *mcw = new MismatchingConnectorWidget(m_topLevelContainer,missingViewId, m_connector->connectorSharedID(), (QWidget*)parent(), false, m_connector);
 	return mcw;
 }
 

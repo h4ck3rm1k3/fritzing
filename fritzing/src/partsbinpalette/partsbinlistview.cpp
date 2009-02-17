@@ -50,7 +50,7 @@ void PartsBinListView::doClear() {
 }
 
 void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
-	if (modelPart->modelPartStuff() == NULL) return;
+	if (modelPart->modelPartShared() == NULL) return;
 	if (modelPart->itemType() == ModelPart::Module) {
 		// don't want the empty root to appear in the view
 		return;
@@ -58,7 +58,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 
 	QString moduleID = modelPart->moduleID();
 	if(!alreadyIn(moduleID)) {
-		QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartStuff()->title(), this);
+		QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartShared()->title(), this);
 		lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
 
 		LayerAttributes layerAttributes;

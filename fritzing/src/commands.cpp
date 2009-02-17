@@ -529,11 +529,11 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	
 	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
-		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 				wire->id(), "connector0", false, true, NULL));
 	}
 	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
-		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 				wire->id(), "connector1", false, true, NULL));
 	}
 
@@ -585,8 +585,8 @@ void SwapCommand::redo() {
 
 void SwapCommand::addDisconnect(class ConnectorItem * from, class ConnectorItem * to) 
 {
-	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(m_sketchWidget, BaseCommand::CrossView, from->attachedToID(), from->connectorStuffID(),
-																to->attachedToID(), to->connectorStuffID(), false, true, NULL);
+	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(m_sketchWidget, BaseCommand::CrossView, from->attachedToID(), from->connectorSharedID(),
+																to->attachedToID(), to->connectorSharedID(), false, true, NULL);
 	m_commands.append(ccc);
 	ccc->redo();
 }
@@ -723,9 +723,9 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 	m_commands.append(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), true, -1, NULL));
 	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
-	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorStuffID(),
+	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorSharedID(),
 			wire->id(), "connector0", true, true, NULL));
-	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorStuffID(),
+	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorSharedID(),
 			wire->id(), "connector1", true, true, NULL));
 	if (!select) {
 		SelectItemCommand * sic = new SelectItemCommand(sketchWidget, SelectItemCommand::NormalDeselect, NULL);

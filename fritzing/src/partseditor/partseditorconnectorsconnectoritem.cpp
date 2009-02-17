@@ -96,7 +96,7 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 }
 
 void PartsEditorConnectorsConnectorItem::highlight(const QString &connId) {
-	if(m_connector->connectorStuffID() == connId) {
+	if(m_connector->connectorSharedID() == connId) {
 		if(m_resizable) m_handlers->setHandlersVisible(true);
 	} else {
 		if(m_resizable) m_handlers->setHandlersVisible(false);
@@ -292,10 +292,10 @@ QRectF PartsEditorConnectorsConnectorItem::mappedRect() {
 }
 
 void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	highlight(connectorStuffID());
+	highlight(connectorSharedID());
 	PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
 	if(gv) {
-		gv->informConnectorSelectionFromView(connectorStuffID());
+		gv->informConnectorSelectionFromView(connectorSharedID());
 	}
 	Q_UNUSED(event);
 	//ConnectorItem::mousePressEvent(event);

@@ -84,7 +84,7 @@ public:
 	QSizeF size();
 	class ModelPart * modelPart();
 	void setModelPart(class ModelPart *);
-	class ModelPartStuff * modelPartStuff();
+	class ModelPartShared * modelPartShared();
 	virtual void writeXml(QXmlStreamWriter &) {}
 	virtual void saveInstance(QXmlStreamWriter &);
 	virtual void saveInstanceLocation(QXmlStreamWriter &) = 0;

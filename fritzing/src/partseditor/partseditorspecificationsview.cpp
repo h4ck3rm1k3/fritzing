@@ -39,7 +39,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../waitpushundostack.h"
 #include "../fritzingwindow.h"
-#include "../connectorstuff.h"
+#include "../connectorshared.h"
 
 QT_BEGIN_NAMESPACE
 

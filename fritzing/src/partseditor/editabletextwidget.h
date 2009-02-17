@@ -32,7 +32,7 @@ $Date$
 #include <QTextEdit>
 
 #include "abstracteditablelabelwidget.h"
-#include "../modelpartstuff.h"
+#include "../modelpartshared.h"
 
 class EditableTextWidget : public AbstractEditableLabelWidget {
 Q_OBJECT

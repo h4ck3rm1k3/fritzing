@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "connector.h"
-#include "connectorstuff.h"
+#include "connectorshared.h"
 #include "connectoritem.h"
 #include "debugdialog.h"
 #include "modelpart.h"
@@ -35,10 +35,10 @@ $Date$
 
 QHash <Connector::ConnectorType, QString > Connector::names;
 
-Connector::Connector( ConnectorStuff * connectorStuff, ModelPart * modelPart)
+Connector::Connector( ConnectorShared * connectorShared, ModelPart * modelPart)
 {
 	m_modelPart = modelPart;
-	m_connectorStuff = connectorStuff;
+	m_connectorShared = connectorShared;
 	m_bus = NULL;
 }
 
@@ -73,26 +73,26 @@ const QString & Connector::connectorNameFromType(ConnectorType type) {
 }
 
 Connector::ConnectorType Connector::connectorType() {
-	if (m_connectorStuff != NULL) {
-		return m_connectorStuff->connectorType();
+	if (m_connectorShared != NULL) {
+		return m_connectorShared->connectorType();
 	}
 
 	return Connector::Unknown;
 }
 
-ConnectorStuff * Connector::connectorStuff() {
-	return m_connectorStuff;
+ConnectorShared * Connector::connectorShared() {
+	return m_connectorShared;
 }
 
 void Connector::addViewItem(ConnectorItem * item) {
 	m_connectorItems.append(item);
-	//DebugDialog::debug(QString("adding view %1 %2").arg(this->connectorStuff()->name()).arg(m_connectorItems.count()) );
+	//DebugDialog::debug(QString("adding view %1 %2").arg(this->connectorShared()->name()).arg(m_connectorItems.count()) );
 }
 
 void Connector::removeViewItem(ConnectorItem * item) {
 	m_connectorItems.removeOne(item);
 
-	//DebugDialog::debug(QString("removing view %1 %2").arg(this->connectorStuff()->name()).arg(m_connectorItems.count()) );
+	//DebugDialog::debug(QString("removing view %1 %2").arg(this->connectorShared()->name()).arg(m_connectorItems.count()) );
 }
 
 void Connector::connectTo(Connector * connector) {
@@ -119,12 +119,12 @@ void Connector::disconnectFrom(Connector * connector) {
 
 void Connector::saveAsPart(QXmlStreamWriter & writer) {
 	writer.writeStartElement("connector");
-	writer.writeAttribute("id", connectorStuff()->id());
-	writer.writeAttribute("type", connectorStuff()->connectorTypeString());
-	writer.writeAttribute("name", connectorStuff()->name());
-	writer.writeTextElement("description", connectorStuff()->description());
+	writer.writeAttribute("id", connectorShared()->id());
+	writer.writeAttribute("type", connectorShared()->connectorTypeString());
+	writer.writeAttribute("name", connectorShared()->name());
+	writer.writeTextElement("description", connectorShared()->description());
 	writer.writeStartElement("views");
-	QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer *> pins = m_connectorStuff->pins();
+	QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer *> pins = m_connectorShared->pins();
 	foreach (ItemBase::ViewIdentifier currView, pins.keys()) {
 		writer.writeStartElement(ItemBase::viewIdentifierXmlName(currView));
 		foreach (SvgIdLayer * svgIdLayer, pins.values(currView)) {
@@ -191,16 +191,16 @@ bool Connector::connectionIsAllowed(Connector* that)
 	return (thisConnectorType != thatConnectorType);		// otherwise heterosexual
 }
 
-const QString & Connector::connectorStuffID() {
-	if (m_connectorStuff == NULL) return ___emptyString___;
+const QString & Connector::connectorSharedID() {
+	if (m_connectorShared == NULL) return ___emptyString___;
 
-	return m_connectorStuff->id();
+	return m_connectorShared->id();
 }
 
-const QString & Connector::connectorStuffName() {
-	if (m_connectorStuff == NULL) return ___emptyString___;
+const QString & Connector::connectorSharedName() {
+	if (m_connectorShared == NULL) return ___emptyString___;
 
-	return m_connectorStuff->name();
+	return m_connectorShared->name();
 }
 
 
@@ -223,9 +223,9 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 	Q_UNUSED(moduleID);
 	
-	if (m_connectorStuff == NULL) return false;
+	if (m_connectorShared == NULL) return false;
 	
-	SvgIdLayer * svgIdLayer = m_connectorStuff->fullPinInfo(viewIdentifier, viewLayerID);
+	SvgIdLayer * svgIdLayer = m_connectorShared->fullPinInfo(viewIdentifier, viewLayerID);
 	if (svgIdLayer == NULL) {
 		return false;
 	}
@@ -260,7 +260,7 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		// TODO: all parts should either have connectors with or without a matrix
 		if (matrix0.isIdentity()) {
-			/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorStuffID())
+			/*DebugDialog::debug(QString("identity matrix %11 %1 %2, viewbox: %3 %4 %5 %6, bounds: %7 %8 %9 %10, size: %12 %13").arg(m_modelPart->title()).arg(connectorSharedID())
 							   .arg(viewBox.x()).arg(viewBox.y()).arg(viewBox.width()).arg(viewBox.height())
 							   .arg(bounds.x()).arg(bounds.y()).arg(bounds.width()).arg(bounds.height())
 							   .arg(viewIdentifier)

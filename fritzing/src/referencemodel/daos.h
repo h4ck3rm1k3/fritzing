@@ -172,7 +172,7 @@ public:
 		Q_ASSERT(moduleID != ___emptyString___);
 		//Q_ASSERT(!moduleID.isNull());
 
-		QHash<QString,QString> props = modelPart->modelPartStuff()->properties();
+		QHash<QString,QString> props = modelPart->modelPartShared()->properties();
 		Q_ASSERT(props.contains("family"));
 
 		QString family = props["family"];

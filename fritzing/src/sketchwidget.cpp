@@ -569,7 +569,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * pale
 		// nobody falls through to here now?
 
 		QMessageBox::information(dynamic_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
-								 QObject::tr("The file %1 is not a Fritzing file (1).").arg(modelPart->modelPartStuff()->path()) );
+								 QObject::tr("The file %1 is not a Fritzing file (1).").arg(modelPart->modelPartShared()->path()) );
 
 
 		DebugDialog::debug(QString("addPartItem renderImage failed %1").arg(modelPart->moduleID()) );
@@ -789,12 +789,12 @@ void SketchWidget::extendChangeConnectionCommand(ConnectorItem * fromConnectorIt
 	}
 
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
-								fromItem->id(), fromConnectorItem->connectorStuffID(),
-								toItem->id(), toConnectorItem->connectorStuffID(),
+								fromItem->id(), fromConnectorItem->connectorSharedID(),
+								toItem->id(), toConnectorItem->connectorSharedID(),
 								connect, seekLayerKin, parentCommand);
 	new RatsnestCommand(this, BaseCommand::CrossView,
-								fromItem->id(), fromConnectorItem->connectorStuffID(),
-								toItem->id(), toConnectorItem->connectorStuffID(),
+								fromItem->id(), fromConnectorItem->connectorSharedID(),
+								toItem->id(), toConnectorItem->connectorSharedID(),
 								connect, seekLayerKin, parentCommand);
 }
 
@@ -817,20 +817,20 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		.arg(fromPos.x()).arg(fromPos.y())
 		.arg(toPos.x()).arg(toPos.y())
 		.arg(wireFlags)
-		.arg(from->attachedToTitle()).arg(from->connectorStuffID())
-		.arg(to->attachedToTitle()).arg(to->connectorStuffID())
+		.arg(from->attachedToTitle()).arg(from->connectorSharedID())
+		.arg(to->attachedToTitle()).arg(to->connectorSharedID())
 		.arg(m_viewIdentifier)
 		);
 
 	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, false, -1, parentCommand);
-	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorStuffID(),
+	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
-	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
+	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
 			newID, "connector1", true, true, parentCommand);
 	if (doRatsnest) {
-		new RatsnestCommand(this, crossViewType, from->attachedToID(), from->connectorStuffID(),
+		new RatsnestCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 				newID, "connector0", true, true, parentCommand);
-		new RatsnestCommand(this, crossViewType, to->attachedToID(), to->connectorStuffID(),
+		new RatsnestCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
 				newID, "connector1", true, true, parentCommand);
 	}
 
@@ -1171,7 +1171,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 
     	ModelPart * modelPart = m_droppingItem->modelPart();
     	if (modelPart == NULL) return;
-    	if (modelPart->modelPartStuff() == NULL) return;
+    	if (modelPart->modelPartShared() == NULL) return;
 
 		QUndoCommand* parentCommand = new QUndoCommand(tr("Add %1").arg(modelPart->title()));
     	stackSelectionState(false, parentCommand);
@@ -1765,14 +1765,14 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 	QString fromConnectorID;
 	if (from != NULL) {
-		fromConnectorID = from->connectorStuffID();
+		fromConnectorID = from->connectorSharedID();
 	}
 
 	long toID = -1;
 	QString toConnectorID;
 	if (to != NULL) {
 		toID = to->attachedToID();
-		toConnectorID = to->connectorStuffID();
+		toConnectorID = to->connectorSharedID();
 	}
 
 
@@ -1874,9 +1874,9 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		long fromID = wire->id();
 
 		DebugDialog::debug(QString("m_connectorDragConnector:%1 %4 from:%2 to:%3")
-						   .arg(m_connectorDragConnector->connectorStuffID())
-						   .arg(fromOnWire->connectorStuffID())
-						   .arg((to == NULL) ? "null" : to->connectorStuffID())
+						   .arg(m_connectorDragConnector->connectorSharedID())
+						   .arg(fromOnWire->connectorSharedID())
+						   .arg((to == NULL) ? "null" : to->connectorSharedID())
 						   .arg(m_connectorDragConnector->attachedTo()->modelPart()->title()) );
 
 
@@ -2787,7 +2787,7 @@ void SketchWidget::killDroppingItem() {
 
 ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart) {
 
-	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->modelPartStuff()->domDocument(), m_viewIdentifier);
+	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->modelPartShared()->domDocument(), m_viewIdentifier);
 	if (layers.isNull()) return ViewLayer::UnknownLayer;
 
 	QDomElement layer = layers.firstChildElement("layer");
@@ -2908,16 +2908,16 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	// disconnect from original wire and reconnect to new wire
 	ConnectorItem * connector1 = wire->connector1();
 	foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
-		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-			wire->id(), connector1->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+			wire->id(), connector1->connectorSharedID(),
 			false, true, parentCommand);
-		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-			newID, connector1->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+			newID, connector1->connectorSharedID(),
 			true, true, parentCommand);
 	}
 
 	// connect the two wires
-	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorStuffID(),
+	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
 
 
@@ -2960,16 +2960,16 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
 	// disconnect the wires
-	new ChangeConnectionCommand(this, crossView, wire->id(), clickedConnectorItem->connectorStuffID(),
-			toWire->id(), toConnectorItem->connectorStuffID(), false, true, parentCommand);
+	new ChangeConnectionCommand(this, crossView, wire->id(), clickedConnectorItem->connectorSharedID(),
+			toWire->id(), toConnectorItem->connectorSharedID(), false, true, parentCommand);
 
 	// disconnect everyone from the other end of the wire being deleted, and reconnect to the remaining wire
 	foreach (ConnectorItem * otherToConnectorItem, otherConnector->connectedToItems()) {
-		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
-			toWire->id(), otherConnector->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorSharedID(),
+			toWire->id(), otherConnector->connectorSharedID(),
 			false, true, parentCommand);
-		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorStuffID(),
-			wire->id(), clickedConnectorItem->connectorStuffID(),
+		new ChangeConnectionCommand(this, crossView, otherToConnectorItem->attachedToID(), otherToConnectorItem->connectorSharedID(),
+			wire->id(), clickedConnectorItem->connectorSharedID(),
 			true, true, parentCommand);
 	}
 
@@ -3882,7 +3882,7 @@ void SketchWidget::chainVisible(ConnectorItem * fromConnectorItem, ConnectorItem
 }
 
 bool SketchWidget::matchesLayer(ModelPart * modelPart) {
-	QDomDocument * domDocument = modelPart->modelPartStuff()->domDocument();
+	QDomDocument * domDocument = modelPart->modelPartShared()->domDocument();
 	if (domDocument->isNull()) return false;
 
 	QDomElement views = domDocument->documentElement().firstChildElement("views");

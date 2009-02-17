@@ -39,7 +39,7 @@ $Date$
 #include <QList>
 
 #include "itembase.h"
-#include "modelpartstuff.h"
+#include "modelpartshared.h"
 #include "connector.h"
 #include "svgandpartfilepath.h"
 
@@ -69,8 +69,8 @@ public:
 	void copy(ModelPart *);
 	void copyNew(ModelPart *);
 	void copyStuff(ModelPart * modelPart);
-	ModelPartStuff * modelPartStuff();
-	void setModelPartStuff(ModelPartStuff *modelPartStuff);
+	ModelPartShared * modelPartShared();
+	void setModelPartShared(ModelPartShared *modelPartShared);
 	void saveInstances(QXmlStreamWriter & streamWriter, bool startDocument);
 	void saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument);
 	void addViewItem(ItemBase *);
@@ -127,7 +127,7 @@ protected:
 	QList<ItemBase *> m_viewItems;
 
 	ItemType m_type;
-	ModelPartStuff *m_modelPartStuff;
+	ModelPartShared *m_modelPartShared;
 	QHash<QString, Connector *> m_connectorHash;
 	QHash<QString, class Bus *> m_busHash;
 	long m_index;						// only used at save time to identify model parts in the xml
@@ -136,7 +136,7 @@ protected:
 	bool m_core;
 	bool m_valid;
 	bool m_alien;
-	bool m_originalModelPartStuff;
+	bool m_originalModelPartShared;
 
 	QString m_instanceTitle;
 	QString m_instanceText;

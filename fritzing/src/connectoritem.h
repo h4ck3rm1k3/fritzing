@@ -66,10 +66,10 @@ public:
 	long attachedToID();
 	int attachedToItemType();
 	const QString & attachedToTitle();
-	const QString & connectorStuffID();
-	const QString & connectorStuffName();
+	const QString & connectorSharedID();
+	const QString & connectorSharedName();
 	const QString & busID();
-	ModelPartStuff * modelPartStuff();
+	ModelPartShared * modelPartShared();
 	ModelPart * modelPart();
 	virtual class Bus * bus();
 	void tempConnectTo(ConnectorItem * item, bool applyColor);

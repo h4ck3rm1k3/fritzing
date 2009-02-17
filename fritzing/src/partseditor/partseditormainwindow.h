@@ -92,7 +92,7 @@ protected:
 	void connectWidgetsToSave(const QList<QWidget*> &widgets);
 	void createFooter();
 
-	ModelPartStuff* modelPartStuff();
+	ModelPartShared* modelPartShared();
 
 	const QString untitledFileName();
 	int &untitledFileCount();

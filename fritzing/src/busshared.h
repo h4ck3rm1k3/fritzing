@@ -24,8 +24,8 @@ $Date$
 
 ********************************************************************/
 
-#ifndef BUSSTUFF_H
-#define BUSSTUFF_H
+#ifndef BUSSHARED_H
+#define BUSSHARED_H
 
 #include <QString>
 #include <QDomElement>
@@ -33,17 +33,17 @@ $Date$
 #include <QList>
 #include <QXmlStreamWriter>
 
-class BusStuff {
+class BusShared {
 	
 public:
-	BusStuff(const QDomElement & busElement, const QHash<QString, class ConnectorStuff *> & connectorHash);
+	BusShared(const QDomElement & busElement, const QHash<QString, class ConnectorShared *> & connectorHash);
 	
 	const QString & id();
-	const QList<class ConnectorStuff *> & connectors();
+	const QList<class ConnectorShared *> & connectors();
 	
 protected:
 	QString m_id;
-	QList<class ConnectorStuff *> m_connectors;
+	QList<class ConnectorShared *> m_connectors;
 };
 
 #endif

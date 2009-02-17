@@ -25,8 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "bus.h"
-#include "busstuff.h"
-#include "connectorstuff.h"
+#include "busshared.h"
+#include "connectorshared.h"
 #include "debugdialog.h"
 #include "connectoritem.h"
 #include "modelpart.h"
@@ -35,18 +35,18 @@ $Date$
 QHash<QString, class Bus *> Bus::___emptyBusList___;
 
 
-Bus::Bus(BusStuff * busStuff, ModelPart * modelPart)
+Bus::Bus(BusShared * busShared, ModelPart * modelPart)
 {
-	m_busStuff = busStuff;
+	m_busShared = busShared;
 	m_modelPart = modelPart;
 	m_busConnector = NULL;
 
 }
 
 const QString & Bus::id() {
-	if (m_busStuff == NULL) return ___emptyString___;
+	if (m_busShared == NULL) return ___emptyString___;
 
-	return m_busStuff->id();
+	return m_busShared->id();
 }
 
 

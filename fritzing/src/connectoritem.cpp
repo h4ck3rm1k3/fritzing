@@ -61,8 +61,8 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
     this->setCursor(Qt::CrossCursor);
 
 	//DebugDialog::debug(QString("%1 attached to %2")
-			//.arg(this->connector()->connectorStuff()->id())
-			//.arg(attachedTo->modelPart()->modelPartStuff()->title()) );
+			//.arg(this->connector()->connectorShared()->id())
+			//.arg(attachedTo->modelPart()->modelPartShared()->title()) );
 }
 
 ConnectorItem::~ConnectorItem() {
@@ -130,7 +130,7 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	if (m_connectedTo.contains(connected)) return;
 
 	m_connectedTo.append(connected);
-	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPart()->modelPartStuff()->title()).arg(m_connectedTo.count()) );
+	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPart()->modelPartShared()->title()).arg(m_connectedTo.count()) );
 	restoreColor();
 	if (m_attachedTo != NULL) {
 		m_attachedTo->connectionChange(this);
@@ -221,7 +221,7 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 			restoreColor();
 			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
 				.arg((long) this, 0, 16)
-				.arg(itemBase->modelPart()->modelPartStuff()->title())
+				.arg(itemBase->modelPart()->modelPartShared()->title())
 				.arg(m_connectedTo.count()) );
 			updateTooltip();
 			return removed;
@@ -325,16 +325,16 @@ const QString & ConnectorItem::attachedToTitle() {
 	return attachedTo()->title();
 }
 
-const QString & ConnectorItem::connectorStuffID() {
+const QString & ConnectorItem::connectorSharedID() {
 	if (m_connector == NULL) return ___emptyString___;
 
-	return m_connector->connectorStuffID();
+	return m_connector->connectorSharedID();
 }
 
-const QString & ConnectorItem::connectorStuffName() {
+const QString & ConnectorItem::connectorSharedName() {
 	if (m_connector == NULL) return ___emptyString___;
 
-	return m_connector->connectorStuffName();
+	return m_connector->connectorSharedName();
 }
 
 const QString & ConnectorItem::busID() {
@@ -343,10 +343,10 @@ const QString & ConnectorItem::busID() {
 	return m_connector->busID();
 }
 
-ModelPartStuff * ConnectorItem::modelPartStuff() {
+ModelPartShared * ConnectorItem::modelPartShared() {
 	if (m_attachedTo == NULL) return NULL;
 
-	return m_attachedTo->modelPartStuff();
+	return m_attachedTo->modelPartShared();
 }
 
 
@@ -405,7 +405,7 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	}
 
 	writer.writeStartElement("connector");
-	writer.writeAttribute("connectorId", connectorStuffID());
+	writer.writeAttribute("connectorId", connectorSharedID());
 	writeTopLevelAttributes(writer);
 	writer.writeStartElement("geometry");
 	writer.writeAttribute("x", QString::number(this->pos().x()));
@@ -422,7 +422,7 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 			//}
 		//}
 		writer.writeStartElement("connect");
-		writer.writeAttribute("connectorId", connectorItem->connectorStuffID());
+		writer.writeAttribute("connectorId", connectorItem->connectorSharedID());
 		writer.writeAttribute("modelIndex", QString::number(connectorItem->connector()->modelIndex()));
 		writer.writeEndElement();
 	}
@@ -517,7 +517,7 @@ void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItem
 
 	for (int i = 0; i < tempItems.count(); i++) {
 		ConnectorItem * connectorItem = tempItems[i];
-		//DebugDialog::debug(QString("testing %1 %2 %3").arg(connectorItem->attachedToID()).arg(connectorItem->attachedToTitle()).arg(connectorItem->connectorStuffID()) );
+		//DebugDialog::debug(QString("testing %1 %2 %3").arg(connectorItem->attachedToID()).arg(connectorItem->attachedToTitle()).arg(connectorItem->connectorSharedID()) );
 
 		Wire * fromWire = (connectorItem->attachedToItemType() == ModelPart::Wire) ? dynamic_cast<Wire *>(connectorItem->attachedTo()) : NULL;
 		if (fromWire != NULL && fromWire->hasAnyFlag(skipFlags)) {
@@ -577,7 +577,7 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 		ItemBase * candidate = connectorItem->attachedTo();
 		if (candidate->itemType() == ModelPart::Part || candidate->itemType() == ModelPart::Board) {
 			if (!partsConnectors.contains(connectorItem)) {
-				//DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorStuffID()) );
+				//DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorSharedID()) );
 				partsConnectors.append(connectorItem);
 			}
 		}
@@ -592,7 +592,7 @@ void ConnectorItem::updateTooltip() {
 
 	QString connections;
 	foreach(ConnectorItem * toConnectorItem, m_connectedTo) {
-		connections += "<br />&nbsp;&nbsp;" + toConnectorItem->attachedToTitle() + ":" + toConnectorItem->connectorStuffName();
+		connections += "<br />&nbsp;&nbsp;" + toConnectorItem->attachedToTitle() + ":" + toConnectorItem->connectorSharedName();
 	}
 
 	setToolTip(m_baseTooltip + ITEMBASE_FONT_PREFIX + connections + ITEMBASE_FONT_SUFFIX);

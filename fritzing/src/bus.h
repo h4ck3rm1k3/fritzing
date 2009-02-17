@@ -37,7 +37,7 @@ $Date$
 class Bus {
 	
 public:
-	Bus(class BusStuff *, class ModelPart *);
+	Bus(class BusShared *, class ModelPart *);
 	
 	const QString & id();
 	const QList<class Connector *> & connectors();
@@ -56,7 +56,7 @@ protected:
 
 	QList<class ConnectorItem *> m_connectorItems;
 	QList<class Connector *> m_connectors;
-	BusStuff * m_busStuff;
+	BusShared * m_busShared;
 	class Connector * m_busConnector;
 	class ModelPart * m_modelPart;
 };

@@ -24,12 +24,12 @@ $Date$
 
 ********************************************************************/
 
-#include "connectorstuff.h"
+#include "connectorshared.h"
 #include "debugdialog.h"
 #include "connector.h"
-#include "busstuff.h"
+#include "busshared.h"
 
-ConnectorStuff::ConnectorStuff()
+ConnectorShared::ConnectorShared()
 {
 	m_id = "";
 	m_name = "";
@@ -39,7 +39,7 @@ ConnectorStuff::ConnectorStuff()
 	m_bus = NULL;
 }
 
-ConnectorStuff::ConnectorStuff( const QDomElement & domElement )
+ConnectorShared::ConnectorShared( const QDomElement & domElement )
 {
 	m_id = domElement.attribute("id", "");
 	m_name = domElement.attribute("name", "");
@@ -50,7 +50,7 @@ ConnectorStuff::ConnectorStuff( const QDomElement & domElement )
 	m_bus = NULL;
 }
 
-ConnectorStuff::~ConnectorStuff() {
+ConnectorShared::~ConnectorShared() {
 	foreach (SvgIdLayer * svgIdLayer, m_pins.values()) {
 		delete svgIdLayer;
 	}
@@ -58,45 +58,45 @@ ConnectorStuff::~ConnectorStuff() {
 }
 
 
-const QString & ConnectorStuff::id() {
+const QString & ConnectorShared::id() {
 	return m_id;
 }
-void ConnectorStuff::setId(QString id) {
+void ConnectorShared::setId(QString id) {
 	m_id = id;
 }
 
-const QString & ConnectorStuff::description() {
+const QString & ConnectorShared::description() {
 	return m_description;
 }
-void ConnectorStuff::setDescription(QString description) {
+void ConnectorShared::setDescription(QString description) {
 	m_description = description;
 }
 
-const QString & ConnectorStuff::name() {
+const QString & ConnectorShared::name() {
 	return m_name;
 }
-void ConnectorStuff::setName(QString name) {
+void ConnectorShared::setName(QString name) {
 	m_name = name;
 }
 
-Connector::ConnectorType ConnectorStuff::connectorType() {
+Connector::ConnectorType ConnectorShared::connectorType() {
 	return m_type;
 }
 
-const QString & ConnectorStuff::connectorTypeString() {
+const QString & ConnectorShared::connectorTypeString() {
 	return m_typeString;
 }
 
-void ConnectorStuff::setConnectorType(QString type) {
+void ConnectorShared::setConnectorType(QString type) {
 	m_typeString = type;
 	m_type = Connector::connectorTypeFromName(type);
 }
 
-const QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer*> & ConnectorStuff::pins() {
+const QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer*> & ConnectorShared::pins() {
 	return m_pins;
 }
 
-void ConnectorStuff::addPin(ItemBase::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID viewLayerID, QString terminalId) {
+void ConnectorShared::addPin(ItemBase::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID viewLayerID, QString terminalId) {
 	SvgIdLayer * svgIdLayer = new SvgIdLayer;
 	svgIdLayer->m_viewLayerID = viewLayerID;
 	svgIdLayer->m_svgId = connectorId;
@@ -105,12 +105,12 @@ void ConnectorStuff::addPin(ItemBase::ViewIdentifier layer, QString connectorId,
 	m_pins.insert(layer, svgIdLayer);
 }
 
-void ConnectorStuff::removePins(ItemBase::ViewIdentifier layer) {
+void ConnectorShared::removePins(ItemBase::ViewIdentifier layer) {
 	m_pins.remove(layer);
 	Q_ASSERT(m_pins.values(layer).size() == 0);
 }
 
-const QString ConnectorStuff::pin(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+const QString ConnectorShared::pin(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
 		if (svgIdLayer->m_viewLayerID == viewLayerID) {
@@ -121,7 +121,7 @@ const QString ConnectorStuff::pin(ItemBase::ViewIdentifier viewId, ViewLayer::Vi
 	return ___emptyString___;
 }
 
-const QString ConnectorStuff::terminal(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+const QString ConnectorShared::terminal(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
 		if (svgIdLayer->m_viewLayerID == viewLayerID) {
@@ -133,7 +133,7 @@ const QString ConnectorStuff::terminal(ItemBase::ViewIdentifier viewId, ViewLaye
 
 }
 
-SvgIdLayer * ConnectorStuff::fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+SvgIdLayer * ConnectorShared::fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
 		if (svgIdLayer->m_viewLayerID == viewLayerID) {
@@ -144,7 +144,7 @@ SvgIdLayer * ConnectorStuff::fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLa
 	return NULL;
 }
 
-void ConnectorStuff::loadPins(const QDomElement & domElement) {
+void ConnectorShared::loadPins(const QDomElement & domElement) {
 	//if(m_domElement == NULL) return;
 
 	// TODO: this is view-related stuff and it would be nice if the model didn't know about it
@@ -154,7 +154,7 @@ void ConnectorStuff::loadPins(const QDomElement & domElement) {
 	loadPin(viewsTag.firstChildElement("pcbView"),ItemBase::PCBView);
 }
 
-void ConnectorStuff::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) {
+void ConnectorShared::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) {
 	QDomElement pinElem = elem.firstChildElement("p");
 	while (!pinElem.isNull()) {
 		QString svgId = pinElem.attribute("svgId");
@@ -174,15 +174,15 @@ void ConnectorStuff::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) 
 	}
 }
 
-void ConnectorStuff::setBus(BusStuff * bus) {
+void ConnectorShared::setBus(BusShared * bus) {
 	m_bus = bus;
 }
 
-BusStuff * ConnectorStuff::bus() {
+BusShared * ConnectorShared::bus() {
 	return m_bus;
 }
 
-const QString & ConnectorStuff::busID() {
+const QString & ConnectorShared::busID() {
 	if (m_bus == NULL) return ___emptyString___;
 		return m_bus->id();
 }

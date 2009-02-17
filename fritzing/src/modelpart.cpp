@@ -26,8 +26,8 @@ $Date$
 
 #include "modelpart.h"
 #include "debugdialog.h"
-#include "connectorstuff.h"
-#include "busstuff.h"
+#include "connectorshared.h"
+#include "busshared.h"
 #include "bus.h"
 #include "version/version.h"
 
@@ -41,11 +41,11 @@ ModelPart::ModelPart(ItemType type)
 	: QObject()
 {
 	m_type = type;
-	m_modelPartStuff = NULL;
+	m_modelPartShared = NULL;
 	m_index = m_nextIndex++;
 	m_core = false;
 	m_alien = false;
-	m_originalModelPartStuff = false;
+	m_originalModelPartShared = false;
 
 }
 
@@ -53,8 +53,8 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	: QObject()
 {
 	m_type = type;
-	m_modelPartStuff = new ModelPartStuff(domDocument, path);
-	m_originalModelPartStuff = true;
+	m_modelPartShared = new ModelPartShared(domDocument, path);
+	m_originalModelPartShared = true;
 	m_core = false;
 	m_alien = false;
 
@@ -71,9 +71,9 @@ ModelPart::~ModelPart() {
 	foreach (ItemBase * itemBase, m_viewItems) {
 		itemBase->clearModelPart();
 	}
-	if (m_originalModelPartStuff) {
-		if (m_modelPartStuff) {
-			delete m_modelPartStuff;
+	if (m_originalModelPartShared) {
+		if (m_modelPartShared) {
+			delete m_modelPartShared;
 		}
 	}
 
@@ -89,7 +89,7 @@ ModelPart::~ModelPart() {
 }
 
 const QString & ModelPart::moduleID() {
-	if (m_modelPartStuff != NULL) return m_modelPartStuff->moduleID();
+	if (m_modelPartShared != NULL) return m_modelPartShared->moduleID();
 
 	return ___emptyString___;
 }
@@ -120,7 +120,7 @@ void ModelPart::setItemType(ItemType t) {
 
 void ModelPart::copy(ModelPart * modelPart) {
 	m_type = modelPart->itemType();
-	m_modelPartStuff = modelPart->modelPartStuff();
+	m_modelPartShared = modelPart->modelPartShared();
 	m_core = modelPart->isCore();
 }
 
@@ -129,18 +129,18 @@ void ModelPart::copyNew(ModelPart * modelPart) {
 }
 
 void ModelPart::copyStuff(ModelPart * modelPart) {
-	modelPartStuff()->copy(modelPart->modelPartStuff());
+	modelPartShared()->copy(modelPart->modelPartShared());
 }
 
-ModelPartStuff * ModelPart::modelPartStuff() {
-	if(!m_modelPartStuff) {
-		m_modelPartStuff = new ModelPartStuff();
-		m_originalModelPartStuff = true;
+ModelPartShared * ModelPart::modelPartShared() {
+	if(!m_modelPartShared) {
+		m_modelPartShared = new ModelPartShared();
+		m_originalModelPartShared = true;
 	}
-	return m_modelPartStuff;
+	return m_modelPartShared;
 }
-void ModelPart::setModelPartStuff(ModelPartStuff * modelPartStuff) {
-	m_modelPartStuff = modelPartStuff;
+void ModelPart::setModelPartShared(ModelPartShared * modelPartShared) {
+	m_modelPartShared = modelPartShared;
 }
 
 void ModelPart::addViewItem(ItemBase * item) {
@@ -164,7 +164,7 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
 		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
-		QString title = this->modelPartStuff()->title();
+		QString title = this->modelPartShared()->title();
 		if(!title.isNull() && !title.isEmpty()) {
 			streamWriter.writeTextElement("title",title);
 		}
@@ -173,11 +173,11 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 
 	if (m_viewItems.size() > 0) {
 		streamWriter.writeStartElement("instance");
-		if (m_modelPartStuff != NULL) {
-			const QString & moduleIdRef = m_modelPartStuff->moduleID();
+		if (m_modelPartShared != NULL) {
+			const QString & moduleIdRef = m_modelPartShared->moduleID();
 			streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
 			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
-			streamWriter.writeAttribute("path", m_modelPartStuff->path());
+			streamWriter.writeAttribute("path", m_modelPartShared->path());
 		}
 		QString title = instanceTitle();
 		if(!title.isNull() && !title.isEmpty()) {
@@ -248,18 +248,18 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 		streamWriter.writeStartDocument();
     	streamWriter.writeStartElement("module");
 		streamWriter.writeAttribute("fritzingVersion", Version::versionString());
-		streamWriter.writeAttribute("moduleId", m_modelPartStuff->moduleID());
-    	writeTag(streamWriter,"version",m_modelPartStuff->version());
-    	writeTag(streamWriter,"author",m_modelPartStuff->author());
-    	writeTag(streamWriter,"title",m_modelPartStuff->title());
-    	writeTag(streamWriter,"label",m_modelPartStuff->label());
-    	writeTag(streamWriter,"date",m_modelPartStuff->dateAsStr());
+		streamWriter.writeAttribute("moduleId", m_modelPartShared->moduleID());
+    	writeTag(streamWriter,"version",m_modelPartShared->version());
+    	writeTag(streamWriter,"author",m_modelPartShared->author());
+    	writeTag(streamWriter,"title",m_modelPartShared->title());
+    	writeTag(streamWriter,"label",m_modelPartShared->label());
+    	writeTag(streamWriter,"date",m_modelPartShared->dateAsStr());
 
-    	writeNestedTag(streamWriter,"tags",m_modelPartStuff->tags(),"tag");
-    	writeNestedTag(streamWriter,"properties",m_modelPartStuff->properties(),"property","name");
+    	writeNestedTag(streamWriter,"tags",m_modelPartShared->tags(),"tag");
+    	writeNestedTag(streamWriter,"properties",m_modelPartShared->properties(),"property","name");
 
-    	writeTag(streamWriter,"taxonomy",m_modelPartStuff->taxonomy());
-    	writeTag(streamWriter,"description",m_modelPartStuff->description());
+    	writeTag(streamWriter,"taxonomy",m_modelPartShared->taxonomy());
+    	writeTag(streamWriter,"description",m_modelPartShared->description());
 	}
 
 	if (m_viewItems.size() > 0) {
@@ -276,7 +276,7 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 		}
 
 		streamWriter.writeStartElement("connectors");
-		const QList<ConnectorStuff *> connectors = m_modelPartStuff->connectors();
+		const QList<ConnectorShared *> connectors = m_modelPartShared->connectors();
 		for (int i = 0; i < connectors.count(); i++) {
 			Connector * connector = new Connector(connectors[i], this);
 			connector->saveAsPart(streamWriter);
@@ -301,7 +301,7 @@ void ModelPart::saveAsPart(QXmlStreamWriter & streamWriter, bool startDocument) 
 }
 
 void ModelPart::initConnectors(bool force) {
-	if(m_modelPartStuff == NULL) return;
+	if(m_modelPartShared == NULL) return;
 
 	if(force) {
 		m_connectorHash.clear();						// TODO: not deleting old connectors here causes a memory leak; but deleting them here causes a crash		
@@ -311,21 +311,21 @@ void ModelPart::initConnectors(bool force) {
 		m_busHash.clear();
 
 		// TODO: this is probably incorrect
-		// instead, find the modelPartStuff for the part being swapped to and use that
-		//m_modelPartStuff->resetConnectorsInitialization();
+		// instead, find the modelPartShared for the part being swapped to and use that
+		//m_modelPartShared->resetConnectorsInitialization();
 	}
 	if(m_connectorHash.count() > 0) return;		// already done
 
-	m_modelPartStuff->initConnectors();
-	foreach (ConnectorStuff * connectorStuff, m_modelPartStuff->connectors()) {
-		Connector * connector = new Connector(connectorStuff, this);
-		m_connectorHash.insert(connectorStuff->id(), connector);
-		BusStuff * busStuff = connectorStuff->bus();
-		if (busStuff != NULL) {
-			Bus * bus = m_busHash.value(busStuff->id());
+	m_modelPartShared->initConnectors();
+	foreach (ConnectorShared * connectorShared, m_modelPartShared->connectors()) {
+		Connector * connector = new Connector(connectorShared, this);
+		m_connectorHash.insert(connectorShared->id(), connector);
+		BusShared * busShared = connectorShared->bus();
+		if (busShared != NULL) {
+			Bus * bus = m_busHash.value(busShared->id());
 			if (bus == NULL) {
-				bus = new Bus(busStuff, this);
-				m_busHash.insert(busStuff->id(), bus);
+				bus = new Bus(busShared, this);
+				m_busHash.insert(busShared->id(), bus);
 			}
 			connector->setBus(bus);
 			bus->addConnector(connector);
@@ -361,19 +361,19 @@ const QDomElement & ModelPart::instanceDomElement() {
 }
 
 const QString & ModelPart::title() {
-	if (m_modelPartStuff != NULL) return m_modelPartStuff->title();
+	if (m_modelPartShared != NULL) return m_modelPartShared->title();
 
 	return ___emptyString___;
 }
 
 const QStringList & ModelPart::tags() {
-	if (m_modelPartStuff != NULL) return m_modelPartStuff->tags();
+	if (m_modelPartShared != NULL) return m_modelPartShared->tags();
 
 	return ___emptyStringList___;
 }
 
 const QHash<QString,QString> & ModelPart::properties() {
-	if (m_modelPartStuff != NULL) return m_modelPartStuff->properties();
+	if (m_modelPartShared != NULL) return m_modelPartShared->properties();
 
 	return ___emptyStringHash___;
 }
@@ -391,7 +391,7 @@ Bus * ModelPart::bus(const QString & busID) {
 }
 
 bool ModelPart::ignoreTerminalPoints() {
-	if (m_modelPartStuff != NULL) return m_modelPartStuff->ignoreTerminalPoints();
+	if (m_modelPartShared != NULL) return m_modelPartShared->ignoreTerminalPoints();
 
 	return true;
 }
@@ -432,7 +432,7 @@ QList<ModelPart*> ModelPart::getAllNonCoreParts() {
 }
 
 QList<SvgAndPartFilePath> ModelPart::getAvailableViewFiles() {
-	QDomElement viewsElems = modelPartStuff()->domDocument()->documentElement().firstChildElement("views");
+	QDomElement viewsElems = modelPartShared()->domDocument()->documentElement().firstChildElement("views");
 	QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath> viewImages;
 
 	grabImagePath(viewImages, viewsElems, ItemBase::IconView);

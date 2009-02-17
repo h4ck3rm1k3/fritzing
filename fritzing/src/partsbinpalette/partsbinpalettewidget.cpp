@@ -144,7 +144,7 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	m_fileName = filename;
 	QString title = m_binTitle->text();
 	if(!title.isNull() && !title.isEmpty()) {
-		m_model->root()->modelPartStuff()->setTitle(title);
+		m_model->root()->modelPartShared()->setTitle(title);
 	}
 	m_model->save(filename);
 	m_undoStack->setClean();
@@ -176,7 +176,7 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 }
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
-	m_binTitle->setText(model->root()->modelPartStuff()->title(), false);
+	m_binTitle->setText(model->root()->modelPartShared()->title(), false);
 }
 
 void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {

@@ -25,11 +25,11 @@ HEADERS += \
     src/bettertriggeraction.h \
     src/breadboardsketchwidget.h \
     src/bus.h \
-    src/busstuff.h \
+    src/busshared.h \
     src/commands.h \
     src/connector.h \
     src/connectoritem.h \
-    src/connectorstuff.h \
+    src/connectorshared.h \
     src/console.h \
     src/debugdialog.h \
     src/dockmanager.h \
@@ -58,7 +58,7 @@ HEADERS += \
     src/misc.h \
     src/modelbase.h \
     src/modelpart.h \
-    src/modelpartstuff.h \
+    src/modelpartshared.h \
     src/paletteitem.h \
     src/paletteitembase.h \
     src/palettemodel.h \
@@ -88,11 +88,11 @@ SOURCES += \
     src/bettertimer.cpp \
     src/breadboardsketchwidget.cpp \
     src/bus.cpp \
-    src/busstuff.cpp \
+    src/busshared.cpp \
     src/commands.cpp \
     src/connector.cpp \
     src/connectoritem.cpp \
-    src/connectorstuff.cpp \
+    src/connectorshared.cpp \
     src/console.cpp \
     src/debugdialog.cpp \
     src/dockmanager.cpp \
@@ -121,7 +121,7 @@ SOURCES += \
     src/misc.cpp \
     src/modelbase.cpp \
     src/modelpart.cpp \
-    src/modelpartstuff.cpp \
+    src/modelpartshared.cpp \
     src/paletteitem.cpp \
     src/paletteitembase.cpp \
     src/palettemodel.cpp \

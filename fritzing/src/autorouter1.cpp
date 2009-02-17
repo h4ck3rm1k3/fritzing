@@ -226,10 +226,10 @@ void Autorouter1::start()
 		DebugDialog::debug(QString("\n\nedge from %1 %2 %3 to %4 %5 %6, %7")
 			.arg(edge->from->attachedToTitle())
 			.arg(edge->from->attachedToID())
-			.arg(edge->from->connectorStuffID())
+			.arg(edge->from->connectorSharedID())
 			.arg(edge->to->attachedToTitle())
 			.arg(edge->to->attachedToID())
-			.arg(edge->to->connectorStuffID())
+			.arg(edge->to->connectorSharedID())
 			.arg(edge->distance) );
 
 		// if both connections are stuck to or attached to the same part
@@ -458,9 +458,9 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 				}
 				//DebugDialog::debug(QString("adj from %1 %2 to %3 %4, %5")
 					//.arg(ci->attachedToTitle())
-					//.arg(ci->connectorStuffID())
+					//.arg(ci->connectorSharedID())
 					//.arg(cj->attachedToTitle())
-					//.arg(cj->connectorStuffID())
+					//.arg(cj->connectorSharedID())
 					//.arg((*adjacency[indexJ])[indexI]) );
 
 
@@ -503,7 +503,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		/*
 		DebugDialog::debug(QString("\t%1 %2 %3 %4")
 				.arg(connectorItem->attachedToTitle())
-				.arg(connectorItem->connectorStuffID())
+				.arg(connectorItem->connectorSharedID())
 				.arg(connectorItem->sceneAdjustedTerminalPoint().x())
 				.arg(connectorItem->sceneAdjustedTerminalPoint().y()) );
 		*/
@@ -740,7 +740,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 			}
 			/*
 			DebugDialog::debug(QString("candidate connectoritem %1 %2 %3\n\t%4")
-								.arg(candidateConnectorItem->connectorStuffID())
+								.arg(candidateConnectorItem->connectorSharedID())
 								.arg(candidateConnectorItem->attachedToTitle())
 								.arg(candidateConnectorItem->attachedToID())
 								.arg(temp) );
@@ -811,7 +811,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		/*
 		ConnectorItem * ci = dynamic_cast<ConnectorItem *>(nearestObstacle);
 		DebugDialog::debug(QString("nearest obstacle connectoritem %1 %2 %3")
-					.arg(ci->connectorStuffID())
+					.arg(ci->connectorSharedID())
 					.arg(ci->attachedToTitle())
 					.arg(ci->attachedToID()) );
 					*/
@@ -1171,15 +1171,15 @@ void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connec
 	foreach (Wire * wire, wires) {
 		ConnectorItem * connector1 = wire->connector1();
 		foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
-			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-												wire->id(), connector1->connectorStuffID(),
+			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+												wire->id(), connector1->connectorSharedID(),
 												connect, true, parentCommand);
 			ccc->setUpdateConnections(false);
 		}
 		ConnectorItem * connector0 = wire->connector0();
 		foreach (ConnectorItem * toConnectorItem, connector0->connectedToItems()) {
-			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
-												wire->id(), connector0->connectorStuffID(),
+			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+												wire->id(), connector0->connectorSharedID(),
 												connect, true, parentCommand);
 			ccc->setUpdateConnections(false);
 		}

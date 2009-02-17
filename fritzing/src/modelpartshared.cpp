@@ -24,14 +24,14 @@ $Date$
 
 ********************************************************************/
 
-#include "modelpartstuff.h"
-#include "connectorstuff.h"
+#include "modelpartshared.h"
+#include "connectorshared.h"
 #include "debugdialog.h"
-#include "busstuff.h"
+#include "busshared.h"
 
 #include <QHash>
 
-ModelPartStuff::ModelPartStuff() {
+ModelPartShared::ModelPartShared() {
 	m_moduleID = "";
 	m_domDocument = NULL;
 	m_path = "";
@@ -39,7 +39,7 @@ ModelPartStuff::ModelPartStuff() {
 	m_ignoreTerminalPoints = false;
 }
 
-ModelPartStuff::ModelPartStuff(QDomDocument * domDocument, const QString & path) {
+ModelPartShared::ModelPartShared(QDomDocument * domDocument, const QString & path) {
 	m_moduleID = "";
 	m_domDocument = domDocument;
 	m_path = path;
@@ -69,15 +69,15 @@ ModelPartStuff::ModelPartStuff(QDomDocument * domDocument, const QString & path)
 	m_moduleID = root.attribute("moduleId", "");
 }
 
-ModelPartStuff::~ModelPartStuff() {
-	foreach (ConnectorStuff * connectorStuff, m_connectorStuffHash.values()) {
+ModelPartShared::~ModelPartShared() {
+	foreach (ConnectorShared * connectorShared, m_connectorSharedHash.values()) {
 		
-		delete connectorStuff;
+		delete connectorShared;
 	}
-	m_connectorStuffHash.clear();
+	m_connectorSharedHash.clear();
 
-	foreach (BusStuff * busStuff, m_buses.values()) {
-		delete busStuff;
+	foreach (BusShared * busShared, m_buses.values()) {
+		delete busShared;
 	}
 	m_buses.clear();
 
@@ -88,14 +88,14 @@ ModelPartStuff::~ModelPartStuff() {
 
 }
 
-void ModelPartStuff::loadTagText(QDomElement parent, QString tagName, QString &field) {
+void ModelPartShared::loadTagText(QDomElement parent, QString tagName, QString &field) {
 	QDomElement tagElement = parent.firstChildElement(tagName);
 	if (!tagElement.isNull()) {
 		field = tagElement.text();
 	}
 }
 
-void ModelPartStuff::populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName) {
+void ModelPartShared::populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName) {
 	QDomElement bag = parent.firstChildElement(tagName);
 	if (!bag.isNull()) {
 		QDomNodeList childs = bag.childNodes();
@@ -108,7 +108,7 @@ void ModelPartStuff::populateTagCollection(QDomElement parent, QStringList &list
 	}
 }
 
-void ModelPartStuff::populateTagCollection(QDomElement parent, QMultiHash<QString,QString> &hash, const QString &tagName, const QString &attrName) {
+void ModelPartShared::populateTagCollection(QDomElement parent, QMultiHash<QString,QString> &hash, const QString &tagName, const QString &attrName) {
 	QDomElement bag = parent.firstChildElement(tagName);
 	if (!bag.isNull()) {
 		QDomNodeList childs = bag.childNodes();
@@ -123,127 +123,127 @@ void ModelPartStuff::populateTagCollection(QDomElement parent, QMultiHash<QStrin
 	}
 }
 
-void ModelPartStuff::setDomDocument(QDomDocument * domDocument) {
+void ModelPartShared::setDomDocument(QDomDocument * domDocument) {
 	m_domDocument = domDocument;
 }
 
-QDomDocument* ModelPartStuff::domDocument() {
+QDomDocument* ModelPartShared::domDocument() {
 	return m_domDocument;
 }
 
-const QString & ModelPartStuff::title() {
+const QString & ModelPartShared::title() {
 	return m_title;
 }
-void ModelPartStuff::setTitle(QString title) {
+void ModelPartShared::setTitle(QString title) {
 	m_title = title;
 }
 
-const QString & ModelPartStuff::label() {
+const QString & ModelPartShared::label() {
 	return m_label;
 }
-void ModelPartStuff::setLabel(QString label) {
+void ModelPartShared::setLabel(QString label) {
 	m_label = label;
 }
 
-const QString & ModelPartStuff::uri() {
+const QString & ModelPartShared::uri() {
 	return m_uri;
 }
-void ModelPartStuff::setUri(QString uri) {
+void ModelPartShared::setUri(QString uri) {
 	m_uri = uri;
 }
 
-const QString & ModelPartStuff::version() {
+const QString & ModelPartShared::version() {
 	return m_version;
 }
-void ModelPartStuff::setVersion(QString version) {
+void ModelPartShared::setVersion(QString version) {
 	m_version = version;
 }
 
-const QString & ModelPartStuff::author() {
+const QString & ModelPartShared::author() {
 	return m_author;
 }
-void ModelPartStuff::setAuthor(QString author) {
+void ModelPartShared::setAuthor(QString author) {
 	m_author = author;
 }
 
-const QString & ModelPartStuff::description() {
+const QString & ModelPartShared::description() {
 	return m_description;
 }
-void ModelPartStuff::setDescription(QString description) {
+void ModelPartShared::setDescription(QString description) {
 	m_description = description;
 }
 
-const QDate & ModelPartStuff::date() {
+const QDate & ModelPartShared::date() {
 	return *new QDate(QDate::fromString(m_date,Qt::ISODate));
 }
-void ModelPartStuff::setDate(QDate date) {
+void ModelPartShared::setDate(QDate date) {
 	m_date = date.toString(Qt::ISODate);
 }
-const QString & ModelPartStuff::dateAsStr() {
+const QString & ModelPartShared::dateAsStr() {
 	return m_date;
 }
-void ModelPartStuff::setDate(QString date) {
+void ModelPartShared::setDate(QString date) {
 	m_date = date;
 }
 
-const QStringList & ModelPartStuff::tags() {
+const QStringList & ModelPartShared::tags() {
 	return m_tags;
 }
-void ModelPartStuff::setTags(const QStringList &tags) {
+void ModelPartShared::setTags(const QStringList &tags) {
 	m_tags = tags;
 }
 
-QString ModelPartStuff::family() {
+QString ModelPartShared::family() {
 	return m_properties.value("family");
 }
-void ModelPartStuff::setFamily(const QString &family) {
+void ModelPartShared::setFamily(const QString &family) {
 	m_properties.insert("family",family);
 }
 
-QMultiHash<QString,QString> & ModelPartStuff::properties() {
+QMultiHash<QString,QString> & ModelPartShared::properties() {
 	return m_properties;
 }
-void ModelPartStuff::setProperties(const QMultiHash<QString,QString> &properties) {
+void ModelPartShared::setProperties(const QMultiHash<QString,QString> &properties) {
 	m_properties = properties;
 }
 
-const QString & ModelPartStuff::path() {
+const QString & ModelPartShared::path() {
 	return m_path;
 }
-void ModelPartStuff::setPath(QString path) {
+void ModelPartShared::setPath(QString path) {
 	m_path = path;
 }
 
-const QString & ModelPartStuff::taxonomy() {
+const QString & ModelPartShared::taxonomy() {
 	return m_taxonomy;
 }
-void ModelPartStuff::setTaxonomy(QString taxonomy) {
+void ModelPartShared::setTaxonomy(QString taxonomy) {
 	m_taxonomy = taxonomy;
 }
 
-const QString & ModelPartStuff::moduleID() {
+const QString & ModelPartShared::moduleID() {
 	return m_moduleID;
 }
-void ModelPartStuff::setModuleID(QString moduleID) {
+void ModelPartShared::setModuleID(QString moduleID) {
 	m_moduleID = moduleID;
 }
 
-const QList<ConnectorStuff *> ModelPartStuff::connectors() {
-	return m_connectorStuffHash.values();
+const QList<ConnectorShared *> ModelPartShared::connectors() {
+	return m_connectorSharedHash.values();
 }
-void ModelPartStuff::setConnectorsStuff(QList<ConnectorStuff *> connectors) {
+void ModelPartShared::setConnectorsStuff(QList<ConnectorShared *> connectors) {
 	for (int i = 0; i < connectors.size(); i++) {
-		ConnectorStuff* cs = connectors[i];
-		m_connectorStuffHash[cs->id()] = cs;
+		ConnectorShared* cs = connectors[i];
+		m_connectorSharedHash[cs->id()] = cs;
 	}
 }
 
-void ModelPartStuff::resetConnectorsInitialization() {
+void ModelPartShared::resetConnectorsInitialization() {
 	m_connectorsInitialized = false;
-	m_connectorStuffHash.clear();
+	m_connectorSharedHash.clear();
 }
 
-void ModelPartStuff::initConnectors() {
+void ModelPartShared::initConnectors() {
 	if (m_domDocument == NULL)
 		return;
 
@@ -264,8 +264,8 @@ void ModelPartStuff::initConnectors() {
 
 	QDomElement connector = connectors.firstChildElement("connector");
 	while (!connector.isNull()) {
-		ConnectorStuff * connectorStuff = new ConnectorStuff(connector);
-		m_connectorStuffHash.insert(connectorStuff->id(), connectorStuff);
+		ConnectorShared * connectorShared = new ConnectorShared(connector);
+		m_connectorSharedHash.insert(connectorShared->id(), connectorShared);
 
 		connector = connector.nextSiblingElement("connector");
 	}
@@ -274,35 +274,35 @@ void ModelPartStuff::initConnectors() {
 	if (!buses.isNull()) {
 		QDomElement busElement = buses.firstChildElement("bus");
 		while (!busElement.isNull()) {
-			BusStuff * bus = new BusStuff(busElement, m_connectorStuffHash);
+			BusShared * bus = new BusShared(busElement, m_connectorSharedHash);
 			m_buses.insert(bus->id(), bus);
 
 			busElement = busElement.nextSiblingElement("bus");
 		}
 	}
 
-	DebugDialog::debug(QString("model %1 has %2 connectors and %3 bus connectors").arg(this->title()).arg(m_connectorStuffHash.count()).arg(m_buses.count()) );
+	DebugDialog::debug(QString("model %1 has %2 connectors and %3 bus connectors").arg(this->title()).arg(m_connectorSharedHash.count()).arg(m_buses.count()) );
 
 
 }
 
-const QHash<QString, BusStuff *> & ModelPartStuff::buses() {
+const QHash<QString, BusShared *> & ModelPartShared::buses() {
 	return m_buses;
 }
 
-ConnectorStuff * ModelPartStuff::getConnectorStuff(const QString & id) {
-	return m_connectorStuffHash.value(id);
+ConnectorShared * ModelPartShared::getConnectorShared(const QString & id) {
+	return m_connectorSharedHash.value(id);
 }
 
-BusStuff * ModelPartStuff::bus(const QString & busID) {
+BusShared * ModelPartShared::bus(const QString & busID) {
 	return m_buses.value(busID);
 }
 
-bool ModelPartStuff::ignoreTerminalPoints() {
+bool ModelPartShared::ignoreTerminalPoints() {
 	return m_ignoreTerminalPoints;
 }
 
-void ModelPartStuff::copy(ModelPartStuff* other) {
+void ModelPartShared::copy(ModelPartShared* other) {
 	setAuthor(other->author());
 	setConnectorsStuff(other->connectors());
 	setDate(other->date());

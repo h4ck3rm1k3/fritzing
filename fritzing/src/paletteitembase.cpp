@@ -29,7 +29,7 @@ $Date$
 #include "debugdialog.h"
 #include "fsvgrenderer.h"
 #include "svg/svgfilesplitter.h"
-#include "connectorstuff.h"
+#include "connectorshared.h"
 #include "layerattributes.h"
 #include "layerkinpaletteitem.h"
 
@@ -353,12 +353,12 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 	t.start();
 #endif
 
-    ModelPartStuff * modelPartStuff = modelPart->modelPartStuff();
+    ModelPartShared * modelPartShared = modelPart->modelPartShared();
 
-    if (modelPartStuff == NULL) return NULL;
-    if (modelPartStuff->domDocument() == NULL) return NULL;
+    if (modelPartShared == NULL) return NULL;
+    if (modelPartShared->domDocument() == NULL) return NULL;
 
-	bool result = layerAttributes.getSvgElementID(modelPartStuff->domDocument(), viewIdentifier, viewLayerID);
+	bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
 	if (!result) return NULL;
 
 	//DebugDialog::debug(QString("setting z %1 %2")
@@ -367,11 +367,11 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 
 
 	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
-	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartStuff->moduleID(), viewLayerID);
+	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartShared->moduleID(), viewLayerID);
 	if (renderer == NULL) {
 		QString tempPath;
-		if(modelPartStuff->path() != ___emptyString___) {
-			QDir dir(modelPartStuff->path());			// is a path to a filename
+		if(modelPartShared->path() != ___emptyString___) {
+			QDir dir(modelPartShared->path());			// is a path to a filename
 			dir.cdUp();									// lop off the filename
 			dir.cdUp();									// parts root
 			tempPath = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir +"/%1/" + layerAttributes.filename();
@@ -431,7 +431,7 @@ FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::View
 			//DebugDialog::debug(QString("set up image elapsed (3) %1").arg(t.elapsed()) );
 
 			if (renderer) {
-				FSvgRenderer::set(modelPartStuff->moduleID(), viewLayerID, renderer);
+				FSvgRenderer::set(modelPartShared->moduleID(), viewLayerID, renderer);
 			}
     	}
 	}
@@ -456,12 +456,12 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 		if (!result) continue;
 
 		//DebugDialog::debug(QString("<rect view=\"%6\" id=\"%1pin\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
-						   //.arg(connector->connectorStuffID())
+						   //.arg(connector->connectorSharedID())
 						   //.arg(connectorRect.x()).arg(connectorRect.y())
 						   //.arg(connectorRect.width()).arg(connectorRect.height())
 						   //.arg(m_viewIdentifier) );
 		//DebugDialog::debug(QString("<rect id=\"%1pterminal\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
-						   //.arg(connector->connectorStuffID())
+						   //.arg(connector->connectorSharedID())
 						   //.arg(connectorRect.x() + (connectorRect.width() / 2)).arg(connectorRect.y() + (connectorRect.height() /2))
 						   //.arg(0).arg(0) );
 

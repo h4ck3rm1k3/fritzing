@@ -226,7 +226,7 @@ void ConnectorsInfoWidget::addConnectorInfo(MismatchingConnectorWidget* mcw) {
 }
 
 Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
-	ConnectorStuff *connStuff = new ConnectorStuff();
+	ConnectorShared *connStuff = new ConnectorShared();
 	connStuff->setId(id);
 	// TODO Mariano: find out the real layer, instead of the default one
 	connStuff->addPin(ItemBase::BreadboardView,id,ItemBase::defaultConnectorLayer(ItemBase::BreadboardView),"");
@@ -238,7 +238,7 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 }
 
 void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
-	QString connId = conn->connectorStuffID();
+	QString connId = conn->connectorSharedID();
 	m_connIds << connId;
 
 	int connCount = m_connsInfo.size();
@@ -307,13 +307,13 @@ void ConnectorsInfoWidget::informEditionCompleted() {
 	emit editionCompleted();
 }
 
-const QList<ConnectorStuff *> ConnectorsInfoWidget::connectorsStuffs() {
-	QList<ConnectorStuff *> connectorsStuff;
+const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsStuffs() {
+	QList<ConnectorShared *> connectorsStuff;
 	for(int i=0; i<m_connsInfo.size(); i++) {
 		SingleConnectorInfoWidget *sci = m_connsInfo[i];
 		QString id = sci->id();
 		Connector *conn = sci->connector();
-		ConnectorStuff* cs = conn->connectorStuff();
+		ConnectorShared* cs = conn->connectorShared();
 		cs->setId(id);
 		cs->setName(sci->name());
 		cs->setDescription(sci->description());
@@ -347,7 +347,7 @@ void ConnectorsInfoWidget::clearMismatchingForView(ItemBase::ViewIdentifier view
 // Updates previous connector to mismatching if they are not in the list
 void ConnectorsInfoWidget::singleToMismatchingNotInView(ItemBase::ViewIdentifier viewId, const QStringList &connIds) {
 	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
-		if(connIds.indexOf(sci->connector()->connectorStuffID()) == -1) {
+		if(connIds.indexOf(sci->connector()->connectorSharedID()) == -1) {
 			MismatchingConnectorWidget *mcw = sci->toMismatching(viewId);
 			removeConnectorInfo(sci,false);
 			addMismatchingConnectorInfo(mcw);
@@ -370,10 +370,10 @@ void ConnectorsInfoWidget::syncNewConnectors(ItemBase::ViewIdentifier viewId, co
 
 	QStringList connIds;
 	foreach(Connector *conn, conns) {
-		QString connId = conn->connectorStuffID();
+		QString connId = conn->connectorSharedID();
 		connIds << connId;
 
-		/*foreach(SvgIdLayer* pin, conn->connectorStuff()->pins().values(viewId)) {
+		/*foreach(SvgIdLayer* pin, conn->connectorShared()->pins().values(viewId)) {
 			m_connectorsPins[connId].insert(viewId,pin);
 		}*/
 
@@ -445,14 +445,14 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, bool singleShot, bool alsoDeleteFromView) {
 	scrollContentLayout()->removeWidget(sci);
 	m_connsInfo.removeOne(sci);
-	m_allConnsInfo.remove(sci->connector()->connectorStuffID());
+	m_allConnsInfo.remove(sci->connector()->connectorSharedID());
 
 	if(m_selected == sci) {
 		m_selected = NULL;
 	}
 
 	if(alsoDeleteFromView) {
-		emit removeConnectorFrom(sci->connector()->connectorStuffID(), ItemBase::AllViews);
+		emit removeConnectorFrom(sci->connector()->connectorSharedID(), ItemBase::AllViews);
 	}
 
 	m_objToDelete = sci;

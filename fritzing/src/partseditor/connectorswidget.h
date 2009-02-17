@@ -38,7 +38,7 @@ $Date$
 #include "../itembase.h"
 #include "../modelpart.h"
 #include "../connector.h"
-#include "../connectorstuff.h"
+#include "../connectorshared.h"
 
 class ConnectorIdValidator : public QRegExpValidator {
 	public:
@@ -58,7 +58,7 @@ class ConnectorsWidget : public QWidget {
 
 	public:
 		ConnectorsWidget(QWidget *parent = 0);
-		QList<ConnectorStuff*> connectorsInfo();
+		QList<ConnectorShared*> connectorsInfo();
 
 	public slots:
 		void connectorsFound(ItemBase::ViewIdentifier viewId, QStringList connNames);
@@ -99,7 +99,7 @@ class ConnectorsWidget : public QWidget {
 
 		void clearChildren();
 		void keepConnInfo();
-		void addConnectorStuff(ConnectorStuff * connStuff);
+		void addConnectorShared(ConnectorShared * connStuff);
 		int itemIndex(QComboBox* opts, QString text);
 
 		QHash<int /* connector position in combobox*/, ConnectorsWidgetHelpClass*> m_connInfo;

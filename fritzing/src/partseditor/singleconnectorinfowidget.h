@@ -30,7 +30,7 @@ $Date$
 #define SINGLECONNECTORINFOWIDGET_H_
 
 #include "../connector.h"
-#include "../connectorstuff.h"
+#include "../connectorshared.h"
 #include "abstractconnectorinfowidget.h"
 #include "editablelinewidget.h"
 #include "editabletextwidget.h"

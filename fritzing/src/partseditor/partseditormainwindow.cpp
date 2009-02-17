@@ -108,7 +108,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 		m_updateEnabled = CORE_EDITION_ENABLED;
 	} else {
 		m_updateEnabled = CORE_EDITION_ENABLED || !modelPart->isCore();
-		m_fileName = modelPart->modelPartStuff()->path();
+		m_fileName = modelPart->modelPartShared()->path();
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough
 	}
@@ -182,7 +182,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 		m_iconViewImage->loadFromModel(m_paletteModel, modelPart);
 	}
 
-	QString title = modelPart ? modelPart->modelPartStuff()->title() : TitleFreshStartText;
+	QString title = modelPart ? modelPart->modelPartShared()->title() : TitleFreshStartText;
 	m_title = new EditableLineWidget(title,m_undoStack,m_headerFrame,"",modelPart,true);
 	m_title->setObjectName("partTitle");
 	m_title->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
@@ -194,9 +194,9 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 }
 
 void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
-	m_moduleId = modelPart ? modelPart->modelPartStuff()->moduleID() : "";
-	m_version  = modelPart ? modelPart->modelPartStuff()->version() : "";
-	m_uri      = modelPart ? modelPart->modelPartStuff()->uri() : "";
+	m_moduleId = modelPart ? modelPart->modelPartShared()->moduleID() : "";
+	m_version  = modelPart ? modelPart->modelPartShared()->version() : "";
+	m_uri      = modelPart ? modelPart->modelPartShared()->uri() : "";
 
 	m_centerFrame = new QFrame();
 	m_centerFrame->setObjectName("center");
@@ -204,13 +204,13 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	QList<QWidget*> specWidgets;
 	m_symbols = new PartSymbolsWidget(m_sketchModel, m_undoStack, this);
 
-	QString label = modelPart ? modelPart->modelPartStuff()->label() : LabelFreshStartText;
+	QString label = modelPart ? modelPart->modelPartShared()->label() : LabelFreshStartText;
 	m_label = new EditableLineWidget(label,m_undoStack,this,tr("Label"),modelPart);
 
-	QString description = modelPart ? modelPart->modelPartStuff()->description() : DescriptionFreshStartText;
+	QString description = modelPart ? modelPart->modelPartShared()->description() : DescriptionFreshStartText;
 	m_description = new EditableTextWidget(description,m_undoStack,this,tr("Description"),modelPart);
 
-	/*QString taxonomy = modelPart ? modelPart->modelPartStuff()->taxonomy() : TAXONOMY_FRESH_START_TEXT;
+	/*QString taxonomy = modelPart ? modelPart->modelPartShared()->taxonomy() : TAXONOMY_FRESH_START_TEXT;
 	m_taxonomy = new EditableLineWidget(taxonomy,m_undoStack,this,tr("Taxonomy"),modelPart);
 	QRegExp regexp("[\\w+\\.]+\\w$");
 	m_taxonomy->setValidator(new QRegExpValidator(regexp,this));*/
@@ -220,7 +220,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	QHash<QString,QString> initValues;
 	if(modelPart) {
-		initValues = modelPart->modelPartStuff()->properties();
+		initValues = modelPart->modelPartShared()->properties();
 	} else {
 		initValues["family"] = "";
 		//initValues["voltage"] = "";
@@ -229,19 +229,19 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	m_properties = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,this);
 
-	QString tags = modelPart ? modelPart->modelPartStuff()->tags().join(", ") : TagsFreshStartText;
+	QString tags = modelPart ? modelPart->modelPartShared()->tags().join(", ") : TagsFreshStartText;
 	m_tags = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
 
 
 	m_author = new EditableLineWidget(
-		modelPart ? modelPart->modelPartStuff()->author() : QString(getenv("USER")),
+		modelPart ? modelPart->modelPartShared()->author() : QString(getenv("USER")),
 		m_undoStack, this, tr("Author"),true);
 	connect(
 		m_author,SIGNAL(editionCompleted(QString)),
 		this,SLOT(updateDateAndAuthor()));
 
 	m_createdOn = new EditableDateWidget(
-		modelPart ? modelPart->modelPartStuff()->date() : QDate::currentDate(),
+		modelPart ? modelPart->modelPartShared()->date() : QDate::currentDate(),
 		m_undoStack,this, tr("Created/Updated on"),true);
 	connect(
 		m_createdOn,SIGNAL(editionCompleted(QString)),
@@ -502,7 +502,7 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
-    m_sketchModel->root()->setModelPartStuff(modelPartStuff());
+    m_sketchModel->root()->setModelPartShared(modelPartShared());
 	m_sketchModel->save(fileName, true);
 
 	m_symbols->copySvgFilesToDestiny();
@@ -526,8 +526,8 @@ void PartsEditorMainWindow::updateDateAndAuthor() {
 	m_createdByText->setText(FooterText.arg(m_author->text()).arg(m_createdOn->text()));
 }
 
-ModelPartStuff* PartsEditorMainWindow::modelPartStuff() {
-	ModelPartStuff* stuff = new ModelPartStuff();
+ModelPartShared* PartsEditorMainWindow::modelPartShared() {
+	ModelPartShared* stuff = new ModelPartShared();
 
 	if(m_moduleId.isNull() || m_moduleId.isEmpty()) {
 		m_moduleId = getRandText();

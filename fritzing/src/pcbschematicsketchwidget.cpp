@@ -54,9 +54,9 @@ void PCBSchematicSketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems
 				
 				DebugDialog::debug(QString("restoring ratsnest: %1 %2, %3 %4")
 					.arg(fromConnectorItem->attachedToTitle())
-					.arg(fromConnectorItem->connectorStuffID())
+					.arg(fromConnectorItem->connectorSharedID())
 					.arg(toConnectorItem->attachedToTitle())
-					.arg(toConnectorItem->connectorStuffID())
+					.arg(toConnectorItem->connectorSharedID())
 					);
 				
 				allConnectors.insert(fromConnectorItem, toConnectorItem);
@@ -127,10 +127,10 @@ void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fro
 	DebugDialog::debug(QString("deal with ratsnest %1 %2 %3, %4 %5 %6")
 		.arg(fromConnectorItem->attachedToTitle())
 		.arg(fromConnectorItem->attachedToID())
-		.arg(fromConnectorItem->connectorStuffID())
+		.arg(fromConnectorItem->connectorSharedID())
 		.arg(toConnectorItem->attachedToTitle())
 		.arg(toConnectorItem->attachedToID())
-		.arg(toConnectorItem->connectorStuffID())
+		.arg(toConnectorItem->connectorSharedID())
 	);
 
 	QList<ConnectorItem *> connectorItems;
@@ -303,8 +303,8 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	 .arg(newID)
 	 .arg(fromPos.x()).arg(fromPos.y())
 	 .arg(toPos.x()).arg(toPos.y())
-	 .arg(source->attachedToTitle()).arg(source->connectorStuffID())
-	 .arg(dest->attachedToTitle()).arg(dest->connectorStuffID())
+	 .arg(source->attachedToTitle()).arg(source->connectorSharedID())
+	 .arg(dest->attachedToTitle()).arg(dest->connectorSharedID())
 	 .arg(m_viewIdentifier)
 	 );
 	 */
@@ -372,14 +372,14 @@ void PCBSchematicSketchWidget::makeWiresChangeConnectionCommands(const QList<Wir
 		foreach (ConnectorItem * fromConnectorItem, wireConnectorItems) {
 			foreach(ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
 				QString already = ((fromConnectorItem->attachedToID() <= toConnectorItem->attachedToID()) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
-					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorStuffID())
-					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorStuffID());
+					.arg(fromConnectorItem->attachedToID()).arg(fromConnectorItem->connectorSharedID())
+					.arg(toConnectorItem->attachedToID()).arg(toConnectorItem->connectorSharedID());
 				if (alreadyList.contains(already)) continue;
 
 				alreadyList.append(already);
 				new ChangeConnectionCommand(this, BaseCommand::SingleView,
-											fromConnectorItem->attachedToID(), fromConnectorItem->connectorStuffID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+											fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 											false, true, parentCommand);
 			}
 		}

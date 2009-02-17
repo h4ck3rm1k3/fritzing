@@ -73,7 +73,7 @@ void PartsEditorConnectorsView::drawConector(Connector *conn, bool showTerminalP
 }
 
 void PartsEditorConnectorsView::createConnector(Connector *conn, const QSize &connSize, bool showTerminalPoint) {
-	QString connId = conn->connectorStuffID();
+	QString connId = conn->connectorSharedID();
 
 	QRectF bounds = m_item
 			? QRectF(m_item->boundingRect().center(),connSize)
@@ -92,7 +92,7 @@ void PartsEditorConnectorsView::removeConnector(const QString &connId) {
 	ConnectorItem *connToRemove = NULL;
 	foreach(QGraphicsItem *item, items()) {
 		ConnectorItem *connItem = dynamic_cast<ConnectorItem*>(item);
-		if(connItem && connItem->connector()->connectorStuffID() == connId) {
+		if(connItem && connItem->connector()->connectorSharedID() == connId) {
 			connToRemove = connItem;
 			break;
 		}
@@ -171,7 +171,7 @@ void PartsEditorConnectorsView::setMismatching(ItemBase::ViewIdentifier viewId, 
 				= dynamic_cast<PartsEditorConnectorsConnectorItem *>(m_item->childItems()[i]);
 			if(connectorItem == NULL) continue;
 
-			if(connectorItem->connector()->connectorStuffID() == id) {
+			if(connectorItem->connector()->connectorSharedID() == id) {
 				connectorItem->setMismatching(mismatching);
 			}
 		}
@@ -259,7 +259,7 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 
 		foreach(PartsEditorConnectorsConnectorItem* drawnConn, m_drawnConns) {
 			bounds = drawnConn->mappedRect();
-			connId = drawnConn->connectorStuffID();
+			connId = drawnConn->connectorSharedID();
 
 			QRectF svgRect = mapFromSceneToSvg(bounds,sceneViewBox,svgViewBox);
 			addRectToSvg(svgDom,connId/*+"pin"*/,svgRect, connectorsLayerId);
@@ -435,5 +435,5 @@ PartsEditorPaletteItem *PartsEditorConnectorsView::newPartsEditorPaletteItem(Mod
 
 void PartsEditorConnectorsView::inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem) {
 	m_drawnConns << connItem;
-	m_removedConnIds << connItem->connector()->connectorStuffID();
+	m_removedConnIds << connItem->connector()->connectorSharedID();
 }

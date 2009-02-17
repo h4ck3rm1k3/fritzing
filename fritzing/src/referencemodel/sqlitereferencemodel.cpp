@@ -437,7 +437,7 @@ bool SqliteReferenceModel::removeProperties(qlonglong partId) {
 QString SqliteReferenceModel::partTitle(const QString moduleID) {
 	ModelPart *mp = retrieveModelPart(moduleID);
 	if(mp) {
-		return mp->modelPartStuff()->title();
+		return mp->modelPartShared()->title();
 	} else {
 		return ___emptyString___;
 	}

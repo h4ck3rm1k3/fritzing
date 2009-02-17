@@ -91,7 +91,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 
     QDomElement title = root.firstChildElement("title");
 	if (!title.isNull()) {
-		this->root()->modelPartStuff()->setTitle(title.text());
+		this->root()->modelPartShared()->setTitle(title.text());
 	}
 
 	QDomElement instances = root.firstChildElement("instances");

@@ -38,7 +38,7 @@ $Date$
 #include "debugdialog.h"
 #include "infographicsview.h"
 #include "connectoritem.h"
-#include "connectorstuff.h"
+#include "connectorshared.h"
 #include "layerattributes.h"
 #include "fsvgrenderer.h"
 #include "labels/partlabel.h"

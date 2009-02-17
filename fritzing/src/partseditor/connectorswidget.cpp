@@ -185,11 +185,11 @@ void ConnectorsWidget::connectorsFound(ItemBase::ViewIdentifier viewId, QStringL
 	currCB->addItems(connNames);
 }
 
-QList<ConnectorStuff*> ConnectorsWidget::connectorsInfo() {
+QList<ConnectorShared*> ConnectorsWidget::connectorsInfo() {
 	keepConnInfo();
-	QList<ConnectorStuff*> *retval = new QList<ConnectorStuff*>;
+	QList<ConnectorShared*> *retval = new QList<ConnectorShared*>;
 	for(int i=0; i<m_userDefConnectors->count(); i++) {
-		ConnectorStuff* cs = new ConnectorStuff();
+		ConnectorShared* cs = new ConnectorShared();
 		ConnectorsWidgetHelpClass *cwhc = m_connInfo[i];
 		cs->setId(cwhc->id);
 		cs->setName(cwhc->name);
@@ -214,15 +214,15 @@ QList<ConnectorStuff*> ConnectorsWidget::connectorsInfo() {
 }
 
 void ConnectorsWidget::updateInfo(ModelPart * modelPart) {
-	modelPart->modelPartStuff()->initConnectors();
-	const QList<ConnectorStuff *> connectors = modelPart->modelPartStuff()->connectors();
+	modelPart->modelPartShared()->initConnectors();
+	const QList<ConnectorShared *> connectors = modelPart->modelPartShared()->connectors();
 
 	for (int i = 0; i < connectors.count(); i++) {
-		addConnectorStuff(connectors[i]);
+		addConnectorShared(connectors[i]);
 	}
 }
 
-void ConnectorsWidget::addConnectorStuff(ConnectorStuff * connStuff) {
+void ConnectorsWidget::addConnectorShared(ConnectorShared * connStuff) {
 	ConnectorsWidgetHelpClass *cwhc = new ConnectorsWidgetHelpClass(connStuff->id());
 	cwhc->name = connStuff->name();
 	cwhc->description = connStuff->description();

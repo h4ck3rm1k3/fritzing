@@ -437,7 +437,7 @@ void SchematicSketchWidget::reviewDeletedConnectionsAux(QSet<ItemBase *> & delet
 	foreach (QList<ConnectorItem *> * net, newNets) {
 		DebugDialog::debug("collected net");
 		foreach (ConnectorItem * ci, *net) {
-			DebugDialog::debug(QString("\t%1 %2").arg(ci->attachedToTitle()).arg(ci->connectorStuffID()));
+			DebugDialog::debug(QString("\t%1 %2").arg(ci->attachedToTitle()).arg(ci->connectorSharedID()));
 		}
 	}
 
@@ -595,8 +595,8 @@ void SchematicSketchWidget::reviewNet(QList<ConnectorItem *> & net, bool leaveAl
 				if (!outOfNet) continue;
 
 				new ChangeConnectionCommand(this, BaseCommand::CrossView,
-											fromConnectorItem->attachedToID(), fromConnectorItem->connectorStuffID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorStuffID(),
+											fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 											false, true, parentCommand);
 				
 				possibleOrphans.insert(wire);
@@ -605,9 +605,9 @@ void SchematicSketchWidget::reviewNet(QList<ConnectorItem *> & net, bool leaveAl
 			else {
 				DebugDialog::debug(QString("leave alone %1 %2 %3 %4")
 					.arg(fromConnectorItem->attachedToTitle())
-					.arg(fromConnectorItem->connectorStuffID())
+					.arg(fromConnectorItem->connectorSharedID())
 					.arg(toConnectorItem->attachedToTitle())
-					.arg(toConnectorItem->connectorStuffID())
+					.arg(toConnectorItem->connectorSharedID())
 					);
 
 				if (leaveAlone) {
@@ -850,21 +850,21 @@ void SchematicSketchWidget::makeTwoWires(Wire * dragWire, ConnectorItem * fromDr
 	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, viewGeometry, newID, true, -1, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								newID, "connector0",
-								otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorStuffID(),
+								otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorSharedID(),
 								true, true, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								newID, "connector1",
-								originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorStuffID(),
+								originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorSharedID(),
 								true, true, parentCommand);
 
 	foreach (SketchWidget * target, m_ratsnestTargets) {
 		new RatsnestCommand(target, BaseCommand::SingleView,
 									newID, "connector0",
-									otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorStuffID(),
+									otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorSharedID(),
 									true, true, parentCommand);
 		new RatsnestCommand(target, BaseCommand::SingleView,
 									newID, "connector1",
-									originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorStuffID(),
+									originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorSharedID(),
 									true, true, parentCommand);
 
 	}
@@ -917,7 +917,7 @@ ConnectorItem * SchematicSketchWidget::findEmptyBusConnectorItem(ConnectorItem *
 
 int SchematicSketchWidget::calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0) {
 	//DebugDialog::debug(QString("calc distance wire: %1 rat:%2 to %3 %4, %5").arg(wire->id()).arg(wire->getRatsnest())
-		//.arg(end->attachedToTitle()).arg(end->connectorStuffID()).arg(distance));
+		//.arg(end->attachedToTitle()).arg(end->connectorSharedID()).arg(distance));
 	
 	distanceWires.append(wire);
 	int d0 = calcDistanceAux(wire->connector0(), end, distance, distanceWires);
@@ -937,8 +937,8 @@ int SchematicSketchWidget::calcDistance(Wire * wire, ConnectorItem * end, int di
 }
 
 int SchematicSketchWidget::calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires) {
-	//DebugDialog::debug(QString("calc distance aux: %1 %2, %3 %4, %5").arg(from->attachedToID()).arg(from->connectorStuffID())
-		//.arg(to->attachedToTitle()).arg(to->connectorStuffID()).arg(distance));
+	//DebugDialog::debug(QString("calc distance aux: %1 %2, %3 %4, %5").arg(from->attachedToID()).arg(from->connectorSharedID())
+		//.arg(to->attachedToTitle()).arg(to->connectorSharedID()).arg(distance));
 
 	foreach (ConnectorItem * toConnectorItem, from->connectedToItems()) {
 		if (toConnectorItem == to) {
@@ -1053,22 +1053,22 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 
 	ConnectorItem * anchor = wire->otherConnector(fromDragWire);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
-								anchor->attachedToID(), anchor->connectorStuffID(),
-								newFromConnectorItem->attachedToID(), newFromConnectorItem->connectorStuffID(),
+								anchor->attachedToID(), anchor->connectorSharedID(),
+								newFromConnectorItem->attachedToID(), newFromConnectorItem->connectorSharedID(),
 								true, true, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
-								fromDragWire->attachedToID(), fromDragWire->connectorStuffID(),
-								newToConnectorItem->attachedToID(), newToConnectorItem->connectorStuffID(),
+								fromDragWire->attachedToID(), fromDragWire->connectorSharedID(),
+								newToConnectorItem->attachedToID(), newToConnectorItem->connectorSharedID(),
 								true, true, parentCommand);
 
 	foreach (SketchWidget * target, m_ratsnestTargets) {
 		new RatsnestCommand(target, BaseCommand::SingleView,
-									anchor->attachedToID(), anchor->connectorStuffID(),
-									newFromConnectorItem->attachedToID(), newFromConnectorItem->connectorStuffID(),
+									anchor->attachedToID(), anchor->connectorSharedID(),
+									newFromConnectorItem->attachedToID(), newFromConnectorItem->connectorSharedID(),
 									true, true, parentCommand);
 		new RatsnestCommand(target, BaseCommand::SingleView,
-									fromDragWire->attachedToID(), fromDragWire->connectorStuffID(),
-									newToConnectorItem->attachedToID(), newToConnectorItem->connectorStuffID(),
+									fromDragWire->attachedToID(), fromDragWire->connectorSharedID(),
+									newToConnectorItem->attachedToID(), newToConnectorItem->connectorSharedID(),
 									true, true, parentCommand);
 
 	}
@@ -1083,11 +1083,11 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 	new AddItemCommand(this, BaseCommand::SingleView, Wire::moduleIDName, vg, newID, true, -1, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::SingleView,
 								newID, "connector0",
-								originalFromConnectorItem->attachedToID(), originalFromConnectorItem->connectorStuffID(),
+								originalFromConnectorItem->attachedToID(), originalFromConnectorItem->connectorSharedID(),
 								true, true, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::SingleView,
 								newID, "connector1",
-								originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorStuffID(),
+								originalToConnectorItem->attachedToID(), originalToConnectorItem->connectorSharedID(),
 								true, true, parentCommand);
 }
 
@@ -1124,7 +1124,7 @@ void SchematicSketchWidget::calcDistances(Wire * wire, QList<ConnectorItem *> & 
 		dt->distance = distance;
 		dt->fromConnector0 = fromConnector0;
 		DebugDialog::debug(QString("distance %1 %2 %3, %4 %5")
-			.arg(end->attachedToID()).arg(end->attachedToTitle()).arg(end->connectorStuffID())
+			.arg(end->attachedToID()).arg(end->attachedToTitle()).arg(end->connectorSharedID())
 			.arg(distance).arg(fromConnector0 ? "connector0" : "connector1"));
 		distances.insert(end, dt);
 	}

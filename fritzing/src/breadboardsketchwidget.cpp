@@ -218,7 +218,7 @@ void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMo
 			continue;
 		}
 
-		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorStuffID(), true);
+		ConnectorItem * fromConnectorItem = findConnectorItem(fromItemBase, foreignFromConnectorItem->connectorSharedID(), true);
 		if (fromConnectorItem == NULL) continue;
 
 		foreach (ConnectorItem * foreignToConnectorItem, foreignMoveItems.values(foreignFromConnectorItem)) {
@@ -226,7 +226,7 @@ void BreadboardSketchWidget::translateToLocalItems(ConnectorPairHash & foreignMo
 			ItemBase * toItemBase = findItem(toItemID);
 			if (toItemBase == NULL) continue;
 
-			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorStuffID(), true);
+			ConnectorItem * toConnectorItem = findConnectorItem(toItemBase, foreignToConnectorItem->connectorSharedID(), true);
 			if (toConnectorItem == NULL) continue;
 
 			moveItems.insert(fromConnectorItem, toConnectorItem);

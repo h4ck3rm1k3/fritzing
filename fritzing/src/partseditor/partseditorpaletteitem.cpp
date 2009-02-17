@@ -133,20 +133,20 @@ void PartsEditorPaletteItem::setConnector(const QString &id, Connector *connecto
 
 bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
 {
-    ModelPartStuff * modelPartStuff = modelPart->modelPartStuff();
-    if (modelPartStuff == NULL) return false;
-    if (modelPartStuff->domDocument() == NULL) return false;
+    ModelPartShared * modelPartShared = modelPart->modelPartShared();
+    if (modelPartShared == NULL) return false;
+    if (modelPartShared->domDocument() == NULL) return false;
 
 	setViewLayerID(viewLayerID, viewLayers);
 
 	if (m_svgStrings == NULL) {
 		// TODO Mariano: Copied from paletteitembase::setUpImage (extract what's in common)
 		LayerAttributes layerAttributes;
-		if (modelPartStuff->domDocument() ) {
-			bool result = layerAttributes.getSvgElementID(modelPartStuff->domDocument(), viewIdentifier, viewLayerID);
+		if (modelPartShared->domDocument() ) {
+			bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
 			if (!result) return false;
 		}
-		QDir dir(modelPartStuff->path());			// is a path to a filename
+		QDir dir(modelPartShared->path());			// is a path to a filename
 		dir.cdUp();									// lop off the filename
 		dir.cdUp();									// parts root
 		StringPair tempPath;
@@ -181,7 +181,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 	// eventually, perhaps, restore the cache when the original part is loaded
 	// and disable it when the user is changing images
 
-	//FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartStuff->moduleID(), viewLayerID);
+	//FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartShared->moduleID(), viewLayerID);
 	FSvgRenderer * renderer = NULL;
 	if (renderer == NULL) {
 		QString fn = m_svgStrings->coreContribOrUser()+(!m_svgStrings->relativePath().isEmpty()?"/"+m_svgStrings->relativePath():"");
@@ -209,7 +209,7 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 	m_svg = true;
 
 	if (doConnectors) {
-		setUpConnectors(renderer, modelPartStuff->ignoreTerminalPoints());
+		setUpConnectors(renderer, modelPartShared->ignoreTerminalPoints());
 	}
 
 	return true;

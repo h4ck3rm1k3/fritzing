@@ -40,7 +40,7 @@ void IconWidgetPaletteItem::setDefaultTooltip() {
 		if(m_modelPart->itemType() != ModelPart::Wire) {
 			this->setToolTip(base.arg(m_modelPart->title()));
 		} else {
-			this->setToolTip(base.arg(m_modelPart->modelPartStuff()->title() + " (" + m_modelPart->modelPartStuff()->moduleID() + ")"));
+			this->setToolTip(base.arg(m_modelPart->modelPartShared()->title() + " (" + m_modelPart->modelPartShared()->moduleID() + ")"));
 		}
 	}
 }

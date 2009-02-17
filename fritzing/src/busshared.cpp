@@ -24,21 +24,12 @@ $Date$
 
 ********************************************************************/
 
-/*
- *  bus.cpp
- *  Fritzing
- *
- *  Created by Jonathan Cohen on 9/4/08.
- *  Copyright 2008 FHP. All rights reserved.
- *
- */
-
-#include "busstuff.h"
-#include "connectorstuff.h"
+#include "busshared.h"
+#include "connectorshared.h"
 #include "debugdialog.h"
 #include "connectoritem.h"
 
-BusStuff::BusStuff(const QDomElement & busElement, const QHash<QString, ConnectorStuff *> & connectorHash)
+BusShared::BusShared(const QDomElement & busElement, const QHash<QString, ConnectorShared *> & connectorHash)
 {
 	m_id = busElement.attribute("id");
 	
@@ -48,7 +39,7 @@ BusStuff::BusStuff(const QDomElement & busElement, const QHash<QString, Connecto
 		if (id.isNull()) continue;
 		if (id.isEmpty()) continue;
 				
-		ConnectorStuff * stuff = connectorHash.value(id);
+		ConnectorShared * stuff = connectorHash.value(id);
 		if (stuff == NULL) continue;
 		
 		m_connectors.append(stuff);
@@ -59,12 +50,12 @@ BusStuff::BusStuff(const QDomElement & busElement, const QHash<QString, Connecto
 	
 }
 
-const QString & BusStuff::id() {
+const QString & BusShared::id() {
 	return m_id;
 }
 
 
-const QList<ConnectorStuff *> & BusStuff::connectors() {
+const QList<ConnectorShared *> & BusShared::connectors() {
 	return m_connectors;
 }
 
