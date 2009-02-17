@@ -275,8 +275,6 @@ QDir PartsEditorAbstractView::tempFolder() {
 QString PartsEditorAbstractView::getOrCreateViewFolderInTemp() {
 	QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
 
-	DebugDialog::debug("<<< "+m_tempFolder.absolutePath());
-
 	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
 		Q_ASSERT(m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder));
 	}

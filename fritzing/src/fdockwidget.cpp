@@ -42,7 +42,7 @@ void FDockWidget::saveState() {
 }
 
 void FDockWidget::restoreState() {
-	DebugDialog::debug(QString("dock restore state %1 %2").arg(windowTitle()).arg(m_state));
+	//DebugDialog::debug(QString("dock restore state %1 %2").arg(windowTitle()).arg(m_state));
 	if (m_state) {
 		this->setVisible(true);
 	}
