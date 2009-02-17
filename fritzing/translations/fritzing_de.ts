@@ -524,12 +524,12 @@
         <translation>%1 speichern</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="880"/>
+        <location filename="../src/mainwindow.cpp" line="879"/>
         <source>Specify a file name</source>
         <translation>Dateinamen auswählen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="882"/>
+        <location filename="../src/mainwindow.cpp" line="881"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
@@ -539,17 +539,17 @@
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1066"/>
+        <location filename="../src/mainwindow.cpp" line="1065"/>
         <source>No connections to route</source>
         <translation>Keine Verbindungen zu routen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1069"/>
+        <location filename="../src/mainwindow.cpp" line="1068"/>
         <source>Routing completed</source>
         <translation>Routing fertiggestellt</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1204"/>
+        <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
@@ -1427,17 +1427,17 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         <translation>Möchtest Du die Bauteile behalten, die mit dem Paket %1 geladen wurden?</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="929"/>
+        <location filename="../src/mainwindow.cpp" line="928"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation>Der Entwurf %1 konnte nicht als Paket exportiert werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="946"/>
+        <location filename="../src/mainwindow.cpp" line="945"/>
         <source>Unable to open shareable sketch %1</source>
         <translation>Das Paket %1 konnte nicht gelesen werden</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1072"/>
+        <location filename="../src/mainwindow.cpp" line="1071"/>
         <source>Routing completed using %n jumper(s)</source>
         <translation>
             <numerusform>Autorouting fertig, mit %n Schaltdraht</numerusform>
@@ -1445,7 +1445,7 @@ Wenn Du gerne weitere Exportmöglichkeiten hättest, sag uns Bescheid oder hilf 
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/mainwindow.cpp" line="1075"/>
+        <location filename="../src/mainwindow.cpp" line="1074"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation>
             <numerusform>%1 von %2 Netzen geroutet - %n Verbindung noch zu routen</numerusform>
@@ -1890,22 +1890,22 @@ a schematic view?</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="436"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="450"/>
         <source>Add to bin</source>
         <translation>Zum Sortiment hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="451"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation>Möchtest Du das ausgewählte Bauteil zum Sortiment hinzufügen?</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="460"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="474"/>
         <source>Remove from bin</source>
         <translation>Bauteil vom Sortiment entfernen</translation>
     </message>
     <message>
-        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="461"/>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="475"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation>Möchtest Du wirklich das Bauteil aus dem Sortiment entfernen?</translation>
     </message>
@@ -1928,6 +1928,11 @@ a schematic view?</source>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="71"/>
         <source>Untitled Bin</source>
         <translation>Unbenanntes Sortiment</translation>
+    </message>
+    <message>
+        <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="397"/>
+        <source>My parts bin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2005,33 +2010,33 @@ a schematic view?</source>
         <translation>Bild öffnen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="435"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="444"/>
         <source>Save as new part</source>
         <translation>Als neues Bauteil speichern</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="436"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="445"/>
         <source>Please, specify a new filename</source>
         <translation>Dateinamen auswählen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="474"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="486"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="476"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="488"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Die Datei %1 konnte nicht geschrieben werden: %2.</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="494"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="506"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>&apos;%1&apos; gespeichert</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditormainwindow.cpp" line="620"/>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="632"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
@@ -2075,16 +2080,26 @@ a schematic view?</source>
         <source>Untitled Part</source>
         <translation>Unbenanntes Bauteil</translation>
     </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="653"/>
+        <source>Icon needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/partseditor/partseditormainwindow.cpp" line="653"/>
+        <source>Please, provide an icon image for this part</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PartsEditorSpecificationsView</name>
     <message>
-        <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="87"/>
+        <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="90"/>
         <source>Open Image</source>
         <translation>Bild öffnen</translation>
     </message>
     <message>
-        <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="89"/>
+        <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="92"/>
         <source>SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2155,12 +2170,12 @@ a schematic view?</source>
         <translation>Sortiment konnte nicht geladen werden</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1112"/>
+        <location filename="../src/mainwindow.cpp" line="1111"/>
         <source>Part</source>
         <translation>Bauteil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1121"/>
+        <location filename="../src/mainwindow.cpp" line="1120"/>
         <source>Wire</source>
         <translation>Kabel</translation>
     </message>
@@ -2572,12 +2587,12 @@ Please stay tuned.</source>
 <context>
     <name>SchematicSketchWidget</name>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="1146"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="1149"/>
         <source>Shift-click to delete this bend point; Cmd-click to drag out a new wire.</source>
         <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
     <message>
-        <location filename="../src/schematicsketchwidget.cpp" line="1148"/>
+        <location filename="../src/schematicsketchwidget.cpp" line="1151"/>
         <source>Shift-click to delete this bend point; Ctrl-click to drag out a new wire.</source>
         <translation>Umschalttaste halten und klicken, um diesen Biegepunkt zu entfernen; Strg-Klick um ein neues Kabel herauszuziehen</translation>
     </message>
