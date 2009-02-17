@@ -302,13 +302,13 @@ bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomElement &docElem) {
 					removeConnectorsIfNeeded(e);
 				}
 			}
-			QDomNode n2;
+			QDomElement e2;
 			if(doRemove) {
-				n2 = n;
+				e2 = e;
 			}
 			n = n.nextSibling();
 			if(doRemove) {
-				docElem.removeChild(n2);
+				e2.removeAttribute("id");
 			}
 		}
 		return true;
