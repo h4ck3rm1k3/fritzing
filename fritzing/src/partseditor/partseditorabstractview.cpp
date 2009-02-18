@@ -144,15 +144,8 @@ void PartsEditorAbstractView::setDefaultBackground() {
 
 void PartsEditorAbstractView::clearScene() {
 	if(m_item) {
-		/*for (int i = 0; i < m_item->layerKin().count(); i++) {
-			LayerKinPaletteItem * lkpi = m_item->layerKin()[i];
-			this->scene()->removeItem(lkpi);
-			//lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
-		}*/
-
 		deleteItem(m_item, m_deleteModelPartOnSceneClear, true);
 
-		//delete m_item;
 		scene()->clear();
 		m_item = NULL;
 	}

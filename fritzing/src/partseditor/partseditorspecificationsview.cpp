@@ -49,7 +49,6 @@ PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdent
 	m_svgFilePath = new SvgAndPartFilePath;
 	m_startItem = startItem;
 	if(m_startItem) {
-		scene()->addItem(startItem);
 		addFixedToCenterItem(startItem);
 		ensureFixedToCenterItems();
 	}

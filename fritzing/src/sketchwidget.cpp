@@ -3677,35 +3677,45 @@ void SketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, 
 
 void SketchWidget::addFixedToTopLeftItem(QGraphicsItem *item) {
 	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	scene()->addItem(item);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
 	m_fixedToTopLeftItems << item;
 	ensureFixedToTopLeft(item);
 }
 
 void SketchWidget::addFixedToTopRightItem(QGraphicsItem *item) {
 	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	scene()->addItem(item);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
 	m_fixedToTopRightItems << item;
 	ensureFixedToTopRight(item);
 }
 
 void SketchWidget::addFixedToBottomLeftItem(QGraphicsItem *item) {
 	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	scene()->addItem(item);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
 	m_fixedToBottomLeftItems << item;
 	ensureFixedToBottomLeft(item);
 }
 
 void SketchWidget::addFixedToBottomRightItem(QGraphicsItem *item) {
 	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	scene()->addItem(item);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
 	m_fixedToBottomRightItems << item;
 	ensureFixedToBottomRight(item);
 }
 
 void SketchWidget::addFixedToCenterItem(QGraphicsItem *item) {
 	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	scene()->addItem(item);
+	if(!scene()->items().contains(item)) {
+		scene()->addItem(item);
+	}
 	m_fixedToCenterItems << item;
 	ensureFixedToCenter(item);
 }
