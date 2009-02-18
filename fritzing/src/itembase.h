@@ -142,6 +142,7 @@ public:
 	void doRotateFlipPartLabel(qreal degrees, Qt::Orientations);			// coming down from the command object
 	bool isSwappable();
 	virtual QString toolTip2();
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
@@ -172,7 +173,6 @@ public:
 	static qint64 getNextID(qint64 fromIndex);
 
 protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event );
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

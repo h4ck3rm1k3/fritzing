@@ -71,6 +71,11 @@ void GroupItemBase::rotateItem(qreal degrees) {
 	Q_UNUSED(degrees);
 }
 
+void GroupItemBase::syncKinMoved(GroupItemBase * originator, QPointF newPos) {
+	Q_UNUSED(newPos);
+	Q_UNUSED(originator);
+}
+
 //////////////////////////////////////////////////
 
 FGraphicsItemGroup::FGraphicsItemGroup() 

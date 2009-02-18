@@ -39,6 +39,8 @@ public:
 	GroupItemBase(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu);
 
 	virtual void addToGroup(ItemBase *, const LayerHash &);
+	virtual void syncKinMoved(GroupItemBase *, QPointF newPos);
+
 	void findConnectorsUnder();
 	void saveGeometry();
 	bool itemMoved();

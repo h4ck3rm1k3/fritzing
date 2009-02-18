@@ -27,8 +27,9 @@ $Date$
 // TODO:
 //	** figure out which layer the grouped items are on and get the next z id
 //	** sort itembases by z
-//	layerkin
-//	save and load
+//	** layerkin
+//	save as group
+//	load into sketch
 //	delete
 //	undo delete
 //	rotate/flip
@@ -39,6 +40,9 @@ $Date$
 //	hide/show layer (still shows group selection box)
 //	copy/paste
 //  select external connections
+//	undo group?
+
+#include <QGraphicsScene>
 
 #include "groupitem.h"
 #include "groupitemkin.h"
@@ -65,9 +69,11 @@ void GroupItem::addToGroup(ItemBase * itemBase, const LayerHash & layerHash)
 			}
 		}
 		if (!gotOne) {
-			GroupItemKin * kin = new GroupItemKin(m_modelPart, m_viewIdentifier, m_viewGeometry, id++, false, NULL);
-			m_layerKin.append(kin);
-			kin->addToGroup(lkpi, layerHash);
+			GroupItemKin * mylkpi = new GroupItemKin(m_modelPart, m_viewIdentifier, m_viewGeometry, id++, false, NULL);
+			mylkpi->setLayerKinChief(this);
+			scene()->addItem(mylkpi);
+			m_layerKin.append(mylkpi);
+			mylkpi->addToGroup(lkpi, layerHash);
 		}
 	}
 }
@@ -78,4 +84,26 @@ ItemBase * GroupItem::layerKinChief() {
 
 const QList<ItemBase *> & GroupItem::layerKin() {
 	return m_layerKin;
+}
+
+void GroupItem::syncKinMoved(GroupItemBase * groupItemBase, QPointF newPos) {
+	if (groupItemBase != this) {
+		setPos(newPos);
+	}
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->setPos(newPos);
+	}
+}
+
+QVariant GroupItem::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	//DebugDialog::debug(QString("chief item change %1 %2").arg(this->id()).arg(change));
+	if (m_layerKin.count() > 0) {
+	    if (change == ItemPositionHasChanged) {
+	    	this->syncKinMoved(this, value.toPointF());
+	   	}
+   	}
+
+
+    return GroupItemBase::itemChange(change, value);
 }

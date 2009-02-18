@@ -38,6 +38,12 @@ public:
 	void addToGroup(ItemBase *, const LayerHash &);
 	ItemBase * layerKinChief();
 	const QList<ItemBase *> & layerKin();
+	void syncKinMoved(GroupItemBase *, QPointF newPos);
+
+
+protected:
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
 
 public:
 	static QString moduleIDName;

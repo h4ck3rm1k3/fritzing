@@ -42,6 +42,10 @@ public:
 	void setLayerKinChief(GroupItemBase *);
 
 protected:
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
+protected:
 	GroupItemBase * m_layerKinChief;
 };
 

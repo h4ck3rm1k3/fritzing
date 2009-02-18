@@ -58,4 +58,17 @@ void GroupItemKin::setLayerKinChief(GroupItemBase * lkc) {
 	m_layerKinChief = lkc;
 }
 
+void GroupItemKin::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	m_layerKinChief->mousePressEvent(event);
+}
 
+QVariant GroupItemKin::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	//DebugDialog::debug(QString("lk item change %1 %2").arg(this->id()).arg(change));
+	if (m_layerKinChief != NULL) {
+	    if (change == ItemPositionHasChanged) {
+	    	m_layerKinChief->syncKinMoved(this, value.toPointF());
+	   	}
+   	}
+    return GroupItemBase::itemChange(change, value);
+}
