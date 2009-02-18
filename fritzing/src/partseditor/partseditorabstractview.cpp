@@ -71,26 +71,29 @@ ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const View
 
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 
-	paletteItem->createSvgPath(modelPart->modelPartShared()->path(), getLayerFileName(modelPart));
-	paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
-	ViewLayer::ViewLayerID viewLayerID =
-		ViewLayer::viewLayerIDFromXmlString(
-			findConnectorLayerId(paletteItem->svgDom())
-		);
-	if(viewLayerID == ViewLayer::UnknownLayer) {
-		viewLayerID = getViewLayerID(modelPart);
-	}
+	if(paletteItem->createSvgPath(modelPart->modelPartShared()->path(), getLayerFileName(modelPart))) {
+		paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
+		ViewLayer::ViewLayerID viewLayerID =
+			ViewLayer::viewLayerIDFromXmlString(
+				findConnectorLayerId(paletteItem->svgDom())
+			);
+		if(viewLayerID == ViewLayer::UnknownLayer) {
+			viewLayerID = getViewLayerID(modelPart);
+		}
 
-	if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
-		addToScene(paletteItemAux, paletteItemAux->viewLayerID());
-		// layers are not needed on the parts editor (so far)
-		/*paletteItem->loadLayerKin(m_viewLayers);
-		for (int i = 0; i < paletteItem->layerKin().count(); i++) {
-			LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
-			this->scene()->addItem(lkpi);
-			lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
-		}*/
-		return paletteItemAux;
+		if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+			addToScene(paletteItemAux, paletteItemAux->viewLayerID());
+			// layers are not needed on the parts editor (so far)
+			/*paletteItem->loadLayerKin(m_viewLayers);
+			for (int i = 0; i < paletteItem->layerKin().count(); i++) {
+				LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
+				this->scene()->addItem(lkpi);
+				lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+			}*/
+			return paletteItemAux;
+		} else {
+			return NULL;
+		}
 	} else {
 		return NULL;
 	}
