@@ -210,9 +210,9 @@ QPen PartsEditorConnectorsConnectorItem::drawDottedLineAux(
 	QPen currentPen = dotCount%2 == 0? firstPen: secondPen;
 	painter->setPen(currentPen);
 	if(orientation == Qt::Horizontal) {
-		painter->drawLine(pos,fixedAxis,pos+dotSize,fixedAxis);
+		painter->drawLine(QPointF(pos,fixedAxis),QPointF(pos+dotSize,fixedAxis));
 	} else if(orientation == Qt::Vertical) {
-		painter->drawLine(fixedAxis,pos,fixedAxis,pos+dotSize);
+		painter->drawLine(QPointF(fixedAxis,pos),QPointF(fixedAxis,pos+dotSize));
 	}
 
 	return currentPen;
@@ -299,4 +299,8 @@ void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEven
 	}
 	Q_UNUSED(event);
 	//ConnectorItem::mousePressEvent(event);
+}
+
+void PartsEditorConnectorsConnectorItem::doPrepareGeometryChange() {
+	prepareGeometryChange();
 }

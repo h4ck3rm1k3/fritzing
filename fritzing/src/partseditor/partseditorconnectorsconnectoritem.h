@@ -76,11 +76,10 @@ protected:
 	);
 
 	void informChange();
+	void doPrepareGeometryChange();
 
 	QGraphicsSvgItem *m_errorIcon;
-
 	bool m_showingTerminalPoint; // important only if m_showsTerminalPoints == true
-
 	TerminalPointItem *m_terminalPointItem;
 
 	QRectF m_resizedRect;

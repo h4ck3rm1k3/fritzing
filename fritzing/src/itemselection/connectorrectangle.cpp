@@ -29,8 +29,9 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "connectorrectangle.h"
 #include "../sketchwidget.h"
 #include "../debugdialog.h"
+#include "../partseditor/partseditorconnectorsconnectoritem.h"
 
-ConnectorRectangle::ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers)
+ConnectorRectangle::ConnectorRectangle(PartsEditorConnectorsConnectorItem* owner, bool withHandlers)
 {
 	m_owner = owner;
 	m_firstPaint = true;
@@ -58,12 +59,12 @@ QGraphicsRectItem *ConnectorRectangle::owner() {
 
 void ConnectorRectangle::setHandlersVisible(bool visible) {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		handler->setVisible(visible);
+		handler->setVisible1(visible);
 	}
 }
 
 void ConnectorRectangle::prepareForChange() {
-	//m_owner->prepareGeometryChange();
+	m_owner->doPrepareGeometryChange();
 }
 
 void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
@@ -73,25 +74,18 @@ void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
 	qreal width = x2-x1 < minWidth ? minWidth : x2-x1;
 	qreal height = y2-y1 < minHeight ? minHeight : y2-y1;
 
-	//if(width != m_owner->boundingRect().width()
-	//   && height != m_owner->boundingRect().height()) {
-		resizableOwner()->resizeRect(x1,y1,width,height);
-	//}
+	resizableOwner()->resizeRect(x1,y1,width,height);
 }
 
 bool ConnectorRectangle::isResizable() {
 	return resizableOwner()->isResizable();
 }
 
-void ConnectorRectangle::setState(State state) {
-	m_state = state;
-}
-
 void ConnectorRectangle::paint(QPainter *painter) {
 	QRectF rect = m_owner->boundingRect();
 
 	if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
-		placeHandlersInto(rect);
+		placeHandlers();
 		m_firstPaint = false;
 	}
 
@@ -107,60 +101,62 @@ void ConnectorRectangle::paint(QPainter *painter) {
 		prepareForChange();
 		foreach(CornerHandler* handler, m_cornerHandlers) {
 			Qt::Corner corner = handler->corner();
-			QPixmap pm = CornerHandler::pixmapHash[corner];
-			qreal scale = currentScale();
-			QPointF hPos = posForHandlerIn(corner, rect);
-			painter->drawPixmap(hPos.x(),hPos.y(),pm.width()/scale,pm.height()/scale,pm);
+			//QPixmap pm = CornerHandler::pixmapHash[corner];
+			QRectF pmRect = handlerRect(corner);
+			//painter->drawPixmap(pmRect.x(),pmRect.y(),pmRect.width(),pmRect.height(),pm);
+			painter->save();
+			painter->setBrush(QBrush(QColor(50,50,50)));
+			painter->drawRect(pmRect);
+			painter->restore();
 		}
 	}
 }
 
 void ConnectorRectangle::resizingStarted() {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		handler->setPixmap(0);
+		handler->setVisible1(false);
 	}
 }
 
 void ConnectorRectangle::resizingFinished() {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		QRectF rect = m_owner->boundingRect();
-		Qt::Corner corner = handler->corner();
-		handler->setPos(posForHandlerIn(corner,rect));
-		handler->setPixmap(CornerHandler::pixmapHash[corner]);
+		handler->setVisible1(true);
+		setHandlerRect(handler);
+		//handler->setPixmap(CornerHandler::pixmapHash[corner]);
 	}
 }
 
-void ConnectorRectangle::placeHandlersInto(const QRectF &rect) {
+void ConnectorRectangle::placeHandlers() {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		handler->setPos(posForHandlerIn(handler->corner(), rect));
+		setHandlerRect(handler);
 	}
 }
 
-QPointF ConnectorRectangle::posForHandlerIn(Qt::Corner corner, const QRectF &rect) {
-	qreal xaux = offsetX();
-	qreal yaux = offsetY();
+void ConnectorRectangle::setHandlerRect(CornerHandler* handler) {
+	handler->setRectAux(handlerRect(handler->corner()));
+}
+
+QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
+	QRectF rect = m_owner->boundingRect();
+	qreal scale = currentScale();
+	QPointF offset(2/scale,2/scale);
+	QPointF cornerPoint;
 	switch(corner) {
 		case Qt::TopLeftCorner:
-			return QPointF(rect.x()-xaux,rect.y()-yaux);
+			cornerPoint=rect.topLeft();
+			break;
 		case Qt::TopRightCorner:
-			return QPointF(rect.x()+rect.width()-xaux,rect.y()-yaux);
+			cornerPoint=rect.topRight();
+			break;
 		case Qt::BottomRightCorner:
-			return QPointF(rect.x()+rect.width()-xaux,rect.y()+rect.height()-yaux);
+			cornerPoint=rect.bottomRight();
+			break;
 		case Qt::BottomLeftCorner:
-			return QPointF(rect.x()-xaux,rect.y()+rect.height()-yaux);
+			cornerPoint=rect.bottomLeft();
+			break;
 		default: Q_ASSERT(false);
 	}
-	return QPointF(-1000,-1000);
-}
-
-qreal ConnectorRectangle::offsetX() {
-	//return QPixmap("resources/images/itemselection/selectionRingLeft.png").width()/currentScale();
-	return 2/currentScale();
-}
-
-qreal ConnectorRectangle::offsetY() {
-	//return QPixmap("resources/images/itemselection/selectionRingTop.png").height()/currentScale();
-	return offsetX();
+	return QRectF(cornerPoint-offset,cornerPoint+offset);
 }
 
 qreal ConnectorRectangle::currentScale() {

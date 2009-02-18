@@ -36,7 +36,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 QHash<Qt::Corner,QPixmap> CornerHandler::pixmapHash;
 
 CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* parentItem, Qt::Corner corner)
-	: QGraphicsPixmapItem(parentItem)
+	: QGraphicsRectItem(parentItem)
 {
 	m_parent = parent;
 	m_corner = corner;
@@ -45,7 +45,21 @@ CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* pare
 	initPixmapHash();
 
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	setPixmap(pixmapHash[m_corner]);
+	setFlag(QGraphicsItem::ItemClipsChildrenToShape);
+
+	/*m_child = new QGraphicsPixmapItem(this);
+	m_child->setPixmap(pixmapHash[m_corner]);*/
+
+	m_cursorBU = cursor();
+	setVisible1(false);
+}
+
+void CornerHandler::setVisible1(bool visible) {
+	if(visible) {
+		setBrush(QBrush(QColor::fromRgb(50,50,50)));
+	} else {
+		setBrush(QBrush());
+	}
 }
 
 void CornerHandler::initPixmapHash() {
@@ -61,6 +75,10 @@ void CornerHandler::initPixmapHash() {
 	}
 }
 
+void CornerHandler::setPixmap(const QPixmap &pixmap) {
+	//m_child->setPixmap(pixmap);
+	//m_child->setPos(0,0);
+}
 
 void CornerHandler::resize(const QPointF &mousePos) {
 	m_parent->prepareForChange();
@@ -101,7 +119,7 @@ void CornerHandler::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		resize(event->pos());
 		scene()->update();
 	} else {
-		QGraphicsPixmapItem::mouseMoveEvent(event);
+		QGraphicsRectItem::mouseMoveEvent(event);
 	}
 }
 
@@ -111,7 +129,7 @@ void CornerHandler::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 		m_resizing = true;
 		setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
 	} else {
-		QGraphicsPixmapItem::mousePressEvent(event);
+		QGraphicsRectItem::mousePressEvent(event);
 	}
 }
 
@@ -121,9 +139,49 @@ void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 		m_resizing = false;
 		m_parent->resizingFinished();
 	}
-	QGraphicsPixmapItem::mouseReleaseEvent(event);
+	QGraphicsRectItem::mouseReleaseEvent(event);
+}
+
+void CornerHandler::hoverEnterEvent(QGraphicsSceneHoverEvent * event) {
+	QGraphicsRectItem::hoverEnterEvent(event);
+	m_cursorBU = cursor();
+	setCursor(QCursor(cursorForCorner(m_corner)));
+}
+
+void CornerHandler::hoverLeaveEvent(QGraphicsSceneHoverEvent * event) {
+	setCursor(m_cursorBU);
+	QGraphicsRectItem::hoverLeaveEvent(event);
+}
+
+Qt::CursorShape CornerHandler::cursorForCorner(Qt::Corner corner) {
+	Qt::CursorShape cursorShape;
+	switch(corner) {
+		case Qt::TopLeftCorner:
+		case Qt::BottomRightCorner:
+			cursorShape = Qt::SizeFDiagCursor;
+			break;
+		case Qt::TopRightCorner:
+		case Qt::BottomLeftCorner:
+			cursorShape = Qt::SizeBDiagCursor;
+			break;
+		default: Q_ASSERT(false);
+	}
+	return cursorShape;
 }
 
 bool CornerHandler::isBeingDragged() {
 	return m_resizing;
 }
+
+/*void CornerHandler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	Q_UNUSED(option)
+	Q_UNUSED(widget)
+
+	if(!isBeingDragged()) {
+		painter->save();
+		QPixmap pm = CornerHandler::pixmapHash[m_corner];
+		QRectF pmRect = m_parent->rectHandlerIn(m_corner, m_parent->owner()->boundingRect(), true);
+		painter->drawRect(mapFromItem(m_parent->owner(),pmRect).boundingRect());
+		painter->restore();
+	}
+}*/

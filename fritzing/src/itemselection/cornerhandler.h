@@ -28,25 +28,40 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #define CORNERHANDLER_H_
 
 #include <QGraphicsPixmapItem>
+#include <QCursor>
 
 class ConnectorRectangle;
 
-class CornerHandler : public QGraphicsPixmapItem {
+class CornerHandler : public QGraphicsRectItem {
 public:
 	CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* parentItem, Qt::Corner corner);
 	void resize(const QPointF &mousePos);
 	Qt::Corner corner();
 	bool isBeingDragged();
+	void setPixmap(const QPixmap &pixmap);
+	void setVisible1(bool visible);
+	void setRectAux(QRectF newRect) {
+		setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
+		setRect(mapFromParent(newRect).boundingRect());
+		//setFlag(QGraphicsItem::ItemIgnoresTransformations,true);
+	}
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+	void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
+	//void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+	Qt::CursorShape cursorForCorner(Qt::Corner);
 
 	void initPixmapHash();
 
 	ConnectorRectangle *m_parent;
 	Qt::Corner m_corner;
+	QCursor m_cursorBU;
+	QGraphicsPixmapItem *m_child;
 	volatile bool m_resizing;
 
 public:

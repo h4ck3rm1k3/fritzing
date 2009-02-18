@@ -31,6 +31,8 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "rectangleside.h"
 #include "resizablerectitem.h"
 
+class PartsEditorConnectorsConnectorItem;
+
 class ConnectorRectangle {
 public:
 	enum State {
@@ -40,30 +42,27 @@ public:
 		Selected = 0x00003
 	};
 
-	ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers = true);
+	ConnectorRectangle(PartsEditorConnectorsConnectorItem* owner, bool withHandlers = true);
 	QGraphicsRectItem *owner();
 	void prepareForChange();
 	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);
 	bool isResizable();
-	void setState(State state);
 
 	void resizingStarted();
 	void resizingFinished();
 
-	QPointF posForHandlerIn(Qt::Corner corner, const QRectF &rect);
 	qreal currentScale();
 
 	void setHandlersVisible(bool visible);
 	void paint(QPainter *painter);
 
 protected:
-	void placeHandlersInto(const QRectF &rect);
+	void setHandlerRect(CornerHandler* handler);
+	QRectF handlerRect(Qt::Corner corner);
+	void placeHandlers();
 	ResizableRectItem* resizableOwner();
 
-	qreal offsetX();
-	qreal offsetY();
-
-	QGraphicsRectItem *m_owner;
+	PartsEditorConnectorsConnectorItem *m_owner;
 
 	CornerHandler *m_topLeftHandler;
 	CornerHandler *m_topRightHandler;
