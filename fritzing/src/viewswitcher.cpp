@@ -220,6 +220,15 @@ void ViewSwitcherButton::leaveEvent(QEvent *event) {
 	QLabel::leaveEvent(event);
 }
 
+void ViewSwitcherButton::cleanup()
+{
+	foreach (QPixmap * pixmap, Pixmaps.values()) {
+		delete pixmap;
+	}
+
+	Pixmaps.clear();
+}
+
 /////////////////////////////////////////////////////////////////////
 
 ViewSwitcher::ViewSwitcher() : QFrame()
@@ -227,7 +236,6 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	// TODO Mariano: couldn't get this applied with the qss file
 	setStyleSheet("ViewSwitcher {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
-	m_mask = NULL;
 	m_closeButton = NULL;
 
 	m_layout = new QHBoxLayout(this);
@@ -265,6 +273,17 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 		//b->setStyleSheet("background-color: green;");
 	//}
 #endif
+}
+
+ViewSwitcher::~ViewSwitcher() {
+}
+
+void ViewSwitcher::cleanup() {
+	if (m_mask) {
+		delete m_mask;
+		m_mask = NULL;
+	}
+	ViewSwitcherButton::cleanup();
 }
 
 ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment) {

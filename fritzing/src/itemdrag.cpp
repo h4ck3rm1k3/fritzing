@@ -35,6 +35,13 @@ ItemDrag::ItemDrag(QObject * parent) :
 {
 }
 
+void ItemDrag::cleanup() {
+	if (singleton) {
+		delete singleton;
+		singleton = NULL;
+	}
+}
+
 QHash<QObject *, QObject *> & ItemDrag::cache() {
 	return m_cache;
 }

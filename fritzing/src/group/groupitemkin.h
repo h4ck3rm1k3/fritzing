@@ -18,46 +18,33 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2085 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 ********************************************************************/
 
+#ifndef GROUPITEMKIN_H
+#define GROUPITEMKIN_H
 
+#include <QGraphicsItemGroup>
+#include <QVariant>
 
-#ifndef ITEMDRAG_H
-#define ITEMDRAG_H
+#include "groupitembase.h"
 
-#include <QDrag>
-#include <QHash>
-#include <QPixmap>
+class GroupItemKin : public GroupItemBase
+{
 
-
-class ItemDrag : public QObject {
-	
-Q_OBJECT
-	
-	
-protected:	
-	ItemDrag(QObject * parent = 0);
-	QHash<QObject *, QObject *> & cache();
-	void dragIsDone();
-	
 public:
-	static ItemDrag * _itemDrag();
-	static QHash<QObject *, QObject *> & _cache();
-	static void _dragIsDone();
-	static void cleanup();
-
-signals:
-	void dragIsDoneSignal(ItemDrag *);
-
-protected:
-	QHash<QObject *, QObject *> m_cache;
+	GroupItemKin(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu);
 	
+	ItemBase * layerKinChief();
+	void setLayerKinChief(GroupItemBase *);
+
 protected:
-	static ItemDrag * singleton;
+	GroupItemBase * m_layerKinChief;
 };
+
+
 
 #endif

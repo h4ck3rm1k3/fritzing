@@ -45,6 +45,8 @@ class HtmlInfoView : public QFrame
 Q_OBJECT
 public:
 	HtmlInfoView(ReferenceModel *refModel, QWidget * parent = 0);
+	~HtmlInfoView();
+
 	QSize sizeHint() const;
 	void setContent(const QString& html);
 

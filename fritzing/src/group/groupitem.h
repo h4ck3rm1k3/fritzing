@@ -24,11 +24,28 @@ $Date$
 
 ********************************************************************/
 
-#include "groupitem.h"
+#ifndef GROUPITEM_H
+#define GROUPITEM_H
 
-GroupItem::GroupItem(  ) 
-	: QGraphicsItemGroup()
+#include "groupitembase.h"
+
+class GroupItem : public GroupItemBase
 {
 
-}
+public:
+	GroupItem(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu);
 
+	void addToGroup(ItemBase *, const LayerHash &);
+	ItemBase * layerKinChief();
+	const QList<ItemBase *> & layerKin();
+
+public:
+	static QString moduleIDName;
+
+protected:
+	QList<class ItemBase *> m_layerKin;
+	
+};
+
+
+#endif

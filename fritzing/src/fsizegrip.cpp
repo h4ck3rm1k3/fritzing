@@ -26,6 +26,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 
 
 #include "fsizegrip.h"
+#include "misc.h"
 
 FSizeGrip::FSizeGrip(MainWindow *parent) : QSizeGrip(parent) {
 	m_mainWindow = parent;

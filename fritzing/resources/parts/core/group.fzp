@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<module uri="http://fritzing.org/modules/note" moduleId="GroupModuleID" >
+ <version>1.1</version>
+ <author>Jonathan Cohen</author>
+ <title>Group</title>
+ <date>2008-07-28</date>
+ <label>Group</label>
+ <tags>
+  <tag>group</tag>
+  <tag>fritzing core</tag>
+ </tags>
+ <properties>
+  <property name="family" >group</property>
+ </properties>
+ <taxonomy>discreteParts.group.group.group</taxonomy>
+ <description>A generic group</description>
+ <views>
+  <defaultUnits>cmil</defaultUnits>
+  <iconView>
+   <layers >
+    <layer layerId="icon" />
+   </layers>
+  </iconView>
+  <breadboardView>
+   <layers  >
+    <layer layerId="breadboard" />
+   </layers>
+  </breadboardView>
+  <schematicView>
+   <layers  >
+    <layer layerId="schematic" />
+   </layers>
+  </schematicView>
+  <pcbView>
+   <layers  >
+    <layer layerId="pcb" />
+   </layers>
+  </pcbView>
+ </views>
+</module>

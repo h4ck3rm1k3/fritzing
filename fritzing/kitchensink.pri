@@ -44,7 +44,6 @@ HEADERS += \
     src/ftabwidget.h \
     src/fsvgrenderer.h \
     src/graphicssvglineitem.h \
-    src/groupitem.h \
     src/htmlinfoview.h \
     src/idockablewidget.h \
     src/infographicsview.h \
@@ -106,7 +105,6 @@ SOURCES += \
     src/ftabwidget.cpp \
     src/fsvgrenderer.cpp \
     src/graphicssvglineitem.cpp \
-    src/groupitem.cpp \
     src/htmlinfoview.cpp \
     src/infographicsview.cpp \
     src/itembase.cpp \

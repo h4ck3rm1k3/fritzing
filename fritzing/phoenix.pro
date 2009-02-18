@@ -65,6 +65,7 @@ include(help.pri)
 include(labels.pri)
 include(itemselection.pri)
 include(version.pri)
+include(group.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

@@ -46,6 +46,8 @@ class ViewSwitcherButton : public QLabel {
 		void setHover(bool hover);
 		int index();
 
+		static void cleanup();
+
 	signals:
 		void clicked(ViewSwitcherButton*);
 
@@ -72,9 +74,12 @@ class ViewSwitcher : public QFrame {
 	Q_OBJECT
 	public:
 		ViewSwitcher();
+		~ViewSwitcher();
 
 		const QBitmap * getMask();
 		void connectClose(QObject * target, const char* slot);
+
+		static void cleanup();
 
 	signals:
 		void viewSwitched(int index);

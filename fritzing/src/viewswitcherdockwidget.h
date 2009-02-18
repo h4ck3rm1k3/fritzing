@@ -37,6 +37,7 @@ class ViewSwitcherDockWidget : public FDockWidget
 
 public:
     ViewSwitcherDockWidget(const QString & title, QWidget * parent = 0);
+	~ViewSwitcherDockWidget();
 	
 	void setViewSwitcher(class ViewSwitcher *);
 

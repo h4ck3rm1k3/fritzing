@@ -28,6 +28,7 @@ $Date$
 #include <QHBoxLayout>
 
 #include "connectorsviewswidget.h"
+#include "../misc.h"
 
 ConnectorsViewsWidget::ConnectorsViewsWidget(PartSymbolsWidget *symbols, SketchModel *sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info, QWidget *parent) : QFrame(parent) {
 	m_showTerminalPointsCheckBox = new QCheckBox(this);

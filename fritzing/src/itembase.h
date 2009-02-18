@@ -68,9 +68,9 @@ public:
 	static void initNames();
 	static void cleanup();
 	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
-	static ItemBase * extractItemBase(QGraphicsItem * item);
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ItemBase::ViewIdentifier viewId);
 	static QString partInstanceDefaultTitle;
+	static QList<ItemBase *> emptyList;
 
 
 public:
@@ -153,6 +153,7 @@ public:
 	virtual void connectionChange(ConnectorItem *);
 	virtual void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	virtual ItemBase * layerKinChief() = 0;
+	virtual const QList<ItemBase *> & layerKin();
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
 	virtual void setInstanceTitle(const QString &title);

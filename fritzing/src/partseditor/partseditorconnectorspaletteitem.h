@@ -42,7 +42,7 @@ class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 		void highlightConnectors(const QString &connId);
 
 	protected:
-		void highlightConnsAux(PaletteItemBase* item, const QString &connId);
+		void highlightConnsAux(ItemBase* item, const QString &connId);
 		ConnectorItem* newConnectorItem(Connector *connector);
 		LayerKinPaletteItem * newLayerKinPaletteItem(
 			PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,

@@ -45,12 +45,12 @@ PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorCo
 
 void PartsEditorConnectorsPaletteItem::highlightConnectors(const QString &connId) {
 	highlightConnsAux(this,connId);
-	foreach(LayerKinPaletteItem* item, m_layerKin) {
+	foreach(ItemBase* item, m_layerKin) {
 		highlightConnsAux(item,connId);
 	}
 }
 
-void PartsEditorConnectorsPaletteItem::highlightConnsAux(PaletteItemBase* item, const QString &connId) {
+void PartsEditorConnectorsPaletteItem::highlightConnsAux(ItemBase* item, const QString &connId) {
 	foreach(QGraphicsItem * child, item->childItems()) {
 		PartsEditorConnectorsConnectorItem * connectorItem
 			= dynamic_cast<PartsEditorConnectorsConnectorItem *>(child);

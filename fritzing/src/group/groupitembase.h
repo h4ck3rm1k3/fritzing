@@ -18,46 +18,48 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2085 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 ********************************************************************/
 
+#ifndef GROUPITEMBASE_H
+#define GROUPITEMBASE_H
 
+#include <QGraphicsItemGroup>
+#include <QVariant>
 
-#ifndef ITEMDRAG_H
-#define ITEMDRAG_H
+#include "../itembase.h"
 
-#include <QDrag>
-#include <QHash>
-#include <QPixmap>
+class GroupItemBase : public ItemBase
+{
 
-
-class ItemDrag : public QObject {
-	
-Q_OBJECT
-	
-	
-protected:	
-	ItemDrag(QObject * parent = 0);
-	QHash<QObject *, QObject *> & cache();
-	void dragIsDone();
-	
 public:
-	static ItemDrag * _itemDrag();
-	static QHash<QObject *, QObject *> & _cache();
-	static void _dragIsDone();
-	static void cleanup();
+	GroupItemBase(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu);
 
-signals:
-	void dragIsDoneSignal(ItemDrag *);
+	virtual void addToGroup(ItemBase *, const LayerHash &);
+	void findConnectorsUnder();
+	void saveGeometry();
+	bool itemMoved();
+	void saveInstanceLocation(QXmlStreamWriter &);
+	void moveItem(ViewGeometry &);
+	void rotateItem(qreal degrees);
 
 protected:
-	QHash<QObject *, QObject *> m_cache;
+	class FGraphicsItemGroup * m_graphicsItemGroup;
 	
-protected:
-	static ItemDrag * singleton;
 };
+
+class FGraphicsItemGroup : public QGraphicsItemGroup
+{
+public:
+	FGraphicsItemGroup();
+
+protected:
+	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
+
+};
+
 
 #endif

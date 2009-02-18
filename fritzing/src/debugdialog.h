@@ -33,6 +33,8 @@ $Date$
 #include <QTextEdit>
 #include <QFile>
 
+#include "misc.h"
+
 class DebugDialog : public QDialog
 {
 	Q_OBJECT
@@ -57,6 +59,7 @@ public:
 	static bool visible();
 	static bool connectToBroadcast(QObject * receiver, const char* slot); 
 	static void setDebugLevel(DebugLevel);
+	static void cleanup();
 
 protected:
 	bool event ( QEvent * e ); 

@@ -29,7 +29,6 @@ $Date$
 
 
 #include <QGraphicsLineItem>
-#include <QGraphicsItemGroup>
 #include <QLineF>
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>

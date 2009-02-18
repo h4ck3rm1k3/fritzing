@@ -171,3 +171,10 @@ void DebugDialog::setDebugLevel(DebugLevel debugLevel) {
 
 	singleton->m_debugLevel = debugLevel;
 }
+
+void DebugDialog::cleanup() {
+	if (singleton) {
+		delete singleton;
+		singleton = NULL;
+	}
+}

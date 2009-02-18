@@ -45,6 +45,7 @@ QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
 QString ItemBase::partInstanceDefaultTitle;
+QList<ItemBase *> ItemBase::emptyList;
 
 const QColor ItemBase::hoverColor(0,0,0);
 const qreal ItemBase::hoverOpacity = .20;
@@ -388,10 +389,6 @@ ItemBase * ItemBase::extractTopLevelItemBase(QGraphicsItem * item) {
 
 bool ItemBase::topLevel() {
 	return m_topLevel;
-}
-
-ItemBase * ItemBase::extractItemBase(QGraphicsItem * item) {
-	return dynamic_cast<ItemBase *>(item);
 }
 
 void ItemBase::setHidden(bool hide) {
@@ -983,3 +980,6 @@ void ItemBase::cleanup() {
 	names.clear();
 }
 
+const QList<ItemBase *> & ItemBase::layerKin() {
+	return emptyList;
+}

@@ -431,6 +431,13 @@ ChangeZCommand::ChangeZCommand(SketchWidget* sketchWidget, QUndoCommand *parent)
 {
 }
 
+ChangeZCommand::~ChangeZCommand() {
+	foreach (RealPair * realpair, m_triplets) {
+		delete realpair;
+	}
+	m_triplets.clear();
+}
+
 void ChangeZCommand::addTriplet(long id, qreal oldZ, qreal newZ) {
 	m_triplets.insert(id, new RealPair (oldZ, newZ));
 }

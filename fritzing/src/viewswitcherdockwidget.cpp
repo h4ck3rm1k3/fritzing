@@ -76,6 +76,12 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	m_offsetFromParent.setY(initial.y());
 }
 
+ViewSwitcherDockWidget::~ViewSwitcherDockWidget() {
+	if (m_bitmap) {
+		delete m_bitmap;
+	}
+}
+
 void ViewSwitcherDockWidget::calcWithin()
 {
 	QRect rw = parentWidget()->frameGeometry();

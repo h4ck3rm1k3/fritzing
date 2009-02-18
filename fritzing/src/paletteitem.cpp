@@ -120,10 +120,10 @@ void PaletteItem::removeLayerKin() {
 void PaletteItem::syncKinSelection(bool selected, PaletteItemBase * originator) {
 	PaletteItemBase::syncKinSelection(selected, originator);
 
-	for (int i = 0; i < m_layerKin.count(); i++) {
-		if (m_layerKin[i] != originator && m_layerKin[i]->isSelected() != selected) {
-				m_layerKin[i]->blockItemSelectedChange(selected);
-				m_layerKin[i]->setSelected(selected);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		if (lkpi != originator && lkpi->isSelected() != selected) {
+				qobject_cast<LayerKinPaletteItem *>(lkpi)->blockItemSelectedChange(selected);
+				lkpi->setSelected(selected);
 		}
 	}
 
@@ -167,7 +167,7 @@ QVariant PaletteItem::itemChange(GraphicsItemChange change, const QVariant &valu
     return PaletteItemBase::itemChange(change, value);
 }
 
-QList<class LayerKinPaletteItem *> & PaletteItem::layerKin()
+const QList<class ItemBase *> & PaletteItem::layerKin()
 {
 	return m_layerKin;
 }
@@ -181,8 +181,8 @@ void PaletteItem::rotateItemAnd(qreal degrees) {
 
 void PaletteItem::flipItemAnd(Qt::Orientations orientation) {
 	this->flipItem(orientation);
-	for (int i = 0; i < m_layerKin.count(); i++) {
-		m_layerKin[i]->flipItem(orientation);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		qobject_cast<LayerKinPaletteItem *>(lkpi)->flipItem(orientation);
 	}
 }
 
@@ -213,22 +213,22 @@ ItemBase * PaletteItem::layerKinChief() {
 
 void PaletteItem::updateConnections() {
 	updateConnectionsAux();
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
-		lkpi->updateConnectionsAux();
+	foreach (ItemBase * lkpi, m_layerKin) {
+		qobject_cast<LayerKinPaletteItem *>(lkpi)->updateConnectionsAux();
 	}
 }
 
 void PaletteItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	collectFemaleConnecteesAux(items);
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
-		lkpi->collectFemaleConnecteesAux(items);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		qobject_cast<LayerKinPaletteItem *>(lkpi)->collectFemaleConnecteesAux(items);
 	}
 }
 
 void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {
 	collectWireConnecteesAux(wires);
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
-		lkpi->collectWireConnecteesAux(wires);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		qobject_cast<LayerKinPaletteItem *>(lkpi)->collectWireConnecteesAux(wires);
 	}
 }
 
@@ -263,7 +263,7 @@ void PaletteItem::syncKinMoved(QPointF offset, QPointF newPos) {
 	//m_syncMoved = pos - offset;
 	//if (newPos != pos()) {
 		setPos(newPos);
-		foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+		foreach (ItemBase * lkpi, m_layerKin) {
 			lkpi->setPos(newPos);
 		}
 	//}
@@ -271,14 +271,14 @@ void PaletteItem::syncKinMoved(QPointF offset, QPointF newPos) {
 
 void PaletteItem::setInstanceTitle(const QString& title) {
 	ItemBase::setInstanceTitle(title);
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+	foreach (ItemBase * lkpi, m_layerKin) {
 		lkpi->setInstanceTitle(title);
 	}
 }
 
 void PaletteItem::updateTooltip() {
 	ItemBase::updateTooltip();
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+	foreach (ItemBase * lkpi, m_layerKin) {
 		lkpi->updateTooltip();
 	}
 }
@@ -318,8 +318,7 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, bool
 QHash<ViewLayer::ViewLayerID,bool> PaletteItem::cleanupLayerKin() {
 	QHash<ViewLayer::ViewLayerID,bool> layersVisibility;
 
-	for (int i = 0; i < layerKin().count(); i++) {
-		LayerKinPaletteItem * lkpi = layerKin()[i];
+	foreach (ItemBase * lkpi, layerKin()) {
 		layersVisibility[lkpi->viewLayerID()] = lkpi->isVisible();
 		this->scene()->removeItem(lkpi);
 		delete lkpi;
@@ -330,8 +329,7 @@ QHash<ViewLayer::ViewLayerID,bool> PaletteItem::cleanupLayerKin() {
 }
 
 void PaletteItem::updateLayerKinVisibility(QHash<ViewLayer::ViewLayerID,bool> layersVisibility) {
-	for (int i = 0; i < layerKin().count(); i++) {
-		LayerKinPaletteItem * lkpi = layerKin()[i];
+	foreach (ItemBase * lkpi, layerKin()) {
 		this->scene()->addItem(lkpi);
 		lkpi->setVisible(layersVisibility[lkpi->viewLayerID()]);
 	}
@@ -427,7 +425,7 @@ void PaletteItem::figureHover() {
 
 	QList<ItemBase *> allKin;
 	allKin.append(this);
-	foreach(LayerKinPaletteItem * lkpi, m_layerKin) {
+	foreach(ItemBase * lkpi, m_layerKin) {
 		allKin.append(lkpi);
 	}
 
@@ -476,7 +474,7 @@ void PaletteItem::figureHover() {
 }
 
 void PaletteItem::clearModelPart() {
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+	foreach (ItemBase * lkpi, m_layerKin) {
 		lkpi->setModelPart(NULL);
 	}
 	ItemBase::clearModelPart();
@@ -493,7 +491,7 @@ bool PaletteItem::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase
 		return true;
 	}
 
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+	foreach (ItemBase * lkpi, m_layerKin) {
 		if (lkpi == paletteItemBase) continue;
 
 		if (lkpi->isVisible() 

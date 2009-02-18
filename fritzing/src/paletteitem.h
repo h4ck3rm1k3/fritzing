@@ -44,7 +44,7 @@ public:
 
 	void removeLayerKin();
 	void addLayerKin(class LayerKinPaletteItem * lkpi);
-	QList<class LayerKinPaletteItem *> & layerKin();
+	const QList<class ItemBase *> & layerKin();
  	void loadLayerKin(const LayerHash & viewLayers);
 	void rotateItemAnd(qreal degrees);
 	void flipItemAnd(Qt::Orientations orientation);
@@ -82,7 +82,7 @@ protected:
 	void updateLayerKinVisibility(QHash<ViewLayer::ViewLayerID,bool>);
 
 protected:
- 	QList<class LayerKinPaletteItem *> m_layerKin;
+ 	QList<class ItemBase *> m_layerKin;
 
 };
 

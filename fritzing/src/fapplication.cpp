@@ -37,6 +37,7 @@ $Date$
 #include "fsvgrenderer.h"
 #include "version/versionchecker.h"
 #include "version/updatedialog.h"
+#include "itemdrag.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -137,10 +138,6 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 
 FApplication::~FApplication(void)
 {
-	FSvgRenderer::cleanup();
-	ViewLayer::cleanup();
-	ItemBase::cleanup();
-	Wire::cleanup();
 
 	if (m_paletteBinModel) {
 		m_paletteBinModel->clearPartHash();
@@ -153,6 +150,14 @@ FApplication::~FApplication(void)
 	if (m_updateDialog) {
 		delete m_updateDialog;
 	}
+		
+	FSvgRenderer::cleanup();
+	ViewLayer::cleanup();
+	ItemBase::cleanup();
+	Wire::cleanup();
+	DebugDialog::cleanup();
+	ViewSwitcher::cleanup();
+	ItemDrag::cleanup();
 
 }
 

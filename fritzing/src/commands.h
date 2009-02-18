@@ -252,6 +252,8 @@ class ChangeZCommand : public BaseCommand
 {
 public:
     ChangeZCommand(class SketchWidget *sketchWidget, QUndoCommand *parent);
+	~ChangeZCommand();
+
     void addTriplet(long id, qreal oldZ, qreal newZ);
     void undo();
     void redo();

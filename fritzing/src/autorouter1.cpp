@@ -333,7 +333,10 @@ void Autorouter1::start()
 	}
 
 	cleanUp();
-
+	foreach (Edge * edge, edges) {
+		delete edge;
+	}
+	edges.clear();
 
 	addToUndo(parentCommand);
 

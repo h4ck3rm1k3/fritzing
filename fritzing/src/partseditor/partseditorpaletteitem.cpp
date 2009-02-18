@@ -125,7 +125,7 @@ void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",xmlViewLayerID());
 		streamWriter.writeEndElement();
-	foreach (LayerKinPaletteItem * lkpi, m_layerKin) {
+	foreach (ItemBase * lkpi, m_layerKin) {
 		streamWriter.writeStartElement("layer");
 		streamWriter.writeAttribute("layerId",ViewLayer::viewLayerXmlNameFromID(lkpi->viewLayerID()));
 		streamWriter.writeEndElement();

@@ -63,6 +63,7 @@ $Date$
 #include "version/version.h"
 #include "labels/partlabel.h"
 #include "labels/note.h"
+#include "group/groupitem.h"
 
 static QColor labelTextColor = Qt::black;
 QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -119,29 +120,6 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     resize(size, size);
     setMinimumSize(minSize, minSize);
-
-
-	//QGraphicsItemGroup * group = new QGraphicsItemGroup();
-	//group->setZValue(10);
-	//this->scene()->addItem(group);
-	//
-	//QPen pen(QBrush(QColor(255, 0, 0)), 5);
-	//
-    //item = new QGraphicsLineItem();
-    //item->setLine(300,300,500,500);
-    //this->scene()->addItem(item);
-    //item->setZValue(0.5);
-	//item->setFlags(QGraphicsItem::ItemIsSelectable );
-	//item->setPen(pen);
-   	//group->addToGroup(item);
-    //
-    //item = new QGraphicsLineItem();
-    //item->setLine(500,300,300,500);
-    //this->scene()->addItem(item);
-    //item->setZValue(10.5);
-	//item->setFlags(QGraphicsItem::ItemIsSelectable );
-	//item->setPen(pen);
-    //group->addToGroup(item);
 
     m_lastPaletteItemSelected = NULL;
 
@@ -556,8 +534,7 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * pale
 	if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
 		addToScene(paletteItem, paletteItem->viewLayerID());
 		paletteItem->loadLayerKin(m_viewLayers);
-		for (int i = 0; i < paletteItem->layerKin().count(); i++) {
-			LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
+		foreach (ItemBase * lkpi, paletteItem->layerKin()) {
 			this->scene()->addItem(lkpi);
 			lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
 		}
@@ -594,7 +571,7 @@ ItemBase * SketchWidget::findItem(long id) {
 
 	QList<QGraphicsItem *> items = this->scene()->items();
 	for (int i = 0; i < items.size(); i++) {
-		ItemBase* base = ItemBase::extractItemBase(items[i]);
+		ItemBase* base = dynamic_cast<ItemBase *>(items[i]);
 		if (base == NULL) continue;
 
 		if (base->id() == id) {
@@ -1296,7 +1273,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 	QSet<Wire *> wires;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems ()) {
-		ItemBase *itemBase = ItemBase::extractItemBase(gitem);
+		ItemBase *itemBase = dynamic_cast<ItemBase *>(gitem);
 		if (itemBase == NULL) continue;
 
 		if (itemBase->itemType() == ModelPart::Wire) {
@@ -1697,7 +1674,7 @@ void SketchWidget::scene_selectionChanged() {
 		m_holdingSelectItemCommand->clearRedo();
 		const QList<QGraphicsItem *> sitems = scene()->selectedItems();
 		foreach (QGraphicsItem * item, scene()->selectedItems()) {
-	 		ItemBase * base = ItemBase::extractItemBase(item);
+	 		ItemBase * base = dynamic_cast<ItemBase *>(item);
 	 		if (base == NULL) continue;
 
 			saveBase = base;
@@ -1742,9 +1719,41 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	if(pitem) m_lastPaletteItemSelected = pitem;
 }
 
-void SketchWidget::group() {
+ModelPart * SketchWidget::group(ModelPart * modelPart) {
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
-	if (sitems.size() < 2) return;
+	if (sitems.size() < 2) return NULL;
+
+	QList<ItemBase *> itemBases;
+	foreach (QGraphicsItem * item, sitems) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		itemBase = itemBase->layerKinChief();
+		if (itemBases.contains(itemBase)) continue;
+
+		itemBases.append(itemBase);
+	}
+
+	if (itemBases.count() < 2) return NULL;
+
+	if (modelPart == NULL) {
+		modelPart = m_paletteModel->retrieveModelPart(GroupItem::moduleIDName);
+	}
+	if (modelPart == NULL) return NULL;
+
+	modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
+	ViewGeometry vg;	
+	vg.setLoc(QPointF(0,0));
+	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, ItemBase::getNextID(), true, NULL);
+	scene()->addItem(groupItem);
+
+	// sort by z
+    qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
+	foreach (ItemBase * itemBase, itemBases) {
+		groupItem->addToGroup(itemBase, m_viewLayers);
+	}	
+
+	return modelPart;
 }
 
 void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to) {
@@ -2299,7 +2308,7 @@ void SketchWidget::sortSelectedByZ(QList<ItemBase *> & bases) {
 
 void SketchWidget::sortAnyByZ(const QList<QGraphicsItem *> & items, QList<ItemBase *> & bases) {
 	for (int i = 0; i < items.size(); i++) {
-		ItemBase * base = ItemBase::extractItemBase(items[i]);
+		ItemBase * base = dynamic_cast<ItemBase *>(items[i]);
 		if (base != NULL) {
 			bases.append(base);
 			base->saveGeometry();
@@ -2324,7 +2333,7 @@ void SketchWidget::changeZ(QHash<long, RealPair * > triplets, qreal (*pairAccess
 	const QList<QGraphicsItem *> items = scene()->items();
 	for (int i = 0; i < items.size(); i++) {
 		// want all items, not just topLevel
-		ItemBase * itemBase = ItemBase::extractItemBase(items[i]);
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(items[i]);
 		if (itemBase == NULL) continue;
 
 		RealPair * pair = triplets[itemBase->id()];
@@ -2490,9 +2499,8 @@ ConnectorItem * SketchWidget::findConnectorItem(ItemBase * itemBase, const QStri
 		PaletteItem * pitem = dynamic_cast<PaletteItem *>(itemBase);
 		if (pitem == NULL) return NULL;
 
-		QList<class LayerKinPaletteItem *> layerKin = pitem->layerKin();
-		for (int j = 0; j < layerKin.count(); j++) {
-			connectorItem = layerKin[j]->findConnectorItemNamed(connectorID);
+		foreach (ItemBase * lkpi, pitem->layerKin()) {
+			connectorItem = lkpi->findConnectorItemNamed(connectorID);
 			if (connectorItem != NULL) return connectorItem;
 		}
 

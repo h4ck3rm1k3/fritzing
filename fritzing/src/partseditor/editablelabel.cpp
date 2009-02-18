@@ -27,6 +27,7 @@ $Date$
 
 
 #include "editablelabel.h"
+#include "../misc.h"
 
 EditableLabel::EditableLabel(QWidget *parent) : QLabel(parent) {
 	setWordWrap(true);

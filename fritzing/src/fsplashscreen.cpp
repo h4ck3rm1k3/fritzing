@@ -25,6 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "fsplashscreen.h"
+#include "misc.h"
 
 #include <QTextDocument>
 #include <QTextCursor>

@@ -1169,8 +1169,11 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_sendToBackAct);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_showPartLabelAct);
-	//m_partMenu->addSeparator();
-	//m_partMenu->addAction(m_groupAct);
+
+#ifndef QT_NO_DEBUG
+	m_partMenu->addSeparator();
+	m_partMenu->addAction(m_groupAct);
+#endif
 
     m_viewMenu = menuBar()->addMenu(tr("&View"));
     m_viewMenu->addAction(m_zoomInAct);
@@ -1489,8 +1492,9 @@ void MainWindow::updateTraceMenu() {
 void MainWindow::group() {
 	if (m_currentGraphicsView == NULL) return;
 
-	notYetImplemented(tr("Group"));
-	//m_currentWidget->group();
+	ModelPart * mp = m_pcbGraphicsView->group(NULL);
+	m_breadboardGraphicsView->group(mp);
+	m_schematicGraphicsView->group(mp);
 }
 
 void MainWindow::addToBin() {
@@ -2014,6 +2018,7 @@ void MainWindow::autoroute() {
 	m_statusBar->removeWidget(&cancelButton);
 	m_statusBar->removeWidget(&cancelTraceButton);
 	m_dontClose = false;
+	delete autorouter1;
 }
 
 void MainWindow::createTrace() {

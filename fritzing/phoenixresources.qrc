@@ -59,6 +59,7 @@ $Date$
     <file>resources/parts/core/cmRuler.fzp</file>
     <file>resources/parts/core/tinyBreadboard.fzp</file>
     <file>resources/parts/core/note.fzp</file>
+    <file>resources/parts/core/group.fzp</file>
     <file>resources/parts/svg/core/icon/wireicon.svg</file>
     <file>resources/parts/svg/core/icon/tinyBreadboardIcon.svg</file>
     <file>resources/parts/svg/core/icon/rulericon.svg</file>

@@ -100,6 +100,9 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 	m_blocksVisibility[ConnsBlockId] = settings.value(settingsBlockVisibilityName(ConnsBlockId),true).toBool();
 }
 
+HtmlInfoView::~HtmlInfoView() {
+}
+
 void HtmlInfoView::jsRegister() {
 	if (!m_setContentMutex.tryLock()) return;
 
