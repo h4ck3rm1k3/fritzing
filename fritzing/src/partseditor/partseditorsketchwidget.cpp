@@ -43,10 +43,10 @@ void PartsEditorSketchWidget::mousePressConnectorEvent(ConnectorItem *, QGraphic
 }
 
 void PartsEditorSketchWidget::loadSvgFile(StringPair *path, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, QString layer) {
-	//PartsEditorPaletteItem * item = new PartsEditorPaletteItem(NULL,modelPart, viewIdentifier, path, layer, false);
-	//if(item->connectors().size() > 0) {
-		//emit connectorsFound(this->m_viewIdentifier,item->connectors());
-	//}
+	PartsEditorPaletteItem * item = new PartsEditorPaletteItem(NULL,modelPart, viewIdentifier, path, layer, false);
+	if(item->connectors().size() > 0) {
+		emit connectorsFound(this->m_viewIdentifier,item->connectors());
+	}
 	this->addItem(modelPart, BaseCommand::CrossView, item->getViewGeometry(),item->id(), -1, item);
 }
 

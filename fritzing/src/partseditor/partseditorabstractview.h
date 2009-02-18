@@ -68,6 +68,10 @@ class PartsEditorAbstractView : public SketchWidget {
 		QString getOrCreateViewFolderInTemp();
 		bool ensureFilePath(const QString &filePath);
 
+		QString findConnectorLayerId(QDomDocument *svgDom);
+		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem);
+		QString getLayerFileName(ModelPart * modelPart);
+
 		PartsEditorPaletteItem *m_item; // just one item per view
 		QDir m_tempFolder;
 		bool m_deleteModelPartOnSceneClear;

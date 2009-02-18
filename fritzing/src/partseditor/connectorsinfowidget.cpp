@@ -373,7 +373,7 @@ void ConnectorsInfoWidget::syncNewConnectors(ItemBase::ViewIdentifier viewId, co
 		QString connId = conn->connectorSharedID();
 		connIds << connId;
 
-		/*foreach(SvgIdLayer* pin, conn->connectorShared()->pins().values(viewId)) {
+		/*foreach(SvgIdLayer* pin, conn->connectorStuff()->pins().values(viewId)) {
 			m_connectorsPins[connId].insert(viewId,pin);
 		}*/
 

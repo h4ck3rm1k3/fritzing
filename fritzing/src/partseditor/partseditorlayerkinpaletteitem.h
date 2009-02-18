@@ -42,6 +42,15 @@ protected:
 	ConnectorItem* newConnectorItem(Connector *connector) {
 		return new PartsEditorConnectorItem(connector,this);
 	}
+
+	void hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+		setCursor(QCursor(Qt::OpenHandCursor));
+		GraphicsSvgLineItem::hoverEnterEvent(event);
+	}
+
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+		GraphicsSvgLineItem::hoverLeaveEvent(event);
+	}
 };
 
 #endif /* PARTSEDITORLAYERKINPALETTEITEM_H_ */

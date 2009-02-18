@@ -341,7 +341,7 @@ void ItemBase::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * , ConnectorIte
 	}
 }
 
-void ItemBase::clearConnectorHover() 
+void ItemBase::clearConnectorHover()
 {
 	m_connectorHoverCount2 = 0;
 	if (itemType() != ModelPart::Breadboard) {
@@ -559,7 +559,7 @@ void ItemBase::addBusConnectorItem(Bus * bus, ConnectorItem * item) {
 	busConnectorItems->append(item);
 }
 
-int ItemBase::itemType() const 
+int ItemBase::itemType() const
 {
 	if (m_modelPart == NULL) return ModelPart::Unknown;
 
@@ -574,7 +574,7 @@ void ItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 	GraphicsSvgLineItem::paint(painter, option, widget);
 }
 
-void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) 
+void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	Q_UNUSED(widget);
 	Q_UNUSED(option);
@@ -626,7 +626,7 @@ bool ItemBase::sticky() {
 	return m_sticky;
 }
 
-void ItemBase::setSticky(bool s) 
+void ItemBase::setSticky(bool s)
 {
 	m_sticky = s;
 }
@@ -701,7 +701,7 @@ void ItemBase::setInstanceTitle(const QString &title) {
 	}
 }
 
-void ItemBase::setInstanceTitleAux(const QString &title) 
+void ItemBase::setInstanceTitleAux(const QString &title)
 {
 	if (m_modelPart) {
 		m_modelPart->setInstanceTitle(title);
@@ -776,6 +776,7 @@ void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 
 ViewLayer::ViewLayerID ItemBase::defaultConnectorLayer(ItemBase::ViewIdentifier viewId) {
 	switch(viewId) {
+		case ItemBase::IconView: return ViewLayer::Icon;
 		case ItemBase::BreadboardView: return ViewLayer::Breadboard;
 		case ItemBase::SchematicView: return ViewLayer::Schematic;
 		case ItemBase::PCBView: return ViewLayer::Copper0;
@@ -890,7 +891,7 @@ void ItemBase::partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos,
 }
 
 void ItemBase::rotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
-{	
+{
 	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->rotateFlipPartLabel(this, degrees, orientation);
@@ -899,7 +900,7 @@ void ItemBase::rotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
 
 
 void ItemBase::doRotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
-{	
+{
 	if (m_partLabel) {
 		m_partLabel->rotateFlipLabel(degrees, orientation);
 	}

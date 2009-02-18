@@ -64,7 +64,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 	setSelected(false);
 }
 
-PartsEditorPaletteItem::~PartsEditorPaletteItem() 
+PartsEditorPaletteItem::~PartsEditorPaletteItem()
 {
 	if (m_svgDom) {
 		delete m_svgDom;
@@ -91,6 +91,27 @@ void PartsEditorPaletteItem::createSvgFile(QString path) {
     }
     m_originalSvgPath = path;
     file.close();
+}
+
+bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, const QString &layerFileName) {
+	QDir dir(modelPartSharedPath);			// is a path to a filename
+	dir.cdUp();								// lop off the filename
+	dir.cdUp();								// parts root
+	StringPair tempPath;
+	tempPath.first = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir;
+	tempPath.second = "%1/" + layerFileName;
+
+	QStringList possibleFolders;
+	possibleFolders << "core" << "contrib" << "user";
+	for(int i=0; i < possibleFolders.size(); i++) {
+		if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
+			m_svgStrings = new SvgAndPartFilePath();
+			m_svgStrings->setAbsolutePath(tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]));
+			m_svgStrings->setRelativePath(tempPath.second.arg(possibleFolders[i]));
+			return true;
+		}
+	}
+	return false;
 }
 
 void PartsEditorPaletteItem::writeXmlLocation(QXmlStreamWriter & /*streamWriter*/) {
@@ -146,27 +167,8 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 			bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
 			if (!result) return false;
 		}
-		QDir dir(modelPartShared->path());			// is a path to a filename
-		dir.cdUp();									// lop off the filename
-		dir.cdUp();									// parts root
-		StringPair tempPath;
-		tempPath.first = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir;
-		tempPath.second = "%1/" + layerAttributes.filename();
 
-		QStringList possibleFolders;
-		possibleFolders << "core" << "contrib" << "user";
-		bool gotOne = false;
-		for(int i=0; i < possibleFolders.size(); i++) {
-			if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
-				m_svgStrings = new SvgAndPartFilePath();
-				m_svgStrings->setAbsolutePath(tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]));
-				m_svgStrings->setRelativePath(tempPath.second.arg(possibleFolders[i]));
-				gotOne = true;
-				break;
-			}
-		}
-
-		if(!gotOne) {
+		if(!createSvgPath(modelPartShared->path(), layerAttributes.filename())) {
 			//QMessageBox::information( NULL, QObject::tr("Fritzing"),
 				//					 QObject::tr("The file %1 is not a Fritzing file (6).").arg(tempPath.arg(possibleFolders[0])));
 			return false;
@@ -174,14 +176,6 @@ bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIde
 	}
 
 
-	// disable image caching because otherwise when the user wants to set up the part with a new image
-	// the old image is reloaded from the cache, based on the moduleID
-	// make sure not to save the changed image in the cache because it will affect the original part
-
-	// eventually, perhaps, restore the cache when the original part is loaded
-	// and disable it when the user is changing images
-
-	//FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartShared->moduleID(), viewLayerID);
 	FSvgRenderer * renderer = NULL;
 	if (renderer == NULL) {
 		QString fn = m_svgStrings->coreContribOrUser()+(!m_svgStrings->relativePath().isEmpty()?"/"+m_svgStrings->relativePath():"");

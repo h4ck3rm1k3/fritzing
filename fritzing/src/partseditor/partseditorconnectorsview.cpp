@@ -105,7 +105,7 @@ void PartsEditorConnectorsView::removeConnector(const QString &connId) {
 			QString("connector '%1' removed from %2 view")
 			.arg(connId).arg(ItemBase::viewIdentifierName(m_viewIdentifier))
 		));
-		// TODO Mariano: quick hack
+
 		PartsEditorConnectorsConnectorItem *connToRemoveAux = dynamic_cast<PartsEditorConnectorsConnectorItem*>(connToRemove);
 		m_drawnConns.removeAll(connToRemoveAux);
 		m_removedConnIds << connId;
@@ -205,8 +205,6 @@ void PartsEditorConnectorsView::aboutToSave() {
 						QString("Couldn't open file for update, after drawing connectors: '%1'")
 							.arg(tempFile)
 					);*/
-					qDebug() << QString("Couldn't open file for update, after drawing connectors: '%1'")
-						.arg(tempFile);
 				}
 				QTextStream out(&file);
 				out << svgDom->toString();
@@ -218,38 +216,6 @@ void PartsEditorConnectorsView::aboutToSave() {
 			DebugDialog::debug("updating part view svg file: could not load file "+m_item->flatSvgFilePath());
 		}
 	}
-}
-
-QString PartsEditorConnectorsView::findConnectorLayerId(QDomDocument *svgDom) {
-	QString result = ___emptyString___;
-	QDomElement docElem = svgDom->documentElement();
-	if(findConnectorLayerIdAux(result, docElem)) {
-		return result;
-	} else {
-		return ___emptyString___; // top level layer
-	}
-}
-
-bool PartsEditorConnectorsView::findConnectorLayerIdAux(QString &result, QDomElement &docElem) {
-	QDomNode n = docElem.firstChild();
-	while(!n.isNull()) {
-		QDomElement e = n.toElement();
-		if(!e.isNull()) {
-			QString id = e.attribute("id");
-			if(id.startsWith("connector")) {
-				// the id is the one from the previous iteration
-				return true;
-			} else if(n.hasChildNodes()) {
-				// potencial solution, if the next iteration returns true
-				result = id;
-				if(findConnectorLayerIdAux(result, e)) {
-					return true;
-				}
-			}
-		}
-		n = n.nextSibling();
-	}
-	return false;
 }
 
 bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
@@ -312,37 +278,6 @@ bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomElement &docElem) {
 			}
 		}
 		return true;
-
-		/*for (int i = 0; i < docEle.childNodes().count(); ++i) {
-			QDomNode n = docEle.childNodes().at(i);
-			if (n.nodeType() == QDomNode::ElementNode) {
-				if (isSupposedToBeRemoved(n.toElement().attribute("id"))) {
-					docEle.removeChild(n);
-					continue;
-				}
-
-				QDomNodeList children = n.toElement().childNodes();
-				for (int c = 0; c < children.count(); ++c) {
-					QDomNode child = children.at(c);
-					if (child.nodeType() == QDomNode::ElementNode
-						&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
-						n.removeChild(child);
-						continue;
-					} else {
-						QDomNodeList children2 = child.toElement().childNodes();
-						for (int c = 0; c < children2.count(); ++c) {
-							QDomNode child2 = children2.at(c);
-							if (child2.nodeType() == QDomNode::ElementNode
-								&& isSupposedToBeRemoved(child.toElement().attribute("id"))) {
-								n.removeChild(child2);
-								continue;
-							}
-						}
-					}
-				}
-			}
-		}
-		return true;*/
 	}
 	return false;
 }

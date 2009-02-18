@@ -73,8 +73,6 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void setItemProperties();
 		bool isSupposedToBeRemoved(const QString& id);
 
-		QString findConnectorLayerId(QDomDocument *svgDom);
-		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem);
 		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox, const QString &connectorsLayerId);
 		bool removeConnectorsIfNeeded(QDomElement &docEle);
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);

@@ -29,6 +29,8 @@ $Date$
 
 #include "partseditorabstractview.h"
 #include "partseditorconnectoritem.h"
+#include "../layerkinpaletteitem.h"
+#include "../layerattributes.h"
 #include "../debugdialog.h"
 
 
@@ -60,23 +62,35 @@ void PartsEditorAbstractView::loadFromModel(PaletteModel *paletteModel, ModelPar
 	fitCenterAndDeselect();
 }
 
-ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItem, bool doConnectors) {
-	if(paletteItem == NULL) {
-		paletteItem = newPartsEditorPaletteItem(modelPart);
+ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItemAux, bool doConnectors) {
+	if(paletteItemAux == NULL) {
+		paletteItemAux = newPartsEditorPaletteItem(modelPart);
 	}
+	PartsEditorPaletteItem *paletteItem = dynamic_cast<PartsEditorPaletteItem*>(paletteItemAux);
+	Q_ASSERT(paletteItem);
+
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 
-	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart);
+	paletteItem->createSvgPath(modelPart->modelPartShared()->path(), getLayerFileName(modelPart));
+	paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
+	ViewLayer::ViewLayerID viewLayerID =
+		ViewLayer::viewLayerIDFromXmlString(
+			findConnectorLayerId(paletteItem->svgDom())
+		);
+	if(viewLayerID == ViewLayer::UnknownLayer) {
+		viewLayerID = getViewLayerID(modelPart);
+	}
 
 	if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
-		addToScene(paletteItem, paletteItem->viewLayerID());
-		paletteItem->loadLayerKin(m_viewLayers);
-		/*for (int i = 0; i < paletteItem->layerKin().count(); i++) {
+		addToScene(paletteItemAux, paletteItemAux->viewLayerID());
+		// layers are not needed on the parts editor (so far)
+		/*paletteItem->loadLayerKin(m_viewLayers);
+		for (int i = 0; i < paletteItem->layerKin().count(); i++) {
 			LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
 			this->scene()->addItem(lkpi);
 			lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
 		}*/
-		return paletteItem;
+		return paletteItemAux;
 	} else {
 		return NULL;
 	}
@@ -127,6 +141,12 @@ void PartsEditorAbstractView::setDefaultBackground() {
 
 void PartsEditorAbstractView::clearScene() {
 	if(m_item) {
+		/*for (int i = 0; i < m_item->layerKin().count(); i++) {
+			LayerKinPaletteItem * lkpi = m_item->layerKin()[i];
+			this->scene()->removeItem(lkpi);
+			//lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+		}*/
+
 		deleteItem(m_item, m_deleteModelPartOnSceneClear, true);
 
 		//delete m_item;
@@ -191,6 +211,7 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
 
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartShared()->setDomDocument(domDoc);
+  	retval->modelPartShared()->resetConnectorsInitialization();
   	retval->initConnectors(true /*redo connectors*/);
 	return retval;
 }
@@ -295,8 +316,46 @@ bool PartsEditorAbstractView::ensureFilePath(const QString &filePath) {
 #endif
 	if(!filePath.contains(svgFolder, cs)) {
 		// This has to be here in order of all this, to work in release mode
-		qDebug() << QString("Ensuring the existance of %1").arg(QFileInfo(filePath).absoluteDir().path());
 		m_tempFolder.mkpath(QFileInfo(filePath).absoluteDir().path());
 	}
 	return true;
+}
+
+QString PartsEditorAbstractView::findConnectorLayerId(QDomDocument *svgDom) {
+	QString result = ___emptyString___;
+	QDomElement docElem = svgDom->documentElement();
+	if(findConnectorLayerIdAux(result, docElem)) {
+		return result;
+	} else {
+		return ___emptyString___; // top level layer
+	}
+}
+
+bool PartsEditorAbstractView::findConnectorLayerIdAux(QString &result, QDomElement &docElem) {
+	QDomNode n = docElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement();
+		if(!e.isNull()) {
+			QString id = e.attribute("id");
+			if(id.startsWith("connector")) {
+				// the id is the one from the previous iteration
+				return true;
+			} else if(n.hasChildNodes()) {
+				// potencial solution, if the next iteration returns true
+				result = id;
+				if(findConnectorLayerIdAux(result, e)) {
+					return true;
+				}
+			}
+		}
+		n = n.nextSibling();
+	}
+	return false;
+}
+
+QString PartsEditorAbstractView::getLayerFileName(ModelPart * modelPart) {
+	QDomElement layers = LayerAttributes::getSvgElementLayers(modelPart->modelPartShared()->domDocument(), m_viewIdentifier);
+	if (layers.isNull()) return ___emptyString___;
+
+	return layers.attribute("image");
 }

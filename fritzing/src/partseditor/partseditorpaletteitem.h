@@ -54,8 +54,10 @@ class PartsEditorPaletteItem : public PaletteItem {
 		void removeFromModel(); // To allow info items to be shown, but not to be persisted
 		void setConnector(const QString &id, Connector *conn);
 
-	protected:
 		void createSvgFile(QString path);
+		bool createSvgPath(const QString &modelPartSharedPath, const QString &layerFileName);
+
+	protected:
 		bool setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 		ConnectorItem* newConnectorItem(Connector *connector);
 		LayerKinPaletteItem * newLayerKinPaletteItem(
