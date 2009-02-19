@@ -38,13 +38,9 @@ public:
 	void resize(const QPointF &mousePos);
 	Qt::Corner corner();
 	bool isBeingDragged();
-	void setPixmap(const QPixmap &pixmap);
 	void doSetVisible(bool visible);
-	void setRectAux(QRectF newRect) {
-		setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
-		setRect(mapFromParent(newRect).boundingRect());
-		//setFlag(QGraphicsItem::ItemIgnoresTransformations,true);
-	}
+	void doSetRect(const QRectF &newRect);
+	void doPaint(QPainter *painter);
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -61,7 +57,6 @@ protected:
 	ConnectorRectangle *m_parent;
 	Qt::Corner m_corner;
 	QCursor m_cursorBU;
-	QGraphicsPixmapItem *m_child;
 
 	bool m_isVisible;
 	volatile bool m_resizing;

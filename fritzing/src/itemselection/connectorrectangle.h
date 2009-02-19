@@ -54,15 +54,15 @@ public:
 	qreal currentScale();
 
 	void setHandlersVisible(bool visible);
+	QRectF handlerRect(Qt::Corner corner);
 	void paint(QPainter *painter);
 
 protected:
 	void setHandlerRect(CornerHandler* handler);
-	QRectF handlerRect(Qt::Corner corner);
 	void placeHandlers();
 	ResizableRectItem* resizableOwner();
 
-	PartsEditorConnectorsConnectorItem *m_owner;
+	QGraphicsRectItem *m_owner;
 
 	CornerHandler *m_topLeftHandler;
 	CornerHandler *m_topRightHandler;

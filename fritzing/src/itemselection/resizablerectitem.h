@@ -36,10 +36,11 @@ friend class ConnectorRectangle;
 public:
 	ResizableRectItem();
 	virtual ~ResizableRectItem() {}
-	
+
 	virtual qreal minWidth() = 0;
 	virtual qreal minHeight() = 0;
 	virtual void resizeRect(qreal x, qreal y, qreal width, qreal height) = 0;
+	virtual void doPrepareGeometryChange() = 0;
 
 	void setResizable(bool resizable);
 	bool isResizable();

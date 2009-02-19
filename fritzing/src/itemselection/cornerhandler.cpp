@@ -34,7 +34,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "../debugdialog.h"
 
 QHash<Qt::Corner,QPixmap> CornerHandler::pixmapHash;
-qreal CornerHandler::Size = 2;
+qreal CornerHandler::Size = 4;
 
 CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* parentItem, Qt::Corner corner)
 	: QGraphicsRectItem(parentItem)
@@ -47,9 +47,6 @@ CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* pare
 
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
 	setFlag(QGraphicsItem::ItemClipsChildrenToShape);
-
-	/*m_child = new QGraphicsPixmapItem(this);
-	m_child->setPixmap(pixmapHash[m_corner]);*/
 
 	m_cursorBU = cursor();
 	doSetVisible(false);
@@ -75,11 +72,6 @@ void CornerHandler::initPixmapHash() {
 		pixmapHash[Qt::BottomLeftCorner] =
 		 	QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png");
 	}
-}
-
-void CornerHandler::setPixmap(const QPixmap &pixmap) {
-	//m_child->setPixmap(pixmap);
-	//m_child->setPos(0,0);
 }
 
 void CornerHandler::resize(const QPointF &mousePos) {
@@ -170,7 +162,24 @@ bool CornerHandler::isBeingDragged() {
 }
 
 void CornerHandler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	Q_UNUSED(option);
+	Q_UNUSED(widget);
 	if(m_isVisible) {
-		QGraphicsRectItem::paint(painter,option,widget);
+		doPaint(painter);
 	}
+}
+
+void CornerHandler::doPaint(QPainter *painter) {
+	painter->save();
+	QRectF trgRect = m_parent->handlerRect(m_corner);
+	QPixmap pm = pixmapHash[m_corner];
+	QRectF srcRect = QRectF(pm.rect());
+	//painter->drawRect(rect);
+	painter->drawPixmap(trgRect,pm,srcRect);
+	painter->restore();
+}
+
+void CornerHandler::doSetRect(const QRectF &newRect) {
+	setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
+	setRect(mapFromParent(newRect).boundingRect());
 }

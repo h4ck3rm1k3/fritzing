@@ -235,3 +235,7 @@ qreal TerminalPointItem::minWidth() {
 void TerminalPointItem::resizeRect(qreal x, qreal y, qreal w, qreal h) {
 	setRect(x,y,w,h);
 }
+
+void TerminalPointItem::doPrepareGeometryChange() {
+	prepareGeometryChange();
+}

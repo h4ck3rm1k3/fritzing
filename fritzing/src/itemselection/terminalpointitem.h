@@ -48,6 +48,8 @@ public:
 	qreal minHeight();
 	qreal minWidth();
 
+	void doPrepareGeometryChange();
+
 protected:
 	QPointF mappedToScenePoint();
 
