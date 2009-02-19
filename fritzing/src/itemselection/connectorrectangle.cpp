@@ -35,7 +35,6 @@ ConnectorRectangle::ConnectorRectangle(PartsEditorConnectorsConnectorItem* owner
 {
 	m_owner = owner;
 	m_firstPaint = true;
-	m_isVisible = false;
 
 	if(withHandlers) {
 		m_topLeftHandler     = new CornerHandler(this, owner, Qt::TopLeftCorner);
@@ -54,12 +53,7 @@ ConnectorRectangle::ConnectorRectangle(PartsEditorConnectorsConnectorItem* owner
 	}
 }
 
-QGraphicsRectItem *ConnectorRectangle::owner() {
-	return m_owner;
-}
-
 void ConnectorRectangle::setHandlersVisible(bool visible) {
-	m_isVisible = visible;
 	foreach(CornerHandler* handler, m_cornerHandlers) {
 		handler->doSetVisible(visible);
 	}
@@ -76,7 +70,9 @@ void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
 	qreal width = x2-x1 < minWidth ? minWidth : x2-x1;
 	qreal height = y2-y1 < minHeight ? minHeight : y2-y1;
 
-	resizableOwner()->resizeRect(x1,y1,width,height);
+	if(width != owner()->rect().width() && height != owner()->rect().height()) {
+		resizableOwner()->resizeRect(x1,y1,width,height);
+	}
 }
 
 bool ConnectorRectangle::isResizable() {
@@ -86,25 +82,23 @@ bool ConnectorRectangle::isResizable() {
 void ConnectorRectangle::paint(QPainter *painter) {
 	QRectF rect = m_owner->boundingRect();
 
-	if(m_isVisible) {
-		if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
-			placeHandlers();
-			m_firstPaint = false;
-		}
+	if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
+		placeHandlers();
+		m_firstPaint = false;
+	}
 
-		bool beingResized = false;
+	bool beingResized = false;
+	foreach(CornerHandler* handler, m_cornerHandlers) {
+		if(handler->isBeingDragged()) {
+			beingResized = true;
+			break;
+		}
+	}
+
+	if(beingResized) {
+		prepareForChange();
 		foreach(CornerHandler* handler, m_cornerHandlers) {
-			if(handler->isBeingDragged()) {
-				beingResized = true;
-				break;
-			}
-		}
-
-		if(beingResized) {
-			prepareForChange();
-			foreach(CornerHandler* handler, m_cornerHandlers) {
-				handler->doPaint(painter);
-			}
+			handler->doPaint(painter);
 		}
 	}
 }
@@ -163,6 +157,10 @@ qreal ConnectorRectangle::currentScale() {
 		}
 	}
 	return 1;
+}
+
+QGraphicsRectItem *ConnectorRectangle::owner() {
+	return m_owner;
 }
 
 ResizableRectItem* ConnectorRectangle::resizableOwner() {

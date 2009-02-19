@@ -56,7 +56,6 @@ protected:
 
 	ConnectorRectangle *m_parent;
 	Qt::Corner m_corner;
-	QCursor m_cursorBU;
 
 	bool m_isVisible;
 	volatile bool m_resizing;

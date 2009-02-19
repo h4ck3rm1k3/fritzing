@@ -50,6 +50,9 @@ class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 		);
 		bool showingTerminalPoints();
 
+		void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+		void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
 		bool m_showingTerminalPoints;
 };
 

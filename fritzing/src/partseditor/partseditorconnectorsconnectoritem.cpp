@@ -298,9 +298,18 @@ void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEven
 		gv->informConnectorSelectionFromView(connectorSharedID());
 	}
 	Q_UNUSED(event);
-	//ConnectorItem::mousePressEvent(event);
 }
 
 void PartsEditorConnectorsConnectorItem::doPrepareGeometryChange() {
 	prepareGeometryChange();
+}
+
+void PartsEditorConnectorsConnectorItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+	Q_UNUSED(event);
+	setCursor(QCursor(Qt::SizeAllCursor));
+}
+
+void PartsEditorConnectorsConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+	Q_UNUSED(event);
+	unsetCursor();
 }

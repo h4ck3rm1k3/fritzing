@@ -253,7 +253,7 @@ QString PartsEditorPaletteItem::xmlViewLayerID() {
 }
 
 void PartsEditorPaletteItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-	setCursor(QCursor(Qt::OpenHandCursor));
+	setCursor(QCursor(Qt::ArrowCursor));
 	GraphicsSvgLineItem::hoverEnterEvent(event);
 }
 

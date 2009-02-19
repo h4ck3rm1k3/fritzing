@@ -35,6 +35,7 @@ PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorCo
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
+	setAcceptHoverEvents(true);
 }
 
 PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
@@ -76,4 +77,14 @@ LayerKinPaletteItem * PartsEditorConnectorsPaletteItem::newLayerKinPaletteItem(
                 PartsEditorConnectorsLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu, m_showingTerminalPoints);
 	lk->init(viewLayerID, viewLayers);
 	return lk;
+}
+
+void PartsEditorConnectorsPaletteItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+	Q_UNUSED(event);
+	setCursor(QCursor(Qt::OpenHandCursor));
+}
+
+void PartsEditorConnectorsPaletteItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+	Q_UNUSED(event);
+	unsetCursor();
 }

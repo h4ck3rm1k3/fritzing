@@ -76,7 +76,6 @@ protected:
 	RectangleSide *m_bottomSide;
 
 	bool m_firstPaint;
-	bool m_isVisible;
 };
 
 #endif /* CONNECTORRECTANGLE_H_ */

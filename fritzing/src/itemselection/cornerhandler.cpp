@@ -47,8 +47,9 @@ CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* pare
 
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
 	setFlag(QGraphicsItem::ItemClipsChildrenToShape);
+	setAcceptHoverEvents(true);
+	setAcceptsHoverEvents(true);
 
-	m_cursorBU = cursor();
 	doSetVisible(false);
 }
 
@@ -76,14 +77,14 @@ void CornerHandler::initPixmapHash() {
 
 void CornerHandler::resize(const QPointF &mousePos) {
 	m_parent->prepareForChange();
-	QRectF rect = parentItem()->boundingRect();
+	QRectF rect = m_parent->owner()->rect();
 
 	qreal oldX1 = rect.x();
 	qreal oldY1 = rect.y();
 	qreal oldX2 = oldX1+rect.width();
 	qreal oldY2 = oldY1+rect.height();
-	qreal newX = mapToItem(parentItem(),mousePos).x();
-	qreal newY = mapToItem(parentItem(),mousePos).y();
+	qreal newX = mapToItem(m_parent->owner(),mousePos).x();
+	qreal newY = mapToItem(m_parent->owner(),mousePos).y();
 
 	switch(m_corner) {
 		case Qt::TopLeftCorner:
@@ -132,12 +133,15 @@ void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 void CornerHandler::hoverEnterEvent(QGraphicsSceneHoverEvent * event) {
 	QGraphicsRectItem::hoverEnterEvent(event);
-	m_cursorBU = cursor();
-	setCursor(QCursor(cursorForCorner(m_corner)));
+	if(m_isVisible) {
+		setCursor(QCursor(cursorForCorner(m_corner)));
+	}
 }
 
 void CornerHandler::hoverLeaveEvent(QGraphicsSceneHoverEvent * event) {
-	setCursor(m_cursorBU);
+	if(m_isVisible) {
+		unsetCursor();
+	}
 	QGraphicsRectItem::hoverLeaveEvent(event);
 }
 
