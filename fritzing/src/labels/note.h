@@ -49,8 +49,6 @@ public:
 	bool itemMoved();
 	void saveInstanceLocation(QXmlStreamWriter &);
 	void moveItem(ViewGeometry &);
-	void rotateItem(qreal degrees);
-	ItemBase * layerKinChief();
 	void findConnectorsUnder();
 	bool resizing();
 	void setText(const QString & text);

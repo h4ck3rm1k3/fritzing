@@ -43,8 +43,8 @@ $Date$
 
 QString PaletteItemBase::SvgFilesDir = "svg";
 
-PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool topLevel ) :
-	ItemBase(modelPart, viewIdentifier, viewGeometry, id, topLevel, itemMenu)
+PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
+	ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_syncSelected = false;
 	m_offset.setX(0);
@@ -112,37 +112,6 @@ bool PaletteItemBase::itemMoved() {
 void PaletteItemBase::moveItem(ViewGeometry & viewGeometry) {
 	this->setPos(viewGeometry.loc());
 	updateConnections();
-}
-
-void PaletteItemBase::rotateItem(qreal degrees) {
-	transformItem(QTransform().rotate(degrees));
-}
-
-void PaletteItemBase::flipItem(Qt::Orientations orientation) {
-	int xScale; int yScale;
-	if(orientation == Qt::Vertical) {
-		xScale = 1;
-		yScale = -1;
-	} else if(orientation == Qt::Horizontal) {
-		xScale = -1;
-		yScale = 1;
-	}
-	else {
-		return;
-	}
-
-	transformItem(QTransform().scale(xScale,yScale));
-}
-
-void PaletteItemBase::transformItem(QTransform currTransf) {
-	QRectF rect = this->boundingRect();
-	qreal x = rect.width() / 2;
-	qreal y = rect.height() / 2;
-	QTransform transf = QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
-	getViewGeometry().setTransform(getViewGeometry().transform()*transf);
-	this->setTransform(getViewGeometry().transform());
-	updateConnections();
-	update();
 }
 
 void PaletteItemBase::saveInstanceLocation(QXmlStreamWriter & streamWriter)

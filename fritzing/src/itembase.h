@@ -74,7 +74,7 @@ public:
 
 
 public:
-	ItemBase(class ModelPart*, ItemBase::ViewIdentifier, const ViewGeometry &, long id, bool topLevel, QMenu * itemMenu);
+	ItemBase(class ModelPart*, ItemBase::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	virtual ~ItemBase();
 
 	qreal z();
@@ -91,7 +91,8 @@ public:
 	virtual void writeGeometry(QXmlStreamWriter &);
 	virtual void moveItem(ViewGeometry &) = 0;
 	virtual void setItemPos(QPointF & pos);
-	virtual void rotateItem(qreal degrees) = 0;
+	virtual void rotateItem(qreal degrees);
+	virtual void flipItem(Qt::Orientations orientation);
 	virtual void removeLayerKin();
 	ItemBase::ViewIdentifier viewIdentifier();
 	QString & viewIdentifierName();
@@ -153,7 +154,7 @@ public:
 	virtual bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual void connectionChange(ConnectorItem *);
 	virtual void connectedMoved(ConnectorItem * from, ConnectorItem * to);
-	virtual ItemBase * layerKinChief() = 0;
+	virtual ItemBase * layerKinChief();
 	virtual const QList<ItemBase *> & layerKin();
 	virtual void findConnectorsUnder() = 0;
 	virtual ConnectorItem* newConnectorItem(class Connector *connector);
@@ -190,6 +191,8 @@ protected:
 	void setInstanceTitleAux(const QString & title);
 	void ensureUniqueTitle(QString &title);
 	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
+	void transformItem(QTransform currTransf);
+
 
 
 protected:
@@ -202,7 +205,6 @@ protected:
 	int m_connectorHoverCount;
 	int m_connectorHoverCount2;
 	int m_hoverCount;
-	bool m_topLevel;
 	bool m_hidden;
 	QHash<class Bus *, QList <ConnectorItem *> * > m_busConnectorItems;
 	bool m_sticky;

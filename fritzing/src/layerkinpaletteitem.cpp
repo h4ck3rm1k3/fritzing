@@ -29,7 +29,7 @@ $Date$
 #include "debugdialog.h"
 
 LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
-	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu, false)
+	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 
 {
     m_layerKinChief = chief;

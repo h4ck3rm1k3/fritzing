@@ -77,7 +77,7 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 /////////////////////////////////////////////////////////////
 
 Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
-	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, true, itemMenu)
+	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_partLabel = new PartLabel(this, "", NULL);
 	m_canChainMultiple = false;
@@ -131,9 +131,6 @@ bool Wire::itemMoved() {
 void Wire::moveItem(ViewGeometry & viewGeometry) {
 	this->setLine(viewGeometry.line());
 	this->setPos(viewGeometry.loc());
-}
-
-void Wire::rotateItem(qreal /* degrees */) {
 }
 
 void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
@@ -678,11 +675,6 @@ ConnectorItem * Wire::connector0() {
 
 ConnectorItem * Wire::connector1() {
 	return m_connector1;
-}
-
-ItemBase * Wire::layerKinChief()
-{
-	return this;
 }
 
 void Wire::findConnectorsUnder() {

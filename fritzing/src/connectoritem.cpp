@@ -694,3 +694,21 @@ bool ConnectorItem::sceneEvent(QEvent *event)
 void ConnectorItem::setIgnoreAncestorFlag(bool ignore) {
 	m_ignoreAncestorFlag = ignore;
 }
+
+bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
+	if (other->m_ignoreAncestorFlag) {
+		if (this->attachedToItemType() == ModelPart::Wire) {
+			ConnectorItem * wireOther = dynamic_cast<Wire *>(this->attachedTo())->otherConnector(this);
+			foreach (ConnectorItem * wireOtherConnectedToItem, wireOther->connectedToItems()) {
+				if (wireOtherConnectedToItem->m_ignoreAncestorFlag) {
+					if (other->commonAncestorItem(wireOtherConnectedToItem) != NULL) {
+						// don't allow wire connection between grouped items
+						return false;
+					}
+				}
+			}
+		}
+	}
+
+	return connector()->connectionIsAllowed(other->connector());
+}

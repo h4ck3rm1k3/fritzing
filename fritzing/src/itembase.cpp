@@ -81,12 +81,11 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 
 ///////////////////////////////////////////////////
 
-ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu )
+ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
-	m_topLevel = topLevel;
 	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;
 	m_viewIdentifier = viewIdentifier;
 	m_modelPart = modelPart;
@@ -388,7 +387,7 @@ ItemBase * ItemBase::extractTopLevelItemBase(QGraphicsItem * item) {
 }
 
 bool ItemBase::topLevel() {
-	return m_topLevel;
+	return (this == this->layerKinChief());
 }
 
 void ItemBase::setHidden(bool hide) {
@@ -482,7 +481,7 @@ ConnectorItem * ItemBase::findConnectorUnder(ConnectorItem * connectorItemOver, 
 		if (connectorItemUnder == NULL) continue;
 		if (connectorItemUnder->connector() == NULL) continue;			// for now; this is probably a busConnectorItem
 		if (childItems().contains(connectorItemUnder)) continue;
-		if (!connectorItemOver->connector()->connectionIsAllowed(connectorItemUnder->connector())) {
+		if (!connectorItemOver->connectionIsAllowed(connectorItemUnder)) {
 			continue;
 		}
 		if (connectorItemUnder->connectedToItems().contains(connectorItemOver)) {
@@ -982,4 +981,39 @@ void ItemBase::cleanup() {
 
 const QList<ItemBase *> & ItemBase::layerKin() {
 	return emptyList;
+}
+
+ItemBase * ItemBase::layerKinChief() {
+	return this;
+}
+
+void ItemBase::rotateItem(qreal degrees) {
+	transformItem(QTransform().rotate(degrees));
+}
+
+void ItemBase::flipItem(Qt::Orientations orientation) {
+	int xScale; int yScale;
+	if(orientation == Qt::Vertical) {
+		xScale = 1;
+		yScale = -1;
+	} else if(orientation == Qt::Horizontal) {
+		xScale = -1;
+		yScale = 1;
+	}
+	else {
+		return;
+	}
+
+	transformItem(QTransform().scale(xScale,yScale));
+}
+
+void ItemBase::transformItem(QTransform currTransf) {
+	QRectF rect = this->boundingRect();
+	qreal x = rect.width() / 2;
+	qreal y = rect.height() / 2;
+	QTransform transf = QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
+	getViewGeometry().setTransform(getViewGeometry().transform()*transf);
+	this->setTransform(getViewGeometry().transform());
+	updateConnections();
+	update();
 }

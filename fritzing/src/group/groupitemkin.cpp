@@ -45,8 +45,8 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 #include "groupitemkin.h"
 
 
-GroupItemKin::GroupItemKin( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu) 
-	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, topLevel, itemMenu)
+GroupItemKin::GroupItemKin( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
+	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 }
 

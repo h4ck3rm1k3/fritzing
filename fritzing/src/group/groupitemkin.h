@@ -36,7 +36,7 @@ class GroupItemKin : public GroupItemBase
 {
 
 public:
-	GroupItemKin(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu);
+	GroupItemKin(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 	
 	ItemBase * layerKinChief();
 	void setLayerKinChief(GroupItemBase *);

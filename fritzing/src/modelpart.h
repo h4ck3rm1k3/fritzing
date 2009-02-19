@@ -60,7 +60,7 @@ public:
 
 public:
 	ModelPart(QDomDocument *, const QString& path, ItemType type);
-	ModelPart(ItemType type = ModelPart::Module);
+	ModelPart(ItemType type = ModelPart::Unknown);
 	~ModelPart();
 
 	ItemType itemType() const { return m_type; };

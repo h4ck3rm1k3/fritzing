@@ -29,14 +29,16 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 #include <QGraphicsItemGroup>
 #include <QVariant>
+#include <QPainter>
 
 #include "../itembase.h"
 
 class GroupItemBase : public ItemBase
 {
+	Q_OBJECT
 
 public:
-	GroupItemBase(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu);
+	GroupItemBase(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
 	virtual void addToGroup(ItemBase *, const LayerHash &);
 	virtual void syncKinMoved(GroupItemBase *, QPointF newPos);
@@ -46,11 +48,12 @@ public:
 	bool itemMoved();
 	void saveInstanceLocation(QXmlStreamWriter &);
 	void moveItem(ViewGeometry &);
-	void rotateItem(qreal degrees);
+	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
 protected:
 	class FGraphicsItemGroup * m_graphicsItemGroup;
-	
+
+	friend class FGraphicsItemGroup;	
 };
 
 class FGraphicsItemGroup : public QGraphicsItemGroup
@@ -60,6 +63,7 @@ public:
 
 protected:
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 };
 

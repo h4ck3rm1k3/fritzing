@@ -33,23 +33,24 @@ class GroupItem : public GroupItemBase
 {
 
 public:
-	GroupItem(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu);
+	GroupItem(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
 	void addToGroup(ItemBase *, const LayerHash &);
-	ItemBase * layerKinChief();
+	void doneAdding(const LayerHash &);
 	const QList<ItemBase *> & layerKin();
 	void syncKinMoved(GroupItemBase *, QPointF newPos);
-
+	void rotateItem(qreal degrees);
+	void flipItem(Qt::Orientations orientation);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
-
 
 public:
 	static QString moduleIDName;
 
 protected:
-	QList<class ItemBase *> m_layerKin;
+	QList<ItemBase *> m_layerKin;
+	QList<ItemBase *> m_itemsToAdd;
 	
 };
 

@@ -46,11 +46,10 @@ public:
 	void addLayerKin(class LayerKinPaletteItem * lkpi);
 	const QList<class ItemBase *> & layerKin();
  	void loadLayerKin(const LayerHash & viewLayers);
-	void rotateItemAnd(qreal degrees);
-	void flipItemAnd(Qt::Orientations orientation);
+	void rotateItem(qreal degrees);
+	void flipItem(Qt::Orientations orientation);
 	void moveItem(ViewGeometry & viewGeometry);
 	void setItemPos(QPointF & pos);
-	ItemBase * layerKinChief();
 
 	bool renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 

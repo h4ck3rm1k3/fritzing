@@ -67,7 +67,7 @@ QString Note::initialTextString;
 /////////////////////////////////////////////
 
 Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
-	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, true, itemMenu)
+	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	if (initialTextString.isEmpty()) {
 		initialTextString = tr("[write your note here]");
@@ -129,14 +129,6 @@ void Note::saveInstanceLocation(QXmlStreamWriter & streamWriter) {
 
 void Note::moveItem(ViewGeometry & viewGeometry) {
 	this->setPos(viewGeometry.loc());
-}
-
-void Note::rotateItem(qreal degrees) {
-	Q_UNUSED(degrees);
-}
-
-ItemBase * Note::layerKinChief() {
-	return this;
 }
 
 void Note::findConnectorsUnder() {

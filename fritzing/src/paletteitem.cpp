@@ -48,7 +48,7 @@ $Date$
 #include <QMessageBox>
 
 PaletteItem::PaletteItem( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
-	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu, true)
+	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	if(doLabel) {
 		m_partLabel = new PartLabel(this, "", NULL);
@@ -172,17 +172,17 @@ const QList<class ItemBase *> & PaletteItem::layerKin()
 	return m_layerKin;
 }
 
-void PaletteItem::rotateItemAnd(qreal degrees) {
-	this->rotateItem(degrees);
+void PaletteItem::rotateItem(qreal degrees) {
+	PaletteItemBase::rotateItem(degrees);
 	for (int i = 0; i < m_layerKin.count(); i++) {
 		m_layerKin[i]->rotateItem(degrees);
 	}
 }
 
-void PaletteItem::flipItemAnd(Qt::Orientations orientation) {
-	this->flipItem(orientation);
+void PaletteItem::flipItem(Qt::Orientations orientation) {
+	PaletteItemBase::flipItem(orientation);
 	foreach (ItemBase * lkpi, m_layerKin) {
-		qobject_cast<LayerKinPaletteItem *>(lkpi)->flipItem(orientation);
+		lkpi->flipItem(orientation);
 	}
 }
 
@@ -205,10 +205,6 @@ void PaletteItem::setItemPos(QPointF & loc) {
 	for (int i = 0; i < m_layerKin.count(); i++) {
 		m_layerKin[i]->setItemPos(loc);
 	}
-}
-
-ItemBase * PaletteItem::layerKinChief() {
-	return this;
 }
 
 void PaletteItem::updateConnections() {

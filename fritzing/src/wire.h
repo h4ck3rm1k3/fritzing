@@ -57,7 +57,6 @@ public:
 	void saveInstanceLocation(QXmlStreamWriter &);
 	void writeGeometry(QXmlStreamWriter &);
 	void moveItem(ViewGeometry & viewGeometry);
-	void rotateItem(qreal degrees);
 	void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
 
@@ -69,7 +68,6 @@ public:
 	ConnectorItem * otherConnector(ConnectorItem *);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();
-	ItemBase * layerKinChief();
 	void setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers);
 	void findConnectorsUnder();
 	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds);

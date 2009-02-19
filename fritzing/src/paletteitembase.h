@@ -44,14 +44,12 @@ class PaletteItemBase : public ItemBase
 	Q_OBJECT
 
 public:
-	PaletteItemBase(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool topLevel);
+	PaletteItemBase(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
 	void saveGeometry();
 	bool itemMoved();
 	virtual void saveInstanceLocation(QXmlStreamWriter &);
 	void moveItem(ViewGeometry &);
-	void rotateItem(qreal degrees);
-	void flipItem(Qt::Orientations orientation);
 	virtual void syncKinSelection(bool selected, PaletteItemBase *originator);
 	virtual void syncKinMoved(QPointF offset, QPointF loc);
  	void blockItemSelectedChange(bool selected);
@@ -90,7 +88,6 @@ protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
-	void transformItem(QTransform currTransf);
 	void findConnectorsUnder();
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 

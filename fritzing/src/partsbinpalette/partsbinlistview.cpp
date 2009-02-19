@@ -51,7 +51,7 @@ void PartsBinListView::doClear() {
 
 void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	if (modelPart->modelPartShared() == NULL) return;
-	if (modelPart->itemType() == ModelPart::Module) {
+	if (modelPart->itemType() == ModelPart::Unknown) {
 		// don't want the empty root to appear in the view
 		return;
 	}

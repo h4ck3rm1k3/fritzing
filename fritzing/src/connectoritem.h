@@ -87,6 +87,7 @@ public:
 	void setBaseTooltip(const QString &);
 	void clearConnector();
 	void setIgnoreAncestorFlag(bool);
+	bool connectionIsAllowed(ConnectorItem * other);
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

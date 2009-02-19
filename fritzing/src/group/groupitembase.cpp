@@ -26,10 +26,16 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 #include "groupitembase.h"
 #include "../connectoritem.h"
+#include "../debugdialog.h"
 
-GroupItemBase::GroupItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu) 
-	: ItemBase( modelPart, viewIdentifier, viewGeometry, id, topLevel, itemMenu)
+#include <QTimer>
+
+GroupItemBase::GroupItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
+	: ItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	this->setCanFlipHorizontal(true);
+	this->setCanFlipVertical(true);
+
 	this->setVisible(true);
 	this->setFlag(QGraphicsItem::ItemIsSelectable);
 
@@ -37,6 +43,7 @@ GroupItemBase::GroupItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier vie
 	m_graphicsItemGroup->setParentItem(this);
 	m_graphicsItemGroup->setVisible(true);
 	m_graphicsItemGroup->setFlag(QGraphicsItem::ItemIsSelectable);
+	m_graphicsItemGroup->setPos(QPointF(0,0));
 }
 
 void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
@@ -44,6 +51,14 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 		this->setViewLayerID(item->viewLayerID(), layerHash);
 		setZValue(this->z());
 	}
+
+	if (!item->canFlipHorizontal()) {
+		setCanFlipHorizontal(false);
+	}
+	if (!item->canFlipVertical()) {
+		setCanFlipVertical(false);
+	}
+
 
 	foreach (QGraphicsItem * item, item->childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
@@ -73,13 +88,25 @@ void GroupItemBase::moveItem(ViewGeometry & viewGeometry) {
 	this->setPos(viewGeometry.loc());
 }
 
-void GroupItemBase::rotateItem(qreal degrees) {
-	Q_UNUSED(degrees);
-}
-
 void GroupItemBase::syncKinMoved(GroupItemBase * originator, QPointF newPos) {
 	Q_UNUSED(newPos);
 	Q_UNUSED(originator);
+}
+
+QVariant GroupItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
+{
+	switch (change) {
+		case QGraphicsItem::ItemSelectedChange:
+		case QGraphicsItem::ItemTransformChange:
+		case QGraphicsItem::ItemTransformHasChanged:
+			m_graphicsItemGroup->update();
+			break;
+		default:
+			DebugDialog::debug(QString("group item base change %1 %2").arg(change).arg(value.value<QString>()));
+			break;
+	}
+
+	return ItemBase::itemChange(change, value);
 }
 
 //////////////////////////////////////////////////
@@ -93,11 +120,25 @@ QVariant FGraphicsItemGroup::itemChange(QGraphicsItem::GraphicsItemChange change
 {
 	switch (change) {
 		case QGraphicsItem::ItemSelectedChange:
-			this->parentItem()->setSelected(value.toBool());
+			//DebugDialog::debug(QString("fgig item change %1").arg(value.toBool()));
+			if (value.toBool()) {
+				parentItem()->setSelected(true);
+				QVariant variant((bool) false);
+				return variant;
+			}
 			break;
 		default:
 			break;
 	}
 
 	return QGraphicsItemGroup::itemChange(change, value);
+}
+
+
+void FGraphicsItemGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+	Q_UNUSED(widget);
+    if (parentItem()->isSelected()  && !dynamic_cast<GroupItemBase *>(parentItem())->hidden()) {
+		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
+    }
 }

@@ -172,7 +172,7 @@ void PartsBinIconView::removePart(const QString &moduleID) {
 }
 
 void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
-	if (!modelPart || modelPart->itemType() == ModelPart::Module) {
+	if (!modelPart || modelPart->itemType() == ModelPart::Unknown) {
 		// don't want the empty root item to appear in the view
 		return;
 	}

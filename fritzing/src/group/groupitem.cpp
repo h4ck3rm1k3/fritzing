@@ -25,66 +25,56 @@ $Date$
 ********************************************************************/
 
 // TODO:
-//	** figure out which layer the grouped items are on and get the next z id
-//	** sort itembases by z
 //	** layerkin
+//		pcb view: group part in bb view, items not visually synced in pcb view
+//  scene jumps when creating a new group--triggered by changing the location of the chief item
+//  late updates (paint) after flip/rotate other?
 //  ** allow mouse events to external connections
-//		don't allow wires to connect with the group
+//		** don't allow wires to connect within the group
 //		drag doesn't keep wire connections
 //	save as group
-//	load into sketch
+//		store them in the user folder
+//		create icon
+//		add to bin
+//		select external connections
+//  save and load sketch with group(s)
+//	recursive groups
+//	open in new sketch (edit)
+//	copy/paste
+//	undo group
 //	delete
 //	undo delete
-//	rotate/flip
-//	undo rotate/flip
-//	add to bin
-//	open in new sketch (edit)
+
 //	** z-order manipulation
 //	** hide/show layer 
-//		still shows group selection box
-//  override QGraphicsItemGroup::paint
-//	copy/paste
-//  select external connections
-//	undo group?
+//		** still shows group selection box
+//  ** override QGraphicsItemGroup::paint
+//	** rotate/flip
+//		** need to center itembase in bounding rect
+//		** unable to rotate in pcb view (selection bug?)
+//		** is flip always allowed?
+//		** undo
+//	** figure out which layer the grouped items are on and get the next z id
+//	** sort itembases by z
+//  ** select/unselect bug
 
 #include <QGraphicsScene>
 
 #include "groupitem.h"
 #include "groupitemkin.h"
+#include "../debugdialog.h"
 
-QString GroupItem::moduleIDName = "NoteModuleID";
+QString GroupItem::moduleIDName = "GroupModuleID";
 
-GroupItem::GroupItem( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu) 
-	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, topLevel, itemMenu)
+GroupItem::GroupItem( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
+	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 }
 
 void GroupItem::addToGroup(ItemBase * itemBase, const LayerHash & layerHash) 
 {
-	GroupItemBase::addToGroup(itemBase, layerHash);
-
-	qint64 id = m_id + 1;
-	foreach (ItemBase * lkpi, itemBase->layerKin()) {
-		bool gotOne = false;
-		foreach (ItemBase * mylkpi, layerKin()) {
-			if (lkpi->viewLayerID() == mylkpi->viewLayerID()) {
-				dynamic_cast<GroupItemKin *>(mylkpi)->addToGroup(lkpi, layerHash);
-				gotOne = true;
-				break;
-			}
-		}
-		if (!gotOne) {
-			GroupItemKin * mylkpi = new GroupItemKin(m_modelPart, m_viewIdentifier, m_viewGeometry, id++, false, NULL);
-			mylkpi->setLayerKinChief(this);
-			scene()->addItem(mylkpi);
-			m_layerKin.append(mylkpi);
-			mylkpi->addToGroup(lkpi, layerHash);
-		}
-	}
-}
-
-ItemBase * GroupItem::layerKinChief() {
-	return this;
+	Q_UNUSED(layerHash);
+	m_itemsToAdd.append(itemBase);
 }
 
 const QList<ItemBase *> & GroupItem::layerKin() {
@@ -102,13 +92,73 @@ void GroupItem::syncKinMoved(GroupItemBase * groupItemBase, QPointF newPos) {
 
 QVariant GroupItem::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-	//DebugDialog::debug(QString("chief item change %1 %2").arg(this->id()).arg(change));
 	if (m_layerKin.count() > 0) {
-	    if (change == ItemPositionHasChanged) {
-	    	this->syncKinMoved(this, value.toPointF());
+		switch (change) {
+			case ItemPositionHasChanged: 
+	    		this->syncKinMoved(this, value.toPointF());
+				break;
+			case ItemSelectedChange:
+				DebugDialog::debug(QString("chief sel change %1 %2").arg(this->id()).arg(value.toBool()));
+				break;
+			default:
+				break;
 	   	}
    	}
 
-
     return GroupItemBase::itemChange(change, value);
+}
+
+void GroupItem::rotateItem(qreal degrees) {
+	GroupItemBase::rotateItem(degrees);
+	for (int i = 0; i < m_layerKin.count(); i++) {
+		m_layerKin[i]->rotateItem(degrees);
+	}
+}
+
+void GroupItem::flipItem(Qt::Orientations orientation) {
+	GroupItemBase::flipItem(orientation);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->flipItem(orientation);
+	}
+}
+
+void GroupItem::doneAdding(const LayerHash & layerHash) 
+{
+	// centers the parent within the bounding rect of the group
+	// fixes rotation, among other things
+
+	QRectF itemsBoundingRect;
+	foreach(ItemBase * item, m_itemsToAdd) {
+		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
+                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
+
+	}
+
+	this->setPos(itemsBoundingRect.center());
+	saveGeometry();
+
+	foreach(ItemBase * itemBase, m_itemsToAdd) {
+		GroupItemBase::addToGroup(itemBase, layerHash);
+
+		qint64 id = m_id + 1;
+		foreach (ItemBase * lkpi, itemBase->layerKin()) {
+			bool gotOne = false;
+			foreach (ItemBase * mylkpi, layerKin()) {
+				if (lkpi->viewLayerID() == mylkpi->viewLayerID()) {
+					dynamic_cast<GroupItemKin *>(mylkpi)->addToGroup(lkpi, layerHash);
+					gotOne = true;
+					break;
+				}
+			}
+			if (!gotOne) {
+				GroupItemKin * mylkpi = new GroupItemKin(m_modelPart, m_viewIdentifier, m_viewGeometry, id++, NULL);
+				mylkpi->setLayerKinChief(this);
+				scene()->addItem(mylkpi);
+				m_layerKin.append(mylkpi);
+				mylkpi->addToGroup(lkpi, layerHash);
+			}
+		}
+	}
+
+	m_itemsToAdd.clear();
 }

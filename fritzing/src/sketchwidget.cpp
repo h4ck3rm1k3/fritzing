@@ -9,7 +9,7 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 Fritzing is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
+but WITHOUT ANY WARRANTY; without even the implied warranty ofro
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
@@ -839,10 +839,7 @@ void SketchWidget::rotateItem(long id, qreal degrees) {
 
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(pitem);
-		if (paletteItem != NULL) {
-			paletteItem->rotateItemAnd(degrees);
-		}
+		pitem->rotateItem(degrees);
 	}
 
 }
@@ -854,10 +851,7 @@ void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
 
 	 ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(pitem);
-		if (paletteItem != NULL) {
-			paletteItem->flipItemAnd(orientation);
-		}
+		pitem->flipItem(orientation);
 	}
 }
 
@@ -1451,7 +1445,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		if (this->m_holdingSelectItemCommand != NULL) {
 			SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
 			m_holdingSelectItemCommand = NULL;
-			//DebugDialog::debug("scene changed push select");
+			DebugDialog::debug("scene changed push select");
 			m_undoStack->push(tempCommand);
 		}
 	}
@@ -1743,8 +1737,8 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
 
 	modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
 	ViewGeometry vg;	
-	vg.setLoc(QPointF(0,0));
-	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, ItemBase::getNextID(), true, NULL);
+	vg.setLoc(itemBases[0]->pos());		// temporary position
+	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, ItemBase::getNextID(), NULL);
 	scene()->addItem(groupItem);
 
 	// sort by z
@@ -1752,6 +1746,7 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
 	foreach (ItemBase * itemBase, itemBases) {
 		groupItem->addToGroup(itemBase, m_viewLayers);
 	}	
+	groupItem->doneAdding(m_viewLayers);
 
 	return modelPart;
 }
@@ -1858,6 +1853,10 @@ void SketchWidget::wire_wireChanged(Wire* wire, QLineF oldLine, QLineF newLine, 
 
 void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, ConnectorItem * to)
 {
+
+	m_connectorDragConnector->tempRemove(m_connectorDragWire->connector1(), false);
+	m_connectorDragWire->connector1()->tempRemove(m_connectorDragConnector, false);
+
 	// if to == NULL and it's pcb or schematic view, bail out
 	if (!canCreateWire(wire, fromOnWire, to)) {
 		clearDragWireTempCommand();
@@ -2034,27 +2033,35 @@ ItemCount SketchWidget::calcItemCount() {
 				itemCount.labelCount++;
 			}
 
-			// can't rotate a wire
-			if (dynamic_cast<PaletteItemBase *>(itemBase) != NULL) {
-
-				// TODO: allow breadboard and ardiuno to rotate
-				bool rotatable = true;
-				if (itemBase->itemType() == ModelPart::Breadboard || itemBase->itemType() == ModelPart::Board) {
-					rotatable = false;
-				}
-
-				if (rotatable) {
-					itemCount.selRotatable++;
-				}
-				if (itemBase->canFlipHorizontal()) {
-					itemCount.selHFlipable++;
-				}
-				if (itemBase->canFlipVertical()) {
-					itemCount.selVFlipable++;
-				}
+			if (itemBase->canFlipHorizontal()) {
+				itemCount.selHFlipable++;
 			}
-			else if (dynamic_cast<Note *>(itemBase) != NULL) {
-				itemCount.noteCount++;
+
+			if (itemBase->canFlipVertical()) {
+				itemCount.selVFlipable++;
+			}
+
+			bool rotatable = true;
+			switch (itemBase->itemType()) {
+				case ModelPart::Wire:
+					rotatable = false;
+					break;
+				case ModelPart::Note:
+					rotatable = false;
+					itemCount.noteCount++;
+					break;
+				case ModelPart::Unknown:
+				case ModelPart::Board:
+				case ModelPart::Breadboard:
+					// TODO: allow breadboard and ardiuno to rotate
+					rotatable = false;
+					break;
+				default:
+					break;
+			}
+
+			if (rotatable) {
+				itemCount.selRotatable++;
 			}
 		}
 	}
@@ -2414,6 +2421,8 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	m_connectorDragWire->setVisible(true);
 	m_connectorDragWire->grabMouse();
 	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
+	m_connectorDragConnector->tempConnectTo(m_connectorDragWire->connector1(), false);
+	m_connectorDragWire->connector1()->tempConnectTo(m_connectorDragConnector, false);
 	if (!m_lastColorSelected.isEmpty()) {
 		m_connectorDragWire->setColorString(m_lastColorSelected, m_connectorDragWire->opacity());
 	}
@@ -2436,14 +2445,25 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 	clearHoldingSelectItem();
 
 	QList <QGraphicsItem *> items = scene()->selectedItems();
-	QList <PaletteItem *> targets;
+	QList <ItemBase *> targets;
 
 	for (int i = 0; i < items.size(); i++) {
 		// can't rotate wires or layerkin (layerkin rotated indirectly)
-		PaletteItem *item = dynamic_cast<PaletteItem *>(items[i]);
-		if (item == NULL) continue;
+		ItemBase *itemBase = ItemBase::extractTopLevelItemBase(items[i]);
+		if (itemBase == NULL) continue;
 
-		targets.append(item);
+		switch (itemBase->itemType()) {
+			case ModelPart::Wire:
+			case ModelPart::Board:
+			case ModelPart::Breadboard:
+			case ModelPart::Note:
+			case ModelPart::Unknown:
+				continue;
+			default:
+				break;
+		}
+
+		targets.append(itemBase);
 	}
 
 	if (targets.count() <= 0) {
@@ -2460,7 +2480,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 	bool doEmit = false;
 	QSet<ItemBase *> emptyList;			// emptylist is only used for a move command
 	ConnectorPairHash connectorHash;
-	foreach (PaletteItem * item, targets) {
+	foreach (ItemBase * item, targets) {
 		if (disconnectFromFemale(item, emptyList, connectorHash, true, parentCommand)) doEmit = true;
 
 		if (item->sticky()) {
