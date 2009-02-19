@@ -39,7 +39,7 @@ public:
 	Qt::Corner corner();
 	bool isBeingDragged();
 	void setPixmap(const QPixmap &pixmap);
-	void setVisible1(bool visible);
+	void doSetVisible(bool visible);
 	void setRectAux(QRectF newRect) {
 		setFlag(QGraphicsItem::ItemIgnoresTransformations,false);
 		setRect(mapFromParent(newRect).boundingRect());
@@ -52,7 +52,7 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent * event);
-	//void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 	Qt::CursorShape cursorForCorner(Qt::Corner);
 
@@ -62,10 +62,13 @@ protected:
 	Qt::Corner m_corner;
 	QCursor m_cursorBU;
 	QGraphicsPixmapItem *m_child;
+
+	bool m_isVisible;
 	volatile bool m_resizing;
 
 public:
 	static QHash<Qt::Corner,QPixmap> pixmapHash;
+	static qreal Size;
 };
 
 #endif /* CORNERHANDLER_H_ */

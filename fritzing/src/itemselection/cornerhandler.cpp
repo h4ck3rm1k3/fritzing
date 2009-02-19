@@ -34,6 +34,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "../debugdialog.h"
 
 QHash<Qt::Corner,QPixmap> CornerHandler::pixmapHash;
+qreal CornerHandler::Size = 2;
 
 CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* parentItem, Qt::Corner corner)
 	: QGraphicsRectItem(parentItem)
@@ -51,15 +52,16 @@ CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* pare
 	m_child->setPixmap(pixmapHash[m_corner]);*/
 
 	m_cursorBU = cursor();
-	setVisible1(false);
+	doSetVisible(false);
 }
 
-void CornerHandler::setVisible1(bool visible) {
+void CornerHandler::doSetVisible(bool visible) {
 	if(visible) {
-		setBrush(QBrush(QColor::fromRgb(50,50,50)));
+		setBrush(QBrush(QColor::fromRgb(0,250,0)));
 	} else {
 		setBrush(QBrush());
 	}
+	m_isVisible = visible;
 }
 
 void CornerHandler::initPixmapHash() {
@@ -90,12 +92,6 @@ void CornerHandler::resize(const QPointF &mousePos) {
 	qreal oldY2 = oldY1+rect.height();
 	qreal newX = mapToItem(parentItem(),mousePos).x();
 	qreal newY = mapToItem(parentItem(),mousePos).y();
-
-	/*DebugDialog::debug(QString("mouse pos x=%1 y=%2").arg(newX).arg(newY));
-
-	DebugDialog::debug(QString("prev rect x1=%1 y1=%2  x2=%3 y2=%4")
-			.arg(oldX1).arg(oldY1).arg(oldX2).arg(oldY2)
-		);*/
 
 	switch(m_corner) {
 		case Qt::TopLeftCorner:
@@ -173,15 +169,8 @@ bool CornerHandler::isBeingDragged() {
 	return m_resizing;
 }
 
-/*void CornerHandler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	Q_UNUSED(option)
-	Q_UNUSED(widget)
-
-	if(!isBeingDragged()) {
-		painter->save();
-		QPixmap pm = CornerHandler::pixmapHash[m_corner];
-		QRectF pmRect = m_parent->rectHandlerIn(m_corner, m_parent->owner()->boundingRect(), true);
-		painter->drawRect(mapFromItem(m_parent->owner(),pmRect).boundingRect());
-		painter->restore();
+void CornerHandler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	if(m_isVisible) {
+		QGraphicsRectItem::paint(painter,option,widget);
 	}
-}*/
+}

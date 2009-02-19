@@ -35,6 +35,7 @@ ConnectorRectangle::ConnectorRectangle(PartsEditorConnectorsConnectorItem* owner
 {
 	m_owner = owner;
 	m_firstPaint = true;
+	m_isVisible = false;
 
 	if(withHandlers) {
 		m_topLeftHandler     = new CornerHandler(this, owner, Qt::TopLeftCorner);
@@ -58,8 +59,9 @@ QGraphicsRectItem *ConnectorRectangle::owner() {
 }
 
 void ConnectorRectangle::setHandlersVisible(bool visible) {
+	m_isVisible = visible;
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		handler->setVisible1(visible);
+		handler->doSetVisible(visible);
 	}
 }
 
@@ -84,43 +86,45 @@ bool ConnectorRectangle::isResizable() {
 void ConnectorRectangle::paint(QPainter *painter) {
 	QRectF rect = m_owner->boundingRect();
 
-	if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
-		placeHandlers();
-		m_firstPaint = false;
-	}
-
-	bool beingResized = false;
-	foreach(CornerHandler* handler, m_cornerHandlers) {
-		if(handler->isBeingDragged()) {
-			beingResized = true;
-			break;
+	if(m_isVisible) {
+		if(m_firstPaint && rect.width() > 0 && rect.height() > 0) {
+			placeHandlers();
+			m_firstPaint = false;
 		}
-	}
 
-	if(beingResized) {
-		prepareForChange();
+		bool beingResized = false;
 		foreach(CornerHandler* handler, m_cornerHandlers) {
-			Qt::Corner corner = handler->corner();
-			//QPixmap pm = CornerHandler::pixmapHash[corner];
-			QRectF pmRect = handlerRect(corner);
-			//painter->drawPixmap(pmRect.x(),pmRect.y(),pmRect.width(),pmRect.height(),pm);
-			painter->save();
-			painter->setBrush(QBrush(QColor(50,50,50)));
-			painter->drawRect(pmRect);
-			painter->restore();
+			if(handler->isBeingDragged()) {
+				beingResized = true;
+				break;
+			}
+		}
+
+		if(beingResized) {
+			prepareForChange();
+			foreach(CornerHandler* handler, m_cornerHandlers) {
+				Qt::Corner corner = handler->corner();
+				//QPixmap pm = CornerHandler::pixmapHash[corner];
+				QRectF pmRect = handlerRect(corner);
+				//painter->drawPixmap(pmRect.x(),pmRect.y(),pmRect.width(),pmRect.height(),pm);
+				painter->save();
+				painter->setBrush(QBrush(QColor(255,1,1)));
+				painter->drawRect(pmRect);
+				painter->restore();
+			}
 		}
 	}
 }
 
 void ConnectorRectangle::resizingStarted() {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		handler->setVisible1(false);
+		handler->doSetVisible(false);
 	}
 }
 
 void ConnectorRectangle::resizingFinished() {
 	foreach(CornerHandler* handler, m_cornerHandlers) {
-		handler->setVisible1(true);
+		handler->doSetVisible(true);
 		setHandlerRect(handler);
 		//handler->setPixmap(CornerHandler::pixmapHash[corner]);
 	}
@@ -139,7 +143,7 @@ void ConnectorRectangle::setHandlerRect(CornerHandler* handler) {
 QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 	QRectF rect = m_owner->boundingRect();
 	qreal scale = currentScale();
-	QPointF offset(2/scale,2/scale);
+	QPointF offset(CornerHandler::Size/scale,CornerHandler::Size/scale);
 	QPointF cornerPoint;
 	switch(corner) {
 		case Qt::TopLeftCorner:

@@ -75,8 +75,8 @@ protected:
 	RectangleSide *m_leftSide;
 	RectangleSide *m_bottomSide;
 
-	State m_state;
 	bool m_firstPaint;
+	bool m_isVisible;
 };
 
 #endif /* CONNECTORRECTANGLE_H_ */
