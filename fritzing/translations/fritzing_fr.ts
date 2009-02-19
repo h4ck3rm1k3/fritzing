@@ -1,151 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="fr">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
         <location filename="../src/aboutbox.cpp" line="84"/>
         <source>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</source>
-        <translation type="unfinished">&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="154"/>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation type="unfinished">&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
+        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="134"/>
         <source>Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
-        <translation type="unfinished">Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</translation>
+        <translation>Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="135"/>
         <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;</source>
-        <translation type="unfinished">&lt;p&gt;Nos remerciements vont à :&lt;br /&gt;</translation>
+        <translation>&lt;p&gt;Nos remerciements vont à :&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="137"/>
         <source>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</source>
-        <translation type="unfinished">Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</translation>
+        <translation>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="142"/>
         <source>Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation type="unfinished">Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
+        <translation>Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="150"/>
         <source>IxDS.&lt;/p&gt;</source>
-        <translation type="unfinished">et de IxDS.&lt;/p&gt;</translation>
+        <translation>et de IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="154"/>
         <source>throughout our rewrite of the app.&lt;/p&gt;</source>
-        <translation type="unfinished">pendant la réécriture de l&apos;application.</translation>
+        <translation>durant la réécriture de l&apos;application.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="72"/>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
-        <translation type="unfinished">Version %1.%2 &lt;small&gt;(%3%4 %5)&lt;/small&gt; {1.%2.%3 ?} {4%5 %6)?}</translation>
+        <translation>Version  %1.%2.%3&lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="95"/>
         <source>&lt;b&gt;GNU GPL v3 on the code and CreativeCommons:BY-SA on the rest</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;GNU GPL v3 sur le code and CreativeCommons:BY-SA sur le reste</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="113"/>
         <source>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;2007-%1 Université des sciences appliquées Potsdam&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="127"/>
         <source>&lt;p&gt;&lt;br/&gt;Fritzing is made by:&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;br/&gt;Fritzing est réalisé par:&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="128"/>
         <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="129"/>
         <source>Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="130"/>
         <source>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="131"/>
         <source>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="132"/>
         <source>Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="136"/>
         <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="138"/>
         <source>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="139"/>
         <source>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="140"/>
         <source>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="143"/>
         <source>&lt;p&gt;And thanks to Kurt Badelt&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Merci à Kurt Badelt&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="145"/>
         <source>for the Spanish translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>pour sa traduction espagnole.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="146"/>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Fritzing a été rendu possible par:&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="147"/>
         <source>MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>MWFK Brandenburg, le soutient du départment&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="148"/>
         <source>Department of Bauhaus-University Weimar and&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>de design de l&apos;université Bauhaus à Weimar et&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="151"/>
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Nous remercions particulièrement tous les étudiants&lt;br /&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="152"/>
         <source>and alpha testers who were brave enough to give&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>et les alpha testers qui ont eu la gentillesse de tester&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="153"/>
         <source>Fritzing a test spin and who stayed with us,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing et qui sont restés avec nous,</translation>
     </message>
 </context>
 <context>
