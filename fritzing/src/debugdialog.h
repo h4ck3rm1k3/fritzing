@@ -52,28 +52,32 @@ public:
 	};
 
 public:
+	static void debug(QString, const QPointF &point, DebugLevel = Debug, QObject * ancestor = 0);
+	static void debug(QString, const QRectF &rect, DebugLevel = Debug, QObject * ancestor = 0);
+	static void debug(QString, const QPoint &point, DebugLevel = Debug, QObject * ancestor = 0);
+	static void debug(QString, const QRect &rect, DebugLevel = Debug, QObject * ancestor = 0);
 	static void debug(QString, DebugLevel = Debug, QObject * ancestor = 0);
 	static void hideDebug();
 	static void showDebug();
 	static void closeDebug();
 	static bool visible();
-	static bool connectToBroadcast(QObject * receiver, const char* slot); 
+	static bool connectToBroadcast(QObject * receiver, const char* slot);
 	static void setDebugLevel(DebugLevel);
 	static void cleanup();
 
 protected:
-	bool event ( QEvent * e ); 
+	bool event ( QEvent * e );
 	void resizeEvent ( QResizeEvent * event );
 
 protected:
 	static DebugDialog* singleton;
 	static QFile m_file;
-	
+
 	QTextEdit* m_textEdit;
 	DebugLevel m_debugLevel;
-	
+
 signals:
 	void debugBroadcast(const QString & message, DebugLevel, QObject * ancestor);
 };
 
-#endif 
+#endif

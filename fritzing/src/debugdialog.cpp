@@ -102,6 +102,27 @@ void DebugDialog::resizeEvent(QResizeEvent *e) {
 
 }
 
+void DebugDialog::debug(QString prefix, const QPointF &point, DebugLevel debug, QObject *ancestor) {
+	QString msg = prefix+QString(" point: x=%1 y=%2").arg(point.x()).arg(point.y());
+	DebugDialog::debug(msg,debug,ancestor);
+}
+
+void DebugDialog::debug(QString prefix, const QRectF &rect, DebugLevel debug, QObject *ancestor) {
+	QString msg = prefix+QString(" rect: x=%1 y=%2 w=%3 h=%4")
+		.arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+	DebugDialog::debug(msg,debug,ancestor);
+}
+
+void DebugDialog::debug(QString prefix, const QPoint &point, DebugLevel debug, QObject *ancestor) {
+	QString msg = prefix+QString(" point: x=%1 y=%1").arg(point.x()).arg(point.y());
+	DebugDialog::debug(msg,debug,ancestor);
+}
+
+void DebugDialog::debug(QString prefix, const QRect &rect, DebugLevel debug, QObject *ancestor) {
+	QString msg = prefix+QString(" rect: x=%1 y=%2 w=%3 h=%4")
+		.arg(rect.x()).arg(rect.y()).arg(rect.width()).arg(rect.height());
+	DebugDialog::debug(msg,debug,ancestor);
+}
 
 void DebugDialog::debug(QString message, DebugLevel debugLevel, QObject * ancestor) {
 #ifdef QT_NO_DEBUG
