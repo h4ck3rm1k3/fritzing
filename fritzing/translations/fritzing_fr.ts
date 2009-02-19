@@ -154,12 +154,12 @@
     <message>
         <location filename="../src/partseditor/abstracteditablelabelwidget.cpp" line="56"/>
         <source>Accept</source>
-        <translation type="unfinished">Accepter</translation>
+        <translation>Accepter</translation>
     </message>
     <message>
         <location filename="../src/partseditor/abstracteditablelabelwidget.cpp" line="59"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -167,22 +167,22 @@
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="120"/>
         <source>List of Connectors</source>
-        <translation type="unfinished">Liste des connecteurs</translation>
+        <translation>Liste des connecteurs</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="290"/>
         <source>Loading connectors...</source>
-        <translation type="unfinished">Chargement des connecteurs...</translation>
+        <translation>Chargement des connecteurs...</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="97"/>
         <source>Mismatching Connector IDs</source>
-        <translation type="unfinished">Les ID des connecteurs ne correspondent pas</translation>
+        <translation>Les ID des connecteurs ne correspondent pas</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorsinfowidget.cpp" line="102"/>
         <source>These problems need to be fixed in the svg-files directly</source>
-        <translation type="unfinished">Ces problèmes sont à régler directement dans le fichier .svg</translation>
+        <translation>Ces problèmes doivent être réglés directement dans le fichier .svg</translation>
     </message>
 </context>
 <context>
@@ -190,7 +190,7 @@
     <message>
         <location filename="../src/partseditor/connectorsviewswidget.cpp" line="34"/>
         <source>Show Anchor Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer les points d&apos;ancrage</translation>
     </message>
 </context>
 <context>
@@ -198,52 +198,52 @@
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="48"/>
         <source>New</source>
-        <translation type="unfinished">Nouveau</translation>
+        <translation>Nouveau</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="59"/>
         <source>Female</source>
-        <translation type="unfinished">Femelle</translation>
+        <translation>Femelle</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="60"/>
         <source>Male</source>
-        <translation type="unfinished">Mâle</translation>
+        <translation>Mâle</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="76"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="79"/>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="82"/>
         <source>Description</source>
-        <translation type="unfinished">Description</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="85"/>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="88"/>
         <source>Breadboard</source>
-        <translation type="unfinished">Platine d&apos;essai</translation>
+        <translation>Platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="91"/>
         <source>Schematic</source>
-        <translation type="unfinished">Vue schématique </translation>
+        <translation>Vue schématique </translation>
     </message>
     <message>
         <location filename="../src/partseditor/connectorswidget.cpp" line="94"/>
         <source>PCB</source>
-        <translation type="unfinished">Circuit imprimé</translation>
+        <translation>Circuit imprimé</translation>
     </message>
 </context>
 <context>
@@ -251,7 +251,7 @@
     <message>
         <location filename="../src/debugdialog.cpp" line="65"/>
         <source>for debugging</source>
-        <translation type="unfinished">Pour le débuggage</translation>
+        <translation>Pour le débuggage</translation>
     </message>
 </context>
 <context>
@@ -259,37 +259,37 @@
     <message>
         <location filename="../src/dockmanager.cpp" line="92"/>
         <source>Inspector</source>
-        <translation type="unfinished">Propriétés</translation>
+        <translation>Inspecteur</translation>
     </message>
     <message>
         <location filename="../src/dockmanager.cpp" line="109"/>
         <source>Undo History</source>
-        <translation type="unfinished">Historique</translation>
+        <translation>Rétablir</translation>
     </message>
     <message>
         <location filename="../src/dockmanager.cpp" line="113"/>
         <source>Breadboard</source>
-        <translation type="unfinished">Platine d&apos;essai</translation>
+        <translation>Platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/dockmanager.cpp" line="114"/>
         <source>Schematic</source>
-        <translation type="unfinished">Vue schématique</translation>
+        <translation>Vue schématique</translation>
     </message>
     <message>
         <location filename="../src/dockmanager.cpp" line="115"/>
         <source>PCB</source>
-        <translation type="unfinished">Circuit imprimé</translation>
+        <translation>Circuit imprimé</translation>
     </message>
     <message>
         <location filename="../src/dockmanager.cpp" line="116"/>
         <source>Navigator</source>
-        <translation type="unfinished">Navigateur</translation>
+        <translation>Navigateur</translation>
     </message>
     <message>
         <location filename="../src/dockmanager.cpp" line="82"/>
         <source>view switcher</source>
-        <translation type="unfinished"></translation>
+        <translation>afficher le sélecteur de vue</translation>
     </message>
 </context>
 <context>
@@ -297,72 +297,72 @@
     <message>
         <location filename="../src/fritzingwindow.cpp" line="75"/>
         <source>&amp;Close Window</source>
-        <translation type="unfinished">&amp;Fermer la fenêtre</translation>
+        <translation>&amp;Fermer la fenêtre</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="76"/>
         <source>Ctrl+W</source>
-        <translation type="unfinished">Ctrl+W</translation>
+        <translation>Ctrl+W</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="77"/>
         <source>Close the current sketch</source>
-        <translation type="unfinished">Fermer le schéma actuel</translation>
+        <translation>Fermer le schéma actuel</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="83"/>
         <source>%1 - %2</source>
-        <translation type="unfinished">%1 - %2</translation>
+        <translation>%1 - %2</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="124"/>
         <source>Specify a file name</source>
-        <translation type="unfinished">Spécifier un nom de fichier</translation>
+        <translation>Spécifier un nom de fichier</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="126"/>
         <source>Fritzing (*%1)</source>
-        <translation type="unfinished">Fritzing (*%1)</translation>
+        <translation>Fritzing (*%1)</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="207"/>
         <source>Save &quot;%1&quot;</source>
-        <translation type="unfinished">Enregistrer %1</translation>
+        <translation>Enregistrer %1</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="209"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation type="unfinished">Voulez-vous enregistrer les modifications faites dans le document &quot;%1&quot;?</translation>
+        <translation>Voulez-vous enregistrer les modifications faites dans le document &quot;%1&quot;?</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="217"/>
         <source>Save...</source>
-        <translation type="unfinished">Enregistrer...</translation>
+        <translation>Enregistrer...</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="217"/>
         <source>Save</source>
-        <translation type="unfinished">Enregistrer</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="218"/>
         <source>Don&apos;t Save</source>
-        <translation type="unfinished">Ne pas enregistrer</translation>
+        <translation>Ne pas enregistrer</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="219"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Ctrl+D</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="220"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les changements seront perdus si vous ne les enregistrez pas.</translation>
     </message>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="222"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -370,32 +370,32 @@
     <message>
         <location filename="../src/help/helper.cpp" line="54"/>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation type="unfinished">La &lt;b&gt;vue de la platine d&apos;essai&lt;b&gt; est destinée à ressembler à un véritable montage avec une platine d&apos;essai.&lt;br/&gt;&lt;br/&gt; Commencer par déposer des composants depuis la bibliothèque, qui se situe en haut à droite. Ajouter d&apos;autres composants, connecter les en cliquant sur les connecteurs et en tirant les câbles. Ce processus est similaire à la manière de s&apos;y prendre dans le monde réel.&lt;br/&gt;&lt;br/&gt;Lorsque la schéma est terminé en vue platine d&apos;essai, veuillez essayer les autres vues. Vous pouvez changer à tout moment de vue en utilisant et en sélectionnant une dans le sélecteur de vue ou dans le navigteur. En raison des différentes missions des différentes vues, l&apos;apparences des composants sera différentes dans les autres vues. </translation>
+        <translation>La &lt;b&gt;vue de la platine d&apos;essai&lt;b&gt; est destinée à ressembler à un &lt;i&gt;véritable&lt;/i&gt; montage avec une platine d&apos;essai.&lt;br/&gt;&lt;br/&gt; Commencer par faire glisser  des composants depuis la bibliothèque, qui se situe en haut à droite. Ajouter d&apos;autres composants, connecter les en cliquant sur les connecteurs et en tirant les câbles. Ce processus est similaire à celui utilisé dans le monde réel.&lt;br/&gt;&lt;br/&gt;Lorsque le schéma est terminé dans la vue de la platine d&apos;essai, veuillez essayer les autres vues. Vous pouvez à tout moment passer de l&apos;une à l&apos;une en utilisant le sélecteur de vue ou le navigateur en bas à droite. En raison des différentes missions associés aux différentes vues, l&apos;apparences des composants variera.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="64"/>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
-        <translation type="unfinished">Bienvenue dans la &lt;b&gt;vue schématique&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt; C&apos;est une maniére plus abstraite de voir les composants et les connections que dans la vue de la platine d&apos;essai. Vous disposez des mêmes éléments que dans la vue breadboard, seule leur apparence est différente. Cette représentation se rapproche des diagrammes traditionnels utilisés par les ingénieurs.&lt;br/&gt;&lt;br/&gt; Vous pouvez pressez &amp;lt;Shift&amp;gt;-click pour créér des points d&apos;articulation pour optimiser vos montages. La vue schématique peut vous aider à vérifier la validité des connectiosn entre composants que vous avez effectuez. Vous pouvez aussi l&apos;imprimer à fin de documentation.</translation>
+        <translation>Bienvenue dans la &lt;b&gt;vue schématique&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt; Les composants et les connections sont représentés de manière plus abstraite que dans la vue de la platine d&apos;essai. Vous y disposez des mêmes éléments, seule l&apos;apparence diffère. Cette représentation se rapproche des diagrammes traditionnels utilisés par les ingénieurs.&lt;br/&gt;&lt;br/&gt; Vous pouvez pressez &amp;lt;Shift&amp;gt;-click pour créér des points d&apos;articulation afin d&apos;optimiser la disposition générale. La vue schématique peut vous aider à vérifier la validité des connections entre composants. Vous pouvez aussi l&apos;imprimer à fin de documentation.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="75"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, first rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation type="unfinished">C&apos;est dans la &lt;b&gt;vue circuit imprimé&lt;b&gt; que vous définissez la disposition qu&apos;auront les composants sur le circuit imprimé.&lt;br/&gt;&lt;br/&gt; Les circuits imprimés peuvent être réalisés à la maison ou dans un petit laboratoire en utilisant des techniques de gravure artisanales. Vous pouvez aussi utiliser les services d&apos;un fabricant de circuits imprimés pour un résultat plus soigné.&lt;br/&gt;&lt;br/&gt; Pour concevoir votre cicuit imprimé, veuillez placer tous les composants sur la plaque. Essayer de les redisposer de manière optimal afin de et de minimiser la longueur des connections et d&apos;améliorer la clarté du montage. Une fois que cela est terminé, vous pouvez cliquer avec le bouton droit sur les différentes connections???? ou utiliser l&apos;autoroutage pour générer les pistes en cuivres entre les composants. Le bouton d&apos;autoroutage &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;se trouve en bas à gauche.</translation>
+        <translation>C&apos;est dans la &lt;b&gt;vue circuit imprimé&lt;b&gt; que vous définissez la disposition qu&apos;auront les composants sur le circuit imprimé.&lt;br/&gt;&lt;br/&gt; Les circuits imprimés peuvent être réalisés avec peu de matériel utilisant des techniques de gravure artisanales. Vous pouvez aussi utiliser les services d&apos;un fabricant de circuits imprimés pour un résultat plus soigné.&lt;br/&gt;&lt;br/&gt; Pour concevoir votre circuit imprimé, veuillez placer tous les composants sur la platine. Essayer d&apos;optimiser la disposition générale afin de minimiser la longueur des connections et d&apos;améliorer la clarté du montage. Une fois que cela est terminé, vous pouvez cliquer avec le bouton droit sur les différentes connectionsou utiliser l&apos;autoroutage pour générer les pistes en cuivres entre les composants. Le bouton d&apos;autoroutage &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;se trouve en bas à gauche.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="41"/>
         <source>Drag out your &lt;br&gt; parts from here</source>
-        <translation type="unfinished">Veuillez déposer les composant</translation>
+        <translation>Veuillez faire un glisser-deposer avec les composant depuis ici</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="42"/>
         <source>When done with arranging, &lt;br&gt; use Autoroute to create &lt;br&gt; your copper traces</source>
-        <translation type="unfinished">Quand vous avez terminé&lt;br&gt; utilisez Autoroute pour créer &lt;br&gt; les pistes en cuivre</translation>
+        <translation>Lorsque l&apos;agencement des composants est terminé&lt;br&gt; utilisez l&apos;autoroutage pour créer &lt;br&gt; les pistes en cuivre</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="43"/>
         <source>Use these buttons to &lt;br&gt; toggle between views</source>
-        <translation type="unfinished">Utilisez ces boutons &lt;br&gt;pour changer de vue.</translation>
+        <translation>Utilisez ces boutons &lt;br&gt;pour changer de vue</translation>
     </message>
 </context>
 <context>
@@ -403,85 +403,85 @@
     <message>
         <location filename="../src/htmlinfoview.cpp" line="199"/>
         <source>conn.</source>
-        <translation type="unfinished">connec.</translation>
+        <translation>conn.</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="200"/>
         <source>name</source>
-        <translation type="unfinished">nom</translation>
+        <translation>nom</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="201"/>
         <source>type</source>
-        <translation type="unfinished">type</translation>
+        <translation>type</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="292"/>
         <source>(autoroutable)</source>
-        <translation type="unfinished">(autoroutable)</translation>
+        <translation>(autoroutable)</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="293"/>
         <source>Wire</source>
-        <translation type="unfinished">câble</translation>
+        <translation>câble</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="295"/>
         <source>Rat&apos;s nest wire</source>
-        <translation type="unfinished">??????????</translation>
+        <translation type="unfinished">??????</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="297"/>
         <source>Trace wire %1</source>
-        <translation type="unfinished">Tracer un câble %1</translation>
+        <translation>Tracer un câble %1</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="299"/>
         <source>Jumper wire %1</source>
-        <translation type="unfinished">??????????</translation>
+        <translation type="unfinished">??????</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="197"/>
         <source>Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Connections</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/htmlinfoview.cpp" line="199"/>
         <source>connected to %n item(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>connecté à %n éléments</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="233"/>
         <source>Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Position</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="266"/>
         <source>line</source>
-        <translation type="unfinished"></translation>
+        <translation>ligne</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="246"/>
         <source>view</source>
-        <translation type="unfinished"></translation>
+        <translation>vue</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="260"/>
         <source>current geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>géometrie actuelle </translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="431"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="460"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Mots clés</translation>
     </message>
 </context>
 <context>
@@ -489,7 +489,7 @@
     <message>
         <location filename="../src/itembase.cpp" line="242"/>
         <source>Part</source>
-        <translation type="unfinished"></translation>
+        <translation>Composant</translation>
     </message>
 </context>
 <context>
@@ -497,374 +497,374 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="487"/>
         <source>Rotate</source>
-        <translation type="unfinished">faire tourner</translation>
+        <translation>Effectuer une rotation</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="498"/>
         <source>Flip</source>
-        <translation type="unfinished">Faire une symétrie</translation>
+        <translation>Effectuer une symétrie</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="507"/>
         <source>Autoroute</source>
-        <translation type="unfinished">Autoroutage</translation>
+        <translation>Autoroutage</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="732"/>
         <source>%1%</source>
-        <translation type="unfinished">%1%</translation>
+        <translation>%1%</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="92"/>
         <source>Ready</source>
-        <translation type="unfinished">Terminé</translation>
+        <translation>Terminé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="705"/>
         <source>Save %1</source>
-        <translation type="unfinished">Enregistrer %1</translation>
+        <translation>Enregistrer %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="879"/>
         <source>Specify a file name</source>
-        <translation type="unfinished">Veuillez spécifier un nom de fichier</translation>
+        <translation>Veuillez spécifier un nom de fichier</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="881"/>
         <source>Fritzing (*%1)</source>
-        <translation type="unfinished">Fritzing (*%1)</translation>
+        <translation>Fritzing (*%1)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1852"/>
         <source>Fritzing</source>
-        <translation type="unfinished">Fritzing</translation>
+        <translation>Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1065"/>
         <source>No connections to route</source>
-        <translation type="unfinished">Pas de connection à relier</translation>
+        <translation>Pas de connection à relier</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1068"/>
         <source>Routing completed</source>
-        <translation type="unfinished">Routage terminé</translation>
+        <translation>Routage terminé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1203"/>
         <source>%1 - [%2]</source>
-        <translation type="unfinished">%1 - [%2]</translation>
+        <translation>%1 - [%2]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="77"/>
         <source>PDF (*.pdf)</source>
-        <translation type="unfinished">PDF (*.pdf)</translation>
+        <translation>PDF (*.pdf)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="78"/>
         <source>PostScript (*.ps)</source>
-        <translation type="unfinished">PostScript (*.ps)</translation>
+        <translation>PostScript (*.ps)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="79"/>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished">PNG Image (*.png)</translation>
+        <translation>PNG Image (*.png)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="80"/>
         <source>JPEG Image (*.jpg)</source>
-        <translation type="unfinished">JPEG Image (*.jpg)</translation>
+        <translation>JPEG Image (*.jpg)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="81"/>
         <source>SVG Image (*.svg)</source>
-        <translation type="unfinished">SVG Image (*.svg)</translation>
+        <translation>SVG Image (*.svg)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="91"/>
         <source>Printing...</source>
-        <translation type="unfinished">Impression en cours ?????</translation>
+        <translation>Impression en cours...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="126"/>
         <source>Export for DIY...</source>
-        <translation type="unfinished">Exporter pour une fabrication maison</translation>
+        <translation>Exporter pour une fabrication artisanale...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="291"/>
         <source>Sketch exported</source>
-        <translation type="unfinished">schéma exporté</translation>
+        <translation>Schéma exporté</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="269"/>
         <source>Export...</source>
-        <translation type="unfinished">Exporter...</translation>
+        <translation>Exporter...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="290"/>
         <source>Exporting...</source>
-        <translation type="unfinished">Export en cours </translation>
+        <translation>Export en cours...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="333"/>
         <source>Unable to save %1</source>
-        <translation type="unfinished">Impossibilité de sauvegarder %1</translation>
+        <translation>Impossibilité de sauvegarder %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="405"/>
         <source>Cannot print to %1</source>
-        <translation type="unfinished">Impossibilité d&apos;imprimé ?? %1</translation>
+        <translation>Impossibilité d&apos;imprimer le PDF %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="414"/>
         <source>Cannot write file %1:
 %2.</source>
-        <translation type="unfinished">Impossibilité d&apos;écrire le fichier</translation>
+        <translation>Impossibilité d&apos;écrire le fichier %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="428"/>
         <source>Saved &apos;%1&apos;</source>
-        <translation type="unfinished">Enregistré &apos;%1&apos;</translation>
+        <translation>&apos;%1&apos; Enregistré</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="469"/>
         <source>Cannot find file %1.</source>
-        <translation type="unfinished">Impossibilité de trouver le fichier %1.</translation>
+        <translation>Impossibilité de trouver le fichier %1.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="480"/>
         <source>Cannot read file  1 %1:
 %2.</source>
-        <translation type="unfinished">Impossibilité de lire le fichier  1 %1:%2.</translation>
+        <translation>Impossibilité de lire le fichier  1 %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="671"/>
         <source>&amp;New</source>
-        <translation type="unfinished">&amp;Nouveau</translation>
+        <translation>&amp;Nouveau</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="672"/>
         <source>Ctrl+N</source>
-        <translation type="unfinished">Ctrl+N</translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="673"/>
         <source>Create a new sketch</source>
-        <translation type="unfinished">Créer un nouveau schéma</translation>
+        <translation>Créer un nouveau schéma</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="682"/>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Ouvrir...</translation>
+        <translation>&amp;Ouvrir...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="683"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished">Ctrl+O</translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="684"/>
         <source>Open a sketch</source>
-        <translation type="unfinished">Ouvrir un schéma</translation>
+        <translation>Ouvrir un schéma</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="687"/>
         <source>&amp;Open Recent Files</source>
-        <translation type="unfinished">&amp;Ouvrir les schémas récents</translation>
+        <translation>&amp;Ouvrir les fichiers récents</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="690"/>
         <source>&amp;Open Example</source>
-        <translation type="unfinished">&amp;Ouvrir un exemple</translation>
+        <translation>&amp;Ouvrir un exemple</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="695"/>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Enregistrer</translation>
+        <translation>&amp;Enregistrer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="696"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished">Ctrl+S</translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="702"/>
         <source>Save the current sketch</source>
-        <translation type="unfinished">Enregistrer le schéma actuel</translation>
+        <translation>Enregistrer le schéma actuel</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="700"/>
         <source>&amp;Save As...</source>
-        <translation type="unfinished">&amp;Enregistrer sous...</translation>
+        <translation>&amp;Enregistrer sous...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="701"/>
         <source>Shift+Ctrl+S</source>
-        <translation type="unfinished">Shift+Ctrl+S</translation>
+        <translation>Shift+Ctrl+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="705"/>
         <source>Save As Shareable...</source>
-        <translation type="unfinished">Enregistrer en tant que fichier partageable...</translation>
+        <translation>Enregistrer en tant que paquet partageable...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="706"/>
         <source>Alt+Ctrl+S</source>
-        <translation type="unfinished">Alt+Ctrl+S</translation>
+        <translation>Alt+Ctrl+S</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="707"/>
         <source>Export current sketch and its non-core parts</source>
-        <translation type="unfinished">Exporter le schéma actuel et ses composants non structurels</translation>
+        <translation>Exporter le schéma actuel et ses composants non-standards</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="710"/>
         <source>to &amp;JPG...</source>
-        <translation type="unfinished">en &amp;JPG...  ?????</translation>
+        <translation type="unfinished">Format &amp;JPG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="712"/>
         <source>Export the current sketch as a JPG image</source>
-        <translation type="unfinished">Exporter les schéma actuel au format JPG</translation>
+        <translation type="unfinished">Exporter le schéma actuel au format JPG</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="715"/>
         <source>to P&amp;NG...</source>
-        <translation type="unfinished">to &amp;PNG...</translation>
+        <translation type="unfinished">Format &amp;PNG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="717"/>
         <source>Export the current sketch as a PNG image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter le schéma actuel au format PNG</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="720"/>
         <source>to Post&amp;Script...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Format Post&amp;Script...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="722"/>
         <source>Export the current sketch as a PostScript image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter le schéma actuel au format PostScript</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="725"/>
         <source>to &amp;PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Format &amp;PDF...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="727"/>
         <source>Export the current sketch as a PDF image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter le schéma actuel au format PDF</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="735"/>
         <source>to &amp;Eagle...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">au format to &amp;Eagle...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="737"/>
         <source>Export the current sketch to Eagle CAD</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter le schéma actuel vers Eagle CAD</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="740"/>
         <source>to &amp;Gerber...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">au format to &amp;Eagle...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="742"/>
         <source>Export the current sketch to Gerber</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter le schéma actuel vers Gerber</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="746"/>
         <source>Export the current sketch to PDF for DIY production</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter le schéma actuel au format PDF pour une production artisanale</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="758"/>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Imprimer...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="759"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+P</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="760"/>
         <source>Print the current view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Imprimer la vue actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="763"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">?Quitter</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="764"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="765"/>
         <source>Quit the application</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Quitter le programme</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="820"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="845"/>
         <source>&amp;Cut</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Couper</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="846"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="847"/>
         <source>Cut selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Couper la selection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="850"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Copy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="851"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+C</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="852"/>
         <source>Copy selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copier la sélection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="855"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Coller</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="856"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="857"/>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copier le contenu du presse-papier</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="860"/>
         <source>&amp;Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Dupliquer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="861"/>
@@ -874,37 +874,37 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="862"/>
         <source>Duplicate selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dupliquer la sélection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="865"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Supprimer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="873"/>
         <source>Delete selection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Supprimer la sélection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="876"/>
         <source>&amp;Select All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Sélection tout</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="877"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="878"/>
         <source>Select all elements</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sélectionner tous les éléments</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="881"/>
         <source>&amp;Deselect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Désélectionner</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="882"/>
@@ -914,7 +914,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="889"/>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Préférences...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1091"/>
@@ -929,7 +929,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="901"/>
         <source>Alt+Ctrl+N</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+N</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="902"/>
@@ -954,12 +954,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="910"/>
         <source>&amp;Add to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ajouter au jeu de composants</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="911"/>
         <source>Add selected part to bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter le composant sélectionné au jeu de composants</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="919"/>
@@ -999,7 +999,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="942"/>
         <source>Alt+Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="943"/>
@@ -1174,7 +1174,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1021"/>
         <source>&amp;Actual Size</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Taille actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1022"/>
@@ -1184,7 +1184,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1023"/>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1026"/>
@@ -1309,7 +1309,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1090"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;À propos</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1098"/>
@@ -1364,12 +1364,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1946"/>
         <source>&amp;Autoroute</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Autoroute</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1947"/>
         <source>Autoroute...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoroute...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1951"/>
@@ -1394,12 +1394,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1974"/>
         <source>Autorouting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoroutage...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="886"/>
         <source>Add a note</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un aide-mémoire</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="521"/>
@@ -1433,8 +1433,8 @@
         <location filename="../src/mainwindow.cpp" line="1074"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 des %2 nets a été routé - %n connector(s) still to be routed</numerusform>
+            <numerusform>%1 of %2 nets routed - %n connector(s) still to be routed</numerusform>
         </translation>
     </message>
     <message>
@@ -1480,7 +1480,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="730"/>
         <source>&amp;Bill of Materials</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Liste des </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="732"/>
@@ -1490,17 +1490,17 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="745"/>
         <source>Etchable PDF...</source>
-        <translation type="unfinished"></translation>
+        <translation>Typon au format PDF...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="749"/>
         <source>Etchable SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Typon au format SVG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="750"/>
         <source>Export the current sketch to SVG for DIY production</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter le schéma au format SVG pour une fabrication artisanale</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="839"/>
@@ -1515,64 +1515,64 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2069"/>
         <source>Add Note</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un aide-mémoire</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="992"/>
         <source>&amp;Show part label</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Montrer l&apos;étiquette du composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="993"/>
         <source>Show or hide the label for the selected parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher ou masquer l&apos;étiquette pour les composants sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1086"/>
         <source>Check for updates...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier la disponibilité d&apos;un mise à jour...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1087"/>
         <source>Check whether a newer version of Fritzing is available for download</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifier si une version plus récente de Fritzing est disponible en téléchargement</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1492"/>
         <source>Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Groupe</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1654"/>
         <source>Create New Sketch From Template</source>
-        <translation type="unfinished"></translation>
+        <translation>Créér un nouveau schéma à partir d&apos;un modèle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1729"/>
         <source>Page Setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Préférences de mise en page</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1824"/>
         <source>Gerber export</source>
-        <translation type="unfinished"></translation>
+        <translation>Export Gerber</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1861"/>
         <source>Fritzing Bill of Materials
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Facture de Fritzing du matériel</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1863"/>
         <source>Sketch: <byte value="x9"/></source>
-        <translation type="unfinished"></translation>
+        <translation>Schéma:<byte value="x9"/></translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1867"/>
         <source>Date: <byte value="x9"/></source>
-        <translation type="unfinished"></translation>
+        <translation>Date:<byte value="x9"/></translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1902"/>
@@ -1583,52 +1583,52 @@ Shopping List
 Quantity<byte value="x9"/>Part
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>PanierQuantité<byte value="x9"/>Composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1917"/>
         <source>Export Bill of Materials (BoM)...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">???????</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1950"/>
         <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Créér une piste à partir des câbles sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1954"/>
         <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Créer ????</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1963"/>
         <source>Select All Traces</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner toutes les pistes</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1964"/>
         <source>Select all trace wires</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">?????????</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1967"/>
         <source>Select All Jumper Wires</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sélectionner ??????</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1968"/>
         <source>Select all jumper wires</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sélectionner ??????</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1988"/>
         <source>Skip this trace</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauter cette piste</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1991"/>
         <source>Cancel autorouting</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler l&apos;autoroutage</translation>
     </message>
 </context>
 <context>
