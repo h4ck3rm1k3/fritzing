@@ -35,7 +35,7 @@ class PartsEditorConnectorsConnectorItem;
 
 class TerminalPointItem : public QGraphicsRectItem, public ResizableRectItem {
 public:
-	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool movable=true);
+	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible);
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
 	~TerminalPointItem();
 
@@ -53,7 +53,7 @@ public:
 protected:
 	QPointF mappedToScenePoint();
 
-	void init(bool visible, bool movable);
+	void init(bool visible);
 	void initPixmapHash();
 	void drawCross();
 	void posCross();
@@ -70,7 +70,7 @@ protected:
 
 	QPointF m_point;
 	bool m_hasBeenMoved;
-	bool m_movable;
+	bool m_pressed;
 
 	QGraphicsPixmapItem *m_cross;
 	PartsEditorConnectorsConnectorItem *m_parent;

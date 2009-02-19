@@ -219,6 +219,7 @@ void PartsEditorConnectorsView::aboutToSave() {
 }
 
 bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
+	bool changed = false;
 	if(!m_drawnConns.isEmpty()) {
 		QRectF bounds;
 		QString connId;
@@ -229,9 +230,17 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 
 			QRectF svgRect = mapFromSceneToSvg(bounds,sceneViewBox,svgViewBox);
 			addRectToSvg(svgDom,connId/*+"pin"*/,svgRect, connectorsLayerId);
+		}
+		changed = true;
+	}
 
-			/*TerminalPointItem *tp = drawnConn->terminalPointItem();
+	foreach(QGraphicsItem *item, items()) {
+		PartsEditorConnectorsConnectorItem *citem =
+			dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
+		if(citem) {
+			TerminalPointItem *tp = citem->terminalPointItem();
 			if(tp && tp->hasBeenMoved()) {
+				QString connId = citem->connector()->connectorSharedID();
 				QRectF rectTPAux = tp->boundingRect();
 				QPointF posTPAux = QPointF(
 					rectTPAux.x()+rectTPAux.width()/2,
@@ -243,13 +252,15 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 					tp->mapToParent(posTPAux).y()-halfTPSize,
 					halfTPSize*2, halfTPSize*2
 				);
-				QRectF svgTpRect = mapFromSceneToSvg(tpointRect,defaultSize,viewBox);
-				addRectToSvg(svgDom,connId+"terminal",svgTpRect);
-			}*/
+				QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
+				addRectToSvg(svgDom,connId+"terminal",svgTpRect, connectorsLayerId);
+
+				changed |= true;
+			}
 		}
-		return true;
 	}
-	return false;
+
+	return changed;
 }
 
 bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomElement &docElem) {

@@ -30,14 +30,15 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 QHash<ConnectorRectangle::State, QPixmap> TerminalPointItem::m_pixmapHash;
 
-TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool movable)
+TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible)
 	: QGraphicsRectItem(parent), ResizableRectItem()
 {
 	Q_ASSERT(parent);
 	m_parent = parent;
 	m_hasBeenMoved = false;
+	m_pressed = false;
 
-	init(visible, movable);
+	init(visible);
 }
 
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point)
@@ -48,7 +49,7 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent,
 	m_hasBeenMoved = false;
 	m_point = point;
 
-	init(visible, false);
+	init(visible);
 }
 
 TerminalPointItem::~TerminalPointItem()
@@ -58,7 +59,7 @@ TerminalPointItem::~TerminalPointItem()
 	}
 }
 
-void TerminalPointItem::init(bool visible, bool movable) {
+void TerminalPointItem::init(bool visible) {
 	initPixmapHash();
 
 	m_handlers = new ConnectorRectangle(this,false);
@@ -69,8 +70,6 @@ void TerminalPointItem::init(bool visible, bool movable) {
 	setPen(pen);
 
 	m_cross = NULL;
-	m_movable = movable;
-	setFlag(QGraphicsItem::ItemIsMovable, movable);
 	setVisible(visible);
 	updatePoint();
 }
@@ -128,6 +127,7 @@ void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 		if(isOutsideConnector()) {
 			setCursor(QCursor(Qt::ForbiddenCursor));
 		} else {
+			m_hasBeenMoved = m_pressed;
 			setCursor(QCursor());
 		}
 	}
@@ -135,7 +135,10 @@ void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void TerminalPointItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible()) m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Selected]);
+	if(isVisible()) {
+		m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Selected]);
+		m_pressed = true;
+	}
 	QGraphicsItem::mousePressEvent(event);
 }
 
@@ -147,19 +150,25 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			return;
 		} else {
 			m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Hover]);
+			m_pressed = false;
 		}
 	}
 	QGraphicsItem::mouseReleaseEvent(event);
 }
 
 bool TerminalPointItem::isOutsideConnector() {
-	QPointF myCenter = mapToParent(rect().center());
+	/*QPointF myCenter = mapToParent(rect().center());
+	//QPointF myCenter = mapToParent(m_cross->boundingRect().center());
 	QRectF pRect = m_parent->rect();
+
+	QPointF aux = m_cross->boundingRect().center();
 
 	return myCenter.x()<pRect.x()
 		|| myCenter.y()<pRect.y()
 		|| myCenter.x()>pRect.x()+pRect.width()
 		|| myCenter.y()>pRect.y()+pRect.height();
+	*/
+	return false;
 }
 
 QPointF TerminalPointItem::mappedToScenePoint() {
