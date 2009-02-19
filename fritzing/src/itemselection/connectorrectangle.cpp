@@ -31,7 +31,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "../debugdialog.h"
 #include "../partseditor/partseditorconnectorsconnectoritem.h"
 
-ConnectorRectangle::ConnectorRectangle(PartsEditorConnectorsConnectorItem* owner, bool withHandlers)
+ConnectorRectangle::ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers)
 {
 	m_owner = owner;
 	m_firstPaint = true;

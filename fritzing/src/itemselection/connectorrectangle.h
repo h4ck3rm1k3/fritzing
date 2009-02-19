@@ -42,7 +42,7 @@ public:
 		Selected = 0x00003
 	};
 
-	ConnectorRectangle(PartsEditorConnectorsConnectorItem* owner, bool withHandlers = true);
+	ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers = true);
 	QGraphicsRectItem *owner();
 	void prepareForChange();
 	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);

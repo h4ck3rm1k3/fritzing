@@ -61,7 +61,7 @@ TerminalPointItem::~TerminalPointItem()
 void TerminalPointItem::init(bool visible, bool movable) {
 	initPixmapHash();
 
-	//m_handlers = new ConnectorRectangle(this,false);
+	m_handlers = new ConnectorRectangle(this,false);
 
 	QPen pen = QPen();
 	pen.setWidth(0);
