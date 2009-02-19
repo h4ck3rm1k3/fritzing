@@ -25,7 +25,7 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 ********************************************************************/
 
 #include "groupitembase.h"
-
+#include "../connectoritem.h"
 
 GroupItemBase::GroupItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, bool topLevel, QMenu * itemMenu) 
 	: ItemBase( modelPart, viewIdentifier, viewGeometry, id, topLevel, itemMenu)
@@ -45,6 +45,12 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 		setZValue(this->z());
 	}
 
+	foreach (QGraphicsItem * item, item->childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (connectorItem == NULL) continue;
+
+		connectorItem->setIgnoreAncestorFlag(true);
+	}
 
 	m_graphicsItemGroup->addToGroup(item);
 }

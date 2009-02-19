@@ -28,6 +28,9 @@ $Date$
 //	** figure out which layer the grouped items are on and get the next z id
 //	** sort itembases by z
 //	** layerkin
+//  ** allow mouse events to external connections
+//		don't allow wires to connect with the group
+//		drag doesn't keep wire connections
 //	save as group
 //	load into sketch
 //	delete
@@ -37,7 +40,9 @@ $Date$
 //	add to bin
 //	open in new sketch (edit)
 //	** z-order manipulation
-//	hide/show layer (still shows group selection box)
+//	** hide/show layer 
+//		still shows group selection box
+//  override QGraphicsItemGroup::paint
 //	copy/paste
 //  select external connections
 //	undo group?

@@ -45,6 +45,7 @@ QBrush ConnectorItem::connectedBrush(QColor(0,255,0));
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
+	m_ignoreAncestorFlag = false;
 	m_dirty = false;
 	m_opacity = 0.4;
 	m_circular = false;
@@ -612,4 +613,84 @@ void ConnectorItem::setRectAux(qreal x1, qreal y1, qreal x2, qreal y2) {
 
 void ConnectorItem::clearConnector() {
 	m_connector = NULL;
+}
+
+bool ConnectorItem::sceneEvent(QEvent *event)
+{
+	if (!m_ignoreAncestorFlag) {
+		return QGraphicsRectItem::sceneEvent(event);
+	}
+
+	// the rest of this is copied from QGraphicsItem::sceneEvent
+	// this seemed to be the only way to be able to allow some items in a group to respond directly to events
+	// while others pass their events up to the parent
+
+	if (!this->isVisible()) {
+		return true;
+	}
+
+    switch (event->type()) {
+    case QEvent::FocusIn:
+        focusInEvent(static_cast<QFocusEvent *>(event));
+        break;
+    case QEvent::FocusOut:
+        focusOutEvent(static_cast<QFocusEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneContextMenu:
+        contextMenuEvent(static_cast<QGraphicsSceneContextMenuEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneDragEnter:
+        dragEnterEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneDragMove:
+        dragMoveEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneDragLeave:
+        dragLeaveEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneDrop:
+        dropEvent(static_cast<QGraphicsSceneDragDropEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneHoverEnter:
+        hoverEnterEvent(static_cast<QGraphicsSceneHoverEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneHoverMove:
+        hoverMoveEvent(static_cast<QGraphicsSceneHoverEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneHoverLeave:
+        hoverLeaveEvent(static_cast<QGraphicsSceneHoverEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneMouseMove:
+        mouseMoveEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneMousePress:
+        mousePressEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneMouseRelease:
+        mouseReleaseEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneMouseDoubleClick:
+        mouseDoubleClickEvent(static_cast<QGraphicsSceneMouseEvent *>(event));
+        break;
+    case QEvent::GraphicsSceneWheel:
+        wheelEvent(static_cast<QGraphicsSceneWheelEvent *>(event));
+        break;
+    case QEvent::KeyPress:
+        keyPressEvent(static_cast<QKeyEvent *>(event));
+        break;
+    case QEvent::KeyRelease:
+        keyReleaseEvent(static_cast<QKeyEvent *>(event));
+        break;
+    case QEvent::InputMethod:
+        inputMethodEvent(static_cast<QInputMethodEvent *>(event));
+        break;
+    default:
+        return false;
+    }
+
+    return true;
+}
+
+void ConnectorItem::setIgnoreAncestorFlag(bool ignore) {
+	m_ignoreAncestorFlag = ignore;
 }

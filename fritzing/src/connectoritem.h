@@ -86,6 +86,7 @@ public:
 	bool isDirty();
 	void setBaseTooltip(const QString &);
 	void clearConnector();
+	void setIgnoreAncestorFlag(bool);
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -101,6 +102,7 @@ protected:
 	virtual void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	virtual void writeOtherElements(QXmlStreamWriter & writer);
 	void updateTooltip();
+	bool sceneEvent(QEvent *event);
 
 	virtual void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
 
@@ -117,6 +119,7 @@ protected:
 	bool m_dirty;
 	QString m_baseTooltip;
 	bool m_connectorHovering;
+	bool m_ignoreAncestorFlag;
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);
