@@ -32,16 +32,16 @@ $Date$
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QStatusBar>
+#include <QMainWindow>
 
 #include "itembase.h"
 #include "sketchwidget.h"
 #include "zoomcombobox.h"
 
-class MainWindow;
 
 class SketchAreaWidget : public QFrame {
 public:
-	SketchAreaWidget(SketchWidget *graphicsView, MainWindow *parent);
+	SketchAreaWidget(SketchWidget *graphicsView, QMainWindow *parent);
 	virtual ~SketchAreaWidget();
 
 	ItemBase::ViewIdentifier viewIdentifier();

@@ -29,12 +29,10 @@ $Date$
 #include <QLabel>
 
 #include "sketchareawidget.h"
-#include "mainwindow.h"
-
 
 const QString SketchAreaWidget::RoutingStateLabelName = "routingStateLabel";
 
-SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, MainWindow *parent)
+SketchAreaWidget::SketchAreaWidget(SketchWidget *graphicsView, QMainWindow *parent)
 	: QFrame(parent)
 {
 	m_graphicsView = graphicsView;
