@@ -719,212 +719,212 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="710"/>
         <source>to &amp;JPG...</source>
-        <translation type="unfinished">Format &amp;JPG...</translation>
+        <translation>Format &amp;JPG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="712"/>
         <source>Export the current sketch as a JPG image</source>
-        <translation type="unfinished">Exporter le schéma actuel au format JPG</translation>
+        <translation>Exporter le schéma actuel au format JPG</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="715"/>
         <source>to P&amp;NG...</source>
-        <translation type="unfinished">Format &amp;PNG...</translation>
+        <translation>Format &amp;PNG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="717"/>
         <source>Export the current sketch as a PNG image</source>
-        <translation type="unfinished">Exporter le schéma actuel au format PNG</translation>
+        <translation>Exporter le schéma actuel au format PNG</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="720"/>
         <source>to Post&amp;Script...</source>
-        <translation type="unfinished">Format Post&amp;Script...</translation>
+        <translation>Format Post&amp;Script...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="722"/>
         <source>Export the current sketch as a PostScript image</source>
-        <translation type="unfinished">Exporter le schéma actuel au format PostScript</translation>
+        <translation>Exporter le schéma actuel au format PostScript</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="725"/>
         <source>to &amp;PDF...</source>
-        <translation type="unfinished">Format &amp;PDF...</translation>
+        <translation>Format &amp;PDF...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="727"/>
         <source>Export the current sketch as a PDF image</source>
-        <translation type="unfinished">Exporter le schéma actuel au format PDF</translation>
+        <translation>Exporter le schéma actuel au format PDF</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="735"/>
         <source>to &amp;Eagle...</source>
-        <translation type="unfinished">au format to &amp;Eagle...</translation>
+        <translation>au format to &amp;Eagle...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="737"/>
         <source>Export the current sketch to Eagle CAD</source>
-        <translation type="unfinished">Exporter le schéma actuel vers Eagle CAD</translation>
+        <translation>Exporter le schéma actuel vers Eagle CAD</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="740"/>
         <source>to &amp;Gerber...</source>
-        <translation type="unfinished">au format to &amp;Eagle...</translation>
+        <translation>au format to &amp;Eagle...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="742"/>
         <source>Export the current sketch to Gerber</source>
-        <translation type="unfinished">Exporter le schéma actuel vers Gerber</translation>
+        <translation>Exporter le schéma actuel vers Gerber</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="746"/>
         <source>Export the current sketch to PDF for DIY production</source>
-        <translation type="unfinished">Exporter le schéma actuel au format PDF pour une production artisanale</translation>
+        <translation>Exporter le schéma actuel au format PDF pour une production artisanale</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="758"/>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Imprimer...</translation>
+        <translation>&amp;Imprimer...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="759"/>
         <source>Ctrl+P</source>
-        <translation type="unfinished">Ctrl+P</translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="760"/>
         <source>Print the current view</source>
-        <translation type="unfinished">Imprimer la vue actuelle</translation>
+        <translation>Imprimer la vue actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="763"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Quitter</translation>
+        <translation>&amp;Quitter</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="764"/>
         <source>Ctrl+Q</source>
-        <translation type="unfinished">Ctrl+Q</translation>
+        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="765"/>
         <source>Quit the application</source>
-        <translation type="unfinished">Quitter le programme</translation>
+        <translation>Quitter le programme</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="820"/>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished">&amp;%1 %2</translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="845"/>
         <source>&amp;Cut</source>
-        <translation type="unfinished">&amp;Couper</translation>
+        <translation>&amp;Couper</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="846"/>
         <source>Ctrl+X</source>
-        <translation type="unfinished">Ctrl+X</translation>
+        <translation>Ctrl+X</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="847"/>
         <source>Cut selection</source>
-        <translation type="unfinished">Couper la selection</translation>
+        <translation>Couper la selection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="850"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Copy</translation>
+        <translation>&amp;Copy</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="851"/>
         <source>Ctrl+C</source>
-        <translation type="unfinished">Ctrl+C</translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="852"/>
         <source>Copy selection</source>
-        <translation type="unfinished">Copier la sélection</translation>
+        <translation>Copier la sélection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="855"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Coller</translation>
+        <translation>&amp;Coller</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="856"/>
         <source>Ctrl+V</source>
-        <translation type="unfinished">Ctrl+V</translation>
+        <translation>Ctrl+V</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="857"/>
         <source>Paste clipboard contents</source>
-        <translation type="unfinished">Copier le contenu du presse-papier</translation>
+        <translation>Copier le contenu du presse-papier</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="860"/>
         <source>&amp;Duplicate</source>
-        <translation type="unfinished">&amp;Dupliquer</translation>
+        <translation>&amp;Dupliquer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="861"/>
         <source>Ctrl+D</source>
-        <translation type="unfinished">Ctrl+D</translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="862"/>
         <source>Duplicate selection</source>
-        <translation type="unfinished">Dupliquer la sélection</translation>
+        <translation>Dupliquer la sélection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="865"/>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Supprimer</translation>
+        <translation>&amp;Supprimer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="873"/>
         <source>Delete selection</source>
-        <translation type="unfinished">Supprimer la sélection</translation>
+        <translation>Supprimer la sélection</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="876"/>
         <source>&amp;Select All</source>
-        <translation type="unfinished">&amp;Sélection tout</translation>
+        <translation>&amp;Sélection tout</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="877"/>
         <source>Ctrl+A</source>
-        <translation type="unfinished">Ctrl+A</translation>
+        <translation>Ctrl+A</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="878"/>
         <source>Select all elements</source>
-        <translation type="unfinished">Sélectionner tous les éléments</translation>
+        <translation>Sélectionner tous les éléments</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="881"/>
         <source>&amp;Deselect</source>
-        <translation type="unfinished">&amp;Désélectionner</translation>
+        <translation>&amp;Désélectionner</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="882"/>
         <source>Deselect</source>
-        <translation type="unfinished">Désélectionner</translation>
+        <translation>Désélectionner</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="889"/>
         <source>&amp;Preferences...</source>
-        <translation type="unfinished">&amp;Préférences...</translation>
+        <translation>&amp;Préférences...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1091"/>
         <source>Show the application&apos;s about box</source>
-        <translation type="unfinished">Montrer &quot;À propos&quot;</translation>
+        <translation>Montrer &quot;À propos&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="900"/>
         <source>&amp;Create New Part...</source>
-        <translation type="unfinished">&amp;Créér un nouveau composant...</translation>
+        <translation>&amp;Créér un nouveau composant...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="901"/>
@@ -934,22 +934,22 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="902"/>
         <source>Create new part</source>
-        <translation type="unfinished">Créér un nouveau composant</translation>
+        <translation>Créér un nouveau composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="905"/>
         <source>&amp;Open in Parts Editor</source>
-        <translation type="unfinished">&amp;Ouvrir dans l&apos;éditeur de composant</translation>
+        <translation>&amp;Ouvrir dans l&apos;éditeur de composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="906"/>
         <source>Ctrl+Return</source>
-        <translation type="unfinished">Ctrl+Entrée</translation>
+        <translation>Ctrl+Entrée</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="907"/>
         <source>Open the old parts editor</source>
-        <translation type="unfinished">Ouvrir l&apos;ancien éditeur de composant</translation>
+        <translation>Ouvrir l&apos;ancien éditeur de composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="910"/>
@@ -964,37 +964,37 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="919"/>
         <source>Update InfoView on hover</source>
-        <translation type="unfinished">Update InfoView on hover</translation>
+        <translation>Update InfoView on hover</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="932"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
-        <translation type="unfinished">&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre</translation>
+        <translation>&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="933"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="934"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation type="unfinished">&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre les éléments sélectionnés</translation>
+        <translation>&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre les éléments sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="937"/>
         <source>&amp;Rotate 180&#xb0;</source>
-        <translation type="unfinished">&amp;Pivoter de 180°</translation>
+        <translation>&amp;Pivoter de 180°</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="938"/>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation type="unfinished">&amp;Pivoter de 180° les éléments sélectionnés</translation>
+        <translation>&amp;Pivoter de 180° les éléments sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="941"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
-        <translation type="unfinished">&amp;Pivoter de 90° dans le sens inverse des aiguilles d&apos;une montre</translation>
+        <translation>&amp;Pivoter de 90° dans le sens inverse des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="942"/>
@@ -1004,37 +1004,37 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="943"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished">Pivoter la sélection actuelle de 90° dans le sens des aiguilles d&apos;une montre</translation>
+        <translation>Pivoter la sélection actuelle de 90° dans le sens des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="946"/>
         <source>&amp;Flip Horizontal</source>
-        <translation type="unfinished">&amp;Faire une symétrie horizontale</translation>
+        <translation>&amp;Faire une symétrie horizontale</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="947"/>
         <source>Flip current selection horizontally</source>
-        <translation type="unfinished">Faire une symétrie horizontale avec la sélection actuelle</translation>
+        <translation>Faire une symétrie horizontale avec la sélection actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="950"/>
         <source>&amp;Flip Vertical</source>
-        <translation type="unfinished">&amp;Faire une symétrie verticale</translation>
+        <translation>&amp;Faire une symétrie verticale</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="951"/>
         <source>Flip current selection vertically</source>
-        <translation type="unfinished">Faire une symétrie verticale avec la sélection actuelle</translation>
+        <translation>Faire une symétrie verticale avec la sélection actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="954"/>
         <source>Bring to Front</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer au premier plan</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="955"/>
         <source>Shift+Ctrl+]</source>
-        <translation type="unfinished">Shift+Ctrl+]</translation>
+        <translation>Shift+Ctrl+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="956"/>
@@ -1044,12 +1044,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="959"/>
         <source>Bring Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer en avant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="960"/>
         <source>Ctrl+]</source>
-        <translation type="unfinished">Ctrl+]</translation>
+        <translation>Ctrl+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="961"/>
@@ -1059,12 +1059,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="964"/>
         <source>Send Backward</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer en arrière</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="965"/>
         <source>Ctrl+[</source>
-        <translation type="unfinished">Ctrl+[</translation>
+        <translation>Ctrl+[</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="966"/>
@@ -1074,12 +1074,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="969"/>
         <source>Send to Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer en arrière-plan</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="970"/>
         <source>Shift+Ctrl+[</source>
-        <translation type="unfinished"></translation>
+        <translation>Shift+Ctrl+[</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="971"/>
@@ -1089,87 +1089,87 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="979"/>
         <source>&amp;Group</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Grouper</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="980"/>
         <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="981"/>
         <source>Group multiple items</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grouper les multiples éléments</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="984"/>
         <source>&amp;Show All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Montrer tous les calques</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="985"/>
         <source>Show all the available layers for the current view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Montrer tous les calques disponibles pour la vue actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="988"/>
         <source>&amp;Hide All Layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Masquer tous les calques</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="989"/>
         <source>Hide all the layers of the current view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Masquer tous les calques de la vue actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="999"/>
         <source>&amp;Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Zoom en avant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1000"/>
         <source>Ctrl++</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl++</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1001"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zoomer en avant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1007"/>
         <source>Ctrl+=</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+=</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1011"/>
         <source>&amp;Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Zoomer en arrière</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1012"/>
         <source>Ctrl+-</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+-</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1013"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zoomer en arrière</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1016"/>
         <source>&amp;Fit in Window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Adapter à la taille de la fenêtre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1017"/>
         <source>Ctrl+0</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1018"/>
         <source>Fit in window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Adapter à la taille de la fenêtre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1021"/>
@@ -1179,7 +1179,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1022"/>
         <source>Shift+Ctrl+0</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Shift+Ctrl+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1023"/>
@@ -1189,92 +1189,92 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1026"/>
         <source>&amp;Show Breadboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Montrer la platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1027"/>
         <source>Ctrl+1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1028"/>
         <source>Show the breadboard view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Montrer la vue de la platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1031"/>
         <source>&amp;Show Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Montrer la schématique</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1032"/>
         <source>Ctrl+2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1033"/>
         <source>Show the schematic view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Montrer la vue schématique</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1036"/>
         <source>&amp;Show PCB</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Montrer le circuit imprimé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1037"/>
         <source>Ctrl+3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+3</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1038"/>
         <source>Show the PCB view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Montrer la vue circuit imprimé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1043"/>
         <source>&amp;Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Minimiser</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1044"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1045"/>
         <source>Minimize current window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minimizer la fenêtre actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1057"/>
         <source>Debugger Output</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sortir du débuggeur</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1063"/>
         <source>Learning Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Apprendre Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1064"/>
         <source>Ctrl+?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1065"/>
         <source>Open Fritzing help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ouvrir l&apos;aide de Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1068"/>
         <source>Example Projects</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exemples de projet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1069"/>
         <source>Open Fritzing examples</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ouvrir les exemples Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1072"/>
