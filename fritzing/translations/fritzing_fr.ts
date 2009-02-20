@@ -438,7 +438,7 @@
     <message>
         <location filename="../src/htmlinfoview.cpp" line="299"/>
         <source>Jumper wire %1</source>
-        <translation type="unfinished">??????</translation>
+        <translation>Câble aérien %1</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="197"/>
@@ -1100,7 +1100,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="981"/>
         <source>Group multiple items</source>
-        <translation type="unfinished">Grouper les multiples éléments</translation>
+        <translation>Grouper les multiples éléments</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="984"/>
@@ -1345,7 +1345,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1195"/>
         <source>&amp;Trace</source>
-        <translation type="unfinished">&amp;Tracer</translation>
+        <translation>&amp;Tracer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1208"/>
@@ -1380,7 +1380,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1955"/>
         <source>Create a jumper wire from the selected wire</source>
-        <translation type="unfinished">??????</translation>
+        <translation>Créer un câble aérien à partir du câble sélectionné</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1958"/>
@@ -1390,7 +1390,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1959"/>
         <source>When autorouting, do not rip up this wire</source>
-        <translation type="unfinished">??????</translation>
+        <translation>Pendant l&apos;autoroutage, ne pas utiliser ce câble</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1974"/>
@@ -1425,8 +1425,8 @@
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1071"/>
         <source>Routing completed using %n jumper(s)</source>
-        <translation type="unfinished">
-            <numerusform>??????</numerusform>
+        <translation>
+            <numerusform>Routage terminé utilisant %n câble(s) aériens</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1605,7 +1605,7 @@ Quantité<byte value="x9"/>Composant</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1954"/>
         <source>&amp;Create Jumper from Selected Wire(s)</source>
-        <translation type="unfinished">&amp;Créer ????</translation>
+        <translation>&amp;Créer des câbles aériens à partir du ou des câble(s) sélectionné(s)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1963"/>
@@ -1615,17 +1615,17 @@ Quantité<byte value="x9"/>Composant</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1964"/>
         <source>Select all trace wires</source>
-        <translation type="unfinished">?????????</translation>
+        <translation>Sélectionner tous les câbles pistés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1967"/>
         <source>Select All Jumper Wires</source>
-        <translation type="unfinished">Sélectionner ??????</translation>
+        <translation>Sélectionner tous les câbles aériens</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1968"/>
         <source>Select all jumper wires</source>
-        <translation type="unfinished">Sélectionner ??????</translation>
+        <translation>Sélectionner tous les câbles aériens</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1988"/>
@@ -1669,7 +1669,7 @@ Quantité<byte value="x9"/>Composant</translation>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="288"/>
         <source>Create Jumper from this Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un câble aérien à partir de ce câble</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="295"/>
@@ -2394,7 +2394,7 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
     <message>
         <location filename="../src/sketchwidget.cpp" line="2931"/>
         <source>Join Wire</source>
-        <translation type="unfinished">????</translation>
+        <translation>Supprimer un point d&apos;articulation</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="47"/>
@@ -2469,12 +2469,12 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
     <message>
         <location filename="../src/viewlayer.cpp" line="70"/>
         <source>Keep out</source>
-        <translation type="unfinished">????</translation>
+        <translation>rester à l&apos;extérieur</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="71"/>
         <source>Jumper wires</source>
-        <translation type="unfinished">????</translation>
+        <translation>Câbles aériens</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="75"/>
