@@ -88,14 +88,16 @@ public:
 	void clearConnector();
 	void setIgnoreAncestorFlag(bool);
 	bool connectionIsAllowed(ConnectorItem * other);
+	void setChosen(bool);
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
 	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
-	virtual void restoreColor();
 	virtual void setHoverColor();
 	virtual void setNormalColor();
 	virtual void setConnectedColor();
+	virtual void setChosenColor();
+	virtual void restoreColor();
 	void setColorAux(QBrush brush, QPen pen, bool paint);
 	void setColorAux(const QColor &color, bool paint=true);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -114,6 +116,7 @@ protected:
 	QPointF m_terminalPoint;
 	bool m_hidden;
 	bool m_paint;
+	bool m_chosen;
 	ConnectorItem * m_overConnectorItem;
 	qreal m_opacity;
 	bool m_circular;
@@ -131,9 +134,11 @@ public:
 	static QPen normalPen;
 	static QPen hoverPen;
 	static QPen connectedPen;
+	static QPen chosenPen;
 	static QBrush hoverBrush;
 	static QBrush normalBrush;
 	static QBrush connectedBrush;
+	static QBrush chosenBrush;
 };
 
 #endif

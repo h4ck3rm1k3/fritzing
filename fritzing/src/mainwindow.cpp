@@ -55,6 +55,7 @@ $Date$
 
 #include "help/helper.h"
 #include "dockmanager.h"
+#include "group/saveasmoduledialog.h"
 
 #include "fsizegrip.h"
 
@@ -1305,4 +1306,6 @@ void MainWindow::enableCheckUpdates(bool enabled)
 }
 
 void MainWindow::saveAsModule() {
+	SaveAsModuleDialog dialog(m_breadboardGraphicsView, this);
+	int result = dialog.exec();
 }

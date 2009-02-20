@@ -24,44 +24,29 @@ $Date$
 
 ********************************************************************/
 
-#ifndef GROUPITEMBASE_H
-#define GROUPITEMBASE_H
 
-#include <QGraphicsItemGroup>
-#include <QVariant>
-#include <QPainter>
+#ifndef SAVEASMODULEDIALOG_H
+#define SAVEASMODULEDIALOG_H
 
-#include "../itembase.h"
+#include <QDialog>
+#include <QFile>
 
-class GroupItemBase : public ItemBase
+class SaveAsModuleDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	GroupItemBase(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
-
-	void addToGroup(ItemBase *);
-	virtual void syncKinMoved(GroupItemBase *, QPointF newPos);
-	virtual void doneAdding(const LayerHash &);
-
-	void findConnectorsUnder();
-	void saveGeometry();
-	bool itemMoved();
-	void saveInstanceLocation(QXmlStreamWriter &);
-	void moveItem(ViewGeometry &);
-	QRectF boundingRect() const;
-	void collectWireConnectees(QSet<class Wire *> & wires);
-	void collectFemaleConnectees(QSet<ItemBase *> & items);
-
-protected:
-	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-	void addToGroup(ItemBase *, const LayerHash &);
+	SaveAsModuleDialog(class SketchWidget * sketchWidget, QWidget *parent = 0);
+	~SaveAsModuleDialog();
 
 
 protected:
-	QRectF m_boundingRect;
-	QList<ItemBase *> m_itemsToAdd;
+	bool eventFilter(QObject *obj, QEvent *);
+	void handleSceneMousePress(QEvent *);
+
+protected:
+	class SketchWidget * m_sketchWidget;
+	QList<class ConnectorItem *> m_externalConnectorItems;
 };
 
-
-#endif
+#endif 

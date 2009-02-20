@@ -20,11 +20,12 @@
 HEADERS += \
 src/group/groupitem.h \
 src/group/groupitembase.h \
-src/group/groupitemkin.h 
+src/group/groupitemkin.h \
+src/group/saveasmoduledialog.h 
  
 SOURCES += \
 src/group/groupitem.cpp \
 src/group/groupitembase.cpp \
-src/group/groupitemkin.cpp 
-
+src/group/groupitemkin.cpp \
+src/group/saveasmoduledialog.cpp
 

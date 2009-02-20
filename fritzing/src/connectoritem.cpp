@@ -38,13 +38,18 @@ $Date$
 QPen ConnectorItem::normalPen(QColor(255,0,0));
 QPen ConnectorItem::hoverPen(QColor(0, 0, 255));
 QPen ConnectorItem::connectedPen(QColor(0, 255, 0));
+QPen ConnectorItem::chosenPen(QColor(255,0,0));
+
 QBrush ConnectorItem::normalBrush(QColor(255,0,0));
 QBrush ConnectorItem::hoverBrush(QColor(0,0,255));
 QBrush ConnectorItem::connectedBrush(QColor(0,255,0));
+QBrush ConnectorItem::chosenBrush(QColor(255,0,0));
+
 
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
+	m_chosen = false;
 	m_ignoreAncestorFlag = false;
 	m_dirty = false;
 	m_opacity = 0.4;
@@ -155,6 +160,11 @@ void ConnectorItem::tempRemove(ConnectorItem * item, bool applyColor) {
 }
 
 void ConnectorItem::restoreColor() {
+	if (m_chosen) {
+		setChosenColor();
+		return;
+	}
+
 	if (m_connectedTo.count() <= 0) {
 		setNormalColor();
 		return;
@@ -171,9 +181,20 @@ void ConnectorItem::setNormalColor() {
 	setColorAux(normalBrush, normalPen, false);
 }
 
+void ConnectorItem::setChosenColor() {
+	setColorAux(chosenBrush, chosenPen, true);
+}
+
 void ConnectorItem::setHoverColor() {
 	setColorAux(hoverBrush, hoverPen, true);
 }
+
+void ConnectorItem::setChosen(bool chosen)
+{
+	m_chosen = chosen;
+	restoreColor();
+}
+
 
 void ConnectorItem::setColorAux(QBrush brush, QPen pen, bool paint) {
 	this->setBrush(brush);
