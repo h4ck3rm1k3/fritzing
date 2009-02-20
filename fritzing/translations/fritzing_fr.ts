@@ -2626,169 +2626,169 @@ Restez à l&apos;écoute.</translation>
     <message>
         <location filename="../src/sketchwidget.cpp" line="391"/>
         <source>loading part</source>
-        <translation type="unfinished">charger le composant</translation>
+        <translation>charger le composant</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="393"/>
         <source>done loading</source>
-        <translation type="unfinished">chargement terminé</translation>
+        <translation>chargement terminé</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="666"/>
         <source>%1 %2</source>
-        <translation type="unfinished">%1 %2</translation>
+        <translation>%1 %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="669"/>
         <source>%1 %2 items</source>
-        <translation type="unfinished">%1 %2 éléments</translation>
+        <translation>%1 %2 éléments</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="924"/>
         <source>Select All</source>
-        <translation type="unfinished">Tout sélectionner</translation>
+        <translation>Tout sélectionner</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="924"/>
         <source>Deselect</source>
-        <translation type="unfinished">Désélectionner</translation>
+        <translation>Désélectionner</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1170"/>
         <source>Add %1</source>
-        <translation type="unfinished">Ajouter %1</translation>
+        <translation>Ajouter %1</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1502"/>
         <source>Move %2 (%1)</source>
-        <translation type="unfinished">Déplacer %2 (%1)</translation>
+        <translation>Déplacer %2 (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1505"/>
         <source>Move %2 items (%1)</source>
-        <translation type="unfinished">Déplacer %2 élements (%1)</translation>
+        <translation>Déplacer %2 élements (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1702"/>
         <source>Select %1</source>
-        <translation type="unfinished">Sélectionner %1</translation>
+        <translation>Sélectionner %1</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1705"/>
         <source>Select %1 items</source>
-        <translation type="unfinished">Sélectionner %1 élements</translation>
+        <translation>Sélectionner %1 élements</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1795"/>
         <source>Disconnect</source>
-        <translation type="unfinished">Déconnecter</translation>
+        <translation>Déconnecter</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1803"/>
         <source>Change</source>
-        <translation type="unfinished">Changer</translation>
+        <translation>Changer</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1807"/>
         <source>Connect</source>
-        <translation type="unfinished">Connecter</translation>
+        <translation>Connecter</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1808"/>
         <source>to %1</source>
-        <translation type="unfinished">à %1</translation>
+        <translation>à %1</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1854"/>
         <source>Create and connect wire</source>
-        <translation type="unfinished">Créer et connecter un câble</translation>
+        <translation>Créer et connecter un câble</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2439"/>
         <source>%3 %2 (%1)</source>
-        <translation type="unfinished">%3 %2 (%1)</translation>
+        <translation>%3 %2 (%1)</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3978"/>
         <source>Rotate</source>
-        <translation type="unfinished">Rotation</translation>
+        <translation>Rotation</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3978"/>
         <source>Flip</source>
-        <translation type="unfinished">Transformation miroir</translation>
+        <translation>Transformation miroir</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3000"/>
         <source>Shift-click to add a bend point to the wire</source>
-        <translation type="unfinished">Shift-clic pour ajouter un point d&apos;articulation sur le câble</translation>
+        <translation>Shift-clic pour ajouter un point d&apos;articulation sur le câble</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3053"/>
         <source>Shift-click to delete this bend point</source>
-        <translation type="unfinished">Shift-clic pour supprimer un point sur le câble</translation>
+        <translation>Shift-clic pour supprimer un point sur le câble</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3160"/>
         <source>Swapped %1 with module %2</source>
-        <translation type="unfinished">Echanger %1 avec le module %2</translation>
+        <translation>Echanger %1 avec le module %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3172"/>
         <source>Sorry!</source>
-        <translation type="unfinished">Oups!</translation>
+        <translation>Oups!</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3227"/>
         <source>Change %1 color from %2 to %3</source>
-        <translation type="unfinished">Change la couleur de %1 de %2 à %3</translation>
+        <translation>Passer la couleur de %1 du %2 au %3</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3233"/>
         <source>Change color of %1 wires to %2</source>
-        <translation type="unfinished">Changer la couleur de %1 câbles en %2</translation>
+        <translation>Changer la couleur de %1 câbles en %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1246"/>
         <source>Selection</source>
-        <translation type="unfinished">Sélection</translation>
+        <translation>Sélection</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3134"/>
         <source>Change %1 label to &apos;%2&apos;</source>
-        <translation type="unfinished">Changer l&apos;étiquette %1 en &apos;%2&apos;</translation>
+        <translation>Changer l&apos;étiquette %1 en &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3176"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation type="unfinished">Aucun composant ayant ces charactéristiques n&apos;existe.
+        <translation>Aucun composant ayant ces charactéristiques n&apos;existe.
 Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entre des propriétés qui existent</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3277"/>
         <source>Change %1 width from %2 to %3</source>
-        <translation type="unfinished">Changer la largeur %1 de %2 en %3 </translation>
+        <translation>Changer la largeur %1 de %2 en %3 </translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3283"/>
         <source>Change width of %1 wires to %2</source>
-        <translation type="unfinished">Changer la largeur de %1 câbles en %2</translation>
+        <translation>Appliquer une largeur à %1 câbles de %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3971"/>
         <source>Move label &apos;%1&apos;</source>
-        <translation type="unfinished">Déplacer l&apos;étiquette &apos;%1&apos;</translation>
+        <translation>Déplacer l&apos;étiquette &apos;%1&apos;</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3978"/>
         <source>%1 label &apos;%2&apos;</source>
-        <translation type="unfinished">%1 étiquette &apos;%2&apos;</translation>
+        <translation>%1 étiquette &apos;%2&apos;</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="4004"/>
         <source>Resize Note</source>
-        <translation type="unfinished">Redimensionner l&apos;aide-mémoire</translation>
+        <translation>Redimensionner l&apos;aide-mémoire</translation>
     </message>
 </context>
 <context>
@@ -2796,72 +2796,72 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/prefsdialog.cpp" line="43"/>
         <source>English - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Anglais - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="44"/>
         <source>French - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Français - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="45"/>
         <source>German - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Allemand - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="46"/>
         <source>Spanish - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Espagnol - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="49"/>
         <source>Dutch - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hollandais - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="50"/>
         <source>Russian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Russe - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="51"/>
         <source>Italian - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Italien - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="52"/>
         <source>Chinese Simp. - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinois Simpl. - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="53"/>
         <source>Chinese Trad. - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinois trad. - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="54"/>
         <source>Japanese - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Japonais - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="55"/>
         <source>Hebrew - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hébreux - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="56"/>
         <source>Arabic - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabe - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="57"/>
         <source>Portuguese - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugais - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="58"/>
         <source>Hindi - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hindi - %1</translation>
     </message>
 </context>
 <context>
@@ -2869,22 +2869,22 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/version/updatedialog.cpp" line="54"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="84"/>
         <source>No new versions found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aucune nouvelle version trouvée.</translation>
     </message>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="141"/>
         <source>Checking...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérification en cours...</translation>
     </message>
     <message>
         <location filename="../src/version/updatedialog.cpp" line="169"/>
         <source>Sorry, unable to retrieve update info</source>
-        <translation type="unfinished"></translation>
+        <translation>Désolé, impossibilité de récupérer des informations de mise à jour</translation>
     </message>
 </context>
 <context>
@@ -2892,17 +2892,17 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/viewswitcher.cpp" line="258"/>
         <source>Breadboard</source>
-        <translation type="unfinished">Platine d&apos;essai</translation>
+        <translation>Platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/viewswitcher.cpp" line="259"/>
         <source>Schematic</source>
-        <translation type="unfinished"></translation>
+        <translation>Schématique</translation>
     </message>
     <message>
         <location filename="../src/viewswitcher.cpp" line="260"/>
         <source>PCB</source>
-        <translation type="unfinished">Circuit imprimé</translation>
+        <translation>Circuit imprimé</translation>
     </message>
 </context>
 <context>
@@ -2910,57 +2910,57 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/wire.cpp" line="876"/>
         <source>blue</source>
-        <translation type="unfinished">bleu</translation>
+        <translation>bleu</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="877"/>
         <source>red</source>
-        <translation type="unfinished">rouge</translation>
+        <translation>rouge</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="878"/>
         <source>black</source>
-        <translation type="unfinished">noir</translation>
+        <translation>noir</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="879"/>
         <source>yellow</source>
-        <translation type="unfinished">jaune</translation>
+        <translation>jaune</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="880"/>
         <source>green</source>
-        <translation type="unfinished">vert</translation>
+        <translation>vert</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="881"/>
         <source>grey</source>
-        <translation type="unfinished">gris</translation>
+        <translation>gris</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="882"/>
         <source>white</source>
-        <translation type="unfinished">blanc</translation>
+        <translation>blanc</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="883"/>
         <source>orange</source>
-        <translation type="unfinished">orange</translation>
+        <translation>orange</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="861"/>
         <source>thin</source>
-        <translation type="unfinished"></translation>
+        <translation>fin</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="862"/>
         <source>medium</source>
-        <translation type="unfinished"></translation>
+        <translation>moyen</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="863"/>
         <source>wide</source>
-        <translation type="unfinished"></translation>
+        <translation>épais</translation>
     </message>
 </context>
 </TS>
