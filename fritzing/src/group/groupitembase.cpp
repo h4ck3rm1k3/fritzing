@@ -27,8 +27,10 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 #include "groupitembase.h"
 #include "../connectoritem.h"
 #include "../debugdialog.h"
+#include "../wire.h"
 
 #include <QTimer>
+#include <QSet>
 
 GroupItemBase::GroupItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: ItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
@@ -151,7 +153,14 @@ void GroupItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 
-		itemBase->collectWireConnectees(wires);
+		QSet<Wire *> tempWires;
+		itemBase->collectWireConnectees(tempWires);
+		foreach (Wire * wire, tempWires) {
+			if (this->commonAncestorItem(wire) == NULL) {
+				wires.insert(wire);
+				break;
+			}
+		}
 	}
 }
 

@@ -45,6 +45,7 @@ $Date$
 //	undo group
 //	delete
 //	undo delete
+//	rotate group: connected external wires don't updateConnections
 
 //	** layerkin
 //		** pcb view: group part in bb view, items not visually synced in pcb view
