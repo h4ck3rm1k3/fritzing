@@ -190,6 +190,7 @@ void PartsEditorConnectorsView::aboutToSave() {
 			QString connectorsLayerId = findConnectorLayerId(svgDom);
 			QDomElement elem = svgDom->documentElement();
 			bool somethingChanged = removeConnectorsIfNeeded(elem);
+			somethingChanged |= updateTerminalPoints( svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 			somethingChanged |= addConnectorsIfNeeded(svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 
 			if(somethingChanged) {
@@ -234,33 +235,79 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 		changed = true;
 	}
 
+
+
+	return changed;
+}
+
+bool PartsEditorConnectorsView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
+	QList<PartsEditorConnectorsConnectorItem*> connsWithNewTPs;
+	QStringList tpIdsToRemove;
 	foreach(QGraphicsItem *item, items()) {
 		PartsEditorConnectorsConnectorItem *citem =
 			dynamic_cast<PartsEditorConnectorsConnectorItem*>(item);
 		if(citem) {
 			TerminalPointItem *tp = citem->terminalPointItem();
 			if(tp && tp->hasBeenMoved()) {
+				connsWithNewTPs << citem;
 				QString connId = citem->connector()->connectorSharedID();
-				QRectF rectTPAux = tp->boundingRect();
-				QPointF posTPAux = QPointF(
-					rectTPAux.x()+rectTPAux.width()/2,
-					rectTPAux.y()+rectTPAux.height()/2
-				);
-				qreal halfTPSize = 0.001; // a tiny rectangle
-				QRectF tpointRect(
-					tp->mapToParent(posTPAux).x()-halfTPSize,
-					tp->mapToParent(posTPAux).y()-halfTPSize,
-					halfTPSize*2, halfTPSize*2
-				);
-				QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
-				addRectToSvg(svgDom,connId+"terminal",svgTpRect, connectorsLayerId);
-
-				changed |= true;
+				tpIdsToRemove << connId+"terminal";
 			}
 		}
 	}
+	QDomElement elem = svgDom->documentElement();
+	removeTerminalPoints(tpIdsToRemove,elem);
+	addNewTerminalPoints(connsWithNewTPs, svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
 
-	return changed;
+	return !tpIdsToRemove.isEmpty();
+}
+
+void PartsEditorConnectorsView::removeTerminalPoints(const QStringList &tpIdsToRemove, QDomElement &docElem) {
+	QDomNode n = docElem.firstChild();
+	while(!n.isNull()) {
+		bool doRemove = false;
+		QDomElement e = n.toElement();
+		if(!e.isNull()) {
+			QString id = e.attribute("id");
+			if(tpIdsToRemove.contains(id)) {
+				doRemove = true;
+			} else if(n.hasChildNodes()) {
+				removeTerminalPoints(tpIdsToRemove,e);
+			}
+		}
+		QDomElement e2;
+		if(doRemove) {
+			e2 = e;
+		}
+		n = n.nextSibling();
+		if(doRemove) {
+			e2.removeAttribute("id");
+		}
+	}
+}
+
+void PartsEditorConnectorsView::addNewTerminalPoints(
+			const QList<PartsEditorConnectorsConnectorItem*> &connsWithNewTPs, QDomDocument *svgDom,
+			const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId
+) {
+	foreach(PartsEditorConnectorsConnectorItem* citem, connsWithNewTPs) {
+		QString connId = citem->connector()->connectorSharedID();
+		TerminalPointItem *tp = citem->terminalPointItem();
+		Q_ASSERT(tp);
+		QRectF rectTPAux = tp->boundingRect();
+		QPointF posTPAux = QPointF(
+			rectTPAux.x()+rectTPAux.width()/2,
+			rectTPAux.y()+rectTPAux.height()/2
+		);
+		qreal halfTPSize = 0.001; // a tiny rectangle
+		QRectF tpointRect(
+			tp->mapToParent(posTPAux).x()-halfTPSize,
+			tp->mapToParent(posTPAux).y()-halfTPSize,
+			halfTPSize*2, halfTPSize*2
+		);
+		QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
+		addRectToSvg(svgDom,connId+"terminal",svgTpRect, connectorsLayerId);
+	}
 }
 
 bool PartsEditorConnectorsView::removeConnectorsIfNeeded(QDomElement &docElem) {

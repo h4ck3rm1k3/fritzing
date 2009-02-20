@@ -73,8 +73,14 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void setItemProperties();
 		bool isSupposedToBeRemoved(const QString& id);
 
-		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &defaultSize, const QRectF &viewBox, const QString &connectorsLayerId);
+		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
 		bool removeConnectorsIfNeeded(QDomElement &docEle);
+		bool updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
+		void removeTerminalPoints(const QStringList &tpIdsToRemove, QDomElement &docElem);
+		void addNewTerminalPoints(
+				const QList<PartsEditorConnectorsConnectorItem*> &connsWithNewTPs, QDomDocument *svgDom,
+				const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId
+		);
 		QRectF mapFromSceneToSvg(const QRectF &sceneRect, const QSizeF &defaultSize, const QRectF &viewBox);
 		void addRectToSvg(QDomDocument* svgDom, const QString &id, const QRectF &rect, const QString &connectorsLayerId);
 		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);
