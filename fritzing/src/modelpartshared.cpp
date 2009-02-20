@@ -231,7 +231,7 @@ void ModelPartShared::setModuleID(QString moduleID) {
 const QList<ConnectorShared *> ModelPartShared::connectors() {
 	return m_connectorSharedHash.values();
 }
-void ModelPartShared::setConnectorsStuff(QList<ConnectorShared *> connectors) {
+void ModelPartShared::setConnectorsShared(QList<ConnectorShared *> connectors) {
 	for (int i = 0; i < connectors.size(); i++) {
 		ConnectorShared* cs = connectors[i];
 		m_connectorSharedHash[cs->id()] = cs;
@@ -304,7 +304,7 @@ bool ModelPartShared::ignoreTerminalPoints() {
 
 void ModelPartShared::copy(ModelPartShared* other) {
 	setAuthor(other->author());
-	setConnectorsStuff(other->connectors());
+	setConnectorsShared(other->connectors());
 	setDate(other->date());
 	setLabel(other->label());
 	setDescription(other->description());

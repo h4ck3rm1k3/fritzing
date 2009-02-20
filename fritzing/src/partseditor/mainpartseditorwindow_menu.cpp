@@ -73,7 +73,7 @@ void MainPartsEditorWindow::saveAsAux(const QString & fileName) {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     ModelPartStuff * stuff = m_partInfoWidget->modelPartStuff();
-    stuff->setConnectorsStuff(m_connWidget->connectorsInfo());
+    stuff->setConnectorsShared(m_connWidget->connectorsInfo());
     m_sketchModel->root()->setModelPartStuff(stuff);
 	m_sketchModel->save(fileName, true);
 

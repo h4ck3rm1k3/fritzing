@@ -527,31 +527,31 @@ void PartsEditorMainWindow::updateDateAndAuthor() {
 }
 
 ModelPartShared* PartsEditorMainWindow::modelPartShared() {
-	ModelPartShared* stuff = new ModelPartShared();
+	ModelPartShared* shared = new ModelPartShared();
 
 	if(m_moduleId.isNull() || m_moduleId.isEmpty()) {
 		m_moduleId = getRandText();
 	}
 
-	stuff->setModuleID(m_moduleId);
-	stuff->setUri(m_uri);
-	stuff->setVersion(m_version);
+	shared->setModuleID(m_moduleId);
+	shared->setUri(m_uri);
+	shared->setVersion(m_version);
 
-	stuff->setAuthor(m_author->text());
-	stuff->setTitle(m_title->text());
-	stuff->setDate(m_createdOn->text());
-	stuff->setLabel(m_label->text());
+	shared->setAuthor(m_author->text());
+	shared->setTitle(m_title->text());
+	shared->setDate(m_createdOn->text());
+	shared->setLabel(m_label->text());
 	//stuff->setTaxonomy(m_taxonomy->text());
-	stuff->setDescription(m_description->text());
+	shared->setDescription(m_description->text());
 
 	QStringList tags = m_tags->text().split(", ");
-	stuff->setTags(tags);
-	stuff->setProperties(m_properties->hash());
+	shared->setTags(tags);
+	shared->setProperties(m_properties->hash());
 
 	m_connsViews->aboutToSave();
-	stuff->setConnectorsStuff(m_connsInfo->connectorsStuffs());
+	shared->setConnectorsShared(m_connsInfo->connectorsShared());
 
-	return stuff;
+	return shared;
 }
 
 void PartsEditorMainWindow::cleanUp() {

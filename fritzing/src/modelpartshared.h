@@ -73,7 +73,7 @@ public:
 	void setTaxonomy(QString taxonomy);
 
 	const QList<class ConnectorShared *> connectors();
-	void setConnectorsStuff(QList<class ConnectorShared *> connectors);
+	void setConnectorsShared(QList<class ConnectorShared *> connectors);
 
 	const QStringList &tags();
 	void setTags(const QStringList &tags);

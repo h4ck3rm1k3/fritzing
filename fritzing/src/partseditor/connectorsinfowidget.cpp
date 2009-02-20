@@ -307,8 +307,8 @@ void ConnectorsInfoWidget::informEditionCompleted() {
 	emit editionCompleted();
 }
 
-const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsStuffs() {
-	QList<ConnectorShared *> connectorsStuff;
+const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsShared() {
+	QList<ConnectorShared *> connectorsShared;
 	for(int i=0; i<m_connsInfo.size(); i++) {
 		SingleConnectorInfoWidget *sci = m_connsInfo[i];
 		QString id = sci->id();
@@ -330,9 +330,9 @@ const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsStuffs() {
 			}
 		}*/
 
-		connectorsStuff << cs;
+		connectorsShared << cs;
 	}
-	return connectorsStuff;
+	return connectorsShared;
 }
 
 // If we're reloading an image, clear mismatching connectors related exclusively to that view
