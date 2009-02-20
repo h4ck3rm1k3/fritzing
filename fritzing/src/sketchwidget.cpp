@@ -833,7 +833,7 @@ void SketchWidget::moveItem(long id, ViewGeometry & viewGeometry) {
 }
 
 void SketchWidget::rotateItem(long id, qreal degrees) {
-	DebugDialog::debug(QString("rotating %1 %2").arg(id).arg(degrees) );
+	//DebugDialog::debug(QString("rotating %1 %2").arg(id).arg(degrees) );
 
 	if (!isVisible()) return;
 
@@ -1744,9 +1744,10 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
 	// sort by z
     qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
 	foreach (ItemBase * itemBase, itemBases) {
-		groupItem->addToGroup(itemBase, m_viewLayers);
+		groupItem->addToGroup(itemBase);
 	}	
 	groupItem->doneAdding(m_viewLayers);
+	groupItem->setSelected(true);
 
 	return modelPart;
 }

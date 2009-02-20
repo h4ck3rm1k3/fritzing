@@ -26,9 +26,9 @@ $Date$
 
 // TODO:
 //	** layerkin
-//		pcb view: group part in bb view, items not visually synced in pcb view
-//  scene jumps when creating a new group--triggered by changing the location of the chief item
-//  late updates (paint) after flip/rotate other?
+//		** pcb view: group part in bb view, items not visually synced in pcb view
+//  ** scene jumps when creating a new group--triggered by changing the location of the chief item
+//  ** late updates (paint) after flip/rotate, other?
 //  ** allow mouse events to external connections
 //		** don't allow wires to connect within the group
 //		drag doesn't keep wire connections
@@ -69,12 +69,7 @@ QString GroupItem::moduleIDName = "GroupModuleID";
 GroupItem::GroupItem( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
-}
-
-void GroupItem::addToGroup(ItemBase * itemBase, const LayerHash & layerHash) 
-{
-	Q_UNUSED(layerHash);
-	m_itemsToAdd.append(itemBase);
+	m_blockSync = false;
 }
 
 const QList<ItemBase *> & GroupItem::layerKin() {
@@ -82,6 +77,8 @@ const QList<ItemBase *> & GroupItem::layerKin() {
 }
 
 void GroupItem::syncKinMoved(GroupItemBase * groupItemBase, QPointF newPos) {
+	if (m_blockSync) return;
+
 	if (groupItemBase != this) {
 		setPos(newPos);
 	}
@@ -98,7 +95,7 @@ QVariant GroupItem::itemChange(GraphicsItemChange change, const QVariant &value)
 	    		this->syncKinMoved(this, value.toPointF());
 				break;
 			case ItemSelectedChange:
-				DebugDialog::debug(QString("chief sel change %1 %2").arg(this->id()).arg(value.toBool()));
+				//DebugDialog::debug(QString("chief sel change %1 %2").arg(this->id()).arg(value.toBool()));
 				break;
 			default:
 				break;
@@ -124,41 +121,36 @@ void GroupItem::flipItem(Qt::Orientations orientation) {
 
 void GroupItem::doneAdding(const LayerHash & layerHash) 
 {
-	// centers the parent within the bounding rect of the group
-	// fixes rotation, among other things
-
-	QRectF itemsBoundingRect;
-	foreach(ItemBase * item, m_itemsToAdd) {
-		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
-                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
-
-	}
-
-	this->setPos(itemsBoundingRect.center());
-	saveGeometry();
-
+	qint64 id = m_id + 1;
 	foreach(ItemBase * itemBase, m_itemsToAdd) {
-		GroupItemBase::addToGroup(itemBase, layerHash);
-
-		qint64 id = m_id + 1;
 		foreach (ItemBase * lkpi, itemBase->layerKin()) {
 			bool gotOne = false;
 			foreach (ItemBase * mylkpi, layerKin()) {
 				if (lkpi->viewLayerID() == mylkpi->viewLayerID()) {
-					dynamic_cast<GroupItemKin *>(mylkpi)->addToGroup(lkpi, layerHash);
+					dynamic_cast<GroupItemKin *>(mylkpi)->addToGroup(lkpi);
 					gotOne = true;
 					break;
 				}
 			}
 			if (!gotOne) {
 				GroupItemKin * mylkpi = new GroupItemKin(m_modelPart, m_viewIdentifier, m_viewGeometry, id++, NULL);
+				mylkpi->setViewLayerID(lkpi->viewLayerID(), layerHash);
 				mylkpi->setLayerKinChief(this);
 				scene()->addItem(mylkpi);
 				m_layerKin.append(mylkpi);
-				mylkpi->addToGroup(lkpi, layerHash);
+				mylkpi->addToGroup(lkpi);
 			}
 		}
 	}
 
-	m_itemsToAdd.clear();
+	syncKinMoved(this, this->pos());
+
+	m_blockSync = true;				// prevent recursive moves when layerkin are moved during doneAdding
+	GroupItemBase::doneAdding(layerHash);
+	foreach (ItemBase * kin, m_layerKin) {
+		dynamic_cast<GroupItemBase *>(kin)->doneAdding(layerHash);
+	}
+	m_blockSync = false;
+
+	syncKinMoved(this, this->pos());
 }

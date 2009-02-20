@@ -40,31 +40,25 @@ class GroupItemBase : public ItemBase
 public:
 	GroupItemBase(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
-	virtual void addToGroup(ItemBase *, const LayerHash &);
+	void addToGroup(ItemBase *);
 	virtual void syncKinMoved(GroupItemBase *, QPointF newPos);
+	virtual void doneAdding(const LayerHash &);
 
 	void findConnectorsUnder();
 	void saveGeometry();
 	bool itemMoved();
 	void saveInstanceLocation(QXmlStreamWriter &);
 	void moveItem(ViewGeometry &);
-	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
+	QRectF boundingRect() const;
 
 protected:
-	class FGraphicsItemGroup * m_graphicsItemGroup;
-
-	friend class FGraphicsItemGroup;	
-};
-
-class FGraphicsItemGroup : public QGraphicsItemGroup
-{
-public:
-	FGraphicsItemGroup();
-
-protected:
-	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+	void addToGroup(ItemBase *, const LayerHash &);
 
+
+protected:
+	QRectF m_boundingRect;
+	QList<ItemBase *> m_itemsToAdd;
 };
 
 

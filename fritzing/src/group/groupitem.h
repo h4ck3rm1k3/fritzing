@@ -35,7 +35,6 @@ class GroupItem : public GroupItemBase
 public:
 	GroupItem(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
-	void addToGroup(ItemBase *, const LayerHash &);
 	void doneAdding(const LayerHash &);
 	const QList<ItemBase *> & layerKin();
 	void syncKinMoved(GroupItemBase *, QPointF newPos);
@@ -50,7 +49,7 @@ public:
 
 protected:
 	QList<ItemBase *> m_layerKin;
-	QList<ItemBase *> m_itemsToAdd;
+	bool m_blockSync;
 	
 };
 

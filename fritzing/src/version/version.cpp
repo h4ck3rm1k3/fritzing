@@ -27,7 +27,7 @@ $Date$
 #include "version.h"
 								
 #include <QString>
-#include <QStringList>
+#include <QStringList>		
 									
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("1");

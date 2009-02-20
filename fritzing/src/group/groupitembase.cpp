@@ -33,17 +33,19 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 GroupItemBase::GroupItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: ItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	this->setHandlesChildEvents(true);
+
 	this->setCanFlipHorizontal(true);
 	this->setCanFlipVertical(true);
 
 	this->setVisible(true);
 	this->setFlag(QGraphicsItem::ItemIsSelectable);
+	this->setPos(viewGeometry.loc());
+}
 
-	m_graphicsItemGroup = new FGraphicsItemGroup();
-	m_graphicsItemGroup->setParentItem(this);
-	m_graphicsItemGroup->setVisible(true);
-	m_graphicsItemGroup->setFlag(QGraphicsItem::ItemIsSelectable);
-	m_graphicsItemGroup->setPos(QPointF(0,0));
+void GroupItemBase::addToGroup(ItemBase * itemBase) 
+{
+	m_itemsToAdd.append(itemBase);
 }
 
 void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
@@ -59,7 +61,6 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 		setCanFlipVertical(false);
 	}
 
-
 	foreach (QGraphicsItem * item, item->childItems()) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
@@ -67,7 +68,17 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 		connectorItem->setIgnoreAncestorFlag(true);
 	}
 
-	m_graphicsItemGroup->addToGroup(item);
+	item->setSelected(false);
+
+    QTransform oldSceneMatrix = item->sceneTransform();
+    item->setPos(mapFromItem(item, 0, 0));
+    item->setParentItem(this);
+    item->setTransform(oldSceneMatrix
+                       * sceneTransform().inverted()
+                       * QTransform().translate(-item->x(), -item->y()));
+
+	prepareGeometryChange();
+	update();
 }
 
 void GroupItemBase::findConnectorsUnder() {
@@ -93,52 +104,45 @@ void GroupItemBase::syncKinMoved(GroupItemBase * originator, QPointF newPos) {
 	Q_UNUSED(originator);
 }
 
-QVariant GroupItemBase::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
-{
-	switch (change) {
-		case QGraphicsItem::ItemSelectedChange:
-		case QGraphicsItem::ItemTransformChange:
-		case QGraphicsItem::ItemTransformHasChanged:
-			m_graphicsItemGroup->update();
-			break;
-		default:
-			DebugDialog::debug(QString("group item base change %1 %2").arg(change).arg(value.value<QString>()));
-			break;
+void GroupItemBase::doneAdding(const LayerHash & layerHash) {
+
+	// centers the parent within the bounding rect of the group
+	// fixes rotation, among other things
+	QRectF itemsBoundingRect;
+	foreach(ItemBase * item, m_itemsToAdd) {
+		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
+                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
+
 	}
 
-	return ItemBase::itemChange(change, value);
-}
+	m_boundingRect.setRect(0, 0, itemsBoundingRect.width(), itemsBoundingRect.height());
 
-//////////////////////////////////////////////////
+	DebugDialog::debug(QString("items bounding rect  "), itemsBoundingRect);
 
-FGraphicsItemGroup::FGraphicsItemGroup() 
-	: QGraphicsItemGroup()
-{
-}
+	this->setPos(itemsBoundingRect.topLeft());
+	saveGeometry();
 
-QVariant FGraphicsItemGroup::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value)
-{
-	switch (change) {
-		case QGraphicsItem::ItemSelectedChange:
-			//DebugDialog::debug(QString("fgig item change %1").arg(value.toBool()));
-			if (value.toBool()) {
-				parentItem()->setSelected(true);
-				QVariant variant((bool) false);
-				return variant;
-			}
-			break;
-		default:
-			break;
+	foreach(ItemBase * itemBase, m_itemsToAdd) {
+		addToGroup(itemBase, layerHash);
 	}
 
-	return QGraphicsItemGroup::itemChange(change, value);
+	DebugDialog::debug(QString("\tlayer %1").arg(ViewLayer::viewLayerNameFromID(m_viewLayerID)));
+
+	m_itemsToAdd.clear();
 }
 
+void GroupItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	if (m_hidden) return;
 
-void FGraphicsItemGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-	Q_UNUSED(widget);
-    if (parentItem()->isSelected()  && !dynamic_cast<GroupItemBase *>(parentItem())->hidden()) {
-		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
+    if (option->state & QStyle::State_Selected) {	
+		// draw this first because otherwise it seems to draw a dashed line down the middle
+        qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
     }
+	ItemBase::paint(painter, option, widget);
 }
+
+QRectF GroupItemBase::boundingRect() const
+{
+	return m_boundingRect;
+}
+
