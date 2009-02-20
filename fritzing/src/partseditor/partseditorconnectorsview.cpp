@@ -251,15 +251,31 @@ bool PartsEditorConnectorsView::updateTerminalPoints(QDomDocument *svgDom, const
 			if(tp && tp->hasBeenMoved()) {
 				connsWithNewTPs << citem;
 				QString connId = citem->connector()->connectorSharedID();
-				tpIdsToRemove << connId+"terminal";
+				QString terminalId = connId+"terminal";
+				tpIdsToRemove << terminalId;
+				updateSvgIdLayer(connId, terminalId, connectorsLayerId);
 			}
 		}
 	}
 	QDomElement elem = svgDom->documentElement();
 	removeTerminalPoints(tpIdsToRemove,elem);
 	addNewTerminalPoints(connsWithNewTPs, svgDom, sceneViewBox, svgViewBox, connectorsLayerId);
-
 	return !tpIdsToRemove.isEmpty();
+}
+
+void PartsEditorConnectorsView::updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId) {
+	foreach(Connector *conn, m_item->connectors()) {
+		foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
+			if(conn->connectorSharedID() == connId) {
+				sil->m_terminalId = terminalId;
+				ViewLayer::ViewLayerID viewLayerID =
+					ViewLayer::viewLayerIDFromXmlString(connectorsLayerId);
+				if(viewLayerID != ViewLayer::UnknownLayer) {
+					sil->m_viewLayerID = viewLayerID;
+				}
+			}
+		}
+	}
 }
 
 void PartsEditorConnectorsView::removeTerminalPoints(const QStringList &tpIdsToRemove, QDomElement &docElem) {

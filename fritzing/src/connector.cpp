@@ -157,8 +157,8 @@ void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifie
 }
 
 void Connector::writeTerminalIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString terminalId) {
-        if((view == ItemBase::BreadboardView || view == ItemBase::SchematicView)
-            &&
+        if(/*(view == ItemBase::BreadboardView || view == ItemBase::SchematicView)
+            &&*/
            (!terminalId.isNull() && !terminalId.isEmpty()) ) {
 		writer.writeAttribute("terminalId",terminalId);
 	} else {
@@ -222,25 +222,25 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 	// this code is a bit more viewish than modelish...
 
 	Q_UNUSED(moduleID);
-	
+
 	if (m_connectorShared == NULL) return false;
-	
+
 	SvgIdLayer * svgIdLayer = m_connectorShared->fullPinInfo(viewIdentifier, viewLayerID);
 	if (svgIdLayer == NULL) {
 		return false;
 	}
-	
-	
+
+
 	if (svgIdLayer->m_processed) {
 		if (!svgIdLayer->m_visible) return false;
-	
+
 		connectorRect = svgIdLayer->m_rect;
 		terminalPoint = svgIdLayer->m_point;
 	}
 	else {
-	
+
 		svgIdLayer->m_processed = true;
-	
+
 		QString connectorID = svgIdLayer->m_svgId; // + "pin" ;
 
 		//DebugDialog::debug(QString("bounds on element %1").arg(connectorID) );
