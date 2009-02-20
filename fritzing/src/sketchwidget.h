@@ -252,7 +252,7 @@ protected:
 	ViewLayer::ViewLayerID getViewLayerID(ModelPart *);
 	ItemBase * overSticky(ItemBase *);
 	virtual void setNewPartVisible(ItemBase *);
-	virtual void collectFemaleConnectees(PaletteItem *);
+	virtual void collectFemaleConnectees(ItemBase *);
 	virtual void findConnectorsUnder(ItemBase * item);
 
 	bool currentlyInfoviewed(ItemBase *item);

@@ -190,6 +190,7 @@ protected slots:
 
 	void saveBundledSketch();
 	void loadBundledSketch(const QString &fileName);
+	void saveAsModule();
 
 	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
@@ -357,6 +358,7 @@ protected:
 	QAction *m_pageSetupAct;
 	QAction *m_printAct;
 	QAction *m_saveAsBundledAct;
+	QAction *m_saveAsModuleAct;
 
 	// Export Menu
 	QMenu *m_exportMenu;

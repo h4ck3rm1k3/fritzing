@@ -707,6 +707,11 @@ void MainWindow::createFileMenuActions() {
 	m_saveAsBundledAct->setStatusTip(tr("Export current sketch and its non-core parts"));
 	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
 
+	m_saveAsModuleAct = new QAction(tr("Save As Module..."), this);
+	m_saveAsModuleAct->setShortcut(tr("Alt+Ctrl+G"));
+	m_saveAsModuleAct->setStatusTip(tr("Export current sketch as a standalone module"));
+	connect(m_saveAsModuleAct, SIGNAL(triggered()), this, SLOT(saveAsModule()));
+
 	m_exportJpgAct = new BetterTriggerAction(tr("to &JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
 	m_exportJpgAct->setStatusTip(tr("Export the current sketch as a JPG image"));
@@ -1106,6 +1111,7 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);
     m_fileMenu->addAction(m_saveAsBundledAct);
+    m_fileMenu->addAction(m_saveAsModuleAct);
     m_fileMenu->addSeparator();
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));
     //m_fileMenu->addAction(m_pageSetupAct);

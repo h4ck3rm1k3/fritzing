@@ -1292,11 +1292,8 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 			}
 		}
 
-		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(chief);
-		if (paletteItem) {
-			collectFemaleConnectees(paletteItem);
-			paletteItem->collectWireConnectees(wires);
-		}
+		collectFemaleConnectees(chief);
+		chief->collectWireConnectees(wires);
 	}
 
 	foreach (Wire * wire, wires) {
@@ -1328,8 +1325,8 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 }
 
-void SketchWidget::collectFemaleConnectees(PaletteItem * paletteItem) {
-	Q_UNUSED(paletteItem);
+void SketchWidget::collectFemaleConnectees(ItemBase * itemBase) {
+	Q_UNUSED(itemBase);
 }
 
 bool SketchWidget::draggingWireEnd() {

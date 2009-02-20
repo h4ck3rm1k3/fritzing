@@ -248,7 +248,7 @@ void PaletteItemBase::updateConnectionsAux() {
 	}
 }
 
-void PaletteItemBase::collectFemaleConnecteesAux(QSet<ItemBase *> & items) {
+void PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
 		if (item == NULL) continue;
@@ -260,10 +260,10 @@ void PaletteItemBase::collectFemaleConnecteesAux(QSet<ItemBase *> & items) {
 
 			items.insert(toConnectorItem->attachedTo());
 		}
-
 	}
 }
-void PaletteItemBase::collectWireConnecteesAux(QSet<Wire *> & wires) {
+
+void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
 		if (item == NULL) continue;

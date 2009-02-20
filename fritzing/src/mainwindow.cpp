@@ -1304,3 +1304,5 @@ void MainWindow::enableCheckUpdates(bool enabled)
 	m_checkForUpdatesAct->setEnabled(enabled);
 }
 
+void MainWindow::saveAsModule() {
+}

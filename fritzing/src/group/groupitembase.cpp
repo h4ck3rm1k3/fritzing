@@ -146,3 +146,21 @@ QRectF GroupItemBase::boundingRect() const
 	return m_boundingRect;
 }
 
+void GroupItemBase::collectWireConnectees(QSet<Wire *> & wires) {
+	foreach (QGraphicsItem * item, childItems()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		itemBase->collectWireConnectees(wires);
+	}
+}
+
+void GroupItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
+	foreach (QGraphicsItem * item, childItems()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		itemBase->collectFemaleConnectees(items);
+	}
+}
+

@@ -144,6 +144,9 @@ public:
 	bool isSwappable();
 	virtual QString toolTip2();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	virtual void collectWireConnectees(QSet<class Wire *> & wires);
+	virtual void collectFemaleConnectees(QSet<ItemBase *> & items);
+
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);

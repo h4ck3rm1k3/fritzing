@@ -1017,3 +1017,11 @@ void ItemBase::transformItem(QTransform currTransf) {
 	updateConnections();
 	update();
 }
+
+void ItemBase::collectWireConnectees(QSet<class Wire *> & wires) {
+	Q_UNUSED(wires);
+}
+
+void ItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
+	Q_UNUSED(items);
+}

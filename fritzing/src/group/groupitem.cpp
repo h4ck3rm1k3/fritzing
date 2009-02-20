@@ -25,13 +25,14 @@ $Date$
 ********************************************************************/
 
 // TODO:
-//	** layerkin
-//		** pcb view: group part in bb view, items not visually synced in pcb view
-//  ** scene jumps when creating a new group--triggered by changing the location of the chief item
-//  ** late updates (paint) after flip/rotate, other?
 //  ** allow mouse events to external connections
 //		** don't allow wires to connect within the group
-//		drag doesn't keep wire connections
+//		** drag doesn't keep wire connections
+//			connect within
+//  female connectors in modules
+//		what happens to ratsnest wires
+//		connect female connectees
+//  traces in modules
 //	save as group
 //		store them in the user folder
 //		create icon
@@ -45,6 +46,10 @@ $Date$
 //	delete
 //	undo delete
 
+//	** layerkin
+//		** pcb view: group part in bb view, items not visually synced in pcb view
+//  ** scene jumps when creating a new group--triggered by changing the location of the chief item
+//  ** late updates (paint) after flip/rotate, other?
 //	** z-order manipulation
 //	** hide/show layer 
 //		** still shows group selection box
@@ -153,4 +158,18 @@ void GroupItem::doneAdding(const LayerHash & layerHash)
 	m_blockSync = false;
 
 	syncKinMoved(this, this->pos());
+}
+
+void GroupItem::collectWireConnectees(QSet<Wire *> & wires) {
+	GroupItemBase::collectWireConnectees(wires);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->collectWireConnectees(wires);
+	}
+}
+
+void GroupItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
+	GroupItemBase::collectFemaleConnectees(items);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->collectFemaleConnectees(items);
+	}
 }

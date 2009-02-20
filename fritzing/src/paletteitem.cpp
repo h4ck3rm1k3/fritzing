@@ -215,16 +215,16 @@ void PaletteItem::updateConnections() {
 }
 
 void PaletteItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
-	collectFemaleConnecteesAux(items);
+	PaletteItemBase::collectFemaleConnectees(items);
 	foreach (ItemBase * lkpi, m_layerKin) {
-		qobject_cast<LayerKinPaletteItem *>(lkpi)->collectFemaleConnecteesAux(items);
+		lkpi->collectFemaleConnectees(items);
 	}
 }
 
 void PaletteItem::collectWireConnectees(QSet<Wire *> & wires) {
-	collectWireConnecteesAux(wires);
+	PaletteItemBase::collectWireConnectees(wires);
 	foreach (ItemBase * lkpi, m_layerKin) {
-		qobject_cast<LayerKinPaletteItem *>(lkpi)->collectWireConnecteesAux(wires);
+		qobject_cast<LayerKinPaletteItem *>(lkpi)->collectWireConnectees(wires);
 	}
 }
 

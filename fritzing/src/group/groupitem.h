@@ -40,6 +40,8 @@ public:
 	void syncKinMoved(GroupItemBase *, QPointF newPos);
 	void rotateItem(qreal degrees);
 	void flipItem(Qt::Orientations orientation);
+	void collectWireConnectees(QSet<class Wire *> & wires);
+	void collectFemaleConnectees(QSet<ItemBase *> & items);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

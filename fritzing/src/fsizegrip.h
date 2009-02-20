@@ -29,16 +29,16 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #define FSIZEGRIP_H_
 
 #include <QSizeGrip>
+#include <QMainWindow>
 
-#include "mainwindow.h"
 
 class FSizeGrip : public QSizeGrip {
 public:
-	FSizeGrip(MainWindow *parent);
+	FSizeGrip(QMainWindow *parent);
 	void rearrange();
 
 protected:
-	MainWindow *m_mainWindow;
+	QMainWindow *m_mainWindow;
 };
 
 #endif /* FSIZEGRIP_H_ */

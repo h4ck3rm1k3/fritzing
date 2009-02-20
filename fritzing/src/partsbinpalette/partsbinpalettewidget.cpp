@@ -34,7 +34,6 @@ $Date$
 #include "partsbinpalettewidget.h"
 #include "partsbincommands.h"
 #include "../fritzingwindow.h"
-#include "../mainwindow.h"
 #include "../misc.h"
 #include "../debugdialog.h"
 #include "../dockmanager.h"

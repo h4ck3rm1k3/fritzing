@@ -50,6 +50,8 @@ public:
 	void saveInstanceLocation(QXmlStreamWriter &);
 	void moveItem(ViewGeometry &);
 	QRectF boundingRect() const;
+	void collectWireConnectees(QSet<class Wire *> & wires);
+	void collectFemaleConnectees(QSet<ItemBase *> & items);
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
