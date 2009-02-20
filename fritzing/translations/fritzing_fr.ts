@@ -623,7 +623,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="428"/>
         <source>Saved &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; Enregistré</translation>
+        <translation>&apos;%1&apos; enregistré</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="469"/>
@@ -634,7 +634,8 @@
         <location filename="../src/mainwindow_menu.cpp" line="480"/>
         <source>Cannot read file  1 %1:
 %2.</source>
-        <translation>Impossibilité de lire le fichier  1 %1:%2.</translation>
+        <translation>Impossibilité de lire le fichier  1 %1:
+%2.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="671"/>
@@ -979,7 +980,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="934"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation>&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre les éléments sélectionnés</translation>
+        <translation>&amp;Pivoter les éléments sélectionnés de 90° dans le sens des aiguilles d&apos;une montre </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="937"/>
@@ -1039,7 +1040,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="956"/>
         <source>Bring selected object(s) to front of their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer au premier plan le(s) objet(s) sélectionné(s) à l&apos;intérieur de leur calque</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="959"/>
@@ -1054,7 +1055,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="961"/>
         <source>Bring selected object(s) forward in their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer en avant le(s) objet(s) sélectionné(s) à l&apos;intérieur de leur calque</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="964"/>
@@ -1069,7 +1070,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="966"/>
         <source>Send selected object(s) back in their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer en arrière le(s) objet(s) sélectionné(s) à l&apos;intérieur de leur calque</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="969"/>
@@ -1084,7 +1085,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="971"/>
         <source>Send selected object(s) to the back of their layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposer en arrière-plan le(s) objet(s) sélectionné(s) à l&apos;intérieur de leur calque</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="979"/>
@@ -1104,72 +1105,72 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="984"/>
         <source>&amp;Show All Layers</source>
-        <translation type="unfinished">&amp;Montrer tous les calques</translation>
+        <translation>&amp;Montrer tous les calques</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="985"/>
         <source>Show all the available layers for the current view</source>
-        <translation type="unfinished">Montrer tous les calques disponibles pour la vue actuelle</translation>
+        <translation>Montrer tous les calques disponibles pour la vue actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="988"/>
         <source>&amp;Hide All Layers</source>
-        <translation type="unfinished">&amp;Masquer tous les calques</translation>
+        <translation>&amp;Masquer tous les calques</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="989"/>
         <source>Hide all the layers of the current view</source>
-        <translation type="unfinished">Masquer tous les calques de la vue actuelle</translation>
+        <translation>Masquer tous les calques de la vue actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="999"/>
         <source>&amp;Zoom In</source>
-        <translation type="unfinished">&amp;Zoom en avant</translation>
+        <translation>&amp;Zoom en avant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1000"/>
         <source>Ctrl++</source>
-        <translation type="unfinished">Ctrl++</translation>
+        <translation>Ctrl++</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1001"/>
         <source>Zoom in</source>
-        <translation type="unfinished">Zoomer en avant</translation>
+        <translation>Zoomer en avant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1007"/>
         <source>Ctrl+=</source>
-        <translation type="unfinished">Ctrl+=</translation>
+        <translation>Ctrl+=</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1011"/>
         <source>&amp;Zoom Out</source>
-        <translation type="unfinished">&amp;Zoomer en arrière</translation>
+        <translation>&amp;Zoomer en arrière</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1012"/>
         <source>Ctrl+-</source>
-        <translation type="unfinished">Ctrl+-</translation>
+        <translation>Ctrl+-</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1013"/>
         <source>Zoom out</source>
-        <translation type="unfinished">Zoomer en arrière</translation>
+        <translation>Zoomer en arrière</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1016"/>
         <source>&amp;Fit in Window</source>
-        <translation type="unfinished">&amp;Adapter à la taille de la fenêtre</translation>
+        <translation>&amp;Adapter l&apos;échelle à la taille de la fenêtre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1017"/>
         <source>Ctrl+0</source>
-        <translation type="unfinished">Ctrl+0</translation>
+        <translation>Ctrl+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1018"/>
         <source>Fit in window</source>
-        <translation type="unfinished">Adapter à la taille de la fenêtre</translation>
+        <translation>Adapter l&apos;échelle à la taille de la fenêtre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1021"/>
@@ -1179,7 +1180,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1022"/>
         <source>Shift+Ctrl+0</source>
-        <translation type="unfinished">Shift+Ctrl+0</translation>
+        <translation>Shift+Ctrl+0</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1023"/>
@@ -1189,122 +1190,122 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1026"/>
         <source>&amp;Show Breadboard</source>
-        <translation type="unfinished">&amp;Montrer la platine d&apos;essai</translation>
+        <translation>&amp;Montrer la platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1027"/>
         <source>Ctrl+1</source>
-        <translation type="unfinished">Ctrl+1</translation>
+        <translation>Ctrl+1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1028"/>
         <source>Show the breadboard view</source>
-        <translation type="unfinished">Montrer la vue de la platine d&apos;essai</translation>
+        <translation>Montrer la vue de la platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1031"/>
         <source>&amp;Show Schematic</source>
-        <translation type="unfinished">&amp;Montrer la schématique</translation>
+        <translation>&amp;Montrer la schématique</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1032"/>
         <source>Ctrl+2</source>
-        <translation type="unfinished">Ctrl+2</translation>
+        <translation>Ctrl+2</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1033"/>
         <source>Show the schematic view</source>
-        <translation type="unfinished">Montrer la vue schématique</translation>
+        <translation>Montrer la vue schématique</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1036"/>
         <source>&amp;Show PCB</source>
-        <translation type="unfinished">&amp;Montrer le circuit imprimé</translation>
+        <translation>&amp;Montrer le circuit imprimé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1037"/>
         <source>Ctrl+3</source>
-        <translation type="unfinished">Ctrl+3</translation>
+        <translation>Ctrl+3</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1038"/>
         <source>Show the PCB view</source>
-        <translation type="unfinished">Montrer la vue circuit imprimé</translation>
+        <translation>Montrer la vue circuit imprimé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1043"/>
         <source>&amp;Minimize</source>
-        <translation type="unfinished">&amp;Minimiser</translation>
+        <translation>&amp;Minimiser</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1044"/>
         <source>Ctrl+M</source>
-        <translation type="unfinished">Ctrl+M</translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1045"/>
         <source>Minimize current window</source>
-        <translation type="unfinished">Minimizer la fenêtre actuelle</translation>
+        <translation>Minimizer la fenêtre actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1057"/>
         <source>Debugger Output</source>
-        <translation type="unfinished">Sortir du débuggeur</translation>
+        <translation>Sortir du débuggeur</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1063"/>
         <source>Learning Fritzing</source>
-        <translation type="unfinished">Apprendre Fritzing</translation>
+        <translation>Apprendre Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1064"/>
         <source>Ctrl+?</source>
-        <translation type="unfinished">Ctrl+?</translation>
+        <translation>Ctrl+?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1065"/>
         <source>Open Fritzing help</source>
-        <translation type="unfinished">Ouvrir l&apos;aide de Fritzing</translation>
+        <translation>Ouvrir l&apos;aide de Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1068"/>
         <source>Example Projects</source>
-        <translation type="unfinished">Exemples de projet</translation>
+        <translation>Exemples de projet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1069"/>
         <source>Open Fritzing examples</source>
-        <translation type="unfinished">Ouvrir les exemples Fritzing</translation>
+        <translation>Ouvrir les exemples Fritzing</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1072"/>
         <source>Parts Reference</source>
-        <translation type="unfinished"></translation>
+        <translation>Documentation des composants</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1073"/>
         <source>Open Parts Reference</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir la documentation des composants</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1076"/>
         <source>First Time Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide pour les débutants</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1077"/>
         <source>Show or Hide First Time Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer  ou masquer l&apos;aide pour les débutants</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1082"/>
         <source>Visit fritzing.org</source>
-        <translation type="unfinished"></translation>
+        <translation>Visiter fritzing.org</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1083"/>
         <source>www.fritzing.org</source>
-        <translation type="unfinished"></translation>
+        <translation>www.fritzing.org</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1090"/>
@@ -1314,82 +1315,82 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1098"/>
         <source>&amp;File</source>
-        <translation type="unfinished">&amp;Fichier</translation>
+        <translation>&amp;Fichier</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1110"/>
         <source>&amp;Export</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exporter</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1129"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Édition</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1149"/>
         <source>&amp;Part</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1175"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vue</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1188"/>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fenêtre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1195"/>
         <source>&amp;Trace</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Tracer</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1208"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Aide</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1734"/>
         <source>Sorry, &quot;%1&quot; has not been implemented yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Désolé, &quot;%1&quot; n&apos;a pas été encore implémenté</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1851"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;export de schéma Fritzing vers le logiciel EAGLE sera bientôt possible. Si vous désirez plus de possibilités d&apos;export vers votre logiciel de CAO électronique favori, vous pouvez vous manifester ou même contribuer au développement.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1946"/>
         <source>&amp;Autoroute</source>
-        <translation>&amp;Autoroute</translation>
+        <translation>&amp;Autoroutage</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1947"/>
         <source>Autoroute...</source>
-        <translation>Autoroute...</translation>
+        <translation>Autoroutage...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1951"/>
         <source>Create a trace from the selected wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une piste à partir du câble sélectionné</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1955"/>
         <source>Create a jumper wire from the selected wire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">??????</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1958"/>
         <source>&amp;Exclude from Autoroute</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exclure de l&apos;autoroutage</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1959"/>
         <source>When autorouting, do not rip up this wire</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">??????</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1974"/>
@@ -1404,88 +1405,88 @@
     <message>
         <location filename="../src/mainwindow.cpp" line="521"/>
         <source>Export Etchable PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter un typon au format PDF</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="707"/>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous garder les composants qui ont été chargés avec le schéma partagé %1?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="928"/>
         <source>Unable to export %1 to shareable sketch</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibilité d&apos;exporter %1 vers le schéma partagé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="945"/>
         <source>Unable to open shareable sketch %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibilité d&apos;ouvrir le schéma partagé %1</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1071"/>
         <source>Routing completed using %n jumper(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>??????</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/mainwindow.cpp" line="1074"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
-        <translation type="unfinished">
-            <numerusform>%1 des %2 nets a été routé - %n connector(s) still to be routed</numerusform>
-            <numerusform>%1 of %2 nets routed - %n connector(s) still to be routed</numerusform>
+        <translation>
+            <numerusform>%1 des %2 réseaux a été routé - %n connecteur(s) doivent êtres reliés</numerusform>
+            <numerusform>%1 des %2 réseaux ont été routé - %n connecteur(s) doivent êtres reliés</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="82"/>
         <source>BoM Text File (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier de nomenclature (*.txt)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="448"/>
         <source>Select a Fritzing File to Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le fichier Fritzing que vous désirez ouvrir</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="450"/>
         <source>Fritzing Files (*%1 *%1z);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers Fritzing (*%1 *%1z);;Fritzing (*%1);;Fritzing partageable (*%2)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="522"/>
         <source>directly loading parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Composants étant chargés directement</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="538"/>
         <source>loading %1 (model)</source>
-        <translation type="unfinished"></translation>
+        <translation>chargement %1 (modèle)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="551"/>
         <source>loading %1 (breadboard)</source>
-        <translation type="unfinished"></translation>
+        <translation>chargement %1 (platine d&apos;essai)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="556"/>
         <source>loading %1 (pcb)</source>
-        <translation type="unfinished"></translation>
+        <translation>chargement %1 (circuit imprimé)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="561"/>
         <source>loading %1 (schematic)</source>
-        <translation type="unfinished"></translation>
+        <translation>chargement %1 (schématique)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="730"/>
         <source>&amp;Bill of Materials</source>
-        <translation type="unfinished">Liste des </translation>
+        <translation>&amp;Nomenclature</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="732"/>
         <source>Save a text Bill of Materials (BoM)/Shopping List</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer la nomenclature/panier</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="745"/>
@@ -1505,12 +1506,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="839"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="843"/>
         <source>Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Retablir</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2069"/>
@@ -1562,7 +1563,9 @@
         <source>Fritzing Bill of Materials
 
 </source>
-        <translation>Facture de Fritzing du matériel</translation>
+        <translation>Nomenclature Frizing
+
+</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1863"/>
@@ -1583,17 +1586,21 @@ Shopping List
 Quantity<byte value="x9"/>Part
 
 </source>
-        <translation>PanierQuantité<byte value="x9"/>Composant</translation>
+        <translation>
+
+Panier
+
+Quantité<byte value="x9"/>Composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1917"/>
         <source>Export Bill of Materials (BoM)...</source>
-        <translation type="unfinished">???????</translation>
+        <translation>Exporter la nomenclature...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1950"/>
         <source>&amp;Create Trace from Selected Wire(s)</source>
-        <translation type="unfinished">&amp;Créér une piste à partir des câbles sélectionnés</translation>
+        <translation>&amp;Créér une piste à partir des câbles sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1954"/>
@@ -1636,17 +1643,17 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/partseditor/mismatchingconnectorwidget.cpp" line="121"/>
         <source>In </source>
-        <translation type="unfinished"></translation>
+        <translation>Dans</translation>
     </message>
     <message>
         <location filename="../src/partseditor/mismatchingconnectorwidget.cpp" line="127"/>
         <source>and </source>
-        <translation type="unfinished"></translation>
+        <translation>et</translation>
     </message>
     <message>
         <location filename="../src/partseditor/mismatchingconnectorwidget.cpp" line="133"/>
         <source>view only</source>
-        <translation type="unfinished"></translation>
+        <translation>vue seulement</translation>
     </message>
 </context>
 <context>
@@ -1654,7 +1661,7 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/labels/note.cpp" line="73"/>
         <source>[write your note here]</source>
-        <translation type="unfinished"></translation>
+        <translation>[écrivez votre text ici]</translation>
     </message>
 </context>
 <context>
@@ -1667,12 +1674,12 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="295"/>
         <source>Create Trace from this Wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une piste à partir de ce câble</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="581"/>
         <source>Click this connector to drag out a new trace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquer sur ce connecteur pour commencer une nouvelle piste.</translation>
     </message>
 </context>
 <context>
@@ -1680,42 +1687,42 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="46"/>
         <source>Tags</source>
-        <translation type="unfinished"></translation>
+        <translation>Mots clés</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="47"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Propriétés</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="54"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="56"/>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>Auteur</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="59"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Titre</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="62"/>
         <source>Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiquette</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="65"/>
         <source>Description</source>
-        <translation type="unfinished">Description</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partinfowidget.cpp" line="70"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date</translation>
     </message>
 </context>
 <context>
@@ -1723,52 +1730,52 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/labels/partlabel.cpp" line="366"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="368"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pivoter les éléments sélectionnés de 90° dans le sens des aiguilles d&apos;une montre </translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="370"/>
         <source>&amp;Rotate 180&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pivoter de 180°</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="372"/>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pivoter de 180° les éléments sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="374"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pivoter de 90° dans le sens inverse des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="376"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Pivoter la sélection actuelle de 90° dans le sens des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="378"/>
         <source>&amp;Flip Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Faire une symétrie horizontale</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="380"/>
         <source>Flip current selection horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Faire une symétrie horizontale avec la sélection actuelle</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="382"/>
         <source>&amp;Flip Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Faire une symétrie verticale</translation>
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="384"/>
         <source>Flip current selection vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Faire une symétrie verticale avec la sélection actuelle</translation>
     </message>
 </context>
 <context>
@@ -1776,26 +1783,30 @@ Quantity<byte value="x9"/>Part
     <message>
         <location filename="../src/partseditor/partsymbolswidget.cpp" line="50"/>
         <source>Please refer to the &lt;a style=&apos;color: #52182C&apos; href=&apos;http://new.fritzing.org/learning/tutorials/making-parts/&apos;&gt;guidelines&lt;/a&gt; before modifying or creating parts</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez vous référer aux  &lt;a style=&apos;color: #52182C&apos; href=&apos;http://new.fritzing.org/learning/tutorials/making-parts/&apos;&gt;directives&lt;/a&gt; avant de modifier ou de créer des composants</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partsymbolswidget.cpp" line="59"/>
         <source>Symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Symboles</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partsymbolswidget.cpp" line="77"/>
         <source>What does this
 part look like on
 the breadboard?</source>
-        <translation type="unfinished"></translation>
+        <translation>À quoi ressemble
+ce composant dans
+la vue de la platine d&apos;essai?</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partsymbolswidget.cpp" line="74"/>
         <source>What does this
 part look like in
 a schematic view?</source>
-        <translation type="unfinished"></translation>
+        <translation>À quoi ressemble
+ce composant dans
+la vue schématique?</translation>
     </message>
 </context>
 <context>
