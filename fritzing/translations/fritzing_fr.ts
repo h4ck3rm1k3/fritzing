@@ -799,7 +799,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="763"/>
         <source>&amp;Quit</source>
-        <translation type="unfinished">?Quitter</translation>
+        <translation type="unfinished">&amp;Quitter</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="764"/>
@@ -919,12 +919,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1091"/>
         <source>Show the application&apos;s about box</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Montrer &quot;À propos&quot;</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="900"/>
         <source>&amp;Create New Part...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Créér un nouveau composant...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="901"/>
@@ -934,22 +934,22 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="902"/>
         <source>Create new part</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Créér un nouveau composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="905"/>
         <source>&amp;Open in Parts Editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Ouvrir dans l&apos;éditeur de composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="906"/>
         <source>Ctrl+Return</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+Entrée</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="907"/>
         <source>Open the old parts editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ouvrir l&apos;ancien éditeur de composant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="910"/>
@@ -964,37 +964,37 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="919"/>
         <source>Update InfoView on hover</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Update InfoView on hover</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="932"/>
         <source>&amp;Rotate 90&#xb0; Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="933"/>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+R</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="934"/>
         <source>Rotate the selected parts by 90 degrees clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Pivoter de 90° dans le sens des aiguilles d&apos;une montre les éléments sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="937"/>
         <source>&amp;Rotate 180&#xb0;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Pivoter de 180°</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="938"/>
         <source>Rotate the selected parts by 180 degrees</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Pivoter de 180° les éléments sélectionnés</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="941"/>
         <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Pivoter de 90° dans le sens inverse des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="942"/>
@@ -1004,27 +1004,27 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="943"/>
         <source>Rotate current selection 90 degrees counter clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pivoter la sélection actuelle de 90° dans le sens des aiguilles d&apos;une montre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="946"/>
         <source>&amp;Flip Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Faire une symétrie horizontale</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="947"/>
         <source>Flip current selection horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Faire une symétrie horizontale avec la sélection actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="950"/>
         <source>&amp;Flip Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Faire une symétrie verticale</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="951"/>
         <source>Flip current selection vertically</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Faire une symétrie verticale avec la sélection actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="954"/>
@@ -1034,7 +1034,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="955"/>
         <source>Shift+Ctrl+]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Shift+Ctrl+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="956"/>
@@ -1049,7 +1049,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="960"/>
         <source>Ctrl+]</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+]</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="961"/>
@@ -1064,7 +1064,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="965"/>
         <source>Ctrl+[</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+[</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="966"/>
