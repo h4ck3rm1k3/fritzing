@@ -34,7 +34,7 @@ $Date$
 #include <math.h>
 
 InfoGraphicsView::InfoGraphicsView( QWidget * parent )
-	: QGraphicsView(parent)
+	: ZoomableGraphicsView(parent)
 {
 	m_infoView = NULL;
 }

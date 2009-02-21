@@ -91,8 +91,6 @@ public:
     void loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand * parentCommand);
     ItemBase* loadFromModel(ModelPart *, const ViewGeometry&);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
-    void relativeZoom(qreal step);
-    void absoluteZoom(qreal percent);
 	void sendToBack();
 	void sendBackward();
 	void bringForward();
@@ -125,7 +123,6 @@ public:
 
  	ItemCount calcItemCount();
 
- 	qreal currentZoom();
 	ItemBase::ViewIdentifier viewIdentifier();
 	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
@@ -210,7 +207,6 @@ protected:
 	virtual void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
-	virtual void wheelEvent(QWheelEvent* event);
     PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors);
 	ItemBase * findItem(long id);
 	void clearHoldingSelectItem();
@@ -315,10 +311,6 @@ signals:
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
 								long toID, QString toConnectorID,
 								bool connect, bool updateConnections);
-	void zoomChanged(qreal zoom);
-	void zoomOutOfRange(qreal zoom);
-	void zoomIn(int amountSteps);
-	void zoomOut(int amountSteps);
 	void copyItemSignal(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
 	void deleteItemSignal(long itemID, QUndoCommand * parentCommand);
 	void findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &);
@@ -328,7 +320,6 @@ signals:
 	void swapped(long itemId, ModelPart *with, bool doEmit, SwapCommand *);
 	void resizeSignal();
 	void dropSignal(const QPoint &pos);
-	void wheelSignal();
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void ratsnestChangeSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
@@ -383,9 +374,6 @@ public slots:
 	void showPartLabel(long id, bool showIt);
 
 protected:
-	qreal m_scaleValue;
-	int m_maxScaleValue;
-	int m_minScaleValue;
 	PaletteModel* m_paletteModel;
 	ReferenceModel* m_refModel;
 	SketchModel * m_sketchModel;

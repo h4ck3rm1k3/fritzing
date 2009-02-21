@@ -79,6 +79,7 @@ HEADERS += \
     src/virtualwire.h \
     src/waitpushundostack.h \
     src/wire.h \
+    src/zoomablegraphicsview.h \
     src/zoomcombobox.h 
 SOURCES += \
     src/aboutbox.cpp \
@@ -140,4 +141,5 @@ SOURCES += \
     src/virtualwire.cpp \
     src/waitpushundostack.cpp \
     src/wire.cpp \
+    src/zoomablegraphicsview.cpp \
     src/zoomcombobox.cpp 

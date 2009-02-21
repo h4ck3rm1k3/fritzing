@@ -78,9 +78,6 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 	m_connectorDragWire = NULL;
 	m_tempDragWireCommand = m_holdingSelectItemCommand = NULL;
 	m_viewIdentifier = viewIdentifier;
-	m_scaleValue = 100;
-	m_maxScaleValue = 2000;
-	m_minScaleValue = 1;
 	setAlignment(Qt::AlignLeft | Qt::AlignTop);
 	setDragMode(QGraphicsView::RubberBandDrag);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
@@ -1544,73 +1541,6 @@ bool SketchWidget::checkMoved()
 
 	return true;
 }
-
-void SketchWidget::relativeZoom(qreal step) {
-	qreal tempSize = m_scaleValue + step;
-	if (tempSize < m_minScaleValue) {
-		m_scaleValue = m_minScaleValue;
-		emit zoomOutOfRange(m_scaleValue);
-		return;
-	}
-	if (tempSize > m_maxScaleValue) {
-		m_scaleValue = m_maxScaleValue;
-		emit zoomOutOfRange(m_scaleValue);
-		return;
-	}
-	qreal tempScaleValue = tempSize/100;
-
-	m_scaleValue = tempSize;
-
-	QMatrix matrix;
-	//matrix.translate((width() / 2) - mousePosition.x(), (height() / 2) -  mousePosition.y());
-	//qreal scale = qPow(qreal(2), (m_scaleValue-50) / qreal(50));
-	matrix.scale(tempScaleValue, tempScaleValue);
-	//matrix.translate(mousePosition.x() - (width() / 2), mousePosition.y() - (height() / 2));
-	this->setMatrix(matrix);
-
-	emit zoomChanged(m_scaleValue);
-}
-
-void SketchWidget::absoluteZoom(qreal percent) {
-	relativeZoom(percent-m_scaleValue);
-}
-
-qreal SketchWidget::currentZoom() {
-	return m_scaleValue;
-}
-
-void SketchWidget::wheelEvent(QWheelEvent* event) {
-	QPointF mousePosition = event->pos();
-	qreal delta = ((qreal)event->delta() / 120) * ZoomComboBox::ZoomStep;
-	if (delta == 0) return;
-
-	// Scroll zooming throw the combobox options
-	/*if(delta < 0) {
-		emit zoomOut(-1*delta);
-	} else {
-		emit zoomIn(delta);
-	}*/
-
-	// Scroll zooming relative to the current size
-	relativeZoom(delta);
-
-	//this->verticalScrollBar()->setValue(verticalScrollBar()->value() + 3);
-	//this->horizontalScrollBar()->setValue(horizontalScrollBar()->value() + 3);
-
-
-	//to do: center zoom around mouse location
-
-
-
-	//QPointF pos = event->pos();
-	//QPointF spos = this->mapToScene((int) pos.x(), (int) pos.y());
-
-
-	//DebugDialog::debug(QString("translate %1 %2").arg(spos.x()).arg(spos.y()) );
-
-	emit wheelSignal();
-}
-
 
 void SketchWidget::setPaletteModel(PaletteModel * paletteModel) {
 	m_paletteModel = paletteModel;

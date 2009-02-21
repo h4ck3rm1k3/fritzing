@@ -26,6 +26,7 @@ $Date$
 
 #include "saveasmoduledialog.h"
 #include "../sketchwidget.h"
+#include "../zoomablegraphicsview.h"
 
 #include <QFormLayout>
 #include <QLabel>
@@ -46,13 +47,13 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 
-	QLabel * label = new QLabel(QObject::tr("To make a connector available to users of this module, click it; click again to make it unavailable."), this);
+	QLabel * label = new QLabel(QObject::tr("To make a connector \"external\", so that parts outside this module can connect to it, click it; click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out."), this);
 	label->setWordWrap(true);
 	vLayout->addWidget(label);
 
 	sketchWidget->scene()->installEventFilter(this);
 
-	QGraphicsView * gv = new QGraphicsView(this);
+	QGraphicsView * gv = new ZoomableGraphicsView(this);
 	gv->setMinimumSize(300, 300);
 	gv->setScene(sketchWidget->scene());
 	gv->show();

@@ -37,8 +37,9 @@ $Date$
 #include "htmlinfoview.h"
 #include "viewlayer.h"
 #include "itembase.h"
+#include "zoomablegraphicsview.h"
 
-class InfoGraphicsView : public QGraphicsView
+class InfoGraphicsView : public ZoomableGraphicsView
 {
 	Q_OBJECT
 
