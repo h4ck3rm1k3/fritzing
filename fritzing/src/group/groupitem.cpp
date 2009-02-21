@@ -37,7 +37,8 @@ $Date$
 //		store them in the user folder
 //		create icon
 //		add to bin
-//		select external connections
+//		xml: something that says group; pointer to icon; properties
+//		** select external connections
 //  save and load sketch with group(s)
 //	recursive groups
 //	open in new sketch (edit)

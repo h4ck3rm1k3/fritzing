@@ -429,6 +429,7 @@ protected:
 	QString m_lastColorSelected;
 
 	ConnectorPairHash m_moveDisconnectedFromFemale;
+	bool m_spaceBarIsPressed;
 
 protected:
 	QString m_viewName;

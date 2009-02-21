@@ -71,6 +71,7 @@ QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_spaceBarIsPressed = false;
 	m_current = false;
 	m_ignoreSelectionChangeEvents = false;
 	m_droppingItem = NULL;
@@ -3404,11 +3405,14 @@ bool SketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase *> & save
 }
 
 void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
+	m_spaceBarIsPressed = isPressed;
 	if (isPressed) {
 		setDragMode(QGraphicsView::ScrollHandDrag);
+		setInteractive(false);
 		setCursor(Qt::OpenHandCursor);
 	}
 	else {
+		setInteractive(true);
 		setDragMode(QGraphicsView::RubberBandDrag);
 		setCursor(Qt::ArrowCursor);
 	}
