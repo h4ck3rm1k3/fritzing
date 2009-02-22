@@ -61,8 +61,11 @@ PartsBinIconView::PartsBinIconView(QWidget *parent)
 void PartsBinIconView::setupLayout() {
 	// TODO Mariano: smells like leak, but if this two lines are uncommented there's a crash
 	// Also tried to iterate through layout children, but didn't work
+	// Mariano: see under doClear--deleting m_layouter automatically deletes m_layout
+
 	//delete m_layouter;
 	//delete m_layout;
+
 
     m_layouter = new QGraphicsWidget;
     m_layout = new GraphicsFlowLayout(m_layouter);
@@ -96,10 +99,14 @@ void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void PartsBinIconView::showInfo(SvgIconWidget * item) {
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(item->scene()->parent());
-	if (infoGraphicsView != NULL) {
-		infoGraphicsView->hoverEnterItem(item->modelPart());
-	}
+	//QObject * parent = item->scene()->parent();
+	//InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(item->scene()->parent());
+	//if (infoGraphicsView != NULL) {
+		//infoGraphicsView->hoverEnterItem(item->modelPart());
+	//}
+
+	// TODO isn't infographics view just this?
+	hoverEnterItem(item->modelPart());
 }
 
 void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
@@ -135,10 +142,12 @@ void PartsBinIconView::doClear() {
 	PartsBinView::doClear();
 	m_layout->clear();
 	foreach(QGraphicsItem *it,m_layouter->childItems()) {
-		it->setParentItem(NULL);
+		//delete it;
+		//it->setParentItem(NULL);
 	}
+	delete m_layouter;			// deleting layouter deletes layout
 	delete scene();
-	setScene(new QGraphicsScene());
+	setScene(new QGraphicsScene(this));
 	setupLayout();
 }
 

@@ -57,6 +57,7 @@ class PartsBinPaletteWidget : public QFrame {
 	Q_OBJECT
 	public:
 		PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent = 0);
+		~PartsBinPaletteWidget();
 
 		QSize sizeHint() const;
 
@@ -115,7 +116,8 @@ class PartsBinPaletteWidget : public QFrame {
 	protected:
 		PaletteModel *m_model;
 		ReferenceModel *m_refModel;
-
+		bool m_canDeleteModel;
+	
 		QString m_fileName;
 		QString m_defaultSaveFolder;
 		QString m_untitledFileName;

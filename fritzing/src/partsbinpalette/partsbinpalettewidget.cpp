@@ -45,6 +45,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 {
 	PartsBinPaletteWidget::Title = tr("Parts");
 	m_refModel = refModel;
+	m_canDeleteModel = false;
 
 	Q_UNUSED(undoStack);
 
@@ -71,6 +72,13 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
+}
+
+PartsBinPaletteWidget::~PartsBinPaletteWidget() {
+	if (m_canDeleteModel && m_model != NULL) {
+		delete m_model;
+		m_model = NULL;
+	}
 }
 
 QSize PartsBinPaletteWidget::sizeHint() const {
@@ -156,6 +164,7 @@ void PartsBinPaletteWidget::loadFromModel(PaletteModel *model) {
 	m_iconView->loadFromModel(model);
 	m_listView->setPaletteModel(model);
 	afterModelSetted(model);
+	m_canDeleteModel = false;				// FApplication is holding this model, so don't delete it
 }
 
 void PartsBinPaletteWidget::setPaletteModel(PaletteModel *model, bool clear) {
@@ -301,14 +310,21 @@ void PartsBinPaletteWidget::openCore() {
 }
 
 void PartsBinPaletteWidget::load(const QString &filename) {
-	PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
+	// TODO deleting this local palette reference model deletes modelPartShared held by the palette bin modelParts
+	//PaletteModel * paletteReferenceModel = new PaletteModel(true, true);
+
+	PaletteModel * oldModel = (m_canDeleteModel) ? m_model : NULL;
 	PaletteModel * paletteBinModel = new PaletteModel(true, false);
-	if (!paletteBinModel->load(filename, paletteReferenceModel)) {
+	if (!paletteBinModel->load(filename, m_refModel)) {		// paletteReferenceModel
 		QMessageBox::warning(NULL, QObject::tr("Fritzing"), QObject::tr("Friting cannot load the parts bin"));
 		return;
 	}
 	setPaletteModel(paletteBinModel,true);
-	delete paletteReferenceModel;
+	m_canDeleteModel = true;					// since we just created this model, we can delete it later
+	if (oldModel) {
+		delete oldModel;
+	}
+	//delete paletteReferenceModel;
 }
 
 void PartsBinPaletteWidget::undoStackCleanChanged(bool isClean) {
