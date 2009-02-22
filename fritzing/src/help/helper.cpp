@@ -106,9 +106,12 @@ Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {
 	connectToView(m_owner->m_schematicGraphicsView);
 	connectToView(m_owner->m_pcbGraphicsView);
 
-	m_owner->m_breadboardGraphicsView->addFixedToCenterItem(m_breadMainHelp);
-	m_owner->m_schematicGraphicsView->addFixedToCenterItem(m_schemMainHelp);
-	m_owner->m_pcbGraphicsView->addFixedToCenterItem(m_pcbMainHelp);
+	//m_owner->m_breadboardGraphicsView->addFixedToCenterItem(m_breadMainHelp);
+	//m_owner->m_schematicGraphicsView->addFixedToCenterItem(m_schemMainHelp);
+	//m_owner->m_pcbGraphicsView->addFixedToCenterItem(m_pcbMainHelp);
+	m_owner->m_breadboardGraphicsView->addFixedToCenterItem2(m_breadMainHelp);
+	m_owner->m_schematicGraphicsView->addFixedToCenterItem2(m_schemMainHelp);
+	m_owner->m_pcbGraphicsView->addFixedToCenterItem2(m_pcbMainHelp);
 
 	//m_owner->m_breadboardGraphicsView->addFixedToTopRightItem(m_partsBinHelp);
 	//m_owner->m_breadboardGraphicsView->addFixedToTopLeftItem(m_switchButtonsHelp);

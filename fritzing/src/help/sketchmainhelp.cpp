@@ -29,6 +29,7 @@ $Date$
 #include <QFile>
 #include <QTimer>
 #include <QSettings>
+#include <QPainter>
 
 #include "sketchmainhelp.h"
 #include "../expandinglabel.h"
@@ -130,6 +131,11 @@ void SketchMainHelpPrivate::doClose() {
 }
 
 void SketchMainHelpPrivate::enterEvent(QEvent * event) {
+	enterEventAux();
+	QFrame::enterEvent(event);
+}
+
+void SketchMainHelpPrivate::enterEventAux() {
 	if(m_shouldGetTransparent) {
 		setWindowOpacity(1.0);
 		QTimer *timer = new QTimer(this);
@@ -138,7 +144,6 @@ void SketchMainHelpPrivate::enterEvent(QEvent * event) {
 		timer->start(2000);
 	}
 	m_closeButton->doShow();
-	QFrame::enterEvent(event);
 }
 
 void SketchMainHelpPrivate::setTransparent() {
@@ -146,13 +151,27 @@ void SketchMainHelpPrivate::setTransparent() {
 }
 
 void SketchMainHelpPrivate::leaveEvent(QEvent * event) {
+	leaveEventAux();
+	QFrame::leaveEvent(event);
+}
+
+void SketchMainHelpPrivate::leaveEventAux() {
 	if(m_shouldGetTransparent) {
 		setTransparent();
 	}
 	m_closeButton->doHide();
-	QFrame::leaveEvent(event);
 }
 
+bool SketchMainHelpPrivate::forwardMousePressEvent(QMouseEvent * event) 
+{
+	QPoint p = m_closeButton->mapFromParent(event->pos());
+	if (m_closeButton->rect().contains(p)) {
+		doClose();
+		return true;
+	}
+
+	return false;
+}
 
 //////////////////////////////////////////////////////////////
 
@@ -162,6 +181,8 @@ SketchMainHelp::SketchMainHelp (
 		bool doShow
 	) : QGraphicsProxyWidget()
 {
+	m_mouseWithin = false;
+	m_pixmap = NULL;
 	setObjectName("sketchMainHelp"+viewString);
 	m_son = new SketchMainHelpPrivate(viewString, htmlText, this);
 	setWidget(m_son);
@@ -197,4 +218,44 @@ void SketchMainHelp::loadState() {
 		? settings.value(prop).toBool()
 		: true;
 	doSetVisible(visible);
+}
+
+const QPixmap & SketchMainHelp::getPixmap() {
+	if (m_pixmap == NULL) {
+		m_pixmap = new QPixmap(m_son->size());
+		QPainter painter(m_pixmap);
+		m_son->render(&painter);
+		painter.end();
+	}
+
+	return *m_pixmap;
+}
+
+bool SketchMainHelp::getVisible() {
+	return m_visible;
+}
+
+bool SketchMainHelp::setMouseWithin(bool within) {
+	if (within == m_mouseWithin) return false;
+
+	if (m_pixmap) {
+		delete m_pixmap;
+		m_pixmap = NULL;
+	}
+	m_mouseWithin = within;
+	(within) ? m_son->enterEventAux() : m_son->leaveEventAux();
+	return true;
+}
+
+bool SketchMainHelp::forwardMousePressEvent(QMouseEvent * event) {
+	bool result = m_son->forwardMousePressEvent(event);
+
+	if (result) {
+		if (m_pixmap) {
+			delete m_pixmap;
+			m_pixmap = NULL;
+		}
+	}
+
+	return result;
 }

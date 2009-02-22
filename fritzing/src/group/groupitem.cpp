@@ -28,16 +28,16 @@ $Date$
 //  ** allow mouse events to external connections
 //		** don't allow wires to connect within the group
 //		** drag doesn't keep wire connections
-//			connect within
+//		connect within
 //  female connectors in modules
 //		what happens to ratsnest wires
 //		connect female connectees
 //  traces in modules
 //	save as group
 //		store them in the user folder
+//		add to bin
 //		** create icon svg
 //			** use the bounding rect of the items instead of the scene rect
-//		add to bin
 //		xml: something that says group; pointer to icon; properties
 //		** select external connections
 //  save and load sketch with group(s)

@@ -175,7 +175,7 @@ public:
 	void addFixedToBottomLeftItem(QGraphicsItem *item);
 	void addFixedToCenterItem(QGraphicsItem *item);
 	void addFixedToBottomRightItem(QGraphicsItem *item);
-	void addFixedToCenterItem2(QWidget *);
+	void addFixedToCenterItem2(class SketchMainHelp *item);
 
 	void ensureFixedToTopLeftItems();
 	void ensureFixedToTopRightItems();
@@ -429,7 +429,7 @@ protected:
 	QList<QGraphicsItem*> m_fixedToBottomLeftItems;
 	QList<QGraphicsItem*> m_fixedToBottomRightItems;
 	QList<QGraphicsItem*> m_fixedToCenterItems;
-	QWidget * m_fixedToCenterItem;
+	class SketchMainHelp * m_fixedToCenterItem;
 	QPoint m_fixedToCenterItemOffset;
 
 	QString m_lastColorSelected;

@@ -34,6 +34,7 @@ $Date$
 #include <QLabel>
 #include <QFrame>
 #include <QGraphicsProxyWidget>
+#include <QPixmap>
 
 #include "inotseeninminiview.h"
 
@@ -70,6 +71,9 @@ class SketchMainHelpPrivate : public QFrame {
 	protected:
 		void enterEvent(QEvent * event);
 		void leaveEvent(QEvent * event);
+		void enterEventAux();
+		void leaveEventAux();
+		bool forwardMousePressEvent(QMouseEvent *);
 
 	protected:
 		friend class SketchMainHelp;
@@ -86,12 +90,18 @@ public:
 	void doClose();
 	void setTransparent();
 	void doSetVisible(bool visible);
+	bool getVisible();
+	bool setMouseWithin(bool);
+	const QPixmap & getPixmap();
+	bool forwardMousePressEvent(QMouseEvent *);
 
 protected:
 	void loadState();
 	void saveState();
 	SketchMainHelpPrivate *m_son;
 	bool m_visible;
+	bool m_mouseWithin;
+	QPixmap * m_pixmap;
 
 public:
 	static qreal OpacityLevel;

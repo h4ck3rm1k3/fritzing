@@ -65,6 +65,7 @@ $Date$
 #include "labels/note.h"
 #include "group/groupitem.h"
 #include "svg/svgfilesplitter.h"
+#include "help/sketchmainhelp.h"
 
 static QColor labelTextColor = Qt::black;
 QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -88,7 +89,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
 	setRenderHint(QPainter::Antialiasing, true);
 	
 	
-	setCacheMode(QGraphicsView::CacheBackground);
+	//setCacheMode(QGraphicsView::CacheBackground);
 	//setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	//setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
@@ -1250,7 +1251,22 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	QGraphicsView::mousePressEvent(event);
 	QGraphicsItem* item = this->itemAt(event->pos());
 	if (item == NULL || (item != wasItem)) {
-		// if you clicked on the sketch itself, or the item was deleted during mousePressEvent (for example, by shift-clicking a connectorItem)
+		// in here if you clicked on the sketch itself, 
+		// or the item was deleted during mousePressEvent 
+		// (for example, by shift-clicking a connectorItem)
+
+		if (item == NULL && m_fixedToCenterItem && m_fixedToCenterItem->getVisible()) {
+			QRectF r(m_fixedToCenterItemOffset, m_fixedToCenterItem->size());
+			if (r.contains(event->pos())) {
+				QMouseEvent newEvent(event->type(), event->pos() - m_fixedToCenterItemOffset, 
+					event->globalPos(), event->button(), event->buttons(), event->modifiers());
+				if (m_fixedToCenterItem->forwardMousePressEvent(&newEvent)) {
+					// update background
+					setBackground(background());
+				}
+			}
+		}
+		
 		return;
 	}
 
@@ -1352,6 +1368,18 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 		if ((event->buttons() & Qt::LeftButton) && !draggingWireEnd()) {
 			m_globalPos = event->globalPos();
 			moveItems(event->globalPos());
+		}
+	}
+
+	if (event->buttons() == Qt::NoButton) {
+		if (m_fixedToCenterItem && m_fixedToCenterItem->getVisible()) {
+			QSize size(m_fixedToCenterItem->size().width(), m_fixedToCenterItem->size().height());
+			QRect r(m_fixedToCenterItemOffset, size);
+			bool within = r.contains(event->pos()) && (itemAt(event->pos()) == NULL);
+			if (m_fixedToCenterItem->setMouseWithin(within)) {
+				// seems to be the only way to force a redraw of the background here
+				setBackground(background());
+			}
 		}
 	}
 
@@ -4159,8 +4187,8 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 }
 
-void SketchWidget::addFixedToCenterItem2(QWidget * widget) {
-	m_fixedToCenterItem = widget;  
+void SketchWidget::addFixedToCenterItem2(SketchMainHelp * item) {
+	m_fixedToCenterItem = item;  
 }
 
 void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
@@ -4171,25 +4199,31 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 	// no matter how the view is zoomed or scrolled
 
 	if (m_fixedToCenterItem != NULL) {
-		QSize size = m_fixedToCenterItem->size();
-		QRectF vp = painter->viewport();
+		if (m_fixedToCenterItem->getVisible()) {
+			QWidget * widget = m_fixedToCenterItem->widget();
+			if (widget != NULL) {
+				QSizeF helpsize = m_fixedToCenterItem->size();
+				QRectF vp = painter->viewport();
 
-		/*
-		// add in scrollbar widths so image doesn't jump when scroll bars appear or disappear?
-		if (verticalScrollBar()->isVisible()) {
-			vp.setWidth(vp.width() + verticalScrollBar()->width());
-		}
-		if (horizontalScrollBar()->isVisible()) {
-			vp.setHeight(vp.height() + horizontalScrollBar()->height());
-		}
-		*/
+				/*
+				// add in scrollbar widths so image doesn't jump when scroll bars appear or disappear?
+				if (verticalScrollBar()->isVisible()) {
+					vp.setWidth(vp.width() + verticalScrollBar()->width());
+				}
+				if (horizontalScrollBar()->isVisible()) {
+					vp.setHeight(vp.height() + horizontalScrollBar()->height());
+				}
+				*/
 
-		m_fixedToCenterItemOffset.setX((vp.width() - size.width()) / 2);
-		m_fixedToCenterItemOffset.setY((vp.height() - size.height()) / 2);
-		painter->save();
-		painter->setWindow(painter->viewport());
-		painter->setTransform(QTransform());
-		m_fixedToCenterItem->render(painter, m_fixedToCenterItemOffset);
-		painter->restore();
+				m_fixedToCenterItemOffset.setX((vp.width() - helpsize.width()) / 2);
+				m_fixedToCenterItemOffset.setY((vp.height() - helpsize.height()) / 2);
+				painter->save();
+				painter->setWindow(painter->viewport());
+				painter->setTransform(QTransform());
+				painter->drawPixmap(m_fixedToCenterItemOffset, m_fixedToCenterItem->getPixmap());
+				//painter->fillRect(m_fixedToCenterItemOffset.x(), m_fixedToCenterItemOffset.y(), helpsize.width(), helpsize.height(), QBrush(QColor(Qt::blue)));
+				painter->restore();
+			}
+		}
 	}
 }
