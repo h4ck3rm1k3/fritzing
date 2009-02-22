@@ -51,7 +51,7 @@ public:
 	bool split(const QString & filename, const QString & elementID);
 	const QByteArray & byteArray();
 	const QDomDocument & domDocument();
-	bool normalize(qreal dpi, const QString & elementID);
+	bool normalize(qreal dpi, const QString & elementID, bool blackOnly);
 	QString shift(qreal x, qreal y, const QString & elementID);
 	QString elementString(const QString & elementID);
 
@@ -59,12 +59,12 @@ protected:
 	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	void normalizeChild(QDomElement & childElement, 
 						qreal sNewWidth, qreal sNewHeight,
-						qreal vbWidth, qreal vbHeight);
+						qreal vbWidth, qreal vbHeight, bool blackOnly);
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
 	void shiftChild(QDomElement & element, qreal x, qreal y);
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 	bool parsePath(const QString & data, const char * slot, PathUserData &);
-	void setStrokeOrFill(QDomElement & element);
+	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void fixStyleAttribute(QDomElement & element);
 	void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
 

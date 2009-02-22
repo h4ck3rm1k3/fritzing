@@ -64,6 +64,7 @@ $Date$
 #include "labels/partlabel.h"
 #include "labels/note.h"
 #include "group/groupitem.h"
+#include "svg/svgfilesplitter.h"
 
 static QColor labelTextColor = Qt::black;
 QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -71,6 +72,7 @@ QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_fixedToCenterItem = NULL;
 	m_spaceBarIsPressed = false;
 	m_current = false;
 	m_ignoreSelectionChangeEvents = false;
@@ -84,6 +86,9 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
     setAcceptDrops(true);
 	setRenderHint(QPainter::Antialiasing, true);
+	
+	
+	setCacheMode(QGraphicsView::CacheBackground);
 	//setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	//setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
@@ -152,6 +157,9 @@ SketchWidget::~SketchWidget() {
 
 
 void SketchWidget::ensureFixedItemsPositions() {
+
+	//DebugDialog::debug("ensure fixed items positions");
+
 	ensureFixedToBottomLeftItems();
 	ensureFixedToCenterItems();
 	ensureFixedToTopLeftItems();
@@ -1440,7 +1448,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 		if (this->m_holdingSelectItemCommand != NULL) {
 			SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
 			m_holdingSelectItemCommand = NULL;
-			DebugDialog::debug("scene changed push select");
+			//DebugDialog::debug("scene changed push select");
 			m_undoStack->push(tempCommand);
 		}
 	}
@@ -3672,12 +3680,12 @@ void SketchWidget::addFixedToBottomRightItem(QGraphicsItem *item) {
 }
 
 void SketchWidget::addFixedToCenterItem(QGraphicsItem *item) {
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);   
 	if(!scene()->items().contains(item)) {
-		scene()->addItem(item);
+		scene()->addItem(item);   
 	}
 	m_fixedToCenterItems << item;
-	ensureFixedToCenter(item);
+	ensureFixedToCenter(item);    
 }
 
 void SketchWidget::ensureFixedToTopLeftItems() {
@@ -3788,7 +3796,7 @@ void SketchWidget::ensureFixedToCenterItems() {
 			if(scene()->items().contains(item)) {
 				ensureFixedToCenter(item);
 			} else {
-				toRemove << item;
+				toRemove << item;  
 			}
 		}
 
@@ -3997,5 +4005,191 @@ void SketchWidget::init() {
 		m_bgcolors[ItemBase::BreadboardView] = QColor(204,204,204);
 		m_bgcolors[ItemBase::SchematicView] = QColor(255,255,255);
 		m_bgcolors[ItemBase::PCBView] = QColor(160,168,179); // QColor(137,144,153)
+	}
+}
+
+QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize) 
+{
+
+	int width = scene()->width();
+	int height = scene()->height();
+
+	QList<ItemBase *> itemBases;
+	QRectF itemsBoundingRect;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+		if (itemBase == NULL) continue;
+
+		if (itemBase->itemType() == ModelPart::Wire) {
+			if (!wireLayers.contains(itemBase->viewLayerID())) {
+				continue;
+			}
+		}
+		else {
+			if (!partLayers.contains(itemBase->viewLayerID())) {
+				continue;
+			}
+		}
+
+		itemBases.append(itemBase);
+
+		// TODO: make sure this does the right thing with grouped items
+		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
+                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
+
+	}
+
+	width = itemsBoundingRect.width();
+	height = itemsBoundingRect.height();
+	QPointF offset = itemsBoundingRect.topLeft();
+
+	imageSize.setWidth(width);
+	imageSize.setHeight(height);
+
+	qreal trueWidth = width / printerScale;
+	qreal trueHeight = height / printerScale;
+	static qreal dpi = 1000;
+
+	QString outputSVG;
+	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "
+							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
+							 "version=\"1.2\" baseProfile=\"tiny\" "
+							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
+							 "viewBox=\"0 0 %3 %4\" >")
+						.arg(trueWidth)
+						.arg(trueHeight)
+						.arg(trueWidth * dpi)
+						.arg(trueHeight * dpi);
+	outputSVG += header;
+
+	QHash<QString, SvgFileSplitter *> svgHash;
+
+	foreach (ItemBase * itemBase, itemBases) {
+		if (itemBase->itemType() != ModelPart::Wire) {
+			foreach (ViewLayer::ViewLayerID viewLayerID, partLayers) {
+				if (itemBase->viewLayerID() != viewLayerID) continue;
+
+				QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+				QString path = dynamic_cast<PaletteItemBase *>(itemBase)->filename();
+				DebugDialog::debug(QString("path: %1").arg(path));
+				SvgFileSplitter * splitter = svgHash.value(path, NULL);
+				if (splitter == NULL) {
+					splitter = new SvgFileSplitter();
+					bool result = splitter->split(path, xmlName);
+					if (!result) {
+						delete splitter;
+						continue;
+					}
+					result = splitter->normalize(dpi, xmlName, blackOnly);
+					if (!result) {
+						delete splitter;
+						continue;
+					}
+					svgHash.insert(path, splitter);
+				}
+
+				QString itemSvg = splitter->elementString(xmlName);
+
+				if (!itemBase->transform().isIdentity()) {
+					QTransform transform = itemBase->transform();
+					itemSvg = QString("<g transform=\"matrix(%1,%2,%3,%4,%5,%6)\" >")
+						.arg(transform.m11())
+						.arg(transform.m12())
+						.arg(transform.m21())
+						.arg(transform.m22())
+						.arg(0.0)  // transform.dx()			// don't understand why but SVG doesn't like this transform
+						.arg(0.0)  // transform.dy()			// maybe it's redundant--already dealt with in the translate used next?
+						.append(itemSvg)
+						.append("</g>");
+				}
+
+				QPointF loc = itemBase->scenePos() - offset;
+				loc.setX(loc.x() * dpi / printerScale);
+				loc.setY(loc.y() * dpi / printerScale);
+				if (loc.x() != 0 || loc.y() != 0) {
+					itemSvg = QString("<g transform=\"translate(%1,%2)\" >")
+						.arg(loc.x())
+						.arg(loc.y())
+						.append(itemSvg)
+						.append("</g>");
+				}
+
+				outputSVG.append(itemSvg);
+
+				/*
+				// TODO:  deal with rotations and flips
+				QString shifted = splitter->shift(loc.x(), loc.y(), xmlName);
+				outputSVG.append(shifted);
+				splitter->shift(-loc.x(), -loc.y(), xmlName);
+				*/
+			}
+		}
+		else {
+			foreach (ViewLayer::ViewLayerID viewLayerID, wireLayers) {
+				Wire * wire = dynamic_cast<Wire *>(itemBase);
+				if (wire == NULL) continue;
+				if (wire->viewLayerID() != viewLayerID) continue;
+
+				QLineF line = wire->getPaintLine();
+				QPointF p1 = wire->pos() + line.p1() - offset;
+				QPointF p2 = wire->pos() + line.p2() - offset;
+				p1.setX(p1.x() * dpi / printerScale);
+				p1.setY(p1.y() * dpi / printerScale);
+				p2.setX(p2.x() * dpi / printerScale);
+				p2.setY(p2.y() * dpi / printerScale);
+				QString lineString = QString("<line style=\"stroke-linecap: round\" stroke=\"black\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
+								.arg(p1.x())
+								.arg(p1.y())
+								.arg(p2.x())
+								.arg(p2.y())
+								.arg(wire->width() * dpi / printerScale);
+				outputSVG.append(lineString);
+			}
+		}
+	}
+
+	outputSVG += "</svg>";
+
+
+	foreach (SvgFileSplitter * splitter, svgHash.values()) {
+		delete splitter;
+	}
+
+	return outputSVG;
+
+}
+
+void SketchWidget::addFixedToCenterItem2(QWidget * widget) {
+	m_fixedToCenterItem = widget;  
+}
+
+void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
+{
+	InfoGraphicsView::drawBackground(painter, rect);
+
+	// always draw the widget in the same place in the window
+	// no matter how the view is zoomed or scrolled
+
+	if (m_fixedToCenterItem != NULL) {
+		QSize size = m_fixedToCenterItem->size();
+		QRectF vp = painter->viewport();
+
+		/*
+		// add in scrollbar widths so image doesn't jump when scroll bars appear or disappear?
+		if (verticalScrollBar()->isVisible()) {
+			vp.setWidth(vp.width() + verticalScrollBar()->width());
+		}
+		if (horizontalScrollBar()->isVisible()) {
+			vp.setHeight(vp.height() + horizontalScrollBar()->height());
+		}
+		*/
+
+		m_fixedToCenterItemOffset.setX((vp.width() - size.width()) / 2);
+		m_fixedToCenterItemOffset.setY((vp.height() - size.height()) / 2);
+		painter->save();
+		painter->setWindow(painter->viewport());
+		painter->setTransform(QTransform());
+		m_fixedToCenterItem->render(painter, m_fixedToCenterItemOffset);
+		painter->restore();
 	}
 }

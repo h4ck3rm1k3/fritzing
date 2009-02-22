@@ -141,7 +141,10 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 		}
 	#endif
 
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());
+	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	viewLayerIDs << ViewLayer::Copper0;
+	QSizeF imageSize;
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize);
 	if (wantSVG) {
 		QString svgFileName = fileName;
 		svgFileName.replace(fileExt, ".svg");
@@ -161,8 +164,8 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 			// now convert to pdf
 			QSvgRenderer svgRenderer;
 			svgRenderer.load(svg.toLatin1());
-			qreal trueWidth = m_pcbGraphicsView->scene()->width() / FSvgRenderer::printerScale();
-			qreal trueHeight = m_pcbGraphicsView->scene()->height() / FSvgRenderer::printerScale();
+			qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
+			qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
 			int res = printer.resolution();
 			QRectF bounds(0, 0, trueWidth * res, trueHeight * res);
 			svgRenderer.render(&painter, bounds);
@@ -1207,6 +1210,7 @@ void MainWindow::createMenus()
 	m_traceMenu->addAction(m_createJumperAct);
 	m_traceMenu->addAction(m_excludeFromAutorouteAct);
 	m_traceMenu->addAction(m_selectAllTracesAct);
+	m_traceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_traceMenu->addAction(m_selectAllJumpersAct);
 	updateTraceMenu();
 	connect(m_traceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
@@ -1490,6 +1494,7 @@ void MainWindow::updateTraceMenu() {
 	m_exportDiyAct->setEnabled(true);
 	m_exportDiySvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
+	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumpersAct->setEnabled(jEnabled);
 
 }
@@ -1834,7 +1839,10 @@ void MainWindow::exportToGerber() {
 	notYetImplemented(tr("Gerber export"));
 	return;
 
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale());
+	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	viewLayerIDs << ViewLayer::Copper0;
+	QSizeF imageSize;
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -1974,6 +1982,10 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
 	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
 
+	m_selectAllExcludedTracesAct = new QAction(tr("Select All Excluded Traces"), this);
+	m_selectAllExcludedTracesAct->setStatusTip(tr("Select all trace wires excluded from autorouting"));
+	connect(m_selectAllExcludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllExcludedTraces()));
+
 	m_selectAllJumpersAct = new QAction(tr("Select All Jumper Wires"), this);
 	m_selectAllJumpersAct->setStatusTip(tr("Select all jumper wires"));
 	connect(m_selectAllJumpersAct, SIGNAL(triggered()), this, SLOT(selectAllJumpers()));
@@ -2041,6 +2053,10 @@ void MainWindow::excludeFromAutoroute() {
 
 void MainWindow::selectAllTraces() {
 	m_pcbGraphicsView->selectAllWires(ViewGeometry::TraceFlag);
+}
+
+void MainWindow::selectAllExcludedTraces() {
+	m_pcbGraphicsView->selectAllExcludedTraces();  
 }
 
 void MainWindow::selectAllJumpers() {

@@ -79,17 +79,21 @@ void Helper::initText() {
 Helper::Helper(MainWindow *owner, bool doShow) : QObject(owner) {
 	m_owner = owner;
 	m_breadMainHelp = new SketchMainHelp("Breadboard", BreadboardHelpText, doShow);
-	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removePartsBinHelp()));
-	connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeSwitchButtonsHelp()));
+	//connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removePartsBinHelp()));
+	//connect(m_breadMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeSwitchButtonsHelp()));
 
 	m_schemMainHelp = new SketchMainHelp("Schematic", SchematicHelpText, doShow);
 
 	m_pcbMainHelp = new SketchMainHelp("PCB", PCBHelpText, doShow);
-	connect(m_pcbMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeAutorouteHelp()));
+	//connect(m_pcbMainHelp->widget(), SIGNAL(aboutToClose()), this, SLOT(removeAutorouteHelp()));
 
-	m_partsBinHelp = new ToolHelp(PartsBinHelpText, QString("PartsBin"));
-	m_autorouteHelp = new ToolHelp(AutorouteHelpText, QString("Autoroute"), QBoxLayout::RightToLeft);
-	m_switchButtonsHelp = new ToolHelp(SwitchButtonsHelpText, QString("SwitchButtons"), QBoxLayout::BottomToTop);
+	//m_partsBinHelp = new ToolHelp(PartsBinHelpText, QString("PartsBin"));
+	//m_autorouteHelp = new ToolHelp(AutorouteHelpText, QString("Autoroute"), QBoxLayout::RightToLeft);
+	//m_switchButtonsHelp = new ToolHelp(SwitchButtonsHelpText, QString("SwitchButtons"), QBoxLayout::BottomToTop);
+
+	m_partsBinHelp = NULL;
+	m_autorouteHelp = NULL;
+	m_switchButtonsHelp = NULL;
 
 	m_stillWaitingFirstDrop = true;
 	m_stillWaitingFirstViewSwitch = true;
@@ -119,16 +123,16 @@ Helper::~Helper() {
 	//m_schemMainHelp->doClose();
 	//m_pcbMainHelp->doClose();
 
-	delete m_partsBinHelp;
-	delete m_autorouteHelp;
-	delete m_switchButtonsHelp;
+	//delete m_partsBinHelp;
+	//delete m_autorouteHelp;
+	//delete m_switchButtonsHelp;
 
 }
 
 void Helper::connectToView(SketchWidget* view) {
 	connect(view, SIGNAL(dropSignal(const QPoint &)), this, SLOT(somethingDroppedIntoView(const QPoint &)));
 	//connect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
-	connect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
+	//connect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 }
 
 
@@ -156,7 +160,7 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 		m_breadMainHelp->doSetVisible(false);
 		m_schemMainHelp->doSetVisible(false);
 		m_pcbMainHelp->doSetVisible(false);
-		removePartsBinHelp();
+		//removePartsBinHelp();
 	} else {
 		m_breadMainHelp->setTransparent();
 		m_schemMainHelp->setTransparent();
@@ -166,25 +170,31 @@ void Helper::somethingDroppedIntoView(const QPoint & pos) {
 }
 
 void Helper::removePartsBinHelp() {
-	m_owner->m_breadboardGraphicsView->scene()->removeItem(m_partsBinHelp);
+	//if (m_partsBinHelp) {
+		//m_owner->m_breadboardGraphicsView->scene()->removeItem(m_partsBinHelp);
+	//}
 }
 
 void Helper::removeSwitchButtonsHelp() {
-	m_owner->m_breadboardGraphicsView->scene()->removeItem(m_switchButtonsHelp);
+	//if (m_switchButtonsHelp) {
+		//m_owner->m_breadboardGraphicsView->scene()->removeItem(m_switchButtonsHelp);
+	//}
 }
 
 void Helper::removeAutorouteHelp() {
-	m_owner->m_pcbGraphicsView->scene()->removeItem(m_autorouteHelp);
+	//if (m_autorouteHelp) {
+		//m_owner->m_pcbGraphicsView->scene()->removeItem(m_autorouteHelp);
+	//}
 }
 
 void Helper::viewSwitched() {
 	if(m_stillWaitingFirstViewSwitch) {
 		m_stillWaitingFirstViewSwitch = false;
 
-		QTimer *timer = new QTimer(this);
-		timer->setSingleShot(true);
-		connect(timer, SIGNAL(timeout()), this, SLOT(removeSwitchButtonsHelp()));
-		timer->start(400);
+		//QTimer *timer = new QTimer(this);
+		//timer->setSingleShot(true);
+		//connect(timer, SIGNAL(timeout()), this, SLOT(removeSwitchButtonsHelp()));
+		//timer->start(400);
 	} else {
 		//disconnect(m_owner->m_breadViewSwitcher->widget(), SIGNAL(viewSwitched(int)), this, SLOT(viewSwitched()));
 	}
@@ -193,9 +203,9 @@ void Helper::viewSwitched() {
 void Helper::autorouted() {
 	if(m_stillWaitingFirstAutoroute) {
 		m_stillWaitingFirstAutoroute = false;
-		removeAutorouteHelp();
+		//removeAutorouteHelp();
 	} else {
-		disconnect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
+		//disconnect(m_owner, SIGNAL(autorouted()), this, SLOT(autorouted()));
 	}
 }
 

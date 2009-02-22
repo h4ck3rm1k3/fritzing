@@ -35,11 +35,13 @@ $Date$
 //  traces in modules
 //	save as group
 //		store them in the user folder
-//		create icon
+//		** create icon svg
+//			** use the bounding rect of the items instead of the scene rect
 //		add to bin
 //		xml: something that says group; pointer to icon; properties
 //		** select external connections
 //  save and load sketch with group(s)
+//	export with groups
 //	recursive groups
 //	open in new sketch (edit)
 //	copy/paste

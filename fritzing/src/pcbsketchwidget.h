@@ -39,7 +39,6 @@ public:
     PCBSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
-	QString renderToSVG(qreal printerScale);
 	bool canDeleteItem(QGraphicsItem * item);
 	bool canCopyItem(QGraphicsItem * item);
 	void createJumper();
@@ -47,6 +46,7 @@ public:
 	void excludeFromAutoroute(bool exclude);
 	bool ratsAllRouted();
 	void selectAllWires(ViewGeometry::WireFlag);
+	void selectAllExcludedTraces();
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
 	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);

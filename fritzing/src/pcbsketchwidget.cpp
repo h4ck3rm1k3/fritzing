@@ -144,119 +144,6 @@ ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * mod
 	return ViewLayer::Copper0;
 }
 
-QString PCBSketchWidget::renderToSVG(qreal printerScale) {
-
-	int width = scene()->width();
-	int height = scene()->height();
-	qreal trueWidth = width / printerScale;
-	qreal trueHeight = height / printerScale;
-	static qreal dpi = 1000;
-
-	QString outputSVG;
-	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "
-							 "<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" "
-							 "version=\"1.2\" baseProfile=\"tiny\" "
-							 "x=\"0in\" y=\"0in\" width=\"%1in\" height=\"%2in\" "
-							 "viewBox=\"0 0 %3 %4\" >")
-						.arg(trueWidth)
-						.arg(trueHeight)
-						.arg(trueWidth * dpi)
-						.arg(trueHeight * dpi);
-	outputSVG += header;
-
-	QHash<QString, SvgFileSplitter *> svgHash;
-
-
-
-	foreach (QGraphicsItem * item, scene()->items()) {
-		PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
-		if (paletteItem != NULL) {
-			QString path = paletteItem->filename();
-			DebugDialog::debug(QString("path: %1").arg(path));
-			SvgFileSplitter * splitter = svgHash.value(path, NULL);
-			if (splitter == NULL) {
-				splitter = new SvgFileSplitter();
-				bool result = splitter->split(path, "copper0");
-				if (!result) {
-					delete splitter;
-					continue;
-				}
-				result = splitter->normalize(dpi, "copper0");
-				if (!result) {
-					delete splitter;
-					continue;
-				}
-				svgHash.insert(path, splitter);
-			}
-			QPointF loc = paletteItem->scenePos();
-			loc.setX(loc.x() * dpi / printerScale);
-			loc.setY(loc.y() * dpi / printerScale);
-
-			QString itemSvg = splitter->elementString("copper0");
-
-			if (!paletteItem->transform().isIdentity()) {
-				QTransform transform = paletteItem->transform();
-				itemSvg = QString("<g transform=\"matrix(%1,%2,%3,%4,%5,%6)\" >")
-					.arg(transform.m11())
-					.arg(transform.m12())
-					.arg(transform.m21())
-					.arg(transform.m22())
-					.arg(0.0)  // transform.dx()			// don't understand why but SVG doesn't like this transform
-					.arg(0.0)  // transform.dy()			// maybe it's redundant--already dealt with in the translate used next?
-					.append(itemSvg)
-					.append("</g>");
-			}
-			if (loc.x() != 0 || loc.y() != 0) {
-				itemSvg = QString("<g transform=\"translate(%1,%2)\" >")
-					.arg(loc.x())
-					.arg(loc.y())
-					.append(itemSvg)
-					.append("</g>");
-			}
-
-			outputSVG.append(itemSvg);
-
-			/*
-			// TODO:  deal with rotations and flips
-			QString shifted = splitter->shift(loc.x(), loc.y(), "copper0");
-			outputSVG.append(shifted);
-			splitter->shift(-loc.x(), -loc.y(), "copper0");
-			*/
-		}
-		else {
-			TraceWire * wire = dynamic_cast<TraceWire *>(item);
-			if (wire == NULL) continue;
-
-
-
-			QLineF line = wire->getPaintLine();
-			QPointF p1 = wire->pos() + line.p1();
-			QPointF p2 = wire->pos() + line.p2();
-			p1.setX(p1.x() * dpi / printerScale);
-			p1.setY(p1.y() * dpi / printerScale);
-			p2.setX(p2.x() * dpi / printerScale);
-			p2.setY(p2.y() * dpi / printerScale);
-			QString lineString = QString("<line style=\"stroke-linecap: round\" stroke=\"black\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
-							.arg(p1.x())
-							.arg(p1.y())
-							.arg(p2.x())
-							.arg(p2.y())
-							.arg(wire->width() * dpi / printerScale);
-			outputSVG.append(lineString);
-		}
-	}
-
-	outputSVG += "</svg>";
-
-
-	foreach (SvgFileSplitter * splitter, svgHash.values()) {
-		delete splitter;
-	}
-
-	return outputSVG;
-
-}
-
 bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item)
 {
 	VirtualWire * wire = dynamic_cast<VirtualWire *>(item);
@@ -548,7 +435,6 @@ void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 
 	if (wires.count() <= 0) {
 		// TODO: tell user?
-		return;
 	}
 
 	QString wireName;
@@ -562,6 +448,30 @@ void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 		wireName = QObject::tr("Ratsnest wires");
 	}
 	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all %1").arg(wireName));
+
+	stackSelectionState(false, parentCommand);
+	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+	foreach (Wire * wire, wires) {
+		selectItemCommand->addRedo(wire->id());
+	}
+
+	scene()->clearSelection();
+	m_undoStack->push(parentCommand);
+}
+
+void PCBSketchWidget::selectAllExcludedTraces() 
+{
+	QList<Wire *> wires;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		TraceWire * wire = dynamic_cast<TraceWire *>(item);
+		if (wire == NULL) continue;
+
+		if (!wire->getAutoroutable()) {
+			wires.append(wire);
+		}
+	}
+
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all excluded traces"));
 
 	stackSelectionState(false, parentCommand);
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);

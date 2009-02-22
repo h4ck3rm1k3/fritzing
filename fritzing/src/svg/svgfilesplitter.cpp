@@ -116,7 +116,7 @@ QString SvgFileSplitter::elementString(const QString & elementID) {
 	return document.toString();
 }
 
-bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID) 
+bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool blackOnly) 
 {
 	// get the viewbox and the width and height
 	// then normalize them
@@ -168,7 +168,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID)
 
 	QDomElement childElement = mainElement.firstChildElement();
 	while (!childElement.isNull()) {
-		normalizeChild(childElement, sWidth * dpi, sHeight * dpi, vbWidth, vbHeight);
+		normalizeChild(childElement, sWidth * dpi, sHeight * dpi, vbWidth, vbHeight, blackOnly);
 		childElement = childElement.nextSiblingElement();
 	}
 
@@ -177,7 +177,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID)
 
 void SvgFileSplitter::normalizeChild(QDomElement & element, 
 									 qreal sNewWidth, qreal sNewHeight,
-									 qreal vbWidth, qreal vbHeight)
+									 qreal vbWidth, qreal vbHeight, bool blackOnly)
 {
 	
 	if (element.nodeName().compare("circle") == 0) {
@@ -186,7 +186,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
 		normalizeAttribute(element, "r", sNewWidth, vbWidth);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element);
+		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("line") == 0) {
 		fixStyleAttribute(element);
@@ -195,7 +195,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "x2", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y2", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element);
+		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("rect") == 0) {
 		fixStyleAttribute(element);
@@ -212,7 +212,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		if (!element.attribute("ry").isEmpty()) {
 			normalizeAttribute(element, "ry", sNewHeight, vbHeight);
 		}
-		setStrokeOrFill(element);
+		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("ellipse") == 0) {
 		fixStyleAttribute(element);
@@ -221,7 +221,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		normalizeAttribute(element, "rx", sNewWidth, vbWidth);
 		normalizeAttribute(element, "ry", sNewHeight, vbHeight);
 		normalizeAttribute(element, "stroke-width", sNewWidth, vbWidth);
-		setStrokeOrFill(element);
+		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
 		fixStyleAttribute(element);
@@ -241,11 +241,11 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 				element.setAttribute("points", pathUserData.string);
 			}
 		}
-		setStrokeOrFill(element);
+		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("path") == 0) {
 		fixStyleAttribute(element);
-		setStrokeOrFill(element);
+		setStrokeOrFill(element, blackOnly);
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
@@ -262,7 +262,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	else {
 		QDomElement childElement = element.firstChildElement();
 		while (!childElement.isNull()) {
-			normalizeChild(childElement, sNewWidth, sNewHeight, vbWidth, vbHeight);
+			normalizeChild(childElement, sNewWidth, sNewHeight, vbWidth, vbHeight, blackOnly);
 			childElement = childElement.nextSiblingElement();
 		}
 	}
@@ -462,8 +462,10 @@ bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUse
 	return svgPathRunner.runPath(parser.symStack(), &pathUserData);
 }
 
-void SvgFileSplitter::setStrokeOrFill(QDomElement & element)
+void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly)
 {
+	if (!blackOnly) return;
+
 	// if stroke attribute is not empty make it black
 	// if fill attribute is not empty and not "none" make it black
 	QString stroke = element.attribute("stroke");

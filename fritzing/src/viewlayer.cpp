@@ -45,7 +45,7 @@ void ViewLayer::initNames() {
 	if (names.count() == 0) {
 		// xmlname, displayname
 		names.insert(ViewLayer::Icon, new StringPair("icon", QObject::tr("Icon")));
-		names.insert(ViewLayer::BreadboardBreadboard, new StringPair("breadboardBreadboard", QObject::tr("Breadboard")));
+		names.insert(ViewLayer::BreadboardBreadboard, new StringPair("breadboardbreadboard", QObject::tr("Breadboard")));
 		names.insert(ViewLayer::Breadboard, new StringPair("breadboard", QObject::tr("Parts")));
 		names.insert(ViewLayer::BreadboardWire,  new StringPair("breadboardWire", QObject::tr("Wires")));
 		names.insert(ViewLayer::BreadboardLabel,  new StringPair("breadboardLabel", QObject::tr("Part Labels")));

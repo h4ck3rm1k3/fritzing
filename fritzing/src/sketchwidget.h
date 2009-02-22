@@ -175,6 +175,7 @@ public:
 	void addFixedToBottomLeftItem(QGraphicsItem *item);
 	void addFixedToCenterItem(QGraphicsItem *item);
 	void addFixedToBottomRightItem(QGraphicsItem *item);
+	void addFixedToCenterItem2(QWidget *);
 
 	void ensureFixedToTopLeftItems();
 	void ensureFixedToTopRightItems();
@@ -195,6 +196,8 @@ public:
 	void noteSizeChanged(ItemBase * itemBase, const QSizeF & oldSize, const QSizeF & newSize);
 	void resizeNote(long itemID, const QSizeF & );
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
+	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize);
+
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -294,6 +297,7 @@ protected:
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QColor & getLabelTextColor();
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize);
+	void drawBackground( QPainter * painter, const QRectF & rect );
 
 protected:
 	static bool lessThan(int a, int b);
@@ -425,6 +429,8 @@ protected:
 	QList<QGraphicsItem*> m_fixedToBottomLeftItems;
 	QList<QGraphicsItem*> m_fixedToBottomRightItems;
 	QList<QGraphicsItem*> m_fixedToCenterItems;
+	QWidget * m_fixedToCenterItem;
+	QPoint m_fixedToCenterItemOffset;
 
 	QString m_lastColorSelected;
 

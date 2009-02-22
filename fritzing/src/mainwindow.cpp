@@ -57,6 +57,7 @@ $Date$
 #include "dockmanager.h"
 #include "group/saveasmoduledialog.h"
 
+#include "fsvgrenderer.h"
 #include "fsizegrip.h"
 
 
@@ -1306,4 +1307,22 @@ void MainWindow::enableCheckUpdates(bool enabled)
 void MainWindow::saveAsModule() {
 	SaveAsModuleDialog dialog(m_breadboardGraphicsView, this);
 	int result = dialog.exec();
+	if (result == QDialog::Accepted) {
+		QList<ViewLayer::ViewLayerID> partViewLayerIDs;
+		partViewLayerIDs << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard;
+		QList<ViewLayer::ViewLayerID> wireViewLayerIDs;
+		wireViewLayerIDs << ViewLayer::BreadboardWire;
+		QSizeF imageSize;
+		QString svg = m_breadboardGraphicsView->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
+		if (svg.isEmpty()) {
+			// tell the user something reasonable
+			return;
+		}
+
+		QFile file("test.svg");
+		file.open(QIODevice::WriteOnly);
+		QTextStream out(&file);
+		out << svg;
+		file.close();
+	}
 }
