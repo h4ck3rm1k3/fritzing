@@ -58,8 +58,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, PaletteItem* paletteItem, bool doConnectors);
 
 		ModelPart *createFakeModelPart(SvgAndPartFilePath *svgpath);
-		ModelPart *createFakeModelPart(const QHash<QString,StringPair*> &connIds, const QStringList &layers, QString svgFilePath);
-		//void replaceMyViewNode(QDomDocument *domDoc, const QString &nodeContent);
+		ModelPart *createFakeModelPart(const QHash<QString,StringPair*> &connIds, const QStringList &layers, const QString &svgFilePath);
 
 		const QHash<QString,StringPair*> getConnectorIds(const QString &path);
 		void getConnectorIdsAux(QHash<QString,StringPair*> &retval, QDomElement &docElem);

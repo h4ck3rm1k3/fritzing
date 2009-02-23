@@ -174,18 +174,14 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(SvgAndPartFilePath *svgp
 	return createFakeModelPart(connIds, layers, path);
 }
 
-ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
-	QString fakePath = svgFilePath;//.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
-	DebugDialog::debug("<<<< svg file path "+svgFilePath);
-	DebugDialog::debug("<<<< fake path "+fakePath);
-
+ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, const QString &svgFilePath) {
 	QDomDocument *domDoc = new QDomDocument();
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
 	QString fakeFzFile =
 		QString("<module><views>\n")+
-			QString("<%1><layers image='%2' >\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier)).arg(fakePath);
+			QString("<%1><layers image='%2' >\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier)).arg(svgFilePath);
 		foreach(QString layer, layers) { fakeFzFile +=
 			QString("    <layer layerId='%1' />\n").arg(layer);
 		}

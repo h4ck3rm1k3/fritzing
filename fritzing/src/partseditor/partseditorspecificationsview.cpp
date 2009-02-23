@@ -162,7 +162,8 @@ void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFil
 		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
 		QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
 
-		if(!m_tempFolder.mkdir(viewFolder)) return;
+		if(!QFileInfo(m_tempFolder.path()+"/"+viewFolder).exists()
+		   && !m_tempFolder.mkdir(viewFolder)) return;
 		if(!m_tempFolder.cd(viewFolder)) return;
 
 		QString destFilePath = FritzingWindow::getRandText()+".svg";
@@ -209,14 +210,11 @@ void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
 	if(filePath.contains(svgFolder, cs)) {
 		// is core file
 		relative = filePathAux.remove(svgFolder+"/", cs);
-		relative = relative.mid(filePathAux.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
-		DebugDialog::debug("<<<< relative "+relative);
-	} else if(filePath.startsWith(tempFolder,cs)) {
-		// is generated file that currently lives inside the temp folder
-		relative = filePathAux.remove(tempFolder+"/", cs);
+		//Mariano: I don't like this folder thing anymore
+		relative = relative.mid(filePathAux.indexOf("/")+1); // remove core/user/contrib
 	} else {
-		// generated jpeg/png
-		relative = m_svgFilePath->relativePath();
+		// generated jpeg/png or file outside fritzing folder
+		relative = "";
 	}
 
 	delete m_svgFilePath;

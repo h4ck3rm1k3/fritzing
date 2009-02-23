@@ -94,21 +94,27 @@ void PartsEditorPaletteItem::createSvgFile(QString path) {
 }
 
 bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, const QString &layerFileName) {
-	QDir dir(modelPartSharedPath);			// is a path to a filename
-	dir.cdUp();								// lop off the filename
-	dir.cdUp();								// parts root
-	StringPair tempPath;
-	tempPath.first = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir;
-	tempPath.second = "%1/" + layerFileName;
+	if(QFileInfo(layerFileName).exists()) {
+		m_svgStrings = new SvgAndPartFilePath();
+		m_svgStrings->setAbsolutePath(layerFileName);
+		return true; // nothing to do
+	} else {
+		QDir dir(modelPartSharedPath);			// is a path to a filename
+		dir.cdUp();								// lop off the filename
+		dir.cdUp();								// parts root
+		StringPair tempPath;
+		tempPath.first = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir;
+		tempPath.second = "%1/" + layerFileName;
 
-	QStringList possibleFolders;
-	possibleFolders << "core" << "contrib" << "user";
-	for(int i=0; i < possibleFolders.size(); i++) {
-		if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
-			m_svgStrings = new SvgAndPartFilePath();
-			m_svgStrings->setAbsolutePath(tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]));
-			m_svgStrings->setRelativePath(tempPath.second.arg(possibleFolders[i]));
-			return true;
+		QStringList possibleFolders;
+		possibleFolders << "core" << "contrib" << "user";
+		for(int i=0; i < possibleFolders.size(); i++) {
+			if (QFileInfo( tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]) ).exists()) {
+				m_svgStrings = new SvgAndPartFilePath();
+				m_svgStrings->setAbsolutePath(tempPath.first+"/"+tempPath.second.arg(possibleFolders[i]));
+				m_svgStrings->setRelativePath(tempPath.second.arg(possibleFolders[i]));
+				return true;
+			}
 		}
 	}
 	return false;
