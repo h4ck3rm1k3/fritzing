@@ -182,12 +182,17 @@ void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFil
 	} else {
 		QString relPathAux = filePathOrig->relativePath();
 		m_svgFilePath->setAbsolutePath(m_originalSvgFilePath);
-		m_svgFilePath->setRelativePath(
-			relPathAux.right(// remove user/core/contrib
-				relPathAux.size() -
-				relPathAux.indexOf("/") - 1
-			)
-		);
+		Q_ASSERT(relPathAux.count("/") <= 2);
+		if(relPathAux.count("/") == 2) { // this means that core/user/contrib is still in the file name
+			m_svgFilePath->setRelativePath(
+				relPathAux.right(// remove user/core/contrib
+					relPathAux.size() -
+					relPathAux.indexOf("/") - 1
+				)
+			);
+		} else { //otherwise, just leave it as it is
+			m_svgFilePath->setRelativePath(relPathAux);
+		}
 	}
 }
 
