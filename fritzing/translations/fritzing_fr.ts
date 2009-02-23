@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/aboutbox.cpp" line="113"/>
         <source>&lt;b&gt;2007-%1 Fachhochschule Potsdam&lt;/b&gt;</source>
-        <translation>&lt;b&gt;2007-%1 Université des sciences appliquées de Potsdam&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;2007-%1 Université des sciences appliquées de Potsdam (FH Potsdam)&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="127"/>
@@ -2165,7 +2165,7 @@ la vue schématique?</translation>
     <message>
         <location filename="../src/fapplication.cpp" line="470"/>
         <source>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Fachhochschule Potsdam&lt;/font&gt;</source>
-        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Université des sciences appliquées de Potsdam&lt;/font&gt;</translation>
+        <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Université des sciences appliquées de Potsdam (FH Potsdam)&lt;/font&gt;</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="308"/>
