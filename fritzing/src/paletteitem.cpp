@@ -286,7 +286,7 @@ QString PaletteItem::family() {
 bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, bool reinit, SwapCommand * swapCommand) {
 	bool sameFamily = family() == newModelPart->modelPartShared()->family();
 	if(sameFamily) {
-		prepareGeometryChange();
+		prepareGeometryChange();				// important to call this when QGraphicsItem boundary changes: seems to prevent crashes in the backingstore
 		invalidateConnectors();
 		clearBusConnectorItems();
 

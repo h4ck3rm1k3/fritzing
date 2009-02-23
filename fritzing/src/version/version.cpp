@@ -41,7 +41,7 @@ QString Version::m_shortDate;
 QString Version::m_versionString;
 QString Version::m_year;
 QStringList Version::m_modifiers;
-			
+								
 Version * Version::m_singleton = new Version();
 			
 Version::Version() {

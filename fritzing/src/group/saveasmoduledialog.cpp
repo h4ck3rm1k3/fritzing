@@ -27,6 +27,12 @@ $Date$
 #include "saveasmoduledialog.h"
 #include "../sketchwidget.h"
 #include "../zoomablegraphicsview.h"
+#include "../partseditor/partspecificationswidget.h"
+#include "../partseditor/partseditormainwindow.h"
+#include "../partseditor/editablelinewidget.h"
+#include "../partseditor/editabletextwidget.h"
+#include "../partseditor/editabledatewidget.h"
+#include "../partseditor/hashpopulatewidget.h"
 
 #include <QFormLayout>
 #include <QLabel>
@@ -45,11 +51,21 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	m_sketchWidget = sketchWidget;
 	this->setWindowTitle(QObject::tr("Save as Module"));
 
-	QVBoxLayout * vLayout = new QVBoxLayout(this);
+	QFrame * centerFrame = new QFrame();
+	centerFrame->setObjectName("center");
 
-	QLabel * label = new QLabel(QObject::tr("To make a connector \"external\", so that parts outside this module can connect to it, click it; click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out."), this);
-	label->setWordWrap(true);
-	vLayout->addWidget(label);
+	QList<QWidget*> specWidgets;
+
+	QLabel * prompt = new QLabel(QObject::tr("<html><body>"
+											"<p>To make a connector \"external\", so that parts outside this module can connect to it, click it;"
+											"click again to make it unavailable for connecting.  "
+											"To make selection easier, use the mouse wheel to zoom in and out.</p>"
+											"<p>Don't forget to scroll down and fill out the description and other fields that describe your module.</p>"
+											"</body></html>"), 
+											
+								this);
+	prompt->setWordWrap(true);
+
 
 	sketchWidget->scene()->installEventFilter(this);
 
@@ -58,19 +74,76 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	gv->setScene(sketchWidget->scene());
 	gv->show();
 
-	vLayout->addWidget(gv);
 
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	ModelPart * modelPart = NULL;
+	WaitPushUndoStack * undoStack = new WaitPushUndoStack();
+
+	QString label = PartsEditorMainWindow::LabelFreshStartText;
+	EditableLineWidget * labelWidget = new EditableLineWidget(label,undoStack,this,tr("Label"),modelPart);
+
+	QString description = PartsEditorMainWindow::DescriptionFreshStartText;
+	EditableTextWidget * descriptionWidget = new EditableTextWidget(description,undoStack,this,tr("Description"),modelPart);
+
+	QStringList readOnlyKeys;
+	readOnlyKeys << "family" << "voltage" << "type";
+
+	QHash<QString,QString> initValues;
+	initValues["family"] = "";
+	HashPopulateWidget * propertiesWidget = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,undoStack,this);
+
+	QString tags = PartsEditorMainWindow::TagsFreshStartText;
+	EditableLineWidget * tagsWidget = new EditableLineWidget(tags,undoStack,this,tr("Tags"),modelPart);
+
+	EditableLineWidget * authorWidget = new EditableLineWidget(
+		QString(getenv("USER")),
+		undoStack, this, tr("Author"),true);
+	
+	/*connect(
+		m_author,SIGNAL(editionCompleted(QString)),
+		this,SLOT(updateDateAndAuthor()));
+	*/
+
+	EditableDateWidget * createdOnWidget = new EditableDateWidget(
+		QDate::currentDate(),
+		undoStack,this, tr("Created/Updated on"),true);
+	
+	/*connect(
+		m_createdOn,SIGNAL(editionCompleted(QString)),
+		this,SLOT(updateDateAndAuthor()));
+	*/
+
+	QLabel * createdByTextWidget = new QLabel(PartsEditorMainWindow::FooterText.arg(authorWidget->text()).arg(createdOnWidget->text()));
+	createdByTextWidget->setObjectName("createdBy");
+
+	specWidgets << labelWidget << descriptionWidget  << propertiesWidget << tagsWidget << authorWidget << createdOnWidget << createdByTextWidget;
+
+	PartSpecificationsWidget * partSpecWidget = new PartSpecificationsWidget(specWidgets,this);
+
+	QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
 
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
-	vLayout->addWidget(buttonBox);
 
-	this->setLayout(vLayout);
 
+	QGridLayout *frameLayout = new QGridLayout(centerFrame);
+	frameLayout->setMargin(0);
+	frameLayout->setSpacing(0);
+	frameLayout->addWidget(partSpecWidget,0,0,1,1);
+	centerFrame->setLayout(frameLayout);
+
+	QVBoxLayout *mainLayout = new QVBoxLayout(this);
+	mainLayout->setMargin(0);
+	mainLayout->setSpacing(0);
+	mainLayout->addWidget(prompt);
+	mainLayout->addWidget(gv);
+	mainLayout->addWidget(centerFrame);
+	mainLayout->addWidget(buttonBox);
+	this->setMinimumSize(QSize(400, 400));
+	this->setLayout(mainLayout);
+	
 }
 
 SaveAsModuleDialog::~SaveAsModuleDialog()
