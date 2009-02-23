@@ -87,6 +87,7 @@ class SketchMainHelp : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
 	SketchMainHelp(const QString &viewString, const QString &htmlText, bool doShow);
 	~SketchMainHelp();
+
 	void doClose();
 	void setTransparent();
 	void doSetVisible(bool visible);

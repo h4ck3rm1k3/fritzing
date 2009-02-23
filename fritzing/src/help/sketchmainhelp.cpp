@@ -45,9 +45,6 @@ SketchMainHelpCloseButton::SketchMainHelpCloseButton(const QString &imagePath, Q
 	setFixedHeight(m_pixmap.height());
 }
 
-SketchMainHelp::~SketchMainHelp() {
-}
-
 void SketchMainHelpCloseButton::mousePressEvent(QMouseEvent * event) {
 	emit clicked();
 	QLabel::mousePressEvent(event);
@@ -189,6 +186,13 @@ SketchMainHelp::SketchMainHelp (
 	if(!doShow) loadState();
 }
 
+SketchMainHelp::~SketchMainHelp()
+{
+	if (m_pixmap != NULL) {
+		delete m_pixmap;
+		m_pixmap = NULL;
+	}
+}
 
 void SketchMainHelp::doClose() {
 	doSetVisible(false);

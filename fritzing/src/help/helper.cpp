@@ -122,6 +122,12 @@ Helper::~Helper() {
 	// m_...MainHelp objects  are deleted by the scene when the scene is deleted
 	// when the sketch is closed, so calling doClose crashes at this point
 
+	// note: in the current implementation, these are not part of the scene so they don't get deleted
+	// remember to comment these out if we go back to including these in the scene
+	delete m_breadMainHelp;
+	delete m_schemMainHelp;
+	delete m_pcbMainHelp;
+
 	//m_breadMainHelp->doClose();
 	//m_schemMainHelp->doClose();
 	//m_pcbMainHelp->doClose();

@@ -141,12 +141,8 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 void PartsBinIconView::doClear() {
 	PartsBinView::doClear();
 	m_layout->clear();
-	foreach(QGraphicsItem *it,m_layouter->childItems()) {
-		//delete it;
-		//it->setParentItem(NULL);
-	}
 	delete m_layouter;			// deleting layouter deletes layout
-	delete scene();
+	delete scene();				// deleting scene deletes QGraphicsItems
 	setScene(new QGraphicsScene(this));
 	setupLayout();
 }
