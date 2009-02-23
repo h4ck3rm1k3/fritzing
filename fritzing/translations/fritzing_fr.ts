@@ -380,7 +380,7 @@
     <message>
         <location filename="../src/help/helper.cpp" line="75"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, first rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation type="unfinished">C&apos;est dans la &lt;b&gt;vue du circuit imprimé&lt;b&gt; que vous définissez la disposition qu&apos;auront les composants sur le circuit imprimé.&lt;br/&gt;&lt;br/&gt; Les circuits imprimés peuvent être réalisés avec peu de matériel utilisant des techniques de gravure artisanales. Vous pouvez aussi utiliser les services d&apos;un fabricant de circuits imprimés pour un résultat plus soigné.&lt;br/&gt;&lt;br/&gt; Pour concevoir votre circuit imprimé, veuillez placer tous les composants sur la platine. Essayer d&apos;optimiser la disposition générale afin de minimiser la longueur des connections et d&apos;améliorer la clarté du montage. Une fois que cela est terminé, vous pouvez cliquer avec le bouton droit sur les différentes connections ou utiliser l&apos;autoroutage pour générer des pistes en cuivres entre les composants. Le bouton d&apos;autoroutage &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;se trouve en bas à gauche.</translation>
+        <translation>C&apos;est dans la &lt;b&gt;vue du circuit imprimé&lt;b&gt; que vous définissez la disposition qu&apos;auront les composants sur le circuit imprimé.&lt;br/&gt;&lt;br/&gt; Les circuits imprimés peuvent être réalisés avec peu de matériel utilisant des techniques de gravure artisanales. Vous pouvez aussi utiliser les services d&apos;un fabricant de circuits imprimés pour un résultat plus soigné.&lt;br/&gt;&lt;br/&gt; Pour concevoir votre circuit imprimé, veuillez placer tous les composants sur la platine. Essayer d&apos;optimiser la disposition générale afin de minimiser la longueur des connections et d&apos;améliorer la clarté du montage. Une fois que cela est terminé, vous pouvez cliquer avec le bouton droit sur les différentes connections ou utiliser l&apos;autoroutage pour générer des pistes en cuivres entre les composants. Le bouton d&apos;autoroutage &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;se trouve en bas à gauche.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="41"/>
@@ -760,7 +760,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="735"/>
         <source>to &amp;Eagle...</source>
-        <translation>au format to &amp;Eagle...</translation>
+        <translation>Vers &amp;Eagle...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="737"/>
@@ -770,7 +770,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="740"/>
         <source>to &amp;Gerber...</source>
-        <translation>au format to &amp;Eagle...</translation>
+        <translation>Vers &amp;Gerber...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="742"/>
@@ -890,7 +890,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="876"/>
         <source>&amp;Select All</source>
-        <translation>&amp;Sélection tout</translation>
+        <translation>&amp;Tout sélectionner</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="877"/>
