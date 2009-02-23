@@ -26,43 +26,32 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 
 #include "terminalpointitem.h"
 #include "../partseditor/partseditorconnectorsconnectoritem.h"
+#include "../partseditor/partseditorconnectorsview.h"
 #include "../debugdialog.h"
 
 QHash<ConnectorRectangle::State, QPixmap> TerminalPointItem::m_pixmapHash;
 
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible)
-	: QGraphicsRectItem(parent), ResizableRectItem()
+	: QGraphicsRectItem(parent)
 {
 	Q_ASSERT(parent);
 	m_parent = parent;
-	m_hasBeenMoved = false;
-	m_pressed = false;
 
 	init(visible);
 }
 
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point)
-	: QGraphicsRectItem(parent), ResizableRectItem()
+	: QGraphicsRectItem(parent)
 {
 	Q_ASSERT(parent);
 	m_parent = parent;
-	m_hasBeenMoved = false;
 	m_point = point;
 
 	init(visible);
 }
 
-TerminalPointItem::~TerminalPointItem()
-{
-	if (m_handlers) {
-		delete m_handlers;
-	}
-}
-
 void TerminalPointItem::init(bool visible) {
 	initPixmapHash();
-
-	m_handlers = new ConnectorRectangle(this,false);
 
 	QPen pen = QPen();
 	pen.setWidth(0);
@@ -72,6 +61,10 @@ void TerminalPointItem::init(bool visible) {
 	m_cross = NULL;
 	setVisible(visible);
 	updatePoint();
+
+	setFlag(QGraphicsItem::ItemIsMovable,false);
+	m_cross->setFlag(QGraphicsItem::ItemIsMovable,true);
+	setBrush(QBrush(QColor(255,0,0)));
 }
 
 void TerminalPointItem::initPixmapHash() {
@@ -87,29 +80,27 @@ void TerminalPointItem::initPixmapHash() {
 
 void TerminalPointItem::updatePoint() {
 	setRect(m_parent->boundingRect());
-	drawCross();
+	updateCrossView();
 }
 
-void TerminalPointItem::drawCross() {
+void TerminalPointItem::updateCrossView() {
 	if(!m_cross) {
-		m_cross = new QGraphicsPixmapItem(this);
+		m_cross = new TerminalPointItemPrivate(this);
 		m_cross->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 	}
 
 	m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Normal]);
+	posCross();
 }
 
 void TerminalPointItem::posCross() {
 	QRectF pRect = parentItem()->boundingRect();
-	QPointF crossCenter = m_point == QPointF()?
-							pRect.center():
-							QPointF(pRect.x(),pRect.y()) + m_point;
+		m_point = m_point == QPointF()
+				?pRect.center()
+				:m_point;
 
-	qreal transf = 2*m_handlers->currentScale();
-	qreal x = crossCenter.x() -m_cross->boundingRect().width()/transf;
-	qreal y = crossCenter.y() -m_cross->boundingRect().height()/transf;
-
-	m_cross->setPos(x,y);
+	QPointF correction = transformedCrossCenter();
+	m_cross->setPos(m_point+pRect.topLeft()-correction);
 }
 
 void TerminalPointItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
@@ -123,27 +114,27 @@ void TerminalPointItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 }
 
 void TerminalPointItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible()) {
+	/*if(isVisible()) {
 		if(isOutsideConnector()) {
 			setCursor(QCursor(Qt::ForbiddenCursor));
 		} else {
 			m_hasBeenMoved = m_pressed;
 			setCursor(QCursor());
 		}
-	}
-	QGraphicsItem::mouseMoveEvent(event);
+	}*/
+	QGraphicsRectItem::mouseMoveEvent(event);
 }
 
 void TerminalPointItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible()) {
+	/*if(isVisible()) {
 		m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Selected]);
 		m_pressed = true;
-	}
-	QGraphicsItem::mousePressEvent(event);
+	}*/
+	QGraphicsRectItem::mousePressEvent(event);
 }
 
 void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible()) {
+	/*if(isVisible()) {
 		if(isOutsideConnector()) {
 			m_parent->resetTerminalPoint();
 			setCursor(QCursor());
@@ -152,11 +143,67 @@ void TerminalPointItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 			m_cross->setPixmap(m_pixmapHash[ConnectorRectangle::Hover]);
 			m_pressed = false;
 		}
-	}
-	QGraphicsItem::mouseReleaseEvent(event);
+	}*/
+	QGraphicsRectItem::mouseReleaseEvent(event);
 }
 
-bool TerminalPointItem::isOutsideConnector() {
+void TerminalPointItem::setMovable(bool movable) {
+	m_cross->setFlag(QGraphicsItem::ItemIsMovable, movable);
+}
+
+qreal TerminalPointItem::currentScale() {
+	if(scene()) {
+		PartsEditorConnectorsView* view = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
+		if(view) {
+			return view->currentZoom()/100;
+		}
+	}
+	return 1;
+}
+
+void TerminalPointItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+	if(!m_cross->hasBeenMoved()) {
+		updateCrossView();
+	}
+	QGraphicsRectItem::paint(painter,option,widget);
+}
+
+QPointF TerminalPointItem::mappedPoint() {
+	Q_ASSERT(m_cross->hasBeenMoved());
+	return m_cross->mapToItem(m_parent,transformedCrossCenter());
+}
+
+QPointF TerminalPointItem::transformedCrossCenter() {
+	return QMatrix()
+			.scale(currentScale(),currentScale())
+			.inverted()
+			.map(m_cross->boundingRect().center());
+}
+
+bool TerminalPointItem::hasBeenMoved() {
+	return m_cross->hasBeenMoved();
+}
+
+void TerminalPointItem::reset() {
+	m_parent->resetTerminalPoint();
+}
+
+
+/////////////////////////////////////////////////////////////////////////
+
+TerminalPointItemPrivate::TerminalPointItemPrivate(TerminalPointItem *parent)
+	: QGraphicsPixmapItem(parent)
+{
+	m_parent = parent;
+	m_pressed = false;
+	m_hasBeenMoved = false;
+}
+
+bool TerminalPointItemPrivate::isPressed() {
+	return m_pressed;
+}
+
+bool TerminalPointItemPrivate::isOutsideConnector() {
 	/*QPointF myCenter = mapToParent(rect().center());
 	//QPointF myCenter = mapToParent(m_cross->boundingRect().center());
 	QRectF pRect = m_parent->rect();
@@ -171,35 +218,42 @@ bool TerminalPointItem::isOutsideConnector() {
 	return false;
 }
 
-QPointF TerminalPointItem::mappedToScenePoint() {
-	return mapToScene(point());
+void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+	if(isVisible()) {
+		if(isOutsideConnector()) {
+			setCursor(QCursor(Qt::ForbiddenCursor));
+		} else {
+			m_hasBeenMoved = m_pressed;
+			setCursor(QCursor());
+		}
+	}
+	QGraphicsPixmapItem::mouseMoveEvent(event);
 }
 
-QPointF TerminalPointItem::point() {
-	return rect().center();
+void TerminalPointItemPrivate::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	if(isVisible()) {
+		setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Selected]);
+		m_pressed = true;
+	}
+	QGraphicsPixmapItem::mousePressEvent(event);
 }
 
-bool TerminalPointItem::hasBeenMoved() {
+void TerminalPointItemPrivate::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+	if(isVisible()) {
+		if(isOutsideConnector()) {
+			m_parent->reset();
+			setCursor(QCursor());
+			return;
+		} else {
+			setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Hover]);
+			//m_parent->setPoint(boundingRect().center());
+			m_pressed = false;
+		}
+	}
+	QGraphicsPixmapItem::mouseReleaseEvent(event);
+}
+
+
+bool TerminalPointItemPrivate::hasBeenMoved() {
 	return m_hasBeenMoved;
-}
-
-void TerminalPointItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-	posCross();
-	QGraphicsRectItem::paint(painter,option,widget);
-}
-
-qreal TerminalPointItem::minHeight() {
-	return 1;
-}
-
-qreal TerminalPointItem::minWidth() {
-	return 1;
-}
-
-void TerminalPointItem::resizeRect(qreal x, qreal y, qreal w, qreal h) {
-	setRect(x,y,w,h);
-}
-
-void TerminalPointItem::doPrepareGeometryChange() {
-	prepareGeometryChange();
 }

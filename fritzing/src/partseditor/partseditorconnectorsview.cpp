@@ -43,9 +43,6 @@ PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier vi
 	m_showingTerminalPoints = showingTerminalPoints;
 	m_lastSelectedConnId = "";
 
-	//m_zoomControls = new ZoomControls(this);
-	//addFixedToBottomRightItem(m_zoomControls);
-
 	setDragMode(QGraphicsView::ScrollHandDrag);
 
 	setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -310,18 +307,12 @@ void PartsEditorConnectorsView::addNewTerminalPoints(
 		QString connId = citem->connector()->connectorSharedID();
 		TerminalPointItem *tp = citem->terminalPointItem();
 		Q_ASSERT(tp);
-		QRectF rectTPAux = tp->boundingRect();
-		QPointF posTPAux = QPointF(
-			rectTPAux.x()+rectTPAux.width()/2,
-			rectTPAux.y()+rectTPAux.height()/2
-		);
-		qreal halfTPSize = 0.001; // a tiny rectangle
-		QRectF tpointRect(
-			tp->mapToParent(posTPAux).x()-halfTPSize,
-			tp->mapToParent(posTPAux).y()-halfTPSize,
-			halfTPSize*2, halfTPSize*2
-		);
+		QRectF tpointRect(tp->mappedPoint(), QPointF(0,0));
 		QRectF svgTpRect = mapFromSceneToSvg(tpointRect,sceneViewBox,svgViewBox);
+
+		qreal halfTPSize = 0.001; // a tiny rectangle
+		svgTpRect.setSize(QSizeF(halfTPSize*2,halfTPSize*2));
+
 		addRectToSvg(svgDom,connId+"terminal",svgTpRect, connectorsLayerId);
 	}
 }

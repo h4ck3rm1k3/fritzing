@@ -86,10 +86,7 @@ void ZoomableGraphicsView::relativeZoom(qreal step) {
 	m_scaleValue = tempSize;
 
 	QMatrix matrix;
-	//matrix.translate((width() / 2) - mousePosition.x(), (height() / 2) -  mousePosition.y());
-	//qreal scale = qPow(qreal(2), (m_scaleValue-50) / qreal(50));
 	matrix.scale(tempScaleValue, tempScaleValue);
-	//matrix.translate(mousePosition.x() - (width() / 2), mousePosition.y() - (height() / 2));
 	this->setMatrix(matrix);
 
 	emit zoomChanged(m_scaleValue);

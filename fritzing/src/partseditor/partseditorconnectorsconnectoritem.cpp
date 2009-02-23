@@ -232,7 +232,7 @@ void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 	// if we're showing the rerminal points, then the connector
 	// is not movable
 	setFlag(QGraphicsItem::ItemIsMovable,!show);
-	m_terminalPointItem->setFlag(QGraphicsItem::ItemIsMovable,show);
+	m_terminalPointItem->setMovable(show);
 }
 
 bool PartsEditorConnectorsConnectorItem::showingTerminalPoint() {

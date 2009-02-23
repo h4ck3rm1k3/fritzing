@@ -32,31 +32,48 @@ $Date: 2008-12-18 19:17:13 +0100 (Thu, 18 Dec 2008) $
 #include "connectorrectangle.h"
 
 class PartsEditorConnectorsConnectorItem;
+class TerminalPointItem;
 
-class TerminalPointItem : public QGraphicsRectItem, public ResizableRectItem {
+class TerminalPointItemPrivate: public QGraphicsPixmapItem {
+public:
+	TerminalPointItemPrivate(TerminalPointItem *parent);
+	bool isOutsideConnector();
+	bool hasBeenMoved();
+	bool isPressed();
+
+protected:
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+	TerminalPointItem *m_parent;
+	bool m_hasBeenMoved;
+	bool m_pressed;
+};
+
+class TerminalPointItem : public QGraphicsRectItem {
+friend class TerminalPointItemPrivate;
 public:
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible);
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
-	~TerminalPointItem();
 
-	QPointF point();
+	//QPointF point();
 	void updatePoint();
-
-	bool isOutsideConnector();
 	bool hasBeenMoved();
 
-	qreal minHeight();
-	qreal minWidth();
+	void setMovable(bool movable);
+	QPointF mappedPoint();
 
-	void doPrepareGeometryChange();
+	void reset();
 
 protected:
-	QPointF mappedToScenePoint();
+	//void setPoint(QPointF point);
 
 	void init(bool visible);
 	void initPixmapHash();
-	void drawCross();
+	void updateCrossView();
 	void posCross();
+	qreal currentScale();
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
 
@@ -66,13 +83,11 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
-	void resizeRect(qreal x, qreal y, qreal w, qreal h);
+	QPointF transformedCrossCenter();
 
 	QPointF m_point;
-	bool m_hasBeenMoved;
-	bool m_pressed;
 
-	QGraphicsPixmapItem *m_cross;
+	TerminalPointItemPrivate *m_cross;
 	PartsEditorConnectorsConnectorItem *m_parent;
 
 	static QHash<ConnectorRectangle::State, QPixmap> m_pixmapHash;
