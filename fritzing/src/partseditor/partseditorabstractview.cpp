@@ -175,7 +175,9 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(SvgAndPartFilePath *svgp
 }
 
 ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,StringPair*> &conns, const QStringList &layers, QString svgFilePath) {
-	QString fakePath = svgFilePath.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
+	QString fakePath = svgFilePath;//.mid(svgFilePath.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
+	DebugDialog::debug("<<<< svg file path "+svgFilePath);
+	DebugDialog::debug("<<<< fake path "+fakePath);
 
 	QDomDocument *domDoc = new QDomDocument();
 	QString errorStr;

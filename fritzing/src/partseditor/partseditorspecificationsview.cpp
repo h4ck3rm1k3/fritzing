@@ -209,6 +209,8 @@ void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
 	if(filePath.contains(svgFolder, cs)) {
 		// is core file
 		relative = filePathAux.remove(svgFolder+"/", cs);
+		relative = relative.mid(filePathAux.indexOf("/")+1); // remove core/user/contrib TODO Mariano: I don't like this folder thing anymore
+		DebugDialog::debug("<<<< relative "+relative);
 	} else if(filePath.startsWith(tempFolder,cs)) {
 		// is generated file that currently lives inside the temp folder
 		relative = filePathAux.remove(tempFolder+"/", cs);
