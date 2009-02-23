@@ -289,7 +289,7 @@
     <message>
         <location filename="../src/dockmanager.cpp" line="82"/>
         <source>view switcher</source>
-        <translation>afficher le sélecteur de vue</translation>
+        <translation>Sélecteur de vue</translation>
     </message>
 </context>
 <context>
@@ -370,17 +370,17 @@
     <message>
         <location filename="../src/help/helper.cpp" line="54"/>
         <source>The &lt;b&gt;Breadboard View&lt;/b&gt; is meant to look like a &lt;i&gt;real-life&lt;/i&gt; breadboard prototype.&lt;br/&gt;&lt;br/&gt;Begin by dragging a part from the Parts Bin, which is over at the top right. Then pull in more parts, connecting them by clicking on the connectors and dragging wires. The process is similar to how you would arrange things in the physical world. &lt;br/&gt;&lt;br/&gt;After you&apos;re finished creating your sketch in the breadboard view, try the other views. You can switch by clicking the other views in either the View Switcher or the Navigator on the lower right. Because different views have different purposes, parts will look different in the other views.</source>
-        <translation>La &lt;b&gt;vue de la platine d&apos;essai&lt;b&gt; est destinée à ressembler à un &lt;i&gt;véritable&lt;/i&gt; montage avec une platine d&apos;essai.&lt;br/&gt;&lt;br/&gt; Commencer par faire glisser  des composants depuis la bibliothèque, qui se situe en haut à droite. Ajouter d&apos;autres composants, connecter les en cliquant sur les connecteurs et en tirant les câbles. Ce processus est similaire à celui utilisé dans le monde réel.&lt;br/&gt;&lt;br/&gt;Lorsque le schéma est terminé dans la vue de la platine d&apos;essai, veuillez essayer les autres vues. Vous pouvez à tout moment passer de l&apos;une à l&apos;une en utilisant le sélecteur de vue ou le navigateur en bas à droite. En raison des différentes missions associés aux différentes vues, l&apos;apparences des composants variera.</translation>
+        <translation>La &lt;b&gt;vue de la platine d&apos;essai&lt;b&gt; imite un &lt;i&gt;véritable&lt;/i&gt; montage avec une platine d&apos;essai.&lt;br/&gt;&lt;br/&gt; Commencer par faire glisser  des composants depuis la bibliothèque, qui se situe en haut à droite. Ajouter d&apos;autres composants, connecter les en cliquant sur les connecteurs et en tirant les câbles. Ce processus est similaire à celui utilisé dans le monde réel.&lt;br/&gt;&lt;br/&gt;Lorsque le schéma est terminé dans la vue de la platine d&apos;essai, veuillez essayer les autres vues. Vous pouvez à tout moment passer de l&apos;une à l&apos;une en utilisant le sélecteur de vue ou le navigateur en bas à droite. En raison des différentes missions associés aux différentes vues, l&apos;apparences des composants variera.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="64"/>
         <source>Welcome to the &lt;b&gt;Schematic View&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;This is a more abstract way to look at components and connections than the Breadboard View. You have the same elements as you have on your breadboard, they just look different. This representation is closer to the traditional diagrams used by engineers.&lt;br/&gt;&lt;br/&gt;You can press &amp;lt;Shift&amp;gt;-click with the mouse to create bend points and tidy up your connections. The Schematic View can help you check that you have made the right connections between components. You can also print out your schematic for documentation.</source>
-        <translation>Bienvenue dans la &lt;b&gt;vue schématique&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt; Les composants et les connections sont représentés de manière plus abstraite que dans la vue de la platine d&apos;essai. Vous y disposez des mêmes éléments, seule l&apos;apparence diffère. Cette représentation se rapproche des diagrammes traditionnels utilisés par les ingénieurs.&lt;br/&gt;&lt;br/&gt; Vous pouvez pressez &amp;lt;Shift&amp;gt;-click pour créér des points d&apos;articulation afin d&apos;optimiser la disposition générale. La vue schématique peut vous aider à vérifier la validité des connections entre composants. Vous pouvez aussi l&apos;imprimer à fin de documentation.</translation>
+        <translation>Bienvenue dans la &lt;b&gt;vue schématique&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt; Les composants et les connections sont représentés de manière plus abstraite que dans la vue de la platine d&apos;essai. Vous y disposez des mêmes éléments, seule l&apos;apparence diffère. Cette représentation se rapproche des diagrammes traditionnels utilisés par les ingénieurs.&lt;br/&gt;&lt;br/&gt; Vous pouvez presser &amp;lt;Shift&amp;gt;-click pour créér des points d&apos;articulation afin d&apos;optimiser la disposition générale. La vue schématique peut vous aider à vérifier la validité des connections entre composants. Vous pouvez aussi l&apos;imprimer à fin de documentation.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="75"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;&lt;br/&gt;To lay out your PCB, first rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation>C&apos;est dans la &lt;b&gt;vue circuit imprimé&lt;b&gt; que vous définissez la disposition qu&apos;auront les composants sur le circuit imprimé.&lt;br/&gt;&lt;br/&gt; Les circuits imprimés peuvent être réalisés avec peu de matériel utilisant des techniques de gravure artisanales. Vous pouvez aussi utiliser les services d&apos;un fabricant de circuits imprimés pour un résultat plus soigné.&lt;br/&gt;&lt;br/&gt; Pour concevoir votre circuit imprimé, veuillez placer tous les composants sur la platine. Essayer d&apos;optimiser la disposition générale afin de minimiser la longueur des connections et d&apos;améliorer la clarté du montage. Une fois que cela est terminé, vous pouvez cliquer avec le bouton droit sur les différentes connectionsou utiliser l&apos;autoroutage pour générer les pistes en cuivres entre les composants. Le bouton d&apos;autoroutage &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;se trouve en bas à gauche.</translation>
+        <translation type="unfinished">C&apos;est dans la &lt;b&gt;vue du circuit imprimé&lt;b&gt; que vous définissez la disposition qu&apos;auront les composants sur le circuit imprimé.&lt;br/&gt;&lt;br/&gt; Les circuits imprimés peuvent être réalisés avec peu de matériel utilisant des techniques de gravure artisanales. Vous pouvez aussi utiliser les services d&apos;un fabricant de circuits imprimés pour un résultat plus soigné.&lt;br/&gt;&lt;br/&gt; Pour concevoir votre circuit imprimé, veuillez placer tous les composants sur la platine. Essayer d&apos;optimiser la disposition générale afin de minimiser la longueur des connections et d&apos;améliorer la clarté du montage. Une fois que cela est terminé, vous pouvez cliquer avec le bouton droit sur les différentes connections ou utiliser l&apos;autoroutage pour générer des pistes en cuivres entre les composants. Le bouton d&apos;autoroutage &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt;se trouve en bas à gauche.</translation>
     </message>
     <message>
         <location filename="../src/help/helper.cpp" line="41"/>
@@ -428,7 +428,7 @@
     <message>
         <location filename="../src/htmlinfoview.cpp" line="295"/>
         <source>Rat&apos;s nest wire</source>
-        <translation type="unfinished">??????</translation>
+        <translation>Rat&apos;s nest wire</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="297"/>
@@ -489,7 +489,7 @@
     <message>
         <location filename="../src/itembase.cpp" line="242"/>
         <source>Part</source>
-        <translation>Composant</translation>
+        <translation>Composants</translation>
     </message>
 </context>
 <context>
@@ -835,7 +835,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="850"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copy</translation>
+        <translation>&amp;Copier</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="851"/>
@@ -1105,12 +1105,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="984"/>
         <source>&amp;Show All Layers</source>
-        <translation>&amp;Montrer tous les calques</translation>
+        <translation>&amp;Afficher tous les calques</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="985"/>
         <source>Show all the available layers for the current view</source>
-        <translation>Montrer tous les calques disponibles pour la vue actuelle</translation>
+        <translation>Afficher tous les calques disponibles pour la vue actuelle</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="988"/>
@@ -1125,7 +1125,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="999"/>
         <source>&amp;Zoom In</source>
-        <translation>&amp;Zoom en avant</translation>
+        <translation>&amp;Zoom avant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1000"/>
@@ -1135,7 +1135,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1001"/>
         <source>Zoom in</source>
-        <translation>Zoomer en avant</translation>
+        <translation>Zoom avant</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1007"/>
@@ -1145,7 +1145,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1011"/>
         <source>&amp;Zoom Out</source>
-        <translation>&amp;Zoomer en arrière</translation>
+        <translation>&amp;Zoom arrière</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1012"/>
@@ -1155,7 +1155,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1013"/>
         <source>Zoom out</source>
-        <translation>Zoomer en arrière</translation>
+        <translation>Zoom arrières</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1016"/>
@@ -1190,7 +1190,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1026"/>
         <source>&amp;Show Breadboard</source>
-        <translation>&amp;Montrer la platine d&apos;essai</translation>
+        <translation>&amp;Afficher la platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1027"/>
@@ -1200,12 +1200,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1028"/>
         <source>Show the breadboard view</source>
-        <translation>Montrer la vue de la platine d&apos;essai</translation>
+        <translation>Afficher la platine d&apos;essai</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1031"/>
         <source>&amp;Show Schematic</source>
-        <translation>&amp;Montrer la schématique</translation>
+        <translation>&amp;Afficher la vue schématique</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1032"/>
@@ -1215,12 +1215,12 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1033"/>
         <source>Show the schematic view</source>
-        <translation>Montrer la vue schématique</translation>
+        <translation>Afficher la vue schématique</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1036"/>
         <source>&amp;Show PCB</source>
-        <translation>&amp;Montrer le circuit imprimé</translation>
+        <translation>&amp;Afficher le circuit imprimé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1037"/>
@@ -1230,7 +1230,7 @@
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1038"/>
         <source>Show the PCB view</source>
-        <translation>Montrer la vue circuit imprimé</translation>
+        <translation>Afficher le circuit imprimé</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1043"/>
@@ -1995,17 +1995,17 @@ la vue schématique?</translation>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="291"/>
         <source>save as new part</source>
-        <translation>enregistrer en tant que nouveau composant</translation>
+        <translation>Enregistrer en tant que nouveau composant</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="295"/>
         <source>save</source>
-        <translation>enregistrer</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="307"/>
         <source>cancel</source>
-        <translation>annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="397"/>
@@ -2369,7 +2369,7 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
     <message>
         <location filename="../src/sketchwidget.cpp" line="1911"/>
         <source>%1 Layer</source>
-        <translation>%1 Calque</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="2139"/>
@@ -2434,7 +2434,7 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
     <message>
         <location filename="../src/viewlayer.cpp" line="62"/>
         <source>Rat&apos;s nest</source>
-        <translation type="unfinished">????</translation>
+        <translation>Rat&apos;s nest</translation>
     </message>
     <message>
         <location filename="../src/viewlayer.cpp" line="63"/>
@@ -2504,7 +2504,7 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="562"/>
         <source>Ratsnest wires</source>
-        <translation type="unfinished">????</translation>
+        <translation>Ratsnest wires</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="564"/>
@@ -2897,7 +2897,7 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/viewswitcher.cpp" line="259"/>
         <source>Schematic</source>
-        <translation>Schématique</translation>
+        <translation>Vue schématique</translation>
     </message>
     <message>
         <location filename="../src/viewswitcher.cpp" line="260"/>
