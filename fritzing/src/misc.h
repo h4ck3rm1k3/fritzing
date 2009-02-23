@@ -42,6 +42,12 @@ $Date$
 #endif
 #endif
 
+#ifdef Q_WS_WIN
+#define getenvUser() getenv("USERNAME")
+#else
+#define getenvUser() getenv("USER")
+#endif
+
 #include <QPair>
 #include <QString>
 #include <QDir>

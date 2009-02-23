@@ -43,6 +43,9 @@ public:
 protected:
 	bool eventFilter(QObject *obj, QEvent *);
 	void handleSceneMousePress(QEvent *);
+	
+protected slots:
+	void saveClose();
 
 protected:
 	class SketchWidget * m_sketchWidget;

@@ -66,14 +66,12 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 								this);
 	prompt->setWordWrap(true);
 
-
 	sketchWidget->scene()->installEventFilter(this);
 
 	QGraphicsView * gv = new ZoomableGraphicsView(this);
 	gv->setMinimumSize(300, 300);
 	gv->setScene(sketchWidget->scene());
 	gv->show();
-
 
 	ModelPart * modelPart = NULL;
 	WaitPushUndoStack * undoStack = new WaitPushUndoStack();
@@ -95,7 +93,7 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	EditableLineWidget * tagsWidget = new EditableLineWidget(tags,undoStack,this,tr("Tags"),modelPart);
 
 	EditableLineWidget * authorWidget = new EditableLineWidget(
-		QString(getenv("USER")),
+		QString(getenvUser()),
 		undoStack, this, tr("Author"),true);
 	
 	/*connect(
@@ -123,10 +121,8 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
 
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveClose()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-
-
 
 	QGridLayout *frameLayout = new QGridLayout(centerFrame);
 	frameLayout->setMargin(0);
@@ -204,3 +200,11 @@ void SaveAsModuleDialog::handleSceneMousePress(QEvent *event)
 	}
 }
 
+void SaveAsModuleDialog::saveClose() {
+
+	foreach (ConnectorItem * connectorItem, m_externalConnectorItems) {
+		// these are the ones to save
+	}
+
+	this->close();
+}

@@ -69,8 +69,8 @@ void PartsEditorMainWindow::initText() {
 	TitleFreshStartText = tr("Please find a name for me!");
 	LabelFreshStartText = tr("Please provide a label");
 	DescriptionFreshStartText = tr("You could tell a little bit about this part");
-	TaxonomyFreshStartText = tr("Please clasify this part");
-	TagsFreshStartText = tr("You can add your tags to find things easier");
+	TaxonomyFreshStartText = tr("Please classify this part");
+	TagsFreshStartText = tr("You can add your tags to make searching easier");
 	FooterText = tr("<i>created by</i> %1 <i>on</i> %2");
 	___partsEditorName___ = tr("Parts Editor");
 
@@ -234,7 +234,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 
 	m_author = new EditableLineWidget(
-		modelPart ? modelPart->modelPartShared()->author() : QString(getenv("USER")),
+		modelPart ? modelPart->modelPartShared()->author() : QString(getenvUser()),
 		m_undoStack, this, tr("Author"),true);
 	connect(
 		m_author,SIGNAL(editionCompleted(QString)),
