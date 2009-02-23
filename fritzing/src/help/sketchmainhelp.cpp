@@ -159,7 +159,7 @@ void SketchMainHelpPrivate::leaveEventAux() {
 	m_closeButton->doHide();
 }
 
-bool SketchMainHelpPrivate::forwardMousePressEvent(QMouseEvent * event) 
+bool SketchMainHelpPrivate::forwardMousePressEvent(QMouseEvent * event)
 {
 	QPoint p = m_closeButton->mapFromParent(event->pos());
 	if (m_closeButton->rect().contains(p)) {
@@ -179,6 +179,7 @@ SketchMainHelp::SketchMainHelp (
 	) : QGraphicsProxyWidget()
 {
 	m_mouseWithin = false;
+	m_visible = true;
 	m_pixmap = NULL;
 	setObjectName("sketchMainHelp"+viewString);
 	m_son = new SketchMainHelpPrivate(viewString, htmlText, this);
