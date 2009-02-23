@@ -733,3 +733,7 @@ bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 
 	return connector()->connectionIsAllowed(other->connector());
 }
+
+void ConnectorItem::prepareGeometryChange() {
+	QGraphicsRectItem::prepareGeometryChange();
+}

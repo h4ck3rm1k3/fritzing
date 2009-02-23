@@ -286,6 +286,7 @@ QString PaletteItem::family() {
 bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, bool reinit, SwapCommand * swapCommand) {
 	bool sameFamily = family() == newModelPart->modelPartShared()->family();
 	if(sameFamily) {
+		prepareGeometryChange();
 		invalidateConnectors();
 		clearBusConnectorItems();
 
@@ -305,6 +306,7 @@ bool PaletteItem::swap(ModelPart* newModelPart, const LayerHash &layerHash, bool
 		setConnectorTooltips();
 
 		figureHover();
+
 
 		scene()->update();
 	}
@@ -351,6 +353,7 @@ void PaletteItem::cleanupConnectors(SwapCommand * swapCommand) {
 				oldOnes.insert(conn->connector()->connectorShared()->name(), conn);
 			} else {
 				newOnes << conn;
+				conn->prepareGeometryChange();
 			}
 		}
 	}

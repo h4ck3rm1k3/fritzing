@@ -89,6 +89,7 @@ public:
 	void setIgnoreAncestorFlag(bool);
 	bool connectionIsAllowed(ConnectorItem * other);
 	void setChosen(bool);
+	void prepareGeometryChange();
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

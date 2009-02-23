@@ -99,13 +99,6 @@ void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void PartsBinIconView::showInfo(SvgIconWidget * item) {
-	//QObject * parent = item->scene()->parent();
-	//InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(item->scene()->parent());
-	//if (infoGraphicsView != NULL) {
-		//infoGraphicsView->hoverEnterItem(item->modelPart());
-	//}
-
-	// TODO isn't infographics view just this?
 	hoverEnterItem(item->modelPart());
 }
 
