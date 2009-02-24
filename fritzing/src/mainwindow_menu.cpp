@@ -524,6 +524,9 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 	else if (fileName.endsWith(FritzingPartExtension)) {
 		notYetImplemented(tr("directly loading parts"));
 	}
+	else if (fileName.endsWith(FritzingModuleExtension)) {
+		notYetImplemented(tr("directly loading module"));
+	}
 
 	if (result) {
 		this->show();

@@ -195,18 +195,20 @@ void ModelBase::save(const QString & fileName, bool asPart) {
     }
 
     QXmlStreamWriter streamWriter(&file1);
-    streamWriter.setAutoFormatting(true);
+	save(streamWriter, asPart);
+	file1.close();
+	QFile original(fileName);
+	original.remove();
+	file1.rename(fileName);
+}
 
+void ModelBase::save(QXmlStreamWriter & streamWriter, bool asPart) {
+    streamWriter.setAutoFormatting(true);
     if(asPart) {
     	m_root->saveAsPart(streamWriter, true);
     } else {
     	m_root->saveInstances(streamWriter, true);
     }
-
-	file1.close();
-	QFile original(fileName);
-	original.remove();
-	file1.rename(fileName);
 }
 
 bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts) 

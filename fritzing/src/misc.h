@@ -48,36 +48,15 @@ $Date$
 #define getenvUser() getenv("USER")
 #endif
 
-#include <QPair>
 #include <QString>
 #include <QDir>
 #include <QDomElement>
 #include <QStringList>
-
-
-template <class T1, class T2, class T3>
-struct Triple {
-public:
-	Triple() {}
-
-	Triple(T1 _first, T2 _second, T3 _third) {
-		first = _first;
-		second = _second;
-		third = _third;
-	}
-
-	T1 first;
-	T2 second;
-	T3 third;
-};
+#include <QPair>
+#include <QList>
 
 typedef QPair<qreal, qreal> RealPair;
 typedef QPair<QString, QString> StringPair;
-struct StringTriple : public Triple<QString, QString, QString> {
-	StringTriple() : Triple<QString, QString, QString>() {}
-	StringTriple(QString _first, QString _second, QString _third)
-		: Triple<QString, QString, QString>(_first, _second, _third) {}
-};
 
 QString getUserPartsFolder();
 QDir *getApplicationSubFolder(QString);
@@ -109,11 +88,14 @@ static const QString ___MacStyle___ = " QTabBar::tab {margin-bottom: 10px; min-w
 static const QString ___MacStyle___ = "";
 #endif
 
-
 static const QString FritzingSketchExtension(".fz");
 static const QString FritzingBinExtension(".fzb");
 static const QString FritzingPartExtension(".fzp");
+static const QString FritzingModuleExtension(".fzm");
 static const QString FritzingBundleExtension(".fzz");
+
+const QList<QString> & fritzingExtensions();
+
 static const QString QtFunkyPlaceholder("[*]");  // this is some wierd hack Qt uses in window titles as a placeholder to setr the modified state
 
 #endif

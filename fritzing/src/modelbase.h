@@ -43,6 +43,7 @@ public:
 	virtual ModelPart * addModelPart(ModelPart * parent, ModelPart * copyChild);
 	virtual bool load(const QString & fileName, ModelBase* refModel, QList<ModelPart *> & modelParts);
 	void save(const QString & fileName, bool asPart=false);
+	void save(class QXmlStreamWriter &, bool asPart);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
 	bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);

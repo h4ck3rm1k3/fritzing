@@ -1306,23 +1306,136 @@ void MainWindow::enableCheckUpdates(bool enabled)
 
 void MainWindow::saveAsModule() {
 	SaveAsModuleDialog dialog(m_breadboardGraphicsView, this);
-	int result = dialog.exec();
-	if (result == QDialog::Accepted) {
-		QList<ViewLayer::ViewLayerID> partViewLayerIDs;
-		partViewLayerIDs << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard;
-		QList<ViewLayer::ViewLayerID> wireViewLayerIDs;
-		wireViewLayerIDs << ViewLayer::BreadboardWire;
-		QSizeF imageSize;
-		QString svg = m_breadboardGraphicsView->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
-		if (svg.isEmpty()) {
-			// tell the user something reasonable
-			return;
-		}
+	if (dialog.exec() != QDialog::Accepted) return;
 
-		QFile file("test.svg");
-		file.open(QIODevice::WriteOnly);
-		QTextStream out(&file);
-		out << svg;
-		file.close();
+	// save the "icon"
+	QList<ViewLayer::ViewLayerID> partViewLayerIDs;
+	partViewLayerIDs << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard;
+	QList<ViewLayer::ViewLayerID> wireViewLayerIDs;
+	wireViewLayerIDs << ViewLayer::BreadboardWire;
+	QSizeF imageSize;
+	QString svg = m_breadboardGraphicsView->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
+	if (svg.isEmpty()) {
+		// tell the user something reasonable
+		return;
 	}
+
+	SketchModel * partSketchModel = new SketchModel(true);
+	ModelPartShared* modelPartShared = new ModelPartShared();
+	partSketchModel->root()->setModelPartShared(modelPartShared);
+
+	QString moduleID;
+	QString uri;
+	QString version;
+
+	if(moduleID.isNull() || moduleID.isEmpty()) {
+		moduleID = FritzingWindow::getRandText();
+	}
+
+	modelPartShared->setModuleID(moduleID);
+	modelPartShared->setUri(uri);
+	modelPartShared->setVersion(version);
+
+	modelPartShared->setAuthor(dialog.author());
+	modelPartShared->setTitle(dialog.title());
+	modelPartShared->setDate(dialog.createdOn());
+	modelPartShared->setLabel(dialog.label());
+	modelPartShared->setDescription(dialog.description());
+	modelPartShared->setTags(dialog.tags());
+	modelPartShared->setProperties(dialog.properties());
+
+	QByteArray partXml;
+	QXmlStreamWriter partStreamWriter(&partXml);
+	partSketchModel->save(partStreamWriter, true);				// get part xml
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument partDocument;
+	bool result = partDocument.setContent(partXml, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		// signal error
+		return;
+	}
+
+	QDomElement partModule = partDocument.documentElement();
+	if (partModule.isNull()) {
+		// signal error
+		return;
+	}
+
+	QByteArray sketchXml;
+	QXmlStreamWriter sketchStreamWriter(&sketchXml);
+	m_sketchModel->save(sketchStreamWriter, false);				// get sketch xml
+
+	QDomDocument sketchDocument;
+	result = sketchDocument.setContent(sketchXml, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		// signal error
+		return;
+	}
+
+	QDomElement sketchModule = sketchDocument.documentElement();
+	if (sketchModule.isNull()) {
+		// signal error
+		return;
+	}
+
+	QDomElement instances = sketchModule.firstChildElement("instances");
+   	if (instances.isNull()) {
+		// signal error
+   		return;
+	}
+
+	sketchModule.removeChild(instances);
+	partModule.appendChild(instances);
+
+	QDomElement externalConnectors = partDocument.createElement("externalConnectors");
+	partModule.appendChild(externalConnectors);
+	foreach (ConnectorItem * connectorItem, dialog.externalConnectorItems()) {
+		QDomElement connector = partDocument.createElement("connector");
+		connector.setAttribute("connectorId", connectorItem->connectorSharedID());
+		connector.setAttribute("modelIndex", connectorItem->attachedTo()->modelPart()->modelIndex());
+		externalConnectors.appendChild(connector);
+	}
+
+	// need to save pointer to file
+	// may need to delete virtual wires...
+
+	QString userPartsSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg/user/icon/";
+
+	QFile file1(userPartsSvgFolderPath + moduleID + ".svg");
+	file1.open(QIODevice::WriteOnly);
+	QTextStream out1(&file1);
+	out1 << svg;
+	file1.close();
+
+	QDomElement views = partDocument.createElement("views");
+	partModule.appendChild(views);
+	QDomElement iconView = partDocument.createElement("iconView");
+	views.appendChild(iconView);
+	QDomElement layers = partDocument.createElement("layers");
+	iconView.appendChild(layers);
+	layers.setAttribute("image", QString("icon/") + moduleID + ".svg");
+	QDomElement layer = partDocument.createElement("layer");
+	layers.appendChild(layer);
+	layer.setAttribute("layerId", "icon");
+
+	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
+
+	QFile file2(userPartsFolderPath + moduleID + FritzingModuleExtension);
+	file2.open(QIODevice::WriteOnly);
+	QTextStream out2(&file2);
+	partDocument.save(out2, 0);
+	file2.close();
+
+
+
+
+
+
+
+
+
 }

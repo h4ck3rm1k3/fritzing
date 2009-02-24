@@ -30,26 +30,45 @@ $Date$
 
 #include <QDialog>
 #include <QFile>
+#include <QLabel>
+#include <QHash>
 
 class SaveAsModuleDialog : public QDialog
 {
 	Q_OBJECT
 
 public:
-	SaveAsModuleDialog(class SketchWidget * sketchWidget, QWidget *parent = 0);
+	SaveAsModuleDialog(class SketchWidget *, QWidget *parent = 0);
 	~SaveAsModuleDialog();
 
+	QString author();
+	QString title();
+	QString createdOn();
+	QString label();
+	QString description();
+	QStringList tags();
+	const QHash<QString, QString> & properties();
+	const QList<class ConnectorItem *> & externalConnectorItems();
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *);
 	void handleSceneMousePress(QEvent *);
 	
 protected slots:
-	void saveClose();
+	//void updateDateAndAuthor();
 
 protected:
 	class SketchWidget * m_sketchWidget;
+	class SketchModel * m_sketchModel;
 	QList<class ConnectorItem *> m_externalConnectorItems;
+	class EditableLineWidget * m_titleWidget;
+	class EditableLineWidget * m_labelWidget;
+	class EditableTextWidget * m_descriptionWidget;
+	class HashPopulateWidget * m_propertiesWidget;
+	class EditableLineWidget * m_tagsWidget;
+	class EditableLineWidget * m_authorWidget;
+	class EditableDateWidget * m_createdOnWidget;
+	//QLabel * m_createdByTextWidget;
 };
 
 #endif 

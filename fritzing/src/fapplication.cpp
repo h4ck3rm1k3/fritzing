@@ -290,16 +290,12 @@ int FApplication::startup(int & argc, char ** argv)
 	// TODO: only do this at install time?
 	QSettings settings1("HKEY_CLASSES_ROOT\\Fritzing", QSettings::NativeFormat);
 	settings1.setValue(".", "Fritzing Application");
-	QSettings settings2("HKEY_CLASSES_ROOT\\.fz", QSettings::NativeFormat);
-	settings2.setValue(".", "Fritzing");
-	QSettings settings3("HKEY_CLASSES_ROOT\\.fzb", QSettings::NativeFormat);
-	settings3.setValue(".", "Fritzing");
-	QSettings settings4("HKEY_CLASSES_ROOT\\.fzp", QSettings::NativeFormat);
-	settings4.setValue(".", "Fritzing");
-	QSettings settings5("HKEY_CLASSES_ROOT\\.fzz", QSettings::NativeFormat);
-	settings5.setValue(".", "Fritzing");
-	QSettings settings6("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
-	settings6.setValue(".", QString("\"%1\" \"%2\"")
+	foreach (QString extension, fritzingExtensions()) {
+		QSettings settings2("HKEY_CLASSES_ROOT\\" + extension, QSettings::NativeFormat);
+		settings2.setValue(".", "Fritzing");
+	}
+	QSettings settings3("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
+	settings3.setValue(".", QString("\"%1\" \"%2\"")
 					   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
 					   .arg("%1") );
 #endif

@@ -42,6 +42,7 @@ $Date$
 #include "viewlayer.h"
 #include "misc.h"
 #include "graphicssvglineitem.h"
+#include "triple.h"
 
 typedef QMultiHash<class ConnectorItem *, class ConnectorItem *> ConnectorPairHash;
 

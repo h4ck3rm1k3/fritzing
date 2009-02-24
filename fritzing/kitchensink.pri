@@ -71,6 +71,7 @@ HEADERS += \
     src/sketchwidget.h \
     src/svgandpartfilepath.h \
     src/tracewire.h \
+    src/triple.h \
     src/triplenavigator.h \
     src/viewgeometry.h \
     src/viewlayer.h \

@@ -174,11 +174,11 @@ void FritzingWindow::replicateDir(QDir srcDir, QDir targDir) {
 
 bool FritzingWindow::alreadyHasExtension(const QString &fileName) {
 	// TODO: Make something preattier to manage all the supported formats at once
-	return fileName.indexOf(FritzingSketchExtension)  != -1
-		|| fileName.indexOf(FritzingBundleExtension)  != -1
-		|| fileName.indexOf(FritzingPartExtension)  != -1
-		|| fileName.indexOf(FritzingBinExtension)  != -1
-		|| fileName.indexOf(".pdf")  != -1
+	foreach (QString extension, fritzingExtensions()) {
+		if (fileName.indexOf(extension) != -1) return true;
+	}
+
+	return fileName.indexOf(".pdf")  != -1
 		|| fileName.indexOf(".ps")  != -1
 		|| fileName.indexOf(".png")  != -1
 		|| fileName.indexOf(".jpg")  != -1;

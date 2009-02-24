@@ -26,6 +26,7 @@ $Date$
 
 #include "saveasmoduledialog.h"
 #include "../sketchwidget.h"
+#include "../sketchmodel.h"
 #include "../zoomablegraphicsview.h"
 #include "../partseditor/partspecificationswidget.h"
 #include "../partseditor/partseditormainwindow.h"
@@ -74,46 +75,39 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	gv->show();
 
 	ModelPart * modelPart = NULL;
-	WaitPushUndoStack * undoStack = new WaitPushUndoStack();
+	WaitPushUndoStack  undoStack;
+
+	QString title = PartsEditorMainWindow::TitleFreshStartText;
+	m_titleWidget = new EditableLineWidget(title,&undoStack,this,"",modelPart);
+	m_titleWidget->setObjectName("partTitle");
 
 	QString label = PartsEditorMainWindow::LabelFreshStartText;
-	EditableLineWidget * labelWidget = new EditableLineWidget(label,undoStack,this,tr("Label"),modelPart);
+	m_labelWidget = new EditableLineWidget(label,&undoStack,this,tr("Label"),modelPart);
 
 	QString description = PartsEditorMainWindow::DescriptionFreshStartText;
-	EditableTextWidget * descriptionWidget = new EditableTextWidget(description,undoStack,this,tr("Description"),modelPart);
+	m_descriptionWidget = new EditableTextWidget(description,&undoStack,this,tr("Description"),modelPart);
 
 	QStringList readOnlyKeys;
 	readOnlyKeys << "family" << "voltage" << "type";
 
 	QHash<QString,QString> initValues;
 	initValues["family"] = "";
-	HashPopulateWidget * propertiesWidget = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,undoStack,this);
+	m_propertiesWidget = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,&undoStack,this);
 
 	QString tags = PartsEditorMainWindow::TagsFreshStartText;
-	EditableLineWidget * tagsWidget = new EditableLineWidget(tags,undoStack,this,tr("Tags"),modelPart);
+	m_tagsWidget = new EditableLineWidget(tags,&undoStack,this,tr("Tags"),modelPart);
 
-	EditableLineWidget * authorWidget = new EditableLineWidget(
-		QString(getenvUser()),
-		undoStack, this, tr("Author"),true);
+	m_authorWidget = new EditableLineWidget(QString(getenvUser()), &undoStack, this, tr("Author"),true);
+	//connect( m_authorWidget,SIGNAL(editionCompleted(QString)), this,SLOT(updateDateAndAuthor()));
 	
-	/*connect(
-		m_author,SIGNAL(editionCompleted(QString)),
-		this,SLOT(updateDateAndAuthor()));
-	*/
+	m_createdOnWidget = new EditableDateWidget( QDate::currentDate(), &undoStack,this, tr("Created/Updated on"),true);	
+	//connect( m_createdOnWidget,SIGNAL(editionCompleted(QString)), this,SLOT(updateDateAndAuthor()));
 
-	EditableDateWidget * createdOnWidget = new EditableDateWidget(
-		QDate::currentDate(),
-		undoStack,this, tr("Created/Updated on"),true);
-	
-	/*connect(
-		m_createdOn,SIGNAL(editionCompleted(QString)),
-		this,SLOT(updateDateAndAuthor()));
-	*/
+	//m_createdByTextWidget = new QLabel();
+	//m_createdByTextWidget->setObjectName("createdBy");
+	//updateDateAndAuthor();
 
-	QLabel * createdByTextWidget = new QLabel(PartsEditorMainWindow::FooterText.arg(authorWidget->text()).arg(createdOnWidget->text()));
-	createdByTextWidget->setObjectName("createdBy");
-
-	specWidgets << labelWidget << descriptionWidget  << propertiesWidget << tagsWidget << authorWidget << createdOnWidget << createdByTextWidget;
+	specWidgets << m_titleWidget << m_labelWidget << m_descriptionWidget  << m_propertiesWidget << m_tagsWidget << m_authorWidget << m_createdOnWidget /* << m_createdByTextWidget */;
 
 	PartSpecificationsWidget * partSpecWidget = new PartSpecificationsWidget(specWidgets,this);
 
@@ -121,7 +115,7 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
 
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(saveClose()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
 	QGridLayout *frameLayout = new QGridLayout(centerFrame);
@@ -131,8 +125,8 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	centerFrame->setLayout(frameLayout);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout(this);
-	mainLayout->setMargin(0);
-	mainLayout->setSpacing(0);
+	//mainLayout->setMargin(0);
+	//mainLayout->setSpacing(0);
 	mainLayout->addWidget(prompt);
 	mainLayout->addWidget(gv);
 	mainLayout->addWidget(centerFrame);
@@ -200,11 +194,42 @@ void SaveAsModuleDialog::handleSceneMousePress(QEvent *event)
 	}
 }
 
-void SaveAsModuleDialog::saveClose() {
-
-	foreach (ConnectorItem * connectorItem, m_externalConnectorItems) {
-		// these are the ones to save
-	}
-
-	this->close();
+/*
+void SaveAsModuleDialog::updateDateAndAuthor() {
+	m_createdByTextWidget->setText(PartsEditorMainWindow::FooterText.arg(m_authorWidget->text()).arg(m_createdOnWidget->text()));
 }
+*/
+
+QString SaveAsModuleDialog::author() {
+	return m_authorWidget->text();
+}
+
+QString SaveAsModuleDialog::title() {
+	return m_titleWidget->text();
+}
+
+QString SaveAsModuleDialog::createdOn() {
+	return m_createdOnWidget->text();
+}
+
+QString SaveAsModuleDialog::label() {
+	return m_labelWidget->text();
+}
+
+QString SaveAsModuleDialog::description() {
+	return m_descriptionWidget->text();
+}
+
+QStringList SaveAsModuleDialog::tags() {
+	return m_tagsWidget->text().split(", ");
+}
+
+const QHash<QString, QString> & SaveAsModuleDialog::properties() {
+	return m_propertiesWidget->hash();
+}
+
+const QList<class ConnectorItem *> & SaveAsModuleDialog::externalConnectorItems() {
+	return m_externalConnectorItems;
+}
+
+

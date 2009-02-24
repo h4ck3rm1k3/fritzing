@@ -31,6 +31,16 @@ $Date$
 #include <QCoreApplication>
 #include <QDir>
 
+static QList<QString> ___fritzingExtensions___;
+
+const QList<QString> & fritzingExtensions() {
+	if (___fritzingExtensions___.count() == 0) {
+		___fritzingExtensions___ << FritzingSketchExtension << FritzingBinExtension << FritzingPartExtension << FritzingModuleExtension << FritzingBundleExtension;
+	}
+
+	return ___fritzingExtensions___;
+}
+
 // finds the user parts folder based on local desktop (OS) defaults
 QString getUserPartsFolder(){
 	return QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/UserCreatedParts";
