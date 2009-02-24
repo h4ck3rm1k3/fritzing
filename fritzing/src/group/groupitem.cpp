@@ -33,23 +33,27 @@ $Date$
 //		what happens to ratsnest wires
 //		connect female connectees
 //  traces in modules
-//	save as group
-//		store them in the user folder
-//		add to bin
-//		** create icon svg
-//			** use the bounding rect of the items instead of the scene rect
-//		xml: something that says group; pointer to icon; properties
-//		** select external connections
 //  save and load sketch with group(s)
+//  drop group into sketch
+//		command objects go where?
 //	export with groups
 //	recursive groups
+//		recursive model part ownership
 //	open in new sketch (edit)
 //	copy/paste
 //	undo group
 //	delete
 //	undo delete
 //	rotate group: connected external wires don't updateConnections
+//	do model parts for grouped items get added as children to the group modelpart?
 
+//	** save as group
+//		** store them in the user folder
+//		** add to bin
+//		** create icon svg
+//			** use the bounding rect of the items instead of the scene rect
+//		** xml: something that says group; pointer to icon; properties
+//		** select external connections
 //	** layerkin
 //		** pcb view: group part in bb view, items not visually synced in pcb view
 //  ** scene jumps when creating a new group--triggered by changing the location of the chief item

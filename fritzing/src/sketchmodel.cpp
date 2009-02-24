@@ -71,3 +71,23 @@ ModelPart * SketchModel::findModelPartAux(ModelPart * modelPart, const QString &
 	return NULL;
 }
 
+bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<ModelPart *> & modelParts, long id) 
+{
+	QList<ModelPart *> already = m_loadedModelParts.values(id);
+	if (already.size() > 0) {
+		foreach (ModelPart * modelPart, already) {
+			modelParts.append(modelPart);
+		}
+		return true;
+	}
+
+	QFile file(filename);
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+		return false;
+	}
+
+	QByteArray itemData = file.readAll();
+	file.close();
+
+	return ModelBase::paste(refModel, itemData, modelParts);
+}

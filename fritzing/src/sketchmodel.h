@@ -31,6 +31,7 @@ $Date$
 #include "modelbase.h"
 
 #include <QTextStream>
+#include <QMultiHash>
 
 class SketchModel : public ModelBase
 {
@@ -40,8 +41,13 @@ public:
 	SketchModel(ModelPart * root);
 	void removeModelPart(ModelPart *);
 	ModelPart * findModelPart(const QString & moduleID, long id);
+	bool paste(ModelBase * refModel, const QString & filePath, QList<ModelPart *> & modelParts, long id);
 
 protected:
 	ModelPart * findModelPartAux(ModelPart * modelPart, const QString & moduleID, long id);
+
+protected:
+	QMultiHash<long, ModelPart *> m_loadedModelParts;
 };
+
 #endif

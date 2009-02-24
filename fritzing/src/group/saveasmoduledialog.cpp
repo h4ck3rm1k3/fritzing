@@ -75,32 +75,32 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	gv->show();
 
 	ModelPart * modelPart = NULL;
-	WaitPushUndoStack  undoStack;
+	m_undoStack = new WaitPushUndoStack(this);
 
 	QString title = PartsEditorMainWindow::TitleFreshStartText;
-	m_titleWidget = new EditableLineWidget(title,&undoStack,this,"",modelPart);
+	m_titleWidget = new EditableLineWidget(title,m_undoStack,this,"",modelPart);
 	m_titleWidget->setObjectName("partTitle");
 
 	QString label = PartsEditorMainWindow::LabelFreshStartText;
-	m_labelWidget = new EditableLineWidget(label,&undoStack,this,tr("Label"),modelPart);
+	m_labelWidget = new EditableLineWidget(label,m_undoStack,this,tr("Label"),modelPart);
 
 	QString description = PartsEditorMainWindow::DescriptionFreshStartText;
-	m_descriptionWidget = new EditableTextWidget(description,&undoStack,this,tr("Description"),modelPart);
+	m_descriptionWidget = new EditableTextWidget(description,m_undoStack,this,tr("Description"),modelPart);
 
 	QStringList readOnlyKeys;
 	readOnlyKeys << "family" << "voltage" << "type";
 
 	QHash<QString,QString> initValues;
-	initValues["family"] = "";
-	m_propertiesWidget = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,&undoStack,this);
+	initValues["family"] = "module";
+	m_propertiesWidget = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,this);
 
 	QString tags = PartsEditorMainWindow::TagsFreshStartText;
-	m_tagsWidget = new EditableLineWidget(tags,&undoStack,this,tr("Tags"),modelPart);
+	m_tagsWidget = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
 
-	m_authorWidget = new EditableLineWidget(QString(getenvUser()), &undoStack, this, tr("Author"),true);
+	m_authorWidget = new EditableLineWidget(QString(getenvUser()), m_undoStack, this, tr("Author"),true);
 	//connect( m_authorWidget,SIGNAL(editionCompleted(QString)), this,SLOT(updateDateAndAuthor()));
 	
-	m_createdOnWidget = new EditableDateWidget( QDate::currentDate(), &undoStack,this, tr("Created/Updated on"),true);	
+	m_createdOnWidget = new EditableDateWidget( QDate::currentDate(), m_undoStack,this, tr("Created/Updated on"),true);	
 	//connect( m_createdOnWidget,SIGNAL(editionCompleted(QString)), this,SLOT(updateDateAndAuthor()));
 
 	//m_createdByTextWidget = new QLabel();

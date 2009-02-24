@@ -233,7 +233,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (properties.text().contains("note", Qt::CaseInsensitive)) {
 		type = ModelPart::Note;
 	}
-	else if (properties.text().contains("group", Qt::CaseInsensitive)) {
+	else if (properties.text().contains("module", Qt::CaseInsensitive)) {
 		type = ModelPart::Module;
 	}
 	ModelPart * modelPart = new ModelPart(domDocument, path, type);

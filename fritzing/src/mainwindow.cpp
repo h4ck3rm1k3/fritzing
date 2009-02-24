@@ -1308,17 +1308,37 @@ void MainWindow::saveAsModule() {
 	SaveAsModuleDialog dialog(m_breadboardGraphicsView, this);
 	if (dialog.exec() != QDialog::Accepted) return;
 
-	// save the "icon"
+	QHash<QString, QString> svgs;
+
 	QList<ViewLayer::ViewLayerID> partViewLayerIDs;
-	partViewLayerIDs << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard;
 	QList<ViewLayer::ViewLayerID> wireViewLayerIDs;
+
+	partViewLayerIDs << ViewLayer::BreadboardBreadboard << ViewLayer::Breadboard;
 	wireViewLayerIDs << ViewLayer::BreadboardWire;
-	QSizeF imageSize;
-	QString svg = m_breadboardGraphicsView->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
-	if (svg.isEmpty()) {
-		// tell the user something reasonable
-		return;
+	QString svg1 = genIcon(m_breadboardGraphicsView, partViewLayerIDs, wireViewLayerIDs);
+	svgs.insert("breadboard", svg1);
+
+	partViewLayerIDs.clear();
+	wireViewLayerIDs.clear();
+	partViewLayerIDs << ViewLayer::Schematic;
+	wireViewLayerIDs << ViewLayer::SchematicWire;
+	QString svg2 = genIcon(m_schematicGraphicsView, partViewLayerIDs, wireViewLayerIDs);
+	svgs.insert("schematic", svg2);
+
+	partViewLayerIDs.clear();
+	wireViewLayerIDs.clear();
+	partViewLayerIDs << ViewLayer::Copper0  << ViewLayer::Silkscreen;   // TODO: what layers should be visible
+	wireViewLayerIDs << ViewLayer::Jumperwires << ViewLayer::Ratsnest;
+	QString svg3 = genIcon(m_pcbGraphicsView, partViewLayerIDs, wireViewLayerIDs);
+	svgs.insert("pcb", svg3);
+
+	foreach (QString svg, svgs.values()) {
+		if (svg.isEmpty()) {
+			// tell the user
+			return;
+		}
 	}
+
 
 	SketchModel * partSketchModel = new SketchModel(true);
 	ModelPartShared* modelPartShared = new ModelPartShared();
@@ -1400,27 +1420,41 @@ void MainWindow::saveAsModule() {
 		externalConnectors.appendChild(connector);
 	}
 
-	// need to save pointer to file
 	// may need to delete virtual wires...
 
-	QString userPartsSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg/user/icon/";
+	QString userPartsSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg/user/";
+	foreach (QString view, svgs.keys()) {
+		QFile file(userPartsSvgFolderPath + view + "/" + moduleID + ".svg");
+		file.open(QIODevice::WriteOnly);
+		QTextStream out(&file);
+		out << svgs.value(view, "");
+		file.close();
+	}
 
-	QFile file1(userPartsSvgFolderPath + moduleID + ".svg");
-	file1.open(QIODevice::WriteOnly);
-	QTextStream out1(&file1);
-	out1 << svg;
-	file1.close();
+	svgs.insert("pcb", "pcb");
+	svgs.insert("schematic", "schematic");
+	svgs.insert("breadboard", "breadboard");
+	svgs.insert("icon", "breadboard");
+
+	QHash<QString, QString> layerids(svgs);
+	layerids.insert("icon", "icon");
+	layerids.insert("pcb", "copper0");
 
 	QDomElement views = partDocument.createElement("views");
 	partModule.appendChild(views);
-	QDomElement iconView = partDocument.createElement("iconView");
-	views.appendChild(iconView);
-	QDomElement layers = partDocument.createElement("layers");
-	iconView.appendChild(layers);
-	layers.setAttribute("image", QString("icon/") + moduleID + ".svg");
-	QDomElement layer = partDocument.createElement("layer");
-	layers.appendChild(layer);
-	layer.setAttribute("layerId", "icon");
+
+	foreach (QString view, svgs.keys()) {
+		QString imagePath = svgs.value(view) + "/"  + moduleID + ".svg";
+
+		QDomElement viewElement = partDocument.createElement(view + "View");
+		views.appendChild(viewElement);
+		QDomElement layers = partDocument.createElement("layers");
+		viewElement.appendChild(layers);
+		layers.setAttribute("image", imagePath);
+		QDomElement layer = partDocument.createElement("layer");
+		layers.appendChild(layer);
+		layer.setAttribute("layerId", layerids.value(view));
+	}
 
 	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
 
@@ -1430,12 +1464,10 @@ void MainWindow::saveAsModule() {
 	partDocument.save(out2, 0);
 	file2.close();
 
+	loadPart(userPartsFolderPath + moduleID + FritzingModuleExtension);
+}
 
-
-
-
-
-
-
-
+QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs) {
+	QSizeF imageSize;
+	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
 }

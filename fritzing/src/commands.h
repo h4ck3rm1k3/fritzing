@@ -508,4 +508,17 @@ protected:
 };
 
 
+class GroupCommand : public BaseCommand {
+public:
+	GroupCommand(class SketchWidget * sketchWidget, long id, QUndoCommand * parent);
+	void undo();
+	void redo();
+	void addItemID(long id);
+
+protected:
+	long m_itemID;
+	QList<long> m_itemIDs;
+};
+
+
 #endif // COMMANDS_H

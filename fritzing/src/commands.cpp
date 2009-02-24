@@ -928,3 +928,25 @@ void ResizeNoteCommand::redo()
     m_sketchWidget->resizeNote(m_itemID, m_newSize);
 }
 
+
+GroupCommand::GroupCommand(SketchWidget* sketchWidget, long itemID, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = itemID;
+}
+
+void GroupCommand::undo()
+{
+	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView);
+}
+
+void GroupCommand::redo()
+{
+    m_sketchWidget->group(m_itemID, m_itemIDs);
+}
+
+void GroupCommand::addItemID(long itemID) {
+	m_itemIDs.append(itemID);
+}
+
+

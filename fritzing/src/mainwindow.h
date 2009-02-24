@@ -283,6 +283,7 @@ protected:
 	void moveEvent(QMoveEvent * event);
 	bool event(QEvent *);
 	void resizeEvent(QResizeEvent * event);
+	QString genIcon(SketchWidget *, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs);
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);

@@ -377,6 +377,31 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 
 	ItemBase * itemBase = NULL;
 	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
+
+	if (modelPart->itemType() == ModelPart::Module) {
+		QList<ModelPart *> modelParts;
+		
+		if (m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, id)) {
+			QUndoCommand * parentCommand = new QUndoCommand("load module");
+			loadFromModel(modelParts, parentCommand);
+			GroupCommand * groupCommand = new GroupCommand(this, crossViewType, parentCommand);
+			for (int i = 0; i < parentCommand->childCount(); i++) {
+				const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
+				if (addItemCommand == NULL) continue;
+
+				groupCommand->addItemID(addItemCommand->itemID());
+			}
+
+			m_undoStack->push(parentCommand);
+		}
+		
+		// need to recursively load the module
+		// how to deal with command objects?
+		// then how to group the new parts
+		// delete the fake drop item part
+		return NULL;
+	}
+
 	if (modelPart != NULL) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		statusMessage(tr("loading part"));
@@ -485,7 +510,6 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			return itemBase;
 		}
 	}
-
 }
 
 
@@ -1073,7 +1097,21 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		// create temporary item
 		// don't need connectors for breadboard
 		// TODO: how to specify which parts don't need connectors during drag and drop from palette?
-		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, modelPart->itemType() != ModelPart::Breadboard && modelPart->itemType() != ModelPart::Board);
+
+		bool doConnectors = true;
+		switch (modelPart->itemType()) {
+			case ModelPart::Breadboard:
+			case ModelPart::Board:
+			case ModelPart::Module:
+			case ModelPart::Unknown:
+				doConnectors = false;
+				break;
+			default:
+				doConnectors = true;
+				break;
+		}
+
+		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, doConnectors);
 
 		ItemDrag::_cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -1675,6 +1713,41 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 
 	PaletteItem *pitem = dynamic_cast<PaletteItem*>(item);
 	if(pitem) m_lastPaletteItemSelected = pitem;
+}
+
+void SketchWidget::group(long itemID, QList<long> & itemIDs) 
+{
+	ModelPart * modelPart = m_sketchModel->findModelPart(GroupItem::moduleIDName, itemID);
+	if (modelPart == NULL) {
+		modelPart = m_paletteModel->retrieveModelPart(GroupItem::moduleIDName);
+		if (modelPart == NULL) return;
+
+		// TODO: what if this is a recursive group, then we shouldn't add the modelpart to the root of the sketchmodel
+		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
+	}
+
+	QList<ItemBase *> itemBases;
+	foreach (long id, itemIDs) {
+		ItemBase * itemBase = findItem(id);
+		if (itemBase == NULL) return;
+
+		itemBases.append(itemBase);
+	}
+
+	if (itemBases.count() < 1) return;
+
+	ViewGeometry vg;	
+	vg.setLoc(itemBases[0]->pos());		// temporary position
+	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, itemID, NULL);
+	scene()->addItem(groupItem);
+
+	// sort by z
+    qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
+	foreach (ItemBase * itemBase, itemBases) {
+		groupItem->addToGroup(itemBase);
+	}	
+	groupItem->doneAdding(m_viewLayers);
+	//groupItem->setSelected(true);
 }
 
 ModelPart * SketchWidget::group(ModelPart * modelPart) {

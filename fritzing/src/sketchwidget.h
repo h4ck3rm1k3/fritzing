@@ -99,6 +99,7 @@ public:
 	void rotateX(qreal degrees);
 	void flip(Qt::Orientations orientation);
 	ModelPart * group(ModelPart *);
+	void group(long itemID, QList<long> & itemIDs);
 	void deleteItem();
 	PaletteItem *getSelectedPart();
 

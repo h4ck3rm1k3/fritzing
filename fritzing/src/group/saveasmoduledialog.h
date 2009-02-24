@@ -68,6 +68,7 @@ protected:
 	class EditableLineWidget * m_tagsWidget;
 	class EditableLineWidget * m_authorWidget;
 	class EditableDateWidget * m_createdOnWidget;
+	class WaitPushUndoStack * m_undoStack;
 	//QLabel * m_createdByTextWidget;
 };
 

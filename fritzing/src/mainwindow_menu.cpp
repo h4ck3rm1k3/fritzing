@@ -612,7 +612,7 @@ void MainWindow::paste() {
 
     QByteArray itemData = mimeData->data("application/x-dnditemsdata");
 	QList<ModelPart *> modelParts;
-	if (m_sketchModel->paste(m_paletteModel, itemData, modelParts)) {
+	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts)) {
 		QUndoCommand * parentCommand = new QUndoCommand("Paste");
 
 		m_breadboardGraphicsView->loadFromModel(modelParts, parentCommand);

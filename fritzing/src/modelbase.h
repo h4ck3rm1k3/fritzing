@@ -46,7 +46,7 @@ public:
 	void save(class QXmlStreamWriter &, bool asPart);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
-	bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
+	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
 
 protected:
 	void renewModelIndexes(QDomElement & root, QHash<long, long> & oldToNew);
