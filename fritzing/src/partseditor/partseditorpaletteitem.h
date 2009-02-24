@@ -77,6 +77,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 		QList<Connector *> *m_connectors;
 
 		PartsEditorAbstractView *m_owner;
+		bool m_shouldDeletePath;
 };
 
 #endif /* PARTSEDITORPALETTEITEM_H_ */

@@ -48,6 +48,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 
 	m_connectors = NULL;
 	m_svgStrings = NULL;
+	m_shouldDeletePath = true;
 }
 
 PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path) :
@@ -55,8 +56,10 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 {
 	m_owner = owner;
 
+	m_svgDom = NULL;
 	createSvgFile(path->absolutePath());
 	m_svgStrings = path;
+	m_shouldDeletePath = false;
 
 	m_connectors = NULL;
 
@@ -72,8 +75,8 @@ PartsEditorPaletteItem::~PartsEditorPaletteItem()
 	if (m_connectors) {
 		delete m_connectors;
 	}
-	if (m_svgStrings) {
-		//delete m_svgStrings;			causes a crash
+	if (m_shouldDeletePath && m_svgStrings) {
+		delete m_svgStrings;
 	}
 	if (this->renderer()) {
 		delete this->renderer();
@@ -81,6 +84,9 @@ PartsEditorPaletteItem::~PartsEditorPaletteItem()
 }
 
 void PartsEditorPaletteItem::createSvgFile(QString path) {
+	if (m_svgDom) {
+		delete m_svgDom;
+	}
     m_svgDom = new QDomDocument();
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
@@ -94,6 +100,12 @@ void PartsEditorPaletteItem::createSvgFile(QString path) {
 }
 
 bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, const QString &layerFileName) {
+	if(m_shouldDeletePath && m_svgStrings) {
+		delete m_svgStrings;
+		m_svgStrings = NULL;
+	}
+	m_shouldDeletePath = true;
+
 	if(QFileInfo(layerFileName).exists()) {
 		m_svgStrings = new SvgAndPartFilePath();
 		m_svgStrings->setAbsolutePath(layerFileName);
@@ -219,6 +231,10 @@ SvgAndPartFilePath* PartsEditorPaletteItem::svgFilePath() {
 }
 
 void PartsEditorPaletteItem::setSvgFilePath(SvgAndPartFilePath *path) {
+	if(m_shouldDeletePath && m_svgStrings) {
+		delete m_svgStrings;
+	}
+	m_shouldDeletePath = false;
 	m_svgStrings = path;
 }
 

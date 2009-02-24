@@ -148,7 +148,6 @@ void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, Mo
 	SvgAndPartFilePath *sp = m_item->svgFilePath();
 
 	copyToTempAndRenameIfNecessary(sp);
-	delete sp;
 	m_item->setSvgFilePath(m_svgFilePath);
 
 	emit loadedFromModel(paletteModel, modelPart);
