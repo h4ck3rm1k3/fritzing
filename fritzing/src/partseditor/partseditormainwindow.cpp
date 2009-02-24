@@ -158,7 +158,8 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 PartsEditorMainWindow::~PartsEditorMainWindow()
 {
 	if (m_sketchModel) {
-		//delete m_sketchModel;				// causes a crash because this deletes a modelpart that some
+		//delete m_sketchModel;
+		//delete m_paletteModel;
 	}
 }
 

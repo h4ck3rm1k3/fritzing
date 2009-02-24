@@ -54,6 +54,10 @@ PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdent
 	}
 }
 
+PartsEditorSpecificationsView::~PartsEditorSpecificationsView() {
+	delete m_svgFilePath;
+}
+
 void PartsEditorSpecificationsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *){
 	DebugDialog::debug("got connector mouse press.  not yet implemented...");
 	return;

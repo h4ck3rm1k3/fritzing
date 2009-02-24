@@ -45,6 +45,10 @@ PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId
 	setDefaultBackground();
 }
 
+PartsEditorAbstractView::~PartsEditorAbstractView() {
+
+}
+
 void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
 	clearScene();
 
