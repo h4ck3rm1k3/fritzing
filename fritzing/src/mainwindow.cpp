@@ -225,7 +225,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 	connect(this, SIGNAL(readOnlyChanged(bool)), this, SLOT(applyReadOnlyChange(bool)));
 
-	m_helper = new Helper(this, true);   
+	m_helper = new Helper(this, true);
 
 	m_setUpDockManagerTimer.setSingleShot(true);
 	connect(&m_setUpDockManagerTimer, SIGNAL(timeout()), m_dockManager, SLOT(keepMargins()));
@@ -1396,7 +1396,7 @@ void MainWindow::saveAsModule() {
 	foreach (ConnectorItem * connectorItem, dialog.externalConnectorItems()) {
 		QDomElement connector = partDocument.createElement("connector");
 		connector.setAttribute("connectorId", connectorItem->connectorSharedID());
-		connector.setAttribute("modelIndex", connectorItem->attachedTo()->modelPart()->modelIndex());
+		connector.setAttribute("modelIndex", QString::number(connectorItem->attachedTo()->modelPart()->modelIndex()));
 		externalConnectors.appendChild(connector);
 	}
 

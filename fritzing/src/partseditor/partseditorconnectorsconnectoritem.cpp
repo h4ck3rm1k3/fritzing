@@ -222,7 +222,7 @@ void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 	m_showingTerminalPoint = show;
 	if(m_terminalPointItem) {
 		if(!m_centerHasChanged) {
-			m_terminalPointItem->setVisible(show);
+			m_terminalPointItem->doSetVisible(show);
 		} else if(show) {
 			resetTerminalPoint();
 			m_centerHasChanged = false;
@@ -254,15 +254,16 @@ qreal PartsEditorConnectorsConnectorItem::minHeight() {
 
 void PartsEditorConnectorsConnectorItem::resetTerminalPoint() {
 	scene()->removeItem(m_terminalPointItem);
-	//delete m_terminalPointItem; // already deleted or what?
+	delete m_terminalPointItem; // already deleted or what?
 	m_terminalPointItem = NULL;
-	updateTerminalPoint();
+	updateTerminalPoint(true);
+	scene()->update();
 }
 
 
-void PartsEditorConnectorsConnectorItem::updateTerminalPoint() {
+void PartsEditorConnectorsConnectorItem::updateTerminalPoint(bool reseting) {
 	if(!m_terminalPointItem) {
-		m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint);
+		m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint,reseting);
 	} else {
 		m_terminalPointItem->setParentItem(this);
 		m_terminalPointItem->updatePoint();

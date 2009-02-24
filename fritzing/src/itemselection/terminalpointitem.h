@@ -54,7 +54,7 @@ protected:
 class TerminalPointItem : public QGraphicsRectItem {
 friend class TerminalPointItemPrivate;
 public:
-	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible);
+	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool reseting = false);
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
 
 	//QPointF point();
@@ -65,6 +65,7 @@ public:
 	QPointF mappedPoint();
 
 	void reset();
+	void doSetVisible(bool visible);
 
 protected:
 	//void setPoint(QPointF point);
@@ -86,9 +87,9 @@ protected:
 	QPointF transformedCrossCenter();
 
 	QPointF m_point;
-
 	TerminalPointItemPrivate *m_cross;
 	PartsEditorConnectorsConnectorItem *m_parent;
+	bool m_reseting;
 
 	static QHash<ConnectorRectangle::State, QPixmap> m_pixmapHash;
 };
