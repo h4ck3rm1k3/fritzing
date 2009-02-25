@@ -133,13 +133,13 @@ void CornerHandler::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 
 void CornerHandler::hoverEnterEvent(QGraphicsSceneHoverEvent * event) {
 	QGraphicsRectItem::hoverEnterEvent(event);
-	if(m_isVisible) {
+	if(m_isVisible && m_parent->isResizable()) {
 		setCursor(QCursor(cursorForCorner(m_corner)));
 	}
 }
 
 void CornerHandler::hoverLeaveEvent(QGraphicsSceneHoverEvent * event) {
-	if(m_isVisible) {
+	if(m_isVisible && m_parent->isResizable()) {
 		unsetCursor();
 	}
 	QGraphicsRectItem::hoverLeaveEvent(event);

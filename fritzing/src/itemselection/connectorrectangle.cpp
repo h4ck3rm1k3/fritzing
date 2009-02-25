@@ -76,7 +76,7 @@ void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
 }
 
 bool ConnectorRectangle::isResizable() {
-	return resizableOwner()->isResizable();
+	return resizableOwner()->isResizable() && !connectorItemOwner()->isShowingTerminalPoint();
 }
 
 void ConnectorRectangle::paint(QPainter *painter) {
@@ -165,4 +165,8 @@ QGraphicsRectItem *ConnectorRectangle::owner() {
 
 ResizableRectItem* ConnectorRectangle::resizableOwner() {
 	return dynamic_cast<ResizableRectItem*>(m_owner);
+}
+
+PartsEditorConnectorsConnectorItem *ConnectorRectangle::connectorItemOwner() {
+	return dynamic_cast<PartsEditorConnectorsConnectorItem*>(m_owner);
 }

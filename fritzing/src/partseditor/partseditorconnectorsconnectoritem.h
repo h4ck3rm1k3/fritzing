@@ -43,7 +43,7 @@ public:
 	void setMismatching(bool isMismatching);
 
 	void setShowTerminalPoint(bool show);
-	bool showingTerminalPoint();
+	bool isShowingTerminalPoint();
 	void setTerminalPoint(QPointF);
 	void resetTerminalPoint();
 	void updateTerminalPoint(bool reseting=false);

@@ -61,6 +61,7 @@ protected:
 	void setHandlerRect(CornerHandler* handler);
 	void placeHandlers();
 	ResizableRectItem* resizableOwner();
+	PartsEditorConnectorsConnectorItem *connectorItemOwner();
 
 	QGraphicsRectItem *m_owner;
 

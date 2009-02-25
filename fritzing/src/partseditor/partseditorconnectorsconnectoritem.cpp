@@ -71,7 +71,7 @@ void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal widt
 	setRect(x,y,width,height);
 	m_resizedRect = QRectF(x,y,width,height);
 	informChange();
-	if(showingTerminalPoint()) {
+	if(isShowingTerminalPoint()) {
 		updateTerminalPoint();
 	} else {
 		m_centerHasChanged = true;
@@ -235,7 +235,7 @@ void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 	m_terminalPointItem->setMovable(show);
 }
 
-bool PartsEditorConnectorsConnectorItem::showingTerminalPoint() {
+bool PartsEditorConnectorsConnectorItem::isShowingTerminalPoint() {
 	return m_showingTerminalPoint;
 }
 
