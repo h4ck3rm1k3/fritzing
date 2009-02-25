@@ -102,7 +102,7 @@ void TerminalPointItem::posCross() {
 
 	QPointF correction = transformedCrossCenter();
 	QPointF point = m_point-correction+(m_reseting?QPointF():pRect.topLeft());
-	m_reseting = false;
+	//m_reseting = false;
 	m_cross->setPos(point);
 }
 
@@ -129,6 +129,7 @@ QPointF TerminalPointItem::mappedPoint() {
 	return m_cross->mapToItem(m_parent,transformedCrossCenter());
 }
 
+// because the cross pixmap doesn't accepts transformations
 QPointF TerminalPointItem::transformedCrossCenter() {
 	return QMatrix()
 			.scale(currentScale(),currentScale())
@@ -183,6 +184,7 @@ void TerminalPointItemPrivate::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) 
 }
 
 void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+	QGraphicsPixmapItem::mouseMoveEvent(event);
 	if(isVisible()) {
 		if(isOutsideConnector()) {
 			setCursor(QCursor(Qt::ForbiddenCursor));
@@ -191,7 +193,6 @@ void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			setCursor(QCursor());
 		}
 	}
-	QGraphicsPixmapItem::mouseMoveEvent(event);
 }
 
 void TerminalPointItemPrivate::mousePressEvent(QGraphicsSceneMouseEvent *event) {
