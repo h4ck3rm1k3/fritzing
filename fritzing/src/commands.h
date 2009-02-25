@@ -508,7 +508,8 @@ protected:
 };
 
 
-class GroupCommand : public BaseCommand {
+class GroupCommand : public BaseCommand 
+{
 public:
 	GroupCommand(class SketchWidget * sketchWidget, long id, QUndoCommand * parent);
 	void undo();
@@ -518,6 +519,21 @@ public:
 protected:
 	long m_itemID;
 	QList<long> m_itemIDs;
+};
+
+
+class SetConnectorExternalCommand : public BaseCommand 
+{
+public:
+	SetConnectorExternalCommand(class SketchWidget * sketchWidget, long id, const QString & connectorID, bool external, QUndoCommand * parent);
+	void undo();
+	void redo();
+
+
+protected:
+	long m_itemID;
+	QString m_connectorID;
+	bool m_external;
 };
 
 

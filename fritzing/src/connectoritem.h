@@ -87,6 +87,7 @@ public:
 	void setBaseTooltip(const QString &);
 	void clearConnector();
 	void setIgnoreAncestorFlag(bool);
+	void setIgnoreAncestorFlagIfExternal(bool);
 	bool connectionIsAllowed(ConnectorItem * other);
 	void setChosen(bool);
 	void prepareGeometryChange();
@@ -125,6 +126,7 @@ protected:
 	QString m_baseTooltip;
 	bool m_connectorHovering;
 	bool m_ignoreAncestorFlag;
+	bool m_external;
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);

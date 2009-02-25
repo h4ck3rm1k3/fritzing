@@ -69,6 +69,8 @@ public:
 	long modelIndex();
 	ModelPart * modelPart();
 	int connectorItemCount();
+	bool external();
+	void setExternal(bool);
 
 public:
 	static void initNames();
@@ -88,6 +90,7 @@ protected:
 	QList<Connector *> m_toConnectors;
 	class ModelPart * m_modelPart;
 	class Bus * m_bus;
+	bool m_external;
 
 protected:
 	static QHash<ConnectorType, QString> names;

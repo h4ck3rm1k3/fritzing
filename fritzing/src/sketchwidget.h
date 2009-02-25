@@ -197,6 +197,7 @@ public:
 	void resizeNote(long itemID, const QSizeF & );
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
 	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize);
+	void setConnectorExternal(long itemID, const QString & connectorID, bool external);
 
 
 protected:

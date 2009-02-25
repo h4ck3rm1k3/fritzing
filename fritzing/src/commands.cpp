@@ -950,3 +950,22 @@ void GroupCommand::addItemID(long itemID) {
 }
 
 
+SetConnectorExternalCommand::SetConnectorExternalCommand(SketchWidget* sketchWidget, long itemID, const QString & connectorID, bool external, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = itemID;
+	m_external = external;
+	m_connectorID = connectorID;
+}
+
+void SetConnectorExternalCommand::undo()
+{
+    m_sketchWidget->setConnectorExternal(m_itemID, m_connectorID, !m_external);
+}
+
+void SetConnectorExternalCommand::redo()
+{
+    m_sketchWidget->setConnectorExternal(m_itemID, m_connectorID, m_external);
+}
+
+

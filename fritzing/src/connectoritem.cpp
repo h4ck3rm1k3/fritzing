@@ -421,34 +421,40 @@ void ConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
 }
 
 void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
-	if (m_connectedTo.count() <= 0) {
-		// no need to save if there's no connection
+	if (m_connectedTo.count() <= 0 && !m_connector->external()) {
+		// no need to save if there's no connection and it's not an external connection (in a group)
 		return;
 	}
 
 	writer.writeStartElement("connector");
 	writer.writeAttribute("connectorId", connectorSharedID());
+	if (m_connector->external()) {
+		writer.writeAttribute("external", "true");
+	}
 	writeTopLevelAttributes(writer);
+
 	writer.writeStartElement("geometry");
 	writer.writeAttribute("x", QString::number(this->pos().x()));
 	writer.writeAttribute("y", QString::number(this->pos().y()));
 	writer.writeEndElement();
 
-	writer.writeStartElement("connects");
-	foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
-		//if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-			//Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
-			//if (wire->getRatsnest()) {
-				// for now, don't save ratsnest connections
-				//continue;
+	if (m_connectedTo.count() > 0) {
+		writer.writeStartElement("connects");
+		foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
+			//if (connectorItem->attachedToItemType() == ModelPart::Wire) {
+				//Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
+				//if (wire->getRatsnest()) {
+					// for now, don't save ratsnest connections
+					//continue;
+				//}
 			//}
-		//}
-		writer.writeStartElement("connect");
-		writer.writeAttribute("connectorId", connectorItem->connectorSharedID());
-		writer.writeAttribute("modelIndex", QString::number(connectorItem->connector()->modelIndex()));
+			writer.writeStartElement("connect");
+			writer.writeAttribute("connectorId", connectorItem->connectorSharedID());
+			writer.writeAttribute("modelIndex", QString::number(connectorItem->connector()->modelIndex()));
+			writer.writeEndElement();
+		}
 		writer.writeEndElement();
 	}
-	writer.writeEndElement();
 
 	writeOtherElements(writer);
 
@@ -716,6 +722,12 @@ void ConnectorItem::setIgnoreAncestorFlag(bool ignore) {
 	m_ignoreAncestorFlag = ignore;
 }
 
+void ConnectorItem::setIgnoreAncestorFlagIfExternal(bool ignore) {
+	if (m_connector->external()) {
+		m_ignoreAncestorFlag = ignore;
+	}
+}
+
 bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 	if (other->m_ignoreAncestorFlag) {
 		if (this->attachedToItemType() == ModelPart::Wire) {
@@ -737,3 +749,4 @@ bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 void ConnectorItem::prepareGeometryChange() {
 	QGraphicsRectItem::prepareGeometryChange();
 }
+

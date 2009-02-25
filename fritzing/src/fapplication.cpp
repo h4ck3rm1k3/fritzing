@@ -122,7 +122,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	QString lib = "/lib";
 #endif
 
-	m_libPath = applicationDirPath() + lib;		// applicationDirPath() doesn't work until after QApplication is instantiated
+	m_libPath = QDir::cleanPath(applicationDirPath() + lib);		// applicationDirPath() doesn't work until after QApplication is instantiated	
 	addLibraryPath(m_libPath);					// tell app where to search for plugins (jpeg export and sql lite)
 
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! remember to delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!

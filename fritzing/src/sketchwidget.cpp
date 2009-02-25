@@ -257,8 +257,6 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (mp->moduleID() == Wire::moduleIDName) {
 				addWireExtras(newID, view, parentCommand);
 			}
-
-
 		}
 	}
 
@@ -282,6 +280,22 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		while (!connector.isNull()) {
 			// TODO: make sure layerkin are searched for connectors
 			QString fromConnectorID = connector.attribute("connectorId");
+			bool external = connector.attribute("external").compare("true") == 0;
+			if (external) {
+				if (parentCommand == NULL) {
+					ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
+					if (fromBase) {
+						ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
+						if (fromConnectorItem) {
+							fromConnectorItem->connector()->setExternal(true);
+						}
+					}
+				}
+				else {
+					new SetConnectorExternalCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, true, parentCommand);
+				}
+			}
+
 			QDomElement connects = connector.firstChildElement("connects");
 			if (!connects.isNull()) {
 				QDomElement connect = connects.firstChildElement("connect");
@@ -4309,4 +4323,14 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 			}
 		}
 	}
+}
+
+void SketchWidget::setConnectorExternal(long itemID, const QString & connectorID, bool external) {
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase == NULL) return;
+
+	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, true);
+	if (connectorItem == NULL) return; 
+
+	connectorItem->connector()->setExternal(external);
 }

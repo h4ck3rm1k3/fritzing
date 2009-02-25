@@ -275,7 +275,13 @@ void PCBSketchWidget::excludeFromAutoroute(bool exclude)
 		if (wire == NULL) continue;
 
 		if (wire->getTrace() || wire->getJumper()) {
-			wire->setAutoroutable(!exclude);
+			QList<Wire *> wires;
+			QList<ConnectorItem *> ends;
+			QList<ConnectorItem *> uniqueEnds;
+			wire->collectChained(wires, ends, uniqueEnds);
+			foreach (Wire * w, wires) {
+				w->setAutoroutable(!exclude);
+			}
 		}
 	}
 }
@@ -471,7 +477,7 @@ void PCBSketchWidget::selectAllExcludedTraces()
 		}
 	}
 
-	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all excluded traces"));
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all traces marked \"Don't autoroute\""));
 
 	stackSelectionState(false, parentCommand);
 	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);

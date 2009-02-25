@@ -37,6 +37,7 @@ QHash <Connector::ConnectorType, QString > Connector::names;
 
 Connector::Connector( ConnectorShared * connectorShared, ModelPart * modelPart)
 {
+	m_external = false;
 	m_modelPart = modelPart;
 	m_connectorShared = connectorShared;
 	m_bus = NULL;
@@ -230,7 +231,6 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 		return false;
 	}
 
-
 	if (svgIdLayer->m_processed) {
 		if (!svgIdLayer->m_visible) return false;
 
@@ -347,4 +347,12 @@ ModelPart * Connector::modelPart() {
 
 int Connector::connectorItemCount() {
 	return m_connectorItems.count();
+}
+
+void Connector::setExternal(bool external) {
+	m_external = external;
+}
+
+bool Connector::external() {
+	return m_external;
 }

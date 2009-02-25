@@ -1346,7 +1346,6 @@ void MainWindow::saveAsModule() {
 		}
 	}
 
-
 	SketchModel * partSketchModel = new SketchModel(true);
 	ModelPartShared* modelPartShared = new ModelPartShared();
 	partSketchModel->root()->setModelPartShared(modelPartShared);
@@ -1373,6 +1372,7 @@ void MainWindow::saveAsModule() {
 
 	QByteArray partXml;
 	QXmlStreamWriter partStreamWriter(&partXml);
+
 	partSketchModel->save(partStreamWriter, true);				// get part xml
 
 	QString errorStr;
@@ -1392,9 +1392,20 @@ void MainWindow::saveAsModule() {
 		return;
 	}
 
+	// TODO: need to clear external flag of all the other connectors?
+	QHash<ConnectorItem *, bool> wasExternal;
+	foreach (ConnectorItem * connectorItem, dialog.externalConnectorItems()) {
+		wasExternal.insert(connectorItem, connectorItem->connector()->external());
+		connectorItem->connector()->setExternal(true);
+	}
+
 	QByteArray sketchXml;
 	QXmlStreamWriter sketchStreamWriter(&sketchXml);
 	m_sketchModel->save(sketchStreamWriter, false);				// get sketch xml
+
+	foreach (ConnectorItem * connectorItem, wasExternal.keys()) {
+		connectorItem->connector()->setExternal(wasExternal.value(connectorItem, false));
+	}
 
 	QDomDocument sketchDocument;
 	result = sketchDocument.setContent(sketchXml, &errorStr, &errorLine, &errorColumn);
@@ -1417,15 +1428,6 @@ void MainWindow::saveAsModule() {
 
 	sketchModule.removeChild(instances);
 	partModule.appendChild(instances);
-
-	QDomElement externalConnectors = partDocument.createElement("externalConnectors");
-	partModule.appendChild(externalConnectors);
-	foreach (ConnectorItem * connectorItem, dialog.externalConnectorItems()) {
-		QDomElement connector = partDocument.createElement("connector");
-		connector.setAttribute("connectorId", connectorItem->connectorSharedID());
-		connector.setAttribute("modelIndex", QString::number(connectorItem->attachedTo()->modelPart()->modelIndex()));
-		externalConnectors.appendChild(connector);
-	}
 
 	// may need to delete virtual wires...
 
@@ -1478,3 +1480,4 @@ QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLa
 	QSizeF imageSize;
 	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
 }
+

@@ -67,7 +67,7 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
 		if (connectorItem == NULL) continue;
 
-		connectorItem->setIgnoreAncestorFlag(true);
+		connectorItem->setIgnoreAncestorFlagIfExternal(true);
 	}
 
 	item->setSelected(false);
