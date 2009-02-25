@@ -134,7 +134,9 @@ protected:
 
 
 	QPushButton *m_saveAsNewPartButton;
+#ifndef QT_NO_DEBUG
 	QPushButton *m_saveButton;
+#endif
 	QPushButton *m_cancelButton;
 
 	QTabWidget *m_tabWidget;
