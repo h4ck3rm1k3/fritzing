@@ -253,17 +253,16 @@ qreal PartsEditorConnectorsConnectorItem::minHeight() {
 }
 
 void PartsEditorConnectorsConnectorItem::resetTerminalPoint() {
-	scene()->removeItem(m_terminalPointItem);
-	delete m_terminalPointItem; // already deleted or what?
-	m_terminalPointItem = NULL;
-	updateTerminalPoint(true);
-	scene()->update();
+	if(!m_terminalPointItem) {
+		m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint);
+	}
+	m_terminalPointItem->reset();
 }
 
 
 void PartsEditorConnectorsConnectorItem::updateTerminalPoint(bool reseting) {
 	if(!m_terminalPointItem) {
-		m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint,reseting);
+		m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint);
 	} else {
 		m_terminalPointItem->setParentItem(this);
 		m_terminalPointItem->updatePoint();

@@ -39,9 +39,12 @@ public:
 	TerminalPointItemPrivate(TerminalPointItem *parent);
 	bool isOutsideConnector();
 	bool hasBeenMoved();
+	void setHasBeenMoved(bool moved);
 	bool isPressed();
 
 protected:
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
+
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -56,26 +59,23 @@ protected:
 class TerminalPointItem : public QGraphicsRectItem {
 friend class TerminalPointItemPrivate;
 public:
-	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, bool reseting = false);
+	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible);
 	TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
 
-	//QPointF point();
 	void updatePoint();
 	bool hasBeenMoved();
 
 	void setMovable(bool movable);
 	QPointF mappedPoint();
+	void setPoint(const QPointF &point);
 
 	void reset();
 	void doSetVisible(bool visible);
 
 protected:
-	//void setPoint(QPointF point);
-
-	void init(bool visible);
+	void init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
 	void initPixmapHash();
-	void updateCrossView();
-	void posCross();
+	void setCrossPos();
 	qreal currentScale();
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
@@ -85,7 +85,6 @@ protected:
 	QPointF m_point;
 	TerminalPointItemPrivate *m_cross;
 	PartsEditorConnectorsConnectorItem *m_parent;
-	bool m_reseting;
 
 	static QHash<ConnectorRectangle::State, QPixmap> m_pixmapHash;
 };
