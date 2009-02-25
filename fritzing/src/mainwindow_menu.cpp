@@ -1978,7 +1978,7 @@ void MainWindow::createTraceMenuActions() {
 	m_createJumperAct->setStatusTip(tr("Create a jumper wire from the selected wire"));
 	connect(m_createJumperAct, SIGNAL(triggered()), this, SLOT(createJumper()));
 
-	m_excludeFromAutorouteAct = new QAction(tr("&Exclude from Autoroute"), this);
+	m_excludeFromAutorouteAct = new QAction(tr("&Don't Autoroute This Trace"), this);
 	m_excludeFromAutorouteAct->setStatusTip(tr("When autorouting, do not rip up this wire"));
 	connect(m_excludeFromAutorouteAct, SIGNAL(triggered()), this, SLOT(excludeFromAutoroute()));
 	m_excludeFromAutorouteAct->setCheckable(true);
@@ -1987,7 +1987,7 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllTracesAct->setStatusTip(tr("Select all trace wires"));
 	connect(m_selectAllTracesAct, SIGNAL(triggered()), this, SLOT(selectAllTraces()));
 
-	m_selectAllExcludedTracesAct = new QAction(tr("Select All Excluded Traces"), this);
+	m_selectAllExcludedTracesAct = new QAction(tr("Select All Traces Marked \"Don't Autoroute\""), this);
 	m_selectAllExcludedTracesAct->setStatusTip(tr("Select all trace wires excluded from autorouting"));
 	connect(m_selectAllExcludedTracesAct, SIGNAL(triggered()), this, SLOT(selectAllExcludedTraces()));
 
