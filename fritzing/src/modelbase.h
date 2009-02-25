@@ -49,8 +49,8 @@ public:
 	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
 
 protected:
-	void renewModelIndexes(QDomElement & root, QHash<long, long> & oldToNew);
-	bool loadInstances(QDomElement & root, QList<ModelPart *> & modelParts);
+	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);
+	bool loadInstances(QDomElement & root, QDomElement & externalConnectors, QList<ModelPart *> & modelParts);
 
 protected:
 	ModelPart * m_root;

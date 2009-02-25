@@ -107,11 +107,12 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
     	delete child;
    	}
 
-	return loadInstances(instances, modelParts);
+	QDomElement externalConnectors;
+	return loadInstances(instances, externalConnectors, modelParts);
 
 }
 
-bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & modelParts) 
+bool ModelBase::loadInstances(QDomElement & instances, QDomElement & externalConnectors, QList<ModelPart *> & modelParts) 
 {
    	QHash<long, ModelPart *> partHash;
    	QDomElement instance = instances.firstChildElement("instance");
@@ -151,6 +152,20 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 
    		instance = instance.nextSiblingElement("instance");
   	}
+/*
+   	QDomElement connector = externalConnectors.firstChildElement("connector");
+   	while (!connector.isNull()) {
+		connector = connector.nextSiblingElement("connector");
+   		bool ok;
+   		long index = connector.attribute("modelIndex").toLong(&ok);
+   		if (ok) {
+			ModelPart * modelPart = partHash.value(index);
+			if (modelPart) {
+				modelPart->addExternalConnector(connector.attribute("connectorId"));
+			}
+		}
+	}
+*/
 
 	return true;
 }
@@ -240,19 +255,25 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 		oldToNew.insert(oldModelIndex, ModelPart::nextIndex());
 		instance = instance.nextSiblingElement("instance");
 	}
-	renewModelIndexes(instances, oldToNew);
+	renewModelIndexes(instances, "instance", oldToNew);
+
+	QDomElement externalConnectors = module.firstChildElement("externalConnectors");
+	if (!externalConnectors.isNull()) {
+		renewModelIndexes(externalConnectors, "connector", oldToNew);
+	}
+
 
 	//QFile file("test.xml");
 	//file.open(QFile::WriteOnly);
 	//file.write(domDocument.toByteArray());
 	//file.close();
 
-	return loadInstances(instances, modelParts);
+	return loadInstances(instances, externalConnectors, modelParts);
 }
 
-void ModelBase::renewModelIndexes(QDomElement & instances, QHash<long, long> & oldToNew) 
+void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew) 
 {
-	QDomElement instance = instances.firstChildElement("instance");
+	QDomElement instance = parentElement.firstChildElement(childName);
 	while (!instance.isNull()) {
 		long oldModelIndex = instance.attribute("modelIndex").toLong();
 		instance.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));

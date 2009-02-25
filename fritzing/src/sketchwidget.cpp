@@ -188,13 +188,13 @@ ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& 
 	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), NULL, true);
 }
 
-void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand * parentCommand) {
+void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
 		SelectItemCommand * selectItemCommand = stackSelectionState(false, parentCommand);
 		selectItemCommand->setSelectItemType(SelectItemCommand::DeselectAll);
-		selectItemCommand->setCrossViewType(BaseCommand::SingleView);
+		selectItemCommand->setCrossViewType(crossViewType);
 	}
 
 	QHash<long, ItemBase *> newItems;
@@ -253,7 +253,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand *
 		else {
 			// offset pasted items so we can differentiate them from the originals
 			viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
-			new AddItemCommand(this, BaseCommand::SingleView, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
+			new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
 			if (mp->moduleID() == Wire::moduleIDName) {
 				addWireExtras(newID, view, parentCommand);
 			}
@@ -383,8 +383,8 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 		
 		if (m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, id)) {
 			QUndoCommand * parentCommand = new QUndoCommand("load module");
-			loadFromModel(modelParts, parentCommand);
-			GroupCommand * groupCommand = new GroupCommand(this, crossViewType, parentCommand);
+			loadFromModel(modelParts, BaseCommand::CrossView, parentCommand);
+			GroupCommand * groupCommand = new GroupCommand(this, BaseCommand::CrossView, parentCommand);
 			for (int i = 0; i < parentCommand->childCount(); i++) {
 				const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
 				if (addItemCommand == NULL) continue;
@@ -394,11 +394,10 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 
 			m_undoStack->push(parentCommand);
 		}
-		
+
 		// need to recursively load the module
 		// how to deal with command objects?
-		// then how to group the new parts
-		// delete the fake drop item part
+		// how to deal with grouping wires across views
 		return NULL;
 	}
 
@@ -1715,7 +1714,7 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	if(pitem) m_lastPaletteItemSelected = pitem;
 }
 
-void SketchWidget::group(long itemID, QList<long> & itemIDs) 
+void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit) 
 {
 	ModelPart * modelPart = m_sketchModel->findModelPart(GroupItem::moduleIDName, itemID);
 	if (modelPart == NULL) {
@@ -1748,6 +1747,10 @@ void SketchWidget::group(long itemID, QList<long> & itemIDs)
 	}	
 	groupItem->doneAdding(m_viewLayers);
 	//groupItem->setSelected(true);
+
+	if (doEmit) {
+		emit groupSignal(itemID, itemIDs, false);
+	}
 }
 
 ModelPart * SketchWidget::group(ModelPart * modelPart) {

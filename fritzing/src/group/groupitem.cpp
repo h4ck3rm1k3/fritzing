@@ -32,13 +32,15 @@ $Date$
 //  female connectors in modules
 //		what happens to ratsnest wires
 //		connect female connectees
-//  traces in modules
+//  how to hide non-external connectors
+//  trace wires and ratsnest wires in modules
+//  autorouting
 //  save and load sketch with group(s)
-//  drop group into sketch
+//  ** drop group into sketch
 //		command objects go where?
 //	export with groups
 //	recursive groups
-//		recursive model part ownership
+//		recursive modelpart ownership
 //	open in new sketch (edit)
 //	copy/paste
 //	undo group

@@ -88,7 +88,7 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-    void loadFromModel(QList<ModelPart *> & modelParts, QUndoCommand * parentCommand);
+	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
     ItemBase* loadFromModel(ModelPart *, const ViewGeometry&);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
@@ -99,7 +99,6 @@ public:
 	void rotateX(qreal degrees);
 	void flip(Qt::Orientations orientation);
 	ModelPart * group(ModelPart *);
-	void group(long itemID, QList<long> & itemIDs);
 	void deleteItem();
 	PaletteItem *getSelectedPart();
 
@@ -333,6 +332,7 @@ signals:
 	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID,
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
+	void groupSignal(long itemID, QList<long> & itemIDs, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -377,6 +377,7 @@ public slots:
  	void selectAllItems(bool state, bool doEmit);
 	void setInstanceTitle(long id, const QString & title, bool isUndoable);
 	void showPartLabel(long id, bool showIt);
+	void group(long itemID, QList<long> & itemIDs, bool doEmit);
 
 protected:
 	PaletteModel* m_paletteModel;

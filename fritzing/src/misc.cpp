@@ -66,6 +66,8 @@ QDir * getApplicationSubFolder(QString search) {
 
 QString getApplicationSubFolderPath(QString search) {
 	QDir * dir = getApplicationSubFolder(search);
+	if (dir == NULL) return "";
+
 	QString result = dir->path();
 	delete dir;
 	return result;

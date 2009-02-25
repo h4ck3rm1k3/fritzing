@@ -942,7 +942,7 @@ void GroupCommand::undo()
 
 void GroupCommand::redo()
 {
-    m_sketchWidget->group(m_itemID, m_itemIDs);
+    m_sketchWidget->group(m_itemID, m_itemIDs, true);
 }
 
 void GroupCommand::addItemID(long itemID) {
