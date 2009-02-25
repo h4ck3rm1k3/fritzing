@@ -226,13 +226,13 @@ void ConnectorsInfoWidget::addConnectorInfo(MismatchingConnectorWidget* mcw) {
 }
 
 Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
-	ConnectorShared *connStuff = new ConnectorShared();
-	connStuff->setId(id);
+	ConnectorShared *connShared = new ConnectorShared();
+	connShared->setId(id);
 	// TODO Mariano: find out the real layer, instead of the default one
-	connStuff->addPin(ItemBase::BreadboardView,id,ItemBase::defaultConnectorLayer(ItemBase::BreadboardView),"");
-	connStuff->addPin(ItemBase::SchematicView,id,ItemBase::defaultConnectorLayer(ItemBase::SchematicView),"");
-	connStuff->addPin(ItemBase::PCBView,id,ItemBase::defaultConnectorLayer(ItemBase::PCBView),"");
-	Connector *conn = new Connector(connStuff,0); // modelPart =? null
+	connShared->addPin(ItemBase::BreadboardView,id,ItemBase::defaultConnectorLayer(ItemBase::BreadboardView),"");
+	connShared->addPin(ItemBase::SchematicView,id,ItemBase::defaultConnectorLayer(ItemBase::SchematicView),"");
+	connShared->addPin(ItemBase::PCBView,id,ItemBase::defaultConnectorLayer(ItemBase::PCBView),"");
+	Connector *conn = new Connector(connShared,0); // modelPart =? null
 	addConnectorInfo(conn);
 	return conn;
 }

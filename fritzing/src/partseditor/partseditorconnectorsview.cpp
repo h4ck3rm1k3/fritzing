@@ -224,17 +224,26 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 
 		foreach(PartsEditorConnectorsConnectorItem* drawnConn, m_drawnConns) {
 			bounds = drawnConn->mappedRect();
-			connId = drawnConn->connectorSharedID();
+			connId = drawnConn->connector()->connectorSharedID();
 
 			QRectF svgRect = mapFromSceneToSvg(bounds,sceneViewBox,svgViewBox);
-			addRectToSvg(svgDom,connId/*+"pin"*/,svgRect, connectorsLayerId);
+			QString svgId = svgIdForConnector(drawnConn->connector(), connId);
+			addRectToSvg(svgDom,svgId,svgRect, connectorsLayerId);
 		}
 		changed = true;
 	}
 
-
-
 	return changed;
+}
+
+QString PartsEditorConnectorsView::svgIdForConnector(Connector* conn, const QString &connId) {
+	foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
+		if(conn->connectorSharedID() == connId) {
+			DebugDialog::debug("<<< "+sil->m_svgId);
+			return sil->m_svgId;
+		}
+	}
+	return connId;
 }
 
 bool PartsEditorConnectorsView::updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId) {
@@ -263,11 +272,7 @@ bool PartsEditorConnectorsView::updateTerminalPoints(QDomDocument *svgDom, const
 void PartsEditorConnectorsView::updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId) {
 	foreach(Connector *conn, m_item->connectors()) {
 		foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
-			if(conn->connectorSharedID() == connId
-			|| conn->connectorSharedID().startsWith(connId)) {
-				DebugDialog::debug("<<< defined conn id "+conn->connectorSharedID());
-				DebugDialog::debug("<<< new conn id "+connId);
-				conn->connectorShared()->setId(connId);
+			if(conn->connectorSharedID() == connId) {
 				sil->m_terminalId = terminalId;
 				ViewLayer::ViewLayerID viewLayerID =
 					ViewLayer::viewLayerIDFromXmlString(connectorsLayerId);

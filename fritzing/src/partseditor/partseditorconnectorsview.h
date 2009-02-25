@@ -76,6 +76,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		bool addConnectorsIfNeeded(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
 		bool removeConnectorsIfNeeded(QDomElement &docEle);
 		bool updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
+		QString svgIdForConnector(Connector* conn, const QString &connId);
 		void updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId);
 		void removeTerminalPoints(const QStringList &tpIdsToRemove, QDomElement &docElem);
 		void addNewTerminalPoints(
