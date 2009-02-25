@@ -462,7 +462,7 @@ bool PartsEditorMainWindow::saveAs() {
 			m_fileName = QInputDialog::getText(
 				this,
 				tr("Save as new part"),
-				tr("Please, specify a new filename"),
+				tr("There's already a file with this name.\nPlease, specify a new filename"),
 				QLineEdit::Normal,
 				m_fileName,
 				&ok

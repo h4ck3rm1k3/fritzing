@@ -99,9 +99,9 @@ void ConnectorsInfoWidget::createScrollArea() {
 	parentLo->addWidget(mismatchConnHeader);
 	parentLo->addWidget(m_mismatchersFrame);
 
-	QLabel *mismatchConnFooter = new QLabel(tr("These problems need to be fixed in the svg-files directly"));
+	/*QLabel *mismatchConnFooter = new QLabel(tr("These problems need to be fixed in the svg-files directly"));
 	mismatchConnFooter->setObjectName("mismatchConnsFooter");
-	parentLo->addWidget(mismatchConnFooter);
+	parentLo->addWidget(mismatchConnFooter);*/
 
 	m_mismatchersFrameParent->hide();
 

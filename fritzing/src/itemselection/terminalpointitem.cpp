@@ -34,19 +34,20 @@ QHash<ConnectorRectangle::State, QPixmap> TerminalPointItem::m_pixmapHash;
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible)
 	: QGraphicsRectItem(parent)
 {
-	init(parent,visible,rect().center());
+	init(parent,visible,rect().center(),false);
 }
 
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point)
 	: QGraphicsRectItem(parent)
 {
-	init(parent,visible,point);
+	init(parent,visible,point,true);
 }
 
-void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point) {
+void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point, bool loadedFromFile) {
 	Q_ASSERT(parent);
 	m_parent = parent;
 	m_point = point;
+	m_loadedFromFile = loadedFromFile;
 
 	initPixmapHash();
 
@@ -127,8 +128,11 @@ bool TerminalPointItem::hasBeenMoved() {
 }
 
 void TerminalPointItem::reset() {
-	setPoint(rect().center()-rect().topLeft());
-	m_cross->setHasBeenMoved(false);
+	QRectF pRect = parentItem()->boundingRect();
+	setRect(pRect);
+	setPoint(pRect.center()-pRect.topLeft());
+	m_cross->setHasBeenMoved(m_loadedFromFile);
+	m_loadedFromFile = false;
 	setCrossPos();
 	scene()->update();
 }
@@ -138,6 +142,10 @@ void TerminalPointItem::doSetVisible(bool visible) {
 		setCrossPos();
 	}
 	setVisible(visible);
+}
+
+bool TerminalPointItem::isOutsideConnector() {
+	return m_cross->isOutsideConnector();
 }
 
 

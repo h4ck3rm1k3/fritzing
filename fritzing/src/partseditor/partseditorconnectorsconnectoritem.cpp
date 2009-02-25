@@ -57,7 +57,9 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 	m_centerHasChanged = false;
 	m_terminalPointItem = NULL;
 	m_showingTerminalPoint = showingTerminalPoint;
-	updateTerminalPoint();
+
+	m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint);
+	m_terminalPointItem->updatePoint();
 }
 
 PartsEditorConnectorsConnectorItem::~PartsEditorConnectorsConnectorItem()
@@ -71,11 +73,12 @@ void PartsEditorConnectorsConnectorItem::resizeRect(qreal x, qreal y, qreal widt
 	setRect(x,y,width,height);
 	m_resizedRect = QRectF(x,y,width,height);
 	informChange();
-	if(isShowingTerminalPoint()) {
-		updateTerminalPoint();
-	} else {
-		m_centerHasChanged = true;
-	}
+	m_centerHasChanged = true;
+	m_geometryHasChanged = true;
+	/*if(isShowingTerminalPoint()) {
+		m_terminalPointItem->updatePoint();
+	}*/
+	scene()->update();
 }
 
 void PartsEditorConnectorsConnectorItem::init(bool resizable) {
@@ -221,12 +224,11 @@ QPen PartsEditorConnectorsConnectorItem::drawDottedLineAux(
 void PartsEditorConnectorsConnectorItem::setShowTerminalPoint(bool show) {
 	m_showingTerminalPoint = show;
 	if(m_terminalPointItem) {
-		if(!m_centerHasChanged) {
-			m_terminalPointItem->doSetVisible(show);
-		} else if(show) {
-			resetTerminalPoint();
+		if(m_geometryHasChanged && show) {
+			m_terminalPointItem->reset();
 			m_centerHasChanged = false;
 		}
+		m_terminalPointItem->doSetVisible(show);
 	}
 
 	// if we're showing the rerminal points, then the connector
@@ -251,24 +253,6 @@ qreal PartsEditorConnectorsConnectorItem::minWidth() {
 qreal PartsEditorConnectorsConnectorItem::minHeight() {
 	return MinHeight;
 }
-
-void PartsEditorConnectorsConnectorItem::resetTerminalPoint() {
-	if(!m_terminalPointItem) {
-		m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint);
-	}
-	m_terminalPointItem->reset();
-}
-
-
-void PartsEditorConnectorsConnectorItem::updateTerminalPoint(bool reseting) {
-	if(!m_terminalPointItem) {
-		m_terminalPointItem = new TerminalPointItem(this,m_showingTerminalPoint);
-	} else {
-		m_terminalPointItem->setParentItem(this);
-		m_terminalPointItem->updatePoint();
-	}
-}
-
 
 TerminalPointItem *PartsEditorConnectorsConnectorItem::terminalPointItem() {
 	return m_terminalPointItem;

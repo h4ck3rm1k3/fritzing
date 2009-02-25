@@ -121,7 +121,7 @@ SingleConnectorInfoWidget::SingleConnectorInfoWidget(ConnectorsInfoWidget *topLe
 {
 	static QString EMPTY_CONN_NAME = QObject::tr("no name yet");
 	static QString EMPTY_CONN_DESC = QObject::tr("no description yet");
-	static Connector::ConnectorType EMPTY_CONN_TYPE = Connector::Female;
+	static Connector::ConnectorType EMPTY_CONN_TYPE = Connector::Male;
 
 	QString name;
 	QString description;

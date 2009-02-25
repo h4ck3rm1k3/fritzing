@@ -263,7 +263,11 @@ bool PartsEditorConnectorsView::updateTerminalPoints(QDomDocument *svgDom, const
 void PartsEditorConnectorsView::updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId) {
 	foreach(Connector *conn, m_item->connectors()) {
 		foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
-			if(conn->connectorSharedID() == connId) {
+			if(conn->connectorSharedID() == connId
+			|| conn->connectorSharedID().startsWith(connId)) {
+				DebugDialog::debug("<<< defined conn id "+conn->connectorSharedID());
+				DebugDialog::debug("<<< new conn id "+connId);
+				conn->connectorShared()->setId(connId);
 				sil->m_terminalId = terminalId;
 				ViewLayer::ViewLayerID viewLayerID =
 					ViewLayer::viewLayerIDFromXmlString(connectorsLayerId);

@@ -72,8 +72,10 @@ public:
 	void reset();
 	void doSetVisible(bool visible);
 
+	bool isOutsideConnector();
+
 protected:
-	void init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point);
+	void init(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point, bool centered);
 	void initPixmapHash();
 	void setCrossPos();
 	qreal currentScale();
@@ -83,6 +85,7 @@ protected:
 	QPointF transformedCrossCenter();
 
 	QPointF m_point;
+	bool m_loadedFromFile;
 	TerminalPointItemPrivate *m_cross;
 	PartsEditorConnectorsConnectorItem *m_parent;
 

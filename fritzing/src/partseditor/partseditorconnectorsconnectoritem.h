@@ -45,8 +45,7 @@ public:
 	void setShowTerminalPoint(bool show);
 	bool isShowingTerminalPoint();
 	void setTerminalPoint(QPointF);
-	void resetTerminalPoint();
-	void updateTerminalPoint(bool reseting=false);
+	void updateTerminalPoint();
 	TerminalPointItem *terminalPointItem();
 
 	qreal minWidth();

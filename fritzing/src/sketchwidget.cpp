@@ -87,8 +87,8 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
     setAcceptDrops(true);
 	setRenderHint(QPainter::Antialiasing, true);
-	
-	
+
+
 	//setCacheMode(QGraphicsView::CacheBackground);
 	//setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	//setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -380,7 +380,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 
 	if (modelPart->itemType() == ModelPart::Module) {
 		QList<ModelPart *> modelParts;
-		
+
 		if (m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, id)) {
 			QUndoCommand * parentCommand = new QUndoCommand("load module");
 			loadFromModel(modelParts, BaseCommand::CrossView, parentCommand);
@@ -561,31 +561,38 @@ PaletteItem* SketchWidget::addPartItem(ModelPart * modelPart, PaletteItem * pale
 
 	ViewLayer::ViewLayerID viewLayerID = getViewLayerID(modelPart);
 
-	if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
-		addToScene(paletteItem, paletteItem->viewLayerID());
-		paletteItem->loadLayerKin(m_viewLayers);
-		foreach (ItemBase * lkpi, paletteItem->layerKin()) {
-			this->scene()->addItem(lkpi);
-			lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+	// render it, only if the layer is defined in the fzp file
+	// if the view is not defined in the part file, without this condition
+	// fritzing crashes
+	if(viewLayerID != ViewLayer::UnknownLayer) {
+		if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+			addToScene(paletteItem, paletteItem->viewLayerID());
+			paletteItem->loadLayerKin(m_viewLayers);
+			foreach (ItemBase * lkpi, paletteItem->layerKin()) {
+				this->scene()->addItem(lkpi);
+				lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+			}
+
+			checkNewSticky(paletteItem);
+			return paletteItem;
 		}
+		else {
+			// nobody falls through to here now?
 
-		checkNewSticky(paletteItem);
-		return paletteItem;
-	}
-	else {
-		// nobody falls through to here now?
-
-		QMessageBox::information(dynamic_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
-								 QObject::tr("The file %1 is not a Fritzing file (1).").arg(modelPart->modelPartShared()->path()) );
+			QMessageBox::information(dynamic_cast<QMainWindow *>(this->window()), QObject::tr("Fritzing"),
+									 QObject::tr("The file %1 is not a Fritzing file (1).").arg(modelPart->modelPartShared()->path()) );
 
 
-		DebugDialog::debug(QString("addPartItem renderImage failed %1").arg(modelPart->moduleID()) );
+			DebugDialog::debug(QString("addPartItem renderImage failed %1").arg(modelPart->moduleID()) );
 
-		//paletteItem->modelPart()->removeViewItem(paletteItem);
-		//delete paletteItem;
-		//return NULL;
-		scene()->addItem(paletteItem);
-		//paletteItem->setVisible(false);
+			//paletteItem->modelPart()->removeViewItem(paletteItem);
+			//delete paletteItem;
+			//return NULL;
+			scene()->addItem(paletteItem);
+			//paletteItem->setVisible(false);
+			return paletteItem;
+		}
+	} else {
 		return paletteItem;
 	}
 }
@@ -1288,14 +1295,14 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	QGraphicsView::mousePressEvent(event);
 	QGraphicsItem* item = this->itemAt(event->pos());
 	if (item == NULL || (item != wasItem)) {
-		// in here if you clicked on the sketch itself, 
-		// or the item was deleted during mousePressEvent 
+		// in here if you clicked on the sketch itself,
+		// or the item was deleted during mousePressEvent
 		// (for example, by shift-clicking a connectorItem)
 
 		if (item == NULL && m_fixedToCenterItem && m_fixedToCenterItem->getVisible()) {
 			QRectF r(m_fixedToCenterItemOffset, m_fixedToCenterItem->size());
 			if (r.contains(event->pos())) {
-				QMouseEvent newEvent(event->type(), event->pos() - m_fixedToCenterItemOffset, 
+				QMouseEvent newEvent(event->type(), event->pos() - m_fixedToCenterItemOffset,
 					event->globalPos(), event->button(), event->buttons(), event->modifiers());
 				if (m_fixedToCenterItem->forwardMousePressEvent(&newEvent)) {
 					// update background
@@ -1303,7 +1310,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 				}
 			}
 		}
-		
+
 		return;
 	}
 
@@ -1714,7 +1721,7 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	if(pitem) m_lastPaletteItemSelected = pitem;
 }
 
-void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit) 
+void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit)
 {
 	ModelPart * modelPart = m_sketchModel->findModelPart(GroupItem::moduleIDName, itemID);
 	if (modelPart == NULL) {
@@ -1735,7 +1742,7 @@ void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit)
 
 	if (itemBases.count() < 1) return;
 
-	ViewGeometry vg;	
+	ViewGeometry vg;
 	vg.setLoc(itemBases[0]->pos());		// temporary position
 	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, itemID, NULL);
 	scene()->addItem(groupItem);
@@ -1744,7 +1751,7 @@ void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit)
     qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
 	foreach (ItemBase * itemBase, itemBases) {
 		groupItem->addToGroup(itemBase);
-	}	
+	}
 	groupItem->doneAdding(m_viewLayers);
 	//groupItem->setSelected(true);
 
@@ -1776,7 +1783,7 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
 	if (modelPart == NULL) return NULL;
 
 	modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
-	ViewGeometry vg;	
+	ViewGeometry vg;
 	vg.setLoc(itemBases[0]->pos());		// temporary position
 	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, ItemBase::getNextID(), NULL);
 	scene()->addItem(groupItem);
@@ -1785,7 +1792,7 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
     qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
 	foreach (ItemBase * itemBase, itemBases) {
 		groupItem->addToGroup(itemBase);
-	}	
+	}
 	groupItem->doneAdding(m_viewLayers);
 	groupItem->setSelected(true);
 
@@ -3784,12 +3791,12 @@ void SketchWidget::addFixedToBottomRightItem(QGraphicsItem *item) {
 }
 
 void SketchWidget::addFixedToCenterItem(QGraphicsItem *item) {
-	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);   
+	item->setFlag(QGraphicsItem::ItemIgnoresTransformations);
 	if(!scene()->items().contains(item)) {
-		scene()->addItem(item);   
+		scene()->addItem(item);
 	}
 	m_fixedToCenterItems << item;
-	ensureFixedToCenter(item);    
+	ensureFixedToCenter(item);
 }
 
 void SketchWidget::ensureFixedToTopLeftItems() {
@@ -3900,7 +3907,7 @@ void SketchWidget::ensureFixedToCenterItems() {
 			if(scene()->items().contains(item)) {
 				ensureFixedToCenter(item);
 			} else {
-				toRemove << item;  
+				toRemove << item;
 			}
 		}
 
@@ -4112,7 +4119,7 @@ void SketchWidget::init() {
 	}
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize) 
+QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize)
 {
 
 	int width = scene()->width();
@@ -4264,7 +4271,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 }
 
 void SketchWidget::addFixedToCenterItem2(SketchMainHelp * item) {
-	m_fixedToCenterItem = item;  
+	m_fixedToCenterItem = item;
 }
 
 void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
