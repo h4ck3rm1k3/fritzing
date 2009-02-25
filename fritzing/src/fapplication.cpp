@@ -506,6 +506,8 @@ void FApplication::preloadSlowParts() {
 	//t.start();
 	//DebugDialog::debug(QString("preload slow parts"));
 	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
+	if (modelPart == NULL) return;
+
 	LayerAttributes layerAttributes;
 	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
 	//DebugDialog::debug(QString("preload set up image"));
