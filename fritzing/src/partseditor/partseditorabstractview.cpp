@@ -210,6 +210,7 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartShared()->setDomDocument(domDoc);
   	retval->modelPartShared()->resetConnectorsInitialization();
+  	retval->modelPartShared()->setPath(getApplicationSubFolderPath("parts")+"/svg/user");
   	retval->initConnectors(true /*redo connectors*/);
 	return retval;
 }

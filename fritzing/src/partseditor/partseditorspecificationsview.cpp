@@ -225,7 +225,7 @@ void PartsEditorSpecificationsView::setSvgFilePath(const QString &filePath) {
 		relative = "";
 	}
 
-	delete m_svgFilePath;
+	// TODO: delete m_svgFilePath;
 	m_svgFilePath = new SvgAndPartFilePath(filePath,relative);
 }
 
