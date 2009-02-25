@@ -125,6 +125,16 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_libPath = applicationDirPath() + lib;		// applicationDirPath() doesn't work until after QApplication is instantiated
 	addLibraryPath(m_libPath);					// tell app where to search for plugins (jpeg export and sql lite)
 
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! remember to delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	QFile file("libpath.txt");
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		QTextStream out(&file);
+		out << m_libPath;
+		file.close();
+	}
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! remember to delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 	// !!! translator must be installed before any widgets are created !!!
 	m_translationPath = m_libPath + "/translations";
 	bool loaded = findTranslator(m_translationPath);
@@ -506,7 +516,10 @@ void FApplication::preloadSlowParts() {
 	//t.start();
 	//DebugDialog::debug(QString("preload slow parts"));
 	ModelPart * modelPart = m_paletteBinModel->retrieveModelPart(ItemBase::breadboardModuleIDName);
-	if (modelPart == NULL) return;
+	if (modelPart == NULL) {
+		// something is badly wrong--parts folder is missing, for example
+		return;
+	}
 
 	LayerAttributes layerAttributes;
 	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
