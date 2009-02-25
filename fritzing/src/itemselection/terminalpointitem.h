@@ -42,6 +42,8 @@ public:
 	bool isPressed();
 
 protected:
+	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -77,12 +79,6 @@ protected:
 	qreal currentScale();
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget=0);
-
-	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 	QPointF transformedCrossCenter();
 

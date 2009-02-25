@@ -168,19 +168,21 @@ bool CornerHandler::isBeingDragged() {
 void CornerHandler::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	Q_UNUSED(option);
 	Q_UNUSED(widget);
-	if(m_isVisible) {
+	if(m_isVisible && m_parent->isResizable()) {
 		doPaint(painter);
 	}
 }
 
 void CornerHandler::doPaint(QPainter *painter) {
-	painter->save();
-	QRectF trgRect = m_parent->handlerRect(m_corner);
-	QPixmap pm = pixmapHash[m_corner];
-	QRectF srcRect = QRectF(pm.rect());
-	//painter->drawRect(rect);
-	painter->drawPixmap(trgRect,pm,srcRect);
-	painter->restore();
+	if(m_isVisible) {
+		painter->save();
+		QRectF trgRect = m_parent->handlerRect(m_corner);
+		QPixmap pm = pixmapHash[m_corner];
+		QRectF srcRect = QRectF(pm.rect());
+		//painter->drawRect(rect);
+		painter->drawPixmap(trgRect,pm,srcRect);
+		painter->restore();
+	}
 }
 
 void CornerHandler::doSetRect(const QRectF &newRect) {

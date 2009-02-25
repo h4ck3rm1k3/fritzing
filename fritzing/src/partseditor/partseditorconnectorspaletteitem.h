@@ -48,7 +48,7 @@ class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 			PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
 			const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers
 		);
-		bool showingTerminalPoints();
+		bool isShowingTerminalPoints();
 
 		void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 		void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);

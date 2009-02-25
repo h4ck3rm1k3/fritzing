@@ -61,7 +61,7 @@ void PartsEditorConnectorsPaletteItem::highlightConnsAux(ItemBase* item, const Q
 	}
 }
 
-bool PartsEditorConnectorsPaletteItem::showingTerminalPoints() {
+bool PartsEditorConnectorsPaletteItem::isShowingTerminalPoints() {
 	return dynamic_cast<PartsEditorConnectorsView*>(m_owner)->showingTerminalPoints();
 }
 

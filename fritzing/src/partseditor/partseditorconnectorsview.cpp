@@ -419,6 +419,7 @@ void PartsEditorConnectorsView::showTerminalPoints(bool show) {
 			connItem->setShowTerminalPoint(show);
 		}
 	}
+	scene()->update();
 }
 
 bool PartsEditorConnectorsView::showingTerminalPoints() {
