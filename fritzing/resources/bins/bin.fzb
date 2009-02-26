@@ -65,7 +65,7 @@
                 </iconView>
              </views>
         </instance>
-        <instance moduleIdRef="3234DFDC00" path="/parts/core/big_pot.fzp">
+        <instance moduleIdRef="3234DFDC00" path="parts/core/big_pot.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
@@ -100,7 +100,21 @@
                 </iconView >
              </views>
         </instance>
-        <instance moduleIdRef="1002ACDC0FA" path="/parts/core/basic_thermistor.fzp">
+        <instance moduleIdRef="1002ACDC0FA" path="parts/core/basic_thermistor.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+		<instance moduleIdRef="56bed03878064b8286b71d5240035138" path="parts/core/inductor.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+		<instance moduleIdRef="3746667c843a2127a0e499f8a0b3ef6a" path="parts/core/crystal.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
@@ -121,21 +135,21 @@
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="a4f38a10-dd92-11dd-a3e2-001f5b3a17a4" path="/parts/core/h-bridge.fzp">
+		<instance moduleIdRef="a4f38a10-dd92-11dd-a3e2-001f5b3a17a4" path="parts/core/h-bridge.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="f5e8f260-de38-11dd-b332-0022430987e8" path="/parts/core/atmega168.fzp">
+		<instance moduleIdRef="f5e8f260-de38-11dd-b332-0022430987e8" path="parts/core/atmega168.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="3a761a45-f1ff-11dd-b332-001a4d5c439f" path="/parts/core/mystery_part3.fzp">
+		<instance moduleIdRef="3a761a45-f1ff-11dd-b332-001a4d5c439f" path="parts/core/mystery_part3.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
@@ -170,6 +184,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="8abf6496b5d466c7a1893c17a296a676" path="parts/core/piezo sensor.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="BreadboardModuleID" path=":/resources/parts/core/breadboard.fzp">
             <views>
                 <iconView layer="icon">
@@ -177,14 +198,14 @@
                 </iconView >
             </views>
         </instance>
-        <instance moduleIdRef="1000AFDF10011" path="/parts/core/battery-AA.fzp">
+        <instance moduleIdRef="1000AFDF10011" path="parts/core/battery-AA.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
 				</iconView>
 			</views>
 		</instance>
-		<instance moduleIdRef="1000FADF10011" path="/parts/core/dc_motor.fzp">
+		<instance moduleIdRef="1000FADF10011" path="parts/core/dc_motor.fzp">
 			<views>
 				<iconView layer="icon">
 					<geometry z="-1" x="-1" y="-1"></geometry>
