@@ -235,6 +235,8 @@ public:
 	bool mergeWith(const QUndoCommand *other);
 	void copyUndo(SelectItemCommand * sother);
 	void setSelectItemType(SelectItemType);
+	bool updated();
+	void setUpdated(bool);
 
 protected:
 	void selectAllFromStack(QList<long> & stack, bool select, bool updateInfoView);
@@ -244,6 +246,7 @@ protected:
     QList<long> m_undoIDs;
     QList<long> m_redoIDs;
     SelectItemType m_type;
+	bool m_updated;
 
 protected:
     static int selectItemCommandID;

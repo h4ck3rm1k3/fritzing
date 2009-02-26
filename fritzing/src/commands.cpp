@@ -343,6 +343,7 @@ SelectItemCommand::SelectItemCommand(SketchWidget* sketchWidget, SelectItemType 
     : BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
 	m_type = type;
+	m_updated = false;
 }
 
 int SelectItemCommand::id() const {
@@ -433,6 +434,15 @@ QString SelectItemCommand::getParamString() const {
 		+ BaseCommand::getParamString() + 
 		QString(" type:%1")
 		.arg(m_type);
+}
+
+bool SelectItemCommand::updated() {
+	return m_updated;
+}
+
+
+void SelectItemCommand::setUpdated(bool updated) {
+	m_updated = updated;
 }
 
 

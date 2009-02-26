@@ -392,8 +392,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 																			  long, const QString &,
 																			  bool, RatsnestCommand *)) );
 
-	succeeded = succeeded && connect(signaller, SIGNAL(groupSignal(long, QList<long> &, bool)),
-									 slotter, SLOT(group(long, QList<long> &, bool)) );
+	succeeded = succeeded && connect(signaller, SIGNAL(groupSignal(long, QList<long> &, const ViewGeometry &, bool)),
+									 slotter, SLOT(group(long, QList<long> &, const ViewGeometry &, bool)) );
 
 
 		void group(long itemID, QList<long> & itemIDs, bool doEmit);

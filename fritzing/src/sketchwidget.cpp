@@ -1287,6 +1287,8 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 
 	// if pushIt assumes m_undoStack->beginMacro has previously been called
 
+	//DebugDialog::debug(QString("stacking"));
+
 	// DebugDialog::debug(QString("stack selection state %1 %2").arg(pushIt).arg((long) parentCommand));
 	SelectItemCommand* selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
@@ -1295,6 +1297,7 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
  		if (base == NULL) continue;
 
  		 selectItemCommand->addUndo(base->id());
+		 //DebugDialog::debug(QString("\tstacking %1").arg(base->id()));
     }
 
 	selectItemCommand->setText(tr("Selection"));
@@ -1559,10 +1562,15 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 
 	if ((m_savedItems.size() <= 0) || !checkMoved()) {
 		if (this->m_holdingSelectItemCommand != NULL) {
-			SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
-			m_holdingSelectItemCommand = NULL;
-			//DebugDialog::debug("scene changed push select");
-			m_undoStack->push(tempCommand);
+			if (m_holdingSelectItemCommand->updated()) {
+				SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
+				m_holdingSelectItemCommand = NULL;
+				DebugDialog::debug(QString("scene changed push select %1").arg(scene()->selectedItems().count()));
+				m_undoStack->push(tempCommand);
+			}
+			else {
+				clearHoldingSelectItem();
+			}
 		}
 	}
 	m_savedItems.clear();
@@ -1692,7 +1700,7 @@ void SketchWidget::scene_selectionChanged() {
 		return;
 	}
 
-	//DebugDialog::debug("selection changed");
+	// DebugDialog::debug("selection changed");
 	// TODO: this can be dangerous if an item is on m_lastSelected and the item is deleted without being deselected first.
 
 	// hack to make up for missing selection state updates
@@ -1709,7 +1717,7 @@ void SketchWidget::scene_selectionChanged() {
 	}
 
 	if (m_holdingSelectItemCommand != NULL) {
-		// DebugDialog::debug("got holding command");
+		//DebugDialog::debug("update holding command");
 
 		int selCount = 0;
 		ItemBase* saveBase = NULL;
@@ -1731,6 +1739,7 @@ void SketchWidget::scene_selectionChanged() {
 			selString = tr("Select %1 items").arg(QString::number(selCount));
 		}
 		m_holdingSelectItemCommand->setText(selString);
+		m_holdingSelectItemCommand->setUpdated(true);
 	}
 }
 
@@ -1797,7 +1806,7 @@ void SketchWidget::group(long itemID, QList<long> & itemIDs, const ViewGeometry 
 	groupItem->setPos(viewGeometry.loc());
 
 	if (doEmit) {
-		emit groupSignal(itemID, itemIDs, false);
+		emit groupSignal(itemID, itemIDs, viewGeometry, false);
 	}
 }
 

@@ -597,6 +597,7 @@ void ItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 	// calling parent class so that multiple selection will work
 	// haven't yet discovered any nasty side-effect
 	GraphicsSvgLineItem::mouseReleaseEvent(event);
+
 	//scene()->setItemIndexMethod(QGraphicsScene::BspTreeIndex);
 	// setCacheMode(QGraphicsItem::NoCache);
 

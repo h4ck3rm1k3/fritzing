@@ -333,7 +333,7 @@ signals:
 	void dealWithRatsnestSignal(long fromID, const QString & fromConnectorID,
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
-	void groupSignal(long itemID, QList<long> & itemIDs, bool doEmit);
+	void groupSignal(long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
