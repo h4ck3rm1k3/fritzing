@@ -33,6 +33,8 @@ $Date$
 #include <QGraphicsProxyWidget>
 #include <QMessageBox>
 #include <QtDebug>
+#include <QUuid>
+#include <QCryptographicHash>
 
 #include "partseditorspecificationsview.h"
 #include "../layerkinpaletteitem.h"
@@ -63,7 +65,7 @@ void PartsEditorSpecificationsView::mousePressConnectorEvent(ConnectorItem *, QG
 	return;
 }
 
-void PartsEditorSpecificationsView::copySvgFileToDestiny() {
+void PartsEditorSpecificationsView::copySvgFileToDestiny(const QString &partFileName) {
 	Qt::CaseSensitivity cs = Qt::CaseSensitive;
 #ifdef Q_WS_WIN
 	cs = Qt::CaseInsensitive;
@@ -72,6 +74,7 @@ void PartsEditorSpecificationsView::copySvgFileToDestiny() {
 	// if the svg file is in the temp folder, then copy it to destiny
 	if(m_svgFilePath->absolutePath().startsWith(m_tempFolder.absolutePath(),cs)) {
 		QString origFile = svgFilePath();
+		setFriendlierSvgFileName(partFileName);
 		QString destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
 
 		ensureFilePath(origFile);
@@ -301,4 +304,23 @@ QString PartsEditorSpecificationsView::createSvgFromImage(const QString &origFil
 	svgPainter.end();
 
 	return newFilePath;
+}
+
+QString PartsEditorSpecificationsView::setFriendlierSvgFileName(const QString &partFileName) {
+	QString aux = partFileName;
+	aux = aux
+		.remove(FritzingPartExtension)
+		.replace(" ","_");
+	if(aux.length()>40) aux.truncate(40);
+	aux+=QString("__%1__%2.svg")
+			.arg(ItemBase::viewIdentifierNaturalName(m_viewIdentifier))
+			.arg(FritzingWindow::getRandText());
+	int slashIdx = m_svgFilePath->relativePath().indexOf("/");
+	QString relpath = m_svgFilePath->relativePath();
+	QString relpath2 = relpath;
+	QString abspath = m_svgFilePath->absolutePath();
+	QString viewFolder = relpath.remove(slashIdx,relpath.size()-slashIdx+1);
+	m_svgFilePath->setAbsolutePath(abspath.remove(relpath2)+viewFolder+"/"+aux);
+	m_svgFilePath->setRelativePath(viewFolder+"/"+aux);
+	return aux;
 }

@@ -517,10 +517,12 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     m_sketchModel->root()->setModelPartShared(modelPartShared());
-	m_sketchModel->save(fileName, true);
 
-	m_symbols->copySvgFilesToDestiny();
-	m_iconViewImage->copySvgFileToDestiny();
+	QString fileNameAux = QFileInfo(fileName).fileName();
+	m_symbols->copySvgFilesToDestiny(fileNameAux);
+	m_iconViewImage->copySvgFileToDestiny(fileNameAux);
+
+	m_sketchModel->save(fileName, true);
 
     QApplication::restoreOverrideCursor();
 

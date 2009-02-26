@@ -38,7 +38,7 @@ class PartSymbolsWidget : public QFrame {
 Q_OBJECT
 	public:
 		PartSymbolsWidget(SketchModel *sketchModel, class WaitPushUndoStack *undoStack, QWidget *parent);
-		void copySvgFilesToDestiny();
+		void copySvgFilesToDestiny(const QString &partFileName);
 		void loadViewsImagesFromModel(PaletteModel *paletteModel, ModelPart *modelPart);
 		const QDir& tempDir();
 

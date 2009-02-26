@@ -42,7 +42,7 @@ public:
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void loadSvgFile(ModelPart * modelPart);
 	void loadFile();
-	void copySvgFileToDestiny();
+	void copySvgFileToDestiny(const QString &partFileName);
 
 	const QString svgFilePath();
 	const SvgAndPartFilePath& svgFileSplit();
@@ -62,6 +62,8 @@ protected:
 	void mousePressEvent(QMouseEvent *event);
 	void fitCenterAndDeselect();
 	QString createSvgFromImage(const QString &filePath);
+
+	QString setFriendlierSvgFileName(const QString &partFileName);
 
 	QGraphicsItem *m_startItem;
 

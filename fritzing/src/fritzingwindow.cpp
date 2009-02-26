@@ -108,13 +108,13 @@ bool FritzingWindow::saveAs() {
 
 	if(m_readOnly) {
 		path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName();
-    } 
+    }
 	else if(m_fileName.startsWith(untitledBase, Qt::CaseInsensitive)) {
 		path = defaultSaveFolder() + "/" + m_fileName;
-	} 
+	}
 	else if(m_fileName.isNull() || m_fileName.isEmpty()) {
 		path = defaultSaveFolder();
-	} 
+	}
 	else {
 		path = m_fileName;
 	}
@@ -189,6 +189,12 @@ QString FritzingWindow::getRandText() {
 	QString randext = QCryptographicHash::hash(rand.toAscii(),QCryptographicHash::Md4).toHex();
 	return randext;
 }
+
+/*QString FritzingWindow::getBase64RandText() {
+	QString rand = QUuid::createUuid().toString();
+	QString randext = QCryptographicHash::hash(rand.toAscii(),QCryptographicHash::Md4).toHex();
+	return randext;
+}*/
 
 /**
  * Is assumed that the options of the possible extensions are defined this way:

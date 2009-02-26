@@ -96,10 +96,10 @@ void PartSymbolsWidget::createViewImageWidget(
 	}
 }
 
-void PartSymbolsWidget::copySvgFilesToDestiny() {
-	m_breadView->copySvgFileToDestiny();
-	m_schemView->copySvgFileToDestiny();
-	m_pcbView->copySvgFileToDestiny();
+void PartSymbolsWidget::copySvgFilesToDestiny(const QString &partFileName) {
+	m_breadView->copySvgFileToDestiny(partFileName);
+	m_schemView->copySvgFileToDestiny(partFileName);
+	m_pcbView->copySvgFileToDestiny(partFileName);
 }
 
 void PartSymbolsWidget::loadViewsImagesFromModel(PaletteModel *paletteModel, ModelPart *modelPart) {

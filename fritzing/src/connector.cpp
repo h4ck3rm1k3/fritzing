@@ -158,8 +158,8 @@ void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifie
 }
 
 void Connector::writeTerminalIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString terminalId) {
-        if(/*(view == ItemBase::BreadboardView || view == ItemBase::SchematicView)
-            &&*/
+        if((view == ItemBase::BreadboardView || view == ItemBase::SchematicView)
+            &&
            (!terminalId.isNull() && !terminalId.isEmpty()) ) {
 		writer.writeAttribute("terminalId",terminalId);
 	} else {
