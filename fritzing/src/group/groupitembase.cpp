@@ -119,7 +119,7 @@ void GroupItemBase::doneAdding(const LayerHash & layerHash) {
 
 	m_boundingRect.setRect(0, 0, itemsBoundingRect.width(), itemsBoundingRect.height());
 
-	DebugDialog::debug(QString("items bounding rect  "), itemsBoundingRect);
+	//DebugDialog::debug(QString("items bounding rect  "), itemsBoundingRect);
 
 	this->setPos(itemsBoundingRect.topLeft());
 	saveGeometry();
@@ -128,7 +128,7 @@ void GroupItemBase::doneAdding(const LayerHash & layerHash) {
 		addToGroup(itemBase, layerHash);
 	}
 
-	DebugDialog::debug(QString("\tlayer %1").arg(ViewLayer::viewLayerNameFromID(m_viewLayerID)));
+	//DebugDialog::debug(QString("\tlayer %1").arg(ViewLayer::viewLayerNameFromID(m_viewLayerID)));
 
 	m_itemsToAdd.clear();
 }

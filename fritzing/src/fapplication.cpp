@@ -125,15 +125,12 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	m_libPath = QDir::cleanPath(applicationDirPath() + lib);		// applicationDirPath() doesn't work until after QApplication is instantiated	
 	addLibraryPath(m_libPath);					// tell app where to search for plugins (jpeg export and sql lite)
 
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! remember to delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	QFile file("libpath.txt");
+	/*QFile file("libpath.txt");
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
 		QTextStream out(&file);
 		out << m_libPath;
 		file.close();
-	}
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! remember to delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+	}*/
 
 	// !!! translator must be installed before any widgets are created !!!
 	m_translationPath = m_libPath + "/translations";
@@ -404,11 +401,11 @@ int FApplication::startup(int & argc, char ** argv)
 
 	m_started = true;
 
-#ifndef WIN_DEBUG
+//#ifndef WIN_DEBUG
 	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
 	splash.showProgress(progressIndex, 0.99);
 	processEvents();
-#endif
+//#endif
 
 	mainWindow->show();
 

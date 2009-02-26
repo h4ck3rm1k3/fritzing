@@ -107,12 +107,11 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
     	delete child;
    	}
 
-	QDomElement externalConnectors;
-	return loadInstances(instances, externalConnectors, modelParts);
+	return loadInstances(instances, modelParts);
 
 }
 
-bool ModelBase::loadInstances(QDomElement & instances, QDomElement & externalConnectors, QList<ModelPart *> & modelParts) 
+bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & modelParts) 
 {
    	QHash<long, ModelPart *> partHash;
    	QDomElement instance = instances.firstChildElement("instance");
@@ -152,20 +151,6 @@ bool ModelBase::loadInstances(QDomElement & instances, QDomElement & externalCon
 
    		instance = instance.nextSiblingElement("instance");
   	}
-/*
-   	QDomElement connector = externalConnectors.firstChildElement("connector");
-   	while (!connector.isNull()) {
-		connector = connector.nextSiblingElement("connector");
-   		bool ok;
-   		long index = connector.attribute("modelIndex").toLong(&ok);
-   		if (ok) {
-			ModelPart * modelPart = partHash.value(index);
-			if (modelPart) {
-				modelPart->addExternalConnector(connector.attribute("connectorId"));
-			}
-		}
-	}
-*/
 
 	return true;
 }
@@ -257,18 +242,12 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 	}
 	renewModelIndexes(instances, "instance", oldToNew);
 
-	QDomElement externalConnectors = module.firstChildElement("externalConnectors");
-	if (!externalConnectors.isNull()) {
-		renewModelIndexes(externalConnectors, "connector", oldToNew);
-	}
-
-
 	//QFile file("test.xml");
 	//file.open(QFile::WriteOnly);
 	//file.write(domDocument.toByteArray());
 	//file.close();
 
-	return loadInstances(instances, externalConnectors, modelParts);
+	return loadInstances(instances, modelParts);
 }
 
 void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew) 

@@ -90,6 +90,18 @@ const QUndoCommand * BaseCommand::parentCommand() const {
 	return m_parentCommand;
 }
 
+void BaseCommand::subUndo() {
+	for (int i = m_commands.count() - 1; i >= 0; i--) { 
+		m_commands[i]->undo();
+	}
+}
+
+void BaseCommand::subRedo() {
+	foreach (BaseCommand * command, m_commands) {
+		command->redo();
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, QUndoCommand *parent)
@@ -130,7 +142,7 @@ void AddItemCommand::undo()
 void AddItemCommand::redo()
 {
 	if (!m_firstRedo || m_doFirstRedo) {
-		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex);
+		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
 		m_sketchWidget->selectItem(m_itemID,true,m_updateInfoView, m_crossViewType == BaseCommand::CrossView);
 	}
 	m_firstRedo = false;
@@ -153,7 +165,7 @@ DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::Cro
 
 void DeleteItemCommand::undo()
 {
-    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex);
+    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
 }
 
 void DeleteItemCommand::redo()
@@ -504,16 +516,12 @@ CleanUpWiresCommand::CleanUpWiresCommand(SketchWidget* sketchWidget, bool skipMe
 
 void CleanUpWiresCommand::undo()
 {
-	for (int i = m_commands.count() - 1; i >= 0; i--) { 
-		m_commands[i]->undo();
-	}
+	subUndo();
 }
 
 void CleanUpWiresCommand::redo()
 {
-	foreach (BaseCommand * command, m_commands) {
-		command->redo();
-	}
+	subRedo();
 
 	m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL, m_skipMe);
 	m_firstTime = false;
@@ -574,17 +582,13 @@ SwapCommand::SwapCommand(SketchWidget* sketchWidget, long itemId, const QString 
 void SwapCommand::undo() {
 	m_sketchWidget->swap(m_itemId, m_oldModuleID, true, NULL);
 
+	subUndo();
 	// reconnect everyone, if necessary
-	for (int i = m_commands.count() - 1; i >= 0; i--) { 
-		m_commands[i]->undo();
-	}
 }
 
 void SwapCommand::redo() {
 	// disconnect everyone, if necessary
-	foreach (BaseCommand * command, m_commands) {
-		command->redo();
-	}
+	subRedo();
 
 	m_sketchWidget->swap(m_itemId, m_newModuleID, true, m_firstTime ? this : NULL);
 	m_firstTime = false;
@@ -708,9 +712,7 @@ RatsnestCommand::RatsnestCommand(class SketchWidget * sketchWidget, BaseCommand:
 }
 
 void RatsnestCommand::undo() {
-	for (int i = m_commands.count() - 1; i >= 0; i--) { 
-		m_commands[i]->undo();
-	}
+	subUndo();
 }
 
 void RatsnestCommand::redo() {
@@ -719,9 +721,7 @@ void RatsnestCommand::redo() {
 		m_sketchWidget->dealWithRatsnest(m_fromID, m_fromConnectorID, m_toID, m_toConnectorID, m_connect, this, m_crossViewType == BaseCommand::CrossView);
 	}
 	else {
-		foreach (BaseCommand * command, m_commands) {
-			command->redo();
-		}
+		subRedo();
 	}
 }
 
@@ -929,10 +929,11 @@ void ResizeNoteCommand::redo()
 }
 
 
-GroupCommand::GroupCommand(SketchWidget* sketchWidget, long itemID, QUndoCommand *parent)
+GroupCommand::GroupCommand(SketchWidget* sketchWidget, long itemID, const ViewGeometry & viewGeometry, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
     m_itemID = itemID;
+	m_viewGeometry = viewGeometry;
 }
 
 void GroupCommand::undo()
@@ -942,7 +943,7 @@ void GroupCommand::undo()
 
 void GroupCommand::redo()
 {
-    m_sketchWidget->group(m_itemID, m_itemIDs, true);
+    m_sketchWidget->group(m_itemID, m_itemIDs, m_viewGeometry, true);
 }
 
 void GroupCommand::addItemID(long itemID) {

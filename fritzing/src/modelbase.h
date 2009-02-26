@@ -50,7 +50,7 @@ public:
 
 protected:
 	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);
-	bool loadInstances(QDomElement & root, QDomElement & externalConnectors, QList<ModelPart *> & modelParts);
+	bool loadInstances(QDomElement & root, QList<ModelPart *> & modelParts);
 
 protected:
 	ModelPart * m_root;

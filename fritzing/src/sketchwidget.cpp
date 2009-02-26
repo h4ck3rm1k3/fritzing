@@ -1310,7 +1310,7 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 	if (m_spaceBarIsPressed) {
-		event->ignore();
+		InfoGraphicsView::mousePressEvent(event);
 		return;
 	}
 
@@ -1441,7 +1441,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// otherwise handle all move action here
 
 	if (m_spaceBarIsPressed) {
-		event->ignore();
+		InfoGraphicsView::mouseMoveEvent(event);
 		return;
 	}
 
@@ -1530,7 +1530,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
 	if (m_spaceBarIsPressed) {
-		event->ignore();
+		InfoGraphicsView::mouseReleaseEvent(event);
 		return;
 	}
 

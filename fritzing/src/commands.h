@@ -56,6 +56,8 @@ public:
 	virtual QString getDebugString() const;
 	const QUndoCommand * parentCommand() const;
 	void addSubCommand(BaseCommand * subCommand);
+	void subUndo();
+	void subRedo();
 
 protected:
 	virtual QString getParamString() const;
@@ -511,13 +513,14 @@ protected:
 class GroupCommand : public BaseCommand 
 {
 public:
-	GroupCommand(class SketchWidget * sketchWidget, long id, QUndoCommand * parent);
+	GroupCommand(class SketchWidget * sketchWidget, long id, const ViewGeometry & , QUndoCommand * parent);
 	void undo();
 	void redo();
 	void addItemID(long id);
 
 protected:
 	long m_itemID;
+	ViewGeometry m_viewGeometry;
 	QList<long> m_itemIDs;
 };
 
