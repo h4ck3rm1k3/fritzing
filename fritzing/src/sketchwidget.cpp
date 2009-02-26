@@ -386,7 +386,7 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	}
 }
 
-ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex) {
+ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand) {
 	if (m_paletteModel == NULL) return NULL;
 
 	ItemBase * itemBase = NULL;
@@ -395,10 +395,21 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	if (modelPart->itemType() == ModelPart::Module) {
 		QList<ModelPart *> modelParts;
 
+		if (originatingCommand->subCommandCount() > 0) {
+			// don't add/delete the item again, trigger the subcommand
+			if (dynamic_cast<AddItemCommand *>(originatingCommand) == NULL) {
+				originatingCommand->subUndo();
+			}
+			else {
+				originatingCommand->subRedo();
+			}
+			return NULL;
+		}
+
 		if (m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, id)) {
-			QUndoCommand * parentCommand = new QUndoCommand("load module");
+			BaseCommand * parentCommand = new BaseCommand(BaseCommand::CrossView, this, NULL);
 			loadFromModel(modelParts, BaseCommand::CrossView, parentCommand);
-			GroupCommand * groupCommand = new GroupCommand(this, BaseCommand::CrossView, parentCommand);
+			GroupCommand * groupCommand = new GroupCommand(this, BaseCommand::CrossView, viewGeometry, parentCommand);
 			for (int i = 0; i < parentCommand->childCount(); i++) {
 				const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
 				if (addItemCommand == NULL) continue;
@@ -407,6 +418,8 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 			}
 
 			m_undoStack->push(parentCommand);
+			originatingCommand->addSubCommand(parentCommand);
+			
 		}
 
 		// need to recursively load the module
@@ -1296,6 +1309,11 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
+	if (m_spaceBarIsPressed) {
+		event->ignore();
+		return;
+	}
+
 	//setRenderHint(QPainter::Antialiasing, false);
 
 	clearHoldingSelectItem();
@@ -1422,6 +1440,11 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// if its just dragging a wire end do default
 	// otherwise handle all move action here
 
+	if (m_spaceBarIsPressed) {
+		event->ignore();
+		return;
+	}
+
 	if (m_savedItems.count() > 0) {
 		if ((event->buttons() & Qt::LeftButton) && !draggingWireEnd()) {
 			m_globalPos = event->globalPos();
@@ -1505,6 +1528,11 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
+
+	if (m_spaceBarIsPressed) {
+		event->ignore();
+		return;
+	}
 
 	turnOffAutoscroll();
 	QGraphicsView::mouseReleaseEvent(event);
@@ -1735,7 +1763,7 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	if(pitem) m_lastPaletteItemSelected = pitem;
 }
 
-void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit)
+void SketchWidget::group(long itemID, QList<long> & itemIDs, const ViewGeometry & viewGeometry, bool doEmit)
 {
 	ModelPart * modelPart = m_sketchModel->findModelPart(GroupItem::moduleIDName, itemID);
 	if (modelPart == NULL) {
@@ -1756,9 +1784,7 @@ void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit)
 
 	if (itemBases.count() < 1) return;
 
-	ViewGeometry vg;
-	vg.setLoc(itemBases[0]->pos());		// temporary position
-	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, vg, itemID, NULL);
+	GroupItem * groupItem = new GroupItem(modelPart, m_viewIdentifier, viewGeometry, itemID, NULL);
 	scene()->addItem(groupItem);
 
 	// sort by z
@@ -1768,6 +1794,8 @@ void SketchWidget::group(long itemID, QList<long> & itemIDs, bool doEmit)
 	}
 	groupItem->doneAdding(m_viewLayers);
 	//groupItem->setSelected(true);
+
+	groupItem->setPos(viewGeometry.loc());
 
 	if (doEmit) {
 		emit groupSignal(itemID, itemIDs, false);
@@ -3541,11 +3569,11 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 	m_spaceBarIsPressed = isPressed;
 	if (isPressed) {
 		setDragMode(QGraphicsView::ScrollHandDrag);
-		setInteractive(false);
+		//setInteractive(false);
 		setCursor(Qt::OpenHandCursor);
 	}
 	else {
-		setInteractive(true);
+		//setInteractive(true);
 		setDragMode(QGraphicsView::RubberBandDrag);
 		setCursor(Qt::ArrowCursor);
 	}

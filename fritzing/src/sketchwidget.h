@@ -72,7 +72,7 @@ public:
 
     QUndoStack* undoStack();
     ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, PaletteItem* item);
-	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex);
+	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit);
     void moveItem(long id, ViewGeometry &);
@@ -378,7 +378,7 @@ public slots:
  	void selectAllItems(bool state, bool doEmit);
 	void setInstanceTitle(long id, const QString & title, bool isUndoable);
 	void showPartLabel(long id, bool showIt);
-	void group(long itemID, QList<long> & itemIDs, bool doEmit);
+	void group(long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 
 protected:
 	PaletteModel* m_paletteModel;
