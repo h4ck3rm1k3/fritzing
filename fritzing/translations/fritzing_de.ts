@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="de">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
     <message>
@@ -25,27 +26,27 @@
     <message>
         <location filename="../src/aboutbox.cpp" line="134"/>
         <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;br/&gt;Fritzing is made by:&lt;br /&gt;Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;br/&gt;Fritzing ist das gemeinsame Werk von:&lt;br /&gt;Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;Jenny Chowdhury, Lionel Michel und Jannis Leidel.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="142"/>
         <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Besonderer Dank geht an:&lt;br /&gt;Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;Michaela Vieser und Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="145"/>
         <source>&lt;p&gt;And thanks to Kurt Badelt&lt;br/&gt;for the Spanish translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Und danke an Kurt Badelt&lt;br/&gt;für die spanische Übersetzung.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="150"/>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Fritzing wurde möglich gemacht durch die Förderung&lt;br/&gt;des MWFK Brandenburg, die Unterstützung der Fakultät Medien&lt;br/&gt;der Bauhaus-Universität Weimar und&lt;br/&gt;IxDS Interaction Design Studios.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="155"/>
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin and who stayed with us,&lt;br/&gt;throughout our rewrite of the app.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Besonderer Dank gilt auch all den Studenten&lt;br/&gt;und Alpha-Testern, die mutig genug waren um &lt;br/&gt;Fritzing auszuprobieren und uns treu geblieben sind,&lt;br/&gt;während der Neuentwicklung.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
     </message>
 </context>
 <context>
@@ -84,7 +85,7 @@
     <message>
         <location filename="../src/partseditor/connectorsviewswidget.cpp" line="35"/>
         <source>Show Anchor Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Ankerpunkte anzeigen</translation>
     </message>
 </context>
 <context>
@@ -383,7 +384,7 @@
     <message>
         <location filename="../src/itembase.cpp" line="242"/>
         <source>Part</source>
-        <translation type="unfinished">Bauteil</translation>
+        <translation>Bauteil</translation>
     </message>
 </context>
 <context>
@@ -1501,62 +1502,62 @@ Menge<byte value="x9"/>Bauteil
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="82"/>
         <source>BoM Text File (*.txt)</source>
-        <translation type="unfinished"></translation>
+        <translation>Materiallisten-Textdatei (*.txt)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="760"/>
         <source>Etchable SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ätzbares SVG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="761"/>
         <source>Export the current sketch to SVG for DIY production</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf als SVG-Datei für die Eigenherstellung speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1886"/>
         <source>Sketch: <byte value="x9"/></source>
-        <translation type="unfinished"></translation>
+        <translation>Entwurf:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1890"/>
         <source>Date: <byte value="x9"/></source>
-        <translation type="unfinished"></translation>
+        <translation>Datum:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="716"/>
         <source>Save As Module...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern als Modul...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="717"/>
         <source>Alt+Ctrl+G</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+G</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="718"/>
         <source>Export current sketch as a standalone module</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf als eigenes Modul speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1991"/>
         <source>Select all trace wires excluded from autorouting</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Leiterbahnen auswählen, die vom Autorouting ausgeschlossen sind</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="528"/>
         <source>directly loading module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul direkt laden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1981"/>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Diese Leiterbahn nicht autorouten</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1990"/>
         <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle nicht-autoroutenden Leiterbahnen auswählen</translation>
     </message>
 </context>
 <context>
@@ -1600,7 +1601,7 @@ Menge<byte value="x9"/>Bauteil
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="497"/>
         <source>Click this connector to drag out a new trace.</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Verbindung anklicken und ziehen, um eine neue Leiterbahn zu erzeugen.</translation>
     </message>
 </context>
 <context>
@@ -1716,14 +1717,18 @@ Menge<byte value="x9"/>Bauteil
         <source>What does this
 part look like on
 the breadboard?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie sieht dieses Bauteil
+in der Steckplatinen-
+Ansicht aus?</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partsymbolswidget.cpp" line="74"/>
         <source>What does this
 part look like in
 a schematic view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie sieht dieses Bauteil
+in der Schaltplan-
+Ansicht aus?</translation>
     </message>
 </context>
 <context>
@@ -1852,7 +1857,7 @@ a schematic view?</source>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="412"/>
         <source>My parts bin</source>
-        <translation type="unfinished"></translation>
+        <translation>Mein Sortiment</translation>
     </message>
 </context>
 <context>
@@ -1988,28 +1993,29 @@ a schematic view?</source>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="678"/>
         <source>Icon needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Icon notwendig</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="678"/>
         <source>Please, provide an icon image for this part</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte füge ein Icon für dieses Bauteil hinzu</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="72"/>
         <source>Please classify this part</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte klassifiziere dieses Bauteil</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="73"/>
         <source>You can add your tags to make searching easier</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit ein paar Tags kannst Du die Suche erleichtern</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditormainwindow.cpp" line="466"/>
         <source>There&apos;s already a file with this name.
 Please, specify a new filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt bereits eine Datei mit diesem Namen.
+Bitte gib einen anderen Dateinamen an.</translation>
     </message>
 </context>
 <context>
@@ -2022,7 +2028,7 @@ Please, specify a new filename</source>
     <message>
         <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="98"/>
         <source>SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG (*.svg);;JPEG (*.jpg);;PNG (*.png)</translation>
     </message>
 </context>
 <context>
@@ -2471,12 +2477,12 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/fritzingwindow.cpp" line="135"/>
         <source>The file &apos;%1&apos; is read-only; please use a different filename.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &apos;%1&apos; ist schreibgeschützt; bitte benutze einen anderen Dateinamen.</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="53"/>
         <source>Save as Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern als Modul</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="65"/>
@@ -2486,7 +2492,7 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="480"/>
         <source>Select all traces marked &quot;Don&apos;t autoroute&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle nicht-autoroutenden Leiterbahnen auswählen</translation>
     </message>
 </context>
 <context>
@@ -2525,42 +2531,42 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="119"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="120"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="85"/>
         <source>Label</source>
-        <translation type="unfinished">Bezeichnung</translation>
+        <translation>Bezeichnung</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="88"/>
         <source>Description</source>
-        <translation type="unfinished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="95"/>
         <source>Properties</source>
-        <translation type="unfinished">Eigenschaften</translation>
+        <translation>Eigenschaften</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="102"/>
         <source>Tags</source>
-        <translation type="unfinished">Tags</translation>
+        <translation>Tags</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="104"/>
         <source>Author</source>
-        <translation type="unfinished">Autor</translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="107"/>
         <source>Created/Updated on</source>
-        <translation type="unfinished">Zuletzt bearbeitet am </translation>
+        <translation>Zuletzt bearbeitet am </translation>
     </message>
 </context>
 <context>
@@ -2581,12 +2587,12 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="206"/>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Name:</translation>
     </message>
     <message>
         <location filename="../src/partseditor/singleconnectorinfowidget.cpp" line="211"/>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung:</translation>
     </message>
 </context>
 <context>
@@ -2744,18 +2750,19 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3405"/>
         <source>Change %1 width from %2 to %3</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite %1 von %2 nach %3 ändern</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3411"/>
         <source>Change width of %1 wires to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite von %1 Bahn(en) nach %2 ändern</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3302"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt leider keine Bauteile mit diesen Eigenschaften.
+(Wir arbeiten daran, diesen Hinweis zu vermeiden, und nur solche Eigenschaften anzubieten, die es gibt.)</translation>
     </message>
 </context>
 <context>
@@ -2917,17 +2924,17 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/wire.cpp" line="853"/>
         <source>thin</source>
-        <translation type="unfinished"></translation>
+        <translation>dünn</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="854"/>
         <source>medium</source>
-        <translation type="unfinished"></translation>
+        <translation>mittel</translation>
     </message>
     <message>
         <location filename="../src/wire.cpp" line="855"/>
         <source>wide</source>
-        <translation type="unfinished"></translation>
+        <translation>breit</translation>
     </message>
 </context>
 </TS>
