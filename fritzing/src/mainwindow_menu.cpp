@@ -1400,13 +1400,15 @@ void MainWindow::updateItemMenu() {
 		else if (selCount > 1) break;
 	}
 
-	bool enabled = (selCount == 1) && (dynamic_cast<PaletteItem *>(itemBase) != NULL);
+	PaletteItem *selected = dynamic_cast<PaletteItem *>(itemBase);
+	bool enabled = (selCount == 1) && (selected != NULL);
+	m_addToBinAct->setEnabled(enabled);
 
 	//TODO PARTS EDITOR REMOVE
 	//m_openInOldPartsEditorAct->setEnabled(enabled);
 	// can't open wire in parts editor
+	enabled &= selected != NULL && selected->itemType() == ModelPart::Part;
 	m_openInPartsEditorAct->setEnabled(enabled);
-	m_addToBinAct->setEnabled(enabled);
 
 }
 
@@ -2061,7 +2063,7 @@ void MainWindow::selectAllTraces() {
 }
 
 void MainWindow::selectAllExcludedTraces() {
-	m_pcbGraphicsView->selectAllExcludedTraces();  
+	m_pcbGraphicsView->selectAllExcludedTraces();
 }
 
 void MainWindow::selectAllJumpers() {

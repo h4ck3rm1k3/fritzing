@@ -55,6 +55,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		void clearScene();
 		virtual void fitCenterAndDeselect();
 		void removeConnectors();
+		void addDefaultLayers();
 
 		void wheelEvent(QWheelEvent* event);
 
@@ -71,7 +72,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		bool ensureFilePath(const QString &filePath);
 
 		QString findConnectorLayerId(QDomDocument *svgDom);
-		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem);
+		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
 		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem);
 		QString getLayerFileName(ModelPart * modelPart);
 

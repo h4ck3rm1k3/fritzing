@@ -49,6 +49,15 @@ PartsEditorAbstractView::~PartsEditorAbstractView() {
 
 }
 
+void PartsEditorAbstractView::addDefaultLayers() {
+	switch( m_viewIdentifier ) {
+		case ItemBase::BreadboardView: addBreadboardViewLayers(); break;
+		case ItemBase::SchematicView: addSchematicViewLayers(); break;
+		case ItemBase::PCBView: addPcbViewLayers(); break;
+		default: break;
+	}
+}
+
 void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath) {
 	clearScene();
 
@@ -86,6 +95,7 @@ ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const View
 			if(viewLayerID == ViewLayer::UnknownLayer) {
 				viewLayerID = getViewLayerID(modelPart);
 			}
+			addDefaultLayers();
 
 			if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
 				addToScene(paletteItemAux, paletteItemAux->viewLayerID());
@@ -372,15 +382,24 @@ bool PartsEditorAbstractView::terminalIdForConnectorIdAux(QString &result, const
 
 QString PartsEditorAbstractView::findConnectorLayerId(QDomDocument *svgDom) {
 	QString result = ___emptyString___;
+	QStringList layers;
 	QDomElement docElem = svgDom->documentElement();
-	if(findConnectorLayerIdAux(result, docElem)) {
+	if(findConnectorLayerIdAux(result, docElem, layers)) {
+		if(ViewLayer::viewLayerIDFromString(result) == ViewLayer::UnknownLayer) {
+			foreach(QString layer, layers) {
+				ViewLayer::ViewLayerID vlid = ViewLayer::viewLayerIDFromXmlString(layer);
+				if(m_viewLayers.keys().contains(vlid)) {
+					result = layer;
+				}
+			}
+		}
 		return result;
 	} else {
 		return ___emptyString___; // top level layer
 	}
 }
 
-bool PartsEditorAbstractView::findConnectorLayerIdAux(QString &result, QDomElement &docElem) {
+bool PartsEditorAbstractView::findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers) {
 	QDomNode n = docElem.firstChild();
 	while(!n.isNull()) {
 		QDomElement e = n.toElement();
@@ -392,7 +411,8 @@ bool PartsEditorAbstractView::findConnectorLayerIdAux(QString &result, QDomEleme
 			} else if(n.hasChildNodes()) {
 				// potencial solution, if the next iteration returns true
 				result = id;
-				if(findConnectorLayerIdAux(result, e)) {
+				prevLayers << id;
+				if(findConnectorLayerIdAux(result, e, prevLayers)) {
 					return true;
 				}
 			}

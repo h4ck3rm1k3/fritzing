@@ -87,13 +87,6 @@ void PartSymbolsWidget::createViewImageWidget(
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
 	viw->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-
-	switch( viewId ) {
-		case ItemBase::BreadboardView: viw->addBreadboardViewLayers(); break;
-		case ItemBase::SchematicView: viw->addSchematicViewLayers(); break;
-		case ItemBase::PCBView: viw->addPcbViewLayers(); break;
-		default: break;
-	}
 }
 
 void PartSymbolsWidget::copySvgFilesToDestiny(const QString &partFileName) {

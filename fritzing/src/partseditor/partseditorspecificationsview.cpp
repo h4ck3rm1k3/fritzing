@@ -54,6 +54,7 @@ PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdent
 		addFixedToCenterItem(startItem);
 		ensureFixedToCenterItems();
 	}
+	addDefaultLayers();
 }
 
 PartsEditorSpecificationsView::~PartsEditorSpecificationsView() {
