@@ -43,6 +43,7 @@ public:
     void relativeZoom(qreal step);
     void absoluteZoom(qreal percent);
  	qreal currentZoom();
+	void setAcceptWheelEvents(bool);
 
 signals:
 	void zoomChanged(qreal zoom);
@@ -56,6 +57,7 @@ protected:
 	qreal m_scaleValue;
 	int m_maxScaleValue;
 	int m_minScaleValue;
+	bool m_acceptWheelEvents;
 };
 
 #endif

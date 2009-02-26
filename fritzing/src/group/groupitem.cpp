@@ -46,7 +46,7 @@ $Date$
 //	undo group
 //	delete
 //	undo delete
-//	rotate group: connected external wires don't updateConnections
+//	rotate group bug: connected external wires don't updateConnections
 //	do model parts for grouped items get added as children to the group modelpart?
 
 //	** save as group

@@ -35,9 +35,15 @@ ZoomableGraphicsView::ZoomableGraphicsView( QWidget * parent )
 	m_scaleValue = 100;
 	m_maxScaleValue = 2000;
 	m_minScaleValue = 1;
+	m_acceptWheelEvents = true;
 }
 
 void ZoomableGraphicsView::wheelEvent(QWheelEvent* event) {
+	if (!m_acceptWheelEvents) {
+		QGraphicsView::wheelEvent(event);
+		return;
+	}
+
 	QPointF mousePosition = event->pos();
 	qreal delta = ((qreal)event->delta() / 120) * ZoomComboBox::ZoomStep;
 	if (delta == 0) return;
@@ -100,3 +106,6 @@ qreal ZoomableGraphicsView::currentZoom() {
 	return m_scaleValue;
 }
 
+void ZoomableGraphicsView::setAcceptWheelEvents(bool accept) {
+	m_acceptWheelEvents = accept;
+}

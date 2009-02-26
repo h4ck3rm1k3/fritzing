@@ -42,6 +42,7 @@ $Date$
 PartsBinIconView::PartsBinIconView(QWidget *parent)
     : InfoGraphicsView(parent)
 {
+	setAcceptWheelEvents(false);
     setFrameStyle(QFrame::Raised | QFrame::StyledPanel);
     setAcceptDrops(true);
 	setAlignment(Qt::AlignLeft | Qt::AlignTop);
