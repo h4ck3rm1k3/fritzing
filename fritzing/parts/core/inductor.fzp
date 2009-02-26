@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.0.b.02.26.2493" moduleId="56bed03878064b8286b71d5240035138">
     <author>lionel</author>
-    <title>inductor</title>
+    <title>Inductor</title>
+    <label>I</label>
     <date>2009-02-26</date>
-    <tags></tags>
+    <tags>
+        <tag>inductor</tag>
+        <tag>coil</tag>
+    </tags>
     <properties>
         <property name="family"></property>
     </properties>
+    <description>Inductor</description>
     <views>
         <iconView>
             <layers image="icon/inductor.svg">
@@ -14,20 +19,20 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/ac6844fb2653b167aa2d5a0b8f15c055.svg">
+            <layers image="breadboard/inductor.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
-        <pcbView>
-            <layers image="pcb/e92c2a1da4de937ab84e326ec890388a.svg">
-                <layer layerId="copper0"></layer>
-            </layers>
-        </pcbView>
         <schematicView>
             <layers image="schematic/inductor.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
+        <pcbView>
+            <layers image="pcb/jumper2.svg">
+                <layer layerId="copper0"></layer>
+            </layers>
+        </pcbView>
     </views>
     <connectors>
         <connector id="connector0" type="male" name="connector 0">

@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.0.b.02.26.2493" moduleId="b0e55b1d0b90f35f7ce4a2221e985a35">
     <author>lionel</author>
-    <title>reed switch</title>
+    <title>Reed switch</title>
+    <label>S</label>
     <date>2009-02-26</date>
-    <tags></tags>
+    <tags>
+        <tag>switch</tag>
+        <tag>magnet</tag>
+    </tags>
     <properties>
         <property name="family"></property>
     </properties>
+    <description>Reed switch</description>
     <views>
         <iconView>
             <layers image="icon/reed_switch.svg">
