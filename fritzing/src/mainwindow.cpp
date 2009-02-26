@@ -1346,9 +1346,9 @@ void MainWindow::saveAsModule() {
 		}
 	}
 
-	SketchModel * partSketchModel = new SketchModel(true);
-	ModelPartShared* modelPartShared = new ModelPartShared();
-	partSketchModel->root()->setModelPartShared(modelPartShared);
+	SketchModel partSketchModel(true);
+	ModelPartShared modelPartShared;
+	partSketchModel.root()->setModelPartShared(&modelPartShared);
 
 	QString moduleID;
 	QString uri;
@@ -1358,22 +1358,22 @@ void MainWindow::saveAsModule() {
 		moduleID = FritzingWindow::getRandText();
 	}
 
-	modelPartShared->setModuleID(moduleID);
-	modelPartShared->setUri(uri);
-	modelPartShared->setVersion(version);
+	modelPartShared.setModuleID(moduleID);
+	modelPartShared.setUri(uri);
+	modelPartShared.setVersion(version);
 
-	modelPartShared->setAuthor(dialog.author());
-	modelPartShared->setTitle(dialog.title());
-	modelPartShared->setDate(dialog.createdOn());
-	modelPartShared->setLabel(dialog.label());
-	modelPartShared->setDescription(dialog.description());
-	modelPartShared->setTags(dialog.tags());
-	modelPartShared->setProperties(dialog.properties());
+	modelPartShared.setAuthor(dialog.author());
+	modelPartShared.setTitle(dialog.title());
+	modelPartShared.setDate(dialog.createdOn());
+	modelPartShared.setLabel(dialog.label());
+	modelPartShared.setDescription(dialog.description());
+	modelPartShared.setTags(dialog.tags());
+	modelPartShared.setProperties(dialog.properties());
 
 	QByteArray partXml;
 	QXmlStreamWriter partStreamWriter(&partXml);
 
-	partSketchModel->save(partStreamWriter, true);				// get part xml
+	partSketchModel.save(partStreamWriter, true);				// get part xml
 
 	QString errorStr;
 	int errorLine;
@@ -1474,6 +1474,7 @@ void MainWindow::saveAsModule() {
 	file2.close();
 
 	loadPart(userPartsFolderPath + moduleID + FritzingModuleExtension);
+
 }
 
 QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs) {

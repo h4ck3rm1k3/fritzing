@@ -729,6 +729,17 @@ void ConnectorItem::setIgnoreAncestorFlagIfExternal(bool ignore) {
 }
 
 bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
+	bool result = connector()->connectionIsAllowed(other->connector());
+	if (!result) return false;
+
+	if (other->attachedTo()->parentItem() != NULL) {
+		// other's part is in a group
+		// TODO: what to do with external connectors once a group is inside a group?
+		if (!other->connector()->external()) {
+			return false;
+		}
+	}
+
 	if (other->m_ignoreAncestorFlag) {
 		if (this->attachedToItemType() == ModelPart::Wire) {
 			ConnectorItem * wireOther = dynamic_cast<Wire *>(this->attachedTo())->otherConnector(this);
@@ -743,7 +754,7 @@ bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 		}
 	}
 
-	return connector()->connectionIsAllowed(other->connector());
+	return true;
 }
 
 void ConnectorItem::prepareGeometryChange() {

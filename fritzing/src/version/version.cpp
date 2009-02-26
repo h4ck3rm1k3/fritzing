@@ -23,12 +23,12 @@ $Author$:
 $Date$
 
 ********************************************************************/
-													
-#include "version.h"
 								
+#include "version.h"
+					
 #include <QString>
 #include <QStringList>		
-									
+					
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("1");
 QString Version::m_minorSubVersion("17");

@@ -93,6 +93,10 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	QHash<QString,QString> initValues;
 	initValues["family"] = "module";
 	m_propertiesWidget = new HashPopulateWidget(tr("Properties"),initValues,readOnlyKeys,m_undoStack,this);
+	HashLineEdit* family = m_propertiesWidget->lineEditAt(1,1);
+	if (family != NULL) {
+		family->setEnabled(false);
+	}
 
 	QString tags = PartsEditorMainWindow::TagsFreshStartText;
 	m_tagsWidget = new EditableLineWidget(tags,m_undoStack,this,tr("Tags"),modelPart);
