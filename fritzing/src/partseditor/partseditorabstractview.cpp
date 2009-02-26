@@ -355,7 +355,6 @@ bool PartsEditorAbstractView::terminalIdForConnectorIdAux(QString &result, const
 			if(id.startsWith(connId) && id.endsWith("terminal")) {
 				// the id is the one from the previous iteration
 				result = id;
-				DebugDialog::debug("<<< termianl id "+result);
 				return true;
 			} else if(n.hasChildNodes()) {
 				// potencial solution, if the next iteration returns true
