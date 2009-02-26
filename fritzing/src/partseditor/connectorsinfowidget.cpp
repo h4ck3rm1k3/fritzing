@@ -235,19 +235,19 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 		ItemBase::BreadboardView,
 		m_connsViews->breadboardView()->svgIdForConnector(id),
 		m_connsViews->breadboardView()->connectorLayerId(),
-		""
+		m_connsViews->breadboardView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
 		ItemBase::SchematicView,
 		m_connsViews->schematicView()->svgIdForConnector(id),
 		m_connsViews->schematicView()->connectorLayerId(),
-		""
+		m_connsViews->schematicView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
 		ItemBase::PCBView,
 		m_connsViews->pcbView()->svgIdForConnector(id),
 		m_connsViews->pcbView()->connectorLayerId(),
-		""
+		m_connsViews->pcbView()->terminalIdForConnector(id)
 	);
 
 	Connector *conn = new Connector(connShared,0); // modelPart =? null

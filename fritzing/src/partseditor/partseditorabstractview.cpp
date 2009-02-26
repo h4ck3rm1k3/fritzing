@@ -335,6 +335,40 @@ ViewLayer::ViewLayerID PartsEditorAbstractView::connectorLayerId() {
 	}
 }
 
+QString PartsEditorAbstractView::terminalIdForConnector(const QString &connId) {
+	Q_ASSERT(m_item);
+	QString result = "";
+	QDomElement elem = m_item->svgDom()->documentElement();
+	if(terminalIdForConnectorIdAux(result, connId, elem)) {
+		return result;
+	} else {
+		return "";
+	}
+}
+
+bool PartsEditorAbstractView::terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem) {
+	QDomNode n = docElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement();
+		if(!e.isNull()) {
+			QString id = e.attribute("id");
+			if(id.startsWith(connId) && id.endsWith("terminal")) {
+				// the id is the one from the previous iteration
+				result = id;
+				DebugDialog::debug("<<< termianl id "+result);
+				return true;
+			} else if(n.hasChildNodes()) {
+				// potencial solution, if the next iteration returns true
+				if(terminalIdForConnectorIdAux(result, connId, e)) {
+					return true;
+				}
+			}
+		}
+		n = n.nextSibling();
+	}
+	return false;
+}
+
 QString PartsEditorAbstractView::findConnectorLayerId(QDomDocument *svgDom) {
 	QString result = ___emptyString___;
 	QDomElement docElem = svgDom->documentElement();

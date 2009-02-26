@@ -41,6 +41,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		QDir tempFolder();
 		bool isEmpty();
 		ViewLayer::ViewLayerID connectorLayerId();
+		QString terminalIdForConnector(const QString &connId);
 
 	public slots:
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
@@ -71,6 +72,7 @@ class PartsEditorAbstractView : public SketchWidget {
 
 		QString findConnectorLayerId(QDomDocument *svgDom);
 		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem);
+		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem);
 		QString getLayerFileName(ModelPart * modelPart);
 
 		PartsEditorPaletteItem *m_item; // just one item per view
