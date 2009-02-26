@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
+<svg version="1.1" baseProfile="basic"
+	 id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg" sodipodi:docname="peltier_sensor.svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#" sodipodi:version="0.32" inkscape:version="0.46" inkscape:output_extension="org.inkscape.output.svg.inkscape"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.78in" height="1.19in"
+	 viewBox="0 0 56.16 85.68" xml:space="preserve">
+<defs>
+	
+	
+		<inkscape:perspective  id="perspective55" inkscape:vp_x="0 : 53.550003 : 1" sodipodi:type="inkscape:persp3d" inkscape:vp_z="70.199997 : 53.550003 : 1" inkscape:persp3d-origin="35.099998 : 35.700002 : 1" inkscape:vp_y="0 : 1000 : 0">
+		</inkscape:perspective>
+</defs>
+<sodipodi:namedview  id="base" inkscape:pageopacity="0.0" objecttolerance="10.0" borderopacity="1.0" bordercolor="#666666" gridtolerance="10.0" inkscape:window-width="640" guidetolerance="10.0" inkscape:pageshadow="2" inkscape:window-height="480" showgrid="false" pagecolor="#ffffff">
+	</sodipodi:namedview>
+<rect id="connector0pin" x="22.983" y="77.392" fill="#8C8C8C" width="2.99" height="8.286"/>
+<rect id="connector1pin" x="30.174" y="77.392" fill="#8C8C8C" width="2.99" height="8.286"/>
+<rect id="connector0terminal" x="22.978" y="85.122" fill="#8C8C8C" width="2.989" height="0.558"/>
+<rect id="connector1terminal" x="30.174" y="85.122" fill="#8C8C8C" width="2.99" height="0.558"/>
+<g id="breadboard" transform="translate(115.90235,-16.373002)">
+	<g id="g8">
+		<rect id="rect10" x="-115.902" y="16.373" fill="#D2F3FF" width="56.031" height="55.856"/>
+		<rect id="rect12" x="-115.902" y="72.232" fill="#717170" width="56.031" height="1.951"/>
+		<rect id="rect14" x="-115.902" y="74.183" fill="#F0D9C2" width="56.031" height="5.932"/>
+		<rect id="rect16" x="-115.902" y="79.979" fill="#A56549" width="56.031" height="1.227"/>
+		<g id="g18">
+			<polygon id="polygon20" fill="#FFFFFF" points="-102.958,72.232 -108.57,72.232 -69.885,16.373 -64.272,16.373 			"/>
+			<polygon id="polygon22" fill="#FFFFFF" points="-98.558,72.232 -100.351,72.232 -61.666,16.373 -59.873,16.373 			"/>
+		</g>
+		<g id="g24">
+			<rect id="rect26" x="-66.799" y="74.183" fill="#474747" width="3.049" height="4.234"/>
+			<rect id="rect28" x="-73.258" y="74.183" fill="#474747" width="3.049" height="4.234"/>
+			<rect id="rect30" x="-79.721" y="74.183" fill="#474747" width="3.049" height="4.234"/>
+			<rect id="rect32" x="-92.642" y="74.183" fill="#474747" width="3.048" height="4.234"/>
+			<rect id="rect34" x="-86.18" y="74.183" fill="#474747" width="3.049" height="4.234"/>
+			<rect id="rect36" x="-99.103" y="74.183" fill="#474747" width="3.048" height="4.234"/>
+			<rect id="rect38" x="-105.562" y="74.183" fill="#474747" width="3.047" height="4.234"/>
+			<rect id="rect40" x="-112.022" y="74.183" fill="#474747" width="3.049" height="4.234"/>
+		</g>
+	</g>
+	<g id="g42">
+		<path id="path44" fill="none" stroke="#000000" stroke-width="3" d="M-110.487,81.134c0,1.989,1.385,4.281,5.017,4.281
+			l9.041,0.001c3.633,0,5.018,2.291,5.018,4.281c0,1.89,0,4.065,0,4.065"/>
+	</g>
+	<g id="g46">
+		<path id="path48" fill="none" stroke="#FF0000" stroke-width="3" d="M-84.232,93.765c0,0,0-2.179,0-4.065
+			c0-1.99,1.386-4.281,5.018-4.281l8.892-0.001c3.633,0,5.017-2.292,5.017-4.281"/>
+	</g>
+</g>
+</svg>
