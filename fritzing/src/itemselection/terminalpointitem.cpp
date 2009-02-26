@@ -56,12 +56,12 @@ void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool vi
 	pen.setBrush(QBrush());
 	setPen(pen);
 
-	m_cross = new TerminalPointItemPrivate(this);
+	bool editable = parent->attachedTo()->viewIdentifier() != ItemBase::PCBView;
+	m_cross = new TerminalPointItemPrivate(this,editable);
 	setVisible(visible);
 	updatePoint();
 
 	setFlag(QGraphicsItem::ItemIsMovable,false);
-	m_cross->setFlag(QGraphicsItem::ItemIsMovable,true);
 }
 
 void TerminalPointItem::initPixmapHash() {
@@ -151,14 +151,16 @@ bool TerminalPointItem::isOutsideConnector() {
 
 /////////////////////////////////////////////////////////////////////////
 
-TerminalPointItemPrivate::TerminalPointItemPrivate(TerminalPointItem *parent)
+TerminalPointItemPrivate::TerminalPointItemPrivate(TerminalPointItem *parent, bool editable)
 	: QGraphicsPixmapItem(parent)
 {
 	m_parent = parent;
 	m_pressed = false;
 	m_hasBeenMoved = false;
+	m_editable = editable;
 	setAcceptHoverEvents(true);
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
+	setFlag(QGraphicsItem::ItemIsMovable, m_editable);
 	setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Normal]);
 }
 
@@ -178,17 +180,29 @@ void TerminalPointItemPrivate::paint(QPainter *painter, const QStyleOptionGraphi
 }
 
 void TerminalPointItemPrivate::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-	if(isVisible()) setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Hover]);
+	if(isVisible()) {
+		if(m_editable) {
+			setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Hover]);
+		} else {
+			setCursor(QCursor(Qt::ForbiddenCursor));
+		}
+	}
 	QGraphicsPixmapItem::hoverEnterEvent(event);
 }
 
 void TerminalPointItemPrivate::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-	if(isVisible()) setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Normal]);
+	if(isVisible()) {
+		if(m_editable) {
+			setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Normal]);
+		} else {
+			unsetCursor();
+		}
+	}
 	QGraphicsPixmapItem::hoverLeaveEvent(event);
 }
 
 void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible()) {
+	if(m_editable && isVisible()) {
 		if(isOutsideConnector()) {
 			setCursor(QCursor(Qt::ForbiddenCursor));
 		} else {
@@ -200,7 +214,7 @@ void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void TerminalPointItemPrivate::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible()) {
+	if(m_editable && isVisible()) {
 		setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Selected]);
 		m_pressed = true;
 	}
@@ -208,7 +222,7 @@ void TerminalPointItemPrivate::mousePressEvent(QGraphicsSceneMouseEvent *event) 
 }
 
 void TerminalPointItemPrivate::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
-	if(isVisible()) {
+	if(m_editable && isVisible()) {
 		if(isOutsideConnector()) {
 			unsetCursor();
 			m_parent->reset();

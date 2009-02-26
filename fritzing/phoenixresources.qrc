@@ -51,6 +51,7 @@ $Date$
     <file>resources/images/icon_icon.png</file>
     <file>resources/images/error_x_small.png</file>
     <file>resources/images/error_x_mini.png</file>
+    <file>resources/images/error_x_mini.svg</file>
     <file>resources/images/remove_prop_enter.png</file>
     <file>resources/images/remove_prop_leave.png</file>
     <file>resources/zoomfactors.txt</file>

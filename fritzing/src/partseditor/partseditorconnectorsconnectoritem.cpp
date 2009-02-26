@@ -120,7 +120,7 @@ void PartsEditorConnectorsConnectorItem::setMismatching(bool isMismatching) {
 
 void PartsEditorConnectorsConnectorItem::addErrorIcon() {
 	if(!m_errorIcon) {
-		m_errorIcon = new QGraphicsSvgItem("resources/images/error_x_mini.svg",this);
+		m_errorIcon = new QGraphicsSvgItem(":/resources/images/error_x_mini.svg",this);
 		this->scene()->addItem(m_errorIcon);
 
 		QRectF boundRect = boundingRect();

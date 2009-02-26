@@ -36,7 +36,7 @@ class TerminalPointItem;
 
 class TerminalPointItemPrivate: public QGraphicsPixmapItem {
 public:
-	TerminalPointItemPrivate(TerminalPointItem *parent);
+	TerminalPointItemPrivate(TerminalPointItem *parent, bool editable);
 	bool isOutsideConnector();
 	bool hasBeenMoved();
 	void setHasBeenMoved(bool moved);
@@ -54,6 +54,7 @@ protected:
 	TerminalPointItem *m_parent;
 	bool m_hasBeenMoved;
 	bool m_pressed;
+	bool m_editable;
 };
 
 class TerminalPointItem : public QGraphicsRectItem {
