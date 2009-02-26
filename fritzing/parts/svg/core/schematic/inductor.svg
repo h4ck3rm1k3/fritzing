@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Basic//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-basic.dtd">
 <svg version="1.1" baseProfile="basic" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28.8px" height="60.898px"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0.40in" height="0.85in"
 	 viewBox="0 0 28.8 60.898" xml:space="preserve">
-<rect id="connector1terminal" x="12.183" y="0.126" width="0.208" height="0.208"/>
-<rect id="connector0terminal" x="12.198" y="60.439" width="0.208" height="0.208"/>
-<rect id="connector1pin" x="11.578" y="0.022" width="1.375" height="11.849"/>
-<rect id="connector0pin" x="11.578" y="47.887" width="1.375" height="13.006"/>
-<g id="schematic">
-	<path fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="12" d="
-		M12.953,11.121h2.054c2.592,0,4.676,2.1,4.676,4.689s-2.1,4.691-4.691,4.691c2.592,0,4.691,2.102,4.691,4.685
-		c0,2.588-2.084,4.689-4.676,4.689c2.592,0,4.676,2.099,4.676,4.689s-2.084,4.691-4.676,4.691c2.592,0,4.676,2.102,4.676,4.691
-		c0,2.592-2.084,4.69-4.676,4.69c0.253,0-2.062,0-2.062,0"/>
-</g>
+	<rect id="connector1terminal" x="12.582" y="60.731" width="0.209" height="0.208"/>
+	<rect id="connector0terminal" x="12.597" y="0.418" width="0.208" height="0.207"/>
+	<rect id="connector1pin" x="11.977" y="49.194" width="1.375" height="11.85"/>
+	<rect id="connector0pin" x="11.977" y="0.172" width="1.375" height="13.006"/>
+	<g id="schematic">
+		<path fill="none" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="12" d="
+			M13.762,12.432c2.592,0,4.676,2.097,4.676,4.689c0,2.588-2.084,4.69-4.676,4.69c2.592,0,4.676,2.101,4.676,4.69
+			c0,2.588-2.084,4.688-4.676,4.688c2.592,0,4.676,2.101,4.676,4.688c0,2.582-2.099,4.686-4.69,4.686c2.59,0,4.69,2.102,4.69,4.689
+			s-2.084,4.689-4.676,4.689"/>
+	</g>
 </svg>
