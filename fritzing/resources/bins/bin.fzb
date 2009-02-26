@@ -121,6 +121,20 @@
 				</iconView>
 			</views>
 		</instance>
+		<instance moduleIdRef="93d4585be720f3982141f4d032f44c8e" modelIndex="432" path="parts/core/peltier element.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="b0e55b1d0b90f35f7ce4a2221e985a35" modelIndex="433" path="parts/core/reed switch.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1001AAAB555Timer" path="parts/core/555timer.fzp">
 			<views>
 				<iconView layer="icon">
