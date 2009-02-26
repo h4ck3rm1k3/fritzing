@@ -11,7 +11,7 @@
     <properties>
         <property name="profile">low</property>
         <property name="speed">16 Mhz</property>
-        <property name="family"></property>
+        <property name="family">crystal</property>
     </properties>
     <description>Crystal</description>
     <views>

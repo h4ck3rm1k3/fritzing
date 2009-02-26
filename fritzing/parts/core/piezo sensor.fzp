@@ -8,7 +8,7 @@
         <tag>piezo</tag>
     </tags>
     <properties>
-        <property name="family"></property>
+        <property name="family">piezo</property>
     </properties>
     <description>Piezo</description>
     <views>

@@ -9,7 +9,7 @@
         <tag>magnet</tag>
     </tags>
     <properties>
-        <property name="family"></property>
+        <property name="family">switch</property>
     </properties>
     <description>Reed switch</description>
     <views>
@@ -29,7 +29,7 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/jumper2.svg">
+            <layers image="pcb/axial_lay_500mil.svg">
                 <layer layerId="copper0"></layer>
             </layers>
         </pcbView>
@@ -45,7 +45,7 @@
                     <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector0pin"></p>
+                    <p layer="copper0" svgId="connector0pad"></p>
                 </pcbView>
             </views>
         </connector>
@@ -59,7 +59,7 @@
                     <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></p>
                 </schematicView>
                 <pcbView>
-                    <p layer="copper0" svgId="connector1pin"></p>
+                    <p layer="copper0" svgId="connector1pad"></p>
                 </pcbView>
             </views>
         </connector>

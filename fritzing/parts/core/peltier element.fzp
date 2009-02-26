@@ -8,7 +8,7 @@
         <tag>peltier</tag>
     </tags>
     <properties>
-        <property name="family"></property>
+        <property name="family">peltier</property>
     </properties>
     <description>Peltier</description>
     <views>
