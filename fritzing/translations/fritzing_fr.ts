@@ -8,41 +8,6 @@
         <translation>&lt;a href=&quot;http://www.fritzing.org&quot;&gt;www.fritzing.org&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="154"/>
-        <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="134"/>
-        <source>Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
-        <translation>Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="135"/>
-        <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;</source>
-        <translation>&lt;p&gt;Nos remerciements vont à :&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="137"/>
-        <source>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</source>
-        <translation>Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="142"/>
-        <source>Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
-        <translation>Michaela Vieser and Julia Werner.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="150"/>
-        <source>IxDS.&lt;/p&gt;</source>
-        <translation>et de IxDS.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="154"/>
-        <source>throughout our rewrite of the app.&lt;/p&gt;</source>
-        <translation>durant la réécriture de l&apos;application.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/aboutbox.cpp" line="72"/>
         <source>Version %1.%2.%3 &lt;small&gt;(%4%5 %6)&lt;/small&gt;</source>
         <translation>Version  %1.%2.%3&lt;small&gt;(%4%5 %6)&lt;/small&gt;</translation>
@@ -58,94 +23,29 @@
         <translation>&lt;b&gt;2007-%1 Université des sciences appliquées de Potsdam (FH Potsdam)&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="127"/>
-        <source>&lt;p&gt;&lt;br/&gt;Fritzing is made by:&lt;br /&gt;</source>
-        <translation>&lt;p&gt;&lt;br/&gt;Fritzing est réalisé par:&lt;br /&gt;</translation>
+        <location filename="../src/aboutbox.cpp" line="134"/>
+        <source>&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;p&gt;&lt;br/&gt;Fritzing is made by:&lt;br /&gt;Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;Jenny Chowdhury, Lionel Michel and Jannis Leidel.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="128"/>
-        <source>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;</source>
-        <translation>Prof. Reto Wettach, Andr&amp;eacute; Kn&amp;ouml;rig, Myriel Milicevic,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="129"/>
-        <source>Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;</source>
-        <translation>Zach Eveland, Dirk van Oosterbosch,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="130"/>
-        <source>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;</source>
-        <translation>Jonathan Cohen, Marcus Paeschke, Omer Yosha,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="131"/>
-        <source>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;</source>
-        <translation>Travis Robertson, Stefan Hermann, Brendan Howell,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="132"/>
-        <source>Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;</source>
-        <translation>Mariano Crowe, Johannes Landstorfer,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="136"/>
-        <source>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;</source>
-        <translation>Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="138"/>
-        <source>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;</source>
-        <translation>Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="139"/>
-        <source>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;</source>
-        <translation>Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="140"/>
-        <source>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;</source>
-        <translation>Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="143"/>
-        <source>&lt;p&gt;And thanks to Kurt Badelt&lt;br/&gt;</source>
-        <translation>&lt;p&gt;Merci à Kurt Badelt&lt;br/&gt;</translation>
+        <location filename="../src/aboutbox.cpp" line="142"/>
+        <source>&lt;p&gt;Special thanks goes out to:&lt;br /&gt;Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;Michaela Vieser and Julia Werner.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="145"/>
-        <source>for the Spanish translation.&lt;/p&gt;</source>
-        <translation>pour sa traduction espagnole.&lt;/p&gt;</translation>
+        <source>&lt;p&gt;And thanks to Kurt Badelt&lt;br/&gt;for the Spanish translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="146"/>
-        <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;</source>
-        <translation>&lt;p&gt;Fritzing a été rendu possible par:&lt;br /&gt;</translation>
+        <location filename="../src/aboutbox.cpp" line="150"/>
+        <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/aboutbox.cpp" line="147"/>
-        <source>MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;</source>
-        <translation>MWFK Brandenburg, le soutient du départment&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="148"/>
-        <source>Department of Bauhaus-University Weimar and&lt;br/&gt;</source>
-        <translation>de design de l&apos;université Bauhaus à Weimar et&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="151"/>
-        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;</source>
-        <translation>&lt;p&gt;Nous remercions particulièrement tous les étudiants&lt;br /&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="152"/>
-        <source>and alpha testers who were brave enough to give&lt;br/&gt;</source>
-        <translation>et les alpha testers qui ont eu la gentillesse de tester&lt;br/&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/aboutbox.cpp" line="153"/>
-        <source>Fritzing a test spin and who stayed with us,&lt;br/&gt;</source>
-        <translation>Fritzing et qui sont restés avec nous,</translation>
+        <location filename="../src/aboutbox.cpp" line="155"/>
+        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin and who stayed with us,&lt;br/&gt;throughout our rewrite of the app.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2382,37 +2282,37 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
         <translation>Le fichier %1 n&apos;est pas un fichier venant de Fritzing (1).</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1910"/>
+        <location filename="../src/sketchwidget.cpp" line="1913"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2014"/>
+        <location filename="../src/sketchwidget.cpp" line="2017"/>
         <source>%1 Layer</source>
         <translation>%1</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2250"/>
+        <location filename="../src/sketchwidget.cpp" line="2253"/>
         <source>Bring forward</source>
         <translation>Disposer en avant</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2242"/>
+        <location filename="../src/sketchwidget.cpp" line="2245"/>
         <source>Send backward</source>
         <translation>Disposer en arrière</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2259"/>
+        <location filename="../src/sketchwidget.cpp" line="2262"/>
         <source>Bring to front</source>
         <translation>Disposer au premier plan</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3006"/>
+        <location filename="../src/sketchwidget.cpp" line="3009"/>
         <source>Split Wire</source>
         <translation>Ajouter un point d&apos;articulation</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3054"/>
+        <location filename="../src/sketchwidget.cpp" line="3057"/>
         <source>Join Wire</source>
         <translation>Supprimer un point d&apos;articulation</translation>
     </message>
@@ -2737,134 +2637,134 @@ Restez à l&apos;écoute.</translation>
         <translation>Ajouter %1</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1595"/>
+        <location filename="../src/sketchwidget.cpp" line="1598"/>
         <source>Move %2 (%1)</source>
         <translation>Déplacer %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1598"/>
+        <location filename="../src/sketchwidget.cpp" line="1601"/>
         <source>Move %2 items (%1)</source>
         <translation>Déplacer %2 élements (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1728"/>
+        <location filename="../src/sketchwidget.cpp" line="1731"/>
         <source>Select %1</source>
         <translation>Sélectionner %1</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1731"/>
+        <location filename="../src/sketchwidget.cpp" line="1734"/>
         <source>Select %1 items</source>
         <translation>Sélectionner %1 élements</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1894"/>
+        <location filename="../src/sketchwidget.cpp" line="1897"/>
         <source>Disconnect</source>
         <translation>Déconnecter</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1902"/>
+        <location filename="../src/sketchwidget.cpp" line="1905"/>
         <source>Change</source>
         <translation>Changer</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1906"/>
+        <location filename="../src/sketchwidget.cpp" line="1909"/>
         <source>Connect</source>
         <translation>Connecter</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1907"/>
+        <location filename="../src/sketchwidget.cpp" line="1910"/>
         <source>to %1</source>
         <translation>à %1</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1957"/>
+        <location filename="../src/sketchwidget.cpp" line="1960"/>
         <source>Create and connect wire</source>
         <translation>Créer et connecter un câble</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="2563"/>
+        <location filename="../src/sketchwidget.cpp" line="2566"/>
         <source>%3 %2 (%1)</source>
         <translation>%3 %2 (%1)</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4116"/>
+        <location filename="../src/sketchwidget.cpp" line="4119"/>
         <source>Rotate</source>
         <translation>Rotation</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4116"/>
+        <location filename="../src/sketchwidget.cpp" line="4119"/>
         <source>Flip</source>
         <translation>Transformation miroir</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3123"/>
+        <location filename="../src/sketchwidget.cpp" line="3126"/>
         <source>Shift-click to add a bend point to the wire</source>
         <translation>Shift-clic pour ajouter un point d&apos;articulation sur le câble</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3176"/>
+        <location filename="../src/sketchwidget.cpp" line="3179"/>
         <source>Shift-click to delete this bend point</source>
         <translation>Shift-clic pour supprimer un point sur le câble</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3283"/>
+        <location filename="../src/sketchwidget.cpp" line="3286"/>
         <source>Swapped %1 with module %2</source>
         <translation>Echanger %1 avec le module %2</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3295"/>
+        <location filename="../src/sketchwidget.cpp" line="3298"/>
         <source>Sorry!</source>
         <translation>Oups!</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3352"/>
+        <location filename="../src/sketchwidget.cpp" line="3355"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>Passer la couleur de %1 du %2 au %3</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3358"/>
+        <location filename="../src/sketchwidget.cpp" line="3361"/>
         <source>Change color of %1 wires to %2</source>
         <translation>Changer la couleur de %1 câbles en %2</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="1300"/>
+        <location filename="../src/sketchwidget.cpp" line="1303"/>
         <source>Selection</source>
         <translation>Sélection</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3257"/>
+        <location filename="../src/sketchwidget.cpp" line="3260"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Changer l&apos;étiquette %1 en &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3299"/>
+        <location filename="../src/sketchwidget.cpp" line="3302"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation>Aucun composant ayant ces charactéristiques n&apos;existe.
 Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entre des propriétés qui existent</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3402"/>
+        <location filename="../src/sketchwidget.cpp" line="3405"/>
         <source>Change %1 width from %2 to %3</source>
         <translation>Changer la largeur %1 de %2 en %3 </translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="3408"/>
+        <location filename="../src/sketchwidget.cpp" line="3411"/>
         <source>Change width of %1 wires to %2</source>
         <translation>Appliquer une largeur à %1 câbles de %2</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4109"/>
+        <location filename="../src/sketchwidget.cpp" line="4112"/>
         <source>Move label &apos;%1&apos;</source>
         <translation>Déplacer l&apos;étiquette &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4116"/>
+        <location filename="../src/sketchwidget.cpp" line="4119"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation>%1 étiquette &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="../src/sketchwidget.cpp" line="4142"/>
+        <location filename="../src/sketchwidget.cpp" line="4145"/>
         <source>Resize Note</source>
         <translation>Redimensionner l&apos;aide-mémoire</translation>
     </message>

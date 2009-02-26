@@ -122,36 +122,37 @@ AboutBox::AboutBox(QWidget *parent)
 
 	// moved data out of credits.txt so we could apply translation
 	QString data = 
-tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />") +
-tr("<p><br/>Fritzing is made by:<br />") +
-tr("Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic,<br/>") +
-tr("Zach Eveland, Dirk van Oosterbosch,<br/>") +
-tr("Jonathan Cohen, Marcus Paeschke, Omer Yosha,<br/>") +
-tr("Travis Robertson, Stefan Hermann, Brendan Howell,<br/>") +
-tr("Mariano Crowe, Johannes Landstorfer,<br/>") +
-tr("Jenny Chowdhury, Lionel Michel and Jannis Leidel.</p>") +
+tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />"
+   "<p><br/>Fritzing is made by:<br />"
+   "Prof. Reto Wettach, Andr&eacute; Kn&ouml;rig, Myriel Milicevic,<br/>"
+   "Zach Eveland, Dirk van Oosterbosch,<br/>"
+   "Jonathan Cohen, Marcus Paeschke, Omer Yosha,<br/>"
+   "Travis Robertson, Stefan Hermann, Brendan Howell,<br/>"
+   "Mariano Crowe, Johannes Landstorfer,<br/>"
+   "Jenny Chowdhury, Lionel Michel and Jannis Leidel.</p>") +
 
-tr("<p>Special thanks goes out to:<br />") +
-tr("Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir,<br/>") +
-tr("Durrell Bishop, David Cuartielles, Fabian Hemmert,<br />") +
-tr("Gero Herkenrath, Jeff Hoefs, Tom Hulbert,<br/>") +
-tr("Tom Igoe, Hans-Peter Kadel, Till Savelkoul,<br/>") +
-tr("Jan Sieber, Yaniv Steiner, Olaf Val,<br/>") +
-tr("Michaela Vieser and Julia Werner.</p>") +
+tr("<p>Special thanks goes out to:<br />"
+   "Jussi &Auml;ngeslev&auml;, Massimo Banzi, Ayah Bdeir,<br/>"
+   "Durrell Bishop, David Cuartielles, Fabian Hemmert,<br />"
+   "Gero Herkenrath, Jeff Hoefs, Tom Hulbert,<br/>"
+   "Tom Igoe, Hans-Peter Kadel, Till Savelkoul,<br/>"
+   "Jan Sieber, Yaniv Steiner, Olaf Val,<br/>"
+   "Michaela Vieser and Julia Werner.</p>") +
 
-tr("<p>And thanks to Kurt Badelt<br/>") +
-tr("for the Spanish translation.</p>") +
+tr("<p>And thanks to Kurt Badelt<br/>"
+   "for the Spanish translation.</p>") +
 
-tr("<p>Fritzing is made possible with funding from the<br/>") +
-tr("MWFK Brandenburg, the sponsorship of the Design<br/>") +
-tr("Department of Bauhaus-University Weimar and<br/>") +
-tr("IxDS.</p>") +
+tr("<p>Fritzing is made possible with funding from the<br/>"
+   "MWFK Brandenburg, the sponsorship of the Design<br/>"
+   "Department of Bauhaus-University Weimar and<br/>"
+   "IxDS.</p>") +
 
-tr("<p>Special thanks goes out as well to all the students<br/>") +
-tr("and alpha testers who were brave enough to give<br/>") +
-tr("Fritzing a test spin and who stayed with us,<br/>") +
-tr("throughout our rewrite of the app.</p>") +
-tr("<br /><br /><br /><br /><br /><br /><br /><br /><br />");
+tr("<p>Special thanks goes out as well to all the students<br/>"
+   "and alpha testers who were brave enough to give<br/>"
+   "Fritzing a test spin and who stayed with us,<br/>"
+   "throughout our rewrite of the app.</p>"
+   "<br /><br /><br /><br /><br /><br /><br /><br /><br />"
+   );
 
 	creditsScroll->setText(data);
 	creditsScroll->setFont(smallFont);
