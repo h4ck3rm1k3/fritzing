@@ -88,7 +88,6 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     setAcceptDrops(true);
 	setRenderHint(QPainter::Antialiasing, true);
 
-
 	//setCacheMode(QGraphicsView::CacheBackground);
 	//setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 	//setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
@@ -1310,8 +1309,8 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
 	if (m_spaceBarIsPressed) {
-		InfoGraphicsView::mousePressEvent(event);
-		return;
+		//InfoGraphicsView::mousePressEvent(event);
+		//return;
 	}
 
 	//setRenderHint(QPainter::Antialiasing, false);
@@ -1441,8 +1440,8 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// otherwise handle all move action here
 
 	if (m_spaceBarIsPressed) {
-		InfoGraphicsView::mouseMoveEvent(event);
-		return;
+		//InfoGraphicsView::mouseMoveEvent(event);
+		//return;
 	}
 
 	if (m_savedItems.count() > 0) {
@@ -1530,8 +1529,8 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
 	if (m_spaceBarIsPressed) {
-		InfoGraphicsView::mouseReleaseEvent(event);
-		return;
+		//InfoGraphicsView::mouseReleaseEvent(event);
+		//return;
 	}
 
 	turnOffAutoscroll();
