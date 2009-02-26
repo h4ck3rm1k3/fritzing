@@ -145,19 +145,22 @@ void PartsEditorSpecificationsView::loadSvgFile(ModelPart * modelPart) {
 }
 
 void PartsEditorSpecificationsView::loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart) {
-	if(m_startItem) {
-		m_fixedToCenterItems.removeAll(m_startItem);
-		m_startItem = NULL;
-	}
-
 	PartsEditorAbstractView::loadFromModel(paletteModel, modelPart);
 
-	SvgAndPartFilePath *sp = m_item->svgFilePath();
+	if(m_item) {
+		if(m_startItem) {
+			m_fixedToCenterItems.removeAll(m_startItem);
+			m_startItem = NULL;
+		}
 
-	copyToTempAndRenameIfNecessary(sp);
-	m_item->setSvgFilePath(m_svgFilePath);
 
-	emit loadedFromModel(paletteModel, modelPart);
+		SvgAndPartFilePath *sp = m_item->svgFilePath();
+
+		copyToTempAndRenameIfNecessary(sp);
+		m_item->setSvgFilePath(m_svgFilePath);
+
+		emit loadedFromModel(paletteModel, modelPart);
+	}
 }
 
 void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePathOrig) {

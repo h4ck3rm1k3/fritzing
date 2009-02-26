@@ -75,63 +75,65 @@ ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const View
 
 	modelPart->initConnectors();    // is a no-op if connectors already in place
 
-	if(paletteItem->createSvgPath(modelPart->modelPartShared()->path(), getLayerFileName(modelPart))) {
-		paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
-		ViewLayer::ViewLayerID viewLayerID =
-			ViewLayer::viewLayerIDFromXmlString(
-				findConnectorLayerId(paletteItem->svgDom())
-			);
-		if(viewLayerID == ViewLayer::UnknownLayer) {
-			viewLayerID = getViewLayerID(modelPart);
-		}
+	QString layerFileName = getLayerFileName(modelPart);
+	if(layerFileName != ___emptyString___) {
+		if(paletteItem->createSvgPath(modelPart->modelPartShared()->path(), layerFileName)) {
+			paletteItem->createSvgFile(paletteItem->svgFilePath()->absolutePath());
+			ViewLayer::ViewLayerID viewLayerID =
+				ViewLayer::viewLayerIDFromXmlString(
+					findConnectorLayerId(paletteItem->svgDom())
+				);
+			if(viewLayerID == ViewLayer::UnknownLayer) {
+				viewLayerID = getViewLayerID(modelPart);
+			}
 
-		if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
-			addToScene(paletteItemAux, paletteItemAux->viewLayerID());
-			// layers are not needed on the parts editor (so far)
-			/*paletteItem->loadLayerKin(m_viewLayers);
-			for (int i = 0; i < paletteItem->layerKin().count(); i++) {
-				LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
-				this->scene()->addItem(lkpi);
-				lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
-			}*/
-			return paletteItemAux;
-		} else {
-			return NULL;
+			if (paletteItem->renderImage(modelPart, m_viewIdentifier, m_viewLayers, viewLayerID, doConnectors)) {
+				addToScene(paletteItemAux, paletteItemAux->viewLayerID());
+				// layers are not needed on the parts editor (so far)
+				/*paletteItem->loadLayerKin(m_viewLayers);
+				for (int i = 0; i < paletteItem->layerKin().count(); i++) {
+					LayerKinPaletteItem * lkpi = paletteItem->layerKin()[i];
+					this->scene()->addItem(lkpi);
+					lkpi->setHidden(!layerIsVisible(lkpi->viewLayerID()));
+				}*/
+				return paletteItemAux;
+			}
 		}
-	} else {
-		return NULL;
 	}
+	return NULL;
 }
 
 void PartsEditorAbstractView::fitCenterAndDeselect() {
-	m_item->setSelected(false);
-	m_item->setHidden(false);
+	if(m_item) {
+		m_item->setSelected(false);
+		m_item->setHidden(false);
 
-	QRectF viewRect = rect();
+		QRectF viewRect = rect();
 
-	int zoomCorrection;
-	if(m_viewIdentifier != ItemBase::IconView) {
-		qreal x = viewRect.center().x();
-		qreal y = viewRect.center().y();
-		m_item->setPos(x,y);
-		zoomCorrection = 10;
-	} else {
-		zoomCorrection = 0;
+		int zoomCorrection;
+		if(m_viewIdentifier != ItemBase::IconView) {
+			qreal x = viewRect.center().x();
+			qreal y = viewRect.center().y();
+			m_item->setPos(x,y);
+			zoomCorrection = 10;
+		} else {
+			zoomCorrection = 0;
+		}
+
+		QRectF itemsRect = scene()->itemsBoundingRect();
+
+		qreal wRelation = viewRect.width()  / itemsRect.width();
+		qreal hRelation = viewRect.height() / itemsRect.height();
+
+		if(wRelation < hRelation) {
+			m_scaleValue = (wRelation * 100);
+		} else {
+			m_scaleValue = (hRelation * 100);
+		}
+
+		absoluteZoom(m_scaleValue-zoomCorrection);
+		centerOn(itemsRect.center());
 	}
-
-	QRectF itemsRect = scene()->itemsBoundingRect();
-
-	qreal wRelation = viewRect.width()  / itemsRect.width();
-	qreal hRelation = viewRect.height() / itemsRect.height();
-
-	if(wRelation < hRelation) {
-		m_scaleValue = (wRelation * 100);
-	} else {
-		m_scaleValue = (hRelation * 100);
-	}
-
-	absoluteZoom(m_scaleValue-zoomCorrection);
-	centerOn(itemsRect.center());
 }
 
 void PartsEditorAbstractView::wheelEvent(QWheelEvent* /*event*/) {
