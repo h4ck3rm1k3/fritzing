@@ -210,3 +210,15 @@ QWidget *ConnectorsViewsWidget::addZoomControls(PartsEditorConnectorsView *view)
 
 	return container;
 }
+
+PartsEditorConnectorsView *ConnectorsViewsWidget::breadboardView() {
+	return m_breadView;
+}
+
+PartsEditorConnectorsView *ConnectorsViewsWidget::schematicView() {
+	return m_schemView;
+}
+
+PartsEditorConnectorsView *ConnectorsViewsWidget::pcbView() {
+	return m_pcbView;
+}

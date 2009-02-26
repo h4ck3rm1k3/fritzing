@@ -43,6 +43,10 @@ class ConnectorsViewsWidget : public QFrame {
 		void aboutToSave();
 		QCheckBox *showTerminalPointsCheckBox();
 
+		PartsEditorConnectorsView *breadboardView();
+		PartsEditorConnectorsView *schematicView();
+		PartsEditorConnectorsView *pcbView();
+
 	public slots:
 		void repaint();
 		void drawConnector(Connector*);

@@ -44,9 +44,10 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
 		void aboutToSave();
 
-
 		void showTerminalPoints(bool show);
 		bool showingTerminalPoints();
+
+		QString svgIdForConnector(const QString &connId);
 
 	public slots:
 		void informConnectorSelection(const QString& connId);
@@ -77,6 +78,7 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		bool removeConnectorsIfNeeded(QDomElement &docEle);
 		bool updateTerminalPoints(QDomDocument *svgDom, const QSizeF &sceneViewBox, const QRectF &svgViewBox, const QString &connectorsLayerId);
 		QString svgIdForConnector(Connector* conn, const QString &connId);
+
 		void updateSvgIdLayer(const QString &connId, const QString &terminalId, const QString &connectorsLayerId);
 		void removeTerminalPoints(const QStringList &tpIdsToRemove, QDomElement &docElem);
 		void addNewTerminalPoints(

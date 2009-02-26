@@ -32,6 +32,7 @@ $Date$
 
 #include "connectorsinfowidget.h"
 #include "addremoveconnectorbutton.h"
+#include "connectorsviewswidget.h"
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
 
@@ -42,6 +43,7 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 	m_objToDelete = NULL;
 	m_selected = NULL;
 	m_undoStack = undoStack;
+	m_connsViews = NULL;
 
 	createScrollArea();
 	createToolsArea();
@@ -228,10 +230,26 @@ void ConnectorsInfoWidget::addConnectorInfo(MismatchingConnectorWidget* mcw) {
 Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 	ConnectorShared *connShared = new ConnectorShared();
 	connShared->setId(id);
-	// TODO Mariano: find out the real layer, instead of the default one
-	connShared->addPin(ItemBase::BreadboardView,id,ItemBase::defaultConnectorLayer(ItemBase::BreadboardView),"");
-	connShared->addPin(ItemBase::SchematicView,id,ItemBase::defaultConnectorLayer(ItemBase::SchematicView),"");
-	connShared->addPin(ItemBase::PCBView,id,ItemBase::defaultConnectorLayer(ItemBase::PCBView),"");
+
+	connShared->addPin(
+		ItemBase::BreadboardView,
+		m_connsViews->breadboardView()->svgIdForConnector(id),
+		m_connsViews->breadboardView()->connectorLayerId(),
+		""
+	);
+	connShared->addPin(
+		ItemBase::SchematicView,
+		m_connsViews->schematicView()->svgIdForConnector(id),
+		m_connsViews->schematicView()->connectorLayerId(),
+		""
+	);
+	connShared->addPin(
+		ItemBase::PCBView,
+		m_connsViews->pcbView()->svgIdForConnector(id),
+		m_connsViews->pcbView()->connectorLayerId(),
+		""
+	);
+
 	Connector *conn = new Connector(connShared,0); // modelPart =? null
 	addConnectorInfo(conn);
 	return conn;
@@ -318,17 +336,6 @@ const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsShared() {
 		cs->setName(sci->name());
 		cs->setDescription(sci->description());
 		cs->setConnectorType(sci->type());
-
-		/*foreach(ItemBase::ViewIdentifier viewId, m_connectorsPins[id].keys()) {
-			cs->removePins(viewId);
-			foreach(SvgIdLayer *pin, m_connectorsPins[id].values(viewId)) { // Multihash
-				// TODO Mariano: change this layer if the connectors aren't in the default layer
-				ViewLayer::ViewLayerID viewLayerId = pin->m_viewLayerID == ViewLayer::UnknownLayer
-					? ItemBase::defaultConnectorLayer(viewId)
-					: pin->m_viewLayerID;
-				cs->addPin(viewId, pin->m_svgId, viewLayerId, pin->m_terminalId);
-			}
-		}*/
 
 		connectorsShared << cs;
 	}
@@ -535,4 +542,8 @@ int ConnectorsInfoWidget::scrollBarWidth() {
 
 void ConnectorsInfoWidget::connectorSelectedInView(const QString &connId) {
 	setSelected(m_allConnsInfo[connId]);
+}
+
+void ConnectorsInfoWidget::setConnectorsView(ConnectorsViewsWidget* connsView) {
+	m_connsViews = connsView;
 }

@@ -37,6 +37,7 @@ $Date$
 #include "singleconnectorinfowidget.h"
 #include "mismatchingconnectorwidget.h"
 
+class ConnectorsViewsWidget;
 class ConnectorsInfoWidget : public QFrame {
 	Q_OBJECT
 	public:
@@ -44,6 +45,7 @@ class ConnectorsInfoWidget : public QFrame {
 		const QList<ConnectorShared *> connectorsShared();
 		QCheckBox *showTerminalPointsCheckBox();
 		int scrollBarWidth();
+		void setConnectorsView(ConnectorsViewsWidget* connsView);
 
 	public slots:
 		void connectorsFound(QList<Connector *>);
@@ -107,6 +109,7 @@ class ConnectorsInfoWidget : public QFrame {
 		QFrame *m_mismatchersFrameParent;
 
 		QFrame *m_toolsContainter;
+		ConnectorsViewsWidget* m_connsViews;
 
 		AbstractConnectorInfoWidget *m_selected;
 

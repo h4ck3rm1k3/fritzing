@@ -207,6 +207,8 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
 	fakeFzFile += QString("</connectors></module>\n");
   	domDoc->setContent(fakeFzFile, &errorStr, &errorLine, &errorColumn);
 
+
+
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartShared()->setDomDocument(domDoc);
   	retval->modelPartShared()->resetConnectorsInitialization();
@@ -318,6 +320,19 @@ bool PartsEditorAbstractView::ensureFilePath(const QString &filePath) {
 		m_tempFolder.mkpath(QFileInfo(filePath).absoluteDir().path());
 	}
 	return true;
+}
+
+ViewLayer::ViewLayerID PartsEditorAbstractView::connectorLayerId() {
+	Q_ASSERT(m_item);
+	ViewLayer::ViewLayerID viewLayerID =
+		ViewLayer::viewLayerIDFromXmlString(
+			findConnectorLayerId(m_item->svgDom())
+		);
+	if(viewLayerID == ViewLayer::UnknownLayer) {
+		return ItemBase::defaultConnectorLayer(m_viewIdentifier);
+	} else {
+		return viewLayerID;
+	}
 }
 
 QString PartsEditorAbstractView::findConnectorLayerId(QDomDocument *svgDom) {

@@ -304,15 +304,11 @@ void ModelPart::initConnectors(bool force) {
 	if(m_modelPartShared == NULL) return;
 
 	if(force) {
-		m_connectorHash.clear();						// TODO: not deleting old connectors here causes a memory leak; but deleting them here causes a crash		
+		m_connectorHash.clear();						// TODO: not deleting old connectors here causes a memory leak; but deleting them here causes a crash
 		foreach (Bus * bus, m_busHash.values()) {
 			delete bus;
 		}
 		m_busHash.clear();
-
-		// TODO: this is probably incorrect
-		// instead, find the modelPartShared for the part being swapped to and use that
-		//m_modelPartShared->resetConnectorsInitialization();
 	}
 	if(m_connectorHash.count() > 0) return;		// already done
 

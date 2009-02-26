@@ -236,10 +236,19 @@ bool PartsEditorConnectorsView::addConnectorsIfNeeded(QDomDocument *svgDom, cons
 	return changed;
 }
 
+QString PartsEditorConnectorsView::svgIdForConnector(const QString &connId) {
+	foreach(Connector* conn, m_item->connectors()) {
+		QString svgId = svgIdForConnector(conn, connId);
+		if(connId != svgId) {
+			return svgId;
+		}
+	}
+	return connId;
+}
+
 QString PartsEditorConnectorsView::svgIdForConnector(Connector* conn, const QString &connId) {
 	foreach(SvgIdLayer *sil, conn->connectorShared()->pins().values(m_viewIdentifier)) {
 		if(conn->connectorSharedID() == connId) {
-			DebugDialog::debug("<<< "+sil->m_svgId);
 			return sil->m_svgId;
 		}
 	}

@@ -40,6 +40,7 @@ class PartsEditorAbstractView : public SketchWidget {
 		~PartsEditorAbstractView();
 		QDir tempFolder();
 		bool isEmpty();
+		ViewLayer::ViewLayerID connectorLayerId();
 
 	public slots:
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
