@@ -27,6 +27,7 @@ $Date$
 #include "partlabel.h"
 #include "../itembase.h"
 #include "../viewgeometry.h"
+#include "../debugdialog.h"
 
 #include <QGraphicsScene>
 #include <QTextDocument>
@@ -34,6 +35,7 @@ $Date$
 #include <QTextFrame>
 #include <QStyle>
 #include <QMenu>
+#include <QApplication>
 
 // TODO:
 //		** selection: coordinate with part selection: it's a layerkin
@@ -439,4 +441,27 @@ void PartLabel::transformLabel(QTransform currTransf)
 	qreal y = rect.height() / 2;
 	QTransform transf = transform() * QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
 	setTransform(transf);
+}
+
+void PartLabel::focusInEvent(QFocusEvent * event) {
+	QApplication::instance()->installEventFilter(this);
+	QGraphicsTextItem::focusInEvent(event);
+}
+
+void PartLabel::focusOutEvent(QFocusEvent * event) {
+	QApplication::instance()->removeEventFilter(this);
+	QGraphicsTextItem::focusOutEvent(event);
+}
+
+bool PartLabel::eventFilter(QObject * object, QEvent * event) 
+{
+	if (event->type() == QEvent::Shortcut || event->type() == QEvent::ShortcutOverride)
+	{
+		if (!object->inherits("QGraphicsView"))
+		{
+			event->accept();
+			return true;
+		}
+	}
+	return false;
 }

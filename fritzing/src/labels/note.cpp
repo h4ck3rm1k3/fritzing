@@ -31,6 +31,7 @@ $Date$
  
 #include <QTextFrame>
 #include <QTextFrameFormat>
+#include <QApplication>
 
 // TODO:
 //		** search for ModelPart:: and fix up
@@ -64,6 +65,30 @@ const int borderWidth = 3;
 
 QString Note::initialTextString;
 
+class NoteGraphicsTextItem : public QGraphicsTextItem
+{
+public:
+	NoteGraphicsTextItem(QGraphicsItem * parent = NULL);
+
+protected:
+	void focusInEvent(QFocusEvent *);
+	void focusOutEvent(QFocusEvent *);
+};
+
+NoteGraphicsTextItem::NoteGraphicsTextItem(QGraphicsItem * parent) : QGraphicsTextItem(parent)
+{
+}
+
+void NoteGraphicsTextItem::focusInEvent(QFocusEvent * event) {
+	QApplication::instance()->installEventFilter((Note *) this->parentItem());
+	QGraphicsTextItem::focusInEvent(event);
+}
+
+void NoteGraphicsTextItem::focusOutEvent(QFocusEvent * event) {
+	QApplication::instance()->removeEventFilter((Note *) this->parentItem());
+	QGraphicsTextItem::focusOutEvent(event);
+}
+
 /////////////////////////////////////////////
 
 Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
@@ -92,7 +117,7 @@ Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_resizeGrip->setCursor(Qt::SizeFDiagCursor);
 	m_resizeGrip->setVisible(true);
 
-	m_graphicsTextItem = new QGraphicsTextItem();
+	m_graphicsTextItem = new NoteGraphicsTextItem();
 	m_graphicsTextItem->setParentItem(this);
 	m_graphicsTextItem->setVisible(true);
 	m_graphicsTextItem->setPlainText(initialTextString);
@@ -297,4 +322,17 @@ void Note::setHidden(bool hide)
 	ItemBase::setHidden(hide);
 	m_graphicsTextItem->setVisible(!hide);
 	m_resizeGrip->setVisible(!hide);
+}
+
+bool Note::eventFilter(QObject * object, QEvent * event) 
+{
+	if (event->type() == QEvent::Shortcut || event->type() == QEvent::ShortcutOverride)
+	{
+		if (!object->inherits("QGraphicsView"))
+		{
+			event->accept();
+			return true;
+		}
+	}
+	return false;
 }

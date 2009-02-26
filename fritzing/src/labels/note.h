@@ -65,6 +65,7 @@ protected:
 	void mousePressEvent ( QGraphicsSceneMouseEvent * event );
 	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+	bool eventFilter(QObject * object, QEvent * event);
 
 protected slots:
 	void contentsChangedSlot();

@@ -90,6 +90,10 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void temporaryMenuEvent(QGraphicsSceneMouseEvent * event);
 	void transformLabel(QTransform currTransf);
+	void focusInEvent(QFocusEvent * event);
+	void focusOutEvent(QFocusEvent * event);
+	bool eventFilter(QObject * object, QEvent * event);
+
 
 protected slots:
 	void contentsChangedSlot();

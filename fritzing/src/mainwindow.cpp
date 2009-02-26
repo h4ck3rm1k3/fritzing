@@ -806,7 +806,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 		// || event->type() == QEvent::KeyRelease
 		|| event->type() == QEvent::ShortcutOverride))
 	{
-		//DebugDialog::debug(QString("event filter %1").arg(event->type()) );
+		DebugDialog::debug(QString("event filter %1").arg(event->type()) );
 		updatePartMenu();
 		updateTraceMenu();
 
