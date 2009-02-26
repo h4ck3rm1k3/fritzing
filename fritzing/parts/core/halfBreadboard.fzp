@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This xml file is generated through a template. Please don't edit it directly -->
 <module uri="http://fritzing.org/modules/breadboard" moduleId="HalfBreadboardModuleID">
   <version>1.1</version>
-  <author>Dirk van Oosterbosch</author>
-  <title>Half Breadboard</title>
-  <date>2008-12-30</date>
-  <label>Breadboard</label>
+  <author>Brendan Howell</author>
+  <title>Half-Breadboard</title>
+  <date>2009-02-26</date>
+  <label>Bread</label>
   <tags>
     <tag>breadboard</tag>
+    <tag>Fritzing Core</tag>
   </tags>
   <properties>
     <property name="family">Breadboard</property>
-      <property name="size" >half</property>
+    <property name="size">half</property>
   </properties>
-  <taxonomy>prototyping.breadboard.breadboard.half</taxonomy>
-  <description>A breadboard for easily prototyping circuits</description>
+  <taxonomy>prototyping.breadboard.breadboard.halfbreadboard</taxonomy>
+  <description>A half-length breadboard for prototyping circuits</description>
   <views>
     <iconView>
-      <layers image="icon/halfBreadboardIcon.svg">
+      <layers image="icon/breadboardicon.svg">
         <layer layerId="icon"/>
       </layers>
     </iconView>
@@ -38,6 +38,146 @@
     </pcbView>
   </views>
   <connectors ignoreTerminalPoints="true" >
+    <connector name="A98" type="female" id="A98">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A98pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A98pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A98pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B98" type="female" id="B98">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B98pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B98pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B98pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C98" type="female" id="C98">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C98pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C98pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C98pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D98" type="female" id="D98">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D98pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D98pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D98pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E98" type="female" id="E98">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E98pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E98pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E98pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="A99" type="female" id="A99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="A99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="A99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="A99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="B99" type="female" id="B99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="B99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="B99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="B99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="C99" type="female" id="C99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="C99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="C99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="C99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="D99" type="female" id="D99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="D99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="D99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="D99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="E99" type="female" id="E99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="E99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="E99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="E99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
     <connector name="A1" type="female" id="A1">
       <description>breadboard socket</description>
       <views>
@@ -2138,73 +2278,143 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="A31" type="female" id="A31">
+    <connector name="F98" type="female" id="F98">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="A31pin" layer="breadboardbreadboard"/>
+          <p svgId="F98pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="A31pin" layer="breadboardbreadboard"/>
+          <p svgId="F98pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="A31pin" layer="breadboardbreadboard"/>
+          <p svgId="F98pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
-    <connector name="B31" type="female" id="B31">
+    <connector name="G98" type="female" id="G98">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="B31pin" layer="breadboardbreadboard"/>
+          <p svgId="G98pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="B31pin" layer="breadboardbreadboard"/>
+          <p svgId="G98pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="B31pin" layer="breadboardbreadboard"/>
+          <p svgId="G98pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
-    <connector name="C31" type="female" id="C31">
+    <connector name="H98" type="female" id="H98">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="C31pin" layer="breadboardbreadboard"/>
+          <p svgId="H98pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="C31pin" layer="breadboardbreadboard"/>
+          <p svgId="H98pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="C31pin" layer="breadboardbreadboard"/>
+          <p svgId="H98pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
-    <connector name="D31" type="female" id="D31">
+    <connector name="I98" type="female" id="I98">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="D31pin" layer="breadboardbreadboard"/>
+          <p svgId="I98pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="D31pin" layer="breadboardbreadboard"/>
+          <p svgId="I98pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="D31pin" layer="breadboardbreadboard"/>
+          <p svgId="I98pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
-    <connector name="E31" type="female" id="E31">
+    <connector name="J98" type="female" id="J98">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="E31pin" layer="breadboardbreadboard"/>
+          <p svgId="J98pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="E31pin" layer="breadboardbreadboard"/>
+          <p svgId="J98pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="E31pin" layer="breadboardbreadboard"/>
+          <p svgId="J98pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="F99" type="female" id="F99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="F99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="F99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="F99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="G99" type="female" id="G99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="G99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="G99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="G99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="H99" type="female" id="H99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="H99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="H99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="H99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="I99" type="female" id="I99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="I99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="I99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="I99pin" layer="breadboardbreadboard"/>
+        </pcbView>
+      </views>
+    </connector>
+    <connector name="J99" type="female" id="J99">
+      <description>breadboard socket</description>
+      <views>
+        <breadboardView>
+          <p svgId="J99pin" layer="breadboardbreadboard"/>
+        </breadboardView>
+        <schematicView>
+          <p svgId="J99pin" layer="breadboardbreadboard"/>
+        </schematicView>
+        <pcbView>
+          <p svgId="J99pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4308,73 +4518,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="F31" type="female" id="F31">
+    <connector name="W1" type="female" id="W1">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="F31pin" layer="breadboardbreadboard"/>
+          <p svgId="W1pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="F31pin" layer="breadboardbreadboard"/>
+          <p svgId="W1pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="F31pin" layer="breadboardbreadboard"/>
-        </pcbView>
-      </views>
-    </connector>
-    <connector name="G31" type="female" id="G31">
-      <description>breadboard socket</description>
-      <views>
-        <breadboardView>
-          <p svgId="G31pin" layer="breadboardbreadboard"/>
-        </breadboardView>
-        <schematicView>
-          <p svgId="G31pin" layer="breadboardbreadboard"/>
-        </schematicView>
-        <pcbView>
-          <p svgId="G31pin" layer="breadboardbreadboard"/>
-        </pcbView>
-      </views>
-    </connector>
-    <connector name="H31" type="female" id="H31">
-      <description>breadboard socket</description>
-      <views>
-        <breadboardView>
-          <p svgId="H31pin" layer="breadboardbreadboard"/>
-        </breadboardView>
-        <schematicView>
-          <p svgId="H31pin" layer="breadboardbreadboard"/>
-        </schematicView>
-        <pcbView>
-          <p svgId="H31pin" layer="breadboardbreadboard"/>
-        </pcbView>
-      </views>
-    </connector>
-    <connector name="I31" type="female" id="I31">
-      <description>breadboard socket</description>
-      <views>
-        <breadboardView>
-          <p svgId="I31pin" layer="breadboardbreadboard"/>
-        </breadboardView>
-        <schematicView>
-          <p svgId="I31pin" layer="breadboardbreadboard"/>
-        </schematicView>
-        <pcbView>
-          <p svgId="I31pin" layer="breadboardbreadboard"/>
-        </pcbView>
-      </views>
-    </connector>
-    <connector name="J31" type="female" id="J31">
-      <description>breadboard socket</description>
-      <views>
-        <breadboardView>
-          <p svgId="J31pin" layer="breadboardbreadboard"/>
-        </breadboardView>
-        <schematicView>
-          <p svgId="J31pin" layer="breadboardbreadboard"/>
-        </schematicView>
-        <pcbView>
-          <p svgId="J31pin" layer="breadboardbreadboard"/>
+          <p svgId="W1pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4434,17 +4588,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="W6" type="female" id="W6">
+    <connector name="W7" type="female" id="W7">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="W6pin" layer="breadboardbreadboard"/>
+          <p svgId="W7pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="W6pin" layer="breadboardbreadboard"/>
+          <p svgId="W7pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="W6pin" layer="breadboardbreadboard"/>
+          <p svgId="W7pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4504,17 +4658,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="W12" type="female" id="W12">
+    <connector name="W13" type="female" id="W13">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="W12pin" layer="breadboardbreadboard"/>
+          <p svgId="W13pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="W12pin" layer="breadboardbreadboard"/>
+          <p svgId="W13pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="W12pin" layer="breadboardbreadboard"/>
+          <p svgId="W13pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4574,17 +4728,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="W18" type="female" id="W18">
+    <connector name="W19" type="female" id="W19">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="W18pin" layer="breadboardbreadboard"/>
+          <p svgId="W19pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="W18pin" layer="breadboardbreadboard"/>
+          <p svgId="W19pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="W18pin" layer="breadboardbreadboard"/>
+          <p svgId="W19pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4644,17 +4798,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="W24" type="female" id="W24">
+    <connector name="W25" type="female" id="W25">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="W24pin" layer="breadboardbreadboard"/>
+          <p svgId="W25pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="W24pin" layer="breadboardbreadboard"/>
+          <p svgId="W25pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="W24pin" layer="breadboardbreadboard"/>
+          <p svgId="W25pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4714,17 +4868,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="W30" type="female" id="W30">
+    <connector name="X1" type="female" id="X1">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="W30pin" layer="breadboardbreadboard"/>
+          <p svgId="X1pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="W30pin" layer="breadboardbreadboard"/>
+          <p svgId="X1pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="W30pin" layer="breadboardbreadboard"/>
+          <p svgId="X1pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4784,17 +4938,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="X6" type="female" id="X6">
+    <connector name="X7" type="female" id="X7">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="X6pin" layer="breadboardbreadboard"/>
+          <p svgId="X7pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="X6pin" layer="breadboardbreadboard"/>
+          <p svgId="X7pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="X6pin" layer="breadboardbreadboard"/>
+          <p svgId="X7pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4854,17 +5008,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="X12" type="female" id="X12">
+    <connector name="X13" type="female" id="X13">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="X12pin" layer="breadboardbreadboard"/>
+          <p svgId="X13pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="X12pin" layer="breadboardbreadboard"/>
+          <p svgId="X13pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="X12pin" layer="breadboardbreadboard"/>
+          <p svgId="X13pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4924,17 +5078,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="X18" type="female" id="X18">
+    <connector name="X19" type="female" id="X19">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="X18pin" layer="breadboardbreadboard"/>
+          <p svgId="X19pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="X18pin" layer="breadboardbreadboard"/>
+          <p svgId="X19pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="X18pin" layer="breadboardbreadboard"/>
+          <p svgId="X19pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -4994,17 +5148,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="X24" type="female" id="X24">
+    <connector name="X25" type="female" id="X25">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="X24pin" layer="breadboardbreadboard"/>
+          <p svgId="X25pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="X24pin" layer="breadboardbreadboard"/>
+          <p svgId="X25pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="X24pin" layer="breadboardbreadboard"/>
+          <p svgId="X25pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5064,17 +5218,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="X30" type="female" id="X30">
+    <connector name="Y1" type="female" id="Y1">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="X30pin" layer="breadboardbreadboard"/>
+          <p svgId="Y1pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="X30pin" layer="breadboardbreadboard"/>
+          <p svgId="Y1pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="X30pin" layer="breadboardbreadboard"/>
+          <p svgId="Y1pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5134,17 +5288,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Y6" type="female" id="Y6">
+    <connector name="Y7" type="female" id="Y7">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Y6pin" layer="breadboardbreadboard"/>
+          <p svgId="Y7pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Y6pin" layer="breadboardbreadboard"/>
+          <p svgId="Y7pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Y6pin" layer="breadboardbreadboard"/>
+          <p svgId="Y7pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5204,17 +5358,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Y12" type="female" id="Y12">
+    <connector name="Y13" type="female" id="Y13">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Y12pin" layer="breadboardbreadboard"/>
+          <p svgId="Y13pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Y12pin" layer="breadboardbreadboard"/>
+          <p svgId="Y13pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Y12pin" layer="breadboardbreadboard"/>
+          <p svgId="Y13pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5274,17 +5428,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Y18" type="female" id="Y18">
+    <connector name="Y19" type="female" id="Y19">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Y18pin" layer="breadboardbreadboard"/>
+          <p svgId="Y19pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Y18pin" layer="breadboardbreadboard"/>
+          <p svgId="Y19pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Y18pin" layer="breadboardbreadboard"/>
+          <p svgId="Y19pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5344,17 +5498,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Y24" type="female" id="Y24">
+    <connector name="Y25" type="female" id="Y25">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Y24pin" layer="breadboardbreadboard"/>
+          <p svgId="Y25pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Y24pin" layer="breadboardbreadboard"/>
+          <p svgId="Y25pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Y24pin" layer="breadboardbreadboard"/>
+          <p svgId="Y25pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5414,17 +5568,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Y30" type="female" id="Y30">
+    <connector name="Z1" type="female" id="Z1">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Y30pin" layer="breadboardbreadboard"/>
+          <p svgId="Z1pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Y30pin" layer="breadboardbreadboard"/>
+          <p svgId="Z1pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Y30pin" layer="breadboardbreadboard"/>
+          <p svgId="Z1pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5484,17 +5638,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Z6" type="female" id="Z6">
+    <connector name="Z7" type="female" id="Z7">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Z6pin" layer="breadboardbreadboard"/>
+          <p svgId="Z7pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Z6pin" layer="breadboardbreadboard"/>
+          <p svgId="Z7pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Z6pin" layer="breadboardbreadboard"/>
+          <p svgId="Z7pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5554,17 +5708,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Z12" type="female" id="Z12">
+    <connector name="Z13" type="female" id="Z13">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Z12pin" layer="breadboardbreadboard"/>
+          <p svgId="Z13pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Z12pin" layer="breadboardbreadboard"/>
+          <p svgId="Z13pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Z12pin" layer="breadboardbreadboard"/>
+          <p svgId="Z13pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5624,17 +5778,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Z18" type="female" id="Z18">
+    <connector name="Z19" type="female" id="Z19">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Z18pin" layer="breadboardbreadboard"/>
+          <p svgId="Z19pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Z18pin" layer="breadboardbreadboard"/>
+          <p svgId="Z19pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Z18pin" layer="breadboardbreadboard"/>
+          <p svgId="Z19pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5694,17 +5848,17 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Z24" type="female" id="Z24">
+    <connector name="Z25" type="female" id="Z25">
       <description>breadboard socket</description>
       <views>
         <breadboardView>
-          <p svgId="Z24pin" layer="breadboardbreadboard"/>
+          <p svgId="Z25pin" layer="breadboardbreadboard"/>
         </breadboardView>
         <schematicView>
-          <p svgId="Z24pin" layer="breadboardbreadboard"/>
+          <p svgId="Z25pin" layer="breadboardbreadboard"/>
         </schematicView>
         <pcbView>
-          <p svgId="Z24pin" layer="breadboardbreadboard"/>
+          <p svgId="Z25pin" layer="breadboardbreadboard"/>
         </pcbView>
       </views>
     </connector>
@@ -5764,563 +5918,563 @@
         </pcbView>
       </views>
     </connector>
-    <connector name="Z30" type="female" id="Z30">
-      <description>breadboard socket</description>
-      <views>
-        <breadboardView>
-          <p svgId="Z30pin" layer="breadboardbreadboard"/>
-        </breadboardView>
-        <schematicView>
-          <p svgId="Z30pin" layer="breadboardbreadboard"/>
-        </schematicView>
-        <pcbView>
-          <p svgId="Z30pin" layer="breadboardbreadboard"/>
-        </pcbView>
-      </views>
-    </connector>
   </connectors>
   <buses>
     <bus id="bus0-4">
+      <nodeMember connectorId="A98"/>
+      <nodeMember connectorId="B98"/>
+      <nodeMember connectorId="C98"/>
+      <nodeMember connectorId="D98"/>
+      <nodeMember connectorId="E98"/>
+    </bus>
+    <bus id="bus1-4">
+      <nodeMember connectorId="A99"/>
+      <nodeMember connectorId="B99"/>
+      <nodeMember connectorId="C99"/>
+      <nodeMember connectorId="D99"/>
+      <nodeMember connectorId="E99"/>
+    </bus>
+    <bus id="bus2-4">
       <nodeMember connectorId="A1"/>
       <nodeMember connectorId="B1"/>
       <nodeMember connectorId="C1"/>
       <nodeMember connectorId="D1"/>
       <nodeMember connectorId="E1"/>
     </bus>
-    <bus id="bus1-4">
+    <bus id="bus3-4">
       <nodeMember connectorId="A2"/>
       <nodeMember connectorId="B2"/>
       <nodeMember connectorId="C2"/>
       <nodeMember connectorId="D2"/>
       <nodeMember connectorId="E2"/>
     </bus>
-    <bus id="bus2-4">
+    <bus id="bus4-4">
       <nodeMember connectorId="A3"/>
       <nodeMember connectorId="B3"/>
       <nodeMember connectorId="C3"/>
       <nodeMember connectorId="D3"/>
       <nodeMember connectorId="E3"/>
     </bus>
-    <bus id="bus3-4">
+    <bus id="bus5-4">
       <nodeMember connectorId="A4"/>
       <nodeMember connectorId="B4"/>
       <nodeMember connectorId="C4"/>
       <nodeMember connectorId="D4"/>
       <nodeMember connectorId="E4"/>
     </bus>
-    <bus id="bus4-4">
+    <bus id="bus6-4">
       <nodeMember connectorId="A5"/>
       <nodeMember connectorId="B5"/>
       <nodeMember connectorId="C5"/>
       <nodeMember connectorId="D5"/>
       <nodeMember connectorId="E5"/>
     </bus>
-    <bus id="bus5-4">
+    <bus id="bus7-4">
       <nodeMember connectorId="A6"/>
       <nodeMember connectorId="B6"/>
       <nodeMember connectorId="C6"/>
       <nodeMember connectorId="D6"/>
       <nodeMember connectorId="E6"/>
     </bus>
-    <bus id="bus6-4">
+    <bus id="bus8-4">
       <nodeMember connectorId="A7"/>
       <nodeMember connectorId="B7"/>
       <nodeMember connectorId="C7"/>
       <nodeMember connectorId="D7"/>
       <nodeMember connectorId="E7"/>
     </bus>
-    <bus id="bus7-4">
+    <bus id="bus9-4">
       <nodeMember connectorId="A8"/>
       <nodeMember connectorId="B8"/>
       <nodeMember connectorId="C8"/>
       <nodeMember connectorId="D8"/>
       <nodeMember connectorId="E8"/>
     </bus>
-    <bus id="bus8-4">
+    <bus id="bus10-4">
       <nodeMember connectorId="A9"/>
       <nodeMember connectorId="B9"/>
       <nodeMember connectorId="C9"/>
       <nodeMember connectorId="D9"/>
       <nodeMember connectorId="E9"/>
     </bus>
-    <bus id="bus9-4">
+    <bus id="bus11-4">
       <nodeMember connectorId="A10"/>
       <nodeMember connectorId="B10"/>
       <nodeMember connectorId="C10"/>
       <nodeMember connectorId="D10"/>
       <nodeMember connectorId="E10"/>
     </bus>
-    <bus id="bus10-4">
+    <bus id="bus12-4">
       <nodeMember connectorId="A11"/>
       <nodeMember connectorId="B11"/>
       <nodeMember connectorId="C11"/>
       <nodeMember connectorId="D11"/>
       <nodeMember connectorId="E11"/>
     </bus>
-    <bus id="bus11-4">
+    <bus id="bus13-4">
       <nodeMember connectorId="A12"/>
       <nodeMember connectorId="B12"/>
       <nodeMember connectorId="C12"/>
       <nodeMember connectorId="D12"/>
       <nodeMember connectorId="E12"/>
     </bus>
-    <bus id="bus12-4">
+    <bus id="bus14-4">
       <nodeMember connectorId="A13"/>
       <nodeMember connectorId="B13"/>
       <nodeMember connectorId="C13"/>
       <nodeMember connectorId="D13"/>
       <nodeMember connectorId="E13"/>
     </bus>
-    <bus id="bus13-4">
+    <bus id="bus15-4">
       <nodeMember connectorId="A14"/>
       <nodeMember connectorId="B14"/>
       <nodeMember connectorId="C14"/>
       <nodeMember connectorId="D14"/>
       <nodeMember connectorId="E14"/>
     </bus>
-    <bus id="bus14-4">
+    <bus id="bus16-4">
       <nodeMember connectorId="A15"/>
       <nodeMember connectorId="B15"/>
       <nodeMember connectorId="C15"/>
       <nodeMember connectorId="D15"/>
       <nodeMember connectorId="E15"/>
     </bus>
-    <bus id="bus15-4">
+    <bus id="bus17-4">
       <nodeMember connectorId="A16"/>
       <nodeMember connectorId="B16"/>
       <nodeMember connectorId="C16"/>
       <nodeMember connectorId="D16"/>
       <nodeMember connectorId="E16"/>
     </bus>
-    <bus id="bus16-4">
+    <bus id="bus18-4">
       <nodeMember connectorId="A17"/>
       <nodeMember connectorId="B17"/>
       <nodeMember connectorId="C17"/>
       <nodeMember connectorId="D17"/>
       <nodeMember connectorId="E17"/>
     </bus>
-    <bus id="bus17-4">
+    <bus id="bus19-4">
       <nodeMember connectorId="A18"/>
       <nodeMember connectorId="B18"/>
       <nodeMember connectorId="C18"/>
       <nodeMember connectorId="D18"/>
       <nodeMember connectorId="E18"/>
     </bus>
-    <bus id="bus18-4">
+    <bus id="bus20-4">
       <nodeMember connectorId="A19"/>
       <nodeMember connectorId="B19"/>
       <nodeMember connectorId="C19"/>
       <nodeMember connectorId="D19"/>
       <nodeMember connectorId="E19"/>
     </bus>
-    <bus id="bus19-4">
+    <bus id="bus21-4">
       <nodeMember connectorId="A20"/>
       <nodeMember connectorId="B20"/>
       <nodeMember connectorId="C20"/>
       <nodeMember connectorId="D20"/>
       <nodeMember connectorId="E20"/>
     </bus>
-    <bus id="bus20-4">
+    <bus id="bus22-4">
       <nodeMember connectorId="A21"/>
       <nodeMember connectorId="B21"/>
       <nodeMember connectorId="C21"/>
       <nodeMember connectorId="D21"/>
       <nodeMember connectorId="E21"/>
     </bus>
-    <bus id="bus21-4">
+    <bus id="bus23-4">
       <nodeMember connectorId="A22"/>
       <nodeMember connectorId="B22"/>
       <nodeMember connectorId="C22"/>
       <nodeMember connectorId="D22"/>
       <nodeMember connectorId="E22"/>
     </bus>
-    <bus id="bus22-4">
+    <bus id="bus24-4">
       <nodeMember connectorId="A23"/>
       <nodeMember connectorId="B23"/>
       <nodeMember connectorId="C23"/>
       <nodeMember connectorId="D23"/>
       <nodeMember connectorId="E23"/>
     </bus>
-    <bus id="bus23-4">
+    <bus id="bus25-4">
       <nodeMember connectorId="A24"/>
       <nodeMember connectorId="B24"/>
       <nodeMember connectorId="C24"/>
       <nodeMember connectorId="D24"/>
       <nodeMember connectorId="E24"/>
     </bus>
-    <bus id="bus24-4">
+    <bus id="bus26-4">
       <nodeMember connectorId="A25"/>
       <nodeMember connectorId="B25"/>
       <nodeMember connectorId="C25"/>
       <nodeMember connectorId="D25"/>
       <nodeMember connectorId="E25"/>
     </bus>
-    <bus id="bus25-4">
+    <bus id="bus27-4">
       <nodeMember connectorId="A26"/>
       <nodeMember connectorId="B26"/>
       <nodeMember connectorId="C26"/>
       <nodeMember connectorId="D26"/>
       <nodeMember connectorId="E26"/>
     </bus>
-    <bus id="bus26-4">
+    <bus id="bus28-4">
       <nodeMember connectorId="A27"/>
       <nodeMember connectorId="B27"/>
       <nodeMember connectorId="C27"/>
       <nodeMember connectorId="D27"/>
       <nodeMember connectorId="E27"/>
     </bus>
-    <bus id="bus27-4">
+    <bus id="bus29-4">
       <nodeMember connectorId="A28"/>
       <nodeMember connectorId="B28"/>
       <nodeMember connectorId="C28"/>
       <nodeMember connectorId="D28"/>
       <nodeMember connectorId="E28"/>
     </bus>
-    <bus id="bus28-4">
+    <bus id="bus30-4">
       <nodeMember connectorId="A29"/>
       <nodeMember connectorId="B29"/>
       <nodeMember connectorId="C29"/>
       <nodeMember connectorId="D29"/>
       <nodeMember connectorId="E29"/>
     </bus>
-    <bus id="bus29-4">
+    <bus id="bus31-4">
       <nodeMember connectorId="A30"/>
       <nodeMember connectorId="B30"/>
       <nodeMember connectorId="C30"/>
       <nodeMember connectorId="D30"/>
       <nodeMember connectorId="E30"/>
     </bus>
-    <bus id="bus30-4">
-      <nodeMember connectorId="A31"/>
-      <nodeMember connectorId="B31"/>
-      <nodeMember connectorId="C31"/>
-      <nodeMember connectorId="D31"/>
-      <nodeMember connectorId="E31"/>
-    </bus>
     <bus id="bus0-11">
+      <nodeMember connectorId="F98"/>
+      <nodeMember connectorId="G98"/>
+      <nodeMember connectorId="H98"/>
+      <nodeMember connectorId="I98"/>
+      <nodeMember connectorId="J98"/>
+    </bus>
+    <bus id="bus1-11">
+      <nodeMember connectorId="F99"/>
+      <nodeMember connectorId="G99"/>
+      <nodeMember connectorId="H99"/>
+      <nodeMember connectorId="I99"/>
+      <nodeMember connectorId="J99"/>
+    </bus>
+    <bus id="bus2-11">
       <nodeMember connectorId="F1"/>
       <nodeMember connectorId="G1"/>
       <nodeMember connectorId="H1"/>
       <nodeMember connectorId="I1"/>
       <nodeMember connectorId="J1"/>
     </bus>
-    <bus id="bus1-11">
+    <bus id="bus3-11">
       <nodeMember connectorId="F2"/>
       <nodeMember connectorId="G2"/>
       <nodeMember connectorId="H2"/>
       <nodeMember connectorId="I2"/>
       <nodeMember connectorId="J2"/>
     </bus>
-    <bus id="bus2-11">
+    <bus id="bus4-11">
       <nodeMember connectorId="F3"/>
       <nodeMember connectorId="G3"/>
       <nodeMember connectorId="H3"/>
       <nodeMember connectorId="I3"/>
       <nodeMember connectorId="J3"/>
     </bus>
-    <bus id="bus3-11">
+    <bus id="bus5-11">
       <nodeMember connectorId="F4"/>
       <nodeMember connectorId="G4"/>
       <nodeMember connectorId="H4"/>
       <nodeMember connectorId="I4"/>
       <nodeMember connectorId="J4"/>
     </bus>
-    <bus id="bus4-11">
+    <bus id="bus6-11">
       <nodeMember connectorId="F5"/>
       <nodeMember connectorId="G5"/>
       <nodeMember connectorId="H5"/>
       <nodeMember connectorId="I5"/>
       <nodeMember connectorId="J5"/>
     </bus>
-    <bus id="bus5-11">
+    <bus id="bus7-11">
       <nodeMember connectorId="F6"/>
       <nodeMember connectorId="G6"/>
       <nodeMember connectorId="H6"/>
       <nodeMember connectorId="I6"/>
       <nodeMember connectorId="J6"/>
     </bus>
-    <bus id="bus6-11">
+    <bus id="bus8-11">
       <nodeMember connectorId="F7"/>
       <nodeMember connectorId="G7"/>
       <nodeMember connectorId="H7"/>
       <nodeMember connectorId="I7"/>
       <nodeMember connectorId="J7"/>
     </bus>
-    <bus id="bus7-11">
+    <bus id="bus9-11">
       <nodeMember connectorId="F8"/>
       <nodeMember connectorId="G8"/>
       <nodeMember connectorId="H8"/>
       <nodeMember connectorId="I8"/>
       <nodeMember connectorId="J8"/>
     </bus>
-    <bus id="bus8-11">
+    <bus id="bus10-11">
       <nodeMember connectorId="F9"/>
       <nodeMember connectorId="G9"/>
       <nodeMember connectorId="H9"/>
       <nodeMember connectorId="I9"/>
       <nodeMember connectorId="J9"/>
     </bus>
-    <bus id="bus9-11">
+    <bus id="bus11-11">
       <nodeMember connectorId="F10"/>
       <nodeMember connectorId="G10"/>
       <nodeMember connectorId="H10"/>
       <nodeMember connectorId="I10"/>
       <nodeMember connectorId="J10"/>
     </bus>
-    <bus id="bus10-11">
+    <bus id="bus12-11">
       <nodeMember connectorId="F11"/>
       <nodeMember connectorId="G11"/>
       <nodeMember connectorId="H11"/>
       <nodeMember connectorId="I11"/>
       <nodeMember connectorId="J11"/>
     </bus>
-    <bus id="bus11-11">
+    <bus id="bus13-11">
       <nodeMember connectorId="F12"/>
       <nodeMember connectorId="G12"/>
       <nodeMember connectorId="H12"/>
       <nodeMember connectorId="I12"/>
       <nodeMember connectorId="J12"/>
     </bus>
-    <bus id="bus12-11">
+    <bus id="bus14-11">
       <nodeMember connectorId="F13"/>
       <nodeMember connectorId="G13"/>
       <nodeMember connectorId="H13"/>
       <nodeMember connectorId="I13"/>
       <nodeMember connectorId="J13"/>
     </bus>
-    <bus id="bus13-11">
+    <bus id="bus15-11">
       <nodeMember connectorId="F14"/>
       <nodeMember connectorId="G14"/>
       <nodeMember connectorId="H14"/>
       <nodeMember connectorId="I14"/>
       <nodeMember connectorId="J14"/>
     </bus>
-    <bus id="bus14-11">
+    <bus id="bus16-11">
       <nodeMember connectorId="F15"/>
       <nodeMember connectorId="G15"/>
       <nodeMember connectorId="H15"/>
       <nodeMember connectorId="I15"/>
       <nodeMember connectorId="J15"/>
     </bus>
-    <bus id="bus15-11">
+    <bus id="bus17-11">
       <nodeMember connectorId="F16"/>
       <nodeMember connectorId="G16"/>
       <nodeMember connectorId="H16"/>
       <nodeMember connectorId="I16"/>
       <nodeMember connectorId="J16"/>
     </bus>
-    <bus id="bus16-11">
+    <bus id="bus18-11">
       <nodeMember connectorId="F17"/>
       <nodeMember connectorId="G17"/>
       <nodeMember connectorId="H17"/>
       <nodeMember connectorId="I17"/>
       <nodeMember connectorId="J17"/>
     </bus>
-    <bus id="bus17-11">
+    <bus id="bus19-11">
       <nodeMember connectorId="F18"/>
       <nodeMember connectorId="G18"/>
       <nodeMember connectorId="H18"/>
       <nodeMember connectorId="I18"/>
       <nodeMember connectorId="J18"/>
     </bus>
-    <bus id="bus18-11">
+    <bus id="bus20-11">
       <nodeMember connectorId="F19"/>
       <nodeMember connectorId="G19"/>
       <nodeMember connectorId="H19"/>
       <nodeMember connectorId="I19"/>
       <nodeMember connectorId="J19"/>
     </bus>
-    <bus id="bus19-11">
+    <bus id="bus21-11">
       <nodeMember connectorId="F20"/>
       <nodeMember connectorId="G20"/>
       <nodeMember connectorId="H20"/>
       <nodeMember connectorId="I20"/>
       <nodeMember connectorId="J20"/>
     </bus>
-    <bus id="bus20-11">
+    <bus id="bus22-11">
       <nodeMember connectorId="F21"/>
       <nodeMember connectorId="G21"/>
       <nodeMember connectorId="H21"/>
       <nodeMember connectorId="I21"/>
       <nodeMember connectorId="J21"/>
     </bus>
-    <bus id="bus21-11">
+    <bus id="bus23-11">
       <nodeMember connectorId="F22"/>
       <nodeMember connectorId="G22"/>
       <nodeMember connectorId="H22"/>
       <nodeMember connectorId="I22"/>
       <nodeMember connectorId="J22"/>
     </bus>
-    <bus id="bus22-11">
+    <bus id="bus24-11">
       <nodeMember connectorId="F23"/>
       <nodeMember connectorId="G23"/>
       <nodeMember connectorId="H23"/>
       <nodeMember connectorId="I23"/>
       <nodeMember connectorId="J23"/>
     </bus>
-    <bus id="bus23-11">
+    <bus id="bus25-11">
       <nodeMember connectorId="F24"/>
       <nodeMember connectorId="G24"/>
       <nodeMember connectorId="H24"/>
       <nodeMember connectorId="I24"/>
       <nodeMember connectorId="J24"/>
     </bus>
-    <bus id="bus24-11">
+    <bus id="bus26-11">
       <nodeMember connectorId="F25"/>
       <nodeMember connectorId="G25"/>
       <nodeMember connectorId="H25"/>
       <nodeMember connectorId="I25"/>
       <nodeMember connectorId="J25"/>
     </bus>
-    <bus id="bus25-11">
+    <bus id="bus27-11">
       <nodeMember connectorId="F26"/>
       <nodeMember connectorId="G26"/>
       <nodeMember connectorId="H26"/>
       <nodeMember connectorId="I26"/>
       <nodeMember connectorId="J26"/>
     </bus>
-    <bus id="bus26-11">
+    <bus id="bus28-11">
       <nodeMember connectorId="F27"/>
       <nodeMember connectorId="G27"/>
       <nodeMember connectorId="H27"/>
       <nodeMember connectorId="I27"/>
       <nodeMember connectorId="J27"/>
     </bus>
-    <bus id="bus27-11">
+    <bus id="bus29-11">
       <nodeMember connectorId="F28"/>
       <nodeMember connectorId="G28"/>
       <nodeMember connectorId="H28"/>
       <nodeMember connectorId="I28"/>
       <nodeMember connectorId="J28"/>
     </bus>
-    <bus id="bus28-11">
+    <bus id="bus30-11">
       <nodeMember connectorId="F29"/>
       <nodeMember connectorId="G29"/>
       <nodeMember connectorId="H29"/>
       <nodeMember connectorId="I29"/>
       <nodeMember connectorId="J29"/>
     </bus>
-    <bus id="bus29-11">
+    <bus id="bus31-11">
       <nodeMember connectorId="F30"/>
       <nodeMember connectorId="G30"/>
       <nodeMember connectorId="H30"/>
       <nodeMember connectorId="I30"/>
       <nodeMember connectorId="J30"/>
     </bus>
-    <bus id="bus30-11">
-      <nodeMember connectorId="F31"/>
-      <nodeMember connectorId="G31"/>
-      <nodeMember connectorId="H31"/>
-      <nodeMember connectorId="I31"/>
-      <nodeMember connectorId="J31"/>
-    </bus>
-    <bus id="busW-1">
+    <bus id="busW-2">
+      <nodeMember connectorId="W1"/>
       <nodeMember connectorId="W2"/>
       <nodeMember connectorId="W3"/>
       <nodeMember connectorId="W4"/>
       <nodeMember connectorId="W5"/>
-      <nodeMember connectorId="W6"/>
+      <nodeMember connectorId="W7"/>
       <nodeMember connectorId="W8"/>
       <nodeMember connectorId="W9"/>
       <nodeMember connectorId="W10"/>
       <nodeMember connectorId="W11"/>
-      <nodeMember connectorId="W12"/>
+      <nodeMember connectorId="W13"/>
       <nodeMember connectorId="W14"/>
       <nodeMember connectorId="W15"/>
       <nodeMember connectorId="W16"/>
       <nodeMember connectorId="W17"/>
-      <nodeMember connectorId="W18"/>
+      <nodeMember connectorId="W19"/>
       <nodeMember connectorId="W20"/>
       <nodeMember connectorId="W21"/>
       <nodeMember connectorId="W22"/>
       <nodeMember connectorId="W23"/>
-      <nodeMember connectorId="W24"/>
+      <nodeMember connectorId="W25"/>
       <nodeMember connectorId="W26"/>
       <nodeMember connectorId="W27"/>
       <nodeMember connectorId="W28"/>
       <nodeMember connectorId="W29"/>
-      <nodeMember connectorId="W30"/>
     </bus>
-    <bus id="busX-1">
+    <bus id="busX-2">
+      <nodeMember connectorId="X1"/>
       <nodeMember connectorId="X2"/>
       <nodeMember connectorId="X3"/>
       <nodeMember connectorId="X4"/>
       <nodeMember connectorId="X5"/>
-      <nodeMember connectorId="X6"/>
+      <nodeMember connectorId="X7"/>
       <nodeMember connectorId="X8"/>
       <nodeMember connectorId="X9"/>
       <nodeMember connectorId="X10"/>
       <nodeMember connectorId="X11"/>
-      <nodeMember connectorId="X12"/>
+      <nodeMember connectorId="X13"/>
       <nodeMember connectorId="X14"/>
       <nodeMember connectorId="X15"/>
       <nodeMember connectorId="X16"/>
       <nodeMember connectorId="X17"/>
-      <nodeMember connectorId="X18"/>
+      <nodeMember connectorId="X19"/>
       <nodeMember connectorId="X20"/>
       <nodeMember connectorId="X21"/>
       <nodeMember connectorId="X22"/>
       <nodeMember connectorId="X23"/>
-      <nodeMember connectorId="X24"/>
+      <nodeMember connectorId="X25"/>
       <nodeMember connectorId="X26"/>
       <nodeMember connectorId="X27"/>
       <nodeMember connectorId="X28"/>
       <nodeMember connectorId="X29"/>
-      <nodeMember connectorId="X30"/>
     </bus>
-    <bus id="busY-1">
+    <bus id="busY-2">
+      <nodeMember connectorId="Y1"/>
       <nodeMember connectorId="Y2"/>
       <nodeMember connectorId="Y3"/>
       <nodeMember connectorId="Y4"/>
       <nodeMember connectorId="Y5"/>
-      <nodeMember connectorId="Y6"/>
+      <nodeMember connectorId="Y7"/>
       <nodeMember connectorId="Y8"/>
       <nodeMember connectorId="Y9"/>
       <nodeMember connectorId="Y10"/>
       <nodeMember connectorId="Y11"/>
-      <nodeMember connectorId="Y12"/>
+      <nodeMember connectorId="Y13"/>
       <nodeMember connectorId="Y14"/>
       <nodeMember connectorId="Y15"/>
       <nodeMember connectorId="Y16"/>
       <nodeMember connectorId="Y17"/>
-      <nodeMember connectorId="Y18"/>
+      <nodeMember connectorId="Y19"/>
       <nodeMember connectorId="Y20"/>
       <nodeMember connectorId="Y21"/>
       <nodeMember connectorId="Y22"/>
       <nodeMember connectorId="Y23"/>
-      <nodeMember connectorId="Y24"/>
+      <nodeMember connectorId="Y25"/>
       <nodeMember connectorId="Y26"/>
       <nodeMember connectorId="Y27"/>
       <nodeMember connectorId="Y28"/>
       <nodeMember connectorId="Y29"/>
-      <nodeMember connectorId="Y30"/>
     </bus>
-    <bus id="busZ-1">
+    <bus id="busZ-2">
+      <nodeMember connectorId="Z1"/>
       <nodeMember connectorId="Z2"/>
       <nodeMember connectorId="Z3"/>
       <nodeMember connectorId="Z4"/>
       <nodeMember connectorId="Z5"/>
-      <nodeMember connectorId="Z6"/>
+      <nodeMember connectorId="Z7"/>
       <nodeMember connectorId="Z8"/>
       <nodeMember connectorId="Z9"/>
       <nodeMember connectorId="Z10"/>
       <nodeMember connectorId="Z11"/>
-      <nodeMember connectorId="Z12"/>
+      <nodeMember connectorId="Z13"/>
       <nodeMember connectorId="Z14"/>
       <nodeMember connectorId="Z15"/>
       <nodeMember connectorId="Z16"/>
       <nodeMember connectorId="Z17"/>
-      <nodeMember connectorId="Z18"/>
+      <nodeMember connectorId="Z19"/>
       <nodeMember connectorId="Z20"/>
       <nodeMember connectorId="Z21"/>
       <nodeMember connectorId="Z22"/>
       <nodeMember connectorId="Z23"/>
-      <nodeMember connectorId="Z24"/>
+      <nodeMember connectorId="Z25"/>
       <nodeMember connectorId="Z26"/>
       <nodeMember connectorId="Z27"/>
       <nodeMember connectorId="Z28"/>
       <nodeMember connectorId="Z29"/>
-      <nodeMember connectorId="Z30"/>
     </bus>
   </buses>
 </module>
