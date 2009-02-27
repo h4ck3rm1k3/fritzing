@@ -44,7 +44,7 @@ QString HtmlInfoView::PropsBlockId = "props_id";
 QString HtmlInfoView::TagsBlockId = "tags_id";
 QString HtmlInfoView::ConnsBlockId = "conns_id";
 
-static QRegExp NumberMatcher("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMpµ]))?");
+static QRegExp NumberMatcher("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMpï¿½]))?");
 static QHash<QString, qreal> NumberMatcherValues;
 
 
@@ -110,6 +110,12 @@ void HtmlInfoView::jsRegister() {
 
 	// prevent recursion, particularly when setting content to NULL
 	disconnect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
+	if(m_currentItem) {
+		InfoGraphicsView* igv = dynamic_cast<InfoGraphicsView*>(m_currentItem->scene()->parent());
+		if(igv) {
+			registerInfoGraphicsView(igv, "sketch");
+		}
+	}
 	registerCurrentAgain();
 	registerRefModel();
 	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
@@ -142,7 +148,7 @@ void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
 }
 
 void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* item, bool swappingEnabled) {
-	
+
 	if (item == NULL) {
 		// TODO: it would be nice to do something reasonable in this case
 		setNullContent();
@@ -369,7 +375,7 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 }
 
 void HtmlInfoView::prepareTitleStuff(ItemBase *base, QString &title) {
-	
+
 	if(base) {
 		title = base->instanceTitle();
 	}
@@ -541,7 +547,7 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 			else if (unit.contains('p')) {
 				n *= 0.000000000001;
 			}
-			else if (unit.contains('µ')) {
+			else if (unit.contains('ï¿½')) {
 				n *= 0.000001;
 			}
 			NumberMatcherValues.insert(opt, n);
@@ -551,7 +557,7 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 		}
 		foreach(QString opt, values) {
 			options += QString("<option value='%1' %2>%1</option> \n")
-				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);			
+				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);
 		}
 		jsCode += "</script>\n";
 
@@ -579,7 +585,7 @@ void HtmlInfoView::setContent(const QString &html) {
 	m_webView->setHtml(fileContent);
 
 	m_setContentMutex.unlock();
-	
+
 	/*QFile file("/tmp/infoview.html");
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 	         return;
@@ -672,7 +678,7 @@ void HtmlInfoView::registerInfoGraphicsView(InfoGraphicsView * infoGraphicsView,
 	}
 }
 
-void HtmlInfoView::setNullContent() 
+void HtmlInfoView::setNullContent()
 {
 	setContent("<html></html>");
 }
