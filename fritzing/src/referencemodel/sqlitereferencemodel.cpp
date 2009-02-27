@@ -158,7 +158,7 @@ ModelPart *SqliteReferenceModel::retrieveModelPart(const Part *examplePart) {
 	return retrieveModelPart(retrieveModuleId(examplePart));
 }
 
-QString SqliteReferenceModel::retrieveModuleIdWithRecordedProps(const QString &family) {
+QString SqliteReferenceModel::retrieveModuleIdWith(const QString &family) {
 	QString moduleID = retrieveModuleId(family,m_recordedProperties);
 	m_recordedProperties.clear();
 	return moduleID;

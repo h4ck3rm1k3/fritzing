@@ -140,7 +140,7 @@ function doSwap(family,name,currValue) {
 	for(propName in currProps) {
 		refModel.recordProperty(propName, currProps[propName]);
 	}
-	var moduleID = refModel.retrieveModuleIdWithRecordedProps(family);
+	var moduleID = refModel.retrieveModuleIdWith(family);
 	//swapper.swapSelected(moduleID);
 	sketch.swapSelected(moduleID);
 }

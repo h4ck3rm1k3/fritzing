@@ -50,7 +50,7 @@ class ReferenceModel : public PaletteModel {
 
 	public slots:
 		virtual void recordProperty(const QString &name, const QString &value) = 0;
-		virtual QString retrieveModuleIdWithRecordedProps(const QString &family) = 0;
+		virtual QString retrieveModuleIdWith(const QString &family) = 0;
 		virtual QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties) = 0;
 		virtual QStringList values(const QString &family, const QString &propName, bool distinct=true) = 0;
 };

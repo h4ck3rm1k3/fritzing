@@ -61,7 +61,7 @@ class SqliteReferenceModel : public ReferenceModel {
 
 	public slots:
 		void recordProperty(const QString &name, const QString &value);
-		QString retrieveModuleIdWithRecordedProps(const QString &family);
+		QString retrieveModuleIdWith(const QString &family);
 		QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties);
 		QStringList values(const QString &family, const QString &propName, bool distinct=true);
 
