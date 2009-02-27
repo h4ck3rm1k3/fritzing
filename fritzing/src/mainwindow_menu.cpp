@@ -738,7 +738,7 @@ void MainWindow::createFileMenuActions() {
 	m_exportPdfAct->setStatusTip(tr("Export the current sketch as a PDF image"));
 	connect(m_exportPdfAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
-        m_exportBomAct = new BetterTriggerAction(tr("&Bill of Materials"), this);
+        m_exportBomAct = new BetterTriggerAction(tr("List of parts (&Bill of Materials)"), this);
         m_exportBomAct->setData(bomActionType);
         m_exportBomAct->setStatusTip(tr("Save a text Bill of Materials (BoM)/Shopping List"));
         connect(m_exportBomAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
@@ -1961,6 +1961,12 @@ void MainWindow::exportBOM() {
         fp.open(QIODevice::WriteOnly);
         fp.write(bom.toUtf8(),bom.length());
         fp.close();
+
+		QClipboard *clipboard = QApplication::clipboard();
+		if (clipboard != NULL) {
+			clipboard->setText(bom);
+		}
+
 }
 
 void MainWindow::hideShowTraceMenu() {
