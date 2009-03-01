@@ -1870,11 +1870,62 @@ void MainWindow::exportToGerber() {
 }
 
 void MainWindow::exportToEagle() {
+	/*
 	QString text =
 		tr("This will soon provide an export of your Fritzing sketch to the EAGLE layout "
 		"software. If you'd like to have more exports to your favourite EDA tool, please let "
 		"us know, or contribute.");
 	QMessageBox::information(this, tr("Fritzing"), text);
+	*/
+	
+	QString text = 
+		tr("The Eagle export module is very experimental.  If anything breaks or behaves "
+		"strangely, please let us know.");
+	QMessageBox::information(this, tr("Fritzing"), text);
+	
+	QList <ItemBase*> partList;
+
+	// bail out if something is wrong    
+	// TODO: show an error in QMessageBox
+    if(m_currentWidget == NULL) {
+		return;
+	}
+
+    m_currentGraphicsView->collectParts(partList);
+	
+	QString exportInfoString = tr("parts include:\n");
+	QString exportString = tr("GRID INCH 0.005\n");
+	
+	
+	for(int i=0; i < partList.size(); i++){
+		QString label = partList.at(i)->instanceTitle();
+		QString desc = partList.at(i)->modelPartShared()->title();
+		
+		QHash<QString,QString> properties = partList.at(i)->modelPartShared()->properties();
+		QString package = properties["package"];
+		if (package == NULL) {
+			package = tr("*** package not specified ***");
+		}
+
+		exportInfoString += label + tr(" which is a ") + desc + tr(" in a ") + package + tr(" package.\n");
+	}
+	QMessageBox::information(this, tr("Fritzing"), exportInfoString);
+	
+	/*
+	QFile fp( fileName );
+	fp.open(QIODevice::WriteOnly);
+	fp.write(bom.toUtf8(),bom.length());
+	fp.close();	
+	*/
+	
+	
+	/*
+	GRID INCH 0.005 
+	USE '/Applications/eclipse/eagle/lbr/fritzing.lbr';
+	ADD RESISTOR@fritzing 'R_1' R0.000 (2.3055117 2.1307087); 
+	ADD LED@fritzing 'L_2' R0.000 (5.423622 2.425197); 
+	GRID LAST; 
+	*/
 }
 
 void MainWindow::exportBOM() {
