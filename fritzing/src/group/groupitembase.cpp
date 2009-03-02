@@ -28,6 +28,7 @@ $Date$
 #include "../connectoritem.h"
 #include "../debugdialog.h"
 #include "../wire.h"
+#include "../modelpart.h"
 
 #include <QTimer>
 #include <QSet>
@@ -81,6 +82,12 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 
 	prepareGeometryChange();
 	update();
+
+	ModelPart * thisModelPart = modelPart();
+	ModelPart * submodelPart = item->modelPart();
+	if (submodelPart->parent() != thisModelPart) {
+		submodelPart->setParent(thisModelPart);
+	}
 }
 
 void GroupItemBase::findConnectorsUnder() {
@@ -95,6 +102,7 @@ bool GroupItemBase::itemMoved() {
 }
 
 void GroupItemBase::saveInstanceLocation(QXmlStreamWriter & streamWriter) {
+	saveLocAndTransform(streamWriter);
 }
 
 void GroupItemBase::moveItem(ViewGeometry & viewGeometry) {

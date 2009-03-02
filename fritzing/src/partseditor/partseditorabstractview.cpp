@@ -160,7 +160,7 @@ void PartsEditorAbstractView::setDefaultBackground() {
 
 void PartsEditorAbstractView::clearScene() {
 	if(m_item) {
-		deleteItem(m_item, m_deleteModelPartOnSceneClear, true);
+		deleteItem(m_item, m_deleteModelPartOnSceneClear, true, false);
 
 		scene()->clear();
 		m_item = NULL;

@@ -35,7 +35,6 @@ $Date$
 #include "viewgeometry.h"
 #include "misc.h"
 
-
 class BaseCommand : public QUndoCommand
 {
 public:
@@ -58,15 +57,19 @@ public:
 	void addSubCommand(BaseCommand * subCommand);
 	void subUndo();
 	void subRedo();
+	int index() const;
 
 protected:
 	virtual QString getParamString() const;
+
+	static int nextIndex;
 
 protected:
 	BaseCommand::CrossViewType m_crossViewType;
     class SketchWidget *m_sketchWidget;
 	QList<BaseCommand *> m_commands;
 	QUndoCommand * m_parentCommand;
+	int m_index;
 };
 
 class AddDeleteItemCommand : public BaseCommand
@@ -507,6 +510,9 @@ public:
     void redo();
 
 protected:
+	QString getParamString() const;
+
+protected:
     long m_itemID;
     QSizeF m_oldSize;
 	QSizeF m_newSize;
@@ -516,15 +522,19 @@ protected:
 class GroupCommand : public BaseCommand 
 {
 public:
-	GroupCommand(class SketchWidget * sketchWidget, long id, const ViewGeometry & , QUndoCommand * parent);
+	GroupCommand(class SketchWidget * sketchWidget, const QString & moduleID, long id, const ViewGeometry & , QUndoCommand * parent);
 	void undo();
 	void redo();
 	void addItemID(long id);
 
 protected:
+	QString getParamString() const;
+
+protected:
 	long m_itemID;
 	ViewGeometry m_viewGeometry;
 	QList<long> m_itemIDs;
+	QString m_moduleID;
 };
 
 
@@ -535,6 +545,8 @@ public:
 	void undo();
 	void redo();
 
+protected:
+	QString getParamString() const;
 
 protected:
 	long m_itemID;

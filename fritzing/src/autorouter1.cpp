@@ -390,7 +390,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 
 	
 	foreach (Wire * wire, oldTraces) {
-		sketchWidget->deleteItem(wire, true, false);
+		sketchWidget->deleteItem(wire, true, false, false);
 	}
 }
 
@@ -788,7 +788,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		return true;
 	}
 
-	m_sketchWidget->deleteItem(trace, true, false);
+	m_sketchWidget->deleteItem(trace, true, false, false);
 
 	if (!recurse) return false;
 
@@ -1041,7 +1041,7 @@ bool Autorouter1::tryOne(QPointF fromPos, QPointF toPos, ConnectorItem * from, C
 	}
 
 	foreach (Wire * wire, localWires) {
-		m_sketchWidget->deleteItem(wire, true, false);
+		m_sketchWidget->deleteItem(wire, true, false, false);
 	}
 	return false;
 }
@@ -1203,8 +1203,8 @@ void Autorouter1::reduceWires(QList<Wire *> & wires, ConnectorItem * from, Conne
 		Wire * traceWire = reduceWiresAux(wires, from, to, fromPos, toPos, boundingPoly);
 		if (traceWire == NULL) continue;
 
-		m_sketchWidget->deleteItem(wires[i], true, false);
-		m_sketchWidget->deleteItem(wires[i + 1], true, false);
+		m_sketchWidget->deleteItem(wires[i], true, false, false);
+		m_sketchWidget->deleteItem(wires[i + 1], true, false, false);
 
 		wires[i] = traceWire;
 		wires.removeAt(i + 1);
@@ -1295,7 +1295,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 		}
 	}	
 	if (intersects) {
-		m_sketchWidget->deleteItem(trace, true, false);
+		m_sketchWidget->deleteItem(trace, true, false, false);
 		return NULL;
 	}
 

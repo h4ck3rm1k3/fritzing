@@ -969,7 +969,7 @@ void SchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* >
 	if (m_deleteStash.count() > 0) {
 		foreach(Wire * wire, m_deleteStash) {
 			command->addWire(this, wire);
-			deleteItem(wire, true, false);
+			deleteItem(wire, true, false, false);
 		}
 		m_deleteStash.clear();
 		return;

@@ -28,9 +28,11 @@ $Date$
 #include "commands.h"
 #include "debugdialog.h"
 #include "sketchwidget.h"
+#include "waitpushundostack.h"
 
 int SelectItemCommand::selectItemCommandID = 3;
 int ChangeLabelTextCommand::changeLabelTextCommandID = 4;
+int BaseCommand::nextIndex = 0;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,6 +42,7 @@ BaseCommand::BaseCommand(BaseCommand::CrossViewType crossViewType, SketchWidget*
 	m_crossViewType = crossViewType;
 	m_sketchWidget = sketchWidget;
 	m_parentCommand = parent;
+	m_index = BaseCommand::nextIndex++;
 }
 
 BaseCommand::~BaseCommand() {
@@ -84,6 +87,11 @@ const BaseCommand * BaseCommand::subCommand(int ix) const {
 
 void BaseCommand::addSubCommand(BaseCommand * subCommand) {
 	m_commands.append(subCommand);
+#ifndef QT_NO_DEBUG
+	if (m_sketchWidget != NULL) {
+		dynamic_cast<WaitPushUndoStack *>(m_sketchWidget->undoStack())->writeUndo(subCommand, 4, this);
+	}
+#endif
 }
 
 const QUndoCommand * BaseCommand::parentCommand() const {
@@ -100,6 +108,10 @@ void BaseCommand::subRedo() {
 	foreach (BaseCommand * command, m_commands) {
 		command->redo();
 	}
+}
+
+int BaseCommand::index() const {
+	return m_index;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +148,7 @@ AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossVie
 
 void AddItemCommand::undo()
 {
-    m_sketchWidget->deleteItem(m_itemID, true, true);
+    m_sketchWidget->deleteItem(m_itemID, true, true, false);
 }
 
 void AddItemCommand::redo()
@@ -170,7 +182,7 @@ void DeleteItemCommand::undo()
 
 void DeleteItemCommand::redo()
 {
-    m_sketchWidget->deleteItem(m_itemID, true, true);
+    m_sketchWidget->deleteItem(m_itemID, true, true, false);
 }
 
 QString DeleteItemCommand::getParamString() const {
@@ -550,26 +562,26 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 		}
 	}
 
-	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
-	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
+	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
+	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	
 	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {	
-		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 				wire->id(), "connector0", false, true, NULL));
 	}
 	foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {	
-		m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+		addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 				wire->id(), "connector1", false, true, NULL));
 	}
 
-	m_commands.append(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
+	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), NULL));
 }
 
 
 void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, int oldNetCount, int oldNetRoutedCount, int oldConnectorsLeftToRoute, int oldJumpers,
 										  int newNetCount, int newNetRoutedCount, int newConnectorsLeftToRoute, int newJumpers)
 {
-	m_commands.append(new RoutingStatusCommand(sketchWidget, oldNetCount, oldNetRoutedCount, oldConnectorsLeftToRoute,  oldJumpers,
+	addSubCommand(new RoutingStatusCommand(sketchWidget, oldNetCount, oldNetRoutedCount, oldConnectorsLeftToRoute,  oldJumpers,
 										   newNetCount, newNetRoutedCount, newConnectorsLeftToRoute, newJumpers, NULL));
 }
 
@@ -608,13 +620,13 @@ void SwapCommand::addDisconnect(class ConnectorItem * from, class ConnectorItem 
 {
 	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(m_sketchWidget, BaseCommand::CrossView, from->attachedToID(), from->connectorSharedID(),
 																to->attachedToID(), to->connectorSharedID(), false, true, NULL);
-	m_commands.append(ccc);
+	addSubCommand(ccc);
 	ccc->redo();
 }
 
 void SwapCommand::addAfterDisconnect() {
 	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(m_sketchWidget, false, NULL);
-	m_commands.append(cuw);
+	addSubCommand(cuw);
 	cuw->redo();
 }
 
@@ -737,17 +749,17 @@ void RatsnestCommand::redo() {
 
 void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest, bool select) 
 {
-	m_commands.append(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), true, -1, NULL));
-	m_commands.append(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
-	m_commands.append(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
-	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorSharedID(),
+	addSubCommand(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), true, -1, NULL));
+	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
+	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
+	addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorSharedID(),
 			wire->id(), "connector0", true, true, NULL));
-	m_commands.append(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorSharedID(),
+	addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, dest->attachedToID(), dest->connectorSharedID(),
 			wire->id(), "connector1", true, true, NULL));
 	if (!select) {
 		SelectItemCommand * sic = new SelectItemCommand(sketchWidget, SelectItemCommand::NormalDeselect, NULL);
 		sic->addRedo(wire->id());
-		m_commands.append(sic);
+		addSubCommand(sic);
 	}
 
 }
@@ -938,28 +950,45 @@ void ResizeNoteCommand::redo()
     m_sketchWidget->resizeNote(m_itemID, m_newSize);
 }
 
+QString ResizeNoteCommand::getParamString() const {
+	return QString("ResizeNoteCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 oldsz:%2 %3 newsz:%4 %5") 
+			.arg(m_itemID).arg(m_oldSize.width()).arg(m_oldSize.height()).arg(m_newSize.width()).arg(m_newSize.height());
 
-GroupCommand::GroupCommand(SketchWidget* sketchWidget, long itemID, const ViewGeometry & viewGeometry, QUndoCommand *parent)
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+GroupCommand::GroupCommand(SketchWidget* sketchWidget, const QString & moduleID, long itemID, const ViewGeometry & viewGeometry, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
 {
     m_itemID = itemID;
+	m_moduleID = moduleID;
 	m_viewGeometry = viewGeometry;
 }
 
 void GroupCommand::undo()
 {
-	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView);
+	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView, false);
 }
 
 void GroupCommand::redo()
 {
-    m_sketchWidget->group(m_itemID, m_itemIDs, m_viewGeometry, true);
+    m_sketchWidget->group(m_moduleID, m_itemID, m_itemIDs, m_viewGeometry, true);
 }
 
 void GroupCommand::addItemID(long itemID) {
 	m_itemIDs.append(itemID);
 }
 
+QString GroupCommand::getParamString() const {
+	return QString("GroupCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 moduleID:%2").arg(m_itemID).arg(m_moduleID);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 SetConnectorExternalCommand::SetConnectorExternalCommand(SketchWidget* sketchWidget, long itemID, const QString & connectorID, bool external, QUndoCommand *parent)
     : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
@@ -978,5 +1007,15 @@ void SetConnectorExternalCommand::redo()
 {
     m_sketchWidget->setConnectorExternal(m_itemID, m_connectorID, m_external);
 }
+
+QString SetConnectorExternalCommand::getParamString() const {
+	return QString("SetConnectorExternalCommand ") 
+		+ BaseCommand::getParamString()
+		+ QString(" id:%1 connector:%2 external:%3") 
+			.arg(m_itemID).arg(m_connectorID).arg(m_external);
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

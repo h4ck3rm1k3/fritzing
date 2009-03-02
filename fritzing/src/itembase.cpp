@@ -84,6 +84,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
+	//DebugDialog::debug(QString("itembase %1").arg(QString::number((long) static_cast<QGraphicsItem *>(this), 16)));
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;
@@ -105,6 +106,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 }
 
 ItemBase::~ItemBase() {
+	//DebugDialog::debug(QString("deleting %1").arg(m_id));
 	if (m_partLabel) {
 		delete m_partLabel;
 		m_partLabel = NULL;
@@ -1025,4 +1027,28 @@ void ItemBase::collectWireConnectees(QSet<class Wire *> & wires) {
 
 void ItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	Q_UNUSED(items);
+}
+
+void ItemBase::prepareGeometryChange() {
+	GraphicsSvgLineItem::prepareGeometryChange();
+}
+
+void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
+{
+	streamWriter.writeAttribute("x", QString::number(m_viewGeometry.loc().x()));
+	streamWriter.writeAttribute("y", QString::number(m_viewGeometry.loc().y()));
+	if (!m_viewGeometry.transform().isIdentity()) {
+		streamWriter.writeStartElement("transform");
+		streamWriter.writeAttribute("m11", QString::number(m_viewGeometry.transform().m11()));
+		streamWriter.writeAttribute("m12", QString::number(m_viewGeometry.transform().m12()));
+		streamWriter.writeAttribute("m13", QString::number(m_viewGeometry.transform().m13()));
+		streamWriter.writeAttribute("m21", QString::number(m_viewGeometry.transform().m21()));
+		streamWriter.writeAttribute("m22", QString::number(m_viewGeometry.transform().m22()));
+		streamWriter.writeAttribute("m23", QString::number(m_viewGeometry.transform().m23()));
+		streamWriter.writeAttribute("m31", QString::number(m_viewGeometry.transform().m31()));
+		streamWriter.writeAttribute("m32", QString::number(m_viewGeometry.transform().m32()));
+		streamWriter.writeAttribute("m33", QString::number(m_viewGeometry.transform().m33()));
+		streamWriter.writeEndElement();
+	}
+
 }

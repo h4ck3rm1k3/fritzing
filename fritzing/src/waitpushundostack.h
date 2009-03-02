@@ -44,13 +44,14 @@ public:
 #ifndef QT_NO_DEBUG
 public:
 	void push(QUndoCommand *);
-	void writeUndo(const QUndoCommand *, int indent);
+	void writeUndo(const QUndoCommand *, int indent, const class BaseCommand * parent);
+
 protected:
 	QFile m_file;
 #endif
-
 protected:
 	void clearDeadTimers();
+
 
 protected:
 	QList<QTimer *> m_deadTimers;

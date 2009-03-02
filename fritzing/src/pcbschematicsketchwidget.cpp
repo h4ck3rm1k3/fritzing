@@ -224,7 +224,7 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 
 	foreach (Wire * wire, deleteWires) {
 		command->addWire(this, wire);
-		deleteItem(wire, true, false);
+		deleteItem(wire, true, false, false);
 	}
 }
 

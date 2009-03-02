@@ -116,22 +116,7 @@ void PaletteItemBase::moveItem(ViewGeometry & viewGeometry) {
 
 void PaletteItemBase::saveInstanceLocation(QXmlStreamWriter & streamWriter)
 {
-	streamWriter.writeAttribute("x", QString::number(m_viewGeometry.loc().x()));
-	streamWriter.writeAttribute("y", QString::number(m_viewGeometry.loc().y()));
-	if (!m_viewGeometry.transform().isIdentity()) {
-		streamWriter.writeStartElement("transform");
-		streamWriter.writeAttribute("m11", QString::number(m_viewGeometry.transform().m11()));
-		streamWriter.writeAttribute("m12", QString::number(m_viewGeometry.transform().m12()));
-		streamWriter.writeAttribute("m13", QString::number(m_viewGeometry.transform().m13()));
-		streamWriter.writeAttribute("m21", QString::number(m_viewGeometry.transform().m21()));
-		streamWriter.writeAttribute("m22", QString::number(m_viewGeometry.transform().m22()));
-		streamWriter.writeAttribute("m23", QString::number(m_viewGeometry.transform().m23()));
-		streamWriter.writeAttribute("m31", QString::number(m_viewGeometry.transform().m31()));
-		streamWriter.writeAttribute("m32", QString::number(m_viewGeometry.transform().m32()));
-		streamWriter.writeAttribute("m33", QString::number(m_viewGeometry.transform().m33()));
-		streamWriter.writeEndElement();
-	}
-
+	saveLocAndTransform(streamWriter);
 }
 
 void PaletteItemBase::syncKinSelection(bool selected, PaletteItemBase * /* originator */) {

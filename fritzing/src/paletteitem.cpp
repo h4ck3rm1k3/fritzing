@@ -114,7 +114,6 @@ void PaletteItem::removeLayerKin() {
 	}
 
 	m_layerKin.clear();
-	// free the items?
 }
 
 void PaletteItem::syncKinSelection(bool selected, PaletteItemBase * originator) {

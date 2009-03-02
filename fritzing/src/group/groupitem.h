@@ -42,6 +42,7 @@ public:
 	void flipItem(Qt::Orientations orientation);
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
+	void removeLayerKin();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

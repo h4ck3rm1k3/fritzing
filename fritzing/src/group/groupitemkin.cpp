@@ -24,23 +24,6 @@ $Date$
 
 ********************************************************************/
 
-// TODO:
-//	** figure out which layer the grouped items are on and get the next z id
-//	** sort itembases by z
-//	layerkin
-//	save and load
-//	delete
-//	undo delete
-//	rotate/flip
-//	undo rotate/flip
-//	add to bin
-//	open in new sketch (edit)
-//	** z-order manipulation
-//	hide/show layer (still shows group selection box)
-//	copy/paste
-//  select external connections
-
-
 
 #include "groupitemkin.h"
 

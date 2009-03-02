@@ -191,7 +191,7 @@ void FSvgRenderer::calcPrinterScale() {
 
 	QSize size = itemBase->size();
 	QString filename = dynamic_cast<PaletteItemBase *>(itemBase)->filename();
-	m_breadboardGraphicsView->deleteItem(itemBase, true, false);
+	m_breadboardGraphicsView->deleteItem(itemBase, true, false, false);
 
 	qreal width = getSvgWidthInInches(filename);
 	if (width <= 0) return;

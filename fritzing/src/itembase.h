@@ -147,6 +147,7 @@ public:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	virtual void collectWireConnectees(QSet<class Wire *> & wires);
 	virtual void collectFemaleConnectees(QSet<ItemBase *> & items);
+	void prepareGeometryChange();
 
 
 public:
@@ -196,7 +197,7 @@ protected:
 	void ensureUniqueTitle(QString &title);
 	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
 	void transformItem(QTransform currTransf);
-
+	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
 
 
 protected:

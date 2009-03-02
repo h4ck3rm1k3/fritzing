@@ -32,6 +32,7 @@ $Date$
 
 FGraphicsScene::FGraphicsScene( QObject * parent) : QGraphicsScene(parent)
 {
+	//setItemIndexMethod(QGraphicsScene::NoIndex);
 }
 
 void FGraphicsScene::drawItems ( QPainter * painter, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget * widget)

@@ -200,12 +200,14 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 		streamWriter.writeEndElement();		//instance
 	}
 
-	QList<QObject *>::const_iterator i;
-    for (i = children().constBegin(); i != children().constEnd(); ++i) {
-		ModelPart* mp = qobject_cast<ModelPart *>(*i);
-		if (mp == NULL) continue;
+	if (this->itemType() != ModelPart::Module) {
+		QList<QObject *>::const_iterator i;
+		for (i = children().constBegin(); i != children().constEnd(); ++i) {
+			ModelPart* mp = qobject_cast<ModelPart *>(*i);
+			if (mp == NULL) continue;
 
-		mp->saveInstances(streamWriter, false);
+			mp->saveInstances(streamWriter, false);
+		}
 	}
 
 	if (startDocument) {

@@ -408,7 +408,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 		if (m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, id)) {
 			BaseCommand * parentCommand = new BaseCommand(BaseCommand::CrossView, this, NULL);
 			loadFromModel(modelParts, BaseCommand::CrossView, parentCommand);
-			GroupCommand * groupCommand = new GroupCommand(this, BaseCommand::CrossView, viewGeometry, parentCommand);
+			GroupCommand * groupCommand = new GroupCommand(this, moduleID, id, viewGeometry, parentCommand);
 			for (int i = 0; i < parentCommand->childCount(); i++) {
 				const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
 				if (addItemCommand == NULL) continue;
@@ -416,8 +416,8 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 				groupCommand->addItemID(addItemCommand->itemID());
 			}
 
-			m_undoStack->push(parentCommand);
 			originatingCommand->addSubCommand(parentCommand);
+			parentCommand->redo();				// trigger  module creation
 			
 		}
 
@@ -645,15 +645,15 @@ ItemBase * SketchWidget::findItem(long id) {
 	return NULL;
 }
 
-void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit) {
+void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool later) {
 	DebugDialog::debug(QString("delete item (1) %1 %2 %3").arg(id).arg(doEmit).arg(m_viewIdentifier) );
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		deleteItem(pitem, deleteModelPart, doEmit);
+		deleteItem(pitem, deleteModelPart, doEmit, later);
 	}
 }
 
-void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit)
+void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
 {
 	if (m_infoView != NULL) {
 		m_infoView->unregisterCurrentItemIf(itemBase->id());
@@ -675,7 +675,12 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 		delete modelPart;
 	}
 
-	delete itemBase;
+	if (later) {
+		itemBase->deleteLater();
+	}
+	else {
+		delete itemBase;
+	}
 
 	if (doEmit) {
 		emit itemDeletedSignal(id);
@@ -1691,7 +1696,7 @@ void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeome
 void SketchWidget::sketchWidget_itemDeleted(long id) {
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		deleteItem(pitem, false, false);
+		deleteItem(pitem, false, false, false);
 	}
 }
 
@@ -1771,11 +1776,11 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	if(pitem) m_lastPaletteItemSelected = pitem;
 }
 
-void SketchWidget::group(long itemID, QList<long> & itemIDs, const ViewGeometry & viewGeometry, bool doEmit)
+void SketchWidget::group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry & viewGeometry, bool doEmit)
 {
-	ModelPart * modelPart = m_sketchModel->findModelPart(GroupItem::moduleIDName, itemID);
+	ModelPart * modelPart = m_sketchModel->findModelPart(moduleID, itemID);
 	if (modelPart == NULL) {
-		modelPart = m_paletteModel->retrieveModelPart(GroupItem::moduleIDName);
+		modelPart = m_paletteModel->retrieveModelPart(moduleID);
 		if (modelPart == NULL) return;
 
 		// TODO: what if this is a recursive group, then we shouldn't add the modelpart to the root of the sketchmodel
@@ -1806,7 +1811,7 @@ void SketchWidget::group(long itemID, QList<long> & itemIDs, const ViewGeometry 
 	groupItem->setPos(viewGeometry.loc());
 
 	if (doEmit) {
-		emit groupSignal(itemID, itemIDs, viewGeometry, false);
+		emit groupSignal(moduleID, itemID, itemIDs, viewGeometry, false);
 	}
 }
 
