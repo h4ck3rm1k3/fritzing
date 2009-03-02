@@ -148,7 +148,7 @@ INSTALLED_APPS = (
     'account',
     'misc',
     'tools',
-    'partslib',
+    'parts',
     'downloads',
 #    'south',
 )
