@@ -1,0 +1,17 @@
+django-pagination
+django-dbtemplates
+django-robots
+django-templatesadmin
+
+http://django-mptt.googlecode.com/svn/trunk/
+http://django-tagging.googlecode.com/svn/trunk/
+http://django-page-cms.googlecode.com/svn/trunk/
+http://django-template-utils.googlecode.com/svn/trunk/
+http://django-reversion.googlecode.com/svn/trunk/src/
+http://django-command-extensions.googlecode.com/svn/trunk/
+http://sorl-thumbnail.googlecode.com/svn/trunk/
+
+-e svn+http://django-threadedcomments.googlecode.com/svn/trunk/#egg=django-threadedcomments
+-e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
+-e git://github.com/jezdez/django-forum.git#egg=django-forum
+-e git://github.com/jezdez/django-ticker.git#egg=django-ticker

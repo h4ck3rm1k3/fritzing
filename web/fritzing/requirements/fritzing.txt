@@ -1,1 +1,0 @@
--e git://github.com/jezdez/django-forum.git#django-forum
