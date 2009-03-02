@@ -1,1 +1,4 @@
-This is the branch for the new fritzing.org site.
+This is the code for the new fritzing.org site.
+
+It's based on Django (http://djangoproject.com) and uses some parts of Pinax 
+(http://pinaxproject.com).
