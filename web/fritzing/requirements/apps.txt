@@ -2,6 +2,8 @@ django-pagination
 django-dbtemplates
 django-robots
 django-templatesadmin
+django-reversion
+South
 
 http://django-mptt.googlecode.com/svn/trunk/
 http://django-tagging.googlecode.com/svn/trunk/
@@ -10,6 +12,9 @@ http://django-template-utils.googlecode.com/svn/trunk/
 http://django-reversion.googlecode.com/svn/trunk/src/
 http://django-command-extensions.googlecode.com/svn/trunk/
 http://sorl-thumbnail.googlecode.com/svn/trunk/
+http://django-emailthis.googlecode.com/svn/trunk/
+http://django-treemenus.googlecode.com/svn/trunk/
+http://django-contact-form.googlecode.com/svn/trunk/
 
 -e svn+http://django-threadedcomments.googlecode.com/svn/trunk/#egg=django-threadedcomments
 -e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
