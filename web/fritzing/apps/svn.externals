@@ -1,8 +1,0 @@
-template_utils http://django-template-utils.googlecode.com/svn/trunk/template_utils
-filebrowser http://django-filebrowser.googlecode.com/svn/trunk
-sorl http://sorl-thumbnail.googlecode.com/svn/trunk/sorl
-reversion http://django-reversion.googlecode.com/svn/trunk/src/reversion/
-emailthis http://django-emailthis.googlecode.com/svn/trunk/emailthis/
-threadedcomments http://django-threadedcomments.googlecode.com/svn/trunk/threadedcomments/
-treemenus http://django-treemenus.googlecode.com/svn/trunk/treemenus/
-contact_form http://django-contact-form.googlecode.com/svn/trunk/contact_form/
