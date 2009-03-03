@@ -922,7 +922,7 @@ void MainWindow::saveBundledSketch() {
 		QList<SvgAndPartFilePath> views = mp->getAvailableViewFiles();
 		foreach(SvgAndPartFilePath view, views) {
 			if(view.coreContribOrUser() != "core") {
-				QFile file(view.absolutePath());
+				QFile file(view.concat());
 				QString svgRelativePath = view.relativePath();
 				file.copy(destFolder.path()+"/"+ZIP_SVG+svgRelativePath.replace("/","."));
 			}
@@ -944,9 +944,9 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 	QDir destFolder = QDir::temp();
 
 	createFolderAnCdIntoIt(destFolder, getRandText());
-	QString unzipDir = destFolder.path();
+	QString unzipDirPath = destFolder.path();
 
-	if(!unzipTo(fileName, unzipDir)) {
+	if(!unzipTo(fileName, unzipDirPath)) {
 		QMessageBox::warning(
 			this,
 			tr("Fritzing"),
@@ -954,16 +954,19 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 		);
 	}
 
-	moveToPartsFolderAndLoad(unzipDir);
+	QDir unzipDir(unzipDirPath);
+	MainWindow *mw = new MainWindow(m_paletteModel, m_refModel);
 
-	rmdir(unzipDir);
+	moveToPartsFolder(unzipDir,mw);
+	loadBundledSketchAux(unzipDir, mw);
+
+	rmdir(unzipDirPath);
 }
 
-void MainWindow::moveToPartsFolderAndLoad(const QString &unzipDirPath) {
-	QDir unzipDir(unzipDirPath);
+void MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw) {
 	QStringList namefilters;
 
-	MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
+	Q_ASSERT(mw);
 
 	namefilters << ZIP_SVG+"*";
 	foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // svg files
@@ -975,8 +978,10 @@ void MainWindow::moveToPartsFolderAndLoad(const QString &unzipDirPath) {
 	foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // part files
 		mw->copyToPartsFolder(file);
 	}
+}
 
-	namefilters.clear();
+void MainWindow::loadBundledSketchAux(QDir &unzipDir, MainWindow* mw) {
+	QStringList namefilters;
 	namefilters << "*"+FritzingSketchExtension;
 
 	// the sketch itself

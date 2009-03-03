@@ -68,6 +68,10 @@ public:
 	void setRelativePath(const QString &fileRelativePath) {
 		third = fileRelativePath;
 	}
+
+	QString concat() {
+		return first+"/"+second+"/"+third;
+	}
 };
 
 #endif /* SVGANDPARTFILEPATH_H_ */

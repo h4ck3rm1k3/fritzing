@@ -237,7 +237,7 @@ protected:
 	void exportToGerber();
     void exportBOM();
 	void exportDiy(bool wantPDF, bool wantSVG);
-	
+
 	QList<QWidget*> getButtonsForView(ItemBase::ViewIdentifier viewId);
 
 	const QString untitledFileName();
@@ -250,7 +250,8 @@ protected:
 	void createTraceMenuActions();
 	void hideShowTraceMenu();
 
-	void moveToPartsFolderAndLoad(const QString &unzipDir);
+	void moveToPartsFolder(QDir &unzipDir, MainWindow* mw);
+	void loadBundledSketchAux(QDir &unzipDir, MainWindow* mw);
 	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 	void copyToPartsFolder(const QFileInfo& file, const QString &destFolder = "contrib");
 
