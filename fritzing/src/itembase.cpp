@@ -45,6 +45,7 @@ QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
 QString ItemBase::partInstanceDefaultTitle;
+QString ItemBase::moduleInstanceDefaultTitle;
 QList<ItemBase *> ItemBase::emptyList;
 
 const QColor ItemBase::hoverColor(0,0,0);
@@ -242,6 +243,7 @@ void ItemBase::initNames() {
 		names.insert(ItemBase::SchematicView, new StringTriple("schematicView", QObject::tr("schematic view"), "schematic"));
 		names.insert(ItemBase::PCBView, new StringTriple("pcbView", QObject::tr("pcb view"), "pcb"));
 		partInstanceDefaultTitle = tr("Part");
+		moduleInstanceDefaultTitle = tr("Module");
 	}
 }
 
@@ -730,7 +732,7 @@ void ItemBase::setInstanceTitleTooltip(const QString &text) {
 
 void ItemBase::setDefaultTooltip() {
 	if (m_modelPart) {
-		QString title = ItemBase::partInstanceDefaultTitle;
+		QString title = (m_modelPart->itemType() == ModelPart::Module) ? ItemBase::moduleInstanceDefaultTitle : ItemBase::partInstanceDefaultTitle;
 		QString inst = instanceTitle();
 		if(!inst.isNull() && !inst.isEmpty()) {
 			title = inst;

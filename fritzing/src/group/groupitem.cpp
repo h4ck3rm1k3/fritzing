@@ -35,9 +35,10 @@ $Date$
 //  ** how to hide non-external connectors
 //  trace wires and ratsnest wires in modules
 //  autorouting
-//  save and load sketch with group(s)
+//  ** save with group(s)
+//  load sketch with group(s)
 //  ** drop group into sketch
-//		command objects go where?
+//		** command objects go where?
 //	export with groups
 //	recursive groups
 //		recursive modelpart ownership

@@ -352,7 +352,7 @@ void MainWindow::connectPairs() {
 void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 {
 
-	bool succeeded = connect(signaller, SIGNAL(itemAddedSignal(ModelPart *, const ViewGeometry & , long )),
+	bool succeeded = connect(signaller, SIGNAL(itemAddedSignal(ModelPart *, const ViewGeometry & , long)),
 							 slotter, SLOT(sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long)));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(itemDeletedSignal(long)),
@@ -394,10 +394,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(groupSignal(const QString &, long, QList<long> &, const ViewGeometry &, bool)),
 									 slotter, SLOT(group(const QString &, long, QList<long> &, const ViewGeometry &, bool)) );
-
-
-		void group(long itemID, QList<long> & itemIDs, bool doEmit);
-
+	succeeded = succeeded && connect(signaller, SIGNAL(makeModuleSignal(ModelPart *, QList<ModelPart *> &, bool , const ViewGeometry &, long , AddDeleteItemCommand * )),
+									 slotter, SLOT(makeModule(ModelPart *, QList<ModelPart *> &, bool , const ViewGeometry &, long , AddDeleteItemCommand * )),
+									 Qt::DirectConnection);
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

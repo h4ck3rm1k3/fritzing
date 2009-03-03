@@ -169,6 +169,10 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 	setConnector0Rect();
 	setConnector1Rect();
 	m_viewGeometry.setLine(this->line());
+	
+   	QBrush brush(QColor(0, 0, 0));
+	QPen pen(brush, penWidth, Qt::SolidLine, Qt::RoundCap);
+	this->setPen(pen);
 
 	m_pen.setCapStyle(Qt::RoundCap);
 	m_shadowPen.setCapStyle(Qt::RoundCap);
@@ -190,10 +194,7 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 			break;
 	}
 
-   	QBrush brush(QColor(0, 0, 0));
-	QPen pen(brush, penWidth, Qt::SolidLine, Qt::RoundCap);
-	this->setPen(pen);
-
+	prepareGeometryChange();
 }
 
 void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {

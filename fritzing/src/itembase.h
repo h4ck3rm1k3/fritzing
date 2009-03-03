@@ -71,6 +71,7 @@ public:
 	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
 	static ViewLayer::ViewLayerID defaultConnectorLayer(ItemBase::ViewIdentifier viewId);
 	static QString partInstanceDefaultTitle;
+	static QString moduleInstanceDefaultTitle;
 	static QList<ItemBase *> emptyList;
 
 

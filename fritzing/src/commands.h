@@ -49,7 +49,7 @@ public:
 
 	BaseCommand::CrossViewType crossViewType() const;
 	void setCrossViewType(BaseCommand::CrossViewType);
-	class SketchWidget* sketchWidget();
+	class SketchWidget* sketchWidget() const;
 	int subCommandCount() const;
 	const BaseCommand * subCommand(int index) const;
 	virtual QString getDebugString() const;
@@ -57,6 +57,8 @@ public:
 	void addSubCommand(BaseCommand * subCommand);
 	void subUndo();
 	void subRedo();
+	void subUndo(int index);
+	void subRedo(int index);
 	int index() const;
 
 protected:

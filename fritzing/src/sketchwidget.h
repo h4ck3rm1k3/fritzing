@@ -88,7 +88,7 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
+	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest);
     ItemBase* loadFromModel(ModelPart *, const ViewGeometry&);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
@@ -142,7 +142,6 @@ public:
 	PaletteModel * paletteModel();
     virtual ItemBase * addItemAux(ModelPart *, const ViewGeometry &, long id, PaletteItem * paletteItem, bool doConnectors);
 
-    void viewItemInfo(long id);
     bool swappingEnabled(ItemBase *);
 
 	virtual void addViewLayers();
@@ -334,6 +333,7 @@ signals:
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
+	void makeModuleSignal(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -365,6 +365,7 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void ensureFixedItemsPositions();
+	void makeModule(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 public slots:
 	void swapSelected(const QString &moduleId);

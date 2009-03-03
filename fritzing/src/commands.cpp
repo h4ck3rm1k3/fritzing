@@ -60,7 +60,7 @@ void BaseCommand::setCrossViewType(BaseCommand::CrossViewType crossViewType) {
 	m_crossViewType = crossViewType;
 }
 
-SketchWidget* BaseCommand::sketchWidget() {
+SketchWidget* BaseCommand::sketchWidget() const {
 	return m_sketchWidget;
 }
 
@@ -110,6 +110,19 @@ void BaseCommand::subRedo() {
 	}
 }
 
+void BaseCommand::subUndo(int index) {
+	if (index < 0 || index >= m_commands.count()) return;
+
+	m_commands[index]->undo();
+
+}
+
+void BaseCommand::subRedo(int index) {
+	if (index < 0 || index >= m_commands.count()) return;
+
+	m_commands[index]->redo();
+}
+
 int BaseCommand::index() const {
 	return m_index;
 }
@@ -155,7 +168,6 @@ void AddItemCommand::redo()
 {
 	if (!m_firstRedo || m_doFirstRedo) {
 		m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, this);
-		m_sketchWidget->selectItem(m_itemID,true,m_updateInfoView, m_crossViewType == BaseCommand::CrossView);
 	}
 	m_firstRedo = false;
 }
@@ -975,7 +987,7 @@ void GroupCommand::undo()
 
 void GroupCommand::redo()
 {
-    m_sketchWidget->group(m_moduleID, m_itemID, m_itemIDs, m_viewGeometry, true);
+    m_sketchWidget->group(m_moduleID, m_itemID, m_itemIDs, m_viewGeometry, m_crossViewType == BaseCommand::CrossView);
 }
 
 void GroupCommand::addItemID(long itemID) {

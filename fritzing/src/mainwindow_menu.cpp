@@ -556,17 +556,17 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	progressBar.setValue(55);
 	m_statusBar->showMessage(tr("loading %1 (breadboard)").arg(fileInfo.fileName()));
 
-	m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL);
+	m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false);
 
 	progressBar.setValue(70);
 	m_statusBar->showMessage(tr("loading %1 (pcb)").arg(fileInfo.fileName()));
 
-	m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL);
+	m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false);
 
 	progressBar.setValue(85);
 	m_statusBar->showMessage(tr("loading %1 (schematic)").arg(fileInfo.fileName()));
 
-	m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL);
+	m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false);
 
 	progressBar.setValue(98);
 	QApplication::processEvents();
@@ -615,9 +615,9 @@ void MainWindow::paste() {
 	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts)) {
 		QUndoCommand * parentCommand = new QUndoCommand("Paste");
 
-		m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand);
-		m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand);
-		m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand);
+		m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true);
+		m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true);
+		m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true);
 
 		m_undoStack->push(parentCommand);
 	}

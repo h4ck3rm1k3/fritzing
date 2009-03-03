@@ -187,7 +187,7 @@ ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& 
 	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), NULL, true);
 }
 
-void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand) {
+void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
@@ -328,7 +328,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 														ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
 														ItemBase::getNextID(modelIndex), toConnectorID,
 														true, true, parentCommand);
-							if (doRatsnestOnCopy()) {
+							if (doRatsnest && doRatsnestOnCopy()) {
 								new RatsnestCommand(this, BaseCommand::SingleView,
 															ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
 															ItemBase::getNextID(modelIndex), toConnectorID,
@@ -393,37 +393,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 
 	if (modelPart->itemType() == ModelPart::Module) {
 		QList<ModelPart *> modelParts;
-
-		if (originatingCommand->subCommandCount() > 0) {
-			// don't add/delete the item again, trigger the subcommand
-			if (dynamic_cast<AddItemCommand *>(originatingCommand) == NULL) {
-				originatingCommand->subUndo();
-			}
-			else {
-				originatingCommand->subRedo();
-			}
-			return NULL;
-		}
-
-		if (m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, id)) {
-			BaseCommand * parentCommand = new BaseCommand(BaseCommand::CrossView, this, NULL);
-			loadFromModel(modelParts, BaseCommand::CrossView, parentCommand);
-			GroupCommand * groupCommand = new GroupCommand(this, moduleID, id, viewGeometry, parentCommand);
-			for (int i = 0; i < parentCommand->childCount(); i++) {
-				const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
-				if (addItemCommand == NULL) continue;
-
-				groupCommand->addItemID(addItemCommand->itemID());
-			}
-
-			originatingCommand->addSubCommand(parentCommand);
-			parentCommand->redo();				// trigger  module creation
-			
-		}
-
-		// need to recursively load the module
-		// how to deal with command objects?
-		// how to deal with grouping wires across views
+		makeModule(modelPart, modelParts, true, viewGeometry, id, originatingCommand);
 		return NULL;
 	}
 
@@ -436,6 +406,47 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	}
 
 	return itemBase;
+}
+
+void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelParts, bool doEmit, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand) 
+{
+	bool gotOne = false;
+	if (originatingCommand) {
+		for (int i = 0; i < originatingCommand->subCommandCount(); i++) {
+			const BaseCommand * baseCommand = originatingCommand->subCommand(i);
+			if (baseCommand->sketchWidget() == this) {
+				originatingCommand->subRedo(i);
+				gotOne = true;
+				break;
+			}
+		}
+	}
+	
+	if (!gotOne) {
+		if (modelParts.count() <= 0) {
+			if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts)) {
+				return;
+			}
+		}
+
+		BaseCommand * parentCommand = new BaseCommand(BaseCommand::SingleView, this, NULL);
+		loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, false);
+		GroupCommand * groupCommand = new GroupCommand(this, modelPart->moduleID(), id, viewGeometry, parentCommand);
+		for (int i = 0; i < parentCommand->childCount(); i++) {
+			const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
+			if (addItemCommand == NULL) continue;
+
+			groupCommand->addItemID(addItemCommand->itemID());
+		}
+
+		originatingCommand->addSubCommand(parentCommand);
+		parentCommand->redo();				// trigger  module creation		
+	}
+
+	if (doEmit) {
+		emit makeModuleSignal(modelPart, modelParts, false, viewGeometry, id, originatingCommand);
+	}
+
 }
 
 ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, PaletteItem* partsEditorPaletteItem) {
@@ -959,7 +970,9 @@ void SketchWidget::selectItem(long id, bool state, bool updateInfoView, bool doE
 	}
 
 	PaletteItem *pitem = dynamic_cast<PaletteItem*>(item);
-	if(pitem) m_lastPaletteItemSelected = pitem;
+	if(pitem) {
+		m_lastPaletteItemSelected = pitem;
+	}
 }
 
 void SketchWidget::selectDeselectAllCommand(bool state) {
@@ -1240,6 +1253,8 @@ void SketchWidget::dropEvent(QDropEvent *event)
 			crossViewType = BaseCommand::SingleView;
 		}
 		new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, parentCommand);
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->addRedo(fromID);
 
 		if (modelPart->itemType() == ModelPart::Wire && !m_lastColorSelected.isEmpty()) {
 			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, UNROUTED_OPACITY, UNROUTED_OPACITY, parentCommand);
@@ -1278,14 +1293,6 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		QGraphicsView::dropEvent(event);
 	}
 
-}
-
-void SketchWidget::viewItemInfo(long id) {
-	ItemBase *item = findItem(id);
-	if (item == NULL) return;
-
-	m_lastPaletteItemSelected = dynamic_cast<PaletteItem*>(item);
-	InfoGraphicsView::viewItemInfo(item);
 }
 
 SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand * parentCommand) {
@@ -1773,7 +1780,9 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 	}
 
 	PaletteItem *pitem = dynamic_cast<PaletteItem*>(item);
-	if(pitem) m_lastPaletteItemSelected = pitem;
+	if(pitem) {
+		m_lastPaletteItemSelected = pitem;
+	}
 }
 
 void SketchWidget::group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry & viewGeometry, bool doEmit)
