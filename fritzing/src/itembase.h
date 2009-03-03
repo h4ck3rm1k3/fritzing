@@ -13,7 +13,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU General Public Licensetriple
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
@@ -42,7 +42,6 @@ $Date$
 #include "viewlayer.h"
 #include "misc.h"
 #include "graphicssvglineitem.h"
-#include "triple.h"
 
 typedef QMultiHash<class ConnectorItem *, class ConnectorItem *> ConnectorPairHash;
 
@@ -223,7 +222,7 @@ protected:
 
 protected:
 	static long nextID;
-	static QHash <ViewIdentifier, StringTriple * > names;
+	static QHash <ViewIdentifier, class NameTriple * > names;
 	const static QColor hoverColor;
 	const static qreal hoverOpacity;
 	const static QColor connectorHoverColor;

@@ -487,7 +487,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			Wire * wire = NULL;
 			if (virtualWire) {
 				wire = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
-             				wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
+             	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
 
 				// prevents virtual wires from flashing up on screen
 				wire->setCanChainMultiple(canChainMultiple());
@@ -4195,15 +4195,19 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 
-		if (itemBase->itemType() == ModelPart::Wire) {
-			if (!wireLayers.contains(itemBase->viewLayerID())) {
+		switch (itemBase->itemType()) {
+			case ModelPart::Wire:
+				if (!wireLayers.contains(itemBase->viewLayerID())) {
+					continue;
+				}
+				break;
+			case ModelPart::Module:
+			case ModelPart::Unknown:
 				continue;
-			}
-		}
-		else {
-			if (!partLayers.contains(itemBase->viewLayerID())) {
-				continue;
-			}
+			default:
+				if (!partLayers.contains(itemBase->viewLayerID())) {
+					continue;
+				}
 		}
 
 		itemBases.append(itemBase);

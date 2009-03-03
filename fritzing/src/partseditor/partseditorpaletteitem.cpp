@@ -137,7 +137,7 @@ void PartsEditorPaletteItem::writeXmlLocation(QXmlStreamWriter & /*streamWriter*
 }
 
 void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
-	streamWriter.writeStartElement(names[m_viewIdentifier]->first);
+	streamWriter.writeStartElement(ItemBase::viewIdentifierXmlName(m_viewIdentifier));
 	streamWriter.writeStartElement("layers");
 	streamWriter.writeAttribute("image",m_svgStrings->relativePath());
 		streamWriter.writeStartElement("layer");

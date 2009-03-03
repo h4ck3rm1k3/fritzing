@@ -39,8 +39,42 @@ $Date$
 #include <QTimer>
 #include <QVector>
 
+
+
+/////////////////////////////////
+
+class NameTriple {
+
+public:
+	NameTriple(const QString & _xmlName, const QString & _viewName, const QString & _naturalName) {
+		m_xmlName = _xmlName;
+		m_viewName = _viewName;
+		m_naturalName = _naturalName;
+	}
+
+	QString & xmlName() {
+		return m_xmlName;
+	}
+
+	QString & viewName() {
+		return m_viewName;
+	}
+
+	QString & naturalName() {
+		return m_naturalName;
+	}
+
+protected:
+	QString m_xmlName;
+	QString m_naturalName;
+	QString m_viewName;
+};
+
+
+/////////////////////////////////
+
 long ItemBase::nextID = 0;
-QHash <ItemBase::ViewIdentifier, StringTriple * > ItemBase::names;
+QHash <ItemBase::ViewIdentifier, NameTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
@@ -221,34 +255,34 @@ ModelPartShared * ItemBase::modelPartShared() {
 QString & ItemBase::viewIdentifierName(ItemBase::ViewIdentifier viewIdentifier) {
 	Q_ASSERT(viewIdentifier >= 0);
 	Q_ASSERT(viewIdentifier < ItemBase::ViewCount);
-	return names[viewIdentifier]->second;
+	return names[viewIdentifier]->viewName();
 }
 
 QString & ItemBase::viewIdentifierXmlName(ItemBase::ViewIdentifier viewIdentifier) {
 	Q_ASSERT(viewIdentifier >= 0);
 	Q_ASSERT(viewIdentifier < ItemBase::ViewCount);
-	return names[viewIdentifier]->first;
+	return names[viewIdentifier]->xmlName();
 }
 
 QString & ItemBase::viewIdentifierNaturalName(ItemBase::ViewIdentifier viewIdentifier) {
 	Q_ASSERT(viewIdentifier >= 0);
 	Q_ASSERT(viewIdentifier < ItemBase::ViewCount);
-	return names[viewIdentifier]->third;
+	return names[viewIdentifier]->naturalName();
 }
 
 void ItemBase::initNames() {
 	if (names.count() == 0) {
-		names.insert(ItemBase::IconView, new StringTriple("iconView", QObject::tr("icon view"), "icon"));
-		names.insert(ItemBase::BreadboardView, new StringTriple("breadboardView", QObject::tr("breadboard view"), "breadboard"));
-		names.insert(ItemBase::SchematicView, new StringTriple("schematicView", QObject::tr("schematic view"), "schematic"));
-		names.insert(ItemBase::PCBView, new StringTriple("pcbView", QObject::tr("pcb view"), "pcb"));
+		names.insert(ItemBase::IconView, new NameTriple("iconView", QObject::tr("icon view"), "icon"));
+		names.insert(ItemBase::BreadboardView, new NameTriple("breadboardView", QObject::tr("breadboard view"), "breadboard"));
+		names.insert(ItemBase::SchematicView, new NameTriple("schematicView", QObject::tr("schematic view"), "schematic"));
+		names.insert(ItemBase::PCBView, new NameTriple("pcbView", QObject::tr("pcb view"), "pcb"));
 		partInstanceDefaultTitle = tr("Part");
 		moduleInstanceDefaultTitle = tr("Module");
 	}
 }
 
 void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
-	streamWriter.writeStartElement(names[m_viewIdentifier]->first);
+	streamWriter.writeStartElement(ItemBase::viewIdentifierXmlName(m_viewIdentifier));
 	streamWriter.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 	this->saveGeometry();
 	writeGeometry(streamWriter);
@@ -978,8 +1012,8 @@ QString ItemBase::toolTip2() {
 }
 
 void ItemBase::cleanup() {
-	foreach (StringTriple * stringTriple, names) {
-		delete stringTriple;
+	foreach (NameTriple * nameTriple, names) {
+		delete nameTriple;
 	}
 	names.clear();
 }

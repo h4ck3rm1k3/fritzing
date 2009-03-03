@@ -30,15 +30,12 @@ $Date$
 //		** drag doesn't keep wire connections
 //		connect within
 //  female connectors in modules
-//		what happens to ratsnest wires
 //		connect female connectees
 //  ** how to hide non-external connectors
-//  trace wires and ratsnest wires in modules
-//  autorouting
-//  ** save with group(s)
-//  load sketch with group(s)
-//  ** drop group into sketch
-//		** command objects go where?
+//  trace wires
+//	** ratsnest wires
+//  ratsnest behavior: what if module is separated parts?
+//  autorouting behavior
 //	export with groups
 //	recursive groups
 //		recursive modelpart ownership
@@ -48,8 +45,13 @@ $Date$
 //	delete
 //	undo delete
 //	rotate group bug: connected external wires don't updateConnections
-//	do model parts for grouped items get added as children to the group modelpart?
 
+//	** do model parts for grouped items get added as children to the group modelpart?
+//  ** save sketch with group(s)
+//  ** load sketch with group(s)
+//	** bug: no shadow in grouped wire
+//  ** drop group into sketch
+//		** command objects go where?
 //	** save as group
 //		** store them in the user folder
 //		** add to bin

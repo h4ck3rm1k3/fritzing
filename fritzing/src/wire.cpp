@@ -180,7 +180,7 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 		case ItemBase::BreadboardView:
 			m_pen.setWidth(penWidth - 2);
 			m_shadowPen.setWidth(penWidth);
-                        setColorString("blue", UNROUTED_OPACITY);
+            setColorString("blue", UNROUTED_OPACITY);
 			break;
 		case ItemBase::SchematicView:
 			setColorString("routed", UNROUTED_OPACITY);
@@ -426,13 +426,6 @@ void Wire::setColor(QDomElement & element) {
 	qreal op = element.attribute("opacity").toDouble(&ok);
 	if (!ok) {
 		op = UNROUTED_OPACITY;
-	}
-
-	foreach (QString colorName, colors.keys()) {
-		if (colors.value(colorName).compare(colorString) == 0) {
-			setColorString(colorName, op);
-			return;
-		}
 	}
 
 	setColorString(colorString, op);
@@ -828,6 +821,13 @@ void Wire::setColorString(QString colorName, qreal op) {
 	QString colorString = colors.value(colorName, "");
 	if (colorString.isEmpty()) {
 		colorString = colorName;
+
+		foreach (QString c, colors.keys()) {
+			if (colors.value(c).compare(colorName, Qt::CaseInsensitive) == 0) {
+				colorName = c;
+				break;
+			}
+		}
 	}
 
 	QColor c;

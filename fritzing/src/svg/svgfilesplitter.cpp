@@ -248,6 +248,9 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly);
 		QString data = element.attribute("d");
 		if (!data.isEmpty()) {
+			if (!data.endsWith('z', Qt::CaseInsensitive)) {
+				data.append("Z");
+			}
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
 			PathUserData pathUserData;
 			pathUserData.sNewHeight = sNewHeight;
