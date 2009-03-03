@@ -27,7 +27,7 @@ $Date$
 #ifndef SVGANDPARTFILEPATH_H_
 #define SVGANDPARTFILEPATH_H_
 
-#include "misc.h"
+#include "triple.h"
 #include "debugdialog.h"
 
 /*
