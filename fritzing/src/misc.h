@@ -91,6 +91,7 @@ static const QString ___MacStyle___ = "";
 static const QString FritzingSketchExtension(".fz");
 static const QString FritzingBinExtension(".fzb");
 static const QString FritzingPartExtension(".fzp");
+static const QString FritzingBundledPartExtension(".fzpz");
 static const QString FritzingModuleExtension(".fzm");
 static const QString FritzingBundleExtension(".fzz");
 

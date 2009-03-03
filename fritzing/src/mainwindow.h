@@ -191,6 +191,7 @@ protected slots:
 
 	void saveBundledSketch();
 	void loadBundledSketch(const QString &fileName);
+	void loadBundledPart();
 	void saveAsModule();
 
 	void binSaved(bool hasAlienParts);
@@ -410,6 +411,7 @@ protected:
 	QAction *m_sendToBackAct;
 	QAction *m_groupAct;
 	QAction *m_showPartLabelAct;
+	QAction *m_loadBundledPart;
 
     QAction *m_showAllLayersAct;
 	QAction *m_hideAllLayersAct;
@@ -466,6 +468,7 @@ protected:
     bool m_comboboxChanged;
 
     QStringList m_alienFiles;
+    QString m_alienPartsMsg;
     QStringList m_filesReplacedByAlienOnes;
 
     QStringList m_openExampleActions;

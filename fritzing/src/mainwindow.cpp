@@ -711,9 +711,9 @@ bool MainWindow::whatToDoWithAlienFiles() {
 	if (m_alienFiles.size() > 0) {
 		QMessageBox::StandardButton reply;
 		reply = QMessageBox::question(this, tr("Save %1").arg(QFileInfo(m_fileName).baseName()),
-									 tr("Do you want to keep the parts that were loaded with this shareable sketch %1?")
-									 .arg(QFileInfo(m_fileName).baseName()),
-									 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+						 m_alienPartsMsg
+						 .arg(QFileInfo(m_fileName).baseName()),
+						 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		if (reply == QMessageBox::Yes) {
 			return true;
 		} else if (reply == QMessageBox::No) {
@@ -958,7 +958,38 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 	MainWindow *mw = new MainWindow(m_paletteModel, m_refModel);
 
 	moveToPartsFolder(unzipDir,mw);
+	// the sketch itself
 	loadBundledSketchAux(unzipDir, mw);
+
+	rmdir(unzipDirPath);
+}
+
+void MainWindow::loadBundledPart() {
+	QString fileName = FApplication::getOpenFileName(
+		this,
+		tr("Select a part to import"),
+		defaultSaveFolder(),
+		tr("External Part (*%1)").arg(FritzingBundledPartExtension)
+	);
+	if (fileName.isNull()) return;
+
+	QDir destFolder = QDir::temp();
+
+	createFolderAnCdIntoIt(destFolder, getRandText());
+	QString unzipDirPath = destFolder.path();
+
+	if(!unzipTo(fileName, unzipDirPath)) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Unable to open shareable part %1").arg(fileName)
+		);
+	}
+
+	QDir unzipDir(unzipDirPath);
+	MainWindow *mw = this;
+
+	moveToPartsFolder(unzipDir,mw);
 
 	rmdir(unzipDirPath);
 }
@@ -984,9 +1015,10 @@ void MainWindow::loadBundledSketchAux(QDir &unzipDir, MainWindow* mw) {
 	QStringList namefilters;
 	namefilters << "*"+FritzingSketchExtension;
 
-	// the sketch itself
 	mw->load(unzipDir.entryInfoList(namefilters)[0].filePath(), false);
 	mw->setWindowModified(true);
+
+	m_alienPartsMsg = tr("Do you want to keep the parts that were loaded with this shareable sketch %1?");
 
 	closeIfEmptySketch(mw);
 }
@@ -1016,6 +1048,7 @@ void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFol
 	backupExistingFileIfExists(destFilePath);
 	if(partfile.copy(destFilePath)) {
 		m_alienFiles << destFilePath;
+		m_alienPartsMsg = tr("Do you want to keep the imported parts?");
 	}
 	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
 	m_paletteWidget->addPart(mp);

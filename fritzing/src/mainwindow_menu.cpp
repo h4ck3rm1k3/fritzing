@@ -1004,6 +1004,10 @@ void MainWindow::createPartMenuActions() {
 	m_showPartLabelAct->setStatusTip(tr("Show or hide the label for the selected parts"));
 	m_showPartLabelAct->setCheckable(true);
 	connect(m_showPartLabelAct, SIGNAL(triggered()), this, SLOT(showPartLabels()));
+
+	m_loadBundledPart = new QAction(tr("&Import part..."), this);
+	m_loadBundledPart->setStatusTip(tr("Import a part"));
+	connect(m_loadBundledPart, SIGNAL(triggered()), this, SLOT(loadBundledPart()));
 }
 
 void MainWindow::createViewMenuActions() {
@@ -1185,6 +1189,8 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_showPartLabelAct);
 
 #ifndef QT_NO_DEBUG
+	m_partMenu->addSeparator();
+	m_partMenu->addAction(m_loadBundledPart);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_groupAct);
 #endif
@@ -1877,30 +1883,30 @@ void MainWindow::exportToEagle() {
 		"us know, or contribute.");
 	QMessageBox::information(this, tr("Fritzing"), text);
 	*/
-	
-	QString text = 
+
+	QString text =
 		tr("The Eagle export module is very experimental.  If anything breaks or behaves "
 		"strangely, please let us know.");
 	QMessageBox::information(this, tr("Fritzing"), text);
-	
+
 	QList <ItemBase*> partList;
 
-	// bail out if something is wrong    
+	// bail out if something is wrong
 	// TODO: show an error in QMessageBox
     if(m_currentWidget == NULL) {
 		return;
 	}
 
     m_currentGraphicsView->collectParts(partList);
-	
+
 	QString exportInfoString = tr("parts include:\n");
 	QString exportString = tr("GRID INCH 0.005\n");
-	
-	
+
+
 	for(int i=0; i < partList.size(); i++){
 		QString label = partList.at(i)->instanceTitle();
 		QString desc = partList.at(i)->modelPartShared()->title();
-		
+
 		QHash<QString,QString> properties = partList.at(i)->modelPartShared()->properties();
 		QString package = properties["package"];
 		if (package == NULL) {
@@ -1910,21 +1916,21 @@ void MainWindow::exportToEagle() {
 		exportInfoString += label + tr(" which is a ") + desc + tr(" in a ") + package + tr(" package.\n");
 	}
 	QMessageBox::information(this, tr("Fritzing"), exportInfoString);
-	
+
 	/*
 	QFile fp( fileName );
 	fp.open(QIODevice::WriteOnly);
 	fp.write(bom.toUtf8(),bom.length());
-	fp.close();	
+	fp.close();
 	*/
-	
-	
+
+
 	/*
-	GRID INCH 0.005 
+	GRID INCH 0.005
 	USE '/Applications/eclipse/eagle/lbr/fritzing.lbr';
-	ADD RESISTOR@fritzing 'R_1' R0.000 (2.3055117 2.1307087); 
-	ADD LED@fritzing 'L_2' R0.000 (5.423622 2.425197); 
-	GRID LAST; 
+	ADD RESISTOR@fritzing 'R_1' R0.000 (2.3055117 2.1307087);
+	ADD LED@fritzing 'L_2' R0.000 (5.423622 2.425197);
+	GRID LAST;
 	*/
 }
 
