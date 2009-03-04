@@ -618,9 +618,7 @@ const QString PartsEditorMainWindow::defaultSaveFolder() {
 }
 
 void PartsEditorMainWindow::updateSaveButton() {
-#ifndef QT_NO_DEBUG
 	m_saveButton->setEnabled(m_updateEnabled);
-#endif
 }
 
 bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
