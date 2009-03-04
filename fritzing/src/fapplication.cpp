@@ -179,10 +179,25 @@ void FApplication::setOpenSaveFolder(const QString& path) {
 	} else {
 		m_openSaveFolder = fileInfo.path().remove(fileInfo.fileName());
 	}
+	QSettings settings;
+	settings.setValue("openSaveFolder", m_openSaveFolder);
 }
 
 const QString FApplication::openSaveFolder() {
 	if(m_openSaveFolder == ___emptyString___) {
+		QSettings settings;
+		QString tempFolder = settings.value("openSaveFolder").toString();
+		if (!tempFolder.isEmpty()) {
+			QFileInfo fileInfo(tempFolder);
+			if (fileInfo.exists()) {
+				m_openSaveFolder = tempFolder;
+				return m_openSaveFolder;
+			}
+			else {
+				settings.remove("openSaveFolder");
+			}
+		}
+
 		DebugDialog::debug(QString("default save location: %1").arg(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation)));
 		return QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
 	} else {
