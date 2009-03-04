@@ -20,3 +20,5 @@ http://django-contact-form.googlecode.com/svn/trunk/
 -e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
 -e git://github.com/jezdez/django-forum.git#egg=django-forum
 -e git://github.com/jezdez/django-ticker.git#egg=django-ticker
+-e git://github.com/jezdez/dregni.git#egg=dregni
+-e git://github.com/alex/django-filter.git#egg=django-filter
