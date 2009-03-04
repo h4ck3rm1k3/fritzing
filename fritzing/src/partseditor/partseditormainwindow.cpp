@@ -105,9 +105,10 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 			return;
 		}
 		m_lastOpened = this;
-		m_updateEnabled = CORE_EDITION_ENABLED;
+		m_updateEnabled = false;
 	} else {
-		m_updateEnabled = CORE_EDITION_ENABLED || !modelPart->isCore();
+		// user only allowed to save parts, once he has saved it as a new one
+		m_updateEnabled = modelPart->isCore()? CORE_EDITION_ENABLED: false;
 		m_fileName = modelPart->modelPartShared()->path();
 		setTitle();
 		UntitledPartIndex--; // TODO Mariano: not good enough
@@ -288,9 +289,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 void PartsEditorMainWindow::connectWidgetsToSave(const QList<QWidget*> &widgets) {
 	for(int i=0; i < widgets.size(); i++) {
 		connect(m_saveAsNewPartButton,SIGNAL(clicked()),widgets[i],SLOT(informEditionCompleted()));
-#ifndef QT_NO_DEBUG
 		connect(m_saveButton,SIGNAL(clicked()),widgets[i],SLOT(informEditionCompleted()));
-#endif
 	}
 }
 
@@ -303,11 +302,10 @@ void PartsEditorMainWindow::createFooter() {
 	m_saveAsNewPartButton->setObjectName("saveAsPartButton");
 	m_saveAsNewPartButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
 
-#ifndef QT_NO_DEBUG
 	m_saveButton = new QPushButton(tr("save"));
 	m_saveButton->setObjectName("saveAsButton");
 	m_saveButton->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-#endif
+
 	updateSaveButton();
 
 	QList<QWidget*> editableLabelWidgets;
@@ -315,9 +313,7 @@ void PartsEditorMainWindow::createFooter() {
 	connectWidgetsToSave(editableLabelWidgets);
 
 	connect(m_saveAsNewPartButton, SIGNAL(clicked()), this, SLOT(saveAs()));
-#ifndef QT_NO_DEBUG
 	connect(m_saveButton, SIGNAL(clicked()), this, SLOT(save()));
-#endif
 
 	m_cancelButton = new QPushButton(tr("cancel"));
 	m_cancelButton->setObjectName("cancelButton");
@@ -329,15 +325,9 @@ void PartsEditorMainWindow::createFooter() {
 	footerLayout->setMargin(0);
 	footerLayout->setSpacing(0);
 	footerLayout->addSpacerItem(new QSpacerItem(40,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
-#ifndef QT_NO_DEBUG
 	footerLayout->addWidget(m_saveAsNewPartButton);
-#endif
 	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Minimum));
-#ifndef QT_NO_DEBUG
 	footerLayout->addWidget(m_saveButton);
-#else
-	footerLayout->addWidget(m_saveAsNewPartButton);
-#endif
 	footerLayout->addSpacerItem(new QSpacerItem(15,0,QSizePolicy::Minimum,QSizePolicy::Minimum));
 	footerLayout->addWidget(m_cancelButton);
 	footerLayout->addSpacerItem(new QSpacerItem(40,0,QSizePolicy::Minimum,QSizePolicy::Minimum));

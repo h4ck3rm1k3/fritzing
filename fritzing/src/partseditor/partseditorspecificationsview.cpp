@@ -96,7 +96,9 @@ void PartsEditorSpecificationsView::loadFile() {
 	QString origPath = QFileDialog::getOpenFileName(this,
 		tr("Open Image"),
 		m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
-		tr("SVG Files (*.svg);;JPEG (*.jpg);;PNG (*.png)"));
+		tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)")
+			.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png")
+	);
 
 	if(origPath.isEmpty()) {
 		return; // Cancel pressed
