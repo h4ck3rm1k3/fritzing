@@ -2,7 +2,7 @@ PartsEditorMainWindow QLabel {
 	font-family: LucidaGrande, LucidaSans, Tahoma, Arial, sans-serif;
 	font-size: 12px;
 	font-weight: bolder;
-	font-style: italic;
+	/*font-style: italic;*/
 }
 
 PartSpecificationsWidget {
