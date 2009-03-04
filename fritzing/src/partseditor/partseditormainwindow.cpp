@@ -90,6 +90,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
     resize(500,700);
 
 	m_id = id;
+	m_partUpdated = false;
 
 	setAttribute(Qt::WA_DeleteOnClose, true);
 
@@ -518,7 +519,7 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
 
     statusBar()->showMessage(tr("Saved '%1'").arg(fileName), 2000);
 
-    emit partUpdated(fileName);
+    m_partUpdated = true;
 
     m_fileName = fileName;
     //setCurrentFile(fileName);
@@ -587,6 +588,7 @@ void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
 	if(beforeClosing()) {
 		cleanUp();
 		QMainWindow::closeEvent(event);
+		if(m_partUpdated) emit partUpdated(m_fileName);
 		emit closed(m_id);
 	} else {
 		event->ignore();

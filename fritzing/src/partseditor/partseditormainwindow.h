@@ -144,6 +144,7 @@ protected:
     QFrame *m_footerFrame;
 
     bool m_updateEnabled;
+    bool m_partUpdated;
 
     static PartsEditorMainWindow *m_lastOpened;
     static int m_closedBeforeCount;

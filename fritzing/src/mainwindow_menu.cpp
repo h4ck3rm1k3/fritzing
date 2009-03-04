@@ -450,7 +450,7 @@ void MainWindow::load() {
 			this,
 			tr("Select a Fritzing File to Open"),
 			path,
-			tr("Fritzing Files (*%1 *%1z);;Fritzing (*%1);;Fritzing Shareable (*%2)").arg(FritzingSketchExtension).arg(FritzingBundleExtension)
+			tr("Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)").arg(FritzingSketchExtension).arg(FritzingBundleExtension)
 		);
 	if (fileName.isNull()) return;
 
