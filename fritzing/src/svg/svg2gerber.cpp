@@ -48,6 +48,9 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
         else if(tag=="line"){
             path = line2path(element);
         }
+        else if(tag=="ellipse"){
+            path = ellipse2path(element);
+        }
         else {
             DebugDialog::debug("svg2gerber ignoring unrecognized SVG element: " + tag);
         }
@@ -63,7 +66,11 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
     }
 }
 
+// note that this only works for paths!  convert to paths first.
 void SVG2gerber::flattenSVG(QDomNode node){
+    QDomElement element = node.toElement();
+    QMatrix transform;
+
     // I'm a leaf node. flatten me
     if(!node.hasChildNodes()) {
 
@@ -74,9 +81,19 @@ void SVG2gerber::flattenSVG(QDomNode node){
 
     for(uint i = 0; i < tagList.length(); i++){
         flattenSVG(tagList.item(i));
+
+        // now apply my transform to the children
+
     }
 
-    // if I'm a <g>, delete me
+    // if I'm a <g>, apply my transform to children, pull them up then delete me
+}
+
+// extract the SVG transform
+QMatrix SVG2gerber::parseTransform(QDomElement element){
+    QMatrix transform = QMatrix();
+
+    return transform;
 }
 
 void SVG2gerber::allPaths2gerber() {
@@ -89,7 +106,7 @@ QDomElement SVG2gerber::rect2path(QDomElement rectElement){
 }
 
 QDomElement SVG2gerber::circle2path(QDomElement circleElement){
-    // 4 arcs
+    // 4 arcs or call ellipse2path?
     return circleElement;
 }
 
@@ -100,6 +117,10 @@ QDomElement SVG2gerber::line2path(QDomElement lineElement){
 QDomElement SVG2gerber::poly2path(QDomElement polyElement){
     // this is just a bunch of calls to line2path()
     return polyElement;
+}
+
+QDomElement SVG2gerber::ellipse2path(QDomElement ellipseElement){
+    return ellipseElement;
 }
 
 QString SVG2gerber::path2gerber(QDomElement pathElement){

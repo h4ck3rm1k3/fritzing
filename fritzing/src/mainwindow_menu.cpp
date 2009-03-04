@@ -1849,8 +1849,10 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 }
 
 void MainWindow::exportToGerber() {
+#ifdef Q_NO_DEBUG
 	notYetImplemented(tr("Gerber export"));
 	return;
+#endif
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper0;
