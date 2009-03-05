@@ -3,8 +3,8 @@ import os
 
 DEST_FOLDER = '/home/merun/workspace/fritzing/web/parts_gen/parts/'
 
-# this two have to be the same, as the one defined for the bundling
-# functionalty in the desktop app
+# this two have to be the same, as the ones defined for the bundling
+# functionalty in the desktop app (mainwindow.cpp)
 ZIP_PART = 'part.'
 ZIP_SVG  = 'svg.'
 
