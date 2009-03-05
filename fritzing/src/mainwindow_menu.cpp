@@ -1849,7 +1849,7 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 }
 
 void MainWindow::exportToGerber() {
-#ifdef Q_NO_DEBUG
+#ifdef QT_NO_DEBUG
 	notYetImplemented(tr("Gerber export"));
 	return;
 #endif
