@@ -40,6 +40,7 @@ $Date$
 #include "fsvgrenderer.h"
 #include "labels/note.h"
 #include "fapplication.h"
+#include "svg/svg2gerber.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1873,8 +1874,16 @@ void MainWindow::exportToGerber() {
 		return;
 	}
 
-	// Brendan's work starts here
+        // create gerber from svg
+        SVG2gerber gerb = SVG2gerber(svg);
 
+        // dump gerber to tmp file for now
+        QFile gerbDump("/tmp/gerber.gerb");
+        if (!gerbDump.open(QIODevice::WriteOnly | QIODevice::Text))
+            DebugDialog::debug("gerber dump: cannot open output file");
+
+        QTextStream out(&gerbDump);
+        out << gerb.getGerber();
 }
 
 void MainWindow::exportToEagle() {
