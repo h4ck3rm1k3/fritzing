@@ -32,7 +32,7 @@ def get_range(obj):
     if obj.has_key('range_min'):
         src += ", min_value = %s" % obj['range_min']
     if obj.has_key('range_max'):
-        src += ", min_value = %s" % obj['range_max']
+        src += ", max_value = %s" % obj['range_max']
     return src
         
 def get_label(obj):

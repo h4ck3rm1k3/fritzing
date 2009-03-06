@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from fritzing.parts_gen.forms import gen
 import tempfile, zipfile
 from django.core.servers.basehttp import FileWrapper
+from fritzing import settings
 from fritzing.parts_gen.utils import \
 DEST_FOLDER, get_params_def, script_config_from_form, add_folder_to_zipfile
 
@@ -18,7 +19,7 @@ def form(request):
     script_id = request.POST['script_id']
     params = get_params_def(script_id)
     
-    class_name = gen.create_class_if_needed(params, script_id, False)
+    class_name = gen.create_class_if_needed(params, script_id, settings.DEBUG)
     form = gen.get_form_class(class_name)()
     return render_to_response('parts_gen/form.html', {'form': form})
 
