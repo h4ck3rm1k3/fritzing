@@ -29,7 +29,7 @@
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
-  <schematicView>
+  <schematicView fliphorizontal="true" flipvertical="true">
    <layers image="schematic/basic_transistor_npn.svg" >
     <layer layerId="schematic" />
    </layers>
