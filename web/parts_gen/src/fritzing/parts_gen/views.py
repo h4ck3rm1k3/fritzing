@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from fritzing.parts_gen import forms as myforms
+from fritzing.parts_gen.forms import gen
 import tempfile, zipfile
 from django.core.servers.basehttp import FileWrapper
-from fritzing.parts_gen.utils import DEST_FOLDER, get_params_def, script_config_from_form, add_folder_to_zipfile
+from fritzing.parts_gen.utils import \
+DEST_FOLDER, get_params_def, script_config_from_form, add_folder_to_zipfile
 
 
 AVAIL_SCRIPTS = [
@@ -13,12 +14,12 @@ AVAIL_SCRIPTS = [
 def choose(request):
     return render_to_response('parts_gen/choose.html', {'scripts_list': AVAIL_SCRIPTS})
 
-
 def form(request): 
     script_id = request.POST['script_id']
-    obj = get_params_def(script_id)
-    form = myforms.DynamicForm()
-    form.load_fields(obj,script_id)
+    params = get_params_def(script_id)
+    
+    class_name = gen.create_class_if_needed(params, script_id, False)
+    form = gen.get_form_class(class_name)()
     return render_to_response('parts_gen/form.html', {'form': form})
 
 
@@ -45,11 +46,11 @@ def send_zipfile(script_id,config):
 
 def generate(request):
     if request.method == 'POST': # If the form has been submitted...
-        form = myforms.DynamicForm(request.POST) # A form bound to the POST data, not working with the dynamic form
-        if form.is_valid(): # All validation rules pass (always true for the dynamic form)
+        script_id = request.POST['script_id']
+        class_name = gen.get_class_name(script_id)
+        form = gen.get_form_class(class_name)(request.POST)
+        if form.is_valid(): # All validation rules pass 
             config, script_id = script_config_from_form(request.POST)
-            #print 'script id = ',script_id
-            #print 'cfg = ',config
             return send_zipfile(script_id,config)
         else:
             return render_to_response('parts_gen/form.html', {'form': form})
