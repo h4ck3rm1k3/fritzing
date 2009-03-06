@@ -80,7 +80,7 @@ public:
 	}
 
 protected:
-	void SvgAndPartFilePath::init(QString absolutePath, QString folderInParts, QString relativeFilePath)
+	void init(QString absolutePath, QString folderInParts, QString relativeFilePath)
 	{
 		m_absolutePath = absolutePath;
 		m_relativePath = relativeFilePath;
