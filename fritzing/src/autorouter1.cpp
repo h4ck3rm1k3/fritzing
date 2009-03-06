@@ -344,7 +344,7 @@ void Autorouter1::start()
 	
 	updateRatsnest(true, parentCommand);
 	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
-	m_sketchWidget->undoStack()->push(parentCommand);
+	m_sketchWidget->pushCommand(parentCommand);
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
 }
 
@@ -1172,6 +1172,11 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connect, QList<Wire *> & wires, QUndoCommand * parentCommand) 
 {
 	foreach (Wire * wire, wires) {
+		if (!wire->getAutoroutable()) {
+			// since the autorouter didn't change this wire, don't add undo connections
+			continue;
+		}
+
 		ConnectorItem * connector1 = wire->connector1();
 		foreach (ConnectorItem * toConnectorItem, connector1->connectedToItems()) {
 			ChangeConnectionCommand * ccc = new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),

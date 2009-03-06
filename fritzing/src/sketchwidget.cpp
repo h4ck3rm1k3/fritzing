@@ -173,7 +173,7 @@ void SketchWidget::restartPasteCount() {
 	m_pasteCount = 1;
 }
 
-QUndoStack* SketchWidget::undoStack() {
+WaitPushUndoStack* SketchWidget::undoStack() {
 	return m_undoStack;
 }
 
@@ -4394,4 +4394,10 @@ void SketchWidget::setConnectorExternal(long itemID, const QString & connectorID
 	if (connectorItem == NULL) return; 
 
 	connectorItem->connector()->setExternal(external);
+}
+
+void SketchWidget::pushCommand(QUndoCommand * command) {
+	if (m_undoStack) {
+		m_undoStack->push(command);
+	}
 }

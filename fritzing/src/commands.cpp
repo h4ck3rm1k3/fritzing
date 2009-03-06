@@ -89,7 +89,7 @@ void BaseCommand::addSubCommand(BaseCommand * subCommand) {
 	m_commands.append(subCommand);
 #ifndef QT_NO_DEBUG
 	if (m_sketchWidget != NULL) {
-		dynamic_cast<WaitPushUndoStack *>(m_sketchWidget->undoStack())->writeUndo(subCommand, 4, this);
+		m_sketchWidget->undoStack()->writeUndo(subCommand, 4, this);
 	}
 #endif
 }

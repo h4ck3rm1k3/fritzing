@@ -135,7 +135,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     m_undoView = new QUndoView();
     m_undoGroup = new QUndoGroup(this);
     m_undoView->setGroup(m_undoGroup);
-    m_undoGroup->setActiveStack(m_breadboardGraphicsView->undoStack());
+    m_undoGroup->setActiveStack(m_undoStack);
 
     m_dockManager = new DockManager(this);
     m_dockManager->createBinAndInfoViewDocks();

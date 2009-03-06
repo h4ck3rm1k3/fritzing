@@ -70,7 +70,8 @@ public:
     SketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=600, int minSize=400);
 	~SketchWidget();
 
-    QUndoStack* undoStack();
+	void pushCommand(QUndoCommand *);
+    class WaitPushUndoStack * undoStack();
     ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, PaletteItem* item);
 	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
