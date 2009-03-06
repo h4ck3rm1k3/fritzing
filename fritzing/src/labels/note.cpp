@@ -59,8 +59,10 @@ $Date$
 //		** icon in taskbar (why does it show up as text until you update it?)
 
 QString Note::moduleIDName = "NoteModuleID";
-const int Note::emptyMinWidth = 150;
-const int Note::emptyMinHeight = 150;
+const int Note::emptyMinWidth = 40;
+const int Note::emptyMinHeight = 25;
+const int Note::initialMinWidth = 140;
+const int Note::initialMinHeight = 45;
 const int borderWidth = 3;
 
 QString Note::initialTextString;

@@ -2167,11 +2167,11 @@ void MainWindow::addNote() {
 	if (m_currentGraphicsView == NULL) return;
 
 	ViewGeometry vg;
-	vg.setRect(0, 0, Note::emptyMinWidth, Note::emptyMinHeight);
+	vg.setRect(0, 0, Note::initialMinWidth, Note::initialMinHeight);
 	QPointF tl = m_currentGraphicsView->mapToScene(QPoint(0, 0));
 	QSizeF vpSize = m_currentGraphicsView->viewport()->size();
-	tl.setX(tl.x() + ((vpSize.width() - Note::emptyMinWidth) / 2));
-	tl.setY(tl.y() + ((vpSize.height() - Note::emptyMinHeight) / 2));
+	tl.setX(tl.x() + ((vpSize.width() - Note::initialMinWidth) / 2));
+	tl.setY(tl.y() + ((vpSize.height() - Note::initialMinHeight) / 2));
 	vg.setLoc(tl);
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));

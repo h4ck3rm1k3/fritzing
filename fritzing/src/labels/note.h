@@ -74,6 +74,8 @@ public:
 	static QString moduleIDName;
 	static const int emptyMinWidth;
 	static const int emptyMinHeight;
+	static const int initialMinWidth;
+	static const int initialMinHeight;
 	static QString initialTextString;
 
 protected:
