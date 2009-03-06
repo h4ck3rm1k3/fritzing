@@ -203,7 +203,6 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	currentNavigatorChanged(m_navigators[tab]);
 	tabWidget_currentChanged(tab+1);
 	tabWidget_currentChanged(tab);
-	updateTransformationActions();
 
 	this->installEventFilter(this);
 
@@ -645,6 +644,7 @@ void MainWindow::tabWidget_currentChanged(int index) {
 
 	hideShowTraceMenu();
 	updateTraceMenu();
+	updateTransformationActions();
 
 	setTitle();
 
