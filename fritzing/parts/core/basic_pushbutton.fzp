@@ -26,7 +26,7 @@
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
-  <schematicView>
+   <schematicView fliphorizontal="true" flipvertical="true">
    <layers image="schematic/pushbutton4lead.svg" >
     <layer layerId="schematic" />
    </layers>

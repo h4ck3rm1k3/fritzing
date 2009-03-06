@@ -22,7 +22,7 @@
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
-        <schematicView>
+        <schematicView fliphorizontal="true" flipvertical="true">
             <layers image="schematic/piezo_sensor.svg">
                 <layer layerId="schematic"></layer>
             </layers>
