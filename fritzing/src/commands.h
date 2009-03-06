@@ -99,6 +99,8 @@ public:
     void undo();
     void redo();
 	void turnOffFirstRedo();
+	bool isModule();
+	void setModule(bool);
 
 protected:
 	QString getParamString() const;
@@ -107,6 +109,7 @@ protected:
 	bool m_updateInfoView;
 	bool m_firstRedo;
 	bool m_doFirstRedo;
+	bool m_module;
 
 };
 

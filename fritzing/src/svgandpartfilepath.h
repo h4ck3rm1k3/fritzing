@@ -27,7 +27,7 @@ $Date$
 #ifndef SVGANDPARTFILEPATH_H_
 #define SVGANDPARTFILEPATH_H_
 
-#include "triple.h"
+#include "misc.h"
 #include "debugdialog.h"
 
 /*
@@ -40,38 +40,59 @@ $Date$
  * relativePath == "breadboard/svg_file.svg"
  */
 
-class SvgAndPartFilePath : public StringTriple {
+class SvgAndPartFilePath  {
 public:
-	SvgAndPartFilePath() : StringTriple() {}
-	SvgAndPartFilePath(QString absolutePath, QString relativeFilePath)
-		: StringTriple(absolutePath, "", relativeFilePath) {}
-	SvgAndPartFilePath(QString absolutePath, QString folderInParts, QString relativeFilePath)
-		: StringTriple(absolutePath, folderInParts, relativeFilePath) {}
+	SvgAndPartFilePath() {
+		init("", "", "");
+	}
+
+	SvgAndPartFilePath(QString absolutePath, QString relativeFilePath) {
+		init(absolutePath, "", relativeFilePath);
+	}
+
+	SvgAndPartFilePath(QString absolutePath, QString folderInParts, QString relativeFilePath) {
+		init(absolutePath, folderInParts, relativeFilePath);
+	}
 
 	const QString &absolutePath() {
-		return first;
+		return m_absolutePath;
 	}
 	void setAbsolutePath(const QString &partFolderPath) {
-		first = partFolderPath;
+		m_absolutePath = partFolderPath;
 	}
 
 	const QString &coreContribOrUser() {
-		return second;
+		return m_coreContribOrUser;
 	}
 	void setCoreContribOrUser(const QString &coreContribOrUser) {
-		second = coreContribOrUser;
+		m_coreContribOrUser = coreContribOrUser;
 	}
 
 	const QString &relativePath() {
-		return third;
+		return m_relativePath;
 	}
 	void setRelativePath(const QString &fileRelativePath) {
-		third = fileRelativePath;
+		m_relativePath = fileRelativePath;
 	}
 
 	QString concat() {
-		return first+"/"+second+"/"+third;
+		return m_absolutePath+"/"+m_coreContribOrUser+"/"+m_relativePath;
 	}
+
+protected:
+	void SvgAndPartFilePath::init(QString absolutePath, QString folderInParts, QString relativeFilePath)
+	{
+		m_absolutePath = absolutePath;
+		m_relativePath = relativeFilePath;
+		m_coreContribOrUser = folderInParts;
+	}
+
+
+
+protected:
+	QString m_absolutePath;
+	QString m_relativePath;
+	QString m_coreContribOrUser;
 };
 
 #endif /* SVGANDPARTFILEPATH_H_ */

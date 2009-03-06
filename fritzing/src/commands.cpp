@@ -156,6 +156,7 @@ AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossVie
     : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, modelIndex, parent)
 {
 	m_doFirstRedo = m_firstRedo = true;
+	m_module = false;
 	m_updateInfoView = updateInfoView;
 }
 
@@ -174,6 +175,14 @@ void AddItemCommand::redo()
 
 void AddItemCommand::turnOffFirstRedo() {
 	m_doFirstRedo = false;
+}
+
+bool AddItemCommand::isModule() {
+	return m_module;
+}
+
+void AddItemCommand::setModule(bool module) {
+	m_module = module;
 }
 
 QString AddItemCommand::getParamString() const {

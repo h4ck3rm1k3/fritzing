@@ -252,9 +252,12 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		else {
 			// offset pasted items so we can differentiate them from the originals
 			viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
-			new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
+			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
 			if (mp->moduleID() == Wire::moduleIDName) {
 				addWireExtras(newID, view, parentCommand);
+			}
+			else if (mp->itemType() == ModelPart::Module) {
+				addItemCommand->setModule(true);
 			}
 		}
 	}
@@ -436,6 +439,8 @@ void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelP
 			const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
 			if (addItemCommand == NULL) continue;
 
+
+
 			groupCommand->addItemID(addItemCommand->itemID());
 		}
 
@@ -443,7 +448,11 @@ void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelP
 		parentCommand->redo();				// trigger  module creation		
 	}
 
-	if (doEmit) {
+	AddItemCommand * addItemCommand = dynamic_cast<AddItemCommand *>(originatingCommand);
+	if (addItemCommand && addItemCommand->isModule()) {
+		// module within a module, don't send an emit signal, since we're already operating from some top level command that's been (or will be) emitted
+	}
+	else if (doEmit) {
 		emit makeModuleSignal(modelPart, modelParts, false, viewGeometry, id, originatingCommand);
 	}
 

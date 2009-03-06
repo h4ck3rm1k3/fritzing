@@ -35,7 +35,7 @@ static QList<QString> ___fritzingExtensions___;
 
 const QList<QString> & fritzingExtensions() {
 	if (___fritzingExtensions___.count() == 0) {
-		___fritzingExtensions___ << FritzingSketchExtension << FritzingBinExtension << FritzingPartExtension << FritzingModuleExtension << FritzingBundleExtension;
+		___fritzingExtensions___ << FritzingSketchExtension << FritzingBinExtension << FritzingPartExtension << FritzingModuleExtension << FritzingBundleExtension << FritzingBundledPartExtension;
 	}
 
 	return ___fritzingExtensions___;
