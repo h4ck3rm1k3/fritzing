@@ -4185,7 +4185,6 @@ void SketchWidget::init() {
 
 QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize)
 {
-
 	int width = scene()->width();
 	int height = scene()->height();
 
@@ -4213,9 +4212,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 		itemBases.append(itemBase);
 
 		// TODO: make sure this does the right thing with grouped items
-		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
-                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
-
+		itemsBoundingRect |= item->sceneBoundingRect();
 	}
 
 	width = itemsBoundingRect.width();
@@ -4310,12 +4307,13 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 				if (wire->viewLayerID() != viewLayerID) continue;
 
 				QLineF line = wire->getPaintLine();
-				QPointF p1 = wire->pos() + line.p1() - offset;
-				QPointF p2 = wire->pos() + line.p2() - offset;
+				QPointF p1 = wire->scenePos() + line.p1() - offset;
+				QPointF p2 = wire->scenePos() + line.p2() - offset;
 				p1.setX(p1.x() * dpi / printerScale);
 				p1.setY(p1.y() * dpi / printerScale);
 				p2.setX(p2.x() * dpi / printerScale);
 				p2.setY(p2.y() * dpi / printerScale);
+				// TODO: use original colors, not just black
 				QString lineString = QString("<line style=\"stroke-linecap: round\" stroke=\"black\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
 								.arg(p1.x())
 								.arg(p1.y())

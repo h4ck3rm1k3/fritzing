@@ -723,6 +723,12 @@ void ConnectorItem::setIgnoreAncestorFlag(bool ignore) {
 }
 
 void ConnectorItem::setIgnoreAncestorFlagIfExternal(bool ignore) {
+	if (m_connector == NULL) {
+		DebugDialog::debug("setIgnoreAncestorFlagIfExternal: connector is null");
+		return;
+	}
+
+
 	if (m_connector->external()) {
 		m_ignoreAncestorFlag = ignore;
 	}

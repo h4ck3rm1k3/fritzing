@@ -552,16 +552,19 @@ QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 		retval << createExportToPdfButton(parent);
 	}*/
 	retval << createNoteButton(parent) << createRotateButton(parent);
-	if(viewId == ItemBase::BreadboardView) {
-		retval << createFlipButton(parent);
-	} else if(viewId == ItemBase::PCBView) {
-		retval << SketchAreaWidget::separator(parent) << createAutorouteButton(parent)
-			   << createExportDiyButton(parent) << m_routingStatusLabel;
+	switch (viewId) {
+		case ItemBase::BreadboardView:
+		case ItemBase::SchematicView:
+			retval << createFlipButton(parent) << createToolbarSpacer(parent);
+			break;
+		case ItemBase::PCBView:
+			retval << SketchAreaWidget::separator(parent) << createAutorouteButton(parent)
+				   << createExportDiyButton(parent) << m_routingStatusLabel;
+			break;
+		default:
+			break;
 	}
 
-	if(viewId != ItemBase::PCBView) {
-		retval << createToolbarSpacer(parent);
-	}
 	return retval;
 }
 
