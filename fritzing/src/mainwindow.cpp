@@ -976,6 +976,10 @@ void MainWindow::loadBundledPart() {
 	);
 	if (fileName.isNull()) return;
 
+	loadBundledPart(fileName);
+}
+
+void MainWindow::loadBundledPart(const QString &fileName) {
 	QDir destFolder = QDir::temp();
 
 	createFolderAnCdIntoIt(destFolder, getRandText());

@@ -517,16 +517,16 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
     } else if(fileName.endsWith(FritzingBundleExtension)) {
     	loadBundledSketch(fileName);
 		result = true;
-    }
-	else if (fileName.endsWith(FritzingBinExtension)) {
+    } else if (fileName.endsWith(FritzingBinExtension)) {
 		m_paletteWidget->load(fileName);
 		result = true;
-	}
-	else if (fileName.endsWith(FritzingPartExtension)) {
+	} else if (fileName.endsWith(FritzingPartExtension)) {
 		notYetImplemented(tr("directly loading parts"));
-	}
-	else if (fileName.endsWith(FritzingModuleExtension)) {
+	} else if (fileName.endsWith(FritzingModuleExtension)) {
 		notYetImplemented(tr("directly loading module"));
+	}  else if (fileName.endsWith(FritzingBundledPartExtension)) {
+		loadBundledPart(fileName);
+		result = true;
 	}
 
 	if (result) {

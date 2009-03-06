@@ -191,6 +191,7 @@ protected slots:
 
 	void saveBundledSketch();
 	void loadBundledSketch(const QString &fileName);
+	void loadBundledPart(const QString &fileName);
 	void loadBundledPart();
 	void saveAsModule();
 
