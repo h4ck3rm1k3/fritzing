@@ -32,6 +32,7 @@ $Date$
 #include <QTextFrame>
 #include <QTextFrameFormat>
 #include <QApplication>
+#include <QFontDatabase>
 
 // TODO:
 //		** search for ModelPart:: and fix up
@@ -98,6 +99,16 @@ Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 {
 	if (initialTextString.isEmpty()) {
 		initialTextString = tr("[write your note here]");
+
+		/* 
+		// font test hack
+		int ix = QFontDatabase::addApplicationFont ("C:/fritzing2/Isabella.ttf/Isabella.ttf");
+		QFontDatabase database;
+		QStringList families = database.families (  );
+		foreach (QString string, families) {
+			DebugDialog::debug(string);			// should print out the name of the font you loaded
+		}
+		*/
 	}
 
 	m_inResize = false;
@@ -125,6 +136,13 @@ Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_graphicsTextItem->setPlainText(initialTextString);
 	m_graphicsTextItem->setTextInteractionFlags(Qt::TextEditorInteraction);
 	m_graphicsTextItem->setCursor(Qt::IBeamCursor);
+
+	/* 
+	// set the font here
+	QFont font("Isabella");
+	m_graphicsTextItem->setFont(font);
+	*/
+
 
 	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()), 
 		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
