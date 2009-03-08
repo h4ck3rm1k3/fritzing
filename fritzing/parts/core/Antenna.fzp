@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="6d07f5eae4523283f5da4171f9c54e25">
+    <author>lionel</author>
+    <title>Antenna</title>
+    <label>Antenna</label>
+    <date>2009-03-05</date>
+    <tags></tags>
+    <properties>
+        <property name="family"></property>
+    </properties>
+    <description>Antenna</description>
+    <views>
+        <iconView>
+            <layers image="icon/antenna.svg">
+                <layer layerId="icon"></layer>
+            </layers>
+        </iconView>
+        <pcbView>
+            <layers image="pcb/jumper1.svg">
+                <layer layerId="copper0"></layer>
+            </layers>
+        </pcbView>
+        <schematicView>
+            <layers image="schematic/antenna.svg">
+                <layer layerId="schematic"></layer>
+            </layers>
+        </schematicView>
+        <breadboardView>
+            <layers image="breadboard/antenna.svg">
+                <layer layerId="breadboard"></layer>
+            </layers>
+        </breadboardView>
+    </views>
+    <connectors>
+        <connector id="connector0" type="male" name="pin 0">
+            <description>pin 0</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector0pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>
