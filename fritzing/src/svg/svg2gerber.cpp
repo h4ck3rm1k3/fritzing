@@ -1,6 +1,7 @@
 #include "svg2gerber.h"
 #include "../debugdialog.h"
 #include <QTextStream>
+#include <math.h>
 
 //TODO: this assumes one layer right now (copper0)
 
@@ -27,7 +28,7 @@ SVG2gerber::SVG2gerber(QString svgStr)
     if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text))
         DebugDialog::debug("gerber svg dump: cannot open output file");
 
-    QTextStream out2(&dump);
+    QTextStream out2(&dump2);
     out2 << m_SVGDom.toString();
 #endif
 
@@ -82,8 +83,7 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
 
         // add the path and delete the primitive element (is this ok for paths?)
         QDomNode parent = node.parentNode();
-        parent.appendChild(path);
-        parent.removeChild(node);
+        parent.replaceChild(path, node);
 
         return;
     }
@@ -91,6 +91,7 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
     // recurse the children
     QDomNodeList tagList = node.childNodes();
 
+    DebugDialog::debug("child nodes: " + QString::number(tagList.length()));
     for(uint i = 0; i < tagList.length(); i++){
         convertShapes2paths(tagList.item(i));
     }
@@ -136,8 +137,48 @@ QDomElement SVG2gerber::rect2path(QDomElement rectElement){
 }
 
 QDomElement SVG2gerber::circle2path(QDomElement circleElement){
-    // 4 arcs or call ellipse2path?
-    return circleElement;
+    // 4 cubic bezier arcs
+    float cx = circleElement.attribute("cx").toFloat();
+    float cy = circleElement.attribute("cy").toFloat();
+    float r = circleElement.attribute("r").toFloat();
+
+    // approximate midpoint
+    float k = r * (sqrt(2) -1) * 4/3;
+
+//    d="m 0,1                      // translate(radius) from center
+//    C 0.552,1   1,0.552   1,0    // 1st quarter
+//      1,-0.552  0.552,-1  0,-1   // 2nd
+//      -0.552,-1 -1,-0.552 -1,0   // 3rd
+//      -1,0.552  -0.552,1  0,1z"  // 4th
+
+    //translate radius from center
+    QString pathStr = 'm ' + QString::number(cx) + "," + QString::number(cy + r) + " ";
+
+    //1st quarter
+    pathStr += "C " + QString::number(cx + k) + "," + QString::number(cy + r) + " ";
+    pathStr += QString::number(cx + r) + "," + QString::number(cy + k) + " ";
+    pathStr += QString::number(cx + r) + "," + QString::number(cy) + " ";
+
+    //2nd quarter
+    pathStr += QString::number(cx + r) + "," + QString::number(cy - k) + " ";
+    pathStr += QString::number(cx + k) + "," + QString::number(cy - r) + " ";
+    pathStr += QString::number(cx) + "," + QString::number(cy - r) + " ";
+
+    //3rd quarter
+    pathStr += QString::number(cx - k) + "," + QString::number(cy - r) + " ";
+    pathStr += QString::number(cx - r) + "," + QString::number(cy - k) + " ";
+    pathStr += QString::number(cx - r) + "," + QString::number(cy) + " ";
+
+    //4th quarter
+    pathStr += QString::number(cx - r) + "," + QString::number(cy + k) + " ";
+    pathStr += QString::number(cx - k) + "," + QString::number(cy + r) + " ";
+    pathStr += QString::number(cx) + "," + QString::number(cy + r) + "z";
+
+
+    QDomElement path = m_SVGDom.createElement("path");
+    path.setAttribute("d",pathStr);
+
+    return path;
 }
 
 QDomElement SVG2gerber::line2path(QDomElement lineElement){
