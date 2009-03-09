@@ -1,5 +1,6 @@
 #include "svg2gerber.h"
 #include "../debugdialog.h"
+#include <QTextStream>
 
 //TODO: this assumes one layer right now (copper0)
 
@@ -8,7 +9,28 @@ SVG2gerber::SVG2gerber(QString svgStr)
     m_SVGDom = QDomDocument("svg");
     m_SVGDom.setContent(svgStr);
 
+#ifndef QT_NO_DEBUG
+    // dump paths SVG to tmp file for now
+    QFile dump("/tmp/paths_in.svg");
+    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber svg dump: cannot open output file");
+
+    QTextStream out(&dump);
+    out << m_SVGDom.toString();
+#endif
+
     normalizeSVG();
+
+#ifndef QT_NO_DEBUG
+    // dump paths SVG to tmp file for now
+    QFile dump2("/tmp/paths_normal.svg");
+    if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber svg dump: cannot open output file");
+
+    QTextStream out2(&dump);
+    out2 << m_SVGDom.toString();
+#endif
+
     allPaths2gerber();
 }
 
@@ -51,9 +73,17 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
         else if(tag=="ellipse"){
             path = ellipse2path(element);
         }
-        else {
-            DebugDialog::debug("svg2gerber ignoring unrecognized SVG element: " + tag);
+        else if(tag=="path"){
+            path = element;
         }
+        else {
+            DebugDialog::debug("svg2gerber ignoring SVG element: " + tag);
+        }
+
+        // add the path and delete the primitive element (is this ok for paths?)
+        QDomNode parent = node.parentNode();
+        parent.appendChild(path);
+        parent.removeChild(node);
 
         return;
     }
