@@ -48,7 +48,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		ModelPart *retrieveModelPart(const QString &moduleID);
 		ModelPart *retrieveModelPart(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties);
 		ModelPart *retrieveModelPart(const Part *examplePart);
-		QString retrieveModuleId(const Part *examplePart);
+		QString retrieveModuleId(const Part *examplePart, const QString &propertyName);
 
 		bool addPart(ModelPart * newModel, bool update);
 		bool updatePart(ModelPart * newModel);
@@ -61,15 +61,21 @@ class SqliteReferenceModel : public ReferenceModel {
 
 	public slots:
 		void recordProperty(const QString &name, const QString &value);
-		QString retrieveModuleIdWith(const QString &family);
-		QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties);
+		QString retrieveModuleIdWith(const QString &family, const QString &propertyName);
+		QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties, const QString &propertyName);
 		QStringList values(const QString &family, const QString &propName, bool distinct=true);
+		bool lastWasExactMatch();
 
 	protected:
 		void init();
 
 	private:
 		bool addPartAux(ModelPart * newModel);
+
+		QString closestMatchId(const Part *examplePart, const QString &propertyName, const QString &propertyValue);
+		QStringList getPossibleMatches(const Part *examplePart, const QString &propertyName, const QString &propertyValue);
+		QString getClosestMatch(const Part *examplePart, QStringList possibleMatches);
+		int countPropsInCommon(const Part *part1, const ModelPart *part2);
 
 		bool createConnection();
 		void deleteConnection();
@@ -80,6 +86,7 @@ class SqliteReferenceModel : public ReferenceModel {
 		bool removeProperties(qlonglong partId);
 
 		volatile bool m_swappingEnabled;
+		volatile bool m_lastWasExactMatch;
 		bool m_init;
 		QMultiHash<QString /*name*/, QString /*value*/> m_recordedProperties;
 };

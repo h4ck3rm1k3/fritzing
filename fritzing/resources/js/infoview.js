@@ -136,13 +136,13 @@ var currProps = {};
 function doSwap(family,name,currValue) {
 	var value = document.getElementById(name).value;
 	currProps[name] = value;
-	//alert("refmodel " + refModel);
 	for(propName in currProps) {
 		refModel.recordProperty(propName, currProps[propName]);
 	}
-	var moduleID = refModel.retrieveModuleIdWith(family);
-	//swapper.swapSelected(moduleID);
-	sketch.swapSelected(moduleID);
+	var moduleID = refModel.retrieveModuleIdWith(family,name);
+	var exactMatch = refModel.lastWasExactMatch();
+	
+	sketch.swapSelected(moduleID,exactMatch);
 }
 
 function setWireColor(wireTitle, wireId, newColor) {

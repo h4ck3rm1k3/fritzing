@@ -370,7 +370,7 @@ protected slots:
 	void makeModule(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 public slots:
-	void swapSelected(const QString &moduleId);
+	void swapSelected(const QString &moduleId, bool exactMatch=true);
 	void swapSelected(PaletteItem* other);
 	void swapSelected(ModelPart* other);
 	void swap(PaletteItem* from, ModelPart *to, bool doEmit, SwapCommand *);

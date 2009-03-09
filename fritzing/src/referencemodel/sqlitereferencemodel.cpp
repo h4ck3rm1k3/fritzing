@@ -37,6 +37,7 @@ SqliteReferenceModel::SqliteReferenceModel() {
 	init();
 
 	m_swappingEnabled = false;
+	m_lastWasExactMatch = true;
 	int tries = 0;
 	while(!m_swappingEnabled && tries < MAX_CONN_TRIES) {
 		createConnection();
@@ -63,9 +64,8 @@ SqliteReferenceModel::SqliteReferenceModel() {
 			Q_ASSERT(mp->moduleID().startsWith("1234ABDC24"));
 		}*/
 
-		// this should fail
 		/*mp = retrieveModelPart(new Part("capacitor","p2","Ceramic Capacitor"));
-		Q_ASSERT(mp->moduleID() == "1001ABDC02");*/
+		Q_ASSERT(mp->moduleID() != "1001ABDC02");*/
 
 		/*QStringList ledscolors = values("led","color");
 		if(ledscolors.size() > 0) {
@@ -155,21 +155,22 @@ ModelPart *SqliteReferenceModel::retrieveModelPart(const QString &family, const 
 }
 
 ModelPart *SqliteReferenceModel::retrieveModelPart(const Part *examplePart) {
-	return retrieveModelPart(retrieveModuleId(examplePart));
+	return retrieveModelPart(retrieveModuleId(examplePart,___emptyString___));
 }
 
-QString SqliteReferenceModel::retrieveModuleIdWith(const QString &family) {
-	QString moduleID = retrieveModuleId(family,m_recordedProperties);
+QString SqliteReferenceModel::retrieveModuleIdWith(const QString &family, const QString &propertyName) {
+	QString moduleID = retrieveModuleId(family,m_recordedProperties,propertyName);
 	m_recordedProperties.clear();
 	return moduleID;
 }
 
-QString SqliteReferenceModel::retrieveModuleId(const QString &family, const QMultiHash<QString, QString> &properties) {
-	return retrieveModuleId(Part::from(family, properties));
+QString SqliteReferenceModel::retrieveModuleId(const QString &family, const QMultiHash<QString, QString> &properties, const QString &propertyName) {
+	return retrieveModuleId(Part::from(family, properties), propertyName);
 }
 
-QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart) {
+QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart, const QString &propertyName) {
 	PartPropertyList props = examplePart->properties();
+	QString propertyValue = ___emptyString___;
 
 	if(props.size() > 0) {
 		QString queryStr =
@@ -186,6 +187,9 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart) {
 			queryDebug += QString(" AND EXISTS (SELECT * FROM properties prop WHERE prop.part_id = part.id AND prop.name = '"+prop->name()+"' AND prop.value = '"+prop->value()+"')");
 			params[propParam+"_name"] = prop->name();
 			params[propParam+"_value"] = prop->value();
+			if(prop->name() == propertyName) {
+				propertyValue = prop->value();
+			}
 		}
 		queryStr += ")";
 		queryDebug += ")";
@@ -200,12 +204,10 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart) {
 
 		QString moduleId = ___emptyString___;
 		if(query.exec()) {
-			DebugDialog::debug("SQLITE: retrieving: \n"+queryDebug);
-			//Q_ASSERT(query.record().count() == 1);
+			//DebugDialog::debug("SQLITE: retrieving: \n"+queryDebug);
 			if(query.next()) {
 				moduleId =  query.value(0).toString(); //grab the first
 			}
-			//Q_ASSERT(!query.next());
 			DebugDialog::debug("SQLITE: found: "+moduleId);
 			query.clear();
 		} else {
@@ -218,10 +220,98 @@ QString SqliteReferenceModel::retrieveModuleId(const Part *examplePart) {
 			);
 		}
 
-		return moduleId;
+		if(moduleId != ___emptyString___) {
+			m_lastWasExactMatch = true;
+			return moduleId;
+		} else if(propertyName!=___emptyString___) {
+			m_lastWasExactMatch = false;
+			return closestMatchId(examplePart, propertyName, propertyValue);
+		} else {
+			return ___emptyString___;
+		}
 	} else {
 		return ___emptyString___;
 	}
+}
+
+QString SqliteReferenceModel::closestMatchId(const Part *examplePart, const QString &propertyName, const QString &propertyValue) {
+	QStringList possibleMatches = getPossibleMatches(examplePart,propertyName, propertyValue);
+	return getClosestMatch(examplePart, possibleMatches);
+}
+
+QStringList SqliteReferenceModel::getPossibleMatches(const Part *examplePart, const QString &propertyName, const QString &propertyValue) {
+	QStringList result;
+	QString queryStr =
+		"SELECT moduleID FROM parts part \n"
+		"WHERE part.family = :family AND EXISTS ( \n"
+			"SELECT * FROM properties prop \n"
+			"WHERE prop.part_id = part.id AND prop.name = :prop_name  AND prop.value = :prop_value \n"
+		") ";
+	QString dbgQueryStr =
+		"SELECT moduleID FROM parts part \n"
+		"WHERE part.family = "+examplePart->family()+" AND EXISTS ( \n"
+			"SELECT * FROM properties prop \n"
+			"WHERE prop.part_id = part.id AND prop.name = "+propertyName+"  AND prop.value = "+propertyValue+" \n"
+		") ";
+
+	QSqlQuery query;
+	query.prepare(queryStr);
+
+	query.bindValue(":family",examplePart->family());
+	query.bindValue(":prop_name",propertyName);
+	query.bindValue(":prop_value",propertyValue);
+
+	Q_UNUSED(dbgQueryStr);
+	//DebugDialog::debug(dbgQueryStr);
+
+	QString moduleId = ___emptyString___;
+	if(query.exec()) {
+		while(query.next()) {
+			result << query.value(0).toString();
+		}
+		//DebugDialog::debug(QString("SQLITE: %1 possible matches found").arg(result.size()));
+		query.clear();
+	} else {
+		moduleId = ___emptyString___;
+		DebugDialog::debug(
+			"SQLITE: couldn't retrieve part\n"
+			"\t "+query.lastQuery()+"\n"
+			"\t ERROR DRIVER: "+query.lastError().driverText()+"\n"
+			"\t ERROR DB: "+query.lastError().databaseText()+"\n"
+		);
+	}
+
+	return result;
+}
+
+QString SqliteReferenceModel::getClosestMatch(const Part *examplePart, QStringList possibleMatches) {
+	int propsInCommonCount = 0;
+	int propsInCommonCountAux = 0;
+	QString result = ___emptyString___;
+	foreach(QString modId, possibleMatches) {
+		propsInCommonCountAux = countPropsInCommon(examplePart,retrieveModelPart(modId));
+		if(propsInCommonCountAux > propsInCommonCount) {
+			result = modId;
+		}
+	}
+	return result;
+}
+
+int SqliteReferenceModel::countPropsInCommon(const Part *part1, const ModelPart *part2) {
+	int result = 0;
+	PartPropertyList props1 = part1->properties();
+	QMultiHash<QString,QString> props2 = part2->properties();
+	foreach(PartProperty *prop1, props1) {
+		QStringList values = props2.values(prop1->name());
+		if(values.contains(prop1->value())) {
+			result++;
+		}
+	}
+	return result;
+}
+
+bool SqliteReferenceModel::lastWasExactMatch() {
+	return m_lastWasExactMatch;
 }
 
 bool SqliteReferenceModel::addPartAux(ModelPart * newModel) {

@@ -86,7 +86,7 @@ public:
 
 	const QString & title();
 	const QStringList & tags();
-	const QHash<QString,QString> & properties();
+	const QHash<QString,QString> & properties() const;
 	const QHash<QString, class Bus *> & buses();
 
 	class Bus * bus(const QString & busID);

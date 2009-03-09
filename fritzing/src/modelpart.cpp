@@ -370,7 +370,7 @@ const QStringList & ModelPart::tags() {
 	return ___emptyStringList___;
 }
 
-const QHash<QString,QString> & ModelPart::properties() {
+const QHash<QString,QString> & ModelPart::properties() const {
 	if (m_modelPartShared != NULL) return m_modelPartShared->properties();
 
 	return ___emptyStringHash___;

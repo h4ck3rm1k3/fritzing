@@ -39,7 +39,7 @@ class ReferenceModel : public PaletteModel {
 		virtual ModelPart *retrieveModelPart(const QString &moduleID) = 0;
 		virtual ModelPart *retrieveModelPart(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties) = 0;
 		virtual ModelPart *retrieveModelPart(const Part *examplePart) = 0;
-		virtual QString retrieveModuleId(const Part *examplePart) = 0;
+		virtual QString retrieveModuleId(const Part *examplePart, const QString &propertyName) = 0;
 
 		virtual bool addPart(ModelPart * newModel, bool update) = 0;
 		virtual bool updatePart(ModelPart * newModel) = 0;
@@ -50,9 +50,10 @@ class ReferenceModel : public PaletteModel {
 
 	public slots:
 		virtual void recordProperty(const QString &name, const QString &value) = 0;
-		virtual QString retrieveModuleIdWith(const QString &family) = 0;
-		virtual QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties) = 0;
+		virtual QString retrieveModuleIdWith(const QString &family, const QString &propertyName) = 0;
+		virtual QString retrieveModuleId(const QString &family, const QMultiHash<QString /*name*/, QString /*value*/> &properties, const QString &propertyName) = 0;
 		virtual QStringList values(const QString &family, const QString &propName, bool distinct=true) = 0;
+		virtual bool lastWasExactMatch() = 0;
 };
 
 #endif /* REFERENCEMODEL_H_ */

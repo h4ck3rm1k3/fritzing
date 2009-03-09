@@ -363,7 +363,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 	else {
 		if (offsetPaste) {
 			// m_pasteCount used for offsetting paste items, not a count of how many items are pasted
-			m_pasteCount++;								
+			m_pasteCount++;
 		}
 		//emit ratsnestChangeSignal(this, parentCommand);
 		new CleanUpWiresCommand(this, false, parentCommand);
@@ -416,7 +416,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	return itemBase;
 }
 
-void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand) 
+void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand)
 {
 	bool gotOne = false;
 	if (originatingCommand) {
@@ -431,7 +431,7 @@ void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelP
 			}
 		}
 	}
-	
+
 	if (!gotOne) {
 		if (modelParts.count() <= 0) {
 			if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts)) {
@@ -2903,7 +2903,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * par
 	if (itemBase->itemType() == ModelPart::Module) {
 		ConnectorPairHash connectorPairHashAll;
 		ConnectorPairHash connectorPairHashRemaining;
-		BaseCommand * subCommand = makeDeleteItemCommandRecurse(deleteItemCommand, itemBase, connectorPairHashAll, connectorPairHashRemaining);	
+		BaseCommand * subCommand = makeDeleteItemCommandRecurse(deleteItemCommand, itemBase, connectorPairHashAll, connectorPairHashRemaining);
 		foreach (ConnectorItem * fromConnectorItem, connectorPairHashRemaining.uniqueKeys()) {
 			foreach (ConnectorItem * toConnectorItem, connectorPairHashRemaining.values(fromConnectorItem)) {
 				new ChangeConnectionCommand(this, BaseCommand::SingleView,
@@ -2915,13 +2915,13 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * par
 	}
 }
 
-BaseCommand * SketchWidget::makeDeleteItemCommandRecurse(AddDeleteItemCommand * grandParentCommand, ItemBase * itemBase, ConnectorPairHash & connectorPairHashAll, ConnectorPairHash & connectorPairHashRemaining) 
+BaseCommand * SketchWidget::makeDeleteItemCommandRecurse(AddDeleteItemCommand * grandParentCommand, ItemBase * itemBase, ConnectorPairHash & connectorPairHashAll, ConnectorPairHash & connectorPairHashRemaining)
 {
 	// TODO?: external connectors?
 	QList<long> ids;
 
 	ConnectorPairHash cph;
-			
+
 	BaseCommand * parentCommand = new BaseCommand(BaseCommand::SingleView, this, NULL);
 	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
 		ItemBase * child = dynamic_cast<ItemBase *>(childItem);
@@ -2953,7 +2953,7 @@ BaseCommand * SketchWidget::makeDeleteItemCommandRecurse(AddDeleteItemCommand * 
 				if (connectorPairHashAll.values(toConnectorItem).contains(fromConnectorItem)) continue;
 
 				connectorPairHashAll.insert(fromConnectorItem, toConnectorItem);
-				
+
 				if (itemBase->isAncestorOf(toConnectorItem)) {
 					// internal connections, handle them below
 					cph.insert(fromConnectorItem, toConnectorItem);
@@ -3400,9 +3400,16 @@ void SketchWidget::swapSelected(ModelPart* other) {
 	swapSelected(other->moduleID());
 }
 
-void SketchWidget::swapSelected(const QString &moduleID) {
+void SketchWidget::swapSelected(const QString &moduleID, bool exactMatch) {
 	if(moduleID != ___emptyString___) {
 		if(m_lastPaletteItemSelected) {
+			if(!exactMatch) {
+				QMessageBox::information(
+					this,
+					tr("Warning!"),
+					tr("Not an exact match")
+				);
+			}
 			QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(m_lastPaletteItemSelected->instanceTitle()).arg(moduleID));
 			new SwapCommand(
 					this,
@@ -4482,7 +4489,7 @@ void SketchWidget::setConnectorExternal(long itemID, const QString & connectorID
 	if (itemBase == NULL) return;
 
 	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, true);
-	if (connectorItem == NULL) return; 
+	if (connectorItem == NULL) return;
 
 	connectorItem->connector()->setExternal(external);
 }
