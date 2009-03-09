@@ -28,7 +28,7 @@ $Date$
 #include "../graphicssvglineitem.h"
 #include "../debugdialog.h"
 #include "../infographicsview.h"
- 
+
 #include <QTextFrame>
 #include <QTextFrameFormat>
 #include <QApplication>
@@ -43,14 +43,14 @@ $Date$
 //		** undo delete + text
 //		** resize
 //		** undo resize
-//		anchor	
+//		anchor
 //		** undo change text
 //		** undo selection
 //		** undo move
 //		** layers and z order
 //		** hide and show layer
 //		** save and load
-//		format: bold, italic, size (small normal large huge), color?, 
+//		format: bold, italic, size (small normal large huge), color?,
 //		undo format
 //		heads-up controls
 //		copy/paste
@@ -100,9 +100,10 @@ Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	if (initialTextString.isEmpty()) {
 		initialTextString = tr("[write your note here]");
 
-		/* 
+		/*
 		// font test hack
 		int ix = QFontDatabase::addApplicationFont ("C:/fritzing2/Isabella.ttf/Isabella.ttf");
+		int ix = QFontDatabase::addApplicationFont ("/home/merun/desktop/isabella/Isabella.ttf");
 		QFontDatabase database;
 		QStringList families = database.families (  );
 		foreach (QString string, families) {
@@ -137,17 +138,17 @@ Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_graphicsTextItem->setTextInteractionFlags(Qt::TextEditorInteraction);
 	m_graphicsTextItem->setCursor(Qt::IBeamCursor);
 
-	/* 
+	/*
 	// set the font here
 	QFont font("Isabella");
 	m_graphicsTextItem->setFont(font);
 	*/
 
 
-	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()), 
+	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 
-	positionGrip();	
+	positionGrip();
 
 	setAcceptHoverEvents(true);
 }
@@ -189,7 +190,7 @@ void Note::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 	painter->setBrush(m_brush);
     painter->drawRect(m_rect);
 
-	if (option->state & QStyle::State_Selected) {	
+	if (option->state & QStyle::State_Selected) {
 		GraphicsSvgLineItem::qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
     }
 }
@@ -305,13 +306,13 @@ void Note::contentsChangedSlot() {
 
 void Note::setText(const QString & text) {
 	// disconnect the signal so it doesn't fire recursively
-	disconnect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()), 
+	disconnect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 			this, SLOT(contentsChangedSlot()));
 
 	QString oldText = text;
 	m_graphicsTextItem->document()->setPlainText(text);
 
-	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()), 
+	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
 
 }
@@ -320,7 +321,7 @@ QString Note::text() {
 	return m_graphicsTextItem->document()->toPlainText();
 }
 
-void Note::setSize(const QSizeF & size) 
+void Note::setSize(const QSizeF & size)
 {
 	prepareGeometryChange();
 	m_rect.setWidth(size.width());
@@ -328,7 +329,7 @@ void Note::setSize(const QSizeF & size)
 	positionGrip();
 }
 
-void Note::setText(const QDomElement & textElement) 
+void Note::setText(const QDomElement & textElement)
 {
 	QString t = textElement.text();
 	if (t.isEmpty()) {
@@ -337,14 +338,14 @@ void Note::setText(const QDomElement & textElement)
 	setText(t);
 }
 
-void Note::setHidden(bool hide) 
+void Note::setHidden(bool hide)
 {
 	ItemBase::setHidden(hide);
 	m_graphicsTextItem->setVisible(!hide);
 	m_resizeGrip->setVisible(!hide);
 }
 
-bool Note::eventFilter(QObject * object, QEvent * event) 
+bool Note::eventFilter(QObject * object, QEvent * event)
 {
 	if (event->type() == QEvent::Shortcut || event->type() == QEvent::ShortcutOverride)
 	{
