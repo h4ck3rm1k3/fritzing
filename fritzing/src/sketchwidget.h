@@ -89,7 +89,7 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest);
+	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
     ItemBase* loadFromModel(ModelPart *, const ViewGeometry&);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
@@ -165,6 +165,7 @@ public:
 	virtual bool canCopyItem(QGraphicsItem * item);
 	const QString & viewName();
 	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
+	BaseCommand * makeDeleteItemCommandRecurse(AddDeleteItemCommand * parentCommand, ItemBase *, ConnectorPairHash & all, ConnectorPairHash & remaining);
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
@@ -334,7 +335,7 @@ signals:
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
-	void makeModuleSignal(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
+	void makeModuleSignal(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -366,7 +367,7 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void ensureFixedItemsPositions();
-	void makeModule(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
+	void makeModule(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 public slots:
 	void swapSelected(const QString &moduleId);

@@ -187,7 +187,7 @@ ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& 
 	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), NULL, true);
 }
 
-void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest) {
+void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
@@ -251,7 +251,9 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		}
 		else {
 			// offset pasted items so we can differentiate them from the originals
-			viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
+			if (offsetPaste) {
+				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
+			}
 			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
 			if (mp->moduleID() == Wire::moduleIDName) {
 				addWireExtras(newID, view, parentCommand);
@@ -359,7 +361,10 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		cleanUpWires(false, NULL, false);
 	}
 	else {
-		m_pasteCount++;								// used for offsetting paste items, not a count of how many items are pasted
+		if (offsetPaste) {
+			// m_pasteCount used for offsetting paste items, not a count of how many items are pasted
+			m_pasteCount++;								
+		}
 		//emit ratsnestChangeSignal(this, parentCommand);
 		new CleanUpWiresCommand(this, false, parentCommand);
 	}
@@ -396,7 +401,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 
 	if (modelPart->itemType() == ModelPart::Module) {
 		QList<ModelPart *> modelParts;
-		makeModule(modelPart, modelParts, true, viewGeometry, id, originatingCommand);
+		makeModule(modelPart, modelParts, crossViewType == BaseCommand::CrossView, true, viewGeometry, id, originatingCommand);
 		return NULL;
 	}
 
@@ -411,14 +416,16 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	return itemBase;
 }
 
-void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelParts, bool doEmit, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand) 
+void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand) 
 {
 	bool gotOne = false;
 	if (originatingCommand) {
 		for (int i = 0; i < originatingCommand->subCommandCount(); i++) {
 			const BaseCommand * baseCommand = originatingCommand->subCommand(i);
 			if (baseCommand->sketchWidget() == this) {
-				originatingCommand->subRedo(i);
+				if (doRedo) {
+					originatingCommand->subRedo(i);
+				}
 				gotOne = true;
 				break;
 			}
@@ -433,29 +440,30 @@ void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelP
 		}
 
 		BaseCommand * parentCommand = new BaseCommand(BaseCommand::SingleView, this, NULL);
-		loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, false);
+		loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, false, false);
 		GroupCommand * groupCommand = new GroupCommand(this, modelPart->moduleID(), id, viewGeometry, parentCommand);
 		for (int i = 0; i < parentCommand->childCount(); i++) {
 			const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
 			if (addItemCommand == NULL) continue;
 
-
-
 			groupCommand->addItemID(addItemCommand->itemID());
 		}
 
 		originatingCommand->addSubCommand(parentCommand);
-		parentCommand->redo();				// trigger  module creation		
+		if (doRedo) {
+			parentCommand->redo();				// trigger  module creation
+		}
 	}
 
 	AddItemCommand * addItemCommand = dynamic_cast<AddItemCommand *>(originatingCommand);
-	if (addItemCommand && addItemCommand->isModule()) {
+	if (addItemCommand) {
+		if (addItemCommand->isModule()) {
 		// module within a module, don't send an emit signal, since we're already operating from some top level command that's been (or will be) emitted
+		}
+		else if (doEmit) {
+			emit makeModuleSignal(modelPart, modelParts, false, doRedo, viewGeometry, id, originatingCommand);
+		}
 	}
-	else if (doEmit) {
-		emit makeModuleSignal(modelPart, modelParts, false, viewGeometry, id, originatingCommand);
-	}
-
 }
 
 ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, PaletteItem* partsEditorPaletteItem) {
@@ -2891,7 +2899,90 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * par
 		new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	}
-	new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), parentCommand);
+	DeleteItemCommand * deleteItemCommand = new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), parentCommand);
+	if (itemBase->itemType() == ModelPart::Module) {
+		ConnectorPairHash connectorPairHashAll;
+		ConnectorPairHash connectorPairHashRemaining;
+		BaseCommand * subCommand = makeDeleteItemCommandRecurse(deleteItemCommand, itemBase, connectorPairHashAll, connectorPairHashRemaining);	
+		foreach (ConnectorItem * fromConnectorItem, connectorPairHashRemaining.uniqueKeys()) {
+			foreach (ConnectorItem * toConnectorItem, connectorPairHashRemaining.values(fromConnectorItem)) {
+				new ChangeConnectionCommand(this, BaseCommand::SingleView,
+											fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+											true, true, subCommand);
+			}
+		}
+	}
+}
+
+BaseCommand * SketchWidget::makeDeleteItemCommandRecurse(AddDeleteItemCommand * grandParentCommand, ItemBase * itemBase, ConnectorPairHash & connectorPairHashAll, ConnectorPairHash & connectorPairHashRemaining) 
+{
+	// TODO?: external connectors?
+	QList<long> ids;
+
+	ConnectorPairHash cph;
+			
+	BaseCommand * parentCommand = new BaseCommand(BaseCommand::SingleView, this, NULL);
+	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+		ItemBase * child = dynamic_cast<ItemBase *>(childItem);
+		if (child == NULL) continue;
+
+		ModelPart * mp = child->modelPart();
+		AddItemCommand * addItemCommand = new AddItemCommand(this, BaseCommand::SingleView, mp->moduleID(), child->getViewGeometry(), child->id(), false, mp->modelIndex(), parentCommand);
+		if (child->itemType() == ModelPart::Module) {
+			makeDeleteItemCommandRecurse(addItemCommand, child, connectorPairHashAll, connectorPairHashRemaining);
+		}
+		else if (mp->moduleID() == Wire::moduleIDName) {
+			Wire * wire = dynamic_cast<Wire *>(child);
+			new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
+			new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
+		}
+		ids.append(child->id());
+
+		foreach (QGraphicsItem * gitem, child->childItems()) {
+			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(gitem);
+			if (fromConnectorItem == NULL) continue;
+
+			if (fromConnectorItem->connector()->external()) {
+				new SetConnectorExternalCommand(this, child->id(), fromConnectorItem->connectorSharedID(), true, parentCommand);
+			}
+
+			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+				// ensure we don't add the same connection twice
+				if (connectorPairHashAll.values(fromConnectorItem).contains(toConnectorItem)) continue;
+				if (connectorPairHashAll.values(toConnectorItem).contains(fromConnectorItem)) continue;
+
+				connectorPairHashAll.insert(fromConnectorItem, toConnectorItem);
+				
+				if (itemBase->isAncestorOf(toConnectorItem)) {
+					// internal connections, handle them below
+					cph.insert(fromConnectorItem, toConnectorItem);
+				}
+				else {
+					// stash this external connection for later
+					connectorPairHashRemaining.insert(fromConnectorItem, toConnectorItem);
+				}
+			}
+		}
+	}
+
+	// create the internal connections now
+	foreach (ConnectorItem * fromConnectorItem, cph.uniqueKeys()) {
+		foreach (ConnectorItem * toConnectorItem, cph.values(fromConnectorItem)) {
+			new ChangeConnectionCommand(this, BaseCommand::SingleView,
+										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+										true, true, parentCommand);
+		}
+	}
+
+	GroupCommand * groupCommand = new GroupCommand(this, itemBase->modelPart()->moduleID(), itemBase->id(), itemBase->getViewGeometry(), parentCommand);
+	foreach (long id, ids) {
+		groupCommand->addItemID(id);
+	}
+
+	grandParentCommand->addSubCommand(parentCommand);
+	return parentCommand;
 }
 
 ItemBase::ViewIdentifier SketchWidget::viewIdentifier() {
