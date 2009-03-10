@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.14.b.01.21.2217">
+<module fritzingVersion="0.2.2.b.03.04.2550">
     <instances>
         <instance moduleIdRef="1234ABDE24_ST" modelIndex="5797" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/controller_arduino_diecimila.fzp">
             <title>Arduino1</title>
             <views>
-                <breadboardView layer="breadboardBreadboard">
-                    <geometry z="1.5" x="-18.3529" y="61.0588"></geometry>
+                <breadboardView layer="breadboardbreadboard">
+                    <geometry z="1.5" x="1.41181" y="70.4706"></geometry>
                     <connectors>
-                        <connector connectorId="connector18" layer="breadboardBreadboard">
+                        <connector connectorId="connector18" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5799"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="connector19" layer="breadboardBreadboard">
+                        <connector connectorId="connector19" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5800"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="connector25" layer="breadboardBreadboard">
+                        <connector connectorId="connector25" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5804"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="connector1" layer="breadboardBreadboard">
+                        <connector connectorId="connector1" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="6163"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="connector2" layer="breadboardBreadboard">
+                        <connector connectorId="connector2" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="6163"></connect>
@@ -144,7 +144,7 @@
             <title>Wire1</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.5" x="141.297" y="286.059" x1="0" y1="0" x2="-0.612813" y2="-47.159" wireFlags="64"></geometry>
+                    <geometry z="3.5" x="161.062" y="295.471" x1="0" y1="0" x2="-0.612813" y2="-47.159" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#cc1414" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -203,7 +203,7 @@
             <title>Wire2</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50001" x="150.297" y="295.059" x1="0" y1="0" x2="-0.640887" y2="-56.159" wireFlags="64"></geometry>
+                    <geometry z="3.5" x="170.062" y="304.471" x1="0" y1="0" x2="-0.640887" y2="-56.159" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#404040" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -221,7 +221,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50001" x="126.65" y="261" x1="0" y1="0" x2="56.9771" y2="-40.1735" wireFlags="64"></geometry>
+                    <geometry z="2.5" x="126.65" y="261" x1="0" y1="0" x2="56.9771" y2="-40.1735" wireFlags="64"></geometry>
                     <wireExtras width="1" color="#000000" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -239,7 +239,7 @@
                     </connectors>
                 </pcbView>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50001" x="126.65" y="261" x1="0" y1="0" x2="106.749" y2="127.858" wireFlags="64"></geometry>
+                    <geometry z="2.5" x="126.65" y="261" x1="0" y1="0" x2="106.749" y2="127.858" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -259,9 +259,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="5801" path=":/resources/parts/core/wire.fzp">
+            <title>Wire3</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50002" x="184.174" y="222.793" x1="0" y1="0" x2="9.00529" y2="0" wireFlags="19"></geometry>
+                    <geometry z="2.50001" x="184.174" y="222.793" x1="0" y1="0" x2="9.00529" y2="0" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -281,9 +282,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="5802" path=":/resources/parts/core/wire.fzp">
+            <title>Wire4</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50003" x="184.323" y="222.913" x1="0" y1="0" x2="-51.2437" y2="-170.065" wireFlags="19"></geometry>
+                    <geometry z="2.50002" x="184.323" y="222.913" x1="0" y1="0" x2="-51.2437" y2="-170.065" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -303,9 +305,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="5803" path=":/resources/parts/core/wire.fzp">
+            <title>Wire5</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50004" x="193.337" y="222.913" x1="0" y1="0" x2="-60.2582" y2="-170.065" wireFlags="19"></geometry>
+                    <geometry z="2.50003" x="193.337" y="222.913" x1="0" y1="0" x2="-60.2582" y2="-170.065" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -328,7 +331,7 @@
             <title>Wire3</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50002" x="213.297" y="322.059" x1="0" y1="0" x2="-0.697468" y2="-83.159" wireFlags="64"></geometry>
+                    <geometry z="3.50001" x="233.062" y="331.471" x1="0" y1="0" x2="-0.697468" y2="-83.159" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#ffe24d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -346,7 +349,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50005" x="189.649" y="288" x1="0" y1="0" x2="56.8377" y2="-67.1735" wireFlags="64"></geometry>
+                    <geometry z="2.50004" x="189.649" y="288" x1="0" y1="0" x2="56.8377" y2="-67.1735" wireFlags="64"></geometry>
                     <wireExtras width="1" color="#000000" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -364,7 +367,7 @@
                     </connectors>
                 </pcbView>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50002" x="189.649" y="288" x1="0" y1="0" x2="-99.5015" y2="-53.5471" wireFlags="64"></geometry>
+                    <geometry z="2.50001" x="189.649" y="288" x1="0" y1="0" x2="-99.5015" y2="-53.5471" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -387,7 +390,7 @@
             <title>Wire4</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50003" x="231.296" y="322.059" x1="0" y1="0" x2="0" y2="-36" wireFlags="64"></geometry>
+                    <geometry z="3.50002" x="251.061" y="331.471" x1="0" y1="0" x2="0" y2="-36" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#cc1414" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -405,7 +408,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50006" x="207.649" y="288" x1="0" y1="0" x2="0" y2="-36" wireFlags="64"></geometry>
+                    <geometry z="2.50005" x="207.649" y="288" x1="0" y1="0" x2="0" y2="-36" wireFlags="64"></geometry>
                     <wireExtras width="1" color="#000000" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -423,7 +426,7 @@
                     </connectors>
                 </pcbView>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50003" x="207.649" y="288" x1="0" y1="0" x2="0" y2="-36" wireFlags="64"></geometry>
+                    <geometry z="2.50002" x="207.649" y="288" x1="0" y1="0" x2="0" y2="-36" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -446,7 +449,7 @@
             <title>Wire5</title>
             <views>
                 <breadboardView layer="breadboardWire">
-                    <geometry z="3.50004" x="195.297" y="322.059" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"></geometry>
+                    <geometry z="3.50003" x="215.062" y="331.471" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#404040" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboardWire">
@@ -464,7 +467,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50007" x="171.65" y="288" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"></geometry>
+                    <geometry z="2.50006" x="171.65" y="288" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"></geometry>
                     <wireExtras width="1" color="#000000" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -482,7 +485,7 @@
                     </connectors>
                 </pcbView>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50004" x="171.65" y="288" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"></geometry>
+                    <geometry z="2.50003" x="171.65" y="288" x1="0" y1="0" x2="0" y2="-27" wireFlags="64"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -505,7 +508,7 @@
             <title>LED1</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.5" x="89.9727" y="0.90343"></geometry>
+                    <geometry z="2.5" x="109.737" y="10.3152"></geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="breadboard">
                             <geometry x="0" y="0"></geometry>
@@ -522,7 +525,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50001" x="131.017" y="81.2906">
+                    <geometry z="4.5" x="131.017" y="81.2906">
                         <transform m11="0" m12="-1" m13="0" m21="1" m22="0" m23="0" m31="0" m32="16" m33="1"></transform>
                     </geometry>
                     <connectors>
@@ -549,7 +552,7 @@
                     </connectors>
                 </pcbView>
                 <schematicView layer="schematic">
-                    <geometry z="1.50001" x="389" y="81.2353"></geometry>
+                    <geometry z="1.5" x="389" y="81.2353"></geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="schematic">
                             <geometry x="0" y="0"></geometry>
@@ -573,7 +576,7 @@
             <title>Wire18</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50005" x="400.8" y="141.168" x1="0" y1="0" x2="0.494195" y2="254.773" wireFlags="17"></geometry>
+                    <geometry z="2.50004" x="400.8" y="141.168" x1="0" y1="0" x2="0.494195" y2="254.773" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -596,7 +599,7 @@
             <title>Wire8</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50008" x="134.077" y="88.9206" x1="0" y1="0" x2="-0.998164" y2="-36.0716" wireFlags="19"></geometry>
+                    <geometry z="2.50007" x="134.077" y="88.9206" x1="0" y1="0" x2="-0.998164" y2="-36.0716" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -619,7 +622,7 @@
             <title>Wire6</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50009" x="134.077" y="88.9206" x1="0" y1="0" x2="50.2456" y2="133.993" wireFlags="19"></geometry>
+                    <geometry z="2.50008" x="134.077" y="88.9206" x1="0" y1="0" x2="50.2456" y2="133.993" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -639,9 +642,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="6167" path=":/resources/parts/core/wire.fzp">
+            <title>Wire9</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.5001" x="134.077" y="88.9206" x1="0" y1="0" x2="59.26" y2="133.993" wireFlags="19"></geometry>
+                    <geometry z="2.50009" x="134.077" y="88.9206" x1="0" y1="0" x2="59.26" y2="133.993" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -664,7 +668,7 @@
             <title>Wire25</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50006" x="400.784" y="82.2189" x1="0" y1="0" x2="-227.784" y2="-1.21891" wireFlags="17"></geometry>
+                    <geometry z="2.50005" x="400.784" y="82.2189" x1="0" y1="0" x2="-227.784" y2="-1.21891" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -687,7 +691,7 @@
             <title>Wire7</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50011" x="143.077" y="88.9206" x1="0" y1="0" x2="-1.02539" y2="-36.0716" wireFlags="19"></geometry>
+                    <geometry z="2.5001" x="143.077" y="88.9206" x1="0" y1="0" x2="-1.02539" y2="-36.0716" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#000000" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -709,64 +713,64 @@
         <instance moduleIdRef="BreadboardModuleID" modelIndex="9293" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/breadboard.fzp">
             <title>Breadboard1</title>
             <views>
-                <breadboardView layer="breadboardBreadboard">
-                    <geometry z="1.50001" x="109.647" y="277.059"></geometry>
+                <breadboardView layer="breadboardbreadboard">
+                    <geometry z="1.5" x="129.412" y="286.471"></geometry>
                     <connectors>
-                        <connector connectorId="A7" layer="breadboardBreadboard">
+                        <connector connectorId="A7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5806"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="A9" layer="breadboardBreadboard">
+                        <connector connectorId="A9" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5804"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C7" layer="breadboardBreadboard">
+                        <connector connectorId="C7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector2" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C9" layer="breadboardBreadboard">
+                        <connector connectorId="C9" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="W1" layer="breadboardBreadboard">
+                        <connector connectorId="W1" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5799"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="W11" layer="breadboardBreadboard">
+                        <connector connectorId="W11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5805"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="X2" layer="breadboardBreadboard">
+                        <connector connectorId="X2" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5800"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="X7" layer="breadboardBreadboard">
+                        <connector connectorId="X7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5806"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C11" layer="breadboardBreadboard">
+                        <connector connectorId="C11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="A11" layer="breadboardBreadboard">
+                        <connector connectorId="A11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5805"></connect>
@@ -774,64 +778,64 @@
                         </connector>
                     </connectors>
                 </breadboardView>
-                <pcbView layer="breadboardBreadboard">
+                <pcbView layer="breadboardbreadboard">
                     <geometry z="1.50002" x="86" y="243"></geometry>
                     <connectors>
-                        <connector connectorId="A7" layer="breadboardBreadboard">
+                        <connector connectorId="A7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5806"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="A9" layer="breadboardBreadboard">
+                        <connector connectorId="A9" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5804"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C7" layer="breadboardBreadboard">
+                        <connector connectorId="C7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector2" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C9" layer="breadboardBreadboard">
+                        <connector connectorId="C9" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="W1" layer="breadboardBreadboard">
+                        <connector connectorId="W1" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5799"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="W11" layer="breadboardBreadboard">
+                        <connector connectorId="W11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5805"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="X2" layer="breadboardBreadboard">
+                        <connector connectorId="X2" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5800"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="X7" layer="breadboardBreadboard">
+                        <connector connectorId="X7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5806"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C11" layer="breadboardBreadboard">
+                        <connector connectorId="C11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="A11" layer="breadboardBreadboard">
+                        <connector connectorId="A11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5805"></connect>
@@ -839,64 +843,64 @@
                         </connector>
                     </connectors>
                 </pcbView>
-                <schematicView layer="breadboardBreadboard">
+                <schematicView layer="breadboardbreadboard">
                     <geometry z="1.50002" x="86" y="243"></geometry>
                     <connectors>
-                        <connector connectorId="A7" layer="breadboardBreadboard">
+                        <connector connectorId="A7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5806"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="A9" layer="breadboardBreadboard">
+                        <connector connectorId="A9" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5804"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C7" layer="breadboardBreadboard">
+                        <connector connectorId="C7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector2" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C9" layer="breadboardBreadboard">
+                        <connector connectorId="C9" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="W1" layer="breadboardBreadboard">
+                        <connector connectorId="W1" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5799"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="W11" layer="breadboardBreadboard">
+                        <connector connectorId="W11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5805"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="X2" layer="breadboardBreadboard">
+                        <connector connectorId="X2" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5800"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="X7" layer="breadboardBreadboard">
+                        <connector connectorId="X7" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5806"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="C11" layer="breadboardBreadboard">
+                        <connector connectorId="C11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="27593"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="A11" layer="breadboardBreadboard">
+                        <connector connectorId="A11" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5805"></connect>
@@ -910,7 +914,7 @@
             <title>Wire8</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50007" x="173" y="81" x1="0" y1="0" x2="0.455573" y2="22.1431" wireFlags="17"></geometry>
+                    <geometry z="2.50006" x="173" y="81" x1="0" y1="0" x2="0.455573" y2="22.1431" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -933,7 +937,7 @@
             <title>Wire19</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50008" x="401.294" y="395.941" x1="0" y1="0" x2="-166.588" y2="0" wireFlags="17"></geometry>
+                    <geometry z="2.50007" x="401.294" y="395.941" x1="0" y1="0" x2="-166.588" y2="0" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -956,7 +960,7 @@
             <title>Wire20</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50009" x="234.706" y="395.941" x1="0" y1="0" x2="-1.30743" y2="-7.08324" wireFlags="17"></geometry>
+                    <geometry z="2.50008" x="234.706" y="395.941" x1="0" y1="0" x2="-1.30743" y2="-7.08324" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -979,7 +983,7 @@
             <title>R1</title>
             <views>
                 <breadboardView layer="breadboard">
-                    <geometry z="2.50001" x="186.723" y="334.937">
+                    <geometry z="2.5" x="206.488" y="344.349">
                         <transform m11="-1" m12="0" m13="0" m21="0" m22="-1" m23="0" m31="53.1" m32="106.11" m33="1"></transform>
                     </geometry>
                     <connectors>
@@ -1004,7 +1008,7 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50002" x="171.121" y="124.409"></geometry>
+                    <geometry z="4.50001" x="171.121" y="124.409"></geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
                             <geometry x="0" y="0"></geometry>
@@ -1036,7 +1040,7 @@
                     </connectors>
                 </pcbView>
                 <schematicView layer="schematic">
-                    <geometry z="1.50002" x="174.529" y="437.235">
+                    <geometry z="1.50001" x="174.529" y="437.235">
                         <transform m11="-1" m12="0" m13="0" m21="0" m22="-1" m23="0" m31="32" m32="63" m33="1"></transform>
                     </geometry>
                     <connectors>
@@ -1069,7 +1073,7 @@
             <title>Wire26</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.5001" x="90.148" y="234.453" x1="0" y1="0" x2="-44.148" y2="0.547111" wireFlags="17"></geometry>
+                    <geometry z="2.50009" x="90.148" y="234.453" x1="0" y1="0" x2="-44.148" y2="0.547111" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1092,7 +1096,7 @@
             <title>Wire10</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50012" x="247.183" y="222.913" x1="0" y1="0" x2="-69.7614" y2="-74.2045" wireFlags="19"></geometry>
+                    <geometry z="2.50011" x="247.183" y="222.913" x1="0" y1="0" x2="-69.7614" y2="-74.2045" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#1c8c44" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -1115,7 +1119,7 @@
             <title>Wire22</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50011" x="46" y="235" x1="0" y1="0" x2="2" y2="215" wireFlags="17"></geometry>
+                    <geometry z="2.5001" x="46" y="235" x1="0" y1="0" x2="2" y2="215" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1138,7 +1142,7 @@
             <title>Wire23</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50012" x="48" y="450" x1="0" y1="0" x2="128.397" y2="-1.68097" wireFlags="17"></geometry>
+                    <geometry z="2.50011" x="48" y="450" x1="0" y1="0" x2="128.397" y2="-1.68097" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1161,7 +1165,7 @@
             <title>Wire24</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50015" x="188.25" y="498.765" x1="0" y1="0" x2="44.7498" y2="-0.764669" wireFlags="17"></geometry>
+                    <geometry z="2.50012" x="188.25" y="498.765" x1="0" y1="0" x2="44.7498" y2="-0.764669" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1181,9 +1185,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29388" path=":/resources/parts/core/wire.fzp">
+            <title>Wire11</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50018" x="177.421" y="130.709" x1="0" y1="0" x2="6.90155" y2="92.2045" wireFlags="19"></geometry>
+                    <geometry z="2.50012" x="177.421" y="130.709" x1="0" y1="0" x2="6.90155" y2="92.2045" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -1203,9 +1208,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29389" path=":/resources/parts/core/wire.fzp">
+            <title>Wire12</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50019" x="177.421" y="130.709" x1="0" y1="0" x2="15.916" y2="92.2045" wireFlags="19"></geometry>
+                    <geometry z="2.50013" x="177.421" y="130.709" x1="0" y1="0" x2="15.916" y2="92.2045" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -1225,9 +1231,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29390" path=":/resources/parts/core/wire.fzp">
+            <title>Wire13</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.5002" x="177.421" y="130.709" x1="0" y1="0" x2="-44.3422" y2="-77.86" wireFlags="19"></geometry>
+                    <geometry z="2.50014" x="177.421" y="130.709" x1="0" y1="0" x2="-44.3422" y2="-77.86" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -1247,9 +1254,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29391" path=":/resources/parts/core/wire.fzp">
+            <title>Wire14</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50021" x="177.421" y="130.709" x1="0" y1="0" x2="-43.344" y2="-41.7884" wireFlags="19"></geometry>
+                    <geometry z="2.50015" x="177.421" y="130.709" x1="0" y1="0" x2="-43.344" y2="-41.7884" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#803400" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -1272,7 +1280,7 @@
             <title>Wire27</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50016" x="188.246" y="438.131" x1="0" y1="0" x2="15.1807" y2="-49.2734" wireFlags="17"></geometry>
+                    <geometry z="2.50013" x="188.246" y="438.131" x1="0" y1="0" x2="15.1807" y2="-49.2734" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1292,9 +1300,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29394" path=":/resources/parts/core/wire.fzp">
+            <title>Wire15</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50023" x="177.421" y="166.709" x1="0" y1="0" x2="-2.10793" y2="56.2045" wireFlags="19"></geometry>
+                    <geometry z="2.50016" x="177.421" y="166.709" x1="0" y1="0" x2="-2.10793" y2="56.2045" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#800700" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -1314,9 +1323,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29578" path=":/resources/parts/core/wire.fzp">
+            <title>Wire16</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50191" x="247.183" y="222.913" x1="0" y1="0" x2="-2.78548" y2="-11.2509" wireFlags="36"></geometry>
+                    <geometry z="4.50002" x="247.183" y="222.913" x1="0" y1="0" x2="-2.78548" y2="-11.2509" wireFlags="36"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -1336,9 +1346,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29579" path=":/resources/parts/core/wire.fzp">
+            <title>Wire17</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50192" x="244.397" y="211.663" x1="0" y1="0" x2="-66.9764" y2="-62.9536" wireFlags="36"></geometry>
+                    <geometry z="4.50003" x="244.397" y="211.663" x1="0" y1="0" x2="-66.9764" y2="-62.9536" wireFlags="36"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -1358,9 +1369,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29581" path=":/resources/parts/core/wire.fzp">
+            <title>Wire18</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50194" x="134.077" y="88.9206" x1="0" y1="0" x2="43.344" y2="41.7884" wireFlags="36"></geometry>
+                    <geometry z="4.50004" x="134.077" y="88.9206" x1="0" y1="0" x2="43.344" y2="41.7884" wireFlags="36"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -1380,9 +1392,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29582" path=":/resources/parts/core/wire.fzp">
+            <title>Wire19</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50195" x="175.313" y="222.913" x1="0" y1="0" x2="2.10793" y2="-56.2045" wireFlags="36"></geometry>
+                    <geometry z="4.50005" x="175.313" y="222.913" x1="0" y1="0" x2="2.10793" y2="-56.2045" wireFlags="36"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -1402,9 +1415,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29583" path=":/resources/parts/core/wire.fzp">
+            <title>Wire20</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50196" x="142.051" y="52.849" x1="0" y1="0" x2="1.02569" y2="36.0716" wireFlags="36"></geometry>
+                    <geometry z="4.50006" x="142.051" y="52.849" x1="0" y1="0" x2="1.02569" y2="36.0716" wireFlags="36"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -1424,9 +1438,10 @@
             </views>
         </instance>
         <instance moduleIdRef="WireModuleID" modelIndex="29707" path=":/resources/parts/core/wire.fzp">
+            <title>Wire21</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50319" x="134.077" y="88.9206" x1="0" y1="0" x2="-0.998164" y2="-36.0716" wireFlags="4"></geometry>
+                    <geometry z="4.50007" x="134.077" y="88.9206" x1="0" y1="0" x2="-0.998164" y2="-36.0716" wireFlags="4"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -1449,7 +1464,7 @@
             <title>Wire28</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50017" x="233" y="498" x1="0" y1="0" x2="0.398455" y2="-109.142" wireFlags="17"></geometry>
+                    <geometry z="2.50014" x="233" y="498" x1="0" y1="0" x2="0.398455" y2="-109.142" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -1466,6 +1481,16 @@
                         </connector>
                     </connectors>
                 </schematicView>
+            </views>
+        </instance>
+        <instance moduleIdRef="NoteModuleID" modelIndex="29985" path=":/resources/parts/core/note.fzp">
+            <title>Note1</title>
+            <text>In this example, potentiometer values are read in through an 'Analog In' pin.  The values are then used to control the blinking rate of an LED.  
+Related example: http://arduino.cc/en/Tutorial/AnalogInput</text>
+            <views>
+                <breadboardView layer="breadboardNote">
+                    <geometry z="5.5" x="18.9477" y="484.993" width="331.276" height="110.557"></geometry>
+                </breadboardView>
             </views>
         </instance>
     </instances>
