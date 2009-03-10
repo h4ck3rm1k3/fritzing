@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from fritzing.parts_gen.forms import gen
-import tempfile, zipfile, os
+import tempfile, zipfile, os, shutil
 from django.core.servers.basehttp import FileWrapper
 from fritzing import settings
 from fritzing.parts_gen.utils import \
@@ -36,8 +36,8 @@ def send_zipfile(script_id,config):
     add_folder_to_zipfile(files_location, archive, files_location) 
     archive.close()
     
-    # TODO: clean up generated files
-    # os.rmdir(files_location)
+    # clean up generated files
+    shutil.rmtree(files_location)
     
     wrapper = FileWrapper(temp)
     response = HttpResponse(wrapper, content_type='application/zip')
