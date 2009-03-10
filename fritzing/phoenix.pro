@@ -72,5 +72,6 @@ TRANSLATIONS += translations/fritzing_de.ts \
 	translations/fritzing_fr.ts \
 	translations/fritzing_en.ts \
 	translations/fritzing_es.ts \
-	translations/fritzing_jp.ts \
-	translations/fritzing_pt.ts
+	translations/fritzing_ja.ts \
+	translations/fritzing_pt_br.ts \
+	translations/fritzing_pt_pt.ts 
