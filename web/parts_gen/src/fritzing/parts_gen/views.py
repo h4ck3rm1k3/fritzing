@@ -5,12 +5,10 @@ import tempfile, zipfile
 from django.core.servers.basehttp import FileWrapper
 from fritzing import settings
 from fritzing.parts_gen.utils import \
-DEST_FOLDER, get_params_def, script_config_from_form, add_folder_to_zipfile
+script_config_from_form, add_folder_to_zipfile
+from fritzing.parts_gen.dispatcher import \
+GEN_FILES_FOLDER, AVAIL_SCRIPTS, get_params_def, gen_files
 
-
-AVAIL_SCRIPTS = [
-    {'value':'resistor','label':'Create a resistor'}
-]
 
 def choose(request):
     return render_to_response('parts_gen/choose.html', {'scripts_list': AVAIL_SCRIPTS})
@@ -30,12 +28,16 @@ def send_zipfile(script_id,config):
     without loading the whole file into memory.
     (http://www.djangosnippets.org/snippets/365/)                                 
     """
+    
+    gen_files(script_id, config)
 
     temp = tempfile.TemporaryFile()
     archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
-    add_folder_to_zipfile(DEST_FOLDER, archive)
-    
+    add_folder_to_zipfile(GEN_FILES_FOLDER, archive) 
     archive.close()
+    
+    # TODO: clean up generated files
+    
     wrapper = FileWrapper(temp)
     response = HttpResponse(wrapper, content_type='application/zip')
     response['Content-Disposition'] = 'attachment; filename=gen_part.fzpz'
