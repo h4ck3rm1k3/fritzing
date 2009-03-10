@@ -50,7 +50,7 @@ public:
 	int findIndex(const QString & language);
 
 protected:
-	QList<QLocale *> m_localeList;
+	static QList<QLocale *> m_localeList;
 
 	static QHash<QString, QString> m_languages;
 };

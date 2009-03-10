@@ -25,6 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "prefsdialog.h"
+#include "debugdialog.h"
+
 #include <QFormLayout>
 #include <QLabel>
 #include <QComboBox>
@@ -35,36 +37,60 @@ $Date$
 
 static QVariant emptyVariant;
 QHash<QString, QString> TranslatorListModel::m_languages;
+QList<QLocale *> TranslatorListModel::m_localeList;
 
 TranslatorListModel::TranslatorListModel(QFileInfoList & fileInfoList, QObject* parent)
 : QAbstractListModel(parent) 
 {
+
 	if (m_languages.count() == 0) {
-                m_languages.insert("english", tr("English - %1").arg("English"));
-                m_languages.insert("french", tr("French - %1").arg("Français"));
-                m_languages.insert("german", tr("German - %1").arg("Deutsch"));
-                m_languages.insert("spanish", tr("Spanish - %1").arg("Español"));
+        m_languages.insert("english", tr("English - %1").arg("English"));
+        m_languages.insert("french", tr("French - %1").arg("Français"));
+        m_languages.insert("german", tr("German - %1").arg("Deutsch"));
+        m_languages.insert("spanish", tr("Spanish - %1").arg("Español"));
+		ushort t1[] = { 0x65e5, 0x672c, 0x8a9e, 0 };
+		m_languages.insert("japanese", tr("Japanese - %1").arg(QString::fromUtf16(t1)));
+        m_languages.insert("portuguese_portugal", tr("Portuguese (European)- %1").arg("Português (Europeu)"));
+        m_languages.insert("portuguese_brazil", tr("Portuguese (Brazilian) - %1").arg("Português (do Brasil)"));
 
-		// put in extras so if someone does a new translation, we won't have to recompile
-                m_languages.insert("dutch", tr("Dutch - %1").arg("Nederlands"));
-                m_languages.insert("russian", tr("Russian - %1").arg("???????"));
-                m_languages.insert("italian", tr("Italian - %1").arg("Italiano"));
-                m_languages.insert("chinese-simplified", tr("Chinese Simp. - %1").arg("?? (??)"));
-                m_languages.insert("chinese-traditional", tr("Chinese Trad. - %1").arg("???? (??)"));
-                m_languages.insert("japanese", tr("Japanese - %1").arg("???"));
-                m_languages.insert("hebrew", tr("Hebrew - %1").arg("?????"));
-                m_languages.insert("arabic", tr("Arabic - %1").arg("????"));
-                m_languages.insert("portuguese", tr("Portuguese - %1").arg("Português"));
-                m_languages.insert("hindi", tr("Hindi - %1").arg("?????? (????)"));
-                // More languages written in their own language can be found
-                // at http://www.mozilla.com/en-US/firefox/all.html
-	}
+// put in extras so if someone does a new translation, we won't have to recompile
+        m_languages.insert("dutch", tr("Dutch - %1").arg("Nederlands"));
+		ushort t2[] = { 0x0420, 0x0443, 0x0441, 0x0441, 0x043a, 0x0438, 0x0439, 0 };
+        m_languages.insert("russian", tr("Russian - %1").arg(QString::fromUtf16(t2)));
+        m_languages.insert("italian", tr("Italian - %1").arg("Italiano"));
+ 		ushort t3[] = { 0x05e2, 0x05d1, 0x05e8, 0x05d9, 0x05ea, 0 };
+        m_languages.insert("hebrew", tr("Hebrew - %1").arg(QString::fromUtf16(t3)));
+		ushort t4[] = { 0x0639, 0x0631, 0x0628, 0x064a, 0 };
+        m_languages.insert("arabic", tr("Arabic - %1").arg(QString::fromUtf16(t4)));
+		ushort t5[] = { 0x0939, 0x093f, 0x0928, 0x094d, 0x0926, 0x0940, 0x0020, 0x0028, 0x092d, 0x093e, 0x0930, 0x0924, 0x0029, 0 };
+        m_languages.insert("hindi", tr("Hindi - %1").arg(QString::fromUtf16(t5)));
 
-	foreach (QFileInfo fileinfo, fileInfoList) {
-		QString name = fileinfo.baseName();
-		name.replace("fritzing_", "");
-		QLocale * locale = new QLocale(name);
-		m_localeList.append(locale);
+		// TODO: not yet sure how to deal with scripts (as opposed to languages)
+		//ushort t6[] = { 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7b80, 0x4f53, 0x0029, 0 };
+        //m_languages.insert("chinese-simplified", tr("Chinese Simp. - %1").arg(QString::fromUtf16(t6)));
+		//ushort t7[] = { 0x6b63, 0x9ad4, 0x4e2d, 0x6587, 0x0020, 0x0028, 0x7e41, 0x9ad4, 0x0029, 0 };		
+		//m_languages.insert("chinese-traditional", tr("Chinese Trad. - %1").arg(QString::fromUtf16(t7)));
+
+        // More languages written in their own language can be found
+        // at http://www.mozilla.com/en-US/firefox/all.html
+
+		// recipe for translating from mozilla strings into source code via windows:
+		//		1. copy the string from the mozilla page into wordpad and save it as a unicode text file
+		//		2. open that unicode text file as a binary file (e.g. in msvc)
+		//		3. ignore the first two bytes (these are a signal that says "I'm unicode")
+		//		4. initialize an array of ushort using the rest of the byte pairs
+		//		5. don't forget to reverse the order of the bytes in each pair.
+	
+		foreach (QFileInfo fileinfo, fileInfoList) {
+			QString name = fileinfo.baseName();
+			name.replace("fritzing_", "");
+			QStringList names = name.split("_");
+			if (names.count() > 1) {
+				name = names[0] + "_" + names[1].toUpper();
+			}
+			QLocale * locale = new QLocale(name);
+			m_localeList.append(locale);
+		}
 	}
 }
 
@@ -81,11 +107,18 @@ QVariant TranslatorListModel::data ( const QModelIndex & index, int role) const
 {
 	if (role == Qt::DisplayRole && index.row() >= 0 && index.row() < m_localeList.count()) {
 		QString languageString = QLocale::languageToString(m_localeList.at(index.row())->language());
+		QString countryString = QLocale::countryToString(m_localeList.at(index.row())->country());
+
+		DebugDialog::debug(QString("language %1 %2").arg(languageString).arg(countryString));
 
 		// QLocale::languageToString() only returns an English string, 
 		// so put it through a language-dependent hash table.
 		QString trLanguageString = m_languages.value(languageString.toLower(), "");
+		if (trLanguageString.isEmpty()) {
+			trLanguageString = m_languages.value(languageString.toLower() + "_" + countryString.toLower(), "");
+		}
 		if (trLanguageString.isEmpty()) return languageString;
+
 		return trLanguageString;
 	}
 
