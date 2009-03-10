@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.1.b.12.23.2001">
+<module fritzingVersion="0.2.2.b.03.04.2550">
     <instances>
-        <instance moduleIdRef="1234ABDE24_ST" modelIndex="473" path="C:/fritzing2/phoenix/parts/core/controller_arduino_diecimila.fz">
+        <instance moduleIdRef="1234ABDE24_ST" modelIndex="473" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/controller_arduino_diecimila.fzp">
             <title>Arduino1</title>
             <views>
-                <breadboardView layer="breadboardBreadboard">
+                <breadboardView layer="breadboardbreadboard">
                     <geometry z="1.5" x="65" y="117"></geometry>
                     <connectors>
-                        <connector connectorId="connector1" layer="breadboardBreadboard">
+                        <connector connectorId="connector1" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector0" modelIndex="5477"></connect>
                             </connects>
                         </connector>
-                        <connector connectorId="connector2" layer="breadboardBreadboard">
+                        <connector connectorId="connector2" layer="breadboardbreadboard">
                             <geometry x="0" y="0"></geometry>
                             <connects>
                                 <connect connectorId="connector1" modelIndex="5477"></connect>
@@ -81,7 +81,8 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="475" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="475" path=":/resources/parts/core/wire.fzp">
+            <title>Wire1</title>
             <views>
                 <breadboardView layer="breadboardWire">
                     <geometry z="3.5" x="202.226" y="140.475" x1="0" y1="0" x2="-196.226" y2="-134.475" wireFlags="1"></geometry>
@@ -97,7 +98,7 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDC24" modelIndex="5477" path="C:/fritzing2/phoenix/parts/core/LED-red-5mm.fz">
+        <instance moduleIdRef="1234ABDC24" modelIndex="5477" path="/Users/jennylc/Documents/Fritzing-Jenny/fritzing/parts/core/LED-red-5mm.fzp">
             <title>LED1</title>
             <views>
                 <breadboardView layer="breadboard">
@@ -118,16 +119,16 @@
                     </connectors>
                 </breadboardView>
                 <pcbView layer="copper0">
-                    <geometry z="4.50001" x="182" y="181">
+                    <geometry z="4.5" x="182" y="181">
                         <transform m11="0" m12="-1" m13="0" m21="1" m22="0" m23="0" m31="0" m32="16" m33="1"></transform>
                     </geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
                             <geometry x="0" y="0"></geometry>
                             <connects>
+                                <connect connectorId="connector1" modelIndex="473"></connect>
                                 <connect connectorId="connector1" modelIndex="5534"></connect>
                                 <connect connectorId="connector0" modelIndex="5490"></connect>
-                                <connect connectorId="connector1" modelIndex="473"></connect>
                                 <connect connectorId="connector0" modelIndex="5488"></connect>
                                 <connect connectorId="connector0" modelIndex="5489"></connect>
                             </connects>
@@ -143,32 +144,33 @@
                     </connectors>
                 </pcbView>
                 <schematicView layer="schematic">
-                    <geometry z="1.50001" x="187" y="307">
+                    <geometry z="1.5" x="187" y="307">
                         <transform m11="0" m12="-1" m13="0" m21="1" m22="0" m23="0" m31="-13" m32="49" m33="1"></transform>
                     </geometry>
                     <connectors>
                         <connector connectorId="connector0" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" modelIndex="5487"></connect>
                                 <connect connectorId="connector1" modelIndex="473"></connect>
+                                <connect connectorId="connector0" modelIndex="5487"></connect>
                             </connects>
                         </connector>
                         <connector connectorId="connector1" layer="schematic">
                             <geometry x="0" y="0"></geometry>
                             <connects>
-                                <connect connectorId="connector0" modelIndex="5491"></connect>
                                 <connect connectorId="connector2" modelIndex="473"></connect>
+                                <connect connectorId="connector0" modelIndex="5491"></connect>
                             </connects>
                         </connector>
                     </connectors>
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5484" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5484" path=":/resources/parts/core/wire.fzp">
+            <title>Wire2</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50001" x="182.902" y="148.755" x1="0" y1="0" x2="51.1915" y2="169.951" wireFlags="19"></geometry>
+                    <geometry z="2.5" x="182.902" y="148.755" x1="0" y1="0" x2="51.1915" y2="169.951" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#004d4d" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -187,10 +189,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5485" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5485" path=":/resources/parts/core/wire.fzp">
+            <title>Wire3</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50002" x="182.902" y="148.755" x1="0" y1="0" x2="60.1968" y2="169.951" wireFlags="19"></geometry>
+                    <geometry z="2.50001" x="182.902" y="148.755" x1="0" y1="0" x2="60.1968" y2="169.951" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#004d4d" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -209,10 +212,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5486" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5486" path=":/resources/parts/core/wire.fzp">
+            <title>Wire4</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50003" x="234.093" y="318.706" x1="0" y1="0" x2="9.00529" y2="0" wireFlags="19"></geometry>
+                    <geometry z="2.50002" x="234.093" y="318.706" x1="0" y1="0" x2="9.00529" y2="0" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#004d4d" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -231,10 +235,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5487" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5487" path=":/resources/parts/core/wire.fzp">
+            <title>Wire2</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50001" x="233.933" y="344.2" x1="0" y1="0" x2="-0.534782" y2="81.6577" wireFlags="17"></geometry>
+                    <geometry z="2.5" x="233.933" y="344.2" x1="0" y1="0" x2="-0.534782" y2="81.6577" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -253,10 +258,11 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5488" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5488" path=":/resources/parts/core/wire.fzp">
+            <title>Wire5</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50004" x="185.039" y="188.913" x1="0" y1="0" x2="-2.13741" y2="-40.1582" wireFlags="19"></geometry>
+                    <geometry z="2.50003" x="185.039" y="188.913" x1="0" y1="0" x2="-2.13741" y2="-40.1582" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#004d4d" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -275,10 +281,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5489" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5489" path=":/resources/parts/core/wire.fzp">
+            <title>Wire6</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50005" x="185.039" y="188.913" x1="0" y1="0" x2="49.0541" y2="129.793" wireFlags="19"></geometry>
+                    <geometry z="2.50004" x="185.039" y="188.913" x1="0" y1="0" x2="49.0541" y2="129.793" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#004d4d" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -297,10 +304,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5490" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5490" path=":/resources/parts/core/wire.fzp">
+            <title>Wire7</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50006" x="185.039" y="188.913" x1="0" y1="0" x2="58.0594" y2="129.793" wireFlags="19"></geometry>
+                    <geometry z="2.50005" x="185.039" y="188.913" x1="0" y1="0" x2="58.0594" y2="129.793" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#004d4d" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -319,10 +327,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5491" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5491" path=":/resources/parts/core/wire.fzp">
+            <title>Wire3</title>
             <views>
                 <schematicView layer="schematicWire">
-                    <geometry z="2.50002" x="174.984" y="344.216" x1="0" y1="0" x2="-1.52807" y2="-204.073" wireFlags="17"></geometry>
+                    <geometry z="2.50001" x="174.984" y="344.216" x1="0" y1="0" x2="-1.52807" y2="-204.073" wireFlags="17"></geometry>
                     <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="schematicWire">
@@ -341,10 +350,11 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5492" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5492" path=":/resources/parts/core/wire.fzp">
+            <title>Wire8</title>
             <views>
                 <pcbView layer="ratsnest">
-                    <geometry z="2.50007" x="193.978" y="188.913" x1="0" y1="0" x2="-2.11263" y2="-40.1582" wireFlags="19"></geometry>
+                    <geometry z="2.50006" x="193.978" y="188.913" x1="0" y1="0" x2="-2.11263" y2="-40.1582" wireFlags="19"></geometry>
                     <wireExtras width="1" color="#1c8c44" opacity="0.35"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="ratsnest">
@@ -363,10 +373,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5534" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5534" path=":/resources/parts/core/wire.fzp">
+            <title>Wire9</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50002" x="182.902" y="148.755" x1="0" y1="0" x2="2.13741" y2="40.1582" wireFlags="36"></geometry>
+                    <geometry z="4.50001" x="182.902" y="148.755" x1="0" y1="0" x2="2.13741" y2="40.1582" wireFlags="36"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -385,10 +396,11 @@
                 </pcbView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="5535" path=":/resources/parts/core/wire.fz">
+        <instance moduleIdRef="WireModuleID" modelIndex="5535" path=":/resources/parts/core/wire.fzp">
+            <title>Wire10</title>
             <views>
                 <pcbView layer="copper0">
-                    <geometry z="4.50003" x="191.865" y="148.755" x1="0" y1="0" x2="2.11263" y2="40.1582" wireFlags="36"></geometry>
+                    <geometry z="4.50002" x="191.865" y="148.755" x1="0" y1="0" x2="2.11263" y2="40.1582" wireFlags="36"></geometry>
                     <wireExtras width="3" color="#ffbf00" opacity="1"></wireExtras>
                     <connectors>
                         <connector connectorId="connector0" layer="copper0">
@@ -405,6 +417,17 @@
                         </connector>
                     </connectors>
                 </pcbView>
+            </views>
+        </instance>
+        <instance moduleIdRef="NoteModuleID" modelIndex="5537" path=":/resources/parts/core/note.fzp">
+            <title>Note1</title>
+            <text>In this very simple example, Arduino will be programmed to blink the LED on pin 13.
+Related example:
+http://arduino.cc/en/Tutorial/Blink</text>
+            <views>
+                <breadboardView layer="breadboardNote">
+                    <geometry z="5.5" x="50" y="339.5" width="281" height="113"></geometry>
+                </breadboardView>
             </views>
         </instance>
     </instances>
