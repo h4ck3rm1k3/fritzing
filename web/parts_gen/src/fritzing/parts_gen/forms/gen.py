@@ -26,25 +26,39 @@ def enum_field(name,obj):
     %(name)s = forms.ChoiceField(required=True%(attrs)s, choices=%(choices)s) ''' \
     % {'name' : name, 'attrs' : get_label(obj), 'choices' : obj['options'] }
     return src
+
+
+def regex_field(name,obj):
+    src = '''
+    %(name)s = forms.RegexField(required=True%(attrs)s) ''' \
+    % {'name' : name, 'attrs' : get_label(obj)+get_regex(obj) }
+    return src
+
     
 def get_range(obj):
-    src=""
-    if obj.has_key('range_min'):
-        src += ", min_value = %s" % obj['range_min']
-    if obj.has_key('range_max'):
-        src += ", max_value = %s" % obj['range_max']
+    src  = get_aux(obj,'min_value',"")
+    src += get_aux(obj,'max_value',"")
     return src
         
 def get_label(obj):
-    if obj.has_key('label'):
-        return ", label='%s'" % obj['label']
-    return ""
+    return get_aux(obj,'label')
+
+def get_regex(obj):
+    return get_aux(obj,'regex')
+
+def get_aux(obj,prop_name,separator="'"):
+    src = ""
+    if obj.has_key(prop_name):
+        src = ", %(name)s=%(sep)s%(value)s%(sep)s" % {'name':prop_name, 'value':obj[prop_name], 'sep': separator}
+    return src
+
         
 field_types = {
     'string': string_field,
     'int'   : int_field,
     'float' : float_field,
-    'enum'  : enum_field
+    'enum'  : enum_field,
+    'regex' : regex_field 
 }
 
 def get_field_from_obj(name,obj):

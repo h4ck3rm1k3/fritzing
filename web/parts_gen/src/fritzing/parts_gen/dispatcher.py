@@ -3,11 +3,32 @@ AVAIL_SCRIPTS = [
 ]
 
 _SCRIPTS_DEF = {
+#    'resistor' : {
+#        'resistance' : {
+#            'label': 'Choose the resistance',
+#            'type' : 'int',
+#            'min_value' : 1,
+#            'max_value' : 5
+#        },
+#        'unit' : {
+#            'label': 'Choose the unit',
+#            'type' : 'enum',
+#            'options' : [('kv','kl'),('mv','ml')]
+#        },
+#        'regex' : {
+#            'type' : 'regex',
+#            'regex' : 'abcdef'
+#        },
+#        'float' : {
+#            'type' : 'float'
+#        }
+#    }
+
     'resistor' : {
         'resistance' : {
             'label': 'Choose the resistance',
             'type' : 'int',
-            'range_min' : 1
+            'min_value' : 1
         },
         'unit' : {
             'label': 'Choose the unit',
