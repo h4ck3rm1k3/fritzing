@@ -1,13 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from fritzing.parts_gen.forms import gen
-import tempfile, zipfile
+import tempfile, zipfile, os
 from django.core.servers.basehttp import FileWrapper
 from fritzing import settings
 from fritzing.parts_gen.utils import \
 script_config_from_form, add_folder_to_zipfile
 from fritzing.parts_gen.dispatcher import \
-GEN_FILES_FOLDER, AVAIL_SCRIPTS, get_params_def, gen_files
+AVAIL_SCRIPTS, get_params_def, gen_files
 
 
 def choose(request):
@@ -29,14 +29,15 @@ def send_zipfile(script_id,config):
     (http://www.djangosnippets.org/snippets/365/)                                 
     """
     
-    gen_files(script_id, config)
+    files_location = gen_files(script_id, config)
 
     temp = tempfile.TemporaryFile()
     archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
-    add_folder_to_zipfile(GEN_FILES_FOLDER, archive) 
+    add_folder_to_zipfile(files_location, archive, files_location) 
     archive.close()
     
     # TODO: clean up generated files
+    # os.rmdir(files_location)
     
     wrapper = FileWrapper(temp)
     response = HttpResponse(wrapper, content_type='application/zip')

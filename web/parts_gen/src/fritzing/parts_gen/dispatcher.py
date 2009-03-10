@@ -17,12 +17,13 @@ _SCRIPTS_DEF = {
     } 
 }
 
-GEN_FILES_FOLDER = '/home/merun/workspace/fritzing/web/parts_gen/parts/'
+_GEN_FILES_FOLDER_PREFIX = '/home/merun/workspace/fritzing/web/parts_gen/parts/'
 
 def get_params_def(script_id):
     obj = _SCRIPTS_DEF[script_id] 
     return obj
 
 def gen_files(script_id, config):
-    # TODO: here execute script, and generate svg and fzp files inside the GEN_FILES_FOLDER folder 
-    pass
+    # TODO: here execute script, and generate svg and fzp files 
+    # inside a folder, inside the _GEN_FILES_FOLDER_PREFIX folder 
+    return _GEN_FILES_FOLDER_PREFIX
