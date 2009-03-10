@@ -143,7 +143,7 @@ QDomElement SVG2gerber::circle2path(QDomElement circleElement){
     float r = circleElement.attribute("r").toFloat();
 
     // approximate midpoint
-    float k = r * (sqrt(2) -1) * 4/3;
+    float k = r * (sqrt(2.0f) -1) * 4/3;
 
 //    d="m 0,1                      // translate(radius) from center
 //    C 0.552,1   1,0.552   1,0    // 1st quarter
