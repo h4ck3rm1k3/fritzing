@@ -54,10 +54,10 @@ def generate(request):
         class_name = gen.get_class_name(script_id)
         form = gen.get_form_class(class_name)(request.POST)
         if form.is_valid(): # All validation rules pass 
-            config, script_id = script_config_from_form(request.POST)
+            config, script_id = script_config_from_form(form.cleaned_data)
             return send_zipfile(script_id,config)
         else:
             return render_to_response('parts_gen/form.html', {'form': form})
     else:
-        return HttpResponse('now form posted')
+        return HttpResponse('no form posted')
     

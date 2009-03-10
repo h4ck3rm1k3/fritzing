@@ -45,6 +45,7 @@ def get_params_def(script_id):
     return obj
 
 def gen_files(script_id, config):
+    print config
     # TODO: here execute script, and generate svg and fzp files 
     # inside a folder, inside the _GEN_FILES_FOLDER_PREFIX folder 
     return _GEN_FILES_FOLDER_PREFIX
