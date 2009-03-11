@@ -1,4 +1,16 @@
 color_bands = ['black', 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'grey', 'white']
+multipliers = {
+    1 : 'black',
+    10 : 'brown',
+    100 : 'red',
+    1000 : 'orange',
+    10000 : 'yellow',
+    100000 : 'green',
+    1000000 : 'blue',
+    0.1 : 'gold',
+    0.01 : 'silver'
+}
+
 colors = {
     'black': 'rgb(0, 0, 0)',
     'brown': 'rgb(138, 61, 6)',
@@ -9,45 +21,56 @@ colors = {
     'blue': 'rgb(0, 96, 182)',
     'purple': 'rgb(130, 16, 210)',
     'grey': 'rgb(140, 140, 140)',
-    'white': 'rgb(255, 255, 255)'
+    'white': 'rgb(255, 255, 255)',
+    'gold' : 'rgb(217, 217, 25)',
+    'silver' : 'rgb(230, 232, 250)'
 }
 
 units = { 'k': 1000, 'M': 1000000 }
 
 def stripe1(resistance):
-    real_resistance = to_number(resistance)
-    ch = str(real_resistance)[0]
-    return colors[color_bands[int(ch)]]
+    fst_num = int(resistance[0])
+    if fst_num == 0:
+        fst_num = int(resistance[2])
+    return colors[color_bands[fst_num]]
     
 def stripe2(resistance):
+    fst_num = int(resistance[0])
     real_resistance = to_number(resistance)
-    digit_cnt = get_whole_digits_count(real_resistance);
-    if(digit_cnt >1 ):
-        ch = str(real_resistance)[1]
-    else:
-        ch = str(real_resistance)[2]
-    return colors[color_bands[int(ch)]]
-    
-def stripe3(resistance):
-    real_resistance = to_number(resistance)
-    fst_num = int(str(real_resistance)[0])
     correction = 0
     if fst_num == 0:
-        fst_num = int(str(real_resistance)[2])
+        fst_num = int(resistance[2])
         correction = 1
     digit_cnt = get_whole_digits_count(real_resistance);
     if(digit_cnt > 1 ):
-        snd_num = int(str(real_resistance)[1])
+        snd_num = int(resistance[1])
     else: # there's a '.' in the middle
         try:
-            snd_num = int(str(real_resistance)[2+correction])
+            snd_num = int(resistance[2+correction])
+        except:
+            snd_num = 0
+    return colors[color_bands[snd_num]]
+    
+def stripe3(resistance):
+    real_resistance = to_number(resistance)
+    fst_num = int(resistance[0])
+    correction = 0
+    if fst_num == 0:
+        fst_num = int(resistance[2])
+        correction = 1
+    digit_cnt = get_whole_digits_count(real_resistance);
+    if(digit_cnt > 1 ):
+        snd_num = int(resistance[1])
+    else: # there's a '.' in the middle
+        try:
+            snd_num = int(resistance[2+correction])
         except:
             snd_num = 0
     multiplier = get_multiplier(fst_num, snd_num, real_resistance)
     #print fst_num
     #print snd_num
     #print multiplier
-    return colors[color_bands[1]]
+    return colors[multipliers[multiplier]]
 
 def to_number(resistance_str):
     last_char = resistance_str[-1]
@@ -60,7 +83,7 @@ def to_number(resistance_str):
 def get_multiplier(fst_num,snd_num,real_resistance):
     digit_cnt = get_whole_digits_count(real_resistance);
     correction = 0
-    if int(str(real_resistance)[0]) == 0 and snd_num != 0:
+    if int(str(real_resistance)[0]) == 0:
         correction = 1
     return 10**(digit_cnt-2-correction)
     
