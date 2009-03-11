@@ -58,6 +58,7 @@ void TerminalPointItem::init(PartsEditorConnectorsConnectorItem *parent, bool vi
 
 	bool editable = parent->attachedTo()->viewIdentifier() != ItemBase::PCBView;
 	m_cross = new TerminalPointItemPrivate(this,editable);
+	setMovable(editable);
 	setVisible(visible);
 	updatePoint();
 
@@ -160,8 +161,8 @@ TerminalPointItemPrivate::TerminalPointItemPrivate(TerminalPointItem *parent, bo
 	m_editable = editable;
 	setAcceptHoverEvents(true);
 	setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	setFlag(QGraphicsItem::ItemIsMovable, m_editable);
 	setPixmap(m_parent->m_pixmapHash[ConnectorRectangle::Normal]);
+	setFlag(QGraphicsItem::ItemIsMovable, m_editable);
 }
 
 bool TerminalPointItemPrivate::isPressed() {
@@ -209,8 +210,8 @@ void TerminalPointItemPrivate::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 			m_hasBeenMoved = m_pressed;
 			unsetCursor();
 		}
+		QGraphicsPixmapItem::mouseMoveEvent(event);
 	}
-	QGraphicsPixmapItem::mouseMoveEvent(event);
 }
 
 void TerminalPointItemPrivate::mousePressEvent(QGraphicsSceneMouseEvent *event) {
