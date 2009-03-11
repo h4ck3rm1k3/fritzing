@@ -1009,6 +1009,7 @@ void MainWindow::createPartMenuActions() {
 	m_loadBundledPart = new QAction(tr("&Import part..."), this);
 	m_loadBundledPart->setStatusTip(tr("Import a part"));
 	connect(m_loadBundledPart, SIGNAL(triggered()), this, SLOT(loadBundledPart()));
+	//connect(m_loadBundledPart, SIGNAL(triggered()), this, SLOT(loadBundledPartFromWeb()));
 }
 
 void MainWindow::createViewMenuActions() {

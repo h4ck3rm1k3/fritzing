@@ -967,6 +967,16 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 	rmdir(unzipDirPath);
 }
 
+void MainWindow::loadBundledPartFromWeb() {
+	QMainWindow *mw = new QMainWindow();
+	QString url = "http://localhost:8081/parts_gen/choose";
+	QWebView *view = new QWebView(mw);
+	mw->setCentralWidget(view);
+	view->setUrl(QUrl(url));
+	mw->show();
+	mw->raise();
+}
+
 void MainWindow::loadBundledPart() {
 	QString fileName = FApplication::getOpenFileName(
 		this,

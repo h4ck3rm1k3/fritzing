@@ -14,22 +14,22 @@
     <description>A basic unipolar stepper motor</description>
     <views>
         <breadboardView>
-            <layers image="breadboard/Stepper_Motor_-_Unipolar__breadboard__5ff54615a9d2d285d102d95421eeea2b.svg">
+            <layers image="breadboard/Stepper_Motor_-_Unipolar__breadboard.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/Stepper_Motor_-_Unipolar__schematic__5ffb8cccdab079c717601bda39036a87.svg">
+            <layers image="schematic/Stepper_Motor_-_Unipolar__schematic.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/Stepper_Motor_-_Unipolar__pcb__464b47019de093cf6a97c8b6476c1d0f.svg">
+            <layers image="pcb/Stepper_Motor_-_Unipolar__pcb.svg">
                 <layer layerId="copper0"></layer>
             </layers>
         </pcbView>
         <iconView>
-            <layers image="icon/Stepper_Motor_-_Unipolar__icon__099212b19c45ec4daf3ab6d8edb7e7ae.svg">
+            <layers image="icon/Stepper_Motor_-_Unipolar__icon.svg">
                 <layer layerId="icon"></layer>
             </layers>
         </iconView>

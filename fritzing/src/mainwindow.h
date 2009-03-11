@@ -193,6 +193,7 @@ protected slots:
 	void loadBundledSketch(const QString &fileName);
 	void loadBundledPart(const QString &fileName);
 	void loadBundledPart();
+	void loadBundledPartFromWeb();
 	void saveAsModule();
 
 	void binSaved(bool hasAlienParts);

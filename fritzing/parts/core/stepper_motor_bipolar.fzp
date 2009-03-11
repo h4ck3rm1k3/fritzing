@@ -22,22 +22,22 @@
     <description>Simple, but very powerful bi polar stepper motor. 4 wire</description>
     <views>
         <breadboardView>
-            <layers image="breadboard/Stepper_Motor_-_Bipolar__breadboard__404d8aa39b7d4a7c2f1599adc50a9d5d.svg">
+            <layers image="breadboard/Stepper_Motor_-_Bipolar__breadboard.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/Stepper_Motor_-_Bipolar__schematic__12bd4d7b9fbfbe985e726e2b5b16d69a.svg">
+            <layers image="schematic/Stepper_Motor_-_Bipolar__schematic.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/Stepper_Motor_-_Bipolar__pcb__76f4561ad210031db54c91eb56050dcd.svg">
+            <layers image="pcb/Stepper_Motor_-_Bipolar__pcb.svg">
                 <layer layerId="copper0"></layer>
             </layers>
         </pcbView>
         <iconView>
-            <layers image="icon/Stepper_Motor_-_Bipolar__icon__fba2c9f812f802874e1301937eee5373.svg">
+            <layers image="icon/Stepper_Motor_-_Bipolar__icon.svg">
                 <layer layerId="icon"></layer>
             </layers>
         </iconView>
