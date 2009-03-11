@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="a22e371d3e8c77a58fdfe4dd2799c449">
+    <author>petbom</author>
+    <title>Stepper Motor - Unipolar</title>
+    <label>Unipolar stepper motor</label>
+    <date>2009-03-10</date>
+    <tags>
+        <tag>Motor</tag>
+        <tag>Stepper Motor</tag>
+    </tags>
+    <properties>
+        <property name="family">Motor</property>
+    </properties>
+    <description>A basic unipolar stepper motor</description>
+    <views>
+        <breadboardView>
+            <layers image="breadboard/Stepper_Motor_-_Unipolar__breadboard__5ff54615a9d2d285d102d95421eeea2b.svg">
+                <layer layerId="breadboard"></layer>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers image="schematic/Stepper_Motor_-_Unipolar__schematic__5ffb8cccdab079c717601bda39036a87.svg">
+                <layer layerId="schematic"></layer>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers image="pcb/Stepper_Motor_-_Unipolar__pcb__464b47019de093cf6a97c8b6476c1d0f.svg">
+                <layer layerId="copper0"></layer>
+            </layers>
+        </pcbView>
+        <iconView>
+            <layers image="icon/Stepper_Motor_-_Unipolar__icon__099212b19c45ec4daf3ab6d8edb7e7ae.svg">
+                <layer layerId="icon"></layer>
+            </layers>
+        </iconView>
+    </views>
+    <connectors>
+        <connector id="connector3" type="male" name="B">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector3pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector3pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector4" type="male" name="COMMON_B">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector4pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector4pin" terminalId="connector4terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector4pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector5" type="male" name="D">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector5pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector5pin" terminalId="connector5terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector5pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector0" type="male" name="A">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector0pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector0pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector1" type="male" name="COMMON_A">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector1pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector1pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector2" type="male" name="C">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector2pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector2pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>

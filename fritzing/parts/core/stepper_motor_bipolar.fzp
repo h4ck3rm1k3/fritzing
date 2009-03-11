@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="7d0bc366bcac9395c747f3a92e2ff843">
+    <author>petbom</author>
+    <title>Stepper Motor - Bipolar</title>
+    <label>Stepper motor</label>
+    <date>2009-03-10</date>
+    <tags>
+        <tag>Motor</tag>
+        <tag>Stepper Motor</tag>
+    </tags>
+    <properties>
+        <property name="rated voltage">15.4</property>
+        <property name="rated current">0.28 A</property>
+        <property name="shaft">5 mm diameter / 33 mm length</property>
+        <property name="size">42.3 x 42.3 x 37.0 mm</property>
+        <property name="family">Motor</property>
+        <property name="phase">2</property>
+        <property name="step angle">1.8</property>
+        <property name="detent torque">120 g*cm</property>
+        <property name="holding torque"> 2.4 kg*cm</property>
+    </properties>
+    <description>Simple, but very powerful bi polar stepper motor. 4 wire</description>
+    <views>
+        <breadboardView>
+            <layers image="breadboard/Stepper_Motor_-_Bipolar__breadboard__404d8aa39b7d4a7c2f1599adc50a9d5d.svg">
+                <layer layerId="breadboard"></layer>
+            </layers>
+        </breadboardView>
+        <schematicView>
+            <layers image="schematic/Stepper_Motor_-_Bipolar__schematic__12bd4d7b9fbfbe985e726e2b5b16d69a.svg">
+                <layer layerId="schematic"></layer>
+            </layers>
+        </schematicView>
+        <pcbView>
+            <layers image="pcb/Stepper_Motor_-_Bipolar__pcb__76f4561ad210031db54c91eb56050dcd.svg">
+                <layer layerId="copper0"></layer>
+            </layers>
+        </pcbView>
+        <iconView>
+            <layers image="icon/Stepper_Motor_-_Bipolar__icon__fba2c9f812f802874e1301937eee5373.svg">
+                <layer layerId="icon"></layer>
+            </layers>
+        </iconView>
+    </views>
+    <connectors>
+        <connector id="connector3" type="male" name="D">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector3pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector3pin" terminalId="connector3terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector3pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector0" type="male" name="A">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector0pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector0pin" terminalId="connector0terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector0pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector1" type="male" name="C">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector1pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector1pin" terminalId="connector1terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector1pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector2" type="male" name="B">
+            <description>no description yet</description>
+            <views>
+                <breadboardView>
+                    <p layer="breadboard" svgId="connector2pin"></p>
+                </breadboardView>
+                <schematicView>
+                    <p layer="schematic" svgId="connector2pin" terminalId="connector2terminal"></p>
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector2pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+    </connectors>
+</module>
