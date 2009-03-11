@@ -40,7 +40,7 @@ def send_zipfile(script_id,config):
     shutil.rmtree(files_location)
     
     wrapper = FileWrapper(temp)
-    response = HttpResponse(wrapper, content_type='application/zip')
+    response = HttpResponse(wrapper, content_type='application/Fritzing')
     response['Content-Disposition'] = 'attachment; filename=gen_part.fzpz'
     response['Content-Length'] = temp.tell()
     temp.seek(0)
