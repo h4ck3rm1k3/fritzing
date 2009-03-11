@@ -17,6 +17,7 @@
 import getopt, sys, ConfigParser, uuid, os
 from datetime import date
 from Cheetah.Template import Template
+from fritzing.parts_gen.core.utils import escape_to_file_name
     
 def usage():
     print """
@@ -104,9 +105,6 @@ _SCRIPTS = {
         }
     }
 }
-
-def escape_to_file_name(a_str):
-    return a_str.replace(" ","_").replace(".","_")
 
 
 def create_output_folder(output_folder_base):

@@ -31,7 +31,8 @@ _SCRIPTS_DEF = {
         'resistance' : {
             'label': 'Choose the resistance',
             'type' : 'regex',
-            'regex': '^[1..9]\d*[kM]?$'
+            # just two significant digits
+            'regex': '^(([1..9]\d0*(\.0*)?)|([1..9]\.\d0*)|(0\.[1..9]\d?0*))[kM]?$'
         }
     } 
 }

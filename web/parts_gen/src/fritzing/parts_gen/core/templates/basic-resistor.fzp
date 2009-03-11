@@ -11,20 +11,21 @@
         <tag>fritzing core</tag>
     </tags>
     <properties>
-        <property name="Resistance">$resistance Ohms</property>
+        <property name="Resistance">${resistance}&#8486;</property>
         <property name="family">Resistor</property>
         <property name="Rated Power">0.25 watt</property>
     </properties>
     <taxonomy>discreteParts.resistor.$resistance</taxonomy>
     <description>A generic resistor (0.25W)</description>
+#from fritzing.parts_gen.core.utils import escape_to_file_name
     <views>
         <iconView>
-            <layers image="icon/basic-resistor_icon_${resistance}.svg">
+            <layers image="icon/basic-resistor_icon_${escape_to_file_name($resistance)}.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/basic-resistor_breadboard_${resistance}.svg">
+            <layers image="breadboard/basic-resistor_breadboard_${escape_to_file_name($resistance)}.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>
