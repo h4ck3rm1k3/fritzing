@@ -28,46 +28,48 @@ colors = {
 
 units = { 'k': 1000, 'M': 1000000 }
 
+def get_first_number(resistance):
+    real_resistance = to_number(resistance)
+    str_real_resistance = str(real_resistance)
+    
+    correction = 0
+    fst_num = int(str_real_resistance[0])
+    if fst_num == 0:
+        fst_num = int(str_real_resistance[2])
+        correction = 1
+
+    return fst_num, correction
 
 def stripe1(resistance):
-    real_resistance = to_number(resistance)
-    fst_num = int(str(real_resistance)[0])
-    if fst_num == 0:
-        fst_num = int(str(real_resistance[2]))
+    fst_num, _ = get_first_number(resistance)
     return colors[color_bands[fst_num]]
 
-    
-def stripe2(resistance):
+
+def get_second_number(resistance, correction):
     real_resistance = to_number(resistance)
-    fst_num = int(str(real_resistance)[0])
-    if fst_num == 0:
-        fst_num = int(str(real_resistance[2]))
-        correction = 1
+    str_real_resistance = str(real_resistance)
+    
     digit_cnt = get_whole_digits_count(real_resistance);
     if(digit_cnt > 1 ):
-        snd_num = int(str(real_resistance)[1])
+        snd_num = int(str_real_resistance[1])
     else: # there's a '.' in the middle
         try:
-            snd_num = int(str(real_resistance)[2+correction])
+            snd_num = int(str_real_resistance[2+correction])
         except:
             snd_num = 0
+
+    return snd_num
+
+def stripe2(resistance):
+    _, correction = get_first_number(resistance)
+    snd_num = get_second_number(resistance, correction)
     return colors[color_bands[snd_num]]
 
     
 def stripe3(resistance):
     real_resistance = to_number(resistance)
-    fst_num = int(str(real_resistance)[0])
-    if fst_num == 0:
-        fst_num = int(str(real_resistance[2]))
-        correction = 1
-    digit_cnt = get_whole_digits_count(real_resistance);
-    if(digit_cnt > 1 ):
-        snd_num = int(str(real_resistance)[1])
-    else: # there's a '.' in the middle
-        try:
-            snd_num = int(str(real_resistance)[2+correction])
-        except:
-            snd_num = 0
+    fst_num, correction = get_first_number(resistance)
+    snd_num = get_second_number(resistance, correction)
     multiplier = get_multiplier(fst_num, snd_num, real_resistance)
     print fst_num
     print snd_num

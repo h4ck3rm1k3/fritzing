@@ -32,7 +32,8 @@ _SCRIPTS_DEF = {
             'label': 'Choose the resistance',
             'type' : 'regex',
             # just two significant digits
-            'regex': '^(([1..9]\d0*(\.0*)?)|([1..9]\.\d0*)|(0\.[1..9]\d?0*))[kM]?$'
+            'regex': '^(([1..9]\d0*(\.0*)?)|([1..9]\.\d0*)|(0\.[1..9]\d?0*)) *[kM]?$',
+            'error_messages' : {'invalid' : "You should provide a resistance with only two significant digits. You can use 'k' and 'M' as units as well."}
         }
     } 
 }
