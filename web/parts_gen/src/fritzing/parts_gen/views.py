@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from fritzing.parts_gen.forms import gen
-import tempfile, zipfile, os, shutil
+import tempfile, zipfile, shutil
 from django.core.servers.basehttp import FileWrapper
 from fritzing import settings
 from fritzing.parts_gen.utils import \

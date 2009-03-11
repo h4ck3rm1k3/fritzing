@@ -1,4 +1,5 @@
 from fritzing.parts_gen.core import partomatic
+import os
 
 AVAIL_SCRIPTS = [
     {'value':'resistor','label':'Create a resistor'}
@@ -35,8 +36,7 @@ _SCRIPTS_DEF = {
     } 
 }
 
-_GEN_FILES_FOLDER_PREFIX = \
-    '/home/merun/workspace/fritzing/web/parts_gen/src/fritzing/parts_gen/core/output'
+_GEN_FILES_FOLDER_PREFIX = os.path.join(os.path.dirname(__file__),"core/output")
 
 def get_params_def(script_id):
     obj = _SCRIPTS_DEF[script_id] 

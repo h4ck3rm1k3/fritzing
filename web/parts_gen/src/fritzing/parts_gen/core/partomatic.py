@@ -92,7 +92,6 @@ def main():
             if(cfgValue == "$DATE"):
                 cfgValue = makeDate()
             cfgDict[cfgItem] = cfgValue
-        print "config dict: " + str(cfgDict)
         render_templates(cfgDict,templateFile,outputDir,nameStub)
 
 _SCRIPTS = {
@@ -100,8 +99,8 @@ _SCRIPTS = {
         'name_param' : 'resistance', # the parameter used to generate the part name and file
         'templates' : {
             'breadboard' : 'basic-resistor_breadboard',
-            'icon' : 'basic-resistor_icon',
-            '' : 'basic-resistor'
+            'icon'       : 'basic-resistor_icon',
+            ''           : 'basic-resistor'
         }
     }
 }
@@ -133,8 +132,8 @@ def web_generate(script_id, config, output_folder_base):
                     + "_"+escape_to_file_name(config[script_data['name_param']]) \
                     + extension
         
-        aux = '/home/merun/workspace/fritzing/web/parts_gen/src/fritzing/parts_gen/core/templates/'
-        template_aux = aux + template + extension 
+        aux = os.path.join(os.path.dirname(__file__),"templates")
+        template_aux = os.path.join(aux,template+extension) 
         render_templates(config, template_aux, os.path.join(output_dir,folder), name_stub)
         
     return output_dir

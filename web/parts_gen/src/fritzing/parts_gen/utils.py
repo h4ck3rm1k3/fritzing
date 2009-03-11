@@ -12,15 +12,11 @@ def add_folder_to_zipfile(dirpath, archive, gen_files_folder):
             continue
         else:
             abspath = os.path.join(dirpath,filename)
-            print "dir path "+dirpath
-            print "file name "+filename
-            print "abs path "+abspath
             if os.path.isdir(abspath):
                 add_folder_to_zipfile(os.path.join(abspath,""), archive, gen_files_folder)
             else:
                 prefix = ZIP_SVG if abspath.endswith('.svg') else ZIP_PART 
                 despfilename = prefix+abspath.replace(gen_files_folder,'').replace('svg/','').replace('/','.')
-                print "dest file "+despfilename
                 archive.write(abspath, despfilename.replace("..","."))
             print ""
 
@@ -33,6 +29,4 @@ def script_config_from_form(data):
             script_id = data[k]
         else:
             config[k] = data[k]  
-    print 'script_id '+script_id
-    print 'config '+str(config)
     return config, script_id

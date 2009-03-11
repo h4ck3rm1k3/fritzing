@@ -1,5 +1,7 @@
 # Django settings for fritzing project.
 
+from os import path
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -66,7 +68,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'fritzing.urls'
 
 TEMPLATE_DIRS = (
-    '/home/merun/workspace/fritzing/web/parts_gen/src/fritzing/parts_gen/templates'
+    path.join(path.dirname(__file__),'parts_gen/templates')
 )
 
 INSTALLED_APPS = (
