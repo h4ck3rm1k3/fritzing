@@ -26,7 +26,7 @@ colors = {
     'silver' : 'rgb(230, 232, 250)'
 }
 
-units = { 'k': 1000, 'M': 1000000 }
+units = { 'k': 1000, 'm': 1000000 }
 
 def get_first_number(resistance):
     real_resistance = to_number(resistance)
@@ -42,6 +42,7 @@ def get_first_number(resistance):
 
 def stripe1(resistance):
     fst_num, _ = get_first_number(resistance)
+    #print "1st stripe "+str(fst_num)+" "+color_bands[fst_num]
     return colors[color_bands[fst_num]]
 
 
@@ -63,6 +64,7 @@ def get_second_number(resistance, correction):
 def stripe2(resistance):
     _, correction = get_first_number(resistance)
     snd_num = get_second_number(resistance, correction)
+    #print "2st stripe "+str(snd_num)+" "+color_bands[snd_num]
     return colors[color_bands[snd_num]]
 
     
@@ -71,14 +73,13 @@ def stripe3(resistance):
     fst_num, correction = get_first_number(resistance)
     snd_num = get_second_number(resistance, correction)
     multiplier = get_multiplier(fst_num, snd_num, real_resistance)
-    print fst_num
-    print snd_num
-    print multiplier
+    #print "multiplier "+str(multiplier)+" "+multipliers[multiplier]
     return colors[multipliers[multiplier]]
 
 
 def to_number(resistance_str):
-    last_char = resistance_str[-1]
+    last_char = str(resistance_str[-1])
+    last_char = last_char.lower()
     if last_char in units.keys() :
         return float(resistance_str[:-1])*units[last_char]
     else:

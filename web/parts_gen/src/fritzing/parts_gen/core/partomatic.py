@@ -65,7 +65,7 @@ usage:
     
 def makeUUID():
     "creates an 8 character hex UUID"
-    print "making new uuid"
+    #print "making new uuid"
     return str(uuid.uuid1())
     
 def makeDate():
