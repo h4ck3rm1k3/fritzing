@@ -20,12 +20,12 @@
 #from fritzing.parts_gen.core.utils import escape_to_file_name
     <views>
         <iconView>
-            <layers image="icon/basic-resistor_icon_${escape_to_file_name($resistance)}.svg">
+            <layers image="icon/basic-resistor_icon_${escape_to_file_name($resistance)}_${icon_unique}.svg">
                 <layer layerId="icon"/>
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/basic-resistor_bread_${escape_to_file_name($resistance)}.svg">
+            <layers image="breadboard/basic-resistor_bread_${escape_to_file_name($resistance)}_${bread_unique}.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

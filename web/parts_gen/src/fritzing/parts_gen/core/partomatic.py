@@ -35,10 +35,17 @@ _SCRIPT_CONFS = {
             'schematic'  : 'mystery-part_schem',
             ''           : 'mystery-part'
         }
-    }
-    
+    }   
 }
     
+_HELPER = { # helper class to name the uuid to append to the files
+    ''           : 'part_unique',
+    'icon'       : 'icon_unique',
+    'breadboard' : 'bread_unique',
+    'schematic'  : 'schem_unique',
+    'pcb'        : 'pcb_unique'
+}
+
 def usage():
     print """
 usage:
@@ -133,10 +140,14 @@ def web_generate(script_id, config, output_folder_base):
     config['uuid'] = makeUUID()
     config['date'] = makeDate()
     
+    for uniques in _HELPER.values():
+        config[uniques] = makeUUID()
+    
     for folder, template in script_data['templates'].items():
         extension = ('.fzp' if folder == '' else '.svg')
         name_stub = template \
                     + "_"+escape_to_file_name(config[script_data['name_param']]) \
+                    + "_"+config[_HELPER[folder]] \
                     + extension
         
         aux = os.path.join(os.path.dirname(__file__),"templates")

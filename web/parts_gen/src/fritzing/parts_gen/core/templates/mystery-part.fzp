@@ -23,12 +23,12 @@
    </layers>
   </iconView>
   <breadboardView>
-   <layers image="breadboard/mystery_part${pins}.svg" >
+   <layers image="breadboard/mystery_part${pins}_${bread_unique}.svg" >
     <layer layerId="breadboard" />
    </layers>
   </breadboardView>
   <schematicView>
-   <layers image="schematic/mystery_part${pins}.svg" >
+   <layers image="schematic/mystery_part${pins}_${schem_unique}.svg" >
     <layer layerId="schematic" />
    </layers>
   </schematicView>
