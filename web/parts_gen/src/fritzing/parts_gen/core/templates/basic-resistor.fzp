@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.1.1201" moduleId="$uuid">
     <version>1.0</version>
-    <title>Basic Resistor</title>
+    <title>$title</title>
     <label>R</label>
     <date>$date</date>
-    <author>Brendan Howell</author>
+    <author>Fritzing Part-o-matic</author>
     <tags>
         <tag>Resistor</tag>
         <tag>basic resistor</tag>
@@ -25,7 +25,7 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/basic-resistor_breadboard_${escape_to_file_name($resistance)}.svg">
+            <layers image="breadboard/basic-resistor_bread_${escape_to_file_name($resistance)}.svg">
                 <layer layerId="breadboard"/>
             </layers>
         </breadboardView>

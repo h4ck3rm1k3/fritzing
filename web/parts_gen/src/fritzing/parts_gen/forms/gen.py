@@ -4,34 +4,34 @@ import sys
 def string_field(name,obj):
     src = '''
     %(name)s = forms.CharField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_and_err_msgs(obj) }
+    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj) }
     return src
     
 def int_field(name,obj):
     src = '''
     %(name)s = forms.IntegerField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_and_err_msgs(obj)+get_range(obj) }
+    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj)+get_range(obj) }
     return src
 
     
 def float_field(name,obj):
     src = '''
     %(name)s = forms.FloatField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_and_err_msgs(obj)+get_range(obj) }
+    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj)+get_range(obj) }
     return src
 
     
 def enum_field(name,obj):
     src = '''
     %(name)s = forms.ChoiceField(required=True%(attrs)s, choices=%(choices)s) ''' \
-    % {'name' : name, 'attrs' : get_label_and_err_msgs(obj), 'choices' : obj['options'] }
+    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj), 'choices' : obj['choices'] }
     return src
 
 
 def regex_field(name,obj):
     src = '''
     %(name)s = forms.RegexField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_and_err_msgs(obj)+get_regex(obj) }
+    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj)+get_regex(obj) }
     return src
 
     
@@ -40,8 +40,10 @@ def get_range(obj):
     src += get_aux(obj,'max_value',"")
     return src
         
-def get_label_and_err_msgs(obj):
-    return get_aux(obj,'label')+get_aux(obj,'error_messages','')
+def get_label_err_msgs_and_initial(obj):
+    return get_aux(obj,'label')\
+        +get_aux(obj,'error_messages','')\
+        +get_aux(obj,'initial')\
 
 def get_regex(obj):
     return get_aux(obj,'regex')
@@ -90,7 +92,9 @@ def create_class_if_needed(params, script_id, force=False):
 class %(class_name)s(forms.Form):
     script_id = forms.CharField(widget=forms.HiddenInput, initial='%(script_id)s') '''
     
-        for name, value in params.iteritems():
+        for name in params.iterkeys():
+            value = params[name]
+            print name
             src += get_field_from_obj(name,value)
         src += '''
     

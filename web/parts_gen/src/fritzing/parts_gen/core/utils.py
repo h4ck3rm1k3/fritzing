@@ -106,6 +106,7 @@ def get_whole_digits_count(real_resistance):
     return digit_cnt
 
 
-def escape_to_file_name(a_str):
+def escape_to_file_name(something):
+    a_str = str(something)
     return a_str.replace(" ","_").replace(".","_")
 

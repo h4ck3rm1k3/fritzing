@@ -18,6 +18,26 @@ import getopt, sys, ConfigParser, uuid, os
 from datetime import date
 from Cheetah.Template import Template
 from fritzing.parts_gen.core.utils import escape_to_file_name
+
+_SCRIPT_CONFS = {
+    'resistor' : {
+        'name_param' : 'resistance', # the parameter used to generate the part name and file
+        'templates' : { # file names, without extension
+            'breadboard' : 'basic-resistor_bread',
+            'icon'       : 'basic-resistor_icon',
+            ''           : 'basic-resistor'
+        }
+    },
+    'mystery' : {
+        'name_param' : 'pins', # the parameter used to generate the part name and file
+        'templates' : { # file names, without extension
+            'breadboard' : 'mystery-part_bread',
+            'schematic'  : 'mystery-part_schem',
+            ''           : 'mystery-part'
+        }
+    }
+    
+}
     
 def usage():
     print """
@@ -95,17 +115,6 @@ def main():
             cfgDict[cfgItem] = cfgValue
         render_templates(cfgDict,templateFile,outputDir,nameStub)
 
-_SCRIPTS = {
-    'resistor' : {
-        'name_param' : 'resistance', # the parameter used to generate the part name and file
-        'templates' : {
-            'breadboard' : 'basic-resistor_breadboard',
-            'icon'       : 'basic-resistor_icon',
-            ''           : 'basic-resistor'
-        }
-    }
-}
-
 
 def create_output_folder(output_folder_base):
     folders = ["icon","breadboard","schematic","pcb"]
@@ -117,7 +126,7 @@ def create_output_folder(output_folder_base):
 
 
 def web_generate(script_id, config, output_folder_base):
-    script_data = _SCRIPTS[script_id]
+    script_data = _SCRIPT_CONFS[script_id]
     assert script_data
         
     output_dir = create_output_folder(output_folder_base)
