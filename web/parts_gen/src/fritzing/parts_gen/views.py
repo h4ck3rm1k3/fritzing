@@ -29,7 +29,7 @@ def send_zipfile(script_id,config):
     (http://www.djangosnippets.org/snippets/365/)                                 
     """
     
-    files_location = gen_files(script_id, config)
+    files_location, file_suffix = gen_files(script_id, config)
 
     temp = tempfile.TemporaryFile()
     archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
@@ -41,7 +41,8 @@ def send_zipfile(script_id,config):
     
     wrapper = FileWrapper(temp)
     response = HttpResponse(wrapper, content_type='application/Fritzing')
-    response['Content-Disposition'] = 'attachment; filename=gen_part.fzpz'
+    response['Content-Disposition'] = \
+        'attachment; filename=gen_part_%(s_id)s_%(suffix)s.fzpz' % {'s_id' : script_id, 'suffix' : file_suffix} 
     response['Content-Length'] = temp.tell()
     temp.seek(0)
     

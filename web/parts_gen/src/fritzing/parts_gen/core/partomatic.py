@@ -142,11 +142,13 @@ def web_generate(script_id, config, output_folder_base):
     
     for uniques in _HELPER.values():
         config[uniques] = makeUUID()
+        
+    suffix = escape_to_file_name(config[script_data['name_param']])
     
     for folder, template in script_data['templates'].items():
         extension = ('.fzp' if folder == '' else '.svg')
         name_stub = template \
-                    + "_"+escape_to_file_name(config[script_data['name_param']]) \
+                    + "_"+suffix \
                     + "_"+config[_HELPER[folder]] \
                     + extension
         
@@ -154,7 +156,7 @@ def web_generate(script_id, config, output_folder_base):
         template_aux = os.path.join(aux,template+extension) 
         render_templates(config, template_aux, os.path.join(output_dir,folder), name_stub)
         
-    return output_dir
+    return output_dir, suffix
 
 
 def render_templates(config,templateFile,outputDir,nameStub):

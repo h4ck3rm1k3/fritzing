@@ -48,5 +48,4 @@ def get_params_def(script_id):
 
 
 def gen_files(script_id, config):
-    output_dir = partomatic.web_generate(script_id, config, _GEN_FILES_FOLDER_PREFIX) 
-    return output_dir
+    return partomatic.web_generate(script_id, config, _GEN_FILES_FOLDER_PREFIX)
