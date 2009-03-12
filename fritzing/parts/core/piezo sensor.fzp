@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.0.b.02.26.2493" moduleId="8abf6496b5d466c7a1893c17a296a676">
-    <author>lionel</author>
-    <title>Piezo</title>
+    <author>Lionel Michel</author>
+    <title>Piezo Speaker</title>
     <label>J</label>
     <date>2009-02-25</date>
     <tags>
         <tag>piezo</tag>
+        <tag>speaker</tag>
+        <tag>buzzer</tag>
+        <tag>sound</tag>
     </tags>
     <properties>
-        <property name="family">piezo</property>
+        <property name="family">Piezo</property>
     </properties>
     <description>Piezo</description>
     <views>
@@ -30,12 +33,13 @@
         <pcbView>
             <layers image="pcb/jumper2.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="pin 0">
-            <description>pin 0</description>
+        <connector id="connector0" type="male" name="pin1">
+            <description>Pin 1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></p>
@@ -48,8 +52,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin 1">
-            <description>pin 1</description>
+        <connector id="connector1" type="male" name="pin2">
+            <description>Pin 2</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></p>

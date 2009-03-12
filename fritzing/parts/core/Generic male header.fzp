@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="bf1d778246ec524bc51c67761afef94e">
-    <author>lionel</author>
+    <author>Lionel Michel</author>
     <title>Generic male header</title>
-    <label>Generic male header</label>
+    <label>J</label>
     <date>2009-03-05</date>
     <tags></tags>
     <properties>
-        <property name="family"></property>
+        <property name="family">Pin Header</property>
+        <property name="Pins">1</property>
+        <property name="Gender">&#9794;</property>
+        <property name="Pin Spacing">0.1in (2.54mm)</property>
     </properties>
     <description>Generic male header</description>
     <views>
@@ -28,12 +31,13 @@
         <pcbView>
             <layers image="pcb/jumper1.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="Noch kein Name">
-            <description>Noch keine Beschreibung</description>
+        <connector id="connector0" type="male" name="pin1">
+            <description>Pin 1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></p>

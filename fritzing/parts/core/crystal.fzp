@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.0.b.02.26.2493" moduleId="3746667c843a2127a0e499f8a0b3ef6a">
-    <author>lionel</author>
+    <author>Lionel Michel</author>
     <title>Crystal</title>
     <label>XTAL</label>
     <date>2009-02-26</date>
     <tags>
         <tag>clock</tag>
         <tag>crystal</tag>
+        <tag>oscillator</tag>
     </tags>
     <properties>
         <property name="profile">low</property>
-        <property name="speed">16 Mhz</property>
-        <property name="family">crystal</property>
+        <property name="Frequency">16 Mhz</property>
+        <property name="family">crystal oscillator</property>
     </properties>
     <description>Crystal</description>
     <views>
@@ -33,6 +34,7 @@
         <pcbView>
             <layers image="pcb/crystal_hc49u.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
     </views>

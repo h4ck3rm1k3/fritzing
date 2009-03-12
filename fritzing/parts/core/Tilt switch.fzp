@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.1.b.03.03.2541" moduleId="d206ca0d70364191f0b3fd30d5e53c5d">
-    <author>lionel</author>
-    <title>Tilt switch</title>
+    <author>Lionel Michel</author>
+    <title>Tilt Switch</title>
+    <label>S</label>
     <date>2009-03-04</date>
     <tags></tags>
     <properties>
-        <property name="family"></property>
+        <property name="family">Tilt Switch</property>
+        <property name="Tilt Mechanism">Mechanical Ball</property>
     </properties>
     <views>
         <iconView>
@@ -21,6 +23,7 @@
         <pcbView>
             <layers image="pcb/jumper2.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
         <schematicView>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="6d07f5eae4523283f5da4171f9c54e25">
-    <author>lionel</author>
+    <author>Lionel Michel</author>
     <title>Antenna</title>
-    <label>Antenna</label>
+    <label>ANT</label>
     <date>2009-03-05</date>
     <tags></tags>
     <properties>
-        <property name="family"></property>
+        <property name="family">Antenna</property>
     </properties>
-    <description>Antenna</description>
+    <description>Random Wire Antenna</description>
     <views>
         <iconView>
             <layers image="icon/antenna.svg">
@@ -18,6 +18,7 @@
         <pcbView>
             <layers image="pcb/jumper1.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
         <schematicView>
@@ -32,8 +33,8 @@
         </breadboardView>
     </views>
     <connectors>
-        <connector id="connector0" type="male" name="pin 0">
-            <description>pin 0</description>
+        <connector id="connector0" type="male" name="antenna lead">
+            <description>antenna lead</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></p>

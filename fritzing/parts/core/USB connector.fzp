@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.1.b.03.03.2541" moduleId="5e3b9f7a14a1627168e700bfc9a03b3c">
-    <author>lionel</author>
+    <author>Lionel Michel</author>
     <title>USB connector</title>
-    <label>USB connector</label>
+    <label>CONN</label>
     <date>2009-03-04</date>
     <tags>
         <tag>USB</tag>
         <tag>connector</tag>
     </tags>
     <properties>
-        <property name="family"></property>
+        <property name="family">USB Connector</property>
+        <property name="Connector Shape">USB-B</property>
     </properties>
     <description>USB connector</description>
     <views>
@@ -24,8 +25,9 @@
             </layers>
         </breadboardView>
         <pcbView>
-            <layers image="pcb/jumper4.svg">
+            <layers image="pcb/connector_usb_b.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
         <iconView>
@@ -35,8 +37,8 @@
         </iconView>
     </views>
     <connectors>
-        <connector id="connector3" type="male" name="pin 3">
-            <description>pin 3</description>
+        <connector id="connector3" type="male" name="GND">
+            <description>Ground</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin" terminalId="connector3terminal"></p>
@@ -49,8 +51,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector0" type="male" name="pin 0">
-            <description>pin 0</description>
+        <connector id="connector0" type="male" name="5V">
+            <description>+5 V</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin" terminalId="connector0terminal"></p>
@@ -63,8 +65,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="pin 1">
-            <description>pin 1</description>
+        <connector id="connector1" type="male" name="d-">
+            <description>D-</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin" terminalId="connector1terminal"></p>
@@ -77,8 +79,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector2" type="male" name="pin 2">
-            <description>pin 2</description>
+        <connector id="connector2" type="male" name="d+">
+            <description>D-</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin" terminalId="connector2terminal"></p>
@@ -91,5 +93,39 @@
                 </pcbView>
             </views>
         </connector>
+        <connector id="connector4" type="male" name="chassis5">
+            <description>Chassis (Pin 5)</description>
+            <views>
+                <breadboardView>
+                    <p layer="unknown" />
+                </breadboardView>
+                <schematicView>
+                    <p layer="unknown" />
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector4pin"></p>
+                </pcbView>
+            </views>
+        </connector>
+        <connector id="connector5" type="male" name="chassis6">
+            <description>Chassis (Pin 6)</description>
+            <views>
+                <breadboardView>
+                    <p layer="unknown" />
+                </breadboardView>
+                <schematicView>
+                    <p layer="unknown" />
+                </schematicView>
+                <pcbView>
+                    <p layer="copper0" svgId="connector5pin"></p>
+                </pcbView>
+            </views>
+        </connector>
     </connectors>
+    <buses>
+      <bus id="chassis" >
+       <nodeMember connectorId="connector4" />
+       <nodeMember connectorId="connector5" />
+      </bus>
+    </buses>
 </module>

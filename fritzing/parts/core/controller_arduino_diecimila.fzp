@@ -13,7 +13,7 @@
  </tags>
  <properties>
   <property name="type" >Arduino Diecimila</property>
-  <property name="family" >Microcontroller</property>
+  <property name="family" >Microcontroller Board</property>
  </properties>
  <taxonomy>discreteParts.controller</taxonomy>
  <description>The awesome Arduino Diecimila microcontroller</description>
