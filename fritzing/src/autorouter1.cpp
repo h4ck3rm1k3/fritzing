@@ -43,7 +43,8 @@ struct Edge {
 
 bool edgeGreaterThan(Edge * e1, Edge * e2)
 {
-	return e1->distance > e2->distance;
+	//return e1->distance > e2->distance;
+	return e1->distance < e2->distance;
 }
 
 static int keepOut = 4;
@@ -1139,7 +1140,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 		return;
 	}
 
-	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), false, -1, parentCommand);
+	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), false, -1, -1, parentCommand);
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
 	new WireColorChangeCommand(m_sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	addItemCommand->turnOffFirstRedo();
@@ -1153,7 +1154,9 @@ void Autorouter1::addToUndo(QUndoCommand * parentCommand)
 		if (wire != NULL) {
 			wire->setClipEnds(true);
 			wire->update();
-			wire->setWidth(StandardTraceWidth);
+			if (wire->getAutoroutable()) {
+				wire->setWidth(StandardTraceWidth);
+			}
 			addToUndo(wire, parentCommand);
 			wires.append(wire);
 		}

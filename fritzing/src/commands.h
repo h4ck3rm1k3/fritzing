@@ -77,7 +77,7 @@ protected:
 class AddDeleteItemCommand : public BaseCommand
 {
 public:
-    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
+    AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 
 	long itemID() const;
 
@@ -89,13 +89,14 @@ protected:
     long m_itemID;
     ViewGeometry m_viewGeometry;
 	long m_modelIndex;
+	long m_originalModelIndex;
 
 };
 
 class AddItemCommand : public AddDeleteItemCommand
 {
 public:
-    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, bool updateInfoView, long modelIndex, QUndoCommand *parent);
+    AddItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent);
     void undo();
     void redo();
 	void turnOffFirstRedo();
@@ -116,7 +117,7 @@ protected:
 class DeleteItemCommand : public AddDeleteItemCommand
 {
 public:
-    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, QUndoCommand *parent);
+    DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent);
     void undo();
     void redo();
 
@@ -557,6 +558,25 @@ protected:
 	long m_itemID;
 	QString m_connectorID;
 	bool m_external;
+};
+
+class ModuleChangeConnectionCommand : public ChangeConnectionCommand
+{
+public:
+	ModuleChangeConnectionCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType,
+							long fromID, const QString & fromConnectorID,
+							QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
+							bool connect, bool seekLayerKin,
+							QUndoCommand * parent);
+	void undo();
+	void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+	QList <long> m_toIDs;
+	bool m_doRatsnest;
 };
 
 

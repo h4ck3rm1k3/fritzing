@@ -79,7 +79,10 @@ public:
 	void initConnectors(bool force=false);
 	const QHash<QString, Connector *> & connectors();
 	long modelIndex();
+	long originalModelIndex();
 	void setModelIndex(long index);
+	void setModelIndexFromMultiplied(long multipliedIndex);
+	void setOriginalModelIndex(long index);
 	void setInstanceDomElement(const QDomElement &);
 	const QDomElement & instanceDomElement();
 	Connector * getConnector(const QString & id);
@@ -114,6 +117,8 @@ public:
 	static const QString & itemTypeName(int);
 	static void initNames();
 	static long nextIndex();
+	static void updateIndex(long index);
+	static const int indexMultiplier;
 
 
 protected:
@@ -131,6 +136,7 @@ protected:
 	QHash<QString, Connector *> m_connectorHash;
 	QHash<QString, class Bus *> m_busHash;
 	long m_index;						// only used at save time to identify model parts in the xml
+	long m_originalIndex;				// only used at save time to identify model parts in the xml (for modules)
 	QDomElement m_instanceDomElement;	// only used at load time (so far)
 
 	bool m_core;

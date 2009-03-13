@@ -54,8 +54,13 @@ ModelPart * SketchModel::findModelPart(const QString & moduleID, long id) {
 
 ModelPart * SketchModel::findModelPartAux(ModelPart * modelPart, const QString & moduleID, long id) 
 {
-	if (modelPart->moduleID().compare(moduleID) == 0 && modelPart->hasViewID(id)) {
-		return modelPart;
+	if (modelPart->moduleID().compare(moduleID) == 0) {
+		if (modelPart->hasViewID(id)) {
+			return modelPart;
+		}
+		if (modelPart->modelIndex() * ModelPart::indexMultiplier == id) {
+			return modelPart;
+		}
 	}
 
 	foreach (QObject * child, modelPart->children()) {

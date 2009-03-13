@@ -148,6 +148,12 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 			// set the index so we can find the same model part later, as we continue loading
 			modelPart->setModelIndex(index);
   		}
+   		long oindex = instance.attribute("originalModelIndex").toLong(&ok);
+   		if (ok) {
+			// used for saving connections to parts in modules
+			modelPart->setOriginalModelIndex(oindex);
+			//DebugDialog::debug(QString("loadinstances original model index %1 %2").arg(oindex).arg((long) modelPart, 0, 16));
+  		}
 
    		instance = instance.nextSiblingElement("instance");
   	}
@@ -256,6 +262,7 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 	while (!instance.isNull()) {
 		long oldModelIndex = instance.attribute("modelIndex").toLong();
 		instance.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
+		instance.setAttribute("originalModelIndex", QString::number(oldModelIndex));
 		QDomElement views = instance.firstChildElement("views");
 		if (!views.isNull()) {
 			QDomElement view = views.firstChildElement();
@@ -268,8 +275,19 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 						if (!connects.isNull()) {
 							QDomElement connect = connects.firstChildElement("connect");
 							while (!connect.isNull()) {
-								oldModelIndex = connect.attribute("modelIndex").toLong();
-								connect.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
+								bool ok;
+								oldModelIndex = connect.attribute("modelIndex").toLong(&ok);
+								if (ok) {
+									connect.setAttribute("modelIndex", QString::number(oldToNew.value(oldModelIndex)));
+								}
+								else {
+									// we're connected to something inside a module; fixup the first modelIndex
+									QDomElement p = connect.firstChildElement("mp");
+									if (!p.isNull()) {
+										oldModelIndex = p.attribute("i").toLong();
+										p.setAttribute("i", QString::number(oldToNew.value(oldModelIndex)));
+									}
+								}
 								connect = connect.nextSiblingElement("connect");
 							}
 						}

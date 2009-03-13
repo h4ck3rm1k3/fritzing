@@ -818,7 +818,7 @@ void SchematicSketchWidget::makeTwoWires(Wire * dragWire, ConnectorItem * fromDr
 		}
 
 		if (newBreadboard) {
-			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, parentCommand);
+			new AddItemCommand(this, BaseCommand::CrossView, newBreadboard->modelPart()->moduleID(), newBreadboard->getViewGeometry(), newBreadboard->id(), true, -1, -1, parentCommand);
 			m_temporaries.append(newBreadboard);			// puts it on a list to be deleted
 		}
 	}
@@ -847,7 +847,7 @@ void SchematicSketchWidget::makeTwoWires(Wire * dragWire, ConnectorItem * fromDr
 
 	DebugDialog::debug(QString("new second wire %1").arg(newID));
 
-	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, viewGeometry, newID, true, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, viewGeometry, newID, true, -1, -1, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								newID, "connector0",
 								otherPartBusConnectorItem->attachedToID(), otherPartBusConnectorItem->connectorSharedID(),
@@ -1019,7 +1019,7 @@ ConnectorItem * SchematicSketchWidget::lookForNewBreadboardConnection(ConnectorI
 	vg.setLoc(QPointF(0, maxY + 50));
 
 	long id = ItemBase::getNextID();
-	newBreadboard = this->addItem(ItemBase::tinyBreadboardModuleIDName, BaseCommand::SingleView, vg, id, -1, NULL);
+	newBreadboard = this->addItem(ItemBase::tinyBreadboardModuleIDName, BaseCommand::SingleView, vg, id, -1, 0, NULL);
 	busConnectorItem = findEmptyBus(newBreadboard);
 	return busConnectorItem;
 }
@@ -1049,7 +1049,7 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 {
 	DebugDialog::debug(QString("new real wire %1").arg(m_connectorDragWire->id()));
 	// create a new "real" wire with the same id as the temporary wire
-	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, m_connectorDragWire->getViewGeometry(), m_connectorDragWire->id(), true, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, m_connectorDragWire->getViewGeometry(), m_connectorDragWire->id(), true, -1, -1, parentCommand);
 
 	ConnectorItem * anchor = wire->otherConnector(fromDragWire);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
@@ -1080,7 +1080,7 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 
 	DebugDialog::debug(QString("new ratsnest wire %1").arg(newID));
 
-	new AddItemCommand(this, BaseCommand::SingleView, Wire::moduleIDName, vg, newID, true, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::SingleView, Wire::moduleIDName, vg, newID, true, -1, -1, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::SingleView,
 								newID, "connector0",
 								originalFromConnectorItem->attachedToID(), originalFromConnectorItem->connectorSharedID(),

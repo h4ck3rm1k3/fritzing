@@ -73,7 +73,7 @@ public:
 	void pushCommand(QUndoCommand *);
     class WaitPushUndoStack * undoStack();
     ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, PaletteItem* item);
-	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, AddDeleteItemCommand * originatingCommand);
+	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand);
     void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
@@ -119,6 +119,11 @@ public:
 	void changeConnection(long fromID,
 						  const QString & fromConnectorID,
 						  long toID, const QString & toConnectorID,
+						  bool connect, bool doEmit, bool seekLayerKin,
+						  bool updateConnections);
+	void moduleChangeConnection(long fromID,
+						  const QString & fromConnectorID,
+						  QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
 						  bool connect, bool doEmit, bool seekLayerKin,
 						  bool updateConnections);
 
@@ -300,6 +305,8 @@ protected:
 	virtual const QColor & getLabelTextColor();
 	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize);
 	void drawBackground( QPainter * painter, const QRectF & rect );
+	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
+	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -335,7 +342,7 @@ signals:
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
-	void makeModuleSignal(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
+	void makeModuleSignal(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -367,7 +374,7 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void ensureFixedItemsPositions();
-	void makeModule(ModelPart *, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
+	void makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 public slots:
 	void swapSelected(const QString &moduleId, bool exactMatch=true);

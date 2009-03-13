@@ -40,6 +40,7 @@ $Date$
 #include <QGraphicsItem>
 #include <QMainWindow>
 #include <QApplication>
+#include <QDomElement>
 
 #include "paletteitem.h"
 #include "wire.h"
@@ -254,7 +255,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (offsetPaste) {
 				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
 			}
-			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), parentCommand);
+			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
 			if (mp->moduleID() == Wire::moduleIDName) {
 				addWireExtras(newID, view, parentCommand);
 			}
@@ -304,43 +305,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (!connects.isNull()) {
 				QDomElement connect = connects.firstChildElement("connect");
 				while (!connect.isNull()) {
-					long modelIndex = connect.attribute("modelIndex").toLong();
-					QString toConnectorID = connect.attribute("connectorId");
-					QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
-										.arg(mp->modelIndex()).arg(fromConnectorID).arg(modelIndex).arg(toConnectorID);
-					if (!alreadyConnected.contains(already)) {
-						alreadyConnected.append(already);
-						if (parentCommand == NULL) {
-							ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
-							ItemBase * toBase = newItems.value(modelIndex, NULL);
-							if (fromBase != NULL && toBase != NULL) {
-								// TODO: make sure layerkin are searched for connectors
-								ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
-								ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID);
-								if (fromConnectorItem != NULL && toConnectorItem != NULL) {
-									fromConnectorItem->connectTo(toConnectorItem);
-									toConnectorItem->connectTo(fromConnectorItem);
-									fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
-									if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-										fromConnectorItem->setHidden(false);
-										toConnectorItem->setHidden(false);
-									}
-								}
-							}
-						}
-						else {
-							new ChangeConnectionCommand(this, BaseCommand::SingleView,
-														ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
-														ItemBase::getNextID(modelIndex), toConnectorID,
-														true, true, parentCommand);
-							if (doRatsnest && doRatsnestOnCopy()) {
-								new RatsnestCommand(this, BaseCommand::SingleView,
-															ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
-															ItemBase::getNextID(modelIndex), toConnectorID,
-															true, true, parentCommand);
-							}
-						}
-					}
+					handleConnect(connect, mp, fromConnectorID, alreadyConnected, newItems, doRatsnest, parentCommand);
 					connect = connect.nextSiblingElement("connect");
 				}
 			}
@@ -358,7 +323,9 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 
 		m_pasteCount = 0;
 		this->scene()->clearSelection();
-		cleanUpWires(false, NULL, false);
+		if (doRatsnest) {
+			cleanUpWires(false, NULL, false);
+		}
 	}
 	else {
 		if (offsetPaste) {
@@ -366,10 +333,110 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			m_pasteCount++;
 		}
 		//emit ratsnestChangeSignal(this, parentCommand);
-		new CleanUpWiresCommand(this, false, parentCommand);
+		if (doRatsnest) {
+			new CleanUpWiresCommand(this, false, parentCommand);
+		}
 	}
 
 	m_ignoreSelectionChangeEvents = false;
+}
+
+void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand) 
+{
+	bool ok;
+	QHash<long, ItemBase *> otherNewItems;
+	long modelIndex = connect.attribute("modelIndex").toLong(&ok);
+	QString toConnectorID = connect.attribute("connectorId");
+	if (ok) {
+		QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+							.arg(mp->modelIndex()).arg(fromConnectorID).arg(modelIndex).arg(toConnectorID);
+		if (alreadyConnected.contains(already)) return;
+
+		alreadyConnected.append(already);
+	}
+	else {
+		// connected inside a module
+		QDomElement p = connect.firstChildElement("mp");
+		if (p.isNull()) return;
+
+		modelIndex = p.attribute("i").toLong(&ok);
+		if (!ok) return;
+
+		QList<long> indexes;
+		indexes.append(modelIndex);
+		QString s = QString::number(modelIndex);
+		while (true) {
+			p = p.firstChildElement("mp");
+			if (p.isNull()) break;
+
+			long originalModelIndex = p.attribute("i").toLong(&ok);
+			if (!ok) return;
+
+			indexes.append(originalModelIndex);
+			s.append(".");
+			s.append(QString::number(originalModelIndex));
+		}
+
+		QString already = ((mp->modelIndex() <= modelIndex) ? QString("%1.%2.%3.%4") : QString("%3.%4.%1.%2"))
+					.arg(mp->modelIndex()).arg(fromConnectorID).arg(s).arg(toConnectorID);
+		if (alreadyConnected.contains(already)) return;
+
+		alreadyConnected.append(already);
+
+		if (parentCommand == NULL) {
+			// walk down the tree of original model indexes until you find the part that you actually connect to
+			ItemBase * toBase = newItems.value(modelIndex, NULL);
+			if (toBase == NULL) return;
+
+			toBase = findModulePart(toBase, indexes);
+			if (toBase == NULL) return;
+			
+			modelIndex = toBase->modelPart()->modelIndex();
+			otherNewItems.insert(modelIndex, toBase);   
+		}
+		else {
+			new ModuleChangeConnectionCommand(this, BaseCommand::SingleView,
+											ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
+											indexes, toConnectorID, doRatsnest && doRatsnestOnCopy(),
+											true, true, parentCommand);
+
+			return;
+		}
+	}
+
+	if (parentCommand == NULL) {
+		ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
+		ItemBase * toBase = newItems.value(modelIndex, NULL);
+		if (toBase == NULL) {
+			toBase = otherNewItems.value(modelIndex, NULL);
+		}
+		if (fromBase == NULL || toBase == NULL) return;
+
+		// TODO: make sure layerkin are searched for connectors
+		ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
+		ConnectorItem * toConnectorItem = toBase->findConnectorItemNamed(toConnectorID);
+		if (fromConnectorItem == NULL || toConnectorItem == NULL) return;
+
+		fromConnectorItem->connectTo(toConnectorItem);
+		toConnectorItem->connectTo(fromConnectorItem);
+		fromConnectorItem->connector()->connectTo(toConnectorItem->connector());
+		if (fromConnectorItem->attachedToItemType() == ModelPart::Wire && toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			fromConnectorItem->setHidden(false);
+			toConnectorItem->setHidden(false);
+		}
+		return;
+	}
+
+	new ChangeConnectionCommand(this, BaseCommand::SingleView,
+								ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
+								ItemBase::getNextID(modelIndex), toConnectorID,
+								true, true, parentCommand);
+	if (doRatsnest && doRatsnestOnCopy()) {
+		new RatsnestCommand(this, BaseCommand::SingleView,
+									ItemBase::getNextID(mp->modelIndex()), fromConnectorID,
+									ItemBase::getNextID(modelIndex), toConnectorID,
+									true, true, parentCommand);
+	}
 }
 
 void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * parentCommand)
@@ -393,15 +460,14 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	}
 }
 
-ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, AddDeleteItemCommand * originatingCommand) {
+ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand) {
 	if (m_paletteModel == NULL) return NULL;
 
 	ItemBase * itemBase = NULL;
 	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
-
 	if (modelPart->itemType() == ModelPart::Module) {
-		QList<ModelPart *> modelParts;
-		makeModule(modelPart, modelParts, crossViewType == BaseCommand::CrossView, true, viewGeometry, id, originatingCommand);
+		QList<ModelPart *>  modelParts; 
+		makeModule(modelPart, originalModelIndex, modelParts, crossViewType == BaseCommand::CrossView, true, viewGeometry, id, originatingCommand);
 		return NULL;
 	}
 
@@ -409,6 +475,11 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		statusMessage(tr("loading part"));
 		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, NULL);
+		if (itemBase != NULL && originalModelIndex > 0) {
+			itemBase->modelPart()->setOriginalModelIndex(originalModelIndex);
+			// DebugDialog::debug(QString("additem original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
+
+		}
 		statusMessage(tr("done loading"), 2000);
 		QApplication::restoreOverrideCursor();
 	}
@@ -416,8 +487,28 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	return itemBase;
 }
 
-void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand)
+void SketchWidget::makeModule(ModelPart * refModelPart, long originalModelIndex, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand)
 {
+	ModelPart * modelPart = m_sketchModel->findModelPart(refModelPart->moduleID(), id);
+	if (modelPart == NULL) {
+		// todo: needs to be added to parent not root
+		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), refModelPart);
+		modelPart->setModelIndexFromMultiplied(id);
+		if (originalModelIndex > 0) {
+			modelPart->setOriginalModelIndex(originalModelIndex);
+			// DebugDialog::debug(QString("group original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
+		}
+	}
+	else if (modelParts.count() <= 0) {
+		foreach (QObject * object, modelPart->children()) {
+			ModelPart * cmp = dynamic_cast<ModelPart *>(object);
+			if (cmp != NULL) {
+				modelParts.append(cmp);
+			}
+		}
+	}
+
+	DebugDialog::debug(QString("mp:%1, omi:%2, view:%3, id:%4").arg(modelPart->modelIndex()).arg(originalModelIndex).arg(m_viewIdentifier).arg(id));
 	bool gotOne = false;
 	if (originatingCommand) {
 		for (int i = 0; i < originatingCommand->subCommandCount(); i++) {
@@ -436,6 +527,11 @@ void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelP
 		if (modelParts.count() <= 0) {
 			if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts)) {
 				return;
+			}
+			// TODO: if this is a module inside a module, set its parent
+
+			foreach (ModelPart * sub, modelParts) {
+				sub->setParent(modelPart);
 			}
 		}
 
@@ -461,7 +557,7 @@ void SketchWidget::makeModule(ModelPart * modelPart, QList<ModelPart *> & modelP
 		// module within a module, don't send an emit signal, since we're already operating from some top level command that's been (or will be) emitted
 		}
 		else if (doEmit) {
-			emit makeModuleSignal(modelPart, modelParts, false, doRedo, viewGeometry, id, originatingCommand);
+			emit makeModuleSignal(modelPart, originalModelIndex, modelParts, false, doRedo, viewGeometry, id, originatingCommand);
 		}
 	}
 }
@@ -895,7 +991,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, false, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, false, -1, -1, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, to->attachedToID(), to->connectorSharedID(),
@@ -1269,7 +1365,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 			// rulers are local to a particular view
 			crossViewType = BaseCommand::SingleView;
 		}
-		new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, parentCommand);
+		new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(fromID);
 
@@ -1594,7 +1690,7 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 			if (m_holdingSelectItemCommand->updated()) {
 				SelectItemCommand* tempCommand = m_holdingSelectItemCommand;
 				m_holdingSelectItemCommand = NULL;
-				DebugDialog::debug(QString("scene changed push select %1").arg(scene()->selectedItems().count()));
+				//DebugDialog::debug(QString("scene changed push select %1").arg(scene()->selectedItems().count()));
 				m_undoStack->push(tempCommand);
 			}
 			else {
@@ -1806,11 +1902,7 @@ void SketchWidget::group(const QString & moduleID, long itemID, QList<long> & it
 {
 	ModelPart * modelPart = m_sketchModel->findModelPart(moduleID, itemID);
 	if (modelPart == NULL) {
-		modelPart = m_paletteModel->retrieveModelPart(moduleID);
-		if (modelPart == NULL) return;
-
-		// TODO: what if this is a recursive group, then we shouldn't add the modelpart to the root of the sketchmodel
-		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), modelPart);
+		return;
 	}
 
 	QList<ItemBase *> itemBases;
@@ -2018,7 +2110,9 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 
 		// create a new wire with the same id as the temporary wire
-		new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, parentCommand);
+		new AddItemCommand(this, BaseCommand::CrossView, m_connectorDragWire->modelPart()->moduleID(), m_connectorDragWire->getViewGeometry(), fromID, true, -1, -1, parentCommand);
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->addRedo(fromID);
 
 		ConnectorItem * anchor = wire->otherConnector(fromOnWire);
 		if (anchor != NULL) {
@@ -2783,6 +2877,29 @@ void SketchWidget::changeConnection(long fromID, const QString & fromConnectorID
 	}
 }
 
+void SketchWidget::moduleChangeConnection(long fromID, const QString & fromConnectorID,
+									QList<long> & toIDs, const QString & toConnectorID, bool doRatsnest,
+									bool connect, bool doEmit, bool seekLayerKin, bool updateConnections)
+{
+	// figure out what part we're actually pointing at, then call changeConnection
+	long id = ItemBase::getNextID(toIDs[0]);
+	ItemBase * superBase = findItem(id);
+	if (superBase == NULL) {
+		return;
+	}
+
+	ItemBase * toBase = findModulePart(superBase, toIDs);
+	if (toBase == NULL) {
+		return;
+	}
+
+	changeConnection(fromID, fromConnectorID, toBase->id(), toConnectorID, connect, doEmit, seekLayerKin, updateConnections);
+
+	if (doRatsnest) {
+		DebugDialog::debug("moduleChangeConnection: doRatsnest not yet implemented");
+	}
+}
+
 void SketchWidget::changeConnectionAux(long fromID, const QString & fromConnectorID,
 									long toID, const QString & toConnectorID,
 									bool connect, bool seekLayerKin, bool updateConnections)
@@ -2899,7 +3016,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * par
 		new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	}
-	DeleteItemCommand * deleteItemCommand = new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), parentCommand);
+	DeleteItemCommand * deleteItemCommand = new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
 	if (itemBase->itemType() == ModelPart::Module) {
 		ConnectorPairHash connectorPairHashAll;
 		ConnectorPairHash connectorPairHashRemaining;
@@ -2928,7 +3045,7 @@ BaseCommand * SketchWidget::makeDeleteItemCommandRecurse(AddDeleteItemCommand * 
 		if (child == NULL) continue;
 
 		ModelPart * mp = child->modelPart();
-		AddItemCommand * addItemCommand = new AddItemCommand(this, BaseCommand::SingleView, mp->moduleID(), child->getViewGeometry(), child->id(), false, mp->modelIndex(), parentCommand);
+		AddItemCommand * addItemCommand = new AddItemCommand(this, BaseCommand::SingleView, mp->moduleID(), child->getViewGeometry(), child->id(), false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
 		if (child->itemType() == ModelPart::Module) {
 			makeDeleteItemCommandRecurse(addItemCommand, child, connectorPairHashAll, connectorPairHashRemaining);
 		}
@@ -3141,7 +3258,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
-	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, true, -1, parentCommand);
+	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, true, -1, -1, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
 
@@ -4498,4 +4615,28 @@ void SketchWidget::pushCommand(QUndoCommand * command) {
 	if (m_undoStack) {
 		m_undoStack->push(command);
 	}
+}
+
+ItemBase * SketchWidget::findModulePart(ItemBase * toBase, QList<long> & indexes) 
+{
+	for (int i = 1; i < indexes.count(); i++) {
+		long originalModelIndex = indexes[i];
+
+		bool gotOne = false;
+		foreach (QGraphicsItem * child, toBase->childItems()) {
+			ItemBase * itemBase = dynamic_cast<ItemBase *>(child);
+			if (itemBase == NULL) continue;
+
+			if (itemBase->modelPart()->originalModelIndex() == originalModelIndex) {
+				toBase = itemBase;
+				gotOne = true;
+				break;
+			}
+		}
+		if (!gotOne) {
+			return NULL;
+		}
+	}
+
+	return toBase;
 }

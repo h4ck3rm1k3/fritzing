@@ -393,8 +393,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(groupSignal(const QString &, long, QList<long> &, const ViewGeometry &, bool)),
 									 slotter, SLOT(group(const QString &, long, QList<long> &, const ViewGeometry &, bool)) );
-	succeeded = succeeded && connect(signaller, SIGNAL(makeModuleSignal(ModelPart *, QList<ModelPart *> &, bool, bool, const ViewGeometry &, long , AddDeleteItemCommand * )),
-									 slotter, SLOT(makeModule(ModelPart *, QList<ModelPart *> &, bool, bool, const ViewGeometry &, long , AddDeleteItemCommand * )),
+	succeeded = succeeded && connect(signaller, SIGNAL(makeModuleSignal(ModelPart *, long, QList<ModelPart *> &, bool, bool, const ViewGeometry &, long , AddDeleteItemCommand * )),
+									 slotter, SLOT(makeModule(ModelPart *, long, QList<ModelPart *> &, bool, bool, const ViewGeometry &, long , AddDeleteItemCommand * )),
 									 Qt::DirectConnection);
 
 	if (!succeeded) {
@@ -1482,8 +1482,6 @@ void MainWindow::saveAsModule() {
 
 	sketchModule.removeChild(instances);
 	partModule.appendChild(instances);
-
-	// may need to delete virtual wires...
 
 	QString userPartsSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg/user/";
 	foreach (QString view, svgs.keys()) {

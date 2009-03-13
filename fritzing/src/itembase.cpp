@@ -39,8 +39,6 @@ $Date$
 #include <QTimer>
 #include <QVector>
 
-
-
 /////////////////////////////////
 
 class NameTriple {
@@ -73,7 +71,6 @@ protected:
 
 /////////////////////////////////
 
-long ItemBase::nextID = 0;
 QHash <ItemBase::ViewIdentifier, NameTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
@@ -119,7 +116,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
-	//DebugDialog::debug(QString("itembase %1").arg(QString::number((long) static_cast<QGraphicsItem *>(this), 16)));
+	//DebugDialog::debug(QString("itembase %1").arg(QString::number((long) static_cast<QGraphicsItem *>(this), 0, 16)));
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;
@@ -213,16 +210,13 @@ bool ItemBase::zLessThan(ItemBase * & p1, ItemBase * & p2)
 }
 
 qint64 ItemBase::getNextID() {
-	qint64 temp = nextID;
-	nextID += 10;								// make sure we leave room for layerkin inbetween
-	return temp;
+	return ModelPart::nextIndex() * ModelPart::indexMultiplier;								// make sure we leave room for layerkin inbetween
 }
 
 qint64 ItemBase::getNextID(qint64 index) {
-	qint64 temp = index * 10;						// make sure we leave room for layerkin inbetween
-	if (nextID <= temp) {
-		nextID = temp + 10;
-	}
+
+	qint64 temp = index * ModelPart::indexMultiplier;						// make sure we leave room for layerkin inbetween
+	ModelPart::updateIndex(index);
 	return temp;
 }
 

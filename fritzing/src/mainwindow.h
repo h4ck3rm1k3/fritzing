@@ -208,6 +208,7 @@ protected slots:
 	void activateWindowAux();
 	void showPartLabels();
 	void addNote();
+	void reportBug();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -458,6 +459,8 @@ protected:
     QAction *m_showInViewHelpAct;;
     QAction *m_visitFritzingDotOrgAct;
     QAction *m_checkForUpdatesAct;
+    QAction *m_aboutQtAct;
+    QAction *m_reportBugAct;
 
     // Dot icons
     QIcon m_dotIcon;

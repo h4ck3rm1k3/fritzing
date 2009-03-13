@@ -82,12 +82,6 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 
 	prepareGeometryChange();
 	update();
-
-	ModelPart * thisModelPart = modelPart();
-	ModelPart * submodelPart = item->modelPart();
-	if (submodelPart->parent() != thisModelPart) {
-		submodelPart->setParent(thisModelPart);
-	}
 }
 
 void GroupItemBase::findConnectorsUnder() {

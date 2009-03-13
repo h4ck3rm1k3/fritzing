@@ -538,6 +538,8 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
 	this->show();
+	showAllFirstTimeHelp(false);
+
 	QApplication::processEvents();
 
 	QFileInfo fileInfo(fileName);
@@ -552,7 +554,6 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 
 	QList<ModelPart *> modelParts;
 	m_sketchModel->load(fileName, m_paletteModel, modelParts);
-	//m_sketchModel->load(fileName, m_refModel, true);
 
 	progressBar.setValue(55);
 	m_statusBar->showMessage(tr("loading %1 (breadboard)").arg(fileInfo.fileName()));
@@ -578,8 +579,6 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	}
 
 	setCurrentFile(fileName, addToRecent);
-
-	showAllFirstTimeHelp(false);
 
 	UntitledSketchIndex--;
 
@@ -1108,6 +1107,14 @@ void MainWindow::createHelpMenuActions() {
 	m_aboutAct->setStatusTip(tr("Show the application's about box"));
 	connect(m_aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 	m_aboutAct->setMenuRole(QAction::AboutRole);
+
+	m_aboutQtAct = new QAction(tr("&About Qt"), this);
+	m_aboutQtAct->setStatusTip(tr("Show Qt's about box"));
+	connect(m_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+	m_reportBugAct = new QAction(tr("&Report a Fritzing bug"), this);
+	m_reportBugAct->setStatusTip(tr("Report a but you've found in Fritzing"));
+	connect(m_reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
 }
 
 void MainWindow::createMenus()
@@ -1240,6 +1247,11 @@ void MainWindow::createMenus()
 	m_helpMenu->addAction(m_checkForUpdatesAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
+#ifndef QT_NO_DEBUG
+	m_helpMenu->addAction(m_aboutQtAct);
+#endif
+	m_helpMenu->addSeparator();
+	m_helpMenu->addAction(m_reportBugAct);
 }
 
 void MainWindow::updateLayerMenu() {
@@ -1592,6 +1604,10 @@ void MainWindow::openPartsReference() {
 
 void MainWindow::visitFritzingDotOrg() {
 	 QDesktopServices::openUrl(QString("http://www.fritzing.org"));
+}
+
+void MainWindow::reportBug() {
+	 QDesktopServices::openUrl(QString("http://code.google.com/p/fritzing/issues"));
 }
 
 void MainWindow::createNewPartInOldEditor() {
@@ -2178,7 +2194,7 @@ void MainWindow::addNote() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
 	m_currentGraphicsView->stackSelectionState(false, parentCommand);
 	m_currentGraphicsView->scene()->clearSelection();
-	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, Note::moduleIDName, vg, ItemBase::getNextID(), false, -1, parentCommand);
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, Note::moduleIDName, vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 

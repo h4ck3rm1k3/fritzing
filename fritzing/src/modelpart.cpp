@@ -35,6 +35,7 @@ $Date$
 
 QHash<ModelPart::ItemType, QString> ModelPart::itemTypeNames;
 long ModelPart::m_nextIndex = 0;
+const int ModelPart::indexMultiplier = 10;
 
 
 ModelPart::ModelPart(ItemType type)
@@ -43,6 +44,7 @@ ModelPart::ModelPart(ItemType type)
 	m_type = type;
 	m_modelPartShared = NULL;
 	m_index = m_nextIndex++;
+	m_originalIndex = -1;
 	m_core = false;
 	m_alien = false;
 	m_originalModelPartShared = false;
@@ -57,6 +59,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	m_originalModelPartShared = true;
 	m_core = false;
 	m_alien = false;
+	m_originalIndex = -1;
 
 	//TODO Mariano: enough for now
 	QDomElement viewsElems = domDocument->documentElement().firstChildElement("views");
@@ -339,11 +342,32 @@ long ModelPart::modelIndex() {
 	return m_index;
 }
 
+long ModelPart::originalModelIndex() {
+	return m_originalIndex;
+}
+
 void ModelPart::setModelIndex(long index) {
 	m_index = index;
+	updateIndex(index);
+}
+
+void ModelPart::setModelIndexFromMultiplied(long multiplied) {
+	setModelIndex(multiplied / ModelPart::indexMultiplier);
+}
+
+void ModelPart::updateIndex(long index) 
+{
 	if (index >= m_nextIndex) {
 		m_nextIndex = index + 1;
 	}
+}
+
+void ModelPart::setOriginalModelIndex(long index) {
+	if (m_originalIndex > 0) {
+		return;
+	}
+
+	m_originalIndex = index;
 }
 
 long ModelPart::nextIndex() {
@@ -351,6 +375,7 @@ long ModelPart::nextIndex() {
 }
 
 void ModelPart::setInstanceDomElement(const QDomElement & domElement) {
+	//DebugDialog::debug(QString("model part instance %1").arg((long) this, 0, 16));
 	m_instanceDomElement = domElement;
 }
 

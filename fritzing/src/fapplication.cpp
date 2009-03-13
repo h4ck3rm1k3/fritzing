@@ -353,7 +353,7 @@ int FApplication::startup(int & argc, char ** argv)
 
 	QTime t;
 	t.start();
-	DebugDialog::debug("starting thread");
+	//DebugDialog::debug("starting thread");
 	QMutex mutex;
 	mutex.lock();
 	DoOnceThread doOnceThread;
@@ -363,7 +363,7 @@ int FApplication::startup(int & argc, char ** argv)
 		mutex.tryLock(10);							// always fails, but effectively sleeps for 10 ms
 	}
 	mutex.unlock();
-	DebugDialog::debug(QString("ending thread %1").arg(t.elapsed()));
+	//DebugDialog::debug(QString("ending thread %1").arg(t.elapsed()));
 
 	splash.showProgress(progressIndex, 0.65);
 
@@ -390,13 +390,13 @@ int FApplication::startup(int & argc, char ** argv)
 		loadOne(mainWindow, argv[i], loaded++);
 	}
 
-	DebugDialog::debug("after argc");
+	//DebugDialog::debug("after argc");
 
 	foreach (QString filename, m_filesToLoad) {
 		loadOne(mainWindow, filename, loaded++);
 	}
 
-	DebugDialog::debug("after m_files");
+	//DebugDialog::debug("after m_files");
 
 	if (loaded == 0)
 	{
@@ -412,7 +412,7 @@ int FApplication::startup(int & argc, char ** argv)
 		}
 	}
 
-	DebugDialog::debug("after last open sketch");
+	//DebugDialog::debug("after last open sketch");
 
 	m_started = true;
 
