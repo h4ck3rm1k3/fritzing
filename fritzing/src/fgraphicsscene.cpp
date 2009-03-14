@@ -27,17 +27,13 @@ $Date$
 #include "fgraphicsscene.h"
 #include "paletteitembase.h"
 #include "connectoritem.h"
+#include "infographicsview.h"
 
 #include <QToolTip>
 
 FGraphicsScene::FGraphicsScene( QObject * parent) : QGraphicsScene(parent)
 {
 	//setItemIndexMethod(QGraphicsScene::NoIndex);
-}
-
-void FGraphicsScene::drawItems ( QPainter * painter, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget * widget)
-{
-	QGraphicsScene::drawItems(painter, numItems, items, options, widget);
 }
 
 void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)

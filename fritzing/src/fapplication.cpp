@@ -52,6 +52,7 @@ $Date$
 #include <QMessageBox>
 
 bool FApplication::m_spaceBarIsPressed = false;
+bool FApplication::m_mousePressed = false;
 QString FApplication::m_openSaveFolder = ___emptyString___;
 QTranslator FApplication::m_translator;
 ReferenceModel * FApplication::m_referenceModel = NULL;
@@ -212,21 +213,31 @@ bool FApplication::eventFilter(QObject *obj, QEvent *event)
 	Q_UNUSED(obj);
 
 	switch (event->type()) {
+		case QEvent::MouseButtonPress:
+			m_mousePressed = true;
+			break;
+		case QEvent::MouseButtonRelease:
+			m_mousePressed = false;
+			break;
 		case QEvent::KeyPress:
 			{
-				QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
-				if (!kevent->isAutoRepeat() && (kevent->key() == Qt::Key_Space)) {
-					m_spaceBarIsPressed = true;
-					emit spaceBarIsPressedSignal(true);
+				if (!m_mousePressed) {
+					QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
+					if (!kevent->isAutoRepeat() && (kevent->key() == Qt::Key_Space)) {
+						m_spaceBarIsPressed = true;
+						emit spaceBarIsPressedSignal(true);
+					}
 				}
 			}
 			break;
 		case QEvent::KeyRelease:
 			{
-				QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
-				if (!kevent->isAutoRepeat() && (kevent->key() == Qt::Key_Space)) {
-					m_spaceBarIsPressed = false;
-					emit spaceBarIsPressedSignal(false);
+				if (m_spaceBarIsPressed) {
+					QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
+					if (!kevent->isAutoRepeat() && (kevent->key() == Qt::Key_Space)) {
+						m_spaceBarIsPressed = false;
+						emit spaceBarIsPressedSignal(false);
+					}
 				}
 			}
 			break;

@@ -83,6 +83,9 @@ QGraphicsView * MiniView::view() {
 	return m_otherView;
 }
 
+
+/*
+// obsolete: we are now drawing INotSeenInMiniView as part of the background
 void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[])
 {
 	FGraphicsScene * fScene = dynamic_cast<FGraphicsScene *>(scene());
@@ -105,3 +108,4 @@ void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[]
 	delete [] itemArray;
 	delete [] styleOptionArray;
 }
+*/

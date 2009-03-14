@@ -101,6 +101,7 @@ protected slots:
 protected:
 	class ItemBase * m_owner;
 	bool m_initialized;
+	bool m_spaceBarWasPressed;
 	bool m_doDrag;
 	QPointF m_initialPosition;
 	QPointF m_initialOffset;

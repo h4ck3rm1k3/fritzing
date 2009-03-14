@@ -68,6 +68,8 @@ public:
 	virtual void rotateFlipPartLabel(ItemBase *, qreal degrees, Qt::Orientations flipDirection);
 	virtual void noteSizeChanged(ItemBase * itemBase, const QRectF & oldRect, const QRectF & newRect);
 
+	virtual bool spaceBarIsPressed(); 
+
 protected:
 	QGraphicsItem *selectedAux();
 	HtmlInfoView *m_infoView;

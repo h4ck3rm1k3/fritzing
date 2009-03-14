@@ -75,7 +75,7 @@ SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *par
     : InfoGraphicsView(parent)
 {
 	m_fixedToCenterItem = NULL;
-	m_spaceBarIsPressed = false;
+	m_spaceBarWasPressed = m_spaceBarIsPressed = false;
 	m_current = false;
 	m_ignoreSelectionChangeEvents = false;
 	m_droppingItem = NULL;
@@ -1436,9 +1436,10 @@ SelectItemCommand* SketchWidget::stackSelectionState(bool pushIt, QUndoCommand *
 
 void SketchWidget::mousePressEvent(QMouseEvent *event) {
 
+	m_spaceBarWasPressed = m_spaceBarIsPressed;
 	if (m_spaceBarIsPressed) {
-		//InfoGraphicsView::mousePressEvent(event);
-		//return;
+		InfoGraphicsView::mousePressEvent(event);
+		return;
 	}
 
 	//setRenderHint(QPainter::Antialiasing, false);
@@ -1567,9 +1568,9 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 	// if its just dragging a wire end do default
 	// otherwise handle all move action here
 
-	if (m_spaceBarIsPressed) {
-		//InfoGraphicsView::mouseMoveEvent(event);
-		//return;
+	if (m_spaceBarWasPressed) {
+		InfoGraphicsView::mouseMoveEvent(event);
+		return;
 	}
 
 	if (m_savedItems.count() > 0) {
@@ -1656,9 +1657,9 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
-	if (m_spaceBarIsPressed) {
-		//InfoGraphicsView::mouseReleaseEvent(event);
-		//return;
+	if (m_spaceBarWasPressed) {
+		InfoGraphicsView::mouseReleaseEvent(event);
+		return;
 	}
 
 	turnOffAutoscroll();
@@ -3819,8 +3820,8 @@ void SketchWidget::spaceBarIsPressedSlot(bool isPressed) {
 		setCursor(Qt::OpenHandCursor);
 	}
 	else {
-		//setInteractive(true);
 		setDragMode(QGraphicsView::RubberBandDrag);
+		//setInteractive(true);
 		setCursor(Qt::ArrowCursor);
 	}
 }
@@ -4640,3 +4641,8 @@ ItemBase * SketchWidget::findModulePart(ItemBase * toBase, QList<long> & indexes
 
 	return toBase;
 }
+
+bool SketchWidget::spaceBarIsPressed() {
+	return m_spaceBarIsPressed;
+}
+

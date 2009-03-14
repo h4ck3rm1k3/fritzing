@@ -72,6 +72,7 @@ protected:
 
 protected:
 	static bool m_spaceBarIsPressed;
+	static bool m_mousePressed;
 	static QString m_openSaveFolder;
 	static QTranslator m_translator;
 	static class ReferenceModel * m_referenceModel;

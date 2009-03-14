@@ -322,6 +322,14 @@ void Note::positionGrip() {
 }
 
 void Note::mousePressEvent(QGraphicsSceneMouseEvent * event) {
+	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infographics != NULL && infographics->spaceBarIsPressed()) {
+		m_spaceBarWasPressed = true;
+		event->ignore();
+		return;
+	}
+
+	m_spaceBarWasPressed = false;
 	QPointF p = m_resizeGrip->mapFromParent(event->pos());
 	if (m_resizeGrip->boundingRect().contains(p)) {
 		saveGeometry();
@@ -336,6 +344,11 @@ void Note::mousePressEvent(QGraphicsSceneMouseEvent * event) {
 }
 
 void Note::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
+	if (m_spaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
 	if (m_inResize) {
 		QRectF r = m_rect;
 		r.setWidth(m_viewGeometry.rect().width() + event->pos().x() - m_resizePos.x());
@@ -365,6 +378,11 @@ void Note::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 }
 
 void Note::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
+	if (m_spaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
 	if (m_inResize) {
 		m_inResize = false;
 		InfoGraphicsView *infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
@@ -460,6 +478,7 @@ bool Note::eventFilter(QObject * object, QEvent * event)
 			return true;
 		}
 	}
+
 	if (event->type() == QEvent::KeyPress) {
 		QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
 		if (kevent->matches(QKeySequence::Bold)) {

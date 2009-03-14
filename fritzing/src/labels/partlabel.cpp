@@ -28,6 +28,7 @@ $Date$
 #include "../itembase.h"
 #include "../viewgeometry.h"
 #include "../debugdialog.h"
+#include "../infographicsview.h"
 
 #include <QGraphicsScene>
 #include <QTextDocument>
@@ -178,7 +179,15 @@ QPainterPath PartLabel::shape() const
 
 void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    scene()->clearSelection();
+	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infographics != NULL && infographics->spaceBarIsPressed()) {
+		m_spaceBarWasPressed = true;
+		event->ignore();
+		return;
+	}
+
+	m_spaceBarWasPressed = false;
+	scene()->clearSelection();
     m_owner->setSelected(true);
 
 	m_doDrag = false;
@@ -204,6 +213,11 @@ void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void PartLabel::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+	if (m_spaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
 	if (m_doDrag) {
 		QPointF currentParentPos = mapToParent(mapFromScene(event->scenePos()));
 		QPointF buttonDownParentPos = mapToParent(mapFromScene(event->buttonDownScenePos(Qt::LeftButton)));
@@ -217,6 +231,11 @@ void PartLabel::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void PartLabel::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+	if (m_spaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
 	if (m_doDrag) {
 		m_owner->partLabelMoved(m_initialPosition, m_initialOffset, pos(), m_offset);
 	}

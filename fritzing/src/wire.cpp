@@ -251,6 +251,7 @@ void Wire::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option,
 void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
 	ItemBase::mousePressEvent(event);
+	if (m_spaceBarWasPressed) return;
 
 	if (event->modifiers() & Qt::ShiftModifier) {
 		emit wireSplitSignal(this, event->scenePos(), this->pos(), this->line());
@@ -285,6 +286,11 @@ void Wire::initDragEnd(ConnectorItem * connectorItem) {
 }
 
 void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+	if (m_spaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
 	if (m_dragEnd == false) {
 		if (event->modifiers() & Qt::ShiftModifier) {
 			// bendpoint
@@ -349,6 +355,11 @@ void Wire::setConnector1Rect() {
 }
 
 void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+	if (m_spaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
 	if (this->scene()->mouseGrabberItem() == this) {
 		this->ungrabMouse();
 	}

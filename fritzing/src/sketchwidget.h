@@ -204,7 +204,7 @@ public:
 	class SelectItemCommand* stackSelectionState(bool pushIt, QUndoCommand * parentCommand);
 	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize);
 	void setConnectorExternal(long itemID, const QString & connectorID, bool external);
-
+	bool spaceBarIsPressed();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -449,6 +449,7 @@ protected:
 
 	ConnectorPairHash m_moveDisconnectedFromFemale;
 	bool m_spaceBarIsPressed;
+	bool m_spaceBarWasPressed;
 
 protected:
 	QString m_viewName;

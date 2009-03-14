@@ -219,6 +219,8 @@ protected:
 	bool m_canFlipVertical;
 	bool m_zUninitialized;
 	class PartLabel * m_partLabel;
+	bool m_spaceBarWasPressed;
+	bool m_hoverEnterSpaceBarWasPressed;
 
 protected:
 	static long nextID;

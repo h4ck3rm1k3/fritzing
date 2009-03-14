@@ -127,6 +127,8 @@ protected:
 	bool m_connectorHovering;
 	bool m_ignoreAncestorFlag;
 	bool m_external;
+	bool m_spaceBarWasPressed;
+	bool m_hoverEnterSpaceBarWasPressed;
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);

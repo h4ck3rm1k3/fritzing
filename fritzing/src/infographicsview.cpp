@@ -136,3 +136,8 @@ void InfoGraphicsView::noteSizeChanged(ItemBase * itemBase, const QRectF & oldRe
 	Q_UNUSED(oldRect);
 	Q_UNUSED(newRect);
 }
+
+bool InfoGraphicsView::spaceBarIsPressed() {
+	return false;
+}
+

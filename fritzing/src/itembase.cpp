@@ -473,12 +473,18 @@ ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
 
 void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	//DebugDialog::debug(QString("hover enter %1").arg(instanceTitle()));
+	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
+		m_hoverEnterSpaceBarWasPressed = true;
+		event->ignore();
+		return;
+	}
 
+	m_hoverEnterSpaceBarWasPressed = false;
 	m_hoverCount++;
 	if (itemType() != ModelPart::Breadboard) {
 		update();
 	}
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverEnterItem(event, this);
 	}
@@ -486,6 +492,11 @@ void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 
 void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	//DebugDialog::debug(QString("hover leave %1").arg(instanceTitle()));
+	if (m_hoverEnterSpaceBarWasPressed) {
+		event->ignore();
+		return;
+	}
+
 	m_hoverCount--;
 	if (itemType() != ModelPart::Breadboard) {
 		update();
@@ -619,6 +630,12 @@ void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *opt
 }
 
 void ItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	InfoGraphicsView *infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
+		event->ignore();
+		return; 
+	}
+
 	//scene()->setItemIndexMethod(QGraphicsScene::NoIndex);
 	//setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 	GraphicsSvgLineItem::mousePressEvent(event);
