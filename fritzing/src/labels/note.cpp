@@ -33,6 +33,13 @@ $Date$
 #include <QTextFrameFormat>
 #include <QApplication>
 #include <QFontDatabase>
+#include <QTextDocumentFragment>
+#include <QTimer>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QLineEdit>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 // TODO:
 //		** search for ModelPart:: and fix up
@@ -68,6 +75,46 @@ const int borderWidth = 3;
 
 QString Note::initialTextString;
 
+QRegExp urlTag("<a.*href=[\"']([^\"]+[.\\s]*)[\"'].*>");    
+
+
+///////////////////////////////////////
+
+bool findText(QDomNode node, QDomNode & textNode) {
+	if (node.isText()) {
+		textNode = node;
+		return true;
+	}
+
+	QDomNode cnode = node.firstChild();
+	while (!cnode.isNull()) {
+		if (findText(cnode, textNode)) return true;
+
+		cnode = cnode.nextSibling();
+	}
+
+	return false;
+}
+
+///////////////////////////////////////
+
+void findA(QDomElement element, QList<QDomElement> & aElements) 
+{
+	if (element.tagName().compare("a", Qt::CaseInsensitive) == 0) {
+		aElements.append(element);
+		return;
+	}
+
+	QDomElement c = element.firstChildElement();
+	while (!c.isNull()) {
+		findA(c, aElements);
+
+		c = c.nextSiblingElement();
+	}
+}
+
+///////////////////////////////////////
+
 class NoteGraphicsTextItem : public QGraphicsTextItem
 {
 public:
@@ -90,6 +137,63 @@ void NoteGraphicsTextItem::focusInEvent(QFocusEvent * event) {
 void NoteGraphicsTextItem::focusOutEvent(QFocusEvent * event) {
 	QApplication::instance()->removeEventFilter((Note *) this->parentItem());
 	QGraphicsTextItem::focusOutEvent(event);
+}
+
+//////////////////////////////////////////
+
+LinkDialog::LinkDialog(QWidget *parent) : QDialog(parent) 
+{
+	this->setWindowTitle(QObject::tr("Edit link"));
+
+	QVBoxLayout * vLayout = new QVBoxLayout(this);
+
+	QGroupBox * formGroupBox = new QGroupBox(this);
+
+	QFormLayout * formLayout = new QFormLayout();
+
+	m_urlEdit = new QLineEdit(this);
+	m_urlEdit->setFixedHeight(25);
+	m_urlEdit->setFixedWidth(200);
+	formLayout->addRow( "url:", m_urlEdit );
+
+	m_textEdit = new QLineEdit(this);
+	m_textEdit->setFixedHeight(25);
+	m_textEdit->setFixedWidth(200);
+	formLayout->addRow( "text:", m_textEdit );
+
+	formGroupBox->setLayout(formLayout);
+
+	vLayout->addWidget(formGroupBox);
+
+    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
+
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
+	vLayout->addWidget(buttonBox);
+
+	this->setLayout(vLayout);
+}
+
+LinkDialog::~LinkDialog() {
+}
+
+void LinkDialog::setText(const QString & text) {
+	m_textEdit->setText(text);
+}
+
+void LinkDialog::setUrl(const QString & url) {
+	m_urlEdit->setText(url);
+}
+
+QString LinkDialog::text() {
+	return m_textEdit->text();
+}
+
+QString LinkDialog::url() {
+	return m_urlEdit->text();
 }
 
 /////////////////////////////////////////////
@@ -135,8 +239,9 @@ Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  con
 	m_graphicsTextItem->setParentItem(this);
 	m_graphicsTextItem->setVisible(true);
 	m_graphicsTextItem->setPlainText(initialTextString);
-	m_graphicsTextItem->setTextInteractionFlags(Qt::TextEditorInteraction);
+	m_graphicsTextItem->setTextInteractionFlags(Qt::TextEditorInteraction | Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
 	m_graphicsTextItem->setCursor(Qt::IBeamCursor);
+	m_graphicsTextItem->setOpenExternalLinks(true);
 
 	/*
 	// set the font here
@@ -297,10 +402,10 @@ void Note::contentsChangedSlot() {
 			this->update();
 		}
 
-		infoGraphicsView->partLabelChanged(this, oldText, m_graphicsTextItem->document()->toPlainText(), oldSize, newSize);
+		infoGraphicsView->partLabelChanged(this, oldText, m_graphicsTextItem->document()->toHtml(), oldSize, newSize);
 	}
 	if (m_modelPart) {
-		m_modelPart->setInstanceText(m_graphicsTextItem->document()->toPlainText());
+		m_modelPart->setInstanceText(m_graphicsTextItem->document()->toHtml());
 	}
 }
 
@@ -310,7 +415,7 @@ void Note::setText(const QString & text) {
 			this, SLOT(contentsChangedSlot()));
 
 	QString oldText = text;
-	m_graphicsTextItem->document()->setPlainText(text);
+	m_graphicsTextItem->document()->setHtml(text);
 
 	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
@@ -318,7 +423,7 @@ void Note::setText(const QString & text) {
 }
 
 QString Note::text() {
-	return m_graphicsTextItem->document()->toPlainText();
+	return m_graphicsTextItem->document()->toHtml();
 }
 
 void Note::setSize(const QSizeF & size)
@@ -355,5 +460,143 @@ bool Note::eventFilter(QObject * object, QEvent * event)
 			return true;
 		}
 	}
+	if (event->type() == QEvent::KeyPress) {
+		QKeyEvent * kevent = static_cast<QKeyEvent *>(event);
+		if (kevent->matches(QKeySequence::Bold)) {
+			QTextCursor textCursor = m_graphicsTextItem->textCursor();
+			QTextCharFormat cf = textCursor.charFormat();
+			bool isBold = cf.fontWeight() == QFont::Bold;
+			QTextCharFormat textCharFormat;
+			textCharFormat.setFontWeight(isBold ? QFont::Normal : QFont::Bold);
+			textCursor.mergeCharFormat(textCharFormat);
+			event->accept();
+			return true;
+		}
+		if (kevent->matches(QKeySequence::Italic)) {
+			QTextCursor textCursor = m_graphicsTextItem->textCursor();
+			QTextCharFormat cf = textCursor.charFormat();
+			QTextCharFormat textCharFormat;
+			textCharFormat.setFontItalic(!cf.fontItalic());
+			textCursor.mergeCharFormat(textCharFormat);
+			event->accept();
+			return true;
+		}
+		if ((kevent->key() == Qt::Key_L) && (kevent->modifiers() & Qt::ControlModifier)) {
+			QTimer::singleShot(75, this, SLOT(linkDialog()));
+			event->accept();
+			return true;
+
+		}
+	}
 	return false;
 }
+
+void Note::linkDialog() {
+	QTextCursor textCursor = m_graphicsTextItem->textCursor();
+	bool gotUrl = false;
+	if (textCursor.anchor() == textCursor.selectionStart()) {
+		// the selection returns empty since we're between characters
+		// so select one character forward or one character backward 
+		// to see whether we're in a url
+		int wasAnchor = textCursor.anchor();
+		bool atEnd = textCursor.atEnd();
+		bool atStart = textCursor.atStart();
+		if (!atStart) {
+			textCursor.setPosition(wasAnchor - 1, QTextCursor::KeepAnchor);
+			QString html = textCursor.selection().toHtml();
+			if (urlTag.indexIn(html) >= 0) {
+				gotUrl = true;
+			}
+		}
+		if (!gotUrl && !atEnd) {
+			textCursor.setPosition(wasAnchor + 1, QTextCursor::KeepAnchor);
+			QString html = textCursor.selection().toHtml();
+			if (urlTag.indexIn(html) >= 0) {
+				gotUrl = true;
+			}
+		}
+		textCursor.setPosition(wasAnchor, QTextCursor::MoveAnchor);
+	}
+	else {
+		QString html = textCursor.selection().toHtml();
+		DebugDialog::debug(html);
+		if (urlTag.indexIn(html) >= 0) {
+			gotUrl = true;
+		}
+	}
+
+	LinkDialog ld;
+	QString originalText;
+	QString originalUrl;
+	if (gotUrl) {
+		originalUrl = urlTag.cap(1);
+		ld.setUrl(originalUrl);
+		QString html = m_graphicsTextItem->toHtml();
+
+		// assumes html is in xml form
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+
+		QDomDocument domDocument;
+		if (!domDocument.setContent(html, &errorStr, &errorLine, &errorColumn)) {
+			return;
+		}
+
+		QDomElement root = domDocument.documentElement();
+		if (root.isNull()) {
+			return;
+		}
+
+		if (root.tagName() != "html") {
+			return;
+		}
+
+		DebugDialog::debug(html);
+		QList<QDomElement> aElements;
+		findA(root, aElements);
+		foreach (QDomElement a, aElements) {
+			// TODO: if multiple hrefs point to the same url this will only find the first one
+			QString href = a.attribute("href");
+			if (href.isEmpty()) {
+				href = a.attribute("HREF");
+			}
+			if (href.compare(originalUrl) == 0) {
+				QDomNode textNode;
+				if (findText(a, textNode)) {
+					originalText = textNode.nodeValue();
+					ld.setText(originalText);
+					break;
+				}
+				else {
+					return;
+				}
+			}
+		}
+	}
+	int result = ld.exec();
+	if (result == QDialog::Accepted) {
+		if (gotUrl) {
+			int from = 0;
+			while (true) {
+				QTextCursor cursor = m_graphicsTextItem->document()->find(originalText, from);
+				if (cursor.isNull()) {
+					// TODO: tell the user
+					return;
+				}
+
+				QString html = cursor.selection().toHtml();
+				if (html.contains(originalUrl)) {
+					cursor.insertHtml(QString("<a href=\"%1\">%2</a>").arg(ld.url()).arg(ld.text()));
+					break;
+				}
+
+				from = cursor.selectionEnd();
+			}
+		}
+		else {
+			textCursor.insertHtml(QString("<a href=\"%1\">%2</a>").arg(ld.url()).arg(ld.text()));
+		}
+	}
+}
+

@@ -33,8 +33,9 @@ $Date$
 #include <QWidget>
 #include <QXmlStreamWriter>
 #include <QDomElement>
-#include <QTextDocument>
 #include <QKeyEvent>
+#include <QDialog>
+#include <QLineEdit>
 
 #include "../itembase.h"
 
@@ -69,6 +70,7 @@ protected:
 
 protected slots:
 	void contentsChangedSlot();
+	void linkDialog();
 
 public:
 	static QString moduleIDName;
@@ -86,6 +88,25 @@ protected:
 	bool m_inResize;
 	QPointF m_resizePos;
 	QGraphicsTextItem * m_graphicsTextItem;
+
+};
+
+class LinkDialog : public QDialog
+{
+Q_OBJECT
+
+public:
+	LinkDialog(QWidget *parent = 0);
+	~LinkDialog();
+
+	void setUrl(const QString &);
+	void setText(const QString &);
+	QString text();
+	QString url();
+
+protected:
+	QLineEdit * m_urlEdit;
+	QLineEdit * m_textEdit;
 
 };
 
