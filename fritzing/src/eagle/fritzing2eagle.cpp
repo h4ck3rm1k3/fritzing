@@ -38,7 +38,7 @@ $Date$
 
 
 #include "../itembase.h"
-#include "pcbsketchwidget.h"
+#include "../pcbsketchwidget.h"
 //#include "sketchwidget.h"
 #include "fritzing2eagle.h"
 
