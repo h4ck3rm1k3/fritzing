@@ -41,6 +41,7 @@ $Date$
 #include "labels/note.h"
 #include "fapplication.h"
 #include "svg/svg2gerber.h"
+#include "eagle/fritzing2eagle.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1904,19 +1905,22 @@ void MainWindow::exportToGerber() {
 }
 
 void MainWindow::exportToEagle() {
-	/*
+	
 	QString text =
 		tr("This will soon provide an export of your Fritzing sketch to the EAGLE layout "
 		"software. If you'd like to have more exports to your favourite EDA tool, please let "
 		"us know, or contribute.");
-	QMessageBox::information(this, tr("Fritzing"), text);
-	*/
-
+/*
 	QString text =
 		tr("The Eagle export module is very experimental.  If anything breaks or behaves "
 		"strangely, please let us know.");
-	QMessageBox::information(this, tr("Fritzing"), text);
+*/
 
+	QMessageBox::information(this, tr("Fritzing"), text);
+	
+	Fritzing2Eagle eagle = Fritzing2Eagle(m_pcbGraphicsView);
+
+	/*
 	QList <ItemBase*> partList;
 
 	// bail out if something is wrong
@@ -1944,6 +1948,7 @@ void MainWindow::exportToEagle() {
 		exportInfoString += label + tr(" which is a ") + desc + tr(" in a ") + package + tr(" package.\n");
 	}
 	QMessageBox::information(this, tr("Fritzing"), exportInfoString);
+	*/
 
 	/*
 	QFile fp( fileName );

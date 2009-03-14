@@ -24,5 +24,45 @@ $Date$
 
 ********************************************************************/
 
+
+#include <QLabel>
+#include <QScrollArea>
+#include <QFont>
+#include <QChar>
+#include <QTime>
+#include <QTimer>
+#include <QKeyEvent>
+#include <QCloseEvent>
+#include <QScrollBar>
+#include <QMessageBox>
+
+
+#include "../itembase.h"
+#include "pcbsketchwidget.h"
+//#include "sketchwidget.h"
 #include "fritzing2eagle.h"
+
+
+
+Fritzing2Eagle* Fritzing2Eagle::singleton = NULL;
+
+Fritzing2Eagle::Fritzing2Eagle(PCBSketchWidget *m_pcbGraphicsView)
+{
+	QList <ItemBase*> partList;
+	
+	m_pcbGraphicsView->collectParts(partList);
+	
+	singleton = this;
+}
+
+/*
+void Fritzing2Eagle::showOutputInfo(PCBSketchWidget m_pcbGraphicsView) 
+{
+	if (singleton == NULL) {
+		new Fritzing2Eagle();
+	}
+	
+}
+*/
+
 
