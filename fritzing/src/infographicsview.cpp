@@ -99,12 +99,13 @@ HtmlInfoView * InfoGraphicsView::infoView() {
 void InfoGraphicsView::mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *) {
 }
 
-void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize) {
+void InfoGraphicsView::partLabelChanged(ItemBase * item, const QString &oldText, const QString & newText, QSizeF oldSize, QSizeF newSize, bool isLabel) {
 	Q_UNUSED(item);
 	Q_UNUSED(oldText);
 	Q_UNUSED(newText);
 	Q_UNUSED(oldSize);
 	Q_UNUSED(newSize);
+	Q_UNUSED(isLabel);
 }
 
 QGraphicsItem *InfoGraphicsView::selectedAux() {

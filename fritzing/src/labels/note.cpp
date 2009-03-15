@@ -420,7 +420,7 @@ void Note::contentsChangedSlot() {
 			this->update();
 		}
 
-		infoGraphicsView->partLabelChanged(this, oldText, m_graphicsTextItem->document()->toHtml(), oldSize, newSize);
+		infoGraphicsView->partLabelChanged(this, oldText, m_graphicsTextItem->document()->toHtml(), oldSize, newSize, false);
 	}
 	if (m_modelPart) {
 		m_modelPart->setInstanceText(m_graphicsTextItem->document()->toHtml());

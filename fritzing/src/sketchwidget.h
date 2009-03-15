@@ -142,7 +142,7 @@ public:
 	void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	void cleanUpWires(bool doEmit, class CleanUpWiresCommand *, bool skipMe);
 
-	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext, QSizeF oldSize, QSizeF newSize);
+	void partLabelChanged(ItemBase *, const QString & oldText, const QString &newtext, QSizeF oldSize, QSizeF newSize, bool isLabel);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
 	PaletteModel * paletteModel();
@@ -303,7 +303,7 @@ protected:
 	virtual const QString & hoverEnterWireConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual const QColor & getLabelTextColor();
-	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize);
+	void partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize, bool isLabel);
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
@@ -318,7 +318,6 @@ signals:
 	void itemDeletedSignal(long id);
 	void clearSelectionSignal();
 	void itemSelectedSignal(long id, bool state);
-	void partLabelChangedSignal(long id, const QString &text, bool isUndoable);
 	void wireDisconnectedSignal(long fromID, QString fromConnectorID);
 	void wireConnectedSignal(long fromID,  QString fromConnectorID, long toID, QString toConnectorID);
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
@@ -386,7 +385,7 @@ public slots:
 	void changeWireColor(const QString newColor);
 	void changeWireWidth(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);
-	void setInstanceTitle(long id, const QString & title, bool isUndoable);
+	void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable);
 	void showPartLabel(long id, bool showIt);
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 

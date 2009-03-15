@@ -897,7 +897,7 @@ void ItemBase::partLabelChanged(const QString & newText) {
 	QString oldText = modelPart()->instanceTitle();
 	setInstanceTitleAux(newText);
 	if (infographics != NULL) {
-		infographics->partLabelChanged(this, oldText, newText, QSizeF(), QSizeF());
+		infographics->partLabelChanged(this, oldText, newText, QSizeF(), QSizeF(), false);
 	}
 }
 

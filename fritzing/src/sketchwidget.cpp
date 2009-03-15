@@ -881,11 +881,10 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	foreach (ItemBase * itemBase, deletedItems) {
 		Note * note = dynamic_cast<Note *>(itemBase);
 		if (note != NULL) {
-			new ChangeLabelTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), parentCommand);
+			new ChangeLabelTextCommand(this, note->id(), note->text(), note->text(), QSizeF(), QSizeF(), false, parentCommand);
 		}
-		else {
-			new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), parentCommand);
-		}
+
+		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, parentCommand);
 	}
 
 
@@ -3472,7 +3471,7 @@ void SketchWidget::sketchWidget_cleanUpWires(CleanUpWiresCommand * command) {
 	updateRatsnestStatus(command, NULL);
 }
 
-void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize) {
+void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize, bool isLabel) {
 	// partLabelChanged triggered from inline editing the label
 
 	if (!m_current) {
@@ -3480,21 +3479,19 @@ void SketchWidget::partLabelChanged(ItemBase * pitem,const QString & oldText, co
 		return;
 	}
 
-
-
 	if (currentlyInfoviewed(pitem))  {
 		// TODO: just change the affected item in the info view
 		InfoGraphicsView::viewItemInfo(pitem);
 	}
 
-	partLabelChangedAux(pitem, oldText, newText, oldSize, newSize);
+	partLabelChangedAux(pitem, oldText, newText, oldSize, newSize, isLabel);
 }
 
-void SketchWidget::partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize)
+void SketchWidget::partLabelChangedAux(ItemBase * pitem,const QString & oldText, const QString &newText, QSizeF oldSize, QSizeF newSize, bool isLabel)
 {
 	if (pitem == NULL) return;
 
-	ChangeLabelTextCommand * command = new ChangeLabelTextCommand(this, pitem->id(), oldText, newText, oldSize, newSize, NULL);
+	ChangeLabelTextCommand * command = new ChangeLabelTextCommand(this, pitem->id(), oldText, newText, oldSize, newSize, isLabel, NULL);
 	command->setText(tr("Change %1 label to '%2'").arg(pitem->title()).arg(newText));
 	m_undoStack->push(command);
 }
@@ -4297,13 +4294,16 @@ const QString & SketchWidget::viewName() {
 	return m_viewName;
 }
 
-void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool isUndoable) {
+void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool isLabel, bool isUndoable) {
+	// isUndoable is true when setInstanceTitle is called from the infoview (via javascript)
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase != NULL) {
-		Note * note = dynamic_cast<Note *>(itemBase);
-		if (note != NULL) {
-			note->setText(newText);
-			return;
+		if (!isLabel) {
+			Note * note = dynamic_cast<Note *>(itemBase);
+			if (note != NULL) {
+				note->setText(newText);
+				return;
+			}
 		}
 
 		QString oldText = itemBase->instanceTitle();
@@ -4313,7 +4313,7 @@ void SketchWidget::setInstanceTitle(long itemID, const QString & newText, bool i
 			InfoGraphicsView::viewItemInfo(itemBase);
 		}
 		if (isUndoable) {
-			partLabelChangedAux(itemBase, oldText, newText, QSizeF(), QSizeF());
+			partLabelChangedAux(itemBase, oldText, newText, QSizeF(), QSizeF(), isLabel);
 		}
 	}
 }

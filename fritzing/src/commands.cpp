@@ -860,7 +860,7 @@ QString MoveLabelCommand::getParamString() const {
 
 ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget, long id, 
 											   const QString & oldText, const QString & newText, 
-											   QSizeF oldSize, QSizeF newSize, QUndoCommand *parent)
+											   QSizeF oldSize, QSizeF newSize, bool isLabel, QUndoCommand *parent)
 	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
 {
     m_itemID = id;
@@ -869,10 +869,11 @@ ChangeLabelTextCommand::ChangeLabelTextCommand(class SketchWidget *sketchWidget,
 	m_oldSize = oldSize;
 	m_newSize = newSize;
 	m_firstTime = true;
+	m_isLabel = isLabel;
 }
 
 void ChangeLabelTextCommand::undo() {
-    m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, false);
+	m_sketchWidget->setInstanceTitle(m_itemID, m_oldText, m_isLabel, false);
 	if (m_oldSize != m_newSize) {
 		m_sketchWidget->resizeNote(m_itemID, m_oldSize);
 	}
@@ -884,7 +885,7 @@ void ChangeLabelTextCommand::redo() {
 		return;
 	}
 
-    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, false);
+    m_sketchWidget->setInstanceTitle(m_itemID, m_newText, m_isLabel, false);
 	if (m_oldSize != m_newSize) {
 		m_sketchWidget->resizeNote(m_itemID, m_newSize);
 	}
@@ -908,6 +909,10 @@ bool ChangeLabelTextCommand::mergeWith(const QUndoCommand *other)
 
 	if (sother->m_itemID != m_itemID) {
 		// this is not the same label so don't merge
+		return false;
+	}
+
+	if (m_isLabel != sother->m_isLabel) {
 		return false;
 	}
 
