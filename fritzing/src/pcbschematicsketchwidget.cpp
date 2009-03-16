@@ -309,7 +309,7 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, NULL);		
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 	if (!select) {

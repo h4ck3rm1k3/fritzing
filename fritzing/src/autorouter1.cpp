@@ -590,7 +590,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, -1, NULL);
+												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (jumper == NULL) {
 		// we're in trouble
 		return;
@@ -650,7 +650,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, -1, NULL);
+												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
 		return false;
@@ -1246,7 +1246,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 	viewGeometry.setAutoroutable(true);
 
 	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
-											BaseCommand::SingleView, viewGeometry, newID, -1, NULL);
+											BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
 		return NULL;

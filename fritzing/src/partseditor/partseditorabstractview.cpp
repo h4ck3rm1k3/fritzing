@@ -62,7 +62,7 @@ void PartsEditorAbstractView::addItemInPartsEditor(ModelPart * modelPart, SvgAnd
 	clearScene();
 
 	m_item = newPartsEditorPaletteItem(modelPart, svgFilePath);
-	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, m_item);
+	this->addItem(modelPart, BaseCommand::CrossView, m_item->getViewGeometry(), m_item->id(), -1, -1, NULL, m_item);
 
 	fitCenterAndDeselect();
 }

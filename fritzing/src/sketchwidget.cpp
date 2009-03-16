@@ -185,7 +185,7 @@ void SketchWidget::setUndoStack(WaitPushUndoStack * undoStack) {
 ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& viewGeometry){
 	// assumes modelPart has already been added to the sketch
 	// or you're in big trouble when you delete the item
-	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), NULL, true);
+	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true);
 }
 
 void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
@@ -220,10 +220,10 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 
 		QDomElement labelGeometry = view.firstChildElement("titleGeometry");
 
+		// use a function of the model index to ensure the same parts have the same ID across views
 		long newID = ItemBase::getNextID(mp->modelIndex());
 		if (parentCommand == NULL) {
-			// use a function of the model index to ensure the same parts have the same ID across views
-			ItemBase * item = addItemAux(mp, viewGeometry, newID, NULL, true);
+			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true);
 			if (item != NULL) {
 				PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
 
@@ -465,16 +465,10 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 
 	ItemBase * itemBase = NULL;
 	ModelPart * modelPart = m_paletteModel->retrieveModelPart(moduleID);
-	if (modelPart->itemType() == ModelPart::Module) {
-		QList<ModelPart *>  modelParts; 
-		makeModule(modelPart, originalModelIndex, modelParts, crossViewType == BaseCommand::CrossView, true, viewGeometry, id, originatingCommand);
-		return NULL;
-	}
-
 	if (modelPart != NULL) {
 		QApplication::setOverrideCursor(Qt::WaitCursor);
 		statusMessage(tr("loading part"));
-		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, NULL);
+		itemBase = addItem(modelPart, crossViewType, viewGeometry, id, modelIndex, originalModelIndex, originatingCommand, NULL);
 		if (itemBase != NULL && originalModelIndex > 0) {
 			itemBase->modelPart()->setOriginalModelIndex(originalModelIndex);
 			// DebugDialog::debug(QString("additem original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
@@ -487,19 +481,14 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	return itemBase;
 }
 
-void SketchWidget::makeModule(ModelPart * refModelPart, long originalModelIndex, QList<ModelPart *> & modelParts, bool doEmit, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand)
+ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand)
 {
-	ModelPart * modelPart = m_sketchModel->findModelPart(refModelPart->moduleID(), id);
-	if (modelPart == NULL) {
-		// todo: needs to be added to parent not root
-		modelPart = m_sketchModel->addModelPart(m_sketchModel->root(), refModelPart);
-		modelPart->setModelIndexFromMultiplied(id);
-		if (originalModelIndex > 0) {
-			modelPart->setOriginalModelIndex(originalModelIndex);
-			// DebugDialog::debug(QString("group original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
-		}
+	modelPart->setModelIndexFromMultiplied(id);
+	if (originalModelIndex > 0) {
+		modelPart->setOriginalModelIndex(originalModelIndex);
+		// DebugDialog::debug(QString("group original model index %1 %2").arg(originalModelIndex).arg((long) modelPart, 0, 16));
 	}
-	else if (modelParts.count() <= 0) {
+	if (modelParts.count() <= 0) {
 		foreach (QObject * object, modelPart->children()) {
 			ModelPart * cmp = dynamic_cast<ModelPart *>(object);
 			if (cmp != NULL) {
@@ -526,7 +515,7 @@ void SketchWidget::makeModule(ModelPart * refModelPart, long originalModelIndex,
 	if (!gotOne) {
 		if (modelParts.count() <= 0) {
 			if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts)) {
-				return;
+				return NULL;
 			}
 			// TODO: if this is a module inside a module, set its parent
 
@@ -545,24 +534,18 @@ void SketchWidget::makeModule(ModelPart * refModelPart, long originalModelIndex,
 			groupCommand->addItemID(addItemCommand->itemID());
 		}
 
-		originatingCommand->addSubCommand(parentCommand);
+		if (originatingCommand) {
+			originatingCommand->addSubCommand(parentCommand);
+		}
 		if (doRedo) {
 			parentCommand->redo();				// trigger  module creation
 		}
 	}
-
-	AddItemCommand * addItemCommand = dynamic_cast<AddItemCommand *>(originatingCommand);
-	if (addItemCommand) {
-		if (addItemCommand->isModule()) {
-		// module within a module, don't send an emit signal, since we're already operating from some top level command that's been (or will be) emitted
-		}
-		else if (doEmit) {
-			emit makeModuleSignal(modelPart, originalModelIndex, modelParts, false, doRedo, viewGeometry, id, originatingCommand);
-		}
-	}
+	
+	return modelPart->viewItem(scene());
 }
 
-ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, PaletteItem* partsEditorPaletteItem) {
+ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem) {
 
 	ModelPart * mp = NULL;
 	if (modelIndex >= 0) {
@@ -577,7 +560,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 	}
 	if (modelPart == NULL) return NULL;
 
-	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, partsEditorPaletteItem, true);
+	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, originalModelIndex, originatingCommand, partsEditorPaletteItem, true);
 	if (crossViewType == BaseCommand::CrossView) {
 		emit itemAddedSignal(modelPart, viewGeometry, id);
 	}
@@ -585,7 +568,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 	return newItem;
 }
 
-ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, PaletteItem* partsEditorPaletteItem, bool doConnectors )
+ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem, bool doConnectors )
 {
 	Q_UNUSED(partsEditorPaletteItem);
 
@@ -594,6 +577,13 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 	}
 
 	switch (modelPart->itemType()) {
+		case ModelPart::Module:
+			if (doConnectors || originatingCommand || originalModelIndex > 0) 
+			{
+				QList<ModelPart *>  modelParts; 
+				return makeModule(modelPart, originalModelIndex, modelParts, true, viewGeometry, id, originatingCommand);
+			}
+			break;					// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
 		case ModelPart::Wire:
 		{
 			bool virtualWire = viewGeometry.getVirtual();
@@ -651,14 +641,14 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			return note;
 		}
 		default:
-		{
-    		PaletteItem* paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
-			DebugDialog::debug(QString("adding part %1 %2 %3").arg(id).arg(paletteItem->title()).arg(m_viewIdentifier) );
-    		ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors);
-			setNewPartVisible(itemBase);
-			return itemBase;
-		}
+			break;
 	}
+
+	PaletteItem* paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+	DebugDialog::debug(QString("adding part %1 %2 %3").arg(id).arg(paletteItem->title()).arg(m_viewIdentifier) );
+	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors);
+	setNewPartVisible(itemBase);
+	return itemBase;
 }
 
 
@@ -1003,7 +993,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 	}
 
 	if (addItNow) {
-		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, NULL, true);
+		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, -1, NULL, NULL, true);
 		if (newItemBase) {
 			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
@@ -1273,7 +1263,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 				break;
 		}
 
-		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, NULL, doConnectors);
+		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors);
 
 		ItemDrag::_cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -1810,7 +1800,7 @@ void SketchWidget::setSketchModel(SketchModel * sketchModel) {
 }
 
 void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id) {
-	addItemAux(modelPart, viewGeometry, id, NULL, true);
+	addItemAux(modelPart, viewGeometry, id, -1, NULL, NULL, true);
 }
 
 void SketchWidget::sketchWidget_itemDeleted(long id) {
@@ -2633,7 +2623,7 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 
 	// create a temporary wire for the user to drag
 	m_connectorDragConnector = connectorItem;
-	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), NULL, true));
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wireModel, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true));
 	DebugDialog::debug("creating connector drag wire");
 	if (m_connectorDragWire == NULL) {
 		clearDragWireTempCommand();
@@ -2650,7 +2640,6 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 		m_connectorDragWire->setColorString(m_lastColorSelected, m_connectorDragWire->opacity());
 	}
 }
-
 
 void SketchWidget::rotateX(qreal degrees) {
 	rotateFlip(degrees, 0);
