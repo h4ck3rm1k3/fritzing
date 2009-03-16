@@ -152,7 +152,7 @@ QDomElement SVG2gerber::circle2path(QDomElement circleElement){
 //      -1,0.552  -0.552,1  0,1z"  // 4th
 
     //translate radius from center
-    QString pathStr = 'm ' + QString::number(cx) + "," + QString::number(cy + r) + " ";
+    QString pathStr = "m " + QString::number(cx) + "," + QString::number(cy + r) + " ";
 
     //1st quarter
     pathStr += "C " + QString::number(cx + k) + "," + QString::number(cy + r) + " ";
