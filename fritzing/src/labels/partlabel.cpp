@@ -111,6 +111,7 @@ PartLabel::PartLabel(ItemBase * owner, const QString & text, QGraphicsItem * par
 	: QGraphicsTextItem(text, parent)
 {
 	m_owner = owner;
+	m_spaceBarWasPressed = false;
 
 	PartLabelTextDocument * doc = PartLabelTextDocument::AllTextDocuments.value(owner->id());
 	if (doc == NULL) {

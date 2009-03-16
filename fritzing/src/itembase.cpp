@@ -117,6 +117,8 @@ ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifie
 	: GraphicsSvgLineItem()
 {
 	//DebugDialog::debug(QString("itembase %1").arg(QString::number((long) static_cast<QGraphicsItem *>(this), 0, 16)));
+	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
+	
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;

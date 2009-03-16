@@ -49,6 +49,7 @@ QBrush ConnectorItem::chosenBrush(QColor(255,0,0));
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
+	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_chosen = false;
 	m_ignoreAncestorFlag = false;
 	m_dirty = false;
