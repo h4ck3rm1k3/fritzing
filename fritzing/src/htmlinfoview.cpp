@@ -44,7 +44,10 @@ QString HtmlInfoView::PropsBlockId = "props_id";
 QString HtmlInfoView::TagsBlockId = "tags_id";
 QString HtmlInfoView::ConnsBlockId = "conns_id";
 
-static QRegExp NumberMatcher("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp�]))?");
+static const ushort MicroSymbolCode = 181;
+static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode);
+
+static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
 static QHash<QString, qreal> NumberMatcherValues;
 
 
@@ -547,7 +550,7 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 			else if (unit.contains('p')) {
 				n *= 0.000000000001;
 			}
-			else if (unit.contains('�')) {
+			else if (unit.contains(MicroSymbol)) {
 				n *= 0.000001;
 			}
 			NumberMatcherValues.insert(opt, n);
