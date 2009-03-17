@@ -6,7 +6,6 @@ Pygments==1.0
 python-dateutil==1.4.1
 docutils==0.5
 flup==1.0.1
-ipython==0.9.1
 markdown==1.7
 simplejson
 textile==2.0.11

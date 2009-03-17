@@ -3,7 +3,7 @@
 django-dbtemplates==0.5.5
 django-templatesadmin==0.5.5
 django-reversion==1.1
-#django-page-cms==0.2.3
+django-page-cms==0.2.4
 django-ajax-validation
 django-announcements==0.1.0
 django-avatar==1.0.1
@@ -12,7 +12,7 @@ django-notification==0.1.2
 django-pagination==1.0.5
 django-robots==0.6.0
 django-messages==0.4.0
-http://django-photologue.googlecode.com/files/photologue-2.1.zip
+django-photologue==2.2
 django-wikiapp==0.1.2
 South
 
@@ -24,7 +24,7 @@ South
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django-debug-toolbar
 -e git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
 -e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
--e svn+http://django-page-cms.googlecode.com/svn/trunk@289#egg=django-page-cms
+#-e svn+http://django-page-cms.googlecode.com/svn/trunk@289#egg=django-page-cms
 -e svn+http://django-bookmarks.googlecode.com/svn/trunk#egg=django-bookmarks
 -e svn+http://django-email-confirmation.googlecode.com/svn/trunk#egg=django-email-confirmation
 -e svn+http://django-flag.googlecode.com/svn/trunk#egg=django-flag
