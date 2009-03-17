@@ -38,14 +38,16 @@ $Date$
 //  ratsnest behavior: what if module contains separated parts?
 //  autorouting behavior
 //	export with groups
-//	recursive groups
+//	** recursive groups
 //		recursive modelpart ownership
 //	open in new sketch (edit)
 //	** copy/paste
+//  ** undo copy/paste
 //	undo group
 //	** delete
-//	** undo delete
+//	undo delete
 //	rotate group bug: connected external wires don't updateConnections
+//  ** bug: not connecting across views
 
 //	** do model parts for grouped items get added as children to the group modelpart?
 //  ** save sketch with group(s)

@@ -75,7 +75,7 @@ void PartsEditorAbstractView::loadFromModel(PaletteModel *paletteModel, ModelPar
 	fitCenterAndDeselect();
 }
 
-ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, PaletteItem * paletteItemAux, bool doConnectors) {
+ItemBase * PartsEditorAbstractView::addItemAux(ModelPart * modelPart, const ViewGeometry & /*viewGeometry*/, long /*id*/, long /*originalModelIndex*/, AddDeleteItemCommand * /*originatingCommand*/, PaletteItem * paletteItemAux, bool doConnectors) {
 	if(paletteItemAux == NULL) {
 		paletteItemAux = newPartsEditorPaletteItem(modelPart);
 	}

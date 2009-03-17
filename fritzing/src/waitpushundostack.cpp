@@ -53,7 +53,7 @@ WaitPushUndoStack::WaitPushUndoStack(QObject * parent) :
 {
 #ifndef QT_NO_DEBUG
 	QString path = QCoreApplication::applicationDirPath();
-    path += "/undoStack.txt";
+    path += "/../undoStack.txt";
 
 	m_file.setFileName(path);
 	m_file.remove();

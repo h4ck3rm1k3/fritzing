@@ -59,7 +59,7 @@ class PartsEditorAbstractView : public SketchWidget {
 
 		void wheelEvent(QWheelEvent* event);
 
-		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, PaletteItem* paletteItem, bool doConnectors);
+		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* paletteItem, bool doConnectors);
 
 		ModelPart *createFakeModelPart(SvgAndPartFilePath *svgpath);
 		ModelPart *createFakeModelPart(const QHash<QString,StringPair*> &connIds, const QStringList &layers, const QString &svgFilePath);

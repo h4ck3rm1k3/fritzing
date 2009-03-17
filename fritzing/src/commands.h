@@ -100,8 +100,6 @@ public:
     void undo();
     void redo();
 	void turnOffFirstRedo();
-	bool isModule();
-	void setModule(bool);
 
 protected:
 	QString getParamString() const;
@@ -120,9 +118,11 @@ public:
     DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent);
     void undo();
     void redo();
+	void setTiny(struct ModelPartTiny *);
 
 protected:
 	QString getParamString() const;
+	struct ModelPartTiny * m_modelPartTiny;
 
 };
 

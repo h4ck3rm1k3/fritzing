@@ -88,3 +88,33 @@ bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<Mo
 
 	return ModelBase::paste(refModel, itemData, modelParts);
 }
+
+void SketchModel::walk(ModelPart * modelPart, int indent) 
+{
+	DebugDialog::debug(QString("%1 %2 %3 %4 %5 %6")
+		.arg(indent)
+		.arg(QString(indent * 4, ' '))
+		.arg(modelPart->modelIndex())
+		.arg(modelPart->originalModelIndex())
+		.arg(modelPart->moduleID())
+		.arg(modelPart->modelPartShared()->title()) );
+
+	foreach (QObject * child, modelPart->children()) {
+		walk(dynamic_cast<ModelPart *>(child), indent + 1);
+	}
+}
+
+ModelPartTiny * SketchModel::makeTiny(ModelPart * modelPart) {
+	ModelPartTiny * modelPartTiny = new ModelPartTiny();
+	modelPartTiny->m_index = modelPart->modelIndex();
+	modelPartTiny->m_originalIndex = modelPart->originalModelIndex();
+	foreach (QObject * child, modelPart->children()) {
+		ModelPart * mp = dynamic_cast<ModelPart *>(child);
+		if (mp == NULL) continue;
+
+		ModelPartTiny * mpt = makeTiny(mp);
+		modelPartTiny->m_children.append(mpt);
+	}
+
+	return modelPartTiny;
+}

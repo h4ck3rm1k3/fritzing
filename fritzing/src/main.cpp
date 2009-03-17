@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
 #ifdef Q_WS_WIN
 #ifndef QT_NO_DEBUG
 	HANDLE hLogFile;
-	hLogFile = CreateFile(L"c:\\fritzing2\\fritzing_leak_log.txt", GENERIC_WRITE, 
+	hLogFile = CreateFile(L"fritzing_leak_log.txt", GENERIC_WRITE, 
 		  FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, 
 		  FILE_ATTRIBUTE_NORMAL, NULL);
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);

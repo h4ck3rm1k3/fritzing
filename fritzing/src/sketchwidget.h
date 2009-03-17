@@ -170,7 +170,6 @@ public:
 	virtual bool canCopyItem(QGraphicsItem * item);
 	const QString & viewName();
 	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
-	BaseCommand * makeDeleteItemCommandRecurse(AddDeleteItemCommand * parentCommand, ItemBase *, ConnectorPairHash & all, ConnectorPairHash & remaining);
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
@@ -205,6 +204,7 @@ public:
 	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize);
 	void setConnectorExternal(long itemID, const QString & connectorID, bool external);
 	bool spaceBarIsPressed();
+	void restoreTiny(ItemBase *, ModelPartTiny *);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -307,6 +307,8 @@ protected:
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
+	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
+	ItemBase * makeModuleAux(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 protected:
 	static bool lessThan(int a, int b);
@@ -372,7 +374,6 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void ensureFixedItemsPositions();
-	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
 
 public slots:
 	void swapSelected(const QString &moduleId, bool exactMatch=true);
@@ -448,6 +449,8 @@ protected:
 	ConnectorPairHash m_moveDisconnectedFromFemale;
 	bool m_spaceBarIsPressed;
 	bool m_spaceBarWasPressed;
+
+	QList<ModelPart *> m_moduleModelPartStack;
 
 protected:
 	QString m_viewName;

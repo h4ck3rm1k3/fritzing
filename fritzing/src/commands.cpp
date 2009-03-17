@@ -178,14 +178,6 @@ void AddItemCommand::turnOffFirstRedo() {
 	m_doFirstRedo = false;
 }
 
-bool AddItemCommand::isModule() {
-	return m_module;
-}
-
-void AddItemCommand::setModule(bool module) {
-	m_module = module;
-}
-
 QString AddItemCommand::getParamString() const {
 	return "AddItemCommand " + AddDeleteItemCommand::getParamString();
 }
@@ -195,11 +187,15 @@ QString AddItemCommand::getParamString() const {
 DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent)
     : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, modelIndex, originalModelIndex, parent)
 {
+	m_modelPartTiny = NULL;
 }
 
 void DeleteItemCommand::undo()
 {
-    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, m_originalModelIndex, this);
+    ItemBase * itemBase = m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, m_originalModelIndex, this);
+	if (m_modelPartTiny) {
+		m_sketchWidget->restoreTiny(itemBase, m_modelPartTiny);
+	}
 }
 
 void DeleteItemCommand::redo()
@@ -209,6 +205,10 @@ void DeleteItemCommand::redo()
 
 QString DeleteItemCommand::getParamString() const {
 	return "DeleteItemCommand " + AddDeleteItemCommand::getParamString();
+}
+
+void DeleteItemCommand::setTiny(ModelPartTiny * tiny) {
+	m_modelPartTiny = tiny;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

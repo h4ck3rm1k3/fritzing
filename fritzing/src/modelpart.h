@@ -149,10 +149,14 @@ protected:
 
 	static QHash<ItemType, QString> itemTypeNames;
 	static long m_nextIndex;
-
-
 };
 
 Q_DECLARE_METATYPE( ModelPart * );			// so we can stash them in a QVariant
+
+struct ModelPartTiny {
+	long m_index;
+	long m_originalIndex;
+	QList<ModelPartTiny *> m_children;
+};
 
 #endif

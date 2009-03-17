@@ -68,7 +68,7 @@ DebugDialog::DebugDialog(QWidget *parent)
 	m_textEdit->setGeometry(QRect(10, 10, 381, 281));
 
     QString path = QCoreApplication::applicationDirPath();
-    path += "/debug.txt";
+    path += "/../debug.txt";
 
 	m_file.setFileName(path);
 	m_file.remove();
