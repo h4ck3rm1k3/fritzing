@@ -3,12 +3,12 @@ Fabric
 Jinja==1.2
 PyYAML==3.06
 Pygments==1.0
-dateutil==1.1
+python-dateutil==1.4.1
 docutils==0.5
 flup==1.0.1
 ipython==0.9.1
 markdown==1.7
-simplejson==2.0.1
+simplejson
 textile==2.0.11
 yolk==0.4.1
 python-memcached
