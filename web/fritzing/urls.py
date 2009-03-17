@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     (r'^forum/', include('forum.urls')),
     (r'^faq/', include('faq.urls')),
     (r'^download/', include('downloads.urls')),
+    (r'^news/', include('ticker.urls')),
+    (r'^comments/', include('threadedcomments.urls')),
     (r'^admin/(.*)', admin.site.root),
     url(r'^faq/$', 'faq.views.faq_list', name='faq_list'),
     url(r'^faq/(?P<slug>[\w]+)/$', 'faq.views.question_detail', name='faq_detail'),
@@ -27,8 +29,6 @@ urlpatterns = patterns('',
 )
 
 if settings.SERVE_MEDIA:
-    urlpatterns += patterns('django.views.static',
-        (r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], 'serve', {
-            'document_root': settings.MEDIA_ROOT,
-        }),
+    urlpatterns += patterns('', 
+        (r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], 'misc.views.serve')
     )

@@ -3,8 +3,13 @@
 
 import os
 
-PINAX_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../pinax/"))
+PINAX_ROOT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../pinax/"))
+PINAX_ROOT = os.path.expanduser('~/pinax-env/src/pinax')
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+
+# tells Pinax to use the default theme
+PINAX_THEME = 'default'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -86,6 +91,7 @@ ROOT_URLCONF = 'fritzing.urls'
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, "../apps/debug_toolbar/templates"),
     os.path.join(PROJECT_ROOT, "templates"),
+    os.path.join(PINAX_ROOT, "templates", PINAX_THEME),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -141,8 +147,10 @@ INSTALLED_APPS = (
     'treemenus',
     'robots',
     'contact_form',
+    'ticker',
 
     # internal (for now)
+    'dregni',
     'basic_profiles',
     'faq',
     'account',
@@ -205,6 +213,8 @@ PAGE_TEMPLATES = (
 )
 
 PAGE_PERMISSION = False
+PAGE_TAGGING = True
+PAGE_USE_SITE_ID = True
 REQUIRE_LOGIN_PATH = LOGIN_REDIRECT_URL
 
 FIXTURE_DIRS = (
