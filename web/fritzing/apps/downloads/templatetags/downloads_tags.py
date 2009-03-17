@@ -18,4 +18,4 @@ def release_history():
     """Show a list of the active releases for a platform
     """
     releases = Release.objects.main()
-    return {'releases': releases[1:HISTORY_LEN]}
+    return {'releases': releases[0:HISTORY_LEN]}

@@ -1,6 +1,6 @@
 {% extends "downloads_base.html" %}
 {% load downloads_tags %}
-
+{% load generic_content %}
 {% block content %}
 <h1>Download</h1>
 <p class="documentDescription">
@@ -13,9 +13,9 @@ it, it is not yet near the intended final version.
 </div>
 <img src="/media/uploads/download_screenshot_jpg_versions/small_download_screenshot.jpg" />
 <p class="latest_release">
-<h2>Latest version</h2>
+{% get_latest_object downloads.release as latest_release %}
 {% if latest_release %}
-    <h3><a href="{{ latest_release.get_absolute_url }}">{{ latest_release.version }}</a> | {{ latest_release.release_date|date }}</h3>
+    <h3>Latest release: <a href="{{ latest_release.get_absolute_url }}">{{ latest_release.version }}</a> | {{ latest_release.release_date|date }}</h3>
     {% for download in latest_release.download_set.all reversed %}
     <img src="{{ MEDIA_URL }}fritzing/img/arrow-down.gif" alt="Arrow down" />
         <strong><a href="{{  download.get_absolute_url }}" 
@@ -24,31 +24,10 @@ it, it is not yet near the intended final version.
     {% endfor %}
 {% endif %}
 </p>
-{% if interim_releases %}
-<div class="interim_releases">
-    <p>
-        Interim releases since the latest version:
-    </p>
-    {% for release in interim_releases %}
-    {% if release.download_set.count %}
-    <div class="interim_release">
-        <a href="{{ release.get_absolute_url }}">{{ release.version }}</a>
-        released {{ release.release_date|timesince }} ago:
-        {% for download in release.download_set.all reversed %}
-        <a href="{{  download.get_absolute_url }}" 
-            title="{{ download.counter }} downloads">{{ download.platform }}</a>
-        {% endfor %}
-    </div>
-    {% endif %}
-    
-    {% endfor %}
-</div>
-{% endif %}
 <br style="clear:both;">
-
 <p>See the&#160;<a href="/download/history-changes/" title="History of Changes">History of Changes</a>&nbsp;and the currently&nbsp;<a href="/download/known-issues/" title="Known Issues">Known Issues</a></p>
 
-<p><strong>NOTE</strong>&nbsp;This is a preview release of the completely new Fritzing 0.1 - we don't make any guarantees yet that file formats are final. If you've created a sketch with an earlier release, it might not work with the newest. For a limited time, send us your file and we might port your sketch over to the new release.</p>
+<p><strong>NOTE</strong>&nbsp;This is a preview release of the completely new Fritzing - we don't make any guarantees yet that file formats are final. If you've created a sketch with an earlier release, it might not work with the newest. For a limited time, send us your file and we might port your sketch over to the new release.</p>
 
 <h2>Installing Fritzing</h2>
 
@@ -58,7 +37,7 @@ it, it is not yet near the intended final version.
     <li><p>Choose a link above to start downloading the Fritzing package that's right for you.</p>
     </li>
     <li><p>Unzip your Fritzing folder somewhere convenient on your 	hard drive. <br />
-    <span class="discreet">This may also be a good time for you to create a 	shortcut to the Fritzing application. (A free unzipping program can be found <span class="link-external"><span class="link-external"><a href="http://www.rarlab.com/download.htm">here</a></span></span>, should you need it.)</span></p></li>
+    <span class="discreet">This may also be a good time for you to create a shortcut to the Fritzing application. (A free unzipping program can be found <span class="link-external"><span class="link-external"><a href="http://www.rarlab.com/download.htm">here</a></span></span>, should you need it.)</span></p></li>
     <li><p>Double click on the Fritzing application, to start Fritzing.</p></li>
 </ol>
 
