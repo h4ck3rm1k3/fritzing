@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.redirects',
     'django.contrib.admin',
+    'django.contrib.comments',
 
     # external
     'django_extensions',
@@ -140,7 +141,6 @@ INSTALLED_APPS = (
     'filebrowser',
     'emailthis',
     'forum',
-    'threadedcomments',
     'treemenus',
     'robots',
     'contact_form',
