@@ -2836,7 +2836,29 @@ dl.portlet dd {
 
 }
 
-
 table.listing tbody tr.odd {
 	background: #f9f9f9;
+}
+
+#region-content ol.comments {
+    margin: 0px 0px 0px -10px;
+    padding: 0px;
+}
+
+.content ol.comments li {
+    list-style: none;
+    margin: 0px;
+    padding: 10px;
+}
+
+.content ol.comments li.odd {
+    background-color: #f9f9f9
+}
+
+.content ol.comments span.date {
+    color: #999;
+}
+
+#id_honeypot {
+    display:none;
 }
