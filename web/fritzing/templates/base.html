@@ -1,4 +1,4 @@
-{% load i18n pages_tags %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+{% load i18n pages_tags cache generic_content %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -28,7 +28,9 @@
         <div id="visual-portal-wrapper">
             <div id="portal-top">
                 <div id="portal-header">
-                    <a id="portal-logo" accesskey="1" href="/" name="portal-logo"><img src="{{ MEDIA_URL }}fritzing/img/logo.gif" alt="" title="" height="29" width="289" /></a>
+                    <a id="portal-logo" accesskey="1" href="/" name="portal-logo">
+                        <img src="{{ MEDIA_URL }}fritzing/img/logo.gif" alt="" title="" height="29" width="289" />
+                    </a>
                     <div id="portal-personaltools-wrapper">
                         {% block login %}{% endblock %}
                     </div>
@@ -46,17 +48,21 @@
                     </ul>
                 </div>
             {% endif %}
+            <div class="visualClear" id="clear-space-before-wrapper-table"><!-- --></div>
             <div id="portal-columns">
                 <div id="portal-column-one">
                     <div class="visualPadding">
-                    <dl class="portlet portletNavigationTree">
-                        <dd class="portletItem">
-                            <ul class="navTree navTreeLevel0">
-                                {% block subnav %}{% endblock subnav %}
-                            </ul>
-                        </dd>
-                    </dl>
+                        <div class="portletWrapper">
+                            <dl class="portlet portletNavigationTree">
+                                <dd class="portletItem">
+                                    <ul class="navTree navTreeLevel0">
+                                        {% block subnav %}{% endblock subnav %}
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </div>
                     </div>
+                </div>
                 <div id="portal-column-content">
                     <div class="">
                         <div id="region-content" class="documentContent">
@@ -112,8 +118,53 @@
                     </div>
                 </div>
                 {% block sidebar %}
+                <div id="portal-column-two">
+                    <div class="visualPadding">
+                        {% cache 600 sidebar_forum %}
+                        {% get_latest_objects ticker.entry 5 as latest_news %}
+                        {% if latest_news %}
+                        <div class="portletWrapper">
+                            <dl class="portlet portletNews">
+                                <dt class="portletHeader">
+                                    <a href="/news/" class="tile">News</a>
+                                </dt>
+                                {% for news in latest_news %}
+                                <dd class="portletItem {% cycle 'odd' 'even' %}">
+                                    <a href="{{ latest_news.get_absolute_url }}" class="tile" title="{{ news.title }}">{{ news.title }} <span class="portletItemDetails">{{ news.created|date:"N d, Y" }}</span></a>
+                                </dd>
+                                {% endfor %}
+                                <dd class="portletFooter">
+                                    <a href="/news/">More news…</a>
+                                </dd>
+                            </dl>
+                        </div>
+                        {% endif %}
+                        {% endcache %}
+                        {% cache 600 sidebar_forum %}
+                        {% get_latest_objects forum.post 10 as latest_forum_posts %}
+                        <div class="portletWrapper">
+                            <dl class="portlet portletPloneboardRecent">
+                                <dt class="portletHeader">
+                                    <a href="/forum/" class="tile">Recent discussions</a>
+                                </dt>
+                                {% for post in latest_forum_posts %}
+                                <dd class="portletItem">
+                                    <div class="contenttype-ploneboardconversation">
+                                        <a href="{{ post.get_feed_url }}" class="state-active tile" title="{{ post.thread.title }}">{{ post.thread.title }}</a> <a class="portletItemDetails" href="{{ post.thread.forum.get_absolute_url }}">{{ post.thread.forum.title }}</a>
+                                    </div>
+                                </dd>
+                                {% endfor %}
+                                <dd class="portletFooter">
+                                    <a class="title" href="/forum/">More…</a>
+                                </dd>
+                            </dl>
+                        </div>&nbsp;
+                        {% endcache %}
+                    </div>
+                </div>
                 {% endblock sidebar %}
             </div>
+            <div class="visualClear" id="clear-space-before-footer"><!-- --></div>
             <div id="portal-footer">
                 <a href="/contact/">Contact</a> \ <a href="http://design.fh-potsdam.de/forschung/interaction-design-lab.html">An initiative of the Interaction Design Lab Potsdam</a>
             </div>

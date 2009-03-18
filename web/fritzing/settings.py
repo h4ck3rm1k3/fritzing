@@ -80,8 +80,6 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-#    'tools.middleware.RequireLoginMiddleware',
-    'pages.middleware.CurrentSiteMiddleware',
     'tools.middleware.UserBasedExceptionMiddleware',
 )
 
@@ -102,7 +100,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     
     "notification.context_processors.notification",
     "announcements.context_processors.site_wide_announcements",
-    "account.context_processors.openid",
+#    "account.context_processors.openid",
     "account.context_processors.account",
     "misc.context_processors.contact_email",
     "misc.context_processors.site_name",
@@ -219,6 +217,10 @@ REQUIRE_LOGIN_PATH = LOGIN_REDIRECT_URL
 FIXTURE_DIRS = (
     os.path.join(PROJECT_ROOT, "fixtures"),
 )
+
+GENERIC_CONTENT_LOOKUP_KWARGS = {
+    'ticker.entry': { 'status': 3 },
+}
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
