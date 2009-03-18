@@ -1,4 +1,4 @@
-{% load i18n pages_tags cache generic_content %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+{% load i18n pages_tags cache generic_content fritzing_tools %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -141,7 +141,7 @@
                         {% endif %}
                         {% endcache %}
                         {% cache 600 sidebar_forum %}
-                        {% get_latest_objects forum.post 10 as latest_forum_posts %}
+                        {% get_latest_objects_with_relatives forum.post 10 as latest_forum_posts %}
                         <div class="portletWrapper">
                             <dl class="portlet portletPloneboardRecent">
                                 <dt class="portletHeader">
