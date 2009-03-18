@@ -1,25 +1,26 @@
-{% load pages_tags cache %}
+{% load pages_tags %}
 {% if page.status %}
 <li class="navTreeItem visualNoMarker navTreeFolderish">
     <div>
-    <a href="{{ page.get_absolute_url }}" class="state-published navTreeFolderish {% if current_page %}{% ifequal page current_page.parent %}navTreeCurrentItem navTreeCurrentNode{% endifequal %}{% ifequal current_page page %}navTreeCurrentItem navTreeCurrentNode{% endifequal %}{% endif %}" title="">
-        <span>{% show_content page "title" %}</span>
-    </a></div>
-    {% if current_page and not page.level %}
-        {% cache PAGE_CONTENT_CACHE_DURATION menu page.id lang current_page.id %}
-        <ul class="navTree navTreeLevel{{ page.level|add:"1" }}">
+        <a href="{% show_absolute_url page %}" class="state-published navTreeFolderish {% if current_page %}{% ifequal page current_page.parent %}navTreeCurrentItem navTreeCurrentNode{% endifequal %}{% ifequal current_page page %}navTreeCurrentItem navTreeCurrentNode{% endifequal %}{% endif %}">
+            <span>{% show_content page "title" %}</span>
+        </a>
+    </div>
+    {% if children and not page.level %}
         {% ifequal page current_page.parent %}
-            {% for child in current_page.parent.get_children %}
+        <ul class="navTree navTreeLevel{{ page.level|add:"1" }}">
+            {% for child in current_page.parent.get_children_for_frontend %}
                 {% pages_menu child %}
             {% endfor %}
+        </ul>
         {% endifequal %}
         {% ifequal page current_page %}
+        <ul class="navTree navTreeLevel{{ page.level|add:"1" }}">
             {% for child in children %}
                 {% pages_menu child %}
             {% endfor %}
-        {% endifequal %}
         </ul>
-        {% endcache %}
+        {% endifequal %}
     {% endif %}
 </li>
 {% endif %}
