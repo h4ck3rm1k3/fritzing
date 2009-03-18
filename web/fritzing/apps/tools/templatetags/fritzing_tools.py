@@ -8,7 +8,7 @@ class RelatedContentNode(GenericContentNode):
     entities of the queryset.
     """
     def _get_query_set(self):
-        return return self.query_set.select_related()
+        return self.query_set.select_related()
 
 def do_latest_objects_with_relatives(parser, token):
     """
@@ -31,4 +31,5 @@ def do_latest_objects_with_relatives(parser, token):
         raise template.TemplateSyntaxError("third argument to '%s' tag must be 'as'" % bits[0])
     return RelatedContentNode(bits[1], bits[2], bits[4])
 
+register = template.Library()
 register.tag('get_latest_objects_with_relatives', do_latest_objects_with_relatives)
