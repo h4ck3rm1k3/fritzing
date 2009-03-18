@@ -96,15 +96,12 @@
                                 </div>
                                 <div class="documentActions">
                                     <ul>
-                                        {% if request.user.is_authenticated %}
-                                            {% if current_page %}
-                                            <li id="document-action-sendto">
-                                                <a href="/admin/pages/page/{{ current_page.pk }}/" title="">Edit</a>
-                                            </li>
-                                            {% endif %}
+                                        {% if request.user.is_authenticated and current_page %}
+                                        <li id="document-action-sendto">
+                                            <a href="/admin/pages/page/{{ current_page.pk }}/" title="">Edit</a>
+                                        </li>
                                         {% endif %}
-                                        {% block documentactions %}
-                                        {% endblock %}
+                                        {% block metalinks %}{% endblock %}
                                         <li id="document-action-print">
                                             <a href="javascript:this.print();" title="">Print this</a>
                                         </li>
@@ -120,7 +117,7 @@
                 {% block sidebar %}
                 <div id="portal-column-two">
                     <div class="visualPadding">
-                        {% cache 600 sidebar_forum %}
+                        {% cache 600 sidebar_news %}
                         {% get_latest_objects ticker.entry 5 as latest_news %}
                         {% if latest_news %}
                         <div class="portletWrapper">
@@ -130,7 +127,7 @@
                                 </dt>
                                 {% for news in latest_news %}
                                 <dd class="portletItem {% cycle 'odd' 'even' %}">
-                                    <a href="{{ latest_news.get_absolute_url }}" class="tile" title="{{ news.title }}">{{ news.title }} <span class="portletItemDetails">{{ news.created|date:"N d, Y" }}</span></a>
+                                    <a href="{{ news.get_absolute_url }}" class="tile" title="{{ news.title }}">{{ news.title }} <span class="portletItemDetails">{{ news.created|date:"N d, Y" }}</span></a>
                                 </dd>
                                 {% endfor %}
                                 <dd class="portletFooter">
