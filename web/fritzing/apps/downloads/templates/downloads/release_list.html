@@ -19,7 +19,7 @@ it, it is not yet near the intended final version.
     {% for download in latest_release.download_set.all reversed %}
     <img src="{{ MEDIA_URL }}fritzing/img/arrow-down.gif" alt="Arrow down" />
         <strong><a href="{{  download.get_absolute_url }}" 
-            title="{{ download.counter }} downloads">
+            title="{{ download.counter|add:download.updated }} downloads">
             {{ download.platform }}</a></strong>
     {% endfor %}
 {% endif %}
