@@ -1223,7 +1223,6 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
-	//menu->addAction(m_swapPartAction);
 #endif
 
     connect(

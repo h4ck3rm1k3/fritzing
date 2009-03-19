@@ -399,7 +399,6 @@ protected:
     QAction *m_createNewPart;
 	QAction *m_openInOldPartsEditorAct;
 	QAction *m_infoViewOnHoverAction;
-	QAction *m_swapPartAction;
 	// TODO PARTS EDITOR REMOVE
     QAction *m_openInPartsEditorAct;
     QAction *m_addToBinAct;

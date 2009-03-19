@@ -28,6 +28,7 @@ $Date$
 #include "debugdialog.h"
 #include "bettertriggeraction.h"
 #include "commands.h"
+#include "htmlinfoview.h"
 
 #include <QMessageBox>
 

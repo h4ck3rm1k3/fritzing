@@ -36,7 +36,6 @@ $Date$
 
 #include "itembase.h"
 #include "wire.h"
-#include "paletteitem.h"
 #include "connectoritem.h"
 #include "referencemodel/referencemodel.h"
 
@@ -79,7 +78,7 @@ protected:
 	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
 
 	void prepareTitleStuff(ItemBase *base, QString &title);
-	QString propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic);
+	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic);
 	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	QString wireColorsSelect(Wire *wire);
 	QString wireWidthSelect(Wire *wire);

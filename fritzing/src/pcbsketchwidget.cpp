@@ -32,6 +32,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "virtualwire.h"
 #include "waitpushundostack.h"
 #include "autorouter1.h"
+#include "connectoritem.h"
 
 static QColor labelTextColor = Qt::white;
 

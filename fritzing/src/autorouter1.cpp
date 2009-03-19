@@ -29,6 +29,7 @@ $Date$
 #include "debugdialog.h"
 #include "virtualwire.h"
 #include "tracewire.h"
+#include "connectoritem.h"
 
 #include <math.h>
 #include <QApplication>

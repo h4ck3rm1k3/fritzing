@@ -115,7 +115,7 @@ bool PartsEditorPaletteItem::createSvgPath(const QString &modelPartSharedPath, c
 		dir.cdUp();								// lop off the filename
 		dir.cdUp();								// parts root
 		StringPair tempPath;
-		tempPath.first = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir;
+		tempPath.first = dir.absolutePath() + "/" + ItemBase::SvgFilesDir;
 		tempPath.second = "%1/" + layerFileName;
 
 		QStringList possibleFolders;

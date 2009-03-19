@@ -28,6 +28,8 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "autorouter1.h"
 #include "debugdialog.h"
 #include "virtualwire.h"
+#include "connectoritem.h"
+
 #include <limits>
 
 static int MAX_INT = std::numeric_limits<int>::max();

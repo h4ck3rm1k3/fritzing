@@ -32,10 +32,6 @@ $Date$
 #include <QHash>
 #include <QList>
 
-#include "wire.h"
-#include "paletteitembase.h"
-#include "htmlinfoview.h"
-#include "viewlayer.h"
 #include "itembase.h"
 #include "zoomablegraphicsview.h"
 
@@ -58,8 +54,8 @@ public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 
-	void setInfoView(HtmlInfoView *);
-	HtmlInfoView * infoView();
+	void setInfoView(class HtmlInfoView *);
+	class HtmlInfoView * infoView();
 
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 
@@ -72,7 +68,7 @@ public:
 
 protected:
 	QGraphicsItem *selectedAux();
-	HtmlInfoView *m_infoView;
+	class HtmlInfoView *m_infoView;
 
 };
 

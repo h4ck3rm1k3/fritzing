@@ -545,7 +545,7 @@ void FApplication::preloadSlowParts() {
 	}
 
 	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
 	//DebugDialog::debug(QString("preload set up image"));
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;

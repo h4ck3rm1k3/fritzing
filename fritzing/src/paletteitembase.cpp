@@ -32,6 +32,8 @@ $Date$
 #include "connectorshared.h"
 #include "layerattributes.h"
 #include "layerkinpaletteitem.h"
+#include "connectoritem.h"
+#include "wire.h"
 
 #include <math.h>
 #include <QBrush>
@@ -40,8 +42,6 @@ $Date$
 #include <QDir>
 #include <QMessageBox>
 
-
-QString PaletteItemBase::SvgFilesDir = "svg";
 
 PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
 	ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
@@ -266,7 +266,7 @@ void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
 {
 	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
 	if (renderer == NULL) {
 		return false;
 	}
@@ -299,104 +299,6 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier
 
 	return true;
 }
-
-FSvgRenderer * PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
-{
-#ifndef QT_NO_DEBUG
-	QTime t;
-	t.start();
-#endif
-
-    ModelPartShared * modelPartShared = modelPart->modelPartShared();
-
-    if (modelPartShared == NULL) return NULL;
-    if (modelPartShared->domDocument() == NULL) return NULL;
-
-	bool result = layerAttributes.getSvgElementID(modelPartShared->domDocument(), viewIdentifier, viewLayerID);
-	if (!result) return NULL;
-
-	//DebugDialog::debug(QString("setting z %1 %2")
-		//.arg(this->z())
-		//.arg(ViewLayer::viewLayerNameFromID(viewLayerID))  );
-
-
-	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
-	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartShared->moduleID(), viewLayerID);
-	if (renderer == NULL) {
-		QString tempPath;
-		if(modelPartShared->path() != ___emptyString___) {
-			QDir dir(modelPartShared->path());			// is a path to a filename
-			dir.cdUp();									// lop off the filename
-			dir.cdUp();									// parts root
-			tempPath = dir.absolutePath() + "/" + PaletteItemBase::SvgFilesDir +"/%1/" + layerAttributes.filename();
-		} else { // for fake models
-			tempPath = getApplicationSubFolderPath("parts") +"/"+ PaletteItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
-		}
-
-		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));
-
-    	QStringList possibleFolders;
-    	possibleFolders << "core" << "contrib" << "user";
-		bool gotOne = false;
-		QString filename;
-		foreach (QString possibleFolder, possibleFolders) {
-			filename = tempPath.arg(possibleFolder);
-			if (QFileInfo( filename ).exists()) {
-				gotOne = true;
-				break;
-			}
-		}
-
-//#ifndef QT_NO_DEBUG
-		//DebugDialog::debug(QString("set up image elapsed (2) %1").arg(t.elapsed()) );
-//#endif
-
-		if (gotOne) {
-			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
-			if (renderer == NULL) {
-				gotOne = false;
-				renderer = new FSvgRenderer();
-				if (layerAttributes.multiLayer()) {
-					// need to treat create "virtual" svg file for each layer
-					SvgFileSplitter svgFileSplitter;
-					if (svgFileSplitter.split(filename, layerAttributes.layerName())) {
-						if (renderer->load(svgFileSplitter.byteArray(), filename)) {
-							gotOne = true;
-						}
-					}
-				}
-				else {
-//#ifndef QT_NO_DEBUG
-//					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
-//#endif
-					// only one layer, just load it directly
-					if (renderer->load(filename)) {
-						gotOne = true;
-					}
-//#ifndef QT_NO_DEBUG
-//					DebugDialog::debug(QString("set up image elapsed (2.4) %1").arg(t.elapsed()) );
-//#endif
-				}
-				if (!gotOne) {
-					delete renderer;
-					renderer = NULL;
-				}
-			}
-			//DebugDialog::debug(QString("set up image elapsed (3) %1").arg(t.elapsed()) );
-
-			if (renderer) {
-				FSvgRenderer::set(modelPartShared->moduleID(), viewLayerID, renderer);
-			}
-    	}
-	}
-
-	if (renderer) {
-		layerAttributes.setFilename(renderer->filename());
-	}
-
-	return renderer;
-}
-
 
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
 	if (m_modelPart->connectors().count() <= 0) return;

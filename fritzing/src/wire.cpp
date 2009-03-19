@@ -42,6 +42,8 @@ $Date$
 #include "layerattributes.h"
 #include "fsvgrenderer.h"
 #include "labels/partlabel.h"
+#include "modelpart.h"
+#include "PaletteItemBase.h"
 
 #include <stdlib.h>
 
@@ -616,7 +618,7 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) {
 
 	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = PaletteItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, layerAttributes);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, layerAttributes);
 	if (renderer == NULL) {
 		return NULL;
 	}

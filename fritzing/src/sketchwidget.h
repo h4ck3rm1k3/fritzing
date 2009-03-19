@@ -85,7 +85,7 @@ public:
     void cut();
     void copy();
     void setPaletteModel(PaletteModel *);
-    void setRefModel(ReferenceModel *refModel);
+    void setRefModel(class ReferenceModel *refModel);
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
@@ -392,7 +392,7 @@ public slots:
 
 protected:
 	PaletteModel* m_paletteModel;
-	ReferenceModel* m_refModel;
+	class ReferenceModel* m_refModel;
 	SketchModel * m_sketchModel;
 	ItemBase::ViewIdentifier m_viewIdentifier;
 	class WaitPushUndoStack * m_undoStack;

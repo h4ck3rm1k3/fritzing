@@ -49,6 +49,8 @@ static const QString MicroSymbol = QString::fromUtf16(&MicroSymbolCode);
 
 static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([kMp") + MicroSymbol + "]))?");
 static QHash<QString, qreal> NumberMatcherValues;
+static QHash<QString, QString> TranslatedPropertyNames;
+
 
 
 bool valueLessThan(QString v1, QString v2)
@@ -58,7 +60,15 @@ bool valueLessThan(QString v1, QString v2)
 
 //////////////////////////////////////
 
-HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) {
+HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(parent) 
+{
+	if (TranslatedPropertyNames.count() == 0) {
+		TranslatedPropertyNames.insert("family", tr("family"));
+		TranslatedPropertyNames.insert("color", tr("color"));
+		TranslatedPropertyNames.insert("resistance", tr("resistance"));
+		// TODO: translate more known property names from fzp files
+	}
+
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(0);
 	lo->setSpacing(0);
@@ -354,12 +364,12 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	Q_UNUSED(id);
 #endif
 	QHash<QString,QString> properties = modelPart->modelPartShared()->properties();
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("family").arg(properties["family"]);
+	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("family")).arg(properties["family"]);
 	QString select = wireColorsSelect(wire);
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("color").arg(select);
+	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("color")).arg(select);
 	select = wireWidthSelect(wire);
 	if (!select.isEmpty()) {
-		s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg("width").arg(select);
+		s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("width")).arg(select);
 	}
 
 	s += 		 "</table></div>\n";
@@ -402,12 +412,12 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	// TODO (jrc): calling setUpImage here is a hack, best to do it somewhere else
 	if (pixmap2 == NULL) {
 		LayerAttributes layerAttributes;
-		PaletteItemBase::setUpImage(modelPart, ItemBase::SchematicView, ViewLayer::Schematic, layerAttributes);
+		ItemBase::setUpImage(modelPart, ItemBase::SchematicView, ViewLayer::Schematic, layerAttributes);
 		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
 	}
 	if (pixmap3 == NULL) {
 		LayerAttributes layerAttributes;
-		PaletteItemBase::setUpImage(modelPart, ItemBase::PCBView, ViewLayer::Copper0, layerAttributes);
+		ItemBase::setUpImage(modelPart, ItemBase::PCBView, ViewLayer::Copper0, layerAttributes);
 		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 	}
 
@@ -457,7 +467,8 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	for(int i=0; i < properties.keys().size(); i++) {
 		QString key = properties.keys()[i];
 		QString value = properties[ key ];
-		s += propertyHtml(key, value, family, swappingEnabled);
+		QString translatedName = TranslatedPropertyNames.value(key.toLower(), key);
+		s += propertyHtml(key, value, family, translatedName, swappingEnabled);
 		rowsLeft--;
 	}
 
@@ -519,11 +530,11 @@ QString HtmlInfoView::wireWidthSelect(Wire *wire) {
 	return retval;
 }
 
-QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, bool dynamic) {
+QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, const QString & displayName, bool dynamic) {
 	QStringList values = m_refModel->values(family,name);
 
 	if(!dynamic || name.toLower() == "id" || name.toLower() == "family" || values.size() == 1) {
-		return QString("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n").arg(name).arg(value);
+		return QString("<tr style='height: 35px;'><td class='label'>%1</td><td>%2</td></tr>\n").arg(displayName).arg(value);
 	} else {
 		QString options = "";
 		QString jsCode = "<script language='JavaScript'>\n";
@@ -564,8 +575,8 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 		}
 		jsCode += "</script>\n";
 
-		return jsCode+QString("<tr style='height: 35px;'><td class='label'>%1</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select></td></tr>\n")
-						.arg(name).arg(value).arg(family).arg(options);
+		return jsCode+QString("<tr style='height: 35px;'><td class='label'>%5</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select></td></tr>\n")
+						.arg(name).arg(value).arg(family).arg(options).arg(displayName);
 	}
 }
 

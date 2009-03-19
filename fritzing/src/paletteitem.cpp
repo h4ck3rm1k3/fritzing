@@ -36,6 +36,7 @@ $Date$
 #include "connectorshared.h"
 #include "labels/partlabel.h"
 #include "commands.h"
+#include "connectoritem.h"
 
 #include <math.h>
 

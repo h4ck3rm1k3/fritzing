@@ -3491,7 +3491,7 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit, SwapCommand * s
 
 		// let's make sure that the icon pixmap will be available for the infoview
 		LayerAttributes layerAttributes;
-		from->setUpImage(from->modelPart(), ItemBase::IconView, ViewLayer::Icon, layerAttributes);
+		ItemBase::setUpImage(from->modelPart(), ItemBase::IconView, ViewLayer::Icon, layerAttributes);
 
 		if(doEmit) {
 			emit swapped(itemId, to, false, NULL);

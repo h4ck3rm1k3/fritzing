@@ -43,7 +43,9 @@ $Date$
 #include "misc.h"
 #include "graphicssvglineitem.h"
 
-typedef QMultiHash<class ConnectorItem *, class ConnectorItem *> ConnectorPairHash;
+class ConnectorItem;
+
+typedef QMultiHash<ConnectorItem *, ConnectorItem *> ConnectorPairHash;
 
 class ItemBase : public GraphicsSvgLineItem
 {
@@ -102,7 +104,7 @@ public:
 	void setViewLayerID(const QString & layerName, const LayerHash & viewLayers);
 	bool topLevel();
 	void collectConnectors(ConnectorPairHash & connectorHash, QGraphicsScene * scene);
-	void busConnectorItems(class Bus * bus, QList<class ConnectorItem *> & items);
+	void busConnectorItems(class Bus * bus, QList<ConnectorItem *> & items);
 	virtual void setHidden(bool hidden);
 	bool hidden();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
@@ -111,7 +113,7 @@ public:
 	const QString & title();
 	bool getVirtual();
 	const QHash<QString, class Bus *> & buses();
-	void addBusConnectorItem(class Bus *, class ConnectorItem *);
+	void addBusConnectorItem(class Bus *, ConnectorItem *);
 	void clearBusConnectorItems();
 	int itemType() const;					// wanted this to return ModelPart::ItemType but couldn't figure out how to get it to compile
 	virtual bool sticky();
@@ -151,9 +153,9 @@ public:
 	virtual void resetID();
 
 public:
-	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
-	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, class ConnectorItem * item);
-	virtual void connectorHover(class ConnectorItem *, ItemBase *, bool hovering);
+	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual void hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
+	virtual void connectorHover(ConnectorItem *, ItemBase *, bool hovering);
 	void clearConnectorHover();
 	virtual void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	virtual bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
@@ -177,6 +179,7 @@ public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
+	static class FSvgRenderer * setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -198,7 +201,6 @@ protected:
 	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
 	void transformItem(QTransform currTransf);
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
-
 
 protected:
  	QSizeF m_size;
@@ -229,6 +231,8 @@ protected:
 	const static qreal hoverOpacity;
 	const static QColor connectorHoverColor;
 	const static qreal connectorHoverOpacity;
+	static QString SvgFilesDir;
+
 
 };
 #endif

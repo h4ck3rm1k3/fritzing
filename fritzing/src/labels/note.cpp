@@ -28,6 +28,7 @@ $Date$
 #include "../graphicssvglineitem.h"
 #include "../debugdialog.h"
 #include "../infographicsview.h"
+#include "../modelpart.h"
 
 #include <QTextFrame>
 #include <QTextFrameFormat>

@@ -936,11 +936,6 @@ void MainWindow::createPartMenuActions() {
 	connect(m_infoViewOnHoverAction, SIGNAL(toggled(bool)), this, SLOT(setInfoViewOnHover(bool)));
 #endif
 
-	// TODO Mariano: DEBUG ACTION
-	/*m_swapPartAction = new QAction(tr("Swap part!"), this);
-	m_swapPartAction->setStatusTip(tr("Swap part with selected en parts dock"));
-	connect(m_swapPartAction, SIGNAL(triggered()), this, SLOT(swapSelected()));*/
-
 	m_rotate90cwAct = new QAction(tr("&Rotate 90\x00B0 Clockwise"), this);
 	m_rotate90cwAct->setShortcut(tr("Ctrl+R"));
 	m_rotate90cwAct->setStatusTip(tr("Rotate the selected parts by 90 degrees clockwise"));
@@ -1379,10 +1374,6 @@ void MainWindow::updateTransformationActions() {
 }
 
 void MainWindow::updateItemMenu() {
-	/*PaletteItem *selInParts = m_paletteWidget->selected();
-	PaletteItem *selInSketch = m_currentWidget->selected();
-	m_swapPartAction->setEnabled(selInParts && selInSketch && selInParts->family() == selInSketch->family());*/
-
 	if (m_currentGraphicsView == NULL) return;
 
 	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();

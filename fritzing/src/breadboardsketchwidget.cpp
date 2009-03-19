@@ -28,6 +28,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "breadboardsketchwidget.h"
 #include "debugdialog.h"
 #include "virtualwire.h"
+#include "connectoritem.h"
 
 BreadboardSketchWidget::BreadboardSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)

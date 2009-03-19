@@ -34,6 +34,7 @@ $Date$
 #include "debugdialog.h"
 #include "bus.h"
 #include "wire.h"
+#include "modelpart.h"
 
 QPen ConnectorItem::normalPen(QColor(255,0,0));
 QPen ConnectorItem::hoverPen(QColor(0, 0, 255));

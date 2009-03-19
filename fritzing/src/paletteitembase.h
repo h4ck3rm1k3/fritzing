@@ -79,9 +79,6 @@ public:
 	void setPos(qreal x, qreal y);
 	 */
 
-public:
-	static class FSvgRenderer * setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
-
 protected:
 	QPainterPath shape() const;
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
@@ -106,8 +103,6 @@ protected:
 	QString m_filename;
 	QPointF m_stickyPos;
 
-protected:
-	static QString SvgFilesDir;
 };
 
 
