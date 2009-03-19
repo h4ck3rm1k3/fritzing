@@ -10,7 +10,7 @@
     </tags>
     <properties>
         <property name="family">Microcontroller Board</property>
-        <property name="type">Nano</property>
+        <property name="type">Arduino Nano</property>
     </properties>
     <views>
         <iconView>
@@ -31,6 +31,7 @@
         <pcbView>
             <layers image="pcb/DIP30W.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
     </views>
@@ -288,7 +289,7 @@
             </views>
         </connector>
         <connector id="connector30" type="male" name="VIN">
-            <description>DC Supply Voltage In</description>
+            <description>DC Supply Voltage Input</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector30pin"></p>

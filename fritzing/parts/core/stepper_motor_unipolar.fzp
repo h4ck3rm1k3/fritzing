@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="a22e371d3e8c77a58fdfe4dd2799c449">
-    <author>petbom</author>
+    <author>Peter Boman</author>
     <title>Stepper Motor - Unipolar</title>
-    <label>Unipolar stepper motor</label>
+    <label>M</label>
     <date>2009-03-10</date>
     <tags>
         <tag>Motor</tag>
         <tag>Stepper Motor</tag>
     </tags>
     <properties>
-        <property name="family">Motor</property>
+        <property name="family">Stepper Motor</property>
+        <property name="Stepper Type">Unipolar</property>
     </properties>
     <description>A basic unipolar stepper motor</description>
     <views>
@@ -24,8 +25,9 @@
             </layers>
         </schematicView>
         <pcbView>
-            <layers image="pcb/Stepper_Motor_-_Unipolar__pcb.svg">
+            <layers image="pcb/jumper6.svg">
                 <layer layerId="copper0"></layer>
+                <layer layerId="silkscreen"></layer>
             </layers>
         </pcbView>
         <iconView>
@@ -36,7 +38,7 @@
     </views>
     <connectors>
         <connector id="connector3" type="male" name="B">
-            <description>no description yet</description>
+            <description>Terminal "B" - Coil Pair 2</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector3pin"></p>
@@ -49,8 +51,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector4" type="male" name="COMMON_B">
-            <description>no description yet</description>
+        <connector id="connector4" type="male" name="COMMON_2">
+            <description>Common Tap - Coil Pair 2</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector4pin"></p>
@@ -64,7 +66,7 @@
             </views>
         </connector>
         <connector id="connector5" type="male" name="D">
-            <description>no description yet</description>
+            <description>Terminal "D" - Coil Pair 2</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector5pin"></p>
@@ -78,7 +80,7 @@
             </views>
         </connector>
         <connector id="connector0" type="male" name="A">
-            <description>no description yet</description>
+            <description>Terminal "A" - Coil Pair 1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector0pin"></p>
@@ -91,8 +93,8 @@
                 </pcbView>
             </views>
         </connector>
-        <connector id="connector1" type="male" name="COMMON_A">
-            <description>no description yet</description>
+        <connector id="connector1" type="male" name="COMMON_1">
+            <description>Common Tap - Coil Pair 1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector1pin"></p>
@@ -106,7 +108,7 @@
             </views>
         </connector>
         <connector id="connector2" type="male" name="C">
-            <description>no description yet</description>
+            <description>Terminal "C" - Coil Pair 1</description>
             <views>
                 <breadboardView>
                     <p layer="breadboard" svgId="connector2pin"></p>

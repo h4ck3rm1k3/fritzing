@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <module uri="http://fritzing.org/modules/arduino-diecimila" moduleId="1234ABDE24_ST" >
- <version>1.0</version>
+ <version>1.1</version>
  <creator>Stefan Hermann</creator>
  <title>Arduino Diecimila</title>
  <date>2008-09-16</date>
@@ -57,8 +57,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector1" name="GND1" >
-   <description>gnd</description>
+  <connector type="female" id="connector1" name="GND" >
+   <description>Ground</description>
    <views>
     <breadboardView>
      <p svgId="connector1pin" layer="breadboardbreadboard" />
@@ -72,8 +72,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector2" name="digital13" >
-   <description>digital13</description>
+  <connector type="female" id="connector2" name="D13" >
+   <description>Digital I/O 13</description>
    <views>
     <breadboardView>
      <p svgId="connector2pin" layer="breadboardbreadboard" />
@@ -87,8 +87,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector3" name="digital12" >
-   <description>digital12</description>
+  <connector type="female" id="connector3" name="D12" >
+   <description>Digital I/O 12</description>
    <views>
     <breadboardView>
      <p svgId="connector3pin" layer="breadboardbreadboard" />
@@ -102,8 +102,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector4" name="digital11" >
-   <description>digital11</description>
+  <connector type="female" id="connector4" name="D11" >
+   <description>Digital I/O 11</description>
    <views>
     <breadboardView>
      <p svgId="connector4pin" layer="breadboardbreadboard" />
@@ -117,8 +117,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector5" name="digital10" >
-   <description>digital10</description>
+  <connector type="female" id="connector5" name="D10" >
+   <description>Digital I/O 10</description>
    <views>
     <breadboardView>
      <p svgId="connector5pin" layer="breadboardbreadboard" />
@@ -132,8 +132,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector6" name="digital9" >
-   <description>digital9</description>
+  <connector type="female" id="connector6" name="D9" >
+   <description>Digital I/O 9</description>
    <views>
     <breadboardView>
      <p svgId="connector6pin" layer="breadboardbreadboard" />
@@ -147,8 +147,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector7" name="digital8" >
-   <description>digital8</description>
+  <connector type="female" id="connector7" name="D8" >
+   <description>Digital I/O 8</description>
    <views>
     <breadboardView>
      <p svgId="connector7pin" layer="breadboardbreadboard" />
@@ -162,8 +162,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector8" name="digital7" >
-   <description>digital7</description>
+  <connector type="female" id="connector8" name="D7" >
+   <description>Digital I/O 7</description>
    <views>
     <breadboardView>
      <p svgId="connector8pin" layer="breadboardbreadboard" />
@@ -177,8 +177,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector9" name="digital6" >
-   <description>digital6</description>
+  <connector type="female" id="connector9" name="D6" >
+   <description>Digital I/O 6</description>
    <views>
     <breadboardView>
      <p svgId="connector9pin" layer="breadboardbreadboard" />
@@ -192,8 +192,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector10" name="digital5" >
-   <description>digital5</description>
+  <connector type="female" id="connector10" name="D5" >
+   <description>Digital I/O 5</description>
    <views>
     <breadboardView>
      <p svgId="connector10pin" layer="breadboardbreadboard" />
@@ -207,8 +207,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector11" name="digital4" >
-   <description>digital4</description>
+  <connector type="female" id="connector11" name="D4" >
+   <description>Digital I/O 4</description>
    <views>
     <breadboardView>
      <p svgId="connector11pin" layer="breadboardbreadboard" />
@@ -222,8 +222,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector12" name="digital3" >
-   <description>digital3</description>
+  <connector type="female" id="connector12" name="D3" >
+   <description>Digital I/O 3</description>
    <views>
     <breadboardView>
      <p svgId="connector12pin" layer="breadboardbreadboard" />
@@ -237,8 +237,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector13" name="digital2" >
-   <description>digital2</description>
+  <connector type="female" id="connector13" name="D2" >
+   <description>Digital I/O 2</description>
    <views>
     <breadboardView>
      <p svgId="connector13pin" layer="breadboardbreadboard" />
@@ -252,8 +252,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector14" name="digital1" >
-   <description>digital1</description>
+  <connector type="female" id="connector14" name="D1" >
+   <description>Digital I/O 1</description>
    <views>
     <breadboardView>
      <p svgId="connector14pin" layer="breadboardbreadboard" />
@@ -267,8 +267,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector15" name="digital0" >
-   <description>digital0</description>
+  <connector type="female" id="connector15" name="D0" >
+   <description>Digital I/O 0</description>
    <views>
     <breadboardView>
      <p svgId="connector15pin" layer="breadboardbreadboard" />
@@ -282,7 +282,7 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector16" name="reset" >
+  <connector type="female" id="connector16" name="RST" >
    <description>Reset</description>
    <views>
     <breadboardView>
@@ -298,7 +298,7 @@
    </views>
   </connector>
   <connector type="female" id="connector17" name="3V3" >
-   <description>3V3</description>
+   <description>+3.3V DC</description>
    <views>
     <breadboardView>
      <p svgId="connector17pin" layer="breadboardbreadboard" />
@@ -312,8 +312,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector18" name="5V" >
-   <description>5V</description>
+  <connector type="female" id="connector18" name="+5V" >
+   <description>+5 V Regulated DC</description>
    <views>
     <breadboardView>
      <p svgId="connector18pin" layer="breadboardbreadboard" />
@@ -327,8 +327,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector19" name="GND2" >
-   <description>GND2</description>
+  <connector type="female" id="connector19" name="GND" >
+   <description>Ground</description>
    <views>
     <breadboardView>
      <p svgId="connector19pin" layer="breadboardbreadboard" />
@@ -342,8 +342,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector20" name="GND3" >
-   <description>GND3</description>
+  <connector type="female" id="connector20" name="GND" >
+   <description>Ground</description>
    <views>
     <breadboardView>
      <p svgId="connector20pin" layer="breadboardbreadboard" />
@@ -357,8 +357,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector21" name="Vin" >
-   <description>Vin</description>
+  <connector type="female" id="connector21" name="VIN" >
+   <description>DC Supply Voltage Input</description>
    <views>
     <breadboardView>
      <p svgId="connector21pin" layer="breadboardbreadboard" />
@@ -372,8 +372,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector22" name="analog0" >
-   <description>analog0</description>
+  <connector type="female" id="connector22" name="A0" >
+   <description>Analog Input 0</description>
    <views>
     <breadboardView>
      <p svgId="connector22pin" layer="breadboardbreadboard" />
@@ -387,8 +387,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector23" name="analog1" >
-   <description>analog1</description>
+  <connector type="female" id="connector23" name="A1" >
+   <description>Analog Input 1</description>
    <views>
     <breadboardView>
      <p svgId="connector23pin" layer="breadboardbreadboard" />
@@ -402,8 +402,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector24" name="analog2" >
-   <description>analog2</description>
+  <connector type="female" id="connector24" name="A2" >
+   <description>Analog Input 2</description>
    <views>
     <breadboardView>
      <p svgId="connector24pin" layer="breadboardbreadboard" />
@@ -417,8 +417,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector25" name="analog3" >
-   <description>analog3</description>
+  <connector type="female" id="connector25" name="A3" >
+   <description>Analog Input 3</description>
    <views>
     <breadboardView>
      <p svgId="connector25pin" layer="breadboardbreadboard" />
@@ -432,8 +432,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector26" name="analog4" >
-   <description>analog4</description>
+  <connector type="female" id="connector26" name="A4" >
+   <description>Analog Input 4</description>
    <views>
     <breadboardView>
      <p svgId="connector26pin" layer="breadboardbreadboard" />
@@ -447,8 +447,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector27" name="analog5" >
-   <description>analog5</description>
+  <connector type="female" id="connector27" name="A5" >
+   <description>Analog Input 5</description>
    <views>
     <breadboardView>
      <p svgId="connector27pin" layer="breadboardbreadboard" />
