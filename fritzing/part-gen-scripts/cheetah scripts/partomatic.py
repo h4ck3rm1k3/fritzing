@@ -21,7 +21,7 @@ from Cheetah.Template import Template
 def usage():
     print """
 usage:
-    partomatic.py -c [Config File] -o [Output Dir] -t [Template File] -s [file suffix]
+    partomatic.py -c [Config File] -o [Output Dir] -t [Template File] -s [file Suffix]
     
     Config File - the name of the file containing a list of variables and values
                    specified on separate lines separated by colons.  
@@ -33,6 +33,8 @@ usage:
    Output Dir - the location where the output files are written
 
    Template File - the Cheetah template used to generate the output
+   
+   file Suffix - the file suffix to use for output files (i.e. .svg or .fzp)
     """
     
 def makeUUID():

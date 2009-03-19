@@ -52,12 +52,12 @@ def setup():
 	# Edit these variables below to generate different breadboards
 	#
 	# sL = searchList, a dict to use with the template 
-	sL['title'] = "My Breadboard"
-	sL['moduleID'] = "MyBreadboardModuleID"
-	sL['svgFile'] = "myBreadboard.svg"
+	sL['title'] = "Half-Breadboard"
+	sL['moduleID'] = "HalfBreadboardModuleID"
+	sL['svgFile'] = "halfBreadboard.svg"
 
-	sL['label'] = "Breadboard"
-	sL['taxonomy'] = "prototyping.breadboard.breadboard.breadboard0"
+	sL['label'] = "Bread"
+	sL['taxonomy'] = "prototyping.breadboard.breadboard.halfbreadboard"
 	
 	# Most breadboards have rows and lines.
 	# Rows are 5 holes verticaly
@@ -68,7 +68,7 @@ def setup():
 	rowsInterBlockSpacing = 2
 	rowProps['startsAtX'] = -1
 	rowProps['startsAtYWithLetter'] = 'A'
-	rowProps['segmentLength'] = 64
+	rowProps['segmentLength'] = 32
 	rowProps['interSegmentSpacing'] = 2
 	rowProps['numberOfSegments'] = 1	
 		
@@ -80,7 +80,7 @@ def setup():
 	lineProps['interSubSegmentSpacing'] = 1
 	lineProps['segmentLength'] = 5 # measures in subSegments
 	lineProps['interSegmentSpacing'] = 2
-	lineProps['numberOfSegments'] = 2
+	lineProps['numberOfSegments'] = 1
 	lineProps['endsAtYWithLetter'] = 'Z'
 	
 	# Layout
