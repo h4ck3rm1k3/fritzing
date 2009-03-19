@@ -191,6 +191,13 @@
 				</iconView>
 			</views>	
 		</instance -->
+		<instance moduleIdRef="6d07f5eae4523283f5da4171f9c54e25" modelIndex="388" path="parts/core/Antenna.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="3234DBDC80" path="parts/core/basic_servo.fzp">
             <views>
                 <iconView layer="icon">
@@ -206,6 +213,13 @@
             </views>
         </instance>
         <instance moduleIdRef="8abf6496b5d466c7a1893c17a296a676" path="parts/core/piezo sensor.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="5e3b9f7a14a1627168e700bfc9a03b3c" modelIndex="45233" path="parts/core/USB connector.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>

@@ -338,6 +338,20 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="6d07f5eae4523283f5da4171f9c54e25" modelIndex="45232" path="parts/core/Antenna.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="5e3b9f7a14a1627168e700bfc9a03b3c" modelIndex="45233" path="parts/core/USB connector.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1000FADF10011" modelIndex="389" path="parts/core/dc_motor.fzp">
             <views>
                 <iconView layer="icon">
