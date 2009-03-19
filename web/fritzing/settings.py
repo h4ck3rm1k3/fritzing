@@ -156,6 +156,7 @@ INSTALLED_APPS = (
     'parts',
     'downloads',
 #    'south',
+    'tinymce',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -213,6 +214,9 @@ PAGE_PERMISSION = False
 PAGE_TAGGING = True
 PAGE_USE_SITE_ID = True
 REQUIRE_LOGIN_PATH = LOGIN_REDIRECT_URL
+
+TINYMCE_JS_URL = '%stiny_mce/tiny_mce.js' % MEDIA_URL
+TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, 'tiny_mce')
 
 FIXTURE_DIRS = (
     os.path.join(PROJECT_ROOT, "fixtures"),

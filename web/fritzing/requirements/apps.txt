@@ -3,7 +3,6 @@
 django-dbtemplates==0.5.5
 django-templatesadmin==0.5.5
 django-reversion==1.1
-django-page-cms==0.2.4
 django-ajax-validation
 django-announcements==0.1.0
 django-avatar==1.0.1
@@ -14,6 +13,7 @@ django-robots==0.6.0
 django-messages==0.4.0
 django-photologue==2.2
 django-wikiapp==0.1.2
+django-tinymce==1.5
 South
 
 -e git+git://github.com/jezdez/django-forum.git#egg=django-forum
@@ -25,7 +25,7 @@ South
 -e git+git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
 -e svn+http://svn.pinaxproject.com/pinax/trunk@1612#egg=Pinax
 -e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
-#-e svn+http://django-page-cms.googlecode.com/svn/trunk@289#egg=django-page-cms
+-e svn+http://django-page-cms.googlecode.com/svn/trunk@289#egg=django-page-cms
 -e svn+http://django-bookmarks.googlecode.com/svn/trunk#egg=django-bookmarks
 -e svn+http://django-email-confirmation.googlecode.com/svn/trunk#egg=django-email-confirmation
 -e svn+http://django-flag.googlecode.com/svn/trunk#egg=django-flag
