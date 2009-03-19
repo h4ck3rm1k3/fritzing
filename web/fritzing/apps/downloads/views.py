@@ -29,7 +29,7 @@ def release_download(request, version, slug, filename):
         download.counter += 1
         download.save()
         return HttpResponseRedirect(download.filename.url)
-    raise HttpResponseRedirect('/')
+    return HttpResponseRedirect('/')
 
 def update_download(request, download_id):
     download = get_object_or_404(Download, pk=download_id)
