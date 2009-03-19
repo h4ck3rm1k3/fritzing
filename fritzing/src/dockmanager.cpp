@@ -32,6 +32,8 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #include "fsizegrip.h"
 #include "viewswitcherdockwidget.h"
 #include "misc.h"
+#include "partsbinpalette/partsbinpalettewidget.h"
+#include "htmlinfoview.h"
 
 FDockWidget * makeViewSwitcherDock(const QString & title, QWidget * parent) {
 	return new ViewSwitcherDockWidget(title, parent);

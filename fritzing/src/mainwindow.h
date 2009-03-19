@@ -36,22 +36,10 @@ $Date$
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
-#include "breadboardsketchwidget.h"
-#include "schematicsketchwidget.h"
-#include "pcbsketchwidget.h"
 #include "miniviewcontainer.h"
-#include "palettemodel.h"
-#include "sketchmodel.h"
-#include "htmlinfoview.h"
 #include "viewlayer.h"
-#include "console.h"
 #include "zoomcombobox.h"
-#include "ftabwidget.h"
 #include "sketchtoolbutton.h"
-#include "expandinglabel.h"
-#include "viewswitcher.h"
-
-#include "partsbinpalette/partsbinpalettewidget.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -69,7 +57,7 @@ class MainWindow : public FritzingWindow
 {
     Q_OBJECT
 public:
-    MainWindow(PaletteModel *, ReferenceModel *refModel);
+    MainWindow(class PaletteModel *, ReferenceModel *refModel);
     MainWindow(QFile & fileToLoad);
 	~MainWindow();
 
@@ -307,30 +295,29 @@ protected:
 	QUndoView *m_undoView;
 
 	SketchAreaWidget *m_breadboardWidget;
-	BreadboardSketchWidget *m_breadboardGraphicsView;
+	class BreadboardSketchWidget *m_breadboardGraphicsView;
 
 	SketchAreaWidget *m_schematicWidget;
-	SchematicSketchWidget *m_schematicGraphicsView;
+	class SchematicSketchWidget *m_schematicGraphicsView;
 
 	SketchAreaWidget *m_pcbWidget;
-	PCBSketchWidget *m_pcbGraphicsView;
+	class PCBSketchWidget *m_pcbGraphicsView;
 
-    PartsBinPaletteWidget *m_paletteWidget;
+    class PartsBinPaletteWidget *m_paletteWidget;
     MiniViewContainer *m_miniViewContainerBreadboard;
     MiniViewContainer *m_miniViewContainerSchematic;
     MiniViewContainer *m_miniViewContainerPCB;
 	QList <MiniViewContainer *> m_navigators;
-    //FTabWidget * m_tabWidget;
 	QStackedWidget * m_tabWidget;
-    PaletteModel *m_paletteModel;
+    class PaletteModel *m_paletteModel;
     ReferenceModel *m_refModel;
-    SketchModel *m_sketchModel;
-    HtmlInfoView * m_infoView;
+    class SketchModel *m_sketchModel;
+    class HtmlInfoView * m_infoView;
     QToolBar *m_toolbar;
 
     QHash <long,class PartsEditorMainWindow*> m_partsEditorWindows;
 
-    Console * m_consoleView;
+    class Console * m_consoleView;
     SavedState m_savedState;
     bool m_closing;
 	bool m_dontClose;
@@ -465,7 +452,7 @@ protected:
     QIcon m_dotIcon;
     QIcon m_emptyIcon;
 
-	ExpandingLabel *m_routingStatusLabel;
+	class ExpandingLabel *m_routingStatusLabel;
 	QList<SketchToolButton*> m_rotateButtons;
 	QList<SketchToolButton*> m_flipButtons;
 
@@ -479,10 +466,6 @@ protected:
 
 	class TripleNavigator * m_tripleNavigator;
 	class FSizeGrip *m_sizeGrip;
-
-	//class ViewSwitcher *m_breadViewSwitcher;
-	//class ViewSwitcher *m_schemViewSwitcher;
-	//class ViewSwitcher *m_pcbViewSwitcher;
 
 	friend class Helper;
 	friend class DockManager;

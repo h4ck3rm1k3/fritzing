@@ -27,6 +27,7 @@ $Date$
 #include <QWebFrame>
 #include <QBuffer>
 #include <QVBoxLayout>
+#include <QSettings>
 
 #include "htmlinfoview.h"
 #include "infographicsview.h"

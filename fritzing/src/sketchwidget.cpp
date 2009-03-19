@@ -67,6 +67,7 @@ $Date$
 #include "group/groupitem.h"
 #include "svg/svgfilesplitter.h"
 #include "help/sketchmainhelp.h"
+#include "htmlinfoview.h"
 
 static QColor labelTextColor = Qt::black;
 QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;

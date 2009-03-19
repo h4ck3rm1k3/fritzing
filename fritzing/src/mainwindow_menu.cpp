@@ -42,6 +42,12 @@ $Date$
 #include "fapplication.h"
 #include "svg/svg2gerber.h"
 #include "eagle/fritzing2eagle.h"
+#include "breadboardsketchwidget.h"
+#include "schematicsketchwidget.h"
+#include "pcbsketchwidget.h"
+#include "partsbinpalette/partsbinpalettewidget.h"
+#include "expandinglabel.h"
+
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";

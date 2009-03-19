@@ -38,11 +38,15 @@ $Date$
 #include "version/versionchecker.h"
 #include "version/updatedialog.h"
 #include "itemdrag.h"
+#include "viewswitcher.h"
+#include "wire.h"
+#include "htmlinfoview.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
 #define CurrentReferenceModel SqliteReferenceModel
 
+#include <QSettings>
 #include <QKeyEvent>
 #include <QFileInfo>
 #include <QDesktopServices>

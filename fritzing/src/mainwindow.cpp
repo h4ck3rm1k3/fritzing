@@ -52,14 +52,20 @@ $Date$
 #include "fapplication.h"
 #include "layerattributes.h"
 #include "triplenavigator.h"
+#include "breadboardsketchwidget.h"
+#include "schematicsketchwidget.h"
+#include "pcbsketchwidget.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
 #include "group/saveasmoduledialog.h"
 
+#include "partsbinpalette/partsbinpalettewidget.h"
+
 #include "fsvgrenderer.h"
 #include "fsizegrip.h"
-
+#include "expandinglabel.h"
+#include "viewswitcher.h"
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
