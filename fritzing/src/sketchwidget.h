@@ -74,7 +74,7 @@ public:
     class WaitPushUndoStack * undoStack();
     ItemBase * addItem(ModelPart *, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* item);
 	ItemBase * addItem(const QString & moduleID, BaseCommand::CrossViewType, const ViewGeometry &, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand);
-    void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later);
+    void deleteItem(long id, bool deleteModelPart, bool doEmit, bool later, RestoreIndexesCommand * restoreIndexesCommand);
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
     void rotateItem(long id, qreal degrees);
@@ -204,7 +204,7 @@ public:
 	QString renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize);
 	void setConnectorExternal(long itemID, const QString & connectorID, bool external);
 	bool spaceBarIsPressed();
-	void restoreTiny(ItemBase *, ModelPartTiny *);
+	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -307,13 +307,12 @@ protected:
 	void drawBackground( QPainter * painter, const QRectF & rect );
 	void handleConnect(QDomElement & connect, ModelPart *, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand);
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
-	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
-	ItemBase * makeModuleAux(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry &, long id, AddDeleteItemCommand * originatingCommand); 
+	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, const ViewGeometry &, long id); 
+	void collectModuleExternalConnectors(ItemBase *, ItemBase * parent, ConnectorPairHash &);
 
 protected:
 	static bool lessThan(int a, int b);
 	static bool greaterThan(int a, int b);
-
 
 signals:
 	void itemAddedSignal(ModelPart *, const ViewGeometry &, long id);
@@ -343,6 +342,7 @@ signals:
 								long toID, const QString & toConnectorID,
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
+	void restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool doEmit);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -388,6 +388,7 @@ public slots:
 	void setInstanceTitle(long id, const QString & title, bool isLabel, bool isUndoable);
 	void showPartLabel(long id, bool showIt);
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
+	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);
 
 protected:
 	PaletteModel* m_paletteModel;
@@ -449,8 +450,6 @@ protected:
 	ConnectorPairHash m_moveDisconnectedFromFemale;
 	bool m_spaceBarIsPressed;
 	bool m_spaceBarWasPressed;
-
-	QList<ModelPart *> m_moduleModelPartStack;
 
 protected:
 	QString m_viewName;

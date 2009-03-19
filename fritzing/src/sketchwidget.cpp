@@ -255,9 +255,13 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			if (offsetPaste) {
 				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
 			}
-			new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
+			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
 			if (mp->moduleID() == Wire::moduleIDName) {
 				addWireExtras(newID, view, parentCommand);
+			}
+			else if (mp->itemType() == ModelPart::Module) {
+				RestoreIndexesCommand * restoreIndexesCommand = new RestoreIndexesCommand(this, newID, NULL, true, parentCommand);
+				addItemCommand->addRestoreIndexesCommand(restoreIndexesCommand);
 			}
 		}
 	}
@@ -478,24 +482,7 @@ ItemBase * SketchWidget::addItem(const QString & moduleID, BaseCommand::CrossVie
 	return itemBase;
 }
 
-ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand)
-{
-	m_moduleModelPartStack.push_back(modelPart);
-	ItemBase * itemBase = makeModuleAux(modelPart, originalModelIndex, modelParts, doRedo, viewGeometry, id, originatingCommand);
-
-	DebugDialog::debug(QString("sub? %1 %2")
-		.arg(modelPart->moduleID())
-		.arg(modelPart->modelPartShared()->title()) );
-
-	DebugDialog::debug(QString("parent %1 %2")
-		.arg(((ModelPart *) modelPart->parent())->moduleID())
-		.arg(((ModelPart *) modelPart->parent())->modelPartShared()->title()) );
-
-	m_moduleModelPartStack.pop_back();
-	return itemBase;
-}
-
-ItemBase * SketchWidget::makeModuleAux(ModelPart * modelPart, long originalModelIndex, QList<ModelPart *> & modelParts, bool doRedo, const ViewGeometry & viewGeometry, long id, AddDeleteItemCommand * originatingCommand)
+ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelIndex, QList<ModelPart *> & modelParts, const ViewGeometry & viewGeometry, long id)
 {
 	modelPart->setModelIndexFromMultiplied(id);
 	if (originalModelIndex > 0) {
@@ -513,18 +500,6 @@ ItemBase * SketchWidget::makeModuleAux(ModelPart * modelPart, long originalModel
 
 	DebugDialog::debug(QString("mp:%1, omi:%2, view:%3, id:%4").arg(modelPart->modelIndex()).arg(originalModelIndex).arg(m_viewIdentifier).arg(id));
 	bool gotOne = false;
-	if (originatingCommand) {
-		for (int i = 0; i < originatingCommand->subCommandCount(); i++) {
-			const BaseCommand * baseCommand = originatingCommand->subCommand(i);
-			if (baseCommand->sketchWidget() == this) {
-				if (doRedo) {
-					originatingCommand->subRedo(i);
-				}
-				gotOne = true;
-				break;
-			}
-		}
-	}
 
 	if (!gotOne) {
 		if (modelParts.count() <= 0) {
@@ -538,22 +513,16 @@ ItemBase * SketchWidget::makeModuleAux(ModelPart * modelPart, long originalModel
 			}
 		}
 
-		BaseCommand * parentCommand = new BaseCommand(BaseCommand::SingleView, this, NULL);
-		loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, false, false);
-		GroupCommand * groupCommand = new GroupCommand(this, modelPart->moduleID(), id, viewGeometry, parentCommand);
-		for (int i = 0; i < parentCommand->childCount(); i++) {
-			const AddItemCommand * addItemCommand = dynamic_cast<const AddItemCommand *>(parentCommand->child(i));
-			if (addItemCommand == NULL) continue;
+		loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
 
-			groupCommand->addItemID(addItemCommand->itemID());
+		QList<long> ids;
+		foreach (ModelPart * mp, modelParts) {
+			ItemBase * item = mp->viewItem(scene());
+			if (item) {
+				ids.append(item->id());
+			}
 		}
-
-		if (originatingCommand) {
-			originatingCommand->addSubCommand(parentCommand);
-		}
-		if (doRedo) {
-			parentCommand->redo();				// trigger  module creation
-		}
+		group(modelPart->moduleID(), id, ids, viewGeometry, false);
 	}
 	
 	return modelPart->viewItem(scene());
@@ -595,7 +564,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			if (doConnectors || originatingCommand || originalModelIndex > 0) 
 			{
 				QList<ModelPart *>  modelParts; 
-				return makeModule(modelPart, originalModelIndex, modelParts, true, viewGeometry, id, originatingCommand);
+				return makeModule(modelPart, originalModelIndex, modelParts, viewGeometry, id);
 			}
 			break;					// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
 		case ModelPart::Wire:
@@ -773,10 +742,16 @@ ItemBase * SketchWidget::findItem(long id) {
 	return NULL;
 }
 
-void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool later) {
+void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool later, RestoreIndexesCommand * restore) {
 	DebugDialog::debug(QString("delete item (1) %1 %2 %3").arg(id).arg(doEmit).arg(m_viewIdentifier) );
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
+		if (restore != NULL) {
+			if (restore->modelPartTiny() == NULL) {
+				ModelPartTiny * mpt = m_sketchModel->makeTiny(pitem->modelPart());
+				restore->setModelPartTiny(mpt);
+			}
+		}
 		deleteItem(pitem, deleteModelPart, doEmit, later);
 	}
 }
@@ -821,6 +796,10 @@ void SketchWidget::deleteItem() {
 }
 
 void SketchWidget::cutDeleteAux(QString undoStackMessage) {
+
+	DebugDialog::debug("before delete");
+	m_sketchModel->walk(m_sketchModel->root(), 0);
+
     // get sitems first, before calling stackSelectionState
     // because selectedItems will return an empty list
 	const QList<QGraphicsItem *> sitems = scene()->selectedItems();
@@ -870,7 +849,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 		foreach (ConnectorItem * fromConnectorItem,  connectorHash->uniqueKeys()) {
 			foreach (ConnectorItem * toConnectorItem, connectorHash->values(fromConnectorItem)) {
 				extendChangeConnectionCommand(fromConnectorItem, toConnectorItem,
-											  false, false, parentCommand);
+											  false, true, parentCommand);
 				fromConnectorItem->tempRemove(toConnectorItem, false);
 				toConnectorItem->tempRemove(fromConnectorItem, false);
 			}
@@ -880,6 +859,19 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 	foreach (ConnectorPairHash * connectorHash, deletedConnections.values())
 	{
 		delete connectorHash;
+	}
+
+	foreach (ItemBase * itemBase, deletedItems) {
+		if (itemBase->itemType() == ModelPart::Module) {
+			// TODO: do these need reviewDeletedConnections? 
+			ConnectorPairHash externalConnectors;
+			collectModuleExternalConnectors(itemBase, itemBase, externalConnectors);
+			foreach (ConnectorItem * fromConnectorItem, externalConnectors.uniqueKeys()) {
+				foreach (ConnectorItem * toConnectorItem, externalConnectors.values(fromConnectorItem)) {
+					extendChangeConnectionCommand(fromConnectorItem, toConnectorItem, false, true, parentCommand);
+				}
+			}
+		}
 	}
 
 	foreach (ItemBase * itemBase, deletedItems) {
@@ -896,14 +888,19 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	new CleanUpWiresCommand(this, skipMe, parentCommand);
 
+	foreach (ItemBase * itemBase, deletedItems) {
+		if (itemBase->itemType() == ModelPart::Module) {
+			ModelPartTiny * mpt = m_sketchModel->makeTiny(itemBase->modelPart());
+			new RestoreIndexesCommand(this, itemBase->id(), mpt, false, parentCommand);
+		}
+	}
+
 	// actual delete commands must come last for undo to work properly
 	foreach (ItemBase * itemBase, deletedItems) {
 		makeDeleteItemCommand(itemBase, parentCommand);
 		emit deleteItemSignal(itemBase->id(), parentCommand);			// let the other views add the command
 	}
    	m_undoStack->push(parentCommand);
-
-
 }
 
 bool SketchWidget::reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand) {
@@ -1368,7 +1365,13 @@ void SketchWidget::dropEvent(QDropEvent *event)
 			// rulers are local to a particular view
 			crossViewType = BaseCommand::SingleView;
 		}
-		new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
+		AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
+
+		if (modelPart->itemType() == ModelPart::Module) {
+			RestoreIndexesCommand * restoreIndexesCommand = new RestoreIndexesCommand(this, fromID, NULL, true, parentCommand);
+			addItemCommand->addRestoreIndexesCommand(restoreIndexesCommand);
+		}
+
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(fromID);
 
@@ -3014,28 +3017,13 @@ void SketchWidget::sketchWidget_deleteItem(long itemID, QUndoCommand * parentCom
 }
 
 void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand) {
-	ModelPartTiny * mpt = NULL;
 	if (itemBase->itemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(itemBase);
 		new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	}
-	else if (itemBase->itemType() == ModelPart::Module) {
-		mpt = m_sketchModel->makeTiny(itemBase->modelPart());
-		ConnectorPairHash externalConnectors;
-		//collectExternalConnectors(mpt, externalConnectors);
-		foreach (ConnectorItem * fromConnectorItem, externalConnectors.uniqueKeys()) {
-			foreach (ConnectorItem * toConnectorItem, externalConnectors.values(fromConnectorItem)) {
-				//change connection command here
-			}
-		}
-	}
-
-
-	DeleteItemCommand * deleteItemCommand = new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
-	if (mpt) {
-		deleteItemCommand->setTiny(mpt);
-	}
+			
+	new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
 }
 
 ItemBase::ViewIdentifier SketchWidget::viewIdentifier() {
@@ -4582,6 +4570,49 @@ bool SketchWidget::spaceBarIsPressed() {
 	return m_spaceBarIsPressed;
 }
 
-void SketchWidget::restoreTiny(ItemBase * itemBase, ModelPartTiny * tree)
+void SketchWidget::restoreIndexes(long id, ModelPartTiny * modelPartTiny, bool doEmit) 
 {
+	ItemBase * itemBase = findItem(id);
+	if (itemBase == NULL) return;
+
+	restoreIndexes(itemBase->modelPart(), modelPartTiny, doEmit);
+	m_sketchModel->walk(m_sketchModel->root(), 0);
+}
+
+void SketchWidget::restoreIndexes(ModelPart * modelPart, ModelPartTiny * modelPartTiny, bool doEmit)
+{
+	modelPart->setModelIndex(modelPartTiny->m_index);
+	modelPart->setOriginalModelIndex(modelPartTiny->m_originalIndex);
+	ItemBase * itemBase = modelPart->viewItem(scene());
+	if (itemBase != NULL) {
+		itemBase->resetID();
+	}
+	for (int i = 0; i < modelPart->children().count(); i++) {
+		QObject * object = modelPart->children().at(i);
+		restoreIndexes(dynamic_cast<ModelPart *>(object), modelPartTiny->m_children.at(i), false);
+	}
+
+	if (doEmit) {
+		emit restoreIndexesSignal(modelPart, modelPartTiny, false);
+	}
+}
+
+void SketchWidget::collectModuleExternalConnectors(ItemBase * itemBase, ItemBase * parent, ConnectorPairHash & connectorHash) 
+{
+	foreach (QGraphicsItem * item, itemBase->childItems()) {
+		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (fromConnectorItem) {
+			foreach (ConnectorItem* toConnectorItem, fromConnectorItem->connectedToItems()) {
+				if (parent->isAncestorOf(toConnectorItem)) continue;
+
+				connectorHash.insert(fromConnectorItem, toConnectorItem);
+			}
+		}
+		else {
+			ItemBase * childBase = dynamic_cast<ItemBase *>(item);
+			if (childBase == NULL) continue;
+
+			collectModuleExternalConnectors(childBase, parent, connectorHash);
+		}
+	}
 }

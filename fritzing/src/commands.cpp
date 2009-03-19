@@ -159,11 +159,12 @@ AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossVie
 	m_doFirstRedo = m_firstRedo = true;
 	m_module = false;
 	m_updateInfoView = updateInfoView;
+	m_restoreIndexesCommand = NULL;
 }
 
 void AddItemCommand::undo()
 {
-    m_sketchWidget->deleteItem(m_itemID, true, true, false);
+    m_sketchWidget->deleteItem(m_itemID, true, true, false, m_restoreIndexesCommand);
 }
 
 void AddItemCommand::redo()
@@ -178,6 +179,12 @@ void AddItemCommand::turnOffFirstRedo() {
 	m_doFirstRedo = false;
 }
 
+
+void AddItemCommand::addRestoreIndexesCommand(RestoreIndexesCommand * restoreIndexesCommand) {
+	m_restoreIndexesCommand = restoreIndexesCommand;
+}
+
+
 QString AddItemCommand::getParamString() const {
 	return "AddItemCommand " + AddDeleteItemCommand::getParamString();
 }
@@ -187,28 +194,20 @@ QString AddItemCommand::getParamString() const {
 DeleteItemCommand::DeleteItemCommand(SketchWidget* sketchWidget,BaseCommand::CrossViewType crossViewType,  QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent)
     : AddDeleteItemCommand(sketchWidget, crossViewType, moduleID, viewGeometry, id, modelIndex, originalModelIndex, parent)
 {
-	m_modelPartTiny = NULL;
 }
 
 void DeleteItemCommand::undo()
 {
-    ItemBase * itemBase = m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, m_originalModelIndex, this);
-	if (m_modelPartTiny) {
-		m_sketchWidget->restoreTiny(itemBase, m_modelPartTiny);
-	}
+    m_sketchWidget->addItem(m_moduleID, m_crossViewType, m_viewGeometry, m_itemID, m_modelIndex, m_originalModelIndex, this);
 }
 
 void DeleteItemCommand::redo()
 {
-    m_sketchWidget->deleteItem(m_itemID, true, true, false);
+    m_sketchWidget->deleteItem(m_itemID, true, true, false, NULL);
 }
 
 QString DeleteItemCommand::getParamString() const {
 	return "DeleteItemCommand " + AddDeleteItemCommand::getParamString();
-}
-
-void DeleteItemCommand::setTiny(ModelPartTiny * tiny) {
-	m_modelPartTiny = tiny;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -997,7 +996,7 @@ GroupCommand::GroupCommand(SketchWidget* sketchWidget, const QString & moduleID,
 
 void GroupCommand::undo()
 {
-	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView, false);
+	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView, false, NULL);
 }
 
 void GroupCommand::redo()
@@ -1082,3 +1081,38 @@ QString ModuleChangeConnectionCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+RestoreIndexesCommand::RestoreIndexesCommand(SketchWidget * sketchWidget, long id, ModelPartTiny * modelPartTiny, bool addType, QUndoCommand * parent) 
+	: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
+{
+	m_modelPartTiny = modelPartTiny;
+	m_itemID = id;
+	m_addType = addType;
+}
+
+void RestoreIndexesCommand::undo() 
+{
+	if (m_modelPartTiny  && !m_addType) {
+		m_sketchWidget->restoreIndexes(m_itemID, m_modelPartTiny, true);		
+	}
+}
+
+void RestoreIndexesCommand::redo() {
+	if (m_modelPartTiny && m_addType) {
+		m_sketchWidget->restoreIndexes(m_itemID, m_modelPartTiny, true);		
+	}
+}
+
+struct ModelPartTiny * RestoreIndexesCommand::modelPartTiny() {
+	return m_modelPartTiny;
+}
+
+void RestoreIndexesCommand::setModelPartTiny(ModelPartTiny * modelPartTiny) {
+	m_modelPartTiny = modelPartTiny;
+}
+
+QString RestoreIndexesCommand::getParamString() const {
+	return QString("RestoreIndexesCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 5")
+		.arg(m_itemID);
+}

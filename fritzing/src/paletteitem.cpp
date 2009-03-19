@@ -509,3 +509,10 @@ bool PaletteItem::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase
 
 	return false;
 }
+
+void PaletteItem::resetID() {
+	ItemBase::resetID();
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->resetID();
+	}
+}

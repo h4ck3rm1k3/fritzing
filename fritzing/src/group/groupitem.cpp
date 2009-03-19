@@ -39,15 +39,17 @@ $Date$
 //  autorouting behavior
 //	export with groups
 //	** recursive groups
-//		recursive modelpart ownership
+//		** recursive modelpart ownership
 //	open in new sketch (edit)
 //	** copy/paste
 //  ** undo copy/paste
 //	undo group
 //	** delete
-//	undo delete
+//	** undo delete
 //	rotate group bug: connected external wires don't updateConnections
 //  ** bug: not connecting across views
+//  bug: after undo, updateconnections not being called
+//  bug: drag out selection so that internal parts are selected, then copy/paste 
 
 //	** do model parts for grouped items get added as children to the group modelpart?
 //  ** save sketch with group(s)
@@ -200,4 +202,12 @@ void GroupItem::removeLayerKin() {
 	}
 
 	m_layerKin.clear();
+}
+
+
+void GroupItem::resetID() {
+	ItemBase::resetID();
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->resetID();
+	}
 }

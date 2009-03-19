@@ -393,6 +393,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 
 	succeeded = succeeded && connect(signaller, SIGNAL(groupSignal(const QString &, long, QList<long> &, const ViewGeometry &, bool)),
 									 slotter, SLOT(group(const QString &, long, QList<long> &, const ViewGeometry &, bool)) );
+	succeeded = succeeded && connect(signaller, SIGNAL(restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool )),
+									 slotter, SLOT(restoreIndexes(ModelPart *, ModelPartTiny *, bool )) );
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

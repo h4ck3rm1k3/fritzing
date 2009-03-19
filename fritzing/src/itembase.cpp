@@ -230,6 +230,10 @@ qint64 ItemBase::id() {
  	return m_id;
 }
 
+void ItemBase::resetID() {
+	m_id = m_modelPart->modelIndex() * ModelPart::indexMultiplier;
+}
+
 qreal ItemBase::z() {
 	return getViewGeometry().z();
 }

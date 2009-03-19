@@ -147,3 +147,9 @@ QHash<ItemBase *, QPointF> & LayerKinPaletteItem::sticking() {
 bool LayerKinPaletteItem::alreadySticking(ItemBase * itemBase) {
 	return m_layerKinChief->alreadySticking(itemBase);
 }
+
+void LayerKinPaletteItem::resetID() {
+	long offset = m_id % ModelPart::indexMultiplier;
+	ItemBase::resetID();
+	m_id += offset;
+}

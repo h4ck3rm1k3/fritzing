@@ -100,6 +100,7 @@ public:
     void undo();
     void redo();
 	void turnOffFirstRedo();
+	void addRestoreIndexesCommand(class RestoreIndexesCommand *);
 
 protected:
 	QString getParamString() const;
@@ -109,6 +110,7 @@ protected:
 	bool m_firstRedo;
 	bool m_doFirstRedo;
 	bool m_module;
+	RestoreIndexesCommand * m_restoreIndexesCommand;
 
 };
 
@@ -118,11 +120,9 @@ public:
     DeleteItemCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent);
     void undo();
     void redo();
-	void setTiny(struct ModelPartTiny *);
 
 protected:
 	QString getParamString() const;
-	struct ModelPartTiny * m_modelPartTiny;
 
 };
 
@@ -579,6 +579,25 @@ protected:
 	QList <long> m_toIDs;
 	bool m_doRatsnest;
 };
+
+class RestoreIndexesCommand : public BaseCommand
+{
+public:
+	RestoreIndexesCommand(class SketchWidget * sketchWidget, long id, struct ModelPartTiny *, bool addType, QUndoCommand * parent);
+	void undo();
+	void redo();
+	struct ModelPartTiny * modelPartTiny();
+	void setModelPartTiny(ModelPartTiny * );
+
+protected:
+	QString getParamString() const;
+
+protected:
+	struct ModelPartTiny * m_modelPartTiny;
+	long m_itemID;
+	bool m_addType;
+};
+
 
 
 #endif // COMMANDS_H

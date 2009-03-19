@@ -67,7 +67,7 @@ public:
 	void clearModelPart();
 	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *);
 	bool isLowerConnectorLayerVisible(PaletteItemBase *);
-
+	void resetID();
 
 protected:
 	void syncKinSelection(bool selected, PaletteItemBase * originator);

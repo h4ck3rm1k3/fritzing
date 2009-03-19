@@ -26,6 +26,7 @@ $Date$
 
 
 #include "groupitemkin.h"
+#include "../modelpart.h"
 
 
 GroupItemKin::GroupItemKin( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
@@ -54,4 +55,10 @@ QVariant GroupItemKin::itemChange(GraphicsItemChange change, const QVariant &val
 	   	}
    	}
     return GroupItemBase::itemChange(change, value);
+}
+
+void GroupItemKin::resetID() {
+	long offset = m_id % ModelPart::indexMultiplier;
+	ItemBase::resetID();
+	m_id += offset;
 }

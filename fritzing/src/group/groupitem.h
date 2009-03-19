@@ -43,6 +43,7 @@ public:
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void removeLayerKin();
+	void resetID();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

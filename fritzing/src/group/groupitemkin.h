@@ -40,6 +40,7 @@ public:
 	
 	ItemBase * layerKinChief();
 	void setLayerKinChief(GroupItemBase *);
+	void resetID();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);

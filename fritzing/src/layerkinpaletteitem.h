@@ -52,6 +52,7 @@ public:
 	bool alreadySticking(ItemBase * itemBase);
 	bool stickyEnabled(ItemBase * stickTo);
 	void saveStickyOffsets(QGraphicsSceneMouseEvent *event);
+	void resetID();
 
 
 protected:
