@@ -88,11 +88,11 @@ protected:
 	QString blockContainer(const QString &blockId);
 	QString settingsBlockVisibilityName(const QString &blockId);
 
-	void registerJsObjects(const QString &parentName);
+	void registerJsObjects();
 	void registerCurrentAgain();
 	void registerRefModel();
 	bool registerAsCurrentItem(ItemBase *item);
-	void registerInfoGraphicsView(class InfoGraphicsView *, const QString & parentName);
+	void registerInfoGraphicsView(class InfoGraphicsView *);
 	void setNullContent();
 
 protected:

@@ -3429,35 +3429,7 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-void SketchWidget::swapSelected(const QString &moduleID, bool exactMatch) {
-	if(moduleID != ___emptyString___) {
-		if(m_lastPaletteItemSelected) {
-			if(!exactMatch) {
-				// TODO: should there be a cancel here?
-				QMessageBox::information(
-					this,
-					tr("Warning!"),
-					tr("Not an exact match")
-				);
-			}
-			QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(m_lastPaletteItemSelected->instanceTitle()).arg(moduleID));
-			setUpSwap(m_lastPaletteItemSelected->id(), ModelPart::nextIndex(), moduleID, true, parentCommand);
-			
-			// TODO:  updateInfoView?
-			m_undoStack->waitPush(parentCommand, 10);
-		}
-	} else {
-		QMessageBox::information(
-			this,
-			tr("Sorry!"),
-			tr(
-			 "No part with those characteristics.\n"
-			 "We're working to avoid this message, and only let you choose between properties that do exist")
-		);
-	}
-}
-
-void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand) 
+void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand) 
 {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) return;
@@ -3476,16 +3448,14 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		}
 	}
 
-	new AddItemCommand(this, BaseCommand::SingleView, newModuleID, itemBase->getViewGeometry(), newID, true, newModelIndex, -1, parentCommand);
-	setUpSwapReconnect(itemBase, connectorHash, newID, newModuleID, parentCommand);
-	
-	if (doEmit) {
+	if (master) {
+		new AddItemCommand(this, BaseCommand::CrossView, newModuleID, itemBase->getViewGeometry(), newID, true, newModelIndex, -1, parentCommand);
+		setUpSwapReconnect(itemBase, connectorHash, newID, newModuleID, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(newID);
 		selectItemCommand->addUndo(itemBase->id());
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, parentCommand);
 		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, parentCommand);
-		emit setUpSwapSignal(itemID, newModelIndex, newModuleID, false, parentCommand);
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 	}
 }
@@ -3509,14 +3479,42 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 			}
 		}
 		if (newConnector) {
-			// TODO: (bbview only) check genders and add wire if necessary
-			// TODO: (bbview only) check distances
-			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-				new ChangeConnectionCommand(this, BaseCommand::SingleView, 
-											newID, fromConnectorItem->connectorSharedID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-											true, true, parentCommand);
-			}										
+			// TODO: check distances (for capacitors, for example)
+			if (swappedGender(fromConnectorItem, newConnector)) {
+				cleanUpWires = true;
+				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+					if (toConnectorItem->connectorType() == newConnector->connectorType()) {
+						// need a wire: connectors are same gender
+						long wireID = ItemBase::getNextID();
+						ViewGeometry vg;
+						new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, vg, wireID, false, -1, -1, parentCommand);
+						new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, fromConnectorItem->connectorSharedID(),
+								wireID, "connector0", true, true, parentCommand);
+						new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+								wireID, "connector1", true, true, parentCommand);
+						new RatsnestCommand(this, BaseCommand::CrossView, newID, fromConnectorItem->connectorSharedID(),
+								wireID, "connector0", true, true, parentCommand);
+						new RatsnestCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+								wireID, "connector1", true, true, parentCommand);
+					}
+					else {
+						// can connect to the new item directly
+						new ChangeConnectionCommand(this, BaseCommand::CrossView, 
+													newID, fromConnectorItem->connectorSharedID(),
+													toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+													true, true, parentCommand);
+					}
+				}	
+			}
+			else {
+				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+					// connect to the new item
+					new ChangeConnectionCommand(this, BaseCommand::CrossView, 
+												newID, fromConnectorItem->connectorSharedID(),
+												toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+												true, true, parentCommand);
+				}	
+			}
 		}
 		else {
 			cleanUpWires = true;
@@ -3525,8 +3523,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 	}
 
 	if (cleanUpWires) {
-		CleanUpWiresCommand * cleanUpWiresCommand = new CleanUpWiresCommand(this, false, parentCommand);
-		cleanUpWiresCommand->setCrossViewType(BaseCommand::SingleView);
+		new CleanUpWiresCommand(this, false, parentCommand);
 	}
 }
 
@@ -4654,4 +4651,15 @@ ViewLayer::ViewLayerID SketchWidget::defaultConnectorLayer(ViewIdentifierClass::
 		case ViewIdentifierClass::PCBView: return ViewLayer::Copper0;
 		default: return ViewLayer::UnknownLayer;
 	}
+}
+
+bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newConnector) {
+
+	return (((connectorItem->connectorType() == Connector::Male) && (newConnector->connectorType() == Connector::Female))  ||
+			((connectorItem->connectorType() == Connector::Female) && (newConnector->connectorType() == Connector::Male)));
+}
+
+PaletteItem * SketchWidget::lastPaletteItemSelected()
+{
+	return m_lastPaletteItemSelected;
 }

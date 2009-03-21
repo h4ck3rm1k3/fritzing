@@ -127,14 +127,12 @@ void HtmlInfoView::jsRegister() {
 	if(m_currentItem) {
 		InfoGraphicsView* igv = dynamic_cast<InfoGraphicsView*>(m_currentItem->scene()->parent());
 		if(igv) {
-			registerInfoGraphicsView(igv, "sketch");
+			registerInfoGraphicsView(igv);
 		}
 	}
 	registerCurrentAgain();
 	registerRefModel();
-	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
-		"infoView", this
-	);
+	m_webView->page()->mainFrame()->addToJavaScriptWindowObject( "infoView", this);
 	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 }
 
@@ -166,7 +164,7 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	if (item == NULL) {
 		// TODO: it would be nice to do something reasonable in this case
 		setNullContent();
-		registerInfoGraphicsView(infoGraphicsView, "sketch");
+		registerInfoGraphicsView(infoGraphicsView);
 		registerRefModel();
 		return;
 	}
@@ -179,7 +177,7 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	//s += appendCurrentGeometry(item, false); //probably not used in alpha -andre/johannes
 	setContent(s);
 	registerAsCurrentItem(item);
-	registerInfoGraphicsView(infoGraphicsView, "sketch");
+	registerInfoGraphicsView(infoGraphicsView);
 	registerRefModel();
 }
 
@@ -621,14 +619,7 @@ bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 	// note: must take place after setContent()
 	if(item) {
 		m_currentItem = item;
-		/*
-		if(m_currentItem->itemType() != ModelPart::Wire) {
-			registerJsObjects("swapper");
-		} else {
-			registerJsObjects("wireManager");
-		}
-		*/
-		registerJsObjects("sketch");
+		registerJsObjects();
 	} else {
 		m_currentItem = NULL;
 		setNullContent();
@@ -636,8 +627,7 @@ bool HtmlInfoView::registerAsCurrentItem(ItemBase *item) {
 	return m_currentItem != NULL;
 }
 
-void HtmlInfoView::registerJsObjects(const QString &parentName) {
-	Q_UNUSED(parentName);
+void HtmlInfoView::registerJsObjects() {
 	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
 		"currentItem", m_currentItem
 	);
@@ -684,12 +674,11 @@ QString HtmlInfoView::blockContainer(const QString &blockId) {
 	return QString("<div id='%1' %2><table>\n").arg(blockId).arg(blockVisibility(blockId));
 }
 
-void HtmlInfoView::registerInfoGraphicsView(InfoGraphicsView * infoGraphicsView, const QString & parentName) {
+void HtmlInfoView::registerInfoGraphicsView(InfoGraphicsView * infoGraphicsView) {
 	// note: must take place after setContent()
 	if(infoGraphicsView) {
-		m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
-			parentName, infoGraphicsView
-		);
+		m_webView->page()->mainFrame()->addToJavaScriptWindowObject("sketch", infoGraphicsView);
+		m_webView->page()->mainFrame()->addToJavaScriptWindowObject("mainWindow", infoGraphicsView->window());
 	}
 }
 

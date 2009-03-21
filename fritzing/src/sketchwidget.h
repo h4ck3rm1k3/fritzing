@@ -205,6 +205,8 @@ public:
 	void setConnectorExternal(long itemID, const QString & connectorID, bool external);
 	bool spaceBarIsPressed();
 	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
+	PaletteItem * lastPaletteItemSelected();
+	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -310,6 +312,7 @@ protected:
 	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, const ViewGeometry &, long id); 
 	void collectModuleExternalConnectors(ItemBase *, ItemBase * parent, ConnectorPairHash &);
 	void setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand);
+	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -342,7 +345,6 @@ signals:
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool doEmit);
-	void setUpSwapSignal(long itemID, long newID, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -373,10 +375,8 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void ensureFixedItemsPositions();
-	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 
 public slots:
-	void swapSelected(const QString &moduleId, bool exactMatch=true);
 	void changeWireColor(const QString newColor);
 	void changeWireWidth(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);

@@ -83,6 +83,7 @@ signals:
 public slots:
 	void ensureClosable();
 	void changeActivation(bool activate);
+	void swapSelected(const QString &moduleId, bool exactMatch);
 
 protected slots:
 	void load();

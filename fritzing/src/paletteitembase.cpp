@@ -65,7 +65,12 @@ QPainterPath PaletteItemBase::shape() const
 	// TODO: figure out real shape of svg
     QPainterPath path;
 
-	if ((m_viewLayerID == ViewLayer::Copper0) && (itemType() == ModelPart::Board)) {
+	if ((m_viewLayerID == ViewLayer::Copper0) && 
+		(itemType() == ModelPart::Board) && 
+		(m_modelPart->moduleID().compare("1234ABDE24_ST") == 0)) 
+	{
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! hack alert !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! eventually this should be replaced by someting in the actual fzp file
 		// hack for testing click through on the arduino
 		path.addRect(m_size.width() * 0.25, 0, 3 * m_size.width() / 4, m_size.height() / 10);
 		path.addRect(m_size.width() * 0.5, 9 * m_size.height() / 10, m_size.width() * 0.5, m_size.height() / 10);

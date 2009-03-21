@@ -1532,3 +1532,38 @@ QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLa
 	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
 }
 
+void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
+	if(moduleID == ___emptyString___) {
+		QMessageBox::information(
+			this,
+			tr("Sorry!"),
+			tr(
+			 "No part with those characteristics.\n"
+			 "We're working to avoid this message, and only let you choose between properties that do exist")
+		);
+		return;
+	}
+
+	PaletteItem * paletteItem = m_currentGraphicsView->lastPaletteItemSelected();
+	if (paletteItem == NULL) return;
+
+	if(!exactMatch) {
+		// TODO: should there be a cancel here?
+		QMessageBox::information(
+			this,
+			tr("Warning!"),
+			tr("Not an exact match")
+		);
+	}
+	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(paletteItem->instanceTitle()).arg(moduleID));
+	long modelIndex = ModelPart::nextIndex();
+	m_schematicGraphicsView->setUpSwap(paletteItem->id(), modelIndex, moduleID, false, parentCommand);
+	m_pcbGraphicsView->setUpSwap(paletteItem->id(), modelIndex, moduleID, false, parentCommand);
+
+	// master view must go last, since it creates the delete command
+	m_breadboardGraphicsView->setUpSwap(paletteItem->id(), modelIndex, moduleID, true, parentCommand);
+
+	// TODO:  z-order?
+	m_undoStack->waitPush(parentCommand, 10);
+
+}

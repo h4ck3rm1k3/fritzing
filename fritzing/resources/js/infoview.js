@@ -142,7 +142,7 @@ function doSwap(family,name,currValue) {
 	var moduleID = refModel.retrieveModuleIdWith(family,name);
 	var exactMatch = refModel.lastWasExactMatch();
 	
-	sketch.swapSelected(moduleID,exactMatch);
+	mainWindow.swapSelected(moduleID,exactMatch);
 }
 
 function setWireColor(wireTitle, wireId, newColor) {
