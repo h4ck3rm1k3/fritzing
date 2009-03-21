@@ -44,7 +44,7 @@ class Note : public ItemBase
 Q_OBJECT
 
 public:
-	Note(class ModelPart*, ItemBase::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
+	Note(class ModelPart*, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	
 	void saveGeometry();
 	bool itemMoved();

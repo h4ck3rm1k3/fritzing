@@ -40,6 +40,7 @@ $Date$
 
 #include "viewgeometry.h"
 #include "viewlayer.h"
+#include "viewidentifierclass.h"
 #include "misc.h"
 #include "graphicssvglineitem.h"
 
@@ -52,32 +53,20 @@ class ItemBase : public GraphicsSvgLineItem
 Q_OBJECT
 
 public:
-   enum ViewIdentifier {
-    	IconView,
-    	BreadboardView,
-    	SchematicView,
-    	PCBView,
-    	AllViews,
-    	ViewCount
-   	};
-
+ 
 	static QString rulerModuleIDName;
 	static QString breadboardModuleIDName;
 	static QString tinyBreadboardModuleIDName;
-	static QString & viewIdentifierName(ViewIdentifier);
-	static QString & viewIdentifierXmlName(ViewIdentifier);
-	static QString & viewIdentifierNaturalName(ViewIdentifier);
 	static void initNames();
 	static void cleanup();
 	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);
-	static ViewLayer::ViewLayerID defaultConnectorLayer(ItemBase::ViewIdentifier viewId);
 	static QString partInstanceDefaultTitle;
 	static QString moduleInstanceDefaultTitle;
 	static QList<ItemBase *> emptyList;
 
 
 public:
-	ItemBase(class ModelPart*, ItemBase::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
+	ItemBase(class ModelPart*, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	virtual ~ItemBase();
 
 	qreal z();
@@ -97,7 +86,7 @@ public:
 	virtual void rotateItem(qreal degrees);
 	virtual void flipItem(Qt::Orientations orientation);
 	virtual void removeLayerKin();
-	ItemBase::ViewIdentifier viewIdentifier();
+	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	QString & viewIdentifierName();
 	ViewLayer::ViewLayerID viewLayerID();
 	void setViewLayerID(ViewLayer::ViewLayerID, const LayerHash & viewLayers);
@@ -179,7 +168,7 @@ public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
 	static qint64 getNextID(qint64 fromIndex);
-	static class FSvgRenderer * setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
+	static class FSvgRenderer * setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, class LayerAttributes &);
 
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
@@ -207,7 +196,7 @@ protected:
 	qint64 m_id;
 	ViewGeometry m_viewGeometry;
 	class ModelPart* m_modelPart;
-	ViewIdentifier m_viewIdentifier;
+	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
 	ViewLayer::ViewLayerID m_viewLayerID;
 	int m_connectorHoverCount;
 	int m_connectorHoverCount2;
@@ -226,7 +215,6 @@ protected:
 
 protected:
 	static long nextID;
-	static QHash <ViewIdentifier, class NameTriple * > names;
 	const static QColor hoverColor;
 	const static qreal hoverOpacity;
 	const static QColor connectorHoverColor;

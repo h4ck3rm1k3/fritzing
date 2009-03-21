@@ -37,7 +37,7 @@ $Date$
 int PartsEditorConnectorsView::ConnDefaultWidth = 5;
 int PartsEditorConnectorsView::ConnDefaultHeight = ConnDefaultWidth;
 
-PartsEditorConnectorsView::PartsEditorConnectorsView(ItemBase::ViewIdentifier viewId, QDir tempDir, bool showingTerminalPoints, QWidget *parent, int size)
+PartsEditorConnectorsView::PartsEditorConnectorsView(ViewIdentifierClass::ViewIdentifier viewId, QDir tempDir, bool showingTerminalPoints, QWidget *parent, int size)
 	: PartsEditorAbstractView(viewId, tempDir, false, parent, size)
 {
 	m_showingTerminalPoints = showingTerminalPoints;
@@ -81,7 +81,7 @@ void PartsEditorConnectorsView::createConnector(Connector *conn, const QSize &co
 
 	m_undoStack->push(new QUndoCommand(
 		QString("connector '%1' added to %2 view")
-		.arg(connId).arg(ItemBase::viewIdentifierName(m_viewIdentifier))
+		.arg(connId).arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
 	));
 }
 
@@ -100,7 +100,7 @@ void PartsEditorConnectorsView::removeConnector(const QString &connId) {
 		scene()->update();
 		m_undoStack->push(new QUndoCommand(
 			QString("connector '%1' removed from %2 view")
-			.arg(connId).arg(ItemBase::viewIdentifierName(m_viewIdentifier))
+			.arg(connId).arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
 		));
 
 		PartsEditorConnectorsConnectorItem *connToRemoveAux = dynamic_cast<PartsEditorConnectorsConnectorItem*>(connToRemove);
@@ -161,7 +161,7 @@ void PartsEditorConnectorsView::informConnectorSelectionFromView(const QString &
 	emit connectorSelected(connId);
 }
 
-void PartsEditorConnectorsView::setMismatching(ItemBase::ViewIdentifier viewId, const QString &id, bool mismatching) {
+void PartsEditorConnectorsView::setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching) {
 	if(m_item && viewId == m_viewIdentifier) {
 		for (int i = 0; i < m_item->childItems().count(); i++) {
 			PartsEditorConnectorsConnectorItem * connectorItem

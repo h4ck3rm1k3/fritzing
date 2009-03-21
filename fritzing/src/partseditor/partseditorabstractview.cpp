@@ -34,7 +34,7 @@ $Date$
 #include "../debugdialog.h"
 
 
-PartsEditorAbstractView::PartsEditorAbstractView(ItemBase::ViewIdentifier viewId, QDir tempDir, bool deleteModelPartOnSceneClear, QWidget *parent, int size)
+PartsEditorAbstractView::PartsEditorAbstractView(ViewIdentifierClass::ViewIdentifier viewId, QDir tempDir, bool deleteModelPartOnSceneClear, QWidget *parent, int size)
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
@@ -51,9 +51,9 @@ PartsEditorAbstractView::~PartsEditorAbstractView() {
 
 void PartsEditorAbstractView::addDefaultLayers() {
 	switch( m_viewIdentifier ) {
-		case ItemBase::BreadboardView: addBreadboardViewLayers(); break;
-		case ItemBase::SchematicView: addSchematicViewLayers(); break;
-		case ItemBase::PCBView: addPcbViewLayers(); break;
+		case ViewIdentifierClass::BreadboardView: addBreadboardViewLayers(); break;
+		case ViewIdentifierClass::SchematicView: addSchematicViewLayers(); break;
+		case ViewIdentifierClass::PCBView: addPcbViewLayers(); break;
 		default: break;
 	}
 }
@@ -121,7 +121,7 @@ void PartsEditorAbstractView::fitCenterAndDeselect() {
 		QRectF viewRect = rect();
 
 		int zoomCorrection;
-		if(m_viewIdentifier != ItemBase::IconView) {
+		if(m_viewIdentifier != ViewIdentifierClass::IconView) {
 			qreal x = viewRect.center().x();
 			qreal y = viewRect.center().y();
 			m_item->setPos(x,y);
@@ -197,23 +197,23 @@ ModelPart *PartsEditorAbstractView::createFakeModelPart(const QHash<QString,Stri
 	int errorColumn;
 	QString fakeFzFile =
 		QString("<module><views>\n")+
-			QString("<%1><layers image='%2' >\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier)).arg(svgFilePath);
+			QString("<%1><layers image='%2' >\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier)).arg(svgFilePath);
 		foreach(QString layer, layers) { fakeFzFile +=
 			QString("    <layer layerId='%1' />\n").arg(layer);
 		}
 	fakeFzFile +=
-			QString("</layers></%1>\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier))+
+			QString("</layers></%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 			QString("</views><connectors>\n");
 
 	foreach(QString id, conns.keys()) {
 		QString terminalAttr = conns[id]->second != ___emptyString___ ? QString("terminalId='%1'").arg(conns[id]->second) : "";
 		fakeFzFile += QString("<connector id='%1'><views>\n").arg(id)+
-				QString("<%1>\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier))+
+				QString("<%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 				QString("<p layer='%1' svgId='%2' %3/>\n")
-					.arg(ViewLayer::viewLayerXmlNameFromID(ItemBase::defaultConnectorLayer(m_viewIdentifier)))
+					.arg(ViewLayer::viewLayerXmlNameFromID(SketchWidget::defaultConnectorLayer(m_viewIdentifier)))
 					.arg(conns[id]->first)
 					.arg(terminalAttr)+
-				QString("</%1>\n").arg(ItemBase::viewIdentifierXmlName(m_viewIdentifier))+
+				QString("</%1>\n").arg(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier))+
 				QString("</views></connector>\n");
 	}
 	fakeFzFile += QString("</connectors></module>\n");
@@ -288,7 +288,7 @@ const QStringList PartsEditorAbstractView::getLayers(const QString &path) {
 	}
 
 	if(retval.isEmpty()) {
-		retval << ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
+		retval << ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 	}
 
 	return retval;
@@ -307,7 +307,7 @@ QDir PartsEditorAbstractView::tempFolder() {
 }
 
 QString PartsEditorAbstractView::getOrCreateViewFolderInTemp() {
-	QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
+	QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 
 	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
 		Q_ASSERT(m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder));
@@ -341,7 +341,7 @@ ViewLayer::ViewLayerID PartsEditorAbstractView::connectorLayerId() {
 			findConnectorLayerId(m_item->svgDom())
 		);
 	if(viewLayerID == ViewLayer::UnknownLayer) {
-		return ItemBase::defaultConnectorLayer(m_viewIdentifier);
+		return SketchWidget::defaultConnectorLayer(m_viewIdentifier);
 	} else {
 		return viewLayerID;
 	}

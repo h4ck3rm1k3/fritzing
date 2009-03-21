@@ -50,7 +50,7 @@ class ConnectorsViewsWidget : public QFrame {
 	public slots:
 		void repaint();
 		void drawConnector(Connector*);
-		void removeConnectorFrom(const QString&,ItemBase::ViewIdentifier);
+		void removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier);
 		void showHideTerminalPoints(int checkState);
 		void informConnectorSelection(const QString &connId);
 
@@ -61,7 +61,7 @@ class ConnectorsViewsWidget : public QFrame {
 		void createViewImageWidget(
 				PartsEditorConnectorsView *&viw, PartsEditorSpecificationsView* sister,
 				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
-				ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId);
+				ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId);
 		QWidget *addZoomControls(PartsEditorConnectorsView *view);
 
 		bool showingTerminalPoints();

@@ -36,7 +36,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 static QColor labelTextColor = Qt::white;
 
-PCBSketchWidget::PCBSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
+PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
 	m_viewName = QObject::tr("PCB View");

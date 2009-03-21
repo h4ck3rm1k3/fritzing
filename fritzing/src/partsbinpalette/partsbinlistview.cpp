@@ -62,7 +62,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 		lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
 
 		LayerAttributes layerAttributes;
-		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ItemBase::IconView, ViewLayer::Icon, layerAttributes);
+		FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
 		if (renderer != NULL) {
 			QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
 			QPixmap * pixmap = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);

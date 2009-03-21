@@ -32,6 +32,9 @@ $Date$
 
 #include "connectorswidget.h"
 #include "../debugdialog.h"
+#include "../modelpart.h"
+#include "../connectorshared.h"
+
 
 ConnectorNameComboBox::ConnectorNameComboBox(int * prevSelIdx, QWidget *parent) : QComboBox(parent) {
 	m_prevSelIdx = prevSelIdx;
@@ -102,9 +105,9 @@ ConnectorsWidget::ConnectorsWidget(QWidget *parent) : QWidget(parent) {
 	connect(m_userDefConnectors,SIGNAL(currentIndexChanged(int)),this,SLOT(showConnInfoIfAnyAndSavePrev(int)));
 	connect(m_connId,SIGNAL(editingFinished()),this,SLOT(updateUserDefConnsComboBox()));
 
-	m_comboBoxes[ItemBase::BreadboardView] = m_breadConnectors;
-	m_comboBoxes[ItemBase::SchematicView] = m_schemConnectors;
-	m_comboBoxes[ItemBase::PCBView] = m_pcbConnectors;
+	m_comboBoxes[ViewIdentifierClass::BreadboardView] = m_breadConnectors;
+	m_comboBoxes[ViewIdentifierClass::SchematicView] = m_schemConnectors;
+	m_comboBoxes[ViewIdentifierClass::PCBView] = m_pcbConnectors;
 
 	//m_editingExistingConnector = false;
 }
@@ -179,7 +182,7 @@ void ConnectorsWidget::setUsrDefConnectorsUneditable() {
 	m_connInfo.insert(idx,new ConnectorsWidgetHelpClass(id));
 }
 
-void ConnectorsWidget::connectorsFound(ItemBase::ViewIdentifier viewId, QStringList connNames) {
+void ConnectorsWidget::connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, QStringList connNames) {
 	QComboBox* currCB = m_comboBoxes[viewId];
 	currCB->clear();
 	currCB->addItems(connNames);
@@ -200,13 +203,13 @@ QList<ConnectorShared*> ConnectorsWidget::connectorsInfo() {
 
 		// TODO: figure out which layer the connectors belong to
 		if(cwhc->idxBreadCB != -1) {
-			cs->addPin(ItemBase::BreadboardView,m_breadConnectors->itemText(cwhc->idxBreadCB), ViewLayer::Breadboard, "");
+			cs->addPin(ViewIdentifierClass::BreadboardView,m_breadConnectors->itemText(cwhc->idxBreadCB), ViewLayer::Breadboard, "");
 		}
 		if(cwhc->idxSchemCB != -1) {
-			cs->addPin(ItemBase::SchematicView, m_schemConnectors->itemText(cwhc->idxSchemCB), ViewLayer::Schematic, "");
+			cs->addPin(ViewIdentifierClass::SchematicView, m_schemConnectors->itemText(cwhc->idxSchemCB), ViewLayer::Schematic, "");
 		}
 		if(cwhc->idxPcbCB != -1) {
-			cs->addPin(ItemBase::PCBView, m_pcbConnectors->itemText(cwhc->idxPcbCB), ViewLayer::Copper0, "");
+			cs->addPin(ViewIdentifierClass::PCBView, m_pcbConnectors->itemText(cwhc->idxPcbCB), ViewLayer::Copper0, "");
 		}
 		*retval << cs;
 	}
@@ -230,9 +233,9 @@ void ConnectorsWidget::addConnectorShared(ConnectorShared * connStuff) {
 	cwhc->idxTypeCB = itemIndex(m_connType, connStuff->connectorTypeString());
 
 	// TODO: figure out the correct pin layer
-	cwhc->idxBreadCB = itemIndex(m_breadConnectors, connStuff->pin(ItemBase::BreadboardView, ViewLayer::Breadboard));
-	cwhc->idxSchemCB = itemIndex(m_schemConnectors, connStuff->pin(ItemBase::SchematicView, ViewLayer::Schematic));
-	cwhc->idxPcbCB = itemIndex(m_pcbConnectors, connStuff->pin(ItemBase::PCBView, ViewLayer::Copper0));
+	cwhc->idxBreadCB = itemIndex(m_breadConnectors, connStuff->pin(ViewIdentifierClass::BreadboardView, ViewLayer::Breadboard));
+	cwhc->idxSchemCB = itemIndex(m_schemConnectors, connStuff->pin(ViewIdentifierClass::SchematicView, ViewLayer::Schematic));
+	cwhc->idxPcbCB = itemIndex(m_pcbConnectors, connStuff->pin(ViewIdentifierClass::PCBView, ViewLayer::Copper0));
 
 	m_connInfo[m_userDefConnectors->count()] = cwhc;
 	m_userDefConnectors->addItem(cwhc->id);

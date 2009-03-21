@@ -36,12 +36,12 @@ class PartsEditorSketchWidget : public SketchWidget
 Q_OBJECT
 
 public:
-    PartsEditorSketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=300, int minSize=100);
+    PartsEditorSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0, int size=300, int minSize=100);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
-	void loadSvgFile(StringPair *path, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, QString layer);
+	void loadSvgFile(StringPair *path, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, QString layer);
 
 signals:
-	void connectorsFound(ItemBase::ViewIdentifier viewId, QStringList connNames);
+	void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, QStringList connNames);
 
 protected:
 	void clearScene();

@@ -163,10 +163,9 @@ protected slots:
 	void loadPart(QString newPartPath);
 	void partsEditorClosed(long id);
 
-	void findSketchWidgetSlot(ItemBase::ViewIdentifier, SketchWidget * &);
+	void findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &);
 
 	void setInfoViewOnHover(bool infoViewOnHover);
-	void swapSelected();
 	void updateItemMenu();
 
 	void autoroute();
@@ -230,7 +229,7 @@ protected:
     void exportBOM();
 	void exportDiy(bool wantPDF, bool wantSVG);
 
-	QList<QWidget*> getButtonsForView(ItemBase::ViewIdentifier viewId);
+	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
 
 	const QString untitledFileName();
 	int &untitledFileCount();

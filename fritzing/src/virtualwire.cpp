@@ -27,7 +27,7 @@ $Date$
 #include "virtualwire.h"
 #include "connectoritem.h"
 
-VirtualWire::VirtualWire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
+VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
 	if (!getRatsnest()) {
@@ -46,7 +46,7 @@ void VirtualWire::paint (QPainter * painter, const QStyleOptionGraphicsItem * op
 void VirtualWire::connectionChange(ConnectorItem * ) {
 }
 
-FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) {
+FSvgRenderer * VirtualWire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 	FSvgRenderer * renderer = Wire::setUpConnectors(modelPart, viewIdentifier);
 	hideConnectors();
 	return renderer;

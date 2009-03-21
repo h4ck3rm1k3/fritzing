@@ -37,7 +37,7 @@ class PartsEditorSpecificationsView : public PartsEditorAbstractView
 Q_OBJECT
 
 public:
-	PartsEditorSpecificationsView(ItemBase::ViewIdentifier, QDir tempDir, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
+	PartsEditorSpecificationsView(ViewIdentifierClass::ViewIdentifier, QDir tempDir, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
 	~PartsEditorSpecificationsView();
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
 	void loadSvgFile(ModelPart * modelPart);

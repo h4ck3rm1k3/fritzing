@@ -35,6 +35,11 @@ $Date$
 #include "partseditorspecificationsview.h"
 #include "partsymbolswidget.h"
 #include "partspecificationswidget.h"
+#include "editabledatewidget.h"
+#include "hashpopulatewidget.h"
+#include "partconnectorswidget.h"
+#include "../palettemodel.h"
+#include "../sketchmodel.h"
 
 #include <QtGui>
 #include <QCryptographicHash>
@@ -173,7 +178,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	int iconViewSize = 50;
 	QGraphicsItem *startItem = modelPart? NULL: PartsEditorMainWindow::emptyViewItem("icon_icon.png",___emptyString___);
 	m_iconViewImage = new PartsEditorSpecificationsView(
-		ItemBase::IconView, createTempFolderIfNecessary(), startItem, m_headerFrame, iconViewSize
+		ViewIdentifierClass::IconView, createTempFolderIfNecessary(), startItem, m_headerFrame, iconViewSize
 	);
 	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);
 	m_iconViewImage->setObjectName("iconImage");
@@ -261,8 +266,8 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_connsViews, SLOT(repaint()));
 	connect(m_connsInfo, SIGNAL(drawConnector(Connector*)), m_connsViews, SLOT(drawConnector(Connector*)));
-	connect(m_connsInfo, SIGNAL(removeConnectorFrom(const QString&,ItemBase::ViewIdentifier)),
-			m_connsViews, SLOT(removeConnectorFrom(const QString&,ItemBase::ViewIdentifier)));
+	connect(m_connsInfo, SIGNAL(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)),
+			m_connsViews, SLOT(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)));
 	connect(m_connsViews, SIGNAL(connectorSelectedInView(const QString&)),
 			m_connsInfo, SLOT(connectorSelectedInView(const QString&)));
 	m_connsViews->showTerminalPointsCheckBox()->setChecked(false);

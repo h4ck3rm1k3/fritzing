@@ -13,35 +13,46 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU General Public Licensetriple
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2398 $:
+$Revision: 2672 $:
 $Author: cohen@irascible.com $:
-$Date: 2009-02-17 00:53:10 +0100 (Tue, 17 Feb 2009) $
+$Date: 2009-03-19 19:31:37 +0100 (Thu, 19 Mar 2009) $
 
 ********************************************************************/
 
 
 
+#ifndef VIEWIDENTIFIERCLASS_H
+#define VIEWIDENTIFIERCLASS_H
 
 
-#include "iconwidgetpaletteitem.h"
-#include "../misc.h"
+#include <QHash>
 
-IconWidgetPaletteItem::IconWidgetPaletteItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
-	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel) {
-}
+class ViewIdentifierClass
+{
 
-void IconWidgetPaletteItem::setDefaultTooltip() {
-	if (m_modelPart) {
-		QString base = ITEMBASE_FONT_PREFIX + "%1" + ITEMBASE_FONT_SUFFIX;
-		if(m_modelPart->itemType() != ModelPart::Wire) {
-			this->setToolTip(base.arg(m_modelPart->title()));
-		} else {
-			this->setToolTip(base.arg(m_modelPart->modelPartShared()->title() + " (" + m_modelPart->modelPartShared()->moduleID() + ")"));
-		}
-	}
-}
+public:
+   enum ViewIdentifier {
+    	IconView,
+    	BreadboardView,
+    	SchematicView,
+    	PCBView,
+    	AllViews,
+    	ViewCount
+   	};
+
+	static QString & viewIdentifierName(ViewIdentifier);
+	static QString & viewIdentifierXmlName(ViewIdentifier);
+	static QString & viewIdentifierNaturalName(ViewIdentifier);
+	static void initNames();
+	static void cleanup();
+
+protected:
+	static QHash <ViewIdentifier, class NameTriple * > names;
+
+};
+#endif

@@ -89,7 +89,7 @@ $Date$
 
 QString GroupItem::moduleIDName = "GroupModuleID";
 
-GroupItem::GroupItem( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
+GroupItem::GroupItem( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_blockSync = false;

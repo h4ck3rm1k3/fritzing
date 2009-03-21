@@ -38,18 +38,13 @@ $Date$
 #include <QHash>
 
 #include "itembase.h"
-#include "viewgeometry.h"
-#include "viewlayer.h"
-#include "graphicssvglineitem.h"
-
-//class Wire : public QObject, public QGraphicsLineItem, public virtual ItemBase
 
 class Wire : public ItemBase
 {
 Q_OBJECT
 
 public:
-	Wire(class ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
+	Wire(class ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry &, long id, QMenu * itemMenu);
 	virtual ~Wire();
 
 	void saveGeometry();
@@ -119,7 +114,7 @@ public:
 	static QString moduleIDName;
 	static void initNames();
 	static QRgb getRgb(const QString & name);
-	static const QColor * netColor(ItemBase::ViewIdentifier);
+	static const QColor * netColor(ViewIdentifierClass::ViewIdentifier);
 	static void cleanup();
 
 protected:
@@ -131,7 +126,7 @@ protected:
 	void initEnds(const ViewGeometry &, QRectF defaultRect);
 	void connectionChange(ConnectorItem *);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
- 	virtual class FSvgRenderer * setUpConnectors(class ModelPart *, ItemBase::ViewIdentifier);
+ 	virtual class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	void collectChained(ConnectorItem * connectorItem, QList<Wire *> & chained, QList<ConnectorItem *> & ends);
 	void setConnector0Rect();
 	void setConnector1Rect();

@@ -31,14 +31,14 @@ $Date$
 #include "connectorinforemovebutton.h"
 #include "../debugdialog.h"
 
-QList<ItemBase::ViewIdentifier> MismatchingConnectorWidget::AllViews;
+QList<ViewIdentifierClass::ViewIdentifier> MismatchingConnectorWidget::AllViews;
 
 //TODO Mariano: looks like an abstracteditable, perhaps can be one
-MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *topLevelContainer, ItemBase::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView, Connector* conn)
+MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *topLevelContainer, ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView, Connector* conn)
 	: AbstractConnectorInfoWidget(topLevelContainer, parent)
 {
 	if(AllViews.size() == 0) {
-		AllViews << ItemBase::BreadboardView << ItemBase::SchematicView << ItemBase::PCBView;
+		AllViews << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
 	}
 
 	m_prevConn = conn;
@@ -54,7 +54,7 @@ MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *top
 	errorImg->setPixmap(QPixmap(":/resources/images/error_x_small.png"));
 
 	if(isInView) {
-		m_missingViews << ItemBase::BreadboardView << ItemBase::SchematicView << ItemBase::PCBView;
+		m_missingViews << ViewIdentifierClass::BreadboardView << ViewIdentifierClass::SchematicView << ViewIdentifierClass::PCBView;
 		addViewPresence(viewId);
 	} else {
 		removeViewPresence(viewId);
@@ -83,16 +83,16 @@ void MismatchingConnectorWidget::setSelected(bool selected, bool doEmitChange) {
 	}
 }
 
-bool MismatchingConnectorWidget::onlyMissingThisView(ItemBase::ViewIdentifier viewId) {
+bool MismatchingConnectorWidget::onlyMissingThisView(ViewIdentifierClass::ViewIdentifier viewId) {
 	return m_missingViews.size() == 1 && m_missingViews[0] == viewId;
 }
 
-void MismatchingConnectorWidget::addViewPresence(ItemBase::ViewIdentifier viewId) {
+void MismatchingConnectorWidget::addViewPresence(ViewIdentifierClass::ViewIdentifier viewId) {
 	m_missingViews.removeAll(viewId);
 	m_connMsgLabel->setText(viewsString());
 }
 
-void MismatchingConnectorWidget::removeViewPresence(ItemBase::ViewIdentifier viewId) {
+void MismatchingConnectorWidget::removeViewPresence(ViewIdentifierClass::ViewIdentifier viewId) {
 	m_missingViews << viewId;
 	m_connMsgLabel->setText(viewsString());
 }
@@ -109,8 +109,8 @@ Connector *MismatchingConnectorWidget::prevConn() {
 	return m_prevConn;
 }
 
-QList<ItemBase::ViewIdentifier> MismatchingConnectorWidget::views() {
-	QList<ItemBase::ViewIdentifier> list = AllViews;
+QList<ViewIdentifierClass::ViewIdentifier> MismatchingConnectorWidget::views() {
+	QList<ViewIdentifierClass::ViewIdentifier> list = AllViews;
 	for(int i=0; i < m_missingViews.size(); i++) {
 		list.removeAll(m_missingViews[i]);
 	}
@@ -121,12 +121,12 @@ QString MismatchingConnectorWidget::viewsString() {
 	QString retval = tr("In ");
 	bool notFirst = false;
 	for(int i=0; i < AllViews.size(); i++) {
-		ItemBase::ViewIdentifier viewId = AllViews[i];
+		ViewIdentifierClass::ViewIdentifier viewId = AllViews[i];
 		if(!m_missingViews.contains(viewId)) {
 			if(notFirst) {
 				retval += tr("and ");
 			}
-			retval += ItemBase::viewIdentifierNaturalName(viewId)+" ";
+			retval += ViewIdentifierClass::viewIdentifierNaturalName(viewId)+" ";
 			notFirst = true;
 		}
 	}

@@ -43,9 +43,9 @@ QString PartSymbolsWidget::EmptyPcbViewText = ___emptyString___;
 PartSymbolsWidget::PartSymbolsWidget(SketchModel *sketchModel, WaitPushUndoStack *undoStack, QWidget *parent) : QFrame(parent) {
 	init();
 
-	createViewImageWidget(sketchModel, undoStack, m_breadView, ItemBase::BreadboardView, "breadboard_icon.png", EmptyBreadViewText);
-	createViewImageWidget(sketchModel, undoStack, m_schemView, ItemBase::SchematicView, "schematic_icon.png", EmptySchemViewText);
-	createViewImageWidget(sketchModel, undoStack, m_pcbView, ItemBase::PCBView, "pcb_icon.png", EmptyPcbViewText);
+	createViewImageWidget(sketchModel, undoStack, m_breadView, ViewIdentifierClass::BreadboardView, "breadboard_icon.png", EmptyBreadViewText);
+	createViewImageWidget(sketchModel, undoStack, m_schemView, ViewIdentifierClass::SchematicView, "schematic_icon.png", EmptySchemViewText);
+	createViewImageWidget(sketchModel, undoStack, m_pcbView, ViewIdentifierClass::PCBView, "pcb_icon.png", EmptyPcbViewText);
 
 	m_guidelines = new QLabel(tr("Please refer to the <a style='color: #52182C' href='http://new.fritzing.org/learning/tutorials/making-parts/'>guidelines</a> before modifying or creating parts"), this);
 	m_guidelines->setOpenExternalLinks(true);
@@ -80,7 +80,7 @@ void PartSymbolsWidget::init() {
 
 void PartSymbolsWidget::createViewImageWidget(
 		SketchModel* sketchModel, WaitPushUndoStack *undoStack, PartsEditorSpecificationsView *&viw,
-		ItemBase::ViewIdentifier viewId, QString iconFileName, QString startText
+		ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText
 	) {
 
 	viw = new PartsEditorSpecificationsView(viewId,tempDir(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);

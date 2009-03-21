@@ -381,7 +381,7 @@ Connector *SingleConnectorInfoWidget::connector() {
 	return m_connector;
 }
 
-MismatchingConnectorWidget *SingleConnectorInfoWidget::toMismatching(ItemBase::ViewIdentifier missingViewId) {
+MismatchingConnectorWidget *SingleConnectorInfoWidget::toMismatching(ViewIdentifierClass::ViewIdentifier missingViewId) {
 	MismatchingConnectorWidget *mcw = new MismatchingConnectorWidget(m_topLevelContainer,missingViewId, m_connector->connectorSharedID(), (QWidget*)parent(), false, m_connector);
 	return mcw;
 }

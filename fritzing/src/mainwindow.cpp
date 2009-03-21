@@ -112,7 +112,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 
 
 	// all this belongs in viewLayer.xml
-	m_breadboardGraphicsView = new BreadboardSketchWidget(ItemBase::BreadboardView, this);
+	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
 	//m_tabWidget->addTab(m_breadboardWidget, tr("breadboard"));
@@ -120,7 +120,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	//connectSwitcherToView(m_breadViewSwitcher,m_breadboardGraphicsView);
 	m_tabWidget->addWidget(m_breadboardWidget);
 
-	m_schematicGraphicsView = new SchematicSketchWidget(ItemBase::SchematicView, this);
+	m_schematicGraphicsView = new SchematicSketchWidget(ViewIdentifierClass::SchematicView, this);
 	initSketchWidget(m_schematicGraphicsView);
 	m_schematicWidget = new SketchAreaWidget(m_schematicGraphicsView, this);
 	//m_tabWidget->addTab(m_schematicWidget, tr("schematic"));
@@ -128,7 +128,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	//connectSwitcherToView(m_schemViewSwitcher,m_schematicGraphicsView);
 	m_tabWidget->addWidget(m_schematicWidget);
 
-	m_pcbGraphicsView = new PCBSketchWidget(ItemBase::PCBView, this);
+	m_pcbGraphicsView = new PCBSketchWidget(ViewIdentifierClass::PCBView, this);
 	initSketchWidget(m_pcbGraphicsView);
 	m_pcbWidget = new SketchAreaWidget(m_pcbGraphicsView, this);
 	//m_tabWidget->addTab(m_pcbWidget, tr("pcb"));
@@ -315,16 +315,16 @@ void MainWindow::connectPairs() {
 	connectPair(m_pcbGraphicsView, m_breadboardGraphicsView);
 	connectPair(m_pcbGraphicsView, m_schematicGraphicsView);
 
-	bool succeeded = connect(m_breadboardGraphicsView, SIGNAL(findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &)),
-							 this, SLOT(findSketchWidgetSlot(ItemBase::ViewIdentifier, SketchWidget * &)),
+	bool succeeded = connect(m_breadboardGraphicsView, SIGNAL(findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
+							 this, SLOT(findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
 							 Qt::DirectConnection);
 
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &)),
-							 this, SLOT(findSketchWidgetSlot(ItemBase::ViewIdentifier, SketchWidget * &)),
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
+							 this, SLOT(findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
 							 Qt::DirectConnection);
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &)),
-							 this, SLOT(findSketchWidgetSlot(ItemBase::ViewIdentifier, SketchWidget * &)),
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
+							 this, SLOT(findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
 							 Qt::DirectConnection);
 
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(int, int, int, int)),
@@ -377,8 +377,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(sketchWidget_wireConnected(long, QString, long, QString)));
 	succeeded = succeeded && connect(signaller, SIGNAL(changeConnectionSignal(long,  QString, long,  QString, bool, bool)),
 									 slotter, SLOT(sketchWidget_changeConnection(long, QString, long, QString, bool, bool)));
-	succeeded = succeeded && connect(signaller, SIGNAL(copyItemSignal(long, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &)),
-													   slotter, SLOT(sketchWidget_copyItem(long, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &)),
+	succeeded = succeeded && connect(signaller, SIGNAL(copyItemSignal(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
+													   slotter, SLOT(sketchWidget_copyItem(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
 									 Qt::DirectConnection);
 	succeeded = succeeded && connect(signaller, SIGNAL(deleteItemSignal(long, QUndoCommand *)),
 									 slotter, SLOT(sketchWidget_deleteItem(long, QUndoCommand *)),
@@ -543,13 +543,13 @@ QWidget *MainWindow::createToolbarSpacer(SketchAreaWidget *parent) {
 	return toolbarSpacer;
 }
 
-QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
+QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId) {
 	QList<QWidget*> retval;
 	SketchAreaWidget *parent;
 	switch(viewId) {
-		case ItemBase::BreadboardView: parent = m_breadboardWidget; break;
-		case ItemBase::SchematicView: parent = m_schematicWidget; break;
-		case ItemBase::PCBView: parent = m_pcbWidget; break;
+		case ViewIdentifierClass::BreadboardView: parent = m_breadboardWidget; break;
+		case ViewIdentifierClass::SchematicView: parent = m_schematicWidget; break;
+		case ViewIdentifierClass::PCBView: parent = m_pcbWidget; break;
 		default: return retval;
 	}
 	/*if(viewId != ItemBase::PCBView) {
@@ -557,11 +557,11 @@ QList<QWidget*> MainWindow::getButtonsForView(ItemBase::ViewIdentifier viewId) {
 	}*/
 	retval << createNoteButton(parent) << createRotateButton(parent);
 	switch (viewId) {
-		case ItemBase::BreadboardView:
-		case ItemBase::SchematicView:
+		case ViewIdentifierClass::BreadboardView:
+		case ViewIdentifierClass::SchematicView:
 			retval << createFlipButton(parent) << createToolbarSpacer(parent);
 			break;
-		case ItemBase::PCBView:
+		case ViewIdentifierClass::PCBView:
 			retval << SketchAreaWidget::separator(parent) << createAutorouteButton(parent)
 				   << createExportDiyButton(parent) << m_routingStatusLabel;
 			break;
@@ -827,7 +827,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 	return QMainWindow::eventFilter(object, event);
 }
 
-void MainWindow::findSketchWidgetSlot(ItemBase::ViewIdentifier viewIdentifier, SketchWidget * & sketchWidget ) {
+void MainWindow::findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier viewIdentifier, SketchWidget * & sketchWidget ) {
 	if (m_breadboardGraphicsView->viewIdentifier() == viewIdentifier) {
 		sketchWidget = m_breadboardGraphicsView;
 		return;
@@ -877,11 +877,6 @@ void MainWindow::setInfoViewOnHover(bool infoViewOnHover) {
 	m_pcbGraphicsView->setInfoViewOnHover(infoViewOnHover);
 
 	m_paletteWidget->setInfoViewOnHover(infoViewOnHover);
-}
-
-void MainWindow::swapSelected() {
-	ModelPart *selInParts = m_paletteWidget->selected();
-	if(selInParts) m_currentGraphicsView->swapSelected(selInParts);
 }
 
 #define ZIP_PART QString("part.")

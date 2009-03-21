@@ -65,7 +65,7 @@ bool distanceLessThan(ConnectorItem * end0, ConnectorItem * end1) {
 	return true;
 }
 
-SchematicSketchWidget::SchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
+SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
 	m_viewName = QObject::tr("Schematic View");

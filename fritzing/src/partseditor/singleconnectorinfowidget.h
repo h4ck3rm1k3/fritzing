@@ -84,7 +84,7 @@ class SingleConnectorInfoWidget : public AbstractConnectorInfoWidget {
 		QString description();
 		QString type();
 
-		MismatchingConnectorWidget *toMismatching(ItemBase::ViewIdentifier viewId);
+		MismatchingConnectorWidget *toMismatching(ViewIdentifierClass::ViewIdentifier viewId);
 
 	protected slots:
 		void editionCompleted();

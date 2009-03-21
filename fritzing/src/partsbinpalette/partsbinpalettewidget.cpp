@@ -30,6 +30,7 @@ $Date$
 #include <QVBoxLayout>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
 
 #include "partsbinpalettewidget.h"
 #include "partsbincommands.h"
@@ -37,6 +38,10 @@ $Date$
 #include "../misc.h"
 #include "../debugdialog.h"
 #include "../dockmanager.h"
+#include "../htmlinfoview.h"
+#include "partsbiniconview.h"
+#include "partsbinlistview.h"
+#include "simpleeditablelabelwidget.h"
 
 QString PartsBinPaletteWidget::Title;
 

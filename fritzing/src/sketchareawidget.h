@@ -34,7 +34,6 @@ $Date$
 #include <QStatusBar>
 #include <QMainWindow>
 
-#include "itembase.h"
 #include "sketchwidget.h"
 #include "zoomcombobox.h"
 
@@ -44,7 +43,7 @@ public:
 	SketchAreaWidget(SketchWidget *graphicsView, QMainWindow *parent);
 	virtual ~SketchAreaWidget();
 
-	ItemBase::ViewIdentifier viewIdentifier();
+	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	SketchWidget* graphicsView();
 	ZoomComboBox *zoomComboBox();
 

@@ -199,7 +199,7 @@ QString LinkDialog::url() {
 
 /////////////////////////////////////////////
 
-Note::Note( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
+Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	if (initialTextString.isEmpty()) {

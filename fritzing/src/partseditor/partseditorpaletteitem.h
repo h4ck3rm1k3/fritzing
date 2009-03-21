@@ -38,8 +38,8 @@ class PartsEditorAbstractView;
 class PartsEditorPaletteItem : public PaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier);
-		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
+		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
+		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
 		~PartsEditorPaletteItem();
 
 		virtual void writeXml(QXmlStreamWriter &);
@@ -58,10 +58,10 @@ class PartsEditorPaletteItem : public PaletteItem {
 		bool createSvgPath(const QString &modelPartSharedPath, const QString &layerFileName);
 
 	protected:
-		bool setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+		bool setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 		ConnectorItem* newConnectorItem(Connector *connector);
 		LayerKinPaletteItem * newLayerKinPaletteItem(
-			PaletteItemBase * chief, ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id,
+			PaletteItemBase * chief, ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id,
 			ViewLayer::ViewLayerID viewLayer, QMenu * itemMenu, const LayerHash & viewLayers
 		);
 		QString xmlViewLayerID();

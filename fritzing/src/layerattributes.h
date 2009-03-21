@@ -32,7 +32,8 @@ $Date$
 #include <QString>
 #include <QDomElement>
 
-#include "itembase.h"
+#include "viewidentifierclass.h"
+#include "viewlayer.h"
 
 class LayerAttributes {
 	
@@ -44,13 +45,13 @@ public:
 	const QString & layerName();
 	bool sticky();
 	bool multiLayer();
-	bool getSvgElementID(QDomDocument * , ItemBase::ViewIdentifier, ViewLayer::ViewLayerID );
-	static QDomElement getSvgElementLayers(QDomDocument * doc, ItemBase::ViewIdentifier viewIdentifier );
+	bool getSvgElementID(QDomDocument * , ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID );
+	static QDomElement getSvgElementLayers(QDomDocument * doc, ViewIdentifierClass::ViewIdentifier viewIdentifier );
 	bool canFlipHorizontal();
 	bool canFlipVertical();
 
 protected:
-	static QDomElement getSvgElementLayer(QDomDocument *, ItemBase::ViewIdentifier, ViewLayer::ViewLayerID, int & layerCount );
+	static QDomElement getSvgElementLayer(QDomDocument *, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, int & layerCount );
 
 protected:
 	QString m_filename;

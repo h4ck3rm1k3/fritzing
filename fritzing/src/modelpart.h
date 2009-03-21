@@ -126,7 +126,7 @@ protected:
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QStringList &values, QString childTag);
 	void writeNestedTag(QXmlStreamWriter & streamWriter, QString tagName, const QHash<QString,QString> &values, QString childTag, QString attrName);
 
-	void grabImagePath(QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId);
+	void grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId);
 	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 
 	QList<ItemBase *> m_viewItems;

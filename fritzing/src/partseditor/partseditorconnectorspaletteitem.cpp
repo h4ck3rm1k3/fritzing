@@ -31,14 +31,14 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #include "partseditorconnectorslayerkinpaletteitem.h"
 
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
 	setAcceptHoverEvents(true);
 }
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier, path)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
@@ -70,7 +70,7 @@ ConnectorItem* PartsEditorConnectorsPaletteItem::newConnectorItem(Connector *con
 }
 
 LayerKinPaletteItem * PartsEditorConnectorsPaletteItem::newLayerKinPaletteItem(
-		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
 		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new

@@ -32,11 +32,6 @@ $Date$
 #include <QGraphicsView>
 
 #include "partsbinview.h"
-#include "svgiconwidget.h"
-#include "graphicsflowlayout.h"
-#include "../paletteitem.h"
-#include "../palettemodel.h"
-#include "../viewgeometry.h"
 #include "../infographicsview.h"
 
 QT_BEGIN_NAMESPACE
@@ -49,8 +44,8 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 	Q_OBJECT
 	public:
 		PartsBinIconView(QWidget *parent=0);
-		void loadFromModel(PaletteModel *);
-		void setPaletteModel(PaletteModel *model, bool clear=false);
+		void loadFromModel(class PaletteModel *);
+		void setPaletteModel(class PaletteModel *model, bool clear=false);
 		void addPart(ModelPart * model, int position = -1);
 		void removePart(const QString &moduleID);
 
@@ -70,7 +65,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		void updateSizeAux(int width);
 		void setupLayout();
 
-		void showInfo(SvgIconWidget * item);
+		void showInfo(class SvgIconWidget * item);
 
 	public slots:
 		void setSelected(int position, bool doEmit=false);
@@ -83,7 +78,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		LayerHash m_viewLayers;
 
 		QGraphicsWidget *m_layouter;
-		GraphicsFlowLayout *m_layout;
+		class GraphicsFlowLayout *m_layout;
 
 		QMenu *m_itemMenu;
 		bool m_noSelectionChangeEmition;

@@ -43,7 +43,7 @@ $Date$
 #include <QMessageBox>
 
 
-PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
+PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu ) :
 	ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_syncSelected = false;
@@ -158,7 +158,7 @@ void PaletteItemBase::mousePressConnectorEvent(ConnectorItem * connectorItem, QG
 bool PaletteItemBase::acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent * event) {
 	Q_UNUSED(event);
 	
-	if (m_viewIdentifier != ItemBase::PCBView) {
+	if (m_viewIdentifier != ViewIdentifierClass::PCBView) {
 		return true;
 	}
 
@@ -263,7 +263,7 @@ void PaletteItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 	}
 }
 
-bool PaletteItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
+bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
 {
 	LayerAttributes layerAttributes;
 	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, viewLayerID, layerAttributes);
@@ -345,7 +345,7 @@ const QString & PaletteItemBase::filename() {
 
 void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	if (from->connectorType() != Connector::Female) return;
-	if (m_viewIdentifier != ItemBase::BreadboardView) return;			// these only really exist in breadboard view
+	if (m_viewIdentifier != ViewIdentifierClass::BreadboardView) return;			// these only really exist in breadboard view
 
 	// female connectors are equivalent to sticky
 
@@ -403,7 +403,7 @@ void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
 
 
 LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(
-	PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+	PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
 	const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new

@@ -28,7 +28,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include "../zoomcombobox.h"
 #include "../debugdialog.h"
 
-ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, SketchWidget* view, QWidget *parent) : QLabel(parent)
+ZoomButton::ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, ZoomableGraphicsView* view, QWidget *parent) : QLabel(parent)
 {
 	QString imgPath = ":/resources/images/icons/partsEditorZoom%1%2Button.png";
 	QString typeStr = type==GraphicsZoomControls::ZoomIn? "In": "Out";
@@ -70,7 +70,7 @@ void ZoomButton::leaveEvent(QEvent *event) {
 
 ///////////////////////////////////////////////////////////
 
-ZoomControlsPrivate::ZoomControlsPrivate(SketchWidget* view, QBoxLayout::Direction dir, QWidget *parent) : QFrame(parent)
+ZoomControlsPrivate::ZoomControlsPrivate(ZoomableGraphicsView* view, QBoxLayout::Direction dir, QWidget *parent) : QFrame(parent)
 {
 	//setObjectName("zoomControls");
 
@@ -88,7 +88,7 @@ ZoomControlsPrivate::ZoomControlsPrivate(SketchWidget* view, QBoxLayout::Directi
 
 ///////////////////////////////////////////////////////////
 
-GraphicsZoomControls::GraphicsZoomControls(SketchWidget *view) : QGraphicsProxyWidget()
+GraphicsZoomControls::GraphicsZoomControls(ZoomableGraphicsView *view) : QGraphicsProxyWidget()
 {
 	ZoomControlsPrivate *d = new ZoomControlsPrivate(view);
 	setFlags(QGraphicsItem::ItemIgnoresTransformations);
@@ -98,7 +98,7 @@ GraphicsZoomControls::GraphicsZoomControls(SketchWidget *view) : QGraphicsProxyW
 
 ///////////////////////////////////////////////////////////
 
-ZoomControls::ZoomControls(SketchWidget *view, QWidget *parent)
+ZoomControls::ZoomControls(ZoomableGraphicsView *view, QWidget *parent)
 	: ZoomControlsPrivate(view, QBoxLayout::RightToLeft, parent)
 {
 	m_zoomLabel = new QLabel(this);

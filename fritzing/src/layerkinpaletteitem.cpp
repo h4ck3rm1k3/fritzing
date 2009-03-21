@@ -28,7 +28,7 @@ $Date$
 #include "infographicsview.h"
 #include "debugdialog.h"
 
-LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
+LayerKinPaletteItem::LayerKinPaletteItem(PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 
 {

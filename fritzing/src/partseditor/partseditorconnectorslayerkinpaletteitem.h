@@ -33,7 +33,7 @@ $Date: 2009-01-16 17:12:45 +0100 (Fri, 16 Jan 2009) $
 class PartsEditorConnectorsLayerKinPaletteItem : public PartsEditorLayerKinPaletteItem {
 public:
 	PartsEditorConnectorsLayerKinPaletteItem(
-			PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+			PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
 			const ViewGeometry & viewGeometry, long id, QMenu* itemMenu, bool showingTerminalPoints)
                 : PartsEditorLayerKinPaletteItem(chief, modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 	{

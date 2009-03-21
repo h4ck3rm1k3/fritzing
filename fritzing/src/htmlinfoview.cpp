@@ -413,12 +413,12 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	// TODO (jrc): calling setUpImage here is a hack, best to do it somewhere else
 	if (pixmap2 == NULL) {
 		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ItemBase::SchematicView, ViewLayer::Schematic, layerAttributes);
+		ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic, layerAttributes);
 		pixmap2 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Schematic, size);
 	}
 	if (pixmap3 == NULL) {
 		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(modelPart, ItemBase::PCBView, ViewLayer::Copper0, layerAttributes);
+		ItemBase::setUpImage(modelPart, ViewIdentifierClass::PCBView, ViewLayer::Copper0, layerAttributes);
 		pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 	}
 

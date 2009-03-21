@@ -164,6 +164,7 @@ FApplication::~FApplication(void)
 	}
 		
 	FSvgRenderer::cleanup();
+	ViewIdentifierClass::cleanup();
 	ViewLayer::cleanup();
 	ItemBase::cleanup();
 	Wire::cleanup();
@@ -308,6 +309,7 @@ int FApplication::startup(int & argc, char ** argv)
 
 	MainWindow::initExportConstants();
 	FSvgRenderer::calcPrinterScale();
+	ViewIdentifierClass::initNames();
 	Wire::initNames();
     ItemBase::initNames();
     ViewLayer::initNames();
@@ -549,14 +551,14 @@ void FApplication::preloadSlowParts() {
 	}
 
 	LayerAttributes layerAttributes;
-	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
+	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard, layerAttributes);
 	//DebugDialog::debug(QString("preload set up image"));
 	foreach (Connector * connector, modelPart->connectors().values()) {
 		if (connector == NULL) continue;
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
-		connector->setUpConnector(renderer, modelPart->moduleID(), ItemBase::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
+		connector->setUpConnector(renderer, modelPart->moduleID(), ViewIdentifierClass::BreadboardView, ViewLayer::BreadboardBreadboard, connectorRect, terminalPoint, false);
 		//DebugDialog::debug(QString("preload set up connector %1").arg(connector->connectorSharedID()));
 	}
 	//DebugDialog::debug(QString("preload slow parts elapsed (1) %1").arg(t.elapsed()) );

@@ -232,19 +232,19 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 	connShared->setId(id);
 
 	connShared->addPin(
-		ItemBase::BreadboardView,
+		ViewIdentifierClass::BreadboardView,
 		m_connsViews->breadboardView()->svgIdForConnector(id),
 		m_connsViews->breadboardView()->connectorLayerId(),
 		m_connsViews->breadboardView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
-		ItemBase::SchematicView,
+		ViewIdentifierClass::SchematicView,
 		m_connsViews->schematicView()->svgIdForConnector(id),
 		m_connsViews->schematicView()->connectorLayerId(),
 		m_connsViews->schematicView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
-		ItemBase::PCBView,
+		ViewIdentifierClass::PCBView,
 		m_connsViews->pcbView()->svgIdForConnector(id),
 		m_connsViews->pcbView()->connectorLayerId(),
 		m_connsViews->pcbView()->terminalIdForConnector(id)
@@ -272,7 +272,7 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 	m_scrollContent->updateGeometry();
 }
 
-void ConnectorsInfoWidget::addMismatchingConnectorInfo(ItemBase::ViewIdentifier viewId, QString connId) {
+void ConnectorsInfoWidget::addMismatchingConnectorInfo(ViewIdentifierClass::ViewIdentifier viewId, QString connId) {
 	m_connIds << connId;
 	addMismatchingConnectorInfo(new MismatchingConnectorWidget(this,viewId,connId,m_mismatchersFrame));
 }
@@ -293,7 +293,7 @@ void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidge
 		setSelected(mcw);
 	}*/
 
-	foreach(ItemBase::ViewIdentifier viewId, mcw->views()) {
+	foreach(ViewIdentifierClass::ViewIdentifier viewId, mcw->views()) {
 		emit setMismatching(viewId, mcw->connId(), true);
 	}
 }
@@ -343,7 +343,7 @@ const QList<ConnectorShared *> ConnectorsInfoWidget::connectorsShared() {
 }
 
 // If we're reloading an image, clear mismatching connectors related exclusively to that view
-void ConnectorsInfoWidget::clearMismatchingForView(ItemBase::ViewIdentifier viewId) {
+void ConnectorsInfoWidget::clearMismatchingForView(ViewIdentifierClass::ViewIdentifier viewId) {
 	foreach(MismatchingConnectorWidget* mcw, m_mismatchConnsInfo) {
 		if(mcw->views().size()==1 &&  mcw->views()[0] == viewId) {
 			removeMismatchingConnectorInfo(mcw, false);
@@ -352,7 +352,7 @@ void ConnectorsInfoWidget::clearMismatchingForView(ItemBase::ViewIdentifier view
 }
 
 // Updates previous connector to mismatching if they are not in the list
-void ConnectorsInfoWidget::singleToMismatchingNotInView(ItemBase::ViewIdentifier viewId, const QStringList &connIds) {
+void ConnectorsInfoWidget::singleToMismatchingNotInView(ViewIdentifierClass::ViewIdentifier viewId, const QStringList &connIds) {
 	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
 		if(connIds.indexOf(sci->connector()->connectorSharedID()) == -1) {
 			MismatchingConnectorWidget *mcw = sci->toMismatching(viewId);
@@ -367,7 +367,7 @@ void ConnectorsInfoWidget::singleToMismatchingNotInView(ItemBase::ViewIdentifier
 	updateLayout();
 }
 
-void ConnectorsInfoWidget::syncNewConnectors(ItemBase::ViewIdentifier viewId, const QList<Connector*> &conns) {
+void ConnectorsInfoWidget::syncNewConnectors(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns) {
 	clearMismatchingForView(viewId);
 
 	// clean the old pins for this view
@@ -430,9 +430,9 @@ void ConnectorsInfoWidget::removeMismatchingConnectorInfo(MismatchingConnectorWi
 	}
 
 	if(alsoDeleteFromView) {
-		emit removeConnectorFrom(mcw->connId(),ItemBase::AllViews);
+		emit removeConnectorFrom(mcw->connId(),ViewIdentifierClass::AllViews);
 	} else {
-		foreach(ItemBase::ViewIdentifier viewId, mcw->views()) {
+		foreach(ViewIdentifierClass::ViewIdentifier viewId, mcw->views()) {
 			emit setMismatching(viewId, mcw->connId(), false);
 		}
 	}
@@ -459,7 +459,7 @@ void ConnectorsInfoWidget::removeConnectorInfo(SingleConnectorInfoWidget *sci, b
 	}
 
 	if(alsoDeleteFromView) {
-		emit removeConnectorFrom(sci->connector()->connectorSharedID(), ItemBase::AllViews);
+		emit removeConnectorFrom(sci->connector()->connectorSharedID(), ViewIdentifierClass::AllViews);
 	}
 
 	m_objToDelete = sci;

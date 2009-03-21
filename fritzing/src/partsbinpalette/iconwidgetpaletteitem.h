@@ -35,7 +35,7 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 class IconWidgetPaletteItem : public PaletteItem {
 
 	public:
-		IconWidgetPaletteItem(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
+		IconWidgetPaletteItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);
 
 protected:
 	void setDefaultTooltip();

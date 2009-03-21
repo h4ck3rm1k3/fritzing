@@ -31,7 +31,7 @@ $Date$
 #include <QDomElement>
 #include <QMultiHash>
 
-#include "itembase.h"
+#include "viewlayer.h"
 #include "connector.h"
 
 
@@ -64,12 +64,12 @@ public:
 	void setConnectorType(QString type);
 	Connector::ConnectorType connectorType();
 
-	const QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer *> &pins();
-	const QString pin(ItemBase::ViewIdentifier, ViewLayer::ViewLayerID viewLayerID);
-	const QString terminal(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
-	SvgIdLayer * fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
-	void addPin(ItemBase::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID, QString terminalId);
-	void removePins(ItemBase::ViewIdentifier layer);
+	const QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> &pins();
+	const QString pin(ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID viewLayerID);
+	const QString terminal(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
+	SvgIdLayer * fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID);
+	void addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID, QString terminalId);
+	void removePins(ViewIdentifierClass::ViewIdentifier layer);
 
 	class BusShared * bus();
 	void setBus(class BusShared *);
@@ -77,7 +77,7 @@ public:
 
 protected:
 	void loadPins(const QDomElement & domElement);
-	void loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId);
+	void loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentifier viewId);
 
 	QString m_description;
 	QString m_id;
@@ -89,7 +89,7 @@ protected:
 	 * The connectorId is used to generate the attribute svgId and terminalId in the FZ file,
 	 * appending the words "pin" and "terminal" (respectively) to it
 	 */
-	QMultiHash<ItemBase::ViewIdentifier, SvgIdLayer*> m_pins;
+	QMultiHash<ViewIdentifierClass::ViewIdentifier, SvgIdLayer*> m_pins;
 
 	class BusShared * m_bus;
 };

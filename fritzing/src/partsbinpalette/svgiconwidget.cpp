@@ -38,13 +38,13 @@ $Date$
 #define SELECTED_STYLE "background-color: white;"
 #define NON_SELECTED_STYLE "background-color: #BEBEBE;"
 
-SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
+SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
 	: QGraphicsProxyWidget() {
 	setFlags(QGraphicsItem::ItemIsSelectable);
 	m_moduleId = modelPart->moduleID();
 
 	m_paletteItem = new IconWidgetPaletteItem(modelPart, viewIdentifier, ViewGeometry(), id, itemMenu);
-	m_paletteItem->renderImage(modelPart, ItemBase::IconView, viewLayers,ViewLayer::Icon, false);
+	m_paletteItem->renderImage(modelPart, ViewIdentifierClass::IconView, viewLayers,ViewLayer::Icon, false);
 
 	m_container = new SvgIconWidgetContainer(m_paletteItem, this);
 	m_container->setStyleSheet(NON_SELECTED_STYLE);

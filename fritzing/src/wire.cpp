@@ -34,6 +34,7 @@ $Date$
 #include <QGraphicsScene>
 #include <QList>
 #include <QGraphicsItem>
+#include <QSet>
 
 #include "debugdialog.h"
 #include "infographicsview.h"
@@ -43,7 +44,6 @@ $Date$
 #include "fsvgrenderer.h"
 #include "labels/partlabel.h"
 #include "modelpart.h"
-#include "PaletteItemBase.h"
 
 #include <stdlib.h>
 
@@ -69,7 +69,7 @@ struct ConnectThing {
 
 ////////////////////////////////////////////////////////////
 
-static QHash<ItemBase::ViewIdentifier, int> netColorIndex;
+static QHash<ViewIdentifierClass::ViewIdentifier, int> netColorIndex;
 
 bool alphaLessThan(QColor * c1, QColor * c2)
 {
@@ -78,7 +78,7 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 
 /////////////////////////////////////////////////////////////
 
-Wire::Wire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
+Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	m_partLabel = new PartLabel(this, "", NULL);
@@ -179,16 +179,16 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 	m_pen.setCapStyle(Qt::RoundCap);
 	m_shadowPen.setCapStyle(Qt::RoundCap);
 	switch (m_viewIdentifier) {
-		case ItemBase::BreadboardView:
+		case ViewIdentifierClass::BreadboardView:
 			m_pen.setWidth(penWidth - 2);
 			m_shadowPen.setWidth(penWidth);
             setColorString("blue", UNROUTED_OPACITY);
 			break;
-		case ItemBase::SchematicView:
+		case ViewIdentifierClass::SchematicView:
 			setColorString("routed", UNROUTED_OPACITY);
 			m_pen.setWidth(2);
 			break;
-		case ItemBase::PCBView:
+		case ViewIdentifierClass::PCBView:
 			setColorString("unrouted", UNROUTED_OPACITY);
 			m_pen.setWidth(1);
 			break;
@@ -615,7 +615,7 @@ void Wire::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 }
 
 
-FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) {
+FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) {
 
 	LayerAttributes layerAttributes;
 	FSvgRenderer * renderer = ItemBase::setUpImage(modelPart, viewIdentifier, m_viewLayerID, layerAttributes);
@@ -920,9 +920,9 @@ void Wire::initNames() {
 	shadowColors.insert("unrouted", "#000000");
 	shadowColors.insert("routed",	"#7d7d7d");
 
-	netColorIndex.insert(ItemBase::BreadboardView, 0);
-	netColorIndex.insert(ItemBase::SchematicView, 0);
-	netColorIndex.insert(ItemBase::PCBView, 0);
+	netColorIndex.insert(ViewIdentifierClass::BreadboardView, 0);
+	netColorIndex.insert(ViewIdentifierClass::SchematicView, 0);
+	netColorIndex.insert(ViewIdentifierClass::PCBView, 0);
 
 	QFile file(":/resources/ratsnestcolors.txt");
 	file.open(QFile::ReadOnly);
@@ -1016,8 +1016,8 @@ void Wire::setOpacity(qreal opacity) {
 	this->update();
 }
 
-const QColor * Wire::netColor(ItemBase::ViewIdentifier viewIdentifier) {
-	if (viewIdentifier == ItemBase::SchematicView) {
+const QColor * Wire::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
+	if (viewIdentifier == ViewIdentifierClass::SchematicView) {
 		return &schematicColor;
 	}
 

@@ -34,7 +34,8 @@ $Date$
 #include <QGraphicsScene>
 #include <QSvgRenderer>
 
-#include "itembase.h"
+#include "viewidentifierclass.h"
+#include "viewlayer.h"
 
 class Connector
 {
@@ -65,7 +66,7 @@ public:
 	const QString & busID();
 	class Bus * bus();
 	void setBus(class Bus *);
-	bool setUpConnector(class FSvgRenderer * renderer, const QString & moduleID, ItemBase::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint);
+	bool setUpConnector(class FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint);
 	long modelIndex();
 	ModelPart * modelPart();
 	int connectorItemCount();
@@ -79,8 +80,8 @@ public:
 
 protected:
 	void writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID);
-	void writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString connId);
-	void writeTerminalIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString terminalId);
+	void writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId);
+	void writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId);
 	QPointF calcTerminalPoint(const QString & terminalId, class FSvgRenderer * renderer, 
 							  const QRectF & connectorRect, struct SvgIdLayer *, bool ignoreTerminalPoint, const QRectF & viewBox);
 

@@ -38,7 +38,7 @@ $Date$
 class PartsEditorConnectorsView: public PartsEditorAbstractView {
 	Q_OBJECT
 	public:
-		PartsEditorConnectorsView(ItemBase::ViewIdentifier, QDir tempDir, bool showingTerminalPoint, QWidget *parent=0, int size=150);
+		PartsEditorConnectorsView(ViewIdentifierClass::ViewIdentifier, QDir tempDir, bool showingTerminalPoint, QWidget *parent=0, int size=150);
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
@@ -54,10 +54,10 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		void informConnectorSelectionFromView(const QString& connId);
 		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
 		virtual void addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath);
-		void setMismatching(ItemBase::ViewIdentifier viewId, const QString &id, bool mismatching);
+		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
 
 	signals:
-		void connectorsFound(ItemBase::ViewIdentifier viewId, const QList<Connector*> &conns);
+		void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns);
 		void svgFileLoadNeeded(const QString &filepath);
 		void connectorSelected(const QString& connId);
 

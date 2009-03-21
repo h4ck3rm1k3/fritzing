@@ -30,7 +30,6 @@ $Date$
 #define EDITABLEDATEWIDGET_H_
 
 #include "abstracteditablelabelwidget.h"
-#include "../modelpartshared.h"
 
 #include <QDateEdit>
 

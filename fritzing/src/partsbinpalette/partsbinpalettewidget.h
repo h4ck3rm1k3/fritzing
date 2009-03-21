@@ -30,15 +30,10 @@ $Date$
 
 #include <QFrame>
 
-#include "../fdockwidget.h"
 #include "../palettemodel.h"
 #include "../modelpart.h"
-#include "../htmlinfoview.h"
 #include "../waitpushundostack.h"
 #include "../abstractimagebutton.h"
-#include "partsbiniconview.h"
-#include "partsbinlistview.h"
-#include "simpleeditablelabelwidget.h"
 
 class ImageButton : public AbstractImageButton {
 public:
@@ -56,7 +51,7 @@ protected:
 class PartsBinPaletteWidget : public QFrame {
 	Q_OBJECT
 	public:
-		PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent = 0);
+		PartsBinPaletteWidget(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent = 0);
 		~PartsBinPaletteWidget();
 
 		QSize sizeHint() const;
@@ -104,7 +99,7 @@ class PartsBinPaletteWidget : public QFrame {
 
 		void grabTitle(PaletteModel *model);
 
-		void setView(PartsBinView *view);
+		void setView(class PartsBinView *view);
 		void saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
@@ -122,11 +117,11 @@ class PartsBinPaletteWidget : public QFrame {
 		QString m_defaultSaveFolder;
 		QString m_untitledFileName;
 
-		SimpleEditableLabelWidget *m_binTitle;
+		class SimpleEditableLabelWidget *m_binTitle;
 
 		PartsBinView *m_currentView;
-		PartsBinIconView *m_iconView;
-		PartsBinListView *m_listView;
+		class PartsBinIconView *m_iconView;
+		class PartsBinListView *m_listView;
 
 		QFrame *m_footer;
 		ImageButton *m_showIconViewButton;

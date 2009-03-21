@@ -125,9 +125,9 @@ void Connector::saveAsPart(QXmlStreamWriter & writer) {
 	writer.writeAttribute("name", connectorShared()->name());
 	writer.writeTextElement("description", connectorShared()->description());
 	writer.writeStartElement("views");
-	QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer *> pins = m_connectorShared->pins();
-	foreach (ItemBase::ViewIdentifier currView, pins.keys()) {
-		writer.writeStartElement(ItemBase::viewIdentifierXmlName(currView));
+	QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer *> pins = m_connectorShared->pins();
+	foreach (ViewIdentifierClass::ViewIdentifier currView, pins.keys()) {
+		writer.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(currView));
 		foreach (SvgIdLayer * svgIdLayer, pins.values(currView)) {
 			writer.writeStartElement("p");
 			writeLayerAttr(writer, svgIdLayer->m_viewLayerID);
@@ -145,11 +145,11 @@ void Connector::writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID 
 	writer.writeAttribute("layer",ViewLayer::viewLayerXmlNameFromID(viewLayerID));
 }
 
-void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString connId) {
+void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId) {
 	QString attrValue = "";
-	if(view == ItemBase::BreadboardView || view == ItemBase::SchematicView) {
+	if(view == ViewIdentifierClass::BreadboardView || view == ViewIdentifierClass::SchematicView) {
 		attrValue = connId /*+"pin"*/;
-	} else if(view == ItemBase::PCBView) {
+	} else if(view == ViewIdentifierClass::PCBView) {
 		attrValue = connId /*+"pad" */;
 	} else {
 		return;
@@ -157,8 +157,8 @@ void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifie
 	writer.writeAttribute("svgId",attrValue);
 }
 
-void Connector::writeTerminalIdAttr(QXmlStreamWriter &writer, ItemBase::ViewIdentifier view, QString terminalId) {
-        if((view == ItemBase::BreadboardView || view == ItemBase::SchematicView)
+void Connector::writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId) {
+        if((view == ViewIdentifierClass::BreadboardView || view == ViewIdentifierClass::SchematicView)
             &&
            (!terminalId.isNull() && !terminalId.isEmpty()) ) {
 		writer.writeAttribute("terminalId",terminalId);
@@ -219,7 +219,7 @@ void Connector::setBus(Bus * bus) {
 	m_bus = bus;
 }
 
-bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint) {
+bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint) {
 	// this code is a bit more viewish than modelish...
 
 	Q_UNUSED(moduleID);

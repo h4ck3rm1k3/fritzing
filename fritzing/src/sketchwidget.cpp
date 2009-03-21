@@ -70,9 +70,9 @@ $Date$
 #include "htmlinfoview.h"
 
 static QColor labelTextColor = Qt::black;
-QHash<ItemBase::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
+QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
-SketchWidget::SketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
+SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
 	m_fixedToCenterItem = NULL;
@@ -201,7 +201,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 	QHash<long, ItemBase *> newItems;
 	m_ignoreSelectionChangeEvents = true;
 
-	QString viewName = ItemBase::viewIdentifierXmlName(m_viewIdentifier);
+	QString viewName = ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier);
 
 	// make parts
 	foreach (ModelPart * mp, modelParts) {
@@ -1730,7 +1730,7 @@ bool SketchWidget::checkMoved()
 	clearHoldingSelectItem();
 
 	QString moveString;
-	QString viewName = ItemBase::viewIdentifierName(m_viewIdentifier);
+	QString viewName = ViewIdentifierClass::viewIdentifierName(m_viewIdentifier);
 
 	if (moveCount == 1) {
 		moveString = tr("Move %2 (%1)").arg(viewName).arg(saveBase->modelPart()->title());
@@ -2701,7 +2701,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 	}
 
 	QString string = tr("%3 %2 (%1)")
-			.arg(ItemBase::viewIdentifierName(m_viewIdentifier))
+			.arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
 			.arg((targets.count() == 1) ? targets[0]->modelPart()->title() : QString::number(targets.count()) + " items" )
 			.arg((degrees != 0) ? tr("Rotate") : tr("Flip"));
 
@@ -2999,7 +2999,7 @@ void SketchWidget::keyPressEvent ( QKeyEvent * event ) {
 
 
 
-void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> & geometryHash) {
+void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> & geometryHash) {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) {
 		// this shouldn't happen
@@ -3027,7 +3027,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * par
 	new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
 }
 
-ItemBase::ViewIdentifier SketchWidget::viewIdentifier() {
+ViewIdentifierClass::ViewIdentifier SketchWidget::viewIdentifier() {
 	return m_viewIdentifier;
 }
 
@@ -3436,10 +3436,6 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-void SketchWidget::swapSelected(ModelPart* other) {
-	swapSelected(other->moduleID());
-}
-
 void SketchWidget::swapSelected(const QString &moduleID, bool exactMatch) {
 	if(moduleID != ___emptyString___) {
 		if(m_lastPaletteItemSelected) {
@@ -3470,10 +3466,6 @@ void SketchWidget::swapSelected(const QString &moduleID, bool exactMatch) {
 	}
 }
 
-void SketchWidget::swapSelected(PaletteItem* other) {
-	swapSelected(other->modelPart());
-}
-
 void SketchWidget::swap(PaletteItem* from, ModelPart *to, bool doEmit, SwapCommand * swapCommand) {
 	if(from && to) {
 		from->swap(to, m_viewLayers, doEmit, swapCommand);
@@ -3492,7 +3484,7 @@ void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit, SwapCommand * s
 
 		// let's make sure that the icon pixmap will be available for the infoview
 		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(from->modelPart(), ItemBase::IconView, ViewLayer::Icon, layerAttributes);
+		ItemBase::setUpImage(from->modelPart(), ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
 
 		if(doEmit) {
 			emit swapped(itemId, to, false, NULL);
@@ -4188,7 +4180,7 @@ bool SketchWidget::matchesLayer(ModelPart * modelPart) {
 	QDomElement views = domDocument->documentElement().firstChildElement("views");
 	if(views.isNull()) return false;
 
-	QDomElement view = views.firstChildElement(ItemBase::viewIdentifierXmlName(m_viewIdentifier));
+	QDomElement view = views.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
 	if (view.isNull()) return false;
 
 	QDomElement layers = view.firstChildElement("layers");
@@ -4327,9 +4319,9 @@ void SketchWidget::resizeNote(long itemID, const QSizeF & size)
 
 void SketchWidget::init() {
 	if(m_bgcolors.isEmpty()) {
-		m_bgcolors[ItemBase::BreadboardView] = QColor(204,204,204);
-		m_bgcolors[ItemBase::SchematicView] = QColor(255,255,255);
-		m_bgcolors[ItemBase::PCBView] = QColor(160,168,179); // QColor(137,144,153)
+		m_bgcolors[ViewIdentifierClass::BreadboardView] = QColor(204,204,204);
+		m_bgcolors[ViewIdentifierClass::SchematicView] = QColor(255,255,255);
+		m_bgcolors[ViewIdentifierClass::PCBView] = QColor(160,168,179); // QColor(137,144,153)
 	}
 }
 
@@ -4615,5 +4607,16 @@ void SketchWidget::collectModuleExternalConnectors(ItemBase * itemBase, ItemBase
 
 			collectModuleExternalConnectors(childBase, parent, connectorHash);
 		}
+	}
+}
+
+
+ViewLayer::ViewLayerID SketchWidget::defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId) {
+	switch(viewId) {
+		case ViewIdentifierClass::IconView: return ViewLayer::Icon;
+		case ViewIdentifierClass::BreadboardView: return ViewLayer::Breadboard;
+		case ViewIdentifierClass::SchematicView: return ViewLayer::Schematic;
+		case ViewIdentifierClass::PCBView: return ViewLayer::Copper0;
+		default: return ViewLayer::UnknownLayer;
 	}
 }

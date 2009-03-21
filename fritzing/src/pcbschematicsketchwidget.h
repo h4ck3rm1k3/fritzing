@@ -36,7 +36,7 @@ class PCBSchematicSketchWidget : public SketchWidget
 	Q_OBJECT
 
 public:
-    PCBSchematicSketchWidget(ItemBase::ViewIdentifier, QWidget *parent);
+    PCBSchematicSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent);
 
 	void setNewPartVisible(ItemBase *);
 

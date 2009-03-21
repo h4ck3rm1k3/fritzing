@@ -64,7 +64,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 	//TODO Mariano: enough for now
 	QDomElement viewsElems = domDocument->documentElement().firstChildElement("views");
 	if(!viewsElems.isNull()) {
-		m_valid = !viewsElems.firstChildElement(ItemBase::viewIdentifierXmlName(ItemBase::IconView)).isNull();
+		m_valid = !viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(ViewIdentifierClass::IconView)).isNull();
 	} else {
 		m_valid = false;
 	}
@@ -456,18 +456,18 @@ QList<ModelPart*> ModelPart::getAllNonCoreParts() {
 
 QList<SvgAndPartFilePath> ModelPart::getAvailableViewFiles() {
 	QDomElement viewsElems = modelPartShared()->domDocument()->documentElement().firstChildElement("views");
-	QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath> viewImages;
+	QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> viewImages;
 
-	grabImagePath(viewImages, viewsElems, ItemBase::IconView);
-	grabImagePath(viewImages, viewsElems, ItemBase::BreadboardView);
-	grabImagePath(viewImages, viewsElems, ItemBase::SchematicView);
-	grabImagePath(viewImages, viewsElems, ItemBase::PCBView);
+	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::IconView);
+	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::BreadboardView);
+	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::SchematicView);
+	grabImagePath(viewImages, viewsElems, ViewIdentifierClass::PCBView);
 
 	return viewImages.values();
 }
 
-void ModelPart::grabImagePath(QHash<ItemBase::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ItemBase::ViewIdentifier viewId) {
-	QDomElement viewElem = viewsElems.firstChildElement(ItemBase::viewIdentifierXmlName(viewId));
+void ModelPart::grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId) {
+	QDomElement viewElem = viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(viewId));
 	if(!viewElem.isNull()) {
 		QString partspath = getApplicationSubFolderPath("parts")+"/svg";
 		QDomElement layerElem = viewElem.firstChildElement("layers");

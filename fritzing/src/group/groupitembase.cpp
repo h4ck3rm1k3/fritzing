@@ -33,7 +33,7 @@ $Date$
 #include <QTimer>
 #include <QSet>
 
-GroupItemBase::GroupItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
+GroupItemBase::GroupItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: ItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	this->setHandlesChildEvents(true);

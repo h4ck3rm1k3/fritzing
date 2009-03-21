@@ -33,7 +33,7 @@ class TraceWire : public Wire
 {
 
 public:
-	TraceWire( ModelPart * modelPart, ItemBase::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
 	
 	void setClipEnds(bool);
 	const QLineF & getPaintLine();	

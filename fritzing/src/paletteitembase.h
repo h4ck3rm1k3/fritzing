@@ -33,9 +33,6 @@ $Date$
 
 #include "modelpart.h"
 #include "itembase.h"
-#include "viewgeometry.h"
-#include "graphicssvglineitem.h"
-#include "viewlayer.h"
 
 class LayerKinPaletteItem;
 
@@ -44,7 +41,7 @@ class PaletteItemBase : public ItemBase
 	Q_OBJECT
 
 public:
-	PaletteItemBase(ModelPart *, ItemBase::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
+	PaletteItemBase(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
 	void saveGeometry();
 	bool itemMoved();
@@ -57,7 +54,7 @@ public:
  	QPointF syncMoved();
 	void mousePressConnectorEvent(class ConnectorItem *, QGraphicsSceneMouseEvent *);
 	bool acceptsMousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
- 	virtual bool setUpImage(ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
+ 	virtual bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 	const QString & filename();
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void updateConnectionsAux();
@@ -89,7 +86,7 @@ protected:
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
 
 	virtual LayerKinPaletteItem * newLayerKinPaletteItem(
-		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
 		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers
 	);
 

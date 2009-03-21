@@ -42,7 +42,7 @@ class SvgIconWidgetContainer;
 class SvgIconWidget : public QGraphicsProxyWidget {
 	Q_OBJECT
 	public:
-		SvgIconWidget(ModelPart *, ItemBase::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
+		SvgIconWidget(ModelPart *, ViewIdentifierClass::ViewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu);
 		~SvgIconWidget();
 		ModelPart *modelPart() const;
 		const QString &moduleID() const;

@@ -30,7 +30,7 @@ $Date$
 #include "mainwindow.h"
 #include "debugdialog.h"
 #include "waitpushundostack.h"
-#include "partseditor/mainpartseditorwindow.h"
+//#include "partseditor/mainpartseditorwindow.h"
 #include "partseditor/partseditormainwindow.h"
 #include "bettertriggeraction.h"
 #include "aboutbox.h"
@@ -47,6 +47,7 @@ $Date$
 #include "pcbsketchwidget.h"
 #include "partsbinpalette/partsbinpalettewidget.h"
 #include "expandinglabel.h"
+#include "htmlinfoview.h"
 
 
 static QString eagleActionType = ".eagle";

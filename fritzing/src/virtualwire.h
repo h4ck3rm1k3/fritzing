@@ -33,7 +33,7 @@ class VirtualWire : public Wire
 {
 
 public:
-	VirtualWire( ModelPart * modelPart, ItemBase::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
 	
 	void setHidden(bool hidden);
 	void tempRemoveAllConnections();
@@ -41,7 +41,7 @@ public:
 protected:
 	void paint (QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget );	
 	void connectionChange(ConnectorItem *);
- 	class FSvgRenderer * setUpConnectors(class ModelPart *, ItemBase::ViewIdentifier);
+ 	class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	void hideConnectors();	
 };
 

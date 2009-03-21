@@ -36,7 +36,7 @@ class PartsEditorAbstractView : public SketchWidget {
 	Q_OBJECT
 
 	public:
-		PartsEditorAbstractView(ItemBase::ViewIdentifier, QDir tempDir, bool deleteModelPartOnSceneClear, QWidget *parent=0, int size=150);
+		PartsEditorAbstractView(ViewIdentifierClass::ViewIdentifier, QDir tempDir, bool deleteModelPartOnSceneClear, QWidget *parent=0, int size=150);
 		~PartsEditorAbstractView();
 		QDir tempFolder();
 		bool isEmpty();

@@ -31,33 +31,33 @@ $Date$
 
 #include <QLabel>
 #include "abstractconnectorinfowidget.h"
-#include "../itembase.h"
+#include "../connector.h"
 
 class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 	Q_OBJECT
 	public:
-		MismatchingConnectorWidget(class ConnectorsInfoWidget *topLevelContainer, ItemBase::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView = true, Connector* conn = NULL);
+		MismatchingConnectorWidget(class ConnectorsInfoWidget *topLevelContainer, ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, QWidget *parent, bool isInView = true, Connector* conn = NULL);
 		void setSelected(bool selected, bool doEmitChange=true);
-		bool onlyMissingThisView(ItemBase::ViewIdentifier viewId);
-		void addViewPresence(ItemBase::ViewIdentifier viewId);
-		void removeViewPresence(ItemBase::ViewIdentifier viewId);
+		bool onlyMissingThisView(ViewIdentifierClass::ViewIdentifier viewId);
+		void addViewPresence(ViewIdentifierClass::ViewIdentifier viewId);
+		void removeViewPresence(ViewIdentifierClass::ViewIdentifier viewId);
 		const QString &connId();
 		Connector *prevConn();
-		QList<ItemBase::ViewIdentifier> views();
+		QList<ViewIdentifierClass::ViewIdentifier> views();
 		bool presentInAllViews();
 
 	protected:
 		void mousePressEvent(QMouseEvent * event);
 		QString viewsString();
 
-		QList<ItemBase::ViewIdentifier> m_missingViews;
+		QList<ViewIdentifierClass::ViewIdentifier> m_missingViews;
 		QString m_connId;
 		Connector *m_prevConn; // If this connector info used to be a not mismatching one, we save that info here
 
 		QLabel *m_connIdLabel;
 		QLabel *m_connMsgLabel;
 
-		static QList<ItemBase::ViewIdentifier> AllViews;
+		static QList<ViewIdentifierClass::ViewIdentifier> AllViews;
 };
 
 #endif /* MISMATCHINGCONNECTORWIDGET_H_ */

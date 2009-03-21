@@ -48,7 +48,7 @@ $Date$
 #include <QDir>
 #include <QMessageBox>
 
-PaletteItem::PaletteItem( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
+PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 	if(doLabel) {
@@ -65,7 +65,7 @@ PaletteItem::~PaletteItem() {
 	}
 }
 
-bool PaletteItem::renderImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {
+bool PaletteItem::renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors) {
 	Q_UNUSED(viewLayerID);
 
 	bool result = setUpImage(modelPart, viewIdentifier, viewLayers, viewLayerID, doConnectors);

@@ -75,7 +75,6 @@ protected:
 
 /////////////////////////////////
 
-QHash <ItemBase::ViewIdentifier, NameTriple * > ItemBase::names;
 QString ItemBase::rulerModuleIDName = "RulerModuleID";
 QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
 QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
@@ -118,7 +117,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 
 ///////////////////////////////////////////////////
 
-ItemBase::ItemBase( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
+ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
 	//DebugDialog::debug(QString("itembase %1").arg(QString::number((long) static_cast<QGraphicsItem *>(this), 0, 16)));
@@ -257,37 +256,13 @@ ModelPartShared * ItemBase::modelPartShared() {
 	return m_modelPart->modelPartShared();
 }
 
-QString & ItemBase::viewIdentifierName(ItemBase::ViewIdentifier viewIdentifier) {
-	Q_ASSERT(viewIdentifier >= 0);
-	Q_ASSERT(viewIdentifier < ItemBase::ViewCount);
-	return names[viewIdentifier]->viewName();
-}
-
-QString & ItemBase::viewIdentifierXmlName(ItemBase::ViewIdentifier viewIdentifier) {
-	Q_ASSERT(viewIdentifier >= 0);
-	Q_ASSERT(viewIdentifier < ItemBase::ViewCount);
-	return names[viewIdentifier]->xmlName();
-}
-
-QString & ItemBase::viewIdentifierNaturalName(ItemBase::ViewIdentifier viewIdentifier) {
-	Q_ASSERT(viewIdentifier >= 0);
-	Q_ASSERT(viewIdentifier < ItemBase::ViewCount);
-	return names[viewIdentifier]->naturalName();
-}
-
 void ItemBase::initNames() {
-	if (names.count() == 0) {
-		names.insert(ItemBase::IconView, new NameTriple("iconView", QObject::tr("icon view"), "icon"));
-		names.insert(ItemBase::BreadboardView, new NameTriple("breadboardView", QObject::tr("breadboard view"), "breadboard"));
-		names.insert(ItemBase::SchematicView, new NameTriple("schematicView", QObject::tr("schematic view"), "schematic"));
-		names.insert(ItemBase::PCBView, new NameTriple("pcbView", QObject::tr("pcb view"), "pcb"));
-		partInstanceDefaultTitle = tr("Part");
-		moduleInstanceDefaultTitle = tr("Module");
-	}
+	partInstanceDefaultTitle = tr("Part");
+	moduleInstanceDefaultTitle = tr("Module");
 }
 
 void ItemBase::saveInstance(QXmlStreamWriter & streamWriter) {
-	streamWriter.writeStartElement(ItemBase::viewIdentifierXmlName(m_viewIdentifier));
+	streamWriter.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
 	streamWriter.writeAttribute("layer", ViewLayer::viewLayerXmlNameFromID(m_viewLayerID));
 	this->saveGeometry();
 	writeGeometry(streamWriter);
@@ -333,12 +308,12 @@ ViewGeometry & ItemBase::getViewGeometry() {
 	return m_viewGeometry;
 }
 
-ItemBase::ViewIdentifier ItemBase::viewIdentifier() {
+ViewIdentifierClass::ViewIdentifier ItemBase::viewIdentifier() {
 	return m_viewIdentifier;
 }
 
 QString & ItemBase::viewIdentifierName() {
-	return ItemBase::viewIdentifierName(m_viewIdentifier);
+	return ViewIdentifierClass::viewIdentifierName(m_viewIdentifier);
 }
 
 ViewLayer::ViewLayerID ItemBase::viewLayerID() {
@@ -831,15 +806,7 @@ void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 	}
 }
 
-ViewLayer::ViewLayerID ItemBase::defaultConnectorLayer(ItemBase::ViewIdentifier viewId) {
-	switch(viewId) {
-		case ItemBase::IconView: return ViewLayer::Icon;
-		case ItemBase::BreadboardView: return ViewLayer::Breadboard;
-		case ItemBase::SchematicView: return ViewLayer::Schematic;
-		case ItemBase::PCBView: return ViewLayer::Copper0;
-		default: return ViewLayer::UnknownLayer;
-	}
-}
+
 
 bool ItemBase::hasConnectors() {
 	foreach (QGraphicsItem * childItem, childItems()) {
@@ -1034,10 +1001,6 @@ QString ItemBase::toolTip2() {
 }
 
 void ItemBase::cleanup() {
-	foreach (NameTriple * nameTriple, names) {
-		delete nameTriple;
-	}
-	names.clear();
 }
 
 const QList<ItemBase *> & ItemBase::layerKin() {
@@ -1111,7 +1074,7 @@ void ItemBase::saveLocAndTransform(QXmlStreamWriter & streamWriter)
 
 }
 
-FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
+FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, LayerAttributes & layerAttributes)
 {
 #ifndef QT_NO_DEBUG
 	QTime t;

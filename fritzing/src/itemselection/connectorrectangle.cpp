@@ -27,7 +27,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include <QHash>
 
 #include "connectorrectangle.h"
-#include "../sketchwidget.h"
+#include "../zoomablegraphicsview.h"
 #include "../debugdialog.h"
 #include "../partseditor/partseditorconnectorsconnectoritem.h"
 
@@ -151,7 +151,7 @@ QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 
 qreal ConnectorRectangle::currentScale() {
 	if(m_owner->scene()) {
-		SketchWidget *sw = dynamic_cast<SketchWidget*>(m_owner->scene()->parent());
+		ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(m_owner->scene()->parent());
 		if(sw) {
 			return sw->currentZoom()/100;
 		}

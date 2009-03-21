@@ -45,6 +45,8 @@ public:
  	qreal currentZoom();
 	void setAcceptWheelEvents(bool);
 
+	virtual void ensureFixedToBottomRightItems() {}
+
 signals:
 	void zoomChanged(qreal zoom);
 	void zoomOutOfRange(qreal zoom);

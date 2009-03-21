@@ -33,7 +33,6 @@ $Date$
 #include "partseditorsketchwidget.h"
 #include "connectorswidget.h"
 #include "partinfowidget.h"
-#include "../itembase.h"
 #include "../palettemodel.h"
 #include "../sketchmodel.h"
 #include "../zoomcombobox.h"
@@ -65,7 +64,7 @@ protected slots:
 	void zoomIn(int);
 	void zoomOut(int);
 	void updateZoomText(int);
-	void loadFileIntoView(StringPair *svgFilePath, PartsEditorSketchWidget * view, ItemBase::ViewIdentifier viewIdentifier, QString layer);
+	void loadFileIntoView(StringPair *svgFilePath, PartsEditorSketchWidget * view, ViewIdentifierClass::ViewIdentifier viewIdentifier, QString layer);
 	void tabWidget_currentChanged(int index);
 
 	void loadPcbFootprint();
@@ -85,14 +84,14 @@ protected:
 	void makeDock(const QString & title, QWidget * widget,  Qt::DockWidgetArea area);
 	void connectViewToConnectorsDock(PartsEditorSketchWidget * view);
 
-	void copyToTempAndRename(QString filePathOrig, StringPair *filePathDest, ItemBase::ViewIdentifier viewId);
+	void copyToTempAndRename(QString filePathOrig, StringPair *filePathDest, ViewIdentifierClass::ViewIdentifier viewId);
 	QString getRandText();
 
 	void copySvgFilesToDestiny();
 	void copySvgFilesToDestinyAux(StringPair *path);
 	QDir createTempFolderIfNecessary();
 
-	void loadSketchWidgetFromModel(PartsEditorSketchWidget *widget, StringPair *filePath, ModelPart * modelPart, ItemBase::ViewIdentifier viewId);
+	void loadSketchWidgetFromModel(PartsEditorSketchWidget *widget, StringPair *filePath, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewId);
 
 	void closeEvent(QCloseEvent *event);
 	void rmdir(QDir & dir);

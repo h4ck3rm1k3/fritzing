@@ -45,7 +45,7 @@ $Date$
 
 QT_BEGIN_NAMESPACE
 
-PartsEditorSpecificationsView::PartsEditorSpecificationsView(ItemBase::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
+PartsEditorSpecificationsView::PartsEditorSpecificationsView(ViewIdentifierClass::ViewIdentifier viewId, QDir tempDir, QGraphicsItem *startItem, QWidget *parent, int size)
 	: PartsEditorAbstractView(viewId, tempDir, false/*true*/, parent, size)
 {
 	m_svgFilePath = new SvgAndPartFilePath;
@@ -172,7 +172,7 @@ void PartsEditorSpecificationsView::copyToTempAndRenameIfNecessary(SvgAndPartFil
 
 	if(!filePathOrig->absolutePath().startsWith(svgFolderPath)) { // it's outside the parts folder
 		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
-		QString viewFolder = ItemBase::viewIdentifierNaturalName(m_viewIdentifier);
+		QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 
 		if(!QFileInfo(m_tempFolder.path()+"/"+viewFolder).exists()
 		   && !m_tempFolder.mkdir(viewFolder)) return;
@@ -319,7 +319,7 @@ QString PartsEditorSpecificationsView::setFriendlierSvgFileName(const QString &p
 		.replace(" ","_");
 	if(aux.length()>40) aux.truncate(40);
 	aux+=QString("__%1__%2.svg")
-			.arg(ItemBase::viewIdentifierNaturalName(m_viewIdentifier))
+			.arg(ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier))
 			.arg(FritzingWindow::getRandText());
 	int slashIdx = m_svgFilePath->relativePath().indexOf("/");
 	QString relpath = m_svgFilePath->relativePath();

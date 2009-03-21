@@ -48,7 +48,7 @@ Q_OBJECT
 	protected:
 		void createViewImageWidget(
 				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, PartsEditorSpecificationsView *&viw,
-				ItemBase::ViewIdentifier viewId, QString iconFileName, QString startText
+				ViewIdentifierClass::ViewIdentifier viewId, QString iconFileName, QString startText
 			);
 		void init();
 

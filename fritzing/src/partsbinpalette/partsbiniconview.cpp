@@ -37,6 +37,8 @@ $Date$
 #include "graphicsflowlayout.h"
 #include "../paletteitem.h"
 #include "../debugdialog.h"
+#include "svgiconwidget.h"
+#include "../palettemodel.h"
 
 
 PartsBinIconView::PartsBinIconView(QWidget *parent)
@@ -179,7 +181,7 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 	QString moduleID = modelPart->moduleID();
 
 	if(!alreadyIn(moduleID)) {
-		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ItemBase::IconView, m_viewLayers, ItemBase::getNextID(), NULL);
+		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, m_viewLayers, ItemBase::getNextID(), NULL);
 		if(position > -1) {
 			m_layout->insertItem(position, svgicon);
 		} else {
@@ -209,7 +211,7 @@ void PartsBinIconView::loadFromModel(PaletteModel * model) {
 		QDomElement views = instance.firstChildElement("views");
 		if (views.isNull()) continue;
 
-		QString name = ItemBase::viewIdentifierXmlName(ItemBase::IconView);
+		QString name = ViewIdentifierClass::viewIdentifierXmlName(ViewIdentifierClass::IconView);
 		QDomElement view = views.firstChildElement(name);
 		if (view.isNull()) continue;
 

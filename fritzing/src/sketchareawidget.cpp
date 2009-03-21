@@ -59,7 +59,7 @@ ZoomComboBox *SketchAreaWidget::zoomComboBox() {
 	return m_zoomComboBox;
 }
 
-ItemBase::ViewIdentifier SketchAreaWidget::viewIdentifier() {
+ViewIdentifierClass::ViewIdentifier SketchAreaWidget::viewIdentifier() {
 	return m_graphicsView->viewIdentifier();
 }
 
@@ -87,7 +87,7 @@ void SketchAreaWidget::createLayout() {
 	m_zoomContainer = new QHBoxLayout(rightButtons);
 	m_zoomContainer->setMargin(0);
 	m_zoomContainer->setSpacing(3);
-	if(viewIdentifier() == ItemBase::PCBView) {
+	if(viewIdentifier() == ViewIdentifierClass::PCBView) {
 		m_zoomContainer->addWidget(separator(this->parentWidget()));
 	}
 	QLabel *zoomLabel = new QLabel(QObject::tr("Zoom"),this);

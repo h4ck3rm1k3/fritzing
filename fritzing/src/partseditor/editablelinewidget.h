@@ -32,7 +32,6 @@ $Date$
 #include <QLineEdit>
 
 #include "abstracteditablelabelwidget.h"
-#include "../modelpartshared.h"
 
 class EditableLineWidget : public AbstractEditableLabelWidget {
 Q_OBJECT

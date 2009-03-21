@@ -67,7 +67,7 @@ class SketchWidget : public InfoGraphicsView
 	Q_OBJECT
 
 public:
-    SketchWidget(ItemBase::ViewIdentifier, QWidget *parent=0, int size=600, int minSize=400);
+    SketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0, int size=600, int minSize=400);
 	~SketchWidget();
 
 	void pushCommand(QUndoCommand *);
@@ -129,7 +129,7 @@ public:
 
  	ItemCount calcItemCount();
 
-	ItemBase::ViewIdentifier viewIdentifier();
+	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
 	void stickyScoop(ItemBase * stickyOne, QUndoCommand * parentCommand);
@@ -324,9 +324,9 @@ signals:
 	void changeConnectionSignal(long fromID, QString fromConnectorID,
 								long toID, QString toConnectorID,
 								bool connect, bool updateConnections);
-	void copyItemSignal(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
+	void copyItemSignal(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
 	void deleteItemSignal(long itemID, QUndoCommand * parentCommand);
-	void findSketchWidgetSignal(ItemBase::ViewIdentifier, SketchWidget * &);
+	void findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &);
 	void cleanUpWiresSignal(CleanUpWiresCommand *);
 	void selectionChangedSignal();
 
@@ -359,7 +359,7 @@ protected slots:
 	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect, bool updateConnections);
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
-	void sketchWidget_copyItem(long itemID, QHash<ItemBase::ViewIdentifier, ViewGeometry *> &);
+	void sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
 	void sketchWidget_deleteItem(long itemID, QUndoCommand * parentCommand);
 	void dragIsDoneSlot(class ItemDrag *);
 	void statusMessage(QString message, int timeout = 0);
@@ -377,8 +377,6 @@ protected slots:
 
 public slots:
 	void swapSelected(const QString &moduleId, bool exactMatch=true);
-	void swapSelected(PaletteItem* other);
-	void swapSelected(ModelPart* other);
 	void swap(PaletteItem* from, ModelPart *to, bool doEmit, SwapCommand *);
 	void swap(long itemId, const QString &moduleID, bool doEmit, SwapCommand *);
 	void swap(long itemId, ModelPart *modelPart, bool doEmit, SwapCommand *);
@@ -394,7 +392,7 @@ protected:
 	PaletteModel* m_paletteModel;
 	class ReferenceModel* m_refModel;
 	SketchModel * m_sketchModel;
-	ItemBase::ViewIdentifier m_viewIdentifier;
+	ViewIdentifierClass::ViewIdentifier m_viewIdentifier;
 	class WaitPushUndoStack * m_undoStack;
 	class SelectItemCommand * m_holdingSelectItemCommand;
 	class SelectItemCommand * m_tempDragWireCommand;
@@ -456,9 +454,10 @@ protected:
 
 public:
 	static void init();
+	static ViewLayer::ViewLayerID defaultConnectorLayer(ViewIdentifierClass::ViewIdentifier viewId);
 
 protected:
-	static QHash<ItemBase::ViewIdentifier,QColor> m_bgcolors;
+	static QHash<ViewIdentifierClass::ViewIdentifier,QColor> m_bgcolors;
 };
 
 #endif

@@ -39,7 +39,7 @@ $Date$
 #include "../layerkinpaletteitem.h"
 
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_owner = owner;
@@ -51,7 +51,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 	m_shouldDeletePath = true;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL, false)
 {
 	m_owner = owner;
@@ -137,7 +137,7 @@ void PartsEditorPaletteItem::writeXmlLocation(QXmlStreamWriter & /*streamWriter*
 }
 
 void PartsEditorPaletteItem::writeXml(QXmlStreamWriter & streamWriter) {
-	streamWriter.writeStartElement(ItemBase::viewIdentifierXmlName(m_viewIdentifier));
+	streamWriter.writeStartElement(ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier));
 	streamWriter.writeStartElement("layers");
 	streamWriter.writeAttribute("image",m_svgStrings->relativePath());
 		streamWriter.writeStartElement("layer");
@@ -170,7 +170,7 @@ void PartsEditorPaletteItem::setConnector(const QString &id, Connector *connecto
 	Q_UNUSED(connector);
 }
 
-bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
+bool PartsEditorPaletteItem::setUpImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID viewLayerID, bool doConnectors)
 {
     ModelPartShared * modelPartShared = modelPart->modelPartShared();
     if (modelPartShared == NULL) return false;
@@ -251,7 +251,7 @@ ConnectorItem* PartsEditorPaletteItem::newConnectorItem(Connector *connector) {
 }
 
 LayerKinPaletteItem * PartsEditorPaletteItem::newLayerKinPaletteItem(
-		PaletteItemBase * chief, ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,
+		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,
 		const ViewGeometry & viewGeometry, long id,ViewLayer::ViewLayerID viewLayerID, QMenu* itemMenu, const LayerHash & viewLayers)
 {
 	LayerKinPaletteItem *lk = new
@@ -269,7 +269,7 @@ void PartsEditorPaletteItem::removeFromModel() {
 
 QString PartsEditorPaletteItem::xmlViewLayerID() {
 	ViewLayer::ViewLayerID viewLayerIDAux = m_viewLayerID == ViewLayer::UnknownLayer
-		? ItemBase::defaultConnectorLayer(m_viewIdentifier)
+		? SketchWidget::defaultConnectorLayer(m_viewIdentifier)
 		: m_viewLayerID;
 	return ViewLayer::viewLayerXmlNameFromID(viewLayerIDAux);
 }

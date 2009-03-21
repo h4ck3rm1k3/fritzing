@@ -29,7 +29,7 @@ $Date$
 #include "../modelpart.h"
 
 
-GroupItemKin::GroupItemKin( ModelPart* modelPart, ItemBase::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
+GroupItemKin::GroupItemKin( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
 }

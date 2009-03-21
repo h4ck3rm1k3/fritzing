@@ -33,22 +33,9 @@ $Date$
 #include <QtGui/qwidget.h>
 
 #include "../fritzingwindow.h"
-#include "partsymbolswidget.h"
 #include "connectorsviewswidget.h"
 #include "connectorsinfowidget.h"
-#include "partconnectorswidget.h"
-#include "partseditorspecificationsview.h"
-#include "editabletextwidget.h"
 #include "editablelinewidget.h"
-#include "editabledatewidget.h"
-#include "hashpopulatewidget.h"
-#include "connectorswidget.h"
-#include "partinfowidget.h"
-#include "../itembase.h"
-#include "../palettemodel.h"
-#include "../sketchmodel.h"
-#include "../zoomcombobox.h"
-#include "../mainwindow.h"
 
 QT_FORWARD_DECLARE_CLASS(QGraphicsScene)
 QT_FORWARD_DECLARE_CLASS(QGraphicsView)
@@ -110,19 +97,19 @@ protected:
 protected:
 	long m_id;
 
-	PaletteModel *m_paletteModel;
-	SketchModel *m_sketchModel;
+	class PaletteModel *m_paletteModel;
+	class SketchModel *m_sketchModel;
 
-	PartsEditorSpecificationsView *m_iconViewImage;
+	class PartsEditorSpecificationsView *m_iconViewImage;
 	EditableLineWidget *m_title;
-	PartSymbolsWidget *m_symbols;
+	class PartSymbolsWidget *m_symbols;
 	EditableLineWidget *m_label;
-	EditableTextWidget *m_description;
+	class EditableTextWidget *m_description;
 	//EditableLineWidget *m_taxonomy;
 	EditableLineWidget *m_tags;
-	HashPopulateWidget *m_properties;
+	class HashPopulateWidget *m_properties;
 	EditableLineWidget *m_author;
-	EditableDateWidget *m_createdOn;
+	class EditableDateWidget *m_createdOn;
 	QLabel *m_createdByText;
 
 	ConnectorsViewsWidget *m_connsViews;

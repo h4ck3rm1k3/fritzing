@@ -31,21 +31,21 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QLabel>
 #include <QBoxLayout>
 
-#include "../sketchwidget.h"
+#include "../zoomablegraphicsview.h"
 #include "../help/inotseeninminiview.h"
 
 
 class GraphicsZoomControls : public QGraphicsProxyWidget, public INotSeenInMiniView {
 public:
 	enum ZoomType {ZoomIn, ZoomOut};
-	GraphicsZoomControls(SketchWidget *view);
+	GraphicsZoomControls(ZoomableGraphicsView *view);
 };
 
 class ZoomButton : public QLabel {
 	Q_OBJECT
 
 	public:
-		ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, SketchWidget* view, QWidget *parent);
+		ZoomButton(QBoxLayout::Direction dir, GraphicsZoomControls::ZoomType type, ZoomableGraphicsView* view, QWidget *parent);
 
 	signals:
 		void clicked();
@@ -58,14 +58,14 @@ class ZoomButton : public QLabel {
 		void leaveEvent(QEvent *event);
 		void mousePressEvent(QMouseEvent *event);
 
-		SketchWidget *m_owner;
+		ZoomableGraphicsView *m_owner;
 		qreal m_step;
 		GraphicsZoomControls::ZoomType m_type;
 };
 
 class ZoomControlsPrivate : public QFrame {
 public:
-	ZoomControlsPrivate(SketchWidget*, QBoxLayout::Direction = QBoxLayout::TopToBottom, QWidget *parent=0);
+	ZoomControlsPrivate(ZoomableGraphicsView*, QBoxLayout::Direction = QBoxLayout::TopToBottom, QWidget *parent=0);
 
 	ZoomButton *zoomInButton();
 	ZoomButton *zoomOutButton();
@@ -80,7 +80,7 @@ protected:
 class ZoomControls : public ZoomControlsPrivate {
 	Q_OBJECT
 	public:
-		ZoomControls(SketchWidget *view, QWidget *parent);
+		ZoomControls(ZoomableGraphicsView *view, QWidget *parent);
 
 	protected slots:
 		void updateLabel(qreal zoom);

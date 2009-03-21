@@ -31,7 +31,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "connectoritem.h"
 #include "wire.h"
 
-PCBSchematicSketchWidget::PCBSchematicSketchWidget(ItemBase::ViewIdentifier viewIdentifier, QWidget *parent)
+PCBSchematicSketchWidget::PCBSchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)
 {
 }

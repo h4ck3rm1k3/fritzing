@@ -30,7 +30,7 @@ $Date$
 
 static double connectorRectClipInset = 0.5;
 
-TraceWire::TraceWire( ModelPart * modelPart, ItemBase::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
+TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
 	m_clipEnds = true;

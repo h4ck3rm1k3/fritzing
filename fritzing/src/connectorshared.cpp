@@ -92,11 +92,11 @@ void ConnectorShared::setConnectorType(QString type) {
 	m_type = Connector::connectorTypeFromName(type);
 }
 
-const QMultiHash<ItemBase::ViewIdentifier,SvgIdLayer*> & ConnectorShared::pins() {
+const QMultiHash<ViewIdentifierClass::ViewIdentifier,SvgIdLayer*> & ConnectorShared::pins() {
 	return m_pins;
 }
 
-void ConnectorShared::addPin(ItemBase::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID viewLayerID, QString terminalId) {
+void ConnectorShared::addPin(ViewIdentifierClass::ViewIdentifier layer, QString connectorId, ViewLayer::ViewLayerID viewLayerID, QString terminalId) {
 	SvgIdLayer * svgIdLayer = new SvgIdLayer;
 	svgIdLayer->m_viewLayerID = viewLayerID;
 	svgIdLayer->m_svgId = connectorId;
@@ -105,12 +105,12 @@ void ConnectorShared::addPin(ItemBase::ViewIdentifier layer, QString connectorId
 	m_pins.insert(layer, svgIdLayer);
 }
 
-void ConnectorShared::removePins(ItemBase::ViewIdentifier layer) {
+void ConnectorShared::removePins(ViewIdentifierClass::ViewIdentifier layer) {
 	m_pins.remove(layer);
 	Q_ASSERT(m_pins.values(layer).size() == 0);
 }
 
-const QString ConnectorShared::pin(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+const QString ConnectorShared::pin(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
 		if (svgIdLayer->m_viewLayerID == viewLayerID) {
@@ -121,7 +121,7 @@ const QString ConnectorShared::pin(ItemBase::ViewIdentifier viewId, ViewLayer::V
 	return ___emptyString___;
 }
 
-const QString ConnectorShared::terminal(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+const QString ConnectorShared::terminal(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
 		if (svgIdLayer->m_viewLayerID == viewLayerID) {
@@ -133,7 +133,7 @@ const QString ConnectorShared::terminal(ItemBase::ViewIdentifier viewId, ViewLay
 
 }
 
-SvgIdLayer * ConnectorShared::fullPinInfo(ItemBase::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
+SvgIdLayer * ConnectorShared::fullPinInfo(ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerID) {
 	QList<SvgIdLayer *> svgLayers = m_pins.values(viewId);
 	foreach ( SvgIdLayer * svgIdLayer, svgLayers) {
 		if (svgIdLayer->m_viewLayerID == viewLayerID) {
@@ -149,12 +149,12 @@ void ConnectorShared::loadPins(const QDomElement & domElement) {
 
 	// TODO: this is view-related stuff and it would be nice if the model didn't know about it
 	QDomElement viewsTag = domElement.firstChildElement("views");
-	loadPin(viewsTag.firstChildElement("breadboardView"),ItemBase::BreadboardView);
-	loadPin(viewsTag.firstChildElement("schematicView"),ItemBase::SchematicView);
-	loadPin(viewsTag.firstChildElement("pcbView"),ItemBase::PCBView);
+	loadPin(viewsTag.firstChildElement("breadboardView"),ViewIdentifierClass::BreadboardView);
+	loadPin(viewsTag.firstChildElement("schematicView"),ViewIdentifierClass::SchematicView);
+	loadPin(viewsTag.firstChildElement("pcbView"),ViewIdentifierClass::PCBView);
 }
 
-void ConnectorShared::loadPin(QDomElement elem, ItemBase::ViewIdentifier viewId) {
+void ConnectorShared::loadPin(QDomElement elem, ViewIdentifierClass::ViewIdentifier viewId) {
 	QDomElement pinElem = elem.firstChildElement("p");
 	while (!pinElem.isNull()) {
 		QString svgId = pinElem.attribute("svgId");

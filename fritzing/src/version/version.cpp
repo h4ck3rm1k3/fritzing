@@ -9,7 +9,7 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 Fritzing is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
+but WITHOUT ANY WARRANTY; without even the implied warranty ofswap
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
@@ -24,7 +24,7 @@ $Date$
 
 ********************************************************************/
 					
-#include "version.h"
+#include "version.h"				
 					
 #include <QString>
 #include <QStringList>		
