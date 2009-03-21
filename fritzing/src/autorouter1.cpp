@@ -386,7 +386,7 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 	if (parentCommand) {
 		addUndoConnections(sketchWidget, false, oldTraces, parentCommand);
 		foreach (Wire * wire, oldTraces) {
-			sketchWidget->makeDeleteItemCommand(wire, parentCommand);
+			sketchWidget->makeDeleteItemCommand(wire, BaseCommand::SingleView, parentCommand);
 		}
 	}
 

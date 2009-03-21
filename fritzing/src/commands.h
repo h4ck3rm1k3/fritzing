@@ -319,31 +319,6 @@ protected:
 	bool m_skipMe;
 };
 
-
-class SwapCommand : public BaseCommand
-{
-public:
-	SwapCommand(
-		SketchWidget* sketchWidget,
-		long itemId, const QString &oldModID, const QString &newModID,
-		QUndoCommand *parent);
-    void undo();
-    void redo();
-
-public:
-	void addDisconnect(class ConnectorItem * from, class ConnectorItem * to);
-	void addAfterDisconnect();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	long m_itemId;
-	QString m_oldModuleID;
-	QString m_newModuleID;
-	bool m_firstTime;
-};
-
 class WireColorChangeCommand : public BaseCommand
 {
 public:

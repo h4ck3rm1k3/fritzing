@@ -798,8 +798,8 @@ void SketchWidget::deleteItem() {
 
 void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
-	DebugDialog::debug("before delete");
-	m_sketchModel->walk(m_sketchModel->root(), 0);
+	//DebugDialog::debug("before delete");
+	//m_sketchModel->walk(m_sketchModel->root(), 0);
 
     // get sitems first, before calling stackSelectionState
     // because selectedItems will return an empty list
@@ -898,8 +898,11 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	// actual delete commands must come last for undo to work properly
 	foreach (ItemBase * itemBase, deletedItems) {
-		makeDeleteItemCommand(itemBase, parentCommand);
-		emit deleteItemSignal(itemBase->id(), parentCommand);			// let the other views add the command
+		BaseCommand::CrossViewType crossView = BaseCommand::CrossView;
+		if (itemBase->getVirtual() || (dynamic_cast<TraceWire *>(itemBase) != NULL)) {
+			crossView = BaseCommand::SingleView;
+		}
+		makeDeleteItemCommand(itemBase, crossView, parentCommand);
 	}
    	m_undoStack->push(parentCommand);
 }
@@ -3010,21 +3013,14 @@ void SketchWidget::sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass:
 	geometryHash.insert(m_viewIdentifier, vg);
 }
 
-void SketchWidget::sketchWidget_deleteItem(long itemID, QUndoCommand * parentCommand) {
-	ItemBase * itemBase = findItem(itemID);
-	if (itemBase == NULL) return;
-
-	makeDeleteItemCommand(itemBase, parentCommand);
-}
-
-void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand) {
+void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType crossView, QUndoCommand * parentCommand) {
 	if (itemBase->itemType() == ModelPart::Wire) {
 		Wire * wire = dynamic_cast<Wire *>(itemBase);
 		new WireWidthChangeCommand(this, wire->id(), wire->width(), wire->width(), parentCommand);
 		new WireColorChangeCommand(this, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	}
 			
-	new DeleteItemCommand(this, BaseCommand::SingleView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
+	new DeleteItemCommand(this, crossView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
 }
 
 ViewIdentifierClass::ViewIdentifier SketchWidget::viewIdentifier() {
@@ -3256,10 +3252,7 @@ void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorIte
 	}
 
 	toWire->saveGeometry();
-	makeDeleteItemCommand(toWire, parentCommand);
-	if (crossView == BaseCommand::CrossView) {
-		emit deleteItemSignal(toWire->id(), parentCommand);
-	}
+	makeDeleteItemCommand(toWire, crossView, parentCommand);
 
 	QLineF newLine;
 	QPointF newPos;
@@ -3440,6 +3433,7 @@ void SketchWidget::swapSelected(const QString &moduleID, bool exactMatch) {
 	if(moduleID != ___emptyString___) {
 		if(m_lastPaletteItemSelected) {
 			if(!exactMatch) {
+				// TODO: should there be a cancel here?
 				QMessageBox::information(
 					this,
 					tr("Warning!"),
@@ -3447,13 +3441,10 @@ void SketchWidget::swapSelected(const QString &moduleID, bool exactMatch) {
 				);
 			}
 			QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(m_lastPaletteItemSelected->instanceTitle()).arg(moduleID));
-			new SwapCommand(
-					this,
-					m_lastPaletteItemSelected->id(),
-					m_lastPaletteItemSelected->modelPart()->moduleID(),
-					moduleID,
-					parentCommand);
-			m_undoStack->push(parentCommand);
+			setUpSwap(m_lastPaletteItemSelected->id(), ModelPart::nextIndex(), moduleID, true, parentCommand);
+			
+			// TODO:  updateInfoView?
+			m_undoStack->waitPush(parentCommand, 10);
 		}
 	} else {
 		QMessageBox::information(
@@ -3466,34 +3457,78 @@ void SketchWidget::swapSelected(const QString &moduleID, bool exactMatch) {
 	}
 }
 
-void SketchWidget::swap(PaletteItem* from, ModelPart *to, bool doEmit, SwapCommand * swapCommand) {
-	if(from && to) {
-		from->swap(to, m_viewLayers, doEmit, swapCommand);
-		updateInfoView();
+void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand) 
+{
+	ItemBase * itemBase = findItem(itemID);
+	if (itemBase == NULL) return;
+
+	long newID = ItemBase::getNextID(newModelIndex);
+
+	// first disconnect
+	ConnectorPairHash connectorHash;
+	itemBase->collectConnectors(connectorHash, this->scene());
+	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+		foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+			new ChangeConnectionCommand(this, BaseCommand::SingleView,
+										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+										false, true, parentCommand);
+		}
+	}
+
+	new AddItemCommand(this, BaseCommand::SingleView, newModuleID, itemBase->getViewGeometry(), newID, true, newModelIndex, -1, parentCommand);
+	setUpSwapReconnect(itemBase, connectorHash, newID, newModuleID, parentCommand);
+	
+	if (doEmit) {
+		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+		selectItemCommand->addRedo(newID);
+		selectItemCommand->addUndo(itemBase->id());
+		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, parentCommand);
+		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, parentCommand);
+		emit setUpSwapSignal(itemID, newModelIndex, newModuleID, false, parentCommand);
+		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
 	}
 }
 
-void SketchWidget::swap(long itemId, const QString &moduleID, bool doEmit, SwapCommand * swapCommand) {
-	swap(itemId, m_refModel->retrieveModelPart(moduleID), doEmit, swapCommand);
-}
+void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand) 
+{
+	Q_UNUSED(itemBase);
 
-void SketchWidget::swap(long itemId, ModelPart *to, bool doEmit, SwapCommand * swapCommand) {
-	PaletteItem *from = dynamic_cast<PaletteItem*>(findItem(itemId));
-	if(from && to) {
-		swap(from,to, doEmit, swapCommand);
+	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
+	if (newModelPart == NULL) return;
 
-		// let's make sure that the icon pixmap will be available for the infoview
-		LayerAttributes layerAttributes;
-		ItemBase::setUpImage(from->modelPart(), ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
-
-		if(doEmit) {
-			emit swapped(itemId, to, false, NULL);
+	newModelPart->initConnectors();			//  make sure the connectors are set up
+	bool cleanUpWires = false;
+	QHash<QString, Connector *> newConnectors = newModelPart->connectors();
+	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+		Connector * newConnector = NULL;
+		foreach (QString key, newConnectors.keys()) {
+			if (key.compare(fromConnectorItem->connectorSharedID()) == 0) {
+				newConnector = newConnectors.value(key);
+				break;
+			}
+		}
+		if (newConnector) {
+			// TODO: (bbview only) check genders and add wire if necessary
+			// TODO: (bbview only) check distances
+			foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+				new ChangeConnectionCommand(this, BaseCommand::SingleView, 
+											newID, fromConnectorItem->connectorSharedID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+											true, true, parentCommand);
+			}										
+		}
+		else {
+			cleanUpWires = true;
 		}
 
+	}
 
+	if (cleanUpWires) {
+		CleanUpWiresCommand * cleanUpWiresCommand = new CleanUpWiresCommand(this, false, parentCommand);
+		cleanUpWiresCommand->setCrossViewType(BaseCommand::SingleView);
 	}
 }
-
 
 void SketchWidget::changeWireColor(const QString newColor)
 {
@@ -4569,7 +4604,7 @@ void SketchWidget::restoreIndexes(long id, ModelPartTiny * modelPartTiny, bool d
 	if (itemBase == NULL) return;
 
 	restoreIndexes(itemBase->modelPart(), modelPartTiny, doEmit);
-	m_sketchModel->walk(m_sketchModel->root(), 0);
+	//m_sketchModel->walk(m_sketchModel->root(), 0);
 }
 
 void SketchWidget::restoreIndexes(ModelPart * modelPart, ModelPartTiny * modelPartTiny, bool doEmit)

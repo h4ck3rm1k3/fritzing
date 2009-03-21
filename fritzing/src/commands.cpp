@@ -205,7 +205,7 @@ void DeleteItemCommand::undo()
 
 void DeleteItemCommand::redo()
 {
-    m_sketchWidget->deleteItem(m_itemID, true, true, false, NULL);
+	m_sketchWidget->deleteItem(m_itemID, true, m_crossViewType == BaseCommand::CrossView, false, NULL);
 }
 
 QString DeleteItemCommand::getParamString() const {
@@ -568,7 +568,7 @@ void CleanUpWiresCommand::redo()
 {
 	subRedo();
 
-	m_sketchWidget->cleanUpWires(true, m_firstTime ? this : NULL, m_skipMe);
+	m_sketchWidget->cleanUpWires(m_crossViewType == BaseCommand::CrossView, m_firstTime ? this : NULL, m_skipMe);
 	m_firstTime = false;
 }
 
@@ -611,54 +611,6 @@ void CleanUpWiresCommand::addRoutingStatus(SketchWidget * sketchWidget, int oldN
 QString CleanUpWiresCommand::getParamString() const {
 	return QString("CleanUpWiresCommand ") 
 		+ BaseCommand::getParamString();
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-SwapCommand::SwapCommand(SketchWidget* sketchWidget, long itemId, const QString &oldModID, const QString &newModID, QUndoCommand *parent)
-: BaseCommand(BaseCommand::CrossView, sketchWidget, parent)
-{
-	m_itemId = itemId;
-	m_oldModuleID = oldModID;
-	m_newModuleID = newModID;
-	m_firstTime = true;
-}
-
-void SwapCommand::undo() {
-	m_sketchWidget->swap(m_itemId, m_oldModuleID, true, NULL);
-
-	subUndo();
-	// reconnect everyone, if necessary
-}
-
-void SwapCommand::redo() {
-	// disconnect everyone, if necessary
-	subRedo();
-
-	m_sketchWidget->swap(m_itemId, m_newModuleID, true, m_firstTime ? this : NULL);
-	m_firstTime = false;
-}
-
-void SwapCommand::addDisconnect(class ConnectorItem * from, class ConnectorItem * to) 
-{
-	ChangeConnectionCommand * ccc = new ChangeConnectionCommand(m_sketchWidget, BaseCommand::CrossView, from->attachedToID(), from->connectorSharedID(),
-																to->attachedToID(), to->connectorSharedID(), false, true, NULL);
-	addSubCommand(ccc);
-	ccc->redo();
-}
-
-void SwapCommand::addAfterDisconnect() {
-	CleanUpWiresCommand * cuw = new CleanUpWiresCommand(m_sketchWidget, false, NULL);
-	addSubCommand(cuw);
-	cuw->redo();
-}
-
-
-QString SwapCommand::getParamString() const {
-	return QString("SwapCommand ") 
-		+ BaseCommand::getParamString()
-		+ QString(" id:%1 oldModule:%2 newModule:%3") 
-			.arg(m_itemId).arg(m_oldModuleID).arg(m_newModuleID);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////

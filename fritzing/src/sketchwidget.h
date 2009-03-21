@@ -169,7 +169,7 @@ public:
 	virtual bool canDeleteItem(QGraphicsItem * item);
 	virtual bool canCopyItem(QGraphicsItem * item);
 	const QString & viewName();
-	void makeDeleteItemCommand(ItemBase * itemBase, QUndoCommand * parentCommand);
+	void makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::CrossViewType, QUndoCommand * parentCommand);
 	virtual void dealWithRatsnest(long fromID, const QString & fromConnectorID,
 								  long toID, const QString & toConnectorID,
 								  bool connect, class RatsnestCommand *, bool doEmit);
@@ -309,6 +309,7 @@ protected:
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
 	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, const ViewGeometry &, long id); 
 	void collectModuleExternalConnectors(ItemBase *, ItemBase * parent, ConnectorPairHash &);
+	void setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand);
 
 protected:
 	static bool lessThan(int a, int b);
@@ -325,12 +326,10 @@ signals:
 								long toID, QString toConnectorID,
 								bool connect, bool updateConnections);
 	void copyItemSignal(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
-	void deleteItemSignal(long itemID, QUndoCommand * parentCommand);
 	void findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &);
 	void cleanUpWiresSignal(CleanUpWiresCommand *);
 	void selectionChangedSignal();
 
-	void swapped(long itemId, ModelPart *with, bool doEmit, SwapCommand *);
 	void resizeSignal();
 	void dropSignal(const QPoint &pos);
 	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
@@ -343,6 +342,7 @@ signals:
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool doEmit);
+	void setUpSwapSignal(long itemID, long newID, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -360,7 +360,6 @@ protected slots:
 	void navigatorScrollChange(double x, double y);
 	void restartPasteCount();
 	void sketchWidget_copyItem(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
-	void sketchWidget_deleteItem(long itemID, QUndoCommand * parentCommand);
 	void dragIsDoneSlot(class ItemDrag *);
 	void statusMessage(QString message, int timeout = 0);
 	void sketchWidget_cleanUpWires(CleanUpWiresCommand *);
@@ -374,12 +373,10 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void ensureFixedItemsPositions();
+	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 
 public slots:
 	void swapSelected(const QString &moduleId, bool exactMatch=true);
-	void swap(PaletteItem* from, ModelPart *to, bool doEmit, SwapCommand *);
-	void swap(long itemId, const QString &moduleID, bool doEmit, SwapCommand *);
-	void swap(long itemId, ModelPart *modelPart, bool doEmit, SwapCommand *);
 	void changeWireColor(const QString newColor);
 	void changeWireWidth(const QString newWidth);
  	void selectAllItems(bool state, bool doEmit);

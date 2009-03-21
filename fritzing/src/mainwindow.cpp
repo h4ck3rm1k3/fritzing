@@ -380,16 +380,9 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(copyItemSignal(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
 													   slotter, SLOT(sketchWidget_copyItem(long, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &)),
 									 Qt::DirectConnection);
-	succeeded = succeeded && connect(signaller, SIGNAL(deleteItemSignal(long, QUndoCommand *)),
-									 slotter, SLOT(sketchWidget_deleteItem(long, QUndoCommand *)),
-									 Qt::DirectConnection);
 
 	succeeded = succeeded && connect(signaller, SIGNAL(cleanUpWiresSignal(CleanUpWiresCommand *)),
 									 slotter, SLOT(sketchWidget_cleanUpWires(CleanUpWiresCommand *)) );
-	succeeded = succeeded && connect(signaller, SIGNAL(swapped(long, ModelPart*, bool, SwapCommand *)),
-									 slotter, SLOT(swap(long, ModelPart*, bool, SwapCommand *)),
-									 Qt::DirectConnection );
-
 	succeeded = succeeded && connect(signaller, SIGNAL(dealWithRatsnestSignal(long, const QString &,
 																			  long, const QString &,
 																			  bool, RatsnestCommand *)),
@@ -401,6 +394,12 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 									 slotter, SLOT(group(const QString &, long, QList<long> &, const ViewGeometry &, bool)) );
 	succeeded = succeeded && connect(signaller, SIGNAL(restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool )),
 									 slotter, SLOT(restoreIndexes(ModelPart *, ModelPartTiny *, bool )) );
+
+	succeeded = succeeded && connect(signaller, SIGNAL(restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool )),
+									 slotter, SLOT(restoreIndexes(ModelPart *, ModelPartTiny *, bool )) );
+	succeeded = succeeded && connect(signaller, SIGNAL(setUpSwapSignal(long, long, const QString &, bool, QUndoCommand *)),
+									 slotter, SLOT(setUpSwap(long, long, const QString &, bool, QUndoCommand *)),
+									 Qt::DirectConnection);
 
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");

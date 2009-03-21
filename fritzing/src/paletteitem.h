@@ -74,11 +74,7 @@ protected:
  	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void invalidateConnectors();
-	void cleanupConnectors(class SwapCommand *);
 	void figureHover();
-	QHash<ViewLayer::ViewLayerID,bool> cleanupLayerKin();
-	void updateLayerKinVisibility(QHash<ViewLayer::ViewLayerID,bool>);
 
 protected:
  	QList<class ItemBase *> m_layerKin;

@@ -240,7 +240,7 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 		jumperOrTrace->collectChained(chained, ends, uniqueEnds);
 		makeWiresChangeConnectionCommands(chained, parentCommand);
 		foreach (Wire * c, chained) {
-			makeDeleteItemCommand(c, parentCommand);
+			makeDeleteItemCommand(c, BaseCommand::SingleView, parentCommand);
 			done.append(c);
 		}
 	}

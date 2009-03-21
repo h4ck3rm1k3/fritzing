@@ -735,7 +735,7 @@ void SchematicSketchWidget::obsolete(QSet<ItemBase *> & deletedItems, QHash<Item
 	makeWiresChangeConnectionCommands(undeleteWires.values(), parentCommand);
 
 	foreach (Wire * wire, undeleteWires) {
-		makeDeleteItemCommand(wire, parentCommand);
+		makeDeleteItemCommand(wire, BaseCommand::SingleView, parentCommand);
 		deletedItems.remove(wire);
 	}
 

@@ -81,23 +81,6 @@
                 </schematicView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="475" path=":/resources/parts/core/wire.fzp">
-            <title>Wire1</title>
-            <views>
-                <breadboardView layer="breadboardWire">
-                    <geometry z="3.5" x="202.226" y="140.475" x1="0" y1="0" x2="-196.226" y2="-134.475" wireFlags="1"></geometry>
-                    <wireExtras width="3" color="#cc1f1f" opacity="1"></wireExtras>
-                </breadboardView>
-                <pcbView layer="ratsnest">
-                    <geometry z="2.5" x="185.039" y="170.913" x1="0" y1="0" x2="-179.039" y2="-164.913" wireFlags="1"></geometry>
-                    <wireExtras width="1" color="#000000" opacity="1"></wireExtras>
-                </pcbView>
-                <schematicView layer="schematicWire">
-                    <geometry z="2.5" x="174.067" y="77.7998" x1="0" y1="0" x2="-168.067" y2="-71.7998" wireFlags="1"></geometry>
-                    <wireExtras width="2" color="#7d7d7d" opacity="1"></wireExtras>
-                </schematicView>
-            </views>
-        </instance>
         <instance moduleIdRef="1234ABDC24" modelIndex="5477" path="C:/fritzing2/phoenix/parts/core/LED-red-5mm.fzp">
             <title>LED1</title>
             <views>
