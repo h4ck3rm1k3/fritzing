@@ -15,7 +15,6 @@ except ImportError:
 # setup the environment before we start accessing things in the settings.
 setup_environ(settings_mod)
 
-print settings.PINAX_ROOT
 sys.path.insert(0, join(settings.PINAX_ROOT, "apps"))
 sys.path.insert(0, join(settings.PROJECT_ROOT, "apps"))
 
