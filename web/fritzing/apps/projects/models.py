@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django_extensions.db.models import TimeStampedModel
 from tagging.fields import TagField
-from fritzing.apps.projects.managers import LiveProjectManager
+from fritzing.apps.projects.managers import PublicProjectManager
 from fritzing.apps.tools.models import TitleSlugDescriptionModel
 from imagekit.models import ImageModel
 from template_utils.markup import formatter
