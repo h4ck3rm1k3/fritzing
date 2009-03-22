@@ -43,6 +43,7 @@ class Category(TitleSlugDescriptionModel):
 mptt.register(Category)
 
 class Property(models.Model):
+    part = models.ForeignKey('Part', verbose_name=_('part'), related_name='properties')
     key = models.TextField()
     value = models.TextField()
 
@@ -50,16 +51,9 @@ class Property(models.Model):
         return self.key
 
 class Part(TitleSlugDescriptionModel, TimeStampedModel):
-    LIVE = 1
-    DRAFT = 2
-    HIDDEN = 3
-    STATUSES = (
-        (LIVE, "live"),
-        (DRAFT, "draft"),
-        (HIDDEN, "hidden"),
-    )
     # normalized data
     description_html = models.TextField(editable=False, blank=True)
+    vendor_info = models.TextField()
 
     # relations
     projects = models.ManyToManyField(Project, verbose_name=_('projects'))
@@ -69,10 +63,6 @@ class Part(TitleSlugDescriptionModel, TimeStampedModel):
     category = models.ForeignKey(Category, verbose_name=_('category'), related_name='projects')
     tags = TagField(help_text=_('Comma separated list of tags.'))
     license = LicenseField(related_name='parts', required=False)
-
-    # metadata
-    properties = models.ManyToManyField(Property, related_name='parts')
-    vendor_info = models.TextField()
 
     public = models.BooleanField(_('public'), default=True,
         help_text=_('Is publicly visible on the site.'))
