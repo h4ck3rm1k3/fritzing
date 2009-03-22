@@ -3482,6 +3482,10 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 		}
 		if (newConnector) {
 			// TODO: check distances (for capacitors, for example)
+			//			use preloadSlowParts code to set up new connectors (which layers?)
+			//			skip breadboards, skip gender changes
+			//			only look at connectors with direct m/f connections
+			//			only care about single parts, 
 			if (swappedGender(fromConnectorItem, newConnector)) {
 				cleanUpWires = true;
 				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
@@ -4659,11 +4663,6 @@ bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newC
 
 	return (((connectorItem->connectorType() == Connector::Male) && (newConnector->connectorType() == Connector::Female))  ||
 			((connectorItem->connectorType() == Connector::Female) && (newConnector->connectorType() == Connector::Male)));
-}
-
-PaletteItem * SketchWidget::lastPaletteItemSelected()
-{
-	return m_lastPaletteItemSelected;
 }
 
 void SketchWidget::setLastPaletteItemSelected(PaletteItem * paletteItem) 

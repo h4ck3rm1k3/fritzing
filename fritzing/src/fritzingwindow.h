@@ -85,6 +85,9 @@ class FritzingWindow : public QMainWindow {
 		static QString getRandText();
 
 	public:
+		virtual void notClosableForAWhile() {}
+
+	public:
 		static QString ReadOnlyPlaceholder;
 		static const QString CoreBinLocation;
 };

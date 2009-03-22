@@ -205,7 +205,6 @@ public:
 	void setConnectorExternal(long itemID, const QString & connectorID, bool external);
 	bool spaceBarIsPressed();
 	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
-	PaletteItem * lastPaletteItemSelected();
 	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 
 protected:

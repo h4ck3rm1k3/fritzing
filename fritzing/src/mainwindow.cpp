@@ -1538,8 +1538,8 @@ void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
 		return;
 	}
 
-	PaletteItem * paletteItem = m_currentGraphicsView->lastPaletteItemSelected();
-	if (paletteItem == NULL) return;
+	ItemBase * itemBase = m_infoView->currentItem();
+	if (itemBase == NULL) return;
 
 	if(!exactMatch) {
 		// TODO: should there be a cancel here?
@@ -1549,13 +1549,13 @@ void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
 			tr("Not an exact match")
 		);
 	}
-	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(paletteItem->instanceTitle()).arg(moduleID));
+	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
 	long modelIndex = ModelPart::nextIndex();
-	m_schematicGraphicsView->setUpSwap(paletteItem->id(), modelIndex, moduleID, false, parentCommand);
-	m_pcbGraphicsView->setUpSwap(paletteItem->id(), modelIndex, moduleID, false, parentCommand);
+	m_schematicGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, false, parentCommand);
+	m_pcbGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, false, parentCommand);
 
 	// master view must go last, since it creates the delete command
-	m_breadboardGraphicsView->setUpSwap(paletteItem->id(), modelIndex, moduleID, true, parentCommand);
+	m_breadboardGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, true, parentCommand);
 
 	// TODO:  z-order?
 

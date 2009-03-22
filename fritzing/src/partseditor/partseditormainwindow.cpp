@@ -636,7 +636,7 @@ bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {
 			event->ignore();
 			QCoreApplication::processEvents();
 #ifdef Q_WS_MAC
-			MainWindow *parent = dynamic_cast<MainWindow*>(parentWidget());
+			FritzingWindow *parent = dynamic_cast<FritzingWindow*>(parentWidget());
 			if(parent) {
 				parent->notClosableForAWhile();
 			}
