@@ -395,12 +395,6 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool )),
 									 slotter, SLOT(restoreIndexes(ModelPart *, ModelPartTiny *, bool )) );
 
-	succeeded = succeeded && connect(signaller, SIGNAL(restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool )),
-									 slotter, SLOT(restoreIndexes(ModelPart *, ModelPartTiny *, bool )) );
-	succeeded = succeeded && connect(signaller, SIGNAL(setUpSwapSignal(long, long, const QString &, bool, QUndoCommand *)),
-									 slotter, SLOT(setUpSwap(long, long, const QString &, bool, QUndoCommand *)),
-									 Qt::DirectConnection);
-
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");
 	}
@@ -1564,6 +1558,8 @@ void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
 	m_breadboardGraphicsView->setUpSwap(paletteItem->id(), modelIndex, moduleID, true, parentCommand);
 
 	// TODO:  z-order?
+
+	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, 10);
 
 }

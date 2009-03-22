@@ -126,7 +126,7 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     resize(size, size);
     setMinimumSize(minSize, minSize);
 
-    m_lastPaletteItemSelected = NULL;
+    setLastPaletteItemSelected(NULL);
 
 #ifdef QT_NO_DEBUG
     m_infoViewOnHover = false;
@@ -763,7 +763,7 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 		m_infoView->unregisterCurrentItemIf(itemBase->id());
 	}
 	if (itemBase == this->m_lastPaletteItemSelected) {
-		m_lastPaletteItemSelected = NULL;
+		setLastPaletteItemSelected(NULL);
 	}
 	m_lastSelected.removeOne(itemBase);
 	removeIfFixedPos(itemBase);
@@ -1088,7 +1088,7 @@ void SketchWidget::selectItem(long id, bool state, bool updateInfoView, bool doE
 
 	PaletteItem *pitem = dynamic_cast<PaletteItem*>(item);
 	if(pitem) {
-		m_lastPaletteItemSelected = pitem;
+		setLastPaletteItemSelected(pitem);
 	}
 }
 
@@ -1487,6 +1487,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	PartLabel * partLabel =  dynamic_cast<PartLabel *>(item);
 	if (partLabel != NULL) {
 		InfoGraphicsView::viewItemInfo(partLabel->owner());
+		setLastPaletteItemSelectedIf(partLabel->owner());
 		return;
 	}
 
@@ -1499,6 +1500,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase) {
 		InfoGraphicsView::viewItemInfo(itemBase);
+		setLastPaletteItemSelectedIf(itemBase);
 	}
 
 	QSet<Wire *> wires;
@@ -1905,7 +1907,7 @@ void SketchWidget::sketchWidget_itemSelected(long id, bool state) {
 
 	PaletteItem *pitem = dynamic_cast<PaletteItem*>(item);
 	if(pitem) {
-		m_lastPaletteItemSelected = pitem;
+		setLastPaletteItemSelected(pitem);
 	}
 }
 
@@ -4662,4 +4664,18 @@ bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newC
 PaletteItem * SketchWidget::lastPaletteItemSelected()
 {
 	return m_lastPaletteItemSelected;
+}
+
+void SketchWidget::setLastPaletteItemSelected(PaletteItem * paletteItem) 
+{
+	m_lastPaletteItemSelected = paletteItem;
+	//DebugDialog::debug(QString("m_lastPaletteItemSelected:%1 %2").arg(paletteItem == NULL ? "NULL" : paletteItem->instanceTitle()).arg(m_viewIdentifier));
+}
+
+void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase) 
+{
+	PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(itemBase);
+	if (paletteItem == NULL) return;
+
+	setLastPaletteItemSelected(paletteItem);
 }

@@ -313,6 +313,9 @@ protected:
 	void collectModuleExternalConnectors(ItemBase *, ItemBase * parent, ConnectorPairHash &);
 	void setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand);
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
+	void setLastPaletteItemSelected(PaletteItem * paletteItem);
+	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
+
 
 protected:
 	static bool lessThan(int a, int b);
