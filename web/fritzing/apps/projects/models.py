@@ -157,6 +157,6 @@ class Attachment(models.Model):
         return self.title
 
     def save(self, force_insert=False, force_update=False):
-        if not self.pk:
+        if not self.pk and not self.title:
             _, self.title = os.path.split(self.attachment.name)
         super(Attachment, self).save(force_insert, force_update)
