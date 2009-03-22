@@ -145,18 +145,17 @@ INSTALLED_APPS = (
     'robots',
     'contact_form',
     'ticker',
+    'tinymce',
+    'markitup',
+#    'south',
+    'licenses',
+    'dregni',
 
     # internal (for now)
-    'dregni',
     'basic_profiles',
-    'faq',
     'account',
     'misc',
-    'tools',
-    'parts',
-    'downloads',
-#    'south',
-    'tinymce',
+    'fritzing.apps.*',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -215,8 +214,23 @@ PAGE_TAGGING = True
 PAGE_USE_SITE_ID = True
 REQUIRE_LOGIN_PATH = LOGIN_REDIRECT_URL
 
-TINYMCE_JS_URL = '%stiny_mce/tiny_mce.js' % MEDIA_URL
-TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, 'tiny_mce')
+TINYMCE_JS_URL = '%stinymce/tiny_mce.js' % MEDIA_URL
+TINYMCE_JS_ROOT = os.path.join(MEDIA_ROOT, 'tinymce')
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'apply_source_formatting' : 'true',
+    'inline_styles' : 'true',
+    'dialog_type' : "window",
+    'theme_advanced_buttons1': 'pastetext,pasteword,cleanup,|,bold,italic,|,forecolor,|,justifyleft,justifycenter,justifyright,|,indent,outdent,|,bullist,numlist,|,link,unlink,image,charmap,|,undo,redo,|,code,',
+    'theme_advanced_buttons2': '',
+    'theme_advanced_buttons3': '',
+    'theme_advanced_resizing' : 'true',
+    'theme_advanced_resize_horizontal' : 'true',
+    'theme_advanced_toolbar_location' : "top",
+    'theme_advanced_statusbar_location' : "bottom"
+}
+TINYMCE_SPELLCHECKER = True
 
 FIXTURE_DIRS = (
     os.path.join(PROJECT_ROOT, "fixtures"),
@@ -225,6 +239,10 @@ FIXTURE_DIRS = (
 GENERIC_CONTENT_LOOKUP_KWARGS = {
     'ticker.entry': { 'status': 3 },
 }
+
+MARKUP_FILTER = ('markdown', {'safe_mode': True})
+MARKITUP_SET = 'markitup/sets/markdown'
+MARKITUP_PREVIEW_FILTER = ('markdown.markdown', {'safe_mode': True})
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
