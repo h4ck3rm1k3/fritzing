@@ -3447,6 +3447,10 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 										false, true, parentCommand);
+					new RatsnestCommand(this, BaseCommand::SingleView, 
+										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+										false, true, parentCommand);
 		}
 	}
 
@@ -3470,13 +3474,13 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 	if (newModelPart == NULL) return;
 
 	newModelPart->initConnectors();			//  make sure the connectors are set up
-	bool cleanUpWires = false;
 	QHash<QString, Connector *> newConnectors = newModelPart->connectors();
 	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
 		Connector * newConnector = NULL;
-		foreach (QString key, newConnectors.keys()) {
-			if (key.compare(fromConnectorItem->connectorSharedID()) == 0) {
-				newConnector = newConnectors.value(key);
+		QString fromName = fromConnectorItem->connectorSharedName();
+		foreach (Connector * connector, newConnectors.values()) {
+			if (fromName.compare(connector->connectorSharedName(), Qt::CaseInsensitive) == 0) {
+				newConnector = connector;
 				break;
 			}
 		}
@@ -3487,18 +3491,17 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 			//			only look at connectors with direct m/f connections
 			//			only care about single parts, 
 			if (swappedGender(fromConnectorItem, newConnector)) {
-				cleanUpWires = true;
 				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
 					if (toConnectorItem->connectorType() == newConnector->connectorType()) {
 						// need a wire: connectors are same gender
 						long wireID = ItemBase::getNextID();
 						ViewGeometry vg;
 						new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, vg, wireID, false, -1, -1, parentCommand);
-						new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, fromConnectorItem->connectorSharedID(),
+						new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 								wireID, "connector0", true, true, parentCommand);
 						new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 								wireID, "connector1", true, true, parentCommand);
-						new RatsnestCommand(this, BaseCommand::CrossView, newID, fromConnectorItem->connectorSharedID(),
+						new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 								wireID, "connector0", true, true, parentCommand);
 						new RatsnestCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 								wireID, "connector1", true, true, parentCommand);
@@ -3506,9 +3509,12 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 					else {
 						// can connect to the new item directly
 						new ChangeConnectionCommand(this, BaseCommand::CrossView, 
-													newID, fromConnectorItem->connectorSharedID(),
+													newID, newConnector->connectorSharedID(),
 													toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 													true, true, parentCommand);
+						new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(), 
+											true, true, parentCommand);
 					}
 				}	
 			}
@@ -3516,21 +3522,17 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
 					// connect to the new item
 					new ChangeConnectionCommand(this, BaseCommand::CrossView, 
-												newID, fromConnectorItem->connectorSharedID(),
+												newID, newConnector->connectorSharedID(),
 												toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 												true, true, parentCommand);
+					new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(), 
+										true, true, parentCommand);
 				}	
 			}
 		}
-		else {
-			cleanUpWires = true;
-		}
-
 	}
-
-	if (cleanUpWires) {
-		new CleanUpWiresCommand(this, false, parentCommand);
-	}
+	new CleanUpWiresCommand(this, false, parentCommand);
 }
 
 void SketchWidget::changeWireColor(const QString newColor)
