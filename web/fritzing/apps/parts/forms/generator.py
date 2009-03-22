@@ -73,7 +73,7 @@ def get_class_name(script_id):
 
 
 def get_form_class(class_name):
-    name = 'fritzing.parts_gen.forms.'+class_name
+    name = 'fritzing.apps.parts.forms.'+class_name
     __import__(name)
     module = sys.modules[name]
 

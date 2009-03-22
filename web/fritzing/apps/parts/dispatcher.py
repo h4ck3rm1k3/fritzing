@@ -1,4 +1,4 @@
-from fritzing.parts_gen.core import partomatic
+from fritzing.apps.parts.core import partomatic
 import os
 from django.utils.datastructures import SortedDict
 

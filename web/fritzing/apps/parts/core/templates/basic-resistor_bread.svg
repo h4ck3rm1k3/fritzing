@@ -6,7 +6,7 @@
 	 x="0px" y="0px" width="0.429in" height="0.0945in" viewBox="0 0 42.917 9.45" 
 	 xml:space="preserve">
 	 
-#from fritzing.parts_gen.core.utils import *
+#from fritzing.apps.parts.core.utils import *
 
 <g id="breadboard">
 	<rect id="connector0pin" y="3.59" fill="none" width="2.5" height="2.91"/>

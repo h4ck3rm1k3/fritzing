@@ -1,17 +1,16 @@
+import tempfile, zipfile, shutil
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from fritzing.parts_gen.forms import gen
-import tempfile, zipfile, shutil
 from django.core.servers.basehttp import FileWrapper
-from fritzing import settings
-from fritzing.parts_gen.utils import \
-script_config_from_form, add_folder_to_zipfile
-from fritzing.parts_gen.dispatcher import \
-AVAIL_SCRIPTS, get_params_def, gen_files
-
+from django.conf import settings
+from fritzing.apps.parts.forms import generator
+from fritzing.apps.parts.utils import script_config_from_form, add_folder_to_zipfile
+from fritzing.apps.parts.dispatcher import AVAIL_SCRIPTS, get_params_def, gen_files
 
 def choose(request):
-    return render_to_response('parts_gen/choose.html', {'scripts_list': AVAIL_SCRIPTS})
+    return render_to_response('parts/generator/choose.html', {
+        'scripts_list': AVAIL_SCRIPTS,
+    })
 
 def form(request): 
     script_id = request.POST['script_id']
@@ -19,7 +18,7 @@ def form(request):
     
     class_name = gen.create_class_if_needed(params, script_id, settings.DEBUG)
     form = gen.get_form_class(class_name)()
-    return render_to_response('parts_gen/form.html', {'form': form})
+    return render_to_response('parts/generator/form.html', {'form': form})
 
 
 def send_zipfile(script_id,config):
@@ -58,7 +57,7 @@ def generate(request):
             config, script_id = script_config_from_form(form.cleaned_data)
             return send_zipfile(script_id,config)
         else:
-            return render_to_response('parts_gen/form.html', {'form': form})
+            return render_to_response('parts/generator/form.html', {'form': form})
     else:
         return HttpResponse('no form posted')
     

@@ -1,6 +1,5 @@
 import os
 
-
 # this two have to be the same, as the ones defined for the bundling
 # functionalty in the desktop app (mainwindow.cpp)
 ZIP_PART = 'part.'

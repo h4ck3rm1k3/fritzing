@@ -6,7 +6,7 @@
 	 x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32"
 	 xml:space="preserve">
 	 
-#from fritzing.parts_gen.core.utils import *
+#from fritzing.apps.parts.core.utils import *
 
 <g id="icon">
 	<path id="pins" fill="#8C8C8C" d="M28.147,31.763V18.306c-0.004-0.464-0.115-0.646-0.201-0.735l0,0c-0.089-0.085-0.268-0.215-0.81-0.221l0,0

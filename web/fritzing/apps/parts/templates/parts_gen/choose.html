@@ -1,6 +1,6 @@
 {% if scripts_list %}
-<form action="/parts_gen/form/" method="post">
-	<label for="script_id">Choose a type of part to create</label>
+<form action="/parts/generator/form/" method="post">
+  <label for="script_id">Choose a type of part to create</label>
     <select name="script_id" id="script_id">
     {% for script in scripts_list %}
         <option value="{{ script.value }}">{{ script.label }}</option>

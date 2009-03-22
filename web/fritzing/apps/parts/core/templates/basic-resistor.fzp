@@ -17,7 +17,7 @@
     </properties>
     <taxonomy>discreteParts.resistor.$resistance</taxonomy>
     <description>A generic resistor (0.25W)</description>
-#from fritzing.parts_gen.core.utils import escape_to_file_name
+#from fritzing.apps.parts.core.utils import escape_to_file_name
     <views>
         <iconView>
             <layers image="icon/basic-resistor_icon_${escape_to_file_name($resistance)}_${icon_unique}.svg">

@@ -17,7 +17,7 @@
 import getopt, sys, ConfigParser, uuid, os
 from datetime import date
 from Cheetah.Template import Template
-from fritzing.parts_gen.core.utils import escape_to_file_name
+from fritzing.apps.parts.core.utils import escape_to_file_name
 
 _SCRIPT_CONFS = {
     'resistor' : {
