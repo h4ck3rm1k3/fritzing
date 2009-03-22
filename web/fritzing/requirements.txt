@@ -29,6 +29,8 @@ django-tinymce==1.5
 django-imagekit
 South
 
+-e bzr+http://bazaar.launchpad.net/~carljm/django-markitup/trunk#egg=django-markitup
+-e hg+http://bitbucket.org/jezdez/django-licenses/#egg=django-licenses
 -e git+git://github.com/jezdez/django-forum.git#egg=django-forum
 -e git+git://github.com/jezdez/django-ticker.git#egg=django-ticker
 -e git+git://github.com/jezdez/dregni.git#egg=dregni
