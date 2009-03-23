@@ -19,11 +19,9 @@
 
 HEADERS += \
 src/utils/autoclosemessagebox.h \
-src/utils/bettertriggeraction.h \
 src/utils/misc.h 
  
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \
-src/utils/bettertriggeraction.cpp \
 src/utils/misc.cpp
 

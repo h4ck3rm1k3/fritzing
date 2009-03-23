@@ -357,7 +357,7 @@ protected slots:
 	void wire_wireChanged(class Wire*, QLineF oldLine, QLineF newLine, QPointF oldPos, QPointF newPos, ConnectorItem * from, ConnectorItem * to);
 	void wire_wireSplit(class Wire*, QPointF newPos, QPointF oldPos, QLineF oldLine);
 	void wire_wireJoin(class Wire*, ConnectorItem * clickedConnectorItem);
-	void toggleLayerVisibility(QAction *);
+	void toggleLayerVisibility();
 	void sketchWidget_wireConnected(long fromID, QString fromConnectorID, long toID, QString toConnectorID);
 	void sketchWidget_wireDisconnected(long fromID, QString fromConnectorID);
 	void sketchWidget_changeConnection(long fromID, QString fromConnectorID, long toID, QString toConnectorID, bool connect, bool updateConnections);

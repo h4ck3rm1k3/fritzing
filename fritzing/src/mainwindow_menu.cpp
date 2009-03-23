@@ -32,7 +32,6 @@ $Date$
 #include "waitpushundostack.h"
 //#include "partseditor/mainpartseditorwindow.h"
 #include "partseditor/partseditormainwindow.h"
-#include "utils/bettertriggeraction.h"
 #include "aboutbox.h"
 #include "autorouter1.h"
 #include "eventeater.h"
@@ -105,13 +104,11 @@ void MainWindow::print() {
 	#endif
 }
 
-void MainWindow::exportDiy(QAction * action) {
-	Q_UNUSED(action);
+void MainWindow::exportDiy() {
 	exportDiy(true, false);
 }
 
-void MainWindow::exportDiySvg(QAction * action) {
-	Q_UNUSED(action);
+void MainWindow::exportDiySvg() {
 	exportDiy(false, true);
 }
 
@@ -254,7 +251,10 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 
 }
 
-void MainWindow::doExport(QAction * action) {
+void MainWindow::doExport() {
+	QAction * action = qobject_cast<QAction *>(sender());
+	if (action == NULL) return;
+
 	QString actionType = action->data().toString();
 	QString path = defaultSaveFolder();
 
@@ -726,48 +726,48 @@ void MainWindow::createFileMenuActions() {
 	m_saveAsModuleAct->setStatusTip(tr("Export current sketch as a standalone module"));
 	connect(m_saveAsModuleAct, SIGNAL(triggered()), this, SLOT(saveAsModule()));
 
-	m_exportJpgAct = new BetterTriggerAction(tr("to &JPG..."), this);
+	m_exportJpgAct = new QAction(tr("to &JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
 	m_exportJpgAct->setStatusTip(tr("Export the current sketch as a JPG image"));
-	connect(m_exportJpgAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+	connect(m_exportJpgAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPngAct = new BetterTriggerAction(tr("to P&NG..."), this);
+	m_exportPngAct = new QAction(tr("to P&NG..."), this);
 	m_exportPngAct->setData(pngActionType);
 	m_exportPngAct->setStatusTip(tr("Export the current sketch as a PNG image"));
-	connect(m_exportPngAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+	connect(m_exportPngAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPsAct = new BetterTriggerAction(tr("to Post&Script..."), this);
+	m_exportPsAct = new QAction(tr("to Post&Script..."), this);
 	m_exportPsAct->setData(psActionType);
 	m_exportPsAct->setStatusTip(tr("Export the current sketch as a PostScript image"));
-	connect(m_exportPsAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+	connect(m_exportPsAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportPdfAct = new BetterTriggerAction(tr("to &PDF..."), this);
+	m_exportPdfAct = new QAction(tr("to &PDF..."), this);
 	m_exportPdfAct->setData(pdfActionType);
 	m_exportPdfAct->setStatusTip(tr("Export the current sketch as a PDF image"));
-	connect(m_exportPdfAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+	connect(m_exportPdfAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-    m_exportBomAct = new BetterTriggerAction(tr("List of parts (&Bill of Materials)"), this);
+    m_exportBomAct = new QAction(tr("List of parts (&Bill of Materials)"), this);
     m_exportBomAct->setData(bomActionType);
     m_exportBomAct->setStatusTip(tr("Save a text Bill of Materials (BoM)/Shopping List"));
-    connect(m_exportBomAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+    connect(m_exportBomAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportEagleAct = new BetterTriggerAction(tr("to &Eagle..."), this);
+	m_exportEagleAct = new QAction(tr("to &Eagle..."), this);
 	m_exportEagleAct->setData(eagleActionType);
 	m_exportEagleAct->setStatusTip(tr("Export the current sketch to Eagle CAD"));
-	connect(m_exportEagleAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+	connect(m_exportEagleAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportGerberAct = new BetterTriggerAction(tr("to &Gerber..."), this);
+	m_exportGerberAct = new QAction(tr("to &Gerber..."), this);
 	m_exportGerberAct->setData(gerberActionType);
 	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber"));
-	connect(m_exportGerberAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportDiyAct = new BetterTriggerAction(tr("Etchable PDF..."), this);
+	m_exportDiyAct = new QAction(tr("Etchable PDF..."), this);
 	m_exportDiyAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
-	connect(m_exportDiyAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiy(QAction *)));
+	connect(m_exportDiyAct, SIGNAL(triggered()), this, SLOT(exportDiy()));
 
-	m_exportDiySvgAct = new BetterTriggerAction(tr("Etchable SVG..."), this);
+	m_exportDiySvgAct = new QAction(tr("Etchable SVG..."), this);
 	m_exportDiySvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY production"));
-	connect(m_exportDiySvgAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(exportDiySvg(QAction *)));
+	connect(m_exportDiySvgAct, SIGNAL(triggered()), this, SLOT(exportDiySvg()));
 
 	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
 	m_pageSetupAct->setShortcut(tr("Shift+Ctrl+P"));

@@ -49,7 +49,6 @@ $Date$
 #include "debugdialog.h"
 #include "layerkinpaletteitem.h"
 #include "sketchwidget.h"
-#include "utils/bettertriggeraction.h"
 #include "connectoritem.h"
 #include "bus.h"
 #include "virtualwire.h"
@@ -2158,10 +2157,11 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 
 void SketchWidget::addViewLayer(ViewLayer * viewLayer) {
 	m_viewLayers.insert(viewLayer->viewLayerID(), viewLayer);
-	BetterTriggerViewLayerAction* action = new BetterTriggerViewLayerAction(QObject::tr("%1 Layer").arg(viewLayer->displayName()), viewLayer, this);
+	QAction* action = new QAction(QObject::tr("%1 Layer").arg(viewLayer->displayName()), this);
+	action->setData(QVariant::fromValue<ViewLayer *>(viewLayer));
 	action->setCheckable(true);
 	action->setChecked(viewLayer->visible());
-    connect(action, SIGNAL(betterTriggered(QAction*)), this, SLOT(toggleLayerVisibility(QAction*)));
+    connect(action, SIGNAL(triggered()), this, SLOT(toggleLayerVisibility()));
     viewLayer->setAction(action);
 }
 
@@ -2336,11 +2336,11 @@ void SketchWidget::setLayerVisible(ViewLayer::ViewLayerID viewLayerID, bool vis)
 	}
 }
 
-void SketchWidget::toggleLayerVisibility(QAction * action) {
-	BetterTriggerViewLayerAction * btvla = dynamic_cast<BetterTriggerViewLayerAction *>(action);
-	if (btvla == NULL) return;
+void SketchWidget::toggleLayerVisibility() {
+	QAction * action = qobject_cast<QAction *>(sender());
+	if (action == NULL) return;
 
-	ViewLayer * viewLayer = btvla->viewLayer();
+	ViewLayer * viewLayer = action->data().value<ViewLayer *>();
 	if (viewLayer == NULL) return;
 
 	setLayerVisible(viewLayer, !viewLayer->visible());

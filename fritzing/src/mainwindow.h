@@ -89,9 +89,9 @@ protected slots:
 	void load();
 	void openRecentOrExampleFile();
     void print();
-    void doExport(QAction *);
-	void exportDiy(QAction * action = NULL);
-	void exportDiySvg(QAction * action = NULL);
+    void doExport();
+	void exportDiy();
+	void exportDiySvg();
     void about();
     void copy();
     void cut();

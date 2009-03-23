@@ -33,8 +33,10 @@ $Date$
 
 #include "utils/misc.h"
 
-class ViewLayer
+class ViewLayer : public QObject
 {
+	Q_OBJECT
+
 public:
 	enum ViewLayerID {
 		Icon,
@@ -107,4 +109,7 @@ protected:
 
 
 typedef QHash<ViewLayer::ViewLayerID, ViewLayer *> LayerHash;
+
+Q_DECLARE_METATYPE( ViewLayer* );
+
 #endif
