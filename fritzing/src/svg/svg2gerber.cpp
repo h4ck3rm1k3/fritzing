@@ -107,6 +107,8 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
             DebugDialog::debug("svg2gerber ignoring SVG element: " + tag);
         }
 
+        copyStyles(element, path);
+
         // add the path and delete the primitive element (is this ok for paths?)
         QDomNode parent = node.parentNode();
         parent.replaceChild(path, node);
@@ -120,6 +122,16 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
     DebugDialog::debug("child nodes: " + QString::number(tagList.length()));
     for(uint i = 0; i < tagList.length(); i++){
         convertShapes2paths(tagList.item(i));
+    }
+}
+
+void SVG2gerber::copyStyles(QDomElement source, QDomElement dest){
+    QList<QString> attrList;
+    attrList << "stroke" << "fill" << "stroke-width" << "style";
+
+    for (int i = 0; i < attrList.size(); ++i) {
+        if (source.hasAttribute(attrList.at(i)))
+            dest.setAttribute(attrList.at(i), source.attribute(attrList.at(i)));
     }
 }
 
@@ -150,6 +162,8 @@ void SVG2gerber::flattenSVG(QDomNode node){
 QMatrix SVG2gerber::parseTransform(QDomElement element){
     QMatrix transform = QMatrix();
 
+    QString svgTransform = element.attribute("transform");
+
     return transform;
 }
 
@@ -158,8 +172,21 @@ void SVG2gerber::allPaths2gerber() {
 }
 
 QDomElement SVG2gerber::rect2path(QDomElement rectElement){
-    // 4 x line2path()
-    return rectElement;
+    float x = rectElement.attribute("x").toFloat();
+    float y = rectElement.attribute("y").toFloat();
+    float width = rectElement.attribute("width").toFloat();
+    float height = rectElement.attribute("height").toFloat();
+
+    QString pathStr = "m " + QString::number(x) + "," + QString::number(y) + " ";
+    pathStr += "h " + QString::number(width) + " ";
+    pathStr += "v " + QString::number(height) + " ";
+    pathStr += "h " + QString::number(-width) + " ";
+    pathStr += "z";
+
+    QDomElement path = m_SVGDom.createElement("path");
+    path.setAttribute("d",pathStr);
+
+    return path;
 }
 
 QDomElement SVG2gerber::circle2path(QDomElement circleElement){
@@ -208,15 +235,27 @@ QDomElement SVG2gerber::circle2path(QDomElement circleElement){
 }
 
 QDomElement SVG2gerber::line2path(QDomElement lineElement){
-    return lineElement;
+    float x1 = lineElement.attribute("x1").toFloat();
+    float y1 = lineElement.attribute("y1").toFloat();
+    float x2 = lineElement.attribute("x2").toFloat();
+    float y2 = lineElement.attribute("y2").toFloat();
+
+    QString pathStr = "m " + QString::number(x1) + "," + QString::number(y1) + " ";
+    pathStr += "L " + QString::number(x2) + "," + QString::number(y2) + " z";
+
+    QDomElement path = m_SVGDom.createElement("path");
+    path.setAttribute("d",pathStr);
+
+    return path;
 }
 
 QDomElement SVG2gerber::poly2path(QDomElement polyElement){
-    // this is just a bunch of calls to line2path()
+    // TODO
     return polyElement;
 }
 
 QDomElement SVG2gerber::ellipse2path(QDomElement ellipseElement){
+    // TODO
     return ellipseElement;
 }
 

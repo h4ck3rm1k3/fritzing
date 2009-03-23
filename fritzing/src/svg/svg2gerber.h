@@ -54,6 +54,8 @@ protected:
     QDomElement poly2path(QDomElement);
     QDomElement ellipse2path(QDomElement);
 
+    void copyStyles(QDomElement, QDomElement);
+
     QString path2gerber(QDomElement);
 
 };
