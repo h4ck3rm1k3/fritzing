@@ -42,6 +42,7 @@ class ProjectAdmin(VersionAdmin):
     model = Project
     exclude = ('author',)
     list_display = ('title', 'slug', 'author', 'difficulty', 'featured', 'blessed', 'public')
+    filter_horizontal = ('members',)
     inlines = [
         ResourceInlineAdmin,
         AttachmentAdmin,
