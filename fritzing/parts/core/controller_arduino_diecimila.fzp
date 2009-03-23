@@ -252,8 +252,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector14" name="D1" >
-   <description>Digital I/O 1</description>
+  <connector type="female" id="connector14" name="D1TX" >
+   <description>Digital I/O 1 / Serial Transmit</description>
    <views>
     <breadboardView>
      <p svgId="connector14pin" layer="breadboardbreadboard" />
@@ -267,8 +267,8 @@
     </pcbView>
    </views>
   </connector>
-  <connector type="female" id="connector15" name="D0" >
-   <description>Digital I/O 0</description>
+  <connector type="female" id="connector15" name="D0RX" >
+   <description>Digital I/O 0 / Serial Recieve</description>
    <views>
     <breadboardView>
      <p svgId="connector15pin" layer="breadboardbreadboard" />
