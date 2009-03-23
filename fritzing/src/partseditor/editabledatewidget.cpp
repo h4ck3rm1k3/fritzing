@@ -26,7 +26,7 @@ $Date$
 
 
 #include "editabledatewidget.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 EditableDateWidget::EditableDateWidget(QDate date, WaitPushUndoStack *undoStack, QWidget *parent, QString title, bool edited, bool noSpacing)
 	: AbstractEditableLabelWidget(date.toString(Qt::ISODate), undoStack, parent, title, edited, noSpacing) {

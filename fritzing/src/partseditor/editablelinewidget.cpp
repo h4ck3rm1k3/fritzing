@@ -27,7 +27,7 @@ $Date$
 
 
 #include "editablelinewidget.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 EditableLineWidget::EditableLineWidget(QString text, WaitPushUndoStack *undoStack, QWidget *parent, QString title, bool edited, bool noSpacing)
 	: AbstractEditableLabelWidget(text, undoStack, parent, title, edited, noSpacing) {

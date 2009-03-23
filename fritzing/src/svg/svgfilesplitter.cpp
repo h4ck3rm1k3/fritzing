@@ -26,7 +26,7 @@ $Date$
 
 #include "svgfilesplitter.h"
 
-#include "../misc.h"
+#include "../utils/misc.h"
 #include "../debugdialog.h"
 #include "svgpathparser.h"
 #include "svgpathlexer.h"

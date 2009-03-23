@@ -26,7 +26,7 @@ $Date$
 
 // misc Fritzing utility functions
 #include "misc.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 #include <QDesktopServices>
 #include <QCoreApplication>
 #include <QDir>

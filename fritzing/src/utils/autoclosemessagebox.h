@@ -18,25 +18,26 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1794 $:
-$Author: merunga $:
-$Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
+$Revision: 2085 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 ********************************************************************/
 
+#ifndef AUTOCLOSEMESSAGEBOX_H
+#define AUTOCLOSEMESSAGEBOX_H
 
-#include "fsizegrip.h"
-#include "utils/misc.h"
+#include <QMessageBox>
 
-FSizeGrip::FSizeGrip(QMainWindow *parent) : QSizeGrip(parent) {
-	m_mainWindow = parent;
-	resize(sizeHint());
-	rearrange();
-}
+class AutoCloseMessageBox : public QMessageBox
+{
+Q_OBJECT
+public:
+	AutoCloseMessageBox(QWidget * parent);
 
-void FSizeGrip::rearrange() {
-	int x = m_mainWindow->width()-this->width();
-	int y = m_mainWindow->height()-this->height();
-	move(x,y);
-	raise();
-}
+protected slots:
+	void autoclose();
+
+};
+
+#endif

@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "waitpushundostack.h"
-#include "misc.h"
+#include "utils/misc.h"
 #include "commands.h"
 
 #include <QCoreApplication>

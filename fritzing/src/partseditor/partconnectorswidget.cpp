@@ -31,7 +31,7 @@ $Date$
 #include <QVBoxLayout>
 
 #include "partconnectorswidget.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 PartConnectorsWidget::PartConnectorsWidget(QWidget* views, QWidget* info, QWidget *parent) : QFrame(parent) {
 	QSplitter *splitter = new QSplitter(Qt::Vertical,this);

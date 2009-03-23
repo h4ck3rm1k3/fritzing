@@ -44,7 +44,7 @@ $Date$
 #include "viewgeometry.h"
 #include "infographicsview.h"
 #include "viewlayer.h"
-#include "misc.h"
+#include "utils/misc.h"
 #include "commands.h"
 
 QT_BEGIN_NAMESPACE

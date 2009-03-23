@@ -26,7 +26,7 @@ $Date$
 
 #include "triplenavigator.h"
 #include "debugdialog.h"
-#include "misc.h"
+#include "utils/misc.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>

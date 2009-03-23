@@ -30,7 +30,7 @@ $Date$
 
 #include "hashpopulatewidget.h"
 #include "../debugdialog.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 HashLineEdit::HashLineEdit(QUndoStack *undoStack, const QString &text, bool defaultValue, QWidget *parent) : QLineEdit(text, parent) {
 	m_firstText = text;

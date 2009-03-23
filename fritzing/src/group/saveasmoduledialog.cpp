@@ -42,6 +42,7 @@ $Date$
 #include <QLocale>
 #include <QDialogButtonBox>
 #include <QGroupBox>
+#include <QMessageBox>
 #include <QApplication>
 
 /////////////////////////////////////
@@ -119,7 +120,7 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
 	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("OK"));
 
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(checkAccept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 
 	QGridLayout *frameLayout = new QGridLayout(centerFrame);
@@ -236,4 +237,16 @@ const QList<class ConnectorItem *> & SaveAsModuleDialog::externalConnectorItems(
 	return m_externalConnectorItems;
 }
 
+void SaveAsModuleDialog::checkAccept() {
+	if (m_externalConnectorItems.count() <= 0) {
+		QMessageBox msgBox(this);
+		msgBox.setText(tr("No external connectors have been defined--which means that you won't be able to connect to this module in Fritzing."));
+		msgBox.setInformativeText(tr("Do you want to proceed anyway?"));
+		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		msgBox.setDefaultButton(QMessageBox::Yes);
+		int ret = msgBox.exec();
+		if (ret != QMessageBox::Yes) return;
+	}
 
+	accept();
+}

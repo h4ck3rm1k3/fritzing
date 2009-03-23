@@ -29,7 +29,7 @@ $Date$
 #include "abstractconnectorinfowidget.h"
 #include "connectorinforemovebutton.h"
 #include "connectorsinfowidget.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 #include <QVariant>
 

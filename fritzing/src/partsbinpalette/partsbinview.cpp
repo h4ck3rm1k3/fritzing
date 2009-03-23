@@ -30,7 +30,7 @@ $Date$
 
 #include "partsbinview.h"
 #include "../itemdrag.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 void PartsBinView::setPaletteModel(PaletteModel * model, bool clear) {
 	if(clear) {

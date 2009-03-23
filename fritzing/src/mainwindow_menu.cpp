@@ -32,7 +32,7 @@ $Date$
 #include "waitpushundostack.h"
 //#include "partseditor/mainpartseditorwindow.h"
 #include "partseditor/partseditormainwindow.h"
-#include "bettertriggeraction.h"
+#include "utils/bettertriggeraction.h"
 #include "aboutbox.h"
 #include "autorouter1.h"
 #include "eventeater.h"
@@ -119,8 +119,8 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 {
 	if (!m_pcbGraphicsView->ratsAllRouted()) {
 		QMessageBox msgBox(this);
-		msgBox.setText("All traces have not yet been routed.");
-		msgBox.setInformativeText("Do you want to proceed anyway?");
+		msgBox.setText(tr("All traces have not yet been routed."));
+		msgBox.setInformativeText(tr("Do you want to proceed anyway?"));
 		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 		msgBox.setDefaultButton(QMessageBox::Yes);
 		int ret = msgBox.exec();
@@ -746,10 +746,10 @@ void MainWindow::createFileMenuActions() {
 	m_exportPdfAct->setStatusTip(tr("Export the current sketch as a PDF image"));
 	connect(m_exportPdfAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
-        m_exportBomAct = new BetterTriggerAction(tr("List of parts (&Bill of Materials)"), this);
-        m_exportBomAct->setData(bomActionType);
-        m_exportBomAct->setStatusTip(tr("Save a text Bill of Materials (BoM)/Shopping List"));
-        connect(m_exportBomAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
+    m_exportBomAct = new BetterTriggerAction(tr("List of parts (&Bill of Materials)"), this);
+    m_exportBomAct->setData(bomActionType);
+    m_exportBomAct->setStatusTip(tr("Save a text Bill of Materials (BoM)/Shopping List"));
+    connect(m_exportBomAct, SIGNAL(betterTriggered(QAction *)), this, SLOT(doExport(QAction *)));
 
 	m_exportEagleAct = new BetterTriggerAction(tr("to &Eagle..."), this);
 	m_exportEagleAct->setData(eagleActionType);
@@ -782,7 +782,6 @@ void MainWindow::createFileMenuActions() {
 	m_quitAct = new QAction(tr("&Quit"), this);
 	m_quitAct->setShortcut(tr("Ctrl+Q"));
 	m_quitAct->setStatusTip(tr("Quit the application"));
-	//connect(m_quitAct, SIGNAL(triggered()), this, SLOT(close()));
 	connect(m_quitAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 	m_quitAct->setMenuRole(QAction::QuitRole);
 
@@ -826,6 +825,20 @@ void MainWindow::createOpenRecentMenu() {
     	m_openRecentFileMenu->addAction(m_openRecentFileActs[i]);
     }
     updateRecentFileActions();
+}
+
+void MainWindow::updateFileMenu() {
+	updateRecentFileActions();
+	bool enabled = false;
+	if (m_currentGraphicsView && m_currentGraphicsView->scene()) {
+		foreach (QGraphicsItem * item, m_currentGraphicsView->scene()->items()) {
+			if (dynamic_cast<ItemBase *>(item) != NULL) {
+				enabled = true;
+				break;
+			}
+		}
+	}
+	m_saveAsModuleAct->setEnabled(enabled);
 }
 
 void MainWindow::updateRecentFileActions() {
@@ -1142,7 +1155,7 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_printAct);
 	m_fileMenu->addSeparator();
 	m_fileMenu->addAction(m_quitAct);
-    connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateRecentFileActions()));
+    connect(m_fileMenu, SIGNAL(aboutToShow()), this, SLOT(updateFileMenu()));
 
 
 	m_exportMenu->addAction(m_exportPdfAct);

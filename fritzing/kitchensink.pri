@@ -21,8 +21,6 @@ HEADERS += \
     src/abstractimagebutton.h \
     src/abstractstatesbutton.h \
     src/autorouter1.h \
-    src/bettertimer.h \
-    src/bettertriggeraction.h \
     src/breadboardsketchwidget.h \
     src/bus.h \
     src/busshared.h \
@@ -54,7 +52,6 @@ HEADERS += \
     src/mainwindow.h \
     src/miniview.h \
     src/miniviewcontainer.h \
-    src/misc.h \
     src/modelbase.h \
     src/modelpart.h \
     src/modelpartshared.h \
@@ -85,8 +82,6 @@ HEADERS += \
 SOURCES += \
     src/aboutbox.cpp \
     src/autorouter1.cpp \
-    src/bettertriggeraction.cpp \
-    src/bettertimer.cpp \
     src/breadboardsketchwidget.cpp \
     src/bus.cpp \
     src/busshared.cpp \
@@ -118,7 +113,6 @@ SOURCES += \
     src/mainwindow_menu.cpp \
     src/miniview.cpp \
     src/miniviewcontainer.cpp \
-    src/misc.cpp \
     src/modelbase.cpp \
     src/modelpart.cpp \
     src/modelpartshared.cpp \

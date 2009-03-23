@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "bettertimer.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 
 BetterTimer::BetterTimer( QObject * parent ) 

@@ -31,7 +31,7 @@ $Date$
 #define DAOS_H_
 
 #include <QList>
-#include "../misc.h"
+#include "../utils/misc.h"
 
 class Part;
 

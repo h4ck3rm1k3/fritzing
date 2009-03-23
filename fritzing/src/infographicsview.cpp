@@ -26,7 +26,7 @@ $Date$
 
 #include "infographicsview.h"
 #include "debugdialog.h"
-#include "bettertriggeraction.h"
+#include "utils/bettertriggeraction.h"
 #include "commands.h"
 #include "htmlinfoview.h"
 

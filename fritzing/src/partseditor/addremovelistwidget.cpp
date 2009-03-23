@@ -27,7 +27,7 @@ $Date$
 
 #include <QGridLayout>
 #include "addremovelistwidget.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 #define BUTTON_SIZE 25
 

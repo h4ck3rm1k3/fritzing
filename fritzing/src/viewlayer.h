@@ -31,7 +31,7 @@ $Date$
 #include <QAction>
 #include <QHash>
 
-#include "misc.h"
+#include "utils/misc.h"
 
 class ViewLayer
 {

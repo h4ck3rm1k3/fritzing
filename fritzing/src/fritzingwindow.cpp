@@ -38,7 +38,7 @@ $Date$
 
 #include "fritzingwindow.h"
 #include "debugdialog.h"
-#include "misc.h"
+#include "utils/misc.h"
 #include "fapplication.h"
 
 #include "lib/quazip/quazip.h"

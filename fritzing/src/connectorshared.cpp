@@ -43,6 +43,7 @@ ConnectorShared::ConnectorShared( const QDomElement & domElement )
 {
 	m_id = domElement.attribute("id", "");
 	m_name = domElement.attribute("name", "");
+	//DebugDialog::debug(QString("\tname:%1 id:%2").arg(m_name).arg(m_id));
 	m_typeString = domElement.attribute("type", "");
 	m_type = Connector::connectorTypeFromName(m_typeString);
 	m_description = domElement.firstChildElement("description").text();

@@ -33,7 +33,7 @@ $Date$
 #include <QTextEdit>
 #include <QFile>
 
-#include "misc.h"
+#include "utils/misc.h"
 
 class DebugDialog : public QDialog
 {

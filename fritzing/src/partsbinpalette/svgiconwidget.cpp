@@ -31,7 +31,7 @@ $Date$
 #include "svgiconwidget.h"
 #include "../infographicsview.h"
 #include "../debugdialog.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 #include "../fsvgrenderer.h"
 #include "iconwidgetpaletteitem.h"
 

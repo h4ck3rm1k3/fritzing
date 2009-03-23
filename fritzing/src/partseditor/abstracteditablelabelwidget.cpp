@@ -29,7 +29,7 @@ $Date$
 #include <QUndoCommand>
 
 #include "abstracteditablelabelwidget.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 AbstractEditableLabelWidget::AbstractEditableLabelWidget(QString text, WaitPushUndoStack *undoStack, QWidget *parent, QString title, bool edited, bool noSpacing) : QFrame(parent) {
 	m_noSpacing = noSpacing;

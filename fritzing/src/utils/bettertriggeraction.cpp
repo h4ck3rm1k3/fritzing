@@ -18,25 +18,33 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 1794 $:
-$Author: merunga $:
-$Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
+$Revision$:
+$Author$:
+$Date$
 
 ********************************************************************/
 
+#include "bettertriggeraction.h"
+#include "../debugdialog.h"
 
-#include "fsizegrip.h"
-#include "utils/misc.h"
-
-FSizeGrip::FSizeGrip(QMainWindow *parent) : QSizeGrip(parent) {
-	m_mainWindow = parent;
-	resize(sizeHint());
-	rearrange();
+BetterTriggerAction::BetterTriggerAction( const QString & text, QObject * parent ) 
+	: QAction(text, parent)
+{
+	connect(this, SIGNAL(triggered()), this, SLOT(self_triggered())   );	
 }
 
-void FSizeGrip::rearrange() {
-	int x = m_mainWindow->width()-this->width();
-	int y = m_mainWindow->height()-this->height();
-	move(x,y);
-	raise();
+void BetterTriggerAction::self_triggered() {
+	emit betterTriggered(this);
 }
+
+
+BetterTriggerViewLayerAction::BetterTriggerViewLayerAction(const QString & text, ViewLayer * viewLayer, QObject * parent)
+	: BetterTriggerAction(text, parent)
+{
+	m_viewLayer = viewLayer;
+}
+
+ViewLayer * BetterTriggerViewLayerAction::viewLayer() {
+	return m_viewLayer;
+}
+

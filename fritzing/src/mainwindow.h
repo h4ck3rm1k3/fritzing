@@ -114,6 +114,7 @@ protected slots:
     void updateLayerMenu();
     void updatePartMenu();
     void updateWireMenu();
+	void updateFileMenu();
     void updateTransformationActions();
 	void updateRecentFileActions();
 	void updateTraceMenu();

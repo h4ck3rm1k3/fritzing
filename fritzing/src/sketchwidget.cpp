@@ -49,7 +49,7 @@ $Date$
 #include "debugdialog.h"
 #include "layerkinpaletteitem.h"
 #include "sketchwidget.h"
-#include "bettertriggeraction.h"
+#include "utils/bettertriggeraction.h"
 #include "connectoritem.h"
 #include "bus.h"
 #include "virtualwire.h"

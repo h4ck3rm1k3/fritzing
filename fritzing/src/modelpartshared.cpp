@@ -262,6 +262,7 @@ void ModelPartShared::initConnectors() {
 
 	m_ignoreTerminalPoints = (connectors.attribute("ignoreTerminalPoints").compare("true", Qt::CaseInsensitive) == 0);
 
+	//DebugDialog::debug(QString("part:%1 %2").arg(m_moduleID).arg(m_title));
 	QDomElement connector = connectors.firstChildElement("connector");
 	while (!connector.isNull()) {
 		ConnectorShared * connectorShared = new ConnectorShared(connector);

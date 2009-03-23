@@ -18,34 +18,22 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2085 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 ********************************************************************/
 
-#include "bettertriggeraction.h"
-#include "debugdialog.h"
-#include "viewlayer.h"
+#include "autoclosemessagebox.h"
+#include "../debugdialog.h"
 
-BetterTriggerAction::BetterTriggerAction( const QString & text, QObject * parent ) 
-	: QAction(text, parent)
+
+AutoCloseMessageBox::AutoCloseMessageBox( QWidget * parent ) 
+	: QMessageBox(parent)
 {
-	connect(this, SIGNAL(triggered()), this, SLOT(self_triggered())   );	
 }
 
-void BetterTriggerAction::self_triggered() {
-	emit betterTriggered(this);
-}
-
-
-BetterTriggerViewLayerAction::BetterTriggerViewLayerAction(const QString & text, ViewLayer * viewLayer, QObject * parent)
-	: BetterTriggerAction(text, parent)
-{
-	m_viewLayer = viewLayer;
-}
-
-ViewLayer * BetterTriggerViewLayerAction::viewLayer() {
-	return m_viewLayer;
+void AutoCloseMessageBox::autoclose() {
+	close();
 }
 

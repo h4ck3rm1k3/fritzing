@@ -56,6 +56,7 @@ protected:
 	
 protected slots:
 	//void updateDateAndAuthor();
+	void checkAccept();
 
 protected:
 	class SketchWidget * m_sketchWidget;

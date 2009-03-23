@@ -26,7 +26,7 @@ $Date$
 
 #include "fapplication.h"
 #include "debugdialog.h"
-#include "misc.h"
+#include "utils/misc.h"
 #include "mainwindow.h"
 #include "fsplashscreen.h"
 #include "version/version.h"

@@ -33,7 +33,7 @@ $Date$
 #include <QHash>
 
 #include "viewgeometry.h"
-#include "misc.h"
+#include "utils/misc.h"
 
 class BaseCommand : public QUndoCommand
 {

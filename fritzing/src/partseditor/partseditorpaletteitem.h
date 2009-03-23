@@ -30,7 +30,7 @@ $Date$
 #define PARTSEDITORPALETTEITEM_H_
 
 #include "../paletteitem.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 #include "../svgandpartfilepath.h"
 
 class PartsEditorAbstractView;

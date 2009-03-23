@@ -41,7 +41,7 @@ $Date$
 #include "viewgeometry.h"
 #include "viewlayer.h"
 #include "viewidentifierclass.h"
-#include "misc.h"
+#include "utils/misc.h"
 #include "graphicssvglineitem.h"
 
 class ConnectorItem;

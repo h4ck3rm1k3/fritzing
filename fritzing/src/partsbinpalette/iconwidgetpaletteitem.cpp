@@ -29,7 +29,7 @@ $Date: 2009-02-17 00:53:10 +0100 (Tue, 17 Feb 2009) $
 
 
 #include "iconwidgetpaletteitem.h"
-#include "../misc.h"
+#include "../utils/misc.h"
 
 IconWidgetPaletteItem::IconWidgetPaletteItem(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel) {

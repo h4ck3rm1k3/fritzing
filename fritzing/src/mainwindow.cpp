@@ -1358,6 +1358,15 @@ void MainWindow::enableCheckUpdates(bool enabled)
 }
 
 void MainWindow::saveAsModule() {
+
+	if (!m_pcbGraphicsView->ratsAllRouted()) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Before you can save a sketch as a module, all traces must be routed."));
+		return;
+	}
+	
 	SaveAsModuleDialog dialog(m_breadboardGraphicsView, this);
 	if (dialog.exec() != QDialog::Accepted) return;
 
@@ -1542,13 +1551,15 @@ void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
 	if (itemBase == NULL) return;
 
 	if(!exactMatch) {
-		// TODO: should there be a cancel here?
+		// TODO: make this messagebox autoclose after 10 seconds
 		QMessageBox::information(
 			this,
-			tr("Warning!"),
-			tr("Not an exact match")
+			tr("Fritzing"),
+			tr("Fritzing doesn't yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.")
 		);
+
 	}
+
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
 	long modelIndex = ModelPart::nextIndex();
 	m_schematicGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, false, parentCommand);
