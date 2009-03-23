@@ -30,6 +30,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="d8f570d723ea4d14f9b61b34575a9699" path="parts/core/Power plug.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
         <instance moduleIdRef="1000AFDF10011" modelIndex="350" path="parts/core/battery-AA.fzp">
             <views>
                 <iconView layer="icon">
@@ -331,6 +338,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="d206ca0d70364191f0b3fd30d5e53c5d" path="parts/core/Tilt switch.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="1001AAACOptocoupler" modelIndex="388" path="parts/core/optocoupler.fzp">
             <views>
                 <iconView layer="icon">
@@ -357,6 +371,48 @@
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="7d0bc366bcac9395c747f3a92e2ff843" path="parts/core/stepper_motor_bipolar.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+		<instance moduleIdRef="a22e371d3e8c77a58fdfe4dd2799c449" path="parts/core/stepper_motor_unipolar.fzp">
+			<views>
+				<iconView layer="icon">
+					<geometry z="-1" x="-1" y="-1"></geometry>
+				</iconView>
+			</views>
+		</instance>
+        <instance moduleIdRef="bf1d778246ec524bc51c67761afef94e" path="parts/core/Generic male header.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView >
+            </views>
+        </instance>
+        <instance moduleIdRef="bdeca02fd3a9cdeea91a5401a231507b" path="parts/core/Generic female header - metal rounded.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView >
+            </views>
+        </instance>
+        <instance moduleIdRef="15ce9e42cd0b6a6a3a8fb746214a7ee2" path="parts/core/Generic female header.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView >
+            </views>
+        </instance>
+        <instance moduleIdRef="0aecd08e3f3118d56cb4a63ebc4e5212" path="parts/core/Screw terminal.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView >
             </views>
         </instance>
         <instance moduleIdRef="1234ABDE27BH" modelIndex="390" path="parts/core/pcb-plain-100x160.fzp">
