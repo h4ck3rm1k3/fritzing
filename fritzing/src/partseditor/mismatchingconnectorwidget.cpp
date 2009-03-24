@@ -61,7 +61,7 @@ MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *top
 		removeViewPresence(viewId);
 	}
 
-	QPushButton *completeConnBtn = new QPushButton(tr("complete this!"),this);
+	QPushButton *completeConnBtn = new QPushButton(tr("fix this!"),this);
 	connect(completeConnBtn,SIGNAL(clicked()),this,SLOT(emitCompletion()));
 
 	QHBoxLayout *lo = new QHBoxLayout();
