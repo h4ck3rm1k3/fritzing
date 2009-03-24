@@ -136,8 +136,10 @@ void ConnectorsInfoWidget::selectionChanged(AbstractConnectorInfoWidget* selecte
 }
 
 void ConnectorsInfoWidget::setSelected(AbstractConnectorInfoWidget * newSelected) {
-	newSelected->setSelected(true,false);
-	selectionChanged(newSelected);
+	if(newSelected != m_selected) {
+		newSelected->setSelected(true,false);
+		selectionChanged(newSelected);
+	}
 }
 
 bool ConnectorsInfoWidget::eventFilter(QObject *obj, QEvent *event) {
