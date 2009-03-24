@@ -50,6 +50,7 @@ class ConnectorsViewsWidget : public QFrame {
 	public slots:
 		void repaint();
 		void drawConnector(Connector*);
+		void drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*);
 		void removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier);
 		void showHideTerminalPoints(int checkState);
 		void informConnectorSelection(const QString &connId);

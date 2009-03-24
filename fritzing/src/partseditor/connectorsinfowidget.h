@@ -65,6 +65,7 @@ class ConnectorsInfoWidget : public QFrame {
 		void repaintNeeded();
 		void showTerminalPoints(bool show);
 		void drawConnector(Connector*);
+		void drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*);
 		void removeConnectorFrom(const QString &connId, ViewIdentifierClass::ViewIdentifier view);
 
 	protected slots:
@@ -72,6 +73,7 @@ class ConnectorsInfoWidget : public QFrame {
 		void selectionChanged(AbstractConnectorInfoWidget* selected);
 		void deleteAux();
 		void connectorSelectedInView(const QString &connId);
+		void completeConn(MismatchingConnectorWidget* mcw);
 
 	protected:
 		void createScrollArea();

@@ -143,6 +143,22 @@ void ConnectorsViewsWidget::drawConnector(Connector* conn) {
 	m_pcbView->drawConector(conn,showing);
 }
 
+void ConnectorsViewsWidget::drawConnector(ViewIdentifierClass::ViewIdentifier viewId, Connector* conn) {
+	bool showing = showingTerminalPoints();
+	switch(viewId) {
+		case ViewIdentifierClass::BreadboardView:
+			m_breadView->drawConector(conn,showing);
+			break;
+		case ViewIdentifierClass::SchematicView:
+			m_schemView->drawConector(conn,showing);
+			break;
+		case ViewIdentifierClass::PCBView:
+			m_pcbView->drawConector(conn,showing);
+			break;
+		default: return;
+	}
+}
+
 void ConnectorsViewsWidget::aboutToSave() {
 	m_breadView->aboutToSave();
 	m_schemView->aboutToSave();

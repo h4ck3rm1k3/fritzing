@@ -27,6 +27,7 @@ $Date$
 
 
 #include <QGridLayout>
+#include <QPushButton>
 #include "mismatchingconnectorwidget.h"
 #include "connectorinforemovebutton.h"
 #include "../debugdialog.h"
@@ -60,12 +61,17 @@ MismatchingConnectorWidget::MismatchingConnectorWidget(ConnectorsInfoWidget *top
 		removeViewPresence(viewId);
 	}
 
+	QPushButton *completeConnBtn = new QPushButton(tr("complete this!"),this);
+	connect(completeConnBtn,SIGNAL(clicked()),this,SLOT(emitCompletion()));
+
 	QHBoxLayout *lo = new QHBoxLayout();
 	lo->addWidget(errorImg);
 	lo->addSpacerItem(new QSpacerItem(5,0));
 	lo->addWidget(m_connIdLabel);
 	lo->addWidget(m_connMsgLabel);
 	lo->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding,QSizePolicy::Expanding));
+	lo->addWidget(completeConnBtn);
+	lo->addSpacerItem(new QSpacerItem(10,0,QSizePolicy::Minimum,QSizePolicy::Expanding));
 	lo->addWidget(m_removeButton);
 	lo->setMargin(3);
 	lo->setSpacing(3);
@@ -117,6 +123,10 @@ QList<ViewIdentifierClass::ViewIdentifier> MismatchingConnectorWidget::views() {
 	return list;
 }
 
+QList<ViewIdentifierClass::ViewIdentifier> MismatchingConnectorWidget::missingViews() {
+	return m_missingViews;
+}
+
 QString MismatchingConnectorWidget::viewsString() {
 	QString retval = tr("In ");
 	bool notFirst = false;
@@ -139,4 +149,8 @@ void MismatchingConnectorWidget::mousePressEvent(QMouseEvent * event) {
 		setSelected(true);
 	}
 	QFrame::mousePressEvent(event);
+}
+
+void MismatchingConnectorWidget::emitCompletion() {
+	emit completeConn(this);
 }

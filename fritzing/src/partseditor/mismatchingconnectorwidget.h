@@ -44,7 +44,14 @@ class MismatchingConnectorWidget : public AbstractConnectorInfoWidget {
 		const QString &connId();
 		Connector *prevConn();
 		QList<ViewIdentifierClass::ViewIdentifier> views();
+		QList<ViewIdentifierClass::ViewIdentifier> missingViews();
 		bool presentInAllViews();
+
+	signals:
+		void completeConn(MismatchingConnectorWidget*);
+
+	protected slots:
+		void emitCompletion();
 
 	protected:
 		void mousePressEvent(QMouseEvent * event);

@@ -257,6 +257,7 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 
 void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 	QString connId = conn->connectorSharedID();
+	DebugDialog::debug("<<<< "+connId);
 	m_connIds << connId;
 
 	int connCount = m_connsInfo.size();
@@ -274,7 +275,12 @@ void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(ViewIdentifierClass::ViewIdentifier viewId, QString connId) {
 	m_connIds << connId;
-	addMismatchingConnectorInfo(new MismatchingConnectorWidget(this,viewId,connId,m_mismatchersFrame));
+	MismatchingConnectorWidget *mcw = new MismatchingConnectorWidget(this,viewId,connId,m_mismatchersFrame);
+	addMismatchingConnectorInfo(mcw);
+	connect(
+		mcw, SIGNAL(completeConn(MismatchingConnectorWidget*)),
+		this, SLOT(completeConn(MismatchingConnectorWidget*))
+	);
 }
 
 void ConnectorsInfoWidget::addMismatchingConnectorInfo(MismatchingConnectorWidget *mcw) {
@@ -356,6 +362,10 @@ void ConnectorsInfoWidget::singleToMismatchingNotInView(ViewIdentifierClass::Vie
 	foreach(SingleConnectorInfoWidget* sci, m_connsInfo) {
 		if(connIds.indexOf(sci->connector()->connectorSharedID()) == -1) {
 			MismatchingConnectorWidget *mcw = sci->toMismatching(viewId);
+			connect(
+				mcw, SIGNAL(completeConn(MismatchingConnectorWidget*)),
+				this, SLOT(completeConn(MismatchingConnectorWidget*))
+			);
 			removeConnectorInfo(sci,false);
 			addMismatchingConnectorInfo(mcw);
 		}
@@ -547,3 +557,21 @@ void ConnectorsInfoWidget::connectorSelectedInView(const QString &connId) {
 void ConnectorsInfoWidget::setConnectorsView(ConnectorsViewsWidget* connsView) {
 	m_connsViews = connsView;
 }
+
+
+void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
+	QList<ViewIdentifierClass::ViewIdentifier> missingViews = mcw->missingViews();
+	removeMismatchingConnectorInfo(mcw);
+
+	if(mcw->prevConn()) {
+		addConnectorInfo(mcw->prevConn());
+	} else {
+		addConnectorInfo(mcw->connId());
+	}
+
+	Connector *connector = findConnector(mcw->connId());
+	foreach(ViewIdentifierClass::ViewIdentifier viewId, missingViews) {
+		emit drawConnector(viewId, connector);
+	}
+}
+

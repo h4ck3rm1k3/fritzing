@@ -266,6 +266,10 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_connsViews, SLOT(repaint()));
 	connect(m_connsInfo, SIGNAL(drawConnector(Connector*)), m_connsViews, SLOT(drawConnector(Connector*)));
+	connect(
+		m_connsInfo, SIGNAL(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*)),
+		m_connsViews, SLOT(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*))
+	);
 	connect(m_connsInfo, SIGNAL(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)),
 			m_connsViews, SLOT(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)));
 	connect(m_connsViews, SIGNAL(connectorSelectedInView(const QString&)),
