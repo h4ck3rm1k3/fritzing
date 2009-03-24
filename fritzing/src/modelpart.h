@@ -129,6 +129,8 @@ protected:
 	void grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId);
 	QString inWhichFolder(const QString &partspath, const QString &imagepath);
 
+
+protected:
 	QList<ItemBase *> m_viewItems;
 
 	ItemType m_type;
@@ -147,11 +149,12 @@ protected:
 	QString m_instanceTitle;
 	QString m_instanceText;
 
+protected:
 	static QHash<ItemType, QString> itemTypeNames;
 	static long m_nextIndex;
 };
 
-Q_DECLARE_METATYPE( ModelPart * );			// so we can stash them in a QVariant
+Q_DECLARE_METATYPE( ModelPart* );			// so we can stash them in a QVariant
 
 struct ModelPartTiny {
 	long m_index;

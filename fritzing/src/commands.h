@@ -519,23 +519,6 @@ protected:
 	QString m_moduleID;
 };
 
-
-class SetConnectorExternalCommand : public BaseCommand 
-{
-public:
-	SetConnectorExternalCommand(class SketchWidget * sketchWidget, long id, const QString & connectorID, bool external, QUndoCommand * parent);
-	void undo();
-	void redo();
-
-protected:
-	QString getParamString() const;
-
-protected:
-	long m_itemID;
-	QString m_connectorID;
-	bool m_external;
-};
-
 class ModuleChangeConnectionCommand : public ChangeConnectionCommand
 {
 public:

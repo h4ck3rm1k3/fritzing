@@ -53,7 +53,6 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_chosen = false;
 	m_ignoreAncestorFlag = false;
-	m_dirty = false;
 	m_opacity = 0.4;
 	m_circular = false;
 	m_overConnectorItem = NULL;
@@ -441,16 +440,13 @@ void ConnectorItem::writeTopLevelAttributes(QXmlStreamWriter & writer) {
 }
 
 void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
-	if (m_connectedTo.count() <= 0 && !m_connector->external()) {
-		// no need to save if there's no connection and it's not an external connection (in a group)
+	if (m_connectedTo.count() <= 0) {
+		// no need to save if there's no connection
 		return;
 	}
 
 	writer.writeStartElement("connector");
 	writer.writeAttribute("connectorId", connectorSharedID());
-	if (m_connector->external()) {
-		writer.writeAttribute("external", "true");
-	}
 	writeTopLevelAttributes(writer);
 
 	writer.writeStartElement("geometry");
@@ -461,47 +457,46 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 	if (m_connectedTo.count() > 0) {
 		writer.writeStartElement("connects");
 		foreach (ConnectorItem * connectorItem, this->m_connectedTo) {
-			//if (connectorItem->attachedToItemType() == ModelPart::Wire) {
-				//Wire * wire = dynamic_cast<Wire *>(connectorItem->attachedTo());
-				//if (wire->getRatsnest()) {
-					// for now, don't save ratsnest connections
-					//continue;
-				//}
-			//}
-			writer.writeStartElement("connect");
-			writer.writeAttribute("connectorId", connectorItem->connectorSharedID());
-			if (connectorItem->attachedTo()->parentItem() == NULL) {
-				writer.writeAttribute("modelIndex", QString::number(connectorItem->connector()->modelIndex()));
-			}
-			else {
-				// if connectorItem is part of a module, then we need to save references up the tree
-				QList<QGraphicsItem *> parents;
-				QGraphicsItem * parent = connectorItem->attachedTo();
-				while (parent) {
-					parents.push_front(parent);
-					parent = parent->parentItem();
-				}
-				ItemBase * itemBase = dynamic_cast<ItemBase *>(parents[0]);
-				writer.writeStartElement("mp");
-				// write the local file modelIndex first
-				writer.writeAttribute("i", QString::number(itemBase->modelPart()->modelIndex()));
-				for (int i = 1; i < parents.count(); i++) {
-					itemBase = dynamic_cast<ItemBase *>(parents[i]);
-					writer.writeStartElement("mp");
-					// now write the indices from the original file
-					writer.writeAttribute("i", QString::number(itemBase->modelPart()->originalModelIndex()));
-				}	
-				for (int i = 0; i < parents.count(); i++) {
-					writer.writeEndElement();
-				}
-			}
-			writer.writeEndElement();
+			connectorItem->writeConnector(writer, "connect");
 		}
 		writer.writeEndElement();
 	}
 
 	writeOtherElements(writer);
 
+	writer.writeEndElement();
+}
+
+
+void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & elementName) 
+{
+	writer.writeStartElement(elementName);
+	writer.writeAttribute("connectorId", connectorSharedID());
+	if (attachedTo()->parentItem() == NULL) {
+		writer.writeAttribute("modelIndex", QString::number(connector()->modelIndex()));
+	}
+	else {
+		// if connectorItem is part of a module, then we need to save references up the tree
+		QList<QGraphicsItem *> parents;
+		QGraphicsItem * parent = attachedTo();
+		while (parent) {
+			parents.push_front(parent);
+			parent = parent->parentItem();
+		}
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(parents[0]);
+		writer.writeStartElement("mp");
+		// write the local file modelIndex first
+		writer.writeAttribute("i", QString::number(itemBase->modelPart()->modelIndex()));
+		for (int i = 1; i < parents.count(); i++) {
+			itemBase = dynamic_cast<ItemBase *>(parents[i]);
+			writer.writeStartElement("mp");
+			// now write the indices from the original file
+			writer.writeAttribute("i", QString::number(itemBase->modelPart()->originalModelIndex()));
+		}	
+		for (int i = 0; i < parents.count(); i++) {
+			writer.writeEndElement();
+		}
+	}
 	writer.writeEndElement();
 }
 
@@ -569,16 +564,6 @@ bool ConnectorItem::wiredTo(ConnectorItem * target)
 
 	return false;
 }
-
-
-void ConnectorItem::setDirty(bool dirty) {
-	m_dirty = dirty;
-}
-
-bool ConnectorItem::isDirty() {
-	return m_dirty;
-}
-
 
 void ConnectorItem::collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags) {
 	// collects all the connectors at the same potential

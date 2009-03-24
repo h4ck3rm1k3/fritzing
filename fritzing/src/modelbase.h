@@ -46,10 +46,11 @@ public:
 	void save(class QXmlStreamWriter &, bool asPart);
 	virtual ModelPart * addPart(QString newPartPath, bool addToReference);
 	virtual bool addPart(ModelPart * modelPart, bool update);
-	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts);
+	virtual bool paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, ModelPart * parent, QHash<QString, QList<long> * > * externalConnectors);
 
 protected:
 	void renewModelIndexes(QDomElement & root, const QString & childName, QHash<long, long> & oldToNew);
+	void renewExternalIndexes(ModelPart * modelPart, QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QString, QList<long> * > * externalConnectors);
 	bool loadInstances(QDomElement & root, QList<ModelPart *> & modelParts);
 
 protected:

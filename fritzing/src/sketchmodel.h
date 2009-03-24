@@ -41,7 +41,7 @@ public:
 	SketchModel(ModelPart * root);
 	void removeModelPart(ModelPart *);
 	ModelPart * findModelPart(const QString & moduleID, long id);
-	bool paste(ModelBase * refModel, const QString & filePath, QList<ModelPart *> & modelParts);
+	bool paste(ModelBase * refModel, const QString & filePath, QList<ModelPart *> & modelParts, ModelPart * parent, QHash<QString, QList<long> * > * externalConnectors);
 	void walk(ModelPart *, int indent);
 	ModelPartTiny * makeTiny(ModelPart * modelPart);
 

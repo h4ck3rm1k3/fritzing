@@ -28,15 +28,26 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 #define AUTOCLOSEMESSAGEBOX_H
 
 #include <QMessageBox>
+#include <QTimer>
 
 class AutoCloseMessageBox : public QMessageBox
 {
 Q_OBJECT
 public:
 	AutoCloseMessageBox(QWidget * parent);
+	void autoExec(long ms);
+	void autoShow(long ms);
+
+protected:
+	void setUp(long ms);
+	void mousePressEvent(QMouseEvent *);
 
 protected slots:
-	void autoclose();
+	void autoClose();
+	void closeEvent(QCloseEvent * event);
+
+protected:
+	QTimer * m_closeTimer;
 
 };
 

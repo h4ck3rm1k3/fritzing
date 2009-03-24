@@ -67,6 +67,8 @@ $Date$
 #include "expandinglabel.h"
 #include "viewswitcher.h"
 
+#include "utils/autoclosemessagebox.h"
+
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
 int MainWindow::CascadeFactorX = 21;
@@ -1447,20 +1449,9 @@ void MainWindow::saveAsModule() {
 		return;
 	}
 
-	// TODO: need to clear external flag of all the other connectors?
-	QHash<ConnectorItem *, bool> wasExternal;
-	foreach (ConnectorItem * connectorItem, dialog.externalConnectorItems()) {
-		wasExternal.insert(connectorItem, connectorItem->connector()->external());
-		connectorItem->connector()->setExternal(true);
-	}
-
 	QByteArray sketchXml;
 	QXmlStreamWriter sketchStreamWriter(&sketchXml);
 	m_sketchModel->save(sketchStreamWriter, false);				// get sketch xml
-
-	foreach (ConnectorItem * connectorItem, wasExternal.keys()) {
-		connectorItem->connector()->setExternal(wasExternal.value(connectorItem, false));
-	}
 
 	QDomDocument sketchDocument;
 	result = sketchDocument.setContent(sketchXml, &errorStr, &errorLine, &errorColumn);
@@ -1518,6 +1509,40 @@ void MainWindow::saveAsModule() {
 		layer.setAttribute("layerId", layerids.value(view));
 	}
 
+	QByteArray tempXml;
+	QXmlStreamWriter tempStreamWriter(&tempXml);
+	tempStreamWriter.writeStartDocument();
+	tempStreamWriter.writeStartElement("module");
+	tempStreamWriter.writeStartElement("externals");
+	foreach (ConnectorItem * connectorItem, dialog.externalConnectorItems()) {
+		connectorItem->writeConnector(tempStreamWriter, "external");
+	}
+	tempStreamWriter.writeEndElement();
+	tempStreamWriter.writeEndElement();
+	tempStreamWriter.writeEndDocument();
+
+	QDomDocument tempDocument;
+	result = tempDocument.setContent(tempXml, &errorStr, &errorLine, &errorColumn);
+	if (!result) {
+		// signal error
+		return;
+	}
+
+	QDomElement tempModule = tempDocument.documentElement();
+	if (tempModule.isNull()) {
+		// signal error
+		return;
+	}
+
+	QDomElement externals = tempModule.firstChildElement("externals");
+   	if (externals.isNull()) {
+		// signal error
+   		return;
+	}
+
+	tempModule.removeChild(externals);
+	partModule.appendChild(externals);
+
 	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
 
 	QFile file2(userPartsFolderPath + moduleID + FritzingModuleExtension);
@@ -1551,13 +1576,14 @@ void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
 	if (itemBase == NULL) return;
 
 	if(!exactMatch) {
-		// TODO: make this messagebox autoclose after 10 seconds
-		QMessageBox::information(
-			this,
-			tr("Fritzing"),
-			tr("Fritzing doesn't yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.")
-		);
-
+		// TODO: andre wants some kind of special disappearing message that's not the status bar
+		// and not the autorouting status message 
+		AutoCloseMessageBox * messageBox = new AutoCloseMessageBox(this);
+		messageBox->setIcon(QMessageBox::Information);
+		messageBox->setWindowTitle(tr("Fritzing"));
+		messageBox->setText(tr("Fritzing doesn't yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted."));
+		messageBox->setStandardButtons(QMessageBox::NoButton);
+		messageBox->autoShow(4 * 1000);  // msec
 	}
 
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));

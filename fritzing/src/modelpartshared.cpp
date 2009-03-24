@@ -85,7 +85,6 @@ ModelPartShared::~ModelPartShared() {
 		delete m_domDocument;
 		m_domDocument = NULL;
 	}
-
 }
 
 void ModelPartShared::loadTagText(QDomElement parent, QString tagName, QString &field) {

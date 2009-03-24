@@ -79,11 +79,10 @@ public:
 	Connector::ConnectorType connectorType();
 	bool chained();
 	virtual void saveInstance(QXmlStreamWriter & );
+	void writeConnector(QXmlStreamWriter & writer, const QString & elementName);
 	bool maleToFemale(ConnectorItem * other);
 	bool wiredTo(ConnectorItem *);
 	class Wire * wiredTo(ConnectorItem *, ViewGeometry::WireFlags);
-	void setDirty(bool dirty);
-	bool isDirty();
 	void setBaseTooltip(const QString &);
 	void clearConnector();
 	void setIgnoreAncestorFlag(bool);
@@ -122,11 +121,9 @@ protected:
 	ConnectorItem * m_overConnectorItem;
 	qreal m_opacity;
 	bool m_circular;
-	bool m_dirty;
 	QString m_baseTooltip;
 	bool m_connectorHovering;
 	bool m_ignoreAncestorFlag;
-	bool m_external;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
 

@@ -48,7 +48,6 @@ ModelPart::ModelPart(ItemType type)
 	m_core = false;
 	m_alien = false;
 	m_originalModelPartShared = false;
-
 }
 
 ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)

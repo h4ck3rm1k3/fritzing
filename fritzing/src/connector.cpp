@@ -350,6 +350,10 @@ int Connector::connectorItemCount() {
 }
 
 void Connector::setExternal(bool external) {
+	if (external == true) {
+		DebugDialog::debug("external");
+	}
+
 	m_external = external;
 }
 

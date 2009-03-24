@@ -286,22 +286,6 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		while (!connector.isNull()) {
 			// TODO: make sure layerkin are searched for connectors
 			QString fromConnectorID = connector.attribute("connectorId");
-			bool external = connector.attribute("external").compare("true") == 0;
-			if (external) {
-				if (parentCommand == NULL) {
-					ItemBase * fromBase = newItems.value(mp->modelIndex(), NULL);
-					if (fromBase) {
-						ConnectorItem * fromConnectorItem = fromBase->findConnectorItemNamed(fromConnectorID);
-						if (fromConnectorItem) {
-							fromConnectorItem->connector()->setExternal(true);
-						}
-					}
-				}
-				else {
-					new SetConnectorExternalCommand(this, ItemBase::getNextID(mp->modelIndex()), fromConnectorID, true, parentCommand);
-				}
-			}
-
 			QDomElement connects = connector.firstChildElement("connects");
 			if (!connects.isNull()) {
 				QDomElement connect = connects.firstChildElement("connect");
@@ -499,30 +483,61 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 	}
 
 	DebugDialog::debug(QString("mp:%1, omi:%2, view:%3, id:%4").arg(modelPart->modelIndex()).arg(originalModelIndex).arg(m_viewIdentifier).arg(id));
-	bool gotOne = false;
 
-	if (!gotOne) {
-		if (modelParts.count() <= 0) {
-			if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts)) {
-				return NULL;
+	bool doExternals = false;
+	QHash<QString, QList<long> * > externalConnectors;
+	if (modelParts.count() <= 0) {
+		doExternals = modelPart->parent() == m_sketchModel->root();  // only need external connectors for top level modules (not for modules-in-modules)
+		if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, modelPart, doExternals ? &externalConnectors : NULL)) {
+			return NULL;
+		}
+
+		foreach (ModelPart * sub, modelParts) {
+			sub->setParent(modelPart);
+		}
+	}
+
+	loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
+
+	QHash<long, ModelPart *> newItems;
+	QList<long> ids;
+	foreach (ModelPart * mp, modelParts) {
+		ItemBase * item = mp->viewItem(scene());
+		if (item) {
+			if (doExternals) {
+				newItems.insert(mp->modelIndex(), mp);
 			}
-			// TODO: if this is a module inside a module, set its parent
+			ids.append(item->id());
+		}
+	}
+	group(modelPart->moduleID(), id, ids, viewGeometry, false);
 
-			foreach (ModelPart * sub, modelParts) {
-				sub->setParent(modelPart);
+	if (doExternals) {
+		ItemBase * toBase = modelPart->viewItem(scene());
+		if (toBase) {
+			foreach (QString connectorID, externalConnectors.keys()) {
+				QList<long> * indexes = externalConnectors.value(connectorID, NULL);
+				if (indexes == NULL) continue;
+
+				ModelPart * first = newItems.value(indexes->at(0));
+				if (first == NULL) continue;
+
+				ItemBase * target = first->viewItem(scene());
+				if (target == NULL) continue;
+
+				target = findModulePart(target, *indexes);
+				if (target == NULL) continue;
+
+				ConnectorItem * connectorItem = findConnectorItem(target, connectorID, true);
+				if (connectorItem == NULL) continue;
+
+				connectorItem->connector()->setExternal(true);
 			}
 		}
 
-		loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
-
-		QList<long> ids;
-		foreach (ModelPart * mp, modelParts) {
-			ItemBase * item = mp->viewItem(scene());
-			if (item) {
-				ids.append(item->id());
-			}
+		foreach (QList<long> * l, externalConnectors.values()) {
+			delete l;
 		}
-		group(modelPart->moduleID(), id, ids, viewGeometry, false);
 	}
 	
 	return modelPart->viewItem(scene());
@@ -4557,16 +4572,6 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 			}
 		}
 	}
-}
-
-void SketchWidget::setConnectorExternal(long itemID, const QString & connectorID, bool external) {
-	ItemBase * itemBase = findItem(itemID);
-	if (itemBase == NULL) return;
-
-	ConnectorItem * connectorItem = findConnectorItem(itemBase, connectorID, true);
-	if (connectorItem == NULL) return;
-
-	connectorItem->connector()->setExternal(external);
 }
 
 void SketchWidget::pushCommand(QUndoCommand * command) {

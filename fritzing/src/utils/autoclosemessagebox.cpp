@@ -31,9 +31,56 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 AutoCloseMessageBox::AutoCloseMessageBox( QWidget * parent ) 
 	: QMessageBox(parent)
 {
+	m_closeTimer = NULL;
+	setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
-void AutoCloseMessageBox::autoclose() {
+void AutoCloseMessageBox::autoExec(long ms) {
+	setUp(ms);
+	exec();
+}
+
+void AutoCloseMessageBox::autoShow(long ms) {
+	setUp(ms);
+	this->setModal(false);
+	show();
+	//Qt::WindowFlags flags = windowFlags();
+	//setWindowFlags(flags);
+	QRect r = this->geometry();
+	r.moveTo(r.left(), parentWidget()->height() - this->height() + parentWidget()->pos().y());
+	this->setGeometry(r);
+}
+
+void AutoCloseMessageBox::setUp(long ms) {
+	m_closeTimer = new QTimer(this);
+	m_closeTimer->setSingleShot(true);
+	connect(m_closeTimer, SIGNAL(timeout()), this, SLOT(autoClose()));
+	m_closeTimer->start(ms);
+}
+
+void AutoCloseMessageBox::autoClose() {
 	close();
 }
 
+
+void AutoCloseMessageBox::mousePressEvent(QMouseEvent * event) {
+	Q_UNUSED(event);
+	close();
+}
+
+void AutoCloseMessageBox::closeEvent(QCloseEvent * event) {
+	if (m_closeTimer) {
+		m_closeTimer->stop();
+	}
+	QDialog::closeEvent(event);
+}
+
+/*
+//	example usage:
+		AutoCloseMessageBox messageBox(this);
+		messageBox.setIcon(QMessageBox::Information);
+		messageBox.setWindowTitle(tr("Fritzing"));
+		messageBox.setText(tr("Fritzing doesn't yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted."));
+		messageBox.setStandardButtons(QMessageBox::Ok);
+		messageBox.autoExec(10 * 1000);  // msec
+*/

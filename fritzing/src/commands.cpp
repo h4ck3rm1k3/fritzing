@@ -970,34 +970,6 @@ QString GroupCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-SetConnectorExternalCommand::SetConnectorExternalCommand(SketchWidget* sketchWidget, long itemID, const QString & connectorID, bool external, QUndoCommand *parent)
-    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
-{
-    m_itemID = itemID;
-	m_external = external;
-	m_connectorID = connectorID;
-}
-
-void SetConnectorExternalCommand::undo()
-{
-    m_sketchWidget->setConnectorExternal(m_itemID, m_connectorID, !m_external);
-}
-
-void SetConnectorExternalCommand::redo()
-{
-    m_sketchWidget->setConnectorExternal(m_itemID, m_connectorID, m_external);
-}
-
-QString SetConnectorExternalCommand::getParamString() const {
-	return QString("SetConnectorExternalCommand ") 
-		+ BaseCommand::getParamString()
-		+ QString(" id:%1 connector:%2 external:%3") 
-			.arg(m_itemID).arg(m_connectorID).arg(m_external);
-
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 ModuleChangeConnectionCommand::ModuleChangeConnectionCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType cv,
 							long fromID, const QString & fromConnectorID,
