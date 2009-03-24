@@ -81,6 +81,7 @@ void ConnectorsViewsWidget::createViewImageWidget(
 		SketchModel* sketchModel, WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
 		ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId) {
 	viw = new PartsEditorConnectorsView(viewId,sister->tempFolder(),showingTerminalPoints(),this);
+	m_views[viewId] = viw;
 	connect(sister,SIGNAL(loadedFromModel(PaletteModel*, ModelPart*)),viw,SLOT(loadFromModel(PaletteModel*, ModelPart*)));
 	connect(
 		sister, SIGNAL(itemAddedToSymbols(ModelPart*, SvgAndPartFilePath*)),
@@ -145,18 +146,12 @@ void ConnectorsViewsWidget::drawConnector(Connector* conn) {
 
 void ConnectorsViewsWidget::drawConnector(ViewIdentifierClass::ViewIdentifier viewId, Connector* conn) {
 	bool showing = showingTerminalPoints();
-	switch(viewId) {
-		case ViewIdentifierClass::BreadboardView:
-			m_breadView->drawConector(conn,showing);
-			break;
-		case ViewIdentifierClass::SchematicView:
-			m_schemView->drawConector(conn,showing);
-			break;
-		case ViewIdentifierClass::PCBView:
-			m_pcbView->drawConector(conn,showing);
-			break;
-		default: return;
-	}
+	m_views[viewId]->drawConector(conn,showing);
+}
+
+void ConnectorsViewsWidget::setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &connId, bool mismatching) {
+	m_views[viewId]->setMismatching(viewId, connId, mismatching);
+	m_views[viewId]->scene()->update();
 }
 
 void ConnectorsViewsWidget::aboutToSave() {
@@ -167,22 +162,12 @@ void ConnectorsViewsWidget::aboutToSave() {
 
 
 void ConnectorsViewsWidget::removeConnectorFrom(const QString &connId, ViewIdentifierClass::ViewIdentifier viewId) {
-	switch(viewId) {
-		case ViewIdentifierClass::AllViews:
-			m_breadView->removeConnector(connId);
-			m_schemView->removeConnector(connId);
-			m_pcbView->removeConnector(connId);
-			break;
-		case ViewIdentifierClass::BreadboardView:
-			m_breadView->removeConnector(connId);
-			break;
-		case ViewIdentifierClass::SchematicView:
-			m_schemView->removeConnector(connId);
-			break;
-		case ViewIdentifierClass::PCBView:
-			m_pcbView->removeConnector(connId);
-			break;
-		default: Q_ASSERT(false);
+	if(viewId == ViewIdentifierClass::AllViews) {
+		m_breadView->removeConnector(connId);
+		m_schemView->removeConnector(connId);
+		m_pcbView->removeConnector(connId);
+	} else {
+		m_views[viewId]->removeConnector(connId);
 	}
 }
 

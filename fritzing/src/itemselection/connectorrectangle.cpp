@@ -31,6 +31,9 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 #include "../debugdialog.h"
 #include "../partseditor/partseditorconnectorsconnectoritem.h"
 
+
+qreal ConnectorRectangle::ErrorIconSize = 6;
+
 ConnectorRectangle::ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers)
 {
 	m_owner = owner;
@@ -146,6 +149,14 @@ QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 			break;
 		default: Q_ASSERT(false);
 	}
+	return QRectF(cornerPoint-offset,cornerPoint+offset);
+}
+
+QRectF ConnectorRectangle::errorIconRect() {
+	QRectF rect = m_owner->boundingRect();
+	qreal scale = currentScale();
+	QPointF offset(ErrorIconSize/scale,ErrorIconSize/scale);
+	QPointF cornerPoint = rect.topLeft()-offset;
 	return QRectF(cornerPoint-offset,cornerPoint+offset);
 }
 

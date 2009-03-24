@@ -270,6 +270,10 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 		m_connsInfo, SIGNAL(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*)),
 		m_connsViews, SLOT(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*))
 	);
+	connect(
+		m_connsInfo, SIGNAL(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString&, bool)),
+		m_connsViews, SLOT(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString&, bool))
+	);
 	connect(m_connsInfo, SIGNAL(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)),
 			m_connsViews, SLOT(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)));
 	connect(m_connsViews, SIGNAL(connectorSelectedInView(const QString&)),

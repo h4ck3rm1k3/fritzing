@@ -54,15 +54,16 @@ class ConnectorsViewsWidget : public QFrame {
 		void removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier);
 		void showHideTerminalPoints(int checkState);
 		void informConnectorSelection(const QString &connId);
+		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
 
 	signals:
 		void connectorSelectedInView(const QString& connId);
 
 	protected:
 		void createViewImageWidget(
-				PartsEditorConnectorsView *&viw, PartsEditorSpecificationsView* sister,
-				SketchModel* sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
-				ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId);
+			PartsEditorConnectorsView *&viw, PartsEditorSpecificationsView* sister,
+			SketchModel* sketchModel, class WaitPushUndoStack *undoStack, ConnectorsInfoWidget* info,
+			ViewIdentifierClass::ViewIdentifier viewId, ViewLayer::ViewLayerID viewLayerId);
 		QWidget *addZoomControls(PartsEditorConnectorsView *view);
 
 		bool showingTerminalPoints();
@@ -74,6 +75,7 @@ class ConnectorsViewsWidget : public QFrame {
 		PartsEditorConnectorsView *m_breadView;
 		PartsEditorConnectorsView *m_schemView;
 		PartsEditorConnectorsView *m_pcbView;
+		QHash<ViewIdentifierClass::ViewIdentifier,PartsEditorConnectorsView*> m_views;
 
 		QCheckBox *m_showTerminalPointsCheckBox;
 };

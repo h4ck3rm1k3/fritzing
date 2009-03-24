@@ -86,7 +86,7 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 
 	setAcceptsHoverEvents(resizable);
 	setAcceptHoverEvents(resizable);
-	m_errorIcon = NULL;
+	m_showErrorIcon = false;
 	m_geometryHasChanged = false;
 	m_resizedRect = QRectF();
 
@@ -111,34 +111,11 @@ void PartsEditorConnectorsConnectorItem::setConnector(Connector *connector) {
 }
 
 void PartsEditorConnectorsConnectorItem::setMismatching(bool isMismatching) {
-	if(!isMismatching) {
-		removeErrorIcon();
-	} else {
-		addErrorIcon();
-	}
+	showErrorIcon(isMismatching);
 }
 
-void PartsEditorConnectorsConnectorItem::addErrorIcon() {
-	if(!m_errorIcon) {
-		m_errorIcon = new QGraphicsSvgItem(":/resources/images/error_x_mini.svg",this);
-		this->scene()->addItem(m_errorIcon);
-
-		QRectF boundRect = boundingRect();
-
-		qreal x = boundRect.x()+boundRect.width()-5;
-		qreal y = boundRect.y()-m_errorIcon->boundingRect().height()+5;
-
-		m_errorIcon->setPos(x,y);
-		m_errorIcon->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-	}
-}
-
-void PartsEditorConnectorsConnectorItem::removeErrorIcon() {
-	if(m_errorIcon) {
-		this->scene()->removeItem(m_errorIcon);
-		delete m_errorIcon;
-		m_errorIcon = NULL;
-	}
+void PartsEditorConnectorsConnectorItem::showErrorIcon(bool showIt) {
+	m_showErrorIcon = showIt;
 }
 
 void PartsEditorConnectorsConnectorItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
@@ -148,7 +125,17 @@ void PartsEditorConnectorsConnectorItem::paint(QPainter *painter, const QStyleOp
 	painter->save();
 	drawDottedRect(painter,Qt::black,Qt::white,rect());
 	m_handlers->paint(painter);
+	if(m_showErrorIcon) {
+		paintErrorIcon(painter);
+	}
 	painter->restore();
+}
+
+void PartsEditorConnectorsConnectorItem::paintErrorIcon(QPainter *painter) {
+	QRectF trgRect = m_handlers->errorIconRect();
+	QPixmap pm = QPixmap(":resources/images/error_x_mini.png");
+	QRectF srcRect = QRectF(pm.rect());
+	painter->drawPixmap(trgRect,pm,srcRect);
 }
 
 void PartsEditorConnectorsConnectorItem::drawDottedRect(QPainter *painter, const QColor &color1, const QColor &color2, const QRectF &rect) {

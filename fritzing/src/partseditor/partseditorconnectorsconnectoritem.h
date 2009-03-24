@@ -59,8 +59,7 @@ protected:
 
 	void resizeRect(qreal x, qreal y, qreal width, qreal height);
 
-	void removeErrorIcon();
-	void addErrorIcon();
+	void showErrorIcon(bool showIt);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
@@ -80,7 +79,9 @@ protected:
 	void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
 	void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
-	QGraphicsSvgItem *m_errorIcon;
+	void paintErrorIcon(QPainter *painter);
+
+	bool m_showErrorIcon;
 	bool m_showingTerminalPoint; // important only if m_showsTerminalPoints == true
 	TerminalPointItem *m_terminalPointItem;
 

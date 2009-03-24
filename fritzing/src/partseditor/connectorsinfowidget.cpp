@@ -259,7 +259,6 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 
 void ConnectorsInfoWidget::addConnectorInfo(Connector *conn) {
 	QString connId = conn->connectorSharedID();
-	DebugDialog::debug("<<<< "+connId);
 	m_connIds << connId;
 
 	int connCount = m_connsInfo.size();
@@ -563,17 +562,22 @@ void ConnectorsInfoWidget::setConnectorsView(ConnectorsViewsWidget* connsView) {
 
 void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
 	QList<ViewIdentifierClass::ViewIdentifier> missingViews = mcw->missingViews();
+	QList<ViewIdentifierClass::ViewIdentifier> availViews = mcw->views();
+	QString connId = mcw->connId();
 	removeMismatchingConnectorInfo(mcw);
 
 	if(mcw->prevConn()) {
 		addConnectorInfo(mcw->prevConn());
 	} else {
-		addConnectorInfo(mcw->connId());
+		addConnectorInfo(connId);
 	}
 
-	Connector *connector = findConnector(mcw->connId());
+	Connector *connector = findConnector(connId);
 	foreach(ViewIdentifierClass::ViewIdentifier viewId, missingViews) {
 		emit drawConnector(viewId, connector);
+	}
+	foreach(ViewIdentifierClass::ViewIdentifier viewId, availViews) {
+		emit setMismatching(viewId,connId,false);
 	}
 }
 

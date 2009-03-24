@@ -55,6 +55,7 @@ public:
 
 	void setHandlersVisible(bool visible);
 	QRectF handlerRect(Qt::Corner corner);
+	QRectF errorIconRect();
 	void paint(QPainter *painter);
 
 protected:
@@ -77,6 +78,9 @@ protected:
 	RectangleSide *m_bottomSide;
 
 	bool m_firstPaint;
+
+public:
+	static qreal ErrorIconSize;
 };
 
 #endif /* CONNECTORRECTANGLE_H_ */
