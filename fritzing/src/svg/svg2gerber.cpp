@@ -26,6 +26,7 @@ $Date$
 
 #include "svg2gerber.h"
 #include "../debugdialog.h"
+#include "svgflattener.h"
 #include <QTextStream>
 #include <math.h>
 
@@ -71,8 +72,17 @@ void SVG2gerber::normalizeSVG(){
     //  convert to paths
     convertShapes2paths(root);
 
+    // dump paths SVG to tmp file for now
+    QFile dump("/tmp/paths_pre.svg");
+    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber svg dump: cannot open output file");
+
+    QTextStream out(&dump);
+    out << m_SVGDom.toString();
+
     //  get rid of transforms
-    flattenSVG(root);
+    SvgFlattener flattener;
+    flattener.flattenChildren(root);
 
 }
 
@@ -135,28 +145,28 @@ void SVG2gerber::copyStyles(QDomElement source, QDomElement dest){
     }
 }
 
-// note that this only works for paths!  convert to paths first.
-void SVG2gerber::flattenSVG(QDomNode node){
-    QDomElement element = node.toElement();
-    QMatrix transform;
-
-    // I'm a leaf node. flatten me
-    if(!node.hasChildNodes()) {
-
-    }
-
-    // recurse the children
-    QDomNodeList tagList = node.childNodes();
-
-    for(uint i = 0; i < tagList.length(); i++){
-        flattenSVG(tagList.item(i));
-
-        // now apply my transform to the children
-
-    }
-
-    // if I'm a <g>, apply my transform to children, pull them up then delete me
-}
+//// note that this only works for paths!  convert to paths first.
+//void SVG2gerber::flattenSVG(QDomNode node){
+//    QDomElement element = node.toElement();
+//    QMatrix transform;
+//
+//    // I'm a leaf node. flatten me
+//    if(!node.hasChildNodes()) {
+//
+//    }
+//
+//    // recurse the children
+//    QDomNodeList tagList = node.childNodes();
+//
+//    for(uint i = 0; i < tagList.length(); i++){
+//        flattenSVG(tagList.item(i));
+//
+//        // now apply my transform to the children
+//
+//    }
+//
+//    // if I'm a <g>, apply my transform to children, pull them up then delete me
+//}
 
 // extract the SVG transform
 QMatrix SVG2gerber::parseTransform(QDomElement element){
@@ -177,7 +187,7 @@ QDomElement SVG2gerber::rect2path(QDomElement rectElement){
     float width = rectElement.attribute("width").toFloat();
     float height = rectElement.attribute("height").toFloat();
 
-    QString pathStr = "m " + QString::number(x) + "," + QString::number(y) + " ";
+    QString pathStr = "M " + QString::number(x) + "," + QString::number(y) + " ";
     pathStr += "h " + QString::number(width) + " ";
     pathStr += "v " + QString::number(height) + " ";
     pathStr += "h " + QString::number(-width) + " ";
@@ -205,7 +215,7 @@ QDomElement SVG2gerber::circle2path(QDomElement circleElement){
 //      -1,0.552  -0.552,1  0,1z"  // 4th
 
     //translate radius from center
-    QString pathStr = "m " + QString::number(cx) + "," + QString::number(cy + r) + " ";
+    QString pathStr = "M " + QString::number(cx) + "," + QString::number(cy + r) + " ";
 
     //1st quarter
     pathStr += "C " + QString::number(cx + k) + "," + QString::number(cy + r) + " ";
@@ -240,7 +250,7 @@ QDomElement SVG2gerber::line2path(QDomElement lineElement){
     float x2 = lineElement.attribute("x2").toFloat();
     float y2 = lineElement.attribute("y2").toFloat();
 
-    QString pathStr = "m " + QString::number(x1) + "," + QString::number(y1) + " ";
+    QString pathStr = "M " + QString::number(x1) + "," + QString::number(y1) + " ";
     pathStr += "L " + QString::number(x2) + "," + QString::number(y2) + " z";
 
     QDomElement path = m_SVGDom.createElement("path");
