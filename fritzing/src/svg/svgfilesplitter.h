@@ -61,7 +61,7 @@ protected:
 						qreal sNewWidth, qreal sNewHeight,
 						qreal vbWidth, qreal vbHeight, bool blackOnly);
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
-	void shiftChild(QDomElement & element, qreal x, qreal y);
+	virtual void shiftChild(QDomElement & element, qreal x, qreal y);
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
 	bool parsePath(const QString & data, const char * slot, PathUserData &);
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);

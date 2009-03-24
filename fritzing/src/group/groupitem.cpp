@@ -29,13 +29,13 @@ $Date$
 //		** don't allow wires to connect within the group
 //		** drag doesn't keep wire connections
 //		connect within
-//		ignore submodule external connections
+//		** ignore submodule external connections
 //  female connectors in modules
 //		connect female connectees
 //  ** how to hide non-external connectors
-//  trace wires
+//  ** trace wires
 //	** ratsnest wires
-//  ratsnest behavior: what if module contains separated parts?
+//  ratsnest behavior: what if module contains separated parts (tough)
 //  autorouting behavior
 //	export with groups
 //	** recursive groups

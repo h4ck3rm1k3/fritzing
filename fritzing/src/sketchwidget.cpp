@@ -488,7 +488,7 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 	QHash<QString, QList<long> * > externalConnectors;
 	if (modelParts.count() <= 0) {
 		doExternals = modelPart->parent() == m_sketchModel->root();  // only need external connectors for top level modules (not for modules-in-modules)
-		if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, modelPart, doExternals ? &externalConnectors : NULL)) {
+		if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, doExternals ? &externalConnectors : NULL)) {
 			return NULL;
 		}
 

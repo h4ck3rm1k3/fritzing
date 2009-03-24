@@ -217,7 +217,7 @@ void ModelBase::save(QXmlStreamWriter & streamWriter, bool asPart) {
     }
 }
 
-bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, ModelPart * parent, QHash<QString, QList<long> * > * externalConnectors) 
+bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *> & modelParts, QHash<QString, QList<long> * > * externalConnectors) 
 {
 	m_referenceModel = refModel;
 
@@ -250,7 +250,7 @@ bool ModelBase::paste(ModelBase * refModel, QByteArray & data, QList<ModelPart *
 	if (externalConnectors) {
 		QDomElement externals = module.firstChildElement("externals");
    		if (!externals.isNull()) {
-			renewExternalIndexes(parent, externals, "external", oldToNew, externalConnectors);
+			renewExternalIndexes(externals, "external", oldToNew, externalConnectors);
 		}
 	}
 
@@ -310,7 +310,7 @@ void ModelBase::renewModelIndexes(QDomElement & parentElement, const QString & c
 }
 
 
-void ModelBase::renewExternalIndexes(ModelPart * modelPart, QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QString, QList<long> * > * externalConnectors) 
+void ModelBase::renewExternalIndexes(QDomElement & parentElement, const QString & childName, QHash<long, long> & oldToNew, QHash<QString, QList<long> * > * externalConnectors) 
 {
 	QDomElement instance = parentElement.firstChildElement(childName);
 	while (!instance.isNull()) {
