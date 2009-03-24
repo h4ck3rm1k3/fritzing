@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1" language="de">
+<!DOCTYPE TS>
+<TS version="2.0" language="de">
 <defaultcodec></defaultcodec>
 <context>
     <name>AboutBox</name>
@@ -381,22 +382,22 @@
     <message>
         <location filename="../src/htmlinfoview.cpp" line="367"/>
         <source>family</source>
-        <translation type="unfinished">Familie</translation>
+        <translation>Familie</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="369"/>
         <source>color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="372"/>
         <source>width</source>
-        <translation type="unfinished">Breite</translation>
+        <translation>Breite</translation>
     </message>
     <message>
         <location filename="../src/htmlinfoview.cpp" line="68"/>
         <source>resistance</source>
-        <translation type="unfinished">Widerstand</translation>
+        <translation>Widerstand</translation>
     </message>
 </context>
 <context>
@@ -409,7 +410,7 @@
     <message>
         <location filename="../src/itembase.cpp" line="285"/>
         <source>Module</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul</translation>
     </message>
 </context>
 <context>
@@ -417,12 +418,12 @@
     <message>
         <location filename="../src/labels/note.cpp" line="170"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/labels/note.cpp" line="171"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -901,7 +902,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="939"/>
-        <source>&amp;Rotate 90&#xb0; Clockwise</source>
+        <source>&amp;Rotate 90° Clockwise</source>
         <translation>&amp;Rotieren um 90° im Uhrzeigersinn</translation>
     </message>
     <message>
@@ -916,7 +917,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="944"/>
-        <source>&amp;Rotate 180&#xb0;</source>
+        <source>&amp;Rotate 180°</source>
         <translation>&amp;Rotieren um 180°</translation>
     </message>
     <message>
@@ -926,7 +927,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="948"/>
-        <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
+        <source>&amp;Rotate 90° Counter Clockwise</source>
         <translation>&amp;Rotieren um 90° gegen den Uhrzeigersinn</translation>
     </message>
     <message>
@@ -1440,14 +1441,14 @@
 
 Shopping List
 
-Quantity<byte value="x9"/>Part
+Quantity	Part
 
 </source>
         <translation>
 
 Einkaufsliste
 
-Menge<byte value="x9"/>Bauteil
+Menge	Bauteil
 
 </translation>
     </message>
@@ -1538,12 +1539,12 @@ Menge<byte value="x9"/>Bauteil
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1969"/>
-        <source>Sketch: <byte value="x9"/></source>
+        <source>Sketch: 	</source>
         <translation>Entwurf:</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1973"/>
-        <source>Date: <byte value="x9"/></source>
+        <source>Date: 	</source>
         <translation>Datum:</translation>
     </message>
     <message>
@@ -1584,67 +1585,67 @@ Menge<byte value="x9"/>Bauteil
     <message>
         <location filename="../src/mainwindow.cpp" line="982"/>
         <source>Select a part to import</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle ein zu importierendes Bauteil aus</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="984"/>
         <source>External Part (*%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Externes Bauteil (*%1)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1001"/>
         <source>Unable to open shareable part %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Fritzing-Paket konnte nicht geöffnet werden %1</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1067"/>
         <source>Do you want to keep the imported parts?</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchtest Du die importierten Bauteile behalten?</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="455"/>
         <source>Fritzing Files (*%1 *%2);;Fritzing (*%1);;Fritzing Shareable (*%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fritzing-Dateien (*%1 *%2);;Fritzing (*%1);;Fritzing-Paket (*%2)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="742"/>
         <source>List of parts (&amp;Bill of Materials)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteilliste (&amp;Bill of Materials)</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1004"/>
         <source>&amp;Import part...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bauteil &amp;importieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1005"/>
         <source>Import a part</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Bauteil importieren</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1107"/>
         <source>&amp;About Qt</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Über Qt</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1108"/>
         <source>Show Qt&apos;s about box</source>
-        <translation type="unfinished"></translation>
+        <translation>Informationen über Qt anzeigen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1111"/>
         <source>&amp;Report a Fritzing bug</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bug in Fritzing melden</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1112"/>
         <source>Report a but you&apos;ve found in Fritzing</source>
-        <translation type="unfinished"></translation>
+        <translation>Melde uns einen Bug, den Du in Fritzing entdeckt hast</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1903"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
-        <translation type="unfinished"></translation>
+        <translation>An dieser Stelle gibt es bald einen Export zur EAGLE Layout software. Wenn Du mehr Exportmöglichkeiten wünschst, sag uns Bescheid, oder hilf mit!</translation>
     </message>
 </context>
 <context>
@@ -1738,7 +1739,7 @@ Menge<byte value="x9"/>Bauteil
     <name>PartLabel</name>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="388"/>
-        <source>&amp;Rotate 90&#xb0; Clockwise</source>
+        <source>&amp;Rotate 90° Clockwise</source>
         <translation>&amp;Rotieren um 90° im Uhrzeigersinn</translation>
     </message>
     <message>
@@ -1748,7 +1749,7 @@ Menge<byte value="x9"/>Bauteil
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="392"/>
-        <source>&amp;Rotate 180&#xb0;</source>
+        <source>&amp;Rotate 180°</source>
         <translation>&amp;Rotieren um 180°</translation>
     </message>
     <message>
@@ -1758,7 +1759,7 @@ Menge<byte value="x9"/>Bauteil
     </message>
     <message>
         <location filename="../src/labels/partlabel.cpp" line="396"/>
-        <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
+        <source>&amp;Rotate 90° Counter Clockwise</source>
         <translation>&amp;Rotieren um 90° gegen den Uhrzeigersinn</translation>
     </message>
     <message>
@@ -2115,7 +2116,7 @@ Bitte gib einen anderen Dateinamen an.</translation>
     <message>
         <location filename="../src/partseditor/partseditorspecificationsview.cpp" line="100"/>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilddateien (%1 %2 %3);;SVG-Dateien (%1);;JPEG-Dateien (%2);;PNG-Dateien(%3)</translation>
     </message>
 </context>
 <context>
@@ -2574,7 +2575,7 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/group/saveasmoduledialog.cpp" line="65"/>
         <source>&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;body&gt;&lt;p&gt;To make a connector &quot;external&quot;, so that parts outside this module can connect to it, click it;click again to make it unavailable for connecting.  To make selection easier, use the mouse wheel to zoom in and out.&lt;/p&gt;&lt;p&gt;Don&apos;t forget to scroll down and fill out the description and other fields that describe your module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/pcbsketchwidget.cpp" line="481"/>
@@ -2584,7 +2585,7 @@ Please stay tuned.</source>
     <message>
         <location filename="../src/labels/note.cpp" line="147"/>
         <source>Edit link</source>
-        <translation type="unfinished"></translation>
+        <translation>Link bearbeiten</translation>
     </message>
 </context>
 <context>
@@ -2859,12 +2860,12 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/sketchwidget.cpp" line="3448"/>
         <source>Warning!</source>
-        <translation type="unfinished"></translation>
+        <translation>Warnung!</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="3450"/>
         <source>Not an exact match</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine exakte Übereinstimmung</translation>
     </message>
 </context>
 <context>
@@ -2927,12 +2928,12 @@ We&apos;re working to avoid this message, and only let you choose between proper
     <message>
         <location filename="../src/prefsdialog.cpp" line="53"/>
         <source>Portuguese (European)- %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugiesisch (Europäisch) - %1</translation>
     </message>
     <message>
         <location filename="../src/prefsdialog.cpp" line="54"/>
         <source>Portuguese (Brazilian) - %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugiesisch (Brasilianisch) - %1</translation>
     </message>
 </context>
 <context>
