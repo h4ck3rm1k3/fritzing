@@ -1,8 +1,5 @@
 #!/bin/bash
 svn export http://fritzing.googlecode.com/svn/trunk/fritzing compile_folder
-cd compile_folder
-qmake CONFIG+=release -unix
-make
 
 #let's define some variables that we'll need to in the future
 arch_aux=`uname -m`
@@ -11,6 +8,17 @@ if [ $arch_aux == 'x86_64' ]
 	else arch='i386'
 fi
 date=`date +%Y.%m.%d`
+
+tarball_folder="fritzing.$date.source"
+cp -rf compile_folder $tarball_folder
+echo "making source tarball: $tarball_folder"
+tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
+rm -rf $tarball_folder
+
+cd compile_folder
+qmake CONFIG+=release -unix
+make
+
 release_folder="fritzing.$date.linux.$arch"
 
 echo "making release folder: $release_folder"
