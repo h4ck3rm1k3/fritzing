@@ -16,8 +16,8 @@ def form(request):
     script_id = request.POST['script_id']
     params = get_params_def(script_id)
     
-    class_name = gen.create_class_if_needed(params, script_id, settings.DEBUG)
-    form = gen.get_form_class(class_name)()
+    class_name = generator.create_class_if_needed(params, script_id, settings.DEBUG)
+    form = generator.get_form_class(class_name)()
     return render_to_response('parts/generator/form.html', {'form': form})
 
 
