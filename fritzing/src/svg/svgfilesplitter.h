@@ -32,9 +32,11 @@ $Date$
 #include <QByteArray>
 #include <QDomElement>
 #include <QObject>
+#include <QMatrix>
 
 struct PathUserData {
 	QString string;
+        QMatrix transform;
 	qreal sNewWidth;
 	qreal sNewHeight;
 	qreal vbWidth; 
@@ -63,7 +65,7 @@ protected:
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
 	virtual void shiftChild(QDomElement & element, qreal x, qreal y);
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
-	bool parsePath(const QString & data, const char * slot, PathUserData &);
+        virtual bool parsePath(const QString & data, const char * slot, PathUserData &);
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void fixStyleAttribute(QDomElement & element);
 	void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
@@ -71,6 +73,7 @@ protected:
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
 	void shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
+        virtual void rotateCommandSlot(QChar, bool, QList<double> &, void *){}
 
 protected:
 	QByteArray m_byteArray;

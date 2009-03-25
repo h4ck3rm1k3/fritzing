@@ -145,30 +145,6 @@ void SVG2gerber::copyStyles(QDomElement source, QDomElement dest){
     }
 }
 
-//// note that this only works for paths!  convert to paths first.
-//void SVG2gerber::flattenSVG(QDomNode node){
-//    QDomElement element = node.toElement();
-//    QMatrix transform;
-//
-//    // I'm a leaf node. flatten me
-//    if(!node.hasChildNodes()) {
-//
-//    }
-//
-//    // recurse the children
-//    QDomNodeList tagList = node.childNodes();
-//
-//    for(uint i = 0; i < tagList.length(); i++){
-//        flattenSVG(tagList.item(i));
-//
-//        // now apply my transform to the children
-//
-//    }
-//
-//    // if I'm a <g>, apply my transform to children, pull them up then delete me
-//}
-
-// extract the SVG transform
 QMatrix SVG2gerber::parseTransform(QDomElement element){
     QMatrix transform = QMatrix();
 
@@ -188,9 +164,9 @@ QDomElement SVG2gerber::rect2path(QDomElement rectElement){
     float height = rectElement.attribute("height").toFloat();
 
     QString pathStr = "M " + QString::number(x) + "," + QString::number(y) + " ";
-    pathStr += "h " + QString::number(width) + " ";
-    pathStr += "v " + QString::number(height) + " ";
-    pathStr += "h " + QString::number(-width) + " ";
+    pathStr += "L " + QString::number(x + width) + "," + QString::number(y);
+    pathStr += "L " + QString::number(x + width) + "," + QString::number(y + height);
+    pathStr += "L " + QString::number(x) + "," + QString::number(y + height);
     pathStr += "z";
 
     QDomElement path = m_SVGDom.createElement("path");

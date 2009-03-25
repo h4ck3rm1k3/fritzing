@@ -40,6 +40,10 @@ public:
     bool hasTranslate(QDomElement & element);
     bool hasRotate(QDomElement & element);
     QList<qreal> getTransformFloats(QDomElement & element);
+
+protected slots:
+    void rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
+
 };
 
 #endif // SVGFLATTENER_H

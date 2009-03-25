@@ -61,6 +61,7 @@ void SvgFlattener::flattenChildren(QDomElement &element){
         QList<qreal> params = getTransformFloats(element);
         QMatrix transform = QMatrix(params.at(0), params.at(1), params.at(2), params.at(3), params.at(4), params.at(5));
 
+        DebugDialog::debug(QString("rotating %1 %2 %3 %4 %5 %6").arg(params.at(0)).arg(params.at(1)).arg(params.at(2)).arg(params.at(3)).arg(params.at(4)).arg(params.at(5)));
         unRotateChild(element, transform);
     }
 
@@ -69,6 +70,27 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 }
 
 void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
+    // I'm a leaf node. (NOTE: assumes only paths)
+    if(!element.hasChildNodes()) {
+        QString data = element.attribute("d");
+        if (!data.isEmpty()) {
+            const char * slot = SLOT(rotateCommandSlot(QChar, bool, QList<double> &, void *));
+            PathUserData pathUserData;
+            pathUserData.transform = transform;
+            if (parsePath(data, slot, pathUserData)) {
+                element.setAttribute("d", pathUserData.string);
+            }
+        }
+        return;
+    }
+
+    // recurse the children
+    QDomNodeList childList = element.childNodes();
+
+    for(uint i = 0; i < childList.length(); i++){
+        QDomElement child = childList.item(i).toElement();
+        unRotateChild(child, transform);
+    }
 
 }
 
@@ -115,4 +137,65 @@ QList<qreal> SvgFlattener::getTransformFloats(QDomElement & element){
 #endif
 
     return list;
+}
+
+void SvgFlattener::rotateCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
+
+        Q_UNUSED(relative);			// just normalizing here, so relative is not used
+
+        PathUserData * pathUserData = (PathUserData *) userData;
+
+        pathUserData->string.append(command);
+        qreal x;
+        qreal y;
+
+
+        // probably will fuck things up with relative coordinates
+        for (int i = 0; i < args.count(); i=i+2) {
+            x = args[i];
+            y = args[i+1];
+            QPointF point = pathUserData->transform.map(QPointF(x,y));
+            pathUserData->string.append(QString::number(point.x()));
+            pathUserData->string.append(',');
+            pathUserData->string.append(QString::number(point.y()));
+        }
+
+
+//        switch(command.toAscii()) {
+//                case 'v':
+//                case 'V':
+//                        d = args[0];
+//                        if (!relative) {
+//                                 d += pathUserData->y;
+//                        }
+//                        pathUserData->string.append(QString::number(d));
+//                        break;
+//                case 'h':
+//                case 'H':
+//                        d = args[0];
+//                        if (!relative) {
+//                                 d += pathUserData->x;
+//                        }
+//                        pathUserData->string.append(QString::number(d));
+//                        break;
+//                default:
+//                        for (int i = 0; i < args.count(); i++) {
+//                                d = args[i];
+//                                if (i % 2 == 0) {
+//                                        if (!relative) {
+//                                                d += pathUserData->x;
+//                                        }
+//                                }
+//                                else {
+//                                        if (!relative) {
+//                                                d += pathUserData->y;
+//                                        }
+//                                }
+//                                pathUserData->string.append(QString::number(d));
+//                                if (i < args.count() - 1) {
+//                                        pathUserData->string.append(',');
+//                                }
+//                        }
+//                        break;
+//        }
 }
