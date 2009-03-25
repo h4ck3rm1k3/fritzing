@@ -38,7 +38,7 @@ South
 -e git+git://github.com/jezdez/django-feedutil.git#egg=django-feedutil
 -e svn+http://svn.pinaxproject.com/pinax/trunk@1612#egg=Pinax
 -e svn+http://django-filebrowser.googlecode.com/svn/trunk#egg=django-filebrowser
--e svn+http://django-page-cms.googlecode.com/svn/trunk@289#egg=django-page-cms
+-e svn+http://django-page-cms.googlecode.com/svn/trunk@409#egg=django-page-cms
 -e svn+http://django-bookmarks.googlecode.com/svn/trunk#egg=django-bookmarks
 -e svn+http://django-email-confirmation.googlecode.com/svn/trunk#egg=django-email-confirmation
 -e svn+http://django-flag.googlecode.com/svn/trunk#egg=django-flag
