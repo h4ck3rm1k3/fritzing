@@ -51,8 +51,8 @@ def send_zipfile(script_id,config):
 def generate(request):
     if request.method == 'POST': # If the form has been submitted...
         script_id = request.POST['script_id']
-        class_name = gen.get_class_name(script_id)
-        form = gen.get_form_class(class_name)(request.POST)
+        class_name = generator.get_class_name(script_id)
+        form = generator.get_form_class(class_name)(request.POST)
         if form.is_valid(): # All validation rules pass 
             config, script_id = script_config_from_form(form.cleaned_data)
             return send_zipfile(script_id,config)
