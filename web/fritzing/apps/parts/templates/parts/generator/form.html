@@ -1,4 +1,10 @@
+{% extends "site_base.html" %}
+{% block subnav %}{% endblock subnav %}
+{% block content %}
+
 <form action="/parts/generator/generate/" method="POST">
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>
+
+{% endblock %}

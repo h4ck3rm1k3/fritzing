@@ -1,3 +1,7 @@
+{% extends "site_base.html" %}
+{% block subnav %}{% endblock subnav %}
+{% block content %}
+
 {% if scripts_list %}
 <form action="/parts/generator/form/" method="post">
   <label for="script_id">Choose a type of part to create</label>
@@ -11,3 +15,5 @@
 {% else %}
     <p>No scripts are available.</p>
 {% endif %}
+
+{% endblock %}
