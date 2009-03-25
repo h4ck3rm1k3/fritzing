@@ -35,6 +35,7 @@ TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent,
 	: QGraphicsRectItem(parent)
 {
 	init(parent,visible,rect().center(),false);
+	reset(); // the first time
 }
 
 TerminalPointItem::TerminalPointItem(PartsEditorConnectorsConnectorItem *parent, bool visible, const QPointF &point)
@@ -135,7 +136,7 @@ void TerminalPointItem::reset() {
 	m_cross->setHasBeenMoved(m_loadedFromFile);
 	m_loadedFromFile = false;
 	setCrossPos();
-	scene()->update();
+	if(scene()) scene()->update();
 }
 
 void TerminalPointItem::doSetVisible(bool visible) {
