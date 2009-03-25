@@ -51,7 +51,7 @@ PaletteItemBase::PaletteItemBase(ModelPart * modelPart, ViewIdentifierClass::Vie
 	m_offset.setY(0);
  	m_blockItemSelectedChange = false;
 	this->setPos(viewGeometry.loc());
-    setFlags(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
     setAcceptsHoverEvents(true);
 }
 

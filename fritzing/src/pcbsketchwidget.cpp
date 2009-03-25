@@ -436,6 +436,11 @@ void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 		if (wire == NULL) continue;
 
 		if (wire->hasFlag(flag)) {
+			if (wire->parentItem() != NULL) {
+				// skip module wires
+				continue;
+			}
+
 			wires.append(wire);
 		}
 	}
@@ -472,6 +477,11 @@ void PCBSketchWidget::selectAllExcludedTraces()
 	foreach (QGraphicsItem * item, scene()->items()) {
 		TraceWire * wire = dynamic_cast<TraceWire *>(item);
 		if (wire == NULL) continue;
+
+		if (wire->parentItem() != NULL) {
+			// skip module wires
+			continue;
+		}
 
 		if (!wire->getAutoroutable()) {
 			wires.append(wire);

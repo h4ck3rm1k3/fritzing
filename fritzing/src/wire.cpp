@@ -83,7 +83,7 @@ Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 {
 	m_partLabel = new PartLabel(this, "", NULL);
 	m_canChainMultiple = false;
-    setFlags(QGraphicsItem::ItemIsSelectable );
+    setFlag(QGraphicsItem::ItemIsSelectable, true );
 	m_connectorHover = NULL;
 	m_opacity = UNROUTED_OPACITY;
 

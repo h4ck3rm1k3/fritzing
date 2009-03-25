@@ -1588,11 +1588,24 @@ void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
 
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
 	long modelIndex = ModelPart::nextIndex();
-	m_schematicGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, false, parentCommand);
-	m_pcbGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, false, parentCommand);
+
+	QList<bool> masterflags;
+	masterflags << false << false << false;
+	if (itemBase->modelPart()->viewItem(m_breadboardGraphicsView->scene()) != NULL) {
+		masterflags[2] = true;
+	}
+	else if (itemBase->modelPart()->viewItem(m_pcbGraphicsView->scene()) != NULL) {
+		masterflags[1] = true;
+	}
+	else {
+		masterflags[0] = true;
+	}
+
+	m_schematicGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[0], parentCommand);
+	m_pcbGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[1], parentCommand);
 
 	// master view must go last, since it creates the delete command
-	m_breadboardGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, true, parentCommand);
+	m_breadboardGraphicsView->setUpSwap(itemBase->id(), modelIndex, moduleID, masterflags[2], parentCommand);
 
 	// TODO:  z-order?
 

@@ -220,7 +220,7 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	m_inResize = false;
 	this->setCursor(Qt::CrossCursor);
 
-    setFlags(QGraphicsItem::ItemIsSelectable );
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
 
 	m_rect.setRect(0, 0, viewGeometry.rect().width(), viewGeometry.rect().height());
 	m_pen.setWidth(borderWidth);

@@ -42,7 +42,7 @@ GroupItemBase::GroupItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIde
 	this->setCanFlipVertical(true);
 
 	this->setVisible(true);
-	this->setFlag(QGraphicsItem::ItemIsSelectable);
+	this->setFlag(QGraphicsItem::ItemIsSelectable, true);
 	this->setPos(viewGeometry.loc());
 }
 
@@ -72,6 +72,7 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 	}
 
 	item->setSelected(false);
+	item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 
     QTransform oldSceneMatrix = item->sceneTransform();
     item->setPos(mapFromItem(item, 0, 0));
