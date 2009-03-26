@@ -27,18 +27,18 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 
 #include "partseditorconnectorspaletteitem.h"
 #include "partseditorconnectorsconnectoritem.h"
-#include "partseditorconnectorsview.h"
+#include "partseditorview.h"
 #include "partseditorconnectorslayerkinpaletteitem.h"
 
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
 	setAcceptHoverEvents(true);
 }
 
-PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
+PartsEditorConnectorsPaletteItem::PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path)
 	: PartsEditorPaletteItem(owner, modelPart, viewIdentifier, path)
 {
 	m_showingTerminalPoints = owner->showingTerminalPoints();
@@ -62,7 +62,7 @@ void PartsEditorConnectorsPaletteItem::highlightConnsAux(ItemBase* item, const Q
 }
 
 bool PartsEditorConnectorsPaletteItem::isShowingTerminalPoints() {
-	return dynamic_cast<PartsEditorConnectorsView*>(m_owner)->showingTerminalPoints();
+	return dynamic_cast<PartsEditorView*>(m_owner)->showingTerminalPoints();
 }
 
 ConnectorItem* PartsEditorConnectorsPaletteItem::newConnectorItem(Connector *connector) {

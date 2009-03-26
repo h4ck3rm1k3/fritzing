@@ -34,12 +34,13 @@ $Date$
 #include "../svgandpartfilepath.h"
 
 class PartsEditorAbstractView;
+class PartsEditorView;
 
 class PartsEditorPaletteItem : public PaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
-		PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
+		PartsEditorPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
+		PartsEditorPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
 		~PartsEditorPaletteItem();
 
 		virtual void writeXml(QXmlStreamWriter &);
@@ -76,7 +77,7 @@ class PartsEditorPaletteItem : public PaletteItem {
 		SvgAndPartFilePath *m_svgStrings;
 		QList<Connector *> *m_connectors;
 
-		PartsEditorAbstractView *m_owner;
+		PartsEditorView *m_owner;
 		bool m_shouldDeletePath;
 };
 

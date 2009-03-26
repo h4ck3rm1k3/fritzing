@@ -32,11 +32,11 @@ $Date$
 #include "../fdockwidget.h"
 #include "../waitpushundostack.h"
 #include "editabletextwidget.h"
-#include "partseditorspecificationsview.h"
-#include "partsymbolswidget.h"
-#include "partspecificationswidget.h"
+#include "partseditorview.h"
+#include "partseditorviewswidget.h"
 #include "editabledatewidget.h"
 #include "hashpopulatewidget.h"
+#include "partspecificationswidget.h"
 #include "partconnectorswidget.h"
 #include "../palettemodel.h"
 #include "../sketchmodel.h"
@@ -148,7 +148,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 	setCentralWidget(frame);
 
     if(fromTemplate) {
-    	m_symbols->loadViewsImagesFromModel(m_paletteModel, m_sketchModel->root());
+    	m_views->loadViewsImagesFromModel(m_paletteModel, m_sketchModel->root());
     }
 
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
@@ -177,8 +177,8 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 
 	int iconViewSize = 50;
 	QGraphicsItem *startItem = modelPart? NULL: PartsEditorMainWindow::emptyViewItem("icon_icon.png",___emptyString___);
-	m_iconViewImage = new PartsEditorSpecificationsView(
-		ViewIdentifierClass::IconView, createTempFolderIfNecessary(), startItem, m_headerFrame, iconViewSize
+	m_iconViewImage = new PartsEditorView(
+		ViewIdentifierClass::IconView, createTempFolderIfNecessary(), false, false, startItem, m_headerFrame, iconViewSize
 	);
 	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);
 	m_iconViewImage->setObjectName("iconImage");
@@ -210,7 +210,9 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	m_centerFrame->setObjectName("center");
 
 	QList<QWidget*> specWidgets;
-	m_symbols = new PartSymbolsWidget(m_sketchModel, m_undoStack, this);
+
+	m_connsInfo = new ConnectorsInfoWidget(m_undoStack,this);
+	m_views = new PartsEditorViewsWidget(m_sketchModel, m_undoStack, m_connsInfo, this);
 
 	QString label = modelPart ? modelPart->modelPartShared()->label() : LabelFreshStartText;
 	m_label = new EditableLineWidget(label,m_undoStack,this,tr("Label"),modelPart);
@@ -258,46 +260,48 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 	m_createdByText = new QLabel(FooterText.arg(m_author->text()).arg(m_createdOn->text()));
 	m_createdByText->setObjectName("createdBy");
 
-	specWidgets << m_symbols << m_label << m_description /*<< m_taxonomy*/ << m_properties << m_tags << m_author << m_createdOn << m_createdByText;
+	specWidgets << m_label << m_description /*<< m_taxonomy*/ << m_properties << m_tags << m_author << m_createdOn << m_createdByText;
 
-	m_connsInfo = new ConnectorsInfoWidget(m_undoStack,this);
-	m_connsViews = new ConnectorsViewsWidget(m_symbols, m_sketchModel, m_undoStack, m_connsInfo, this);
-	m_connsInfo->setConnectorsView(m_connsViews);
+	m_connsInfo->setConnectorsView(m_views);
 
-	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_connsViews, SLOT(repaint()));
-	connect(m_connsInfo, SIGNAL(drawConnector(Connector*)), m_connsViews, SLOT(drawConnector(Connector*)));
+	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_views, SLOT(repaint()));
+	connect(m_connsInfo, SIGNAL(drawConnector(Connector*)), m_views, SLOT(drawConnector(Connector*)));
 	connect(
 		m_connsInfo, SIGNAL(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*)),
-		m_connsViews, SLOT(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*))
+		m_views, SLOT(drawConnector(ViewIdentifierClass::ViewIdentifier, Connector*))
 	);
 	connect(
 		m_connsInfo, SIGNAL(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString&, bool)),
-		m_connsViews, SLOT(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString&, bool))
+		m_views, SLOT(setMismatching(ViewIdentifierClass::ViewIdentifier, const QString&, bool))
 	);
 	connect(m_connsInfo, SIGNAL(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)),
-			m_connsViews, SLOT(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)));
-	connect(m_connsViews, SIGNAL(connectorSelectedInView(const QString&)),
+			m_views, SLOT(removeConnectorFrom(const QString&,ViewIdentifierClass::ViewIdentifier)));
+	connect(m_views, SIGNAL(connectorSelectedInView(const QString&)),
 			m_connsInfo, SLOT(connectorSelectedInView(const QString&)));
-	m_connsViews->showTerminalPointsCheckBox()->setChecked(false);
+	m_views->showTerminalPointsCheckBox()->setChecked(false);
 
 	connect(
-		m_symbols, SIGNAL(connectorsFound(QList<Connector*>)),
+		m_views, SIGNAL(connectorsFound(QList<Connector*>)),
 		m_connsInfo, SLOT(connectorsFound(QList<Connector*>))
 	);
 
 	m_tabWidget = new QTabWidget(m_centerFrame);
 	m_tabWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 	m_tabWidget->addTab(new PartSpecificationsWidget(specWidgets,this),tr("Specifications"));
-	m_tabWidget->addTab(new PartConnectorsWidget(m_connsViews, m_connsInfo,this),tr("Connectors"));
+	m_tabWidget->addTab(new PartConnectorsWidget(m_connsInfo,this),tr("Connectors"));
 
 	QGridLayout *tabLayout = new QGridLayout(m_tabWidget);
 	tabLayout->setMargin(0);
 	tabLayout->setSpacing(0);
 
+	QSplitter *splitter = new QSplitter(Qt::Vertical,this);
+	splitter->addWidget(m_views);
+	splitter->addWidget(m_tabWidget);
+
 	QGridLayout *mainLayout = new QGridLayout(m_centerFrame);
 	mainLayout->setMargin(0);
 	mainLayout->setSpacing(0);
-	mainLayout->addWidget(m_tabWidget,0,0,1,1);
+	mainLayout->addWidget(splitter,0,0,1,1);
 }
 
 void PartsEditorMainWindow::connectWidgetsToSave(const QList<QWidget*> &widgets) {
@@ -523,7 +527,7 @@ void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
     m_sketchModel->root()->setModelPartShared(modelPartShared());
 
 	QString fileNameAux = QFileInfo(fileName).fileName();
-	m_symbols->copySvgFilesToDestiny(fileNameAux);
+	m_views->copySvgFilesToDestiny(fileNameAux);
 	m_iconViewImage->copySvgFileToDestiny(fileNameAux);
 
 	m_sketchModel->save(fileName, true);
@@ -568,7 +572,7 @@ ModelPartShared* PartsEditorMainWindow::modelPartShared() {
 	shared->setTags(tags);
 	shared->setProperties(m_properties->hash());
 
-	m_connsViews->aboutToSave();
+	m_views->aboutToSave();
 	shared->setConnectorsShared(m_connsInfo->connectorsShared());
 
 	return shared;

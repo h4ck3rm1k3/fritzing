@@ -27,6 +27,7 @@ $Date$
 #include "saveasmoduledialog.h"
 #include "../sketchwidget.h"
 #include "../sketchmodel.h"
+#include "../connectoritem.h"
 #include "../zoomablegraphicsview.h"
 #include "../partseditor/partspecificationswidget.h"
 #include "../partseditor/partseditormainwindow.h"
@@ -63,8 +64,8 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 											"click again to make it unavailable for connecting.  "
 											"To make selection easier, use the mouse wheel to zoom in and out.</p>"
 											"<p>Don't forget to scroll down and fill out the description and other fields that describe your module.</p>"
-											"</body></html>"), 
-											
+											"</body></html>"),
+
 								this);
 	prompt->setWordWrap(true);
 
@@ -104,8 +105,8 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 
 	m_authorWidget = new EditableLineWidget(QString(getenvUser()), m_undoStack, this, tr("Author"),true);
 	//connect( m_authorWidget,SIGNAL(editionCompleted(QString)), this,SLOT(updateDateAndAuthor()));
-	
-	m_createdOnWidget = new EditableDateWidget( QDate::currentDate(), m_undoStack,this, tr("Created/Updated on"),true);	
+
+	m_createdOnWidget = new EditableDateWidget( QDate::currentDate(), m_undoStack,this, tr("Created/Updated on"),true);
 	//connect( m_createdOnWidget,SIGNAL(editionCompleted(QString)), this,SLOT(updateDateAndAuthor()));
 
 	//m_createdByTextWidget = new QLabel();
@@ -138,7 +139,7 @@ SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *par
 	mainLayout->addWidget(buttonBox);
 	this->setMinimumSize(QSize(400, 400));
 	this->setLayout(mainLayout);
-	
+
 }
 
 SaveAsModuleDialog::~SaveAsModuleDialog()
@@ -160,15 +161,15 @@ bool SaveAsModuleDialog::eventFilter(QObject *obj, QEvent *event)
 			return true;
 
 		case QEvent::KeyPress:
-		case QEvent::KeyRelease:			
+		case QEvent::KeyRelease:
 		case QEvent::MouseButtonPress:
-		case QEvent::MouseButtonRelease:			
+		case QEvent::MouseButtonRelease:
 		case QEvent::MouseButtonDblClick:
 		case QEvent::WinEventAct:
 		case QEvent::GraphicsSceneMouseDoubleClick:
 		case QEvent::GraphicsSceneMouseRelease:
 			return true;
-			
+
 		default:
 			//DebugDialog::debug(QString("got event %1").arg(event->type()));
 			break;

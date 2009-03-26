@@ -30,13 +30,13 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 
 #include "partseditorpaletteitem.h"
 
-class PartsEditorConnectorsView;
+class PartsEditorView;
 
 class PartsEditorConnectorsPaletteItem : public PartsEditorPaletteItem {
 	Q_OBJECT
 	public:
-		PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart *modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
-		PartsEditorConnectorsPaletteItem(PartsEditorConnectorsView *owner, ModelPart *modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
+		PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart *modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier);
+		PartsEditorConnectorsPaletteItem(PartsEditorView *owner, ModelPart *modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path);
 
 	public slots:
 		void highlightConnectors(const QString &connId);

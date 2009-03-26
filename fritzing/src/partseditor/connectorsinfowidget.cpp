@@ -32,7 +32,7 @@ $Date$
 
 #include "connectorsinfowidget.h"
 #include "addremoveconnectorbutton.h"
-#include "connectorsviewswidget.h"
+#include "partseditorviewswidget.h"
 #include "../debugdialog.h"
 #include "../fritzingwindow.h"
 
@@ -555,7 +555,7 @@ void ConnectorsInfoWidget::connectorSelectedInView(const QString &connId) {
 	setSelected(m_allConnsInfo[connId]);
 }
 
-void ConnectorsInfoWidget::setConnectorsView(ConnectorsViewsWidget* connsView) {
+void ConnectorsInfoWidget::setConnectorsView(PartsEditorViewsWidget* connsView) {
 	m_connsViews = connsView;
 }
 

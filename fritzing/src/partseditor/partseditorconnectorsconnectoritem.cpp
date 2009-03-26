@@ -26,7 +26,7 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 
 
 #include "partseditorconnectorsconnectoritem.h"
-#include "partseditorconnectorsview.h"
+#include "partseditorview.h"
 #include "../debugdialog.h"
 
 
@@ -255,7 +255,7 @@ QVariant PartsEditorConnectorsConnectorItem::itemChange(GraphicsItemChange chang
 
 void PartsEditorConnectorsConnectorItem::informChange() {
 	if(m_inFileDefined && !m_geometryHasChanged) {
-		PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
+		PartsEditorView *gv = dynamic_cast<PartsEditorView*>(scene()->parent());
 		if(gv) {
 			gv->inFileDefinedConnectorChanged(this);
 		}
@@ -269,7 +269,7 @@ QRectF PartsEditorConnectorsConnectorItem::mappedRect() {
 
 void PartsEditorConnectorsConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	highlight(connectorSharedID());
-	PartsEditorConnectorsView *gv = dynamic_cast<PartsEditorConnectorsView*>(scene()->parent());
+	PartsEditorView *gv = dynamic_cast<PartsEditorView*>(scene()->parent());
 	if(gv) {
 		gv->informConnectorSelectionFromView(connectorSharedID());
 	}

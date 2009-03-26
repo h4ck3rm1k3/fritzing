@@ -18,27 +18,46 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2676 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 
 ********************************************************************/
 
 
+#ifndef PARTSEDITORVIEW_H_
+#define PARTSEDITORVIEW_H_
 
-#ifndef PARTSEDITORCONNECTORSVIEW_H_
-#define PARTSEDITORCONNECTORSVIEW_H_
-
-#include "partseditorconnectoritem.h"
-#include "partseditorabstractview.h"
+#include "../sketchwidget.h"
+#include "../connectorshared.h"
+#include "partseditorpaletteitem.h"
 #include "partseditorconnectorspaletteitem.h"
 #include "partseditorconnectorsconnectoritem.h"
-#include "zoomcontrols.h"
 
-class PartsEditorConnectorsView: public PartsEditorAbstractView {
+
+class PartsEditorView : public SketchWidget {
 	Q_OBJECT
+
 	public:
-		PartsEditorConnectorsView(ViewIdentifierClass::ViewIdentifier, QDir tempDir, bool showingTerminalPoint, QWidget *parent=0, int size=150);
+		PartsEditorView(
+			ViewIdentifierClass::ViewIdentifier, QDir tempDir, bool deleteModelPartOnSceneClear,
+			bool showingTerminalPoints, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
+		~PartsEditorView();
+
+		// general
+		QDir tempFolder();
+		bool isEmpty();
+		ViewLayer::ViewLayerID connectorLayerId();
+		QString terminalIdForConnector(const QString &connId);
+
+		// specs
+		void loadSvgFile(ModelPart * modelPart);
+		void copySvgFileToDestiny(const QString &partFileName);
+
+		const QString svgFilePath();
+		const SvgAndPartFilePath& svgFileSplit();
+
+		// conns
 		void drawConector(Connector *conn, bool showTerminalPoint);
 		void removeConnector(const QString &connId);
 		void inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem);
@@ -50,22 +69,66 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		QString svgIdForConnector(const QString &connId);
 
 	public slots:
+		// general
+		void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
+		void addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath);
+
+		// specs
+		void loadFile();
+		void loadSvgFile(const QString& origPath);
+		void updateModelPart(const QString& origPath);
+
+		// conns
 		void informConnectorSelection(const QString& connId);
 		void informConnectorSelectionFromView(const QString& connId);
-		virtual void loadFromModel(PaletteModel *paletteModel, ModelPart * modelPart);
-		virtual void addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFilePath * svgFilePath);
 		void setMismatching(ViewIdentifierClass::ViewIdentifier viewId, const QString &id, bool mismatching);
 
 	signals:
+		// conns
 		void connectorsFound(ViewIdentifierClass::ViewIdentifier viewId, const QList<Connector*> &conns);
 		void svgFileLoadNeeded(const QString &filepath);
 		void connectorSelected(const QString& connId);
 
 	protected:
+		// general
 		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart);
 		PartsEditorPaletteItem *newPartsEditorPaletteItem(ModelPart * modelPart, SvgAndPartFilePath *path);
 
+		void setDefaultBackground();
+		void clearScene();
+		void fitCenterAndDeselect();
+		void removeConnectors();
+		void addDefaultLayers();
+
 		void wheelEvent(QWheelEvent* event);
+
+		ItemBase * addItemAux(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* paletteItem, bool doConnectors);
+
+		ModelPart *createFakeModelPart(SvgAndPartFilePath *svgpath);
+		ModelPart *createFakeModelPart(const QHash<QString,StringPair*> &connIds, const QStringList &layers, const QString &svgFilePath);
+
+		const QHash<QString,StringPair*> getConnectorIds(const QString &path);
+		void getConnectorIdsAux(QHash<QString,StringPair*> &retval, QDomElement &docElem);
+		const QStringList getLayers(const QString &path);
+
+		QString getOrCreateViewFolderInTemp();
+		bool ensureFilePath(const QString &filePath);
+
+		QString findConnectorLayerId(QDomDocument *svgDom);
+		bool findConnectorLayerIdAux(QString &result, QDomElement &docElem, QStringList &prevLayers);
+		bool terminalIdForConnectorIdAux(QString &result, const QString &connId, QDomElement &docElem);
+		QString getLayerFileName(ModelPart * modelPart);
+
+
+		// specs
+		void setSvgFilePath(const QString &filePath);
+		void copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePathOrig);
+		QString createSvgFromImage(const QString &filePath);
+
+		QString setFriendlierSvgFileName(const QString &partFileName);
+
+
+		// conns
 		void mousePressEvent(QMouseEvent *event);
 		void mouseMoveEvent(QMouseEvent *event);
 		void mouseReleaseEvent(QMouseEvent *event);
@@ -90,9 +153,15 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		bool addRectToSvgAux(QDomElement &docElem, const QString &connectorsLayerId, QDomElement &rectElem);
 
 		PartsEditorConnectorsPaletteItem *myItem();
-		QTransform m_prevTransform;
 
-		//ZoomControls *m_zoomControls;
+
+		PartsEditorPaletteItem *m_item; // just one item per view
+		QDir m_tempFolder;
+		bool m_deleteModelPartOnSceneClear;
+		QGraphicsItem *m_startItem;
+
+		SvgAndPartFilePath *m_svgFilePath;
+		QString m_originalSvgFilePath;
 
 		QList<PartsEditorConnectorsConnectorItem*> m_drawnConns;
 		QStringList m_removedConnIds;
@@ -105,5 +174,4 @@ class PartsEditorConnectorsView: public PartsEditorAbstractView {
 		static int ConnDefaultHeight;
 };
 
-#endif /* PARTSEDITORCONNECTORSVIEW_H_ */
-
+#endif /* PARTSEDITORVIEW_H_ */

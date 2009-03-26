@@ -33,15 +33,9 @@ $Date$
 #include "partconnectorswidget.h"
 #include "../utils/misc.h"
 
-PartConnectorsWidget::PartConnectorsWidget(QWidget* views, QWidget* info, QWidget *parent) : QFrame(parent) {
-	QSplitter *splitter = new QSplitter(Qt::Vertical,this);
-	splitter->addWidget(views);
-	splitter->addWidget(info);
-
+PartConnectorsWidget::PartConnectorsWidget(QWidget* info, QWidget *parent) : QFrame(parent) {
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	//layout->addWidget(views);
-	//layout->addWidget(info);
-	layout->addWidget(splitter);
+	layout->addWidget(info);
 	layout->setMargin(4);
 	layout->setSpacing(10);
 }

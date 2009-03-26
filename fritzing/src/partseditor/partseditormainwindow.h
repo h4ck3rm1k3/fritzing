@@ -29,11 +29,12 @@ $Date$
 #define PARTSEDITORMAINWINDOW_H_
 
 #include <QMainWindow>
+#include <QTabWidget>
 #include <QStackedWidget>
 #include <QtGui/qwidget.h>
 
 #include "../fritzingwindow.h"
-#include "connectorsviewswidget.h"
+#include "../modelpartshared.h"
 #include "connectorsinfowidget.h"
 #include "editablelinewidget.h"
 
@@ -100,9 +101,11 @@ protected:
 	class PaletteModel *m_paletteModel;
 	class SketchModel *m_sketchModel;
 
-	class PartsEditorSpecificationsView *m_iconViewImage;
+	class PartsEditorView *m_iconViewImage;
 	EditableLineWidget *m_title;
-	class PartSymbolsWidget *m_symbols;
+
+	class PartsEditorViewsWidget *m_views;
+
 	EditableLineWidget *m_label;
 	class EditableTextWidget *m_description;
 	//EditableLineWidget *m_taxonomy;
@@ -112,7 +115,6 @@ protected:
 	class EditableDateWidget *m_createdOn;
 	QLabel *m_createdByText;
 
-	ConnectorsViewsWidget *m_connsViews;
 	ConnectorsInfoWidget *m_connsInfo;
 
 	QString m_version;

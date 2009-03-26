@@ -31,7 +31,7 @@ $Date$
 
 #include "partseditorpaletteitem.h"
 #include "partseditorconnectoritem.h"
-#include "partseditorabstractview.h"
+#include "partseditorview.h"
 #include "partseditorlayerkinpaletteitem.h"
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
@@ -39,7 +39,7 @@ $Date$
 #include "../layerkinpaletteitem.h"
 
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL)
 {
 	m_owner = owner;
@@ -51,7 +51,7 @@ PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, M
 	m_shouldDeletePath = true;
 }
 
-PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorAbstractView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path) :
+PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, SvgAndPartFilePath *path) :
 	PaletteItem(modelPart, viewIdentifier, m_viewGeometry, ItemBase::getNextID(), NULL, false)
 {
 	m_owner = owner;

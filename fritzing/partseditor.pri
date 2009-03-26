@@ -28,21 +28,16 @@ HEADERS += \
     src/partseditor/editabledatewidget.h \
     src/partseditor/abstractconnectorinfowidget.h \
     src/partseditor/mismatchingconnectorwidget.h \
-    src/partseditor/partseditorabstractview.h \
-    src/partseditor/partseditorconnectorsview.h \
     src/partseditor/partseditorconnectoritem.h \
     src/partseditor/singleconnectorinfowidget.h \
     src/partseditor/partconnectorswidget.h \
-    src/partseditor/connectorsviewswidget.h \
     src/partseditor/connectorsinfowidget.h \
     src/partseditor/hashpopulatewidget.h \
     src/partseditor/editablelinewidget.h \
     src/partseditor/editabletextwidget.h \
     src/partseditor/abstracteditablelabelwidget.h \
     src/partseditor/partseditormainwindow.h \
-    src/partseditor/partsymbolswidget.h \
     src/partseditor/editablelabel.h \
-    src/partseditor/partseditorspecificationsview.h \
     src/partseditor/partspecificationswidget.h \
     src/partseditor/addremovelistwidget.h \
     src/partseditor/connectorswidget.h \
@@ -59,26 +54,23 @@ HEADERS += \
     src/partseditor/partseditorconnectorsconnectoritem.h \
     src/partseditor/partseditorlayerkinpaletteitem.h \
     src/partseditor/partseditorconnectorslayerkinpaletteitem.h \
+    src/partseditor/partseditorview.h \
+    src/partseditor/partseditorviewswidget.h
 
 SOURCES += \
     src/partseditor/editabledatewidget.cpp \
     src/partseditor/abstractconnectorinfowidget.cpp \
     src/partseditor/mismatchingconnectorwidget.cpp \
-    src/partseditor/partseditorabstractview.cpp \
-    src/partseditor/partseditorconnectorsview.cpp \
     src/partseditor/partseditorconnectoritem.cpp \
     src/partseditor/singleconnectorinfowidget.cpp \
     src/partseditor/partconnectorswidget.cpp \
-    src/partseditor/connectorsviewswidget.cpp \
     src/partseditor/connectorsinfowidget.cpp \
     src/partseditor/hashpopulatewidget.cpp \
     src/partseditor/editablelinewidget.cpp \
     src/partseditor/editabletextwidget.cpp \
     src/partseditor/abstracteditablelabelwidget.cpp \
     src/partseditor/partseditormainwindow.cpp \
-    src/partseditor/partsymbolswidget.cpp \
     src/partseditor/editablelabel.cpp \
-    src/partseditor/partseditorspecificationsview.cpp \
     src/partseditor/partspecificationswidget.cpp \
     src/partseditor/addremovelistwidget.cpp \
     src/partseditor/connectorswidget.cpp \
@@ -89,4 +81,7 @@ SOURCES += \
     src/partseditor/svgview.cpp \
     src/partseditor/zoomcontrols.cpp \
     src/partseditor/partseditorconnectorspaletteitem.cpp \
-    src/partseditor/partseditorconnectorsconnectoritem.cpp
+    src/partseditor/partseditorconnectorsconnectoritem.cpp \
+    src/partseditor/partseditorview.cpp \
+    src/partseditor/partseditorviewswidget.cpp
+    

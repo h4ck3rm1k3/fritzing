@@ -2,7 +2,6 @@ PartsEditorMainWindow QLabel {
 	font-family: LucidaGrande, LucidaSans, Tahoma, Arial, sans-serif;
 	font-size: 12px;
 	font-weight: bolder;
-	/*font-style: italic;*/
 }
 
 PartSpecificationsWidget {
@@ -24,7 +23,7 @@ PartConnectorsWidget {
 	background-color: #7F7F7F;
 }
 
-PartsEditorSpecificationsView {
+PartsEditorView {
 	border-radius: 5px;
 	background-color: #D8D8D8;
 }
@@ -64,15 +63,19 @@ SingleConnectorInfoWidget #description {
 	border: 0px;
 }
 
-PartSpecificationsWidget PartSymbolsWidget QLabel,
+PartSpecificationsWidget PartEditorViewsWidget QLabel,
 PartSpecificationsWidget AbstractEditableLabelWidget #title,
 PartSpecificationsWidget HashPopulateWidget QLabel,
 ConnectorsInfoWidget #title {
 	color: #52182C;
 }
 
+PartEditorViewsWidget {
+	
+}
+
 PartSpecificationsWidget HashPopulateWidget,
-PartSpecificationsWidget PartSymbolsWidget,
+PartSpecificationsWidget PartEditorViewsWidget,
 PartSpecificationsWidget AbstractEditableLabelWidget,
 ConnectorsInfoWidget {
  	background-color: #B2B2B2;
@@ -181,4 +184,21 @@ QTabBar::tab:!selected {
 #mismatchConnsFooter {
 	margin-top: 4px;
 	margin-left: 3px;
+}
+
+PartsEditorViewsWidget {
+	background-color: #7F7F7F;
+}
+
+#browseButton {
+	background-color: #d1d3d4;
+}
+
+#browseButton:pressed {
+	background-color: #d1d3d4;
+}
+
+#guidelinesLabel {
+	margin-top: 5px;
+	font-size: 11px;
 }

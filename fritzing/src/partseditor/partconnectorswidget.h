@@ -34,7 +34,7 @@ $Date$
 class PartConnectorsWidget : public QFrame {
 	Q_OBJECT
 	public:
-		PartConnectorsWidget(QWidget* views, QWidget* info, QWidget *parent=0);
+		PartConnectorsWidget(QWidget* info, QWidget *parent=0);
 };
 
 #endif /* PARTCONNECTORSWIDGET_H_ */
