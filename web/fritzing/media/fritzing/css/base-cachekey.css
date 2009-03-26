@@ -2416,6 +2416,7 @@ img {
 #portal-column-content {
 	position: static;
 	left: 0;
+	clear: left;
 	float: left;
 	padding: 15px 15px 10px 50px;
 	margin: 0;
