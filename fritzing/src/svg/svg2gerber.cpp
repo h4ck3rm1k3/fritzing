@@ -59,11 +59,47 @@ SVG2gerber::SVG2gerber(QString svgStr)
     out2 << m_SVGDom.toString();
 #endif
 
+    writeGerberHeader();
     allPaths2gerber();
+    writeGerberFooter();
 }
 
 QString SVG2gerber::getGerber(){
     return m_gerber;
+}
+
+void SVG2gerber::writeGerberHeader(){
+    // initialize axes
+    m_gerber = "%ASAXBY*%\n";
+
+    // NOTE: this currently forces a 1 mil grid
+    // format coordinates to drop leading zeros with 2,3 digits
+    m_gerber += "%FSLAX23Y23*%\n";
+
+    // set units to inches
+    m_gerber += "%MOIN*%\n";
+
+    // no offset
+    m_gerber += "%OFA0B0*%\n";
+
+    // scale factor 1x1
+    m_gerber += "%SFA1.0B1.0*%\n";
+
+    // TODO: aperture defs go here...
+
+    // label our layer
+    m_gerber += "%LNFRITZING*%\n";
+
+    //just to be safe: G90 (absolute coords) and G70 (inches)
+    m_gerber += "G90*\nG70*\n";
+}
+
+void SVG2gerber::writeGerberFooter(){
+    // comment to indicate end-of-sketch
+    m_gerber += "G04 End of Fritzing sketch*\n";
+
+    // write gerber end-of-program
+    m_gerber += "M02*";
 }
 
 void SVG2gerber::normalizeSVG(){
@@ -99,13 +135,15 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
             path = poly2path(element);
         }
         else if(tag=="rect"){
-            path = rect2path(element);
+            //path = rect2path(element);
+            path = element;
         }
         else if(tag=="circle"){
-            path = circle2path(element);
+            //path = circle2path(element);
+            path = element;
         }
         else if(tag=="line"){
-            path = line2path(element);
+            path = element;
         }
         else if(tag=="ellipse"){
             path = ellipse2path(element);
@@ -154,6 +192,11 @@ QMatrix SVG2gerber::parseTransform(QDomElement element){
 }
 
 void SVG2gerber::allPaths2gerber() {
+    // convert circles
+
+    // convert rects
+
+    // convert paths
 
 }
 
@@ -246,5 +289,7 @@ QDomElement SVG2gerber::ellipse2path(QDomElement ellipseElement){
 }
 
 QString SVG2gerber::path2gerber(QDomElement pathElement){
-    return QString("NOT IMPLEMENTED YET");
+    QString d;
+
+    return d;
 }

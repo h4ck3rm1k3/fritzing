@@ -70,17 +70,43 @@ void SvgFlattener::flattenChildren(QDomElement &element){
 }
 
 void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
-    // I'm a leaf node. (NOTE: assumes only paths)
+    // I'm a leaf node.
+    QString tag = element.nodeName().toLower();
+
+
     if(!element.hasChildNodes()) {
-        QString data = element.attribute("d");
-        if (!data.isEmpty()) {
-            const char * slot = SLOT(rotateCommandSlot(QChar, bool, QList<double> &, void *));
-            PathUserData pathUserData;
-            pathUserData.transform = transform;
-            if (parsePath(data, slot, pathUserData)) {
-                element.setAttribute("d", pathUserData.string);
+        if(tag == "path"){
+            QString data = element.attribute("d");
+            if (!data.isEmpty()) {
+                const char * slot = SLOT(rotateCommandSlot(QChar, bool, QList<double> &, void *));
+                PathUserData pathUserData;
+                pathUserData.transform = transform;
+                if (parsePath(data, slot, pathUserData)) {
+                    element.setAttribute("d", pathUserData.string);
+                }
             }
         }
+        else if(tag == "rect"){
+            // NOTE: this only works for 90/180/270 deg rotations
+            float x = element.attribute("x").toFloat();
+            float y = element.attribute("y").toFloat();
+            float width = element.attribute("width").toFloat();
+            float height = element.attribute("height").toFloat();
+            float cx = x + (width/2);
+            float cy = y + (height/2);
+            QPointF point = transform.map(QPointF(cx,cy));
+            element.setAttribute("x", point.x()-(width/2));
+            element.setAttribute("y", point.y()-(height/2));
+        }
+        else if(tag == "circle"){
+            float cx = element.attribute("cx").toFloat();
+            float cy = element.attribute("cy").toFloat();
+            QPointF point = transform.map(QPointF(cx,cy));
+            element.setAttribute("cx", point.x());
+            element.setAttribute("cy", point.y());
+        }
+        else
+            DebugDialog::debug("Warning! Can't rotate element: " + tag);
         return;
     }
 

@@ -43,7 +43,6 @@ protected:
     QString m_gerber;
 
     void normalizeSVG();
-    void allPaths2gerber();
     void convertShapes2paths(QDomNode);
     void flattenSVG(QDomNode);
     QMatrix parseTransform(QDomElement);
@@ -56,6 +55,9 @@ protected:
 
     void copyStyles(QDomElement, QDomElement);
 
+    void writeGerberHeader();
+    void writeGerberFooter();
+    void allPaths2gerber();
     QString path2gerber(QDomElement);
 
 };
