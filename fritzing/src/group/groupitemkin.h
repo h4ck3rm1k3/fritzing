@@ -41,6 +41,7 @@ public:
 	ItemBase * layerKinChief();
 	void setLayerKinChief(GroupItemBase *);
 	void resetID();
+	void clearModelPart();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);

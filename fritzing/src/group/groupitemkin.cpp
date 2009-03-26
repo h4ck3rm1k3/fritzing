@@ -32,6 +32,7 @@ $Date$
 GroupItemKin::GroupItemKin( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+    m_modelPart->removeViewItem(this);  // we don't need to save layerkin
 }
 
 ItemBase * GroupItemKin::layerKinChief() {
@@ -61,4 +62,8 @@ void GroupItemKin::resetID() {
 	long offset = m_id % ModelPart::indexMultiplier;
 	ItemBase::resetID();
 	m_id += offset;
+}
+
+void GroupItemKin::clearModelPart() {
+	m_layerKinChief->clearModelPart();
 }

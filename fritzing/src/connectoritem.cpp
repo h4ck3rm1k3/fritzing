@@ -73,6 +73,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 }
 
 ConnectorItem::~ConnectorItem() {
+	//DebugDialog::debug(QString("deleting connectorItem %1").arg((long) this, 0, 16));
 	for (int i = 0; i < m_connectedTo.count(); i++) {
 		m_connectedTo[i]->tempRemove(this, true);
 	}

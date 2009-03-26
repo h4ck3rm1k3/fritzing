@@ -761,6 +761,9 @@ void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool l
 	DebugDialog::debug(QString("delete item (1) %1 %2 %3").arg(id).arg(doEmit).arg(m_viewIdentifier) );
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
+		//if (pitem->itemType() == ModelPart::Module) {
+		//	m_sketchModel->walk(m_sketchModel->root(),0);
+		//}
 		if (restore != NULL) {
 			if (restore->modelPartTiny() == NULL) {
 				ModelPartTiny * mpt = m_sketchModel->makeTiny(pitem->modelPart());
@@ -773,6 +776,9 @@ void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool l
 
 void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
 {
+	long id = itemBase->id();
+	DebugDialog::debug(QString("delete item (2) %1 %2 %3").arg(id).arg(itemBase->title()).arg(m_viewIdentifier) );
+
 	if (m_infoView != NULL) {
 		m_infoView->unregisterCurrentItemIf(itemBase->id());
 	}
@@ -782,16 +788,15 @@ void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool do
 	m_lastSelected.removeOne(itemBase);
 	removeIfFixedPos(itemBase);
 
-	long id = itemBase->id();
-	itemBase->removeLayerKin();
-	this->scene()->removeItem(itemBase);
-	DebugDialog::debug(QString("delete item (2) %1 %2 %3").arg(id).arg(itemBase->title()).arg(m_viewIdentifier) );
 
 	if (deleteModelPart) {
 		ModelPart * modelPart = itemBase->modelPart();
 		m_sketchModel->removeModelPart(modelPart);
 		delete modelPart;
 	}
+
+	itemBase->removeLayerKin();
+	this->scene()->removeItem(itemBase);
 
 	if (later) {
 		itemBase->deleteLater();

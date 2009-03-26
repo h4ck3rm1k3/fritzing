@@ -144,7 +144,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 }
 
 ItemBase::~ItemBase() {
-	//DebugDialog::debug(QString("deleting %1").arg(m_id));
+	//DebugDialog::debug(QString("deleting itembase %1 %2 %3").arg((long) this, 0, 16).arg(m_id).arg((long) m_modelPart, 0, 16));
 	if (m_partLabel) {
 		delete m_partLabel;
 		m_partLabel = NULL;

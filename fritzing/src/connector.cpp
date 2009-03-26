@@ -44,6 +44,7 @@ Connector::Connector( ConnectorShared * connectorShared, ModelPart * modelPart)
 }
 
 Connector::~Connector() {
+	//DebugDialog::debug(QString("deleting connector %1 %2").arg((long) this, 0, 16).arg(connectorSharedID()));
 	foreach (ConnectorItem * connectorItem, m_connectorItems) {
 		connectorItem->clearConnector();
 	}

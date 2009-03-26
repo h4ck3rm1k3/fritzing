@@ -44,6 +44,7 @@ public:
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void removeLayerKin();
 	void resetID();
+	void clearModelPart();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

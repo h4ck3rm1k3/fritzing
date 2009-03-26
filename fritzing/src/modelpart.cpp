@@ -70,6 +70,7 @@ ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType 
 }
 
 ModelPart::~ModelPart() {
+	//DebugDialog::debug(QString("deleting modelpart %1 %2").arg((long) this, 0, 16).arg(m_index));
 	foreach (ItemBase * itemBase, m_viewItems) {
 		itemBase->clearModelPart();
 	}

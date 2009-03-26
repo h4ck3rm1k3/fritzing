@@ -196,7 +196,7 @@ void GroupItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
 void GroupItem::removeLayerKin() {
 	// assumes item is still in scene
 	for (int i = 0; i < m_layerKin.size(); i++) {
-		DebugDialog::debug(QString("removing group kin %1 %2").arg(m_layerKin[i]->id()).arg(m_layerKin[i]->z()));
+		//DebugDialog::debug(QString("removing group kin %1 %2").arg(m_layerKin[i]->id()).arg(m_layerKin[i]->z()));
 		this->scene()->removeItem(m_layerKin[i]);
 		delete m_layerKin[i];
 	}
@@ -204,6 +204,12 @@ void GroupItem::removeLayerKin() {
 	m_layerKin.clear();
 }
 
+void GroupItem::clearModelPart() {
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->setModelPart(NULL);
+	}
+	ItemBase::clearModelPart();
+}
 
 void GroupItem::resetID() {
 	ItemBase::resetID();
