@@ -46,22 +46,20 @@ QBitmap * ViewSwitcher::m_mask = NULL;
 
 static const int extraWidth = 8;
 
-ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment, int index, ViewSwitcher *parent) 
-: QWidget(parent)
+ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment, int index, ViewSwitcher *parent) : QLabel(parent)
 {
+	QPixmap * pixmap = NULL;
 	m_focus = false;
 	m_active = false;
 	m_hover = false;
 	m_index = index;
 	m_resourcePath = ResourcePathPattern.arg(view);
 	m_parent = parent;
-	m_pixmap = NULL;
 
 	QFont font = this->font();
 	font.setPointSize(pointSize);
 	this->setFont(font);
-	this->setVisible(true);
-
+	
 	QList<QString> actives;
 	actives << "Active" << "Inactive";
 	QList<QString> focuses;
@@ -173,33 +171,15 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				painter.end();
 
 				Pixmaps.insert(name, buttonPixmap);
-				m_pixmap = buttonPixmap;
+				pixmap = buttonPixmap;
 			}
 		}
 	}
-}
 
-QSize ViewSwitcherButton::minimumSizeHint() const
-{
-	if (m_pixmap) {
-		return m_pixmap->size();
+	if (pixmap) {
+		setPixmap(*pixmap);
+		setFixedSize(pixmap->size());
 	}
-    
-	return QSize(10,10);
-}
-
-QSize ViewSwitcherButton::sizeHint() const
-{
-    return minimumSizeHint();
-}
-
-void ViewSwitcherButton::paintEvent(QPaintEvent * event) 
-{
-	if (m_pixmap) {
-   		QPainter painter(this);
-		painter.drawPixmap(0, 0, *m_pixmap);
-	}
-	QWidget::paintEvent(event);
 }
 
 void ViewSwitcherButton::setFocus(bool focus) {
@@ -210,7 +190,7 @@ void ViewSwitcherButton::setFocus(bool focus) {
 void ViewSwitcherButton::setActive(bool active) {
 	m_active = active;
 	updateImage();
-}
+} 
 
 void ViewSwitcherButton::setHover(bool hover) {
 	m_hover = hover;
@@ -227,31 +207,23 @@ void ViewSwitcherButton::updateImage() {
 	QString hoverText = m_hover ? "Hover" : "";
 	QPixmap * pixmap = Pixmaps.value(m_resourcePath.arg(activeText+focusText+hoverText));
 	if (pixmap != NULL) {
-		setPixmap(pixmap);
+		setPixmap(*pixmap);
 	}
-}
-
-void ViewSwitcherButton::setPixmap(QPixmap * pixmap) {
-	m_pixmap = pixmap;
-	if (m_pixmap->size() != this->size()) {
-		this->resize(m_pixmap->size());
-	}
-	this->repaint();
 }
 
 void ViewSwitcherButton::mousePressEvent(QMouseEvent *event) {
 	emit clicked(this);
-	QWidget::mousePressEvent(event);
+	QLabel::mousePressEvent(event);
 }
 
 void ViewSwitcherButton::enterEvent(QEvent *event) {
 	m_parent->updateHoverState(this);
-	QWidget::enterEvent(event);
+	QLabel::enterEvent(event);
 }
 
 void ViewSwitcherButton::leaveEvent(QEvent *event) {
 	m_parent->updateHoverState();
-	QWidget::leaveEvent(event);
+	QLabel::leaveEvent(event);
 }
 
 void ViewSwitcherButton::cleanup()
