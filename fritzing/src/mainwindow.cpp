@@ -1359,6 +1359,23 @@ void MainWindow::enableCheckUpdates(bool enabled)
 	m_checkForUpdatesAct->setEnabled(enabled);
 }
 
+void MainWindow::editModule() {
+	ItemBase * itemBase = NULL;
+	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
+	if (items.count() == 1) {
+		ItemBase * item = dynamic_cast<ItemBase *>(items[0]);
+		if (item != NULL) {
+			itemBase = (item->itemType() == ModelPart::Module) ? item : NULL;
+		}
+	}
+
+	if (itemBase == NULL) return;
+
+    MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
+	mw->loadWhich(itemBase->modelPartShared()->path(), false, false);
+	closeIfEmptySketch(mw);
+}
+
 void MainWindow::saveAsModule() {
 
 	if (!m_pcbGraphicsView->ratsAllRouted()) {

@@ -61,7 +61,7 @@ public:
     MainWindow(QFile & fileToLoad);
 	~MainWindow();
 
-    void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
+    void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true, bool doExternals = false);
 	bool loadWhich(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
@@ -184,6 +184,7 @@ protected slots:
 	void loadBundledPart();
 	void loadBundledPartFromWeb();
 	void saveAsModule();
+	void editModule();
 
 	void binSaved(bool hasAlienParts);
 	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
@@ -354,6 +355,7 @@ protected:
 	QAction *m_printAct;
 	QAction *m_saveAsBundledAct;
 	QAction *m_saveAsModuleAct;
+	QAction *m_editModuleAct;
 
 	// Export Menu
 	QMenu *m_exportMenu;

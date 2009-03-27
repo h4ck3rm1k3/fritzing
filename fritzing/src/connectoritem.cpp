@@ -69,7 +69,7 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 
 	//DebugDialog::debug(QString("%1 attached to %2")
 			//.arg(this->connector()->connectorShared()->id())
-			//.arg(attachedTo->modelPart()->modelPartShared()->title()) );
+			//.arg(attachedTo->modelPartShared()->title()) );
 }
 
 ConnectorItem::~ConnectorItem() {
@@ -150,7 +150,7 @@ void ConnectorItem::connectTo(ConnectorItem * connected) {
 	if (m_connectedTo.contains(connected)) return;
 
 	m_connectedTo.append(connected);
-	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPart()->modelPartShared()->title()).arg(m_connectedTo.count()) );
+	//DebugDialog::debug(QString("connect to cc:%4 this:%1 to:%2 %3").arg((long) this, 0, 16).arg((long) connected, 0, 16).arg(connected->attachedTo()->modelPartShared()->title()).arg(m_connectedTo.count()) );
 	restoreColor();
 	if (m_attachedTo != NULL) {
 		m_attachedTo->connectionChange(this);
@@ -263,7 +263,7 @@ ConnectorItem * ConnectorItem::removeConnection(ItemBase * itemBase) {
 			restoreColor();
 			DebugDialog::debug(QString("remove from:%1 to:%2 count%3")
 				.arg((long) this, 0, 16)
-				.arg(itemBase->modelPart()->modelPartShared()->title())
+				.arg(itemBase->modelPartShared()->title())
 				.arg(m_connectedTo.count()) );
 			updateTooltip();
 			return removed;

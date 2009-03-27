@@ -520,7 +520,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 {
 	bool result = false;
     if(fileName.endsWith(FritzingSketchExtension)) {
-    	load(fileName, setAsLastOpened, addToRecent);
+    	load(fileName, setAsLastOpened, addToRecent, false);
 		result = true;
     } else if(fileName.endsWith(FritzingBundleExtension)) {
     	loadBundledSketch(fileName);
@@ -531,7 +531,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 	} else if (fileName.endsWith(FritzingPartExtension)) {
 		notYetImplemented(tr("directly loading parts"));
 	} else if (fileName.endsWith(FritzingModuleExtension)) {
-		notYetImplemented(tr("directly loading module"));
+		load(fileName, false, false, true);
 	}  else if (fileName.endsWith(FritzingBundledPartExtension)) {
 		loadBundledPart(fileName);
 		result = true;
@@ -544,7 +544,7 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 	return result;
 }
 
-void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
+void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent, bool doExternals) {
 	this->show();
 	showAllFirstTimeHelp(false);
 
@@ -722,9 +722,12 @@ void MainWindow::createFileMenuActions() {
 	connect(m_saveAsBundledAct, SIGNAL(triggered()), this, SLOT(saveBundledSketch()));
 
 	m_saveAsModuleAct = new QAction(tr("Save As Module..."), this);
-	m_saveAsModuleAct->setShortcut(tr("Alt+Ctrl+G"));
 	m_saveAsModuleAct->setStatusTip(tr("Export current sketch as a standalone module"));
 	connect(m_saveAsModuleAct, SIGNAL(triggered()), this, SLOT(saveAsModule()));
+
+	m_editModuleAct = new QAction(tr("Open Module as Sketch"), this);
+	m_editModuleAct->setStatusTip(tr("Open selected module as a sketch (for editing)"));
+	connect(m_editModuleAct, SIGNAL(triggered()), this, SLOT(editModule()));
 
 	m_exportJpgAct = new QAction(tr("to &JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
@@ -839,6 +842,17 @@ void MainWindow::updateFileMenu() {
 		}
 	}
 	m_saveAsModuleAct->setEnabled(enabled);
+
+	enabled = false;
+	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
+	if (items.count() == 1) {
+		ItemBase * item = dynamic_cast<ItemBase *>(items[0]);
+		if (item != NULL) {
+			enabled = (item->itemType() == ModelPart::Module);
+		}
+	}
+
+	m_editModuleAct->setEnabled(enabled);
 }
 
 void MainWindow::updateRecentFileActions() {
@@ -1148,6 +1162,7 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_saveAsBundledAct);
 #ifndef QT_NO_DEBUG
     m_fileMenu->addAction(m_saveAsModuleAct);
+    m_fileMenu->addAction(m_editModuleAct);
 #endif
     m_fileMenu->addSeparator();
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));

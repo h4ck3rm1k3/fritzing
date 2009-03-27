@@ -33,6 +33,12 @@ $Date$
 #include <QTimer>
 #include <QSet>
 
+/////////////////////////////////////////
+
+static QBrush GroupBrush(QColor(255, 0, 0));
+
+/////////////////////////////////////////
+
 GroupItemBase::GroupItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: ItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
@@ -71,7 +77,8 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 		connectorItem->setIgnoreAncestorFlagIfExternal(true);
 	}
 
-	item->setSelected(false);
+	item->setSelected(false);				// elements inside group can't be individually selected
+	item->setSticky(false);					// elements inside group can't be sticky
 	item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 
     QTransform oldSceneMatrix = item->sceneTransform();
@@ -143,6 +150,10 @@ void GroupItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 		// draw this first because otherwise it seems to draw a dashed line down the middle
         qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
     }
+	painter->save();
+	painter->setOpacity(0.1);
+	painter->fillRect(boundingRect(), GroupBrush);
+	painter->restore();
 	ItemBase::paint(painter, option, widget);
 }
 

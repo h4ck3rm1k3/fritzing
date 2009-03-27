@@ -30,17 +30,20 @@ $Date$
 //		** drag doesn't keep wire connections
 //		connect within
 //		** ignore submodule external connections
+//	breadboard or arduino in module
 //  female connectors in modules
 //		connect female connectees
 //  ** how to hide non-external connectors
 //  ** trace wires
 //	** ratsnest wires
-//  ratsnest behavior: what if module contains separated parts (tough)
-//  autorouting behavior
+//  drag onto breadboard behavior
+//  ** ratsnest behavior: what if module contains separated parts (tough)
+//  ** autorouting behavior
 //	export with groups
 //	** recursive groups
 //		** recursive modelpart ownership
-//	open in new sketch (edit)
+//	** open in new sketch (edit)
+//		need to preserve external connectors
 //	** copy/paste
 //  ** undo copy/paste
 //	undo group
@@ -49,7 +52,8 @@ $Date$
 //	rotate group bug: connected external wires don't updateConnections
 //  ** bug: not connecting across views
 //  bug: after undo, updateconnections not being called
-//  bug: drag out selection so that internal parts are selected, then copy/paste 
+//  ** bug: drag out selection so that internal parts are selected, then copy/paste 
+//  sticky
 
 //	** do model parts for grouped items get added as children to the group modelpart?
 //  ** save sketch with group(s)
