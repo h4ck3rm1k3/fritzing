@@ -36,7 +36,7 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 
 class ViewSwitcher;
 
-class ViewSwitcherButton : public QLabel {
+class ViewSwitcherButton : public QWidget {
 	Q_OBJECT
 
 	public:
@@ -45,6 +45,8 @@ class ViewSwitcherButton : public QLabel {
 		void setActive(bool selected);
 		void setHover(bool hover);
 		int index();
+		QSize minimumSizeHint() const;
+		QSize sizeHint() const;
 
 		static void cleanup();
 
@@ -56,6 +58,8 @@ class ViewSwitcherButton : public QLabel {
 		void leaveEvent(QEvent *event);
 		void mousePressEvent(QMouseEvent *event);
 		void updateImage();
+		void paintEvent ( QPaintEvent * event );
+		void setPixmap(QPixmap *);
 
 	protected:
 		bool m_focus;
@@ -64,6 +68,7 @@ class ViewSwitcherButton : public QLabel {
 		int m_index;
 		QString m_resourcePath;
 		ViewSwitcher *m_parent;
+		QPixmap* m_pixmap;
 
 	protected:
 		static QString ResourcePathPattern;
