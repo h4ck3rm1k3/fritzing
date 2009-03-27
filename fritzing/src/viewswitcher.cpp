@@ -173,6 +173,7 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				painter.end();
 
 				Pixmaps.insert(name, buttonPixmap);
+				m_pixmap = buttonPixmap;
 			}
 		}
 	}
@@ -180,7 +181,9 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 
 QSize ViewSwitcherButton::minimumSizeHint() const
 {
-	if (m_pixmap) return m_pixmap->size();
+	if (m_pixmap) {
+		return m_pixmap->size();
+	}
     
 	return QSize(10,10);
 }
