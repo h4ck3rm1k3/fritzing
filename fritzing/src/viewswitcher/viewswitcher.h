@@ -78,6 +78,7 @@ class ViewSwitcher : public QFrame {
 
 		const QBitmap * getMask();
 		void connectClose(QObject * target, const char* slot);
+		QRect buttonHolderGeometry();
 
 		static void cleanup();
 
@@ -94,6 +95,7 @@ class ViewSwitcher : public QFrame {
 	protected:
 		void enterEvent(QEvent *event);
 		void leaveEvent(QEvent *event);
+		void resizeEvent(QResizeEvent * event);
 
 		ViewSwitcherButton *createButton(const QString &view, const QString &text, int maxWidth, Qt::Alignment);
 		void createMask();
@@ -103,6 +105,7 @@ class ViewSwitcher : public QFrame {
 		QList<ViewSwitcherButton*> m_buttons;
 		static QBitmap * m_mask;
 		class SketchMainHelpCloseButton * m_closeButton;
+		QWidget * m_buttonHolder;
 };
 
 /*

@@ -46,6 +46,8 @@ ViewSwitcherDockWidget::ViewSwitcherDockWidget(const QString & title, QWidget * 
 	m_viewSwitcher = NULL;
 	m_within = true;
 
+	connect(this, SIGNAL(topLevelChanged(bool)), this, SLOT(topLevelChangedSlot(bool)));
+
 	bool floatFlag = true;
 	QPoint initial(10,50);
 
@@ -126,11 +128,18 @@ void ViewSwitcherDockWidget::setViewSwitcher(ViewSwitcher * viewSwitcher)
 {
 	m_viewSwitcher = viewSwitcher;
 	setTitleBarWidget(viewSwitcher);
+	topLevelChangedSlot(isFloating());
 }
 
 void ViewSwitcherDockWidget::resizeEvent(QResizeEvent * event)
 {
 	FDockWidget::resizeEvent(event);
+
+	/*
+	if (!isFloating()) {
+		this->clearMask();
+		return;
+	}
 
 	if (m_viewSwitcher == NULL) return;
 
@@ -148,10 +157,33 @@ void ViewSwitcherDockWidget::resizeEvent(QResizeEvent * event)
 	painter.drawPixmap(p, *mask);
 	painter.end();
 
-	this->setMask(*bitmap);
+	//this->setMask(*bitmap);
 	if (m_bitmap) delete m_bitmap;
 	m_bitmap = bitmap;
+*/
+}
 
+void ViewSwitcherDockWidget::topLevelChangedSlot(bool topLevel) {
+	if (m_viewSwitcher == NULL) return;
+
+	if (!topLevel) {
+		this->clearMask();
+		return;
+	}
+
+	this->setStyleSheet("border: 0px; margin: 0px; padding: 0px; border-radius: 0px; spacing: 0px;");
+	QRect r = this->geometry();
+	const QBitmap * mask = m_viewSwitcher->getMask();
+	QSize vssz = mask->size();
+	QSize sz = size();
+	this->setMinimumSize(vssz);
+	DebugDialog::debug(QString("mask size %1 %2").arg(vssz.width()).arg(vssz.height()));
+	r.setRect(r.left() + ((sz.width() - vssz.width()) / 2), 
+				r.top() + ((sz.height() - vssz.height()) / 2), 
+				vssz.width(), 
+				vssz.height());
+	this->setGeometry(r);
+	this->setMask(*mask);
 }
 
 /*

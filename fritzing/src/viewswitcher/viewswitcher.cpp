@@ -46,7 +46,8 @@ QBitmap * ViewSwitcher::m_mask = NULL;
 
 static const int extraWidth = 8;
 
-ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment, int index, ViewSwitcher *parent) : QLabel(parent)
+ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment, int index, ViewSwitcher *parent)
+	: QLabel(parent)
 {
 	QPixmap * pixmap = NULL;
 	m_focus = false;
@@ -268,11 +269,25 @@ ViewSwitcher::ViewSwitcher() : QFrame()
 	if (w > maxWidth) maxWidth = w;
 	maxWidth += extraWidth;
 
-	m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	m_buttons << createButton("Breadboard", tr("Breadboard"), maxWidth, Qt::AlignLeft);
 	m_buttons << createButton("Schematic", tr("Schematic"), maxWidth, Qt::AlignCenter);
 	m_buttons << createButton("PCB", tr("PCB"), maxWidth, Qt::AlignRight);
-	m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+
+	m_buttonHolder = new QWidget();
+	int bw = 0;
+	int bh = 0;
+	foreach (QWidget * b, m_buttons) {
+		QSize sz = b->size();
+		b->setParent(m_buttonHolder);
+		b->setGeometry(bw, 0, sz.width(), sz.height());		
+		bw += sz.width();
+		bh = sz.height();
+	}
+	m_buttonHolder->setFixedSize(bw, bh);
+
+	//m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	m_layout->addWidget(m_buttonHolder);
+	//m_layout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 
 #ifndef QT_NO_DEBUG
 	//foreach (ViewSwitcherButton * b, m_buttons) {
@@ -295,7 +310,6 @@ void ViewSwitcher::cleanup() {
 ViewSwitcherButton *ViewSwitcher::createButton(const QString &view, const QString & text, int maxWidth, Qt::Alignment alignment) {
 	ViewSwitcherButton *btn = new ViewSwitcherButton(view, text, maxWidth, alignment, m_buttons.size(), this);
 	connect(btn, SIGNAL(clicked(ViewSwitcherButton*)), this, SLOT(updateState(ViewSwitcherButton*)));
-	m_layout->addWidget(btn);
 	return btn;
 }
 
@@ -336,7 +350,7 @@ void ViewSwitcher::createMask()
 {
 	if (m_mask != NULL) return;
 
-	setStyleSheet("ViewSwitcher {border: 0px; background-color: rgb(0,255,255); margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
+	setStyleSheet("ViewSwitcher {border: 0px; background-color: rgb(0,255,255); margin: 0px; } ViewSwitcherButton {	margin: 0px;}");
 
 	QSize size = this->size();
 	//DebugDialog::debug(QString("vs size %1 %2").arg(size.width()).arg(size.height()));
@@ -366,7 +380,7 @@ void ViewSwitcher::createMask()
 
 	}
 
-	setStyleSheet("ViewSwitcher {border: 0px; background-color: transparent; margin-top: 0px; margin-left: 0px; } ViewSwitcherButton {	margin: 0px;}");
+	setStyleSheet("ViewSwitcher {border: 0px; background-color: transparent; margin: 0px; } ViewSwitcherButton {	margin: 0px;}");
 	
 	m_mask = new QBitmap(QBitmap::fromImage(bImage));
 }
@@ -386,6 +400,21 @@ void ViewSwitcher::connectClose(QObject * target, const char* slot) {
 	//if (m_closeButton) {
 		//connect(m_closeButton, SIGNAL(clicked()), target, slot);
 	//}
+}
+
+QRect ViewSwitcher::buttonHolderGeometry() {
+	if (!m_buttonHolder) return QRect();
+
+	return m_buttonHolder->geometry();
+}
+
+void ViewSwitcher::resizeEvent(QResizeEvent * event)
+{
+	DebugDialog::debug(QString("viewswitcher resize %1 %2 %3 %4")
+		.arg(event->size().width()).arg(event->size().height())
+		.arg(parentWidget()->size().width()).arg(parentWidget()->size().height())
+		);
+	QFrame::resizeEvent(event);
 }
 
 /////////////////////////////////////////

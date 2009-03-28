@@ -43,6 +43,7 @@ public:
 
 public slots:
 	void windowMoved(QWidget *);
+	void topLevelChangedSlot(bool topLevel);
 
 protected:
 	void calcWithin();
