@@ -72,8 +72,6 @@ HEADERS += \
     src/viewgeometry.h \
     src/viewidentifierclass.h \
     src/viewlayer.h \
-    src/viewswitcher.h \
-    src/viewswitcherdockwidget.h \
     src/virtualwire.h \
     src/waitpushundostack.h \
     src/wire.h \
@@ -132,8 +130,6 @@ SOURCES += \
     src/viewgeometry.cpp \
     src/viewidentifierclass.cpp \
     src/viewlayer.cpp \
-    src/viewswitcher.cpp \
-    src/viewswitcherdockwidget.cpp \
     src/virtualwire.cpp \
     src/waitpushundostack.cpp \
     src/wire.cpp \

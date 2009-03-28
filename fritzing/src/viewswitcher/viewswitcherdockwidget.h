@@ -18,31 +18,49 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision: 2631 $:
-$Author: zeveland $:
-$Date: 2009-03-13 17:02:11 -0400 (Fri, 13 Mar 2009) $
+$Revision: 2136 $:
+$Author: merunga $:
+$Date: 2009-01-09 18:26:29 +0100 (Fri, 09 Jan 2009) $
 
 ********************************************************************/
 
-#ifndef FRITZING2EAGLE_H
-#define FRITZING2EAGLE_H
 
-#include <QWidget>
-#include <QTime>
+#ifndef VIEWSWITCHERDOCKWIDGET_H
+#define VIEWSWITCHERDOCKWIDGET_H
 
-class Fritzing2Eagle {
-//	Q_OBJECT
+#include "../fdockwidget.h"
+
+
+class ViewSwitcherDockWidget : public FDockWidget
+{
+    Q_OBJECT
 
 public:
-	Fritzing2Eagle(PCBSketchWidget *m_pcbGraphicsView);
-
-/*
-public:
-	static void showOutputInfo(PCBSketchWidget m_pcbGraphicsView);
-*/
+    ViewSwitcherDockWidget(const QString & title, QWidget * parent = 0);
+	~ViewSwitcherDockWidget();
 	
+	void setViewSwitcher(class ViewSwitcher *);
+
+public slots:
+	void windowMoved(QWidget *);
+
 protected:
-	static Fritzing2Eagle* singleton;
+	void calcWithin();
+	//void enterEvent(QEvent *event);
+	//void leaveEvent(QEvent *event);
+	bool event(QEvent *event);
+	void resizeEvent(QResizeEvent * event);
+
+
+protected:
+	//int m_viewIndex;
+	class ViewSwitcher * m_viewSwitcher;
+	QPoint m_offsetFromParent;
+	bool m_within;
+	QBitmap * m_bitmap;
+
+protected slots:
+	//void viewSwitched(int);
 };
 
 #endif

@@ -28,7 +28,7 @@ $Date: 2009-01-09 18:26:29 +0100 (Fri, 09 Jan 2009) $
 #include <QPainter>
 
 #include "viewswitcherdockwidget.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 #include "viewswitcher.h"
 
 #ifdef Q_WS_WIN

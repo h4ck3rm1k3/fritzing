@@ -65,7 +65,7 @@ $Date$
 #include "fsvgrenderer.h"
 #include "fsizegrip.h"
 #include "expandinglabel.h"
-#include "viewswitcher.h"
+#include "viewswitcher/viewswitcher.h"
 
 #include "utils/autoclosemessagebox.h"
 

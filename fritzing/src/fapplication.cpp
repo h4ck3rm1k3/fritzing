@@ -38,7 +38,7 @@ $Date$
 #include "version/versionchecker.h"
 #include "version/updatedialog.h"
 #include "itemdrag.h"
-#include "viewswitcher.h"
+#include "viewswitcher/viewswitcher.h"
 #include "wire.h"
 #include "htmlinfoview.h"
 

@@ -55,19 +55,20 @@ QT += core \
     sql
 RC_FILE = fritzing.rc
 RESOURCES += phoenixresources.qrc
-include(kitchensink.pri)
-include(quazip.pri)
-include(partsbinpalette.pri)
-include(partseditor.pri)
-include(referencemodel.pri)
-include(svg.pri)
-include(help.pri)
-include(labels.pri)
-include(itemselection.pri)
-include(version.pri)
-include(group.pri)
-include(eagle.pri)
-include(utils.pri)
+include(pri/kitchensink.pri)
+include(pri/quazip.pri)
+include(pri/partsbinpalette.pri)
+include(pri/partseditor.pri)
+include(pri/referencemodel.pri)
+include(pri/svg.pri)
+include(pri/help.pri)
+include(pri/labels.pri)
+include(pri/itemselection.pri)
+include(pri/version.pri)
+include(pri/group.pri)
+include(pri/eagle.pri)
+include(pri/utils.pri)
+include(pri/viewswitcher.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

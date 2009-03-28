@@ -30,7 +30,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #include "dockmanager.h"
 #include "triplenavigator.h"
 #include "fsizegrip.h"
-#include "viewswitcherdockwidget.h"
+#include "viewswitcher/viewswitcherdockwidget.h"
 #include "utils/misc.h"
 #include "partsbinpalette/partsbinpalettewidget.h"
 #include "htmlinfoview.h"

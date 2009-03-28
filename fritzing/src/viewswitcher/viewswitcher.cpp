@@ -31,8 +31,8 @@ $Date: 2008-11-13 13:10:48 +0100 (Thu, 13 Nov 2008) $
 #include <QPainter>
 
 #include "viewswitcher.h"
-#include "debugdialog.h"
-#include "help/sketchmainhelp.h"
+#include "../debugdialog.h"
+//#include "../help/sketchmainhelp.h"
 
 QHash<QString, QPixmap *> ViewSwitcherButton::Pixmaps;
 QString ViewSwitcherButton::ResourcePathPattern = (":/resources/images/icons/segmentedSwitcher%1%2.png");
@@ -381,9 +381,11 @@ const QBitmap * ViewSwitcher::getMask() {
 }
 
 void ViewSwitcher::connectClose(QObject * target, const char* slot) {
-	if (m_closeButton) {
-		connect(m_closeButton, SIGNAL(clicked()), target, slot);
-	}
+	Q_UNUSED(target);
+	Q_UNUSED(slot);
+	//if (m_closeButton) {
+		//connect(m_closeButton, SIGNAL(clicked()), target, slot);
+	//}
 }
 
 /////////////////////////////////////////
