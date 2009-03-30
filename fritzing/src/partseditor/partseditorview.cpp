@@ -330,6 +330,7 @@ QString PartsEditorView::getOrCreateViewFolderInTemp() {
 	QString viewFolder = ViewIdentifierClass::viewIdentifierNaturalName(m_viewIdentifier);
 
 	if(!QFileInfo(m_tempFolder.absolutePath()+"/"+viewFolder).exists()) {
+		DebugDialog::debug("<<<< "+m_tempFolder.absolutePath()+"/"+viewFolder);
 		Q_ASSERT(m_tempFolder.mkpath(m_tempFolder.absolutePath()+"/"+viewFolder));
 	}
 

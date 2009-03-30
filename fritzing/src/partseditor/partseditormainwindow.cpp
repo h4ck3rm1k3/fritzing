@@ -413,8 +413,8 @@ const QDir& PartsEditorMainWindow::createTempFolderIfNecessary() {
 	if(m_tempDir.path() == ".") {
 		QString randext = getRandText();
 		m_tempDir = QDir(QDir::tempPath());
-		if(!m_tempDir.mkdir(randext)) return ___emptyDir___;
-		if(!m_tempDir.cd(randext)) return ___emptyDir___;
+		Q_ASSERT(m_tempDir.mkdir(randext));
+		Q_ASSERT(m_tempDir.cd(randext));
 	}
 	return m_tempDir;
 }
