@@ -190,6 +190,14 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 		m_iconViewImage->loadFromModel(m_paletteModel, modelPart);
 	}
 
+	QPushButton *button = new QPushButton(tr("..."));
+	button->setObjectName("browseButton");
+	button->setFixedWidth(30);
+	button->setFixedHeight(20);
+	button->setStyleSheet("background-color: transparent;");
+	m_iconViewImage->addFixedToBottomRight(button);
+	connect(button, SIGNAL(clicked()), m_iconViewImage, SLOT(loadFile()));
+
 	QString title = modelPart ? modelPart->modelPartShared()->title() : TitleFreshStartText;
 	m_title = new EditableLineWidget(title,m_undoStack,m_headerFrame,"",modelPart,true);
 	m_title->setObjectName("partTitle");

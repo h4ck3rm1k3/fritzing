@@ -28,6 +28,7 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 #include <QFileDialog>
 #include <QtDebug>
 #include <QSvgGenerator>
+#include <QGraphicsProxyWidget>
 
 #include "partseditorview.h"
 #include "partseditorconnectoritem.h"
@@ -96,6 +97,14 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 	fitCenterAndDeselect();
 
 	setItemProperties();
+
+	foreach(QWidget* w, m_fixedWidgets) {
+		QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
+		proxy->setWidget(w);
+
+		addFixedToBottomRightItem(proxy);
+	}
+
 	emit connectorsFound(this->m_viewIdentifier,m_item->connectors());
 }
 
@@ -1089,4 +1098,13 @@ bool PartsEditorView::showingTerminalPoints() {
 void PartsEditorView::inFileDefinedConnectorChanged(PartsEditorConnectorsConnectorItem *connItem) {
 	m_drawnConns << connItem;
 	m_removedConnIds << connItem->connector()->connectorSharedID();
+}
+
+
+void PartsEditorView::addFixedToBottomRight(QWidget *widget) {
+	m_fixedWidgets << widget;
+	QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
+	proxy->setWidget(widget);
+
+	addFixedToBottomRightItem(proxy);
 }

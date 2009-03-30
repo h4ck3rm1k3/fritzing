@@ -49,6 +49,7 @@ class PartsEditorView : public SketchWidget {
 		bool isEmpty();
 		ViewLayer::ViewLayerID connectorLayerId();
 		QString terminalIdForConnector(const QString &connId);
+		void addFixedToBottomRight(QWidget *widget);
 
 		// specs
 		void loadSvgFile(ModelPart * modelPart);
@@ -168,6 +169,8 @@ class PartsEditorView : public SketchWidget {
 
 		QString m_lastSelectedConnId;
 		bool m_showingTerminalPoints;
+
+		QList<QWidget* > m_fixedWidgets;
 
 	protected:
 		static int ConnDefaultWidth;
