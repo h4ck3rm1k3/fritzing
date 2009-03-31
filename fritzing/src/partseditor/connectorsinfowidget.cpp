@@ -29,6 +29,7 @@ $Date$
 #include <QProgressDialog>
 #include <QApplication>
 #include <QScrollBar>
+#include <QMessageBox>
 
 #include "connectorsinfowidget.h"
 #include "addremoveconnectorbutton.h"
@@ -43,7 +44,7 @@ ConnectorsInfoWidget::ConnectorsInfoWidget(WaitPushUndoStack *undoStack, QWidget
 	m_objToDelete = NULL;
 	m_selected = NULL;
 	m_undoStack = undoStack;
-	m_connsViews = NULL;
+	m_views = NULL;
 
 	createScrollArea();
 	createToolsArea();
@@ -235,21 +236,21 @@ Connector* ConnectorsInfoWidget::addConnectorInfo(QString id) {
 
 	connShared->addPin(
 		ViewIdentifierClass::BreadboardView,
-		m_connsViews->breadboardView()->svgIdForConnector(id),
-		m_connsViews->breadboardView()->connectorLayerId(),
-		m_connsViews->breadboardView()->terminalIdForConnector(id)
+		m_views->breadboardView()->svgIdForConnector(id),
+		m_views->breadboardView()->connectorLayerId(),
+		m_views->breadboardView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
 		ViewIdentifierClass::SchematicView,
-		m_connsViews->schematicView()->svgIdForConnector(id),
-		m_connsViews->schematicView()->connectorLayerId(),
-		m_connsViews->schematicView()->terminalIdForConnector(id)
+		m_views->schematicView()->svgIdForConnector(id),
+		m_views->schematicView()->connectorLayerId(),
+		m_views->schematicView()->terminalIdForConnector(id)
 	);
 	connShared->addPin(
 		ViewIdentifierClass::PCBView,
-		m_connsViews->pcbView()->svgIdForConnector(id),
-		m_connsViews->pcbView()->connectorLayerId(),
-		m_connsViews->pcbView()->terminalIdForConnector(id)
+		m_views->pcbView()->svgIdForConnector(id),
+		m_views->pcbView()->connectorLayerId(),
+		m_views->pcbView()->terminalIdForConnector(id)
 	);
 
 	Connector *conn = new Connector(connShared,0); // modelPart =? null
@@ -555,29 +556,37 @@ void ConnectorsInfoWidget::connectorSelectedInView(const QString &connId) {
 	setSelected(m_allConnsInfo[connId]);
 }
 
-void ConnectorsInfoWidget::setConnectorsView(PartsEditorViewsWidget* connsView) {
-	m_connsViews = connsView;
+void ConnectorsInfoWidget::setViews(PartsEditorViewsWidget* connsView) {
+	m_views = connsView;
 }
 
 
 void ConnectorsInfoWidget::completeConn(MismatchingConnectorWidget* mcw) {
-	QList<ViewIdentifierClass::ViewIdentifier> missingViews = mcw->missingViews();
-	QList<ViewIdentifierClass::ViewIdentifier> availViews = mcw->views();
-	QString connId = mcw->connId();
-	removeMismatchingConnectorInfo(mcw);
+	if(m_views->imagesLoadedInAllViews()) {
+		QList<ViewIdentifierClass::ViewIdentifier> missingViews = mcw->missingViews();
+		QList<ViewIdentifierClass::ViewIdentifier> availViews = mcw->views();
+		QString connId = mcw->connId();
+		removeMismatchingConnectorInfo(mcw);
 
-	if(mcw->prevConn()) {
-		addConnectorInfo(mcw->prevConn());
+		if(mcw->prevConn()) {
+			addConnectorInfo(mcw->prevConn());
+		} else {
+			addConnectorInfo(connId);
+		}
+
+		Connector *connector = findConnector(connId);
+		foreach(ViewIdentifierClass::ViewIdentifier viewId, missingViews) {
+			emit drawConnector(viewId, connector);
+		}
+		foreach(ViewIdentifierClass::ViewIdentifier viewId, availViews) {
+			emit setMismatching(viewId,connId,false);
+		}
 	} else {
-		addConnectorInfo(connId);
-	}
-
-	Connector *connector = findConnector(connId);
-	foreach(ViewIdentifierClass::ViewIdentifier viewId, missingViews) {
-		emit drawConnector(viewId, connector);
-	}
-	foreach(ViewIdentifierClass::ViewIdentifier viewId, availViews) {
-		emit setMismatching(viewId,connId,false);
+		QMessageBox::information(
+			parentWidget(),
+			tr("Couldn't fix connector"),
+			tr("Please, first load an image in each view,\nin order to fix this connector")
+		);
 	}
 }
 

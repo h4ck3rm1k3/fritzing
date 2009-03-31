@@ -270,7 +270,7 @@ void PartsEditorMainWindow::createCenter(ModelPart *modelPart) {
 
 	specWidgets << m_label << m_description /*<< m_taxonomy*/ << m_properties << m_tags << m_author << m_createdOn << m_createdByText;
 
-	m_connsInfo->setConnectorsView(m_views);
+	m_connsInfo->setViews(m_views);
 
 	connect(m_connsInfo, SIGNAL(repaintNeeded()), m_views, SLOT(repaint()));
 	connect(m_connsInfo, SIGNAL(drawConnector(Connector*)), m_views, SLOT(drawConnector(Connector*)));

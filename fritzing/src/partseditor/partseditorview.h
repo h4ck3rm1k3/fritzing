@@ -50,6 +50,7 @@ class PartsEditorView : public SketchWidget {
 		ViewLayer::ViewLayerID connectorLayerId();
 		QString terminalIdForConnector(const QString &connId);
 		void addFixedToBottomRight(QWidget *widget);
+		bool imageLoaded();
 
 		// specs
 		void loadSvgFile(ModelPart * modelPart);

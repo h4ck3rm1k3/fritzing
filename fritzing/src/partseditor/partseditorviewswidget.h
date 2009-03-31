@@ -43,6 +43,8 @@ Q_OBJECT
 		void aboutToSave();
 		QCheckBox *showTerminalPointsCheckBox();
 
+		bool imagesLoadedInAllViews();
+
 		PartsEditorView *breadboardView();
 		PartsEditorView *schematicView();
 		PartsEditorView *pcbView();

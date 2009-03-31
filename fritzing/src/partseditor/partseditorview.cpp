@@ -1108,3 +1108,7 @@ void PartsEditorView::addFixedToBottomRight(QWidget *widget) {
 
 	addFixedToBottomRightItem(proxy);
 }
+
+bool PartsEditorView::imageLoaded() {
+	return m_item != NULL;
+}

@@ -45,7 +45,7 @@ class ConnectorsInfoWidget : public QFrame {
 		const QList<ConnectorShared *> connectorsShared();
 		QCheckBox *showTerminalPointsCheckBox();
 		int scrollBarWidth();
-		void setConnectorsView(PartsEditorViewsWidget* connsView);
+		void setViews(PartsEditorViewsWidget* connsView);
 
 	public slots:
 		void connectorsFound(QList<Connector *>);
@@ -111,7 +111,7 @@ class ConnectorsInfoWidget : public QFrame {
 		QFrame *m_mismatchersFrameParent;
 
 		QFrame *m_toolsContainter;
-		PartsEditorViewsWidget* m_connsViews;
+		PartsEditorViewsWidget* m_views;
 
 		AbstractConnectorInfoWidget *m_selected;
 

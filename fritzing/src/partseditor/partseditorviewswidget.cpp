@@ -294,3 +294,9 @@ PartsEditorView *PartsEditorViewsWidget::schematicView() {
 PartsEditorView *PartsEditorViewsWidget::pcbView() {
 	return m_pcbView;
 }
+
+bool PartsEditorViewsWidget::imagesLoadedInAllViews() {
+	return m_breadView->imageLoaded()
+		&& m_schemView->imageLoaded()
+		&& m_pcbView->imageLoaded();
+}
