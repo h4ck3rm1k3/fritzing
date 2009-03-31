@@ -260,12 +260,6 @@ LayerKinPaletteItem * PartsEditorPaletteItem::newLayerKinPaletteItem(
 	return lk;
 }
 
-void PartsEditorPaletteItem::removeFromModel() {
-	if(m_modelPart) {
-		m_modelPart->removeViewItem(this);
-	}
-}
-
 
 QString PartsEditorPaletteItem::xmlViewLayerID() {
 	ViewLayer::ViewLayerID viewLayerIDAux = m_viewLayerID == ViewLayer::UnknownLayer

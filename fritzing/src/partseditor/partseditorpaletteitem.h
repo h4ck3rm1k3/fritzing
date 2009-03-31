@@ -52,7 +52,6 @@ class PartsEditorPaletteItem : public PaletteItem {
 		QDomDocument *svgDom();
 		QString flatSvgFilePath();
 
-		void removeFromModel(); // To allow info items to be shown, but not to be persisted
 		void setConnector(const QString &id, Connector *conn);
 
 		void createSvgFile(QString path);

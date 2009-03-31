@@ -98,12 +98,12 @@ void PartsEditorView::addItemInPartsEditor(ModelPart * modelPart, SvgAndPartFile
 
 	setItemProperties();
 
-	foreach(QWidget* w, m_fixedWidgets) {
+	/*foreach(QWidget* w, m_fixedWidgets) {
 		QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
 		proxy->setWidget(w);
 
 		addFixedToBottomRightItem(proxy);
-	}
+	}*/
 
 	emit connectorsFound(this->m_viewIdentifier,m_item->connectors());
 }
@@ -787,7 +787,6 @@ void PartsEditorView::setItemProperties() {
 		m_item->setFlag(QGraphicsItem::ItemIsMovable, false);
 		m_item->setFlag(QGraphicsItem::ItemClipsToShape, true);
 		//m_item->setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
-		m_item->removeFromModel();
 		myItem()->highlightConnectors(m_lastSelectedConnId);
 
 		qreal size = 500; // just make sure the user get enough space to play
