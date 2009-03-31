@@ -40,7 +40,8 @@ public:
 
 protected:
     QDomDocument m_SVGDom;
-    QString m_gerber;
+    QString m_gerber_header;
+    QString m_gerber_paths;
 
     void normalizeSVG();
     void convertShapes2paths(QDomNode);
@@ -55,8 +56,7 @@ protected:
 
     void copyStyles(QDomElement, QDomElement);
 
-    void writeGerberHeader();
-    void writeGerberFooter();
+    void renderGerber();
     void allPaths2gerber();
     QString path2gerber(QDomElement);
 

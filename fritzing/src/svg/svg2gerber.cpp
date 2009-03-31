@@ -59,47 +59,46 @@ SVG2gerber::SVG2gerber(QString svgStr)
     out2 << m_SVGDom.toString();
 #endif
 
-    writeGerberHeader();
-    allPaths2gerber();
-    writeGerberFooter();
+    renderGerber();
 }
 
 QString SVG2gerber::getGerber(){
-    return m_gerber;
+    return m_gerber_header + m_gerber_paths;
 }
 
-void SVG2gerber::writeGerberHeader(){
+void SVG2gerber::renderGerber(){
     // initialize axes
-    m_gerber = "%ASAXBY*%\n";
+    m_gerber_header = "%ASAXBY*%\n";
 
     // NOTE: this currently forces a 1 mil grid
     // format coordinates to drop leading zeros with 2,3 digits
-    m_gerber += "%FSLAX23Y23*%\n";
+    m_gerber_header += "%FSLAX23Y23*%\n";
 
     // set units to inches
-    m_gerber += "%MOIN*%\n";
+    m_gerber_header += "%MOIN*%\n";
 
     // no offset
-    m_gerber += "%OFA0B0*%\n";
+    m_gerber_header += "%OFA0B0*%\n";
 
     // scale factor 1x1
-    m_gerber += "%SFA1.0B1.0*%\n";
+    m_gerber_header += "%SFA1.0B1.0*%\n";
 
-    // TODO: aperture defs go here...
+    // define apertures and draw em
+    allPaths2gerber();
 
     // label our layer
-    m_gerber += "%LNFRITZING*%\n";
+    m_gerber_header += "%LNFRITZING*%\n";
 
     //just to be safe: G90 (absolute coords) and G70 (inches)
-    m_gerber += "G90*\nG70*\n";
-}
+    m_gerber_header += "G90*\nG70*\n";
 
-void SVG2gerber::writeGerberFooter(){
+
+    // now write the footer
     // comment to indicate end-of-sketch
-    m_gerber += "G04 End of Fritzing sketch*\n";
+    m_gerber_paths += "G04 End of Fritzing sketch*\n";
 
     // write gerber end-of-program
-    m_gerber += "M02*";
+    m_gerber_paths += "M02*";
 }
 
 void SVG2gerber::normalizeSVG(){
@@ -109,12 +108,12 @@ void SVG2gerber::normalizeSVG(){
     convertShapes2paths(root);
 
     // dump paths SVG to tmp file for now
-    QFile dump("/tmp/paths_pre.svg");
-    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
-        DebugDialog::debug("gerber svg dump: cannot open output file");
-
-    QTextStream out(&dump);
-    out << m_SVGDom.toString();
+//    QFile dump("/tmp/paths_pre.svg");
+//    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
+//        DebugDialog::debug("gerber svg dump: cannot open output file");
+//
+//    QTextStream out(&dump);
+//    out << m_SVGDom.toString();
 
     //  get rid of transforms
     SvgFlattener flattener;
@@ -192,11 +191,59 @@ QMatrix SVG2gerber::parseTransform(QDomElement element){
 }
 
 void SVG2gerber::allPaths2gerber() {
-    // convert circles
+    QHash<QString, QString> apertureMap;
+    int dcode_index = 10;
 
-    // convert rects
+    // iterates through all circles, rects, lines and paths
+    //  1. check if we already have an aperture
+    //      if aperture does not exist, add it to the header
+    //  2. switch to this aperture
+    //  3. draw it at the correct path/location
 
-    // convert paths
+    // circles
+    QDomNodeList circleList = m_SVGDom.elementsByTagName("circle");
+
+    DebugDialog::debug("circles to gerber: " + QString::number(circleList.length()));
+    for(uint i = 0; i < circleList.length(); i++){
+        QDomElement circle = circleList.item(i).toElement();
+        QString aperture;
+
+        QString cx = circle.attribute("cx");
+        QString cy = circle.attribute("cy");
+        qreal r = circle.attribute("r").toFloat();
+        QString fill = circle.attribute("fill");
+        qreal stroke_width = circle.attribute("stroke-width").toFloat();
+
+        qreal diam = ((2*r) + stroke_width)/1000;
+        qreal hole = ((2*r) - stroke_width)/1000;
+
+        if(fill=="none")
+            aperture = QString("C,%1X%2").arg(diam).arg(hole);
+        else
+            aperture = QString("C,%1").arg(diam);
+
+        // add aperture to defs if we don't have it yet
+        if(!apertureMap.contains(aperture)){
+            apertureMap[aperture] = "D" + QString::number(dcode_index);
+            m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+            dcode_index++;
+        }
+
+        QString dcode = apertureMap[aperture];
+
+        //switch to correct aperture
+        m_gerber_paths += "G54" + dcode + "*\n";
+        //flash
+        m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
+
+
+    }
+
+    // rects
+
+    // lines
+
+    // paths - NOTE: this assumes circular aperture
 
 }
 
