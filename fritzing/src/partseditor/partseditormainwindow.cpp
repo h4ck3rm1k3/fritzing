@@ -192,7 +192,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 
 	QPushButton *button = new QPushButton(tr("..."), this);
 	button->setObjectName("browseButton");
-	button->setFixedWidth(50);
+	button->setFixedWidth(iconViewSize);
 	button->setFixedHeight(20);
 	//m_iconViewImage->addFixedToBottomRight(button);
 	connect(button, SIGNAL(clicked()), m_iconViewImage, SLOT(loadFile()));

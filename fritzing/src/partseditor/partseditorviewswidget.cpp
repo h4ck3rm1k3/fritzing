@@ -265,8 +265,8 @@ QWidget *PartsEditorViewsWidget::addZoomControlsAndBrowseButton(PartsEditorView 
 
 	QPushButton *button = new QPushButton(tr("Browse..."),container1);
 	button->setObjectName("browseButton");
-	button->setMinimumWidth(70);
-	button->setMaximumWidth(80);
+	button->setMinimumWidth(85);
+	button->setMaximumWidth(85);
 	button->setFixedHeight(20);
 	button->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 
