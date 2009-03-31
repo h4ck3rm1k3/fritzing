@@ -18,26 +18,9 @@ import getopt, sys, ConfigParser, uuid, os
 from datetime import date
 from Cheetah.Template import Template
 from fritzing.apps.parts.core.utils import escape_to_file_name
+from fritzing.apps.parts.core.confs import SCRIPT_CONFS
 
-_SCRIPT_CONFS = {
-    'resistor' : {
-        'name_param' : 'resistance', # the parameter used to generate the part name and file
-        'templates' : { # file names, without extension
-            'breadboard' : 'basic-resistor_bread',
-            'icon'       : 'basic-resistor_icon',
-            ''           : 'basic-resistor'
-        }
-    },
-    'mystery' : {
-        'name_param' : 'pins', # the parameter used to generate the part name and file
-        'templates' : { # file names, without extension
-            'breadboard' : 'mystery-part_bread',
-            'schematic'  : 'mystery-part_schem',
-            ''           : 'mystery-part'
-        }
-    }   
-}
-    
+
 _HELPER = { # helper class to name the uuid to append to the files
     ''           : 'part_unique',
     'icon'       : 'icon_unique',
@@ -133,7 +116,7 @@ def create_output_folder(output_folder_base):
 
 
 def web_generate(script_id, config, output_folder_base):
-    script_data = _SCRIPT_CONFS[script_id]
+    script_data = SCRIPT_CONFS[script_id]
     assert script_data
         
     output_dir = create_output_folder(output_folder_base)

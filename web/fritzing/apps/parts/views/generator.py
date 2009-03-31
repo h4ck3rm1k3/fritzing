@@ -6,7 +6,8 @@ from django.conf import settings
 from django.template import RequestContext
 from fritzing.apps.parts.forms import generator
 from fritzing.apps.parts.utils import script_config_from_form, add_folder_to_zipfile
-from fritzing.apps.parts.dispatcher import AVAIL_SCRIPTS, get_params_def, gen_files
+from fritzing.apps.parts.dispatcher import get_params_def, gen_files
+from fritzing.apps.parts.core.defs import AVAIL_SCRIPTS
 
 def choose(request):
     return render_to_response(

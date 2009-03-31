@@ -69,7 +69,7 @@ def get_field_from_obj(name,obj):
 
 
 def get_class_name(script_id):
-    return script_id.capitalize()+"DynamicForm"
+    return script_id.capitalize().replace("-","_")+"DynamicForm"
 
 
 def get_form_class(class_name):
