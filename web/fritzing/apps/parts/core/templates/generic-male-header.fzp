@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="bf1d778246ec524bc51c67761afef94e">
+<module fritzingVersion="0.2.2.b.03.04.2550" moduleId="$uuid">
     <author>Fritzing Part-o-matic</author>
     <title>$title - $pins pins</title>
     <label>J</label>
@@ -19,12 +19,12 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/generic-male-header${pins}_${bread_unique}.svg">
+            <layers image="breadboard/generic-male-header_bread_${pins}_${bread_unique}.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/generic-male-header${pins}_${schem_unique}.svg">
+            <layers image="schematic/generic-male-header_schem_${pins}_${schem_unique}.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
