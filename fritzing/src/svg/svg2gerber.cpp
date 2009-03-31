@@ -192,6 +192,7 @@ QMatrix SVG2gerber::parseTransform(QDomElement element){
 
 void SVG2gerber::allPaths2gerber() {
     QHash<QString, QString> apertureMap;
+    QString current_dcode;
     int dcode_index = 10;
 
     // iterates through all circles, rects, lines and paths
@@ -230,9 +231,11 @@ void SVG2gerber::allPaths2gerber() {
         }
 
         QString dcode = apertureMap[aperture];
-
-        //switch to correct aperture
-        m_gerber_paths += "G54" + dcode + "*\n";
+        if(current_dcode != dcode){
+            //switch to correct aperture
+            m_gerber_paths += "G54" + dcode + "*\n";
+            current_dcode = dcode;
+        }
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
 
