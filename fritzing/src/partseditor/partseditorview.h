@@ -40,8 +40,9 @@ class PartsEditorView : public SketchWidget {
 
 	public:
 		PartsEditorView(
-			ViewIdentifierClass::ViewIdentifier, QDir tempDir, bool deleteModelPartOnSceneClear,
-			bool showingTerminalPoints, QGraphicsItem *startItem=0, QWidget *parent=0, int size=150);
+			ViewIdentifierClass::ViewIdentifier, QDir tempDir,
+			bool showingTerminalPoints, QGraphicsItem *startItem=0,
+			QWidget *parent=0, int size=150, bool deleteModelPartOnClearScene=false);
 		~PartsEditorView();
 
 		// general

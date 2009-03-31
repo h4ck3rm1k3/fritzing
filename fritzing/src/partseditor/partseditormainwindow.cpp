@@ -178,7 +178,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	int iconViewSize = 50;
 	QGraphicsItem *startItem = modelPart? NULL: PartsEditorMainWindow::emptyViewItem("icon_icon.png",___emptyString___);
 	m_iconViewImage = new PartsEditorView(
-		ViewIdentifierClass::IconView, createTempFolderIfNecessary(), false, false, startItem, m_headerFrame, iconViewSize
+		ViewIdentifierClass::IconView, createTempFolderIfNecessary(), false, startItem, m_headerFrame, iconViewSize
 	);
 	m_iconViewImage->setFixedSize(iconViewSize,iconViewSize);
 	m_iconViewImage->setObjectName("iconImage");

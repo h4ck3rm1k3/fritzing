@@ -43,12 +43,13 @@ int PartsEditorView::ConnDefaultWidth = 5;
 int PartsEditorView::ConnDefaultHeight = ConnDefaultWidth;
 
 PartsEditorView::PartsEditorView(
-		ViewIdentifierClass::ViewIdentifier viewId, QDir tempDir, bool deleteModelPartOnSceneClear,
-		bool showingTerminalPoints, QGraphicsItem *startItem, QWidget *parent, int size)
+		ViewIdentifierClass::ViewIdentifier viewId, QDir tempDir,
+		bool showingTerminalPoints, QGraphicsItem *startItem,
+		QWidget *parent, int size, bool deleteModelPartOnClearScene)
 	: SketchWidget(viewId, parent, size, size)
 {
 	m_item = NULL;
-	m_deleteModelPartOnSceneClear = deleteModelPartOnSceneClear;
+	m_deleteModelPartOnSceneClear = deleteModelPartOnClearScene;
 	m_tempFolder = tempDir;
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -479,6 +480,7 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 				.arg(origFile)
 				.arg(destFile));
 		tempFile.copy(destFile);
+		tempFile.close();
 	}
 }
 
@@ -577,6 +579,7 @@ void PartsEditorView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePat
 
 		QFile tempFile(m_originalSvgFilePath);
 		tempFile.copy(m_tempFolder.absolutePath()+"/"+destFilePath);
+		tempFile.close();
 
 		if(!m_tempFolder.cd("..")) return; // out of view folder
 

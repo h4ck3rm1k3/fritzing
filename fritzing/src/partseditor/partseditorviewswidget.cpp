@@ -114,7 +114,7 @@ void PartsEditorViewsWidget::createViewImageWidget(
 		ConnectorsInfoWidget* info, ViewLayer::ViewLayerID viewLayerId
 	) {
 
-	viw = new PartsEditorView(viewId,tempDir(),true,showingTerminalPoints(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
+	viw = new PartsEditorView(viewId,tempDir(),showingTerminalPoints(),PartsEditorMainWindow::emptyViewItem(iconFileName,startText),this);
 	viw->setSketchModel(sketchModel);
 	viw->setUndoStack(undoStack);
 	viw->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
