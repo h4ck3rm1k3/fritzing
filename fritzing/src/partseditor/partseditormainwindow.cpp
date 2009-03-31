@@ -190,22 +190,22 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 		m_iconViewImage->loadFromModel(m_paletteModel, modelPart);
 	}
 
-	QPushButton *button = new QPushButton(tr("..."));
+	QPushButton *button = new QPushButton(tr("..."), this);
 	button->setObjectName("browseButton");
-	button->setFixedWidth(30);
+	button->setFixedWidth(50);
 	button->setFixedHeight(20);
-	button->setStyleSheet("background-color: transparent;");
-	m_iconViewImage->addFixedToBottomRight(button);
+	//m_iconViewImage->addFixedToBottomRight(button);
 	connect(button, SIGNAL(clicked()), m_iconViewImage, SLOT(loadFile()));
 
 	QString title = modelPart ? modelPart->modelPartShared()->title() : TitleFreshStartText;
 	m_title = new EditableLineWidget(title,m_undoStack,m_headerFrame,"",modelPart,true);
 	m_title->setObjectName("partTitle");
-	m_title->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
+	m_title->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::MinimumExpanding));
 
 	QGridLayout *headerLayout = new QGridLayout();
 	headerLayout->addWidget(m_iconViewImage,0,0);
-	headerLayout->addWidget(m_title,0,1);
+	headerLayout->addWidget(button,1,0);
+	headerLayout->addWidget(m_title,0,1,2,1);
 	m_headerFrame->setLayout(headerLayout);
 }
 
