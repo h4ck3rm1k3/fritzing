@@ -5,7 +5,7 @@ AVAIL_SCRIPTS = [
     {'value':'mystery','label':'Create a mystery part'},
     {'value':'generic-male-header','label':'Create a generic male header'},
     {'value':'generic-female-header','label':'Create a generic female header'},
-    {'value':'generic-female-header-rounded','label':'Create a generci female metal rounded header'},
+    {'value':'generic-female-header-rounded','label':'Create a generic female metal rounded header'},
 ]
 
 SCRIPTS_DEFS = {
