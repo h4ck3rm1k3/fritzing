@@ -502,8 +502,11 @@ bool PartsEditorMainWindow::saveAs() {
 		QString filename = !m_fileName.startsWith(userPartsFolderPath, cs)
 				? userPartsFolderPath+m_fileName
 				: m_fileName;
+		QString guid = "__"+getRandText()+FritzingPartExtension;;
 		if(!alreadyHasExtension(filename)) {
-			filename += FritzingPartExtension;
+			filename += guid;
+		} else {
+			filename.replace(FritzingPartExtension,guid);
 		}
 
 		saveAsAux(filename);
