@@ -209,8 +209,10 @@ void SVG2gerber::allPaths2gerber() {
         QDomElement circle = circleList.item(i).toElement();
         QString aperture;
 
-        QString cx = circle.attribute("cx");
-        QString cy = circle.attribute("cy");
+        qreal centerx = circle.attribute("cx").toFloat();
+        qreal centery = circle.attribute("cy").toFloat();
+        QString cx = QString::number(round(centerx));
+        QString cy = QString::number(round(centery));
         qreal r = circle.attribute("r").toFloat();
         QString fill = circle.attribute("fill");
         qreal stroke_width = circle.attribute("stroke-width").toFloat();
@@ -243,6 +245,48 @@ void SVG2gerber::allPaths2gerber() {
     }
 
     // rects
+    QDomNodeList rectList = m_SVGDom.elementsByTagName("rect");
+
+    DebugDialog::debug("rects to gerber: " + QString::number(rectList.length()));
+    for(uint j = 0; j < rectList.length(); j++){
+        QDomElement rect = rectList.item(j).toElement();
+        QString aperture;
+
+        qreal width = rect.attribute("width").toFloat();
+        qreal height = rect.attribute("height").toFloat();
+        qreal centerx = rect.attribute("x").toFloat() + (width/2);
+        qreal centery = rect.attribute("y").toFloat() + (height/2);
+        QString cx = QString::number(round(centerx));
+        QString cy = QString::number(round(centery));
+        QString fill = rect.attribute("fill");
+        qreal stroke_width = rect.attribute("stroke-width").toFloat();
+
+        qreal totalx = (width + stroke_width)/1000;
+        qreal totaly = (height + stroke_width)/1000;
+        qreal holex = (width - stroke_width)/1000;
+        qreal holey = (height - stroke_width)/1000;
+
+        if(fill=="none")
+            aperture = QString("R,%1X%2X%3X%4").arg(totalx).arg(totaly).arg(holex).arg(holey);
+        else
+            aperture = QString("R,%1X%2").arg(totalx).arg(totaly);
+
+        // add aperture to defs if we don't have it yet
+        if(!apertureMap.contains(aperture)){
+            apertureMap[aperture] = "D" + QString::number(dcode_index);
+            m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+            dcode_index++;
+        }
+
+        QString dcode = apertureMap[aperture];
+        if(current_dcode != dcode){
+            //switch to correct aperture
+            m_gerber_paths += "G54" + dcode + "*\n";
+            current_dcode = dcode;
+        }
+        //flash
+        m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
+    }
 
     // lines
 
