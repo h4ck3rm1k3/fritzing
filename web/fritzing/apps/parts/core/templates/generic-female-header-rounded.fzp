@@ -25,7 +25,7 @@
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/generic-female-header-rounded_schem_${pins}_${schem_unique}.svg">
+            <layers image="schematic/generic-female-header_schem_${pins}_${schem_unique}.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>

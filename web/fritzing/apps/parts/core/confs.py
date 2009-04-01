@@ -35,7 +35,7 @@ SCRIPT_CONFS = {
         'name_param' : 'pins', # the parameter used to generate the part name and file
         'templates' : { # file names, without extension
             'breadboard' : 'generic-female-header-rounded_bread',
-            'schematic'  : 'generic-female-header-rounded_schem',
+            'schematic'  : 'generic-female-header_schem',
             ''           : 'generic-female-header-rounded'
         }
     },
