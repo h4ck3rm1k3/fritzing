@@ -107,105 +107,210 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="f3eb6551-1edf-11de-8283-0019d2b7521e" modelIndex="153" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_2.fzp">
+        <instance moduleIdRef="f3eb6551-1edf-11de-8283-0019d2b7521e" modelIndex="153" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_2.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="f9f8ddcf-1edf-11de-8283-0019d2b7521e" modelIndex="171" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_3.fzp">
+        <instance moduleIdRef="f9f8ddcf-1edf-11de-8283-0019d2b7521e" modelIndex="171" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_3.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="00cf453f-1ee0-11de-8283-0019d2b7521e" modelIndex="190" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_4.fzp">
+        <instance moduleIdRef="00cf453f-1ee0-11de-8283-0019d2b7521e" modelIndex="190" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_4.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="063fdda9-1ee0-11de-8283-0019d2b7521e" modelIndex="210" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_5.fzp">
+        <instance moduleIdRef="063fdda9-1ee0-11de-8283-0019d2b7521e" modelIndex="210" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_5.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="0bf577ef-1ee0-11de-8283-0019d2b7521e" modelIndex="231" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_6.fzp">
+        <instance moduleIdRef="0bf577ef-1ee0-11de-8283-0019d2b7521e" modelIndex="231" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_6.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="11c1351f-1ee0-11de-8283-0019d2b7521e" modelIndex="253" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_7.fzp">
+        <instance moduleIdRef="11c1351f-1ee0-11de-8283-0019d2b7521e" modelIndex="253" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_7.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="17898e57-1ee0-11de-8283-0019d2b7521e" modelIndex="276" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_8.fzp">
+        <instance moduleIdRef="17898e57-1ee0-11de-8283-0019d2b7521e" modelIndex="276" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_8.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1d2d699b-1ee0-11de-8283-0019d2b7521e" modelIndex="300" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_9.fzp">
+        <instance moduleIdRef="1d2d699b-1ee0-11de-8283-0019d2b7521e" modelIndex="300" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_9.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="2351fa99-1ee0-11de-8283-0019d2b7521e" modelIndex="325" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_10.fzp">
+        <instance moduleIdRef="2351fa99-1ee0-11de-8283-0019d2b7521e" modelIndex="325" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_10.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="2b3cd7a1-1ee0-11de-8283-0019d2b7521e" modelIndex="351" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_11.fzp">
+        <instance moduleIdRef="2b3cd7a1-1ee0-11de-8283-0019d2b7521e" modelIndex="351" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_11.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="324c8dc5-1ee0-11de-8283-0019d2b7521e" modelIndex="378" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_12.fzp">
+        <instance moduleIdRef="324c8dc5-1ee0-11de-8283-0019d2b7521e" modelIndex="378" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_12.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="39262593-1ee0-11de-8283-0019d2b7521e" modelIndex="406" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_14.fzp">
+        <instance moduleIdRef="39262593-1ee0-11de-8283-0019d2b7521e" modelIndex="406" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_14.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="3fbde67f-1ee0-11de-8283-0019d2b7521e" modelIndex="435" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_16.fzp">
+        <instance moduleIdRef="3fbde67f-1ee0-11de-8283-0019d2b7521e" modelIndex="435" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_16.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="45abb927-1ee0-11de-8283-0019d2b7521e" modelIndex="465" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_18.fzp">
+        <instance moduleIdRef="45abb927-1ee0-11de-8283-0019d2b7521e" modelIndex="465" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_18.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="4bfab00d-1ee0-11de-8283-0019d2b7521e" modelIndex="496" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header_20.fzp">
+        <instance moduleIdRef="4bfab00d-1ee0-11de-8283-0019d2b7521e" modelIndex="496" path="/home/mariano/workspace/fritzing/app/parts/core/generic-female-header_20.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="ab8b0927-1ee1-11de-8283-0019d2b7521e" modelIndex="528" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_2.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="b13c0353-1ee1-11de-8283-0019d2b7521e" modelIndex="561" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_3.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="b799cea1-1ee1-11de-8283-0019d2b7521e" modelIndex="595" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_4.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="bd523905-1ee1-11de-8283-0019d2b7521e" modelIndex="630" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_5.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="c45f10b5-1ee1-11de-8283-0019d2b7521e" modelIndex="666" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_6.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="c9ba7e19-1ee1-11de-8283-0019d2b7521e" modelIndex="703" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_7.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="d1095a0f-1ee1-11de-8283-0019d2b7521e" modelIndex="741" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_8.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="d70d1c11-1ee1-11de-8283-0019d2b7521e" modelIndex="780" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_9.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="dd4de6b9-1ee1-11de-8283-0019d2b7521e" modelIndex="820" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_10.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="e32fbeef-1ee1-11de-8283-0019d2b7521e" modelIndex="861" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_11.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="e96e4c31-1ee1-11de-8283-0019d2b7521e" modelIndex="903" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_12.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="efd57f13-1ee1-11de-8283-0019d2b7521e" modelIndex="946" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_14.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="f627affd-1ee1-11de-8283-0019d2b7521e" modelIndex="990" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_16.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="fc7c79bf-1ee1-11de-8283-0019d2b7521e" modelIndex="1035" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_18.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
+        <instance moduleIdRef="024b306b-1ee2-11de-8283-0019d2b7521e" modelIndex="1081" path="/home/mariano/workspace/fritzing/app/parts/contrib/generic-female-header-rounded_20.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
