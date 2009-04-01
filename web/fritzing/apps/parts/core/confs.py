@@ -28,7 +28,7 @@ SCRIPT_CONFS = {
         'templates' : { # file names, without extension
             'breadboard' : 'generic-female-header_bread',
             'schematic'  : 'generic-female-header_schem',
-            ''           : 'eneric-female-header'
+            ''           : 'generic-female-header'
         }
     },
     'generic-female-header-rounded' : {
@@ -36,7 +36,7 @@ SCRIPT_CONFS = {
         'templates' : { # file names, without extension
             'breadboard' : 'generic-female-header-rounded_bread',
             'schematic'  : 'generic-female-header-rounded_schem',
-            ''           : 'eneric-female-header-rounded'
+            ''           : 'generic-female-header-rounded'
         }
     },
 }
