@@ -29,6 +29,8 @@ _HELPER = { # helper class to name the uuid to append to the files
     'pcb'        : 'pcb_unique'
 }
 
+GEN_TO_CORE = False
+
 def usage():
     print """
 usage:
@@ -123,16 +125,20 @@ def web_generate(script_id, config, output_folder_base):
     config['uuid'] = makeUUID()
     config['date'] = makeDate()
     
+    config['gen_to_core'] = GEN_TO_CORE
+    
     for uniques in _HELPER.values():
         config[uniques] = makeUUID()
         
     suffix = escape_to_file_name(config[script_data['name_param']])
     
+    
     for folder, template in script_data['templates'].items():
         extension = ('.fzp' if folder == '' else '.svg')
+        guid = "_"+config[_HELPER[folder]] if not GEN_TO_CORE else ""
         name_stub = template \
                     + "_"+suffix \
-                    + "_"+config[_HELPER[folder]] \
+                    + guid \
                     + extension
         
         aux = os.path.join(os.path.dirname(__file__),"templates")

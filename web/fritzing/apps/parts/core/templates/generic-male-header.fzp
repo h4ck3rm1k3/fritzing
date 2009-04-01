@@ -19,12 +19,14 @@
             </layers>
         </iconView>
         <breadboardView>
-            <layers image="breadboard/generic-male-header_bread_${pins}_${bread_unique}.svg">
+#set $bread_suffix = '_'+$bread_unique if not $gen_to_core else ''
+            <layers image="breadboard/generic-male-header_bread_${pins}${bread_suffix}.svg">
                 <layer layerId="breadboard"></layer>
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/generic-male-header_schem_${pins}_${schem_unique}.svg">
+#set $schem_suffix = '_'+$schem_unique if not $gen_to_core else ''
+            <layers image="schematic/generic-male-header_schem_${pins}${schem_suffix}.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
