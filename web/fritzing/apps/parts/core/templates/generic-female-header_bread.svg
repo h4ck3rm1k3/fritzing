@@ -3,6 +3,7 @@
 #set $one_tenth_of_an_inch = 7.179
 <svg version="1.1" baseProfile="basic" id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 	 x="0px" y="0px" width="${0.10*int($pins)}in" height="0.10in" viewBox="0 0 ${$one_tenth_of_an_inch*int($pins)} 7.178" xml:space="preserve">
+
 #for $pin in range(int($pins))
 	#set $offset = $pin*$one_tenth_of_an_inch
 <rect id="connector${pin}pin" x="${$offset+2.202}" y="2.202" fill="none" width="2.775" height="2.775"/>
@@ -20,4 +21,5 @@
 	<polygon fill="#373737" points="${$offset+1.179},5.998 ${$offset+2.202},4.976 ${$offset+2.202},2.202 ${$offset+1.179},1.18 	"/>
 #end for
 </g>
+
 </svg>
