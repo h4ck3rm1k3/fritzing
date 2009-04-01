@@ -30,6 +30,10 @@ $Date$
 #include <QTextStream>
 #include <math.h>
 
+#ifdef Q_WS_WIN
+#define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))
+#endif
+
 //TODO: this assumes one layer right now (copper0)
 
 SVG2gerber::SVG2gerber(QString svgStr)
@@ -194,6 +198,9 @@ void SVG2gerber::allPaths2gerber() {
     QHash<QString, QString> apertureMap;
     QString current_dcode;
     int dcode_index = 10;
+    bool light_on = false;
+    int currentx = -1;
+    int currenty = -1;
 
     // iterates through all circles, rects, lines and paths
     //  1. check if we already have an aperture
@@ -288,7 +295,51 @@ void SVG2gerber::allPaths2gerber() {
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
     }
 
-    // lines
+    // lines - NOTE: this assumes a circular aperture
+    QDomNodeList lineList = m_SVGDom.elementsByTagName("line");
+
+    DebugDialog::debug("lines to gerber: " + QString::number(lineList.length()));
+    for(uint k = 0; k < lineList.length(); k++){
+        QDomElement line = lineList.item(k).toElement();
+        QString aperture;
+
+        int x1 = round(line.attribute("x1").toFloat());
+        int y1 = round(line.attribute("y1").toFloat());
+        int x2 = round(line.attribute("x2").toFloat());
+        int y2 = round(line.attribute("y2").toFloat());
+        qreal stroke_width = line.attribute("stroke-width").toFloat();
+
+        aperture = QString("C,%1").arg(stroke_width/1000);
+
+        // add aperture to defs if we don't have it yet
+        if(!apertureMap.contains(aperture)){
+            apertureMap[aperture] = "D" + QString::number(dcode_index);
+            m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+            dcode_index++;
+        }
+
+        // turn off light if we are not continuing along a path
+        if ((y1 != currenty) || (x1 != currentx)) {
+            if (light_on) {
+                m_gerber_paths += "D02*\n";
+                light_on = false;
+            }
+        }
+
+        QString dcode = apertureMap[aperture];
+        if(current_dcode != dcode){
+            //switch to correct aperture
+            m_gerber_paths += "G54" + dcode + "*\n";
+            current_dcode = dcode;
+        }
+        //go to start - light off
+        m_gerber_paths += "X" + QString::number(x1) + "Y" + QString::number(y1) + "D02*\n";
+        //go to end point - light on
+        m_gerber_paths += "X" + QString::number(x2) + "Y" + QString::number(y2) + "D01*\n";
+        light_on = true;
+        currentx = x2;
+        currenty = y2;
+    }
 
     // paths - NOTE: this assumes circular aperture
 
