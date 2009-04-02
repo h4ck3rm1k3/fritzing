@@ -24,7 +24,7 @@
 		var script_id = document.getElementById('script_id').value
 		if(script_id != -1) {
 			$.post(
-				"/parts/generator/form/",
+				"/parts/generator/form/"+Math.random(),
 				{'script_id' : script_id},
 				cb_get_form,
 				"html"
