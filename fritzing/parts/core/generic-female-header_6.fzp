@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="0bf577ef-1ee0-11de-8283-0019d2b7521e">
     <author>Fritzing Part-o-matic</author>
-    <title>Generated Generic Female Header - 6 pins</title>
+    <title>Generic Female Header - 6 pins</title>
     <label>J</label>
     <date>2009-04-01</date>
     <tags></tags>
@@ -10,6 +10,7 @@
         <property name="Pins">6</property>
         <property name="Gender">&#9792;</property>
         <property name="Pin Spacing">0.1in (2.54mm)</property>
+        <property name="Hole Shape">Square</property>
     </properties>
     <description>Generic female header</description>
     <views>
