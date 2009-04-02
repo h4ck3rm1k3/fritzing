@@ -177,7 +177,11 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
     if (!styleSheet.open(QIODevice::ReadOnly)) {
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
-		setStyleSheet(styleSheet.readAll()+___MacStyle___);
+		QString menuStyle = "";
+#ifdef Q_WS_X11
+		menuStyle = " QMenuBar {background-color: rgb(240,240,240);} ";
+#endif
+		setStyleSheet(styleSheet.readAll()+___MacStyle___+menuStyle);
 	}
 
 	QMenu *breadItemMenu = breadboardItemMenu();
@@ -1385,7 +1389,7 @@ void MainWindow::saveAsModule() {
 			tr("Before you can save a sketch as a module, all traces must be routed."));
 		return;
 	}
-	
+
 	SaveAsModuleDialog dialog(m_breadboardGraphicsView, this);
 	if (dialog.exec() != QDialog::Accepted) return;
 
@@ -1594,7 +1598,7 @@ void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
 
 	if(!exactMatch) {
 		// TODO: andre wants some kind of special disappearing message that's not the status bar
-		// and not the autorouting status message 
+		// and not the autorouting status message
 		AutoCloseMessageBox * messageBox = new AutoCloseMessageBox(this);
 		messageBox->setIcon(QMessageBox::Information);
 		messageBox->setWindowTitle(tr("Fritzing"));

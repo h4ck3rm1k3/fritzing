@@ -28,11 +28,6 @@ MainWindow {
 	color: rgb(255,255,255);
 }
 
-QMenuBar {
-	background-color: rgb(240,240,240);
-}
-
-
 QStatusBar {
 	background-color: rgb(84,24,44);
 }
