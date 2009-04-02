@@ -1227,10 +1227,10 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_sendToBackAct);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_showPartLabelAct);
-
-#ifndef QT_NO_DEBUG
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_loadBundledPart);
+
+#ifndef QT_NO_DEBUG
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_groupAct);
 #endif
@@ -1931,7 +1931,7 @@ void MainWindow::exportToGerber() {
 }
 
 void MainWindow::exportToEagle() {
-	
+
 	QString text =
 		tr("This will soon provide an export of your Fritzing sketch to the EAGLE layout "
 		"software. If you'd like to have more exports to your favourite EDA tool, please let "
@@ -1943,7 +1943,7 @@ void MainWindow::exportToEagle() {
 */
 
 	QMessageBox::information(this, tr("Fritzing"), text);
-	
+
 	Fritzing2Eagle eagle = Fritzing2Eagle(m_pcbGraphicsView);
 
 	/*
