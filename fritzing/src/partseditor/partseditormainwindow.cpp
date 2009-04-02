@@ -154,8 +154,10 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 
 	QSettings settings;
-	if(!settings.value("peditor/state").isNull()) {
+	if (!settings.value("peditor/state").isNull()) {
 		restoreState(settings.value("peditor/state").toByteArray());
+	}
+	if (!settings.value("peditor/geometry").isNull()) {
 		restoreGeometry(settings.value("peditor/geometry").toByteArray());
 	}
 

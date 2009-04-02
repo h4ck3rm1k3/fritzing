@@ -93,7 +93,7 @@ PartsEditorViewsWidget::PartsEditorViewsWidget(SketchModel *sketchModel, WaitPus
 	lo->setSpacing(1);
 
 	this->resize(width(),220);
-	this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
+	//this->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
 }
 
 void PartsEditorViewsWidget::init() {
