@@ -16,8 +16,8 @@ SCRIPTS_DEFS = {
     'generic-female-header-rounded' : SortedDict(),
 }
 
-SCRIPTS_DEFS['mystery']['title'] = {
-    'label'   : 'Part title',
+SCRIPTS_DEFS['mystery']['name'] = {
+    'label'   : 'Part name',
     'type'    : 'string',
     'initial' : 'Generated Mystery Part'
 }

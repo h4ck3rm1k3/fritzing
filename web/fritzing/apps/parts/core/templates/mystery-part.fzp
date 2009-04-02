@@ -2,7 +2,7 @@
 <module uri="http://fritzing.org/modules/mysterypart$pins" moduleId="$uuid" >
  <version>1.0</version>
  <author>Fritzing Part-o-matic</author>
- <title>$title - $pins pins</title>
+ <title>$name - $pins pins</title>
  <label>U</label>
  <date>$date</date>
  <tags>
