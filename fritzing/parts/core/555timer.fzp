@@ -58,7 +58,7 @@
    </views>
   </connector>
   <connector type="male" id="connector4" name="Pin 5" >
-   <description>Control</description>
+   <description>Control Voltage</description>
    <views>
     <breadboardView>
      <p svgId="connector4pin" layer="breadboard" terminalId="connector4terminal" />
@@ -78,7 +78,7 @@
      <p svgId="connector5pin" layer="breadboard" terminalId="connector5terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector5pin" layer="schematic" terminalId="connector5terminal" />
+     <p svgId="connector6pin" layer="schematic" terminalId="connector6terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector5pad" layer="copper0" />
@@ -92,7 +92,7 @@
      <p svgId="connector6pin" layer="breadboard" terminalId="connector6terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector6pin" layer="schematic" terminalId="connector6terminal" />
+     <p svgId="connector5pin" layer="schematic" terminalId="connector5terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector6pad" layer="copper0" />
@@ -100,7 +100,7 @@
    </views>
   </connector>
   <connector type="male" id="connector7" name="Pin 8" >
-   <description>Supply +Vs</description>
+   <description>+Vcc Supply Voltage</description>
    <views>
     <breadboardView>
      <p svgId="connector7pin" layer="breadboard" terminalId="connector7terminal" />
