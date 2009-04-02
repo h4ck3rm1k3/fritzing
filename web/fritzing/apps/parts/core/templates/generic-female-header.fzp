@@ -10,6 +10,7 @@
         <property name="Pins">$pins</property>
         <property name="Gender">&#9792;</property>
         <property name="Pin Spacing">0.1in (2.54mm)</property>
+        <property name="Hole Shape">Square</property>
     </properties>
     <description>Generic female header</description>
     <views>
