@@ -42,42 +42,42 @@
   </pcbView>
  </views>
  <connectors>
-  <connector type="male" id="connector0" name="adjust" >
-   <description>adjust</description>
+  <connector type="male" id="connector0" name="ADJ" >
+   <description>Adjust</description>
    <views>
     <breadboardView>
      <p svgId="connector0pin" layer="breadboard" terminalId="connector0terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
+     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector0pad" layer="copper0" />
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector1" name="output voltage" >
-   <description>output</description>
+  <connector type="male" id="connector1" name="OUT" >
+   <description>Output</description>
    <views>
     <breadboardView>
      <p svgId="connector1pin" layer="breadboard" terminalId="connector1terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector1pin" layer="schematic" terminalId="connector1terminal" />
+     <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector1pad" layer="copper0" />
     </pcbView>
    </views>
   </connector>
-  <connector type="male" id="connector2" name="input voltage" >
-   <description>input voltage</description>
+  <connector type="male" id="connector2" name="IN" >
+   <description>Input Voltage</description>
    <views>
     <breadboardView>
      <p svgId="connector2pin" layer="breadboard" terminalId="connector2terminal" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector2pin" layer="schematic" terminalId="connector2terminal" />
+     <p svgId="connector0pin" layer="schematic" terminalId="connector0terminal" />
     </schematicView>
     <pcbView>
      <p svgId="connector2pad" layer="copper0" />
