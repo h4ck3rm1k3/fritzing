@@ -410,7 +410,10 @@ void PartsBinPaletteWidget::addPart(const QString& moduleID, int position) {
 
 void PartsBinPaletteWidget::addNewPart(ModelPart *modelPart) {
 	addPart(modelPart);
+	saveAndCreateNewBinIfCore();
+}
 
+void PartsBinPaletteWidget::saveAndCreateNewBinIfCore() {
 	if(currentBinIsCore()) {
 		m_binTitle->setText(tr("My parts bin"));
 		QDateTime now = QDateTime::currentDateTime();

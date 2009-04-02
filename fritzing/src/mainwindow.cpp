@@ -682,9 +682,14 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 		return;
 	}
 
-	if(!beforeClosing() || !whatToDoWithAlienFiles() ||!m_paletteWidget->beforeClosing()) {
+	bool whatWithAliens = whatToDoWithAlienFiles();
+	if(!beforeClosing() || !whatWithAliens ||!m_paletteWidget->beforeClosing()) {
 		event->ignore();
 		return;
+	}
+
+	if(whatWithAliens && m_paletteWidget->hasAlienParts()) {
+		m_paletteWidget->saveAndCreateNewBinIfCore();
 	}
 
 	m_closing = true;
@@ -1067,6 +1072,7 @@ void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFol
 		m_alienPartsMsg = tr("Do you want to keep the imported parts?");
 	}
 	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
+	mp->setAlien(true);
 	m_paletteWidget->addPart(mp);
 }
 

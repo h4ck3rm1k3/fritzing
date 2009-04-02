@@ -66,6 +66,7 @@ class PartsBinPaletteWidget : public QFrame {
 
 		ModelPart * selected();
 		bool hasAlienParts();
+		void saveAndCreateNewBinIfCore();
 
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void addPart(const QString& moduleID, int position = -1);
@@ -112,7 +113,7 @@ class PartsBinPaletteWidget : public QFrame {
 		PaletteModel *m_model;
 		ReferenceModel *m_refModel;
 		bool m_canDeleteModel;
-	
+
 		QString m_fileName;
 		QString m_defaultSaveFolder;
 		QString m_untitledFileName;
