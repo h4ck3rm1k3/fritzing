@@ -4385,7 +4385,7 @@ void SketchWidget::init() {
 	}
 }
 
-QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize)
+QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart)
 {
 	int width = scene()->width();
 	int height = scene()->height();
@@ -4420,6 +4420,10 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 	width = itemsBoundingRect.width();
 	height = itemsBoundingRect.height();
 	QPointF offset = itemsBoundingRect.topLeft();
+
+	if (offsetPart) {
+		offset = offsetPart->scenePos();
+	}
 
 	imageSize.setWidth(width);
 	imageSize.setHeight(height);

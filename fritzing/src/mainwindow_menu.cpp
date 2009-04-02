@@ -150,7 +150,7 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper0;
 	QSizeF imageSize;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL);
 	if (wantSVG) {
 		QString svgFileName = fileName;
 		svgFileName.replace(fileExt, ".svg");
@@ -1902,7 +1902,7 @@ void MainWindow::exportToGerber() {
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper0;
 	QSizeF imageSize;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize);
+	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;

@@ -1584,7 +1584,7 @@ void MainWindow::saveAsModule() {
 
 QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs) {
 	QSizeF imageSize;
-	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize);
+	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL);
 }
 
 void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
