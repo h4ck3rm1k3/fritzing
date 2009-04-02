@@ -183,9 +183,7 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 	m_model = model;
 	m_undoStack->setClean();
 	m_fileName = model->loadedFrom();
-	if(currentBinIsCore()) {
-		setSaveButtonEnabled(false);
-	}
+	setSaveButtonEnabled(!currentBinIsCore());
 }
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
