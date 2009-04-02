@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+#from fritzing.apps.parts.core.utils import escape_to_file_name, escape_spaces
 <module fritzingVersion="0.1.1201" moduleId="$uuid">
     <version>1.0</version>
-    <title>$title</title>
+    <title>${escape_spaces($resistance)} &#8486; Resistor</title>
     <label>R</label>
     <date>$date</date>
     <author>Fritzing Part-o-matic</author>
@@ -17,7 +18,6 @@
     </properties>
     <taxonomy>discreteParts.resistor.$resistance</taxonomy>
     <description>A generic resistor (0.25W)</description>
-#from fritzing.apps.parts.core.utils import escape_to_file_name
     <views>
         <iconView>
 #set $icon_suffix = '_'+$icon_unique if not $gen_to_core else ''

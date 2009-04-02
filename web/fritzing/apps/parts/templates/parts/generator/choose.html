@@ -1,17 +1,63 @@
 {% extends "site_base.html" %}
+
+{% if debugging %}
 {% block subnav %}{% endblock subnav %}
+{% endif %}
+
 {% block content %}
 
 {% if scripts_list %}
-<form action="/parts/generator/form/" method="post">
+<h1>Part-o-matic</h1>
+<img style="float: left" src="{{ MEDIA_URL }}fritzing/img/part-o-matic.jpg"/>
+<div>
+	Custom parts can be quickly created using this tool. Go through a couple of simple steps 
+	to define a new part, download it, and import to Fritzing. Standard parts like ICs, 
+	resistors, and pin headers are supported, while more complex parts can be created 
+	using the Parts Editor.
+</div>
+
+<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.js"></script>
+<script type="text/javascript" src="{{ PAGES_MEDIA_URL }}javascript/jquery.query.js"></script>
+
+<script language="JavaScript">
+	function get_form() {
+		var script_id = document.getElementById('script_id').value
+		if(script_id != -1) {
+			$.post(
+				"/parts/generator/form/",
+				{'script_id' : script_id},
+				cb_get_form,
+				"html"
+			);
+		}
+	}
+	
+	function cb_get_form(data) {
+		document.getElementById('form_container').innerHTML = data;
+	}
+</script>
+
+<form>
   <label for="script_id">Choose a type of part to create</label>
-    <select name="script_id" id="script_id">
+    <select name="script_id" id="script_id" onchange="get_form()">
+    	<option value="-1">--- Choose a type of part ---</option>
     {% for script in scripts_list %}
-        <option value="{{ script.value }}">{{ script.label }}</option>
+        <option value="{{ script.value }}" {% ifequal script_id script.value %}selected="selected"{% endifequal %}>
+        	{{ script.label }}
+		</option>
     {% endfor %}
     </select><br />
-    <input type="submit" value="Submit" />
 </form>
+
+<div id="form_container">
+{% if script_form %}
+<form action="/parts/generator/generate/" method="POST">
+	{{ script_form.as_p }}
+	<input type="submit" value="Submit" />
+</form>
+{% endif %}	
+</div>
+
 {% else %}
     <p>No scripts are available.</p>
 {% endif %}

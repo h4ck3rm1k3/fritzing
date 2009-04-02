@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module fritzingVersion="0.2.2.b.03.04.2550" moduleId="$uuid">
     <author>Fritzing Part-o-matic</author>
-    <title>$title - $pins pins</title>
+    <title>Generic female header - $pins pins</title>
     <label>J</label>
     <date>$date</date>
     <tags></tags>

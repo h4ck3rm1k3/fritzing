@@ -1,3 +1,5 @@
+import re
+
 color_bands = ['black', 'brown', 'red', 'orange', 'yellow', 'green', 'blue', 'purple', 'grey', 'white']
 multipliers = {
     1 : 'black',
@@ -77,7 +79,8 @@ def stripe3(resistance):
     return colors[multipliers[multiplier]]
 
 
-def to_number(resistance_str):
+def to_number(resistance):
+    resistance_str = escape_spaces(resistance)
     last_char = str(resistance_str[-1])
     last_char = last_char.lower()
     if last_char in units.keys() :
@@ -108,6 +111,11 @@ def get_whole_digits_count(real_resistance):
 
 
 def escape_to_file_name(something):
-    a_str = str(something)
+    a_str = escape_spaces(something)
     return a_str.replace(" ","_").replace(".","_")
+
+def escape_spaces(something):
+    a_str = str(something)
+    a_str = re.sub("\s+", " ", a_str)
+    return a_str.strip()
 

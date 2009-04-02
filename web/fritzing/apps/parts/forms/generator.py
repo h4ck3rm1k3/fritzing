@@ -4,34 +4,34 @@ import sys
 def string_field(name,obj):
     src = '''
     %(name)s = forms.CharField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj) }
+    % {'name' : name, 'attrs' : get_standard_attrs(obj) }
     return src
     
 def int_field(name,obj):
     src = '''
     %(name)s = forms.IntegerField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj)+get_range(obj) }
+    % {'name' : name, 'attrs' : get_standard_attrs(obj)+get_range(obj) }
     return src
 
     
 def float_field(name,obj):
     src = '''
     %(name)s = forms.FloatField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj)+get_range(obj) }
+    % {'name' : name, 'attrs' : get_standard_attrs(obj)+get_range(obj) }
     return src
 
     
 def enum_field(name,obj):
     src = '''
     %(name)s = forms.ChoiceField(required=True%(attrs)s, choices=%(choices)s) ''' \
-    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj), 'choices' : obj['choices'] }
+    % {'name' : name, 'attrs' : get_standard_attrs(obj), 'choices' : obj['choices'] }
     return src
 
 
 def regex_field(name,obj):
     src = '''
     %(name)s = forms.RegexField(required=True%(attrs)s) ''' \
-    % {'name' : name, 'attrs' : get_label_err_msgs_and_initial(obj)+get_regex(obj) }
+    % {'name' : name, 'attrs' : get_standard_attrs(obj)+get_regex(obj) }
     return src
 
     
@@ -40,10 +40,11 @@ def get_range(obj):
     src += get_aux(obj,'max_value',"")
     return src
         
-def get_label_err_msgs_and_initial(obj):
+def get_standard_attrs(obj):
     return get_aux(obj,'label')\
         +get_aux(obj,'error_messages','')\
         +get_aux(obj,'initial')\
+        +get_aux(obj,'help_text')
 
 def get_regex(obj):
     return get_aux(obj,'regex')
