@@ -263,14 +263,14 @@ QWidget *PartsEditorViewsWidget::addZoomControlsAndBrowseButton(PartsEditorView 
 	lo1->setSpacing(1);
 	lo1->setMargin(0);
 
-	QPushButton *button = new QPushButton(tr("Browse..."),container1);
+	QLabel *button = new QLabel(QString("<a style='color:black; text-decoration: none;' href='#'>%1</a>").arg(tr("image ...")), this);
 	button->setObjectName("browseButton");
 	button->setMinimumWidth(85);
 	button->setMaximumWidth(85);
 	button->setFixedHeight(20);
 	button->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 
-	connect(button, SIGNAL(clicked()), view, SLOT(loadFile()));
+	connect(button, SIGNAL(linkActivated(const QString&)), view, SLOT(loadFile()));
 	QHBoxLayout *lo2 = new QHBoxLayout();
 	lo2->setSpacing(1);
 	lo2->setMargin(0);

@@ -176,6 +176,7 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	m_headerFrame = new QFrame();
 	m_headerFrame->setSizePolicy(QSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed));
 	m_headerFrame->setObjectName("header");
+	m_headerFrame->setStyleSheet("padding: 2px; padding-bottom: 0;");
 
 	int iconViewSize = 50;
 	QGraphicsItem *startItem = modelPart? NULL: PartsEditorMainWindow::emptyViewItem("icon_icon.png",___emptyString___);
@@ -192,12 +193,17 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 		m_iconViewImage->loadFromModel(m_paletteModel, modelPart);
 	}
 
-	QPushButton *button = new QPushButton(tr("..."), this);
-	button->setObjectName("browseButton");
+	QString linkStyle = "font-size: 10px; color: white; text-decoration: none;";
+	QLabel *button = new QLabel(
+						QString("<a style='%2' href='#'>%1</a>")
+							.arg(tr("image ..."))
+							.arg(linkStyle),
+						this);
+	button->setObjectName("iconBrowseButton");
 	button->setFixedWidth(iconViewSize);
 	button->setFixedHeight(20);
 	//m_iconViewImage->addFixedToBottomRight(button);
-	connect(button, SIGNAL(clicked()), m_iconViewImage, SLOT(loadFile()));
+	connect(button, SIGNAL(linkActivated(const QString&)), m_iconViewImage, SLOT(loadFile()));
 
 	QString title = modelPart ? modelPart->modelPartShared()->title() : TitleFreshStartText;
 	m_title = new EditableLineWidget(title,m_undoStack,m_headerFrame,"",modelPart,true);
@@ -207,7 +213,9 @@ void PartsEditorMainWindow::createHeader(ModelPart *modelPart) {
 	QGridLayout *headerLayout = new QGridLayout();
 	headerLayout->addWidget(m_iconViewImage,0,0);
 	headerLayout->addWidget(button,1,0);
-	headerLayout->addWidget(m_title,0,1,2,1);
+	headerLayout->addWidget(m_title,0,1);
+	headerLayout->setVerticalSpacing(0);
+	headerLayout->setMargin(0);
 	m_headerFrame->setLayout(headerLayout);
 }
 

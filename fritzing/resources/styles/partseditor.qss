@@ -190,12 +190,10 @@ PartsEditorViewsWidget {
 	background-color: #7F7F7F;
 }
 
-#browseButton {
-	background-color: #d1d3d4;
-}
-
-#browseButton:pressed {
-	background-color: #d1d3d4;
+#iconBrowseButton {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
 }
 
 #guidelinesLabel {
