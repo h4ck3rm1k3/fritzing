@@ -6,7 +6,11 @@
 
 {% block content %}
 
+{% if debugging %}
 debugging {{ debugging }}
+{% else %}
+no debugging
+{% endif %}
 
 {% if scripts_list %}
 <h1>Part-o-matic</h1>
