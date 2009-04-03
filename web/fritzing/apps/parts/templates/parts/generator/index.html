@@ -10,8 +10,8 @@
 
 {% if scripts_list %}
 <h1>Part-o-matic</h1>
-<img style="float: left" src="{{ MEDIA_URL }}fritzing/img/part-o-matic.jpg"/>
-<div>
+<img style="float: right; margin-right: 15%;" src="{{ MEDIA_URL }}fritzing/img/part-o-matic.jpg"/>
+<div style="width: 60%; text-align: justify; margin-top: 10px;">
 	Custom parts can be quickly created using this tool. Go through a couple of simple steps 
 	to define a new part, download it, and import to Fritzing. Standard parts like ICs, 
 	resistors, and pin headers are supported, while more complex parts can be created 
@@ -41,7 +41,7 @@
 	}
 </script>
 
-<form>
+<form style="margin-top: 10px;">
   <label for="script_id">Choose a type of part to create</label>
     <select name="script_id" id="script_id" onchange="get_form()">
     	<option value="-1">--- Choose a type of part ---</option>

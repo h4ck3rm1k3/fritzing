@@ -138,8 +138,9 @@ def escape_to_file_name(something):
 
 def escape_spaces(something):
     a_str = str(something)
+    a_str = a_str.strip()
     a_str = re.sub("\s+", " ", a_str)
     if "." in a_str:
         a_str = re.sub("0+$", "", a_str)
-    return a_str.strip()
+    return a_str
 
