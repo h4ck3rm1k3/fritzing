@@ -66,7 +66,7 @@ def to_str_without_scient_not(long_num):
 def get_second_number(resistance, correction):
     real_resistance = to_number(resistance)
     
-    str_real_resistance = to_str_without_scient_not(resistance)
+    str_real_resistance = to_str_without_scient_not(real_resistance)
     
     digit_cnt = get_whole_digits_count(real_resistance);
     if(digit_cnt > 1 ):
@@ -120,7 +120,7 @@ def get_whole_digits_count(real_resistance):
     
     matches = re.match('(\d+)e\+(\d+)', resist_str)
     if matches and len(matches.group()) > 0:
-        return int(matches.group(2))+1
+        return int(matches.group(2))+1 #the exponent plus one
 
     i = 1
     char = resist_str[0]
@@ -141,6 +141,12 @@ def escape_spaces(something):
     a_str = a_str.strip()
     a_str = re.sub("\s+", " ", a_str)
     if "." in a_str:
+        # all this can be done with a single regexp,
+        # and some post processing for sure
         a_str = re.sub("0+$", "", a_str)
+        a_str = re.sub("0+ k$", " k", a_str)
+        a_str = re.sub("0+ K$", " K", a_str)
+        a_str = re.sub("0+ m$", " m", a_str)
+        a_str = re.sub("0+ M$", " M", a_str)
     return a_str
 
