@@ -49,7 +49,7 @@ def get_standard_attrs(obj):
 def get_regex(obj):
     return get_aux(obj,'regex')
 
-def get_aux(obj,prop_name,separator="'"):
+def get_aux(obj,prop_name,separator='"'):
     src = ""
     if obj.has_key(prop_name):
         src = ", %(name)s=%(sep)s%(value)s%(sep)s" % {'name':prop_name, 'value':obj[prop_name], 'sep': separator}

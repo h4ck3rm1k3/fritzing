@@ -47,10 +47,26 @@ def stripe1(resistance):
     #print "1st stripe "+str(fst_num)+" "+color_bands[fst_num]
     return colors[color_bands[fst_num]]
 
+def to_str_without_scient_not(long_num):
+    long_str = str(long_num)
+    
+    matches = re.match("(.+)[eE]([\+\-]\d+)",long_str)
+    if matches and len(matches.group()) >0:
+        signif_str = matches.group(1)
+        power_str  = matches.group(2)
+        decimals = 0
+        if "." in signif_str:
+            decimals = len(signif_str) - signif_str.find(".") -1
+            signif_str = signif_str.replace(".","")
+        return signif_str+("0"*(int(power_str)-decimals))
+    else:
+        return long_str
+
 
 def get_second_number(resistance, correction):
     real_resistance = to_number(resistance)
-    str_real_resistance = str(real_resistance)
+    
+    str_real_resistance = to_str_without_scient_not(resistance)
     
     digit_cnt = get_whole_digits_count(real_resistance);
     if(digit_cnt > 1 ):
@@ -101,12 +117,18 @@ def get_multiplier(fst_num,snd_num,real_resistance):
 def get_whole_digits_count(real_resistance):
     digit_cnt = 0
     resist_str = str(real_resistance)
+    
+    matches = re.match('(\d+)e\+(\d+)', resist_str)
+    if matches and len(matches.group()) > 0:
+        return int(matches.group(2))+1
+
     i = 1
     char = resist_str[0]
     while char != '.' and i <= len(resist_str):
         digit_cnt += 1
         i += 1
         char = resist_str[i-1]
+        
     return digit_cnt
 
 
@@ -117,5 +139,7 @@ def escape_to_file_name(something):
 def escape_spaces(something):
     a_str = str(something)
     a_str = re.sub("\s+", " ", a_str)
+    if "." in a_str:
+        a_str = re.sub("0+$", "", a_str)
     return a_str.strip()
 

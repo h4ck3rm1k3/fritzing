@@ -35,9 +35,13 @@ SCRIPTS_DEFS['resistor']['resistance'] = {
     'label': 'Choose the resistance',
     'type' : 'regex',
     # just two significant digits
-    'regex': '^(([123456789]\d0*(\.0*)?)|([1..9]\.\d0*)|(0\.[1..9]\d?0*))\s*[kKmM]?$',
-    'error_messages' : {'invalid' : "You should provide a resistance with only two significant digits. You can use 'k' and 'M' as units as well."},
-    'help_text' : "You should provide a resistance with only two significant digits."
+    'regex': '^\s*(([1-9]\d0*(\.0*)?)|([1-9]\.\d0*)|(0\.[1-9]\d?0*))\s*[kKmM]?\s*$',
+    'error_messages' : {'invalid' : "You should provide a resistance with only two \
+                        significant digits and with one tenth decimal precision, for values lower than 1."},
+    'help_text' : "Provide a positive value with only two significant digits and with one "+\
+                    "tenth decimal precision, for values lower than 1. You can use 'k' and 'M' "+\
+                    "as units as well.<br/>For example: 10k, 0.2, 0.11, 0.5 M and 7500000000 are all "+\
+                    "valid values, but 0.01, 0.507, 113.10 k and 123000 are not"
 }
 
 SCRIPTS_DEFS['mystery']['pins'] = _PINS_DICT_AUX

@@ -24,7 +24,7 @@ def form(request):
     form = generator.get_form_class(class_name)()
     return render_to_response(
         'parts/generator/form.html',
-        {'form': form},
+        {'script_form': form},
         context_instance = RequestContext(request)
     )
 

@@ -51,10 +51,7 @@
 
 <div id="form_container">
 {% if script_form %}
-<form action="/parts/generator/generate/" method="POST">
-	{{ script_form.as_p }}
-	<input type="submit" value="Submit" />
-</form>
+	{% include "parts/generator/form.html" %}
 {% endif %}	
 </div>
 
