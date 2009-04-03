@@ -1,18 +1,12 @@
 {% extends "site_base.html" %}
 
-{% if debugging %}
-{% block subnav %}{% endblock subnav %}
-{% else %}
-<div>no debugging</div>
-{% endif %}
+{% block subnav %}
+	{% if not debugging %}
+		{{ block.super}}
+	{% endif %}
+{% endblock subnav %}
 
 {% block content %}
-
-{% if debugging %}
-debugging {{ debugging }}
-{% else %}
-no debugging
-{% endif %}
 
 {% if scripts_list %}
 <h1>Part-o-matic</h1>
