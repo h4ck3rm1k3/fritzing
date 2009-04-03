@@ -11,7 +11,7 @@ from fritzing.apps.parts.core.defs import AVAIL_SCRIPTS
 
 def choose(request):
     return render_to_response(
-        'parts/generator/choose.html',
+        'parts/generator/index.html',
         {'scripts_list': AVAIL_SCRIPTS, 'debugging' : settings.DEBUG},
         context_instance = RequestContext(request)
     )
@@ -66,7 +66,7 @@ def generate(request):
             return send_zipfile(script_id,config)
         else:
             return render_to_response(
-                'parts/generator/choose.html',
+                'parts/generator/index.html',
                 {'script_form': form,
                  'script_id' : script_id,
                  'scripts_list': AVAIL_SCRIPTS,
