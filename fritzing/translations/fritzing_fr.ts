@@ -64,19 +64,30 @@
 <context>
     <name>ConnectorsInfoWidget</name>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="122"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="123"/>
         <source>List of Connectors</source>
         <translation>Liste des connecteurs</translation>
     </message>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="315"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="316"/>
         <source>Loading connectors...</source>
         <translation>Chargement des connecteurs...</translation>
     </message>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="99"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="100"/>
         <source>Mismatching Connector IDs</source>
         <translation>Les ID des connecteurs ne correspondent pas</translation>
+    </message>
+    <message>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="587"/>
+        <source>Couldn&apos;t fix connector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="589"/>
+        <source>Please, first load an image in each view,
+in order to fix this connector</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -419,22 +430,22 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="src/mainwindow.cpp" line="494"/>
+        <location filename="src/mainwindow.cpp" line="498"/>
         <source>Rotate</source>
         <translation>Effectuer une rotation</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="505"/>
+        <location filename="src/mainwindow.cpp" line="509"/>
         <source>Flip</source>
         <translation>Effectuer une symétrie</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="514"/>
+        <location filename="src/mainwindow.cpp" line="518"/>
         <source>Autoroute</source>
         <translation>Autoroutage</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="743"/>
+        <location filename="src/mainwindow.cpp" line="752"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
@@ -444,17 +455,17 @@
         <translation>Terminé</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="716"/>
+        <location filename="src/mainwindow.cpp" line="725"/>
         <source>Save %1</source>
         <translation>Enregistrer %1</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="885"/>
+        <location filename="src/mainwindow.cpp" line="894"/>
         <source>Specify a file name</source>
         <translation>Veuillez spécifier un nom de fichier</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="887"/>
+        <location filename="src/mainwindow.cpp" line="896"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
@@ -464,17 +475,17 @@
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1123"/>
+        <location filename="src/mainwindow.cpp" line="1133"/>
         <source>No connections to route</source>
         <translation>Pas de connection à relier</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1126"/>
+        <location filename="src/mainwindow.cpp" line="1136"/>
         <source>Routing completed</source>
         <translation>Routage terminé</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1260"/>
+        <location filename="src/mainwindow.cpp" line="1270"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
@@ -1317,27 +1328,27 @@
         <translation>Ajouter un aide-mémoire</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="528"/>
+        <location filename="src/mainwindow.cpp" line="532"/>
         <source>Export Etchable PDF</source>
         <translation>Exporter un typon au format PDF</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1033"/>
+        <location filename="src/mainwindow.cpp" line="1042"/>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
         <translation>Voulez-vous garder les composants qui ont été chargés avec le schéma partagé %1?</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="934"/>
+        <location filename="src/mainwindow.cpp" line="943"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation>Impossibilité d&apos;exporter %1 vers le schéma partagé</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="951"/>
+        <location filename="src/mainwindow.cpp" line="960"/>
         <source>Unable to open shareable sketch %1</source>
         <translation>Impossibilité d&apos;ouvrir le schéma partagé %1</translation>
     </message>
     <message numerus="yes">
-        <location filename="src/mainwindow.cpp" line="1129"/>
+        <location filename="src/mainwindow.cpp" line="1139"/>
         <source>Routing completed using %n jumper(s)</source>
         <translation>
             <numerusform>Routage terminé utilisant %n câble(s) aériens</numerusform>
@@ -1345,7 +1356,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="src/mainwindow.cpp" line="1132"/>
+        <location filename="src/mainwindow.cpp" line="1142"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation>
             <numerusform>%1 des %2 réseaux a été routé - %n connecteur(s) doivent êtres reliés</numerusform>
@@ -1562,22 +1573,22 @@ Quantité<byte value="x9"/>Composant</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="978"/>
+        <location filename="src/mainwindow.cpp" line="987"/>
         <source>Select a part to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="980"/>
+        <location filename="src/mainwindow.cpp" line="989"/>
         <source>External Part (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="997"/>
+        <location filename="src/mainwindow.cpp" line="1006"/>
         <source>Unable to open shareable part %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1063"/>
+        <location filename="src/mainwindow.cpp" line="1072"/>
         <source>Do you want to keep the imported parts?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1627,29 +1638,29 @@ Quantité<byte value="x9"/>Composant</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1385"/>
+        <location filename="src/mainwindow.cpp" line="1396"/>
         <source>Before you can save a sketch as a module, all traces must be routed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1584"/>
+        <location filename="src/mainwindow.cpp" line="1663"/>
         <source>Sorry!</source>
         <translation type="unfinished">Oups!</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1588"/>
+        <location filename="src/mainwindow.cpp" line="1667"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation type="unfinished">Aucun composant ayant ces charactéristiques n&apos;existe.
 Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entre des propriétés qui existent</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1601"/>
+        <location filename="src/mainwindow.cpp" line="1680"/>
         <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1606"/>
+        <location filename="src/mainwindow.cpp" line="1685"/>
         <source>Swapped %1 with module %2</source>
         <translation type="unfinished">Echanger %1 avec le module %2</translation>
     </message>
@@ -1827,104 +1838,104 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
         <translation>Composants</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="217"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="215"/>
         <source>Show as icons</source>
         <translation>Représentation sous forme d&apos;icônes</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="221"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="219"/>
         <source>Show as list</source>
         <translation>Représentation sous forme de liste</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="225"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="223"/>
         <source>Remove selected part</source>
         <translation>Supprimer le composant sélectionné</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="230"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="228"/>
         <source>Open bin</source>
         <translation>Ouvrir un jeu de composant</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="235"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="233"/>
         <source>Save bin</source>
         <translation>Enregistrer le jeu de composant</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="240"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="238"/>
         <source>Restore core bin</source>
         <translation>Restaurer le jeu de composant standard</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="266"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="264"/>
         <source>Specify a file name</source>
         <translation>Veuillez spécifier un nom</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="287"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="285"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="299"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="297"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="294"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="292"/>
         <source>Cannot find file %1.</source>
         <translation>Impossibilité de trouver le fichier %1.</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="301"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="299"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Impossibilité de lire le fichier %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="354"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="352"/>
         <source>Save &quot;%1&quot;</source>
         <translation>Enregistrer %1</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="356"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="354"/>
         <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
         <translation>Voulez-vous enregistrer les modifications faites au document &quot;%1&quot;?</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="363"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="361"/>
         <source>Save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="364"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="362"/>
         <source>Don&apos;t Save</source>
         <translation>Ne pas enregistrer</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="365"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="363"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="470"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="471"/>
         <source>Add to bin</source>
         <translation>Ajouter au jeu de composants</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="471"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="472"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation>Voulez-vous vraiment ajouter le composant sélectionné au jeu de composant?</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="494"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="495"/>
         <source>Remove from bin</source>
         <translation>Supprimer du jeu de composant</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="495"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="496"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation>Voulez-vous vraiment supprimer le composant sélectionné du jeu de composant?</translation>
     </message>
@@ -1934,17 +1945,17 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
         <translation>Jeu de composant sans nom</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="285"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="283"/>
         <source>Select a Fritzing file to open</source>
         <translation>Sélectionner un fichier Fritzing à ouvrir</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="366"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="364"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation>Vos changements seront perdus si vous ne les enregistrez pas.</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="417"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="418"/>
         <source>My parts bin</source>
         <translation>Mon jeu de composant</translation>
     </message>
@@ -1963,88 +1974,88 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
         <translation>Erreur! le fichier composant ne peut pas être créé.</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="218"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="236"/>
         <source>Label</source>
         <translation>Etiquette</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="221"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="239"/>
         <source>Description</source>
         <translation>Description</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="240"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="258"/>
         <source>Properties</source>
         <translation>Propriétés</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="243"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="261"/>
         <source>Tags</source>
         <translation>Mots clés</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="248"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="266"/>
         <source>Author</source>
         <translation>Auteur</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="255"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="273"/>
         <source>Created/Updated on</source>
         <translation>Créé/Mise à jour le</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="290"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="308"/>
         <source>Specifications</source>
         <translation>Spécifications</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="291"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="309"/>
         <source>Connectors</source>
         <translation>Connecteurs</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="319"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="337"/>
         <source>save as new part</source>
         <translation>Enregistrer en tant que nouveau composant</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="323"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="341"/>
         <source>save</source>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="336"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="354"/>
         <source>cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="426"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="444"/>
         <source>Open Image</source>
         <translation>Ouvrir une image</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="473"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="491"/>
         <source>Save as new part</source>
         <translation>Enregistrer en tant que nouveau composant</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="515"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="536"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="517"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="538"/>
         <source>Cannot write file %1:
 %2.</source>
         <translation>Ne peux pas écrire le fichier %1:%2.</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="537"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="558"/>
         <source>Saved &apos;%1&apos;</source>
         <translation>Enregistré &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="664"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="685"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
@@ -2074,17 +2085,17 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
         <translation>&lt;i&gt;créé par&lt;/i&gt; %1 &lt;i&gt;le&lt;/i&gt; %2</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="426"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="444"/>
         <source>SVG Files (*.fzfp)</source>
         <translation>SVG Files (*.fzfp)</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="685"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="706"/>
         <source>Icon needed</source>
         <translation>Icône requise</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="685"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="706"/>
         <source>Please, provide an icon image for this part</source>
         <translation>Veuillez fournir un fichier image pour l&apos;icône de ce composant</translation>
     </message>
@@ -2099,21 +2110,26 @@ Nous travaillons pour éviter ce message afin de pouvoir vous faire choisir entr
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditormainwindow.cpp" line="474"/>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="492"/>
         <source>There&apos;s already a file with this name.
 Please, specify a new filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/partseditor/partseditormainwindow.cpp" line="199"/>
+        <source>image ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PartsEditorView</name>
     <message>
-        <location filename="src/partseditor/partseditorview.cpp" line="477"/>
+        <location filename="src/partseditor/partseditorview.cpp" line="489"/>
         <source>Open Image</source>
         <translation type="unfinished">Ouvrir une image</translation>
     </message>
     <message>
-        <location filename="src/partseditor/partseditorview.cpp" line="480"/>
+        <location filename="src/partseditor/partseditorview.cpp" line="492"/>
         <source>Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2150,7 +2166,7 @@ la vue schématique?</translation>
     </message>
     <message>
         <location filename="src/partseditor/partseditorviewswidget.cpp" line="266"/>
-        <source>Browse...</source>
+        <source>image ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2215,17 +2231,17 @@ la vue schématique?</translation>
         <translation>&lt;font face=&apos;Lucida Grande, Tahoma, Sans Serif&apos; size=&apos;2&apos; color=&apos;#eaf4ed&apos;&gt;&amp;#169; 2007-%1 Université des sciences appliquées de Potsdam (FH Potsdam)&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="324"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="322"/>
         <source>Friting cannot load the parts bin</source>
         <translation>Fritzing ne peut pas charger le jeu de composants</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1169"/>
+        <location filename="src/mainwindow.cpp" line="1179"/>
         <source>Part</source>
         <translation>Composant</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1178"/>
+        <location filename="src/mainwindow.cpp" line="1188"/>
         <source>Wire</source>
         <translation>Câble</translation>
     </message>
@@ -2265,7 +2281,7 @@ la vue schématique?</translation>
         <translation>Le fichier %1 n&apos;est pas un fichier venant de Fritzing (3).</translation>
     </message>
     <message>
-        <location filename="src/modelbase.cpp" line="199"/>
+        <location filename="src/modelbase.cpp" line="202"/>
         <source>Cannot write file temp file:
 %1.</source>
         <translation>Impossibilité d&apos;écrire le fichier temporaire :
@@ -2539,7 +2555,7 @@ Fritzing va continuer à fonctionner, mais vous n&apos;aurez pas la possibilité
         <translation>Le fichier &apos;%1&apos; ne peut pas être modifié; Veuillez utiliser un autre nom.</translation>
     </message>
     <message>
-        <location filename="src/partseditor/connectorsinfowidget.cpp" line="71"/>
+        <location filename="src/partseditor/connectorsinfowidget.cpp" line="72"/>
         <source>Add connector</source>
         <translation>Ajouter un connecteur</translation>
     </message>
