@@ -25,10 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "miniview.h"
-#include "debugdialog.h"
-#include "fgraphicsscene.h"
-#include "help/sketchmainhelp.h"
-
+#include "../debugdialog.h"
+#include "../fgraphicsscene.h"
 
 MiniView::MiniView(QWidget *parent )
 	: QGraphicsView(parent)

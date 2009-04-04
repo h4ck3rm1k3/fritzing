@@ -51,7 +51,7 @@ $Date$
 #include "waitpushundostack.h"
 #include "fapplication.h"
 #include "layerattributes.h"
-#include "triplenavigator.h"
+#include "navigator/triplenavigator.h"
 #include "breadboardsketchwidget.h"
 #include "schematicsketchwidget.h"
 #include "pcbsketchwidget.h"
@@ -1383,11 +1383,12 @@ void MainWindow::editModule() {
 
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
 	mw->loadWhich(itemBase->modelPartShared()->path(), false, false);
+	mw->m_sketchModel->walk(mw->m_sketchModel->root(), 0);
 	closeIfEmptySketch(mw);
 }
 
-void MainWindow::saveAsModule() {
-
+void MainWindow::saveAsModule() 
+{
 	if (!m_pcbGraphicsView->ratsAllRouted()) {
 		QMessageBox::warning(
 			this,
@@ -1396,7 +1397,10 @@ void MainWindow::saveAsModule() {
 		return;
 	}
 
-	SaveAsModuleDialog dialog(m_breadboardGraphicsView, this);
+	QList<ConnectorItem *> externalConnectors;
+	initExternalConnectors(externalConnectors);
+
+	SaveAsModuleDialog dialog(m_breadboardGraphicsView, externalConnectors, this);
 	if (dialog.exec() != QDialog::Accepted) return;
 
 	QHash<QString, QString> svgs;
@@ -1579,6 +1583,71 @@ void MainWindow::saveAsModule() {
 	file2.close();
 
 	loadPart(userPartsFolderPath + moduleID + FritzingModuleExtension);
+
+}
+
+void MainWindow::initExternalConnectors(QList<ConnectorItem *> & externalConnectors) {
+	QFile file(m_fileName);
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument* domDocument = new QDomDocument();
+
+	if (!domDocument->setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		return;
+	}
+
+	QDomElement root = domDocument->documentElement();
+	if (root.isNull()) {
+		return;
+	}
+
+	if (root.tagName() != "module") {
+		return;
+	}
+
+	QDomElement externals = root.firstChildElement("externals");
+	if (externals.isNull()) return;
+
+	QDomElement external = externals.firstChildElement("external");
+	while (!external.isNull()) {
+		ModelPart * mp = NULL;
+		bool ok;
+		QString connectorID = external.attribute("connectorId");
+		long oldModelIndex = external.attribute("modelIndex").toLong(&ok);
+		if (ok) {
+			mp = m_sketchModel->findModelPartFromOriginal(m_sketchModel->root(), oldModelIndex);
+		}
+		else {
+			// we're connected to something inside a module; fixup the first modelIndex
+			QDomElement p = external.firstChildElement("mp");
+			if (!p.isNull()) {
+				oldModelIndex = p.attribute("i").toLong();
+				mp = m_sketchModel->findModelPartFromOriginal(m_sketchModel->root(), oldModelIndex);
+				if (mp == NULL) break;
+
+				while (true) {
+					p = p.firstChildElement("mp");
+					if (p.isNull()) break;
+
+					mp = m_sketchModel->findModelPartFromOriginal(mp, p.attribute("i").toLong());
+					if (mp == NULL) break;
+				}
+			}
+		}
+		if (mp != NULL) {
+			ItemBase * itemBase = mp->viewItem(m_breadboardGraphicsView->scene());
+			if (itemBase != NULL) {
+				ConnectorItem * connectorItem = itemBase->findConnectorItemNamed(connectorID);
+				if (connectorItem != NULL) {
+					externalConnectors.append(connectorItem);
+				}
+			}
+		}
+
+		external = external.nextSiblingElement("external");
+	}
 
 }
 

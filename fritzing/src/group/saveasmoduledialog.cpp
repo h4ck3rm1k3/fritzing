@@ -48,11 +48,16 @@ $Date$
 
 /////////////////////////////////////
 
-SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QWidget *parent)
+SaveAsModuleDialog::SaveAsModuleDialog(SketchWidget * sketchWidget, QList<ConnectorItem *> & externalConnectors, QWidget *parent)
 	: QDialog(parent)
 {
 	m_sketchWidget = sketchWidget;
 	this->setWindowTitle(QObject::tr("Save as Module"));
+
+	foreach (ConnectorItem * connectorItem, externalConnectors) {
+		this->m_externalConnectorItems.append(connectorItem);
+		connectorItem->setChosen(true);
+	}
 
 	QFrame * centerFrame = new QFrame();
 	centerFrame->setObjectName("center");

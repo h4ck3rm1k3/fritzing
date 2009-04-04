@@ -38,7 +38,7 @@ class SaveAsModuleDialog : public QDialog
 	Q_OBJECT
 
 public:
-	SaveAsModuleDialog(class SketchWidget *, QWidget *parent = 0);
+	SaveAsModuleDialog(class SketchWidget *, QList<class ConnectorItem *> & externalConnectors, QWidget *parent = 0);
 	~SaveAsModuleDialog();
 
 	QString author();

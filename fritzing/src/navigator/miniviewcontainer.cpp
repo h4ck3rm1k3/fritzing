@@ -28,8 +28,8 @@ $Date$
 #include <QScrollBar>
 
 #include "miniviewcontainer.h"
-#include "debugdialog.h"
-#include "utils/misc.h"
+#include "../debugdialog.h"
+#include "../utils/misc.h"
 
 bool firstTime = true;
 

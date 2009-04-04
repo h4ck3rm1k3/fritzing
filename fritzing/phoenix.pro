@@ -69,6 +69,7 @@ include(pri/group.pri)
 include(pri/eagle.pri)
 include(pri/utils.pri)
 include(pri/viewswitcher.pri)
+include(pri/navigator.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

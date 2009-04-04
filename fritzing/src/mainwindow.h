@@ -36,7 +36,7 @@ $Date$
 
 #include "fritzingwindow.h"
 #include "sketchareawidget.h"
-#include "miniviewcontainer.h"
+#include "navigator/miniviewcontainer.h"
 #include "viewlayer.h"
 #include "zoomcombobox.h"
 #include "sketchtoolbutton.h"
@@ -61,7 +61,7 @@ public:
     MainWindow(QFile & fileToLoad);
 	~MainWindow();
 
-    void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true, bool doExternals = false);
+    void load(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	bool loadWhich(const QString & fileName, bool setAsLastOpened = true, bool addToRecent = true);
 	void notClosableForAWhile();
 	QAction *raiseWindowAction();
@@ -279,6 +279,7 @@ protected:
 	bool event(QEvent *);
 	void resizeEvent(QResizeEvent * event);
 	QString genIcon(SketchWidget *, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs);
+	void initExternalConnectors(QList<ConnectorItem *> & externalConnectors);
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);

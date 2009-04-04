@@ -154,6 +154,9 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 			modelPart->setOriginalModelIndex(oindex);
 			//DebugDialog::debug(QString("loadinstances original model index %1 %2").arg(oindex).arg((long) modelPart, 0, 16));
   		}
+		else {
+			modelPart->setOriginalModelIndex(index);
+		}
 
    		instance = instance.nextSiblingElement("instance");
   	}

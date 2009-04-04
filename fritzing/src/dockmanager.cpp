@@ -28,7 +28,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #include <QStatusBar>
 
 #include "dockmanager.h"
-#include "triplenavigator.h"
+#include "navigator/triplenavigator.h"
 #include "fsizegrip.h"
 #include "viewswitcher/viewswitcherdockwidget.h"
 #include "utils/misc.h"

@@ -50,8 +50,6 @@ HEADERS += \
     src/layerattributes.h \
     src/layerkinpaletteitem.h \
     src/mainwindow.h \
-    src/miniview.h \
-    src/miniviewcontainer.h \
     src/modelbase.h \
     src/modelpart.h \
     src/modelpartshared.h \
@@ -68,7 +66,6 @@ HEADERS += \
     src/sketchwidget.h \
     src/svgandpartfilepath.h \
     src/tracewire.h \
-    src/triplenavigator.h \
     src/viewgeometry.h \
     src/viewidentifierclass.h \
     src/viewlayer.h \
@@ -109,8 +106,6 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/mainwindow_menu.cpp \
-    src/miniview.cpp \
-    src/miniviewcontainer.cpp \
     src/modelbase.cpp \
     src/modelpart.cpp \
     src/modelpartshared.cpp \
@@ -126,7 +121,6 @@ SOURCES += \
     src/sketchtoolbutton.cpp \
     src/sketchwidget.cpp \
     src/tracewire.cpp \
-    src/triplenavigator.cpp \
     src/viewgeometry.cpp \
     src/viewidentifierclass.cpp \
     src/viewlayer.cpp \
