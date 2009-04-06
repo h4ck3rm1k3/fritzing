@@ -16,17 +16,20 @@ def choose(request):
         context_instance = RequestContext(request)
     )
 
-def form(request): 
-    script_id = request.POST['script_id']
-    params = get_params_def(script_id)
-    
-    class_name = generator.create_class_if_needed(params, script_id, settings.DEBUG)
-    form = generator.get_form_class(class_name)()
-    return render_to_response(
-        'parts/generator/form.html',
-        {'script_form': form},
-        context_instance = RequestContext(request)
-    )
+def form(request):
+    if 'script_id' in request.POST.keys(): 
+        script_id = request.POST['script_id']
+        params = get_params_def(script_id)
+        
+        class_name = generator.create_class_if_needed(params, script_id, settings.DEBUG)
+        form = generator.get_form_class(class_name)()
+        return render_to_response(
+            'parts/generator/form.html',
+            {'script_form': form},
+            context_instance = RequestContext(request)
+        )
+    else:
+        HttpResponse('no generator selected')
 
 
 def send_zipfile(script_id,config):
