@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -8,37 +8,24 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   version="1.0"
-   baseProfile="tiny"
-   id="Layer_1"
-   x="0px"
-   y="0px"
    width="32"
    height="32"
-   viewBox="0 0 595.28 841.89"
-   xml:space="preserve"
+   id="svg2524"
    sodipodi:version="0.32"
    inkscape:version="0.46"
+   version="1.0"
    sodipodi:docname="plain_pcb.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape"><metadata
-   id="metadata13"><rdf:RDF><cc:Work
-       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
-   id="defs11"><inkscape:perspective
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   <defs
+   id="defs11">
+   <inkscape:perspective
    sodipodi:type="inkscape:persp3d"
    inkscape:vp_x="0 : 420.94501 : 1"
    inkscape:vp_y="0 : 1000 : 0"
    inkscape:vp_z="595.28003 : 420.94501 : 1"
    inkscape:persp3d-origin="297.64001 : 280.63 : 1"
    id="perspective15" />
-	
-
-		
-		
-		
-		
-		
-	</defs><sodipodi:namedview
+   </defs><sodipodi:namedview
    inkscape:window-height="852"
    inkscape:window-width="1440"
    inkscape:pageshadow="2"
@@ -57,25 +44,34 @@
    inkscape:window-x="0"
    inkscape:window-y="22"
    inkscape:current-layer="Layer_1" />
+
 <rect
    id="rect2383_2_"
    x="-122.64378"
    y="0.47263345"
    width="843.34906"
    height="843.34906"
-   style="fill:#86a28c;stroke:#568b53;stroke-width:51.15904617;stroke-miterlimit:4;stroke-dasharray:none" /><rect
+   style="fill:#86a28c;stroke:#568b53;stroke-width:51.15904617;stroke-miterlimit:4;stroke-dasharray:none" />
+   
+   <rect
    id="rect2385_1_"
    x="-6.1558318"
    y="133.58987"
    width="176.36537"
    height="192.96883"
-   style="fill:#f5c930;stroke:#f5c930;stroke-width:26.35465813" /><path
+   style="fill:#f5c930;stroke:#f5c930;stroke-width:26.35465813" />
+   
+   <path
    id="path3157_1_"
    d="M 530.18782,586.15223 C 530.18782,636.12066 489.73342,676.60142 439.73864,676.60142 C 389.79655,676.60142 349.28944,636.14702 349.28944,586.15223 C 349.28944,536.21015 389.79655,495.70304 439.73864,495.70304 C 489.73342,495.70304 530.18782,536.21015 530.18782,586.15223 z"
-   style="fill:none;stroke:#f5c930;stroke-width:72.71778107" /><path
+   style="fill:none;stroke:#f5c930;stroke-width:72.71778107" />
+   
+   <path
    id="path3159_1_"
    d="M 80.340135,240.0892 L 83.687177,403.11912 L 343.22787,559.56038"
-   style="fill:none;stroke:#f5c930;stroke-width:52.70931625" /><path
+   style="fill:none;stroke:#f5c930;stroke-width:52.70931625" />
+   
+   <path
    id="path3161_1_"
    d="M 443.08568,499.62988 L 446.38001,250.07761 L 634.71483,97.674063 L 634.97395,26.647435"
    style="fill:none;stroke:#f5c930;stroke-width:52.70931625"
