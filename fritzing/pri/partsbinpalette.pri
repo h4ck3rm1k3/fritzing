@@ -33,7 +33,9 @@ HEADERS += \
     src/partsbinpalette/graphicsflowlayout.h \
     src/partsbinpalette/svgiconwidget.h \
     src/partsbinpalette/iconwidgetpaletteitem.h \
-    src/partsbinpalette/partsbincommands.h
+    src/partsbinpalette/partsbincommands.h \
+    src/partsbinpalette/binmanager.h \
+    src/partsbinpalette/stackwidget.h
 
 SOURCES += \
     src/partsbinpalette/simpleeditablelabelwidget.cpp \
@@ -44,6 +46,8 @@ SOURCES += \
     src/partsbinpalette/graphicsflowlayout.cpp \
     src/partsbinpalette/iconwidgetpaletteitem.cpp \
     src/partsbinpalette/svgiconwidget.cpp \
-    src/partsbinpalette/partsbincommands.cpp
+    src/partsbinpalette/partsbincommands.cpp \
+    src/partsbinpalette/binmanager.cpp \
+    src/partsbinpalette/stackwidget.cpp
  
 

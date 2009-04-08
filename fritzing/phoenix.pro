@@ -42,7 +42,7 @@ unix {
             DEFINES += LINUX_64
         } else {
             DEFINES += LINUX_32
-	}
+		}
     }
 }
 ICON = resources/images/fritzing_icon.icns
@@ -55,21 +55,21 @@ QT += core \
     sql
 RC_FILE = fritzing.rc
 RESOURCES += phoenixresources.qrc
-include(pri/kitchensink.pri)
-include(pri/quazip.pri)
-include(pri/partsbinpalette.pri)
-include(pri/partseditor.pri)
-include(pri/referencemodel.pri)
-include(pri/svg.pri)
-include(pri/help.pri)
-include(pri/labels.pri)
-include(pri/itemselection.pri)
-include(pri/version.pri)
-include(pri/group.pri)
-include(pri/eagle.pri)
-include(pri/utils.pri)
-include(pri/viewswitcher.pri)
-include(pri/navigator.pri)
+	include(pri/kitchensink.pri)
+	include(pri/quazip.pri)
+	include(pri/partsbinpalette.pri)
+	include(pri/partseditor.pri)
+	include(pri/referencemodel.pri)
+	include(pri/svg.pri)
+	include(pri/help.pri)
+	include(pri/labels.pri)
+	include(pri/itemselection.pri)
+	include(pri/version.pri)
+	include(pri/group.pri)
+	include(pri/eagle.pri)
+	include(pri/utils.pri)
+	include(pri/viewswitcher.pri)
+	include(pri/navigator.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

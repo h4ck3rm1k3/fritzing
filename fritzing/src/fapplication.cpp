@@ -41,6 +41,7 @@ $Date$
 #include "viewswitcher/viewswitcher.h"
 #include "wire.h"
 #include "htmlinfoview.h"
+#include "partsbinpalette/binmanager.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -127,7 +128,7 @@ FApplication::FApplication( int & argc, char ** argv) : QApplication(argc, argv)
 	QString lib = "/lib";
 #endif
 
-	m_libPath = QDir::cleanPath(applicationDirPath() + lib);		// applicationDirPath() doesn't work until after QApplication is instantiated	
+	m_libPath = QDir::cleanPath(applicationDirPath() + lib);		// applicationDirPath() doesn't work until after QApplication is instantiated
 	addLibraryPath(m_libPath);					// tell app where to search for plugins (jpeg export and sql lite)
 
 	/*QFile file("libpath.txt");
@@ -162,7 +163,7 @@ FApplication::~FApplication(void)
 	if (m_updateDialog) {
 		delete m_updateDialog;
 	}
-		
+
 	FSvgRenderer::cleanup();
 	ViewIdentifierClass::cleanup();
 	ViewLayer::cleanup();
@@ -456,6 +457,13 @@ int FApplication::startup(int & argc, char ** argv)
 	 */
 
 	splash.finish(mainWindow);
+
+#if QT_VERSION >= 0x040500
+	QMainWindow *other = new QMainWindow();
+	BinManager *bm = new BinManager(other);
+	other->setCentralWidget(bm);
+	other->show();
+#endif
 
 	return 0;
 }
