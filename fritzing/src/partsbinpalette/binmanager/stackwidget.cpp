@@ -1,91 +1,36 @@
-/*
- * (c) Fachhochschule Potsdam
- */
+/*******************************************************************
 
-#include <QMouseEvent>
+Part of the Fritzing project - http://fritzing.org
+Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
+
+Fritzing is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fritzing is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************
+
+$Revision: 2776 $:
+$Author: merunga $:
+$Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
+
+********************************************************************/
+
+
 #include <QLabel>
 
 #include "stackwidget.h"
-#include "../debugdialog.h"
+#include "stackwidgetseparator.h"
+#include "../../debugdialog.h"
 
-StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
-	m_pressedIndex = -1;
-	m_parent = parent;
-}
-
-int StackTabBar::tabIndexAtPos(const QPoint &p) const {
-	for (int i = 0; i < m_parent->count(); ++i) {
-    	if (m_parent->isTabEnabled(i) && tabRect(i).contains(p)) {
-    		return i;
-    	}
-	}
-    return -1;
-}
-
-void StackTabBar::mouseMoveEvent(QMouseEvent *event) {
-	/*if(!rect().contains(event->pos())) {
-		setMovable(false);
-	} else {
-		setMovable(true);
-	}*/
-	QTabBar::mouseMoveEvent(event);
-}
-
-void StackTabBar::mousePressEvent(QMouseEvent *event) {
-	m_pressedIndex = tabIndexAtPos(event->pos());
-	QTabBar::mousePressEvent(event);
-}
-
-void StackTabBar::mouseReleaseEvent(QMouseEvent *event) {
-	if(!rect().contains(event->pos()) && m_pressedIndex > -1) {
-		QWidget *tab = m_parent->widget(m_pressedIndex);
-		m_parent->removeTab(m_pressedIndex);
-		emit tabDetached(tab, event->pos());
-	}
-	QTabBar::mouseReleaseEvent(event);
-}
-
-////////////////////////////////////////////////////////////
-
-StackTabWidget::StackTabWidget(QWidget *parent) : QTabWidget(parent) {
-	setTabBar(new StackTabBar(this));
-	connect(
-		tabBar(),SIGNAL(tabDetached(QWidget*, const QPoint&)),
-		parent,SLOT(tabDetached(QWidget*, const QPoint&))
-	);
-}
-
-////////////////////////////////////////////////////////////
-
-StackWidgetSeparator::StackWidgetSeparator(QWidget *parent)
-	:QFrame(parent)
-{
-	setMinimumHeight(10);
-}
-
-void StackWidgetSeparator::enterEvent(QEvent *event) {
-	expand();
-	emit setReceptor(this);
-	QFrame::enterEvent(event);
-}
-
-void StackWidgetSeparator::leaveEvent(QEvent *event) {
-	shrink();
-	emit setReceptor(NULL);
-	QFrame::leaveEvent(event);
-}
-
-void StackWidgetSeparator::expand() {
-	setMinimumHeight(200);
-	resize(width(),200);
-}
-
-void StackWidgetSeparator::shrink() {
-	setMinimumHeight(10);
-	resize(width(),10);
-}
-
-////////////////////////////////////////////////////////////
 
 StackWidget::StackWidget(QWidget *parent) : QFrame(parent) {
 	m_current = NULL;

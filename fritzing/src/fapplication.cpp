@@ -41,7 +41,7 @@ $Date$
 #include "viewswitcher/viewswitcher.h"
 #include "wire.h"
 #include "htmlinfoview.h"
-#include "partsbinpalette/binmanager.h"
+#include "partsbinpalette/binmanager/binmanager.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"

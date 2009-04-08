@@ -25,39 +25,48 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 ********************************************************************/
 
 
+#ifndef STACKWIDGET_H_
+#define STACKWIDGET_H_
+
+#include <QFrame>
+#include <QTabWidget>
+#include <QTabBar>
 #include <QVBoxLayout>
-#include "binmanager.h"
-#include "../debugdialog.h"
 
-BinManager::BinManager(QWidget *parent)
-	: QFrame(parent) {
-	m_widget = new StackWidget(this);
-	m_widget->setAcceptDrops(true);
-	//m_activeBinTabWidget = new QTabWidget(m_widget);
-	//m_widget->addWidget(m_activeBinTabWidget);
+class StackWidgetSeparator;
 
-	for(int i=0; i < 4; i++) {
-		StackTabWidget *tb = new StackTabWidget(m_widget);
-		for(int j=0; j < 9; j++) {
-			QFrame *f = new QFrame(m_widget);
-			f->setFixedWidth(300);
-			f->setFixedHeight(500);
-			f->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
-			tb->addTab(f,QString("tab %1%2").arg(i).arg(j));
-// this functions are only available on 4.5.0 or later
-#if QT_VERSION >= 0x040500
-			tb->setTabsClosable(true);
-			tb->setMovable(true);
-#endif
-		}
-		m_widget->addWidget(tb);
-	}
-	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->addWidget(m_widget);
-	setMaximumHeight(500);
-}
+class StackWidget : public QFrame {
+	Q_OBJECT
+	public:
+		StackWidget(QWidget *parent=0);
 
-BinManager::~BinManager() {
+		int addWidget(QWidget *widget);
+		int count() const;
+		int currentIndex() const;
+		QWidget *currentWidget() const;
+		int indexOf(QWidget *widget) const;
+		void insertWidget(int index, QWidget *widget);
+		void removeWidget(QWidget *widget);
+		QWidget *widget(int index) const;
+		bool contains(QWidget *widget) const;
 
-}
+	public slots:
+		void tabDetached(QWidget *tab, const QPoint &pos);
+		void setCurrentIndex(int index);
+		void setCurrentWidget(QWidget *widget);
+		void setReceptor(StackWidgetSeparator* receptor);
 
+	signals:
+		void currentChanged(int index);
+		void widgetRemoved(int index);
+
+	protected:
+		int closestIndexToPos(const QPoint &pos);
+		StackWidgetSeparator *newSeparator();
+
+		QVBoxLayout *m_layout;
+		QWidget *m_current;
+		StackWidgetSeparator *m_dropReceptor;
+};
+
+#endif /* STACKWIDGET_H_ */
