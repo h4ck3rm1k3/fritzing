@@ -29,7 +29,7 @@ def form(request):
             context_instance = RequestContext(request)
         )
     else:
-        HttpResponse('no generator selected')
+        return HttpResponse('no generator selected')
 
 
 def send_zipfile(script_id,config):
