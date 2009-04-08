@@ -64,14 +64,12 @@ StackWidgetSeparator::StackWidgetSeparator(QWidget *parent)
 }
 
 void StackWidgetSeparator::enterEvent(QEvent *event) {
-	DebugDialog::debug("separator enter");
 	expand();
 	emit setReceptor(this);
 	QFrame::enterEvent(event);
 }
 
 void StackWidgetSeparator::leaveEvent(QEvent *event) {
-	DebugDialog::debug("separator leave");
 	shrink();
 	emit setReceptor(NULL);
 	QFrame::leaveEvent(event);

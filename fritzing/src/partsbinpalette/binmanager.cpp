@@ -44,7 +44,7 @@ BinManager::BinManager(QWidget *parent)
 			f->setFixedHeight(500);
 			f->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
 			tb->addTab(f,QString("tab %1%2").arg(i).arg(j));
-// this fuctios are only available on 4.5.0 or later
+// this functions are only available on 4.5.0 or later
 #if QT_VERSION >= 0x040500
 			tb->setTabsClosable(true);
 			tb->setMovable(true);
