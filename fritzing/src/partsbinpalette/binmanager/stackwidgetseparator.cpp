@@ -29,12 +29,22 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QDragEnterEvent>
 
 #include "stackwidgetseparator.h"
+#include "../../debugdialog.h"
 
 StackWidgetSeparator::StackWidgetSeparator(QWidget *parent)
 	:QFrame(parent)
 {
-	setMinimumHeight(10);
 	setAcceptDrops(true);
+	m_feedbackIcon = new QLabel(this);
+	m_feedbackPixmap = new QPixmap(":/resources/images/icons/binRearrangeSeparator.png");
+	setMinimumHeight(5);
+	setMaximumHeight(5);
+	setPixmapWidth(width());
+	m_feedbackIcon->hide();
+}
+
+StackWidgetSeparator::~StackWidgetSeparator() {
+	delete m_feedbackPixmap;
 }
 
 void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
@@ -43,15 +53,14 @@ void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
 	QStringList formats = m->formats();
 	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
 		event->acceptProposedAction();
-		expand();
-		emit setDropReceptor(this);
+		emit setPotentialDropSink(this);
+		emit setDropSink(this);
 	}
-	QFrame::dragEnterEvent(event);
 }
 
 void StackWidgetSeparator::dragLeaveEvent(QDragLeaveEvent *event) {
-	shrink();
-	emit setDropReceptor(NULL);
+	//shrink();
+	emit setDropSink(NULL);
 	QFrame::dragLeaveEvent(event);
 }
 
@@ -70,4 +79,20 @@ void StackWidgetSeparator::shrink() {
 	resize(width(),10);
 }
 
+void StackWidgetSeparator::showFeedback(int index, bool doShow) {
+	Q_UNUSED(index);
+	m_feedbackIcon->setVisible(doShow);
+}
 
+void StackWidgetSeparator::resizeEvent(QResizeEvent *event) {
+	int newWidth = event->size().width();
+	if(newWidth != event->oldSize().width()) {
+		setPixmapWidth(newWidth);
+	}
+	QFrame::resizeEvent(event);
+}
+
+void StackWidgetSeparator::setPixmapWidth(int newWidth) {
+	QPixmap newPixmap = m_feedbackPixmap->scaled(newWidth,height());
+	m_feedbackIcon->setPixmap(newPixmap);
+}

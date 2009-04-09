@@ -38,6 +38,12 @@ StackWidget::StackWidget(QWidget *parent) : QFrame(parent) {
 	m_layout = new QVBoxLayout(this);
 	m_layout->setSpacing(1);
 	m_layout->setMargin(1);
+
+	m_dragSource = DragFromOrTo(NULL,-1);
+	m_dropSink = DragFromOrTo(NULL,-1);
+	m_potentialDropSink = DragFromOrTo(NULL,-1);
+
+	m_layout->addWidget(newSeparator(this));
 }
 
 int StackWidget::addWidget(QWidget *widget) {
@@ -50,8 +56,12 @@ int StackWidget::addWidget(QWidget *widget) {
 StackWidgetSeparator *StackWidget::newSeparator(QWidget *widget) {
 	StackWidgetSeparator *sep = new StackWidgetSeparator(this);
 	connect(
-		sep, SIGNAL(setDropReceptor(QWidget*,int)),
-		this, SLOT(setDropReceptor(QWidget*,int))
+		sep, SIGNAL(setDropSink(DropSink*,int)),
+		this, SLOT(setDropSink(DropSink*,int))
+	);
+	connect(
+		sep, SIGNAL(setPotentialDropSink(DropSink*,int)),
+		this, SLOT(setPotentialDropSink(DropSink*,int))
 	);
 	connect(
 		sep, SIGNAL(dropped()),
@@ -80,8 +90,8 @@ int StackWidget::indexOf(QWidget *widget) const {
 
 void StackWidget::insertWidget(int index, QWidget *widget) {
 	m_layout->insertWidget(index, widget);
-	m_layout->insertWidget(index, newSeparator(widget));
-	if(!m_current) m_current = widget;
+	m_layout->insertWidget(index+1, newSeparator(widget));
+	//if(!m_current) m_current = widget;
 }
 
 void StackWidget::removeWidget(QWidget *widget) {
@@ -113,49 +123,64 @@ bool StackWidget::contains(QWidget *widget) const {
 }
 
 void StackWidget::setDragSource(StackTabWidget* tabWidget, int index) {
-	DebugDialog::debug(QString("setting drag source %1 index %2").arg((long)tabWidget).arg(index));
 	m_dragSource = DragFromOrTo(tabWidget,index);
 }
 
-void StackWidget::setDropReceptor(QWidget* receptor, int index) {
-	DebugDialog::debug(QString("setting drop receptor %1 index %2").arg((long)receptor).arg(index));
-	m_dropReceptor = DragFromOrTo(receptor,index);
+void StackWidget::setDropSink(DropSink* receptor, int index) {
+	m_dropSink = DragFromOrTo(receptor,index);
+}
+
+void StackWidget::setPotentialDropSink(DropSink* receptor, int index) {
+	DropSink *oldOne = m_potentialDropSink.first;
+	if(oldOne && (oldOne != receptor || m_potentialDropSink.second != index)) {
+		oldOne->showFeedback(m_potentialDropSink.second, false);
+	}
+	m_potentialDropSink = DragFromOrTo(receptor,index);
+	m_potentialDropSink.first->showFeedback(m_potentialDropSink.second, true);
 }
 
 void StackWidget::dropped() {
-	StackTabWidget *oldTab = dynamic_cast<StackTabWidget*>(m_dragSource.first);
-	if(oldTab) {
+	StackTabWidget *oldTabWidget = dynamic_cast<StackTabWidget*>(m_dragSource.first);
+	if(oldTabWidget && m_dropSink.first) {
+		m_potentialDropSink.first->showFeedback(m_potentialDropSink.second, false);
 		int fromIndex  = m_dragSource.second;
-		QWidget *widgetToMove = oldTab->widget(fromIndex);
-		QString text = oldTab->tabText(fromIndex);
+		int toIndex = m_dropSink.second;
+		QWidget *widgetToMove = oldTabWidget->widget(fromIndex);
+		QIcon icon = oldTabWidget->tabIcon(fromIndex);
+		QString text = oldTabWidget->tabText(fromIndex);
 
-		oldTab->removeTab(fromIndex);
-		StackTabWidget *newTab = dynamic_cast<StackTabWidget*>(m_dropReceptor.first);
-		if(!newTab) {
-			int whereToInsert = indexOf(m_dropReceptor.first);
-			newTab = new StackTabWidget(this);
-			newTab->addTab(widgetToMove,text);
-			insertWidget(whereToInsert,newTab);
+		StackTabWidget *newTabWidget = dynamic_cast<StackTabWidget*>(m_dropSink.first);
+		if(!newTabWidget) { // dropping into a container, not an existing tabwidget
+			int whereToInsert = indexOf(dynamic_cast<QWidget*>(m_dropSink.first))+1;
+			newTabWidget = new StackTabWidget(this);
+// this functions are only available on 4.5.0 or later
+#if QT_VERSION >= 0x040500
+			newTabWidget->setTabsClosable(true);
+			//newTabWidget->setMovable(true);
+#endif
+			oldTabWidget->removeTab(fromIndex);
+			newTabWidget->addTab(widgetToMove, icon, text);
+			insertWidget(whereToInsert,newTabWidget);
 		} else {
-			int toIndex = m_dropReceptor.second;
-			if(oldTab != newTab && fromIndex != toIndex) {
-				DebugDialog::debug(QString("from: %1  to: %2").arg(fromIndex).arg(toIndex));
-				QIcon icon = oldTab->tabIcon(fromIndex);
-
-				oldTab->setCurrentIndex(-1);
-				newTab->insertTab(toIndex, widgetToMove, icon, text);
-				newTab->setCurrentIndex(toIndex);
+			if(oldTabWidget != newTabWidget || fromIndex != toIndex) { // is the user really rearranging?
+				oldTabWidget->removeTab(fromIndex);
+				oldTabWidget->setCurrentIndex(-1);
+				newTabWidget->insertTab(toIndex, widgetToMove, icon, text);
+				newTabWidget->setCurrentIndex(toIndex);
 			}
 		}
 
-		StackWidgetSeparator *curSeparator = m_separators[oldTab];
+		StackWidgetSeparator *curSeparator = m_separators[oldTabWidget];
 		curSeparator->shrink();
-		if(oldTab->count() == 0) {
-			removeWidget(oldTab);
+		if(oldTabWidget->count() == 0) { // if the tabwidget is now empty, remove it
+			removeWidget(oldTabWidget);
 			removeWidget(curSeparator);
-			oldTab->hide();
+
+			oldTabWidget->hide();
 			curSeparator->hide();
-			m_separators.remove(oldTab);
+
+			m_separators.remove(oldTabWidget);
+
 			//delete oldTab;
 			//delete sepToRemove;
 		}

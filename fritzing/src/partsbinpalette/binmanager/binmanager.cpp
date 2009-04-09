@@ -51,7 +51,8 @@ BinManager::BinManager(QWidget *parent)
 			//tb->setMovable(true);
 #endif
 		}
-		m_widget->addWidget(tb);
+		m_widget->insertWidget(m_widget->count(),tb);
+		//m_widget->addWidget(tb);
 	}
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->addWidget(m_widget);

@@ -33,28 +33,26 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 	setTabBar(new StackTabBar(this));
-	/*connect(
-		tabBar(), SIGNAL(tabMoveRequested(int, int)),
-		this, SLOT(moveTab(int, int))
-	);*/
-
-	/*connect(
-		tabBar(),SIGNAL(tabDetached(QWidget*, const QPoint&)),
-		parent,SLOT(tabDetached(QWidget*, const QPoint&))
-	);*/
 
 	connect(
 		tabBar(),SIGNAL(setDragSource(StackTabWidget*, int)),
 		parent,SLOT(setDragSource(StackTabWidget*, int))
 	);
 	connect(
-		tabBar(),SIGNAL(setDropReceptor(QWidget*, int)),
-		parent,SLOT(setDropReceptor(QWidget*, int))
+		tabBar(),SIGNAL(setDropSink(DropSink*, int)),
+		parent,SLOT(setDropSink(DropSink*, int))
+	);
+	connect(
+		tabBar(),SIGNAL(setPotentialDropSink(DropSink*, int)),
+		parent,SLOT(setPotentialDropSink(DropSink*, int))
 	);
 	connect(
 		tabBar(),SIGNAL(dropped()),
 		parent,SLOT(dropped())
 	);
+
+	QPixmap pixmap = QPixmap(":/resources/images/icons/binRearrangeTabs.png");
+	m_feedbackIcon = QIcon(pixmap);
 }
 
 void StackTabWidget::dragEnterEvent(QDragEnterEvent* event) {
@@ -64,7 +62,6 @@ void StackTabWidget::dragEnterEvent(QDragEnterEvent* event) {
 	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
 		event->acceptProposedAction();
 	}
-	QTabWidget::dragEnterEvent(event);
 }
 
 void StackTabWidget::moveTab(int fromIndex, int toIndex) {
@@ -75,4 +72,9 @@ void StackTabWidget::moveTab(int fromIndex, int toIndex) {
 	removeTab(fromIndex);
 	insertTab(toIndex, w, icon, text);
 	setCurrentIndex(toIndex);
+}
+
+void StackTabWidget::showFeedback(int index, bool doShow) {
+	QIcon icon = doShow? m_feedbackIcon: QIcon();
+	setTabIcon(index,icon);
 }

@@ -37,7 +37,9 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 class StackWidgetSeparator;
 class StackTabWidget;
 
-#define DragFromOrTo QPair<QWidget* /*tab widget*/, int /*index*/>
+#include "dropsink.h"
+
+#define DragFromOrTo QPair<DropSink* /*tab widget*/, int /*index*/>
 
 class StackWidget : public QFrame {
 	Q_OBJECT
@@ -59,7 +61,8 @@ class StackWidget : public QFrame {
 		void setCurrentWidget(QWidget *widget);
 
 		void setDragSource(StackTabWidget*, int index);
-		void setDropReceptor(QWidget* receptor, int index);
+		void setDropSink(DropSink* receptor, int index);
+		void setPotentialDropSink(DropSink* receptor, int index);
 		void dropped();
 
 	signals:
@@ -74,7 +77,8 @@ class StackWidget : public QFrame {
 		QWidget *m_current;
 
 		DragFromOrTo m_dragSource;
-		DragFromOrTo m_dropReceptor;
+		DragFromOrTo m_dropSink;
+		DragFromOrTo m_potentialDropSink;
 
 		QHash<QWidget*,StackWidgetSeparator*> m_separators;
 };

@@ -29,6 +29,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #define STACKTABBAR_H_
 
 #include <QTabBar>
+#include "dropsink.h"
 
 class StackTabBar : public QTabBar {
 	Q_OBJECT
@@ -37,7 +38,8 @@ class StackTabBar : public QTabBar {
 
 	signals:
 		void setDragSource(StackTabWidget*, int index=-1);
-		void setDropReceptor(QWidget*, int index=-1);
+		void setDropSink(DropSink*, int index=-1);
+		void setPotentialDropSink(DropSink*, int index=-1);
 		void dropped();
 
 	protected:
@@ -45,7 +47,7 @@ class StackTabBar : public QTabBar {
 		void mousePressEvent(QMouseEvent *event);
 		void mouseReleaseEvent( QMouseEvent *event);
 		void dragEnterEvent(QDragEnterEvent* event);
-        //void dragMoveEvent(QDragMoveEvent* event);
+        void dragMoveEvent(QDragMoveEvent* event);
 		void dropEvent(QDropEvent* event);
 
 		int tabIndexAtPos(const QPoint &p) const;

@@ -29,25 +29,34 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #define STACKWIDGETSEPARATOR_H_
 
 #include <QFrame>
+#include <QLabel>
+#include "dropsink.h"
 
-class StackWidgetSeparator : public QFrame {
+class StackWidgetSeparator : public QFrame, public DropSink {
 	Q_OBJECT
 	public:
 		StackWidgetSeparator(QWidget *parent=0);
+		~StackWidgetSeparator();
 		void setDragging(bool);
 		void expand();
 		void shrink();
+		void showFeedback(int index, bool doShow=true);
 
 	signals:
-		void setDropReceptor(QWidget*, int index=-1);
+		void setPotentialDropSink(DropSink*, int index=-1);
+		void setDropSink(DropSink*, int index=-1);
 		void dropped();
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dragLeaveEvent(QDragLeaveEvent *event);
 		void dropEvent(QDropEvent* event);
+		void resizeEvent(QResizeEvent *event);
 
-		bool m_dragging;
+		void setPixmapWidth(int newWidth);
+
+		QPixmap *m_feedbackPixmap;
+		QLabel *m_feedbackIcon;
 };
 
 #endif /* STACKWIDGETSEPARATOR_H_ */

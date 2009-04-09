@@ -148,6 +148,8 @@ $Date$
     <file>resources/images/icons/partsEditorConnectorRemoveEnabled_icon.png</file>
     <file>resources/images/icons/partsEditorConnectorRemoveDisabled_icon.png</file>
     <file>resources/images/icons/partsEditorConnectorRemovePressed_icon.png</file>
+    <file>resources/images/icons/binRearrangeTabs.png</file>
+    <file>resources/images/icons/binRearrangeSeparator.png</file>
     
     <!-- Item Selection images -->
     <file>resources/images/itemselection/cornerHandlerActiveBottomLeft.png</file>
@@ -168,6 +170,6 @@ $Date$
     <file>resources/images/itemselection/selectionRingRight.png</file>
     <file>resources/images/itemselection/selectionRingTop.png</file>
     <file>resources/images/itemselection/selectionRingTopLeft.png</file>
-    <file>resources/images/itemselection/selectionRingTopRight.png</file>   
+    <file>resources/images/itemselection/selectionRingTopRight.png</file>
 </qresource>
 </RCC>

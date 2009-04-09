@@ -30,17 +30,22 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include <QTabWidget>
 
+#include "dropsink.h"
+
 // originally extracted from http://wiki.qtcentre.org/index.php?title=Movable_Tabs
-class StackTabWidget : public QTabWidget {
+class StackTabWidget : public QTabWidget, public DropSink {
 	Q_OBJECT
 	public:
 		StackTabWidget(class StackWidget *parent);
+		void showFeedback(int index, bool doShow=true);
 
 	public slots:
 		void moveTab(int fromIndex, int toIndex);
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent* event);
+
+		QIcon m_feedbackIcon;
 };
 
 #endif /* STACKTABWIDGET_H_ */
