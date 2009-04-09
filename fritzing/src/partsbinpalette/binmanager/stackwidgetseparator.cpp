@@ -25,24 +25,39 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 ********************************************************************/
 
 
+#include <QMimeData>
+#include <QDragEnterEvent>
+
 #include "stackwidgetseparator.h"
 
 StackWidgetSeparator::StackWidgetSeparator(QWidget *parent)
 	:QFrame(parent)
 {
 	setMinimumHeight(10);
+	setAcceptDrops(true);
 }
 
-void StackWidgetSeparator::enterEvent(QEvent *event) {
-	expand();
-	emit setReceptor(this);
-	QFrame::enterEvent(event);
+void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
+	// Only accept if it's an tab-reordering request
+	const QMimeData* m = event->mimeData();
+	QStringList formats = m->formats();
+	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
+		event->acceptProposedAction();
+		expand();
+		emit setReceptor(this);
+	}
+	QFrame::dragEnterEvent(event);
 }
 
-void StackWidgetSeparator::leaveEvent(QEvent *event) {
+void StackWidgetSeparator::dragLeaveEvent(QDragLeaveEvent *event) {
 	shrink();
 	emit setReceptor(NULL);
-	QFrame::leaveEvent(event);
+	QFrame::dragLeaveEvent(event);
+}
+
+void StackWidgetSeparator::dropEvent(QDropEvent* event) {
+	emit dropped();
+	QFrame::dropEvent(event);
 }
 
 void StackWidgetSeparator::expand() {

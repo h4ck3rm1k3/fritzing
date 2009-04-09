@@ -38,10 +38,12 @@ class StackWidgetSeparator : public QFrame {
 
 	signals:
 		void setReceptor(StackWidgetSeparator*);
+		void dropped();
 
 	protected:
-		void enterEvent(QEvent *event);
-		void leaveEvent(QEvent *event);
+		void dragEnterEvent(QDragEnterEvent *event);
+		void dragLeaveEvent(QDragLeaveEvent *event);
+		void dropEvent(QDropEvent* event);
 		void expand();
 		void shrink();
 

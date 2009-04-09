@@ -34,6 +34,9 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QVBoxLayout>
 
 class StackWidgetSeparator;
+class StackTabWidget;
+
+#define DragFromOrTo QPair<QWidget* /*tab widget*/, int /*index*/>
 
 class StackWidget : public QFrame {
 	Q_OBJECT
@@ -51,10 +54,11 @@ class StackWidget : public QFrame {
 		bool contains(QWidget *widget) const;
 
 	public slots:
-		void tabDetached(QWidget *tab, const QPoint &pos);
 		void setCurrentIndex(int index);
 		void setCurrentWidget(QWidget *widget);
-		void setReceptor(StackWidgetSeparator* receptor);
+
+		void setDragSource(StackTabWidget*, int index);
+		void setDropReceptor(QWidget* receptor, int index);
 
 	signals:
 		void currentChanged(int index);
@@ -66,7 +70,9 @@ class StackWidget : public QFrame {
 
 		QVBoxLayout *m_layout;
 		QWidget *m_current;
-		StackWidgetSeparator *m_dropReceptor;
+
+		DragFromOrTo m_dragSource;
+		DragFromOrTo m_dropReceptor;
 };
 
 #endif /* STACKWIDGET_H_ */

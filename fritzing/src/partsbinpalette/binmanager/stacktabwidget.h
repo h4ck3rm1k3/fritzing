@@ -30,15 +30,17 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include <QTabWidget>
 
-// extracted from http://wiki.qtcentre.org/index.php?title=Movable_Tabs
+// originally extracted from http://wiki.qtcentre.org/index.php?title=Movable_Tabs
 class StackTabWidget : public QTabWidget {
 	Q_OBJECT
 	public:
-		StackTabWidget(QWidget *parent=0);
+		StackTabWidget(class StackWidget *parent);
 
 	public slots:
 		void moveTab(int fromIndex, int toIndex);
 
+	protected:
+		void dragEnterEvent(QDragEnterEvent* event);
 };
 
 #endif /* STACKTABWIDGET_H_ */

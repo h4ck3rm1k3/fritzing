@@ -24,23 +24,40 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 ********************************************************************/
 
+#include <QMouseEvent>
 
 #include "stacktabwidget.h"
+#include "stackwidget.h"
 #include "stacktabbar.h"
+#include "../../debugdialog.h"
 
-StackTabWidget::StackTabWidget(QWidget *parent) : QTabWidget(parent) {
+StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 	setTabBar(new StackTabBar(this));
-	connect(
+	/*connect(
 		tabBar(), SIGNAL(tabMoveRequested(int, int)),
 		this, SLOT(moveTab(int, int))
-	);
+	);*/
 
-	connect(
+	/*connect(
 		tabBar(),SIGNAL(tabDetached(QWidget*, const QPoint&)),
 		parent,SLOT(tabDetached(QWidget*, const QPoint&))
+	);*/
+
+	connect(
+		tabBar(),SIGNAL(setDragSource(StackTabWidget*, int)),
+		parent,SLOT(setDragSource(StackTabWidget*, int))
 	);
 }
 
+void StackTabWidget::dragEnterEvent(QDragEnterEvent* event) {
+	// Only accept if it's an tab-reordering request
+	const QMimeData* m = event->mimeData();
+	QStringList formats = m->formats();
+	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
+		event->acceptProposedAction();
+	}
+	QTabWidget::dragEnterEvent(event);
+}
 
 void StackTabWidget::moveTab(int fromIndex, int toIndex) {
 	QWidget* w = widget(fromIndex);

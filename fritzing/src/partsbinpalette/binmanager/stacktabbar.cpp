@@ -30,10 +30,11 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include "stacktabbar.h"
 #include "stacktabwidget.h"
+#include "../../debugdialog.h"
+
 
 StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
 	setAcceptDrops(true);
-	m_pressedIndex = -1;
 	m_parent = parent;
 }
 
@@ -57,9 +58,11 @@ void StackTabBar::mouseMoveEvent(QMouseEvent *event) {
 
 	// initiate Drag
 	QDrag* drag = new QDrag(this);
+
 	QMimeData* mimeData = new QMimeData;
 	// a crude way to distinguish tab-reodering drops from other ones
-	mimeData->setData("action", "tab-reordering") ;
+	mimeData->setData("action", "tab-reordering");
+
 	drag->setMimeData(mimeData);
 	drag->exec();
 }
@@ -67,9 +70,19 @@ void StackTabBar::mouseMoveEvent(QMouseEvent *event) {
 void StackTabBar::mousePressEvent(QMouseEvent *event) {
 	if(event->button() == Qt::LeftButton) {
 		m_dragStartPos = event->pos();
+		emit setDragSource(m_parent,tabAt(m_dragStartPos));
+		DebugDialog::debug("mouse pressed on tab widget");
 	}
 
     QTabBar::mousePressEvent(event);
+}
+
+void StackTabBar::mouseReleaseEvent(QMouseEvent *event) {
+	if(event->button() == Qt::LeftButton) {
+		emit setDragSource(NULL);
+		DebugDialog::debug("mouse released on tab widget");
+	}
+	QTabBar::mouseReleaseEvent(event);
 }
 
 void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
@@ -91,15 +104,5 @@ void StackTabBar::dropEvent(QDropEvent* event) {
 	}
 
 	event->acceptProposedAction();
-}
-
-
-void StackTabBar::mouseReleaseEvent(QMouseEvent *event) {
-	if(!rect().contains(event->pos()) && m_pressedIndex > -1) {
-		QWidget *tab = m_parent->widget(m_pressedIndex);
-		m_parent->removeTab(m_pressedIndex);
-		emit tabDetached(tab, event->pos());
-	}
-	QTabBar::mouseReleaseEvent(event);
 }
 

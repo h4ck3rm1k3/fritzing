@@ -28,6 +28,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QLabel>
 
 #include "stackwidget.h"
+#include "stacktabwidget.h"
 #include "stackwidgetseparator.h"
 #include "../../debugdialog.h"
 
@@ -104,10 +105,14 @@ bool StackWidget::contains(QWidget *widget) const {
 	return indexOf(widget) > -1;
 }
 
-void StackWidget::tabDetached(QWidget *tab, const QPoint &pos) {
+/*void StackWidget::tabDetached(QWidget *tab, const QPoint &pos) {
 	int idx = closestIndexToPos(pos);
 	DebugDialog::debug(QString("detached idx %1 %2").arg(idx).arg((long)tab));
 	insertWidget(idx,new QLabel("detached!",this));
+}*/
+
+void StackWidget::setDragSource(StackTabWidget* tabWidget, int index) {
+	m_dragSource = DragFromOrTo(tabWidget,index);
 }
 
 int StackWidget::closestIndexToPos(const QPoint &pos) {
@@ -119,6 +124,6 @@ int StackWidget::closestIndexToPos(const QPoint &pos) {
     return -1;
 }
 
-void StackWidget::setReceptor(StackWidgetSeparator* receptor) {
-	m_dropReceptor = receptor;
+void StackWidget::setDropReceptor(QWidget* receptor, int index) {
+	m_dropReceptor = DragFromOrTo(receptor,index);
 }
