@@ -38,7 +38,8 @@ HEADERS += \
     src/partsbinpalette/binmanager/stackwidget.h \
     src/partsbinpalette/binmanager/stacktabbar.h \
     src/partsbinpalette/binmanager/stacktabwidget.h \
-    src/partsbinpalette/binmanager/stackwidgetseparator.h
+    src/partsbinpalette/binmanager/stackwidgetseparator.h \
+    src/partsbinpalette/binmanager/dropsink.h
 
 SOURCES += \
     src/partsbinpalette/simpleeditablelabelwidget.cpp \
