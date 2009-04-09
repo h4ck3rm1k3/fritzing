@@ -42,17 +42,23 @@ StackWidget::StackWidget(QWidget *parent) : QFrame(parent) {
 
 int StackWidget::addWidget(QWidget *widget) {
 	m_layout->addWidget(widget);
-	m_layout->addWidget(newSeparator());
+	m_layout->addWidget(newSeparator(widget));
 	if(!m_current) m_current = widget;
 	return indexOf(widget);
 }
 
-StackWidgetSeparator *StackWidget::newSeparator() {
+StackWidgetSeparator *StackWidget::newSeparator(QWidget *widget) {
 	StackWidgetSeparator *sep = new StackWidgetSeparator(this);
 	connect(
-		sep, SIGNAL(setReceptor(StackWidgetSeparator*)),
-		this, SLOT(setReceptor(StackWidgetSeparator*))
+		sep, SIGNAL(setDropReceptor(QWidget*,int)),
+		this, SLOT(setDropReceptor(QWidget*,int))
 	);
+	connect(
+		sep, SIGNAL(dropped()),
+		this, SLOT(dropped())
+	);
+	m_separators[widget] = sep;
+
 	return sep;
 }
 
@@ -74,6 +80,7 @@ int StackWidget::indexOf(QWidget *widget) const {
 
 void StackWidget::insertWidget(int index, QWidget *widget) {
 	m_layout->insertWidget(index, widget);
+	m_layout->insertWidget(index, newSeparator(widget));
 	if(!m_current) m_current = widget;
 }
 
@@ -115,6 +122,37 @@ void StackWidget::setDragSource(StackTabWidget* tabWidget, int index) {
 	m_dragSource = DragFromOrTo(tabWidget,index);
 }
 
+void StackWidget::setDropReceptor(QWidget* receptor, int index) {
+	m_dropReceptor = DragFromOrTo(receptor,index);
+}
+
+void StackWidget::dropped() {
+	int whereToInsert = indexOf(m_dropReceptor.first);
+	StackTabWidget *oldTab = dynamic_cast<StackTabWidget*>(m_dragSource.first);
+	if(oldTab) {
+		int srcIndex = m_dragSource.second;
+		QWidget *widgetToMove = oldTab->widget(srcIndex);
+		QString title = oldTab->tabText(srcIndex);
+
+		oldTab->removeTab(srcIndex);
+		StackTabWidget *newTab = new StackTabWidget(this);
+		newTab->addTab(widgetToMove,title);
+		insertWidget(whereToInsert,newTab);
+
+		if(oldTab->count() == 0) {
+			StackWidgetSeparator *sepToRemove = m_separators[oldTab];
+			Q_ASSERT(sepToRemove);
+			removeWidget(oldTab);
+			removeWidget(sepToRemove);
+			oldTab->hide();
+			sepToRemove->hide();
+			m_separators.remove(oldTab);
+			//delete oldTab;
+			//delete sepToRemove;
+		}
+	}
+}
+
 int StackWidget::closestIndexToPos(const QPoint &pos) {
 	for (int i = 0; i < count(); ++i) {
     	if (widget(i)->rect().contains(pos)) {
@@ -122,8 +160,4 @@ int StackWidget::closestIndexToPos(const QPoint &pos) {
     	}
 	}
     return -1;
-}
-
-void StackWidget::setDropReceptor(QWidget* receptor, int index) {
-	m_dropReceptor = DragFromOrTo(receptor,index);
 }

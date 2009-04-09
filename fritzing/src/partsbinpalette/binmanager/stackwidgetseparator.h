@@ -37,7 +37,7 @@ class StackWidgetSeparator : public QFrame {
 		void setDragging(bool);
 
 	signals:
-		void setReceptor(StackWidgetSeparator*);
+		void setDropReceptor(QWidget*, int index=-1);
 		void dropped();
 
 	protected:

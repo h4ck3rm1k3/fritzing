@@ -44,14 +44,14 @@ void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
 	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
 		event->acceptProposedAction();
 		expand();
-		emit setReceptor(this);
+		emit setDropReceptor(this);
 	}
 	QFrame::dragEnterEvent(event);
 }
 
 void StackWidgetSeparator::dragLeaveEvent(QDragLeaveEvent *event) {
 	shrink();
-	emit setReceptor(NULL);
+	emit setDropReceptor(NULL);
 	QFrame::dragLeaveEvent(event);
 }
 

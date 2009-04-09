@@ -71,7 +71,6 @@ void StackTabBar::mousePressEvent(QMouseEvent *event) {
 	if(event->button() == Qt::LeftButton) {
 		m_dragStartPos = event->pos();
 		emit setDragSource(m_parent,tabAt(m_dragStartPos));
-		DebugDialog::debug("mouse pressed on tab widget");
 	}
 
     QTabBar::mousePressEvent(event);
@@ -80,7 +79,6 @@ void StackTabBar::mousePressEvent(QMouseEvent *event) {
 void StackTabBar::mouseReleaseEvent(QMouseEvent *event) {
 	if(event->button() == Qt::LeftButton) {
 		emit setDragSource(NULL);
-		DebugDialog::debug("mouse released on tab widget");
 	}
 	QTabBar::mouseReleaseEvent(event);
 }

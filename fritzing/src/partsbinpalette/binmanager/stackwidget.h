@@ -32,6 +32,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QTabWidget>
 #include <QTabBar>
 #include <QVBoxLayout>
+#include <QHash>
 
 class StackWidgetSeparator;
 class StackTabWidget;
@@ -59,6 +60,7 @@ class StackWidget : public QFrame {
 
 		void setDragSource(StackTabWidget*, int index);
 		void setDropReceptor(QWidget* receptor, int index);
+		void dropped();
 
 	signals:
 		void currentChanged(int index);
@@ -66,13 +68,15 @@ class StackWidget : public QFrame {
 
 	protected:
 		int closestIndexToPos(const QPoint &pos);
-		StackWidgetSeparator *newSeparator();
+		StackWidgetSeparator *newSeparator(QWidget *widget);
 
 		QVBoxLayout *m_layout;
 		QWidget *m_current;
 
 		DragFromOrTo m_dragSource;
 		DragFromOrTo m_dropReceptor;
+
+		QHash<QWidget*,StackWidgetSeparator*> m_separators;
 };
 
 #endif /* STACKWIDGET_H_ */
