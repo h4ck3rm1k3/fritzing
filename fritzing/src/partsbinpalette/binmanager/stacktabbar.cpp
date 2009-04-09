@@ -93,14 +93,11 @@ void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
 }
 
 void StackTabBar::dropEvent(QDropEvent* event) {
-	int fromIndex = tabAt(m_dragStartPos);
 	int toIndex = tabAt(event->pos());
 
 	// Tell interested objects that
-	if (fromIndex != toIndex) {
-		emit tabMoveRequested(fromIndex, toIndex);
-	}
-
+	emit setDropReceptor(m_parent, toIndex);
+	emit dropped();
 	event->acceptProposedAction();
 }
 

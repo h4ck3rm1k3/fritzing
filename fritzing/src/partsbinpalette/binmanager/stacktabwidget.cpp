@@ -47,6 +47,14 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 		tabBar(),SIGNAL(setDragSource(StackTabWidget*, int)),
 		parent,SLOT(setDragSource(StackTabWidget*, int))
 	);
+	connect(
+		tabBar(),SIGNAL(setDropReceptor(QWidget*, int)),
+		parent,SLOT(setDropReceptor(QWidget*, int))
+	);
+	connect(
+		tabBar(),SIGNAL(dropped()),
+		parent,SLOT(dropped())
+	);
 }
 
 void StackTabWidget::dragEnterEvent(QDragEnterEvent* event) {

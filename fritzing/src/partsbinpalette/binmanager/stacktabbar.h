@@ -36,9 +36,9 @@ class StackTabBar : public QTabBar {
 		StackTabBar(class StackTabWidget *parent);
 
 	signals:
-		void tabDetached(QWidget *tab, const QPoint &pos);
-		void tabMoveRequested(int fromIndex, int toIndex);
 		void setDragSource(StackTabWidget*, int index=-1);
+		void setDropReceptor(QWidget*, int index=-1);
+		void dropped();
 
 	protected:
 		void mouseMoveEvent(QMouseEvent *event);

@@ -35,6 +35,8 @@ class StackWidgetSeparator : public QFrame {
 	public:
 		StackWidgetSeparator(QWidget *parent=0);
 		void setDragging(bool);
+		void expand();
+		void shrink();
 
 	signals:
 		void setDropReceptor(QWidget*, int index=-1);
@@ -44,8 +46,6 @@ class StackWidgetSeparator : public QFrame {
 		void dragEnterEvent(QDragEnterEvent *event);
 		void dragLeaveEvent(QDragLeaveEvent *event);
 		void dropEvent(QDropEvent* event);
-		void expand();
-		void shrink();
 
 		bool m_dragging;
 };

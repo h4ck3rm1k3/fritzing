@@ -39,7 +39,7 @@ BinManager::BinManager(QWidget *parent)
 
 	for(int i=0; i < 4; i++) {
 		StackTabWidget *tb = new StackTabWidget(m_widget);
-		for(int j=0; j < 9; j++) {
+		for(int j=0; j < 6; j++) {
 			QFrame *f = new QFrame(m_widget);
 			f->setFixedWidth(300);
 			f->setFixedHeight(500);

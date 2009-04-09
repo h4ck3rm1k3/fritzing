@@ -112,40 +112,49 @@ bool StackWidget::contains(QWidget *widget) const {
 	return indexOf(widget) > -1;
 }
 
-/*void StackWidget::tabDetached(QWidget *tab, const QPoint &pos) {
-	int idx = closestIndexToPos(pos);
-	DebugDialog::debug(QString("detached idx %1 %2").arg(idx).arg((long)tab));
-	insertWidget(idx,new QLabel("detached!",this));
-}*/
-
 void StackWidget::setDragSource(StackTabWidget* tabWidget, int index) {
+	DebugDialog::debug(QString("setting drag source %1 index %2").arg((long)tabWidget).arg(index));
 	m_dragSource = DragFromOrTo(tabWidget,index);
 }
 
 void StackWidget::setDropReceptor(QWidget* receptor, int index) {
+	DebugDialog::debug(QString("setting drop receptor %1 index %2").arg((long)receptor).arg(index));
 	m_dropReceptor = DragFromOrTo(receptor,index);
 }
 
 void StackWidget::dropped() {
-	int whereToInsert = indexOf(m_dropReceptor.first);
 	StackTabWidget *oldTab = dynamic_cast<StackTabWidget*>(m_dragSource.first);
 	if(oldTab) {
-		int srcIndex = m_dragSource.second;
-		QWidget *widgetToMove = oldTab->widget(srcIndex);
-		QString title = oldTab->tabText(srcIndex);
+		int fromIndex  = m_dragSource.second;
+		QWidget *widgetToMove = oldTab->widget(fromIndex);
+		QString text = oldTab->tabText(fromIndex);
 
-		oldTab->removeTab(srcIndex);
-		StackTabWidget *newTab = new StackTabWidget(this);
-		newTab->addTab(widgetToMove,title);
-		insertWidget(whereToInsert,newTab);
+		oldTab->removeTab(fromIndex);
+		StackTabWidget *newTab = dynamic_cast<StackTabWidget*>(m_dropReceptor.first);
+		if(!newTab) {
+			int whereToInsert = indexOf(m_dropReceptor.first);
+			newTab = new StackTabWidget(this);
+			newTab->addTab(widgetToMove,text);
+			insertWidget(whereToInsert,newTab);
+		} else {
+			int toIndex = m_dropReceptor.second;
+			if(oldTab != newTab && fromIndex != toIndex) {
+				DebugDialog::debug(QString("from: %1  to: %2").arg(fromIndex).arg(toIndex));
+				QIcon icon = oldTab->tabIcon(fromIndex);
 
+				oldTab->setCurrentIndex(-1);
+				newTab->insertTab(toIndex, widgetToMove, icon, text);
+				newTab->setCurrentIndex(toIndex);
+			}
+		}
+
+		StackWidgetSeparator *curSeparator = m_separators[oldTab];
+		curSeparator->shrink();
 		if(oldTab->count() == 0) {
-			StackWidgetSeparator *sepToRemove = m_separators[oldTab];
-			Q_ASSERT(sepToRemove);
 			removeWidget(oldTab);
-			removeWidget(sepToRemove);
+			removeWidget(curSeparator);
 			oldTab->hide();
-			sepToRemove->hide();
+			curSeparator->hide();
 			m_separators.remove(oldTab);
 			//delete oldTab;
 			//delete sepToRemove;
