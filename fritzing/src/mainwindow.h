@@ -358,6 +358,12 @@ protected:
 	QAction *m_saveAsModuleAct;
 	QAction *m_editModuleAct;
 
+	QMenu *m_zOrderMenu;
+	QAction *m_bringToFrontAct;
+	QAction *m_bringForwardAct;
+	QAction *m_sendBackwardAct;
+	QAction *m_sendToBackAct;
+
 	// Export Menu
 	QMenu *m_exportMenu;
 	QAction *m_exportJpgAct;
@@ -398,10 +404,6 @@ protected:
 	QAction *m_rotate90ccwAct;
 	QAction *m_flipHorizontalAct;
 	QAction *m_flipVerticalAct;
-	QAction *m_bringToFrontAct;
-	QAction *m_bringForwardAct;
-	QAction *m_sendBackwardAct;
-	QAction *m_sendToBackAct;
 	QAction *m_groupAct;
 	QAction *m_showPartLabelAct;
 	QAction *m_loadBundledPart;

@@ -48,10 +48,9 @@ public:
 	void setSticky(bool);
 	void addSticky(ItemBase *, bool stickem);
 	ItemBase * stuckTo();
-	QHash<ItemBase *, QPointF> & sticking();
+	QList<ItemBase *> & stickyList();
 	bool alreadySticking(ItemBase * itemBase);
 	bool stickyEnabled(ItemBase * stickTo);
-	void saveStickyOffsets(QGraphicsSceneMouseEvent *event);
 	void resetID();
 
 

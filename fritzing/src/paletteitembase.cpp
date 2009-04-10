@@ -189,17 +189,6 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 			connectorItem->setOverConnectorItem(NULL);
 		}
 	}
-
-	saveStickyOffsets(event);
-}
-
-void PaletteItemBase::saveStickyOffsets(QGraphicsSceneMouseEvent *event) {
-	if (m_sticky) {
-		m_stickyPos = event->scenePos();
-		foreach (ItemBase * itemBase, m_stickyList.keys()) {
-			m_stickyList.insert(itemBase, itemBase->pos());
-		}
-	}
 }
 
 void PaletteItemBase::findConnectorsUnder() {

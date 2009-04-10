@@ -401,6 +401,13 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool )),
 									 slotter, SLOT(restoreIndexes(ModelPart *, ModelPartTiny *, bool )) );
 
+	succeeded = succeeded && connect(signaller, SIGNAL(checkStickySignal(long, bool, CheckStickyCommand *)),
+									 slotter, SLOT(checkSticky(long, bool, CheckStickyCommand *)) );
+	succeeded = succeeded && connect(signaller, SIGNAL(rememberStickySignal(long, QUndoCommand *)),
+									 slotter, SLOT(rememberSticky(long, QUndoCommand *)),
+									 Qt::DirectConnection);
+
+
 	if (!succeeded) {
 		DebugDialog::debug("connectPair failed");
 	}
@@ -1186,10 +1193,7 @@ QMenu *MainWindow::pcbItemMenu() {
 
 QMenu *MainWindow::pcbWireMenu() {
 	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
-	menu->addAction(m_bringToFrontAct);
-	menu->addAction(m_bringForwardAct);
-	menu->addAction(m_sendBackwardAct);
-	menu->addAction(m_sendToBackAct);
+	menu->addMenu(m_zOrderMenu);
 	menu->addSeparator();
 	menu->addAction(m_createTraceAct);
 	menu->addAction(m_createJumperAct);
@@ -1213,10 +1217,7 @@ QMenu *MainWindow::pcbWireMenu() {
 
 QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addSeparator();
-	menu->addAction(m_bringToFrontAct);
-	menu->addAction(m_bringForwardAct);
-	menu->addAction(m_sendBackwardAct);
-	menu->addAction(m_sendToBackAct);
+	menu->addMenu(m_zOrderMenu);
 	menu->addSeparator();
 	menu->addAction(m_copyAct);
 	menu->addAction(m_duplicateAct);

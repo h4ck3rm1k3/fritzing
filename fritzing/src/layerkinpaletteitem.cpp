@@ -131,16 +131,12 @@ void LayerKinPaletteItem::addSticky(ItemBase * sticky, bool stickem) {
 	m_layerKinChief->addSticky(sticky, stickem);
 }
 
-void LayerKinPaletteItem::saveStickyOffsets(QGraphicsSceneMouseEvent *event) {
-	m_layerKinChief->saveStickyOffsets(event);
-}
-
 ItemBase * LayerKinPaletteItem::stuckTo() {
 	return m_layerKinChief->stuckTo();
 }
 
-QHash<ItemBase *, QPointF> & LayerKinPaletteItem::sticking() {
-	return m_layerKinChief->sticking();
+QList<ItemBase *> & LayerKinPaletteItem::stickyList() {
+	return m_layerKinChief->stickyList();
 }
 
 bool LayerKinPaletteItem::alreadySticking(ItemBase * itemBase) {

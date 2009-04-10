@@ -524,31 +524,57 @@ QString ChangeZCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-StickyCommand::StickyCommand(SketchWidget* sketchWidget, long stickTargetID, long stickSourceID, bool stick, QUndoCommand *parent)
-: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+CheckStickyCommand::CheckStickyCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, long itemID, QUndoCommand *parent)
+: BaseCommand(crossViewType, sketchWidget, parent)
 {
-	m_stickTargetID = stickTargetID;
-	m_stickSourceID = stickSourceID;
-	m_stick = stick;
+	m_itemID = itemID;
+	m_firstTime = true;
 }
 
-void StickyCommand::undo()
-{
-	m_sketchWidget->stickem(m_stickTargetID, m_stickSourceID, !m_stick);
+CheckStickyCommand::~CheckStickyCommand() {
+	foreach (StickyThing * stickyThing, m_stickyList) {
+		delete stickyThing;
+	}
+
+	m_stickyList.clear();
 }
 
-void StickyCommand::redo()
+void CheckStickyCommand::undo()
 {
-	m_sketchWidget->stickem(m_stickTargetID, m_stickSourceID, m_stick);
+	foreach (StickyThing * stickyThing, m_stickyList) {
+		stickyThing->sketchWidget->stickem(stickyThing->fromID, stickyThing->toID, !stickyThing->stickem);
+	}
 }
 
-QString StickyCommand::getParamString() const {
-	return QString("StickyCommand ") 
+void CheckStickyCommand::redo()
+{
+	if (m_firstTime) {
+		m_sketchWidget->checkSticky(m_itemID, m_crossViewType == BaseCommand::CrossView, this);
+		m_firstTime = false;
+	}
+	else {
+		foreach (StickyThing * stickyThing, m_stickyList) {
+			stickyThing->sketchWidget->stickem(stickyThing->fromID, stickyThing->toID, stickyThing->stickem);
+		}
+	}
+}
+
+QString CheckStickyCommand::getParamString() const {
+	return QString("CheckStickyCommand ") 
 		+ BaseCommand::getParamString()
-		+ QString("target:%1 src:%2 sticks:%3") 
-			.arg(m_stickTargetID).arg(m_stickSourceID).arg(m_stick);
+		+ QString("id:%1") 
+			.arg(this->m_stickyList.count());
 }
 
+void CheckStickyCommand::stick(SketchWidget * sketchWidget, long fromID, long toID, bool stickem) {
+	m_firstTime = false;
+	StickyThing * stickyThing = new StickyThing;
+	stickyThing->sketchWidget = sketchWidget;
+	stickyThing->fromID = fromID;
+	stickyThing->toID = toID;
+	stickyThing->stickem = stickem;
+	m_stickyList.append(stickyThing);
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

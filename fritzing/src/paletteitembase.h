@@ -67,7 +67,6 @@ public:
 	QRectF boundingRect() const;
 	virtual bool isLowerConnectorLayerVisible(PaletteItemBase *);
 	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-	virtual void saveStickyOffsets(QGraphicsSceneMouseEvent *event);
 
 
 	/*
@@ -98,7 +97,6 @@ protected:
  	QPointF m_syncMoved;
  	bool m_svg;
 	QString m_filename;
-	QPointF m_stickyPos;
 
 };
 

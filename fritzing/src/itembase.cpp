@@ -159,7 +159,7 @@ ItemBase::~ItemBase() {
 		}
 	}
 
-	foreach (ItemBase * itemBase, m_stickyList.keys()) {
+	foreach (ItemBase * itemBase, m_stickyList) {		// .keys()
 		itemBase->addSticky(this, false);
 	}
 
@@ -666,19 +666,19 @@ void ItemBase::setSticky(bool s)
 void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
 	if (stickem) {
 		if (!m_sticky) {
-			foreach (ItemBase * oldStuckTo, m_stickyList.keys()) {
+			foreach (ItemBase * oldStuckTo, m_stickyList) {		
 				if (oldStuckTo == sticky->layerKinChief()) continue;
 
 				oldStuckTo->addSticky(this, false);
 			}
 			m_stickyList.clear();
 		}
-		m_stickyList.insert(sticky->layerKinChief(), QPointF());
+		m_stickyList.append(sticky->layerKinChief());
 	}
 	else {
-		int result = m_stickyList.remove(sticky);
+		int result = m_stickyList.removeOne(sticky);
 		if (result <= 0) {
-			m_stickyList.remove(sticky->layerKinChief());
+			m_stickyList.removeOne(sticky->layerKinChief());
 		}
 	}
 }
@@ -693,15 +693,15 @@ ItemBase * ItemBase::stuckTo() {
 		DebugDialog::debug(QString("error: sticky list > 1 %1").arg(title()));
 	}
 
-	return m_stickyList.keys()[0];
+	return m_stickyList[0];	
 }
 
-QHash<ItemBase *, QPointF> & ItemBase::sticking() {
+QList<ItemBase *> & ItemBase::stickyList() {
 	return m_stickyList;
 }
 
 bool ItemBase::alreadySticking(ItemBase * itemBase) {
-	return m_stickyList.keys().contains(itemBase->layerKinChief());
+	return m_stickyList.contains(itemBase->layerKinChief());
 }
 
 ConnectorItem* ItemBase::newConnectorItem(Connector *connector) {

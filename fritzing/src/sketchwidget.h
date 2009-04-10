@@ -89,7 +89,7 @@ public:
     void setSketchModel(SketchModel *);
     void setUndoStack(class WaitPushUndoStack *);
     void clearSelection();
-	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste);
+	void loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, bool doCheckSticky);
     ItemBase* loadFromModel(ModelPart *, const ViewGeometry&);
     void changeZ(QHash<long, RealPair * >, qreal (*pairAccessor)(RealPair *) );
 	void sendToBack();
@@ -132,9 +132,9 @@ public:
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
-	void stickyScoop(ItemBase * stickyOne, QUndoCommand * parentCommand);
-	void checkNewSticky(ItemBase * itemBase);
-	void checkSticky(ItemBase * item, QUndoCommand * parentCommand);
+	void stickyScoop(ItemBase * stickyOne, CheckStickyCommand *);
+	//void checkNewSticky(ItemBase * itemBase, AddDeleteItemCommand * originatingCommand);
+	//void checkSticky(ItemBase * item, QUndoCommand * parentCommand);
 	void setChainDrag(bool);
 	void hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
@@ -217,7 +217,7 @@ protected:
 	virtual void mousePressEvent(QMouseEvent *event);
 	void mouseMoveEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
-    PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors);
+    PaletteItem* addPartItem(ModelPart * modelPart, PaletteItem * paletteItem, bool doConnectors, bool & ok);
 	ItemBase * findItem(long id);
 	void clearHoldingSelectItem();
 	bool startZChange(QList<ItemBase *> & bases);
@@ -346,6 +346,8 @@ signals:
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool doEmit);
+	void checkStickySignal(long id, bool doEmit, CheckStickyCommand *);
+	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 
 protected slots:
 	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
@@ -376,6 +378,7 @@ protected slots:
 							  bool connect, class RatsnestCommand * ratsnestCommand);
 
 	void ensureFixedItemsPositions();
+	void rememberSticky(long id, QUndoCommand * parentCommand);
 
 public slots:
 	void changeWireColor(const QString newColor);
@@ -385,6 +388,7 @@ public slots:
 	void showPartLabel(long id, bool showIt);
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);
+	void checkSticky(long id, bool doEmit, CheckStickyCommand *);
 
 protected:
 	PaletteModel* m_paletteModel;

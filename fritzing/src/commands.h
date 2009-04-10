@@ -283,21 +283,30 @@ protected:
     QHash<long, RealPair *> m_triplets;
 };
 
+struct StickyThing {
+	SketchWidget * sketchWidget;
+	bool stickem;
+	long fromID;
+	long toID;
+};
 
-class StickyCommand : public BaseCommand
+class CheckStickyCommand : public BaseCommand
 {
 public:
-	StickyCommand(class SketchWidget *sketchWidget, long stickTargetID, long stickSourceID, bool stick, QUndoCommand *parent);
-    void undo();
+	CheckStickyCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, long itemID, QUndoCommand *parent);
+	~CheckStickyCommand();
+	
+	void undo();
     void redo();
+	void stick(SketchWidget *, long fromID, long toID, bool stickem);
 
 protected:
 	QString getParamString() const;
 
 protected:
-	long m_stickTargetID;
-	long m_stickSourceID;
-	bool m_stick;
+	long m_itemID;
+	QList<StickyThing *> m_stickyList;
+	bool m_firstTime;
 };
 
 class CleanUpWiresCommand : public BaseCommand

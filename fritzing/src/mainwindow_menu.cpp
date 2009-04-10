@@ -566,17 +566,17 @@ void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addTo
 	progressBar.setValue(55);
 	m_statusBar->showMessage(tr("loading %1 (breadboard)").arg(fileInfo.fileName()));
 
-	m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false, true);
 
 	progressBar.setValue(70);
 	m_statusBar->showMessage(tr("loading %1 (pcb)").arg(fileInfo.fileName()));
 
-	m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false, true);
 
 	progressBar.setValue(85);
 	m_statusBar->showMessage(tr("loading %1 (schematic)").arg(fileInfo.fileName()));
 
-	m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
+	m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false, true);
 
 	progressBar.setValue(98);
 	QApplication::processEvents();
@@ -623,9 +623,9 @@ void MainWindow::paste() {
 	if (((ModelBase *) m_sketchModel)->paste(m_paletteModel, itemData, modelParts, NULL)) {
 		QUndoCommand * parentCommand = new QUndoCommand("Paste");
 
-		m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true);
-		m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true);
-		m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true);
+		m_breadboardGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true, true);
+		m_pcbGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true, true);
+		m_schematicGraphicsView->loadFromModel(modelParts, BaseCommand::SingleView, parentCommand, true, true, true);
 
 		m_undoStack->push(parentCommand);
 	}
@@ -1221,10 +1221,7 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_flipHorizontalAct);
 	m_partMenu->addAction(m_flipVerticalAct);
 	m_partMenu->addSeparator();
-	m_partMenu->addAction(m_bringToFrontAct);
-	m_partMenu->addAction(m_bringForwardAct);
-	m_partMenu->addAction(m_sendBackwardAct);
-	m_partMenu->addAction(m_sendToBackAct);
+	m_zOrderMenu = m_partMenu->addMenu(tr("Raise and Lower"));
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_showPartLabelAct);
 	m_partMenu->addSeparator();
@@ -1234,6 +1231,11 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_groupAct);
 #endif
+
+	m_zOrderMenu->addAction(m_bringToFrontAct);
+	m_zOrderMenu->addAction(m_bringForwardAct);
+	m_zOrderMenu->addAction(m_sendBackwardAct);
+	m_zOrderMenu->addAction(m_sendToBackAct);
 
     m_viewMenu = menuBar()->addMenu(tr("&View"));
     m_viewMenu->addAction(m_zoomInAct);
