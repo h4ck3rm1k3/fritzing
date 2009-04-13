@@ -57,10 +57,8 @@ public:
  	virtual bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 	const QString & filename();
 	void connectedMoved(ConnectorItem * from, ConnectorItem * to);
-	void updateConnectionsAux();
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectWireConnectees(QSet<class Wire *> & wires);
-	virtual void updateConnections() = 0;
 	virtual void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	virtual void figureHover() = 0;

@@ -97,7 +97,7 @@ public:
 	virtual void setHidden(bool hidden);
 	bool hidden();
 	ConnectorItem * findConnectorItemNamed(const QString & connectorID);
-	virtual void updateConnections(ConnectorItem *);
+	void updateConnections(ConnectorItem *);
 	virtual void updateConnections();
 	const QString & title();
 	bool getVirtual();
@@ -140,6 +140,8 @@ public:
 	virtual void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void prepareGeometryChange();
 	virtual void resetID();
+	void updateConnectionsAux();
+	void updateExternalConnections();
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);

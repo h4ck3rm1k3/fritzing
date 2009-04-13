@@ -46,6 +46,7 @@ public:
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	void updateConnections();
 
 protected:
 	GroupItemBase * m_layerKinChief;

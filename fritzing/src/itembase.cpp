@@ -1171,4 +1171,27 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 	return renderer;
 }
 
+void ItemBase::updateConnectionsAux() {
+	//DebugDialog::debug("update connections");
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (connectorItem == NULL) continue;
 
+		updateConnections(connectorItem);
+	}
+}
+
+void ItemBase::updateExternalConnections() {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (connectorItem != NULL && connectorItem->isExternal()) {
+			updateConnections(connectorItem);
+			continue;
+		}
+
+		ItemBase * itemBase = dynamic_cast<ItemBase *>(childItem);
+		if (itemBase != NULL) {
+			itemBase->updateExternalConnections();
+		}
+	}
+}

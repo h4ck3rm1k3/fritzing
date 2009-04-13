@@ -797,3 +797,9 @@ void ConnectorItem::prepareGeometryChange() {
 	QGraphicsRectItem::prepareGeometryChange();
 }
 
+bool ConnectorItem::isExternal() {
+	if (m_connector == NULL) return false;
+
+	return m_connector->external();
+}
+

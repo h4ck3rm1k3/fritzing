@@ -90,6 +90,7 @@ public:
 	bool connectionIsAllowed(ConnectorItem * other);
 	void setChosen(bool);
 	void prepareGeometryChange();
+	bool isExternal();
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );

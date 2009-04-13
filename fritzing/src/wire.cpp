@@ -1098,124 +1098,6 @@ void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> 
 			continue;
 		}			
 	}
-
-
-
-	/*
-	QList<Wire *> outs;
-	foreach (Wire * wire, chained) {
-		bool hasNone0 = false;
-		bool connectsOut0 = false;
-		bool hasNone1 = false;
-		bool connectsOut1 = false;
-		connectsWithin(wire->connector0(), hasNone0, connectsOut0);
-		connectsWithin(wire->connector1(), hasNone1, connectsOut1);
-		if (selected && hasNone0 && hasNone1) {
-			// goes with
-			continue;
-		}
-
-	}
-
-
-
-
-
-	bool allIn = true;
-	foreach (ConnectorItem * end, ends) {
-		if (!in.contains(end->attachedTo()) {
-			allIn = false;
-			// figure out which wire is attached
-			// add it to out
-		}
-	}
-
-
-
-
-
-		bool c0SelectedUnconnected = false;
-		bool c1SelectedUnconnected = false;
-		bool c0 = wire->connectsWithin(m_connector0, c0SelectedUnconnected, in, wires);
-		bool c1 = wire->connectsWithin(m_connector1, c1SelectedUnconnected, in, wires);
-		if (!(c0 || (c0SelectedUnconnected && includeSelectedUnconnected))) {
-			if (c1) {
-				out.insert(wire, wire->connector1());
-			}
-			return;
-		}
-		if (!(c1 || (c1SelectedUnconnected && includeSelectedUnconnected))) {
-			if (c1) {
-				out.insert(wire, wire->connector0());
-			}
-			return;
-		}
-	}
-
-	foreach (Wire * wire, wires) {
-		in.insert(wire);
-	}
-
-	return;
-
-	*/
-
-	/*
-
-
-
-	// if neither end connects, return true, because it's just floating
-	bool c0SelectedUnconnected = false;
-	bool c1SelectedUnconnected = false;
-	bool c0 = connectsWithin(m_connector0, c0SelectedUnconnected, in, wires);
-	bool c1 = connectsWithin(m_connector1, c1SelectedUnconnected, in, wires);
-	if (wires.count() == 1) {
-		if ((c0 == true || c0SelectedUnconnected) && (c1 == true || c1SelectedUnconnected)) {
-			in.insert(this);
-			return;
-		}
-
-		if (c0) {
-			out.insert(this, m_connector0);
-			return;
-		}
-
-		if (c1) {
-			out.insert(this, m_connector1);
-			return;
-		}
-
-		// can't drag either end
-		return;
-	}
-
-	if (c0 && c1) {
-		bool isIn = true;
-		for (int i = 1; i < wires.count(); i++) {
-			Wire * wire = wires[i];
-			if (!wire->connectsWithin(wire->connector0(), c0SelectedUnconnected, in, wires)) {
-				isIn = false;
-				break;
-			}
-			if (!wire->connectsWithin(wire->connector1(), c1SelectedUnconnected, in, wires)) {
-				isIn = false;
-				break;
-			}
-		}
-		if (isIn) {
-			foreach (Wire * wire, wires) {
-				in.insert(wire);
-			}
-			return;
-		}
-	}
-
-	if (c0) out.insert(this, m_connector0);
-	else if (c1) out.insert(this, m_connector1);
-
-	// connected but not within, so no dragging
-
-	*/
 }
 
 void Wire::connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires,
@@ -1229,6 +1111,10 @@ void Wire::connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, 
 	
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 		ItemBase * attachedTo = toConnectorItem->attachedTo();
+		while (attachedTo->parentItem() != NULL) {
+			attachedTo = dynamic_cast<ItemBase *>(attachedTo->parentItem());
+		}
+
 		if (in.contains(attachedTo)) {
 			connectedIn = true;
 			continue;

@@ -216,17 +216,6 @@ void PaletteItemBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
 	ItemBase::mouseReleaseEvent(event);
 }
 
-
-void PaletteItemBase::updateConnectionsAux() {
-	//DebugDialog::debug("update connections");
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);
-		if (item == NULL) continue;
-
-		ItemBase::updateConnections(item);
-	}
-}
-
 void PaletteItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	foreach (QGraphicsItem * childItem, childItems()) {
 		ConnectorItem * item = dynamic_cast<ConnectorItem *>(childItem);

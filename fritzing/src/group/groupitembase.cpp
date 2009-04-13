@@ -109,6 +109,7 @@ void GroupItemBase::saveInstanceLocation(QXmlStreamWriter & streamWriter) {
 
 void GroupItemBase::moveItem(ViewGeometry & viewGeometry) {
 	this->setPos(viewGeometry.loc());
+	updateConnections();
 }
 
 void GroupItemBase::syncKinMoved(GroupItemBase * originator, QPointF newPos) {

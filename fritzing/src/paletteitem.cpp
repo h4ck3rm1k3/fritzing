@@ -210,7 +210,7 @@ void PaletteItem::setItemPos(QPointF & loc) {
 void PaletteItem::updateConnections() {
 	updateConnectionsAux();
 	foreach (ItemBase * lkpi, m_layerKin) {
-		qobject_cast<LayerKinPaletteItem *>(lkpi)->updateConnectionsAux();
+		lkpi->updateConnectionsAux();
 	}
 }
 

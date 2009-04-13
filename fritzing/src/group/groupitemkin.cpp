@@ -67,3 +67,7 @@ void GroupItemKin::resetID() {
 void GroupItemKin::clearModelPart() {
 	m_layerKinChief->clearModelPart();
 }
+
+void GroupItemKin::updateConnections() {
+	m_layerKinChief->updateConnections();
+}

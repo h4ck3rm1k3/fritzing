@@ -25,36 +25,37 @@ $Date$
 ********************************************************************/
 
 // TODO:
-//  ** allow mouse events to external connections
-//		** don't allow wires to connect within the group
-//		** drag doesn't keep wire connections
-//		connect within
-//		** ignore submodule external connections
-//	breadboard or arduino in module
-//  female connectors in modules
-//		connect female connectees
-//  ** how to hide non-external connectors
-//  ** trace wires
-//	** ratsnest wires
 //  drag onto breadboard behavior
+//	undo group
+//  bug: can't drag wire from external connectors
+
+//	** rotate group bug: connected external wires don't updateConnections
+//  ** bug: after undo, updateconnections not being called
+//	** export with groups
+//  ** bug: drag out selection so that internal parts are selected, then copy/paste 
+//  ** sticky
+//  ** bug: not connecting across views
+//	** delete
+//	** undo delete
 //  ** ratsnest behavior: what if module contains separated parts (tough)
 //  ** autorouting behavior
-//	export with groups
 //	** recursive groups
 //		** recursive modelpart ownership
 //	** open in new sketch (edit)
-//		need to preserve external connectors
+//		** need to preserve external connectors
 //	** copy/paste
 //  ** undo copy/paste
-//	undo group
-//	** delete
-//	** undo delete
-//	rotate group bug: connected external wires don't updateConnections
-//  ** bug: not connecting across views
-//  bug: after undo, updateconnections not being called
-//  ** bug: drag out selection so that internal parts are selected, then copy/paste 
-//  sticky
-
+//  ** allow mouse events to external connections
+//		** don't allow wires to connect within the group
+//		** drag doesn't keep wire connections
+//		** connect within
+//		** ignore submodule external connections
+//	** breadboard or arduino in module
+//  ** female connectors in modules
+//		** connect female connectees
+//  ** how to hide non-external connectors
+//  ** trace wires
+//	** ratsnest wires
 //	** do model parts for grouped items get added as children to the group modelpart?
 //  ** save sketch with group(s)
 //  ** load sketch with group(s)
@@ -236,5 +237,19 @@ void GroupItem::resetID() {
 	ItemBase::resetID();
 	foreach (ItemBase * lkpi, m_layerKin) {
 		lkpi->resetID();
+	}
+}
+
+void GroupItem::updateConnections() {
+	updateExternalConnections();
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->updateExternalConnections();
+	}
+}
+
+void GroupItem::moveItem(ViewGeometry & viewGeometry) {
+	GroupItemBase::moveItem(viewGeometry);
+	for (int i = 0; i < m_layerKin.count(); i++) {
+		m_layerKin[i]->moveItem(viewGeometry);
 	}
 }

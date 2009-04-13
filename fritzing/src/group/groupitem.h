@@ -45,9 +45,11 @@ public:
 	void removeLayerKin();
 	void resetID();
 	void clearModelPart();
+	void moveItem(ViewGeometry & viewGeometry);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+	void updateConnections();
 
 public:
 	static QString moduleIDName;
