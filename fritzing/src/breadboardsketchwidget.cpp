@@ -67,7 +67,11 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
 			if (toConnectorItem->connectorType() == Connector::Female) {
-				if (savedItems.contains(toConnectorItem->attachedTo())) {
+				ItemBase * parent = toConnectorItem->attachedTo();
+				while (parent->parentItem() != NULL) {
+					parent = dynamic_cast<ItemBase *>(parent->parentItem());
+				}
+				if (savedItems.contains(parent)) {
 					// the thing we're connected to is also moving, so don't disconnect
 					continue;
 				}

@@ -86,6 +86,7 @@ $Date$
 //  ** select/unselect bug
 
 #include <QGraphicsScene>
+#include <QSet>
 
 #include "groupitem.h"
 #include "groupitemkin.h"
@@ -191,9 +192,25 @@ void GroupItem::collectWireConnectees(QSet<Wire *> & wires) {
 }
 
 void GroupItem::collectFemaleConnectees(QSet<ItemBase *> & items) {
-	GroupItemBase::collectFemaleConnectees(items);
+	QSet<ItemBase *> temp;
+	GroupItemBase::collectFemaleConnectees(temp);
 	foreach (ItemBase * lkpi, m_layerKin) {
-		lkpi->collectFemaleConnectees(items);
+		lkpi->collectFemaleConnectees(temp);
+	}
+
+	foreach (ItemBase * itemBase, temp) {
+		if (this->isAncestorOf(itemBase)) continue;
+
+		bool common = false;
+		foreach (ItemBase * lkpi, m_layerKin) {
+			if (lkpi->isAncestorOf(itemBase)) {
+				common = true;
+				break;
+			}
+		}
+		if (common) continue;
+
+		items.insert(itemBase);
 	}
 }
 

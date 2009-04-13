@@ -196,6 +196,14 @@ void SaveAsModuleDialog::handleSceneMousePress(QEvent *event)
 			m_externalConnectorItems.removeOne(connectorItem);
 			connectorItem->setChosen(false);
 		}
+		/*
+		else if (connectorItem->connectorType() == Connector::Female) {
+			QMessageBox::information(this, QObject::tr("Fritzing"),
+				QObject::tr("Only male connectors can be external to a module.  "
+							"Try attaching a wire (you will have to cancel out of 'Save As Module'.") );
+			return;
+		}
+		*/
 		else {
 			m_externalConnectorItems.append(connectorItem);
 			connectorItem->setChosen(true);

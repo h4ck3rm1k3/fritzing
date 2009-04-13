@@ -188,7 +188,7 @@ ItemBase* SketchWidget::loadFromModel(ModelPart *modelPart, const ViewGeometry& 
 	return addItemAux(modelPart, viewGeometry, ItemBase::getNextID(), -1, NULL, NULL, true);
 }
 
-void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste, bool doCheckSticky) {
+void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::CrossViewType crossViewType, QUndoCommand * parentCommand, bool doRatsnest, bool offsetPaste) {
 	clearHoldingSelectItem();
 
 	if (parentCommand) {
@@ -498,7 +498,7 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 		}
 	}
 
-	loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false, false);
+	loadFromModel(modelParts, BaseCommand::SingleView, NULL, false, false);
 
 	QHash<long, ModelPart *> newItems;
 	QList<long> ids;
