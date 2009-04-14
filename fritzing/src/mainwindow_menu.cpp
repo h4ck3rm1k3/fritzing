@@ -44,7 +44,7 @@ $Date$
 #include "breadboardsketchwidget.h"
 #include "schematicsketchwidget.h"
 #include "pcbsketchwidget.h"
-#include "partsbinpalette/partsbinpalettewidget.h"
+#include "partsbinpalette/binmanager/binmanager.h"
 #include "expandinglabel.h"
 #include "htmlinfoview.h"
 

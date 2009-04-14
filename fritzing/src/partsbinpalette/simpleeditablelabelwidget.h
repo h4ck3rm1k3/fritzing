@@ -45,6 +45,9 @@ class SimpleEditableLabelWidget : public QFrame {
 		void toStandardMode(bool markAsEdited = true);
 		void toEditionMode();
 
+	signals:
+		void textChanged(const QString& text);
+
 	protected:
 		void swapWidgets(QWidget *toShow, QWidget *toHide);
 		void swapMode();

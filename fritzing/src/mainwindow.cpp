@@ -60,7 +60,7 @@ $Date$
 #include "dockmanager.h"
 #include "group/saveasmoduledialog.h"
 
-#include "partsbinpalette/partsbinpalettewidget.h"
+#include "partsbinpalette/binmanager/binmanager.h"
 
 #include "fsvgrenderer.h"
 #include "fsizegrip.h"
@@ -1388,7 +1388,7 @@ void MainWindow::editModule() {
 	closeIfEmptySketch(mw);
 }
 
-void MainWindow::saveAsModule() 
+void MainWindow::saveAsModule()
 {
 	if (!m_pcbGraphicsView->ratsAllRouted()) {
 		QMessageBox::warning(

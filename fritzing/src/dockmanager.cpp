@@ -32,7 +32,7 @@ $Date: 2008-12-11 14:50:11 +0100 (Thu, 11 Dec 2008) $
 #include "fsizegrip.h"
 #include "viewswitcher/viewswitcherdockwidget.h"
 #include "utils/misc.h"
-#include "partsbinpalette/partsbinpalettewidget.h"
+#include "partsbinpalette/binmanager/binmanager.h"
 #include "htmlinfoview.h"
 
 FDockWidget * makeViewSwitcherDock(const QString & title, QWidget * parent) {
@@ -66,7 +66,7 @@ void DockManager::dockChangeActivation(bool activate) {
 void DockManager::createBinAndInfoViewDocks() {
 	m_mainWindow->m_infoView = new HtmlInfoView(m_mainWindow->m_refModel);
 
-	m_mainWindow->m_paletteWidget = new PartsBinPaletteWidget(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
+	m_mainWindow->m_paletteWidget = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
 	connect(m_mainWindow->m_paletteWidget, SIGNAL(saved(bool)), m_mainWindow, SLOT(binSaved(bool)));
 	connect(m_mainWindow, SIGNAL(alienPartsDismissed()), m_mainWindow->m_paletteWidget, SLOT(removeAlienParts()));
 
@@ -82,7 +82,7 @@ void DockManager::createDockWindows()
 	QWidget * widget = new QWidget();
 	widget->setMinimumHeight(0);
 	widget->setMaximumHeight(0);
-	FDockWidget * dock = makeDock(tr("view switcher"), widget, 0,  0, Qt::RightDockWidgetArea, makeViewSwitcherDock);	
+	FDockWidget * dock = makeDock(tr("view switcher"), widget, 0,  0, Qt::RightDockWidgetArea, makeViewSwitcherDock);
 	static_cast<ViewSwitcherDockWidget *>(dock)->setViewSwitcher(m_mainWindow->m_viewSwitcher);
 	connect(m_mainWindow, SIGNAL(mainWindowMoved(QWidget *)), dock, SLOT(windowMoved(QWidget *)));
 
@@ -91,7 +91,7 @@ void DockManager::createDockWindows()
 	//m_mainWindow->m_viewSwitcher->setStyleSheet("background-color: blue;");
 #endif
 
-	makeDock(PartsBinPaletteWidget::Title, m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
+	makeDock(BinManager::Title, m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
     makeDock(tr("Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerBreadboard = new MiniViewContainer(m_mainWindow));

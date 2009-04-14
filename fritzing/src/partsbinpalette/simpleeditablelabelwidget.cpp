@@ -63,6 +63,7 @@ void SimpleEditableLabelWidget::setText(const QString &text, bool markAsEdited) 
 		m_label->setText(text);
 		m_hasBeenEdited = markAsEdited;
 		updateUndoStackIfNecessary();
+		emit textChanged(text);
 	}
 }
 

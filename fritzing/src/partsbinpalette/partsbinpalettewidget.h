@@ -51,10 +51,12 @@ protected:
 class PartsBinPaletteWidget : public QFrame {
 	Q_OBJECT
 	public:
-		PartsBinPaletteWidget(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent = 0);
+		PartsBinPaletteWidget(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, class BinManager* manager);
 		~PartsBinPaletteWidget();
 
 		QSize sizeHint() const;
+		QString title() const;
+		void setTitle(const QString &title);
 
 		void loadFromModel(PaletteModel *model);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
@@ -78,16 +80,18 @@ class PartsBinPaletteWidget : public QFrame {
 		void addPartCommand(const QString& moduleID);
 		void removePartCommand(const QString& moduleID);
 		void removeAlienParts();
+		void titleChanged(const QString &newTitle);
+		bool save();
+		void open();
 
 	protected slots:
 		void toIconView();
 		void toListView();
 		bool removeSelected();
-		bool save();
 		bool saveAs();
-		void open();
 		void openCore();
 		void undoStackCleanChanged(bool isClean);
+		void saveAsLastBin();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -104,8 +108,6 @@ class PartsBinPaletteWidget : public QFrame {
 		void saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
-		void setSaveButtonEnabled(bool enabled);
-		void saveAsLastBin();
 
 		bool alreadyIn(QString moduleID);
 
@@ -128,11 +130,12 @@ class PartsBinPaletteWidget : public QFrame {
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;
 		ImageButton *m_removeSelected;
-		ImageButton *m_openBinButton;
+		/*ImageButton *m_openBinButton;
 		ImageButton *m_saveBinButton;
-		ImageButton *m_coreBinButton;
+		ImageButton *m_coreBinButton;*/
 
 		WaitPushUndoStack *m_undoStack;
+		BinManager *m_manager;
 
 		QStringList m_alienParts;
 

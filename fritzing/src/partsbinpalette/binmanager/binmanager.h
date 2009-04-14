@@ -30,18 +30,71 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include <QStackedWidget>
 #include <QTabWidget>
+#include <QMenu>
+#include <QToolButton>
 
 #include "stackwidget.h"
+
+class ModelPart;
+class PaletteModel;
 
 class BinManager : public QFrame {
 	Q_OBJECT
 	public:
-		BinManager(QWidget *parent=0);
+		BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, class WaitPushUndoStack *undoStack, QWidget* parent = 0);
 		virtual ~BinManager();
 
+		void loadFromModel(PaletteModel *model);
+		void setPaletteModel(PaletteModel *model, bool clear=false);
+
+		void addBin(class PartsBinPaletteWidget* bin);
+		void addPart(ModelPart *modelPart, int position = -1);
+		void addNewPart(ModelPart *modelPart);
+
+		bool beforeClosing();
+
+		bool hasAlienParts();
+		void saveAndCreateNewBinIfCore();
+
+		void setInfoViewOnHover(bool infoViewOnHover);
+		void load(const QString&);
+
+		void setDirtyTab(QWidget* w, bool dirty=true);
+		void updateTitle(QWidget* w, const QString& newTitle);
+
+	public slots:
+		void addPartCommand(const QString& moduleID);
+		void removeAlienParts();
+
+		void newBin();
+		void openBin();
+		void saveBin();
+		void renameBin();
+
+	signals:
+		void saved(bool hasPartsFromBundled);
+
 	protected:
+		void createMenu();
+
+		ReferenceModel *m_refModel;
+		HtmlInfoView *m_infoView;
+		WaitPushUndoStack *m_undoStack;
+
 		StackWidget *m_widget;
 		QTabWidget *m_activeBinTabWidget;
+
+		QHash<QWidget*,StackTabWidget*> m_tabWidgets;
+		int m_unsavedBins;
+
+		QToolButton *m_menuButton;
+		QAction *m_newBinAction;
+		QAction *m_openBinAction;
+		QAction *m_saveBinAction;
+		QAction *m_renameBinAction;
+
+	public:
+		static QString Title;
 };
 
 #endif /* BINMANAGER_H_ */

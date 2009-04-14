@@ -41,7 +41,6 @@ $Date$
 #include "viewswitcher/viewswitcher.h"
 #include "wire.h"
 #include "htmlinfoview.h"
-#include "partsbinpalette/binmanager/binmanager.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -355,7 +354,7 @@ int FApplication::startup(int & argc, char ** argv)
 	processEvents();
 
 	QString binToOpen = settings.value("lastBin").toString();
-	binToOpen = binToOpen.isNull() || binToOpen.isEmpty() ? MainWindow::CoreBinLocation : binToOpen;
+	binToOpen = binToOpen.isNull() || binToOpen.isEmpty()? MainWindow::CoreBinLocation: binToOpen;
 
 	if (!m_paletteBinModel->load(binToOpen, m_referenceModel)) {
 		if(binToOpen == MainWindow::CoreBinLocation
@@ -457,14 +456,6 @@ int FApplication::startup(int & argc, char ** argv)
 	 */
 
 	splash.finish(mainWindow);
-
-#if QT_VERSION >= 0x040500
-	QMainWindow *other = new QMainWindow();
-	BinManager *bm = new BinManager(other);
-	other->setCentralWidget(bm);
-	other->show();
-#endif
-
 	return 0;
 }
 

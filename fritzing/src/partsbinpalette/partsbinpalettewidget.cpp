@@ -42,13 +42,14 @@ $Date$
 #include "partsbiniconview.h"
 #include "partsbinlistview.h"
 #include "simpleeditablelabelwidget.h"
+#include "binmanager/binmanager.h"
 
-QString PartsBinPaletteWidget::Title;
 
-PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent) :
-	QFrame(parent)
+PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
+	QFrame(manager)
 {
-	PartsBinPaletteWidget::Title = tr("Parts");
+	m_manager = manager;
+
 	m_refModel = refModel;
 	m_canDeleteModel = false;
 
@@ -64,6 +65,10 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_listView->setInfoView(infoView);
 
 	m_binTitle = new SimpleEditableLabelWidget(m_undoStack,this);
+	connect(
+		m_binTitle, SIGNAL(textChanged(const QString&)),
+		this, SLOT(titleChanged(const QString&))
+	);
 
 	setObjectName("partsBinContainer");
 
@@ -90,6 +95,15 @@ QSize PartsBinPaletteWidget::sizeHint() const {
 	return QSize(DockManager::DockDefaultWidth, DockManager::PartsBinDefaultHeight);
 }
 
+QString PartsBinPaletteWidget::title() const {
+	return m_binTitle->text();
+}
+
+void PartsBinPaletteWidget::setTitle(const QString &title) {
+	m_binTitle->setText(title);
+}
+
+
 void PartsBinPaletteWidget::setupFooter() {
 	m_footer = new QFrame(this);
 	m_footer->setObjectName("partsBinFooter");
@@ -107,9 +121,9 @@ void PartsBinPaletteWidget::setupFooter() {
 	rightLayout->setMargin(0);
 	rightLayout->setSpacing(3);
 	rightLayout->addWidget(m_removeSelected);
-	rightLayout->addWidget(m_coreBinButton);
+	/*rightLayout->addWidget(m_coreBinButton);
 	rightLayout->addWidget(m_saveBinButton);
-	rightLayout->addWidget(m_openBinButton);
+	rightLayout->addWidget(m_openBinButton);*/
 
 	QHBoxLayout *footerLayout = new QHBoxLayout(m_footer);
 	footerLayout->setMargin(2);
@@ -154,7 +168,7 @@ void PartsBinPaletteWidget::toListView() {
 
 void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	m_fileName = filename;
-	QString title = m_binTitle->text();
+	QString title = this->title();
 	if(!title.isNull() && !title.isEmpty()) {
 		m_model->root()->modelPartShared()->setTitle(title);
 	}
@@ -183,7 +197,6 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 	m_model = model;
 	m_undoStack->setClean();
 	m_fileName = model->loadedFrom();
-	setSaveButtonEnabled(!currentBinIsCore());
 }
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
@@ -201,14 +214,6 @@ void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
 	}
 }
 
-void PartsBinPaletteWidget::setSaveButtonEnabled(bool enabled) {
-	m_saveBinButton->setEnabled(enabled);
-	if(!enabled) {
-		m_saveBinButton->setDisabledIcon();
-	} else {
-		m_saveBinButton->setEnabledIcon();
-	}
-}
 
 void PartsBinPaletteWidget::setupButtons() {
 	m_showIconViewButton = new ImageButton("IconView",this);
@@ -224,7 +229,7 @@ void PartsBinPaletteWidget::setupButtons() {
 	m_removeSelected->setEnabledIcon();
 	connect(m_removeSelected,SIGNAL(clicked()),this,SLOT(removeSelected()));
 
-	m_openBinButton = new ImageButton("Open",this);
+	/*m_openBinButton = new ImageButton("Open",this);
 	m_openBinButton->setToolTip(tr("Open bin"));
 	m_openBinButton->setEnabledIcon();
 	connect(m_openBinButton,SIGNAL(clicked()),this,SLOT(open()));
@@ -238,6 +243,7 @@ void PartsBinPaletteWidget::setupButtons() {
 	m_coreBinButton->setToolTip(tr("Restore core bin"));
 	m_coreBinButton->setEnabledIcon();
 	connect(m_coreBinButton,SIGNAL(clicked()),this,SLOT(openCore()));
+	*/
 }
 
 bool PartsBinPaletteWidget::removeSelected() {
@@ -304,7 +310,6 @@ void PartsBinPaletteWidget::open() {
     file.close();
 
     load(fileName);
-    setSaveButtonEnabled(true);
     saveAsLastBin();
 }
 
@@ -333,10 +338,9 @@ void PartsBinPaletteWidget::load(const QString &filename) {
 void PartsBinPaletteWidget::undoStackCleanChanged(bool isClean) {
 	if(!isClean && currentBinIsCore()) {
 		m_fileName = QString::null;
-		setSaveButtonEnabled(true);
 	}
 	setWindowModified(!isClean);
-	parentWidget()->setWindowTitle(Title + (!isClean ? " (modified)" : ""));
+	m_manager->setDirtyTab(this,isClean);
 }
 
 bool PartsBinPaletteWidget::currentBinIsCore() {
@@ -501,4 +505,9 @@ void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
 		m_undoStack->push(new QUndoCommand("Parts bin: part removed"));
 		removePart(moduleID);
 	}
+}
+
+
+void PartsBinPaletteWidget::titleChanged(const QString &newTitle) {
+	m_manager->updateTitle(this,newTitle);
 }

@@ -306,7 +306,7 @@ protected:
 	SketchAreaWidget *m_pcbWidget;
 	class PCBSketchWidget *m_pcbGraphicsView;
 
-    class PartsBinPaletteWidget *m_paletteWidget;
+    class BinManager *m_paletteWidget;
     MiniViewContainer *m_miniViewContainerBreadboard;
     MiniViewContainer *m_miniViewContainerSchematic;
     MiniViewContainer *m_miniViewContainerPCB;
