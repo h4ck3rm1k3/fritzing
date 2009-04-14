@@ -91,6 +91,7 @@ $Date$
 
 #include "groupitem.h"
 #include "groupitemkin.h"
+#include "../connectoritem.h"
 #include "../debugdialog.h"
 
 QString GroupItem::moduleIDName = "GroupModuleID";
@@ -253,3 +254,4 @@ void GroupItem::moveItem(ViewGeometry & viewGeometry) {
 		m_layerKin[i]->moveItem(viewGeometry);
 	}
 }
+

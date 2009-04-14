@@ -93,6 +93,15 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 }
 
 void GroupItemBase::findConnectorsUnder() {
+	foreach (ConnectorItem * connectorItem, m_externalConnectorItems) {
+		if (connectorItem->connectorType() == Connector::Female) {
+			continue;
+		}
+
+		connectorItem->setOverConnectorItem(
+				findConnectorUnder(connectorItem,  connectorItem->overConnectorItem(), true));
+
+	}
 }
 
 void GroupItemBase::saveGeometry() {
@@ -190,3 +199,31 @@ void GroupItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 	}
 }
 
+void GroupItemBase::collectExternalConnectorItems() {
+	QList<ItemBase *> itemBases;
+	itemBases.append(this);
+
+	for (int i = 0; i < itemBases.count(); i++) {
+		foreach (QGraphicsItem * childItem, itemBases[i]->childItems()) {
+			ItemBase * itemBase = dynamic_cast<ItemBase *>(childItem);
+			if (itemBase != NULL) itemBases.append(itemBase);
+		}
+	}
+
+	foreach (ItemBase * itemBase, itemBases) {
+		foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+			ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+			if (connectorItem == NULL) continue;
+
+			if (connectorItem->isExternal()) {
+				m_externalConnectorItems.append(connectorItem);
+			}
+		}
+	}
+}
+
+void GroupItemBase::collectConnectors(QList<ConnectorItem *> & connectors) {
+	foreach (ConnectorItem * connectorItem, m_externalConnectorItems) {
+		connectors.append(connectorItem);
+	}
+}

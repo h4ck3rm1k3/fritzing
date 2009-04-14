@@ -247,6 +247,10 @@ void ConnectorItem::attachedMoved() {
 	foreach (ConnectorItem * toConnector, m_connectedTo) {
 		ItemBase * itemBase = toConnector->attachedTo();
 		if (itemBase == NULL) continue;
+		if (itemBase->parentItem()) {
+			// part of a group so don't move it separately
+			continue;
+		}
 
 		itemBase->connectedMoved(this, toConnector);
 	}

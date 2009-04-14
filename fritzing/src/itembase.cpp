@@ -444,6 +444,13 @@ void ItemBase::collectConnectors(ConnectorPairHash & connectorHash, QGraphicsSce
 	}
 }
 
+void ItemBase::collectConnectors(QList<ConnectorItem *> & connectors) {
+	foreach (QGraphicsItem * childItem, childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>( childItem );
+		if (connectorItem != NULL) connectors.append(connectorItem);
+	}
+}
+
 ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
 	for (int i = 0; i < childItems().count(); i++) {
 		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItems()[i]);

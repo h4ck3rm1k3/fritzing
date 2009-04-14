@@ -513,9 +513,9 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 	}
 
 	group(modelPart->moduleID(), id, ids, viewGeometry, false);
+	ItemBase * toBase = modelPart->viewItem(scene());
 
 	if (doExternals) {
-		ItemBase * toBase = modelPart->viewItem(scene());
 		if (toBase) {
 			foreach (QString connectorID, externalConnectors.keys()) {
 				QList<long> * indexes = externalConnectors.value(connectorID, NULL);
@@ -546,8 +546,14 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 			delete l;
 		}
 	}
+
+	if (toBase) {
+		if (modelPart->parent() == m_sketchModel->root()) {
+			dynamic_cast<GroupItem *>(toBase)->collectExternalConnectorItems();
+		}
+	}
 	
-	return modelPart->viewItem(scene());
+	return toBase;
 }
 
 ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewType crossViewType, const ViewGeometry & viewGeometry, long id, long modelIndex, long originalModelIndex, AddDeleteItemCommand * originatingCommand, PaletteItem* partsEditorPaletteItem) {
@@ -1542,7 +1548,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		ItemBase * chief = itemBase->layerKinChief();
 		m_savedItems.insert(chief);
 		if (chief->sticky()) {
-			foreach(ItemBase * sitemBase, chief->stickyList()) {		// .keys()
+			foreach(ItemBase * sitemBase, chief->stickyList()) {		
 				if (sitemBase->isVisible()) {
 					if (sitemBase->itemType() == ModelPart::Wire) {
 						wires.insert(dynamic_cast<Wire *>(sitemBase));
@@ -1803,10 +1809,9 @@ bool SketchWidget::checkMoved()
 	foreach (ItemBase * item, m_savedItems) {
 		if (item->itemType() == ModelPart::Wire) continue;
 
-		foreach (QGraphicsItem * childItem, item->childItems()) {
-			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (fromConnectorItem == NULL) continue;
-
+		QList<ConnectorItem *> connectorItems;
+		item->collectConnectors(connectorItems);
+		foreach (ConnectorItem * fromConnectorItem, connectorItems) {
 			ConnectorItem * toConnectorItem = fromConnectorItem->overConnectorItem();
 			if (toConnectorItem != NULL) {
 				toConnectorItem->connectorHover(item, false);

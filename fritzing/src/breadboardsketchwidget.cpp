@@ -61,12 +61,12 @@ bool BreadboardSketchWidget::disconnectFromFemale(ItemBase * item, QSet<ItemBase
 	// at the moment, I think this doesn't apply to other views
 
 	bool result = false;
-	foreach (QGraphicsItem * childItem, item->childItems()) {
-		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (fromConnectorItem == NULL) continue;
-
+	QList<ConnectorItem *> connectorItems;
+	item->collectConnectors(connectorItems);
+	foreach (ConnectorItem * fromConnectorItem , connectorItems) {
 		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems())  {
 			if (toConnectorItem->connectorType() == Connector::Female) {
+				// go up the tree in case it's a group
 				ItemBase * parent = toConnectorItem->attachedTo();
 				while (parent->parentItem() != NULL) {
 					parent = dynamic_cast<ItemBase *>(parent->parentItem());

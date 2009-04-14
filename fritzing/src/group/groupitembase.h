@@ -52,6 +52,8 @@ public:
 	QRectF boundingRect() const;
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
+	void collectExternalConnectorItems();
+	void collectConnectors(QList<ConnectorItem *> & connectors);
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -61,6 +63,7 @@ protected:
 protected:
 	QRectF m_boundingRect;
 	QList<ItemBase *> m_itemsToAdd;
+	QList<class ConnectorItem *> m_externalConnectorItems;
 };
 
 

@@ -96,6 +96,7 @@ bool BinManager::beforeClosing() {
 
 
 bool BinManager::hasAlienParts() {
+	return false;
 
 }
 
