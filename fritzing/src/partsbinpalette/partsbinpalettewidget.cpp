@@ -48,6 +48,7 @@ $Date$
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
 {
+	m_tabWidget = NULL;
 	m_manager = manager;
 
 	m_refModel = refModel;
@@ -103,6 +104,9 @@ void PartsBinPaletteWidget::setTitle(const QString &title) {
 	m_binTitle->setText(title);
 }
 
+void PartsBinPaletteWidget::setTabWidget(StackTabWidget *tabWidget) {
+	m_tabWidget = tabWidget;
+}
 
 void PartsBinPaletteWidget::setupFooter() {
 	m_footer = new QFrame(this);
@@ -120,7 +124,9 @@ void PartsBinPaletteWidget::setupFooter() {
 	rightLayout->setDirection(QBoxLayout::RightToLeft);
 	rightLayout->setMargin(0);
 	rightLayout->setSpacing(3);
-	rightLayout->addWidget(m_removeSelected);
+	rightLayout->addWidget(m_removeSelectedButton);
+	rightLayout->addWidget(m_importPartButton);
+	rightLayout->addWidget(m_addPartButton);
 	/*rightLayout->addWidget(m_coreBinButton);
 	rightLayout->addWidget(m_saveBinButton);
 	rightLayout->addWidget(m_openBinButton);*/
@@ -129,6 +135,8 @@ void PartsBinPaletteWidget::setupFooter() {
 	footerLayout->setMargin(2);
 	footerLayout->setSpacing(0);
 	footerLayout->addWidget(leftButtons);
+	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
+	footerLayout->addWidget(m_menuButton);
 	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	footerLayout->addWidget(rightButtons);
 }
@@ -224,10 +232,22 @@ void PartsBinPaletteWidget::setupButtons() {
 	m_showListViewButton->setToolTip(tr("Show as list"));
 	connect(m_showListViewButton,SIGNAL(clicked()),this,SLOT(toListView()));
 
-	m_removeSelected = new ImageButton("Delete",this);
-	m_removeSelected->setToolTip(tr("Remove selected part"));
-	m_removeSelected->setEnabledIcon();
-	connect(m_removeSelected,SIGNAL(clicked()),this,SLOT(removeSelected()));
+	m_removeSelectedButton = new ImageButton("Delete",this);
+	m_removeSelectedButton->setToolTip(tr("Remove selected part"));
+	m_removeSelectedButton->setEnabledIcon();
+	connect(m_removeSelectedButton,SIGNAL(clicked()),this,SLOT(removeSelected()));
+
+	createMenu();
+
+	m_addPartButton = new ImageButton("AddPart",false,this);
+	m_addPartButton->setToolTip(tr("Add Part"));
+	m_addPartButton->setEnabledIcon();
+	connect(m_addPartButton,SIGNAL(clicked()),this,SLOT(addPart()));
+
+	m_importPartButton = new ImageButton("ImportPart",false,this);
+	m_importPartButton->setToolTip(tr("Import Part"));
+	m_importPartButton->setEnabledIcon();
+	connect(m_importPartButton,SIGNAL(clicked()),this,SLOT(importPart()));
 
 	/*m_openBinButton = new ImageButton("Open",this);
 	m_openBinButton->setToolTip(tr("Open bin"));
@@ -244,6 +264,62 @@ void PartsBinPaletteWidget::setupButtons() {
 	m_coreBinButton->setEnabledIcon();
 	connect(m_coreBinButton,SIGNAL(clicked()),this,SLOT(openCore()));
 	*/
+}
+
+void PartsBinPaletteWidget::createMenu() {
+	m_menuButton = new QToolButton(this);
+	m_menuButton->setPopupMode(QToolButton::InstantPopup);
+	m_menuButton->setIcon(QIcon(":/resources/images/icons/partsBinMenu_icon.png"));
+	QMenu *menu = new QMenu(this);
+
+	m_newBinAction = new QAction(tr("New bin"), this);
+	m_openBinAction = new QAction(tr("Open bin..."),this);
+	m_openCoreBinAction = new QAction(tr("Open core bin"),this);
+	m_closeBinAction = new QAction(tr("Close bin"),this);
+	m_saveAction = new QAction(tr("Save bin"),this);
+	m_renameAction = new QAction(tr("Rename bin"),this);
+
+	menu->addAction(m_newBinAction);
+	menu->addAction(m_openBinAction);
+	menu->addAction(m_openCoreBinAction);
+	menu->addAction(m_closeBinAction);
+	menu->addAction(m_saveAction);
+	menu->addAction(m_renameAction);
+
+	connect(
+		m_newBinAction, SIGNAL(triggered()),
+		this, SLOT(newBin())
+	);
+	connect(
+		m_openBinAction, SIGNAL(triggered()),
+		this, SLOT(openBin())
+	);
+	connect(
+		m_openCoreBinAction, SIGNAL(triggered()),
+		this, SLOT(openCoreBin())
+	);
+	connect(
+		m_closeBinAction, SIGNAL(triggered()),
+		this, SLOT(closeBin())
+	);
+	connect(
+		m_saveAction, SIGNAL(triggered()),
+		this, SLOT(save())
+	);
+	connect(
+		m_renameAction, SIGNAL(triggered()),
+		this, SLOT(rename())
+	);
+
+	m_menuButton->setMenu(menu);
+}
+
+void PartsBinPaletteWidget::addPart() {
+
+}
+
+void PartsBinPaletteWidget::importPart() {
+
 }
 
 bool PartsBinPaletteWidget::removeSelected() {
@@ -510,4 +586,25 @@ void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
 
 void PartsBinPaletteWidget::titleChanged(const QString &newTitle) {
 	m_manager->updateTitle(this,newTitle);
+}
+
+void PartsBinPaletteWidget::newBin() {
+	m_manager->newBinIn(m_tabWidget);
+}
+
+void PartsBinPaletteWidget::openBin() {
+	m_manager->openBinIn(m_tabWidget);
+}
+
+void PartsBinPaletteWidget::openCoreBin() {
+	m_manager->openCoreBinIn(m_tabWidget);
+}
+
+void PartsBinPaletteWidget::closeBin() {
+	m_manager->closeBinIn(m_tabWidget);
+}
+
+
+void PartsBinPaletteWidget::rename() {
+
 }

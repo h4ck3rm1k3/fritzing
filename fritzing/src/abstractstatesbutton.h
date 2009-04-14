@@ -54,10 +54,16 @@ protected:
 	}
 
 	virtual void setImage(const QPixmap & pixmap) = 0;
-	virtual void setupIcons(const QString &imageName) {
-		m_enabledImage = QPixmap(imagePrefix()+imageName+"Enabled"+imageSubfix());
-		m_disabledImage = QPixmap(imagePrefix()+imageName+"Disabled"+imageSubfix());
-		m_pressedImage = QPixmap(imagePrefix()+imageName+"Pressed"+imageSubfix());
+	virtual void setupIcons(const QString &imageName, bool hasStates=true) {
+		if(hasStates) {
+			m_enabledImage = QPixmap(imagePrefix()+imageName+"Enabled"+imageSubfix());
+			m_disabledImage = QPixmap(imagePrefix()+imageName+"Disabled"+imageSubfix());
+			m_pressedImage = QPixmap(imagePrefix()+imageName+"Pressed"+imageSubfix());
+		} else {
+			m_enabledImage = QPixmap(imagePrefix()+imageName+imageSubfix());
+			m_disabledImage = m_enabledImage;
+			m_pressedImage =  m_enabledImage;
+		}
 	}
 
 protected:

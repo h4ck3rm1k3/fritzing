@@ -49,8 +49,6 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_infoView = infoView;
 	m_undoStack = undoStack;
 
-	createMenu();
-
 	m_widget = new StackWidget(this);
 	m_widget->setAcceptDrops(true);
 	//m_activeBinTabWidget = new QTabWidget(m_widget);
@@ -58,7 +56,6 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_unsavedBins = 0;
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->addWidget(m_menuButton);
 	lo->addWidget(m_widget);
 	setMaximumHeight(500);
 }
@@ -69,6 +66,7 @@ BinManager::~BinManager() {
 
 void BinManager::addBin(PartsBinPaletteWidget* bin) {
 	StackTabWidget *tb = new StackTabWidget(m_widget);
+	bin->setTabWidget(tb);
 	tb->addTab(bin,bin->title());
 	// this functions are only available on 4.5.0 or later
 #if QT_VERSION >= 0x040500
@@ -76,6 +74,12 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 	//tb->setMovable(true);
 #endif
 	m_widget->addWidget(tb);
+	m_tabWidgets[bin] = tb;
+}
+
+void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb) {
+	tb->insertTab(index,bin,bin->title());
+	tb->setCurrentIndex(index);
 	m_tabWidgets[bin] = tb;
 }
 
@@ -141,57 +145,27 @@ void BinManager::updateTitle(QWidget* w, const QString& newTitle) {
 	if(tw) tw->setTabText(tw->indexOf(w), newTitle+" (*)");
 }
 
-void BinManager::newBin() {
+void BinManager::newBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBins));
-	addBin(bin);
+	insertBin(bin, tb->currentIndex(), tb);
 }
 
-void BinManager::openBin() {
+void BinManager::openBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
 	bin->open();
-	addBin(bin);
+	insertBin(bin, tb->currentIndex(), tb);
 }
 
-void BinManager::saveBin() {
-
+void BinManager::openCoreBinIn(StackTabWidget* tb) {
+	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	bin->openCore();
+	insertBin(bin, tb->currentIndex(), tb);
 }
 
-void BinManager::renameBin() {
-
-}
-
-void BinManager::createMenu() {
-	m_menuButton = new QToolButton(this);
-	m_menuButton->setPopupMode(QToolButton::InstantPopup);
-	QMenu *menu = new QMenu(this);
-
-	m_newBinAction = new QAction(tr("New bin"), this);
-	m_openBinAction = new QAction(tr("Open bin..."),this);
-	m_saveBinAction = new QAction(tr("Save bin"),this);
-	m_renameBinAction = new QAction(tr("Rename bin"),this);
-
-	menu->addAction(m_newBinAction);
-	menu->addAction(m_openBinAction);
-	menu->addAction(m_saveBinAction);
-	menu->addAction(m_renameBinAction);
-
-	connect(
-		m_newBinAction, SIGNAL(triggered()),
-		this, SLOT(newBin())
-	);
-	connect(
-		m_openBinAction, SIGNAL(triggered()),
-		this, SLOT(openBin())
-	);
-	connect(
-		m_saveBinAction, SIGNAL(triggered()),
-		this, SLOT(saveBin())
-	);
-	connect(
-		m_renameBinAction, SIGNAL(triggered()),
-		this, SLOT(renameBin())
-	);
-
-	m_menuButton->setMenu(menu);
+void BinManager::closeBinIn(StackTabWidget* tb) {
+	tb->removeTab(tb->currentIndex());
+	if(tb->count() == 0 && m_widget->count() <= 3) { // one tab widget and two separators
+		openCoreBinIn(tb);
+	}
 }

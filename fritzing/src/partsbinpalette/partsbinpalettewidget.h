@@ -29,6 +29,7 @@ $Date$
 #define PARTSBINPALETTEWIDGET_H_
 
 #include <QFrame>
+#include <QToolButton>
 
 #include "../palettemodel.h"
 #include "../modelpart.h"
@@ -37,10 +38,10 @@ $Date$
 
 class ImageButton : public AbstractImageButton {
 public:
-	ImageButton(const QString &imageName, QWidget *parent=0)
+	ImageButton(const QString &imageName, bool hasStates, QWidget *parent=0)
 		: AbstractImageButton(parent)
 	{
-		setupIcons(imageName);
+		setupIcons(imageName, hasStates);
 	};
 protected:
 	QString imagePrefix() {
@@ -57,6 +58,8 @@ class PartsBinPaletteWidget : public QFrame {
 		QSize sizeHint() const;
 		QString title() const;
 		void setTitle(const QString &title);
+
+		void setTabWidget(class StackTabWidget *tabWidget);
 
 		void loadFromModel(PaletteModel *model);
 		void setPaletteModel(PaletteModel *model, bool clear=false);
@@ -83,15 +86,22 @@ class PartsBinPaletteWidget : public QFrame {
 		void titleChanged(const QString &newTitle);
 		bool save();
 		void open();
+		void openCore();
 
 	protected slots:
 		void toIconView();
 		void toListView();
 		bool removeSelected();
 		bool saveAs();
-		void openCore();
 		void undoStackCleanChanged(bool isClean);
 		void saveAsLastBin();
+		void addPart();
+		void importPart();
+		void newBin();
+		void openBin();
+		void openCoreBin();
+		void rename();
+		void closeBin();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -108,8 +118,8 @@ class PartsBinPaletteWidget : public QFrame {
 		void saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
-
 		bool alreadyIn(QString moduleID);
+		void createMenu();
 
 	protected:
 		PaletteModel *m_model;
@@ -127,15 +137,27 @@ class PartsBinPaletteWidget : public QFrame {
 		class PartsBinListView *m_listView;
 
 		QFrame *m_footer;
+
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;
-		ImageButton *m_removeSelected;
+		ImageButton *m_removeSelectedButton;
 		/*ImageButton *m_openBinButton;
 		ImageButton *m_saveBinButton;
 		ImageButton *m_coreBinButton;*/
+		ImageButton *m_addPartButton;
+		ImageButton *m_importPartButton;
+
+		QToolButton *m_menuButton;
+		QAction *m_newBinAction;
+		QAction *m_openBinAction;
+		QAction *m_openCoreBinAction;
+		QAction *m_closeBinAction;
+		QAction *m_saveAction;
+		QAction *m_renameAction;
 
 		WaitPushUndoStack *m_undoStack;
 		BinManager *m_manager;
+		StackTabWidget *m_tabWidget;
 
 		QStringList m_alienParts;
 

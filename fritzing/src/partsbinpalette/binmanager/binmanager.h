@@ -30,8 +30,6 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include <QStackedWidget>
 #include <QTabWidget>
-#include <QMenu>
-#include <QToolButton>
 
 #include "stackwidget.h"
 
@@ -48,6 +46,7 @@ class BinManager : public QFrame {
 		void setPaletteModel(PaletteModel *model, bool clear=false);
 
 		void addBin(class PartsBinPaletteWidget* bin);
+		void insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb);
 		void addPart(ModelPart *modelPart, int position = -1);
 		void addNewPart(ModelPart *modelPart);
 
@@ -62,14 +61,14 @@ class BinManager : public QFrame {
 		void setDirtyTab(QWidget* w, bool dirty=true);
 		void updateTitle(QWidget* w, const QString& newTitle);
 
+		void newBinIn(StackTabWidget* tb);
+		void openBinIn(StackTabWidget* tb);
+		void openCoreBinIn(StackTabWidget* tb);
+		void closeBinIn(StackTabWidget* tb);
+
 	public slots:
 		void addPartCommand(const QString& moduleID);
 		void removeAlienParts();
-
-		void newBin();
-		void openBin();
-		void saveBin();
-		void renameBin();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -86,12 +85,6 @@ class BinManager : public QFrame {
 
 		QHash<QWidget*,StackTabWidget*> m_tabWidgets;
 		int m_unsavedBins;
-
-		QToolButton *m_menuButton;
-		QAction *m_newBinAction;
-		QAction *m_openBinAction;
-		QAction *m_saveBinAction;
-		QAction *m_renameBinAction;
 
 	public:
 		static QString Title;
