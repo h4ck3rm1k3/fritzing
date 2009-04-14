@@ -758,7 +758,6 @@ void ConnectorItem::setIgnoreAncestorFlagIfExternal(bool ignore) {
 		return;
 	}
 
-
 	if (m_connector->external()) {
 		m_ignoreAncestorFlag = ignore;
 	}

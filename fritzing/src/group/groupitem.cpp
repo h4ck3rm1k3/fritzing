@@ -27,8 +27,8 @@ $Date$
 // TODO:
 //  drag onto breadboard behavior
 //	undo group
-//  bug: can't drag wire from external connectors
 
+//  ** bug: can't drag wire from external connectors
 //	** rotate group bug: connected external wires don't updateConnections
 //  ** bug: after undo, updateconnections not being called
 //	** export with groups
@@ -56,7 +56,7 @@ $Date$
 //  ** how to hide non-external connectors
 //  ** trace wires
 //	** ratsnest wires
-//	** do model parts for grouped items get added as children to the group modelpart?
+//	** model parts for grouped items get added as children to the group modelpart
 //  ** save sketch with group(s)
 //  ** load sketch with group(s)
 //	** bug: no shadow in grouped wire

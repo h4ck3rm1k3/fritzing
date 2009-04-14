@@ -511,6 +511,7 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 			ids.append(item->id());
 		}
 	}
+
 	group(modelPart->moduleID(), id, ids, viewGeometry, false);
 
 	if (doExternals) {
@@ -533,6 +534,11 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 				if (connectorItem == NULL) continue;
 
 				connectorItem->connector()->setExternal(true);
+
+				// must call setIgnoreAncestorFlag here, since group() is called previously,
+				// externals weren't set up
+				// and group() calls setIgnoreAncestorFlagIfExternal
+				connectorItem->setIgnoreAncestorFlag(true);
 			}
 		}
 
