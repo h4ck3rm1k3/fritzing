@@ -1893,11 +1893,17 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 	}
 }
 
+//TODO: this whole thing should probably be cleaned up and moved to another file
 void MainWindow::exportToGerber() {
 #ifdef QT_NO_DEBUG
 	notYetImplemented(tr("Gerber export"));
 	return;
 #endif
+
+        QString exportDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                                 defaultSaveFolder(),
+                                                 QFileDialog::ShowDirsOnly
+                                                 | QFileDialog::DontResolveSymlinks);
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper0;
@@ -1918,16 +1924,46 @@ void MainWindow::exportToGerber() {
 		return;
 	}
 
-        // create gerber from svg
-        SVG2gerber gerb = SVG2gerber(svg);
+        // create copper0 gerber from svg
+        SVG2gerber copper0Gerber = SVG2gerber(svg);
 
-        // dump gerber to tmp file for now
-        QFile gerbDump("/tmp/gerber.gerb");
-        if (!gerbDump.open(QIODevice::WriteOnly | QIODevice::Text))
-            DebugDialog::debug("gerber dump: cannot open output file");
+        QString copper0File = exportDir + "/" +
+                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                              + "_copper0.gerb";
+        QFile copper0Out(copper0File);
+        if (!copper0Out.open(QIODevice::WriteOnly | QIODevice::Text))
+            DebugDialog::debug("gerber export: cannot open output file");
 
-        QTextStream out(&gerbDump);
-        out << gerb.getGerber();
+        QTextStream out1(&copper0Out);
+        out1 << copper0Gerber.getGerber();
+
+        // now do it for silk
+        QList<ViewLayer::ViewLayerID> silkLayerIDs;
+        silkLayerIDs << ViewLayer::Silkscreen;
+        QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, NULL);
+        if (svgSilk.isEmpty()) {
+                // tell the user something reasonable
+                return;
+        }
+
+        result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
+        if (!result) {
+                // tell the user something reasonable
+                return;
+        }
+
+        // create copper0 gerber from svg
+        SVG2gerber silk0Gerber = SVG2gerber(svgSilk);
+
+        QString silk0File = exportDir + "/" +
+                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                              + "_silkscr0.gerb";
+        QFile silk0Out(silk0File);
+        if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text))
+            DebugDialog::debug("gerber export: cannot open output file");
+
+        QTextStream out2(&silk0Out);
+        out2 << silk0Gerber.getGerber();
 }
 
 void MainWindow::exportToEagle() {
@@ -2049,10 +2085,10 @@ void MainWindow::exportBOM() {
 
         QString path = defaultSaveFolder();
 
-		QString fileExt;
-		QString extFmt = fileExtFormats.value(bomActionType);
-		QString fname = path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
-		DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
+        QString fileExt;
+        QString extFmt = fileExtFormats.value(bomActionType);
+        QString fname = path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
+        DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
         QString fileName = FApplication::getSaveFileName(this,
                 tr("Export Bill of Materials (BoM)..."),

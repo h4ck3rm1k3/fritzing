@@ -105,6 +105,19 @@ void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
             element.setAttribute("cx", point.x());
             element.setAttribute("cy", point.y());
         }
+        else if(tag == "line") {
+            float x1 = element.attribute("x1").toFloat();
+            float y1 = element.attribute("y1").toFloat();
+            QPointF p1 = transform.map(QPointF(x1,y1));
+            element.setAttribute("x1", p1.x());
+            element.setAttribute("y1", p1.y());
+
+            float x2 = element.attribute("x2").toFloat();
+            float y2 = element.attribute("y2").toFloat();
+            QPointF p2 = transform.map(QPointF(x2,y2));
+            element.setAttribute("x2", p2.x());
+            element.setAttribute("y2", p2.y());
+        }
         else
             DebugDialog::debug("Warning! Can't rotate element: " + tag);
         return;
