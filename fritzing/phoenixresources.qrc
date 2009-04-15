@@ -82,6 +82,9 @@ $Date$
     <file>resources/images/icons/partsBinListViewEnabled_icon.png</file>
     <file>resources/images/icons/partsBinListViewDisabled_icon.png</file>
     <file>resources/images/icons/partsBinListViewPressed_icon.png</file>
+    <file>resources/images/icons/partsBinMenu_icon.png</file>
+    <file>resources/images/icons/partsBinAddPart_icon.png</file>
+    <file>resources/images/icons/partsBinImportPart_icon.png</file>
     <file>resources/images/icons/toolbarExport_gbr_icon.png</file>
     <file>resources/images/icons/toolbarExport_gbx_icon.png</file>
     <file>resources/images/icons/toolbarExport_jpeg_icon.png</file>
