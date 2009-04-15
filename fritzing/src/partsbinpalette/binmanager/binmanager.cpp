@@ -153,8 +153,9 @@ void BinManager::newBinIn(StackTabWidget* tb) {
 
 void BinManager::openBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
-	bin->open();
-	insertBin(bin, tb->currentIndex(), tb);
+	if(bin->open()) {
+		insertBin(bin, tb->currentIndex(), tb);
+	}
 }
 
 void BinManager::openCoreBinIn(StackTabWidget* tb) {

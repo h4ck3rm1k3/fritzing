@@ -31,18 +31,19 @@ $Date$
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSettings>
+#include <QInputDialog>
 
 #include "partsbinpalettewidget.h"
 #include "partsbincommands.h"
+#include "partsbiniconview.h"
+#include "partsbinlistview.h"
+#include "simpleeditablelabelwidget.h"
+#include "binmanager/binmanager.h"
 #include "../fritzingwindow.h"
 #include "../utils/misc.h"
 #include "../debugdialog.h"
 #include "../dockmanager.h"
 #include "../htmlinfoview.h"
-#include "partsbiniconview.h"
-#include "partsbinlistview.h"
-#include "simpleeditablelabelwidget.h"
-#include "binmanager/binmanager.h"
 
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
@@ -65,11 +66,11 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_listView = new PartsBinListView(this);
 	m_listView->setInfoView(infoView);
 
-	m_binTitle = new SimpleEditableLabelWidget(m_undoStack,this);
-	connect(
+	//m_binTitle = new SimpleEditableLabelWidget(m_undoStack,this);
+	/*connect(
 		m_binTitle, SIGNAL(textChanged(const QString&)),
 		this, SLOT(titleChanged(const QString&))
-	);
+	);*/
 
 	setObjectName("partsBinContainer");
 
@@ -97,11 +98,12 @@ QSize PartsBinPaletteWidget::sizeHint() const {
 }
 
 QString PartsBinPaletteWidget::title() const {
-	return m_binTitle->text();
+	return m_title;
 }
 
 void PartsBinPaletteWidget::setTitle(const QString &title) {
-	m_binTitle->setText(title);
+	m_title = title;
+	m_manager->updateTitle(this, title);
 }
 
 void PartsBinPaletteWidget::setTabWidget(StackTabWidget *tabWidget) {
@@ -159,7 +161,6 @@ void PartsBinPaletteWidget::setView(PartsBinView *view) {
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(3);
 	lo->setSpacing(0);
-	lo->addWidget(m_binTitle);
 	lo->addWidget(dynamic_cast<QWidget*>(m_currentView));
 	lo->addWidget(m_footer);
 }
@@ -208,7 +209,7 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 }
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
-	m_binTitle->setText(model->root()->modelPartShared()->title(), false);
+	m_title = model->root()->modelPartShared()->title();
 }
 
 void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
@@ -359,20 +360,20 @@ bool PartsBinPaletteWidget::saveAs() {
     return true;
 }
 
-void PartsBinPaletteWidget::open() {
+bool PartsBinPaletteWidget::open() {
 	QString fileName = QFileDialog::getOpenFileName(
 			this,
 			tr("Select a Fritzing file to open"),
 			m_defaultSaveFolder,
 			tr("Fritzing (*%1)").arg(FritzingBinExtension) );
-	if (fileName.isNull()) return;
+	if (fileName.isNull()) return false;
 
 	QFile file(fileName);
 	if (!file.exists()) {
        QMessageBox::warning(this, tr("Fritzing"),
                              tr("Cannot find file %1.")
                              .arg(fileName));
-		return;
+		return false;
 	}
 
     if (!file.open(QFile::ReadOnly | QFile::Text)) {
@@ -380,13 +381,15 @@ void PartsBinPaletteWidget::open() {
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
                              .arg(file.errorString()));
-        return;
+        return false;
     }
 
     file.close();
 
     load(fileName);
     saveAsLastBin();
+
+    return true;
 }
 
 void PartsBinPaletteWidget::openCore() {
@@ -495,7 +498,7 @@ void PartsBinPaletteWidget::addNewPart(ModelPart *modelPart) {
 
 void PartsBinPaletteWidget::saveAndCreateNewBinIfCore() {
 	if(currentBinIsCore()) {
-		m_binTitle->setText(tr("My parts bin"));
+		setTitle(tr("My parts bin"));
 		QDateTime now = QDateTime::currentDateTime();
 		QString binPath = getApplicationSubFolderPath("bins")+
 			QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));
@@ -583,11 +586,6 @@ void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
 	}
 }
 
-
-void PartsBinPaletteWidget::titleChanged(const QString &newTitle) {
-	m_manager->updateTitle(this,newTitle);
-}
-
 void PartsBinPaletteWidget::newBin() {
 	m_manager->newBinIn(m_tabWidget);
 }
@@ -606,5 +604,16 @@ void PartsBinPaletteWidget::closeBin() {
 
 
 void PartsBinPaletteWidget::rename() {
-
+	bool ok;
+	QString newTitle = QInputDialog::getText(
+		this,
+		tr("Rename bin"),
+		tr("Bin title:"),
+		QLineEdit::Normal,
+		m_title,
+		&ok
+	);
+	if(ok) {
+		setTitle(newTitle);
+	}
 }

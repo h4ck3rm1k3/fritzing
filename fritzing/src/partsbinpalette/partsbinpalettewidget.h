@@ -83,9 +83,8 @@ class PartsBinPaletteWidget : public QFrame {
 		void addPartCommand(const QString& moduleID);
 		void removePartCommand(const QString& moduleID);
 		void removeAlienParts();
-		void titleChanged(const QString &newTitle);
 		bool save();
-		void open();
+		bool open();
 		void openCore();
 
 	protected slots:
@@ -130,7 +129,8 @@ class PartsBinPaletteWidget : public QFrame {
 		QString m_defaultSaveFolder;
 		QString m_untitledFileName;
 
-		class SimpleEditableLabelWidget *m_binTitle;
+		//class SimpleEditableLabelWidget *m_binTitle;
+		QString m_title;
 
 		PartsBinView *m_currentView;
 		class PartsBinIconView *m_iconView;
