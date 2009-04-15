@@ -119,7 +119,7 @@ void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &m
 	ItemDrag::_dragIsDone();
 }
 
-void PartsBinView::dragMoveEventAux(QDragMoveEvent* event) {
+void PartsBinView::dragMoveEnterEventAux(QDragMoveEvent* event) {
 	// Only accept if it's an icon-reordering request
 	const QMimeData* m = event->mimeData();
 	QStringList formats = m->formats();

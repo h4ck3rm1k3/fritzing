@@ -33,16 +33,25 @@ $Date$
 
 #include "partsbinlistview.h"
 
-PartsBinListView::PartsBinListView( QWidget * parent )
-	: QListWidget( parent )
+PartsBinListView::PartsBinListView(QWidget *parent)
+	: QListWidget(parent)
 {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
 	m_infoViewOnHover = false;
 	setMouseTracking(true);
-	setAcceptDrops(true);
 	setSpacing(2);
 	setIconSize(QSize(16,16));
+
+	setDragEnabled(true);
+	viewport()->setAcceptDrops(true);
+	setDropIndicatorShown(true);
+	setDragDropMode(QAbstractItemView::DragDrop);
+	//setAcceptDrops(true);
+
+
+
+	//setDragDropOverwriteMode(true);
 }
 
 PartsBinListView::~PartsBinListView() {
@@ -88,7 +97,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	}
 }
 
-void PartsBinListView::mouseMoveEvent ( QMouseEvent * event ) {
+void PartsBinListView::mouseMoveEvent(QMouseEvent *event) {
 	if (m_infoView == NULL) return;
 
 	if(m_infoViewOnHover) {
@@ -186,13 +195,14 @@ void PartsBinListView::setSelected(int position) {
 	}
 }
 
-void PartsBinListView::dragMoveEvent(QDragMoveEvent* event) {
-	dragMoveEventAux(event);
+/*void PartsBinListView::dragEnterEvent(QDragEnterEvent* event) {
+	dragMoveEnterEventAux(event);
 }
 
 void PartsBinListView::dropEvent(QDropEvent* event) {
+	DebugDialog::debug("dropped");
 	dropEventAux(event);
-}
+}*/
 
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {
 	QListWidgetItem *item = this->item(fromIndex);
@@ -203,3 +213,14 @@ void PartsBinListView::moveItem(int fromIndex, int toIndex) {
 int PartsBinListView::itemIndexAt(const QPoint& pos) {
 	return row(itemAt(pos));
 }
+
+/*
+Qt::ItemFlags PartsBinListViewModel::flags(const QModelIndex &index) const {
+    Qt::ItemFlags defaultFlags = QStringListModel::flags(index);
+
+    if (index.isValid())
+        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
+    else
+        return Qt::ItemIsDropEnabled | defaultFlags;
+}
+*/

@@ -57,8 +57,8 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 
 		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);
-		void dragMoveEvent(QDragMoveEvent* event);
-		void dropEvent(QDropEvent* event);
+		//void dragEnterEvent(QDragEnterEvent* event);
+		//void dropEvent(QDropEvent* event);
 		void setItemAux(ModelPart * modelPart, int position = -1);
 
 		ModelPart *itemModelPart(const QListWidgetItem *item);

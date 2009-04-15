@@ -87,11 +87,14 @@ void GraphicsFlowLayout::clear() {
 }
 
 int GraphicsFlowLayout::indexOf(const QGraphicsItem *item) {
+	Q_UNUSED(item);
+#if QT_VERSION >= 0x040500
 	for(int i=0; i < count(); i++) {
 		QGraphicsLayoutItem *litem = itemAt(i);
 		if(litem->graphicsItem() == item) {
 			return i;
 		}
 	}
+#endif
 	return -1;
 }

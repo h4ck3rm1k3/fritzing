@@ -91,7 +91,8 @@ void BinManager::loadFromModel(PaletteModel *model) {
 }
 
 void BinManager::setPaletteModel(PaletteModel *model, bool clear) {
-
+	Q_UNUSED(model);
+	Q_UNUSED(clear);
 }
 
 
@@ -110,23 +111,24 @@ void BinManager::saveAndCreateNewBinIfCore() {
 }
 
 void BinManager::setInfoViewOnHover(bool infoViewOnHover) {
-
+	Q_UNUSED(infoViewOnHover);
 }
 
 void BinManager::addNewPart(ModelPart *modelPart) {
-
+	Q_UNUSED(modelPart);
 }
 
 void BinManager::addPart(ModelPart *modelPart, int position) {
-
+	Q_UNUSED(modelPart);
+	Q_UNUSED(position);
 }
 
-void BinManager::load(const QString&) {
-
+void BinManager::load(const QString& filename) {
+	Q_UNUSED(filename);
 }
 
 void BinManager::addPartCommand(const QString& moduleID) {
-
+	Q_UNUSED(moduleID);
 }
 
 void BinManager::removeAlienParts() {

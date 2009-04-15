@@ -277,7 +277,7 @@ void PartsBinIconView::informNewSelection() {
 }
 
 void PartsBinIconView::dragMoveEvent(QDragMoveEvent* event) {
-	dragMoveEventAux(event);
+	dragMoveEnterEventAux(event);
 }
 
 void PartsBinIconView::dropEvent(QDropEvent* event) {

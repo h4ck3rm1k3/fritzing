@@ -57,7 +57,7 @@ class PartsBinView {
 				const QPoint &dragStartPos,
 				const QString &moduleId, const QSize &size,
 				const QPointF &dataPoint = QPointF(0,0), const QPoint &hotspot = QPoint(0,0));
-		void dragMoveEventAux(QDragMoveEvent* event);
+		void dragMoveEnterEventAux(QDragMoveEvent* event);
 		void dropEventAux(QDropEvent* event);
 
 		virtual void setItemAux(ModelPart * modelPart, int position = -1) = 0;
