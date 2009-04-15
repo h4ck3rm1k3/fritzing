@@ -46,8 +46,8 @@ PartsBinIconView::PartsBinIconView(QWidget *parent)
 {
 	setAcceptWheelEvents(false);
     setFrameStyle(QFrame::Raised | QFrame::StyledPanel);
-    setAcceptDrops(true);
 	setAlignment(Qt::AlignLeft | Qt::AlignTop);
+	setAcceptDrops(true);
 
     QGraphicsScene* scene = new QGraphicsScene(this);
     this->setScene(scene);
@@ -107,7 +107,7 @@ void PartsBinIconView::showInfo(SvgIconWidget * item) {
 
 void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 	QGraphicsItem* item = this->itemAt(event->pos());
-	if (item == NULL) {
+	if (item == NULL || event->button() != Qt::LeftButton) {
 		return QGraphicsView::mousePressEvent(event);
 	}
 
@@ -130,7 +130,7 @@ void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 			showInfo(icon);
 		}
 
-		mousePressOnItem( moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
+		mousePressOnItem(event->pos(), moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
 	}
 }
 
@@ -274,4 +274,26 @@ void PartsBinIconView::informNewSelection() {
 	} else {
 		m_noSelectionChangeEmition = false;
 	}
+}
+
+void PartsBinIconView::dragMoveEvent(QDragMoveEvent* event) {
+	dragMoveEventAux(event);
+}
+
+void PartsBinIconView::dropEvent(QDropEvent* event) {
+	dropEventAux(event);
+}
+
+void PartsBinIconView::moveItem(int fromIndex, int toIndex) {
+	QGraphicsLayoutItem *item = m_layout->itemAt(fromIndex);
+	m_layout->removeItem(item);
+	//int realToIndex = toIndex>fromIndex? toIndex-1: toIndex;
+	m_layout->insertItem(toIndex,item);
+	updateSize();
+}
+
+
+int PartsBinIconView::itemIndexAt(const QPoint& pos) {
+	QGraphicsItem *item = itemAt(pos);
+	return m_layout->indexOf(item);
 }

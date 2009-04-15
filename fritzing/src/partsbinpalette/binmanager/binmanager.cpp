@@ -70,7 +70,7 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 	tb->addTab(bin,bin->title());
 	// this functions are only available on 4.5.0 or later
 #if QT_VERSION >= 0x040500
-	tb->setTabsClosable(true);
+	//tb->setTabsClosable(true);
 	//tb->setMovable(true);
 #endif
 	m_widget->addWidget(tb);

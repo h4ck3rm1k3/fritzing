@@ -48,15 +48,24 @@ class PartsBinView {
 
 	protected:
 		virtual void doClear();
+		virtual void moveItem(int fromIndex, int toIndex) = 0;
+		virtual int itemIndexAt(const QPoint& pos) = 0;
+
 		void setItem(ModelPart * modelPart);
+
 		void mousePressOnItem(
+				const QPoint &dragStartPos,
 				const QString &moduleId, const QSize &size,
 				const QPointF &dataPoint = QPointF(0,0), const QPoint &hotspot = QPoint(0,0));
+		void dragMoveEventAux(QDragMoveEvent* event);
+		void dropEventAux(QDropEvent* event);
 
 		virtual void setItemAux(ModelPart * modelPart, int position = -1) = 0;
 
 		QHash<QString /*moduleId*/,ModelPart*> m_partHash;
 		bool m_infoViewOnHover;
+
+		QPoint m_dragStartPos;
 };
 
 #endif /* PARTSBINVIEW_H_ */

@@ -27,6 +27,7 @@ $Date$
 
 #include <QMimeData>
 #include <QDrag>
+#include <QDragEnterEvent>
 
 #include "partsbinview.h"
 #include "../itemdrag.h"
@@ -65,7 +66,9 @@ void PartsBinView::addPart(ModelPart * model, int position) {
 	setItemAux(model, position);
 }
 
-void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, const QPointF &dataPoint, const QPoint &hotspot) {
+void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &moduleId, const QSize &size, const QPointF &dataPoint, const QPoint &hotspot) {
+	m_dragStartPos = dragStartPos;
+
 	QByteArray itemData;
 	QDataStream dataStream(&itemData, QIODevice::WriteOnly);
 
@@ -73,6 +76,7 @@ void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, 
 
 	QMimeData *mimeData = new QMimeData;
 	mimeData->setData("application/x-dnditemdata", itemData);
+	mimeData->setData("action", "part-reordering");
 
 	QDrag * drag = new QDrag(dynamic_cast<QWidget*>(this));
 
@@ -105,12 +109,31 @@ void PartsBinView::mousePressOnItem(const QString &moduleId, const QSize &size, 
 	//drag.setDragCursor(*pitem->pixmap(), Qt::IgnoreAction);
 
 
-	if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
+	drag->exec();
+
+	/*if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
 	}
 	else {
-	}
+	}*/
 
 	ItemDrag::_dragIsDone();
+}
+
+void PartsBinView::dragMoveEventAux(QDragMoveEvent* event) {
+	// Only accept if it's an icon-reordering request
+	const QMimeData* m = event->mimeData();
+	QStringList formats = m->formats();
+	if (formats.contains("action") && (m->data("action") == "part-reordering")) {
+		event->acceptProposedAction();
+	}
+}
+
+void PartsBinView::dropEventAux(QDropEvent* event) {
+	int fromIndex = itemIndexAt(m_dragStartPos);
+	int toIndex = itemIndexAt(event->pos());
+
+	moveItem(fromIndex,toIndex);
+	event->acceptProposedAction();
 }
 
 bool PartsBinView::alreadyIn(QString moduleID) {

@@ -33,14 +33,18 @@ $Date$
 
 #include "partsbinlistview.h"
 
-PartsBinListView::PartsBinListView( QWidget * parent ) : QListWidget( parent ) {
+PartsBinListView::PartsBinListView( QWidget * parent )
+	: QListWidget( parent )
+{
 	m_infoView = NULL;
 	m_hoverItem = NULL;
 	m_infoViewOnHover = false;
-	setMouseTracking( true );
+	setMouseTracking(true);
+	setAcceptDrops(true);
 	setSpacing(2);
 	setIconSize(QSize(16,16));
 }
+
 PartsBinListView::~PartsBinListView() {
 }
 
@@ -131,7 +135,7 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 		showInfo(current);
 	}
 
-	mousePressOnItem(modelPart->moduleID(), iconSize());
+	mousePressOnItem(event->pos(), modelPart->moduleID(), iconSize());
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
@@ -180,4 +184,22 @@ void PartsBinListView::setSelected(int position) {
 	} else {
 		setCurrentRow(position);
 	}
+}
+
+void PartsBinListView::dragMoveEvent(QDragMoveEvent* event) {
+	dragMoveEventAux(event);
+}
+
+void PartsBinListView::dropEvent(QDropEvent* event) {
+	dropEventAux(event);
+}
+
+void PartsBinListView::moveItem(int fromIndex, int toIndex) {
+	QListWidgetItem *item = this->item(fromIndex);
+	removeItemWidget(item);
+	insertItem(toIndex,item);
+}
+
+int PartsBinListView::itemIndexAt(const QPoint& pos) {
+	return row(itemAt(pos));
 }

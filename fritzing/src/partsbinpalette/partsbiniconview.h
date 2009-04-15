@@ -55,8 +55,14 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 		int selectedIndex();
 	protected:
 		void doClear();
+		void moveItem(int fromIndex, int toIndex);
+		int itemIndexAt(const QPoint& pos);
+
 		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);
+		void dragMoveEvent(QDragMoveEvent* event);
+		void dropEvent(QDropEvent* event);
+
 		void setItemAux(ModelPart *, int position = -1);
 
 		void resizeEvent(QResizeEvent * event);

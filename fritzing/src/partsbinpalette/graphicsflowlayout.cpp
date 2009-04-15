@@ -85,3 +85,13 @@ void GraphicsFlowLayout::clear() {
 		removeItem(iToR);
 	}
 }
+
+int GraphicsFlowLayout::indexOf(const QGraphicsItem *item) {
+	for(int i=0; i < count(); i++) {
+		QGraphicsLayoutItem *litem = itemAt(i);
+		if(litem->graphicsItem() == item) {
+			return i;
+		}
+	}
+	return -1;
+}
