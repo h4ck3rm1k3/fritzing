@@ -58,8 +58,8 @@ class BinManager : public QFrame {
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void load(const QString&);
 
-		void setDirtyTab(QWidget* w, bool dirty=true);
-		void updateTitle(QWidget* w, const QString& newTitle);
+		void setDirtyTab(PartsBinPaletteWidget* w, bool dirty=true);
+		void updateTitle(PartsBinPaletteWidget* w, const QString& newTitle);
 
 		void newBinIn(StackTabWidget* tb);
 		void openBinIn(StackTabWidget* tb);
@@ -75,6 +75,7 @@ class BinManager : public QFrame {
 
 	protected:
 		void createMenu();
+		PartsBinPaletteWidget* currentBin(StackTabWidget* tb);
 
 		ReferenceModel *m_refModel;
 		HtmlInfoView *m_infoView;

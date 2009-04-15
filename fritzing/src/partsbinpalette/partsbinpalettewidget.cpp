@@ -332,12 +332,14 @@ bool PartsBinPaletteWidget::removeSelected() {
 }
 
 bool PartsBinPaletteWidget::save() {
-	if (FritzingWindow::isEmptyFileName(m_fileName,m_untitledFileName)) {
-		return saveAs();
+	bool result = true;
+	if (FritzingWindow::isEmptyFileName(m_fileName,m_untitledFileName) || currentBinIsCore()) {
+		result = saveAs();
 	} else {
 		saveAsAux(m_fileName);
-		return true;
 	}
+	if(result) m_manager->setDirtyTab(this,false);
+	return result;
 }
 
 bool PartsBinPaletteWidget::saveAs() {

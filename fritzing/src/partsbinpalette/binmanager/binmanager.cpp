@@ -78,6 +78,7 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 }
 
 void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb) {
+	bin->setTabWidget(tb);
 	tb->insertTab(index,bin,bin->title());
 	tb->setCurrentIndex(index);
 	m_tabWidgets[bin] = tb;
@@ -132,17 +133,19 @@ void BinManager::removeAlienParts() {
 
 }
 
-void BinManager::setDirtyTab(QWidget* w, bool dirty) {
+void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
+	w->setWindowModified(dirty);
 	QTabWidget* tw = m_tabWidgets[w];
-	if(tw) {
-		int tabIdx = tw->indexOf(w);
-		tw->setTabText(tabIdx, tw->tabText(tabIdx)+(dirty? " (*)": ""));
-	}
+	Q_ASSERT(tw);
+	int tabIdx = tw->indexOf(w);
+	tw->setTabText(tabIdx, w->title()+(dirty? " (*)": ""));
 }
 
-void BinManager::updateTitle(QWidget* w, const QString& newTitle) {
+void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) {
 	QTabWidget* tw = m_tabWidgets[w];
-	if(tw) tw->setTabText(tw->indexOf(w), newTitle+" (*)");
+	Q_ASSERT(tw);
+	tw->setTabText(tw->indexOf(w), newTitle+" (*)");
+	setDirtyTab(w);
 }
 
 void BinManager::newBinIn(StackTabWidget* tb) {
@@ -165,8 +168,15 @@ void BinManager::openCoreBinIn(StackTabWidget* tb) {
 }
 
 void BinManager::closeBinIn(StackTabWidget* tb) {
-	tb->removeTab(tb->currentIndex());
-	if(tb->count() == 0 && m_widget->count() <= 3) { // one tab widget and two separators
-		openCoreBinIn(tb);
+	PartsBinPaletteWidget *w = currentBin(tb);
+	if(w && w->beforeClosing()) {
+		tb->removeTab(tb->currentIndex());
+		if(tb->count() == 0 && m_widget->count() <= 3) { // one tab widget and two separators
+			openCoreBinIn(tb);
+		}
 	}
+}
+
+PartsBinPaletteWidget* BinManager::currentBin(StackTabWidget* tb) {
+	return dynamic_cast<PartsBinPaletteWidget*>(tb->currentWidget());
 }
