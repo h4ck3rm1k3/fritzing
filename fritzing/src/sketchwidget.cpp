@@ -225,24 +225,24 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		if (parentCommand == NULL) {
 			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true);
 			if (item != NULL) {
-				PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
-
-				if (paletteItem) {
+				const char * className = item->metaObject()->className();
+				if (strcmp(className, "PaletteItem") == 0) {
+					PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
 					// wires don't have transforms
 					paletteItem->setTransforms();
 				}
-				else {
+				else if (strcmp(className, "Wire") == 0) {
 					Wire * wire = dynamic_cast<Wire *>(item);
-					if (wire != NULL) {
-						QDomElement extras = view.firstChildElement("wireExtras");
-						wire->setExtras(extras);
-					}
-					else {
-						Note * note = dynamic_cast<Note *>(item);
-						if (note != NULL) {
-							note->setText(mp->instanceText());
-						}
-					}
+					QDomElement extras = view.firstChildElement("wireExtras");
+					wire->setExtras(extras);
+				}
+				else if (strcmp(className, "Note") == 0) {
+					Note * note = dynamic_cast<Note *>(item);
+					note->setText(mp->instanceText());
+				}
+				else if (strcmp(className, "GroupItem") == 0) {
+					GroupItem * groupItem = dynamic_cast<GroupItem *>(item);
+					groupItem->setTransforms();
 				}
 
 				// use the modelIndex from mp, not from the newly created item, because we're mapping from the modelIndex in the xml file
@@ -486,7 +486,7 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 	DebugDialog::debug(QString("mp:%1, omi:%2, view:%3, id:%4").arg(modelPart->modelIndex()).arg(originalModelIndex).arg(m_viewIdentifier).arg(id));
 
 	bool doExternals = false;
-	QHash<QString, QList<long> * > externalConnectors;
+	QHash<QList<long> *, QString > externalConnectors;
 	if (modelParts.count() <= 0) {
 		doExternals = modelPart->parent() == m_sketchModel->root();  // only need external connectors for top level modules (not for modules-in-modules)
 		if (!m_sketchModel->paste(m_paletteModel, modelPart->modelPartShared()->path(), modelParts, doExternals ? &externalConnectors : NULL)) {
@@ -517,9 +517,9 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 
 	if (doExternals) {
 		if (toBase) {
-			foreach (QString connectorID, externalConnectors.keys()) {
-				QList<long> * indexes = externalConnectors.value(connectorID, NULL);
-				if (indexes == NULL) continue;
+			foreach (QList<long> * indexes, externalConnectors.keys()) {
+				QString connectorID = externalConnectors.value(indexes, "");
+				if (connectorID.isEmpty()) continue;
 
 				ModelPart * first = newItems.value(indexes->at(0));
 				if (first == NULL) continue;
@@ -542,7 +542,7 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 			}
 		}
 
-		foreach (QList<long> * l, externalConnectors.values()) {
+		foreach (QList<long> * l, externalConnectors.keys()) {
 			delete l;
 		}
 	}

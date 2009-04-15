@@ -93,7 +93,7 @@ ModelPart * SketchModel::findModelPartAux(ModelPart * modelPart, const QString &
 	return NULL;
 }
 
-bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<ModelPart *> & modelParts, QHash<QString, QList<long> * > * externalConnectors) 
+bool SketchModel::paste(ModelBase * refModel, const QString & filename, QList<ModelPart *> & modelParts, QHash<QList<long> *, QString > * externalConnectors) 
 {
 	QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text)) {

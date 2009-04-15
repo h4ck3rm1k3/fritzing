@@ -128,6 +128,10 @@ protected:
 
 NoteGraphicsTextItem::NoteGraphicsTextItem(QGraphicsItem * parent) : QGraphicsTextItem(parent)
 {
+	const QTextFrameFormat format = document()->rootFrame()->frameFormat();
+	QTextFrameFormat altFormat(format);
+	altFormat.setMargin(0);										// so document never thinks a mouse click is a move event
+	document()->rootFrame()->setFrameFormat(altFormat);
 }
 
 void NoteGraphicsTextItem::focusInEvent(QFocusEvent * event) {

@@ -24,8 +24,6 @@ $Date$
 
 ********************************************************************/
 
-
-
 #include "paletteitem.h"
 #include "debugdialog.h"
 #include "viewgeometry.h"

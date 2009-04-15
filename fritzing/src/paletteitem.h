@@ -36,7 +36,10 @@ $Date$
 #include "paletteitembase.h"
 #include "viewlayer.h"
 
-class PaletteItem : public PaletteItemBase {
+class PaletteItem : public PaletteItemBase 
+{
+	Q_OBJECT
+
 public:
 	// after calling this constructor if you want to render the loaded svg (either from model or from file), MUST call <reanderImage>
 	PaletteItem(ModelPart *, ViewIdentifierClass::ViewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel = true);

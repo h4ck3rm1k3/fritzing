@@ -31,6 +31,7 @@ $Date$
 
 class GroupItem : public GroupItemBase
 {
+	Q_OBJECT
 
 public:
 	GroupItem(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
@@ -46,6 +47,7 @@ public:
 	void resetID();
 	void clearModelPart();
 	void moveItem(ViewGeometry & viewGeometry);
+	void setTransforms();
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

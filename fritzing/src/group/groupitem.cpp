@@ -26,8 +26,13 @@ $Date$
 
 // TODO:
 //  drag onto breadboard behavior
+//  allow arbitrary image to be associated (where to put connectors?)
 //	undo group
+//  labels?
+//  what if module has an internal transform
+//  bug: new module not appearing in parts bin
 
+//  ** bug: transform group, save sketch, transform isn't preserved
 //  ** bug: can't drag wire from external connectors
 //	** rotate group bug: connected external wires don't updateConnections
 //  ** bug: after undo, updateconnections not being called
@@ -255,3 +260,9 @@ void GroupItem::moveItem(ViewGeometry & viewGeometry) {
 	}
 }
 
+void GroupItem::setTransforms() {
+	setTransform(getViewGeometry().transform());
+	for (int i = 0; i < m_layerKin.count(); i++) {
+		m_layerKin[i]->setTransform(m_layerKin[i]->getViewGeometry().transform());
+	}
+}
