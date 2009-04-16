@@ -294,6 +294,7 @@ void PartsBinIconView::moveItem(int fromIndex, int toIndex) {
 
 
 int PartsBinIconView::itemIndexAt(const QPoint& pos) {
-	QGraphicsItem *item = itemAt(pos);
+	QGraphicsWidget *item = dynamic_cast<QGraphicsWidget*>(itemAt(pos));
+	Q_ASSERT(item);
 	return m_layout->indexOf(item);
 }
