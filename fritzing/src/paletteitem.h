@@ -69,8 +69,9 @@ public:
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	void clearModelPart();
 	void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *);
-	bool isLowerConnectorLayerVisible(PaletteItemBase *);
+	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void resetID();
+	void blockSyncKinMoved(bool block);
 
 protected:
 	void syncKinSelection(bool selected, PaletteItemBase * originator);
@@ -81,6 +82,7 @@ protected:
 
 protected:
  	QList<class ItemBase *> m_layerKin;
+	bool m_blockSyncKinMoved;
 
 };
 

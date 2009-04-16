@@ -61,11 +61,7 @@ public:
 	void collectWireConnectees(QSet<class Wire *> & wires);
 	virtual void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
-	virtual void figureHover() = 0;
 	QRectF boundingRect() const;
-	virtual bool isLowerConnectorLayerVisible(PaletteItemBase *);
-	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
-
 
 	/*
 	// for debugging
@@ -81,6 +77,7 @@ protected:
     void setUpConnectors(FSvgRenderer *, bool ignoreTerminalPoints);
 	void findConnectorsUnder();
 	void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
+	void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 	virtual LayerKinPaletteItem * newLayerKinPaletteItem(
 		PaletteItemBase * chief, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,

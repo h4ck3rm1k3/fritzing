@@ -411,7 +411,7 @@ bool ItemBase::topLevel() {
 void ItemBase::setHidden(bool hide) {
 
 	m_hidden = hide;
-	setAcceptedMouseButtons(hide ? Qt::NoButton : Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2);
+	setAcceptedMouseButtons(hide ? Qt::NoButton : ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(!hide);
 	update();
 	for (int i = 0; i < childItems().count(); i++) {
@@ -1201,4 +1201,16 @@ void ItemBase::updateExternalConnections() {
 			itemBase->updateExternalConnections();
 		}
 	}
+}
+
+void ItemBase::blockSyncKinMoved(bool block) {
+	Q_UNUSED(block);
+}
+
+ItemBase * ItemBase::lowerConnectorLayerVisible(ItemBase * itemBase) {
+	Q_UNUSED(itemBase);
+	return NULL;
+}
+
+void ItemBase::figureHover() {
 }

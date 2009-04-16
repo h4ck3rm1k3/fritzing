@@ -55,6 +55,8 @@ $Date$
 #include <QPair>
 #include <QList>
 
+#define ALLMOUSEBUTTONS (Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2)
+
 typedef QPair<qreal, qreal> RealPair;
 typedef QPair<QString, QString> StringPair;
 

@@ -41,7 +41,7 @@ public:
 	bool ok();
 	void setHidden(bool hidden);
 	void clearModelPart();
-	bool isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase);
+	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void init(ViewLayer::ViewLayerID viewLayerID, const LayerHash &viewLayers);
 	QString toolTip2();
 	bool sticky();
@@ -58,7 +58,6 @@ protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
-	void figureHover();
 
 protected:
 	PaletteItemBase * m_layerKinChief;

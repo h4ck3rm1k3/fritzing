@@ -86,7 +86,8 @@ void LayerKinPaletteItem::updateConnections() {
 
 void LayerKinPaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	//DebugDialog::debug("layer kin mouse press event");
-	if (m_layerKinChief->isLowerConnectorLayerVisible(this)) {
+	if (m_layerKinChief->lowerConnectorLayerVisible(this)) {
+		DebugDialog::debug("LayerKinPaletteItem::mousePressEvent isn't obsolete");
 		event->ignore();
 		return;
 	}
@@ -99,15 +100,12 @@ void LayerKinPaletteItem::setHidden(bool hide) {
 	m_layerKinChief->figureHover();
 }
 
-void LayerKinPaletteItem::figureHover() {
-}
-
 void LayerKinPaletteItem::clearModelPart() {
 	m_layerKinChief->clearModelPart();
 }
 
-bool LayerKinPaletteItem::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase) {
-	return m_layerKinChief->isLowerConnectorLayerVisible(paletteItemBase);
+ItemBase * LayerKinPaletteItem::lowerConnectorLayerVisible(ItemBase * itemBase) {
+	return m_layerKinChief->lowerConnectorLayerVisible(itemBase);
 }
 
 QString LayerKinPaletteItem::toolTip2() {

@@ -55,6 +55,11 @@ public:
 	void collectExternalConnectorItems();
 	void collectConnectors(QList<ConnectorItem *> & connectors);
 	virtual bool isLowerLayerVisible(GroupItemBase *) = 0;
+	void setBoundingRect(const QRectF &);
+	const QRectF & calcBoundingRect();
+	const QRectF & itemsBoundingRect();
+	bool hasExternalConnectorItems();
+	bool hasConnectors();
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -62,6 +67,8 @@ protected:
 
 protected:
 	QRectF m_boundingRect;
+	QRectF m_itemsBoundingRect;
+	QPointF m_offset;
 	QList<ItemBase *> m_itemsToAdd;
 	QList<class ConnectorItem *> m_externalConnectorItems;
 };

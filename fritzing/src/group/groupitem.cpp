@@ -28,9 +28,11 @@ $Date$
 //  drag onto breadboard behavior
 //  allow arbitrary image to be associated (where to put connectors?)
 //	undo group
-//  labels?
 //  bug: new module not appearing in parts bin
+//	pcb view: group kin not synching during rotate
 
+
+//  * labels
 //  * bug: pcb view drawing multiple rectangles
 //  * what if module has an internal transform
 //  * bug: transform group, save sketch, transform isn't preserved
@@ -84,7 +86,6 @@ $Date$
 //		* still shows group selection box
 //  * override QGraphicsItemGroup::paint
 //	** rotate/flip
-//		** pcb view: group kin not synching
 //		* need to center itembase in bounding rect
 //		* unable to rotate in pcb view (selection bug?)
 //		** is flip always allowed?
@@ -98,7 +99,9 @@ $Date$
 
 #include "groupitem.h"
 #include "groupitemkin.h"
+#include "../labels/partlabel.h"
 #include "../connectoritem.h"
+#include "../wire.h"
 #include "../debugdialog.h"
 
 QString GroupItem::moduleIDName = "GroupModuleID";
@@ -106,16 +109,16 @@ QString GroupItem::moduleIDName = "GroupModuleID";
 GroupItem::GroupItem( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu) 
 	: GroupItemBase( modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
-	m_blockSync = false;
+	m_blockSyncKinMoved = false;
+	m_partLabel = new PartLabel(this, "", NULL);
 }
-
 
 const QList<ItemBase *> & GroupItem::layerKin() {
 	return m_layerKin;
 }
 
 void GroupItem::syncKinMoved(GroupItemBase * groupItemBase, QPointF newPos) {
-	if (m_blockSync) return;
+	if (m_blockSyncKinMoved) return;
 
 	if (groupItemBase != this) {
 		setPos(newPos);
@@ -157,47 +160,99 @@ void GroupItem::flipItem(Qt::Orientations orientation) {
 	}
 }
 
-void GroupItem::doneAdding(const LayerHash & layerHash) 
+void GroupItem::doneAdding(const LayerHash & layerHash, ViewLayer::ViewLayerID viewLayerID) 
 {
 	qint64 id = m_id + 1;
-	foreach(ItemBase * itemBase, m_itemsToAdd) {
+
+	// need to redistribute items based on which layer they belong to
+	QList<ItemBase *> tempItemsToAdd(m_itemsToAdd);
+	m_itemsToAdd.clear();
+
+	foreach (ItemBase * itemBase, tempItemsToAdd) {
+		addToList(itemBase, viewLayerID, layerHash, id);
 		foreach (ItemBase * lkpi, itemBase->layerKin()) {
-			bool gotOne = false;
-			foreach (ItemBase * mylkpi, layerKin()) {
-				if (lkpi->viewLayerID() == mylkpi->viewLayerID()) {
-					dynamic_cast<GroupItemKin *>(mylkpi)->addToGroup(lkpi);
-					gotOne = true;
-					break;
-				}
-			}
-			if (!gotOne) {
-				GroupItemKin * mylkpi = new GroupItemKin(m_modelPart, m_viewIdentifier, m_viewGeometry, id++, NULL);
-				mylkpi->setViewLayerID(lkpi->viewLayerID(), layerHash);
-				mylkpi->setLayerKinChief(this);
-				scene()->addItem(mylkpi);
-				m_layerKin.append(mylkpi);
-				mylkpi->addToGroup(lkpi);
-				mylkpi->setZValue(mylkpi->z());
-			}
+			addToList(lkpi, viewLayerID, layerHash, id);
 		}
 	}
 
-	syncKinMoved(this, this->pos());
+	blockSyncKinMoved(true);				// prevent recursive moves when layerkin are moved during doneAdding
 
-	m_blockSync = true;				// prevent recursive moves when layerkin are moved during doneAdding
+	// need to set them all to the same bounding rect
+	QRectF boundingRect = calcBoundingRect();
+	foreach (ItemBase * kin, m_layerKin) {
+		boundingRect |= dynamic_cast<GroupItemBase *>(kin)->calcBoundingRect();
+	}
+	setBoundingRect(boundingRect);
+
+	DebugDialog::debug(QString("total bounding rect %1 ").arg(this->z()), boundingRect);
+
+	foreach (ItemBase * kin, m_layerKin) {
+		dynamic_cast<GroupItemBase *>(kin)->setBoundingRect(boundingRect);
+	}
+
 	GroupItemBase::doneAdding(layerHash);
 	foreach (ItemBase * kin, m_layerKin) {
 		dynamic_cast<GroupItemBase *>(kin)->doneAdding(layerHash);
 	}
-	m_blockSync = false;
+	blockSyncKinMoved(false);
 
 	syncKinMoved(this, this->pos());
+
+	figureHover();
 }
 
-void GroupItem::collectWireConnectees(QSet<Wire *> & wires) {
-	GroupItemBase::collectWireConnectees(wires);
+void GroupItem::addToList(ItemBase * candidate, ViewLayer::ViewLayerID viewLayerID, const LayerHash & layerHash, qint64 & id) 
+{
+	if (candidate->viewLayerID() == viewLayerID) {
+		addToGroup(candidate);
+		return;
+	}
+
+	foreach (ItemBase * mylkpi, layerKin()) {
+		if (candidate->viewLayerID() == mylkpi->viewLayerID()) {
+			dynamic_cast<GroupItemKin *>(mylkpi)->addToGroup(candidate);
+			return;
+		}
+	}
+
+	GroupItemKin * mylkpi = new GroupItemKin(m_modelPart, m_viewIdentifier, m_viewGeometry, id++, NULL);
+	mylkpi->setViewLayerID(candidate->viewLayerID(), layerHash);
+	mylkpi->setLayerKinChief(this);
+	scene()->addItem(mylkpi);
+	m_layerKin.append(mylkpi);
+	mylkpi->addToGroup(candidate);
+	mylkpi->setZValue(mylkpi->z());
+}
+
+void GroupItem::collectWireConnectees(QSet<Wire *> & wires) 
+{
+	QSet<Wire *> tempWires;
+	GroupItemBase::collectWireConnectees(tempWires);
 	foreach (ItemBase * lkpi, m_layerKin) {
-		lkpi->collectWireConnectees(wires);
+		lkpi->collectWireConnectees(tempWires);
+	}
+
+	foreach (Wire * wire, tempWires) {
+		QGraphicsItem * parent = wire;
+		while (parent->parentItem()) {
+			parent = parent->parentItem();
+		}
+		bool gotOne = false;
+		if (parent == this) {
+			gotOne = true;
+		}
+		else {
+			foreach (ItemBase * kin, m_layerKin) {
+				if (parent == kin) {
+					gotOne = true;
+					break;
+				}
+			}
+		}
+
+		if (!gotOne) {
+			wires.insert(wire);
+		}
 	}
 }
 
@@ -273,7 +328,7 @@ void GroupItem::setTransforms() {
 bool GroupItem::isLowerLayerVisible(GroupItemBase * groupItemBase) {
 	if (m_layerKin.count() == 0) return false;
 
-	DebugDialog::debug(QString("incoming z: %1, chief z: %2").arg(groupItemBase->zValue()).arg(this->zValue()));
+	// DebugDialog::debug(QString("incoming z: %1, chief z: %2").arg(groupItemBase->zValue()).arg(this->zValue()));
 
 	if ((groupItemBase != this) 
 		&& this->isVisible() 
@@ -285,7 +340,7 @@ bool GroupItem::isLowerLayerVisible(GroupItemBase * groupItemBase) {
 	foreach (ItemBase * lkpi, m_layerKin) {
 		if (lkpi == groupItemBase) continue;
 
-		DebugDialog::debug(QString("lkpi z: %1").arg(lkpi->zValue()));
+		// DebugDialog::debug(QString("lkpi z: %1").arg(lkpi->zValue()));
 
 		if (lkpi->isVisible() 
 			&& (!lkpi->hidden()) 
@@ -296,4 +351,89 @@ bool GroupItem::isLowerLayerVisible(GroupItemBase * groupItemBase) {
 	}
 
 	return false;
+}
+
+void GroupItem::blockSyncKinMoved(bool block) {
+	m_blockSyncKinMoved = block;
+}
+
+ItemBase * GroupItem::lowerConnectorLayerVisible(ItemBase * itemBase) {
+	if (m_layerKin.count() == 0) return NULL;
+
+	if ((itemBase != this) 
+		&& this->isVisible() 
+		&& (!this->hidden()) && (this->zValue() < itemBase->zValue())
+		&& hasConnectors()) 
+	{
+		return this;
+	}
+
+	foreach (ItemBase * lkpi, m_layerKin) {
+		if (lkpi == itemBase) continue;
+
+		if (lkpi->isVisible() 
+			&& (!lkpi->hidden()) 
+			&& (lkpi->zValue() < itemBase->zValue()) 
+			&& lkpi->hasConnectors() ) 
+		{
+			return lkpi;
+		}
+	}
+
+	return NULL;
+}
+
+void GroupItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+	if (lowerConnectorLayerVisible(this)) {
+		DebugDialog::debug("GroupItem::mousePressEvent isn't obsolete");
+		event->ignore();
+		return;
+	}
+
+	GroupItemBase::mousePressEvent(event);
+}
+
+
+void GroupItem::setHidden(bool hide) {
+	ItemBase::setHidden(hide);
+	figureHover();
+}
+
+
+void GroupItem::figureHover() {
+	// if a layer contains connectors, make it the one that accepts hover events
+	// if you make all layers accept hover events, then the topmost layer will get the event
+	// and lower layers won't
+
+	QList<ItemBase *> allKin;
+	allKin.append(this);
+	foreach(ItemBase * lkpi, m_layerKin) {
+		allKin.append(lkpi);
+	}
+
+	qSort(allKin.begin(), allKin.end(), ItemBase::zLessThan);
+	foreach (ItemBase * base, allKin) {
+		base->setAcceptHoverEvents(false);
+		base->setAcceptedMouseButtons(Qt::NoButton);
+	}
+
+	int ix = 0;
+	foreach (ItemBase * base, allKin) {
+		if (!base->hidden() && base->hasConnectors()) {
+			base->setAcceptHoverEvents(true);
+			base->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
+			break;
+		}
+		ix++;
+	}
+
+	for (int i = 0; i < ix; i++) {
+		ItemBase * base = allKin[i];
+		if (!base->hidden()) {
+			base->setAcceptHoverEvents(true);
+			base->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
+			return;
+		}
+	}
 }

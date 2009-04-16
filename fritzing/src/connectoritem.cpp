@@ -345,7 +345,7 @@ void ConnectorItem::setHidden(bool hide) {
 		setAcceptHoverEvents(false);
 	}
 	else {
-		this->setAcceptedMouseButtons(Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2);
+		this->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 		this->setCursor(Qt::CrossCursor);
 		setAcceptHoverEvents(true);
 	}

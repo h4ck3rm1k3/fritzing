@@ -49,6 +49,7 @@ $Date$
 PaletteItem::PaletteItem( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	m_blockSyncKinMoved = false;
 	if(doLabel) {
 		m_partLabel = new PartLabel(this, "", NULL);
 		m_partLabel->setVisible(false);
@@ -247,7 +248,8 @@ void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 		return;
 	}
 
-	if (isLowerConnectorLayerVisible(this)) {
+	if (lowerConnectorLayerVisible(this)) {
+		DebugDialog::debug("PaletteItem::mousePressEvent isn't obsolete");
 		event->ignore();
 		return;
 	}
@@ -258,6 +260,8 @@ void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void PaletteItem::syncKinMoved(QPointF offset, QPointF newPos) {
 	Q_UNUSED(offset);    // ignore offset--should all be zeros now
+
+	if (m_blockSyncKinMoved) return;
 
 	//DebugDialog::debug(QString("sync kin moved %1 %2").arg(offset.x()).arg(offset.y()) );
 	//m_syncMoved = pos - offset;
@@ -306,12 +310,14 @@ void PaletteItem::figureHover() {
 	qSort(allKin.begin(), allKin.end(), ItemBase::zLessThan);
 	foreach (ItemBase * base, allKin) {
 		base->setAcceptHoverEvents(false);
+		base->setAcceptedMouseButtons(Qt::NoButton);
 	}
 
 	int ix = 0;
 	foreach (ItemBase * base, allKin) {
 		if (!base->hidden() && base->hasConnectors()) {
 			base->setAcceptHoverEvents(true);
+			base->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 			break;
 		}
 		ix++;
@@ -321,30 +327,10 @@ void PaletteItem::figureHover() {
 		ItemBase * base = allKin[i];
 		if (!base->hidden()) {
 			base->setAcceptHoverEvents(true);
+			base->setAcceptedMouseButtons(ALLMOUSEBUTTONS);
 			return;
 		}
 	}
-
-	/* 
-	foreach (PaletteItemBase * base, allKin) {
-		base->setAcceptHoverEvents(false);
-	}
-
-	foreach (PaletteItemBase * base, allKin) {
-		if (!base->hidden() && base->hasConnectors()) {
-			base->setAcceptHoverEvents(true);
-			return;
-		}
-	}
-
-	foreach (PaletteItemBase * base, allKin) {
-		if (!base->hidden()) {
-			base->setAcceptHoverEvents(true);
-			return;
-		}
-	}
-	*/
-
 }
 
 void PaletteItem::clearModelPart() {
@@ -354,30 +340,30 @@ void PaletteItem::clearModelPart() {
 	ItemBase::clearModelPart();
 }
 
-bool PaletteItem::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase) {
-	if (m_layerKin.count() == 0) return false;
+ItemBase * PaletteItem::lowerConnectorLayerVisible(ItemBase * itemBase) {
+	if (m_layerKin.count() == 0) return NULL;
 
-	if ((paletteItemBase != this) 
+	if ((itemBase != this) 
 		&& this->isVisible() 
-		&& (!this->hidden()) && (this->zValue() < paletteItemBase->zValue())
+		&& (!this->hidden()) && (this->zValue() < itemBase->zValue())
 		&& this->hasConnectors()) 
 	{
-		return true;
+		return this;
 	}
 
 	foreach (ItemBase * lkpi, m_layerKin) {
-		if (lkpi == paletteItemBase) continue;
+		if (lkpi == itemBase) continue;
 
 		if (lkpi->isVisible() 
 			&& (!lkpi->hidden()) 
-			&& (lkpi->zValue() < paletteItemBase->zValue()) 
+			&& (lkpi->zValue() < itemBase->zValue()) 
 			&& lkpi->hasConnectors() ) 
 		{
-			return true;
+			return lkpi;
 		}
 	}
 
-	return false;
+	return NULL;
 }
 
 void PaletteItem::resetID() {
@@ -385,4 +371,8 @@ void PaletteItem::resetID() {
 	foreach (ItemBase * lkpi, m_layerKin) {
 		lkpi->resetID();
 	}
+}
+
+void PaletteItem::blockSyncKinMoved(bool block) {
+	m_blockSyncKinMoved = block;
 }

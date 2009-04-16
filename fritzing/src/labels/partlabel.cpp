@@ -294,7 +294,7 @@ void PartLabel::setHidden(bool hide) {
 	if (!m_initialized) return;
 
 	m_hidden = hide;
-	setAcceptedMouseButtons(hide ? Qt::NoButton : Qt::LeftButton | Qt::MidButton | Qt::RightButton | Qt::XButton1 | Qt::XButton2);
+	setAcceptedMouseButtons(hide ? Qt::NoButton : ALLMOUSEBUTTONS);
 	setAcceptHoverEvents(!hide);
 	update();
 }

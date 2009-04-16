@@ -82,12 +82,17 @@ void GroupItemBase::addToGroup(ItemBase * item, const LayerHash & layerHash) {
 	item->setFlag(QGraphicsItem::ItemIsSelectable, false);
 
     QTransform oldSceneMatrix = item->sceneTransform();
-    item->setPos(mapFromItem(item, 0, 0));
+	DebugDialog::debug(QString("before pos %1").arg(item->id()), item->pos());
+	
+	item->layerKinChief()->blockSyncKinMoved(true);
+    item->setPos(mapFromItem(item, m_offset.x(), m_offset.y()));
     item->setParentItem(this);
     item->setTransform(oldSceneMatrix
                        * sceneTransform().inverted()
                        * QTransform().translate(-item->x(), -item->y()));
+	item->layerKinChief()->blockSyncKinMoved(false);
 
+	DebugDialog::debug("after pos", item->pos());
 	prepareGeometryChange();
 	update();
 }
@@ -126,22 +131,32 @@ void GroupItemBase::syncKinMoved(GroupItemBase * originator, QPointF newPos) {
 	Q_UNUSED(originator);
 }
 
-void GroupItemBase::doneAdding(const LayerHash & layerHash) {
-
+const QRectF & GroupItemBase::calcBoundingRect() {
 	// centers the parent within the bounding rect of the group
 	// fixes rotation, among other things
-	QRectF itemsBoundingRect;
 	foreach(ItemBase * item, m_itemsToAdd) {
-		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
+		m_itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
                             .mapRect(item->boundingRect() | item->childrenBoundingRect());
 
 	}
+	DebugDialog::debug(QString("bounding rect %1 ").arg(this->z()), m_itemsBoundingRect);
+	return m_itemsBoundingRect;
+}
 
-	m_boundingRect.setRect(0, 0, itemsBoundingRect.width(), itemsBoundingRect.height());
+const QRectF & GroupItemBase::itemsBoundingRect() {
+	return m_itemsBoundingRect;
+}
 
-	//DebugDialog::debug(QString("items bounding rect  "), itemsBoundingRect);
+void GroupItemBase::setBoundingRect(const QRectF & boundingRect) {
+	m_offset = m_itemsBoundingRect.topLeft() - boundingRect.topLeft();
+	m_boundingRect.setRect(0, 0, boundingRect.width(), boundingRect.height());
+}
 
-	this->setPos(itemsBoundingRect.topLeft());
+void GroupItemBase::doneAdding(const LayerHash & layerHash) 
+{
+	// assumes setBoundingRect has been called already
+
+	this->setPos(m_itemsBoundingRect.topLeft() - m_offset);
 	saveGeometry();
 
 	foreach(ItemBase * itemBase, m_itemsToAdd) {
@@ -156,11 +171,13 @@ void GroupItemBase::doneAdding(const LayerHash & layerHash) {
 void GroupItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
 	if (m_hidden) return;
 
-    if (option->state & QStyle::State_Selected) {	
+	if (option->state & QStyle::State_Selected) {	
 		// draw this first because otherwise it seems to draw a dashed line down the middle
-        qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
-    }
-	if (this->parentItem() == NULL && !isLowerLayerVisible(this)) {
+		qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
+	}
+
+	if (this->parentItem() == NULL && !isLowerLayerVisible(this)) {   
+
 		painter->save();
 		painter->setOpacity(0.1);
 		painter->fillRect(boundingRect(), GroupBrush);
@@ -179,14 +196,7 @@ void GroupItemBase::collectWireConnectees(QSet<Wire *> & wires) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
 
-		QSet<Wire *> tempWires;
-		itemBase->collectWireConnectees(tempWires);
-		foreach (Wire * wire, tempWires) {
-			if (this->commonAncestorItem(wire) == NULL) {
-				wires.insert(wire);
-				break;
-			}
-		}
+		itemBase->collectWireConnectees(wires);
 	}
 }
 
@@ -200,6 +210,10 @@ void GroupItemBase::collectFemaleConnectees(QSet<ItemBase *> & items) {
 }
 
 void GroupItemBase::collectExternalConnectorItems() {
+
+	// TODO: what if connectorItems are in the GroupItemKin rather than the GroupItem
+	// this may be a general flaw in all the layerKin code that collects connectors
+
 	QList<ItemBase *> itemBases;
 	itemBases.append(this);
 
@@ -226,4 +240,12 @@ void GroupItemBase::collectConnectors(QList<ConnectorItem *> & connectors) {
 	foreach (ConnectorItem * connectorItem, m_externalConnectorItems) {
 		connectors.append(connectorItem);
 	}
+}
+
+bool GroupItemBase::hasExternalConnectorItems() {
+	return m_externalConnectorItems.count() > 0;
+}
+
+bool GroupItemBase::hasConnectors() {
+	return hasExternalConnectorItems();
 }

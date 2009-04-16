@@ -58,13 +58,10 @@ void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
 		else {
 			if (itemBase->hidden()) continue;
 
-			PaletteItemBase * paletteItemBase = dynamic_cast<PaletteItemBase *>(itemBase);
-			if (paletteItemBase != NULL) {
-				if (paletteItemBase->isLowerConnectorLayerVisible(paletteItemBase)) {
-					continue;
-				}
-			}			
-
+			if (itemBase->lowerConnectorLayerVisible(itemBase) != NULL) {
+				continue;
+			}
+		
 			if (!itemBase->toolTip2().isEmpty()) {
 				text = itemBase->toolTip2();
 				point = helpEvent->screenPos();

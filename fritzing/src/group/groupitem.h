@@ -36,7 +36,7 @@ class GroupItem : public GroupItemBase
 public:
 	GroupItem(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu);
 
-	void doneAdding(const LayerHash &);
+	void doneAdding(const LayerHash &, ViewLayer::ViewLayerID);
 	const QList<ItemBase *> & layerKin();
 	void syncKinMoved(GroupItemBase *, QPointF newPos);
 	void rotateItem(qreal degrees);
@@ -49,18 +49,23 @@ public:
 	void moveItem(ViewGeometry & viewGeometry);
 	void setTransforms();
 	bool isLowerLayerVisible(GroupItemBase *);
+	ItemBase * lowerConnectorLayerVisible(ItemBase *);
+	void blockSyncKinMoved(bool block);
+	void setHidden(bool hide);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
-
+	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void figureHover();
+	void addToList(ItemBase * candidate, ViewLayer::ViewLayerID, const LayerHash &, qint64 & id);
 
 public:
 	static QString moduleIDName;
 
 protected:
 	QList<ItemBase *> m_layerKin;
-	bool m_blockSync;
+	bool m_blockSyncKinMoved;
 	
 };
 

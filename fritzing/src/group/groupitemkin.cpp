@@ -75,3 +75,12 @@ void GroupItemKin::updateConnections() {
 bool GroupItemKin::isLowerLayerVisible(GroupItemBase * groupItemBase) {
 	return m_layerKinChief->isLowerLayerVisible(groupItemBase);
 }
+
+ItemBase * GroupItemKin::lowerConnectorLayerVisible(ItemBase * itemBase) {
+	return m_layerKinChief->lowerConnectorLayerVisible(itemBase);
+}
+
+void GroupItemKin::setHidden(bool hide) {
+	ItemBase::setHidden(hide);
+	m_layerKinChief->figureHover();
+}

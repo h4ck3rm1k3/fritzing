@@ -122,7 +122,7 @@ public:
 	void setTooltip();
 	void setConnectorTooltips();
 	void removeTooltip();
-	bool hasConnectors();
+	virtual bool hasConnectors();
 	bool canFlipHorizontal();
 	void setCanFlipHorizontal(bool);
 	bool canFlipVertical();
@@ -144,6 +144,13 @@ public:
 	virtual void resetID();
 	void updateConnectionsAux();
 	void updateExternalConnections();
+	virtual void blockSyncKinMoved(bool block);
+	virtual ItemBase * lowerConnectorLayerVisible(ItemBase *);
+	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
+	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
+	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
+    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
+	virtual void figureHover();
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
@@ -177,13 +184,9 @@ public:
 protected:
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event );
-	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
-	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
-	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
 	ConnectorItem * findConnectorUnder(ConnectorItem* , ConnectorItem * lastUnderConnector, bool useTerminalPoint);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	virtual void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
-    void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	QVariant itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant & value);
 
 

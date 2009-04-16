@@ -365,14 +365,9 @@ bool PaletteItemBase::isBuriedConnectorHit(QGraphicsSceneMouseEvent *event) {
 }
 */
 
-bool PaletteItemBase::isLowerConnectorLayerVisible(PaletteItemBase * paletteItemBase) {
-	Q_UNUSED(paletteItemBase);
-	return false;
-}
-
-
 void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
-	if (isLowerConnectorLayerVisible(this)) {
+	if (lowerConnectorLayerVisible(this)) {
+		DebugDialog::debug("PaletteItemBase::hoverEnterEvent isn't obsolete");
 		event->ignore();
 		return;
 	}
@@ -382,7 +377,8 @@ void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 
 
 void PaletteItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event) {
-	if (isLowerConnectorLayerVisible(this)) {
+	if (lowerConnectorLayerVisible(this)) {
+		DebugDialog::debug("PaletteItemBase::contextMenuEvent isn't obsolete");
 		event->ignore();
 		return;
 	}

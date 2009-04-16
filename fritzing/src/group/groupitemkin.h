@@ -43,6 +43,8 @@ public:
 	void resetID();
 	void clearModelPart();
 	bool isLowerLayerVisible(GroupItemBase *);
+	ItemBase * lowerConnectorLayerVisible(ItemBase *);
+	void setHidden(bool hide);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);

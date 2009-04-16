@@ -1964,7 +1964,7 @@ void SketchWidget::group(const QString & moduleID, long itemID, QList<long> & it
 	foreach (ItemBase * itemBase, itemBases) {
 		groupItem->addToGroup(itemBase);
 	}
-	groupItem->doneAdding(m_viewLayers);
+	groupItem->doneAdding(m_viewLayers, defaultConnectorLayer(m_viewIdentifier));
 	//groupItem->setSelected(true);
 
 	groupItem->setPos(viewGeometry.loc());
@@ -2007,7 +2007,7 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
 	foreach (ItemBase * itemBase, itemBases) {
 		groupItem->addToGroup(itemBase);
 	}
-	groupItem->doneAdding(m_viewLayers);
+	groupItem->doneAdding(m_viewLayers, defaultConnectorLayer(m_viewIdentifier));
 	groupItem->setSelected(true);
 
 	return modelPart;
