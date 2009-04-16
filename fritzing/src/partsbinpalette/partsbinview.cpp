@@ -33,6 +33,11 @@ $Date$
 #include "../itemdrag.h"
 #include "../utils/misc.h"
 
+
+PartsBinView::PartsBinView(ReferenceModel *refModel) {
+	m_refModel = refModel;
+}
+
 void PartsBinView::setPaletteModel(PaletteModel * model, bool clear) {
 	if(clear) {
 		doClear();

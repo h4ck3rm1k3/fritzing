@@ -43,7 +43,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 {
 	Q_OBJECT
 	public:
-		PartsBinIconView(QWidget *parent=0);
+		PartsBinIconView(ReferenceModel* refModel, QWidget *parent=0);
 		void loadFromModel(class PaletteModel *);
 		void setPaletteModel(class PaletteModel *model, bool clear=false);
 		void addPart(ModelPart * model, int position = -1);
@@ -76,8 +76,10 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 	public slots:
 		void setSelected(int position, bool doEmit=false);
 		void informNewSelection();
+		void itemMoved(int fromIndex, int toIndex);
 
 	signals:
+		void informItemMoved(int fromIndex, int toIndex);
 		void selectionChanged(int index);
 
 	protected:

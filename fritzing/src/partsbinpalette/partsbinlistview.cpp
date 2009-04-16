@@ -33,8 +33,8 @@ $Date$
 
 #include "partsbinlistview.h"
 
-PartsBinListView::PartsBinListView(QWidget *parent)
-	: QListWidget(parent)
+PartsBinListView::PartsBinListView(ReferenceModel* refModel, QWidget *parent)
+	: QListWidget(parent), PartsBinView(refModel)
 {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
@@ -201,6 +201,11 @@ void PartsBinListView::dropEvent(QDropEvent* event) {
 }
 
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {
+	itemMoved(fromIndex,toIndex);
+	emit informItemMoved(fromIndex, toIndex);
+}
+
+void PartsBinListView::itemMoved(int fromIndex, int toIndex) {
 	QListWidgetItem *item = takeItem(fromIndex);
 	insertItem(toIndex,item);
 }

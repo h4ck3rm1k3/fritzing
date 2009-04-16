@@ -60,10 +60,10 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_undoStack = new WaitPushUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
-	m_iconView = new PartsBinIconView(this);
+	m_iconView = new PartsBinIconView(m_refModel, this);
 	m_iconView->setInfoView(infoView);
 
-	m_listView = new PartsBinListView(this);
+	m_listView = new PartsBinListView(m_refModel, this);
 	m_listView->setInfoView(infoView);
 
 	//m_binTitle = new SimpleEditableLabelWidget(m_undoStack,this);
@@ -84,6 +84,9 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
+
+	connect(m_listView, SIGNAL(informItemMoved(int,int)), m_iconView, SLOT(itemMoved(int,int)));
+	connect(m_iconView, SIGNAL(informItemMoved(int,int)), m_listView, SLOT(itemMoved(int,int)));
 }
 
 PartsBinPaletteWidget::~PartsBinPaletteWidget() {

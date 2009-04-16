@@ -41,8 +41,8 @@ $Date$
 #include "../palettemodel.h"
 
 
-PartsBinIconView::PartsBinIconView(QWidget *parent)
-    : InfoGraphicsView(parent)
+PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, QWidget *parent)
+    : InfoGraphicsView(parent), PartsBinView(refModel)
 {
 	setAcceptWheelEvents(false);
     setFrameStyle(QFrame::Raised | QFrame::StyledPanel);
@@ -285,6 +285,11 @@ void PartsBinIconView::dropEvent(QDropEvent* event) {
 }
 
 void PartsBinIconView::moveItem(int fromIndex, int toIndex) {
+	itemMoved(fromIndex,toIndex);
+	emit informItemMoved(fromIndex, toIndex);
+}
+
+void PartsBinIconView::itemMoved(int fromIndex, int toIndex) {
 	QGraphicsLayoutItem *item = m_layout->itemAt(fromIndex);
 	m_layout->removeItem(item);
 	//int realToIndex = toIndex>fromIndex? toIndex-1: toIndex;
