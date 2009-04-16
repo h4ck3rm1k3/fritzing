@@ -42,11 +42,13 @@ public:
 	void setLayerKinChief(GroupItemBase *);
 	void resetID();
 	void clearModelPart();
+	bool isLowerLayerVisible(GroupItemBase *);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
+
 
 protected:
 	GroupItemBase * m_layerKinChief;

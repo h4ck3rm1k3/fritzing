@@ -160,7 +160,7 @@ void GroupItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 		// draw this first because otherwise it seems to draw a dashed line down the middle
         qt_graphicsItem_highlightSelected(this, painter, option, boundingRect(), QPainterPath(), NULL);
     }
-	if (this->parentItem() == NULL) {
+	if (this->parentItem() == NULL && !isLowerLayerVisible(this)) {
 		painter->save();
 		painter->setOpacity(0.1);
 		painter->fillRect(boundingRect(), GroupBrush);

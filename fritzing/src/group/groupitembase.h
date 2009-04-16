@@ -54,11 +54,11 @@ public:
 	void collectFemaleConnectees(QSet<ItemBase *> & items);
 	void collectExternalConnectorItems();
 	void collectConnectors(QList<ConnectorItem *> & connectors);
+	virtual bool isLowerLayerVisible(GroupItemBase *) = 0;
 
 protected:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 	void addToGroup(ItemBase *, const LayerHash &);
-
 
 protected:
 	QRectF m_boundingRect;

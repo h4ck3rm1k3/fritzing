@@ -71,3 +71,7 @@ void GroupItemKin::clearModelPart() {
 void GroupItemKin::updateConnections() {
 	m_layerKinChief->updateConnections();
 }
+
+bool GroupItemKin::isLowerLayerVisible(GroupItemBase * groupItemBase) {
+	return m_layerKinChief->isLowerLayerVisible(groupItemBase);
+}

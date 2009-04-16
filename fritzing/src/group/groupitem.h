@@ -48,10 +48,12 @@ public:
 	void clearModelPart();
 	void moveItem(ViewGeometry & viewGeometry);
 	void setTransforms();
+	bool isLowerLayerVisible(GroupItemBase *);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void updateConnections();
+
 
 public:
 	static QString moduleIDName;

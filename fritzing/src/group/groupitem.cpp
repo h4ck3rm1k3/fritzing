@@ -29,67 +29,69 @@ $Date$
 //  allow arbitrary image to be associated (where to put connectors?)
 //	undo group
 //  labels?
-//  what if module has an internal transform
 //  bug: new module not appearing in parts bin
 
-//  ** bug: transform group, save sketch, transform isn't preserved
-//  ** bug: can't drag wire from external connectors
-//	** rotate group bug: connected external wires don't updateConnections
-//  ** bug: after undo, updateconnections not being called
-//	** export with groups
-//  ** bug: drag out selection so that internal parts are selected, then copy/paste 
+//  * bug: pcb view drawing multiple rectangles
+//  * what if module has an internal transform
+//  * bug: transform group, save sketch, transform isn't preserved
+//  * bug: can't drag wire from external connectors
+//	* rotate group bug: connected external wires don't updateConnections
+//  * bug: after undo, updateconnections not being called
+//	* export with groups
+//  * bug: drag out selection so that internal parts are selected, then copy/paste 
 //  ** sticky
-//  ** bug: not connecting across views
-//	** delete
-//	** undo delete
+//  * bug: not connecting across views
+//	* delete
+//	* undo delete
 //  ** ratsnest behavior: what if module contains separated parts (tough)
 //  ** autorouting behavior
-//	** recursive groups
-//		** recursive modelpart ownership
-//	** open in new sketch (edit)
-//		** need to preserve external connectors
-//	** copy/paste
-//  ** undo copy/paste
-//  ** allow mouse events to external connections
-//		** don't allow wires to connect within the group
-//		** drag doesn't keep wire connections
-//		** connect within
-//		** ignore submodule external connections
+//	* recursive groups
+//		* recursive modelpart ownership
+//	* open in new sketch (edit)
+//		* need to preserve external connectors
+//	* copy/paste
+//  * undo copy/paste
+//  * allow mouse events to external connections
+//		* allow wires to connect within the group
+//		* drag doesn't keep wire connections
+//		* connect within
+//		* ignore submodule external connections
 //	** breadboard or arduino in module
 //  ** female connectors in modules
 //		** connect female connectees
-//  ** how to hide non-external connectors
+//  * how to hide non-external connectors
 //  ** trace wires
 //	** ratsnest wires
-//	** model parts for grouped items get added as children to the group modelpart
-//  ** save sketch with group(s)
-//  ** load sketch with group(s)
-//	** bug: no shadow in grouped wire
-//  ** drop group into sketch
-//		** command objects go where?
+//	* model parts for grouped items get added as children to the group modelpart
+//  * save sketch with group(s)
+//  * load sketch with group(s)
+//	* bug: no shadow in grouped wire
+//  * drop group into sketch
+//		* command objects go where?
 //	** save as group
-//		** store them in the user folder
+//		* store them in the user folder
 //		** add to bin
-//		** create icon svg
-//			** use the bounding rect of the items instead of the scene rect
-//		** xml: something that says group; pointer to icon; properties
-//		** select external connections
-//	** layerkin
+//		* create icon svg
+//			* use the bounding rect of the items instead of the scene rect
+//		* xml: something that says group; pointer to icon; properties
+//		* select external connections
+//	* layerkin
 //		** pcb view: group part in bb view, items not visually synced in pcb view
-//  ** scene jumps when creating a new group--triggered by changing the location of the chief item
-//  ** late updates (paint) after flip/rotate, other?
+//  * scene jumps when creating a new group--triggered by changing the location of the chief item
+//  * late updates (paint) after flip/rotate, other?
 //	** z-order manipulation
-//	** hide/show layer 
-//		** still shows group selection box
-//  ** override QGraphicsItemGroup::paint
+//	* hide/show layer 
+//		* still shows group selection box
+//  * override QGraphicsItemGroup::paint
 //	** rotate/flip
-//		** need to center itembase in bounding rect
-//		** unable to rotate in pcb view (selection bug?)
+//		** pcb view: group kin not synching
+//		* need to center itembase in bounding rect
+//		* unable to rotate in pcb view (selection bug?)
 //		** is flip always allowed?
-//		** undo
-//	** figure out which layer the grouped items are on and get the next z id
-//	** sort itembases by z
-//  ** select/unselect bug
+//		* undo
+//	* figure out which layer the grouped items are on and get the next z id
+//	* sort itembases by z
+//  * select/unselect bug
 
 #include <QGraphicsScene>
 #include <QSet>
@@ -175,6 +177,7 @@ void GroupItem::doneAdding(const LayerHash & layerHash)
 				scene()->addItem(mylkpi);
 				m_layerKin.append(mylkpi);
 				mylkpi->addToGroup(lkpi);
+				mylkpi->setZValue(mylkpi->z());
 			}
 		}
 	}
@@ -265,4 +268,32 @@ void GroupItem::setTransforms() {
 	for (int i = 0; i < m_layerKin.count(); i++) {
 		m_layerKin[i]->setTransform(m_layerKin[i]->getViewGeometry().transform());
 	}
+}
+
+bool GroupItem::isLowerLayerVisible(GroupItemBase * groupItemBase) {
+	if (m_layerKin.count() == 0) return false;
+
+	DebugDialog::debug(QString("incoming z: %1, chief z: %2").arg(groupItemBase->zValue()).arg(this->zValue()));
+
+	if ((groupItemBase != this) 
+		&& this->isVisible() 
+		&& (!this->hidden()) && (this->zValue() < groupItemBase->zValue())) 
+	{
+		return true;
+	}
+
+	foreach (ItemBase * lkpi, m_layerKin) {
+		if (lkpi == groupItemBase) continue;
+
+		DebugDialog::debug(QString("lkpi z: %1").arg(lkpi->zValue()));
+
+		if (lkpi->isVisible() 
+			&& (!lkpi->hidden()) 
+			&& (lkpi->zValue() < groupItemBase->zValue())  ) 
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

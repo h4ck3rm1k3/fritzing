@@ -1626,14 +1626,14 @@ void MainWindow::initExternalConnectors(QList<ConnectorItem *> & externalConnect
 			if (!p.isNull()) {
 				oldModelIndex = p.attribute("i").toLong();
 				mp = m_sketchModel->findModelPartFromOriginal(m_sketchModel->root(), oldModelIndex);
-				if (mp == NULL) break;
+				if (mp != NULL) {
+					while (true) {
+						p = p.firstChildElement("mp");
+						if (p.isNull()) break;
 
-				while (true) {
-					p = p.firstChildElement("mp");
-					if (p.isNull()) break;
-
-					mp = m_sketchModel->findModelPartFromOriginal(mp, p.attribute("i").toLong());
-					if (mp == NULL) break;
+						mp = m_sketchModel->findModelPartFromOriginal(mp, p.attribute("i").toLong());
+						if (mp == NULL) break;
+					}
 				}
 			}
 		}

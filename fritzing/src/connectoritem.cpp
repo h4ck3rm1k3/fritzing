@@ -779,6 +779,8 @@ bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 		}
 	}
 
+	/*
+	// code to disallow a wire connecting two items in the same group, but why not?
 	if (other->m_ignoreAncestorFlag) {
 		if (this->attachedToItemType() == ModelPart::Wire) {
 			ConnectorItem * wireOther = dynamic_cast<Wire *>(this->attachedTo())->otherConnector(this);
@@ -792,6 +794,7 @@ bool ConnectorItem::connectionIsAllowed(ConnectorItem * other) {
 			}
 		}
 	}
+	*/
 
 	return true;
 }
