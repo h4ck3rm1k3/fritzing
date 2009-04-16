@@ -137,7 +137,9 @@ void PartsBinView::dropEventAux(QDropEvent* event) {
 	int fromIndex = itemIndexAt(m_dragStartPos);
 	int toIndex = itemIndexAt(event->pos());
 
-	moveItem(fromIndex,toIndex);
+	if(fromIndex != toIndex) {
+		moveItem(fromIndex,toIndex);
+	}
 	event->acceptProposedAction();
 }
 

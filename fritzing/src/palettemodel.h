@@ -54,6 +54,7 @@ public:
 	void removePart(const QString &moduleID);
 
 	void clearPartHash();
+	void setOrdererChildren(QList<QObject*> children);
 
 signals:
 	void newPartLoaded(ModelPart *);

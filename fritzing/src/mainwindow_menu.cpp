@@ -698,12 +698,8 @@ void MainWindow::createFileMenuActions() {
 	m_openAct->setStatusTip(tr("Open a sketch"));
 	connect(m_openAct, SIGNAL(triggered()), this, SLOT(load()));
 
-	m_openRecentFileMenu = new QMenu(tr("&Open Recent Files"), this);
 	createOpenRecentMenu();
-
-	m_openExampleMenu = new QMenu(tr("&Open Example"), this);
-	createOpenExampleMenu(m_openExampleMenu,getApplicationSubFolderPath("examples"));
-
+	createOpenExampleMenu();
 	createCloseAction();
 
 	m_saveAct = new QAction(tr("&Save"), this);
@@ -790,7 +786,74 @@ void MainWindow::createFileMenuActions() {
 
 }
 
-void MainWindow::createOpenExampleMenu(QMenu * parentMenu, QString path) {
+void MainWindow::createOpenExampleMenu() {
+	m_openExampleMenu = new QMenu(tr("&Open Example"), this);
+	QString folderPath = getApplicationSubFolderPath("sketches")+"/";
+	populateMenuFromXMLFile(m_openExampleMenu, m_openExampleActions, folderPath, "index.xml"/*, "fritzing-sketches", "sketch", "category"*/);
+}
+
+void MainWindow::populateMenuFromXMLFile(
+		QMenu *parentMenu, QStringList &actionsTracker,
+		const QString &folderPath, const QString &indexFileName/*,
+		const QString &rootNode, const QString &indexNode,
+		const QString &submenuNode*/
+) {
+	QDomDocument *dom = new QDomDocument();
+	QFile file(folderPath+indexFileName);
+	dom->setContent(&file);
+	file.close();
+
+	QDomElement domElem = dom->documentElement();
+	QDomElement indexDomElem = domElem.firstChild().toElement();
+	QDomElement taxonomyDomElem = indexDomElem.nextSiblingElement("categories");
+
+	SketchIndex index = indexAvailableElements(indexDomElem,folderPath);
+	populateMenuWithIndex(index,parentMenu,actionsTracker,taxonomyDomElem);
+}
+
+SketchIndex MainWindow::indexAvailableElements(QDomElement &domElem, const QString &srcPreffix) {
+	SketchIndex retval;
+	QDomNode n = domElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement();
+		if(!e.isNull() && e.tagName() == "sketch") {
+			const QString id = e.attribute("id");
+			const QString name = e.attribute("name");
+			const QString src = srcPreffix+e.attribute("src");
+			retval[id] = new SketchDescriptor(id,name,src);
+		}
+		n = n.nextSibling();
+	}
+	return retval;
+}
+
+void MainWindow::populateMenuWithIndex(const SketchIndex &index, QMenu * parentMenu, QStringList &actionsTracker, QDomElement &domElem) {
+	QDomNode n = domElem.firstChild();
+	while(!n.isNull()) {
+		QDomElement e = n.toElement(); // try to convert the node to an element.
+		if(!e.isNull()) {
+			if(e.nodeName() == "sketch") {
+				QString id = e.attribute("id");
+				if(!id.isNull() && !id.isEmpty()) {
+					SketchDescriptor elem = *index[id];
+					actionsTracker << elem.name;
+					QAction * currAction = new QAction(elem.name, this);
+					currAction->setData(elem.src);
+					connect(currAction,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
+					parentMenu->addAction(currAction);
+				}
+			} else if(e.nodeName() == "category") {
+				QString name = e.attribute("name");
+				QMenu * currMenu = new QMenu(name, parentMenu);
+				parentMenu->addMenu(currMenu);
+				populateMenuWithIndex(index, currMenu, actionsTracker, e);
+			}
+		}
+		n = n.nextSibling();
+	}
+}
+
+void MainWindow::populateMenuFromFolderContent(QMenu * parentMenu, const QString &path) {
 	QDir *currDir = new QDir(path);
 	QStringList content = currDir->entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
 	if(content.size() > 0) {
@@ -800,7 +863,7 @@ void MainWindow::createOpenExampleMenu(QMenu * parentMenu, QString path) {
 			if(QFileInfo(currFilePath).isDir()) {
 				QMenu * currMenu = new QMenu(currFile, parentMenu);
 				parentMenu->addMenu(currMenu);
-				createOpenExampleMenu(currMenu, currFilePath);
+				populateMenuFromFolderContent(currMenu, currFilePath);
 			} else {
 				QString actionText = currFile.remove(FritzingSketchExtension);
 				m_openExampleActions << actionText;
@@ -817,6 +880,8 @@ void MainWindow::createOpenExampleMenu(QMenu * parentMenu, QString path) {
 }
 
 void MainWindow::createOpenRecentMenu() {
+	m_openRecentFileMenu = new QMenu(tr("&Open Recent Files"), this);
+
 	for (int i = 0; i < MaxRecentFiles; ++i) {
 		m_openRecentFileActs[i] = new QAction(this);
 		m_openRecentFileActs[i]->setVisible(false);

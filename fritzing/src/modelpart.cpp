@@ -204,8 +204,14 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 	}
 
 	if (this->itemType() != ModelPart::Module) {
+
+		QList<QObject *> children = this->children();
+		if(m_orderedChildren.count() > 0) {
+			children = m_orderedChildren;
+		}
+
 		QList<QObject *>::const_iterator i;
-		for (i = children().constBegin(); i != children().constEnd(); ++i) {
+		for (i = children.constBegin(); i != children.constEnd(); ++i) {
 			ModelPart* mp = qobject_cast<ModelPart *>(*i);
 			if (mp == NULL) continue;
 
@@ -355,7 +361,7 @@ void ModelPart::setModelIndexFromMultiplied(long multiplied) {
 	setModelIndex(multiplied / ModelPart::indexMultiplier);
 }
 
-void ModelPart::updateIndex(long index) 
+void ModelPart::updateIndex(long index)
 {
 	if (index >= m_nextIndex) {
 		m_nextIndex = index + 1;
@@ -517,3 +523,6 @@ void ModelPart::setInstanceTitle(QString title) {
 	m_instanceTitle = title;
 }
 
+void ModelPart::setOrderedChildren(QList<QObject*> children) {
+	m_orderedChildren = children;
+}

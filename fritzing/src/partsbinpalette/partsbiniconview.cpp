@@ -303,3 +303,14 @@ int PartsBinIconView::itemIndexAt(const QPoint& pos) {
 	Q_ASSERT(item);
 	return m_layout->indexOf(item);
 }
+
+QList<QObject*> PartsBinIconView::orderedChildren() {
+	QList<QObject*> result;
+	for(int i=0; m_layout->count(); i++) {
+		SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(m_layout->itemAt(i));
+		if(it) {
+			result << it->modelPart();
+		}
+	}
+	return result;
+}

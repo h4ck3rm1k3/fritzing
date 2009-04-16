@@ -333,3 +333,7 @@ void PaletteModel::clearPartHash() {
 	}
 	m_partHash.clear();
 }
+
+void PaletteModel::setOrdererChildren(QList<QObject*> children) {
+	m_root->setOrderedChildren(children);
+}

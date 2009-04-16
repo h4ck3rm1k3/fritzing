@@ -86,6 +86,7 @@ class PartsBinPaletteWidget : public QFrame {
 		bool save();
 		bool open();
 		void openCore();
+		void itemMoved();
 
 	protected slots:
 		void toIconView();
@@ -124,6 +125,7 @@ class PartsBinPaletteWidget : public QFrame {
 		PaletteModel *m_model;
 		ReferenceModel *m_refModel;
 		bool m_canDeleteModel;
+		bool m_orderHasChanged;
 
 		QString m_fileName;
 		QString m_defaultSaveFolder;

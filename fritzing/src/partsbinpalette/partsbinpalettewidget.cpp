@@ -54,6 +54,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	m_refModel = refModel;
 	m_canDeleteModel = false;
+	m_orderHasChanged = false;
 
 	Q_UNUSED(undoStack);
 
@@ -87,6 +88,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), m_iconView, SLOT(itemMoved(int,int)));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), m_listView, SLOT(itemMoved(int,int)));
+	connect(m_listView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
+	connect(m_iconView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 }
 
 PartsBinPaletteWidget::~PartsBinPaletteWidget() {
@@ -184,7 +187,16 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	if(!title.isNull() && !title.isEmpty()) {
 		m_model->root()->modelPartShared()->setTitle(title);
 	}
+
+	if(m_orderHasChanged) {
+		m_model->setOrdererChildren(m_iconView->orderedChildren());
+	}
 	m_model->save(filename);
+	if(m_orderHasChanged) {
+		m_model->setOrdererChildren(QList<QObject*>());
+		m_orderHasChanged = false;
+	}
+
 	m_undoStack->setClean();
 
 	saveAsLastBin();
@@ -622,4 +634,8 @@ void PartsBinPaletteWidget::rename() {
 	if(ok) {
 		setTitle(newTitle);
 	}
+}
+
+void PartsBinPaletteWidget::itemMoved() {
+	m_orderHasChanged = true;
 }

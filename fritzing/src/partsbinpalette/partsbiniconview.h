@@ -53,6 +53,8 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 
 		ModelPart *selected();
 		int selectedIndex();
+
+		QList<QObject*> orderedChildren();
 	protected:
 		void doClear();
 		void moveItem(int fromIndex, int toIndex);

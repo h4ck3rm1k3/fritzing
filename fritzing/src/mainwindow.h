@@ -51,6 +51,23 @@ class Helper;
 class DockManager;
 class FSizeGrip;
 
+// help struct to create the example menu from a xml file
+struct SketchDescriptor {
+	SketchDescriptor(const QString &_id, const QString &_name, const QString &_src) {
+		id = _id;
+		name = _name;
+		src = _src;
+	}
+
+	QString id;
+	QString name;
+	QString src;
+};
+
+
+
+#define SketchIndex QHash<QString /*id*/, SketchDescriptor*>
+
 bool sortPartList(ItemBase * b1, ItemBase * b2);
 
 class MainWindow : public FritzingWindow
@@ -205,7 +222,16 @@ protected:
 
     void createActions();
     void createFileMenuActions();
-    void createOpenExampleMenu(QMenu * parentMenu, QString directory);
+    void createOpenExampleMenu();
+    void populateMenuFromXMLFile(
+    		QMenu *parentMenu, QStringList &actionsTracker,
+    		const QString &folderPath, const QString &indexFileName/*,
+    		const QString &rootNode, const QString &indexNode,
+    		const QString &submenuNode*/
+    );
+    SketchIndex indexAvailableElements(QDomElement &domElem, const QString &srcPreffix="");
+    void populateMenuWithIndex(const SketchIndex &index, QMenu * parentMenu, QStringList &actionsTracker, QDomElement &domElem);
+    void populateMenuFromFolderContent(QMenu *parentMenu, const QString &path);
     void createOpenRecentMenu();
     void createEditMenuActions();
     void createPartMenuActions();

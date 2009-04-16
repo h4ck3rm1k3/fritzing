@@ -112,6 +112,7 @@ public:
 	void setInstanceTitle(QString);
 	void setInstanceText(QString);
 
+	void setOrderedChildren(QList<QObject*> children);
 public:
 	static const QString & itemTypeName(ModelPart::ItemType);
 	static const QString & itemTypeName(int);
@@ -148,6 +149,8 @@ protected:
 
 	QString m_instanceTitle;
 	QString m_instanceText;
+
+	QList<QObject*> m_orderedChildren;
 
 protected:
 	static QHash<ItemType, QString> itemTypeNames;
