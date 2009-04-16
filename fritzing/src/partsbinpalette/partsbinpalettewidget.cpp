@@ -271,6 +271,7 @@ void PartsBinPaletteWidget::createMenu() {
 	m_menuButton = new QToolButton(this);
 	m_menuButton->setPopupMode(QToolButton::InstantPopup);
 	m_menuButton->setIcon(QIcon(":/resources/images/icons/partsBinMenu_icon.png"));
+	m_menuButton->setStyleSheet("background-color: transparent;");
 	QMenu *menu = new QMenu(this);
 
 	m_newBinAction = new QAction(tr("New bin"), this);
