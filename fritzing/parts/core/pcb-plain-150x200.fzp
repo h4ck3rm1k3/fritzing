@@ -38,6 +38,7 @@
    <label/>
    <layers image="pcb/pcb_150x200mm.svg" >
     <layer layerId="board" sticky="true" />
+    <layer layerId="silkscreen" sticky="true" />
    </layers>
   </pcbView>
  </views>

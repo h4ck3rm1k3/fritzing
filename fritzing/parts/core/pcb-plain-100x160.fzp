@@ -37,10 +37,11 @@
   <pcbView>
    <label/>
    <layers image="pcb/pcb_100x160mm.svg" >
+    <layer layerId="silkscreen" />
     <layer layerId="board" sticky="true" />
    </layers>
   </pcbView>
  </views>
- <connectors/>
- <buses/>
+ <connectors />
+ <buses />
 </module>

@@ -37,10 +37,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="281.10081"
+     inkscape:cx="103.10081"
      inkscape:cy="185.24943"
      inkscape:document-units="mm"
-     inkscape:current-layer="board"
+     inkscape:current-layer="svg3313"
      showgrid="false"
      units="mm"
      width="100mm"
@@ -70,5 +70,42 @@
        height="351.08899"
        x="1"
        y="1" />
+  </g>
+  <g
+     id="silkscreen">
+    <line
+       x1="4"
+       y1="4"
+       x2="562.92914"
+       y2="4"
+       id="line8"
+       style="stroke:#ffffff;stroke-width:8;stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="562.92914"
+       y1="4"
+       x2="562.92914"
+       y2="350.33069"
+       id="line10"
+       style="stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="562.92914"
+       y1="350.33069"
+       x2="4"
+       y2="350.33069"
+       id="line12"
+       style="stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="4"
+       y1="350.33069"
+       x2="4"
+       y2="4"
+       id="line14"
+       style="stroke-linecap:round" />
   </g>
 </svg>

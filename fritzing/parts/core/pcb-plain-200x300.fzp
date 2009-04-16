@@ -27,6 +27,7 @@
   <breadboardView>
    <layers image="icon/plain_pcb.svg" >
     <layer layerId="unknown" />
+    <layer layerId="silkscreen" sticky="true" />
    </layers>
   </breadboardView>
   <schematicView>
