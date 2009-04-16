@@ -20,7 +20,7 @@
         <sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fz"/>
         <sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fz"/>
         <sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator.fz"/>
-        <sketch id="Window_Alarm" name="Window_Alarm" src="core/Window_Alarm.fz"/>
+        <sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
 	</sketches>
 	<categories>
 		<category name="Digital">
