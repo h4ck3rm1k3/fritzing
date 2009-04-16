@@ -33,6 +33,7 @@ $Date$
 
 #include "partsbinview.h"
 
+
 class PartsBinListView : public QListWidget, public PartsBinView {
 	Q_OBJECT
 	public:
@@ -49,8 +50,6 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		void setSelected(int position);
 
 	protected:
-		void setModel(PaletteModel *model);
-
 		void doClear();
 		void moveItem(int fromIndex, int toIndex);
 		int itemIndexAt(const QPoint& pos);
@@ -58,13 +57,17 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);
 		//void dragEnterEvent(QDragEnterEvent* event);
-		//void dropEvent(QDropEvent* event);
+		void dropEvent(QDropEvent* event);
 		void setItemAux(ModelPart * modelPart, int position = -1);
 
 		ModelPart *itemModelPart(const QListWidgetItem *item);
 		const QString& itemModuleID(const QListWidgetItem *item);
 
 		void showInfo(QListWidgetItem * item);
+
+		bool dropMimeData(int index, const QMimeData *data, Qt::DropAction action);
+		QMimeData * mimeData(const QList<QListWidgetItem *> items) const;
+		QStringList mimeTypes() const;
 
 	protected:
 		class HtmlInfoView * m_infoView;

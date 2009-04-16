@@ -47,11 +47,7 @@ PartsBinListView::PartsBinListView(QWidget *parent)
 	viewport()->setAcceptDrops(true);
 	setDropIndicatorShown(true);
 	setDragDropMode(QAbstractItemView::DragDrop);
-	//setAcceptDrops(true);
-
-
-
-	//setDragDropOverwriteMode(true);
+	setAcceptDrops(true);
 }
 
 PartsBinListView::~PartsBinListView() {
@@ -104,6 +100,8 @@ void PartsBinListView::mouseMoveEvent(QMouseEvent *event) {
 		QListWidgetItem * item = itemAt(event->pos());
 		showInfo(item);
 	}
+
+	QListWidget::mouseMoveEvent(event);
 }
 
 void PartsBinListView::showInfo(QListWidgetItem * item) {
@@ -132,8 +130,6 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 
 
 void PartsBinListView::mousePressEvent(QMouseEvent *event) {
-	QListWidget::mousePressEvent(event);
-
 	QListWidgetItem * current = currentItem ();
 	if (current == NULL) return;
 
@@ -144,7 +140,8 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 		showInfo(current);
 	}
 
-	mousePressOnItem(event->pos(), modelPart->moduleID(), iconSize());
+	m_dragStartPos = event->pos();
+	QListWidget::mousePressEvent(event);
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
@@ -197,16 +194,14 @@ void PartsBinListView::setSelected(int position) {
 
 /*void PartsBinListView::dragEnterEvent(QDragEnterEvent* event) {
 	dragMoveEnterEventAux(event);
-}
-
-void PartsBinListView::dropEvent(QDropEvent* event) {
-	DebugDialog::debug("dropped");
-	dropEventAux(event);
 }*/
 
+void PartsBinListView::dropEvent(QDropEvent* event) {
+	dropEventAux(event);
+}
+
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {
-	QListWidgetItem *item = this->item(fromIndex);
-	removeItemWidget(item);
+	QListWidgetItem *item = takeItem(fromIndex);
 	insertItem(toIndex,item);
 }
 
@@ -214,13 +209,51 @@ int PartsBinListView::itemIndexAt(const QPoint& pos) {
 	return row(itemAt(pos));
 }
 
-/*
-Qt::ItemFlags PartsBinListViewModel::flags(const QModelIndex &index) const {
-    Qt::ItemFlags defaultFlags = QStringListModel::flags(index);
+bool PartsBinListView::dropMimeData(int index, const QMimeData *data, Qt::DropAction action) {
+	Q_UNUSED(index);
+	Q_UNUSED(action);
+	if(data->hasFormat("action") && (data->data("action") == "part-reordering")) {
+		/*QByteArray itemData = data->data("application/x-dnditemdata");
+		QDataStream dataStream(&itemData, QIODevice::ReadOnly);
 
-    if (index.isValid())
-        return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
-    else
-        return Qt::ItemIsDropEnabled | defaultFlags;
+		QString moduleID;
+		QPointF offset;
+		dataStream >> moduleID >> offset;
+
+		ModelPart *modelPart = m_partHash[moduleID];
+
+		QModelIndex idx = model()->index(index, 0);
+		model()->setData(idx, qVariantFromValue(modelPart), Qt::UserRole);*/
+
+		return true;
+	} else {
+		return false;
+	}
+	return true;
 }
-*/
+
+QMimeData * PartsBinListView::mimeData(const QList<QListWidgetItem *> items) const {
+	Q_ASSERT(items.count()<=1);
+
+	if(items.count()==1) {
+		ModelPart * modelPart = items[0]->data(Qt::UserRole).value<ModelPart *>();
+		QByteArray itemData;
+		QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+
+		dataStream << modelPart->moduleID() << QPointF(0,0);
+
+		QMimeData *mimeData = new QMimeData;
+		mimeData->setData("application/x-dnditemdata", itemData);
+		mimeData->setData("action", "part-reordering");
+
+		return mimeData;
+	} else {
+		return QListWidget::mimeData(items);
+	}
+}
+
+QStringList PartsBinListView::mimeTypes() const {
+	QStringList list;
+	list << "application/x-dnditemdata" << "action";
+	return list;
+}
