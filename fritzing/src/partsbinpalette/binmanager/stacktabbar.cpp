@@ -83,19 +83,31 @@ void StackTabBar::mouseReleaseEvent(QMouseEvent *event) {
 	QTabBar::mouseReleaseEvent(event);
 }
 
+bool StackTabBar::mimeIsAction(const QMimeData* m, const QString& action) {
+	Q_ASSERT(m);
+	QStringList formats = m->formats();
+	return formats.contains("action") && (m->data("action") == action);
+}
+
 void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
 	// Only accept if it's an tab-reordering request
-	const QMimeData* m = event->mimeData();
-	QStringList formats = m->formats();
-	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
+	const QMimeData *m = event->mimeData();
+	if (mimeIsAction(m, "tab-reordering") || mimeIsAction(m, "part-reordering")) {
 		event->acceptProposedAction();
 	}
 }
 
 void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
+	const QMimeData *m = event->mimeData();
 	int index = tabAt(event->pos());
-	emit setPotentialDropSink(m_parent,index);
-	emit setDropSink(NULL);
+	if(event->source() == this && mimeIsAction(m,"tab-reordering")) {
+		emit setPotentialDropSink(m_parent,index);
+		emit setDropSink(NULL);
+		event->acceptProposedAction();
+	} else if (event->source() != this && mimeIsAction(event->mimeData(),"part-reordering")) {
+		event->acceptProposedAction();
+		setCurrentIndex(index);
+	}
 }
 
 void StackTabBar::dropEvent(QDropEvent* event) {

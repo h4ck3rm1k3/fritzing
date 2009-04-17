@@ -50,6 +50,7 @@ class StackTabBar : public QTabBar {
         void dragMoveEvent(QDragMoveEvent* event);
 		void dropEvent(QDropEvent* event);
 
+		bool mimeIsAction(const class QMimeData* m, const QString& action);
 		int tabIndexAtPos(const QPoint &p) const;
 
 

@@ -139,7 +139,6 @@ void PartsBinView::dragMoveEnterEventAux(QDragMoveEvent* event) {
 void PartsBinView::dropEventAux(QDropEvent* event) {
 	int toIndex = itemIndexAt(event->pos());
 	if(event->source() == dynamic_cast<QWidget*>(this)) {
-		DebugDialog::debug("rearranging");
 		int fromIndex = itemIndexAt(m_dragStartPos);
 
 		if(fromIndex != toIndex) {
