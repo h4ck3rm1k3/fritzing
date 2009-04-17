@@ -186,6 +186,8 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 			visitedWires.insert(w);
 		}
 
+		QList<Wire *> wiresCopy(wires);
+
 		// this is ugly, but for the moment I can't think of anything better.
 		// it prevents disconnected deleted traces (traces which have been directly deleted,
 		// as opposed to traces that are indirectly deleted by deleting or disconnecting parts)
@@ -213,9 +215,48 @@ void PCBSchematicSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>
 
 					// assumes one end is connected to a part, checks to see if the other end is also, possibly indirectly, connected
 					bothEndsConnected(w, flag, tci, wires, *list);
+
 				}
 			}
 			if (wires.count() == 0) break;
+		}
+
+		if (ends.count() > 1 && wires.count() == 0) {
+			// if wire connects two connectors on the same bus on the same part
+			// and there are no outside connections, remove the wire
+			// TODO: should this wire have ever been created in the first place?
+			ItemBase * attachedTo = ends[0]->attachedTo();
+			Bus * bus = ends[0]->bus();
+			bool allOnSameBus = true;
+			for (int i = 1; i < ends.count(); i++)  {
+				if (ends[i]->attachedTo() != attachedTo) {
+					allOnSameBus = false;
+					break;
+				}
+				if (ends[i]->bus() != bus) {
+					allOnSameBus = false;
+					break;
+				}
+			}
+			if (allOnSameBus) {
+				QList<ConnectorItem *> eqp(ends);
+				ConnectorItem::collectEqualPotential(eqp, ViewGeometry::RatsnestFlag | ViewGeometry::TraceFlag | ViewGeometry::JumperFlag);
+				for (int i = ends.count(); i < eqp.count(); i++) {
+					if (eqp[i]->attachedTo() != attachedTo) {
+						allOnSameBus = false;
+						break;
+					}
+					if (eqp[i]->bus() != bus) {
+						allOnSameBus = false;
+						break;
+					}
+				}
+			}
+			if (allOnSameBus) {
+				foreach (Wire * w, wiresCopy) {
+					wires.append(w);
+				}
+			}
 		}
 
 		foreach (Wire * w, wires) {
