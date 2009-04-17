@@ -379,15 +379,6 @@ bool PartsBinPaletteWidget::saveAs() {
 }
 
 bool PartsBinPaletteWidget::open(QString fileName) {
-	if(fileName.isNull() || fileName.isEmpty()) {
-		fileName = QFileDialog::getOpenFileName(
-				this,
-				tr("Select a Fritzing file to open"),
-				m_defaultSaveFolder,
-				tr("Fritzing (*%1)").arg(FritzingBinExtension) );
-		if (fileName.isNull()) return false;
-	}
-
 	QFile file(fileName);
 	if (!file.exists()) {
        QMessageBox::warning(this, tr("Fritzing"),

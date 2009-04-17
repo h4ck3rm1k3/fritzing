@@ -50,12 +50,13 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_paletteModel = NULL;
 	m_infoView = infoView;
 	m_undoStack = undoStack;
+	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
 
 	m_widget = new StackWidget(this);
 	m_widget->setAcceptDrops(true);
 	//m_activeBinTabWidget = new QTabWidget(m_widget);
 
-	m_unsavedBins = 0;
+	m_unsavedBinsCount = 0;
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->addWidget(m_widget);
@@ -182,15 +183,30 @@ void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) 
 PartsBinPaletteWidget* BinManager::newBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
 	bin->setPaletteModel(new PaletteModel(true,false),true);
-	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBins));
+	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBinsCount));
 	insertBin(bin, tb->currentIndex(), tb);
 	return bin;
 }
 
 PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileName) {
-	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
-	if(bin->open(fileName)) {
-		insertBin(bin, tb->currentIndex(), tb);
+	if(fileName.isNull() || fileName.isEmpty()) {
+		fileName = QFileDialog::getOpenFileName(
+				this,
+				tr("Select a Fritzing file to open"),
+				m_defaultSaveFolder,
+				tr("Fritzing (*%1)").arg(FritzingBinExtension) );
+		if (fileName.isNull()) return false;
+	}
+	PartsBinPaletteWidget* bin = NULL;
+	if(m_openedBins.contains(fileName)) {
+		bin = m_openedBins[fileName];
+		m_tabWidgets[bin]->setCurrentWidget(bin);
+	} else {
+		bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+		if(bin->open(fileName)) {
+			m_openedBins[fileName] = bin;
+			insertBin(bin, tb->currentIndex(), tb);
+		}
 	}
 	return bin;
 }
@@ -207,6 +223,7 @@ void BinManager::closeBinIn(StackTabWidget* tb) {
 	if(w && w->beforeClosing()) {
 		tb->removeTab(tb->currentIndex());
 		m_tabWidgets.remove(w);
+		m_openedBins.remove(w->fileName());
 		if(tb->count() == 0 && m_widget->count() <= 3) { // one tab widget and two separators
 			openCoreBinIn(tb);
 		}

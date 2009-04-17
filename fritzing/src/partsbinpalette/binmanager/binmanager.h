@@ -86,7 +86,9 @@ class BinManager : public QFrame {
 		QTabWidget *m_activeBinTabWidget;
 
 		QHash<PartsBinPaletteWidget*,StackTabWidget*> m_tabWidgets;
-		int m_unsavedBins;
+		QHash<QString /*filename*/,PartsBinPaletteWidget*> m_openedBins;
+		int m_unsavedBinsCount;
+		QString m_defaultSaveFolder;
 
 	public:
 		static QString Title;
