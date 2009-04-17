@@ -46,6 +46,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	BinManager::Title = tr("Parts");
 
 	m_refModel = refModel;
+	m_paletteModel = NULL;
 	m_infoView = infoView;
 	m_undoStack = undoStack;
 
@@ -86,13 +87,13 @@ void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget
 
 void BinManager::loadFromModel(PaletteModel *model) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	m_paletteModel=model;
 	bin->loadFromModel(model);
 	addBin(bin);
 }
 
-void BinManager::setPaletteModel(PaletteModel *model, bool clear) {
-	Q_UNUSED(model);
-	Q_UNUSED(clear);
+void BinManager::setPaletteModel(PaletteModel *model) {
+	m_paletteModel = model;
 }
 
 
@@ -153,6 +154,7 @@ void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) 
 
 void BinManager::newBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	bin->setPaletteModel(new PaletteModel(true,false),true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBins));
 	insertBin(bin, tb->currentIndex(), tb);
 }
