@@ -79,6 +79,9 @@ class PartsBinPaletteWidget : public QFrame {
 		void removePart(const QString& moduleID);
 		void load(const QString&);
 
+		bool alreadyIn(QString moduleID);
+		void setDirty(bool dirty=true);
+
 	public slots:
 		void addPartCommand(const QString& moduleID);
 		void removePartCommand(const QString& moduleID);
@@ -118,7 +121,6 @@ class PartsBinPaletteWidget : public QFrame {
 		void saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
-		bool alreadyIn(QString moduleID);
 		void createMenu();
 
 	protected:

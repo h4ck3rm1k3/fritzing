@@ -28,14 +28,17 @@ $Date$
 #include <QMimeData>
 #include <QDrag>
 #include <QDragEnterEvent>
+#include <QMessageBox>
 
 #include "partsbinview.h"
+#include "partsbinpalettewidget.h"
 #include "../itemdrag.h"
 #include "../utils/misc.h"
 
 
-PartsBinView::PartsBinView(ReferenceModel *refModel) {
+PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent) {
 	m_refModel = refModel;
+	m_parent = parent;
 }
 
 void PartsBinView::setPaletteModel(PaletteModel * model, bool clear) {
@@ -134,11 +137,31 @@ void PartsBinView::dragMoveEnterEventAux(QDragMoveEvent* event) {
 }
 
 void PartsBinView::dropEventAux(QDropEvent* event) {
-	int fromIndex = itemIndexAt(m_dragStartPos);
 	int toIndex = itemIndexAt(event->pos());
+	if(event->source() == dynamic_cast<QWidget*>(this)) {
+		DebugDialog::debug("rearranging");
+		int fromIndex = itemIndexAt(m_dragStartPos);
 
-	if(fromIndex != toIndex) {
-		moveItem(fromIndex,toIndex);
+		if(fromIndex != toIndex) {
+			moveItem(fromIndex,toIndex);
+		}
+	} else {
+		QByteArray itemData = event->mimeData()->data("application/x-dnditemdata");
+		QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+
+		QString moduleID;
+		QPointF offset;
+		dataStream >> moduleID >> offset;
+
+		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
+		if(mp) {
+			if(m_parent->alreadyIn(moduleID)) {
+				QMessageBox::information(m_parent, m_parent->tr("Part already in bin"), m_parent->tr("The part that you have just added,\nis already there, we won't add it again, right?"));
+			} else {
+				m_parent->addPart(mp,toIndex);
+				m_parent->setDirty();
+			}
+		}
 	}
 	event->acceptProposedAction();
 }

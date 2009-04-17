@@ -33,8 +33,8 @@ $Date$
 
 #include "partsbinlistview.h"
 
-PartsBinListView::PartsBinListView(ReferenceModel* refModel, QWidget *parent)
-	: QListWidget(parent), PartsBinView(refModel)
+PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidget *parent)
+	: QListWidget((QWidget*)parent), PartsBinView(refModel, parent)
 {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
@@ -211,7 +211,9 @@ void PartsBinListView::itemMoved(int fromIndex, int toIndex) {
 }
 
 int PartsBinListView::itemIndexAt(const QPoint& pos) {
-	return row(itemAt(pos));
+	QListWidgetItem *item = itemAt(pos);
+	if(item) return row(item);
+	else return -1;
 }
 
 bool PartsBinListView::dropMimeData(int index, const QMimeData *data, Qt::DropAction action) {

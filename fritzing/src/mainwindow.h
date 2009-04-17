@@ -229,7 +229,7 @@ protected:
     		const QString &rootNode, const QString &indexNode,
     		const QString &submenuNode*/
     );
-    SketchIndex indexAvailableElements(QDomElement &domElem, const QString &srcPreffix="");
+    SketchIndex indexAvailableElements(QDomElement &domElem, const QString &srcPrefix="");
     void populateMenuWithIndex(const SketchIndex &index, QMenu * parentMenu, QStringList &actionsTracker, QDomElement &domElem);
     void populateMenuFromFolderContent(QMenu *parentMenu, const QString &path);
     void createOpenRecentMenu();

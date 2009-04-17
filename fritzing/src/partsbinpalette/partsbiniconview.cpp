@@ -41,8 +41,8 @@ $Date$
 #include "../palettemodel.h"
 
 
-PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, QWidget *parent)
-    : InfoGraphicsView(parent), PartsBinView(refModel)
+PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent)
+    : InfoGraphicsView((QWidget*)parent), PartsBinView(refModel, parent)
 {
 	setAcceptWheelEvents(false);
     setFrameStyle(QFrame::Raised | QFrame::StyledPanel);
@@ -300,8 +300,8 @@ void PartsBinIconView::itemMoved(int fromIndex, int toIndex) {
 
 int PartsBinIconView::itemIndexAt(const QPoint& pos) {
 	QGraphicsWidget *item = dynamic_cast<QGraphicsWidget*>(itemAt(pos));
-	Q_ASSERT(item);
-	return m_layout->indexOf(item);
+	if(item) return m_layout->indexOf(item);
+	else return -1;
 }
 
 QList<QObject*> PartsBinIconView::orderedChildren() {

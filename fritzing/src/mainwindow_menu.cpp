@@ -811,7 +811,7 @@ void MainWindow::populateMenuFromXMLFile(
 	populateMenuWithIndex(index,parentMenu,actionsTracker,taxonomyDomElem);
 }
 
-SketchIndex MainWindow::indexAvailableElements(QDomElement &domElem, const QString &srcPreffix) {
+SketchIndex MainWindow::indexAvailableElements(QDomElement &domElem, const QString &srcPrefix) {
 	SketchIndex retval;
 	QDomNode n = domElem.firstChild();
 	while(!n.isNull()) {
@@ -819,7 +819,9 @@ SketchIndex MainWindow::indexAvailableElements(QDomElement &domElem, const QStri
 		if(!e.isNull() && e.tagName() == "sketch") {
 			const QString id = e.attribute("id");
 			const QString name = e.attribute("name");
-			const QString src = srcPreffix+e.attribute("src");
+			QString srcAux = e.attribute("src");
+			// if it's an absolute path, don't prefix it
+			const QString src = QFileInfo(srcAux).exists()? srcAux: srcPrefix+srcAux;
 			retval[id] = new SketchDescriptor(id,name,src);
 		}
 		n = n.nextSibling();
@@ -836,11 +838,13 @@ void MainWindow::populateMenuWithIndex(const SketchIndex &index, QMenu * parentM
 				QString id = e.attribute("id");
 				if(!id.isNull() && !id.isEmpty()) {
 					SketchDescriptor elem = *index[id];
-					actionsTracker << elem.name;
-					QAction * currAction = new QAction(elem.name, this);
-					currAction->setData(elem.src);
-					connect(currAction,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
-					parentMenu->addAction(currAction);
+					if(QFileInfo(elem.src).exists()) {
+						actionsTracker << elem.name;
+						QAction * currAction = new QAction(elem.name, this);
+						currAction->setData(elem.src);
+						connect(currAction,SIGNAL(triggered()),this,SLOT(openRecentOrExampleFile()));
+						parentMenu->addAction(currAction);
+					}
 				}
 			} else if(e.nodeName() == "category") {
 				QString name = e.attribute("name");

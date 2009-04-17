@@ -145,9 +145,10 @@ void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 
 void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) {
 	QTabWidget* tw = m_tabWidgets[w];
-	Q_ASSERT(tw);
-	tw->setTabText(tw->indexOf(w), newTitle+" (*)");
-	setDirtyTab(w);
+	if(tw) {
+		tw->setTabText(tw->indexOf(w), newTitle+" (*)");
+		setDirtyTab(w);
+	}
 }
 
 void BinManager::newBinIn(StackTabWidget* tb) {

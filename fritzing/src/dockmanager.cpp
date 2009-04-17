@@ -91,7 +91,7 @@ void DockManager::createDockWindows()
 	//m_mainWindow->m_viewSwitcher->setStyleSheet("background-color: blue;");
 #endif
 
-	makeDock(BinManager::Title, m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight);
+	makeDock(BinManager::Title, m_mainWindow->m_paletteWidget, PartsBinMinHeight, PartsBinDefaultHeight/*, Qt::LeftDockWidgetArea*/);
     makeDock(tr("Inspector"), m_mainWindow->m_infoView, InfoViewMinHeight, InfoViewDefaultHeight);
 
     m_mainWindow->m_navigators << (m_mainWindow->m_miniViewContainerBreadboard = new MiniViewContainer(m_mainWindow));

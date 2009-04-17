@@ -33,9 +33,11 @@ $Date$
 #include "../paletteitem.h"
 #include "../referencemodel/referencemodel.h"
 
+class PartsBinPaletteWidget;
+
 class PartsBinView {
 	public:
-		PartsBinView(ReferenceModel *refModel);
+		PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent);
 		virtual ~PartsBinView() {};				// removes compiler warnings
 
 		virtual void setPaletteModel(PaletteModel * model, bool clear = false);
@@ -67,6 +69,8 @@ class PartsBinView {
 		virtual void setItemAux(ModelPart * modelPart, int position = -1) = 0;
 
 		ReferenceModel *m_refModel;
+		PartsBinPaletteWidget *m_parent;
+
 		QHash<QString /*moduleId*/,ModelPart*> m_partHash;
 		bool m_infoViewOnHover;
 

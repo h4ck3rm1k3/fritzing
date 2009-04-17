@@ -640,3 +640,7 @@ void PartsBinPaletteWidget::itemMoved() {
 	m_orderHasChanged = true;
 	m_manager->setDirtyTab(this);
 }
+
+void PartsBinPaletteWidget::setDirty(bool dirty) {
+	m_manager->setDirtyTab(this,dirty);
+}
