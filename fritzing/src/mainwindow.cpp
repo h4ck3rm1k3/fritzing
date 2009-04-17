@@ -696,7 +696,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	}
 
 	if(whatWithAliens && m_paletteWidget->hasAlienParts()) {
-		m_paletteWidget->saveAndCreateNewBinIfCore();
+		m_paletteWidget->createIfMyPartsNotExists();
 	}
 
 	m_closing = true;

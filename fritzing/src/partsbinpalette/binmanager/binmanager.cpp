@@ -39,6 +39,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 
 QString BinManager::Title;
+QString BinManager::MyPartsBinLocation;
 
 BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent)
 	: QFrame(parent)
@@ -107,16 +108,42 @@ bool BinManager::hasAlienParts() {
 
 }
 
-void BinManager::saveAndCreateNewBinIfCore() {
-
-}
-
 void BinManager::setInfoViewOnHover(bool infoViewOnHover) {
 	Q_UNUSED(infoViewOnHover);
 }
 
 void BinManager::addNewPart(ModelPart *modelPart) {
-	Q_UNUSED(modelPart);
+	QList<PartsBinPaletteWidget*> myPartsBins;
+	foreach(PartsBinPaletteWidget* bin, m_tabWidgets.keys()) {
+		if(bin->fileName() == MyPartsBinLocation) {
+			myPartsBins << bin;
+		}
+	}
+
+	if(myPartsBins.isEmpty()) {
+		QString fileToOpen = QFileInfo(MyPartsBinLocation).exists()?
+			MyPartsBinLocation:
+			createIfMyPartsNotExists();
+
+		PartsBinPaletteWidget* bin = openBinIn(m_tabWidgets.values()[0], fileToOpen);
+		bin->addPart(modelPart);
+		setDirtyTab(bin);
+	} else {
+		foreach(PartsBinPaletteWidget* bin, myPartsBins) {
+			bin->addPart(modelPart);
+			setDirtyTab(bin);
+		}
+	}
+}
+
+QString BinManager::createIfMyPartsNotExists() {
+	QDateTime now = QDateTime::currentDateTime();
+	/*QString binPath = getApplicationSubFolderPath("bins")+
+		QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));*/
+	QString binPath = MyPartsBinLocation;
+	QFile file(":/resources/bins/my_parts.fzb");
+	file.copy(binPath);
+	return binPath;
 }
 
 void BinManager::addPart(ModelPart *modelPart, int position) {
@@ -152,30 +179,34 @@ void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) 
 	}
 }
 
-void BinManager::newBinIn(StackTabWidget* tb) {
+PartsBinPaletteWidget* BinManager::newBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
 	bin->setPaletteModel(new PaletteModel(true,false),true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBins));
 	insertBin(bin, tb->currentIndex(), tb);
+	return bin;
 }
 
-void BinManager::openBinIn(StackTabWidget* tb) {
+PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileName) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
-	if(bin->open()) {
+	if(bin->open(fileName)) {
 		insertBin(bin, tb->currentIndex(), tb);
 	}
+	return bin;
 }
 
-void BinManager::openCoreBinIn(StackTabWidget* tb) {
+PartsBinPaletteWidget* BinManager::openCoreBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
 	bin->openCore();
 	insertBin(bin, tb->currentIndex(), tb);
+	return bin;
 }
 
 void BinManager::closeBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget *w = currentBin(tb);
 	if(w && w->beforeClosing()) {
 		tb->removeTab(tb->currentIndex());
+		m_tabWidgets.remove(w);
 		if(tb->count() == 0 && m_widget->count() <= 3) { // one tab widget and two separators
 			openCoreBinIn(tb);
 		}

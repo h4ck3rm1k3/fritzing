@@ -378,13 +378,15 @@ bool PartsBinPaletteWidget::saveAs() {
     return true;
 }
 
-bool PartsBinPaletteWidget::open() {
-	QString fileName = QFileDialog::getOpenFileName(
-			this,
-			tr("Select a Fritzing file to open"),
-			m_defaultSaveFolder,
-			tr("Fritzing (*%1)").arg(FritzingBinExtension) );
-	if (fileName.isNull()) return false;
+bool PartsBinPaletteWidget::open(QString fileName) {
+	if(fileName.isNull() || fileName.isEmpty()) {
+		fileName = QFileDialog::getOpenFileName(
+				this,
+				tr("Select a Fritzing file to open"),
+				m_defaultSaveFolder,
+				tr("Fritzing (*%1)").arg(FritzingBinExtension) );
+		if (fileName.isNull()) return false;
+	}
 
 	QFile file(fileName);
 	if (!file.exists()) {
@@ -509,23 +511,6 @@ void PartsBinPaletteWidget::addPart(const QString& moduleID, int position) {
 	addPart(modelPart, position);
 }
 
-void PartsBinPaletteWidget::addNewPart(ModelPart *modelPart) {
-	addPart(modelPart);
-	saveAndCreateNewBinIfCore();
-}
-
-void PartsBinPaletteWidget::saveAndCreateNewBinIfCore() {
-	if(currentBinIsCore()) {
-		setTitle(tr("My parts bin"));
-		QDateTime now = QDateTime::currentDateTime();
-		QString binPath = getApplicationSubFolderPath("bins")+
-			QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));
-		saveAsAux(binPath);
-	} else {
-		save();
-	}
-}
-
 void PartsBinPaletteWidget::removePart(const QString& moduleID) {
 	m_iconView->removePart(moduleID);
 	m_listView->removePart(moduleID);
@@ -643,4 +628,8 @@ void PartsBinPaletteWidget::itemMoved() {
 
 void PartsBinPaletteWidget::setDirty(bool dirty) {
 	m_manager->setDirtyTab(this,dirty);
+}
+
+const QString &PartsBinPaletteWidget::fileName() {
+	return m_fileName;
 }

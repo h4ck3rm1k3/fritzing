@@ -71,7 +71,6 @@ class PartsBinPaletteWidget : public QFrame {
 
 		ModelPart * selected();
 		bool hasAlienParts();
-		void saveAndCreateNewBinIfCore();
 
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void addPart(const QString& moduleID, int position = -1);
@@ -82,12 +81,14 @@ class PartsBinPaletteWidget : public QFrame {
 		bool alreadyIn(QString moduleID);
 		void setDirty(bool dirty=true);
 
+		const QString &fileName();
+
 	public slots:
 		void addPartCommand(const QString& moduleID);
 		void removePartCommand(const QString& moduleID);
 		void removeAlienParts();
 		bool save();
-		bool open();
+		bool open(QString fileName="");
 		void openCore();
 		void itemMoved();
 

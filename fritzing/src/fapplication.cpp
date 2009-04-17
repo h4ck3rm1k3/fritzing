@@ -41,6 +41,7 @@ $Date$
 #include "viewswitcher/viewswitcher.h"
 #include "wire.h"
 #include "htmlinfoview.h"
+#include "partsbinpalette/binmanager/binmanager.h"
 
 // dependency injection :P
 #include "referencemodel/sqlitereferencemodel.h"
@@ -319,6 +320,7 @@ int FApplication::startup(int & argc, char ** argv)
     ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
+	BinManager::MyPartsBinLocation = getApplicationSubFolderPath("bins")+"/my_parts.fzb";
 
 	splash.showProgress(progressIndex, 0.1);
 	processEvents();

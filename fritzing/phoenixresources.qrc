@@ -126,6 +126,7 @@ $Date$
     <file>resources/styles/updatedialog.css</file>
     <file>resources/js/infoview.js</file>
     <file>resources/bins/bin.fzb</file>
+    <file>resources/bins/my_parts.fzb</file>
     <file>resources/images/helpImageBreadboard.png</file>
     <file>resources/images/helpImageSchematic.png</file>
     <file>resources/images/helpImagePCB.png</file>

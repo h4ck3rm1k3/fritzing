@@ -53,7 +53,7 @@ class BinManager : public QFrame {
 		bool beforeClosing();
 
 		bool hasAlienParts();
-		void saveAndCreateNewBinIfCore();
+		QString createIfMyPartsNotExists();
 
 		void setInfoViewOnHover(bool infoViewOnHover);
 		void load(const QString&);
@@ -61,9 +61,9 @@ class BinManager : public QFrame {
 		void setDirtyTab(PartsBinPaletteWidget* w, bool dirty=true);
 		void updateTitle(PartsBinPaletteWidget* w, const QString& newTitle);
 
-		void newBinIn(StackTabWidget* tb);
-		void openBinIn(StackTabWidget* tb);
-		void openCoreBinIn(StackTabWidget* tb);
+		PartsBinPaletteWidget* newBinIn(StackTabWidget* tb);
+		PartsBinPaletteWidget* openBinIn(StackTabWidget* tb, QString fileName="");
+		PartsBinPaletteWidget* openCoreBinIn(StackTabWidget* tb);
 		void closeBinIn(StackTabWidget* tb);
 
 	public slots:
@@ -85,11 +85,12 @@ class BinManager : public QFrame {
 		StackWidget *m_widget;
 		QTabWidget *m_activeBinTabWidget;
 
-		QHash<QWidget*,StackTabWidget*> m_tabWidgets;
+		QHash<PartsBinPaletteWidget*,StackTabWidget*> m_tabWidgets;
 		int m_unsavedBins;
 
 	public:
 		static QString Title;
+		static QString MyPartsBinLocation;
 };
 
 #endif /* BINMANAGER_H_ */
