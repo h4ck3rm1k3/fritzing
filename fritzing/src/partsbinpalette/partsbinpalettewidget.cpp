@@ -638,4 +638,5 @@ void PartsBinPaletteWidget::rename() {
 
 void PartsBinPaletteWidget::itemMoved() {
 	m_orderHasChanged = true;
+	m_manager->setDirtyTab(this);
 }
