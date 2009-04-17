@@ -306,7 +306,7 @@ int PartsBinIconView::itemIndexAt(const QPoint& pos) {
 
 QList<QObject*> PartsBinIconView::orderedChildren() {
 	QList<QObject*> result;
-	for(int i=0; m_layout->count(); i++) {
+	for(int i=0; i < m_layout->count(); i++) {
 		SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(m_layout->itemAt(i));
 		if(it) {
 			result << it->modelPart();

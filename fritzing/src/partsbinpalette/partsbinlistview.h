@@ -46,6 +46,8 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		bool swappingEnabled();
 		int position(const QString &moduleID);
 
+		QList<QObject*> orderedChildren();
+
 	public slots:
 		void setSelected(int position);
 		void itemMoved(int fromIndex, int toIndex);

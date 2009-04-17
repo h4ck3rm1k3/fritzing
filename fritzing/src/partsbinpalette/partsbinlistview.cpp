@@ -262,3 +262,14 @@ QStringList PartsBinListView::mimeTypes() const {
 	list << "application/x-dnditemdata" << "action";
 	return list;
 }
+
+QList<QObject*> PartsBinListView::orderedChildren() {
+	QList<QObject*> result;
+	for(int i=0; i < count(); i++) {
+		ModelPart *mp = item(i)->data(Qt::UserRole).value<ModelPart *>();
+		if(mp) {
+			result << mp;
+		}
+	}
+	return result;
+}

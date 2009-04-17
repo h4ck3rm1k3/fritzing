@@ -48,6 +48,8 @@ class PartsBinView {
 		bool alreadyIn(QString moduleID);
 		void setInfoViewOnHover(bool infoViewOnHover);
 
+		virtual QList<QObject*> orderedChildren() = 0;
+
 	protected:
 		virtual void doClear();
 		virtual void moveItem(int fromIndex, int toIndex) = 0;
