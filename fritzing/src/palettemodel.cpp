@@ -41,6 +41,8 @@ bool PaletteModel::CreateAllPartsBinFile = true;
 bool PaletteModel::CreateAllPartsBinFile = false;
 #endif
 
+bool JustAppendAllPartsInstances = false;
+
 QString PaletteModel::AllPartsBinFilePath = ___emptyString___;
 
 PaletteModel::PaletteModel() : ModelBase(true) {
@@ -91,8 +93,11 @@ void PaletteModel::updateOrAddModelPart(const QString & moduleID, ModelPart *new
 void PaletteModel::loadParts() {
 	QStringList nameFilters;
 	nameFilters << "*" + FritzingPartExtension << "*" + FritzingModuleExtension;
-
-	if(CreateAllPartsBinFile) writeAllPartsBinHeader();
+						
+	if(CreateAllPartsBinFile) {
+		JustAppendAllPartsInstances = true;	
+		writeAllPartsBinHeader();
+	}
 
 	QDir * dir = getApplicationSubFolder("parts");
 	if (dir != NULL) {
@@ -103,7 +108,10 @@ void PaletteModel::loadParts() {
 	dir = new QDir(":/resources/parts");
 	loadPartsAux(*dir, nameFilters);
 
-	if(CreateAllPartsBinFile) writeAllPartsBinFooter();
+	if(CreateAllPartsBinFile) {
+		writeAllPartsBinFooter();
+		JustAppendAllPartsInstances = false;
+	}
 
 	delete dir;
 }
@@ -125,16 +133,59 @@ void PaletteModel::writeAllPartsBinFooter() {
 void PaletteModel::writeInstanceInAllPartsBin(const QString &moduleID, const QString &path) {
 	QString pathAux = path;
 	pathAux.remove(getApplicationSubFolderPath("")+"/");
-	QString instance =
-        QString(
-        	"\t\t<instance moduleIdRef=\"%1\" path=\"%2\">\n").arg(moduleID).arg(pathAux)+
-            "\t\t\t<views>\n"
-        	"\t\t\t\t<iconView layer=\"icon\">\n"
-        	"\t\t\t\t\t<geometry z=\"-1\" x=\"-1\" y=\"-1\"></geometry>\n"
-        	"\t\t\t\t</iconView>\n"
-        	"\t\t\t</views>\n"
-        	"\t\t</instance>\n";
-	writeToAllPartsBinAux(instance, QFile::Append);
+
+	if (JustAppendAllPartsInstances) {
+		QString instance =
+			QString(
+        		"\t\t<instance moduleIdRef=\"%1\" path=\"%2\">\n").arg(moduleID).arg(pathAux)+
+				"\t\t\t<views>\n"
+        		"\t\t\t\t<iconView layer=\"icon\">\n"
+        		"\t\t\t\t\t<geometry z=\"-1\" x=\"-1\" y=\"-1\"></geometry>\n"
+        		"\t\t\t\t</iconView>\n"
+        		"\t\t\t</views>\n"
+        		"\t\t</instance>\n";
+		writeToAllPartsBinAux(instance, QFile::Append);
+	}
+	else {
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+		QDomDocument domDocument;
+
+		QFile file(AllPartsBinFilePath);
+
+		if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+			return;
+		}
+
+		QDomElement root = domDocument.documentElement();
+   		if (root.isNull()) {
+   			return;
+		}
+
+		if (root.tagName() != "module") {
+			return;
+		}
+
+		QDomElement instances = root.firstChildElement("instances");
+		if (instances.isNull()) return;
+
+		QDomElement instance = domDocument.createElement("instance");
+		instances.appendChild(instance);
+		instance.setAttribute("moduleIdRef", moduleID);
+		instance.setAttribute("path", pathAux);
+		QDomElement views = domDocument.createElement("views");
+		instance.appendChild(views);
+		QDomElement iconView = domDocument.createElement("iconView");
+		views.appendChild(iconView);
+		iconView.setAttribute("layer", "icon");
+		QDomElement geometry = domDocument.createElement("geometry");
+		iconView.appendChild(geometry);
+		geometry.setAttribute("x", "-1");
+		geometry.setAttribute("y", "-1");
+		geometry.setAttribute("z", "-1");
+		writeToAllPartsBinAux(domDocument.toString(), QFile::WriteOnly);
+	}
 }
 
 void PaletteModel::writeToAllPartsBinAux(const QString &textToWrite, QIODevice::OpenMode openMode) {
