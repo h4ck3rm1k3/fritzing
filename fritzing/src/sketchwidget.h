@@ -271,7 +271,7 @@ protected:
 	void clearDragWireTempCommand();
 	bool draggingWireEnd();
 	void moveItems(QPoint globalPos);
-	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
+	virtual ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName);
 	virtual BaseCommand::CrossViewType wireSplitCrossView();
 	virtual bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
 	virtual bool canChainMultiple();

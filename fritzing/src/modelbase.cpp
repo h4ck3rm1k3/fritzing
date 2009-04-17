@@ -85,7 +85,7 @@ bool ModelBase::load(const QString & fileName, ModelBase * refModel, QList<Model
 	}
 
     if (root.tagName() != "module") {
-        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file.").arg(fileName));
+        QMessageBox::information(NULL, QObject::tr("Fritzing"), QObject::tr("The file %1 is not a Fritzing file (4).").arg(fileName));
         return false;
     }
 

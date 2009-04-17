@@ -3139,11 +3139,12 @@ ViewLayer::ViewLayerID SketchWidget::getViewLayerID(ModelPart * modelPart) {
 		return ViewLayer::viewLayerIDFromXmlString(layerName);
 	}
 
-	return multiLayerGetViewLayerID(modelPart, layerName);
+	return multiLayerGetViewLayerID(modelPart, layers, layerName);
 }
 
-ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName) {
+ViewLayer::ViewLayerID SketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
+	Q_UNUSED(layers);
 	return ViewLayer::viewLayerIDFromXmlString(layerName);
 }
 

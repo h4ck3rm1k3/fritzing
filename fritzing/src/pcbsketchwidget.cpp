@@ -139,10 +139,21 @@ void PCBSketchWidget::checkAutorouted()
 }
 */
 
-ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName) {
-	Q_UNUSED(layerName);
+ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);
-	return ViewLayer::Copper0;
+
+	// priviledge Copper0 if it's available
+	QDomElement layer = layers.firstChildElement("layer");
+	while (!layer.isNull()) {
+		QString lName = layer.attribute("layerId");
+		if (ViewLayer::viewLayerIDFromXmlString(lName) == ViewLayer::Copper0) {
+			return ViewLayer::Copper0;
+		}
+
+		layer = layer.nextSiblingElement("layer");
+	}
+
+	return ViewLayer::viewLayerIDFromXmlString(layerName);
 }
 
 bool PCBSketchWidget::canDeleteItem(QGraphicsItem * item)

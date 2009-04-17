@@ -57,7 +57,7 @@ protected:
 	void setWireVisible(Wire * wire);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
 	// void checkAutorouted();
-	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QString & layerName);
+	ViewLayer::ViewLayerID multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName);
 	bool canChainWire(Wire *);
 	void createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag, const QString & colorString);
 	void createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag flag, bool allowAny, QList<Wire *> & done, 
