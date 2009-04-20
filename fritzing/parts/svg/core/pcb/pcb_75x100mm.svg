@@ -71,4 +71,41 @@
        x="1"
        y="1" />
   </g>
+  <g
+     id="silkscreen">
+    <line
+       x1="4"
+       y1="4"
+       x2="350.33069"
+       y2="4"
+       id="line8"
+       style="stroke:#ffffff;stroke-width:8;stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="350.33069"
+       y1="4"
+       x2="350.33069"
+       y2="261.74802"
+       id="line10"
+       style="stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="350.33069"
+       y1="261.74802"
+       x2="4"
+       y2="261.74802"
+       id="line12"
+       style="stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="4"
+       y1="261.74802"
+       x2="4"
+       y2="4"
+       id="line14"
+       style="stroke-linecap:round" />
+  </g>
 </svg>

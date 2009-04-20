@@ -64,11 +64,51 @@
      inkscape:groupmode="layer"
      id="board">
     <rect
-       style="fill:#338040;fill-opacity:0.5;fill-rule:evenodd;stroke:#338040;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#338040;fill-opacity:0.5;fill-rule:evenodd;stroke:#338040;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect3832"
        width="704.22198"
        height="527.05664"
        x="1"
-       y="1" />
+       y="1" 
+       rx="4"
+       ry="4"
+       />
+  </g>
+  <g
+     id="silkscreen">
+    <line
+       x1="4"
+       y1="4"
+       x2="704.66138"
+       y2="4"
+       id="line8"
+       style="stroke:#ffffff;stroke-width:8;stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="704.66138"
+       y1="4"
+       x2="704.66138"
+       y2="527.49603"
+       id="line10"
+       style="stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="704.66138"
+       y1="527.49603"
+       x2="4"
+       y2="527.49603"
+       id="line12"
+       style="stroke-linecap:round" />
+    <line
+       stroke-width="8"
+       stroke="#FFFFFF"
+       x1="4"
+       y1="527.49603"
+       x2="4"
+       y2="4"
+       id="line14"
+       style="stroke-linecap:round" />
   </g>
 </svg>
