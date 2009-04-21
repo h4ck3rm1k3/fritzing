@@ -151,6 +151,7 @@ void StackWidget::setPotentialDropSink(DropSink* receptor, int index) {
 }
 
 void StackWidget::dropped() {
+	// TODO: UPDATE the tab widget attached to the bin
 	StackTabWidget *oldTabWidget = dynamic_cast<StackTabWidget*>(m_dragSource.first);
 	if(oldTabWidget && m_dropSink.first) {
 		m_potentialDropSink.first->showFeedback(m_potentialDropSink.second, false);
@@ -164,11 +165,6 @@ void StackWidget::dropped() {
 		if(!newTabWidget) { // dropping into a container, not an existing tabwidget
 			int whereToInsert = indexOf(dynamic_cast<QWidget*>(m_dropSink.first))+1;
 			newTabWidget = new StackTabWidget(this);
-// this functions are only available on 4.5.0 or later
-#if QT_VERSION >= 0x040500
-			newTabWidget->setTabsClosable(true);
-			//newTabWidget->setMovable(true);
-#endif
 			oldTabWidget->removeTab(fromIndex);
 			newTabWidget->addTab(widgetToMove, icon, text);
 			insertWidget(whereToInsert,newTabWidget);

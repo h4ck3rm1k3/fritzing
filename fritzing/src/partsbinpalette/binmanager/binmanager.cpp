@@ -73,16 +73,12 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 	StackTabWidget *tb = new StackTabWidget(m_widget);
 	bin->setTabWidget(tb);
 	tb->addTab(bin,bin->title());
-	// this functions are only available on 4.5.0 or later
-#if QT_VERSION >= 0x040500
-	//tb->setTabsClosable(true);
-	//tb->setMovable(true);
-#endif
 	m_widget->addWidget(tb);
 	registerBin(bin,tb);
 }
 
 void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
+	bin->setTabWidget(tb);
 	m_tabWidgets[bin] = tb;
 	if(bin->fileName() != ___emptyString___) {
 		m_openedBins[bin->fileName()] = bin;
@@ -291,21 +287,30 @@ void BinManager::saveStateAndGeometry() {
 void BinManager::restoreStateAndGeometry() {
 	QSettings settings;
 	settings.beginGroup("bins");
-	foreach(QString g, settings.childGroups()) {
-		settings.beginGroup(g);
-
+	if(settings.childGroups().size()==0) {
 		StackTabWidget *tw = new StackTabWidget(m_widget);
-		foreach(QString k, settings.childKeys()) {
-			PartsBinPaletteWidget* bin = newBin();
-			QString filename = settings.value(k).toString();
-			if(bin->open(filename)) {
-				bin->setTabWidget(tw);
-				tw->addTab(bin,bin->title());
-				registerBin(bin,tw);
-			}
-		}
+		PartsBinPaletteWidget* bin = newBin();
+		bin->openCore();
+		tw->addTab(bin,bin->title());
+		registerBin(bin,tw);
 		m_widget->addWidget(tw);
+	} else {
+		foreach(QString g, settings.childGroups()) {
+			settings.beginGroup(g);
 
-		settings.endGroup();
+			StackTabWidget *tw = new StackTabWidget(m_widget);
+			foreach(QString k, settings.childKeys()) {
+				PartsBinPaletteWidget* bin = newBin();
+				QString filename = settings.value(k).toString();
+				if(bin->open(filename)) {
+					bin->setTabWidget(tw);
+					tw->addTab(bin,bin->title());
+					registerBin(bin,tw);
+				}
+			}
+			m_widget->addWidget(tw);
+
+			settings.endGroup();
+		}
 	}
 }
