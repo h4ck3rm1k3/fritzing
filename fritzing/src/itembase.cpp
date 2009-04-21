@@ -159,7 +159,7 @@ ItemBase::~ItemBase() {
 		}
 	}
 
-	foreach (ItemBase * itemBase, m_stickyList) {		// .keys()
+	foreach (ItemBase * itemBase, m_stickyList) {		
 		itemBase->addSticky(this, false);
 	}
 

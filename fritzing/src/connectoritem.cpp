@@ -637,11 +637,17 @@ void ConnectorItem::collectParts(QList<ConnectorItem *> & connectorItems, QList<
 {
 	foreach (ConnectorItem * connectorItem, connectorItems) {
 		ItemBase * candidate = connectorItem->attachedTo();
-		if (candidate->itemType() == ModelPart::Part || candidate->itemType() == ModelPart::Board) {
-			if (!partsConnectors.contains(connectorItem)) {
-				//DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorSharedID()) );
-				partsConnectors.append(connectorItem);
-			}
+		switch (candidate->itemType()) {
+			case ModelPart::Part:
+			case ModelPart::Board:
+			case ModelPart::ResizableBoard:
+				if (!partsConnectors.contains(connectorItem)) {
+					//DebugDialog::debug(QString("collecting part %1 %2").arg(candidate->id()).arg(connectorItem->connectorSharedID()) );
+					partsConnectors.append(connectorItem);
+				}
+				break;
+			default:
+				break;
 		}
 	}
 }

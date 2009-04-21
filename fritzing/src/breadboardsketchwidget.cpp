@@ -297,7 +297,7 @@ bool BreadboardSketchWidget::shareBreadboard(ConnectorItem * fromConnectorItem, 
 }
 
 bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
-	if (modelPart->itemType() == ModelPart::Board) {
+	if (modelPart->itemType() == ModelPart::Board || modelPart->itemType() == ModelPart::ResizableBoard) {
 		return matchesLayer(modelPart);
 	}
 

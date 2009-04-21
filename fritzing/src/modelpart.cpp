@@ -112,6 +112,7 @@ void ModelPart::initNames() {
 		itemTypeNames.insert(ModelPart::Wire, QObject::tr("wire"));
 		itemTypeNames.insert(ModelPart::Breadboard, QObject::tr("breadboard"));
 		itemTypeNames.insert(ModelPart::Board, QObject::tr("board"));
+		itemTypeNames.insert(ModelPart::Board, QObject::tr("resizable"));
 		itemTypeNames.insert(ModelPart::Module, QObject::tr("module"));
 	}
 }

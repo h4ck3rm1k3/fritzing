@@ -84,60 +84,7 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 		}
 	}
 }
-/*
-void PCBSketchWidget::checkAutorouted()
-{
-	// TODO: the code below is mostly redundant to the code in updateRatsnestStatus
 
-	bool autorouted = true;
-	QList<ConnectorItem *> allConnectorItems;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(item);
-		if (connectorItem == NULL) continue;
-
-		if (connectorItem->attachedToItemType() != ModelPart::Part && connectorItem->attachedToItemType() != ModelPart::Board) continue;
-		allConnectorItems.append(connectorItem);
-	}
-
-	while (allConnectorItems.count() > 0) {
-		ConnectorItem * connectorItem = allConnectorItems.takeFirst();
-		QList<ConnectorItem *> ratPartsConnectorItems;
-		ratPartsConnectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotentialParts(ratPartsConnectorItems, ViewGeometry::RatsnestFlag);
-
-		QList<ConnectorItem *> tracePartsConnectorItems;
-		tracePartsConnectorItems.append(connectorItem);
-		ConnectorItem::collectEqualPotentialParts(tracePartsConnectorItems, ViewGeometry::JumperFlag | ViewGeometry::TraceFlag);
-		if (tracePartsConnectorItems.count() != ratPartsConnectorItems.count()) {
-			autorouted = false;
-			allConnectorItems.clear();
-			break;
-		}
-
-		foreach (ConnectorItem * ci, ratPartsConnectorItems) {
-			// don't check these parts again
-			allConnectorItems.removeOne(ci);
-			DebugDialog::debug(QString("allparts count %1").arg(allConnectorItems.count()) );
-		}
-	}
-
-
-	if (autorouted) {
-		// TODO need to figure out which net each wire belongs to
-		// or save the ratsnest wires so they can simply be reloaded
-		DebugDialog::debug("autorouted");
-		foreach (QGraphicsItem * item, scene()->items()) {
-			Wire * wire = dynamic_cast<Wire *>(item);
-			if (wire == NULL) continue;
-
-			if (wire->getRatsnest()) {
-				wire->setRouted(true);
-				wire->setOpacity(ROUTED_OPACITY);
-			}
-		}
-	}
-}
-*/
 
 ViewLayer::ViewLayerID PCBSketchWidget::multiLayerGetViewLayerID(ModelPart * modelPart, QDomElement & layers, QString & layerName) {
 	Q_UNUSED(modelPart);

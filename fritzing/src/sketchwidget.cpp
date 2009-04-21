@@ -1298,6 +1298,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 		switch (modelPart->itemType()) {
 			case ModelPart::Breadboard:
 			case ModelPart::Board:
+			case ModelPart::ResizableBoard:
 			case ModelPart::Module:
 			case ModelPart::Unknown:
 				doConnectors = false;
@@ -1794,7 +1795,7 @@ bool SketchWidget::checkMoved()
 		}
 
 		// TODO: boardtypes and breadboard types are always sticky
-		if (item->itemType() == ModelPart::Board) {
+		if (item->itemType() == ModelPart::Board || item->itemType() == ModelPart::ResizableBoard) {
 			hasBoard = true;
 		}
 	}
@@ -2319,6 +2320,7 @@ ItemCount SketchWidget::calcItemCount() {
 					break;
 				case ModelPart::Unknown:
 				case ModelPart::Board:
+				case ModelPart::ResizableBoard:
 				case ModelPart::Breadboard:
 					// TODO: allow breadboard and ardiuno to rotate
 					rotatable = false;
@@ -2721,6 +2723,7 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 		switch (itemBase->itemType()) {
 			case ModelPart::Wire:
 			case ModelPart::Board:
+			case ModelPart::ResizableBoard:
 			case ModelPart::Breadboard:
 			case ModelPart::Note:
 			case ModelPart::Unknown:
@@ -3071,11 +3074,11 @@ void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), parentCommand);
 	if (itemBase->sticky()) {
 		foreach (ItemBase * stuck, stickyList) {
-			checkStickyCommand->stick(this, itemBase->id(), stuck->id(), true);
+			checkStickyCommand->stick(this, itemBase->id(), stuck->id(), false);
 		}
 	}
 	else if (itemBase->stuckTo() != NULL) {
-		checkStickyCommand->stick(this, itemBase->stuckTo()->id(), itemBase->id(), true);
+		checkStickyCommand->stick(this, itemBase->stuckTo()->id(), itemBase->id(), false);
 	}
 }
 

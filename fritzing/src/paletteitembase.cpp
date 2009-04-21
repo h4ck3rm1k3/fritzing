@@ -66,7 +66,7 @@ QPainterPath PaletteItemBase::shape() const
     QPainterPath path;
 
 	if ((m_viewLayerID == ViewLayer::Copper0) && 
-		(itemType() == ModelPart::Board) && 
+		((itemType() == ModelPart::Board) || (itemType() == ModelPart::ResizableBoard)) && 
 		(m_modelPart->moduleID().compare("1234ABDE24_ST") == 0)) 
 	{
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! hack alert !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -192,9 +192,14 @@ void PaletteItemBase::mousePressEvent(PaletteItemBase * originalItem, QGraphicsS
 }
 
 void PaletteItemBase::findConnectorsUnder() {
-	if (itemType() == ModelPart::Breadboard || itemType() == ModelPart::Board) {
-		// don't try to map connectors when we drag a breadboard: it's too damn slow
-		return;
+	switch (itemType()) {
+		case ModelPart::Breadboard:
+		case ModelPart::Board:
+		case ModelPart::ResizableBoard:
+			// don't try to map connectors when we drag a breadboard: it's too damn slow
+			return;
+		default:
+			break;
 	}
 
 	for (int i = 0; i < childItems().count(); i++) {

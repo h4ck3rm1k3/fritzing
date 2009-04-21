@@ -279,7 +279,7 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 		type = ModelPart::Board;
 	}
 	else if (properties.text().contains("plain pcb", Qt::CaseInsensitive)) {
-		type = ModelPart::Board;
+		type = ModelPart::ResizableBoard;
 	}
 	else if (properties.text().contains("note", Qt::CaseInsensitive)) {
 		type = ModelPart::Note;

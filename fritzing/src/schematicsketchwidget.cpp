@@ -112,12 +112,14 @@ void SchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fromCo
 	bool useFrom = false;
 	bool useTo = false;
 	if ((fromConnectorItem->attachedToItemType() == ModelPart::Part) ||
-		(fromConnectorItem->attachedToItemType() == ModelPart::Board))
+		(fromConnectorItem->attachedToItemType() == ModelPart::Board) ||
+		(fromConnectorItem->attachedToItemType() == ModelPart::ResizableBoard))
 	{
 		useFrom = true;
 	}
 	if ((toConnectorItem->attachedToItemType() == ModelPart::Part) ||
-		(toConnectorItem->attachedToItemType() == ModelPart::Board))
+		(toConnectorItem->attachedToItemType() == ModelPart::Board) ||
+		(toConnectorItem->attachedToItemType() == ModelPart::ResizableBoard))
 	{
 		useTo = true;
 	}

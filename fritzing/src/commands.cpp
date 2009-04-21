@@ -762,6 +762,7 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 		sic->addRedo(wire->id());
 		addSubCommand(sic);
 	}
+	addSubCommand(new CheckStickyCommand(sketchWidget, BaseCommand::SingleView, wire->id(), NULL));
 
 }
 

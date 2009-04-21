@@ -53,6 +53,7 @@ public:
 		 Wire,
 		 Breadboard,
 		 Board,
+		 ResizableBoard,
 		 Module,
 		 Note,
 		 Unknown
