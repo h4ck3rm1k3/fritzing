@@ -28,6 +28,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QVBoxLayout>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QSettings>
 
 #include "binmanager.h"
 #include "stacktabwidget.h"
@@ -54,13 +55,14 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 
 	m_widget = new StackWidget(this);
 	m_widget->setAcceptDrops(true);
-	//m_activeBinTabWidget = new QTabWidget(m_widget);
 
 	m_unsavedBinsCount = 0;
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->addWidget(m_widget);
 	setMaximumHeight(500);
+
+	restoreStateAndGeometry();
 }
 
 BinManager::~BinManager() {
@@ -77,6 +79,10 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 	//tb->setMovable(true);
 #endif
 	m_widget->addWidget(tb);
+	registerBin(bin,tb);
+}
+
+void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
 	m_tabWidgets[bin] = tb;
 	if(bin->fileName() != ___emptyString___) {
 		m_openedBins[bin->fileName()] = bin;
@@ -91,10 +97,11 @@ void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget
 }
 
 void BinManager::loadFromModel(PaletteModel *model) {
-	PartsBinPaletteWidget* bin = newBin();
+	Q_UNUSED(model);
+	/*PartsBinPaletteWidget* bin = newBin();
 	m_paletteModel=model;
 	bin->loadFromModel(model);
-	addBin(bin);
+	addBin(bin);*/
 }
 
 void BinManager::setPaletteModel(PaletteModel *model) {
@@ -103,6 +110,7 @@ void BinManager::setPaletteModel(PaletteModel *model) {
 
 
 bool BinManager::beforeClosing() {
+	saveStateAndGeometry();
 	return true;
 }
 
@@ -236,7 +244,10 @@ void BinManager::closeBinIn(StackTabWidget* tb) {
 		tb->removeTab(tb->currentIndex());
 		m_tabWidgets.remove(w);
 		m_openedBins.remove(w->fileName());
-		if(tb->count() == 0 && m_widget->count() <= 3) { // one tab widget and two separators
+		if(tb->count() == 0) {
+			m_widget->removeWidget(tb);
+		}
+		if(m_widget->count() <= 3) { // one tab widget and two separators
 			openCoreBinIn(tb);
 		}
 	}
@@ -249,4 +260,52 @@ PartsBinPaletteWidget* BinManager::currentBin(StackTabWidget* tb) {
 void BinManager::updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename) {
 	m_openedBins.remove(oldFilename);
 	m_openedBins[newFileName] = bin;
+}
+
+void BinManager::saveStateAndGeometry() {
+	QSettings settings;
+	settings.remove("bins"); // clean up previous state
+	settings.beginGroup("bins");
+	for(int i=m_widget->count()-1; i >= 0; i--) {
+		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_widget->widget(i));
+		if(tw) {
+			bool groupBegan = false;
+			for(int j=tw->count()-1; j >= 0; j--) {
+				PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(tw->widget(j));
+				if(bin) {
+					if(!groupBegan) {
+						settings.beginGroup(QString("%1").arg(i));
+						groupBegan = true;
+					}
+					settings.setValue(QString("%1").arg(j),bin->fileName());
+				}
+			}
+			if(groupBegan) {
+				settings.endGroup();
+			}
+		}
+	}
+	settings.endGroup();
+}
+
+void BinManager::restoreStateAndGeometry() {
+	QSettings settings;
+	settings.beginGroup("bins");
+	foreach(QString g, settings.childGroups()) {
+		settings.beginGroup(g);
+
+		StackTabWidget *tw = new StackTabWidget(m_widget);
+		foreach(QString k, settings.childKeys()) {
+			PartsBinPaletteWidget* bin = newBin();
+			QString filename = settings.value(k).toString();
+			if(bin->open(filename)) {
+				bin->setTabWidget(tw);
+				tw->addTab(bin,bin->title());
+				registerBin(bin,tw);
+			}
+		}
+		m_widget->addWidget(tw);
+
+		settings.endGroup();
+	}
 }

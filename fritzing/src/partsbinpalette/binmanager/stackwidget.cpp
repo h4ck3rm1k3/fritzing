@@ -97,6 +97,17 @@ void StackWidget::insertWidget(int index, QWidget *widget) {
 void StackWidget::removeWidget(QWidget *widget) {
 	m_layout->removeWidget(widget);
 	if(m_current == widget) m_current = NULL;
+	if(m_separators.contains(widget)) {
+		StackWidgetSeparator* sep = m_separators[widget];
+		m_separators.remove(widget);
+		m_layout->removeWidget(sep);
+		sep->hide();
+		//sep->setParent(NULL);
+		//delete sep;
+	}
+	widget->hide();
+	//widget->setParent(NULL);
+	//delete widget;
 }
 
 QWidget *StackWidget::widget(int index) const {

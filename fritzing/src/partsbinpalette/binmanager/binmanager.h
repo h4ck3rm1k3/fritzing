@@ -79,7 +79,10 @@ class BinManager : public QFrame {
 	protected:
 		void createMenu();
 		PartsBinPaletteWidget* newBin();
+		void registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb);
 		PartsBinPaletteWidget* currentBin(StackTabWidget* tb);
+		void saveStateAndGeometry();
+		void restoreStateAndGeometry();
 
 		ReferenceModel *m_refModel;
 		PaletteModel *m_paletteModel;
@@ -87,7 +90,6 @@ class BinManager : public QFrame {
 		WaitPushUndoStack *m_undoStack;
 
 		StackWidget *m_widget;
-		QTabWidget *m_activeBinTabWidget;
 
 		QHash<PartsBinPaletteWidget*,StackTabWidget*> m_tabWidgets;
 		QHash<QString /*filename*/,PartsBinPaletteWidget*> m_openedBins;
