@@ -1998,13 +1998,35 @@ void MainWindow::exportToGerber() {
 
         QString copper0File = exportDir + "/" +
                               QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                              + "_copper0.gerb";
+                              + "_copperTop.gtl";
         QFile copper0Out(copper0File);
         if (!copper0Out.open(QIODevice::WriteOnly | QIODevice::Text))
             DebugDialog::debug("gerber export: cannot open output file");
 
-        QTextStream out1(&copper0Out);
-        out1 << copper0Gerber.getGerber();
+        QTextStream copperStream(&copper0Out);
+        copperStream << copper0Gerber.getGerber();
+
+        // soldermask
+        QString soldermaskFile = exportDir + "/" +
+                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                              + "_maskTop.gts";
+        QFile maskOut(soldermaskFile);
+        if (!maskOut.open(QIODevice::WriteOnly | QIODevice::Text))
+            DebugDialog::debug("gerber export: cannot open output file");
+
+        QTextStream maskStream(&maskOut);
+        maskStream << copper0Gerber.getSolderMask();
+
+        // drill file
+        QString drillFile = exportDir + "/" +
+                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                              + "_drill.txt";
+        QFile drillOut(drillFile);
+        if (!drillOut.open(QIODevice::WriteOnly | QIODevice::Text))
+            DebugDialog::debug("gerber export: cannot open output file");
+
+        QTextStream drillStream(&drillOut);
+        drillStream << copper0Gerber.getNCDrill();
 
         // now do it for silk
         QList<ViewLayer::ViewLayerID> silkLayerIDs;
@@ -2026,13 +2048,13 @@ void MainWindow::exportToGerber() {
 
         QString silk0File = exportDir + "/" +
                               QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                              + "_silkscr0.gerb";
+                              + "_silkTop.gto";
         QFile silk0Out(silk0File);
         if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text))
             DebugDialog::debug("gerber export: cannot open output file");
 
-        QTextStream out2(&silk0Out);
-        out2 << silk0Gerber.getGerber();
+        QTextStream silkStream(&silk0Out);
+        silkStream << silk0Gerber.getGerber();
 }
 
 void MainWindow::exportToEagle() {

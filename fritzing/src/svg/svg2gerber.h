@@ -37,11 +37,17 @@ class SVG2gerber
 public:
     SVG2gerber(QString);
     QString getGerber();
+    QString getSolderMask();
+    QString getNCDrill();
 
 protected:
     QDomDocument m_SVGDom;
     QString m_gerber_header;
     QString m_gerber_paths;
+    QString m_soldermask_header;
+    QString m_soldermask_paths;
+    QString m_drill_header;
+    QString m_drill_paths;
 
     void normalizeSVG();
     void convertShapes2paths(QDomNode);

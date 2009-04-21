@@ -70,6 +70,14 @@ QString SVG2gerber::getGerber(){
     return m_gerber_header + m_gerber_paths;
 }
 
+QString SVG2gerber::getSolderMask(){
+    return m_soldermask_header + m_soldermask_paths;
+}
+
+QString SVG2gerber::getNCDrill(){
+    return m_drill_header + m_drill_paths;
+}
+
 void SVG2gerber::renderGerber(){
     // initialize axes
     m_gerber_header = "%ASAXBY*%\n";
@@ -87,22 +95,31 @@ void SVG2gerber::renderGerber(){
     // scale factor 1x1
     m_gerber_header += "%SFA1.0B1.0*%\n";
 
+    // clone it for the mask header
+    m_soldermask_header = m_gerber_header;
+
+    // set inverse polarity
+    m_soldermask_header += "%IPNEG*%\n";
+
     // define apertures and draw em
     allPaths2gerber();
 
-    // label our layer
+    // label our layers
     m_gerber_header += "%LNFRITZING*%\n";
+    m_soldermask_header += "%LNMASK*%\n";
 
     //just to be safe: G90 (absolute coords) and G70 (inches)
     m_gerber_header += "G90*\nG70*\n";
-
+    m_soldermask_header += "G90*\nG70*\n";
 
     // now write the footer
     // comment to indicate end-of-sketch
     m_gerber_paths += "G04 End of Fritzing sketch*\n";
+    m_soldermask_paths += "G04 End of Fritzing solder mask*\n";
 
     // write gerber end-of-program
     m_gerber_paths += "M02*";
+    m_soldermask_paths += "M02*";
 }
 
 void SVG2gerber::normalizeSVG(){
@@ -110,14 +127,6 @@ void SVG2gerber::normalizeSVG(){
 
     //  convert to paths
     convertShapes2paths(root);
-
-    // dump paths SVG to tmp file for now
-//    QFile dump("/tmp/paths_pre.svg");
-//    if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
-//        DebugDialog::debug("gerber svg dump: cannot open output file");
-//
-//    QTextStream out(&dump);
-//    out << m_SVGDom.toString();
 
     //  get rid of transforms
     SvgFlattener flattener;
@@ -215,6 +224,7 @@ void SVG2gerber::allPaths2gerber() {
     for(uint i = 0; i < circleList.length(); i++){
         QDomElement circle = circleList.item(i).toElement();
         QString aperture;
+        QString mask_aperture;
 
         qreal centerx = circle.attribute("cx").toFloat();
         qreal centery = circle.attribute("cy").toFloat();
@@ -226,16 +236,21 @@ void SVG2gerber::allPaths2gerber() {
 
         qreal diam = ((2*r) + stroke_width)/1000;
         qreal hole = ((2*r) - stroke_width)/1000;
+        //NOTE: assuming 3 mil soldermask clearance
+        qreal mask_diam = diam + 0.006;
 
         if(fill=="none")
             aperture = QString("C,%1X%2").arg(diam).arg(hole);
         else
             aperture = QString("C,%1").arg(diam);
 
+        mask_aperture = QString("C,%1").arg(mask_diam);
+
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
             apertureMap[aperture] = "D" + QString::number(dcode_index);
             m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+            m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
             dcode_index++;
         }
 
@@ -243,12 +258,12 @@ void SVG2gerber::allPaths2gerber() {
         if(current_dcode != dcode){
             //switch to correct aperture
             m_gerber_paths += "G54" + dcode + "*\n";
+            m_soldermask_paths += "G54" + dcode + "*\n";
             current_dcode = dcode;
         }
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
-
-
+        m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
     }
 
     // rects
@@ -258,6 +273,7 @@ void SVG2gerber::allPaths2gerber() {
     for(uint j = 0; j < rectList.length(); j++){
         QDomElement rect = rectList.item(j).toElement();
         QString aperture;
+        QString mask_aperture;
 
         qreal width = rect.attribute("width").toFloat();
         qreal height = rect.attribute("height").toFloat();
@@ -273,15 +289,22 @@ void SVG2gerber::allPaths2gerber() {
         qreal holex = (width - stroke_width)/1000;
         qreal holey = (height - stroke_width)/1000;
 
+        //NOTE: assumes 3 mil mask clearance
+        qreal mask_totalx = totalx + 0.006;
+        qreal mask_totaly = totaly + 0.006;
+
         if(fill=="none")
             aperture = QString("R,%1X%2X%3X%4").arg(totalx).arg(totaly).arg(holex).arg(holey);
         else
             aperture = QString("R,%1X%2").arg(totalx).arg(totaly);
 
+        mask_aperture = QString("R,%1X%2").arg(mask_totalx).arg(mask_totaly);
+
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
             apertureMap[aperture] = "D" + QString::number(dcode_index);
             m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+            m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
             dcode_index++;
         }
 
@@ -289,10 +312,12 @@ void SVG2gerber::allPaths2gerber() {
         if(current_dcode != dcode){
             //switch to correct aperture
             m_gerber_paths += "G54" + dcode + "*\n";
+            m_soldermask_paths += "G54" + dcode + "*\n";
             current_dcode = dcode;
         }
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
+        m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
     }
 
     // lines - NOTE: this assumes a circular aperture
