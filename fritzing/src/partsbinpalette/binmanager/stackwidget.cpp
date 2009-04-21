@@ -151,7 +151,6 @@ void StackWidget::setPotentialDropSink(DropSink* receptor, int index) {
 }
 
 void StackWidget::dropped() {
-	// TODO: UPDATE the tab widget attached to the bin
 	StackTabWidget *oldTabWidget = dynamic_cast<StackTabWidget*>(m_dragSource.first);
 	if(oldTabWidget && m_dropSink.first) {
 		m_potentialDropSink.first->showFeedback(m_potentialDropSink.second, false);
@@ -176,6 +175,7 @@ void StackWidget::dropped() {
 				newTabWidget->setCurrentIndex(toIndex);
 			}
 		}
+		emit widgetChangedTabParent(widgetToMove, oldTabWidget, newTabWidget);
 
 		StackWidgetSeparator *curSeparator = m_separators[oldTabWidget];
 		curSeparator->shrink();

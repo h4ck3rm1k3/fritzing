@@ -55,6 +55,10 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 
 	m_widget = new StackWidget(this);
 	m_widget->setAcceptDrops(true);
+	connect(
+		m_widget, SIGNAL(widgetChangedTabParent(QWidget*, StackTabWidget*,StackTabWidget*)),
+		this, SLOT(widgetChangedTabParent(QWidget*, StackTabWidget*,StackTabWidget*))
+	);
 
 	m_unsavedBinsCount = 0;
 
@@ -71,7 +75,6 @@ BinManager::~BinManager() {
 
 void BinManager::addBin(PartsBinPaletteWidget* bin) {
 	StackTabWidget *tb = new StackTabWidget(m_widget);
-	bin->setTabWidget(tb);
 	tb->addTab(bin,bin->title());
 	m_widget->addWidget(tb);
 	registerBin(bin,tb);
@@ -312,5 +315,15 @@ void BinManager::restoreStateAndGeometry() {
 
 			settings.endGroup();
 		}
+	}
+}
+
+void BinManager::widgetChangedTabParent(
+	QWidget* widgetMoved, StackTabWidget *oldTabWidget, StackTabWidget *newTabWidget
+) {
+	Q_UNUSED(oldTabWidget);
+	PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(widgetMoved);
+	if(bin) {
+		registerBin(bin, newTabWidget);
 	}
 }

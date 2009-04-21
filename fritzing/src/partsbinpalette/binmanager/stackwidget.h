@@ -68,6 +68,10 @@ class StackWidget : public QFrame {
 	signals:
 		void currentChanged(int index);
 		void widgetRemoved(int index);
+		void widgetChangedTabParent(
+			QWidget* widgetToMove, StackTabWidget* oldTabWidget, StackTabWidget* newTabWidget
+		);
+
 
 	protected:
 		int closestIndexToPos(const QPoint &pos);
