@@ -34,8 +34,10 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 
 qreal ConnectorRectangle::ErrorIconSize = 6;
 
-ConnectorRectangle::ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers)
+ConnectorRectangle::ConnectorRectangle(QGraphicsItem* owner, bool withHandlers)
+: QObject()
 {
+	m_minWidth = m_minHeight = 0;
 	m_owner = owner;
 	m_firstPaint = true;
 
@@ -62,24 +64,22 @@ void ConnectorRectangle::setHandlersVisible(bool visible) {
 	}
 }
 
-void ConnectorRectangle::prepareForChange() {
-	resizableOwner()->doPrepareGeometryChange();
-}
-
 void ConnectorRectangle::resizeRect(qreal x1, qreal y1, qreal x2, qreal y2) {
-	qreal minWidth = resizableOwner()->minWidth();
-	qreal minHeight = resizableOwner()->minHeight();
 
-	qreal width = x2-x1 < minWidth ? minWidth : x2-x1;
-	qreal height = y2-y1 < minHeight ? minHeight : y2-y1;
+	qreal width = x2-x1 < m_minWidth ? m_minWidth : x2-x1;
+	qreal height = y2-y1 < m_minHeight ? m_minHeight : y2-y1;
 
-	if(width != owner()->rect().width() && height != owner()->rect().height()) {
-		resizableOwner()->resizeRect(x1,y1,width,height);
+	QRectF rect = owner()->boundingRect();
+	if(width != rect.width() && height != rect.height()) {
+		emit resizeSignal(x1,y1,width,height);
 	}
 }
 
 bool ConnectorRectangle::isResizable() {
-	return resizableOwner()->isResizable() && !connectorItemOwner()->isShowingTerminalPoint();
+	bool resizable;
+	emit isResizableSignal(resizable);				// must be connected via Qt::DirectConnection
+	return resizable;  
+	
 }
 
 void ConnectorRectangle::paint(QPainter *painter) {
@@ -99,7 +99,6 @@ void ConnectorRectangle::paint(QPainter *painter) {
 	}
 
 	if(beingResized) {
-		prepareForChange();
 		foreach(CornerHandler* handler, m_cornerHandlers) {
 			handler->doPaint(painter);
 		}
@@ -170,14 +169,12 @@ qreal ConnectorRectangle::currentScale() {
 	return 1;
 }
 
-QGraphicsRectItem *ConnectorRectangle::owner() {
+QGraphicsItem *ConnectorRectangle::owner() {
 	return m_owner;
 }
 
-ResizableRectItem* ConnectorRectangle::resizableOwner() {
-	return dynamic_cast<ResizableRectItem*>(m_owner);
-}
 
-PartsEditorConnectorsConnectorItem *ConnectorRectangle::connectorItemOwner() {
-	return dynamic_cast<PartsEditorConnectorsConnectorItem*>(m_owner);
+void ConnectorRectangle::setMinSize(qreal minWidth, qreal minHeight) {
+	m_minWidth = minWidth;
+	m_minHeight = minHeight;
 }

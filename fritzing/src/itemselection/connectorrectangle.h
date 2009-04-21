@@ -29,11 +29,12 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 
 #include "cornerhandler.h"
 #include "rectangleside.h"
-#include "resizablerectitem.h"
 
 class PartsEditorConnectorsConnectorItem;
 
-class ConnectorRectangle {
+class ConnectorRectangle : public QObject {
+	Q_OBJECT
+
 public:
 	enum State {
 		Normal = 0x00000,
@@ -42,9 +43,8 @@ public:
 		Selected = 0x00003
 	};
 
-	ConnectorRectangle(QGraphicsRectItem* owner, bool withHandlers = true);
-	QGraphicsRectItem *owner();
-	void prepareForChange();
+	ConnectorRectangle(QGraphicsItem* owner, bool withHandlers = true);
+	QGraphicsItem *owner();
 	void resizeRect(qreal x1, qreal y1, qreal x2, qreal y2);
 	bool isResizable();
 
@@ -52,19 +52,22 @@ public:
 	void resizingFinished();
 
 	qreal currentScale();
+	void setMinSize(qreal minWidth, qreal minHeight);
 
 	void setHandlersVisible(bool visible);
 	QRectF handlerRect(Qt::Corner corner);
 	QRectF errorIconRect();
 	void paint(QPainter *painter);
 
+signals:
+	void resizeSignal(qreal x1, qreal y1, qreal x2, qreal y2);
+	void isResizableSignal(bool & resizable);
+
 protected:
 	void setHandlerRect(CornerHandler* handler);
 	void placeHandlers();
-	ResizableRectItem* resizableOwner();
-	PartsEditorConnectorsConnectorItem *connectorItemOwner();
 
-	QGraphicsRectItem *m_owner;
+	QGraphicsItem *m_owner;
 
 	CornerHandler *m_topLeftHandler;
 	CornerHandler *m_topRightHandler;
@@ -76,6 +79,9 @@ protected:
 	RectangleSide *m_rightSide;
 	RectangleSide *m_leftSide;
 	RectangleSide *m_bottomSide;
+
+	qreal m_minWidth;
+	qreal m_minHeight;
 
 	bool m_firstPaint;
 

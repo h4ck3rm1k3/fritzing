@@ -36,7 +36,7 @@ $Date: 2009-01-13 05:46:37 +0100 (Tue, 13 Jan 2009) $
 QHash<Qt::Corner,QPixmap> CornerHandler::pixmapHash;
 qreal CornerHandler::Size = 4;
 
-CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* parentItem, Qt::Corner corner)
+CornerHandler::CornerHandler(ConnectorRectangle *parent, QGraphicsItem* parentItem, Qt::Corner corner)
 	: QGraphicsRectItem(parentItem)
 {
 	m_parent = parent;
@@ -76,8 +76,7 @@ void CornerHandler::initPixmapHash() {
 }
 
 void CornerHandler::resize(const QPointF &mousePos) {
-	m_parent->prepareForChange();
-	QRectF rect = m_parent->owner()->rect();
+	QRectF rect = m_parent->owner()->boundingRect();
 
 	qreal oldX1 = rect.x();
 	qreal oldY1 = rect.y();

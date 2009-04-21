@@ -34,7 +34,7 @@ class ConnectorRectangle;
 
 class CornerHandler : public QGraphicsRectItem {
 public:
-	CornerHandler(ConnectorRectangle *parent, QGraphicsRectItem* parentItem, Qt::Corner corner);
+	CornerHandler(ConnectorRectangle *parent, QGraphicsItem* parentItem, Qt::Corner corner);
 	void resize(const QPointF &mousePos);
 	Qt::Corner corner();
 	bool isBeingDragged();

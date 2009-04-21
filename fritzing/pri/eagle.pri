@@ -12,9 +12,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Fritzing. If not, see <http://www.gnu.org/licenses/>.
 # ********************************************************************
-# $Revision: 2278 $:
-# $Author: cohen@irascible.com $:
-# $Date: 2009-01-27 18:10:36 -0500 (Tue, 27 Jan 2009) $
+# $Revision$:
+# $Author$:
+# $Date$
 # ********************************************************************/
 
 HEADERS += src/eagle/fritzing2eagle.h 

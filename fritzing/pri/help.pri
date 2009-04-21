@@ -12,9 +12,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Fritzing. If not, see <http://www.gnu.org/licenses/>.
 # ********************************************************************
-# $Revision: 1509 $:
-# $Author: andre.knoerig $:
-# $Date: 2008-11-15 16:16:14 +0100 (Sat, 15 Nov 2008) $
+# $Revision$:
+# $Author$:
+# $Date$
 # ********************************************************************/
 HEADERS += src/help/inotseeninminiview.h \
     src/help/toolhelp.h \

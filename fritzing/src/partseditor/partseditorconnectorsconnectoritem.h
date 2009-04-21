@@ -29,9 +29,10 @@ $Date: 2009-01-22 19:47:17 +0100 (Thu, 22 Jan 2009) $
 #define PARTSEDITORCONNECTORSCONNECTORITEM_H_
 
 #include "partseditorconnectoritem.h"
-#include "../itemselection/resizablerectitem.h"
 
-class PartsEditorConnectorsConnectorItem : public PartsEditorConnectorItem, public ResizableRectItem {
+class PartsEditorConnectorsConnectorItem : public QObject, public PartsEditorConnectorItem {
+	Q_OBJECT
+
 friend class ConnectorRectangle;
 public:
 	PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint);
@@ -53,11 +54,16 @@ public:
 
 	QRectF mappedRect();
 
+protected slots:
+	void isResizableSlot(bool & resizable);
+	void resizeSlot(qreal x1, qreal y1, qreal x2, qreal y2);
+
 protected:
 	void init(bool resizable);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 	void resizeRect(qreal x, qreal y, qreal width, qreal height);
+	void setResizable(bool resizable);
 
 	void showErrorIcon(bool showIt);
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -89,6 +95,9 @@ protected:
 	bool m_geometryHasChanged;
 	bool m_inFileDefined;
 	bool m_centerHasChanged;
+
+	ConnectorRectangle *m_handlers;
+	bool m_resizable;
 
 	static qreal MinWidth;
 	static qreal MinHeight;

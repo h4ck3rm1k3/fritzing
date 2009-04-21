@@ -12,9 +12,9 @@
 # You should have received a copy of the GNU General Public License
 # along with Fritzing. If not, see <http://www.gnu.org/licenses/>.
 # ********************************************************************
-# $Revision: 2137 $:
-# $Author: cohen@irascible.com $:
-# $Date: 2009-01-11 00:42:02 +0100 (Sun, 11 Jan 2009) $
+# $Revision$:
+# $Author$:
+# $Date$
 # ********************************************************************/
 
 HEADERS += \

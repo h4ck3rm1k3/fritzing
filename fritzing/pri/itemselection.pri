@@ -18,9 +18,9 @@
 #
 # ********************************************************************
 #
-# $Revision: 1509 $:
-# $Author: andre.knoerig $:
-# $Date: 2008-11-15 16:16:14 +0100 (Sat, 15 Nov 2008) $
+# $Revision$:
+# $Author$:
+# $Date$
 #
 #********************************************************************/
 
@@ -28,13 +28,11 @@ HEADERS += \
     src/itemselection/connectorrectangle.h \
     src/itemselection/cornerhandler.h \
     src/itemselection/rectangleside.h \
-    src/itemselection/resizablerectitem.h \
     src/itemselection/terminalpointitem.h
     
 SOURCES += \
     src/itemselection/connectorrectangle.cpp \
     src/itemselection/cornerhandler.cpp \
     src/itemselection/rectangleside.cpp \
-    src/itemselection/resizablerectitem.cpp \
     src/itemselection/terminalpointitem.cpp
     

@@ -34,7 +34,7 @@ qreal PartsEditorConnectorsConnectorItem::MinWidth = 1;
 qreal PartsEditorConnectorsConnectorItem::MinHeight = MinWidth;
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint)
-	: PartsEditorConnectorItem(conn, attachedTo), ResizableRectItem()
+	: PartsEditorConnectorItem(conn, attachedTo)
 {
 	init(true);
 
@@ -44,7 +44,7 @@ PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector
 }
 
 PartsEditorConnectorsConnectorItem::PartsEditorConnectorsConnectorItem(Connector * conn, ItemBase* attachedTo, bool showingTerminalPoint, const QRectF &bounds)
-	: PartsEditorConnectorItem(conn, attachedTo), ResizableRectItem()
+	: PartsEditorConnectorItem(conn, attachedTo)
 {
 	init(true);
 
@@ -93,6 +93,15 @@ void PartsEditorConnectorsConnectorItem::init(bool resizable) {
 	setResizable(resizable);
 	if(m_resizable) {
 		m_handlers = new ConnectorRectangle(this);
+		m_handlers->setMinSize(MinWidth, MinHeight);
+
+		connect(m_handlers, SIGNAL(resizeSignal(qreal, qreal, qreal, qreal)),
+				this, SLOT(resizeSlot(qreal, qreal, qreal, qreal)));
+
+		// isResizableSignal MUST be connected with Qt::DirectConnection
+		connect(m_handlers, SIGNAL(isResizableSignal(bool &)),
+				this, SLOT(isResizableSlot(bool &)),
+				Qt::DirectConnection);						
 	} else {
 		m_handlers = NULL;
 	}
@@ -289,3 +298,19 @@ void PartsEditorConnectorsConnectorItem::hoverLeaveEvent(QGraphicsSceneHoverEven
 	Q_UNUSED(event);
 	unsetCursor();
 }
+
+void PartsEditorConnectorsConnectorItem::setResizable(bool resizable) {
+	m_resizable = resizable;
+}
+
+void PartsEditorConnectorsConnectorItem::isResizableSlot(bool & resizable) {
+	resizable = m_resizable && !isShowingTerminalPoint();
+}
+
+void PartsEditorConnectorsConnectorItem::resizeSlot(qreal x, qreal y, qreal width, qreal height) {
+	prepareGeometryChange();
+	resizeRect(x, y, width, height);
+}
+
+
+
