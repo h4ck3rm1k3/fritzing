@@ -78,6 +78,9 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 #endif
 	m_widget->addWidget(tb);
 	m_tabWidgets[bin] = tb;
+	if(bin->fileName() != ___emptyString___) {
+		m_openedBins[bin->fileName()] = bin;
+	}
 }
 
 void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb) {
@@ -88,7 +91,7 @@ void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget
 }
 
 void BinManager::loadFromModel(PaletteModel *model) {
-	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	PartsBinPaletteWidget* bin = newBin();
 	m_paletteModel=model;
 	bin->loadFromModel(model);
 	addBin(bin);
@@ -181,7 +184,7 @@ void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) 
 }
 
 PartsBinPaletteWidget* BinManager::newBinIn(StackTabWidget* tb) {
-	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	PartsBinPaletteWidget* bin = newBin();
 	bin->setPaletteModel(new PaletteModel(true,false),true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBinsCount));
 	insertBin(bin, tb->currentIndex(), tb);
@@ -202,7 +205,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 		bin = m_openedBins[fileName];
 		m_tabWidgets[bin]->setCurrentWidget(bin);
 	} else {
-		bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+		bin = newBin();
 		if(bin->open(fileName)) {
 			m_openedBins[fileName] = bin;
 			insertBin(bin, tb->currentIndex(), tb);
@@ -212,9 +215,18 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 }
 
 PartsBinPaletteWidget* BinManager::openCoreBinIn(StackTabWidget* tb) {
-	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	PartsBinPaletteWidget* bin = newBin();
 	bin->openCore();
 	insertBin(bin, tb->currentIndex(), tb);
+	return bin;
+}
+
+PartsBinPaletteWidget* BinManager::newBin() {
+	PartsBinPaletteWidget* bin = new PartsBinPaletteWidget(m_refModel,m_infoView,m_undoStack,this);
+	connect(
+		bin, SIGNAL(fileNameUpdated(PartsBinPaletteWidget*, const QString&, const QString&)),
+		this, SLOT(updateFileName(PartsBinPaletteWidget*, const QString&, const QString&))
+	);
 	return bin;
 }
 
@@ -232,4 +244,9 @@ void BinManager::closeBinIn(StackTabWidget* tb) {
 
 PartsBinPaletteWidget* BinManager::currentBin(StackTabWidget* tb) {
 	return dynamic_cast<PartsBinPaletteWidget*>(tb->currentWidget());
+}
+
+void BinManager::updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename) {
+	m_openedBins.remove(oldFilename);
+	m_openedBins[newFileName] = bin;
 }

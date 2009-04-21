@@ -182,6 +182,7 @@ void PartsBinPaletteWidget::toListView() {
 }
 
 void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
+	QString oldFilename = m_fileName;
 	m_fileName = filename;
 	QString title = this->title();
 	if(!title.isNull() && !title.isEmpty()) {
@@ -200,6 +201,9 @@ void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
 	m_undoStack->setClean();
 
 	saveAsLastBin();
+	if(oldFilename != m_fileName) {
+		emit fileNameUpdated(this,m_fileName,oldFilename);
+	}
 	emit saved(hasAlienParts());
 }
 
@@ -208,6 +212,7 @@ void PartsBinPaletteWidget::loadFromModel(PaletteModel *model) {
 	m_listView->setPaletteModel(model);
 	afterModelSetted(model);
 	m_canDeleteModel = false;				// FApplication is holding this model, so don't delete it
+	m_fileName = model->loadedFrom();
 }
 
 void PartsBinPaletteWidget::setPaletteModel(PaletteModel *model, bool clear) {

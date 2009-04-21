@@ -109,6 +109,7 @@ class PartsBinPaletteWidget : public QFrame {
 
 	signals:
 		void saved(bool hasPartsFromBundled);
+		void fileNameUpdated(PartsBinPaletteWidget*, const QString &newFileName, const QString &oldFilename);
 
 	protected:
 		void closeEvent(QCloseEvent* event);

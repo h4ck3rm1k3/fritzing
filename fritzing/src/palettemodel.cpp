@@ -93,9 +93,9 @@ void PaletteModel::updateOrAddModelPart(const QString & moduleID, ModelPart *new
 void PaletteModel::loadParts() {
 	QStringList nameFilters;
 	nameFilters << "*" + FritzingPartExtension << "*" + FritzingModuleExtension;
-						
+
 	if(CreateAllPartsBinFile) {
-		JustAppendAllPartsInstances = true;	
+		JustAppendAllPartsInstances = true;
 		writeAllPartsBinHeader();
 	}
 
@@ -339,7 +339,7 @@ QString PaletteModel::loadedFrom() {
 	if(m_loadedFromFile) {
 		return m_loadedFrom;
 	} else {
-		return QString::null;
+		return ___emptyString___;
 	}
 }
 

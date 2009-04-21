@@ -70,11 +70,15 @@ class BinManager : public QFrame {
 		void addPartCommand(const QString& moduleID);
 		void removeAlienParts();
 
+	protected slots:
+		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
+
 	signals:
 		void saved(bool hasPartsFromBundled);
 
 	protected:
 		void createMenu();
+		PartsBinPaletteWidget* newBin();
 		PartsBinPaletteWidget* currentBin(StackTabWidget* tb);
 
 		ReferenceModel *m_refModel;
