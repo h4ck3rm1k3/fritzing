@@ -159,6 +159,7 @@ class PartsBinPaletteWidget : public QFrame {
 		QAction *m_openCoreBinAction;
 		QAction *m_closeBinAction;
 		QAction *m_saveAction;
+		QAction *m_saveAsAction;
 		QAction *m_renameAction;
 
 		WaitPushUndoStack *m_undoStack;

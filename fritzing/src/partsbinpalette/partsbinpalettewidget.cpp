@@ -299,6 +299,7 @@ void PartsBinPaletteWidget::createMenu() {
 	m_openCoreBinAction = new QAction(tr("Open core bin"),this);
 	m_closeBinAction = new QAction(tr("Close bin"),this);
 	m_saveAction = new QAction(tr("Save bin"),this);
+	m_saveAsAction = new QAction(tr("Save bin as..."),this);
 	m_renameAction = new QAction(tr("Rename bin"),this);
 
 	menu->addAction(m_newBinAction);
@@ -306,6 +307,7 @@ void PartsBinPaletteWidget::createMenu() {
 	menu->addAction(m_openCoreBinAction);
 	menu->addAction(m_closeBinAction);
 	menu->addAction(m_saveAction);
+	menu->addAction(m_saveAsAction);
 	menu->addAction(m_renameAction);
 
 	connect(
@@ -327,6 +329,10 @@ void PartsBinPaletteWidget::createMenu() {
 	connect(
 		m_saveAction, SIGNAL(triggered()),
 		this, SLOT(save())
+	);
+	connect(
+		m_saveAsAction, SIGNAL(triggered()),
+		this, SLOT(saveAs())
 	);
 	connect(
 		m_renameAction, SIGNAL(triggered()),
