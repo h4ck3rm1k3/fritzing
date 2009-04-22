@@ -56,7 +56,8 @@ PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidg
     m_layout = NULL;
     setupLayout();
 
-    connect(scene, SIGNAL(selectionChanged()), this, SLOT(informNewSelection()));
+    //connect(scene, SIGNAL(selectionChanged()), this, SLOT(informNewSelection()));
+    //connect(scene, SIGNAL(changed(const QList<QRectF>&)), this, SLOT(informNewSelection()));
 
     m_noSelectionChangeEmition = false;
 }
@@ -108,30 +109,31 @@ void PartsBinIconView::showInfo(SvgIconWidget * item) {
 void PartsBinIconView::mousePressEvent(QMouseEvent *event) {
 	QGraphicsItem* item = this->itemAt(event->pos());
 	if (item == NULL || event->button() != Qt::LeftButton) {
-		return QGraphicsView::mousePressEvent(event);
-	}
+		QGraphicsView::mousePressEvent(event);
+	} else {
+		SvgIconWidget* icon = dynamic_cast<SvgIconWidget *>(item);
+		if (icon != NULL) {
+			QList<QGraphicsItem *> items = scene()->selectedItems();
+			for (int i = 0; i < items.count(); i++) {
+				// not sure why clearSelection doesn't do the update, but whatever...
+				items[i]->setSelected(false);
+				items[i]->update();
+			}
+			icon->setSelected(true);
+			icon->update();
 
-	SvgIconWidget* icon = dynamic_cast<SvgIconWidget *>(item);
-	if (icon != NULL) {
-		QList<QGraphicsItem *> items = scene()->selectedItems();
-		for (int i = 0; i < items.count(); i++) {
-			// not sure why clearSelection doesn't do the update, but whatever...
-			items[i]->setSelected(false);
-			items[i]->update();
+			QPointF mts = this->mapToScene(event->pos());
+			QString moduleID = icon->moduleID();
+			QPoint hotspot = (mts.toPoint()-icon->pos().toPoint());
+
+			if(!m_infoViewOnHover) {
+				showInfo(icon);
+			}
+
+			mousePressOnItem(event->pos(), moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
 		}
-		icon->setSelected(true);
-		icon->update();
-
-		QPointF mts = this->mapToScene(event->pos());
-		QString moduleID = icon->moduleID();
-		QPoint hotspot = (mts.toPoint()-icon->pos().toPoint());
-
-		if(!m_infoViewOnHover) {
-			showInfo(icon);
-		}
-
-		mousePressOnItem(event->pos(), moduleID, icon->size().toSize(), (mts - icon->pos()), hotspot );
 	}
+	informNewSelection();
 }
 
 void PartsBinIconView::doClear() {

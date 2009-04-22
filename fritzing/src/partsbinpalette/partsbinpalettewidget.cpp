@@ -86,6 +86,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
 
+	connect(m_iconView, SIGNAL(selectionChanged(int)), this, SLOT(updateButtonStates()));
+
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), m_iconView, SLOT(itemMoved(int,int)));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), m_listView, SLOT(itemMoved(int,int)));
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
@@ -133,7 +135,7 @@ void PartsBinPaletteWidget::setupFooter() {
 	rightLayout->setMargin(0);
 	rightLayout->setSpacing(3);
 	rightLayout->addWidget(m_removeSelectedButton);
-	rightLayout->addWidget(m_importPartButton);
+	rightLayout->addWidget(m_exportPartButton);
 	rightLayout->addWidget(m_addPartButton);
 	/*rightLayout->addWidget(m_coreBinButton);
 	rightLayout->addWidget(m_saveBinButton);
@@ -260,15 +262,16 @@ void PartsBinPaletteWidget::setupButtons() {
 
 	createMenu();
 
-	m_addPartButton = new ImageButton("AddPart",false,this);
+	m_addPartButton = new ImageButton("AddPart",this,false);
 	m_addPartButton->setToolTip(tr("Add Part"));
 	m_addPartButton->setEnabledIcon();
 	connect(m_addPartButton,SIGNAL(clicked()),this,SLOT(addPart()));
 
-	m_importPartButton = new ImageButton("ImportPart",false,this);
-	m_importPartButton->setToolTip(tr("Import Part"));
-	m_importPartButton->setEnabledIcon();
-	connect(m_importPartButton,SIGNAL(clicked()),this,SLOT(importPart()));
+	m_exportPartButton = new ImageButton("ExportPart",this);
+	m_exportPartButton->setToolTip(tr("Export Part"));
+	m_exportPartButton->setDisabled(true);
+	m_exportPartButton->setDisabledIcon();
+	connect(m_exportPartButton,SIGNAL(clicked()),this,SLOT(exportPart()));
 
 	/*m_openBinButton = new ImageButton("Open",this);
 	m_openBinButton->setToolTip(tr("Open bin"));
@@ -346,8 +349,14 @@ void PartsBinPaletteWidget::addPart() {
 
 }
 
-void PartsBinPaletteWidget::importPart() {
-
+void PartsBinPaletteWidget::exportPart() {
+	ModelPart *mp = selected();
+	if(mp) {
+		//if(!mp->isCore()) {
+			emit savePartAsBundled(mp->moduleID());
+		//} else {
+		//}
+	}
 }
 
 bool PartsBinPaletteWidget::removeSelected() {
@@ -634,4 +643,15 @@ void PartsBinPaletteWidget::setDirty(bool dirty) {
 
 const QString &PartsBinPaletteWidget::fileName() {
 	return m_fileName;
+}
+
+void PartsBinPaletteWidget::updateButtonStates() {
+	ModelPart *mp = selected();
+	bool enabled = mp && !mp->isCore();
+	m_exportPartButton->setEnabled(enabled);
+	if(enabled) {
+		m_exportPartButton->setEnabledIcon();
+	} else {
+		m_exportPartButton->setDisabledIcon();
+	}
 }

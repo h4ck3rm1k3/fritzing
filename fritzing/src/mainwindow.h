@@ -196,6 +196,8 @@ protected slots:
 	void selectAllJumpers();
 
 	void saveBundledSketch();
+	void saveBundledPart(const QString &moduleId);
+	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
 	void loadBundledSketch(const QString &fileName);
 	void loadBundledPart(const QString &fileName);
 	void loadBundledPart();

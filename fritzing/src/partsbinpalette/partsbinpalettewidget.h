@@ -38,7 +38,7 @@ $Date$
 
 class ImageButton : public AbstractImageButton {
 public:
-	ImageButton(const QString &imageName, bool hasStates, QWidget *parent=0)
+	ImageButton(const QString &imageName, QWidget *parent=0, bool hasStates=true)
 		: AbstractImageButton(parent)
 	{
 		setupIcons(imageName, hasStates);
@@ -100,16 +100,18 @@ class PartsBinPaletteWidget : public QFrame {
 		void undoStackCleanChanged(bool isClean);
 		void saveAsLastBin();
 		void addPart();
-		void importPart();
+		void exportPart();
 		void newBin();
 		void openBin();
 		void openCoreBin();
 		void rename();
 		void closeBin();
+		void updateButtonStates();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
 		void fileNameUpdated(PartsBinPaletteWidget*, const QString &newFileName, const QString &oldFilename);
+		void savePartAsBundled(const QString &moduleId);
 
 	protected:
 		void closeEvent(QCloseEvent* event);
@@ -151,7 +153,7 @@ class PartsBinPaletteWidget : public QFrame {
 		ImageButton *m_saveBinButton;
 		ImageButton *m_coreBinButton;*/
 		ImageButton *m_addPartButton;
-		ImageButton *m_importPartButton;
+		ImageButton *m_exportPartButton;
 
 		QToolButton *m_menuButton;
 		QAction *m_newBinAction;

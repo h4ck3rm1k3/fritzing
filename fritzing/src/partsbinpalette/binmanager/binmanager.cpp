@@ -52,6 +52,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_infoView = infoView;
 	m_undoStack = undoStack;
 	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
+	m_originalParent = parent;
 
 	m_widget = new StackWidget(this);
 	m_widget->setAcceptDrops(true);
@@ -234,6 +235,10 @@ PartsBinPaletteWidget* BinManager::newBin() {
 		bin, SIGNAL(fileNameUpdated(PartsBinPaletteWidget*, const QString&, const QString&)),
 		this, SLOT(updateFileName(PartsBinPaletteWidget*, const QString&, const QString&))
 	);
+	connect(
+		bin, SIGNAL(savePartAsBundled(const QString &)),
+		m_originalParent, SLOT(saveBundledPart(const QString &))
+	);
 	return bin;
 }
 
@@ -290,7 +295,7 @@ void BinManager::saveStateAndGeometry() {
 void BinManager::restoreStateAndGeometry() {
 	QSettings settings;
 	settings.beginGroup("bins");
-	if(settings.childGroups().size()==0) {
+	if(settings.childGroups().size()==0) { // first time? open core then
 		StackTabWidget *tw = new StackTabWidget(m_widget);
 		PartsBinPaletteWidget* bin = newBin();
 		bin->openCore();

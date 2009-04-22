@@ -89,9 +89,11 @@ class BinManager : public QFrame {
 
 		ReferenceModel *m_refModel;
 		PaletteModel *m_paletteModel;
+
 		HtmlInfoView *m_infoView;
 		WaitPushUndoStack *m_undoStack;
 
+		QWidget *m_originalParent;
 		StackWidget *m_widget;
 
 		QHash<PartsBinPaletteWidget*,StackTabWidget*> m_tabWidgets;

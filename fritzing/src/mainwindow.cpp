@@ -930,17 +930,7 @@ void MainWindow::saveBundledSketch() {
 
 	QList<ModelPart*> partsToSave = m_sketchModel->root()->getAllNonCoreParts();
 	foreach(ModelPart* mp, partsToSave) {
-		QString partPath = mp->modelPartShared()->path();
-		QFile file(partPath);
-		file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
-		QList<SvgAndPartFilePath> views = mp->getAvailableViewFiles();
-		foreach(SvgAndPartFilePath view, views) {
-			if(view.coreContribOrUser() != "core") {
-				QFile file(view.concat());
-				QString svgRelativePath = view.relativePath();
-				file.copy(destFolder.path()+"/"+ZIP_SVG+svgRelativePath.replace("/","."));
-			}
-		}
+		saveBundledAux(mp, destFolder);
 	}
 
 	if(!createZipAndSaveTo(destFolder, bundledFileName)) {
@@ -1020,6 +1010,70 @@ void MainWindow::loadBundledPart(const QString &fileName) {
 	moveToPartsFolder(unzipDir,mw);
 
 	rmdir(unzipDirPath);
+}
+
+void MainWindow::saveBundledPart(const QString &moduleId) {
+	QString fileExt;
+	QString path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName()+"z";
+	QString bundledFileName = FApplication::getSaveFileName(
+			this,
+			tr("Specify a file name"),
+			path,
+			tr("Fritzing (*%1)").arg(FritzingBundledPartExtension),
+			&fileExt
+		  );
+
+	if (bundledFileName.isEmpty()) return; // Cancel pressed
+
+	if(!alreadyHasExtension(bundledFileName)) {
+		fileExt = getExtFromFileDialog(fileExt);
+		bundledFileName += fileExt;
+	}
+
+	QDir destFolder = QDir::temp();
+
+	createFolderAnCdIntoIt(destFolder, getRandText());
+	QString dirToRemove = destFolder.path();
+
+	QString aux = QFileInfo(bundledFileName).fileName();
+	QString destPartPath = // remove the last "z" from the extension
+			destFolder.path()+"/"+aux.left(aux.size()-1);
+	DebugDialog::debug("saving part temporarily to "+destPartPath);
+
+	bool wasModified = isWindowModified();
+	QString prevFileName = m_fileName;
+	//saveAsAux(destPartPath);
+	m_fileName = prevFileName;
+	setWindowModified(wasModified);
+	setTitle();
+
+	ModelPart* mp = m_refModel->retrieveModelPart(moduleId);
+	saveBundledAux(mp, destFolder);
+
+
+	if(!createZipAndSaveTo(destFolder, bundledFileName)) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Unable to export %1 to shareable sketch").arg(bundledFileName)
+		);
+	}
+
+	rmdir(dirToRemove);
+}
+
+void MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
+	QString partPath = mp->modelPartShared()->path();
+	QFile file(partPath);
+	file.copy(destFolder.path()+"/"+ZIP_PART+QFileInfo(partPath).fileName());
+	QList<SvgAndPartFilePath> views = mp->getAvailableViewFiles();
+	foreach(SvgAndPartFilePath view, views) {
+		if(view.coreContribOrUser() != "core") {
+			QFile file(view.concat());
+			QString svgRelativePath = view.relativePath();
+			file.copy(destFolder.path()+"/"+ZIP_SVG+svgRelativePath.replace("/","."));
+		}
+	}
 }
 
 void MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw) {
