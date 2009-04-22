@@ -1964,10 +1964,6 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 
 //TODO: this whole thing should probably be cleaned up and moved to another file
 void MainWindow::exportToGerber() {
-#ifdef QT_NO_DEBUG
-	notYetImplemented(tr("Gerber export"));
-	return;
-#endif
 
         //NOTE: this assumes just one board per sketch
         //TODO: should deal with crazy multi-board setups someday...
