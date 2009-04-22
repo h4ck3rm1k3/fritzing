@@ -110,8 +110,30 @@ void BinManager::setPaletteModel(PaletteModel *model) {
 
 
 bool BinManager::beforeClosing() {
-	saveStateAndGeometry();
-	return true;
+	bool retval = true;
+
+	for(int i=0; i < m_widget->count(); i++) {
+		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_widget->widget(i));
+		if(tw) {
+			for(int j=0; j < tw->count(); j++) {
+				PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(tw->widget(j));
+				if(bin) {
+					setAsCurrentTab(bin);
+					retval = retval && bin->beforeClosing();
+					if(!retval) break;
+				}
+			}
+		}
+	}
+	if(retval) {
+		saveStateAndGeometry();
+	}
+
+	return retval;
+}
+
+void BinManager::setAsCurrentTab(PartsBinPaletteWidget* bin) {
+	m_tabWidgets[bin]->setCurrentWidget(bin);
 }
 
 
@@ -217,6 +239,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 		if(bin->open(fileName)) {
 			m_openedBins[fileName] = bin;
 			insertBin(bin, tb->currentIndex(), tb);
+			bin->saveAsLastBin();
 		}
 	}
 	return bin;

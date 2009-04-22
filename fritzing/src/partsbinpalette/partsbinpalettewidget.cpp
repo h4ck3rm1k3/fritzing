@@ -464,7 +464,7 @@ bool PartsBinPaletteWidget::beforeClosing() {
 		QMessageBox::StandardButton reply;
 		QMessageBox *messageBox = new QMessageBox(
 				tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
-				tr("Do you want to save the changes you made in the document \"%1\"?")
+				tr("Do you want to save the changes you made in this bin \"%1\"?")
 					.arg(QFileInfo(m_fileName).baseName()),
 				QMessageBox::Warning,
 				QMessageBox::Yes,
@@ -490,8 +490,6 @@ bool PartsBinPaletteWidget::beforeClosing() {
 	} else {
 		retval = true;
 	}
-
-	saveAsLastBin();
 	return retval;
 }
 

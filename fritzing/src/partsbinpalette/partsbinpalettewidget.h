@@ -91,6 +91,7 @@ class PartsBinPaletteWidget : public QFrame {
 		bool open(QString fileName="");
 		void openCore();
 		void itemMoved();
+		void saveAsLastBin();
 
 	protected slots:
 		void toIconView();
@@ -98,7 +99,6 @@ class PartsBinPaletteWidget : public QFrame {
 		bool removeSelected();
 		bool saveAs();
 		void undoStackCleanChanged(bool isClean);
-		void saveAsLastBin();
 		void addPart();
 		void exportPart();
 		void newBin();

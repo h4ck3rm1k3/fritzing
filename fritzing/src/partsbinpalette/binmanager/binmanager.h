@@ -86,6 +86,7 @@ class BinManager : public QFrame {
 		PartsBinPaletteWidget* currentBin(StackTabWidget* tb);
 		void saveStateAndGeometry();
 		void restoreStateAndGeometry();
+		void setAsCurrentTab(PartsBinPaletteWidget* bin);
 
 		ReferenceModel *m_refModel;
 		PaletteModel *m_paletteModel;
