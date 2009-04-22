@@ -36,14 +36,14 @@ $Date$
 
 //TODO: this assumes one layer right now (copper0)
 
-SVG2gerber::SVG2gerber(QString svgStr)
+SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
 {
     m_SVGDom = QDomDocument("svg");
     m_SVGDom.setContent(svgStr);
 
 #ifndef QT_NO_DEBUG
     // dump paths SVG to tmp file for now
-    QFile dump("/tmp/paths_in.svg");
+    QFile dump("/tmp/paths_in" + debugStr + ".svg");
     if (!dump.open(QIODevice::WriteOnly | QIODevice::Text))
         DebugDialog::debug("gerber svg dump: cannot open output file");
 
@@ -55,7 +55,7 @@ SVG2gerber::SVG2gerber(QString svgStr)
 
 #ifndef QT_NO_DEBUG
     // dump paths SVG to tmp file for now
-    QFile dump2("/tmp/paths_normal.svg");
+    QFile dump2("/tmp/paths_normal" + debugStr + ".svg");
     if (!dump2.open(QIODevice::WriteOnly | QIODevice::Text))
         DebugDialog::debug("gerber svg dump: cannot open output file");
 
@@ -101,12 +101,20 @@ void SVG2gerber::renderGerber(){
     // set inverse polarity
     m_soldermask_header += "%IPNEG*%\n";
 
+    // setup drill file header
+    m_drill_header = "M48\n";
+    // set to english (inches) units, with trailing zeros
+    m_drill_header += "M72,TZ\n";
+
     // define apertures and draw em
     allPaths2gerber();
 
     // label our layers
     m_gerber_header += "%LNFRITZING*%\n";
     m_soldermask_header += "%LNMASK*%\n";
+
+    // rewind drill to start position
+    m_drill_header += "%\n";
 
     //just to be safe: G90 (absolute coords) and G70 (inches)
     m_gerber_header += "G90*\nG70*\n";
@@ -120,6 +128,10 @@ void SVG2gerber::renderGerber(){
     // write gerber end-of-program
     m_gerber_paths += "M02*";
     m_soldermask_paths += "M02*";
+
+    // drill file unload tool and end of program
+    m_drill_paths += "T00\n";
+    m_drill_paths += "M30\n";
 }
 
 void SVG2gerber::normalizeSVG(){
@@ -225,11 +237,14 @@ void SVG2gerber::allPaths2gerber() {
         QDomElement circle = circleList.item(i).toElement();
         QString aperture;
         QString mask_aperture;
+        QString drill_aperture;
 
         qreal centerx = circle.attribute("cx").toFloat();
         qreal centery = circle.attribute("cy").toFloat();
         QString cx = QString::number(round(centerx));
         QString cy = QString::number(round(centery));
+        QString drill_cx = QString::number(round(centerx)*10);
+        QString drill_cy = QString::number(round(centery)*10);
         qreal r = circle.attribute("r").toFloat();
         QString fill = circle.attribute("fill");
         qreal stroke_width = circle.attribute("stroke-width").toFloat();
@@ -239,8 +254,10 @@ void SVG2gerber::allPaths2gerber() {
         //NOTE: assuming 3 mil soldermask clearance
         qreal mask_diam = diam + 0.006;
 
-        if(fill=="none")
+        if(fill=="none"){
             aperture = QString("C,%1X%2").arg(diam).arg(hole);
+            drill_aperture = QString("C%1").arg(hole);
+        }
         else
             aperture = QString("C,%1").arg(diam);
 
@@ -248,22 +265,28 @@ void SVG2gerber::allPaths2gerber() {
 
         // add aperture to defs if we don't have it yet
         if(!apertureMap.contains(aperture)){
-            apertureMap[aperture] = "D" + QString::number(dcode_index);
+            apertureMap[aperture] = QString::number(dcode_index);
             m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
             m_soldermask_header += "%ADD" + QString::number(dcode_index) + mask_aperture + "*%\n";
+            if(drill_aperture != "")
+                m_drill_header += "T" + QString::number(dcode_index) + drill_aperture + "\n";
             dcode_index++;
         }
 
         QString dcode = apertureMap[aperture];
         if(current_dcode != dcode){
             //switch to correct aperture
-            m_gerber_paths += "G54" + dcode + "*\n";
-            m_soldermask_paths += "G54" + dcode + "*\n";
+            m_gerber_paths += "G54D" + dcode + "*\n";
+            m_soldermask_paths += "G54D" + dcode + "*\n";
+            if(drill_aperture != "")
+                m_drill_paths += "T" + dcode + "\n";
             current_dcode = dcode;
         }
         //flash
         m_gerber_paths += "X" + cx + "Y" + cy + "D03*\n";
         m_soldermask_paths += "X" + cx + "Y" + cy + "D03*\n";
+        if(drill_aperture != "")
+            m_drill_paths += "X" + drill_cx + "Y" + drill_cy + "\n";
     }
 
     // rects

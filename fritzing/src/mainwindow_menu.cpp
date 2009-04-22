@@ -1969,6 +1969,29 @@ void MainWindow::exportToGerber() {
 	return;
 #endif
 
+        //NOTE: this assumes just one board per sketch
+        //TODO: should deal with crazy multi-board setups someday...
+
+        // grab the list of parts
+        ItemBase * board = NULL;
+        foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
+            board = dynamic_cast<ItemBase *>(childItem);
+            if (board == NULL) continue;
+
+            //for now take the first board you find
+            if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
+                break;
+            }
+            board = NULL;
+        }
+
+        // barf an error if there's no board
+        if (!board) {
+            QMessageBox::critical(this, tr("Fritzing"),
+                       tr("Your sketch does not have a board!  Add a board so you can export to Gerber."));
+            return;
+        }
+
         QString exportDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                  defaultSaveFolder(),
                                                  QFileDialog::ShowDirsOnly
@@ -1977,7 +2000,7 @@ void MainWindow::exportToGerber() {
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper0;
 	QSizeF imageSize;
-	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL);
+        QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -1994,7 +2017,7 @@ void MainWindow::exportToGerber() {
 	}
 
         // create copper0 gerber from svg
-        SVG2gerber copper0Gerber = SVG2gerber(svg);
+        SVG2gerber copper0Gerber = SVG2gerber(svg, "copper0");
 
         QString copper0File = exportDir + "/" +
                               QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
@@ -2031,7 +2054,7 @@ void MainWindow::exportToGerber() {
         // now do it for silk
         QList<ViewLayer::ViewLayerID> silkLayerIDs;
         silkLayerIDs << ViewLayer::Silkscreen;
-        QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, NULL);
+        QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board);
         if (svgSilk.isEmpty()) {
                 // tell the user something reasonable
                 return;
@@ -2044,7 +2067,7 @@ void MainWindow::exportToGerber() {
         }
 
         // create copper0 gerber from svg
-        SVG2gerber silk0Gerber = SVG2gerber(svgSilk);
+        SVG2gerber silk0Gerber = SVG2gerber(svgSilk, "silk");
 
         QString silk0File = exportDir + "/" +
                               QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)

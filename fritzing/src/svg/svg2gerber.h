@@ -35,7 +35,7 @@ $Date$
 class SVG2gerber
 {
 public:
-    SVG2gerber(QString);
+    SVG2gerber(QString svgStr, QString debugStr="dbg");
     QString getGerber();
     QString getSolderMask();
     QString getNCDrill();
