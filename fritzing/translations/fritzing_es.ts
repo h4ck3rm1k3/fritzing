@@ -69,17 +69,17 @@
         <translation type="unfinished">Partes</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/binmanager/binmanager.cpp" line="196"/>
+        <location filename="src/partsbinpalette/binmanager/binmanager.cpp" line="219"/>
         <source>New bin (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/binmanager/binmanager.cpp" line="205"/>
+        <location filename="src/partsbinpalette/binmanager/binmanager.cpp" line="228"/>
         <source>Select a Fritzing file to open</source>
         <translation type="unfinished">Seleccionar un archivo Fritzing para abrir</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/binmanager/binmanager.cpp" line="207"/>
+        <location filename="src/partsbinpalette/binmanager/binmanager.cpp" line="230"/>
         <source>Fritzing (*%1)</source>
         <translation type="unfinished">Fritzing (*%1)</translation>
     </message>
@@ -441,12 +441,12 @@ in order to fix this connector</source>
 <context>
     <name>LinkDialog</name>
     <message>
-        <location filename="src/labels/note.cpp" line="174"/>
+        <location filename="src/labels/note.cpp" line="173"/>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <location filename="src/labels/note.cpp" line="175"/>
+        <location filename="src/labels/note.cpp" line="174"/>
         <source>OK</source>
         <translation type="unfinished">Aceptar</translation>
     </message>
@@ -484,47 +484,47 @@ in order to fix this connector</source>
         <translation>Guardar %1</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1049"/>
+        <location filename="src/mainwindow.cpp" line="1103"/>
         <source>Do you want to keep the parts that were loaded with this shareable sketch %1?</source>
         <translation>¿Deseas mantener las partes cargadas en este bosquejo portable %1?</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="901"/>
+        <location filename="src/mainwindow.cpp" line="1020"/>
         <source>Specify a file name</source>
         <translation>Especifica un nombre para el archivo</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="903"/>
+        <location filename="src/mainwindow.cpp" line="1022"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2072"/>
+        <location filename="src/mainwindow_menu.cpp" line="2091"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="950"/>
+        <location filename="src/mainwindow.cpp" line="1058"/>
         <source>Unable to export %1 to shareable sketch</source>
         <translation>Imposible exportar %1 como un bosquejo portable</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="967"/>
+        <location filename="src/mainwindow.cpp" line="957"/>
         <source>Unable to open shareable sketch %1</source>
         <translation>Imposible de abrir el bosquejo portable %1</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1140"/>
+        <location filename="src/mainwindow.cpp" line="1194"/>
         <source>No connections to route</source>
         <translation>No existen conexiones que rutear</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1143"/>
+        <location filename="src/mainwindow.cpp" line="1197"/>
         <source>Routing completed</source>
         <translation>Ruteado completo</translation>
     </message>
     <message numerus="yes">
-        <location filename="src/mainwindow.cpp" line="1146"/>
+        <location filename="src/mainwindow.cpp" line="1200"/>
         <source>Routing completed using %n jumper(s)</source>
         <translation>
             <numerusform>Ruteo completado utilizando %n jumper(s)</numerusform>
@@ -532,7 +532,7 @@ in order to fix this connector</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="src/mainwindow.cpp" line="1149"/>
+        <location filename="src/mainwindow.cpp" line="1203"/>
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
         <translation>
             <numerusform>%1 to %2 redes ruteadas -%n conector(es) pendiente(s) de rutear</numerusform>
@@ -540,7 +540,7 @@ in order to fix this connector</source>
         </translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1271"/>
+        <location filename="src/mainwindow.cpp" line="1325"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
@@ -1383,37 +1383,37 @@ in order to fix this connector</source>
         <translation>Disculpa, &quot;%1&quot; no se ha implementado aun</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2220"/>
+        <location filename="src/mainwindow_menu.cpp" line="2239"/>
         <source>&amp;Autoroute</source>
         <translation>&amp;Autorutear</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2221"/>
+        <location filename="src/mainwindow_menu.cpp" line="2240"/>
         <source>Autoroute...</source>
         <translation>Autorutear...</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2225"/>
+        <location filename="src/mainwindow_menu.cpp" line="2244"/>
         <source>Create a trace from the selected wire</source>
         <translation>Crear una traza a partir del cable seleccionado</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2229"/>
+        <location filename="src/mainwindow_menu.cpp" line="2248"/>
         <source>Create a jumper wire from the selected wire</source>
         <translation>Crear un Jumper a partir del cable seleccionado</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2233"/>
+        <location filename="src/mainwindow_menu.cpp" line="2252"/>
         <source>When autorouting, do not rip up this wire</source>
         <translation>Durante el Autoruteo, no tocar este cable</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2252"/>
+        <location filename="src/mainwindow_menu.cpp" line="2271"/>
         <source>Autorouting...</source>
         <translation>Autoruteando...</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2269"/>
+        <location filename="src/mainwindow_menu.cpp" line="2288"/>
         <source>Cancel autorouting</source>
         <translation>Cancelar Autoruteo</translation>
     </message>
@@ -1448,12 +1448,7 @@ in order to fix this connector</source>
         <translation>Mostrar/Ocultar la etiqueta de las partes seleccionadas</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="1968"/>
-        <source>Gerber export</source>
-        <translation>Exportar a Gerber</translation>
-    </message>
-    <message>
-        <location filename="src/mainwindow_menu.cpp" line="2129"/>
+        <location filename="src/mainwindow_menu.cpp" line="2148"/>
         <source>Fritzing Bill of Materials
 
 </source>
@@ -1462,7 +1457,7 @@ in order to fix this connector</source>
 </translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2170"/>
+        <location filename="src/mainwindow_menu.cpp" line="2189"/>
         <source>
 
 Shopping List
@@ -1479,12 +1474,12 @@ Cantidad<byte value="x9"/>Parte
 </translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2185"/>
+        <location filename="src/mainwindow_menu.cpp" line="2204"/>
         <source>Export Bill of Materials (BoM)...</source>
         <translation>Exportar Lista de Materiales(BoM)...</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2266"/>
+        <location filename="src/mainwindow_menu.cpp" line="2285"/>
         <source>Skip this trace</source>
         <translation>Saltar esta traza</translation>
     </message>
@@ -1504,7 +1499,7 @@ Cantidad<byte value="x9"/>Parte
         <translation>PDF para grabado al aguafuerte</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2352"/>
+        <location filename="src/mainwindow_menu.cpp" line="2371"/>
         <source>Add Note</source>
         <translation>Agregar Nota</translation>
     </message>
@@ -1519,32 +1514,32 @@ Cantidad<byte value="x9"/>Parte
         <translation>Comprobar si hay una nueva versión de Fritzing disponible para descargar</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2224"/>
+        <location filename="src/mainwindow_menu.cpp" line="2243"/>
         <source>&amp;Create Trace from Selected Wire(s)</source>
         <translation>&amp;Crear Traza a partir de el/los cable(s) seleccionado(s)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2228"/>
+        <location filename="src/mainwindow_menu.cpp" line="2247"/>
         <source>&amp;Create Jumper from Selected Wire(s)</source>
         <translation>&amp;Crear Jumper a partir de el/los cable(s) seleccionado(s)</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2237"/>
+        <location filename="src/mainwindow_menu.cpp" line="2256"/>
         <source>Select All Traces</source>
         <translation>Seleccionar Todas las Trazas</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2238"/>
+        <location filename="src/mainwindow_menu.cpp" line="2257"/>
         <source>Select all trace wires</source>
         <translation>Seleccionar Todas las Trazas</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2245"/>
+        <location filename="src/mainwindow_menu.cpp" line="2264"/>
         <source>Select All Jumper Wires</source>
         <translation>Seleccionar Todos los Jumpers</translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2246"/>
+        <location filename="src/mainwindow_menu.cpp" line="2265"/>
         <source>Select all jumper wires</source>
         <translation>Seleccionar todos los Jumpers</translation>
     </message>
@@ -1564,12 +1559,12 @@ Cantidad<byte value="x9"/>Parte
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2131"/>
+        <location filename="src/mainwindow_menu.cpp" line="2150"/>
         <source>Sketch: <byte value="x9"/></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2135"/>
+        <location filename="src/mainwindow_menu.cpp" line="2154"/>
         <source>Date: <byte value="x9"/></source>
         <translation type="unfinished"></translation>
     </message>
@@ -1584,37 +1579,37 @@ Cantidad<byte value="x9"/>Parte
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2242"/>
+        <location filename="src/mainwindow_menu.cpp" line="2261"/>
         <source>Select all trace wires excluded from autorouting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2232"/>
+        <location filename="src/mainwindow_menu.cpp" line="2251"/>
         <source>&amp;Don&apos;t Autoroute This Trace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2241"/>
+        <location filename="src/mainwindow_menu.cpp" line="2260"/>
         <source>Select All Traces Marked &quot;Don&apos;t Autoroute&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="994"/>
+        <location filename="src/mainwindow.cpp" line="984"/>
         <source>Select a part to import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="996"/>
+        <location filename="src/mainwindow.cpp" line="986"/>
         <source>External Part (*%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1013"/>
+        <location filename="src/mainwindow.cpp" line="1003"/>
         <source>Unable to open shareable part %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1079"/>
+        <location filename="src/mainwindow.cpp" line="1133"/>
         <source>Do you want to keep the imported parts?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1659,33 +1654,33 @@ Cantidad<byte value="x9"/>Parte
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="2065"/>
+        <location filename="src/mainwindow_menu.cpp" line="2084"/>
         <source>This will soon provide an export of your Fritzing sketch to the EAGLE layout software. If you&apos;d like to have more exports to your favourite EDA tool, please let us know, or contribute.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1397"/>
+        <location filename="src/mainwindow.cpp" line="1451"/>
         <source>Before you can save a sketch as a module, all traces must be routed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1664"/>
+        <location filename="src/mainwindow.cpp" line="1718"/>
         <source>Sorry!</source>
         <translation type="unfinished">Disculpa!</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1668"/>
+        <location filename="src/mainwindow.cpp" line="1722"/>
         <source>No part with those characteristics.
 We&apos;re working to avoid this message, and only let you choose between properties that do exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1681"/>
+        <location filename="src/mainwindow.cpp" line="1735"/>
         <source>Fritzing doesn&apos;t yet have a part that matches all the requested properties, so one that matches only some of the properties is being substituted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1686"/>
+        <location filename="src/mainwindow.cpp" line="1740"/>
         <source>Swapped %1 with module %2</source>
         <translation type="unfinished">Se intercambió %1 por módulo %2</translation>
     </message>
@@ -1715,8 +1710,13 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/mainwindow_menu.cpp" line="1972"/>
+        <location filename="src/mainwindow_menu.cpp" line="1991"/>
         <source>Open Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/mainwindow_menu.cpp" line="1987"/>
+        <source>Your sketch does not have a board!  Add a board so you can export to Gerber.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1746,7 +1746,7 @@ We&apos;re working to avoid this message, and only let you choose between proper
 <context>
     <name>Note</name>
     <message>
-        <location filename="src/labels/note.cpp" line="210"/>
+        <location filename="src/labels/note.cpp" line="209"/>
         <source>[write your note here]</source>
         <translation>[escribe tu nota aquí]</translation>
     </message>
@@ -1868,98 +1868,93 @@ We&apos;re working to avoid this message, and only let you choose between proper
 <context>
     <name>PartsBinPaletteWidget</name>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="249"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="251"/>
         <source>Show as icons</source>
         <translation>Mostrar como Iconos</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="253"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="255"/>
         <source>Show as list</source>
         <translation>Mostrar como Lista</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="257"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="259"/>
         <source>Remove selected part</source>
         <translation>Quitar la parte seleccionada</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="301"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="304"/>
         <source>Save bin</source>
         <translation>Guardar catálogo</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="376"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="385"/>
         <source>Specify a file name</source>
         <translation>Especifica un nombre para el archivo</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="378"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="387"/>
         <source>Fritzing (*%1)</source>
         <translation>Fritzing (*%1)</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="402"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="411"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="397"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="406"/>
         <source>Cannot find file %1.</source>
         <translation>Imposible encontrar archivo %1.</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="404"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="413"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>Imposible leer archivo %1:%2.</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="457"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="466"/>
         <source>Save &quot;%1&quot;</source>
         <translation>Guardar &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="459"/>
-        <source>Do you want to save the changes you made in the document &quot;%1&quot;?</source>
-        <translation>¿Deseas guardar los cambios realizados al documento &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="466"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="475"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="467"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="476"/>
         <source>Don&apos;t Save</source>
         <translation>No Guardar</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="468"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="477"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="559"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="566"/>
         <source>Add to bin</source>
         <translation>Agregar al catálogo</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="560"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="567"/>
         <source>Do you really want to add the selected part to the bin?</source>
         <translation>¿Realmente quieres agregar la parte seleccionada al catálogo?</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="583"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="590"/>
         <source>Remove from bin</source>
         <translation>Quitar del catálogo</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="584"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="591"/>
         <source>Do you really want to remove the selected part from the bin?</source>
         <translation>¿Realmente quieres quitar la parte seleccionada del catálogo?</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="469"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="478"/>
         <source>Your changes will be lost if you don&apos;t save them.</source>
         <translation>Los cambios se perderán si no se guardan.</translation>
     </message>
@@ -1969,62 +1964,53 @@ We&apos;re working to avoid this message, and only let you choose between proper
         <translation>Catalogo Sin Nombre</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="264"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="266"/>
         <source>Add Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="269"/>
-        <source>Import Part</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="297"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="300"/>
         <source>New bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="298"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="301"/>
         <source>Open bin...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="299"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="302"/>
         <source>Open core bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="300"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="303"/>
         <source>Close bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="302"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="305"/>
         <source>Save bin as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="615"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="622"/>
         <source>Rename bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="616"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="623"/>
         <source>Bin title:</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>PartsBinView</name>
     <message>
-        <location filename="src/partsbinpalette/partsbinview.cpp" line="158"/>
-        <source>Part already in bin</source>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="271"/>
+        <source>Export Part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinview.cpp" line="158"/>
-        <source>The part that you have just added,
-is already there, we won&apos;t add it again, right?</source>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="468"/>
+        <source>Do you want to save the changes you made in this bin &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2265,12 +2251,12 @@ a schematic view?</source>
         <translation>Vista de Protoboard (placa de Prototipos)</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="729"/>
+        <location filename="src/sketchwidget.cpp" line="734"/>
         <source>Fritzing</source>
         <translation>Fritzing</translation>
     </message>
     <message>
-        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="428"/>
+        <location filename="src/partsbinpalette/partsbinpalettewidget.cpp" line="437"/>
         <source>Friting cannot load the parts bin</source>
         <translation>Fritzing no pudo cargar el catalogo de partes</translation>
     </message>
@@ -2300,12 +2286,12 @@ a schematic view?</source>
         <translation>Vista de PCB</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1186"/>
+        <location filename="src/mainwindow.cpp" line="1240"/>
         <source>Part</source>
         <translation>Parte</translation>
     </message>
     <message>
-        <location filename="src/mainwindow.cpp" line="1195"/>
+        <location filename="src/mainwindow.cpp" line="1249"/>
         <source>Wire</source>
         <translation>Cable</translation>
     </message>
@@ -2493,42 +2479,42 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="730"/>
+        <location filename="src/sketchwidget.cpp" line="735"/>
         <source>The file %1 is not a Fritzing file (1).</source>
         <translation>El archivo %1 no es un archivo valido de Fritzing(1).</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2085"/>
+        <location filename="src/sketchwidget.cpp" line="2090"/>
         <source>%1 %2 %3</source>
         <translation>%1 %2 %3</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2192"/>
+        <location filename="src/sketchwidget.cpp" line="2197"/>
         <source>%1 Layer</source>
         <translation>%1 Capa</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2430"/>
+        <location filename="src/sketchwidget.cpp" line="2435"/>
         <source>Bring forward</source>
         <translation>Traer hacia adelante</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2422"/>
+        <location filename="src/sketchwidget.cpp" line="2427"/>
         <source>Send backward</source>
         <translation>Enviar hacia atrás</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2439"/>
+        <location filename="src/sketchwidget.cpp" line="2444"/>
         <source>Bring to front</source>
         <translation>Traer al frente</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3247"/>
+        <location filename="src/sketchwidget.cpp" line="3252"/>
         <source>Split Wire</source>
         <translation>Separar Cable</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3294"/>
+        <location filename="src/sketchwidget.cpp" line="3299"/>
         <source>Join Wire</source>
         <translation>Unir Cable</translation>
     </message>
@@ -2693,7 +2679,7 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="src/labels/note.cpp" line="151"/>
+        <location filename="src/labels/note.cpp" line="150"/>
         <source>Edit link</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2705,6 +2691,17 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
     <message>
         <location filename="src/modelpart.cpp" line="115"/>
         <source>resizable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/partsbinpalette/partsbinview.cpp" line="158"/>
+        <source>Part already in bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="src/partsbinpalette/partsbinview.cpp" line="158"/>
+        <source>The part that you have just added,
+is already there, we won&apos;t add it again, right?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2821,152 +2818,152 @@ Fritzing segirá funcionando, pero no podrás cambiar las propiedades de las par
 <context>
     <name>SketchWidget</name>
     <message>
-        <location filename="src/sketchwidget.cpp" line="456"/>
+        <location filename="src/sketchwidget.cpp" line="457"/>
         <source>loading part</source>
         <translation>cargando parte</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="463"/>
+        <location filename="src/sketchwidget.cpp" line="464"/>
         <source>done loading</source>
         <translation>carga terminada</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="853"/>
+        <location filename="src/sketchwidget.cpp" line="858"/>
         <source>%1 %2</source>
         <translation>%1 %2</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="856"/>
+        <location filename="src/sketchwidget.cpp" line="861"/>
         <source>%1 %2 items</source>
         <translation>%1 %2 items</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1128"/>
+        <location filename="src/sketchwidget.cpp" line="1133"/>
         <source>Select All</source>
         <translation>Seleccionar Todo</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1128"/>
+        <location filename="src/sketchwidget.cpp" line="1133"/>
         <source>Deselect</source>
         <translation>Deseleccionar</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1389"/>
+        <location filename="src/sketchwidget.cpp" line="1394"/>
         <source>Add %1</source>
         <translation>Agregar %1</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1772"/>
+        <location filename="src/sketchwidget.cpp" line="1777"/>
         <source>Move %2 (%1)</source>
         <translation>Mover %2 (%1)</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1775"/>
+        <location filename="src/sketchwidget.cpp" line="1780"/>
         <source>Move %2 items (%1)</source>
         <translation>Mover %2 items (%1)</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1903"/>
+        <location filename="src/sketchwidget.cpp" line="1908"/>
         <source>Select %1</source>
         <translation>Selecionar %1</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1906"/>
+        <location filename="src/sketchwidget.cpp" line="1911"/>
         <source>Select %1 items</source>
         <translation>Selecionar %1 items</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2069"/>
+        <location filename="src/sketchwidget.cpp" line="2074"/>
         <source>Disconnect</source>
         <translation>Desconectar</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2077"/>
+        <location filename="src/sketchwidget.cpp" line="2082"/>
         <source>Change</source>
         <translation>Cambiar</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2081"/>
+        <location filename="src/sketchwidget.cpp" line="2086"/>
         <source>Connect</source>
         <translation>Conectar</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2082"/>
+        <location filename="src/sketchwidget.cpp" line="2087"/>
         <source>to %1</source>
         <translation>a %1</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2132"/>
+        <location filename="src/sketchwidget.cpp" line="2137"/>
         <source>Create and connect wire</source>
         <translation>Crear y conectar Cable</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="2743"/>
+        <location filename="src/sketchwidget.cpp" line="2748"/>
         <source>%3 %2 (%1)</source>
         <translation>%3 %2 (%1)</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="4397"/>
+        <location filename="src/sketchwidget.cpp" line="4402"/>
         <source>Rotate</source>
         <translation>Girar</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="4397"/>
+        <location filename="src/sketchwidget.cpp" line="4402"/>
         <source>Flip</source>
         <translation>Invertir</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3357"/>
+        <location filename="src/sketchwidget.cpp" line="3362"/>
         <source>Shift-click to add a bend point to the wire</source>
         <translation>Shift-click para agregar un punto de doblez al cable</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3410"/>
+        <location filename="src/sketchwidget.cpp" line="3415"/>
         <source>Shift-click to delete this bend point</source>
         <translation>Shift-click para borrar este punto de doblez</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3630"/>
+        <location filename="src/sketchwidget.cpp" line="3635"/>
         <source>Change %1 color from %2 to %3</source>
         <translation>Cambiar el color de %1 de %2 a %3</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3636"/>
+        <location filename="src/sketchwidget.cpp" line="3641"/>
         <source>Change color of %1 wires to %2</source>
         <translation>Cambiar color de %1 cables a %2</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3489"/>
+        <location filename="src/sketchwidget.cpp" line="3494"/>
         <source>Change %1 label to &apos;%2&apos;</source>
         <translation>Cambiar la etiqueta %1 a &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="4390"/>
+        <location filename="src/sketchwidget.cpp" line="4395"/>
         <source>Move label &apos;%1&apos;</source>
         <translation>Mover etiqueta &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="4397"/>
+        <location filename="src/sketchwidget.cpp" line="4402"/>
         <source>%1 label &apos;%2&apos;</source>
         <translation>%1 etiqueta &apos;%2&apos;</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="1469"/>
+        <location filename="src/sketchwidget.cpp" line="1474"/>
         <source>Selection</source>
         <translation>Selección</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="4423"/>
+        <location filename="src/sketchwidget.cpp" line="4428"/>
         <source>Resize Note</source>
         <translation>Cambiar tamaño de la Nota</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3680"/>
+        <location filename="src/sketchwidget.cpp" line="3685"/>
         <source>Change %1 width from %2 to %3</source>
         <translation>Cambiar el ancho de %1 de %2 a %3</translation>
     </message>
     <message>
-        <location filename="src/sketchwidget.cpp" line="3686"/>
+        <location filename="src/sketchwidget.cpp" line="3691"/>
         <source>Change width of %1 wires to %2</source>
         <translation>Cambiar el ancho de %1 cables a %2</translation>
     </message>

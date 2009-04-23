@@ -155,7 +155,7 @@ void PartsBinView::dropEventAux(QDropEvent* event) {
 		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
 		if(mp) {
 			if(m_parent->alreadyIn(moduleID)) {
-				QMessageBox::information(m_parent, m_parent->tr("Part already in bin"), m_parent->tr("The part that you have just added,\nis already there, we won't add it again, right?"));
+				QMessageBox::information(m_parent, QObject::tr("Part already in bin"), QObject::tr("The part that you have just added,\nis already there, we won't add it again, right?"));
 			} else {
 				m_parent->addPart(mp,toIndex);
 				m_parent->setDirty();
