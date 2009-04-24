@@ -70,6 +70,7 @@ RESOURCES += phoenixresources.qrc
 	include(pri/utils.pri)
 	include(pri/viewswitcher.pri)
 	include(pri/navigator.pri)
+	include(pri/items.pri)
 TARGET = Fritzing
 TEMPLATE = app
 TRANSLATIONS += translations/fritzing_de.ts \

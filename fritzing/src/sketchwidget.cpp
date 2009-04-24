@@ -67,6 +67,7 @@ $Date$
 #include "svg/svgfilesplitter.h"
 #include "help/sketchmainhelp.h"
 #include "htmlinfoview.h"
+#include "items/resizableboard.h"
 
 static QColor labelTextColor = Qt::black;
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -587,6 +588,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 		modelPart->initConnectors();    // is a no-op if connectors already in place
 	}
 
+	PaletteItem* paletteItem = NULL;
 	switch (modelPart->itemType()) {
 		case ModelPart::Module:
 			if (doConnectors || originatingCommand || originalModelIndex > 0) 
@@ -651,11 +653,14 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			addToScene(note, getNoteViewLayerID());
 			return note;
 		}
+		case ModelPart::ResizableBoard:
+			paletteItem = new ResizableBoard(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
+			break;
 		default:
+			paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
 			break;
 	}
 
-	PaletteItem* paletteItem = new PaletteItem(modelPart, m_viewIdentifier, viewGeometry, id, m_itemMenu);
 	DebugDialog::debug(QString("adding part %1 %2 %3").arg(id).arg(paletteItem->title()).arg(m_viewIdentifier) );
 	bool ok;
 	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors, ok);
@@ -1528,10 +1533,17 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		return;
 	}
 
+
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase) {
 		InfoGraphicsView::viewItemInfo(itemBase);
 		setLastPaletteItemSelectedIf(itemBase);
+	}
+
+	// board's child items (at the moment) are the resize grips
+	ResizableBoard * board = dynamic_cast<ResizableBoard *>(item->parentItem());
+	if (board != NULL) {
+		return;
 	}
 
 	QSet<Wire *> wires;
@@ -1625,7 +1637,7 @@ void SketchWidget::mouseMoveEvent(QMouseEvent *event) {
 
 	if (event->buttons() == Qt::NoButton) {
 		if (m_fixedToCenterItem && m_fixedToCenterItem->getVisible()) {
-			QSize size(m_fixedToCenterItem->size().width(), m_fixedToCenterItem->size().height());
+			QSize size((int) m_fixedToCenterItem->size().width(), (int) m_fixedToCenterItem->size().height());
 			QRect r(m_fixedToCenterItemOffset, size);
 			bool within = r.contains(event->pos()) && (itemAt(event->pos()) == NULL);
 			if (m_fixedToCenterItem->setMouseWithin(within)) {
@@ -4137,10 +4149,7 @@ void SketchWidget::ensureFixedToTopLeftItems() {
 }
 
 void SketchWidget::ensureFixedToTopLeft(QGraphicsItem* item) {
-	qreal x = 0;
-	qreal y = 0;
-
-	item->setPos(mapToScene(x,y));
+	item->setPos(mapToScene(0,0));
 }
 
 void SketchWidget::ensureFixedToTopRightItems() {
@@ -4162,8 +4171,8 @@ void SketchWidget::ensureFixedToTopRightItems() {
 }
 
 void SketchWidget::ensureFixedToTopRight(QGraphicsItem* item) {
-	qreal x = width()-fixedItemWidth(item);
-	qreal y = 0;
+	int x = (int) (width()-fixedItemWidth(item));
+	int y = 0;
 
 	item->setPos(mapToScene(x,y));
 }
@@ -4187,8 +4196,8 @@ void SketchWidget::ensureFixedToBottomLeftItems() {
 }
 
 void SketchWidget::ensureFixedToBottomLeft(QGraphicsItem* item) {
-	qreal x = 0;
-	qreal y = height()-fixedItemHeight(item);
+	int x = 0;
+	int y = (int) (height()-fixedItemHeight(item));
 
 	item->setPos(mapToScene(x,y));
 }
@@ -4212,8 +4221,8 @@ void SketchWidget::ensureFixedToBottomRightItems() {
 }
 
 void SketchWidget::ensureFixedToBottomRight(QGraphicsItem* item) {
-	qreal x = width()-fixedItemWidth(item);
-	qreal y = height()-fixedItemHeight(item);
+	int x = (int) (width()-fixedItemWidth(item));
+	int y = (int) (height()-fixedItemHeight(item));
 
 	item->setPos(mapToScene(x,y));
 }
@@ -4443,8 +4452,8 @@ void SketchWidget::init() {
 
 QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::ViewLayerID> & partLayers, const QList<ViewLayer::ViewLayerID> & wireLayers, bool blackOnly, QSizeF & imageSize, ItemBase * offsetPart)
 {
-	int width = scene()->width();
-	int height = scene()->height();
+	qreal width =  scene()->width();
+	qreal height =  scene()->height();
 
 	QList<ItemBase *> itemBases;
 	QRectF itemsBoundingRect;
@@ -4626,8 +4635,8 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 				}
 				*/
 
-				m_fixedToCenterItemOffset.setX((vp.width() - helpsize.width()) / 2);
-				m_fixedToCenterItemOffset.setY((vp.height() - helpsize.height()) / 2);
+				m_fixedToCenterItemOffset.setX((int) ((vp.width() - helpsize.width()) / 2));
+				m_fixedToCenterItemOffset.setY((int) ((vp.height() - helpsize.height()) / 2));
 				painter->save();
 				painter->setWindow(painter->viewport());
 				painter->setTransform(QTransform());

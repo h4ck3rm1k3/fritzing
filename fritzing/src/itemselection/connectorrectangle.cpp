@@ -131,6 +131,7 @@ void ConnectorRectangle::setHandlerRect(CornerHandler* handler) {
 QRectF ConnectorRectangle::handlerRect(Qt::Corner corner) {
 	QRectF rect = m_owner->boundingRect();
 	qreal scale = currentScale();
+	//DebugDialog::debug(QString("scale %1").arg(scale));
 	QPointF offset(CornerHandler::Size/scale,CornerHandler::Size/scale);
 	QPointF cornerPoint;
 	switch(corner) {
@@ -178,3 +179,4 @@ void ConnectorRectangle::setMinSize(qreal minWidth, qreal minHeight) {
 	m_minWidth = minWidth;
 	m_minHeight = minHeight;
 }
+

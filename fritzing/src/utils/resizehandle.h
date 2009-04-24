@@ -18,34 +18,44 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2676 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 
 ********************************************************************/
 
-#ifndef EVENTEATER_H
-#define EVENTEATER_H
+#ifndef RESIZEHANDLE_H
+#define RESIZEHANDLE_H
 
-#include <QObject>
-#include <QEvent>
-#include <QWidget>
-#include <QList>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsSceneMouseEvent>
 
-class EventEater : public QObject
+class ResizeHandle : public QObject, public QGraphicsPixmapItem 
 {
 Q_OBJECT
 
 public:
-	EventEater(QObject * parent = 0);
+	ResizeHandle(const QPixmap & pixmap, QGraphicsItem * parent = 0);
+	~ResizeHandle();
 
-	void allowEventsIn(QWidget *);
+	QPointF resizeOffset();
+	void setResizeOffset(QPointF);
+	qreal currentScale();
 
- protected:
-     bool eventFilter(QObject *obj, QEvent *event);
+public slots:
+	void zoomChangedSlot(qreal scale);
 
 protected:
-	QList<QWidget *> m_allowedWidgets;
+	void mousePressEvent ( QGraphicsSceneMouseEvent * event );
+	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
+signals:
+	void mousePressSignal(QGraphicsSceneMouseEvent * event, ResizeHandle *);
+	void zoomChangedSignal(qreal scale);
+
+protected:
+	QPointF m_resizeOffset;
+
 };
 
 #endif

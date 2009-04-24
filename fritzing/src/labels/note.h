@@ -51,7 +51,6 @@ public:
 	void saveInstanceLocation(QXmlStreamWriter &);
 	void moveItem(ViewGeometry &);
 	void findConnectorsUnder();
-	bool resizing();
 	void setText(const QString & text);
 	void setText(const QDomElement & textElement);
 	QString text();
@@ -71,6 +70,8 @@ protected:
 protected slots:
 	void contentsChangedSlot();
 	void linkDialog();
+	void handleZoomChangedSlot(qreal scale);
+	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
 
 public:
 	static QString moduleIDName;
@@ -84,9 +85,8 @@ protected:
 	QRectF m_rect;
     QPen m_pen;
     QBrush m_brush;
-	QGraphicsPixmapItem * m_resizeGrip;
-	bool m_inResize;
-	QPointF m_resizePos;
+	class ResizeHandle * m_resizeGrip;
+	class ResizeHandle * m_inResize;
 	QGraphicsTextItem * m_graphicsTextItem;
 
 };
@@ -109,5 +109,6 @@ protected:
 	QLineEdit * m_textEdit;
 
 };
+
 
 #endif

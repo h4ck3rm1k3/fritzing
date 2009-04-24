@@ -29,6 +29,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../infographicsview.h"
 #include "../modelpart.h"
+#include "../utils/resizehandle.h"
 
 #include <QTextFrame>
 #include <QTextFrameFormat>
@@ -77,7 +78,6 @@ const int borderWidth = 3;
 QString Note::initialTextString;
 
 QRegExp urlTag("<a.*href=[\"']([^\"]+[.\\s]*)[\"'].*>");    
-
 
 ///////////////////////////////////////
 
@@ -221,13 +221,14 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 		*/
 	}
 
-	m_inResize = false;
+	m_inResize = NULL;
 	this->setCursor(Qt::CrossCursor);
 
     setFlag(QGraphicsItem::ItemIsSelectable, true);
 
 	m_rect.setRect(0, 0, viewGeometry.rect().width(), viewGeometry.rect().height());
 	m_pen.setWidth(borderWidth);
+	m_pen.setCosmetic(true);
 	m_pen.setBrush(QColor(0xff, 0xd5, 0x0e));
 
 	m_brush.setColor(QColor(0xfb, 0xf7, 0xab));
@@ -235,10 +236,10 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 
 	setPos(m_viewGeometry.loc());
 
-	m_resizeGrip = new QGraphicsPixmapItem(QPixmap(":/resources/images/icons/noteResizeGrip.png"));
-	m_resizeGrip->setParentItem(this);
-	m_resizeGrip->setCursor(Qt::SizeFDiagCursor);
-	m_resizeGrip->setVisible(true);
+	QPixmap pixmap(":/resources/images/icons/noteResizeGrip.png");
+	m_resizeGrip = new ResizeHandle(pixmap, this);
+	connect(m_resizeGrip, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+	connect(m_resizeGrip, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
 
 	m_graphicsTextItem = new NoteGraphicsTextItem();
 	m_graphicsTextItem->setParentItem(this);
@@ -249,11 +250,11 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	m_graphicsTextItem->setOpenExternalLinks(true);
 
 	/*
+	// hack for testing embedded fonts
 	// set the font here
 	QFont font("Isabella");
 	m_graphicsTextItem->setFont(font);
 	*/
-
 
 	connect(m_graphicsTextItem->document(), SIGNAL(contentsChanged()),
 		this, SLOT(contentsChangedSlot()), Qt::DirectConnection);
@@ -319,12 +320,16 @@ QPainterPath Note::shape() const
 
 void Note::positionGrip() {
 	QSizeF gripSize = m_resizeGrip->boundingRect().size();
-	QSizeF sz = this->boundingRect().size() - gripSize;
+	QSizeF sz = this->boundingRect().size(); 
+	qreal scale = m_resizeGrip->currentScale();
+	QPointF offset((gripSize.width() + borderWidth - 1) / scale, (gripSize.height() + borderWidth - 1) / scale);
 	QPointF p(sz.width(), sz.height());
-	m_resizeGrip->setPos(p);
+	m_resizeGrip->setPos(p - offset);
 	m_graphicsTextItem->setPos(gripSize.width(), gripSize.height());
 	m_graphicsTextItem->setTextWidth(sz.width() - gripSize.width());
 }
+
+
 
 void Note::mousePressEvent(QGraphicsSceneMouseEvent * event) {
 	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
@@ -335,16 +340,7 @@ void Note::mousePressEvent(QGraphicsSceneMouseEvent * event) {
 	}
 
 	m_spaceBarWasPressed = false;
-	QPointF p = m_resizeGrip->mapFromParent(event->pos());
-	if (m_resizeGrip->boundingRect().contains(p)) {
-		saveGeometry();
-		m_inResize = true;
-		m_resizePos = event->pos();
-		event->accept();
-		return;
-	}
-
-	m_inResize = false;
+	m_inResize = NULL;
 	ItemBase::mousePressEvent(event);
 }
 
@@ -355,27 +351,53 @@ void Note::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	}
 
 	if (m_inResize) {
-		QRectF r = m_rect;
-		r.setWidth(m_viewGeometry.rect().width() + event->pos().x() - m_resizePos.x());
-		r.setHeight(m_viewGeometry.rect().height() + event->pos().y() - m_resizePos.y());
 		qreal minWidth = emptyMinWidth;
 		qreal minHeight = emptyMinHeight;
 		QSizeF gripSize = m_resizeGrip->boundingRect().size();
 		QSizeF minSize = m_graphicsTextItem->document()->size() + gripSize + gripSize;
 		if (minSize.height() > minHeight) minHeight = minSize.height();
 
-		if (r.width() < minWidth) {
-			r.setWidth(minWidth);
+		QRectF rect = boundingRect();
+		rect.moveTopLeft(this->pos());
+
+		qreal oldX1 = rect.x();
+		qreal oldY1 = rect.y();
+		qreal oldX2 = oldX1+rect.width();
+		qreal oldY2 = oldY1+rect.height();
+		qreal newX = event->scenePos().x() + m_inResize->resizeOffset().x();
+		qreal newY = event->scenePos().y() + m_inResize->resizeOffset().y();
+		QRectF newR;
+
+		/*if (m_inResize == m_resizeGripNW) {
+			if (oldX2 - newX < minWidth) {
+				newX = oldX2 - minWidth;
+			}
+			if (oldY2 - newY < minHeight) {
+				newY = oldY2 - minHeight;
+			}
+
+			QPointF p(newX, newY);
+			if (p != this->pos()) {
+				this->setPos(p);
+			}
+
+			newR.setRect(0, 0, oldX2 - newX, oldY2 - newY);
 		}
-		if (r.height() < minHeight) {
-			r.setHeight(minHeight);
+		else*/ if (m_inResize == m_resizeGrip) {
+			if (newX - oldX1 < minWidth) {
+				newX = oldX1 + minWidth;
+			}
+			if (newY - oldY1 < minHeight) {
+				newY = oldY1 + minHeight;
+			}	
+			newR.setRect(0, 0, newX - oldX1, newY - oldY1);
 		}
 
 		prepareGeometryChange();
-		m_rect = r;
+		m_rect = newR;
 		positionGrip();
-
 		event->accept();
+		
 		return;
 	}
 
@@ -389,7 +411,8 @@ void Note::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	}
 
 	if (m_inResize) {
-		m_inResize = false;
+		this->ungrabMouse();
+		m_inResize = NULL;
 		InfoGraphicsView *infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
 		if (infoGraphicsView != NULL) {
 			infoGraphicsView->noteSizeChanged(this, m_viewGeometry.rect(), m_rect);
@@ -399,10 +422,6 @@ void Note::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	}
 
 	ItemBase::mouseReleaseEvent(event);
-}
-
-bool Note::resizing() {
-	return m_inResize;
 }
 
 void Note::contentsChangedSlot() {
@@ -622,5 +641,28 @@ void Note::linkDialog() {
 			textCursor.insertHtml(QString("<a href=\"%1\">%2</a>").arg(ld.url()).arg(ld.text()));
 		}
 	}
+}
+
+void Note::handleZoomChangedSlot(qreal scale) {
+	Q_UNUSED(scale);
+	positionGrip();
+}
+
+void Note::handleMousePressSlot(QGraphicsSceneMouseEvent * event, ResizeHandle * resizeHandle) {
+	if (m_spaceBarWasPressed) return;
+
+	saveGeometry();
+
+	if (resizeHandle == m_resizeGrip) {
+		QSizeF sz = this->boundingRect().size();
+		resizeHandle->setResizeOffset(this->pos() + QPointF(sz.width(), sz.height()) - event->scenePos());
+	}
+	else {
+		//resizeHandle->setResizeOffset(this->pos() - event->scenePos());
+	}
+
+	m_inResize = resizeHandle;
+	this->grabMouse();
+
 }
 

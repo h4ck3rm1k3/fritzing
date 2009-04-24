@@ -625,8 +625,9 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		return false;
 	}
 
-	QPoint fp(fromPos.x(), fromPos.y());
-	QPoint tp(toPos.x(), toPos.y());
+	// round to int to compare
+	QPoint fp((int) fromPos.x(), (int) fromPos.y());
+	QPoint tp((int) toPos.x(), (int) toPos.y());
 	foreach (QLine * lastDrawTrace, m_lastDrawTraces) {
 		if (lastDrawTrace->p1() == fp && lastDrawTrace->p2() == tp) {
 			// been there done that

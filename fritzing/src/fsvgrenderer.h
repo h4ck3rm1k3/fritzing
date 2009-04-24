@@ -42,6 +42,7 @@ public:
 
 	bool load(const QString & filename);
 	bool load ( const QByteArray & contents, const QString & filename );     // for SvgSplitter loads
+	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
 

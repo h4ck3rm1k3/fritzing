@@ -145,7 +145,7 @@ void CornerHandler::hoverLeaveEvent(QGraphicsSceneHoverEvent * event) {
 }
 
 Qt::CursorShape CornerHandler::cursorForCorner(Qt::Corner corner) {
-	Qt::CursorShape cursorShape;
+	Qt::CursorShape cursorShape = Qt::SizeFDiagCursor;
 	switch(corner) {
 		case Qt::TopLeftCorner:
 		case Qt::BottomRightCorner:
@@ -174,13 +174,12 @@ void CornerHandler::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void CornerHandler::doPaint(QPainter *painter) {
 	if(m_isVisible) {
-		painter->save();
 		QRectF trgRect = m_parent->handlerRect(m_corner);
+		//DebugDialog::debug("handler rect ", trgRect);
 		QPixmap pm = pixmapHash[m_corner];
 		QRectF srcRect = QRectF(pm.rect());
 		//painter->drawRect(rect);
 		painter->drawPixmap(trgRect,pm,srcRect);
-		painter->restore();
 	}
 }
 

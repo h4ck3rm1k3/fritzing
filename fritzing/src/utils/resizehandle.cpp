@@ -1,0 +1,88 @@
+/*******************************************************************
+
+Part of the Fritzing project - http://fritzing.org
+Copyright (c) 2007-2009 Fachhochschule Potsdam - http://fh-potsdam.de
+
+Fritzing is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Fritzing is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************
+
+$Revision: 2820 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-04-15 16:37:21 +0200 (Wed, 15 Apr 2009) $
+
+********************************************************************/
+
+#include "resizehandle.h"
+#include "../zoomablegraphicsview.h"
+
+#include <QCursor>
+
+ResizeHandle::ResizeHandle(const QPixmap &pixmap, QGraphicsItem *parent)
+: QGraphicsPixmapItem(pixmap, parent)
+{
+	setCursor(Qt::SizeFDiagCursor);
+	setVisible(true);
+	setFlag(QGraphicsItem::ItemIgnoresTransformations, true);
+}
+
+ResizeHandle::~ResizeHandle() {
+}
+
+void ResizeHandle::mousePressEvent(QGraphicsSceneMouseEvent * event) {
+	event->accept();
+	emit mousePressSignal(event, this);
+}
+
+void ResizeHandle::setResizeOffset(QPointF p) {
+	m_resizeOffset = p;
+}
+
+QPointF ResizeHandle::resizeOffset()
+{
+	return m_resizeOffset;
+}
+
+QVariant ResizeHandle::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+	switch (change) {
+		case QGraphicsItem::ItemSceneHasChanged: 
+			if (scene()) {
+				ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(scene()->parent());
+				if (sw) {
+					connect(sw, SIGNAL(zoomChanged(qreal)), this, SLOT(zoomChangedSlot(qreal)));
+				}
+
+			}
+			break;
+		default:
+			break;
+   	}
+
+    return QGraphicsPixmapItem::itemChange(change, value);
+}
+
+void ResizeHandle::zoomChangedSlot(qreal scale) {
+	emit zoomChangedSignal(scale);
+}
+
+qreal ResizeHandle::currentScale() {
+	if(scene()) {
+		ZoomableGraphicsView *sw = dynamic_cast<ZoomableGraphicsView*>(scene()->parent());
+		if(sw) {
+			return sw->currentZoom()/100;
+		}
+	}
+	return 1;
+}

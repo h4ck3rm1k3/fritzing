@@ -118,9 +118,9 @@ void MiniViewContainer::updateFrame()
 	int h, w, dw, dh, newW, newH, newX, newY, tw, th;
 
 	if (hVis && vVis) {
-		tw = sceneRect.width();
+		tw = (int) sceneRect.width();
 		w = m_miniView->width();
-		th = sceneRect.height();
+		th = (int) sceneRect.height();
 		h = m_miniView->height();
 
 		//DebugDialog::debug(QString("tw:%1 th:%2").arg(tw).arg(th) );
@@ -140,10 +140,10 @@ void MiniViewContainer::updateFrame()
 
 		//DebugDialog::debug(QString("dw:%1 dh%2 w:%3 h:%4").arg(dw).arg(dh).arg(w).arg(h));
 
-		newW = w * (bottomRight.x() - topLeft.x())  / tw;
-		newX = w * (topLeft.x() - sceneRect.x()) / tw;
-		newY = h * (topLeft.y() - sceneRect.y()) / th;
-		newH = h * (bottomRight.y() - topLeft.y())  / th;
+		newW = (int) (w * (bottomRight.x() - topLeft.x())  / tw);
+		newX = (int) (w * (topLeft.x() - sceneRect.x()) / tw);
+		newY = (int) (h * (topLeft.y() - sceneRect.y()) / th);
+		newH = (int) (h * (bottomRight.y() - topLeft.y())  / th);
 	}
 	else if (hVis) {
 		int min = view->horizontalScrollBar()->minimum();
@@ -154,12 +154,12 @@ void MiniViewContainer::updateFrame()
 		//DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
 
 		QMatrix matrix = m_miniView->matrix();
-		w = sceneRect.width() * matrix.m11();
+		w = (int) (sceneRect.width() * matrix.m11());
 		dw = (this->width() - w) / 2;
 		newW = w * page / (max + page - min);
 		newX = w * (value - min) / (max + page - min);
 
-		h = sceneRect.height() * matrix.m22();
+		h = (int) (sceneRect.height() * matrix.m22());
 		dh = (this->height() - h) / 2;
 		newY = 0;
 		newH = h;
@@ -174,24 +174,24 @@ void MiniViewContainer::updateFrame()
 		//DebugDialog::debug(QString("min:%1 max:%2 page:%3 value:%4").arg(min).arg(max).arg(page).arg(value) );
 
 		QMatrix matrix = m_miniView->matrix();
-		h = sceneRect.height() * matrix.m22();
+		h = (int) (sceneRect.height() * matrix.m22());
 		dh = (this->height() - h) / 2;
 		newH = h * page / (max + page - min);
 		newY = h * (value - min) / (max + page - min);
 
-		w = sceneRect.width() * matrix.m11();
+		w = (int) (sceneRect.width() * matrix.m11());
 		dw = (this->width() - w) / 2;
 		newX = 0;
 		newW = w;
 	}
 	else if ((sceneRect.width() > 0) && (sceneRect.height() > 0)) {
 		QMatrix matrix = m_miniView->matrix();
-		w = sceneRect.width() * matrix.m11();
+		w = (int) (sceneRect.width() * matrix.m11());
 		dw = (this->width() - w) / 2;
 		newX = 0;
 		newW = w;
 
-		h = sceneRect.height() * matrix.m22();
+		h = (int) (sceneRect.height() * matrix.m22());
 		dh = (this->height() - h) / 2;
 		newY = 0;
 		newH = h;

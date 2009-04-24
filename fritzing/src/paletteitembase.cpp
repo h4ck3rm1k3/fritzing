@@ -350,26 +350,6 @@ void PaletteItemBase::connectedMoved(ConnectorItem * from, ConnectorItem * to) {
 	updateConnections();
 }
 
-/*
-bool PaletteItemBase::isBuriedConnectorHit(QGraphicsSceneMouseEvent *event) {
-	if (itemType() == ModelPart::Breadboard) return false;
-
-	foreach (QGraphicsItem * childItem, childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
-
-		QPointF p = connectorItem->mapFromScene(event->scenePos());
-		QRectF r = connectorItem->rect();
-		if (r.contains(p)) {
-			mousePressConnectorEvent(connectorItem, event);
-			return true;
-		}
-	}
-
-	return false;
-}
-*/
-
 void PaletteItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (lowerConnectorLayerVisible(this)) {
 		DebugDialog::debug("PaletteItemBase::hoverEnterEvent isn't obsolete");

@@ -71,7 +71,7 @@ void FSplashScreen::showProgress(int index, qreal progress) {
 	if (index < 0) return;
 	if (index >= m_pixmaps.count()) return;
 
-	int w = this->width() * progress;
+	int w = (int) (this->width() * progress);
 	PixmapThing * pixmapThing = m_pixmaps[index];
 	pixmapThing->rect.setWidth(w);
 	repaint();

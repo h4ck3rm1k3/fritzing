@@ -83,6 +83,10 @@ bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename)
 	return result;
 }
 
+bool FSvgRenderer::fastLoad(const QByteArray & contents) {
+	return QSvgRenderer::load(contents);
+}
+
 const QString & FSvgRenderer::filename() {
 	return m_filename;
 }
