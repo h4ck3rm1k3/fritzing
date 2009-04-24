@@ -42,6 +42,10 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 QString BinManager::Title;
 QString BinManager::MyPartsBinLocation;
 
+QString BinManager::StandardBinStyle = "background-color: gray;";
+QString BinManager::CurrentBinStyle = "background-color: black;";
+
+
 BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent)
 	: QFrame(parent)
 {
@@ -53,6 +57,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_undoStack = undoStack;
 	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
 	m_originalParent = parent;
+	m_currentBin = NULL;
 
 	m_widget = new StackWidget(this);
 	m_widget->setAcceptDrops(true);
@@ -259,10 +264,29 @@ PartsBinPaletteWidget* BinManager::newBin() {
 		this, SLOT(updateFileName(PartsBinPaletteWidget*, const QString&, const QString&))
 	);
 	connect(
+		bin, SIGNAL(focused(PartsBinPaletteWidget*)),
+		this, SLOT(setAsCurrentBin(PartsBinPaletteWidget*))
+	);
+	connect(
 		bin, SIGNAL(savePartAsBundled(const QString &)),
 		m_originalParent, SLOT(saveBundledPart(const QString &))
 	);
 	return bin;
+}
+
+void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
+	QString style = m_originalParent->styleSheet();
+	if(m_currentBin != bin) {
+		if(m_currentBin) {
+			m_currentBin->setProperty("current","false");
+			m_currentBin->setStyleSheet("");
+			m_currentBin->setStyleSheet(style);
+		}
+		m_currentBin = bin;
+		m_currentBin->setProperty("current","true");
+		m_currentBin->setStyleSheet("");
+		m_currentBin->setStyleSheet(style);
+	}
 }
 
 void BinManager::closeBinIn(StackTabWidget* tb) {

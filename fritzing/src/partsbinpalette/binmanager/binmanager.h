@@ -75,6 +75,7 @@ class BinManager : public QFrame {
 		void widgetChangedTabParent(
 			QWidget* widgetMoved, StackTabWidget* oldTabWidget, StackTabWidget* newTabWidget
 		);
+		void setAsCurrentBin(PartsBinPaletteWidget* bin);
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -96,11 +97,16 @@ class BinManager : public QFrame {
 
 		QWidget *m_originalParent;
 		StackWidget *m_widget;
+		PartsBinPaletteWidget *m_currentBin;
 
 		QHash<PartsBinPaletteWidget*,StackTabWidget*> m_tabWidgets;
 		QHash<QString /*filename*/,PartsBinPaletteWidget*> m_openedBins;
 		int m_unsavedBinsCount;
 		QString m_defaultSaveFolder;
+
+	protected:
+		static QString StandardBinStyle;
+		static QString CurrentBinStyle;
 
 	public:
 		static QString Title;

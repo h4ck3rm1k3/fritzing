@@ -51,6 +51,7 @@ protected:
 
 class PartsBinPaletteWidget : public QFrame {
 	Q_OBJECT
+
 	public:
 		PartsBinPaletteWidget(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, class BinManager* manager);
 		~PartsBinPaletteWidget();
@@ -112,9 +113,12 @@ class PartsBinPaletteWidget : public QFrame {
 		void saved(bool hasPartsFromBundled);
 		void fileNameUpdated(PartsBinPaletteWidget*, const QString &newFileName, const QString &oldFilename);
 		void savePartAsBundled(const QString &moduleId);
+		void focused(PartsBinPaletteWidget*);
 
 	protected:
-		void closeEvent(QCloseEvent* event);
+		void closeEvent(QCloseEvent *event);
+		void mousePressEvent(QMouseEvent *event);
+		bool eventFilter(QObject *obj, QEvent *event);
 
 		void setupFooter();
 		void setupButtons();

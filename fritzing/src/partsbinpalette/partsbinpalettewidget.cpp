@@ -55,6 +55,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_refModel = refModel;
 	m_canDeleteModel = false;
 	m_orderHasChanged = false;
+	setProperty("current","false");
 
 	Q_UNUSED(undoStack);
 
@@ -86,12 +87,18 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
 
+	connect(m_listView, SIGNAL(currentRowChanged(int)), this, SLOT(updateButtonStates()));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), this, SLOT(updateButtonStates()));
+
+	//connect(m_listView, SIGNAL(clicked()), this, SLOT(updateButtonStates()));
+	//connect(m_iconView, SIGNAL(clicked()(int)), this, SLOT(updateButtonStates()));
 
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), m_iconView, SLOT(itemMoved(int,int)));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), m_listView, SLOT(itemMoved(int,int)));
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
+
+	installEventFilter(this);
 }
 
 PartsBinPaletteWidget::~PartsBinPaletteWidget() {
@@ -296,6 +303,8 @@ void PartsBinPaletteWidget::createMenu() {
 	m_menuButton->setIcon(QIcon(":/resources/images/icons/partsBinMenu_icon.png"));
 	m_menuButton->setStyleSheet("background-color: transparent;");
 	QMenu *menu = new QMenu(this);
+
+	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateButtonStates()));
 
 	m_newBinAction = new QAction(tr("New bin"), this);
 	m_openBinAction = new QAction(tr("Open bin..."),this);
@@ -503,6 +512,11 @@ void PartsBinPaletteWidget::closeEvent(QCloseEvent* event) {
 	QFrame::closeEvent(event);
 }
 
+void PartsBinPaletteWidget::mousePressEvent(QMouseEvent* event) {
+	emit focused(this);
+	QFrame::mousePressEvent(event);
+}
+
 ModelPart * PartsBinPaletteWidget::selected() {
 	return m_currentView->selected();
 }
@@ -652,4 +666,18 @@ void PartsBinPaletteWidget::updateButtonStates() {
 	} else {
 		m_exportPartButton->setDisabledIcon();
 	}
+	emit focused(this);
+}
+
+bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {
+	if (obj == this) {
+		if (event->type() == QEvent::MouseButtonPress ||
+			event->type() == QEvent::GraphicsSceneDragMove ||
+			event->type() == QEvent::GraphicsSceneDrop ||
+			event->type() == QEvent::GraphicsSceneMousePress
+		) {
+			emit focused(this);
+		}
+	}
+	return QFrame::eventFilter(obj, event);
 }

@@ -53,6 +53,11 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 
 	QPixmap pixmap = QPixmap(":/resources/images/icons/binRearrangeTabs.png");
 	m_feedbackIcon = QIcon(pixmap);
+
+#if QT_VERSION >= 0x040500
+	this->setMovable(true);
+	this->setTabsClosable(true);
+#endif
 }
 
 void StackTabWidget::dragEnterEvent(QDragEnterEvent* event) {

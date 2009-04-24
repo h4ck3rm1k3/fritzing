@@ -328,12 +328,22 @@ PartsBinListView {
 	selection-background-color: #BEBEBE;
 }
 
+/*****
 #partsBinFooter,
 #partsBinContainer,
 PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
 	background-color: rgb(179,179,179);
+}
+*****/
+
+PartsBinPaletteWidget[current="false"] {
+	background-color: rgb(179,179,179);
+}
+
+PartsBinPaletteWidget[current="true"] {
+	background-color: black;
 }
 
 Console {
