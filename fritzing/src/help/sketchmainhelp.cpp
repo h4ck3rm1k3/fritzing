@@ -228,9 +228,7 @@ void SketchMainHelp::loadState() {
 const QPixmap & SketchMainHelp::getPixmap() {
 	if (m_pixmap == NULL) {
 		m_pixmap = new QPixmap(m_son->size());
-		QPainter painter(m_pixmap);
-		m_son->render(&painter);
-		painter.end();
+		m_son->render(m_pixmap);
 	}
 
 	return *m_pixmap;
