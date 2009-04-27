@@ -23,7 +23,7 @@ $Author: cohen@irascible.com $:
 $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 ********************************************************************/
-   
+
 // TODO:
 //	drag all 4 handles
 //	update properties in modelpartshared
@@ -33,7 +33,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 //  load svg form info view
 //		check for board and silkscreen layers
 
-#include "resizableBoard.h"
+#include "resizableboard.h"
 #include "../utils/resizehandle.h"
 #include "../fsvgrenderer.h"
 
@@ -121,7 +121,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 		if (newY - oldY1 < minHeight) {
 			newY = oldY1 + minHeight;
-		}	
+		}
 		newR.setRect(0, 0, newX - oldX1, newY - oldY1);
 	}
 	else if (m_inResize == m_resizeGripTL) {
@@ -160,7 +160,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 		if (newY - oldY1 < minHeight) {
 			newY = oldY1 + minHeight;
-		}	
+		}
 
 		QPointF p(newX, oldY1);
 		if (p != this->pos()) {
@@ -169,7 +169,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 
 		newR.setRect(0, 0, oldX2 - newX, newY - oldY1);
 	}
-	
+
 	QString s = BoardLayerTemplate.arg(newR.width()).arg(newR.height()).arg(newR.width() - 2).arg(newR.height() - 2);
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
@@ -185,7 +185,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 				m_silkscreenRenderer = new FSvgRenderer(itemBase);
 			}
 
-			s = SilkscreenLayerTemplate.arg(newR.width()).arg(newR.height()).arg(newR.width() - 4).arg(newR.height() - 4);			
+			s = SilkscreenLayerTemplate.arg(newR.width()).arg(newR.height()).arg(newR.width() - 4).arg(newR.height() - 4);
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
 				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
@@ -224,7 +224,7 @@ void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, Resi
 		resizeHandle->setResizeOffset(QPointF(this->pos().x() + this->boundingRect().width(), this->pos().y())  - event->scenePos());
 	}
 	else if (resizeHandle == m_resizeGripBL) {
-		resizeHandle->setResizeOffset(QPointF(this->pos().x(), this->pos().y() + this->boundingRect().height())  - event->scenePos());	
+		resizeHandle->setResizeOffset(QPointF(this->pos().x(), this->pos().y() + this->boundingRect().height())  - event->scenePos());
 	}
 
 	m_inResize = resizeHandle;
@@ -238,7 +238,7 @@ void ResizableBoard::handleZoomChangedSlot(qreal scale) {
 }
 
 void ResizableBoard::positionGrips() {
-	QSizeF sz = this->boundingRect().size(); 
+	QSizeF sz = this->boundingRect().size();
 	qreal scale = m_resizeGripBL->currentScale();
 
 	// assuming all the handles are the same size, offset to the center

@@ -55,9 +55,18 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 	m_feedbackIcon = QIcon(pixmap);
 
 #if QT_VERSION >= 0x040500
-	this->setMovable(true);
-	this->setTabsClosable(true);
+	//this->setMovable(true);
+	//this->setTabsClosable(true);
 #endif
+
+	connect(
+		this, SIGNAL(currentChanged(int)),
+		this, SLOT(informCurrentChanged(int))
+	);
+	connect(
+		this, SIGNAL(tabCloseRequested(int)),
+		this, SLOT(informTabCloseRequested(int))
+	);
 }
 
 void StackTabWidget::dragEnterEvent(QDragEnterEvent* event) {
@@ -83,3 +92,16 @@ void StackTabWidget::showFeedback(int index, bool doShow) {
 	QIcon icon = doShow? m_feedbackIcon: QIcon();
 	setTabIcon(index,icon);
 }
+
+StackTabBar *StackTabWidget::stackTabBar() {
+	return dynamic_cast<StackTabBar*>(tabBar());
+}
+
+void StackTabWidget::informCurrentChanged(int index) {
+	emit currentChanged(this,index);
+}
+
+void StackTabWidget::informTabCloseRequested(int index) {
+	emit tabCloseRequested(this, index);
+}
+

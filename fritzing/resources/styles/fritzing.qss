@@ -156,34 +156,6 @@ ZoomComboBox QScrollBar::sub-page:vertical {
 }
 
 
-/* ################### the sketch #################### */
-
-QToolBar QTabBar::tab {
-	/*margin-top: 10px;*/
-	padding: 4px 10px 6px 3px;
-	min-width: 5em;
-	text-align: left;
-
-	background-color: rgb(84,24,44);
-	border: 1px solid rgb(126,54,77);
-	border-bottom: 0px;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	font-size: 12px;
-	color: rgb(255,255,255);
-}
-QToolBar QTabBar::tab:hover {
-	background-color: rgb(108,36,60);
-}
-QToolBar QTabBar::tab:selected {
-	background-color: rgb(126,54,77);
-	color: rgb(0,0,0);
-}
-
-#sketch_tabs::tab-bar {
-	left: 5px;
-}
-
 /* ################### the palettes #################### */
 FDockWidget {
 	/* only relevant if palette is floating
@@ -267,31 +239,6 @@ HtmlInfoView {
 	border-top: 0px;
 }
 
-QTabWidget#palette_tabs QTabBar::tab {
-	padding: 2px;
-	min-width: 4em;
-	text-align: left;
-
-	border: 1px solid rgb(217,217,217);
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	background-color: rgb(179,179,179);
-
-	font-size: 10px;
-	font-weight: bold;
-	color: rgb(84,24,44);
-}
-QTabWidget#palette_tabs QTabBar::tab:hover {
-	background-color: rgb(190,190,190);
-}
-QTabWidget#palette_tabs QTabBar::tab:selected {
-	background-color: rgb(217,217,217);
-}
-
-QTabWidget#palette_tabs QTabBar::pane {
-	background-color: rgb(217,217,217);
-}
-
 /*
 light grey:		rgb(217,217,217);
 medium grey_l:	rgb(190,190,190); (lighter grey for hovers)
@@ -328,7 +275,6 @@ PartsBinListView {
 	selection-background-color: #BEBEBE;
 }
 
-/*****
 #partsBinFooter,
 #partsBinContainer,
 PartsBinPaletteWidget,
@@ -336,15 +282,35 @@ PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
 	background-color: rgb(179,179,179);
 }
-*****/
 
-PartsBinPaletteWidget[current="false"] {
-	background-color: rgb(179,179,179);
+StackTabBar::tab {
+	margin: 0;
+	spacing: 0;
+	padding: 0;
+	
+	min-width: 5.5em;
+	min-height: 1.7em;
+	text-align: left;
+
+	border: 1px solid rgb(217,217,217);
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	background: rgb(179,179,179);
 }
 
-PartsBinPaletteWidget[current="true"] {
-	background-color: black;
+StackTabBar::tab:hover {
+	background-color: rgb(190,190,190);
 }
+
+StackTabBar::pane {
+	background-color: rgb(217,217,217);
+}
+
+StackTabBar[current="true"]::tab:selected {
+	background-color: rgb(217,217,217);
+}
+
+
 
 Console {
 	background-color: black;

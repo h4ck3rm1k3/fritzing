@@ -38,9 +38,16 @@ class StackTabWidget : public QTabWidget, public DropSink {
 	public:
 		StackTabWidget(class StackWidget *parent);
 		void showFeedback(int index, bool doShow=true);
+		class StackTabBar *stackTabBar();
 
 	public slots:
 		void moveTab(int fromIndex, int toIndex);
+		void informCurrentChanged(int index);
+		void informTabCloseRequested(int index);
+
+	signals:
+		void currentChanged(StackTabWidget *, int index);
+		void tabCloseRequested(StackTabWidget *, int index);
 
 	protected:
 		void dragEnterEvent(QDragEnterEvent* event);

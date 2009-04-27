@@ -64,7 +64,9 @@ class BinManager : public QFrame {
 		PartsBinPaletteWidget* newBinIn(StackTabWidget* tb);
 		PartsBinPaletteWidget* openBinIn(StackTabWidget* tb, QString fileName="");
 		PartsBinPaletteWidget* openCoreBinIn(StackTabWidget* tb);
-		void closeBinIn(StackTabWidget* tb);
+		void closeBinIn(StackTabWidget* tb, int index=-1);
+
+		void addPartIn(PartsBinPaletteWidget* bin);
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -76,6 +78,8 @@ class BinManager : public QFrame {
 			QWidget* widgetMoved, StackTabWidget* oldTabWidget, StackTabWidget* newTabWidget
 		);
 		void setAsCurrentBin(PartsBinPaletteWidget* bin);
+		void currentChanged(StackTabWidget*,int);
+		void tabCloseRequested(StackTabWidget*,int);
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -84,11 +88,13 @@ class BinManager : public QFrame {
 		void createMenu();
 		PartsBinPaletteWidget* newBin();
 		void registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb);
+		PartsBinPaletteWidget* getBin(StackTabWidget* tb, int index);
 		PartsBinPaletteWidget* currentBin(StackTabWidget* tb);
 		void saveStateAndGeometry();
 		void restoreStateAndGeometry();
 		void setAsCurrentTab(PartsBinPaletteWidget* bin);
 		PartsBinPaletteWidget* getOrOpenMyPartsBin();
+		void connectTabWidget(StackTabWidget *tw);
 
 		ReferenceModel *m_refModel;
 		PaletteModel *m_paletteModel;

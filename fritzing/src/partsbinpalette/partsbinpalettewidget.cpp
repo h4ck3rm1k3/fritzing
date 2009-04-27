@@ -55,7 +55,6 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_refModel = refModel;
 	m_canDeleteModel = false;
 	m_orderHasChanged = false;
-	setProperty("current","false");
 
 	Q_UNUSED(undoStack);
 
@@ -355,7 +354,7 @@ void PartsBinPaletteWidget::createMenu() {
 }
 
 void PartsBinPaletteWidget::addPart() {
-
+	m_manager->addPartIn(this);
 }
 
 void PartsBinPaletteWidget::exportPart() {

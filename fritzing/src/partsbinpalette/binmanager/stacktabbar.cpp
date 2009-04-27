@@ -36,6 +36,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
 	setAcceptDrops(true);
 	m_parent = parent;
+	setProperty("current","false");
 }
 
 int StackTabBar::tabIndexAtPos(const QPoint &p) const {
@@ -70,7 +71,11 @@ void StackTabBar::mouseMoveEvent(QMouseEvent *event) {
 void StackTabBar::mousePressEvent(QMouseEvent *event) {
 	if(event->button() == Qt::LeftButton) {
 		m_dragStartPos = event->pos();
-		emit setDragSource(m_parent,tabAt(m_dragStartPos));
+		int index = tabAt(m_dragStartPos);
+		emit setDragSource(m_parent,index);
+		if(index == currentIndex()) {
+			m_parent->informCurrentChanged(index);
+		}
 	}
 
     QTabBar::mousePressEvent(event);

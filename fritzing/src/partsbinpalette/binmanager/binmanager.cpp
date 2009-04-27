@@ -32,6 +32,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include "binmanager.h"
 #include "stacktabwidget.h"
+#include "stacktabbar.h"
 #include "../partsbinpalettewidget.h"
 #include "../../modelpart.h"
 #include "../../palettemodel.h"
@@ -84,14 +85,30 @@ void BinManager::addBin(PartsBinPaletteWidget* bin) {
 	tb->addTab(bin,bin->title());
 	m_widget->addWidget(tb);
 	registerBin(bin,tb);
+	connectTabWidget(tb);
+	setAsCurrentBin(bin);
 }
 
 void BinManager::registerBin(PartsBinPaletteWidget* bin, StackTabWidget *tb) {
 	bin->setTabWidget(tb);
+	if(!m_tabWidgets.values().contains(tb)) {
+		connectTabWidget(tb);
+	}
 	m_tabWidgets[bin] = tb;
 	if(bin->fileName() != ___emptyString___) {
 		m_openedBins[bin->fileName()] = bin;
 	}
+}
+
+void BinManager::connectTabWidget(StackTabWidget *tw) {
+	connect(
+		tw, SIGNAL(currentChanged(StackTabWidget*,int)),
+		this, SLOT(currentChanged(StackTabWidget*,int))
+	);
+	connect(
+		tw, SIGNAL(tabCloseRequested(StackTabWidget*,int)),
+		this, SLOT(tabCloseRequested(StackTabWidget*,int))
+	);
 }
 
 void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb) {
@@ -253,6 +270,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 			bin->saveAsLastBin();
 		}
 	}
+	setAsCurrentBin(bin);
 	return bin;
 }
 
@@ -260,6 +278,7 @@ PartsBinPaletteWidget* BinManager::openCoreBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = newBin();
 	bin->openCore();
 	insertBin(bin, tb->currentIndex(), tb);
+	setAsCurrentBin(bin);
 	return bin;
 }
 
@@ -280,38 +299,57 @@ PartsBinPaletteWidget* BinManager::newBin() {
 	return bin;
 }
 
+void BinManager::currentChanged(StackTabWidget *tw, int index) {
+	PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(tw->widget(index));
+	if(bin) setAsCurrentBin(bin);
+}
+
 void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
-	QString style = m_originalParent->styleSheet();
+	Q_ASSERT(bin);
+
+	//if(m_tabWidgets[m_currentBin] != m_tabWidgets[bin]) {
 	if(m_currentBin != bin) {
-		if(m_currentBin) {
-			m_currentBin->setProperty("current","false");
-			m_currentBin->setStyleSheet("");
-			m_currentBin->setStyleSheet(style);
+		QString style = m_originalParent->styleSheet();
+		StackTabBar *currTabBar = NULL;
+		if(m_currentBin && m_tabWidgets[m_currentBin]) {
+			currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
+			currTabBar->setProperty("current","false");
+			currTabBar->setStyleSheet("");
+			currTabBar->setStyleSheet(style);
 		}
-		m_currentBin = bin;
-		m_currentBin->setProperty("current","true");
-		m_currentBin->setStyleSheet("");
-		m_currentBin->setStyleSheet(style);
+		if(m_tabWidgets[bin]) {
+			m_currentBin = bin;
+			currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
+			currTabBar->setProperty("current","true");
+			currTabBar->setStyleSheet("");
+			currTabBar->setStyleSheet(style);
+		}
 	}
 }
 
-void BinManager::closeBinIn(StackTabWidget* tb) {
-	PartsBinPaletteWidget *w = currentBin(tb);
+void BinManager::closeBinIn(StackTabWidget* tb, int index) {
+	int realIndex = index == -1? tb->currentIndex(): index;
+	PartsBinPaletteWidget *w = getBin(tb, realIndex);
 	if(w && w->beforeClosing()) {
-		tb->removeTab(tb->currentIndex());
+		tb->removeTab(realIndex);
 		m_tabWidgets.remove(w);
 		m_openedBins.remove(w->fileName());
-		if(tb->count() == 0) {
+
+		bool emptyTabWidget = tb->count() == 0;
+		if(emptyTabWidget && m_widget->count() == 3) { // only the two separators
+			openCoreBinIn(tb);
+		} else if(emptyTabWidget) {
 			m_widget->removeWidget(tb);
 		}
-		if(m_widget->count() <= 3) { // one tab widget and two separators
-			openCoreBinIn(tb);
-		}
 	}
+}
+
+PartsBinPaletteWidget* BinManager::getBin(StackTabWidget* tb, int index) {
+	return dynamic_cast<PartsBinPaletteWidget*>(tb->widget(index));
 }
 
 PartsBinPaletteWidget* BinManager::currentBin(StackTabWidget* tb) {
-	return dynamic_cast<PartsBinPaletteWidget*>(tb->currentWidget());
+	return getBin(tb, tb->currentIndex());
 }
 
 void BinManager::updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename) {
@@ -384,4 +422,12 @@ void BinManager::widgetChangedTabParent(
 	if(bin) {
 		registerBin(bin, newTabWidget);
 	}
+}
+
+void BinManager::tabCloseRequested(StackTabWidget* tw, int index) {
+	closeBinIn(tw,index);
+}
+
+void BinManager::addPartIn(PartsBinPaletteWidget* bin) {
+	//AddPartDialog::
 }
