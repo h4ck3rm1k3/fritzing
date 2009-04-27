@@ -24,7 +24,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 ********************************************************************/
 
-#include "resizableBoard.h"
+#include "resizableboard.h"
 #include "../utils/resizehandle.h"
 #include "../fsvgrenderer.h"
 
@@ -92,7 +92,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 		if (newY - oldY1 < minHeight) {
 			newY = oldY1 + minHeight;
-		}	
+		}
 		newR.setRect(0, 0, newX - oldX1, newY - oldY1);
 	}
 
@@ -156,7 +156,7 @@ void ResizableBoard::handleZoomChangedSlot(qreal scale) {
 }
 
 void ResizableBoard::positionGrips() {
-	QSizeF sz = this->boundingRect().size(); 
+	QSizeF sz = this->boundingRect().size();
 	qreal scale = m_resizeGripBL->currentScale();
 
 	// assuming all the handles are the same size, offset to the center

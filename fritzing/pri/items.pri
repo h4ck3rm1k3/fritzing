@@ -18,7 +18,7 @@
 # ********************************************************************/
 
 HEADERS += \
-	src/items/resizableBoard.h 
+	src/items/resizableboard.h 
 
 SOURCES += \
-	src/items/resizableBoard.cpp 
+	src/items/resizableboard.cpp 
