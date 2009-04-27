@@ -34,6 +34,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "stacktabwidget.h"
 #include "stacktabbar.h"
 #include "../partsbinpalettewidget.h"
+#include "../addpartdialog/addpartdialog.h"
 #include "../../modelpart.h"
 #include "../../palettemodel.h"
 #include "../../waitpushundostack.h"
@@ -307,7 +308,6 @@ void BinManager::currentChanged(StackTabWidget *tw, int index) {
 void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
 	Q_ASSERT(bin);
 
-	//if(m_tabWidgets[m_currentBin] != m_tabWidgets[bin]) {
 	if(m_currentBin != bin) {
 		QString style = m_originalParent->styleSheet();
 		StackTabBar *currTabBar = NULL;
@@ -429,5 +429,8 @@ void BinManager::tabCloseRequested(StackTabWidget* tw, int index) {
 }
 
 void BinManager::addPartIn(PartsBinPaletteWidget* bin) {
-	//AddPartDialog::
+	ModelPart *mp = AddPartDialog::getModelPart(this);
+	if(mp) {
+		bin->addPart(mp);
+	}
 }
