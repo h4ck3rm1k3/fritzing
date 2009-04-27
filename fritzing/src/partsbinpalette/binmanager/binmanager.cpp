@@ -152,27 +152,30 @@ void BinManager::setInfoViewOnHover(bool infoViewOnHover) {
 }
 
 void BinManager::addNewPart(ModelPart *modelPart) {
-	QList<PartsBinPaletteWidget*> myPartsBins;
+	PartsBinPaletteWidget* myPartsBin = getOrOpenMyPartsBin();
+	myPartsBin->addPart(modelPart);
+	setDirtyTab(myPartsBin);
+}
+
+PartsBinPaletteWidget* BinManager::getOrOpenMyPartsBin() {
+	PartsBinPaletteWidget* myPartsBin = NULL;
+
 	foreach(PartsBinPaletteWidget* bin, m_tabWidgets.keys()) {
 		if(bin->fileName() == MyPartsBinLocation) {
-			myPartsBins << bin;
+			myPartsBin = bin;
+			break;
 		}
 	}
 
-	if(myPartsBins.isEmpty()) {
+	if(!myPartsBin) {
 		QString fileToOpen = QFileInfo(MyPartsBinLocation).exists()?
 			MyPartsBinLocation:
 			createIfMyPartsNotExists();
 
-		PartsBinPaletteWidget* bin = openBinIn(m_tabWidgets.values()[0], fileToOpen);
-		bin->addPart(modelPart);
-		setDirtyTab(bin);
-	} else {
-		foreach(PartsBinPaletteWidget* bin, myPartsBins) {
-			bin->addPart(modelPart);
-			setDirtyTab(bin);
-		}
+		myPartsBin = openBinIn(m_tabWidgets.values()[0], fileToOpen);
 	}
+
+	return myPartsBin;
 }
 
 QString BinManager::createIfMyPartsNotExists() {
@@ -186,8 +189,11 @@ QString BinManager::createIfMyPartsNotExists() {
 }
 
 void BinManager::addPart(ModelPart *modelPart, int position) {
-	Q_UNUSED(modelPart);
-	Q_UNUSED(position);
+	PartsBinPaletteWidget *bin = m_currentBin? m_currentBin: getOrOpenMyPartsBin();
+	if(bin) {
+		bin->addPart(modelPart, position);
+		setDirtyTab(bin);
+	}
 }
 
 void BinManager::load(const QString& filename) {
