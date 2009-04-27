@@ -24,7 +24,6 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 ********************************************************************/
 
-
 #ifndef RESIZABLEBOARD_H
 #define RESIZABLEBOARD_H
 
@@ -34,7 +33,6 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QVariant>
 
 #include "../paletteitem.h"
-
 
 class ResizableBoard : public PaletteItem 
 {
@@ -64,8 +62,7 @@ protected:
 	class ResizeHandle * m_resizeGripBR;
 	class ResizeHandle * m_inResize;
 	class FSvgRenderer * m_renderer;
-
-
+	class FSvgRenderer * m_silkscreenRenderer;
 };
 
 #endif

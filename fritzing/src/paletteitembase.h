@@ -62,6 +62,7 @@ public:
 	virtual void mousePressEvent(PaletteItemBase * originalItem, QGraphicsSceneMouseEvent *event);
 	//bool isBuriedConnectorHit(QGraphicsSceneMouseEvent *event);
 	QRectF boundingRect() const;
+	void setSharedRenderer(class FSvgRenderer *);
 
 	/*
 	// for debugging

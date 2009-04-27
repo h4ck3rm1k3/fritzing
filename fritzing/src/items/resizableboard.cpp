@@ -23,14 +23,39 @@ $Author: cohen@irascible.com $:
 $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 ********************************************************************/
+   
+// TODO:
+//	drag all 4 handles
+//	update properties in modelpartshared
+//	show x & y sizes during resize operation
+//	set size in info view
+//	gerber export (temp file?)
+//  load svg form info view
+//		check for board and silkscreen layers
 
-#include "resizableboard.h"
+#include "resizableBoard.h"
 #include "../utils/resizehandle.h"
 #include "../fsvgrenderer.h"
+
+static QString BoardLayerTemplate = "";
+static QString SilkscreenLayerTemplate = "";
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
 {
+	if (BoardLayerTemplate.isEmpty()) {
+		QFile file(":/resources/resizableBoard_boardLayerTemplate.txt");
+		file.open(QFile::ReadOnly);
+		BoardLayerTemplate = file.readAll();
+		file.close();
+	}
+	if (SilkscreenLayerTemplate.isEmpty()) {
+		QFile file(":/resources/resizableBoard_silkscreenLayerTemplate.txt");
+		file.open(QFile::ReadOnly);
+		SilkscreenLayerTemplate = file.readAll();
+		file.close();
+	}
+
 	m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), this);
 	connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
 	m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), this);
@@ -42,7 +67,7 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 
 	connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
 
-	m_renderer = NULL;
+	m_silkscreenRenderer = m_renderer = NULL;
 	m_inResize = NULL;
 }
 
@@ -72,6 +97,10 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		return;
 	}
 
+	if (m_renderer == NULL) {
+		m_renderer = new FSvgRenderer(this);
+	}
+
 	QRectF rect = boundingRect();
 	rect.moveTopLeft(this->pos());
 
@@ -92,26 +121,78 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 		if (newY - oldY1 < minHeight) {
 			newY = oldY1 + minHeight;
-		}
+		}	
 		newR.setRect(0, 0, newX - oldX1, newY - oldY1);
 	}
+	else if (m_inResize == m_resizeGripTL) {
+		if (oldX2 - newX < minWidth) {
+			newX = oldX2 - minWidth;
+		}
+		if (oldY2 - newY < minHeight) {
+			newY = oldY2 - minHeight;
+		}
 
-	prepareGeometryChange();
+		QPointF p(newX, newY);
+		if (p != this->pos()) {
+			this->setPos(p);
+		}
 
-	QString s = QString("<svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/2000/svg' width='%1' height='%2'> "
-						"<g id='board'> "
-						"<rect stroke-width='2' stroke='#338040' fill='#338040' style='fill-opacity:0.5;stroke-opacity:1' "
-						"width='%3' height='%4' x='1' y='1' /> "
-						"</g> "
-						"</svg>").arg(newR.width()).arg(newR.height()).arg(newR.width() - 2).arg(newR.height() - 2);
+		newR.setRect(0, 0, oldX2 - newX, oldY2 - newY);
+	}
+	else if (m_inResize == m_resizeGripTR) {
+		if (newX - oldX1 < minWidth) {
+			newX = oldX1 + minWidth;
+		}
+		if (oldY2 - newY < minHeight) {
+			newY = oldY2 - minHeight;
+		}
+
+		QPointF p(oldX1, newY);
+		if (p != this->pos()) {
+			this->setPos(p);
+		}
+
+		newR.setRect(0, 0, newX - oldX1, oldY2 - newY);
+	}
+	else if (m_inResize == m_resizeGripBL) {
+		if (oldX2 - newX < minWidth) {
+			newX = oldX2 - minWidth;
+		}
+		if (newY - oldY1 < minHeight) {
+			newY = oldY1 + minHeight;
+		}	
+
+		QPointF p(newX, oldY1);
+		if (p != this->pos()) {
+			this->setPos(p);
+		}
+
+		newR.setRect(0, 0, oldX2 - newX, newY - oldY1);
+	}
+	
+	QString s = BoardLayerTemplate.arg(newR.width()).arg(newR.height()).arg(newR.width() - 2).arg(newR.height() - 2);
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
 		setSharedRenderer(m_renderer);
 	}
-	this->update();
 	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
 
 	positionGrips();
+
+	foreach (ItemBase * itemBase, m_layerKin) {
+		if (itemBase->viewLayerID() == ViewLayer::Silkscreen) {
+			if (m_silkscreenRenderer == NULL) {
+				m_silkscreenRenderer = new FSvgRenderer(itemBase);
+			}
+
+			s = SilkscreenLayerTemplate.arg(newR.width()).arg(newR.height()).arg(newR.width() - 4).arg(newR.height() - 4);			
+			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
+			if (result) {
+				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
+			}
+			break;
+		}
+	}
 
 	event->accept();
 }
@@ -122,9 +203,9 @@ void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 		return;
 	}
 
-	DebugDialog::debug("ungrabbed mouse");
 	this->ungrabMouse();
 	event->accept();
+	m_inResize = NULL;
 }
 
 
@@ -132,20 +213,21 @@ void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, Resi
 {
 	if (m_spaceBarWasPressed) return;
 
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-		this->setSharedRenderer(m_renderer);
-	}
-
 	if (resizeHandle == m_resizeGripBR) {
 		QSizeF sz = this->boundingRect().size();
 		resizeHandle->setResizeOffset(this->pos() + QPointF(sz.width(), sz.height()) - event->scenePos());
 	}
-	else {
+	else if (resizeHandle == m_resizeGripTL) {
+		resizeHandle->setResizeOffset(this->pos() - event->scenePos());
+	}
+	else if (resizeHandle == m_resizeGripTR) {
+		resizeHandle->setResizeOffset(QPointF(this->pos().x() + this->boundingRect().width(), this->pos().y())  - event->scenePos());
+	}
+	else if (resizeHandle == m_resizeGripBL) {
+		resizeHandle->setResizeOffset(QPointF(this->pos().x(), this->pos().y() + this->boundingRect().height())  - event->scenePos());	
 	}
 
 	m_inResize = resizeHandle;
-	DebugDialog::debug("grabbed mouse");
 	this->grabMouse();
 
 }
@@ -156,7 +238,7 @@ void ResizableBoard::handleZoomChangedSlot(qreal scale) {
 }
 
 void ResizableBoard::positionGrips() {
-	QSizeF sz = this->boundingRect().size();
+	QSizeF sz = this->boundingRect().size(); 
 	qreal scale = m_resizeGripBL->currentScale();
 
 	// assuming all the handles are the same size, offset to the center

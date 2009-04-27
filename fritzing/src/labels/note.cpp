@@ -362,36 +362,17 @@ void Note::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 
 		qreal oldX1 = rect.x();
 		qreal oldY1 = rect.y();
-		qreal oldX2 = oldX1+rect.width();
-		qreal oldY2 = oldY1+rect.height();
 		qreal newX = event->scenePos().x() + m_inResize->resizeOffset().x();
 		qreal newY = event->scenePos().y() + m_inResize->resizeOffset().y();
 		QRectF newR;
 
-		/*if (m_inResize == m_resizeGripNW) {
-			if (oldX2 - newX < minWidth) {
-				newX = oldX2 - minWidth;
-			}
-			if (oldY2 - newY < minHeight) {
-				newY = oldY2 - minHeight;
-			}
-
-			QPointF p(newX, newY);
-			if (p != this->pos()) {
-				this->setPos(p);
-			}
-
-			newR.setRect(0, 0, oldX2 - newX, oldY2 - newY);
+		if (newX - oldX1 < minWidth) {
+			newX = oldX1 + minWidth;
 		}
-		else*/ if (m_inResize == m_resizeGrip) {
-			if (newX - oldX1 < minWidth) {
-				newX = oldX1 + minWidth;
-			}
-			if (newY - oldY1 < minHeight) {
-				newY = oldY1 + minHeight;
-			}	
-			newR.setRect(0, 0, newX - oldX1, newY - oldY1);
-		}
+		if (newY - oldY1 < minHeight) {
+			newY = oldY1 + minHeight;
+		}	
+		newR.setRect(0, 0, newX - oldX1, newY - oldY1);
 
 		prepareGeometryChange();
 		m_rect = newR;
@@ -653,13 +634,8 @@ void Note::handleMousePressSlot(QGraphicsSceneMouseEvent * event, ResizeHandle *
 
 	saveGeometry();
 
-	if (resizeHandle == m_resizeGrip) {
-		QSizeF sz = this->boundingRect().size();
-		resizeHandle->setResizeOffset(this->pos() + QPointF(sz.width(), sz.height()) - event->scenePos());
-	}
-	else {
-		//resizeHandle->setResizeOffset(this->pos() - event->scenePos());
-	}
+	QSizeF sz = this->boundingRect().size();
+	resizeHandle->setResizeOffset(this->pos() + QPointF(sz.width(), sz.height()) - event->scenePos());
 
 	m_inResize = resizeHandle;
 	this->grabMouse();

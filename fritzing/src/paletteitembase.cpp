@@ -277,8 +277,6 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 	this->setZValue(this->z());
 	this->setSharedRenderer(renderer);
 
-	m_size = renderer->defaultSizeF();
-
 	m_svg = true;
 
 	if (doConnectors) {
@@ -292,6 +290,11 @@ bool PaletteItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::Vie
 	}
 
 	return true;
+}
+
+void PaletteItemBase::setSharedRenderer(FSvgRenderer * renderer) {
+	ItemBase::setSharedRenderer(renderer);
+	m_size = renderer->defaultSizeF();
 }
 
 void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTerminalPoints) {
