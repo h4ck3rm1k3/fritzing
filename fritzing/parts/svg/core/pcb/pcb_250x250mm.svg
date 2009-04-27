@@ -1,108 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="885.82672"
-   height="885.82672"
-   id="svg3313"
-   sodipodi:version="0.32"
-   inkscape:version="0.46"
+   width="250mm"
+   height="250mm"
    version="1.0"
-   sodipodi:docname="pcb_250x250mm.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
-  <defs
-     id="defs3315">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 526.18109 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="744.09448 : 526.18109 : 1"
-       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
-       id="perspective3321" />
-  </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     gridtolerance="10000"
-     guidetolerance="10"
-     objecttolerance="10"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="420.24099"
-     inkscape:cy="423.34962"
-     inkscape:document-units="mm"
-     inkscape:current-layer="svg3313"
-     showgrid="false"
-     units="mm"
-     width="100mm"
-     inkscape:window-width="1170"
-     inkscape:window-height="726"
-     inkscape:window-x="9"
-     inkscape:window-y="25" />
-  <metadata
-     id="metadata3318">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
+   viewBox="0 0 9842.5175 9842.5175">
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
      id="board">
     <rect
-       style="fill:#338040;fill-opacity:0.5;fill-rule:evenodd;stroke:#338040;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3832"
-       width="879.41852"
-       height="879.41852"
-       x="1"
-       y="1" />
+       style="fill:#338040;fill-opacity:0.5;fill-rule:evenodd;stroke:#338040;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       width="9834.5175"
+       height="9834.5175"
+       x="4"
+       y="4" />
   </g>
   <g
      id="silkscreen">
     <line
        x1="4"
        y1="4"
-       x2="881.82672"
+       x2="9838.5175"
        y2="4"
        id="line8"
        style="stroke:#ffffff;stroke-width:8;stroke-linecap:round" />
     <line
        stroke-width="8"
        stroke="#FFFFFF"
-       x1="881.82672"
+       x1="9838.5175"
        y1="4"
-       x2="881.82672"
-       y2="881.82672"
+       x2="9838.5175"
+       y2="9838.5175"
        id="line10"
        style="stroke-linecap:round" />
     <line
        stroke-width="8"
        stroke="#FFFFFF"
-       x1="881.82672"
-       y1="881.82672"
+       x1="9838.5175"
+       y1="9838.5175"
        x2="4"
-       y2="881.82672"
+       y2="9838.5175"
        id="line12"
        style="stroke-linecap:round" />
     <line
        stroke-width="8"
        stroke="#FFFFFF"
        x1="4"
-       y1="881.82672"
+       y1="9838.5175"
        x2="4"
        y2="4"
        id="line14"
