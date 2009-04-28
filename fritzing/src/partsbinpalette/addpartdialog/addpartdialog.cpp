@@ -25,11 +25,17 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 ********************************************************************/
 
 #include <QPushButton>
+#include <QVBoxLayout>
+#include <QDialogButtonBox>
 
 #include "addpartdialog.h"
 #include "../../modelpart.h"
 
 AddPartDialog::AddPartDialog(QWidget *parent) : QDialog(parent) {
+	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->setSpacing(1);
+	layout->setMargin(1);
+
 	addButton(
 		tr("Create a new part"),
 		SLOT(fromPartsEditor())
@@ -46,6 +52,14 @@ AddPartDialog::AddPartDialog(QWidget *parent) : QDialog(parent) {
 		tr("Import part from local folder"),
 		SLOT(fromLocalFolder())
 	);
+
+	layout->addSpacing(3);
+
+	QDialogButtonBox *dlgBtnBox = new QDialogButtonBox(this);
+	QPushButton *closeBtn = dlgBtnBox->addButton(QDialogButtonBox::Cancel);
+	connect(closeBtn, SIGNAL(clicked()), this, SLOT(reject()));
+
+	layout->addWidget(dlgBtnBox);
 }
 
 AddPartDialog::~AddPartDialog() {
@@ -55,7 +69,7 @@ AddPartDialog::~AddPartDialog() {
 void AddPartDialog::addButton(const QString &btnText, const char *method) {
 	QPushButton *btn = new QPushButton(btnText,this);
 	connect(btn, SIGNAL(clicked()),	this, method);
-
+	layout()->addWidget(btn);
 }
 
 QList<ModelPart*> AddPartDialog::getModelParts(QWidget *parent) {
