@@ -389,8 +389,42 @@ void SVG2gerber::allPaths2gerber() {
         currenty = y2;
     }
 
-    // paths - NOTE: this assumes circular aperture
+    // paths - NOTE: this assumes circular aperture and does not fill!
+    QDomNodeList pathList = m_SVGDom.elementsByTagName("path");
 
+    DebugDialog::debug("paths to gerber: " + QString::number(pathList.length()));
+    for(uint n = 0; n < pathList.length(); n++){
+        QDomElement path = pathList.item(n).toElement();
+        QString data = path.attribute("d");
+        QString aperture;
+
+        const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
+
+        PathUserData pathUserData;
+        pathUserData.x = 0;
+        pathUserData.y = 0;
+        pathUserData.string = "";
+
+        SvgFlattener flattener;
+        flattener.parsePath(data, slot, pathUserData);
+
+        // only add paths if they contained gerber-izable path commands (NO CURVES!)
+        if(pathUserData.string.contains("INVALID"))
+            continue;
+
+        qreal stroke_width = path.attribute("stroke-width").toFloat();
+
+        aperture = QString("C,%1").arg(stroke_width/1000);
+
+        // add aperture to defs if we don't have it yet
+        if(!apertureMap.contains(aperture)){
+            apertureMap[aperture] = "D" + QString::number(dcode_index);
+            m_gerber_header += "%ADD" + QString::number(dcode_index) + aperture + "*%\n";
+            dcode_index++;
+        }
+
+        m_gerber_paths += pathUserData.string;
+    }
 }
 
 QDomElement SVG2gerber::rect2path(QDomElement rectElement){
@@ -485,4 +519,73 @@ QString SVG2gerber::path2gerber(QDomElement pathElement){
     QString d;
 
     return d;
+}
+
+void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double> & args, void * userData) {
+    QString gerb;
+    int x, y;
+
+    PathUserData * pathUserData = (PathUserData *) userData;
+
+    switch(command.toAscii()) {
+                case 'm':
+                case 'M':
+                    x = args[0];
+                    y = args[1];
+                    if (relative) {
+                        x += pathUserData->x;
+                        y += pathUserData->y;
+                    }
+                    gerb = "X" + QString::number(x) + "Y" + QString::number(y) + "D02*\n";
+                    pathUserData->x = x;
+                    pathUserData->y = y;
+                    m_pathstart_x = x;
+                    m_pathstart_y = y;
+                    pathUserData->string.append(gerb);
+                    break;
+                case 'v':
+                case 'V':
+                    y = args[0];
+                    if (relative) {
+                        y += pathUserData->y;
+                    }
+                    gerb = "Y" + QString::number(y) + "D01*\n";
+                    pathUserData->y = y;
+                    pathUserData->string.append(gerb);
+                    break;
+                case 'h':
+                case 'H':
+                    x = args[0];
+                    if (relative) {
+                        x += pathUserData->x;
+                    }
+                    gerb = "X" + QString::number(x) + "D01*\n";
+                    pathUserData->x = x;
+                    pathUserData->string.append(gerb);
+                    break;
+                case 'l':
+                case 'L':
+                    x = args[0];
+                    y = args[1];
+                    if (relative) {
+                        x += pathUserData->x;
+                        y += pathUserData->y;
+                    }
+                    gerb = "X" + QString::number(x) + "Y" + QString::number(y) + "D01*\n";
+                    pathUserData->x = x;
+                    pathUserData->y = y;
+                    pathUserData->string.append(gerb);
+                    break;
+                case 'z':
+                case 'Z':
+                    gerb = "X" + QString::number(m_pathstart_x) + "Y" + QString::number(m_pathstart_y) + "D01*\n";
+                    gerb += "D02*\n";
+                    pathUserData->x = x;
+                    pathUserData->y = y;
+                    pathUserData->string.append(gerb);
+                    break;
+                default:
+                    pathUserData->string.append("INVALID");
+                    break;
+    }
 }

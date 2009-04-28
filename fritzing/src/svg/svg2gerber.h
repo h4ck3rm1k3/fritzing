@@ -49,6 +49,9 @@ protected:
     QString m_drill_header;
     QString m_drill_paths;
 
+    qreal m_pathstart_x;
+    qreal m_pathstart_y;
+
     void normalizeSVG();
     void convertShapes2paths(QDomNode);
     void flattenSVG(QDomNode);
@@ -65,6 +68,10 @@ protected:
     void renderGerber();
     void allPaths2gerber();
     QString path2gerber(QDomElement);
+
+protected slots:
+    void path2gerbCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
+
 
 };
 

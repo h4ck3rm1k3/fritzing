@@ -56,6 +56,7 @@ public:
 	bool normalize(qreal dpi, const QString & elementID, bool blackOnly);
 	QString shift(qreal x, qreal y, const QString & elementID);
 	QString elementString(const QString & elementID);
+        virtual bool parsePath(const QString & data, const char * slot, PathUserData &);
 
 protected:
 	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
@@ -65,7 +66,6 @@ protected:
 	bool normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom);
 	virtual void shiftChild(QDomElement & element, qreal x, qreal y);
 	bool shiftAttribute(QDomElement & element, const char * attributeName, qreal d);
-        virtual bool parsePath(const QString & data, const char * slot, PathUserData &);
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void fixStyleAttribute(QDomElement & element);
 	void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
