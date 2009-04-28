@@ -35,11 +35,12 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 class ModelPart;
 class PaletteModel;
+class MainWindow;
 
 class BinManager : public QFrame {
 	Q_OBJECT
 	public:
-		BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, class WaitPushUndoStack *undoStack, QWidget* parent = 0);
+		BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, class WaitPushUndoStack *undoStack, MainWindow* parent);
 		virtual ~BinManager();
 
 		void loadFromModel(PaletteModel *model);
@@ -102,7 +103,7 @@ class BinManager : public QFrame {
 		HtmlInfoView *m_infoView;
 		WaitPushUndoStack *m_undoStack;
 
-		QWidget *m_originalParent;
+		MainWindow *m_mainWindow;
 		StackWidget *m_widget;
 		PartsBinPaletteWidget *m_currentBin;
 

@@ -48,7 +48,7 @@ class PartsEditorMainWindow : public FritzingWindow
 Q_OBJECT
 
 public:
-	PartsEditorMainWindow(long id, QWidget * parent = 0, Qt::WFlags f = 0, ModelPart * modelPart=0, bool fromTemplate = false);
+	PartsEditorMainWindow(long id, QWidget *parent=0, ModelPart * modelPart=0, bool fromTemplate=false, bool asMainWindow=true);
 	~PartsEditorMainWindow();
 
 	static const QString templatePath;
@@ -128,6 +128,7 @@ protected:
 
 	QTabWidget *m_tabWidget;
 
+	QFrame *m_mainFrame;
     QFrame *m_headerFrame;
     QFrame *m_centerFrame;
     QFrame *m_footerFrame;

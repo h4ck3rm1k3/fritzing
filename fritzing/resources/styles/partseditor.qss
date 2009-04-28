@@ -1,4 +1,4 @@
-PartsEditorMainWindow QLabel {
+#partsEditor QLabel {
 	font-family: LucidaGrande, LucidaSans, Tahoma, Arial, sans-serif;
 	font-size: 12px;
 	font-weight: bolder;
@@ -118,17 +118,17 @@ AbstractEditableLabelWidget QLabel {
 	font-size: 18px;
 }
 
-QTabWidget::pane {
+#partsEditor QTabWidget::pane {
  	padding: 0px;
 	margin: 0px;
 	border: 0px;
 }
 
-QTabWidget::tab-bar {
+#partsEditor QTabWidget::tab-bar {
  	left: 5px;
 }
 
-QTabBar::tab {
+#partsEditor QTabBar::tab {
 	margin-top: 5px;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
@@ -141,12 +141,12 @@ QTabBar::tab {
 	min-width: 12ex;
 }
 
-QTabBar::tab:selected {
+#partsEditor QTabBar::tab:selected {
 	background-color: #802643;
 	border-bottom: 0px;
 }
 
-QTabBar::tab:!selected {
+#partsEditor QTabBar::tab:!selected {
 	border: 2px solid #802643;
 	border-bottom: 0px;
 }

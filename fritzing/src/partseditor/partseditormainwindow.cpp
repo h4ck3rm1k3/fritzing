@@ -81,15 +81,17 @@ void PartsEditorMainWindow::initText() {
 
 }
 
-PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFlags f, ModelPart *modelPart, bool fromTemplate)
-	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent, f)
+PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, ModelPart *modelPart, bool fromTemplate, bool asMainWindow)
+	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
     QFile styleSheet(":/resources/styles/partseditor.qss");
+    m_mainFrame = new QFrame(this);
+    m_mainFrame->setObjectName("partsEditor");
 
     if (!styleSheet.open(QIODevice::ReadOnly)) {
         qWarning("Unable to open :/resources/styles/partseditor.qss");
     } else {
-    	setStyleSheet(styleSheet.readAll()+___MacStyle___);
+    	m_mainFrame->setStyleSheet(styleSheet.readAll()+___MacStyle___);
     }
 
     resize(500,700);
@@ -131,21 +133,25 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, Qt::WFla
 
 	createHeader(mp);
 	createCenter(mp);
-	createFooter();
+	if(asMainWindow) {
+		createFooter();
+	} else {
+		m_footerFrame = NULL;
+	}
 
 	layout()->setMargin(0);
 	layout()->setSpacing(0);
 
 
-	QFrame * frame = new QFrame();
-	QGridLayout *layout = new QGridLayout();
+	QGridLayout *layout = new QGridLayout(m_mainFrame);
 	layout->setMargin(0);
 	layout->setSpacing(0);
 	layout->addWidget(m_headerFrame,0,0);
 	layout->addWidget(m_centerFrame,1,0);
-	layout->addWidget(m_footerFrame,2,0);
-	frame->setLayout(layout);
-	setCentralWidget(frame);
+	if(asMainWindow) {
+		layout->addWidget(m_footerFrame,2,0);
+	}
+	setCentralWidget(m_mainFrame);
 
     if(fromTemplate) {
     	m_views->loadViewsImagesFromModel(m_paletteModel, m_sketchModel->root());

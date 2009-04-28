@@ -1736,6 +1736,12 @@ void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
 
 // TODO PARTS EDITOR REMOVE
 void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
+	QWidget *partsEditor = getPartsEditor(paletteItem, this);
+	partsEditor->show();
+	partsEditor->raise();
+}
+
+QWidget* MainWindow::getPartsEditor(PaletteItem *paletteItem, QWidget *parent, bool asMainWindow) {
 	static long nextId = -1;
 	ModelPart *modelPart = NULL;
 	long id = nextId--;
@@ -1745,15 +1751,21 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 		id = paletteItem->id();
 	}
 
-	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(id,this,0,modelPart,modelPart!=NULL);
-	connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), this, SLOT(loadPart(QString)));
-	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
-	connect(this, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
-	connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), this, SLOT(changeActivation(bool)));
+	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(id,parent,modelPart,modelPart!=NULL,asMainWindow);
 
-	m_partsEditorWindows.insert(id, mainPartsEditorWindow);
-	mainPartsEditorWindow->show();
-	mainPartsEditorWindow->raise();
+	if(asMainWindow) {
+		connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), parent, SLOT(loadPart(QString)));
+		connect(mainPartsEditorWindow, SIGNAL(closed(long)), parent, SLOT(partsEditorClosed(long)));
+		connect(parent, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
+		connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), parent, SLOT(changeActivation(bool)));
+	}
+
+	if(asMainWindow) {
+		m_partsEditorWindows.insert(id, mainPartsEditorWindow);
+		return mainPartsEditorWindow;
+	} else {
+		return mainPartsEditorWindow->centralWidget();
+	}
 }
 
 void MainWindow::partsEditorClosed(long id) {

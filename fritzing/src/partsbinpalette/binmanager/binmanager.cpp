@@ -34,8 +34,9 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "stacktabwidget.h"
 #include "stacktabbar.h"
 #include "../partsbinpalettewidget.h"
-#include "../addpartdialog/addpartdialog.h"
+#include "../addpartwizard/addpartwizard.h"
 #include "../../modelpart.h"
+#include "../../mainwindow.h"
 #include "../../palettemodel.h"
 #include "../../waitpushundostack.h"
 #include "../../debugdialog.h"
@@ -48,7 +49,7 @@ QString BinManager::StandardBinStyle = "background-color: gray;";
 QString BinManager::CurrentBinStyle = "background-color: black;";
 
 
-BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, QWidget* parent)
+BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoView, WaitPushUndoStack *undoStack, MainWindow* parent)
 	: QFrame(parent)
 {
 	BinManager::Title = tr("Parts");
@@ -58,7 +59,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_infoView = infoView;
 	m_undoStack = undoStack;
 	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
-	m_originalParent = parent;
+	m_mainWindow = parent;
 	m_currentBin = NULL;
 
 	m_widget = new StackWidget(this);
@@ -295,7 +296,7 @@ PartsBinPaletteWidget* BinManager::newBin() {
 	);
 	connect(
 		bin, SIGNAL(savePartAsBundled(const QString &)),
-		m_originalParent, SLOT(saveBundledPart(const QString &))
+		m_mainWindow, SLOT(saveBundledPart(const QString &))
 	);
 	return bin;
 }
@@ -309,7 +310,7 @@ void BinManager::setAsCurrentBin(PartsBinPaletteWidget* bin) {
 	Q_ASSERT(bin);
 
 	if(m_currentBin != bin) {
-		QString style = m_originalParent->styleSheet();
+		QString style = m_mainWindow->styleSheet();
 		StackTabBar *currTabBar = NULL;
 		if(m_currentBin && m_tabWidgets[m_currentBin]) {
 			currTabBar = m_tabWidgets[m_currentBin]->stackTabBar();
@@ -429,7 +430,7 @@ void BinManager::tabCloseRequested(StackTabWidget* tw, int index) {
 }
 
 void BinManager::addPartIn(PartsBinPaletteWidget* bin) {
-	QList<ModelPart*> mps = AddPartDialog::getModelParts(this);
+	QList<ModelPart*> mps = AddPartWizard::getModelParts(m_mainWindow, this);
 	foreach(ModelPart *mp, mps) {
 		bin->addPart(mp);
 	}

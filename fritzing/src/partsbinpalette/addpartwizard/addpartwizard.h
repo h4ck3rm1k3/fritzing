@@ -24,16 +24,50 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 ********************************************************************/
 
-#ifndef ADDPARTDIALOG_H_
-#define ADDPARTDIALOG_H_
+#ifndef ADDPARTWIZARD_H_
+#define ADDPARTWIZARD_H_
 
-#include <QDialog>
+#include <QWizard>
 
-class AddPartDialog : public QDialog {
+class AddPartWizard;
+
+class SourceOptionsPage : public QWizardPage {
+	public:
+		SourceOptionsPage(AddPartWizard*);
+
+	protected:
+		void addButton(const QString &btnText, const char *method);
+		void initializePage();
+
+	protected:
+		AddPartWizard* m_parent;
+
+};
+
+//////////////////////////////////////////////////
+
+class PageSourcePage : public QWizardPage {
+	public:
+		PageSourcePage(AddPartWizard*);
+		void setCentralWidget(QWidget *widget);
+
+	protected:
+		void initializePage();
+
+	protected:
+		AddPartWizard* m_parent;
+		QWidget* m_centralWidget;
+};
+
+//////////////////////////////////////////////////
+
+class MainWindow;
+
+class AddPartWizard : public QWizard {
 	Q_OBJECT
 	public:
-		AddPartDialog(QWidget *parent=0);
-		virtual ~AddPartDialog();
+		AddPartWizard(MainWindow *mainWindow, QWidget *parent=0);
+		virtual ~AddPartWizard();
 
 	public slots:
 		void fromPartsEditor();
@@ -42,13 +76,16 @@ class AddPartDialog : public QDialog {
 		void fromLocalFolder();
 
 	public:
-		static QList<class ModelPart*> getModelParts(QWidget *parent);
+		static QList<class ModelPart*> getModelParts(MainWindow *mainWindow, QWidget *parent);
 
 	protected:
-		void addButton(const QString &btnText, const char *method);
 		QList<ModelPart*> modelParts();
 
 		QList<ModelPart*> m_modelParts;
+		MainWindow *m_mainWindow;
+
+		SourceOptionsPage *m_sourceOptionsPage;
+		PageSourcePage *m_partSourcePage;
 };
 
-#endif /* ADDPARTDIALOG_H_ */
+#endif /* ADDPARTWIZARD_H_ */
