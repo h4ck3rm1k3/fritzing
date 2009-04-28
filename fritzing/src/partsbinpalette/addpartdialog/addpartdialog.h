@@ -42,10 +42,13 @@ class AddPartDialog : public QDialog {
 		void fromLocalFolder();
 
 	public:
-		static class ModelPart *getModelPart(QWidget *parent);
+		static QList<class ModelPart*> getModelParts(QWidget *parent);
 
 	protected:
 		void addButton(const QString &btnText, const char *method);
+		QList<ModelPart*> modelParts();
+
+		QList<ModelPart*> m_modelParts;
 };
 
 #endif /* ADDPARTDIALOG_H_ */

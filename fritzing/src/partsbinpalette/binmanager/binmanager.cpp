@@ -429,8 +429,8 @@ void BinManager::tabCloseRequested(StackTabWidget* tw, int index) {
 }
 
 void BinManager::addPartIn(PartsBinPaletteWidget* bin) {
-	ModelPart *mp = AddPartDialog::getModelPart(this);
-	if(mp) {
+	QList<ModelPart*> mps = AddPartDialog::getModelParts(this);
+	foreach(ModelPart *mp, mps) {
 		bin->addPart(mp);
 	}
 }

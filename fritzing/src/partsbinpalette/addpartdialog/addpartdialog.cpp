@@ -49,7 +49,7 @@ AddPartDialog::AddPartDialog(QWidget *parent) : QDialog(parent) {
 }
 
 AddPartDialog::~AddPartDialog() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void AddPartDialog::addButton(const QString &btnText, const char *method) {
@@ -58,10 +58,18 @@ void AddPartDialog::addButton(const QString &btnText, const char *method) {
 
 }
 
-ModelPart *AddPartDialog::getModelPart(QWidget *parent) {
+QList<ModelPart*> AddPartDialog::getModelParts(QWidget *parent) {
 	AddPartDialog dialog(parent);
-	dialog.show();
-	return NULL;
+	int result = dialog.exec();
+	if(result == QDialog::Accepted) {
+		return dialog.modelParts();
+	} else {
+		return QList<ModelPart*>();
+	}
+}
+
+QList<ModelPart*> AddPartDialog::modelParts() {
+	return m_modelParts;
 }
 
 
