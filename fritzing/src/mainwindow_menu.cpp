@@ -1758,9 +1758,7 @@ QWidget* MainWindow::getPartsEditor(PaletteItem *paletteItem, QWidget *parent, b
 		connect(mainPartsEditorWindow, SIGNAL(closed(long)), parent, SLOT(partsEditorClosed(long)));
 		connect(parent, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
 		connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), parent, SLOT(changeActivation(bool)));
-	}
 
-	if(asMainWindow) {
 		m_partsEditorWindows.insert(id, mainPartsEditorWindow);
 		return mainPartsEditorWindow;
 	} else {
