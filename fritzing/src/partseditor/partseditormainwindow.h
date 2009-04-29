@@ -54,6 +54,8 @@ public:
 	static const QString templatePath;
 	const QDir& tempDir();
 
+	bool validateMinRequirements();
+
 signals:
 	void partUpdated(QString);
 	void closed(long id);
@@ -61,11 +63,11 @@ signals:
 
 public slots:
 	void parentAboutToClose();
+	bool save();
 
 protected slots:
 	void loadPcbFootprint();
 	void updateDateAndAuthor();
-	bool save();
 	bool saveAs();
 
 protected:
@@ -89,8 +91,6 @@ protected:
 
 	void updateSaveButton();
 	const QString fritzingTitle();
-
-	bool validateMinRequirements();
 
 	void cleanUp();
 	bool event(QEvent *);

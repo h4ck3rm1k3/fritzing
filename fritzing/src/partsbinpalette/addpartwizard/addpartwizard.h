@@ -28,38 +28,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #define ADDPARTWIZARD_H_
 
 #include <QWizard>
-
-class AddPartWizard;
-
-class SourceOptionsPage : public QWizardPage {
-	public:
-		SourceOptionsPage(AddPartWizard*);
-
-	protected:
-		void addButton(const QString &btnText, const char *method);
-		void initializePage();
-
-	protected:
-		AddPartWizard* m_parent;
-
-};
-
-//////////////////////////////////////////////////
-
-class PageSourcePage : public QWizardPage {
-	public:
-		PageSourcePage(AddPartWizard*);
-		void setCentralWidget(QWidget *widget);
-
-	protected:
-		void initializePage();
-
-	protected:
-		AddPartWizard* m_parent;
-		QWidget* m_centralWidget;
-};
-
-//////////////////////////////////////////////////
+#include "addpartwizardpages.h"
 
 class MainWindow;
 
@@ -75,17 +44,23 @@ class AddPartWizard : public QWizard {
 		void fromWebGenerator();
 		void fromLocalFolder();
 
+		void loadPart(QString newPartPath);
+
 	public:
 		static QList<class ModelPart*> getModelParts(MainWindow *mainWindow, QWidget *parent);
 
 	protected:
 		QList<ModelPart*> modelParts();
+		QAbstractButton *finishButton();
 
 		QList<ModelPart*> m_modelParts;
 		MainWindow *m_mainWindow;
 
+
 		SourceOptionsPage *m_sourceOptionsPage;
-		PageSourcePage *m_partSourcePage;
+
+		PartsEditorPage *m_partsEditorPage;
+		FileBrowserPage *m_fileBrowserPage;
 };
 
 #endif /* ADDPARTWIZARD_H_ */

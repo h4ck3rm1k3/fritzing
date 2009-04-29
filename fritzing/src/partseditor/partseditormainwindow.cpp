@@ -137,6 +137,9 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, ModelPar
 		createFooter();
 	} else {
 		m_footerFrame = NULL;
+		m_saveAsNewPartButton = NULL;
+		m_saveButton = NULL;
+		m_cancelButton = NULL;
 	}
 
 	layout()->setMargin(0);
@@ -664,7 +667,7 @@ const QString PartsEditorMainWindow::defaultSaveFolder() {
 }
 
 void PartsEditorMainWindow::updateSaveButton() {
-	m_saveButton->setEnabled(m_updateEnabled);
+	if(m_saveButton) m_saveButton->setEnabled(m_updateEnabled);
 }
 
 bool PartsEditorMainWindow::eventFilter(QObject *object, QEvent *event) {

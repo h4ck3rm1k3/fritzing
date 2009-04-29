@@ -1741,7 +1741,7 @@ void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	partsEditor->raise();
 }
 
-QWidget* MainWindow::getPartsEditor(PaletteItem *paletteItem, QWidget *parent, bool asMainWindow) {
+PartsEditorMainWindow* MainWindow::getPartsEditor(PaletteItem *paletteItem, QWidget *parent, bool asMainWindow) {
 	static long nextId = -1;
 	ModelPart *modelPart = NULL;
 	long id = nextId--;
@@ -1760,10 +1760,8 @@ QWidget* MainWindow::getPartsEditor(PaletteItem *paletteItem, QWidget *parent, b
 		connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), parent, SLOT(changeActivation(bool)));
 
 		m_partsEditorWindows.insert(id, mainPartsEditorWindow);
-		return mainPartsEditorWindow;
-	} else {
-		return mainPartsEditorWindow->centralWidget();
 	}
+	return mainPartsEditorWindow;
 }
 
 void MainWindow::partsEditorClosed(long id) {

@@ -39,6 +39,9 @@ class FritzingWindow : public QMainWindow {
 	Q_OBJECT
 	public:
 		FritzingWindow(const QString &untitledFileName, int &untitledFileCount, QString fileExt, QWidget * parent = 0, Qt::WFlags f = 0);
+		const QString &fileName() {
+			return m_fileName;
+		}
 
 	signals:
 		void readOnlyChanged(bool isReadOnly);

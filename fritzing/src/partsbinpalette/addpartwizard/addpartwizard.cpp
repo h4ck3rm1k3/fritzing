@@ -24,69 +24,11 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 ********************************************************************/
 
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QDialogButtonBox>
-
 #include "addpartwizard.h"
+#include "addpartwizardpages.h"
 #include "../../modelpart.h"
 #include "../../mainwindow.h"
 
-
-SourceOptionsPage::SourceOptionsPage(AddPartWizard *parent) : QWizardPage() {
-	m_parent = parent;
-
-	QVBoxLayout *layout = new QVBoxLayout(this);
-	layout->setSpacing(1);
-	layout->setMargin(1);
-
-	addButton( tr("Create a new part"), SLOT(fromPartsEditor()) );
-	addButton( tr("Browse all the existing parts"), SLOT(fromAllTheLibrary()) );
-	addButton( tr("Generate new part"), SLOT(fromWebGenerator()) );
-	addButton( tr("Import part from local folder"), SLOT(fromLocalFolder()) );
-
-	layout->addSpacing(3);
-}
-
-void SourceOptionsPage::initializePage() {
-	QList<QWizard::WizardButton> btnlayout;
-	btnlayout << QWizard::Stretch << QWizard::BackButton << QWizard::CancelButton;
-	m_parent->setButtonLayout(btnlayout);
-}
-
-void SourceOptionsPage::addButton(const QString &btnText, const char *method) {
-	QPushButton *btn = new QPushButton(btnText, this);
-	connect(btn, SIGNAL(clicked()),	m_parent, method);
-	layout()->addWidget(btn);
-}
-
-//////////////////////////////////////////////////
-
-PageSourcePage::PageSourcePage(AddPartWizard* parent) : QWizardPage() {
-	m_parent = parent;
-	m_centralWidget = NULL;
-	new QVBoxLayout(this);
-	layout()->setMargin(0);
-	layout()->setSpacing(0);
-}
-
-void PageSourcePage::setCentralWidget(QWidget *widget) {
-	if(m_centralWidget) {
-		layout()->removeWidget(m_centralWidget);
-		delete m_centralWidget;
-	}
-	m_centralWidget = widget;
-	layout()->addWidget(m_centralWidget);
-}
-
-void PageSourcePage::initializePage() {
-	QList<QWizard::WizardButton> btnlayout;
-	btnlayout << QWizard::Stretch << QWizard::BackButton
-			  << QWizard::FinishButton << QWizard::CancelButton;
-	m_parent->setButtonLayout(btnlayout);
-}
-
-//////////////////////////////////////////////////
 
 AddPartWizard::AddPartWizard(MainWindow *mainWindow, QWidget *parent) : QWizard(parent) {
 	m_mainWindow = mainWindow;
@@ -94,8 +36,8 @@ AddPartWizard::AddPartWizard(MainWindow *mainWindow, QWidget *parent) : QWizard(
 	m_sourceOptionsPage = new SourceOptionsPage(this);
 	addPage(m_sourceOptionsPage);
 
-	m_partSourcePage = new PageSourcePage(this);
-	addPage(m_partSourcePage);
+	m_partsEditorPage = NULL;
+	m_fileBrowserPage = NULL;
 }
 
 AddPartWizard::~AddPartWizard() {
@@ -117,11 +59,17 @@ QList<ModelPart*> AddPartWizard::modelParts() {
 	return m_modelParts;
 }
 
+QAbstractButton *AddPartWizard::finishButton() {
+	return button(FinishButton);
+}
+
 
 void AddPartWizard::fromPartsEditor() {
-	m_partSourcePage->setCentralWidget(
-		m_mainWindow->getPartsEditor(NULL, this, false)
-	);
+	removePage(1);
+	if(!m_partsEditorPage) {
+		m_partsEditorPage = new PartsEditorPage(this, m_mainWindow->getPartsEditor(NULL,this,false));
+	}
+	addPage(m_partsEditorPage);
 	next();
 }
 
@@ -134,5 +82,18 @@ void AddPartWizard::fromWebGenerator() {
 }
 
 void AddPartWizard::fromLocalFolder() {
+	removePage(1);
+	if(!m_fileBrowserPage) {
+		m_fileBrowserPage = new FileBrowserPage(this);
+	}
+	addPage(m_fileBrowserPage);
+	next();
+}
 
+void AddPartWizard::loadPart(QString newPartPath) {
+	m_modelParts.clear();
+	ModelPart *mp = m_mainWindow->loadPartFromFile(newPartPath);
+	if(mp) {
+		m_modelParts << mp;
+	}
 }

@@ -434,4 +434,5 @@ void BinManager::addPartIn(PartsBinPaletteWidget* bin) {
 	foreach(ModelPart *mp, mps) {
 		bin->addPart(mp);
 	}
+	setDirtyTab(bin,true);
 }

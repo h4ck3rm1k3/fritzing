@@ -40,7 +40,8 @@ HEADERS += \
     src/partsbinpalette/binmanager/stacktabwidget.h \
     src/partsbinpalette/binmanager/stackwidgetseparator.h \
     src/partsbinpalette/binmanager/dropsink.h \
-    src/partsbinpalette/addpartwizard/addpartwizard.h
+    src/partsbinpalette/addpartwizard/addpartwizard.h \
+    src/partsbinpalette/addpartwizard/addpartwizardpages.h
 
 SOURCES += \
     src/partsbinpalette/simpleeditablelabelwidget.cpp \
@@ -57,5 +58,6 @@ SOURCES += \
     src/partsbinpalette/binmanager/stacktabbar.cpp \
     src/partsbinpalette/binmanager/stacktabwidget.cpp \
     src/partsbinpalette/binmanager/stackwidgetseparator.cpp \
-    src/partsbinpalette/addpartwizard/addpartwizard.cpp
+    src/partsbinpalette/addpartwizard/addpartwizard.cpp \
+    src/partsbinpalette/addpartwizard/addpartwizardpages.cpp
  

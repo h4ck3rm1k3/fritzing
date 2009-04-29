@@ -87,7 +87,8 @@ public:
 	void showAllFirstTimeHelp(bool show);
 	void enableCheckUpdates(bool enabled);
 
-	QWidget* getPartsEditor(PaletteItem *paletteItem, QWidget *parent, bool asMainWindow=true);
+	class PartsEditorMainWindow* getPartsEditor(PaletteItem *paletteItem, QWidget *parent, bool asMainWindow=true);
+	ModelPart *loadPartFromFile(const QString& newPartPath);
 
 public:
 	static void initExportConstants();
