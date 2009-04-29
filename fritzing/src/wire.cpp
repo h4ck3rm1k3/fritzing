@@ -489,7 +489,7 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 	}
 
 	if (m_canChainMultiple && event->modifiers() == Qt::ControlModifier) {
-		InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView != NULL) {
 			infoGraphicsView->mousePressConnectorEvent(connectorItem, event);
 		}

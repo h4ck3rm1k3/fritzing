@@ -157,7 +157,7 @@ void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fro
 		foreach (Wire * wire, ratsnestWires) {
 			QColor colorAsQColor = (QColor) *color;
 			wire->setColor(colorAsQColor, wire->getRouted() ? ROUTED_OPACITY : UNROUTED_OPACITY);
-			checkSticky(wire->id(), false, NULL);
+			checkSticky(wire->id(), false, false, NULL);
 		}
 	}
 

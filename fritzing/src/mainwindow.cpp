@@ -401,8 +401,8 @@ void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 	succeeded = succeeded && connect(signaller, SIGNAL(restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool )),
 									 slotter, SLOT(restoreIndexes(ModelPart *, ModelPartTiny *, bool )) );
 
-	succeeded = succeeded && connect(signaller, SIGNAL(checkStickySignal(long, bool, CheckStickyCommand *)),
-									 slotter, SLOT(checkSticky(long, bool, CheckStickyCommand *)) );
+	succeeded = succeeded && connect(signaller, SIGNAL(checkStickySignal(long, bool, bool, CheckStickyCommand *)),
+									 slotter, SLOT(checkSticky(long, bool, bool, CheckStickyCommand *)) );
 	succeeded = succeeded && connect(signaller, SIGNAL(rememberStickySignal(long, QUndoCommand *)),
 									 slotter, SLOT(rememberSticky(long, QUndoCommand *)),
 									 Qt::DirectConnection);

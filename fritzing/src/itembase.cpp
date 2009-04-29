@@ -466,7 +466,7 @@ ConnectorItem * ItemBase::findConnectorItemNamed(const QString & connectorID)  {
 
 void ItemBase::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 	//DebugDialog::debug(QString("hover enter %1").arg(instanceTitle()));
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
 		m_hoverEnterSpaceBarWasPressed = true;
 		event->ignore();
@@ -494,7 +494,7 @@ void ItemBase::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	if (itemType() != ModelPart::Breadboard) {
 		update();
 	}
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveItem(event, this);
 	}
@@ -623,7 +623,7 @@ void ItemBase::paintHover(QPainter *painter, const QStyleOptionGraphicsItem *opt
 }
 
 void ItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	InfoGraphicsView *infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView *infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
 		event->ignore();
 		return; 
@@ -747,7 +747,7 @@ void ItemBase::setInstanceTitleAux(const QString &title)
 	}
 	setInstanceTitleTooltip(title);
 
-//	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+//	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 //	if (infographics != NULL) {
 //		infographics->setItemTooltip(this, title);
 //	}
@@ -878,7 +878,7 @@ void ItemBase::showPartLabel(bool showIt, ViewLayer* viewLayer, const QColor & t
 
 void ItemBase::partLabelChanged(const QString & newText) {
 	// sent from part label after inline edit
-	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	QString oldText = modelPart()->instanceTitle();
 	setInstanceTitleAux(newText);
 	if (infographics != NULL) {
@@ -915,7 +915,7 @@ void ItemBase::movePartLabel(QPointF newPos, QPointF newOffset) {
 
 
 void ItemBase::partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos, QPointF newOffset) {
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->partLabelMoved(this, oldPos, oldOffset, newPos, newOffset);
 	}
@@ -923,7 +923,7 @@ void ItemBase::partLabelMoved(QPointF oldPos, QPointF oldOffset, QPointF newPos,
 
 void ItemBase::rotateFlipPartLabel(qreal degrees, Qt::Orientations orientation)
 {
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->rotateFlipPartLabel(this, degrees, orientation);
 	}

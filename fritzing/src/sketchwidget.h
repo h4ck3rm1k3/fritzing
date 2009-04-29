@@ -132,9 +132,7 @@ public:
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	void setViewLayerIDs(ViewLayer::ViewLayerID part, ViewLayer::ViewLayerID wire, ViewLayer::ViewLayerID connector, ViewLayer::ViewLayerID ruler, ViewLayer::ViewLayerID label, ViewLayer::ViewLayerID note);
 	void stickem(long stickTargetID, long stickSourceID, bool stick);
-	void stickyScoop(ItemBase * stickyOne, CheckStickyCommand *);
-	//void checkNewSticky(ItemBase * itemBase, AddDeleteItemCommand * originatingCommand);
-	//void checkSticky(ItemBase * item, QUndoCommand * parentCommand);
+	void stickyScoop(ItemBase * stickyOne, bool checkCurrent, CheckStickyCommand *);
 	void setChainDrag(bool);
 	void hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
 	void hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item);
@@ -346,7 +344,7 @@ signals:
 								bool connect, class RatsnestCommand * ratsnestCommand);
 	void groupSignal(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexesSignal(ModelPart *, ModelPartTiny *, bool doEmit);
-	void checkStickySignal(long id, bool doEmit, CheckStickyCommand *);
+	void checkStickySignal(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 
 protected slots:
@@ -388,7 +386,7 @@ public slots:
 	void showPartLabel(long id, bool showIt);
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);
-	void checkSticky(long id, bool doEmit, CheckStickyCommand *);
+	void checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand *);
 	void resizeBoard(qreal w, qreal h);
 	void resizeBoard(long id, qreal w, qreal h);
 

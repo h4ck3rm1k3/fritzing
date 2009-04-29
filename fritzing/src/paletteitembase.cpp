@@ -154,7 +154,7 @@ void PaletteItemBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 }
 
 void PaletteItemBase::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->mousePressConnectorEvent(connectorItem, event);
 	}

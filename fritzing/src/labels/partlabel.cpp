@@ -180,7 +180,7 @@ QPainterPath PartLabel::shape() const
 
 void PartLabel::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL && infographics->spaceBarIsPressed()) {
 		m_spaceBarWasPressed = true;
 		event->ignore();

@@ -68,6 +68,9 @@ public:
 
 	QVariant evaluateJavascript(const QString &);
 
+public:
+	static InfoGraphicsView * getInfoGraphicsView(QGraphicsItem *);
+
 protected:
 	QGraphicsItem *selectedAux();
 	class HtmlInfoView *m_infoView;

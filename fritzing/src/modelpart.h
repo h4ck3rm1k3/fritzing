@@ -114,7 +114,7 @@ public:
 	void setInstanceText(QString);
 
 	void setOrderedChildren(QList<QObject*> children);
-	void collectExtraValues(const QString & prop, QStringList & extraValues);
+	void collectExtraValues(const QString & prop, QString & value, QStringList & extraValues);
 	QString collectExtraHtml(const QString & prop, const QString & value);
 	QSizeF size();
 	void setSize(QSizeF);

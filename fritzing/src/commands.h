@@ -293,7 +293,7 @@ struct StickyThing {
 class CheckStickyCommand : public BaseCommand
 {
 public:
-	CheckStickyCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, long itemID, QUndoCommand *parent);
+	CheckStickyCommand(class SketchWidget *sketchWidget, BaseCommand::CrossViewType, long itemID, bool checkCurrent, QUndoCommand *parent);
 	~CheckStickyCommand();
 	
 	void undo();
@@ -307,6 +307,7 @@ protected:
 	long m_itemID;
 	QList<StickyThing *> m_stickyList;
 	bool m_firstTime;
+	bool m_checkCurrent;
 };
 
 class CleanUpWiresCommand : public BaseCommand

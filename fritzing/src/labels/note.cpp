@@ -332,7 +332,7 @@ void Note::positionGrip() {
 
 
 void Note::mousePressEvent(QGraphicsSceneMouseEvent * event) {
-	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL && infographics->spaceBarIsPressed()) {
 		m_spaceBarWasPressed = true;
 		event->ignore();
@@ -394,7 +394,7 @@ void Note::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	if (m_inResize) {
 		this->ungrabMouse();
 		m_inResize = NULL;
-		InfoGraphicsView *infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+		InfoGraphicsView *infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView != NULL) {
 			infoGraphicsView->noteSizeChanged(this, m_viewGeometry.rect(), m_rect);
 		}
@@ -406,7 +406,7 @@ void Note::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 }
 
 void Note::contentsChangedSlot() {
-	InfoGraphicsView *infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView *infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		QString oldText;
 		if (m_modelPart) {

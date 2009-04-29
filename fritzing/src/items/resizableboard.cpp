@@ -25,10 +25,9 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 ********************************************************************/
 
 // TODO:
-//	show x & y sizes during resize operation
+//  select "custom size" in view menu: input widgets appear
 //	undo
 //  copy/paste
-//	save and load
 //	gerber export (temp file?)
 //  load svg from info view
 //		equivalent to create new part/swap operation
@@ -72,8 +71,6 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 
 	m_silkscreenRenderer = m_renderer = NULL;
 	m_inResize = NULL;
-
-	m_originalSizeProperty = modelPart->modelPartShared()->properties().value("size");
 }
 
 ResizableBoard::~ResizableBoard() {
@@ -126,6 +123,9 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		newR.setRect(0, 0, newX - oldX1, newY - oldY1);
 	}
 	else if (m_inResize == m_resizeGripTL) {
+		oldX2 = m_originalRect.left() + m_originalRect.width();
+		oldY2 = m_originalRect.top() + m_originalRect.height();
+
 		if (oldX2 - newX < minWidth) {
 			newX = oldX2 - minWidth;
 		}
@@ -144,6 +144,8 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		if (newX - oldX1 < minWidth) {
 			newX = oldX1 + minWidth;
 		}
+
+		oldY2 = m_originalRect.top() + m_originalRect.height();
 		if (oldY2 - newY < minHeight) {
 			newY = oldY2 - minHeight;
 		}
@@ -154,8 +156,12 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		}
 
 		newR.setRect(0, 0, newX - oldX1, oldY2 - newY);
+		QRectF tempR = newR;
+		tempR.moveTopLeft(p);
+		DebugDialog::debug(QString("new rect %1 %2 %3").arg(newY).arg(newR.height()).arg(newY + newR.height()));
 	}
 	else if (m_inResize == m_resizeGripBL) {
+		oldX2 = m_originalRect.left() + m_originalRect.width();
 		if (oldX2 - newX < minWidth) {
 			newX = oldX2 - minWidth;
 		}
@@ -187,7 +193,7 @@ void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	event->accept();
 	m_inResize = NULL;
 
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView) {
 		infoGraphicsView->viewItemInfo(this);
 	}
@@ -196,6 +202,9 @@ void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, ResizeHandle * resizeHandle)
 {
 	if (m_spaceBarWasPressed) return;
+
+	m_originalRect = boundingRect();
+	m_originalRect.moveTopLeft(this->pos());
 
 	if (resizeHandle == m_resizeGripBR) {
 		QSizeF sz = this->boundingRect().size();
@@ -214,16 +223,16 @@ void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, Resi
 	m_inResize = resizeHandle;
 	this->grabMouse();
 
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView) {
 		QSizeF sz = modelPart()->size();
 		if (sz.width() == 0) {
-			// set the size so the <input> text items will appear in the infoview
+			// set the size so the infoGraphicsView will display the size as you drag
+			sz = this->boundingRect().size();
 			modelPart()->setSize(QSizeF(sz.width() / FSvgRenderer::printerScale() * 25.4, sz.height() / FSvgRenderer::printerScale() * 25.4)); 
 		}
 		infoGraphicsView->viewItemInfo(this);
 	}
-
 }
 
 void ResizableBoard::handleZoomChangedSlot(qreal scale) {
@@ -260,7 +269,6 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	if (mmW == 0 || mmH == 0) {
 		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, true);
 		modelPart()->setSize(QSizeF(0,0));
-		modelPart()->modelPartShared()->setProperty("size", m_originalSizeProperty);
 		// do the layerkin
 		positionGrips();
 		return;
@@ -280,10 +288,9 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
 		setSharedRenderer(m_renderer);
-		modelPart()->modelPartShared()->setProperty("size", ModelPart::customSize);
 		modelPart()->setSize(QSizeF(mmW, mmH));
 
-		InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView) {
 			infoGraphicsView->evaluateJavascript(QString("updateBoardSize(%1,%2);").arg(qRound(mmW * 10) / 10.0).arg(qRound(mmH * 10) / 10.0));
 		}
@@ -305,10 +312,17 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
 				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
-				itemBase->modelPart()->modelPartShared()->setProperty("size", ModelPart::customSize);
 				itemBase->modelPart()->setSize(QSizeF(mmW, mmH));
 			}
 			break;
 		}
 	}
 }
+
+void ResizableBoard::loadLayerKin( const LayerHash & viewLayers) {
+	PaletteItem::loadLayerKin(viewLayers);
+	if (m_modelPart->size().width() != 0) {
+		resizeMM(m_modelPart->size().width(), m_modelPart->size().height(), viewLayers);
+	}
+}
+

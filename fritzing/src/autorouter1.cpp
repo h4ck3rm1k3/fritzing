@@ -1143,7 +1143,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 	}
 
 	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), false, -1, -1, parentCommand);
-	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), parentCommand);
+	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, parentCommand);
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
 	new WireColorChangeCommand(m_sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);

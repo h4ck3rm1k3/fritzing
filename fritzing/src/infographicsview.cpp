@@ -148,3 +148,14 @@ QVariant InfoGraphicsView::evaluateJavascript(const QString & script)
 
 	return m_infoView->evaluateJavascript(script);
 }
+
+InfoGraphicsView * InfoGraphicsView::getInfoGraphicsView(QGraphicsItem * item)
+{
+	if (item == NULL) return NULL;
+
+	QGraphicsScene * scene = item->scene();
+	if (scene == NULL) return NULL;
+
+	return dynamic_cast<InfoGraphicsView *>(scene->parent());
+}
+

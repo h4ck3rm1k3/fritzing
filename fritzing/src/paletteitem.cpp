@@ -242,7 +242,7 @@ void PaletteItem::mousePressEvent(PaletteItemBase * originalItem, QGraphicsScene
 
 void PaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL && infographics->spaceBarIsPressed()) { 
 		event->ignore();
 		return;

@@ -524,11 +524,12 @@ QString ChangeZCommand::getParamString() const {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-CheckStickyCommand::CheckStickyCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, long itemID, QUndoCommand *parent)
+CheckStickyCommand::CheckStickyCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, long itemID, bool checkCurrent, QUndoCommand *parent)
 : BaseCommand(crossViewType, sketchWidget, parent)
 {
 	m_itemID = itemID;
 	m_firstTime = true;
+	m_checkCurrent = checkCurrent;
 }
 
 CheckStickyCommand::~CheckStickyCommand() {
@@ -549,7 +550,7 @@ void CheckStickyCommand::undo()
 void CheckStickyCommand::redo()
 {
 	if (m_firstTime) {
-		m_sketchWidget->checkSticky(m_itemID, m_crossViewType == BaseCommand::CrossView, this);
+		m_sketchWidget->checkSticky(m_itemID, m_crossViewType == BaseCommand::CrossView, m_checkCurrent, this);
 		m_firstTime = false;
 	}
 	else {
@@ -762,7 +763,7 @@ void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, Connecto
 		sic->addRedo(wire->id());
 		addSubCommand(sic);
 	}
-	addSubCommand(new CheckStickyCommand(sketchWidget, BaseCommand::SingleView, wire->id(), NULL));
+	addSubCommand(new CheckStickyCommand(sketchWidget, BaseCommand::SingleView, wire->id(), false, NULL));
 
 }
 

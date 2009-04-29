@@ -188,6 +188,12 @@ void ModelPart::saveInstances(QXmlStreamWriter & streamWriter, bool startDocumen
 			streamWriter.writeAttribute("moduleIdRef", moduleIdRef);
 			streamWriter.writeAttribute("modelIndex", QString::number(m_index));
 			streamWriter.writeAttribute("path", m_modelPartShared->path());
+			if (m_size.width() != 0) {
+				streamWriter.writeAttribute("width", QString::number(m_size.width()));
+			}
+			if (m_size.height() != 0) {
+				streamWriter.writeAttribute("height", QString::number(m_size.height()));
+			}
 		}
 		QString title = instanceTitle();
 		if(!title.isNull() && !title.isEmpty()) {
@@ -534,7 +540,7 @@ void ModelPart::setOrderedChildren(QList<QObject*> children) {
 	m_orderedChildren = children;
 }
 
-void ModelPart::collectExtraValues(const QString & prop, QStringList & extraValues) {
+void ModelPart::collectExtraValues(const QString & prop, QString & value, QStringList & extraValues) {
 	if (itemType() != ModelPart::ResizableBoard) return;
 
 	if (prop.compare("size") == 0) {
@@ -545,7 +551,11 @@ void ModelPart::collectExtraValues(const QString & prop, QStringList & extraValu
 			customShapeTranslated = tr("Custom Shape");
 		}
 		extraValues.append(customSizeTranslated);
-		extraValues.append(customShapeTranslated);
+		//extraValues.append(customShapeTranslated);
+
+		if (m_size.width() != 0) {
+			value = customSizeTranslated;
+		}
 	}
 }
 
@@ -555,6 +565,8 @@ QString ModelPart::collectExtraHtml(const QString & prop, const QString & value)
 	if (prop.compare("size") != 0) return ___emptyString___;
 
 	if (value.compare(customSizeTranslated) == 0) {
+		if (m_size.width() == 0) return ___emptyString___;
+
 		qreal w = qRound(m_size.width() * 10) / 10.0;	// truncate to 1 decimal point
 		qreal h = qRound(m_size.height() * 10) / 10.0;  // truncate to 1 decimal point
 		return QString("&nbsp;width(mm):<input type='text' name='boardwidth' id='boardwidth' maxlength='5' value='%1' style='width:35px' />"

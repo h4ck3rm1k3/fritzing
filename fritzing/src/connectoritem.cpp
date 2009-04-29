@@ -83,7 +83,7 @@ ConnectorItem::~ConnectorItem() {
 }
 
 void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
 		m_hoverEnterSpaceBarWasPressed = true;
 		event->ignore();
@@ -107,7 +107,7 @@ void ConnectorItem::hoverLeaveEvent ( QGraphicsSceneHoverEvent * event ) {
 	}
 
 	restoreColor();
-	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL) {
 		infoGraphicsView->hoverLeaveConnectorItem(event, this);
 	}
@@ -223,7 +223,7 @@ void ConnectorItem::setColorAux(const QColor &color, bool paint) {
 }
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-	InfoGraphicsView *infographics = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL && infographics->spaceBarIsPressed()) { 
 		event->ignore();
 		return;

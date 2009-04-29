@@ -411,7 +411,7 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		QString value = properties[ key ];
 		QString translatedName = TranslatedPropertyNames.value(key.toLower(), key);
 		QStringList extraValues;
-		modelPart->collectExtraValues(key, extraValues);
+		modelPart->collectExtraValues(key, value, extraValues);
 		QString phtml = propertyHtml(key, value, family, translatedName, swappingEnabled, extraValues,  modelPart->collectExtraHtml(key, value));
 		//DebugDialog::debug(phtml);
 		s += phtml;

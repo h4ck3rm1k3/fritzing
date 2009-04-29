@@ -158,13 +158,19 @@ bool ModelBase::loadInstances(QDomElement & instances, QList<ModelPart *> & mode
 			modelPart->setOriginalModelIndex(index);
 		}
 
+		qreal w = instance.attribute("width").toDouble(&ok);
+		if (ok) {
+			qreal h = instance.attribute("height").toDouble(&ok);
+			if (ok) {
+				modelPart->setSize(QSizeF(w, h));
+			}
+		}
+
    		instance = instance.nextSiblingElement("instance");
   	}
 
 	return true;
 }
-
-
 
 ModelPart * ModelBase::addModelPart(ModelPart * parent, ModelPart * copyChild) {
 	ModelPart * modelPart = new ModelPart();
