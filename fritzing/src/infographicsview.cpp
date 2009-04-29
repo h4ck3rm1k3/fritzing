@@ -142,3 +142,9 @@ bool InfoGraphicsView::spaceBarIsPressed() {
 	return false;
 }
 
+QVariant InfoGraphicsView::evaluateJavascript(const QString & script)
+{
+	if (m_infoView == NULL) return QVariant();
+
+	return m_infoView->evaluateJavascript(script);
+}

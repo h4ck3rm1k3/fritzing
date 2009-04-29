@@ -565,6 +565,22 @@ protected:
 	bool m_addType;
 };
 
+class ResizeBoardCommand : public BaseCommand
+{
+public:
+	ResizeBoardCommand(class SketchWidget *, long itemID, qreal oldWidth, qreal oldHeight, qreal newWidth, qreal newHeight, QUndoCommand * parent);
+	void undo();
+	void redo();
 
+protected:
+	QString getParamString() const;
+
+protected:
+	qreal m_oldWidth;
+	qreal m_oldHeight;
+	qreal m_newWidth;
+	qreal m_newHeight;
+	long m_itemID;
+};
 
 #endif // COMMANDS_H

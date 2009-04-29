@@ -25,20 +25,23 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 ********************************************************************/
 
 // TODO:
-//	drag all 4 handles
-//	update properties in modelpartshared
 //	show x & y sizes during resize operation
-//	set size in info view
+//	undo
+//  copy/paste
+//	save and load
 //	gerber export (temp file?)
-//  load svg form info view
+//  load svg from info view
+//		equivalent to create new part/swap operation
 //		check for board and silkscreen layers
 
 #include "resizableboard.h"
 #include "../utils/resizehandle.h"
 #include "../fsvgrenderer.h"
+#include "../infographicsview.h"
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
+static const int LineThickness = 4;
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -69,6 +72,8 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 
 	m_silkscreenRenderer = m_renderer = NULL;
 	m_inResize = NULL;
+
+	m_originalSizeProperty = modelPart->modelPartShared()->properties().value("size");
 }
 
 ResizableBoard::~ResizableBoard() {
@@ -97,15 +102,11 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		return;
 	}
 
-	if (m_renderer == NULL) {
-		m_renderer = new FSvgRenderer(this);
-	}
-
 	QRectF rect = boundingRect();
 	rect.moveTopLeft(this->pos());
 
-	qreal minWidth = 0.1 * FSvgRenderer::printerScale();
-	qreal minHeight = 0.1 * FSvgRenderer::printerScale();
+	qreal minWidth = 0.1 * FSvgRenderer::printerScale();			// .1 inch
+	qreal minHeight = 0.1 * FSvgRenderer::printerScale();			// .1 inch
 
 	qreal oldX1 = rect.x();
 	qreal oldY1 = rect.y();
@@ -170,30 +171,9 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 		newR.setRect(0, 0, oldX2 - newX, newY - oldY1);
 	}
 
-	QString s = BoardLayerTemplate.arg(newR.width()).arg(newR.height()).arg(newR.width() - 2).arg(newR.height() - 2);
-	bool result = m_renderer->fastLoad(s.toUtf8());
-	if (result) {
-		setSharedRenderer(m_renderer);
-	}
-	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
+	LayerHash lh;
 
-	positionGrips();
-
-	foreach (ItemBase * itemBase, m_layerKin) {
-		if (itemBase->viewLayerID() == ViewLayer::Silkscreen) {
-			if (m_silkscreenRenderer == NULL) {
-				m_silkscreenRenderer = new FSvgRenderer(itemBase);
-			}
-
-			s = SilkscreenLayerTemplate.arg(newR.width()).arg(newR.height()).arg(newR.width() - 4).arg(newR.height() - 4);
-			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
-			if (result) {
-				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
-			}
-			break;
-		}
-	}
-
+	resizeMM(newR.width() / FSvgRenderer::printerScale() * 25.4, newR.height() / FSvgRenderer::printerScale() * 25.4, lh);
 	event->accept();
 }
 
@@ -206,8 +186,12 @@ void ResizableBoard::mouseReleaseEvent(QGraphicsSceneMouseEvent * event) {
 	this->ungrabMouse();
 	event->accept();
 	m_inResize = NULL;
-}
 
+	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infoGraphicsView) {
+		infoGraphicsView->viewItemInfo(this);
+	}
+}
 
 void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, ResizeHandle * resizeHandle)
 {
@@ -229,6 +213,16 @@ void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, Resi
 
 	m_inResize = resizeHandle;
 	this->grabMouse();
+
+	InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+	if (infoGraphicsView) {
+		QSizeF sz = modelPart()->size();
+		if (sz.width() == 0) {
+			// set the size so the <input> text items will appear in the infoview
+			modelPart()->setSize(QSizeF(sz.width() / FSvgRenderer::printerScale() * 25.4, sz.height() / FSvgRenderer::printerScale() * 25.4)); 
+		}
+		infoGraphicsView->viewItemInfo(this);
+	}
 
 }
 
@@ -260,4 +254,61 @@ bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::View
 	}
 
 	return result;
+}
+
+void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
+	if (mmW == 0 || mmH == 0) {
+		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, true);
+		modelPart()->setSize(QSizeF(0,0));
+		modelPart()->modelPartShared()->setProperty("size", m_originalSizeProperty);
+		// do the layerkin
+		positionGrips();
+		return;
+	}
+
+	if (m_renderer == NULL) {
+		m_renderer = new FSvgRenderer(this);
+	}
+
+	qreal milsW = mmW / 25.4 * 1000;
+	qreal milsH = mmH / 25.4 * 1000;
+
+	QString s = BoardLayerTemplate
+		.arg(mmW).arg(mmH)			
+		.arg(milsW).arg(milsH)
+		.arg(milsW - LineThickness).arg(milsH - LineThickness);
+	bool result = m_renderer->fastLoad(s.toUtf8());
+	if (result) {
+		setSharedRenderer(m_renderer);
+		modelPart()->modelPartShared()->setProperty("size", ModelPart::customSize);
+		modelPart()->setSize(QSizeF(mmW, mmH));
+
+		InfoGraphicsView * infoGraphicsView = dynamic_cast<InfoGraphicsView *>(this->scene()->parent());
+		if (infoGraphicsView) {
+			infoGraphicsView->evaluateJavascript(QString("updateBoardSize(%1,%2);").arg(qRound(mmW * 10) / 10.0).arg(qRound(mmH * 10) / 10.0));
+		}
+	}
+	//	DebugDialog::debug(QString("fast load result %1 %2").arg(result).arg(s));
+
+	positionGrips();
+
+	foreach (ItemBase * itemBase, m_layerKin) {
+		if (itemBase->viewLayerID() == ViewLayer::Silkscreen) {
+			if (m_silkscreenRenderer == NULL) {
+				m_silkscreenRenderer = new FSvgRenderer(itemBase);
+			}
+
+			s = SilkscreenLayerTemplate
+				.arg(mmW).arg(mmH)
+				.arg(milsW).arg(milsH)
+				.arg(milsW - LineThickness).arg(milsH - LineThickness);
+			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
+			if (result) {
+				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
+				itemBase->modelPart()->modelPartShared()->setProperty("size", ModelPart::customSize);
+				itemBase->modelPart()->setSize(QSizeF(mmW, mmH));
+			}
+			break;
+		}
+	}
 }

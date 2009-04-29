@@ -68,6 +68,7 @@ $Date$
 #include "help/sketchmainhelp.h"
 #include "htmlinfoview.h"
 #include "items/resizableboard.h"
+#include "fsvgrenderer.h"
 
 static QColor labelTextColor = Qt::black;
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
@@ -75,6 +76,7 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_resizingBoard = NULL;
 	m_fixedToCenterItem = NULL;
 	m_spaceBarWasPressed = m_spaceBarIsPressed = false;
 	m_current = false;
@@ -1533,7 +1535,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		return;
 	}
 
-
 	ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 	if (itemBase) {
 		InfoGraphicsView::viewItemInfo(itemBase);
@@ -1541,8 +1542,10 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	}
 
 	// board's child items (at the moment) are the resize grips
-	ResizableBoard * board = dynamic_cast<ResizableBoard *>(item->parentItem());
-	if (board != NULL) {
+	m_resizingBoard = dynamic_cast<ResizableBoard *>(item->parentItem());
+	if (m_resizingBoard != NULL) {
+		m_resizingBoardSize = m_resizingBoard->modelPart()->size();
+		m_resizingBoardPos = m_resizingBoard->pos();
 		return;
 	}
 
@@ -1713,6 +1716,25 @@ void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
 	if (m_spaceBarWasPressed) {
+		InfoGraphicsView::mouseReleaseEvent(event);
+		return;
+	}
+
+	if (m_resizingBoard != NULL) {
+		QSizeF sz = m_resizingBoard->modelPart()->size();
+		QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(sz.width()).arg(sz.height()));
+		new ResizeBoardCommand(this, m_resizingBoard->id(), m_resizingBoardSize.width(), m_resizingBoardSize.height(), sz.width(), sz.height(), parentCommand);
+		if (m_resizingBoardPos != m_resizingBoard->pos()) {
+			m_resizingBoard->saveGeometry();
+			ViewGeometry vg1 = m_resizingBoard->getViewGeometry();
+			ViewGeometry vg2 = vg1;
+			vg1.setLoc(m_resizingBoardPos);
+			vg2.setLoc(m_resizingBoard->pos());
+			ViewGeometry vg21 = m_resizingBoard->getViewGeometry();
+			new MoveItemCommand(this, m_resizingBoard->id(), vg1, vg2, parentCommand);
+		}
+		m_undoStack->waitPush(parentCommand, 10);
+		m_resizingBoard = NULL;
 		InfoGraphicsView::mouseReleaseEvent(event);
 		return;
 	}
@@ -4759,3 +4781,30 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 
 	setLastPaletteItemSelected(paletteItem);
 }
+
+// called from javascript (htmlInfoView)
+void SketchWidget::resizeBoard(qreal mmW, qreal mmH) 
+{
+	
+	PaletteItem * item = getSelectedPart();
+	if (item == NULL) return;
+
+	if (item->itemType() != ModelPart::ResizableBoard) return;
+
+	QSizeF sz = item->modelPart()->size();
+
+	ResizeBoardCommand * resizeBoardCommand = new ResizeBoardCommand(this, item->id(), sz.width(), sz.height(), mmW, mmH, NULL);
+	resizeBoardCommand->setText(tr("Resize board to %1 %2").arg(mmW).arg(mmH));
+	m_undoStack->push(resizeBoardCommand);
+}
+
+// called from ResizeBoardCommand
+void SketchWidget::resizeBoard(long itemID, qreal mmW, qreal mmH) {
+	ItemBase * item = findItem(itemID);
+	if (item == NULL) return;
+
+	if (item->itemType() != ModelPart::ResizableBoard) return;
+
+	dynamic_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
+}
+

@@ -107,7 +107,7 @@ void ModelPartShared::populateTagCollection(QDomElement parent, QStringList &lis
 	}
 }
 
-void ModelPartShared::populateTagCollection(QDomElement parent, QMultiHash<QString,QString> &hash, const QString &tagName, const QString &attrName) {
+void ModelPartShared::populateTagCollection(QDomElement parent, QHash<QString,QString> &hash, const QString &tagName, const QString &attrName) {
 	QDomElement bag = parent.firstChildElement(tagName);
 	if (!bag.isNull()) {
 		QDomNodeList childs = bag.childNodes();
@@ -199,7 +199,7 @@ void ModelPartShared::setFamily(const QString &family) {
 	m_properties.insert("family",family);
 }
 
-QMultiHash<QString,QString> & ModelPartShared::properties() {
+QHash<QString,QString> & ModelPartShared::properties() {
 	return m_properties;
 }
 void ModelPartShared::setProperties(const QMultiHash<QString,QString> &properties) {
@@ -317,4 +317,6 @@ void ModelPartShared::copy(ModelPartShared* other) {
 	setVersion(other->version());
 }
 
-
+void ModelPartShared::setProperty(const QString & key, const QString & value) {
+	m_properties.insert(key, value);
+}

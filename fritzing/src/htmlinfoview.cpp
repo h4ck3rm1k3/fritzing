@@ -52,8 +52,6 @@ static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([k
 static QHash<QString, qreal> NumberMatcherValues;
 static QHash<QString, QString> TranslatedPropertyNames;
 
-
-
 bool valueLessThan(QString v1, QString v2)
 {
 	return NumberMatcherValues.value(v1, 0) <= NumberMatcherValues.value(v2, 0);
@@ -173,8 +171,6 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 
 	QString s = appendStuff(item,swappingEnabled);
 
-	//s += appendViewGeometry(item, false); //cprobably not used in alpha -andre/johannes
-	//s += appendCurrentGeometry(item, false); //probably not used in alpha -andre/johannes
 	setContent(s);
 	registerAsCurrentItem(item);
 	registerInfoGraphicsView(infoGraphicsView);
@@ -244,58 +240,6 @@ void HtmlInfoView::hoverLeaveConnectorItem(InfoGraphicsView *igv, QGraphicsScene
 	// clear
 }
 
-
-QString HtmlInfoView::appendViewGeometry(ItemBase * base, bool doLine) {
-	if (base == NULL) return "missing base";
-
-	ViewGeometry & viewGeometry = base->getViewGeometry();
-	QString s = "";
-	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("Position")) +
-		 QString("<tr><td class='label'>x</td><td>%1</td></tr>\n").arg(viewGeometry.loc().x()) +
-		 QString("<tr><td class='label'>y</td><td>%1</td></tr>\n").arg(viewGeometry.loc().y());
-
-	if (doLine) {
-		s +=	QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("line")) +
-				QString("<tr><td class='label'>x1 / y1</td><td>%1 / %2</td></tr>\n").arg(viewGeometry.line().x1()).
-																				   arg(viewGeometry.line().y1());
-				QString("<tr><td class='label'>x2 / y2</td><td>%1 / %2</td></tr>\n").arg(viewGeometry.line().x2()).
-																				   arg(viewGeometry.line().y2());
-	}
-
-	s += QString("<tr><td class='label'>z</td><td>%1</td></tr>\n").arg(viewGeometry.z());
-	s += QString("<tr><td class='label'>%1</td><td>%2</td></tr>\n").arg(tr("view")).arg(base->viewIdentifierName());
-	s += 		 "</table>\n";
-
-	return s;
-}
-
-QString HtmlInfoView::appendCurrentGeometry(ItemBase * item, bool doLine) {
-	Q_UNUSED(doLine);
-
-	if (item == NULL) return "missing item";
-
-	QPointF loc = item->pos();
-	QString s = "";
-	s += 		 "<table>\n";
-	s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("current geometry")) +
-		 QString("<tr><td class='label'>x</td><td>%1</td></tr>\n").arg(loc.x()) +
-		 QString("<tr><td class='label'>y</td><td>%1</td></tr>\n").arg(loc.y());
-
-	if (item->hasLine()) {
-		QLineF line = item->line();
-		s += QString("<tr><td class='subhead' colspan='2'>%1</td></tr>\n").arg(tr("line")) +
-			 QString("<tr><td class='label'>x1 / y1</td><td>%1,%2</td></tr>\n").arg(line.x1()).
-		 																	  arg(line.y1());
-		s += QString("<tr><td class='label'>x2 / y2</td><td>%1,%2</td></tr>\n").arg(line.x2()).
-		 																	  arg(line.y2());
-	}
-
-	s += QString("<tr><td class='label'>z</td><td>%1</td></tr>\n").arg(item->zValue());
-	s += 		 "</table>\n";
-	return s;
-}
-
 QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnabled) {
 	if (base == NULL) return "missing base";
 
@@ -310,6 +254,10 @@ QString HtmlInfoView::appendItemStuff(ItemBase* base, long id, bool swappingEnab
 QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	if (wire == NULL) return "missing base";
 
+	ModelPart *modelPart = wire->modelPart();
+	if (modelPart == NULL) return "missing modelpart";
+	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
+
 	QString autoroutable = wire->getAutoroutable() ? tr("(autoroutable)") : "";
 	QString nameString = tr("Wire");
 	if(wire->getRatsnest()) {
@@ -323,13 +271,8 @@ QString HtmlInfoView::appendWireStuff(Wire* wire, long id) {
 	QString title;
 	prepareTitleStuff(wire, title);
 
-
 	QSize size(STANDARD_ICON_IMG_WIDTH, STANDARD_ICON_IMG_HEIGHT);
 	QPixmap *pixmap = FSvgRenderer::getPixmap(wire->modelPart()->moduleID(), ViewLayer::Icon, size);
-
-	ModelPart *modelPart = wire->modelPart();
-	if (modelPart == NULL) return "missing modelpart";
-	if (modelPart->modelPartShared() == NULL) return "missing modelpart stuff";
 
 	QString s = "";
 	if(!title.isNull() && !title.isEmpty()) {
@@ -467,7 +410,11 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 		QString key = properties.keys()[i];
 		QString value = properties[ key ];
 		QString translatedName = TranslatedPropertyNames.value(key.toLower(), key);
-		s += propertyHtml(key, value, family, translatedName, swappingEnabled);
+		QStringList extraValues;
+		modelPart->collectExtraValues(key, extraValues);
+		QString phtml = propertyHtml(key, value, family, translatedName, swappingEnabled, extraValues,  modelPart->collectExtraHtml(key, value));
+		//DebugDialog::debug(phtml);
+		s += phtml;
 		rowsLeft--;
 	}
 
@@ -529,7 +476,7 @@ QString HtmlInfoView::wireWidthSelect(Wire *wire) {
 	return retval;
 }
 
-QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, const QString & displayName, bool dynamic) {
+QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, const QString& family, const QString & displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml) {
 	QStringList values = m_refModel->values(family,name);
 
 	if(!dynamic || name.toLower() == "id" || name.toLower() == "family" || values.size() == 1) {
@@ -572,9 +519,13 @@ QString HtmlInfoView::propertyHtml(const QString& name, const QString& value, co
 			options += QString("<option value='%1' %2>%1</option> \n")
 				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);
 		}
+		foreach (QString opt, extraValues) {
+			options += QString("<option value='%1' %2>%1</option> \n")
+				.arg(opt).arg(opt==value?" selected='selected'" : ___emptyString___);
+		}
 		jsCode += "</script>\n";
 
-		return jsCode+QString("<tr style='height: 35px;'><td class='label'>%5</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select></td></tr>\n")
+		return jsCode+QString("<tr style='height: 35px;'><td class='label'>%5</td><td><select name='%1' id='%1' onchange='doSwap(\"%3\",\"%1\",\"%2\")'>\n%4</select>" + extraHtml + "</td></tr>\n")
 						.arg(name).arg(value).arg(family).arg(options).arg(displayName);
 	}
 }
@@ -685,4 +636,10 @@ void HtmlInfoView::registerInfoGraphicsView(InfoGraphicsView * infoGraphicsView)
 void HtmlInfoView::setNullContent()
 {
 	setContent("<html></html>");
+}
+
+QVariant HtmlInfoView::evaluateJavascript(const QString & script) {
+	QVariant v = m_webView->page()->mainFrame()->evaluateJavaScript(script);
+	//DebugDialog::debug(QString("return %1").arg(v.toString()));
+	return v;
 }

@@ -1069,3 +1069,36 @@ QString RestoreIndexesCommand::getParamString() const {
 		QString(" id:%1 5")
 		.arg(m_itemID);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ResizeBoardCommand::ResizeBoardCommand(SketchWidget * sketchWidget, long itemID, qreal oldWidth, qreal oldHeight, qreal newWidth, qreal newHeight, QUndoCommand * parent)
+: BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+	m_itemID = itemID;
+	m_oldWidth = oldWidth;
+	m_newWidth = newWidth;
+	m_oldHeight = oldHeight;
+	m_newHeight = newHeight;
+}
+
+void ResizeBoardCommand::undo() {
+	m_sketchWidget->resizeBoard(m_itemID, m_oldWidth, m_oldHeight);
+}
+
+void ResizeBoardCommand::redo() {
+	m_sketchWidget->resizeBoard(m_itemID, m_newWidth, m_newHeight);
+}
+
+QString ResizeBoardCommand::getParamString() const {
+
+	return QString("ResizeBoardCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1 ow:%2 oh:%3 nw:%4 nh:%5")
+		.arg(m_itemID)
+		.arg(m_oldWidth)
+		.arg(m_oldHeight)
+		.arg(m_newWidth)
+		.arg(m_newHeight);
+}
+

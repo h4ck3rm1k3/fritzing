@@ -81,7 +81,7 @@ public:
 	QString family();
 	void setFamily(const QString &family);
 
-	QMultiHash<QString,QString> & properties();
+	QHash<QString,QString> & properties();
 	void setProperties(const QMultiHash<QString,QString> &properties);
 
 	void initConnectors();
@@ -91,11 +91,14 @@ public:
 	BusShared * bus(const QString & busID);
 	bool ignoreTerminalPoints();
 
+	void setProperty(const QString & key, const QString & value);
+
+
 protected:
 	void loadTagText(QDomElement parent, QString tagName, QString &field);
 	// used to populate de StringList that contains both the <tags> and the <properties> values
 	void populateTagCollection(QDomElement parent, QStringList &list, const QString &tagName);
-	void populateTagCollection(QDomElement parent, QMultiHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
+	void populateTagCollection(QDomElement parent, QHash<QString,QString> &hash, const QString &tagName, const QString &attrName);
 
 	QDomDocument* m_domDocument;
 
@@ -112,7 +115,7 @@ protected:
 	QString m_taxonomy;
 
 	QStringList m_tags;
-	QMultiHash<QString,QString> m_properties;
+	QHash<QString,QString> m_properties;
 
 	QHash<QString, class ConnectorShared *> m_connectorSharedHash;
 	QHash<QString, class BusShared *> m_buses;

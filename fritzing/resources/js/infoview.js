@@ -165,3 +165,44 @@ function toggleVisibility(emitter,idToAffect) {
 	}
 	infoView.setBlockVisibility(idToAffect,!isBeingShown);
 }
+
+function loadBoardImage() {
+    alert("load board image");
+}
+
+function resizeBoard() {    
+	var reg = /^(\d{1,3}$)|(\d{1,3}\.\d$)/;
+	
+	var w = document.getElementById("boardwidth").value;			
+   	if (!reg.test(w)) {
+	    alert("board width is not a number");
+	    return;
+	}
+	if (w < 3) {
+	    alert("board width must be at least 3 mm");
+	    return;
+	}
+	
+   	var h = document.getElementById("boardheight").value;		
+   	if (!reg.test(h)) {
+	    alert("board height is not a number");
+	    return;
+	}	
+	if (h < 3) {
+	    alert("board width must be at least 3 mm");
+	    return;
+	}
+	
+    sketch.resizeBoard(w, h);
+}
+
+function updateBoardSize(w, h) {
+    var bw = document.getElementById("boardwidth");
+    if (bw) {
+        bw.value = w;
+    }
+    var bh = document.getElementById("boardheight");
+    if (bh) {
+        bh.value = h;
+    }
+}

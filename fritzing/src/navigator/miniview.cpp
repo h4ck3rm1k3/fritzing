@@ -82,10 +82,9 @@ QGraphicsView * MiniView::view() {
 }
 
 
-/*
-// obsolete: we are now drawing INotSeenInMiniView as part of the background
 void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[], const QStyleOptionGraphicsItem options[])
 {
+	// hide the items that don't scale so they don't overwhelm the mini view
 	FGraphicsScene * fScene = dynamic_cast<FGraphicsScene *>(scene());
 
     QGraphicsItem **itemArray = new QGraphicsItem *[numItems];
@@ -93,7 +92,7 @@ void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[]
 
 	int ix = 0;
 	for (int i = 0; i < numItems; i++) {
-		if (dynamic_cast<INotSeenInMiniView *>(items[i])) continue;
+		if (items[i]->flags() & QGraphicsItem::ItemIgnoresTransformations) continue;
 
 		itemArray[ix] = items[i];
 		styleOptionArray[ix++] = options[i];
@@ -105,5 +104,6 @@ void MiniView::drawItems(QPainter *painter, int numItems, QGraphicsItem *items[]
 
 	delete [] itemArray;
 	delete [] styleOptionArray;
+
 }
-*/
+

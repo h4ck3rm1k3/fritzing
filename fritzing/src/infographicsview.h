@@ -66,6 +66,8 @@ public:
 
 	virtual bool spaceBarIsPressed(); 
 
+	QVariant evaluateJavascript(const QString &);
+
 protected:
 	QGraphicsItem *selectedAux();
 	class HtmlInfoView *m_infoView;

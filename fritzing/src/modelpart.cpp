@@ -36,11 +36,16 @@ $Date$
 QHash<ModelPart::ItemType, QString> ModelPart::itemTypeNames;
 long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
+QString ModelPart::customSize = "Custom Size";
+QString ModelPart::customShape = "Custom Shape";
+QString ModelPart::customSizeTranslated;
+QString ModelPart::customShapeTranslated;
 
 
 ModelPart::ModelPart(ItemType type)
 	: QObject()
 {
+	m_size = QSizeF(0,0);
 	m_type = type;
 	m_modelPartShared = NULL;
 	m_index = m_nextIndex++;
@@ -53,6 +58,7 @@ ModelPart::ModelPart(ItemType type)
 ModelPart::ModelPart(QDomDocument * domDocument, const QString & path, ItemType type)
 	: QObject()
 {
+	m_size = QSizeF(0,0);
 	m_type = type;
 	m_modelPartShared = new ModelPartShared(domDocument, path);
 	m_originalModelPartShared = true;
@@ -526,4 +532,47 @@ void ModelPart::setInstanceTitle(QString title) {
 
 void ModelPart::setOrderedChildren(QList<QObject*> children) {
 	m_orderedChildren = children;
+}
+
+void ModelPart::collectExtraValues(const QString & prop, QStringList & extraValues) {
+	if (itemType() != ModelPart::ResizableBoard) return;
+
+	if (prop.compare("size") == 0) {
+		if (customSizeTranslated.isEmpty()) {
+			customSizeTranslated = tr("Custom Size");
+		}
+		if (customShapeTranslated.isEmpty()) {
+			customShapeTranslated = tr("Custom Shape");
+		}
+		extraValues.append(customSizeTranslated);
+		extraValues.append(customShapeTranslated);
+	}
+}
+
+QString ModelPart::collectExtraHtml(const QString & prop, const QString & value) {
+	if (itemType() != ModelPart::ResizableBoard) return  ___emptyString___;
+
+	if (prop.compare("size") != 0) return ___emptyString___;
+
+	if (value.compare(customSizeTranslated) == 0) {
+		qreal w = qRound(m_size.width() * 10) / 10.0;	// truncate to 1 decimal point
+		qreal h = qRound(m_size.height() * 10) / 10.0;  // truncate to 1 decimal point
+		return QString("&nbsp;width(mm):<input type='text' name='boardwidth' id='boardwidth' maxlength='5' value='%1' style='width:35px' />"
+					   "&nbsp;height(mm):<input type='text' name='boardheight' id='boardheight' maxlength='5' value='%2' style='width:35px' />"
+					   "<input type='button' name='resize' value='resize' style='width:60px' onclick='resizeBoard()'/>")
+					   .arg(w).arg(h);
+	}
+	else if (value.compare(customShapeTranslated) == 0) {
+		return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
+	}
+
+	return ___emptyString___;
+}
+
+void ModelPart::setSize(QSizeF sz) {
+	m_size = sz;
+}
+
+QSizeF ModelPart::size() {
+	return m_size;
 }

@@ -114,6 +114,17 @@ public:
 	void setInstanceText(QString);
 
 	void setOrderedChildren(QList<QObject*> children);
+	void collectExtraValues(const QString & prop, QStringList & extraValues);
+	QString collectExtraHtml(const QString & prop, const QString & value);
+	QSizeF size();
+	void setSize(QSizeF);
+
+public:
+	static QString customSize;
+	static QString customShape;
+	static QString customSizeTranslated;
+	static QString customShapeTranslated;
+
 public:
 	static const QString & itemTypeName(ModelPart::ItemType);
 	static const QString & itemTypeName(int);
@@ -152,6 +163,8 @@ protected:
 	QString m_instanceText;
 
 	QList<QObject*> m_orderedChildren;
+
+	QSizeF m_size;
 
 protected:
 	static QHash<ItemType, QString> itemTypeNames;

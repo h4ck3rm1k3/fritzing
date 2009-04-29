@@ -389,6 +389,8 @@ public slots:
 	void group(const QString & moduleID, long itemID, QList<long> & itemIDs, const ViewGeometry &, bool doEmit);
 	void restoreIndexes(ModelPart *, ModelPartTiny *, bool doEmit);
 	void checkSticky(long id, bool doEmit, CheckStickyCommand *);
+	void resizeBoard(qreal w, qreal h);
+	void resizeBoard(long id, qreal w, qreal h);
 
 protected:
 	PaletteModel* m_paletteModel;
@@ -450,6 +452,10 @@ protected:
 	ConnectorPairHash m_moveDisconnectedFromFemale;
 	bool m_spaceBarIsPressed;
 	bool m_spaceBarWasPressed;
+
+	class ResizableBoard * m_resizingBoard;
+	QSizeF m_resizingBoardSize;
+	QPointF m_resizingBoardPos;
 
 protected:
 	QString m_viewName;

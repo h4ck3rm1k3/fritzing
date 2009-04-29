@@ -65,20 +65,20 @@ public:
 	void unregisterCurrentItem();
 	void unregisterCurrentItemIf(long id);
 
+	QVariant evaluateJavascript(const QString &);
+
 protected slots:
 	void jsRegister();
 	void setBlockVisibility(const QString &blockId, bool value);
 
 protected:
 	QString appendStuff(ItemBase* item, bool swappingEnabled); //finds out if it's a wire or something else
-	QString appendViewGeometry(ItemBase * base, bool doLine);
-	QString appendCurrentGeometry(ItemBase *, bool doLine);
 	QString appendWireStuff(Wire* wire, long itemID);
 	QString appendItemStuff(ItemBase* base, long itemID, bool swappingEnabled);
 	QString appendItemStuff(ModelPart * modelPart, long itemID, bool swappingEnabled, const QString title = "", bool labelIsVisible = false);
 
 	void prepareTitleStuff(ItemBase *base, QString &title);
-	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic);
+	QString propertyHtml(const QString& name, const QString& value, const QString& family, const QString& displayName, bool dynamic, const QStringList & extraValues, const QString & extraHtml);
 	QString toHtmlImage(QPixmap *pixmap, const char* format = "PNG");
 	QString wireColorsSelect(Wire *wire);
 	QString wireWidthSelect(Wire *wire);
