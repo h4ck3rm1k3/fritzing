@@ -306,8 +306,13 @@ StackTabBar::pane {
 	background-color: rgb(217,217,217);
 }
 
-StackTabBar[current="true"]::tab:selected {
+StackTabBar::tab:selected {
 	background-color: rgb(217,217,217);
+}
+
+StackTabBar[current="true"]::tab:selected {
+	background-color: black;
+	color: white;
 }
 
 
