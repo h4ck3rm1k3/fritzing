@@ -41,7 +41,7 @@ $Date$
 #include <QPaintDevice>
 #include <QPixmap>
 
-#include "paletteitem.h"
+#include "items/paletteitem.h"
 #include "mainwindow.h"
 #include "debugdialog.h"
 #include "connector.h"

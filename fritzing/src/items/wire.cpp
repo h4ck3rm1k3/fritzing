@@ -36,14 +36,14 @@ $Date$
 #include <QGraphicsItem>
 #include <QSet>
 
-#include "debugdialog.h"
-#include "infographicsview.h"
-#include "connectoritem.h"
-#include "connectorshared.h"
-#include "layerattributes.h"
-#include "fsvgrenderer.h"
-#include "labels/partlabel.h"
-#include "modelpart.h"
+#include "../debugdialog.h"
+#include "../infographicsview.h"
+#include "../connectoritem.h"
+#include "../connectorshared.h"
+#include "../layerattributes.h"
+#include "../fsvgrenderer.h"
+#include "../labels/partlabel.h"
+#include "../modelpart.h"
 
 #include <stdlib.h>
 

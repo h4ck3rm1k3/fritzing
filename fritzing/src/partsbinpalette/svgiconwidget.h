@@ -35,7 +35,7 @@ $Date$
 #include <QToolTip>
 
 #include "../modelpart.h"
-#include "../paletteitem.h"
+#include "../items/paletteitem.h"
 
 class SvgIconWidgetContainer;
 

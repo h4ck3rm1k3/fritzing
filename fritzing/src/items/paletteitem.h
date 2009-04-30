@@ -34,7 +34,7 @@ $Date$
 #include <QVariant>
 
 #include "paletteitembase.h"
-#include "viewlayer.h"
+#include "../viewlayer.h"
 
 class PaletteItem : public PaletteItemBase 
 {

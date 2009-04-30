@@ -30,7 +30,7 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 #define ICONWIDGETPALETTEITEM_H_
 
 
-#include "../paletteitem.h"
+#include "../items/paletteitem.h"
 
 class IconWidgetPaletteItem : public PaletteItem {
 

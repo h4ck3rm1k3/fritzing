@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "graphicssvglineitem.h"
-#include "utils/misc.h"
+#include "../utils/misc.h"
 
 
 // note: copied most of this code directly from Qt's QGraphicsLineItem code

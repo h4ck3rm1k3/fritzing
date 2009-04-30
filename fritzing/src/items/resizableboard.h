@@ -32,7 +32,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include <QPixmap>
 #include <QVariant>
 
-#include "../paletteitem.h"
+#include "paletteitem.h"
 
 class ResizableBoard : public PaletteItem 
 {

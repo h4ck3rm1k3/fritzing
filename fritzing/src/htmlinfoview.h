@@ -34,8 +34,8 @@ $Date$
 #include <QGraphicsSceneHoverEvent>
 #include <QMutex>
 
-#include "itembase.h"
-#include "wire.h"
+#include "items/itembase.h"
+#include "items/wire.h"
 #include "connectoritem.h"
 #include "referencemodel/referencemodel.h"
 

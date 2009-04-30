@@ -38,10 +38,10 @@ $Date$
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsItem>
 
-#include "viewgeometry.h"
-#include "viewlayer.h"
-#include "viewidentifierclass.h"
-#include "utils/misc.h"
+#include "../viewgeometry.h"
+#include "../viewlayer.h"
+#include "../viewidentifierclass.h"
+#include "../utils/misc.h"
 #include "graphicssvglineitem.h"
 
 class ConnectorItem;

@@ -26,17 +26,17 @@ $Date$
 
 
 #include "itembase.h"
-#include "debugdialog.h"
-#include "modelpart.h"
-#include "connectoritem.h"
-#include "connectorshared.h"
-#include "infographicsview.h"
-#include "connector.h"
-#include "bus.h"
-#include "labels/partlabel.h"
-#include "layerattributes.h"
-#include "fsvgrenderer.h"
-#include "svg/svgfilesplitter.h"
+#include "../debugdialog.h"
+#include "../modelpart.h"
+#include "../connectoritem.h"
+#include "../connectorshared.h"
+#include "../infographicsview.h"
+#include "../connector.h"
+#include "../bus.h"
+#include "../labels/partlabel.h"
+#include "../layerattributes.h"
+#include "../fsvgrenderer.h"
+#include "../svg/svgfilesplitter.h"
 
 #include <QScrollBar>
 #include <QTimer>

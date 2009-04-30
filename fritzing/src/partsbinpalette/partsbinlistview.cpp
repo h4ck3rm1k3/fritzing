@@ -27,7 +27,7 @@ $Date$
 
 #include "../debugdialog.h"
 #include "../htmlinfoview.h"
-#include "../itembase.h"
+#include "../items/itembase.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"
 

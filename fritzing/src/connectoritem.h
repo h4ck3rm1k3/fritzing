@@ -34,7 +34,7 @@ $Date$
 #include <QXmlStreamWriter>
 
 #include "connector.h"
-#include "itembase.h"
+#include "items/itembase.h"
 
 class ConnectorItem : public QGraphicsRectItem
 {

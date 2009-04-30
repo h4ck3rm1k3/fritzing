@@ -32,7 +32,7 @@ $Date: 2009-03-21 03:10:39 +0100 (Sat, 21 Mar 2009) $
 
 #include "partseditorview.h"
 #include "partseditorconnectoritem.h"
-#include "../layerkinpaletteitem.h"
+#include "../items/layerkinpaletteitem.h"
 #include "../layerattributes.h"
 #include "../fritzingwindow.h"
 #include "../fsvgrenderer.h"

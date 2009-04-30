@@ -42,17 +42,17 @@ $Date$
 #include <QApplication>
 #include <QDomElement>
 
-#include "paletteitem.h"
-#include "wire.h"
+#include "items/paletteitem.h"
+#include "items/wire.h"
 #include "commands.h"
 #include "modelpart.h"
 #include "debugdialog.h"
-#include "layerkinpaletteitem.h"
+#include "items/layerkinpaletteitem.h"
 #include "sketchwidget.h"
 #include "connectoritem.h"
 #include "bus.h"
-#include "virtualwire.h"
-#include "tracewire.h"
+#include "items/virtualwire.h"
+#include "items/tracewire.h"
 #include "itemdrag.h"
 #include "layerattributes.h"
 #include "waitpushundostack.h"

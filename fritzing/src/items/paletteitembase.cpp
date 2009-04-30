@@ -25,14 +25,14 @@ $Date$
 ********************************************************************/
 
 #include "paletteitembase.h"
-#include "infographicsview.h"
-#include "debugdialog.h"
-#include "fsvgrenderer.h"
-#include "svg/svgfilesplitter.h"
-#include "connectorshared.h"
-#include "layerattributes.h"
+#include "../infographicsview.h"
+#include "../debugdialog.h"
+#include "../fsvgrenderer.h"
+#include "../svg/svgfilesplitter.h"
+#include "../connectorshared.h"
+#include "../layerattributes.h"
 #include "layerkinpaletteitem.h"
-#include "connectoritem.h"
+#include "../connectoritem.h"
 #include "wire.h"
 
 #include <math.h>

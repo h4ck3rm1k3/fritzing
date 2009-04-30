@@ -31,7 +31,7 @@ $Date$
 #include <QVariant>
 #include <QPainter>
 
-#include "../itembase.h"
+#include "../items/itembase.h"
 
 class GroupItemBase : public ItemBase
 {

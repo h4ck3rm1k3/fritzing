@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "partlabel.h"
-#include "../itembase.h"
+#include "../items/itembase.h"
 #include "../viewgeometry.h"
 #include "../debugdialog.h"
 #include "../infographicsview.h"

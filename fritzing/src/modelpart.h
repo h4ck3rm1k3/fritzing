@@ -38,7 +38,7 @@ $Date$
 #include <QHash>
 #include <QList>
 
-#include "itembase.h"
+#include "items/itembase.h"
 #include "modelpartshared.h"
 #include "connector.h"
 #include "svgandpartfilepath.h"

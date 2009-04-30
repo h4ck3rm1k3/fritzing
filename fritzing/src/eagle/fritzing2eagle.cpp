@@ -37,7 +37,7 @@ $Date$
 #include <QMessageBox>
 
 
-#include "../itembase.h"
+#include "../items/itembase.h"
 #include "../pcbsketchwidget.h"
 //#include "sketchwidget.h"
 #include "fritzing2eagle.h"

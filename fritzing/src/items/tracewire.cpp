@@ -25,8 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "tracewire.h"
-#include "connectoritem.h"
-#include "modelpart.h"
+#include "../connectoritem.h"
+#include "../modelpart.h"
 
 static double connectorRectClipInset = 0.5;
 

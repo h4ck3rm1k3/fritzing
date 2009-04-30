@@ -36,7 +36,7 @@ $Date$
 #include "../fsvgrenderer.h"
 #include "../debugdialog.h"
 #include "../layerattributes.h"
-#include "../layerkinpaletteitem.h"
+#include "../items/layerkinpaletteitem.h"
 
 
 PartsEditorPaletteItem::PartsEditorPaletteItem(PartsEditorView *owner, ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier) :

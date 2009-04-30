@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "note.h"
-#include "../graphicssvglineitem.h"
+#include "../items/graphicssvglineitem.h"
 #include "../debugdialog.h"
 #include "../infographicsview.h"
 #include "../modelpart.h"

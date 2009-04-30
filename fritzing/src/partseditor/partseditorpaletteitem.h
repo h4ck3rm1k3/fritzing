@@ -29,7 +29,7 @@ $Date$
 #ifndef PARTSEDITORPALETTEITEM_H_
 #define PARTSEDITORPALETTEITEM_H_
 
-#include "../paletteitem.h"
+#include "../items/paletteitem.h"
 #include "../utils/misc.h"
 #include "../svgandpartfilepath.h"
 

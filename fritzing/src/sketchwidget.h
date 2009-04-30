@@ -38,7 +38,7 @@ $Date$
 #include <QHash>
 #include <QTimer>
 
-#include "paletteitem.h"
+#include "items/paletteitem.h"
 #include "palettemodel.h"
 #include "sketchmodel.h"
 #include "viewgeometry.h"

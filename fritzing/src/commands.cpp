@@ -29,7 +29,7 @@ $Date$
 #include "debugdialog.h"
 #include "sketchwidget.h"
 #include "waitpushundostack.h"
-#include "wire.h"
+#include "items/wire.h"
 #include "connectoritem.h"
 
 int SelectItemCommand::selectItemCommandID = 3;

@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "fgraphicsscene.h"
-#include "paletteitembase.h"
+#include "items/paletteitembase.h"
 #include "connectoritem.h"
 #include "infographicsview.h"
 

@@ -41,20 +41,15 @@ HEADERS += \
     src/fsplashscreen.h \
     src/ftabwidget.h \
     src/fsvgrenderer.h \
-    src/graphicssvglineitem.h \
     src/htmlinfoview.h \
     src/idockablewidget.h \
     src/infographicsview.h \
-    src/itembase.h \
     src/itemdrag.h \
     src/layerattributes.h \
-    src/layerkinpaletteitem.h \
     src/mainwindow.h \
     src/modelbase.h \
     src/modelpart.h \
     src/modelpartshared.h \
-    src/paletteitem.h \
-    src/paletteitembase.h \
     src/palettemodel.h \
     src/pcbsketchwidget.h \
     src/pcbschematicsketchwidget.h \
@@ -65,15 +60,13 @@ HEADERS += \
     src/sketchtoolbutton.h \
     src/sketchwidget.h \
     src/svgandpartfilepath.h \
-    src/tracewire.h \
     src/viewgeometry.h \
     src/viewidentifierclass.h \
     src/viewlayer.h \
-    src/virtualwire.h \
     src/waitpushundostack.h \
-    src/wire.h \
     src/zoomablegraphicsview.h \
     src/zoomcombobox.h 
+    
 SOURCES += \
     src/aboutbox.cpp \
     src/autorouter1.cpp \
@@ -96,21 +89,16 @@ SOURCES += \
     src/fsplashscreen.cpp \
     src/ftabwidget.cpp \
     src/fsvgrenderer.cpp \
-    src/graphicssvglineitem.cpp \
     src/htmlinfoview.cpp \
     src/infographicsview.cpp \
-    src/itembase.cpp \
     src/itemdrag.cpp \
     src/layerattributes.cpp \
-    src/layerkinpaletteitem.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/mainwindow_menu.cpp \
     src/modelbase.cpp \
     src/modelpart.cpp \
     src/modelpartshared.cpp \
-    src/paletteitem.cpp \
-    src/paletteitembase.cpp \
     src/palettemodel.cpp \
     src/pcbsketchwidget.cpp \
     src/pcbschematicsketchwidget.cpp \
@@ -120,12 +108,9 @@ SOURCES += \
     src/sketchmodel.cpp \
     src/sketchtoolbutton.cpp \
     src/sketchwidget.cpp \
-    src/tracewire.cpp \
     src/viewgeometry.cpp \
     src/viewidentifierclass.cpp \
     src/viewlayer.cpp \
-    src/virtualwire.cpp \
     src/waitpushundostack.cpp \
-    src/wire.cpp \
     src/zoomablegraphicsview.cpp \
     src/zoomcombobox.cpp 

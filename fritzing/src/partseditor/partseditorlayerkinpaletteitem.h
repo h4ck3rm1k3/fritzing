@@ -28,7 +28,7 @@ $Date: 2009-01-16 17:12:45 +0100 (Fri, 16 Jan 2009) $
 #define PARTSEDITORLAYERKINPALETTEITEM_H_
 
 #include "partseditorconnectoritem.h"
-#include "../layerkinpaletteitem.h"
+#include "../items/layerkinpaletteitem.h"
 
 class PartsEditorLayerKinPaletteItem : public LayerKinPaletteItem {
 public:

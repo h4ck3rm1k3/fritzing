@@ -30,7 +30,7 @@ $Date$
 #define PARTSBINVIEW_H_
 
 #include "../palettemodel.h"
-#include "../paletteitem.h"
+#include "../items/paletteitem.h"
 #include "../referencemodel/referencemodel.h"
 
 class PartsBinPaletteWidget;

@@ -101,7 +101,7 @@ $Date$
 #include "groupitemkin.h"
 #include "../labels/partlabel.h"
 #include "../connectoritem.h"
-#include "../wire.h"
+#include "../items/wire.h"
 #include "../debugdialog.h"
 
 QString GroupItem::moduleIDName = "GroupModuleID";

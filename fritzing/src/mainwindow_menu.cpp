@@ -35,7 +35,7 @@ $Date$
 #include "aboutbox.h"
 #include "autorouter1.h"
 #include "eventeater.h"
-#include "virtualwire.h"
+#include "items/virtualwire.h"
 #include "fsvgrenderer.h"
 #include "labels/note.h"
 #include "fapplication.h"

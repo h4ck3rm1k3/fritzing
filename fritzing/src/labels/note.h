@@ -37,7 +37,7 @@ $Date$
 #include <QDialog>
 #include <QLineEdit>
 
-#include "../itembase.h"
+#include "../items/itembase.h"
 
 class Note : public ItemBase
 {

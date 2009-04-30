@@ -18,7 +18,23 @@
 # ********************************************************************/
 
 HEADERS += \
+    src/items/graphicssvglineitem.h \
+    src/items/itembase.h \
+    src/items/layerkinpaletteitem.h \
+    src/items/paletteitem.h \
+    src/items/paletteitembase.h \
+    src/items/tracewire.h \
+    src/items/virtualwire.h \
+    src/items/wire.h \
 	src/items/resizableboard.h 
 
 SOURCES += \
+    src/items/graphicssvglineitem.cpp \
+    src/items/itembase.cpp \
+    src/items/layerkinpaletteitem.cpp \
+    src/items/paletteitem.cpp \
+    src/items/paletteitembase.cpp \
+    src/items/tracewire.cpp \
+    src/items/virtualwire.cpp \
+    src/items/wire.cpp \
 	src/items/resizableboard.cpp 

@@ -29,7 +29,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "debugdialog.h"
 #include "autorouter1.h"
 #include "connectoritem.h"
-#include "wire.h"
+#include "items/wire.h"
 
 PCBSchematicSketchWidget::PCBSchematicSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : SketchWidget(viewIdentifier, parent)

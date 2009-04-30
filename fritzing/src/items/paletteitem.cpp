@@ -25,16 +25,16 @@ $Date$
 ********************************************************************/
 
 #include "paletteitem.h"
-#include "debugdialog.h"
-#include "viewgeometry.h"
-#include "infographicsview.h"
+#include "../debugdialog.h"
+#include "../viewgeometry.h"
+#include "../infographicsview.h"
 #include "layerkinpaletteitem.h"
-#include "fsvgrenderer.h"
-#include "layerattributes.h"
-#include "connectorshared.h"
-#include "labels/partlabel.h"
-#include "commands.h"
-#include "connectoritem.h"
+#include "../fsvgrenderer.h"
+#include "../layerattributes.h"
+#include "../connectorshared.h"
+#include "../labels/partlabel.h"
+#include "../commands.h"
+#include "../connectoritem.h"
 
 #include <math.h>
 

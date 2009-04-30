@@ -35,7 +35,7 @@ $Date$
 
 #include "partsbiniconview.h"
 #include "graphicsflowlayout.h"
-#include "../paletteitem.h"
+#include "../items/paletteitem.h"
 #include "../debugdialog.h"
 #include "svgiconwidget.h"
 #include "../palettemodel.h"

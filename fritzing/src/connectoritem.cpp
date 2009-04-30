@@ -33,7 +33,7 @@ $Date$
 #include "infographicsview.h"
 #include "debugdialog.h"
 #include "bus.h"
-#include "wire.h"
+#include "items/wire.h"
 #include "modelpart.h"
 
 QPen ConnectorItem::normalPen(QColor(255,0,0));

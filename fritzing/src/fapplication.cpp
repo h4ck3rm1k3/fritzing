@@ -39,7 +39,7 @@ $Date$
 #include "version/updatedialog.h"
 #include "itemdrag.h"
 #include "viewswitcher/viewswitcher.h"
-#include "wire.h"
+#include "items/wire.h"
 #include "htmlinfoview.h"
 #include "partsbinpalette/binmanager/binmanager.h"
 
