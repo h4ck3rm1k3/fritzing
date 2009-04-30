@@ -1715,8 +1715,32 @@ QString MainWindow::genIcon(SketchWidget * sketchWidget, QList<ViewLayer::ViewLa
 	return sketchWidget->renderToSVG(FSvgRenderer::printerScale(), partViewLayerIDs, wireViewLayerIDs, false, imageSize, NULL);
 }
 
-void MainWindow::swapSelected(const QString &moduleID, bool exactMatch) {
+void MainWindow::swapSelected(const QVariant & currProps, const QString & family, const QString & name) {
+	if (family.isEmpty()) return;
+	if (name.isEmpty()) return;
+
+	QMap<QString, QVariant> currPropsMap = currProps.toMap();
+	if (currPropsMap.isEmpty()) return;
+
+	foreach (QString key, currPropsMap.keys()) {
+		QString value = currPropsMap.value(key).toString();
+		m_refModel->recordProperty(key, value);
+	}
+
+	QString moduleID = m_refModel->retrieveModuleIdWith(family, name);
+	bool exactMatch = m_refModel->lastWasExactMatch();
+
 	if(moduleID == ___emptyString___) {
+		foreach (QString key, currPropsMap.keys()) {
+			if (key.compare("size") == 0) {
+				QString value = currPropsMap.value(key).toString();
+				if (value.compare(ModelPart::customSizeTranslated) == 0) {
+					this->m_currentGraphicsView->resizeBoard(0, 0);
+					return;
+				}
+			}
+		}
+
 		QMessageBox::information(
 			this,
 			tr("Sorry!"),

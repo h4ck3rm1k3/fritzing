@@ -103,7 +103,7 @@ signals:
 public slots:
 	void ensureClosable();
 	void changeActivation(bool activate);
-	void swapSelected(const QString &moduleId, bool exactMatch);
+	void swapSelected(const QVariant & currProps, const QString &family, const QString & name);
 
 protected slots:
 	void load();

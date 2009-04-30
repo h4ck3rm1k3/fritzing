@@ -28,7 +28,7 @@ $Date$
 					
 #include <QString>
 #include <QStringList>		
-									
+						
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("2");
 QString Version::m_minorSubVersion("5");

@@ -90,7 +90,6 @@ protected:
 
 	void registerJsObjects();
 	void registerCurrentAgain();
-	void registerRefModel();
 	bool registerAsCurrentItem(ItemBase *item);
 	void registerInfoGraphicsView(class InfoGraphicsView *);
 	void setNullContent();

@@ -25,7 +25,6 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 ********************************************************************/
 
 // TODO:
-//  select "custom size" in view menu: input widgets appear
 //	undo
 //  copy/paste
 //	gerber export (temp file?)
@@ -225,12 +224,7 @@ void ResizableBoard::handleMousePressSlot(QGraphicsSceneMouseEvent * event, Resi
 
 	InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView) {
-		QSizeF sz = modelPart()->size();
-		if (sz.width() == 0) {
-			// set the size so the infoGraphicsView will display the size as you drag
-			sz = this->boundingRect().size();
-			modelPart()->setSize(QSizeF(sz.width() / FSvgRenderer::printerScale() * 25.4, sz.height() / FSvgRenderer::printerScale() * 25.4)); 
-		}
+		setInitialSize();
 		infoGraphicsView->viewItemInfo(this);
 	}
 }
@@ -323,6 +317,15 @@ void ResizableBoard::loadLayerKin( const LayerHash & viewLayers) {
 	PaletteItem::loadLayerKin(viewLayers);
 	if (m_modelPart->size().width() != 0) {
 		resizeMM(m_modelPart->size().width(), m_modelPart->size().height(), viewLayers);
+	}
+}
+
+void ResizableBoard::setInitialSize() {
+	QSizeF sz = modelPart()->size();
+	if (sz.width() == 0) {
+		// set the size so the infoGraphicsView will display the size as you drag
+		sz = this->boundingRect().size();
+		modelPart()->setSize(QSizeF(sz.width() / FSvgRenderer::printerScale() * 25.4, sz.height() / FSvgRenderer::printerScale() * 25.4)); 
 	}
 }
 

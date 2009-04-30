@@ -46,6 +46,7 @@ public:
 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
  	void loadLayerKin(const LayerHash & viewLayers);
+	void setInitialSize();
 
 protected slots:
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);

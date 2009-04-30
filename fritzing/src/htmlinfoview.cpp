@@ -102,7 +102,6 @@ HtmlInfoView::HtmlInfoView(ReferenceModel *refModel, QWidget * parent) : QFrame(
 	Q_ASSERT(m_refModel);
 
 	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
-	registerRefModel();
 
 	m_maxPropCount = 0;
 
@@ -129,7 +128,6 @@ void HtmlInfoView::jsRegister() {
 		}
 	}
 	registerCurrentAgain();
-	registerRefModel();
 	m_webView->page()->mainFrame()->addToJavaScriptWindowObject( "infoView", this);
 	connect(m_webView->page()->mainFrame(),SIGNAL(javaScriptWindowObjectCleared()),this,SLOT(jsRegister()));
 }
@@ -142,12 +140,6 @@ void HtmlInfoView::setBlockVisibility(const QString &blockId, bool value) {
 
 QString HtmlInfoView::settingsBlockVisibilityName(const QString &blockId) {
 	return "infoView/"+blockId+"Visibility";
-}
-
-void HtmlInfoView::registerRefModel() {
-	m_webView->page()->mainFrame()->addToJavaScriptWindowObject(
-		"refModel", m_refModel
-	);
 }
 
 void HtmlInfoView::hoverEnterItem(ModelPart * modelPart, bool swappingEnabled) {
@@ -163,7 +155,6 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 		// TODO: it would be nice to do something reasonable in this case
 		setNullContent();
 		registerInfoGraphicsView(infoGraphicsView);
-		registerRefModel();
 		return;
 	}
 
@@ -174,7 +165,6 @@ void HtmlInfoView::viewItemInfo(InfoGraphicsView * infoGraphicsView, ItemBase* i
 	setContent(s);
 	registerAsCurrentItem(item);
 	registerInfoGraphicsView(infoGraphicsView);
-	registerRefModel();
 }
 
 QString HtmlInfoView::appendStuff(ItemBase* item, bool swappingEnabled) {
@@ -223,7 +213,6 @@ void HtmlInfoView::viewConnectorItemInfo(ConnectorItem * item, bool swappingEnab
 
 	if (item->attachedTo() && item->attachedTo() != m_currentItem) {
 		registerAsCurrentItem(item->attachedTo());
-		registerRefModel();
 	}
 }
 

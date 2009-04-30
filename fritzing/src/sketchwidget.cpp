@@ -4800,7 +4800,7 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 	setLastPaletteItemSelected(paletteItem);
 }
 
-// called from javascript (htmlInfoView)
+// called from javascript (htmlInfoView) or mainWindow::setUpSwap
 void SketchWidget::resizeBoard(qreal mmW, qreal mmH) 
 {
 	PaletteItem * item = getSelectedPart();
@@ -4809,6 +4809,19 @@ void SketchWidget::resizeBoard(qreal mmW, qreal mmH)
 	if (item->itemType() != ModelPart::ResizableBoard) return;
 
 	QSizeF sz = item->modelPart()->size();
+
+	if (mmH == 0 || mmW == 0) {
+		dynamic_cast<ResizableBoard *>(item)->setInitialSize();
+		if (item->modelPart()->size() == sz) {
+			// no change
+			return;
+		}
+
+		viewItemInfo(item);
+		QSizeF newSize = item->modelPart()->size();
+		mmW = newSize.width();
+		mmH = newSize.height();
+	}
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Resize board to %1 %2").arg(mmW).arg(mmH));
 	new ResizeBoardCommand(this, item->id(), sz.width(), sz.height(), mmW, mmH, parentCommand);
