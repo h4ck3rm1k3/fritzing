@@ -385,6 +385,32 @@ LayerKinPaletteItem *PaletteItemBase::newLayerKinPaletteItem(
 	return lk;
 }
 
+QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+{
+	QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+	QString path = filename();
+	
+	//DebugDialog::debug(QString("path: %1").arg(path));
+
+	SvgFileSplitter * splitter = svgHash.value(path, NULL);
+	if (splitter == NULL) {
+		splitter = new SvgFileSplitter();
+		bool result = splitter->split(path, xmlName);
+		if (!result) {
+			delete splitter;
+			return "";
+		}
+		result = splitter->normalize(dpi, xmlName, blackOnly);
+		if (!result) {
+			delete splitter;
+			return "";
+		}
+		svgHash.insert(path, splitter);
+	}
+
+	return splitter->elementString(xmlName);
+}
+
 /*
 
 void PaletteItemBase::setPos(const QPointF & pos) {

@@ -47,6 +47,7 @@ public:
 	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
  	void loadLayerKin(const LayerHash & viewLayers);
 	void setInitialSize();
+	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 
 protected slots:
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
@@ -56,6 +57,8 @@ protected:
 	void positionGrips();
 	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+	QString makeCopper0Svg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	QString makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 
 protected:
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

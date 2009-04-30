@@ -110,8 +110,8 @@ protected slots:
 	void openRecentOrExampleFile();
     void print();
     void doExport();
-	void exportDiy();
-	void exportDiySvg();
+	void exportEtchable();
+	void exportEtchableSvg();
     void about();
     void copy();
     void cut();
@@ -261,7 +261,7 @@ protected:
 	void exportToEagle();
 	void exportToGerber();
     void exportBOM();
-	void exportDiy(bool wantPDF, bool wantSVG);
+	void exportEtchable(bool wantPDF, bool wantSVG);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
 
@@ -297,7 +297,7 @@ protected:
 	SketchToolButton *createRotateButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
-	SketchToolButton *createExportDiyButton(SketchAreaWidget *parent);
+	SketchToolButton *createExportEtchableButton(SketchAreaWidget *parent);
 	SketchToolButton *createNoteButton(SketchAreaWidget *parent);
 	QWidget *createToolbarSpacer(SketchAreaWidget *parent);
 
@@ -405,8 +405,8 @@ protected:
 	QAction *m_exportPdfAct;
 	QAction *m_exportEagleAct;
 	QAction *m_exportGerberAct;
-	QAction *m_exportDiyAct;
-	QAction *m_exportDiySvgAct;
+	QAction *m_exportEtchableAct;
+	QAction *m_exportEtchableSvgAct;
 	QAction *m_exportBomAct;
 
     // Edit Menu

@@ -151,6 +151,7 @@ public:
 	void hoverMoveEvent( QGraphicsSceneHoverEvent * event );
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual void figureHover();
+	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);

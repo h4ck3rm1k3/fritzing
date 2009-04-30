@@ -534,11 +534,11 @@ SketchToolButton *MainWindow::createNoteButton(SketchAreaWidget *parent) {
 	return noteButton;
 }
 
-SketchToolButton *MainWindow::createExportDiyButton(SketchAreaWidget *parent) {
-	SketchToolButton *exportDiyButton = new SketchToolButton("Diy",parent, m_exportDiyAct);
-	exportDiyButton->setText(tr("Export Etchable PDF"));
-	exportDiyButton->setEnabledIcon();				// seems to need this to display button icon first time
-	return exportDiyButton;
+SketchToolButton *MainWindow::createExportEtchableButton(SketchAreaWidget *parent) {
+	SketchToolButton *exportEtchableButton = new SketchToolButton("Diy",parent, m_exportEtchableAct);
+	exportEtchableButton->setText(tr("Export Etchable PDF"));
+	exportEtchableButton->setEnabledIcon();				// seems to need this to display button icon first time
+	return exportEtchableButton;
 }
 
 QWidget *MainWindow::createToolbarSpacer(SketchAreaWidget *parent) {
@@ -569,7 +569,7 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 			break;
 		case ViewIdentifierClass::PCBView:
 			retval << SketchAreaWidget::separator(parent) << createAutorouteButton(parent)
-				   << createExportDiyButton(parent) << m_routingStatusLabel;
+				   << createExportEtchableButton(parent) << m_routingStatusLabel;
 			break;
 		default:
 			break;

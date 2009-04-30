@@ -104,15 +104,15 @@ void MainWindow::print() {
 	#endif
 }
 
-void MainWindow::exportDiy() {
-	exportDiy(true, false);
+void MainWindow::exportEtchable() {
+	exportEtchable(true, false);
 }
 
-void MainWindow::exportDiySvg() {
-	exportDiy(false, true);
+void MainWindow::exportEtchableSvg() {
+	exportEtchable(false, true);
 }
 
-void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
+void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 {
 	if (!m_pcbGraphicsView->ratsAllRouted()) {
 		QMessageBox msgBox(this);
@@ -129,7 +129,7 @@ void MainWindow::exportDiy(bool wantPDF, bool wantSVG)
 	QString fileExt;
 	QString extFmt = (wantPDF) ? fileExtFormats.value(pdfActionType) : fileExtFormats.value(svgActionType);
 	QString fileName = FApplication::getSaveFileName(this,
-		tr("Export for DIY..."),
+		tr("Export Etchable for DIY..."),
 		path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+getExtFromFileDialog(extFmt),
 		extFmt,
 		&fileExt
@@ -752,13 +752,13 @@ void MainWindow::createFileMenuActions() {
 	m_exportGerberAct->setStatusTip(tr("Export the current sketch to Gerber"));
 	connect(m_exportGerberAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
-	m_exportDiyAct = new QAction(tr("Etchable PDF..."), this);
-	m_exportDiyAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
-	connect(m_exportDiyAct, SIGNAL(triggered()), this, SLOT(exportDiy()));
+	m_exportEtchableAct = new QAction(tr("Etchable PDF..."), this);
+	m_exportEtchableAct->setStatusTip(tr("Export the current sketch to PDF for DIY production"));
+	connect(m_exportEtchableAct, SIGNAL(triggered()), this, SLOT(exportEtchable()));
 
-	m_exportDiySvgAct = new QAction(tr("Etchable SVG..."), this);
-	m_exportDiySvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY production"));
-	connect(m_exportDiySvgAct, SIGNAL(triggered()), this, SLOT(exportDiySvg()));
+	m_exportEtchableSvgAct = new QAction(tr("Etchable SVG..."), this);
+	m_exportEtchableSvgAct->setStatusTip(tr("Export the current sketch to SVG for DIY production"));
+	connect(m_exportEtchableSvgAct, SIGNAL(triggered()), this, SLOT(exportEtchableSvg()));
 
 	/*m_pageSetupAct = new QAction(tr("&Page Setup..."), this);
 	m_pageSetupAct->setShortcut(tr("Shift+Ctrl+P"));
@@ -1238,8 +1238,8 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportJpgAct);
 	m_exportMenu->addSeparator();
 	m_exportMenu->addAction(m_exportBomAct);
-	m_exportMenu->addAction(m_exportDiyAct);
-	m_exportMenu->addAction(m_exportDiySvgAct);
+	m_exportMenu->addAction(m_exportEtchableAct);
+	m_exportMenu->addAction(m_exportEtchableSvgAct);
 	m_exportMenu->addAction(m_exportEagleAct);
 	m_exportMenu->addAction(m_exportGerberAct);
 
@@ -1606,8 +1606,8 @@ void MainWindow::updateTraceMenu() {
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_autorouteAct->setEnabled(rEnabled);
-	m_exportDiyAct->setEnabled(true);
-	m_exportDiySvgAct->setEnabled(true);
+	m_exportEtchableAct->setEnabled(true);
+	m_exportEtchableSvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumpersAct->setEnabled(jEnabled);
@@ -1969,33 +1969,33 @@ void MainWindow::removeActionsStartingAt(QMenu * menu, int start) {
 //TODO: this whole thing should probably be cleaned up and moved to another file
 void MainWindow::exportToGerber() {
 
-        //NOTE: this assumes just one board per sketch
-        //TODO: should deal with crazy multi-board setups someday...
+    //NOTE: this assumes just one board per sketch
+    //TODO: should deal with crazy multi-board setups someday...
 
-        // grab the list of parts
-        ItemBase * board = NULL;
-        foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
-            board = dynamic_cast<ItemBase *>(childItem);
-            if (board == NULL) continue;
+    // grab the list of parts
+    ItemBase * board = NULL;
+    foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
+        board = dynamic_cast<ItemBase *>(childItem);
+        if (board == NULL) continue;
 
-            //for now take the first board you find
-            if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
-                break;
-            }
-            board = NULL;
+        //for now take the first board you find
+        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
+            break;
         }
+        board = NULL;
+    }
 
-        // barf an error if there's no board
-        if (!board) {
-            QMessageBox::critical(this, tr("Fritzing"),
-                       tr("Your sketch does not have a board!  Add a board so you can export to Gerber."));
-            return;
-        }
+    // barf an error if there's no board
+    if (!board) {
+        QMessageBox::critical(this, tr("Fritzing"),
+                   tr("Your sketch does not have a board!  Add a board so you can export to Gerber."));
+        return;
+    }
 
-        QString exportDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
-                                                 defaultSaveFolder(),
-                                                 QFileDialog::ShowDirsOnly
-                                                 | QFileDialog::DontResolveSymlinks);
+    QString exportDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+                                             defaultSaveFolder(),
+                                             QFileDialog::ShowDirsOnly
+                                             | QFileDialog::DontResolveSymlinks);
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper0;
@@ -2016,68 +2016,78 @@ void MainWindow::exportToGerber() {
 		return;
 	}
 
-        // create copper0 gerber from svg
-        SVG2gerber copper0Gerber = SVG2gerber(svg, "copper0");
+    // create copper0 gerber from svg
+    SVG2gerber copper0Gerber = SVG2gerber(svg, "copper0");
 
-        QString copper0File = exportDir + "/" +
-                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                              + "_copperTop.gtl";
-        QFile copper0Out(copper0File);
-        if (!copper0Out.open(QIODevice::WriteOnly | QIODevice::Text))
-            DebugDialog::debug("gerber export: cannot open output file");
+    QString copper0File = exportDir + "/" +
+                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                          + "_copperTop.gtl";
+    QFile copper0Out(copper0File);
+    if (!copper0Out.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber export: cannot open output file");
 
-        QTextStream copperStream(&copper0Out);
-        copperStream << copper0Gerber.getGerber();
+    QTextStream copperStream(&copper0Out);
+    copperStream << copper0Gerber.getGerber();
 
-        // soldermask
-        QString soldermaskFile = exportDir + "/" +
-                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                              + "_maskTop.gts";
-        QFile maskOut(soldermaskFile);
-        if (!maskOut.open(QIODevice::WriteOnly | QIODevice::Text))
-            DebugDialog::debug("gerber export: cannot open output file");
+    // soldermask
+    QString soldermaskFile = exportDir + "/" +
+                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                          + "_maskTop.gts";
+    QFile maskOut(soldermaskFile);
+    if (!maskOut.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber export: cannot open output file");
 
-        QTextStream maskStream(&maskOut);
-        maskStream << copper0Gerber.getSolderMask();
+    QTextStream maskStream(&maskOut);
+    maskStream << copper0Gerber.getSolderMask();
 
-        // drill file
-        QString drillFile = exportDir + "/" +
-                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                              + "_drill.txt";
-        QFile drillOut(drillFile);
-        if (!drillOut.open(QIODevice::WriteOnly | QIODevice::Text))
-            DebugDialog::debug("gerber export: cannot open output file");
+    // drill file
+    QString drillFile = exportDir + "/" +
+                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                          + "_drill.txt";
+    QFile drillOut(drillFile);
+    if (!drillOut.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber export: cannot open output file");
 
-        QTextStream drillStream(&drillOut);
-        drillStream << copper0Gerber.getNCDrill();
+    QTextStream drillStream(&drillOut);
+    drillStream << copper0Gerber.getNCDrill();
 
-        // now do it for silk
-        QList<ViewLayer::ViewLayerID> silkLayerIDs;
-        silkLayerIDs << ViewLayer::Silkscreen;
-        QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board);
-        if (svgSilk.isEmpty()) {
-                // tell the user something reasonable
-                return;
-        }
+    // now do it for silk
+    QList<ViewLayer::ViewLayerID> silkLayerIDs;
+    silkLayerIDs << ViewLayer::Silkscreen;
+    QString svgSilk = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), silkLayerIDs, silkLayerIDs, true, imageSize, board);
+    if (svgSilk.isEmpty()) {
+        // tell the user something reasonable
+        return;
+    }
 
-        result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
-        if (!result) {
-                // tell the user something reasonable
-                return;
-        }
+	/*
+	// for debugging silkscreen svg
+    QFile silkout("silk.svg");
+	if (silkout.open(QIODevice::WriteOnly | QIODevice::Text)) {
+		QTextStream silkStream(&silkout);
+		silkStream << svgSilk;
+		silkout.close();
+	}
+	*/
 
-        // create copper0 gerber from svg
-        SVG2gerber silk0Gerber = SVG2gerber(svgSilk, "silk");
+    result = domDocument.setContent(svg, &errorStr, &errorLine, &errorColumn);
+    if (!result) {
+            // tell the user something reasonable
+            return;
+    }
 
-        QString silk0File = exportDir + "/" +
-                              QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
-                              + "_silkTop.gto";
-        QFile silk0Out(silk0File);
-        if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text))
-            DebugDialog::debug("gerber export: cannot open output file");
+    // create copper0 gerber from svg
+    SVG2gerber silk0Gerber = SVG2gerber(svgSilk, "silk");
 
-        QTextStream silkStream(&silk0Out);
-        silkStream << silk0Gerber.getGerber();
+    QString silk0File = exportDir + "/" +
+                          QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
+                          + "_silkTop.gto";
+    QFile silk0Out(silk0File);
+    if (!silk0Out.open(QIODevice::WriteOnly | QIODevice::Text))
+        DebugDialog::debug("gerber export: cannot open output file");
+
+    QTextStream silkStream(&silk0Out);
+    silkStream << silk0Gerber.getGerber();
 }
 
 void MainWindow::exportToEagle() {

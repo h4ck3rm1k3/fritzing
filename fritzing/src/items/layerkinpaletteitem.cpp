@@ -146,3 +146,8 @@ void LayerKinPaletteItem::resetID() {
 	ItemBase::resetID();
 	m_id += offset;
 }
+
+QString LayerKinPaletteItem::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+{
+	return m_layerKinChief->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+}

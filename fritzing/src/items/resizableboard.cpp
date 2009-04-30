@@ -25,12 +25,9 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 ********************************************************************/
 
 // TODO:
-//	undo
-//  copy/paste
-//	gerber export (temp file?)
 //  load svg from info view
 //		equivalent to create new part/swap operation
-//		check for board and silkscreen layers
+//		check for board and silkscreen layers, give warning if not found and create silkscreen based on bounding rect
 
 #include "resizableboard.h"
 #include "../utils/resizehandle.h"
@@ -40,6 +37,8 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 4;
+
+#define mm2mils(mm) (mm / 25.4 * 1000)
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -57,13 +56,13 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 		file.close();
 	}
 
-	m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), this);
+	m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
 	connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-	m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), this);
+	m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
 	connect(m_resizeGripTR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-	m_resizeGripBL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png"), this);
+	m_resizeGripBL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png"), Qt::SizeBDiagCursor, this);
 	connect(m_resizeGripBL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-	m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), this);
+	m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), Qt::SizeFDiagCursor, this);
 	connect(m_resizeGripBR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
 
 	connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
@@ -177,7 +176,6 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	}
 
 	LayerHash lh;
-
 	resizeMM(newR.width() / FSvgRenderer::printerScale() * 25.4, newR.height() / FSvgRenderer::printerScale() * 25.4, lh);
 	event->accept();
 }
@@ -272,13 +270,11 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 		m_renderer = new FSvgRenderer(this);
 	}
 
-	qreal milsW = mmW / 25.4 * 1000;
-	qreal milsH = mmH / 25.4 * 1000;
+	qreal milsW = mm2mils(mmW);
+	qreal milsH = mm2mils(mmH);
 
-	QString s = BoardLayerTemplate
-		.arg(mmW).arg(mmH)			
-		.arg(milsW).arg(milsH)
-		.arg(milsW - LineThickness).arg(milsH - LineThickness);
+	QString s = makeCopper0Svg(mmW, mmH, milsW, milsH);
+
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
 		setSharedRenderer(m_renderer);
@@ -299,10 +295,7 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 				m_silkscreenRenderer = new FSvgRenderer(itemBase);
 			}
 
-			s = SilkscreenLayerTemplate
-				.arg(mmW).arg(mmH)
-				.arg(milsW).arg(milsH)
-				.arg(milsW - LineThickness).arg(milsH - LineThickness);
+			s = makeSilkscreenSvg(mmW, mmH, milsW, milsH);
 			bool result = m_silkscreenRenderer->fastLoad(s.toUtf8());
 			if (result) {
 				dynamic_cast<PaletteItemBase *>(itemBase)->setSharedRenderer(m_silkscreenRenderer);
@@ -327,5 +320,38 @@ void ResizableBoard::setInitialSize() {
 		sz = this->boundingRect().size();
 		modelPart()->setSize(QSizeF(sz.width() / FSvgRenderer::printerScale() * 25.4, sz.height() / FSvgRenderer::printerScale() * 25.4)); 
 	}
+}
+
+QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+{
+	QSizeF sz = modelPart()->size();
+	if (sz.width() != 0) {
+		switch (viewLayerID) {
+			case ViewLayer::Copper0:
+				return makeCopper0Svg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
+				break;
+			case ViewLayer::Silkscreen:
+				return makeSilkscreenSvg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
+				break;
+			default:
+				break;
+		}
+	}
+
+	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+}
+
+QString ResizableBoard::makeCopper0Svg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+	return BoardLayerTemplate
+		.arg(mmW).arg(mmH)			
+		.arg(milsW).arg(milsH)
+		.arg(milsW - LineThickness).arg(milsH - LineThickness);
+}
+
+QString ResizableBoard::makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+	return SilkscreenLayerTemplate
+		.arg(mmW).arg(mmH)
+		.arg(milsW).arg(milsH)
+		.arg(milsW - LineThickness).arg(milsH - LineThickness);
 }
 

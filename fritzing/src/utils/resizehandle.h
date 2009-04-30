@@ -35,7 +35,7 @@ class ResizeHandle : public QObject, public QGraphicsPixmapItem
 Q_OBJECT
 
 public:
-	ResizeHandle(const QPixmap & pixmap, QGraphicsItem * parent = 0);
+	ResizeHandle(const QPixmap & pixmap, const QCursor &, QGraphicsItem * parent = 0);
 	~ResizeHandle();
 
 	QPointF resizeOffset();

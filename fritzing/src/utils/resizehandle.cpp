@@ -29,10 +29,10 @@ $Date: 2009-04-15 16:37:21 +0200 (Wed, 15 Apr 2009) $
 
 #include <QCursor>
 
-ResizeHandle::ResizeHandle(const QPixmap &pixmap, QGraphicsItem *parent)
+ResizeHandle::ResizeHandle(const QPixmap &pixmap, const QCursor & cursor, QGraphicsItem *parent)
 : QGraphicsPixmapItem(pixmap, parent)
 {
-	setCursor(Qt::SizeFDiagCursor);
+	setCursor(cursor);
 	setVisible(true);
 	setFlag(QGraphicsItem::ItemIgnoresTransformations, true);
 }

@@ -259,6 +259,10 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				viewGeometry.offset(20*m_pasteCount, 20*m_pasteCount);
 			}
 			AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, mp->moduleID(), viewGeometry, newID, false, mp->modelIndex(), mp->originalModelIndex(), parentCommand);
+			if (mp->itemType() == ModelPart::ResizableBoard && mp->size().width() != 0) {
+				new ResizeBoardCommand(this, newID, mp->size().width(), mp->size().height(), mp->size().width(), mp->size().height(), parentCommand);
+			}
+
 			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 			if (mp->moduleID() == Wire::moduleIDName) {
 				addWireExtras(newID, view, parentCommand);
@@ -4535,7 +4539,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 	qreal trueWidth = width / printerScale;
 	qreal trueHeight = height / printerScale;
-	static qreal dpi = 1000;
+	qreal dpi = 1000;
 
 	QString outputSVG;
 	QString header = QString("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?> "
@@ -4556,26 +4560,8 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 			foreach (ViewLayer::ViewLayerID viewLayerID, partLayers) {
 				if (itemBase->viewLayerID() != viewLayerID) continue;
 
-				QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
-				QString path = dynamic_cast<PaletteItemBase *>(itemBase)->filename();
-				DebugDialog::debug(QString("path: %1").arg(path));
-				SvgFileSplitter * splitter = svgHash.value(path, NULL);
-				if (splitter == NULL) {
-					splitter = new SvgFileSplitter();
-					bool result = splitter->split(path, xmlName);
-					if (!result) {
-						delete splitter;
-						continue;
-					}
-					result = splitter->normalize(dpi, xmlName, blackOnly);
-					if (!result) {
-						delete splitter;
-						continue;
-					}
-					svgHash.insert(path, splitter);
-				}
-
-				QString itemSvg = splitter->elementString(xmlName);
+				QString itemSvg = itemBase->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
+				if (itemSvg.isEmpty()) continue;
 
 				if (!itemBase->transform().isIdentity()) {
 					QTransform transform = itemBase->transform();

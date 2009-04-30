@@ -1214,3 +1214,13 @@ ItemBase * ItemBase::lowerConnectorLayerVisible(ItemBase * itemBase) {
 
 void ItemBase::figureHover() {
 }
+
+QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+{
+	Q_UNUSED(viewLayerID);
+	Q_UNUSED(svgHash);
+	Q_UNUSED(blackOnly);
+	Q_UNUSED(dpi);
+	return ___emptyString___;
+}
+

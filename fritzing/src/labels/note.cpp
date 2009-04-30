@@ -237,7 +237,7 @@ Note::Note( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdent
 	setPos(m_viewGeometry.loc());
 
 	QPixmap pixmap(":/resources/images/icons/noteResizeGrip.png");
-	m_resizeGrip = new ResizeHandle(pixmap, this);
+	m_resizeGrip = new ResizeHandle(pixmap, Qt::SizeFDiagCursor, this);
 	connect(m_resizeGrip, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
 	connect(m_resizeGrip, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
 
