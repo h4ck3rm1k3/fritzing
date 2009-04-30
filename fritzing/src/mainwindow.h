@@ -312,6 +312,8 @@ protected:
 	QString genIcon(SketchWidget *, QList<ViewLayer::ViewLayerID> &  partViewLayerIDs, QList<ViewLayer::ViewLayerID> & wireViewLayerIDs);
 	void initExternalConnectors(QList<ConnectorItem *> & externalConnectors);
 
+	bool alreadyOpen(const QString & fileName);
+
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);
 	//static qreal getSvgWidthInInches(QFile & file);

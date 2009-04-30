@@ -444,6 +444,22 @@ void MainWindow::saveAsAux(const QString & fileName) {
     m_undoStack->setClean();
 }
 
+
+void MainWindow::closeIfEmptySketch(MainWindow* mw) {
+	int cascFactorX; int cascFactorY;
+	// close empty sketch window if user opens from a file
+	if (isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty()) {
+		QTimer::singleShot(0, this, SLOT(close()) );
+		cascFactorX = 0;
+		cascFactorY = 0;
+	} else {
+		cascFactorX = CascadeFactorX;
+		cascFactorY = CascadeFactorY;
+	}
+	mw->move(x()+cascFactorX,y()+cascFactorY);
+	mw->show();
+}
+
 void MainWindow::load() {
 	QString path;
 	// if it's the first time load is called use Documents folder
@@ -463,16 +479,7 @@ void MainWindow::load() {
 		);
 	if (fileName.isNull()) return;
 
-    foreach (QWidget * widget, QApplication::topLevelWidgets()) {
-        MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
-        if (mainWindow == NULL) continue;
-
-		// don't load two copies of the same file
-		if (mainWindow->fileName().compare(fileName) == 0) {
-			mainWindow->raise();
-			return;
-		}
-    }
+	if (alreadyOpen(fileName)) return;
 
 	QFile file(fileName);
 	if (!file.exists()) {
@@ -499,21 +506,6 @@ void MainWindow::load() {
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
 	mw->loadWhich(fileName);
 	closeIfEmptySketch(mw);
-}
-
-void MainWindow::closeIfEmptySketch(MainWindow* mw) {
-	int cascFactorX; int cascFactorY;
-	// close empty sketch window if user opens from a file
-	if (isEmptyFileName(m_fileName, untitledFileName()) && this->undoStackIsEmpty()) {
-		QTimer::singleShot(0, this, SLOT(close()) );
-		cascFactorX = 0;
-		cascFactorY = 0;
-	} else {
-		cascFactorX = CascadeFactorX;
-		cascFactorY = CascadeFactorY;
-	}
-	mw->move(x()+cascFactorX,y()+cascFactorY);
-	mw->show();
 }
 
 bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool addToRecent)
@@ -1950,6 +1942,10 @@ void MainWindow::hideAllLayers() {
 void MainWindow::openRecentOrExampleFile() {
 	QAction *action = qobject_cast<QAction *>(sender());
 	if (action) {
+		if (alreadyOpen(action->data().toString())) {
+			return;
+		}
+
 		MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
@@ -2383,3 +2379,17 @@ void MainWindow::addNote() {
 	m_undoStack->push(parentCommand);
 }
 
+bool MainWindow::alreadyOpen(const QString & fileName) {
+    foreach (QWidget * widget, QApplication::topLevelWidgets()) {
+        MainWindow * mainWindow = qobject_cast<MainWindow *>(widget);
+        if (mainWindow == NULL) continue;
+
+		// don't load two copies of the same file
+		if (mainWindow->fileName().compare(fileName) == 0) {
+			mainWindow->raise();
+			return true;
+		}
+    }
+
+	return false;
+}
