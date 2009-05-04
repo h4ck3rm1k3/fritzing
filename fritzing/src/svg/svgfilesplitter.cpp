@@ -121,7 +121,7 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	// get the viewbox and the width and height
 	// then normalize them
 	// then normalize all the internal stuff
-	// if there are transitions, we're fucked
+	// if there are translations, we're fucked
 	
 	QDomElement root = m_domDocument.documentElement();
 	QString swidthStr = root.attribute("width");
@@ -506,3 +506,42 @@ void SvgFileSplitter::fixStyleAttribute(QDomElement & element, QString & style, 
 	}
 }
 
+bool SvgFileSplitter::getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox)
+{
+
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+	QDomDocument domDocument;
+
+	QFile file(path);
+	if (!domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+		return false;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) {
+		return false;
+	}
+
+	if (root.tagName() != "svg") {
+		return false;
+	}
+
+	width = root.attribute("width");
+	if (width.isEmpty()) {
+		return false;
+	}
+
+	height = root.attribute("height");
+	if (height.isEmpty()) {
+		return false;
+	}
+
+	viewBox = root.attribute("viewBox");
+	if (viewBox.isEmpty()) {
+		return false;
+	}
+
+	return true;
+}

@@ -551,7 +551,7 @@ void ModelPart::collectExtraValues(const QString & prop, QString & value, QStrin
 			customShapeTranslated = tr("Custom Shape");
 		}
 		extraValues.append(customSizeTranslated);
-		//extraValues.append(customShapeTranslated);
+		extraValues.append(customShapeTranslated);
 
 		if (m_size.width() != 0) {
 			value = customSizeTranslated;

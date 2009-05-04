@@ -58,6 +58,7 @@ $Date$
     <file>resources/ratsnestcolors.txt</file>
     <file>resources/resizableBoard_boardLayerTemplate.txt</file>
     <file>resources/resizableBoard_silkscreenLayerTemplate.txt</file>
+    <file>resources/custom_pcb_fzp_template.txt</file>
     <file>resources/parts/core/wire.fzp</file>
     <file>resources/parts/core/cmRuler.fzp</file>
     <file>resources/parts/core/tinyBreadboard.fzp</file>

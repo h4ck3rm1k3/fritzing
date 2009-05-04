@@ -24,11 +24,6 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 
 ********************************************************************/
 
-// TODO:
-//  load svg from info view
-//		equivalent to create new part/swap operation
-//		check for board and silkscreen layers, give warning if not found and create silkscreen based on bounding rect
-
 #include "resizableboard.h"
 #include "../utils/resizehandle.h"
 #include "../fsvgrenderer.h"

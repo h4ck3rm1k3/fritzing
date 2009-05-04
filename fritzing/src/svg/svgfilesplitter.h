@@ -56,7 +56,11 @@ public:
 	bool normalize(qreal dpi, const QString & elementID, bool blackOnly);
 	QString shift(qreal x, qreal y, const QString & elementID);
 	QString elementString(const QString & elementID);
-        virtual bool parsePath(const QString & data, const char * slot, PathUserData &);
+    virtual bool parsePath(const QString & data, const char * slot, PathUserData &);
+
+public:
+	static bool getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox);
+
 
 protected:
 	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);

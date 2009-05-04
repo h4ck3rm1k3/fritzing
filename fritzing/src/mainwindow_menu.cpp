@@ -1221,8 +1221,10 @@ void MainWindow::createMenus()
     m_fileMenu->addAction(m_saveAct);
     m_fileMenu->addAction(m_saveAsAct);
     m_fileMenu->addAction(m_saveAsBundledAct);
+#ifndef QT_NO_DEBUG
     m_fileMenu->addAction(m_saveAsModuleAct);
     m_fileMenu->addAction(m_editModuleAct);
+#endif
     m_fileMenu->addSeparator();
 	m_exportMenu = m_fileMenu->addMenu(tr("&Export"));
     //m_fileMenu->addAction(m_pageSetupAct);

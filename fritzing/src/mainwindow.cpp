@@ -55,6 +55,7 @@ $Date$
 #include "breadboardsketchwidget.h"
 #include "schematicsketchwidget.h"
 #include "pcbsketchwidget.h"
+#include "svg/svgfilesplitter.h"
 
 #include "help/helper.h"
 #include "dockmanager.h"
@@ -1738,6 +1739,14 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 					this->m_currentGraphicsView->resizeBoard(0, 0);
 					return;
 				}
+				if (value.compare(ModelPart::customShapeTranslated) == 0) {
+					if (!loadCustomBoardShape()) {
+						ItemBase * itemBase = m_infoView->currentItem();
+						// restores the infoview size menu
+						m_currentGraphicsView->viewItemInfo(itemBase);
+					}
+					return;
+				}
 			}
 		}
 
@@ -1765,6 +1774,11 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 		messageBox->autoShow(4 * 1000);  // msec
 	}
 
+	swapSelectedAux(itemBase, moduleID);
+}
+
+void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) {
+
 	QUndoCommand* parentCommand = new QUndoCommand(tr("Swapped %1 with module %2").arg(itemBase->instanceTitle()).arg(moduleID));
 	long modelIndex = ModelPart::nextIndex();
 
@@ -1791,4 +1805,131 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	// need to defer execution so the content of the info view doesn't change during an event that started in the info view
 	m_undoStack->waitPush(parentCommand, 10);
 
+}
+
+bool MainWindow::loadCustomBoardShape() 
+{
+	ItemBase * itemBase = m_infoView->currentItem();
+	if (itemBase == NULL) return false;
+
+	QString path = FApplication::getOpenFileName(this,
+		tr("Open custom board shape SVG file"),
+		defaultSaveFolder(),
+		tr("SVG Files (%1)").arg("*.svg")
+	);
+
+	if (path.isEmpty()) {
+		return false; // Cancel pressed
+	}
+
+	SvgFileSplitter splitter;
+	if (!splitter.split(path, "board")) {
+		svgMissingLayer("board", path);
+		return false;
+	}
+
+	if (!splitter.split(path, "silkscreen")) {
+		svgMissingLayer("silkscreen", path);
+		return false;
+	}
+
+	QString wStr, hStr, vbStr;
+	if (!SvgFileSplitter::getSvgSizeAttributes(path, wStr, hStr, vbStr)) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Svg file '%1' is missing width, height, or viewbox attribute").arg(path)
+		);		
+		return false;
+	}
+
+	bool ok;
+	qreal w = convertToInches(wStr, &ok);
+	if (!ok) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Svg file '%1': bad width attribute").arg(path)
+		);		
+		return false;
+	}
+
+	qreal h = convertToInches(hStr, &ok);
+	if (!ok) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Svg file '%1': bad height attribute").arg(path)
+		);		
+		return false;
+	}
+
+
+	QString moduleID = FritzingWindow::getRandText();
+	QString userPartsSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg/user/";
+	QString newName = userPartsSvgFolderPath + "pcb" + "/" + moduleID + ".svg";
+	bool result = QFile(path).copy(newName);
+	if (result == false) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Sorry, Fritzing is unable to copy the svg file.")
+		);		
+		return false;
+	}
+
+	QFile file(":/resources/custom_pcb_fzp_template.txt");
+	file.open(QFile::ReadOnly);
+	QString fzpTemplate = file.readAll();
+	file.close();
+
+	if (fzpTemplate.isEmpty()) {
+		QMessageBox::warning(
+			this,
+			tr("Fritzing"),
+			tr("Sorry, Fritzing is unable to load the part template file.")
+		);		
+		return false;
+	}
+
+	// %1 = author
+	// %2 = width
+	// %3 = height
+	// %4 = filename (minus path and extension) 
+	// %5 = date string
+	// %6 = module id
+
+	QString fzp = fzpTemplate
+		.arg(getenvUser())
+		.arg(w * 25.4)
+		.arg(h * 25.4)
+		.arg(QFileInfo(path).baseName())
+		.arg(QDate::currentDate().toString(Qt::ISODate))
+		.arg(moduleID);
+
+
+	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
+	QFile file2(userPartsFolderPath + moduleID + FritzingPartExtension);
+	file2.open(QIODevice::WriteOnly);
+	QTextStream out2(&file2);
+	out2 << fzp;
+	file2.close();
+
+	loadPart(userPartsFolderPath + moduleID + FritzingPartExtension);
+
+	swapSelectedAux(itemBase, moduleID);
+
+	return true;
+}
+
+void MainWindow::svgMissingLayer(const QString & layername, const QString & path) {
+	QMessageBox::warning(
+		this,
+		tr("Fritzing"),
+		tr("Svg %1 is missing a '%2' layer. "
+			"For more information on how to create a custom board shape, "
+			"see the tutorial at <a href='http://www.fritzing.org'>www.fritzing.org</a>.")
+		.arg(path)
+		.arg(layername)
+	);
 }

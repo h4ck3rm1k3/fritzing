@@ -313,6 +313,11 @@ protected:
 	void initExternalConnectors(QList<ConnectorItem *> & externalConnectors);
 
 	bool alreadyOpen(const QString & fileName);
+	bool loadCustomBoardShape();
+	void svgMissingLayer(const QString & layername, const QString & path);
+	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
+
+
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);
