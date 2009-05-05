@@ -69,7 +69,7 @@ QString FApplication::m_translationPath;
 UpdateDialog * FApplication::m_updateDialog = NULL;
 
 
-static int kBottomOfAlpha = 206;
+static int kBottomOfAlpha = 204;
 
 #ifdef Q_WS_WIN
 #ifndef QT_NO_DEBUG
@@ -322,7 +322,7 @@ int FApplication::startup(int & argc, char ** argv)
 	PartsEditorMainWindow::initText();
 	BinManager::MyPartsBinLocation = getApplicationSubFolderPath("bins")+"/my_parts.fzb";
 
-	splash.showProgress(progressIndex, 0.1);
+	splash.showProgress(progressIndex, 0.085);
 	processEvents();
 
 #ifdef Q_WS_WIN
