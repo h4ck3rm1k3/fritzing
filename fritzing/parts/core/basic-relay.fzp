@@ -127,4 +127,10 @@
             </views>
         </connector>
     </connectors>
+    <buses>
+        <bus id="common">
+          <nodeMember connectorId="connector2" />
+          <nodeMember connectorId="connector3" />
+        </bus>
+    </buses>
 </module>
