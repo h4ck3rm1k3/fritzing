@@ -2019,7 +2019,7 @@ void MainWindow::exportToGerber() {
 	}
 
     // create copper0 gerber from svg
-    SVG2gerber * copper0Gerber = new SVG2gerber(svg, "copper0");
+    SVG2gerber copper0Gerber(svg, "copper0");
 
     QString copper0File = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
@@ -2029,7 +2029,7 @@ void MainWindow::exportToGerber() {
         DebugDialog::debug("gerber export: cannot open output file");
 
     QTextStream copperStream(&copper0Out);
-    copperStream << copper0Gerber->getGerber();
+    copperStream << copper0Gerber.getGerber();
 
     // soldermask
     QString soldermaskFile = exportDir + "/" +
@@ -2040,7 +2040,7 @@ void MainWindow::exportToGerber() {
         DebugDialog::debug("gerber export: cannot open output file");
 
     QTextStream maskStream(&maskOut);
-    maskStream << copper0Gerber->getSolderMask();
+    maskStream << copper0Gerber.getSolderMask();
 
     // drill file
     QString drillFile = exportDir + "/" +
@@ -2051,7 +2051,7 @@ void MainWindow::exportToGerber() {
         DebugDialog::debug("gerber export: cannot open output file");
 
     QTextStream drillStream(&drillOut);
-    drillStream << copper0Gerber->getNCDrill();
+    drillStream << copper0Gerber.getNCDrill();
 
     // now do it for silk
     QList<ViewLayer::ViewLayerID> silkLayerIDs;
@@ -2079,7 +2079,7 @@ void MainWindow::exportToGerber() {
     }
 
     // create copper0 gerber from svg
-    SVG2gerber * silk0Gerber = new SVG2gerber(svgSilk, "silk");
+    SVG2gerber silk0Gerber(svgSilk, "silk");
 
     QString silk0File = exportDir + "/" +
                           QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)
@@ -2089,7 +2089,7 @@ void MainWindow::exportToGerber() {
         DebugDialog::debug("gerber export: cannot open output file");
 
     QTextStream silkStream(&silk0Out);
-    silkStream << silk0Gerber->getGerber();
+    silkStream << silk0Gerber.getGerber();
 }
 
 void MainWindow::exportToEagle() {
