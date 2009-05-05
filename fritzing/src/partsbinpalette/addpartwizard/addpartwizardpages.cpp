@@ -67,10 +67,10 @@ SourceOptionsPage::SourceOptionsPage(AddPartWizard *parent) : AbstractAddPartWiz
 	m_layout->setSpacing(1);
 	m_layout->setMargin(1);
 
-	addButton( tr("Create a new part"), SLOT(fromPartsEditor()) );
-	addButton( tr("Browse all the existing parts"), SLOT(fromAllTheLibrary()) );
-	addButton( tr("Generate new part"), SLOT(fromWebGenerator()) );
-	addButton( tr("Import part from local folder"), SLOT(fromLocalFolder()) );
+	addButton( QObject::tr("Create a new part"), SLOT(fromPartsEditor()) );
+	addButton( QObject::tr("Browse all the existing parts"), SLOT(fromAllTheLibrary()) );
+	addButton( QObject::tr("Generate new part"), SLOT(fromWebGenerator()) );
+	addButton( QObject::tr("Import part from local folder"), SLOT(fromLocalFolder()) );
 
 	m_layout->addSpacing(3);
 }
@@ -136,9 +136,9 @@ void FileBrowserPage::initializePage() {
 	if(!m_fileDialog) {
 		m_fileDialog = new QFileDialog(
 			this,
-			tr("Select a part to import"),
+			QObject::tr("Select a part to import"),
 			"",
-			tr("External Part (*%1)").arg(FritzingBundledPartExtension)
+			QObject::tr("External Part (*%1)").arg(FritzingBundledPartExtension)
 		);
 		removeButtonsFrom(m_fileDialog);
 		m_centralWidget = new QWidget(this);
