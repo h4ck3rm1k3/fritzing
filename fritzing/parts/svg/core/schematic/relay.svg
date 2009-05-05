@@ -1,40 +1,209 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 43363)  -->
-<svg version="1.2" baseProfile="tiny" id="svg2" xmlns:svg="http://www.w3.org/2000/svg"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="143.25px" height="93.5px"
-	 viewBox="-10.642 -14.858 143.25 93.5" xml:space="preserve">
-<path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="12" d="M23.95,12.302
-	c-2.692,0-4.856,2.178-4.856,4.87c0,2.688,2.164,4.871,4.856,4.871c-2.692,0-4.856,2.182-4.856,4.871
-	c0,2.688,2.164,4.869,4.856,4.869c-2.692,0-4.856,2.182-4.856,4.868c0,2.682,2.18,4.866,4.87,4.866c-2.689,0-4.87,2.184-4.87,4.87
-	c0,2.688,2.164,4.87,4.856,4.87"/>
-<line fill="none" stroke="#000000" stroke-linecap="round" x1="119.87" y1="-5.437" x2="119.87" y2="68.85"/>
-<polyline fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" points="119.859,30.24 101.242,30.248 
-	78.502,38.341 "/>
-<line fill="none" stroke="#000000" stroke-linecap="round" x1="-0.005" y1="69.218" x2="-0.005" y2="60.525"/>
-<line fill="none" stroke="#000000" stroke-linecap="round" x1="24.12" y1="69.218" x2="24.12" y2="51.349"/>
-<polyline fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" points="0,60.432 58.181,60.432 
-	58.181,41.838 77.181,41.838 "/>
-<path id="path2400" sodipodi:type="arc" sodipodi:ry="2.1042509" sodipodi:rx="2.1042509" sodipodi:cy="20" sodipodi:cx="5" d="
-	M77.207,39.738c1.162,0,2.104,0.941,2.104,2.104s-0.942,2.105-2.104,2.105l0,0c-1.162,0-2.104-0.943-2.104-2.105
-	S76.045,39.738,77.207,39.738z"/>
-<path id="path2402" sodipodi:type="arc" sodipodi:ry="2.1042509" sodipodi:rx="2.1042509" sodipodi:cy="20" sodipodi:cx="25" d="
-	M77.207,19.737c1.162,0,2.104,0.941,2.104,2.104s-0.942,2.105-2.104,2.105s-2.104-0.943-2.104-2.105S76.045,19.737,77.207,19.737
-	L77.207,19.737z"/>
-<polyline fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" points="0,3.35 58.181,3.35 58.181,21.944 
-	77.181,21.944 "/>
-<line fill="none" stroke="#000000" stroke-linecap="round" x1="24.12" y1="-5.437" x2="24.12" y2="12.434"/>
-<line fill="none" stroke="#000000" stroke-linecap="round" x1="-0.005" y1="-5.437" x2="-0.005" y2="3.258"/>
-<rect x="-10.1" y="-5.4" fill="none" stroke="#000000" stroke-linecap="round" width="142.25" height="74.25"/>
-<line id="connector0pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="-0.005" y1="77.63" x2="-0.005" y2="69.546"/>
-<rect id="connector0terminal_5_" x="-0.114" y="77.654" width="0.208" height="0.207"/>
-<line id="connector1pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="24.12" y1="77.63" x2="24.12" y2="69.896"/>
-<rect id="connector1terminal" x="24.004" y="77.654" width="0.208" height="0.207"/>
-<line id="connector2pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="119.87" y1="77.63" x2="119.87" y2="69.896"/>
-<rect id="connector2terminal" x="119.765" y="77.654" width="0.208" height="0.207"/>
-<line id="connector3pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="119.87" y1="-13.848" x2="119.87" y2="-6.114"/>
-<rect id="connector3terminal" x="119.765" y="-14.079" width="0.208" height="0.207"/>
-<line id="connector4pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="24.12" y1="-13.848" x2="24.12" y2="-6.114"/>
-<rect id="connector4terminal" x="24.004" y="-14.079" width="0.208" height="0.207"/>
-<line id="connector5pin" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" x1="-0.005" y1="-13.848" x2="-0.005" y2="-5.765"/>
-<rect id="connector5terminal" x="-0.114" y="-14.079" width="0.208" height="0.207"/>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.2"
+   baseProfile="tiny"
+   id="svg2"
+   x="0px"
+   y="0px"
+   width="121.875px"
+   height="93.5px"
+   viewBox="0 0 121.875 93.5"
+   xml:space="preserve"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="relay.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"><metadata
+   id="metadata39"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs37"><inkscape:perspective
+   sodipodi:type="inkscape:persp3d"
+   inkscape:vp_x="0 : 46.75 : 1"
+   inkscape:vp_y="0 : 1000 : 0"
+   inkscape:vp_z="121.875 : 46.75 : 1"
+   inkscape:persp3d-origin="60.9375 : 31.166667 : 1"
+   id="perspective41" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</defs><sodipodi:namedview
+   inkscape:window-height="726"
+   inkscape:window-width="645"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   guidetolerance="10.0"
+   gridtolerance="10.0"
+   objecttolerance="10.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   id="base"
+   showgrid="false"
+   inkscape:zoom="2.990248"
+   inkscape:cx="76.335718"
+   inkscape:cy="55.490539"
+   inkscape:window-x="10"
+   inkscape:window-y="73"
+   inkscape:current-layer="svg2" />
+	 
+	 <path
+   style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:12;stroke-width:2;"
+   id="path4"
+   d="M 24.955,27.172003 C 22.263,27.172003 20.099,29.350003 20.099,32.042003 C 20.099,34.730003 22.263,36.913003 24.955,36.913003 C 22.263,36.913003 20.099,39.095003 20.099,41.784003 C 20.099,44.472003 22.263,46.653003 24.955,46.653003 C 22.263,46.653003 20.099,48.835003 20.099,51.521003 C 20.099,54.203003 22.279,56.387003 24.969,56.387003 C 22.28,56.387003 20.099,58.571003 20.099,61.257003 C 20.099,63.945003 22.263,66.127003 24.955,66.127003"
+   stroke-miterlimit="12" /><line
+   style="fill:none;stroke:#000000;stroke-linecap:round;stroke-width:2;"
+   id="line6"
+   y2="83.720001"
+   x2="120.875"
+   y1="9.4330034"
+   x1="120.875" /><polyline
+   style="fill:none;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2;"
+   id="polyline8"
+   points="119.859,30.24 101.242,30.248   78.502,38.341 "
+   transform="translate(1.005,14.870003)" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   id="line10"
+   y2="75.395004"
+   x2="1"
+   y1="84.088005"
+   x1="1" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   id="line12"
+   y2="66.219002"
+   x2="25.125"
+   y1="84.088005"
+   x1="25.125" /><polyline
+   style="fill:none;stroke-width:2;stroke:#000000;stroke-linecap:round;stroke-linejoin:round"
+   id="polyline14"
+   points="0,60.432 58.181,60.432   58.181,41.838 77.181,41.838 "
+   transform="translate(1.005,14.870003)" /><circle
+   style="fill:#000000"
+   sodipodi:ry="2.1042509"
+   sodipodi:rx="2.1042509"
+   sodipodi:cy="36.839256"
+   sodipodi:cx="78.719002"
+   cx="78.719002"
+   cy="36.839256"
+   r="2.1042509"
+   id="path2400" /><circle
+   style="fill:#000000"
+   sodipodi:ry="2.1042509"
+   sodipodi:rx="2.1042509"
+   sodipodi:cy="56.650002"
+   sodipodi:cx="78.719704"
+   cx="78.719704"
+   cy="56.650002"
+   r="2.1042509"
+   id="path2402" /><polyline
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+   id="polyline18"
+   points="0,3.35 58.181,3.35 58.181,21.944   77.181,21.944 "
+   transform="translate(1.005,14.870003)" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   id="line20"
+   y2="27.304003"
+   x2="25.125"
+   y1="9.4330034"
+   x1="25.125" /><line
+   style="fill:none;stroke-width:2;stroke:#000000;stroke-linecap:round"
+   id="line22"
+   y2="18.128002"
+   x2="1"
+   y1="9.4330034"
+   x1="1" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   y2="84.416"
+   x2="1"
+   y1="92.5"
+   x1="1"
+   id="connector0pin" /><rect
+   height="0.207"
+   width="0.208"
+   y="92.524002"
+   x="0.89099997"
+   id="connector0terminal" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   y2="84.766006"
+   x2="25.125"
+   y1="92.5"
+   x1="25.125"
+   id="connector1pin" /><rect
+   height="0.207"
+   width="0.208"
+   y="92.524002"
+   x="25.008999"
+   id="connector1terminal" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   y2="84.766006"
+   x2="120.875"
+   y1="92.5"
+   x1="120.875"
+   id="connector2pin" /><rect
+   height="0.207"
+   width="0.208"
+   y="92.524002"
+   x="120.77"
+   id="connector2terminal" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   y2="8.7560034"
+   x2="120.875"
+   y1="1.0220035"
+   x1="120.875"
+   id="connector3pin" /><rect
+   height="0.207"
+   width="0.208"
+   y="0.79100263"
+   x="120.77"
+   id="connector3terminal" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   y2="8.7560034"
+   x2="25.125"
+   y1="1.0220035"
+   x1="25.125"
+   id="connector4pin" /><rect
+   height="0.207"
+   width="0.208"
+   y="0.79100263"
+   x="25.008999"
+   id="connector4terminal" /><line
+   style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round"
+   y2="9.1050034"
+   x2="1"
+   y1="1.0220035"
+   x1="1"
+   id="connector5pin" /><rect
+   height="0.207"
+   width="0.208"
+   y="0.79100263"
+   x="0.89099997"
+   id="connector5terminal" />
 </svg>

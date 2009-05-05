@@ -240,6 +240,13 @@
                 </iconView>
             </views>
         </instance>
+        <instance moduleIdRef="1099ABDE24_ST_relay"  path="parts/core/basic-relay.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
         <instance moduleIdRef="3234DBDC80" modelIndex="376" path="parts/core/basic_servo.fzp">
             <views>
                 <iconView layer="icon">

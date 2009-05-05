@@ -30,7 +30,7 @@
             </layers>
         </breadboardView>
         <schematicView>
-            <layers image="schematic/pushbutton.svg">
+            <layers image="schematic/relay.svg">
                 <layer layerId="schematic"></layer>
             </layers>
         </schematicView>
