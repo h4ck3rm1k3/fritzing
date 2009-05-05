@@ -235,7 +235,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			pathUserData.sNewWidth = sNewWidth;
 			pathUserData.vbHeight = vbHeight;
 			pathUserData.vbWidth = vbWidth;
-			if (parsePath(data, slot, pathUserData)) {
+                        if (parsePath(data, slot, pathUserData, this)) {
 				pathUserData.string.remove(0, 1);			// get rid of the "M"
 				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
 				element.setAttribute("points", pathUserData.string);
@@ -257,7 +257,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 			pathUserData.sNewWidth = sNewWidth;
 			pathUserData.vbHeight = vbHeight;
 			pathUserData.vbWidth = vbWidth;
-			if (parsePath(data, slot, pathUserData)) {
+                        if (parsePath(data, slot, pathUserData, this)) {
 				element.setAttribute("d", pathUserData.string);
 			}
 		}
@@ -324,7 +324,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 			PathUserData pathUserData;
 			pathUserData.x = x;
 			pathUserData.y = y;
-			if (parsePath(data, slot, pathUserData)) {
+                        if (parsePath(data, slot, pathUserData, this)) {
 				pathUserData.string.remove(0, 1);			// get rid of the "M"
 				pathUserData.string.remove(pathUserData.string.length() - 1, 1);
 				element.setAttribute("points", pathUserData.string);
@@ -338,7 +338,7 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 			PathUserData pathUserData;
 			pathUserData.x = x;
 			pathUserData.y = y;
-			if (parsePath(data, slot, pathUserData)) {
+                        if (parsePath(data, slot, pathUserData, this)) {
 				element.setAttribute("d", pathUserData.string);
 			}
 		}
@@ -452,7 +452,7 @@ void SvgFileSplitter::shiftCommandSlot(QChar command, bool relative, QList<doubl
 	}
 }
 
-bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData) {
+bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUserData & pathUserData, QObject * slotTarget) {
 	SVGPathLexer lexer(data);
 	SVGPathParser parser;
 	if (!parser.parse(&lexer)) {
@@ -461,7 +461,7 @@ bool SvgFileSplitter::parsePath(const QString & data, const char * slot, PathUse
 	}
 
 	SVGPathRunner svgPathRunner;
-	connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)), this, slot, Qt::DirectConnection);
+        connect(&svgPathRunner, SIGNAL(commandSignal(QChar, bool, QList<double> &, void *)), slotTarget, slot, Qt::DirectConnection);
 	return svgPathRunner.runPath(parser.symStack(), &pathUserData);
 }
 

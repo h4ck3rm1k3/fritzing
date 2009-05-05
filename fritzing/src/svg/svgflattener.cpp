@@ -81,7 +81,7 @@ void SvgFlattener::unRotateChild(QDomElement & element,QMatrix transform){
                 const char * slot = SLOT(rotateCommandSlot(QChar, bool, QList<double> &, void *));
                 PathUserData pathUserData;
                 pathUserData.transform = transform;
-                if (parsePath(data, slot, pathUserData)) {
+                if (parsePath(data, slot, pathUserData, this)) {
                     element.setAttribute("d", pathUserData.string);
                 }
             }

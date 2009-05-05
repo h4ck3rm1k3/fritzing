@@ -24,16 +24,18 @@ $Date$
 
 ********************************************************************/
 
+#ifndef SVG2GERBER_H
+#define SVG2GERBER_H
+
 #include <QString>
 #include <QDomElement>
 #include <QObject>
 #include <QMatrix>
 
-#ifndef SVG2GERBER_H
-#define SVG2GERBER_H
-
-class SVG2gerber
+class SVG2gerber : public QObject
 {
+    Q_OBJECT
+
 public:
     SVG2gerber(QString svgStr, QString debugStr="dbg");
     QString getGerber();

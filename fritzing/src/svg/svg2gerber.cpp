@@ -148,6 +148,7 @@ void SVG2gerber::normalizeSVG(){
 
 void SVG2gerber::convertShapes2paths(QDomNode node){
     // I'm a leaf node.  make me a path
+    //TODO: this should strip svg: namspaces
     if(!node.hasChildNodes()) {
         QString tag = node.nodeName().toLower();
         QDomElement element = node.toElement();
@@ -172,7 +173,7 @@ void SVG2gerber::convertShapes2paths(QDomNode node){
         else if(tag=="ellipse"){
             path = ellipse2path(element);
         }
-        else if(tag=="path"){
+        else if((tag=="path") || (tag=="svg:path")){
             path = element;
         }
         else {
@@ -398,7 +399,7 @@ void SVG2gerber::allPaths2gerber() {
         QString data = path.attribute("d");
         QString aperture;
 
-        const char * slot = SLOT(shiftCommandSlot(QChar, bool, QList<double> &, void *));
+        const char * slot = SLOT(path2gerbCommandSlot(QChar, bool, QList<double> &, void *));
 
         PathUserData pathUserData;
         pathUserData.x = 0;
@@ -406,7 +407,7 @@ void SVG2gerber::allPaths2gerber() {
         pathUserData.string = "";
 
         SvgFlattener flattener;
-        flattener.parsePath(data, slot, pathUserData);
+        flattener.parsePath(data, slot, pathUserData, this);
 
         // only add paths if they contained gerber-izable path commands (NO CURVES!)
         if(pathUserData.string.contains("INVALID"))
