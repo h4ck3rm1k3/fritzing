@@ -120,8 +120,6 @@ public:
 	void setSize(QSizeF);
 
 public:
-	static QString customSize;
-	static QString customShape;
 	static QString customSizeTranslated;
 	static QString customShapeTranslated;
 

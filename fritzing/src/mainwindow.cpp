@@ -1763,6 +1763,8 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 	ItemBase * itemBase = m_infoView->currentItem();
 	if (itemBase == NULL) return;
 
+	itemBase = itemBase->layerKinChief();
+
 	if(!exactMatch) {
 		// TODO: andre wants some kind of special disappearing message that's not the status bar
 		// and not the autorouting status message
@@ -1811,6 +1813,8 @@ bool MainWindow::loadCustomBoardShape()
 {
 	ItemBase * itemBase = m_infoView->currentItem();
 	if (itemBase == NULL) return false;
+
+	itemBase = itemBase->layerKinChief();
 
 	QString path = FApplication::getOpenFileName(this,
 		tr("Open custom board shape SVG file"),
@@ -1898,6 +1902,7 @@ bool MainWindow::loadCustomBoardShape()
 	// %4 = filename (minus path and extension) 
 	// %5 = date string
 	// %6 = module id
+	// %7 = time string
 
 	QString fzp = fzpTemplate
 		.arg(getenvUser())
@@ -1905,7 +1910,8 @@ bool MainWindow::loadCustomBoardShape()
 		.arg(h * 25.4)
 		.arg(QFileInfo(path).baseName())
 		.arg(QDate::currentDate().toString(Qt::ISODate))
-		.arg(moduleID);
+		.arg(moduleID)
+		.arg(QTime::currentTime().toString("HH:mm:ss"));
 
 
 	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";

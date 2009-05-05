@@ -2,7 +2,7 @@
 <module moduleId="%6" >
  <version>1.0</version>
  <author>%1</author>
- <title>Custom PCB - %2 x %3 mm - %4</title>
+ <title>Custom PCB - %4 - %1</title>
  <date>%5</date>
  <label>PCB</label>
  <tags>
@@ -13,11 +13,11 @@
   <tag>fritzing user</tag>
  </tags>
  <properties>
-  <property name="Size">%2 x %3 mm - %4 - %6</property>
+  <property name="Size">%4 %2 x %3mm (%1 %5 %7)</property>
   <property name="family">Plain PCB</property>
  </properties>
- <taxonomy>discreteParts.pcb.custom.%2x%3mm.%4</taxonomy>
- <description>Custom %2 x %3 mm %4 Circuit Board</description>
+ <taxonomy>discreteParts.pcb.custom.%4.%1</taxonomy>
+ <description>Custom %4 - %1 - %2x%3mm Circuit Board %5 %7</description>
  <views>
   <defaultUnits>mm</defaultUnits>
   <iconView>

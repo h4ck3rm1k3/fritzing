@@ -1,6 +1,8 @@
 // based on: http://www.yvoschaap.com/instantedit/instantedit.js
 
 var changing = false;
+var lastGoodWidth = 0;
+var lastGoodHeight = 0;
 
 function fieldEnter(field,evt,idfld) {
 	evt = (evt) ? evt : window.event;
@@ -170,6 +172,7 @@ function resizeBoard() {
 	var w = document.getElementById("boardwidth").value;			
    	if (!reg.test(w)) {
 	    alert("board width is not a number");
+	    setLastGood();
 	    return;
 	}
 	if (w < 3) {
@@ -180,17 +183,24 @@ function resizeBoard() {
    	var h = document.getElementById("boardheight").value;		
    	if (!reg.test(h)) {
 	    alert("board height is not a number");
+	    setLastGood();
 	    return;
 	}	
 	if (h < 3) {
 	    alert("board width must be at least 3 mm");
+	    setLastGood();
 	    return;
 	}
+	
+	lastGoodWidth = w;
+	lastGoodHeight = h;
 	
     sketch.resizeBoard(w, h);
 }
 
 function updateBoardSize(w, h) {
+    lastGoodWidth = w;
+    lastGoodHeight = h;
     var bw = document.getElementById("boardwidth");
     if (bw) {
         bw.value = w;
@@ -200,3 +210,37 @@ function updateBoardSize(w, h) {
         bh.value = h;
     }
 }
+
+function resizeBoardWidth() {
+    resizeBoard();
+}
+
+function resizeBoardHeight() {
+    resizeBoard();
+}
+
+function resizeBoardWidthEnter(evt) {
+	evt = (evt) ? evt : window.event;	
+	if (evt.keyCode == 13) {
+	    resizeBoard();
+		return false;
+	} 
+		
+	return true;
+}
+
+function resizeBoardHeightEnter(evt) {
+	evt = (evt) ? evt : window.event;	
+	if (evt.keyCode == 13) {
+	    resizeBoard();
+		return false;
+	} 
+		
+	return true;
+}
+
+function setLastGood() {
+    document.getElementById("boardwidth").value = lastGoodWidth;
+    document.getElementById("boardheight").value = lastGoodHeight;
+}
+
