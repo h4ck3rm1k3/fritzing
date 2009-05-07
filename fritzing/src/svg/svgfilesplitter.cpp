@@ -51,11 +51,19 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 		return false;
 	}
 
+	QString contents = file.readAll();
+	file.close();
+
+	// gets rid of some crap inserted by illustrator which can screw up polygons and paths
+	contents.remove(QChar('\t'));
+	contents.remove(QChar('\n'));
+	contents.remove(QChar('\r'));
+
 	QString errorStr;
 	int errorLine;
 	int errorColumn;
 
-	if (!m_domDocument.setContent(&file, true, &errorStr, &errorLine, &errorColumn)) {
+	if (!m_domDocument.setContent(contents, true, &errorStr, &errorLine, &errorColumn)) {
 		return false;
 	}
 
@@ -68,6 +76,8 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 		return false;
 	}
 
+	root.removeAttribute("space");
+
 	QDomElement element = findElementWithAttribute(root, "id", elementID);
 	if (element.isNull()) return false;
 
@@ -77,6 +87,9 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 
 	root.appendChild(element);
 	m_byteArray = m_domDocument.toByteArray();
+
+	QString s = m_domDocument.toString();
+	DebugDialog::debug(s);
 
 	return true;
 }
