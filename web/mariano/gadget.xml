@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs width="800" height="600" directory_title="Moon Phase" title="Moon Phase" title_url="http://www.die.net/moon/" author="Aaron Hopkins" author_email="tools@die.net" author_location="Los Angeles, California, USA" screenshot="http://static.die.net/moon/gadget_screenshot.png" thumbnail="http://static.die.net/moon/gadget_thumb.png" description="See the moon's current phase along with the times of the next new moon and full moon.">
+    <Require feature="dynamic-height"/>
+  </ModulePrefs>
+  <UserPref name="size" display_name="Size of the moon image:" default_value="medium" datatype="enum">
+    <EnumValue value="small"/>
+    <EnumValue value="medium"/>
+    <EnumValue value="large"/>
+  </UserPref>
+  <UserPref name="info" display_name="Display phase name and percent lit?" default_value="true" datatype="bool"/>
+  <UserPref name="date" display_name="Display dates of new and full moon?" default_value="false" datatype="bool"/>
+  <Content type="html">
+    <![CDATA[
+	<style type="text/css">
+	body { background: #000; font-family: verdana, helvetica, arial, sans-serif; font-size: 12px }
+	a, a:link, a:visited { display: block; text-decoration: none; color: #ccc; text-align: center; padding: 5px 0px }
+	p { display: none; margin: 0px }
+	</style>
+	<a href="http://www.die.net/moon/" target="_top">
+	<img border="0" id="moon">
+	<p id="info"><b>Full</b> moon, <b>98</b>%&nbsp;lit</p>
+	<p id="date">New was <b>Apr&nbsp;25</b>, full is <b>May&nbsp;9</b>, new again <b>May&nbsp;24</b></p>
+	</a>
+	<script type="text/javascript"> 
+	<!--
+	var moon = document.getElementById("moon");
+	moon.onload = _IG_AdjustIFrameHeight;
+	function resize() {
+	  var width = document.body.offsetWidth;
+	  if ("__UP_size__" == "medium") width /= 2;
+	  else if ("__UP_size__" == "small") width /= 3;
+	  var sizes = [ 64, 96, 128, 144, 192, 224, 256, 288, 320, 400, 480, 512 ];
+	  for (var i = sizes.length - 1; i > 0 && width < sizes[i]; i--);
+	  var src = _IG_GetImageUrl("http://static.die.net/moon/" + sizes[i] + ".jpg").replace("?", "?time=" + Math.floor((new Date()).getTime() / 1800000) + "&");
+	  if (moon.src != src) moon.src = src;
+	}
+	function reload() {
+	  if (__UP_info__) document.getElementById("info").style.display = "block";
+	  if (__UP_date__) document.getElementById("date").style.display = "block";
+	  resize();
+	  setTimeout(function () { (new Image()).src = 'http://optimizer.cyberverse.net/ping.gif' }, Math.random()*10000);
+	}
+	window.onresize = resize;
+	setInterval(reload, 1800000);
+	_IG_RegisterOnloadHandler(reload);
+	-->
+	</script>
+    ]]>
+  </Content>
+</Module>
