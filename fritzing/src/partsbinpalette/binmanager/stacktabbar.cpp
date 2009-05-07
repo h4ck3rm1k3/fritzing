@@ -106,13 +106,29 @@ void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	const QMimeData *m = event->mimeData();
 	int index = tabAt(event->pos());
 	if(event->source() == this && mimeIsAction(m,"tab-reordering")) {
-		emit setPotentialDropSink(m_parent,index);
+		ButtonPosition side = getButtonPos(index,event->pos());
+		emit setPotentialDropSink(m_parent,side,index);
 		emit setDropSink(NULL);
 		event->acceptProposedAction();
 	} else if (event->source() != this && mimeIsAction(event->mimeData(),"part-reordering")) {
 		event->acceptProposedAction();
 		setCurrentIndex(index);
 	}
+}
+
+QTabBar::ButtonPosition StackTabBar::getButtonPos(int index, const QPoint &pos) {
+	if(index == count()-1 && posCloserToTheEnd(pos)) {
+		return QTabBar::RightSide;
+	} else {
+		return QTabBar::LeftSide;
+	}
+}
+
+bool StackTabBar::posCloserToTheEnd(const QPoint &pos) {
+	QRect tabRect = this->tabRect(count()-1);
+	QPoint middle(tabRect.x()+tabRect.width()/2,tabRect.y()+tabRect.height());
+	QRect rightSide(tabRect.topLeft(),middle);
+	return !rightSide.contains(pos);
 }
 
 void StackTabBar::dropEvent(QDropEvent* event) {

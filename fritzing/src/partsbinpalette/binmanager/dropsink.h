@@ -7,7 +7,7 @@
 
 class DropSink {
 	public:
-		virtual void showFeedback(int index, bool doShow=true) = 0;
+		virtual void showFeedback(int index, QTabBar::ButtonPosition side, bool doShow=true) = 0;
 	virtual ~DropSink() {}
 };
 

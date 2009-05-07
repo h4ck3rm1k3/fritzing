@@ -30,6 +30,8 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include <QFrame>
 #include <QLabel>
+#include <QTabBar>
+
 #include "dropsink.h"
 
 class StackWidgetSeparator : public QFrame, public DropSink {
@@ -40,10 +42,10 @@ class StackWidgetSeparator : public QFrame, public DropSink {
 		void setDragging(bool);
 		void expand();
 		void shrink();
-		void showFeedback(int index, bool doShow=true);
+		void showFeedback(int index, QTabBar::ButtonPosition side, bool doShow=true);
 
 	signals:
-		void setPotentialDropSink(DropSink*, int index=-1);
+		void setPotentialDropSink(DropSink*, QTabBar::ButtonPosition=QTabBar::RightSide, int index=-1);
 		void setDropSink(DropSink*, int index=-1);
 		void dropped();
 

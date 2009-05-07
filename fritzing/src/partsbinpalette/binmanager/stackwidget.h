@@ -39,7 +39,16 @@ class StackTabWidget;
 
 #include "dropsink.h"
 
-#define DragFromOrTo QPair<DropSink* /*tab widget*/, int /*index*/>
+struct DragFromOrTo {
+	DragFromOrTo(DropSink* _sink = NULL, int _index = -1, QTabBar::ButtonPosition _side = QTabBar::LeftSide) {
+		sink = _sink;
+		index = _index;
+		side = _side;
+	}
+	DropSink* sink;
+	int index;
+	QTabBar::ButtonPosition side;
+};
 
 class StackWidget : public QFrame {
 	Q_OBJECT
@@ -62,7 +71,7 @@ class StackWidget : public QFrame {
 
 		void setDragSource(StackTabWidget*, int index);
 		void setDropSink(DropSink* receptor, int index);
-		void setPotentialDropSink(DropSink* receptor, int index);
+		void setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index);
 		void dropped();
 
 	signals:

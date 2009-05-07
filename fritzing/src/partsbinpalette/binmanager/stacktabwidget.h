@@ -29,6 +29,8 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #define STACKTABWIDGET_H_
 
 #include <QTabWidget>
+#include <QTabBar>
+#include <QPushButton>
 
 #include "dropsink.h"
 
@@ -37,7 +39,7 @@ class StackTabWidget : public QTabWidget, public DropSink {
 	Q_OBJECT
 	public:
 		StackTabWidget(class StackWidget *parent);
-		void showFeedback(int index, bool doShow=true);
+		void showFeedback(int index, QTabBar::ButtonPosition side, bool doShow=true);
 		class StackTabBar *stackTabBar();
 
 	public slots:
@@ -52,7 +54,7 @@ class StackTabWidget : public QTabWidget, public DropSink {
 	protected:
 		void dragEnterEvent(QDragEnterEvent* event);
 
-		QIcon m_feedbackIcon;
+		QPushButton *m_feedback;
 };
 
 #endif /* STACKTABWIDGET_H_ */

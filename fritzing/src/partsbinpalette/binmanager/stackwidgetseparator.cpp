@@ -61,6 +61,7 @@ void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
 void StackWidgetSeparator::dragLeaveEvent(QDragLeaveEvent *event) {
 	//shrink();
 	emit setDropSink(NULL);
+	showFeedback(-1, QTabBar::LeftSide, false); // a little hacky, but it works
 	QFrame::dragLeaveEvent(event);
 }
 
@@ -79,8 +80,9 @@ void StackWidgetSeparator::shrink() {
 	resize(width(),10);
 }
 
-void StackWidgetSeparator::showFeedback(int index, bool doShow) {
+void StackWidgetSeparator::showFeedback(int index, QTabBar::ButtonPosition side, bool doShow) {
 	Q_UNUSED(index);
+	Q_UNUSED(side);
 	m_feedbackIcon->setVisible(doShow);
 }
 

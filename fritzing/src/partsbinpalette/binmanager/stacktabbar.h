@@ -39,7 +39,7 @@ class StackTabBar : public QTabBar {
 	signals:
 		void setDragSource(StackTabWidget*, int index=-1);
 		void setDropSink(DropSink*, int index=-1);
-		void setPotentialDropSink(DropSink*, int index=-1);
+		void setPotentialDropSink(DropSink*, QTabBar::ButtonPosition, int index=-1);
 		void dropped();
 
 	protected:
@@ -52,6 +52,8 @@ class StackTabBar : public QTabBar {
 
 		bool mimeIsAction(const class QMimeData* m, const QString& action);
 		int tabIndexAtPos(const QPoint &p) const;
+		QTabBar::ButtonPosition getButtonPos(int index, const QPoint &pos);
+		bool posCloserToTheEnd(const QPoint &pos);
 
 
 		QPoint m_dragStartPos;

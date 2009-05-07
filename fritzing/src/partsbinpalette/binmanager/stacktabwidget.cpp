@@ -43,8 +43,8 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 		parent,SLOT(setDropSink(DropSink*, int))
 	);
 	connect(
-		tabBar(),SIGNAL(setPotentialDropSink(DropSink*, int)),
-		parent,SLOT(setPotentialDropSink(DropSink*, int))
+		tabBar(),SIGNAL(setPotentialDropSink(DropSink*, QTabBar::ButtonPosition, int)),
+		parent,SLOT(setPotentialDropSink(DropSink*, QTabBar::ButtonPosition, int))
 	);
 	connect(
 		tabBar(),SIGNAL(dropped()),
@@ -52,7 +52,14 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 	);
 
 	QPixmap pixmap = QPixmap(":/resources/images/icons/binRearrangeTabs.png");
-	m_feedbackIcon = QIcon(pixmap);
+	QIcon icon(pixmap);
+	m_feedback = new QPushButton(this);
+	m_feedback->setIcon(icon);
+	m_feedback->hide();
+	m_feedback->setEnabled(false);
+	m_feedback->setFlat(true);
+	m_feedback->setFixedWidth(10);
+	m_feedback->setStyleSheet("background-color: transparent;");
 
 #if QT_VERSION >= 0x040500
 	//this->setMovable(true);
@@ -88,9 +95,17 @@ void StackTabWidget::moveTab(int fromIndex, int toIndex) {
 	setCurrentIndex(toIndex);
 }
 
-void StackTabWidget::showFeedback(int index, bool doShow) {
-	QIcon icon = doShow? m_feedbackIcon: QIcon();
-	setTabIcon(index,icon);
+void StackTabWidget::showFeedback(int index, QTabBar::ButtonPosition side, bool doShow) {
+	m_feedback->setVisible(doShow);
+	if(doShow) {
+		tabBar()->setTabButton(index,side,m_feedback);
+		QTabBar::ButtonPosition otherSide = side == QTabBar::RightSide? QTabBar::LeftSide: QTabBar::RightSide;
+		tabBar()->setTabButton(index,otherSide,NULL);
+	} else {
+		m_feedback->setParent(this);
+		tabBar()->setTabButton(index,QTabBar::LeftSide,NULL);
+		tabBar()->setTabButton(index,QTabBar::RightSide,NULL);
+	}
 }
 
 StackTabBar *StackTabWidget::stackTabBar() {
