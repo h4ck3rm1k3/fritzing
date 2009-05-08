@@ -114,7 +114,7 @@ void DebugDialog::debug(QString prefix, const QRectF &rect, DebugLevel debug, QO
 }
 
 void DebugDialog::debug(QString prefix, const QPoint &point, DebugLevel debug, QObject *ancestor) {
-	QString msg = prefix+QString(" point: x=%1 y=%1").arg(point.x()).arg(point.y());
+	QString msg = prefix+QString(" point: x=%1 y=%2").arg(point.x()).arg(point.y());
 	DebugDialog::debug(msg,debug,ancestor);
 }
 

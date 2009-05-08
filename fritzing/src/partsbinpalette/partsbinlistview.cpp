@@ -201,13 +201,17 @@ void PartsBinListView::dropEvent(QDropEvent* event) {
 }
 
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {
+	//DebugDialog::debug(QString("<<<<< moving item in list view from %1 to %2").arg(fromIndex).arg(toIndex));
 	itemMoved(fromIndex,toIndex);
 	emit informItemMoved(fromIndex, toIndex);
 }
 
 void PartsBinListView::itemMoved(int fromIndex, int toIndex) {
+	//DebugDialog::debug(QString("<<<<< item moved in icon view from %1 to %2").arg(fromIndex).arg(toIndex));
 	QListWidgetItem *item = takeItem(fromIndex);
 	insertItem(toIndex,item);
+	//setItemSelected(item,true);
+	setSelected(toIndex);
 }
 
 int PartsBinListView::itemIndexAt(const QPoint& pos) {

@@ -75,6 +75,9 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 
 		void showInfo(class SvgIconWidget * item);
 
+		bool inEmptyArea(const QPoint& pos);
+		QGraphicsWidget* closestItemTo(const QPoint& pos);
+
 	public slots:
 		void setSelected(int position, bool doEmit=false);
 		void informNewSelection();

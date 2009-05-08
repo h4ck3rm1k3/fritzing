@@ -40,6 +40,7 @@ $Date$
 #include "svgiconwidget.h"
 #include "../palettemodel.h"
 
+#define ICON_SPACING 3
 
 PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent)
     : InfoGraphicsView((QWidget*)parent), PartsBinView(refModel, parent)
@@ -72,7 +73,7 @@ void PartsBinIconView::setupLayout() {
 
 
     m_layouter = new QGraphicsWidget;
-    m_layout = new GraphicsFlowLayout(m_layouter);
+    m_layout = new GraphicsFlowLayout(m_layouter, ICON_SPACING);
     scene()->addItem(m_layouter);
 }
 
@@ -100,6 +101,8 @@ void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
 		SvgIconWidget * item = dynamic_cast<SvgIconWidget*>(itemAt(event->pos()));
 		if(item) showInfo(item);
 	}
+	if (event->button() == Qt::LeftButton)
+		DebugDialog::debug("mouse moved",event->pos());
 }
 
 void PartsBinIconView::showInfo(SvgIconWidget * item) {
@@ -234,19 +237,13 @@ ModelPart *PartsBinIconView::selected() {
 }
 
 void PartsBinIconView::setSelected(int position, bool doEmit) {
-	int count = m_layouter->childItems().count();
-	for(int i=0; i < count; i++) {
-		QGraphicsItem *gIt = m_layouter->childItems()[i];
-		SvgIconWidget *it = dynamic_cast<SvgIconWidget*>(gIt);
-		if(it && position == 0 && position <= count) {
-			m_noSelectionChangeEmition = true;
-			scene()->clearSelection();
-			m_noSelectionChangeEmition = !doEmit;
-			it->setSelected(true);
-			break;
-		} else {
-			position--;
-		}
+	//DebugDialog::debug(QString("<<<< setting selected %1").arg(position));
+	QGraphicsLayoutItem *glIt = m_layout->itemAt(position);
+	if(SvgIconWidget *item = dynamic_cast<SvgIconWidget*>(glIt)) {
+		m_noSelectionChangeEmition = true;
+		scene()->clearSelection();
+		m_noSelectionChangeEmition = !doEmit;
+		item->setSelected(true);
 	}
 }
 
@@ -287,23 +284,70 @@ void PartsBinIconView::dropEvent(QDropEvent* event) {
 }
 
 void PartsBinIconView::moveItem(int fromIndex, int toIndex) {
+	//DebugDialog::debug(QString("<<<<< moving item in icon view from %1 to %2").arg(fromIndex).arg(toIndex));
 	itemMoved(fromIndex,toIndex);
 	emit informItemMoved(fromIndex, toIndex);
 }
 
 void PartsBinIconView::itemMoved(int fromIndex, int toIndex) {
+	//DebugDialog::debug(QString("<<<<< item moved in list view from %1 to %2").arg(fromIndex).arg(toIndex));
 	QGraphicsLayoutItem *item = m_layout->itemAt(fromIndex);
 	m_layout->removeItem(item);
-	//int realToIndex = toIndex>fromIndex? toIndex-1: toIndex;
 	m_layout->insertItem(toIndex,item);
 	updateSize();
+	setSelected(toIndex,/*doEmit*/false);
 }
 
 
 int PartsBinIconView::itemIndexAt(const QPoint& pos) {
 	QGraphicsWidget *item = dynamic_cast<QGraphicsWidget*>(itemAt(pos));
-	if(item) return m_layout->indexOf(item);
-	else return -1;
+	if(item) {
+		int foundIdx = m_layout->indexOf(item);;
+		if(foundIdx != -1) { // no trouble finding it
+			return foundIdx;
+		} //else: something weird happened, the item exists,
+		  //      but it should have and index > -1
+	}
+	if(!inEmptyArea(pos)) {
+		// let's see if moving around the point we can find a real item
+		return m_layout->indexOf(closestItemTo(pos));
+	} else { // it's beyond the icons area, so -1 is OK
+		return -1;
+	}
+}
+
+bool PartsBinIconView::inEmptyArea(const QPoint& pos) {
+	if(m_layout->count() == 0) {
+		return true;
+	} else {
+		QGraphicsLayoutItem *lastItem = m_layout->itemAt(m_layout->count()-1);
+		QPointF itemBottomRightPoint =
+			lastItem->graphicsItem()->mapToScene(lastItem->contentsRect().bottomRight());
+		QPointF posF = mapToScene(pos);
+
+		return itemBottomRightPoint.y() < pos.y()
+			|| ( itemBottomRightPoint.y() >= pos.y()
+				&& itemBottomRightPoint.x() < pos.x()
+				);
+	}
+}
+
+QGraphicsWidget* PartsBinIconView::closestItemTo(const QPoint& pos) {
+	QPointF realPos = mapToScene(pos);
+	QGraphicsItem *item = NULL;
+	if((item = itemAt(realPos.x()+ICON_SPACING,realPos.y()+ICON_SPACING))) {
+		return dynamic_cast<QGraphicsWidget*>(item);
+	}
+	if((item = itemAt(realPos.x()-ICON_SPACING,realPos.y()+ICON_SPACING))) {
+		return dynamic_cast<QGraphicsWidget*>(item);
+	}
+	if((item = itemAt(realPos.x()+ICON_SPACING,realPos.y()-ICON_SPACING))) {
+		return dynamic_cast<QGraphicsWidget*>(item);
+	}
+	if((item = itemAt(realPos.x()-ICON_SPACING,realPos.y()-ICON_SPACING))) {
+		return dynamic_cast<QGraphicsWidget*>(item);
+	}
+	return NULL;
 }
 
 QList<QObject*> PartsBinIconView::orderedChildren() {

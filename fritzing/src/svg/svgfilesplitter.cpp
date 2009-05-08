@@ -36,7 +36,7 @@ $Date$
 #include <QFile>
 #include <QtDebug>
 
-static QString findStyle("%1[\\s]*:[\\s]*([^;]*)[;]?");    
+static QString findStyle("%1[\\s]*:[\\s]*([^;]*)[;]?");
 
 SvgFileSplitter::SvgFileSplitter()
 {
@@ -89,7 +89,7 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 	m_byteArray = m_domDocument.toByteArray();
 
 	QString s = m_domDocument.toString();
-	DebugDialog::debug(s);
+	//DebugDialog::debug(s);
 
 	return true;
 }
@@ -129,13 +129,13 @@ QString SvgFileSplitter::elementString(const QString & elementID) {
 	return document.toString();
 }
 
-bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool blackOnly) 
+bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool blackOnly)
 {
 	// get the viewbox and the width and height
 	// then normalize them
 	// then normalize all the internal stuff
 	// if there are translations, we're fucked
-	
+
 	QDomElement root = m_domDocument.documentElement();
 	QString swidthStr = root.attribute("width");
 	if (swidthStr.isEmpty()) return false;
@@ -188,11 +188,11 @@ bool SvgFileSplitter::normalize(qreal dpi, const QString & elementID, bool black
 	return true;
 }
 
-void SvgFileSplitter::normalizeChild(QDomElement & element, 
+void SvgFileSplitter::normalizeChild(QDomElement & element,
 									 qreal sNewWidth, qreal sNewHeight,
 									 qreal vbWidth, qreal vbHeight, bool blackOnly)
 {
-	
+
 	if (element.nodeName().compare("circle") == 0) {
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "cx", sNewWidth, vbWidth);
@@ -239,7 +239,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
 		fixStyleAttribute(element);
 		QString data = element.attribute("points");
-		if (!data.isEmpty()) {			
+		if (!data.isEmpty()) {
 			data.prepend("M");		// pretend it's a path so we can use the path parser
 			data.append("Z");
 			const char * slot = SLOT(normalizeCommandSlot(QChar, bool, QList<double> &, void *));
@@ -284,14 +284,14 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 	}
 }
 
-bool SvgFileSplitter::normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom) 
+bool SvgFileSplitter::normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom)
 {
 	qreal n = element.attribute(attributeName).toDouble() * num / denom;
-	element.setAttribute(attributeName, QString::number(n)); 
+	element.setAttribute(attributeName, QString::number(n));
 	return true;
 }
 
-QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID) 
+QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
 {
 	QDomElement root = m_domDocument.documentElement();
 
@@ -313,7 +313,7 @@ QString SvgFileSplitter::shift(qreal x, qreal y, const QString & elementID)
 }
 
 void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
-{	
+{
 	if (element.nodeName().compare("circle") == 0 || element.nodeName().compare("ellipse") == 0) {
 		shiftAttribute(element, "cx", x);
 		shiftAttribute(element, "cy", y);
@@ -365,10 +365,10 @@ void SvgFileSplitter::shiftChild(QDomElement & element, qreal x, qreal y)
 	}
 }
 
-bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attributeName, qreal d) 
+bool SvgFileSplitter::shiftAttribute(QDomElement & element, const char * attributeName, qreal d)
 {
 	qreal n = element.attribute(attributeName).toDouble() + d;
-	element.setAttribute(attributeName, QString::number(n)); 
+	element.setAttribute(attributeName, QString::number(n));
 	return true;
 }
 
@@ -496,7 +496,7 @@ void SvgFileSplitter::setStrokeOrFill(QDomElement & element, bool blackOnly)
 	}
 }
 
-void SvgFileSplitter::fixStyleAttribute(QDomElement & element) 
+void SvgFileSplitter::fixStyleAttribute(QDomElement & element)
 {
 	QString style = element.attribute("style");
 	if (style.isEmpty()) return;

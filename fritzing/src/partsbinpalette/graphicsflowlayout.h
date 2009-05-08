@@ -35,7 +35,7 @@ $Date$
 
 class GraphicsFlowLayout : public QGraphicsLinearLayout {
 	public:
-		GraphicsFlowLayout(QGraphicsLayoutItem *parent = 0, int spacing = 3);
+		GraphicsFlowLayout(QGraphicsLayoutItem *parent, int spacing);
 		void setGeometry(const QRectF &rect);
 		int heightForWidth(int width);
 		void clear();
