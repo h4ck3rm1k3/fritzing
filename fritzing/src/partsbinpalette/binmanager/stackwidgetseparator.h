@@ -46,7 +46,7 @@ class StackWidgetSeparator : public QFrame, public DropSink {
 
 	signals:
 		void setPotentialDropSink(DropSink*, QTabBar::ButtonPosition=QTabBar::RightSide, int index=-1);
-		void setDropSink(DropSink*, int index=-1);
+		void setDropSink(DropSink*, QTabBar::ButtonPosition=QTabBar::LeftSide, int index=-1);
 		void dropped();
 
 	protected:

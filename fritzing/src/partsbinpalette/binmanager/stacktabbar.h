@@ -38,7 +38,7 @@ class StackTabBar : public QTabBar {
 
 	signals:
 		void setDragSource(StackTabWidget*, int index=-1);
-		void setDropSink(DropSink*, int index=-1);
+		void setDropSink(DropSink*, QTabBar::ButtonPosition=LeftSide, int index=-1);
 		void setPotentialDropSink(DropSink*, QTabBar::ButtonPosition, int index=-1);
 		void dropped();
 

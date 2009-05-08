@@ -39,8 +39,8 @@ StackTabWidget::StackTabWidget(StackWidget *parent) : QTabWidget(parent) {
 		parent,SLOT(setDragSource(StackTabWidget*, int))
 	);
 	connect(
-		tabBar(),SIGNAL(setDropSink(DropSink*, int)),
-		parent,SLOT(setDropSink(DropSink*, int))
+		tabBar(),SIGNAL(setDropSink(DropSink*,QTabBar::ButtonPosition, int)),
+		parent,SLOT(setDropSink(DropSink*,QTabBar::ButtonPosition, int))
 	);
 	connect(
 		tabBar(),SIGNAL(setPotentialDropSink(DropSink*, QTabBar::ButtonPosition, int)),

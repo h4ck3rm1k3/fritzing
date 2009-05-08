@@ -70,7 +70,7 @@ class StackWidget : public QFrame {
 		void setCurrentWidget(QWidget *widget);
 
 		void setDragSource(StackTabWidget*, int index);
-		void setDropSink(DropSink* receptor, int index);
+		void setDropSink(DropSink* receptor, QTabBar::ButtonPosition, int index);
 		void setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index);
 		void dropped();
 

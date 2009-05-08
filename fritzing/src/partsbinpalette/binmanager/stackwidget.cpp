@@ -56,8 +56,8 @@ int StackWidget::addWidget(QWidget *widget) {
 StackWidgetSeparator *StackWidget::newSeparator(QWidget *widget) {
 	StackWidgetSeparator *sep = new StackWidgetSeparator(this);
 	connect(
-		sep, SIGNAL(setDropSink(DropSink*,int)),
-		this, SLOT(setDropSink(DropSink*,int))
+		sep, SIGNAL(setDropSink(DropSink*,QTabBar::ButtonPosition,int)),
+		this, SLOT(setDropSink(DropSink*,QTabBar::ButtonPosition,int))
 	);
 	connect(
 		sep, SIGNAL(setPotentialDropSink(DropSink*,QTabBar::ButtonPosition,int)),
@@ -137,8 +137,8 @@ void StackWidget::setDragSource(StackTabWidget* tabWidget, int index) {
 	m_dragSource = DragFromOrTo(tabWidget,index);
 }
 
-void StackWidget::setDropSink(DropSink* receptor, int index) {
-	m_dropSink = DragFromOrTo(receptor,index);
+void StackWidget::setDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index) {
+	m_dropSink = DragFromOrTo(receptor,index,side);
 }
 
 void StackWidget::setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index) {
@@ -171,8 +171,9 @@ void StackWidget::dropped() {
 			if(oldTabWidget != newTabWidget || fromIndex != toIndex) { // is the user really rearranging?
 				oldTabWidget->removeTab(fromIndex);
 				oldTabWidget->setCurrentIndex(-1);
-				newTabWidget->insertTab(toIndex, widgetToMove, icon, text);
-				newTabWidget->setCurrentIndex(toIndex);
+				int realToIndex = m_dropSink.side == QTabBar::RightSide? -1: toIndex;
+				newTabWidget->insertTab(realToIndex, widgetToMove, icon, text);
+				newTabWidget->setCurrentIndex(realToIndex);
 			}
 		}
 		emit widgetChangedTabParent(widgetToMove, oldTabWidget, newTabWidget);

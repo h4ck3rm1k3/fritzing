@@ -105,7 +105,7 @@ void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
 void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	const QMimeData *m = event->mimeData();
 	int index = tabAt(event->pos());
-	if(event->source() == this && mimeIsAction(m,"tab-reordering")) {
+	if(mimeIsAction(m,"tab-reordering")) {
 		ButtonPosition side = getButtonPos(index,event->pos());
 		emit setPotentialDropSink(m_parent,side,index);
 		emit setDropSink(NULL);
@@ -134,7 +134,7 @@ bool StackTabBar::posCloserToTheEnd(const QPoint &pos) {
 void StackTabBar::dropEvent(QDropEvent* event) {
 	int toIndex = tabAt(event->pos());
 
-	emit setDropSink(m_parent, toIndex);
+	emit setDropSink(m_parent, getButtonPos(toIndex,event->pos()), toIndex);
 	emit dropped();
 	event->acceptProposedAction();
 }
