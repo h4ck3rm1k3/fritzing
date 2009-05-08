@@ -86,12 +86,17 @@ class PartsEditorPage : public AbstractAddPartSourceWizardPage {
 //////////////////////////////////////////////////
 
 class FileBrowserPage : public AbstractAddPartSourceWizardPage {
+	Q_OBJECT
 	public:
 		FileBrowserPage(AddPartWizard*);
 		~FileBrowserPage();
 
+	protected slots:
+		void setModelPart();
+
 	protected:
 		void initializePage();
+		bool validatePage();
 		void removeButtonsFrom(class QFileDialog* dlg);
 
 		QFileDialog *m_fileDialog;

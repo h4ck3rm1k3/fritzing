@@ -995,7 +995,7 @@ void MainWindow::loadBundledPart() {
 	loadBundledPart(fileName);
 }
 
-void MainWindow::loadBundledPart(const QString &fileName) {
+ModelPart* MainWindow::loadBundledPart(const QString &fileName, bool addToBin) {
 	QDir destFolder = QDir::temp();
 
 	createFolderAnCdIntoIt(destFolder, getRandText());
@@ -1012,9 +1012,12 @@ void MainWindow::loadBundledPart(const QString &fileName) {
 	QDir unzipDir(unzipDirPath);
 	MainWindow *mw = this;
 
-	moveToPartsFolder(unzipDir,mw);
+	QList<ModelPart*> mps = moveToPartsFolder(unzipDir,mw,addToBin);
+	Q_ASSERT(mps.count()==1);
 
 	rmdir(unzipDirPath);
+
+	return mps[0];
 }
 
 void MainWindow::saveBundledPart(const QString &moduleId) {
@@ -1094,7 +1097,7 @@ void MainWindow::saveBundledAux(ModelPart *mp, const QDir &destFolder) {
 	}
 }
 
-void MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw) {
+QList<ModelPart*> MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin) {
 	QStringList namefilters;
 
 	Q_ASSERT(mw);
@@ -1106,9 +1109,13 @@ void MainWindow::moveToPartsFolder(QDir &unzipDir, MainWindow* mw) {
 
 	namefilters.clear();
 	namefilters << ZIP_PART+"*";
+
+	QList<ModelPart*> retval;
 	foreach(QFileInfo file, unzipDir.entryInfoList(namefilters)) { // part files
-		mw->copyToPartsFolder(file);
+		retval << mw->copyToPartsFolder(file,addToBin);
 	}
+
+	return retval;
 }
 
 void MainWindow::loadBundledSketchAux(QDir &unzipDir, MainWindow* mw) {
@@ -1139,7 +1146,7 @@ void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolde
 	}
 }
 
-void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFolder) {
+ModelPart* MainWindow::copyToPartsFolder(const QFileInfo& file, bool addToBin, const QString &destFolder) {
 	QFile partfile(file.filePath());
 	// let's make sure that we remove just the suffix
 	QString destFilePath =
@@ -1152,8 +1159,13 @@ void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFol
 	}
 	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
 	mp->setAlien(true);
-	//m_paletteWidget->addPart(mp);
-	m_paletteWidget->addToMyPart(mp);
+
+	if(addToBin) {
+		//m_paletteWidget->addPart(mp);
+		m_paletteWidget->addToMyPart(mp);
+	}
+
+	return mp;
 }
 
 void MainWindow::binSaved(bool hasPartsFromBundled) {

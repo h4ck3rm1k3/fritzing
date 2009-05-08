@@ -97,3 +97,11 @@ void AddPartWizard::loadPart(QString newPartPath) {
 		m_modelParts << mp;
 	}
 }
+
+void AddPartWizard::loadBundledPart(QString newPartPath) {
+	m_modelParts.clear();
+	ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,false);
+	if(mp) {
+		m_modelParts << mp;
+	}
+}

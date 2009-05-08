@@ -28,6 +28,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include <QMessageBox>
 
 #include "addpartwizardpages.h"
 #include "addpartwizard.h"
@@ -42,7 +43,6 @@ AbstractAddPartWizardPage::AbstractAddPartWizardPage(AddPartWizard* parent)
 }
 
 //////////////////////////////////////////////////
-
 AbstractAddPartSourceWizardPage::AbstractAddPartSourceWizardPage(AddPartWizard* parent)
 	: AbstractAddPartWizardPage(parent)
 {
@@ -68,8 +68,8 @@ SourceOptionsPage::SourceOptionsPage(AddPartWizard *parent) : AbstractAddPartWiz
 	m_layout->setMargin(1);
 
 	addButton( QObject::tr("Create a new part"), SLOT(fromPartsEditor()) );
-	addButton( QObject::tr("Browse all the existing parts"), SLOT(fromAllTheLibrary()) );
-	addButton( QObject::tr("Generate new part"), SLOT(fromWebGenerator()) );
+	//addButton( QObject::tr("Browse all the existing parts"), SLOT(fromAllTheLibrary()) );
+	//addButton( QObject::tr("Generate new part"), SLOT(fromWebGenerator()) );
 	addButton( QObject::tr("Import part from local folder"), SLOT(fromLocalFolder()) );
 
 	m_layout->addSpacing(3);
@@ -140,11 +140,40 @@ void FileBrowserPage::initializePage() {
 			"",
 			QObject::tr("External Part (*%1)").arg(FritzingBundledPartExtension)
 		);
+
+		connect(
+			m_parent, SIGNAL(accepted()),
+			this, SLOT(setModelPart())
+		);
+
 		removeButtonsFrom(m_fileDialog);
 		m_centralWidget = new QWidget(this);
 		m_centralWidget->setLayout(m_fileDialog->layout());
 	}
 	AbstractAddPartSourceWizardPage::initializePage();
+}
+
+#define FILE_NEEDED_MSG QMessageBox::information(this, tr("File needed"), tr("Please, select a file to import"));
+
+bool FileBrowserPage::validatePage() {
+	QStringList selFiles = m_fileDialog->selectedFiles();
+	if(selFiles.isEmpty()) {
+		FILE_NEEDED_MSG
+		return false;
+	} else {
+		if(selFiles.count() == 1) {
+			if(m_fileDialog->directory().path() != selFiles[0]) {
+				return true;
+			} else {
+				FILE_NEEDED_MSG
+				return false;
+			}
+		} else {
+			QMessageBox::information(this, tr("File needed"), tr("Please, select just one file to import"));
+			return false;
+		}
+	}
+
 }
 
 void FileBrowserPage::removeButtonsFrom(QFileDialog* dlg) {
@@ -159,6 +188,10 @@ void FileBrowserPage::removeButtonsFrom(QFileDialog* dlg) {
 	if(toHide) {
 		toHide->hide();
 	}
+}
+
+void FileBrowserPage::setModelPart() {
+	m_parent->loadBundledPart(m_fileDialog->selectedFiles()[0]);
 }
 
 //////////////////////////////////////////////////

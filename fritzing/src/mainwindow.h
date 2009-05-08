@@ -104,6 +104,7 @@ public slots:
 	void ensureClosable();
 	void changeActivation(bool activate);
 	void swapSelected(const QVariant & currProps, const QString &family, const QString & name);
+	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 
 protected slots:
 	void load();
@@ -202,7 +203,6 @@ protected slots:
 	void saveBundledPart(const QString &moduleId=___emptyString___);
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
 	void loadBundledSketch(const QString &fileName);
-	void loadBundledPart(const QString &fileName);
 	void loadBundledPart();
 	void loadBundledPartFromWeb();
 	void saveAsModule();
@@ -275,10 +275,10 @@ protected:
 	void createTraceMenuActions();
 	void hideShowTraceMenu();
 
-	void moveToPartsFolder(QDir &unzipDir, MainWindow* mw);
+	QList<ModelPart*> moveToPartsFolder(QDir &unzipDir, MainWindow* mw, bool addToBin=true);
 	void loadBundledSketchAux(QDir &unzipDir, MainWindow* mw);
 	void copyToSvgFolder(const QFileInfo& file, const QString &destFolder = "contrib");
-	void copyToPartsFolder(const QFileInfo& file, const QString &destFolder = "contrib");
+	ModelPart* copyToPartsFolder(const QFileInfo& file, bool addToBin=true, const QString &destFolder="contrib");
 
 	void closeIfEmptySketch(MainWindow* mw);
 	bool whatToDoWithAlienFiles();

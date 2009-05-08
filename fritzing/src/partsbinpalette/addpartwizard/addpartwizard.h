@@ -45,6 +45,7 @@ class AddPartWizard : public QWizard {
 		void fromLocalFolder();
 
 		void loadPart(QString newPartPath);
+		void loadBundledPart(QString newPartPath);
 
 	public:
 		static QList<class ModelPart*> getModelParts(MainWindow *mainWindow, QWidget *parent);
