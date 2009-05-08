@@ -248,6 +248,7 @@ PartsBinPaletteWidget* BinManager::newBinIn(StackTabWidget* tb) {
 	bin->setPaletteModel(new PaletteModel(true,false),true);
 	bin->setTitle(tr("New bin (%1)").arg(++m_unsavedBinsCount));
 	insertBin(bin, tb->currentIndex(), tb);
+	bin->rename();
 	return bin;
 }
 
@@ -387,12 +388,19 @@ void BinManager::saveStateAndGeometry() {
 void BinManager::restoreStateAndGeometry() {
 	QSettings settings;
 	settings.beginGroup("bins");
-	if(settings.childGroups().size()==0) { // first time? open core then
+	if(settings.childGroups().size()==0) { // first time? open core and my_parts then
 		StackTabWidget *tw = new StackTabWidget(m_widget);
-		PartsBinPaletteWidget* bin = newBin();
-		bin->openCore();
-		tw->addTab(bin,bin->title());
-		registerBin(bin,tw);
+
+		PartsBinPaletteWidget* core = newBin();
+		core->openCore();
+		tw->addTab(core,core->title());
+		registerBin(core,tw);
+
+		PartsBinPaletteWidget* myParts = newBin();
+		myParts->open(MyPartsBinLocation);
+		tw->addTab(myParts,myParts->title());
+		registerBin(myParts,tw);
+
 		m_widget->addWidget(tw);
 	} else {
 		foreach(QString g, settings.childGroups()) {
@@ -402,10 +410,12 @@ void BinManager::restoreStateAndGeometry() {
 			foreach(QString k, settings.childKeys()) {
 				PartsBinPaletteWidget* bin = newBin();
 				QString filename = settings.value(k).toString();
-				if(bin->open(filename)) {
+				if(QFileInfo(filename).exists() && bin->open(filename)) {
 					bin->setTabWidget(tw);
 					tw->addTab(bin,bin->title());
 					registerBin(bin,tw);
+				} else {
+					delete bin;
 				}
 			}
 			m_widget->addWidget(tw);

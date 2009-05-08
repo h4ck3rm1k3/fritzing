@@ -93,6 +93,7 @@ class PartsBinPaletteWidget : public QFrame {
 		void openCore();
 		void itemMoved();
 		void saveAsLastBin();
+		void rename();
 
 	protected slots:
 		void toIconView();
@@ -105,7 +106,6 @@ class PartsBinPaletteWidget : public QFrame {
 		void newBin();
 		void openBin();
 		void openCoreBin();
-		void rename();
 		void closeBin();
 		void updateButtonStates();
 
