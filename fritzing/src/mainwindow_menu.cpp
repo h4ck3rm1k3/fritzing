@@ -1004,19 +1004,19 @@ void MainWindow::createPartMenuActions() {
     /*m_createNewPartActInOldEditor = new QAction(tr("&Create New Part in Old Editor..."), this);
 	connect(m_createNewPartActInOldEditor, SIGNAL(triggered()), this, SLOT(createNewPartInOldEditor()));*/
 
-	m_createNewPart = new QAction(tr("&Create New Part..."), this);
+	m_createNewPart = new QAction(tr("&New"), this);
 	m_createNewPart->setShortcut(tr("Alt+Ctrl+N"));
 	m_createNewPart->setStatusTip(tr("Create new part"));
 	connect(m_createNewPart, SIGNAL(triggered()), this, SLOT(createNewPart()));
 
-	m_openInPartsEditorAct = new QAction(tr("&Open in Parts Editor"), this);
+	m_openInPartsEditorAct = new QAction(tr("&Edit"), this);
 	m_openInPartsEditorAct->setShortcut(tr("Ctrl+Return"));
 	m_openInPartsEditorAct->setStatusTip(tr("Open the old parts editor"));
 	connect(m_openInPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInPartsEditor()));
 
-	m_addToBinAct = new QAction(tr("&Add to bin"), this);
+	/*m_addToBinAct = new QAction(tr("&Add to bin"), this);
 	m_addToBinAct->setStatusTip(tr("Add selected part to bin"));
-	connect(m_addToBinAct, SIGNAL(triggered()), this, SLOT(addToBin()));
+	connect(m_addToBinAct, SIGNAL(triggered()), this, SLOT(addToBin()));*/
 
 	// TODO PARTS EDITOR REMOVE
 	/*m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
@@ -1096,10 +1096,13 @@ void MainWindow::createPartMenuActions() {
 	m_showPartLabelAct->setCheckable(true);
 	connect(m_showPartLabelAct, SIGNAL(triggered()), this, SLOT(showPartLabels()));
 
-	m_loadBundledPart = new QAction(tr("&Import part..."), this);
+	m_loadBundledPart = new QAction(tr("&Import..."), this);
 	m_loadBundledPart->setStatusTip(tr("Import a part"));
 	connect(m_loadBundledPart, SIGNAL(triggered()), this, SLOT(loadBundledPart()));
-	//connect(m_loadBundledPart, SIGNAL(triggered()), this, SLOT(loadBundledPartFromWeb()));
+
+	m_saveBundledPart = new QAction(tr("&Export..."), this);
+	m_saveBundledPart->setStatusTip(tr("Export selected part"));
+	connect(m_saveBundledPart, SIGNAL(triggered()), this, SLOT(saveBundledPart()));
 }
 
 void MainWindow::createViewMenuActions() {
@@ -1167,16 +1170,16 @@ void MainWindow::createWindowMenuActions() {
 }
 
 void MainWindow::createHelpMenuActions() {
-	m_openHelpAct = new QAction(tr("Learning Fritzing"), this);
+	m_openHelpAct = new QAction(tr("Online Tutorials"), this);
 	m_openHelpAct->setShortcut(tr("Ctrl+?"));
 	m_openHelpAct->setStatusTip(tr("Open Fritzing help"));
 	connect(m_openHelpAct, SIGNAL(triggered(bool)), this, SLOT(openHelp()));
 
-	m_examplesAct = new QAction(tr("Example Projects"), this);
+	m_examplesAct = new QAction(tr("Online Projects Gallery"), this);
 	m_examplesAct->setStatusTip(tr("Open Fritzing examples"));
 	connect(m_examplesAct, SIGNAL(triggered(bool)), this, SLOT(openExamples()));
 
-	m_partsRefAct = new QAction(tr("Parts Reference"), this);
+	m_partsRefAct = new QAction(tr("Online Parts Reference"), this);
 	m_partsRefAct->setStatusTip(tr("Open Parts Reference"));
 	connect(m_partsRefAct, SIGNAL(triggered(bool)), this, SLOT(openPartsReference()));
 
@@ -1186,9 +1189,9 @@ void MainWindow::createHelpMenuActions() {
 	m_showInViewHelpAct->setChecked(true);
 	connect(m_showInViewHelpAct, SIGNAL(triggered(bool)), this, SLOT(showInViewHelp()));
 
-	m_visitFritzingDotOrgAct = new QAction(tr("Visit fritzing.org"), this);
+	/*m_visitFritzingDotOrgAct = new QAction(tr("Visit fritzing.org"), this);
 	m_visitFritzingDotOrgAct->setStatusTip(tr("www.fritzing.org"));
-	connect(m_visitFritzingDotOrgAct, SIGNAL(triggered(bool)), this, SLOT(visitFritzingDotOrg()));
+	connect(m_visitFritzingDotOrgAct, SIGNAL(triggered(bool)), this, SLOT(visitFritzingDotOrg()));*/
 
 	m_checkForUpdatesAct = new QAction(tr("Check for updates..."), this);
 	m_checkForUpdatesAct->setStatusTip(tr("Check whether a newer version of Fritzing is available for download"));
@@ -1203,7 +1206,7 @@ void MainWindow::createHelpMenuActions() {
 	m_aboutQtAct->setStatusTip(tr("Show Qt's about box"));
 	connect(m_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
-	m_reportBugAct = new QAction(tr("&Report a Fritzing bug"), this);
+	m_reportBugAct = new QAction(tr("&Report a bug..."), this);
 	m_reportBugAct->setStatusTip(tr("Report a but you've found in Fritzing"));
 	connect(m_reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
 }
@@ -1266,27 +1269,23 @@ void MainWindow::createMenus()
 
 
     m_partMenu = menuBar()->addMenu(tr("&Part"));
-    // TODO PARTS EDITOR REMOVE
-    //m_partMenu->addAction(m_createNewPartActInOldEditor);
-    m_partMenu->addAction(m_createNewPart);
-
     connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updatePartMenu()));
-    // TODO PARTS EDITOR REMOVE
-	//m_partMenu->addAction(m_openInOldPartsEditorAct);
+
+    m_partMenu->addAction(m_createNewPart);
+	m_partMenu->addAction(m_loadBundledPart);
+	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_openInPartsEditorAct);
-	m_partMenu->addAction(m_addToBinAct);
+	//m_partMenu->addAction(m_addToBinAct);
+	m_partMenu->addAction(m_saveBundledPart);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_rotate90cwAct);
 	m_partMenu->addAction(m_rotate180Act);
 	m_partMenu->addAction(m_rotate90ccwAct);
 	m_partMenu->addAction(m_flipHorizontalAct);
 	m_partMenu->addAction(m_flipVerticalAct);
-	m_partMenu->addSeparator();
 	m_zOrderMenu = m_partMenu->addMenu(tr("Raise and Lower"));
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_showPartLabelAct);
-	m_partMenu->addSeparator();
-	m_partMenu->addAction(m_loadBundledPart);
 
 #ifndef QT_NO_DEBUG
 	m_partMenu->addSeparator();
@@ -1333,19 +1332,18 @@ void MainWindow::createMenus()
     menuBar()->addSeparator();
 
     m_helpMenu = menuBar()->addMenu(tr("&Help"));
+    m_helpMenu->addAction(m_showInViewHelpAct);
     m_helpMenu->addAction(m_openHelpAct);
     m_helpMenu->addAction(m_examplesAct);
     m_helpMenu->addAction(m_partsRefAct);
-    m_helpMenu->addAction(m_showInViewHelpAct);
-    m_helpMenu->addAction(m_visitFritzingDotOrgAct);
+	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_checkForUpdatesAct);
+	m_helpMenu->addAction(m_reportBugAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
 #ifndef QT_NO_DEBUG
 	m_helpMenu->addAction(m_aboutQtAct);
 #endif
-	m_helpMenu->addSeparator();
-	m_helpMenu->addAction(m_reportBugAct);
 }
 
 void MainWindow::updateLayerMenu() {
@@ -1512,7 +1510,8 @@ void MainWindow::updateItemMenu() {
 
 	PaletteItem *selected = dynamic_cast<PaletteItem *>(itemBase);
 	bool enabled = (selCount == 1) && (selected != NULL);
-	m_addToBinAct->setEnabled(enabled);
+	//m_addToBinAct->setEnabled(enabled);
+	m_saveBundledPart->setEnabled(enabled && !selected->modelPart()->isCore());
 
 	//TODO PARTS EDITOR REMOVE
 	//m_openInOldPartsEditorAct->setEnabled(enabled);

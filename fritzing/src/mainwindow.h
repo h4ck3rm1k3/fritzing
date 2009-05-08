@@ -199,7 +199,7 @@ protected slots:
 	void selectAllJumpers();
 
 	void saveBundledSketch();
-	void saveBundledPart(const QString &moduleId);
+	void saveBundledPart(const QString &moduleId=___emptyString___);
 	void saveBundledAux(ModelPart *mp, const QDir &destFolder);
 	void loadBundledSketch(const QString &fileName);
 	void loadBundledPart(const QString &fileName);
@@ -445,6 +445,7 @@ protected:
 	QAction *m_groupAct;
 	QAction *m_showPartLabelAct;
 	QAction *m_loadBundledPart;
+	QAction *m_saveBundledPart;
 
     QAction *m_showAllLayersAct;
 	QAction *m_hideAllLayersAct;

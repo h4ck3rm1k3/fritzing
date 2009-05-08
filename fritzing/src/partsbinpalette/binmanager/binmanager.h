@@ -49,6 +49,8 @@ class BinManager : public QFrame {
 		void addBin(class PartsBinPaletteWidget* bin);
 		void insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb);
 		void addPart(ModelPart *modelPart, int position = -1);
+		void addToMyPart(ModelPart *modelPart);
+
 		void addNewPart(ModelPart *modelPart);
 
 		bool beforeClosing();
@@ -96,6 +98,7 @@ class BinManager : public QFrame {
 		void setAsCurrentTab(PartsBinPaletteWidget* bin);
 		PartsBinPaletteWidget* getOrOpenMyPartsBin();
 		void connectTabWidget(StackTabWidget *tw);
+		void addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position = -1);
 
 		ReferenceModel *m_refModel;
 		PaletteModel *m_paletteModel;

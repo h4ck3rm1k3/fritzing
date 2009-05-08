@@ -1018,7 +1018,20 @@ void MainWindow::loadBundledPart(const QString &fileName) {
 }
 
 void MainWindow::saveBundledPart(const QString &moduleId) {
-	QString partTitle = m_refModel->retrieveModelPart(moduleId)->title();
+	QString modIdToExport;
+	ModelPart* mp;
+
+	if(moduleId == ___emptyString___) {
+		if (m_currentGraphicsView == NULL) return;
+		PaletteItem *selectedPart = m_currentGraphicsView->getSelectedPart();
+		mp = selectedPart->modelPart();
+		modIdToExport = mp->moduleID();
+	} else {
+		modIdToExport = moduleId;
+		mp = m_refModel->retrieveModelPart(moduleId);
+	}
+	QString partTitle = mp->title();
+
 	QString fileExt;
 	QString path = defaultSaveFolder()+"/"+partTitle+FritzingBundledPartExtension;
 	QString bundledFileName = FApplication::getSaveFileName(
@@ -1053,7 +1066,6 @@ void MainWindow::saveBundledPart(const QString &moduleId) {
 	setWindowModified(wasModified);
 	setTitle();
 
-	ModelPart* mp = m_refModel->retrieveModelPart(moduleId);
 	saveBundledAux(mp, destFolder);
 
 
@@ -1140,7 +1152,8 @@ void MainWindow::copyToPartsFolder(const QFileInfo& file, const QString &destFol
 	}
 	ModelPart *mp = m_refModel->loadPart(destFilePath, true);
 	mp->setAlien(true);
-	m_paletteWidget->addPart(mp);
+	//m_paletteWidget->addPart(mp);
+	m_paletteWidget->addToMyPart(mp);
 }
 
 void MainWindow::binSaved(bool hasPartsFromBundled) {
@@ -1284,7 +1297,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addAction(m_deleteAct);
 	menu->addSeparator();
 	menu->addAction(m_openInPartsEditorAct);
-	menu->addAction(m_addToBinAct);
+	//menu->addAction(m_addToBinAct);
 	menu->addSeparator();
 	menu->addAction(m_showPartLabelAct);
 #ifndef QT_NO_DEBUG

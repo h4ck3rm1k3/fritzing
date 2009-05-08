@@ -209,11 +209,22 @@ QString BinManager::createIfMyPartsNotExists() {
 
 void BinManager::addPart(ModelPart *modelPart, int position) {
 	PartsBinPaletteWidget *bin = m_currentBin? m_currentBin: getOrOpenMyPartsBin();
+	addPartAux(bin,modelPart,position);
+}
+
+void BinManager::addToMyPart(ModelPart *modelPart) {
+	PartsBinPaletteWidget *bin = getOrOpenMyPartsBin();
+	addPartAux(bin,modelPart);
+}
+
+void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, int position) {
 	if(bin) {
 		bin->addPart(modelPart, position);
 		setDirtyTab(bin);
 	}
 }
+
+
 
 void BinManager::load(const QString& filename) {
 	Q_UNUSED(filename);
