@@ -1018,13 +1018,14 @@ void MainWindow::loadBundledPart(const QString &fileName) {
 }
 
 void MainWindow::saveBundledPart(const QString &moduleId) {
+	QString partTitle = m_refModel->retrieveModelPart(moduleId)->title();
 	QString fileExt;
-	QString path = defaultSaveFolder() + "/" + QFileInfo(m_fileName).fileName()+"z";
+	QString path = defaultSaveFolder()+"/"+partTitle+FritzingBundledPartExtension;
 	QString bundledFileName = FApplication::getSaveFileName(
 			this,
 			tr("Specify a file name"),
 			path,
-			tr("Fritzing (*%1)").arg(FritzingBundledPartExtension),
+			tr("Fritzing Part (*%1)").arg(FritzingBundledPartExtension),
 			&fileExt
 		  );
 
@@ -1809,7 +1810,7 @@ void MainWindow::swapSelectedAux(ItemBase * itemBase, const QString & moduleID) 
 
 }
 
-bool MainWindow::loadCustomBoardShape() 
+bool MainWindow::loadCustomBoardShape()
 {
 	ItemBase * itemBase = m_infoView->currentItem();
 	if (itemBase == NULL) return false;
@@ -1843,7 +1844,7 @@ bool MainWindow::loadCustomBoardShape()
 			this,
 			tr("Fritzing"),
 			tr("Svg file '%1' is missing width, height, or viewbox attribute").arg(path)
-		);		
+		);
 		return false;
 	}
 
@@ -1854,7 +1855,7 @@ bool MainWindow::loadCustomBoardShape()
 			this,
 			tr("Fritzing"),
 			tr("Svg file '%1': bad width attribute").arg(path)
-		);		
+		);
 		return false;
 	}
 
@@ -1864,7 +1865,7 @@ bool MainWindow::loadCustomBoardShape()
 			this,
 			tr("Fritzing"),
 			tr("Svg file '%1': bad height attribute").arg(path)
-		);		
+		);
 		return false;
 	}
 
@@ -1878,7 +1879,7 @@ bool MainWindow::loadCustomBoardShape()
 			this,
 			tr("Fritzing"),
 			tr("Sorry, Fritzing is unable to copy the svg file.")
-		);		
+		);
 		return false;
 	}
 
@@ -1892,14 +1893,14 @@ bool MainWindow::loadCustomBoardShape()
 			this,
 			tr("Fritzing"),
 			tr("Sorry, Fritzing is unable to load the part template file.")
-		);		
+		);
 		return false;
 	}
 
 	// %1 = author
 	// %2 = width
 	// %3 = height
-	// %4 = filename (minus path and extension) 
+	// %4 = filename (minus path and extension)
 	// %5 = date string
 	// %6 = module id
 	// %7 = time string
