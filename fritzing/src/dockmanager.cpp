@@ -67,8 +67,6 @@ void DockManager::createBinAndInfoViewDocks() {
 	m_mainWindow->m_infoView = new HtmlInfoView(m_mainWindow->m_refModel);
 
 	m_mainWindow->m_paletteWidget = new BinManager(m_mainWindow->m_refModel, m_mainWindow->m_infoView, m_mainWindow->m_undoStack, m_mainWindow);
-	connect(m_mainWindow->m_paletteWidget, SIGNAL(saved(bool)), m_mainWindow, SLOT(binSaved(bool)));
-	connect(m_mainWindow, SIGNAL(alienPartsDismissed()), m_mainWindow->m_paletteWidget, SLOT(removeAlienParts()));
 
 	if (m_mainWindow->m_paletteModel->loadedFromFile()) {
 		m_mainWindow->m_paletteWidget->loadFromModel(m_mainWindow->m_paletteModel);

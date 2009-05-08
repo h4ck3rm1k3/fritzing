@@ -73,7 +73,6 @@ class BinManager : public QFrame {
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
-		void removeAlienParts();
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);
@@ -83,9 +82,6 @@ class BinManager : public QFrame {
 		void setAsCurrentBin(PartsBinPaletteWidget* bin);
 		void currentChanged(StackTabWidget*,int);
 		void tabCloseRequested(StackTabWidget*,int);
-
-	signals:
-		void saved(bool hasPartsFromBundled);
 
 	protected:
 		void createMenu();

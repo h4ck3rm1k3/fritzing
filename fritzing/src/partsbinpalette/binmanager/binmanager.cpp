@@ -224,18 +224,12 @@ void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, in
 	}
 }
 
-
-
 void BinManager::load(const QString& filename) {
 	Q_UNUSED(filename);
 }
 
 void BinManager::addPartCommand(const QString& moduleID) {
 	Q_UNUSED(moduleID);
-}
-
-void BinManager::removeAlienParts() {
-
 }
 
 void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
@@ -310,6 +304,9 @@ PartsBinPaletteWidget* BinManager::newBin() {
 		bin, SIGNAL(savePartAsBundled(const QString &)),
 		m_mainWindow, SLOT(saveBundledPart(const QString &))
 	);
+	connect(bin, SIGNAL(saved(bool)), m_mainWindow, SLOT(binSaved(bool)));
+	connect(m_mainWindow, SIGNAL(alienPartsDismissed()), bin, SLOT(removeAlienParts()));
+
 	return bin;
 }
 
