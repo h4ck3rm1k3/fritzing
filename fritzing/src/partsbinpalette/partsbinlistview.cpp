@@ -42,6 +42,7 @@ PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidg
 	setMouseTracking(true);
 	setSpacing(2);
 	setIconSize(QSize(16,16));
+	setSortingEnabled(false);
 
 	setDragEnabled(true);
 	viewport()->setAcceptDrops(true);
@@ -67,7 +68,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 
 	QString moduleID = modelPart->moduleID();
 	if(!alreadyIn(moduleID)) {
-		QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartShared()->title(), this);
+		QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartShared()->title());
 		lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
 
 		LayerAttributes layerAttributes;
@@ -82,7 +83,6 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 
 		if(position > -1 && position < count()) {
 			insertItem(position, lwi);
-			update();
 		} else {
 			addItem(lwi);
 		}
@@ -184,7 +184,8 @@ bool PartsBinListView::swappingEnabled() {
 	return false;
 }
 
-void PartsBinListView::setSelected(int position) {
+void PartsBinListView::setSelected(int position, bool doEmit) {
+	Q_UNUSED(doEmit);
 	if(position > -1 && position < count()) {
 		item(position)->setSelected(true);
 	} else {
@@ -201,23 +202,28 @@ void PartsBinListView::dropEvent(QDropEvent* event) {
 }
 
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {
-	//DebugDialog::debug(QString("<<<<< moving item in list view from %1 to %2").arg(fromIndex).arg(toIndex));
 	itemMoved(fromIndex,toIndex);
 	emit informItemMoved(fromIndex, toIndex);
 }
 
 void PartsBinListView::itemMoved(int fromIndex, int toIndex) {
-	//DebugDialog::debug(QString("<<<<< item moved in icon view from %1 to %2").arg(fromIndex).arg(toIndex));
 	QListWidgetItem *item = takeItem(fromIndex);
 	insertItem(toIndex,item);
 	//setItemSelected(item,true);
 	setSelected(toIndex);
 }
 
-int PartsBinListView::itemIndexAt(const QPoint& pos) {
+int PartsBinListView::itemIndexAt(const QPoint& pos, bool &trustIt) {
+	trustIt = true;
 	QListWidgetItem *item = itemAt(pos);
-	if(item) return row(item);
-	else return -1;
+	if(item) {
+		return row(item);
+	} else if(rect().contains(pos)) {
+		trustIt = false;
+		return -1;
+	} else {
+		return -1;
+	}
 }
 
 bool PartsBinListView::dropMimeData(int index, const QMimeData *data, Qt::DropAction action) {

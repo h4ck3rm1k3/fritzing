@@ -58,7 +58,7 @@ class PartsBinIconView : public InfoGraphicsView, public PartsBinView
 	protected:
 		void doClear();
 		void moveItem(int fromIndex, int toIndex);
-		int itemIndexAt(const QPoint& pos);
+		int itemIndexAt(const QPoint& pos, bool &trustIt);
 
 		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);

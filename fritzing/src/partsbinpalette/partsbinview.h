@@ -55,7 +55,8 @@ class PartsBinView {
 	protected:
 		virtual void doClear();
 		virtual void moveItem(int fromIndex, int toIndex) = 0;
-		virtual int itemIndexAt(const QPoint& pos) = 0;
+		virtual int itemIndexAt(const QPoint& pos, bool &trustIt) = 0;
+		virtual void setSelected(int position, bool doEmit=false) = 0;
 
 		void setItem(ModelPart * modelPart);
 

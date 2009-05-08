@@ -49,7 +49,7 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 		QList<QObject*> orderedChildren();
 
 	public slots:
-		void setSelected(int position);
+		void setSelected(int position, bool doEmit=false);
 		void itemMoved(int fromIndex, int toIndex);
 
 	signals:
@@ -58,7 +58,7 @@ class PartsBinListView : public QListWidget, public PartsBinView {
 	protected:
 		void doClear();
 		void moveItem(int fromIndex, int toIndex);
-		int itemIndexAt(const QPoint& pos);
+		int itemIndexAt(const QPoint& pos, bool &trustIt);
 
 		void mouseMoveEvent(QMouseEvent *event);
 		void mousePressEvent(QMouseEvent *event);

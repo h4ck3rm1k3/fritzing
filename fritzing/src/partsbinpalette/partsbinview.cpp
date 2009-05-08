@@ -72,6 +72,7 @@ void PartsBinView::setItem(ModelPart * modelPart) {
 
 void PartsBinView::addPart(ModelPart * model, int position) {
 	setItemAux(model, position);
+	setSelected(position);
 }
 
 void PartsBinView::mousePressOnItem(const QPoint &dragStartPos, const QString &moduleId, const QSize &size, const QPointF &dataPoint, const QPoint &hotspot) {
@@ -137,11 +138,14 @@ void PartsBinView::dragMoveEnterEventAux(QDragMoveEvent* event) {
 }
 
 void PartsBinView::dropEventAux(QDropEvent* event) {
-	int toIndex = itemIndexAt(event->pos());
+	bool trustResult;
+	int toIndex = itemIndexAt(event->pos(), trustResult);
+
+	if(!trustResult) return;
 
 	if(event->source() == dynamic_cast<QWidget*>(this)) {
-		int fromIndex = itemIndexAt(m_dragStartPos);
-		if(fromIndex != toIndex) {
+		int fromIndex = itemIndexAt(m_dragStartPos, trustResult);
+		if(trustResult && fromIndex != toIndex) {
 			moveItem(fromIndex,toIndex);
 		}
 	} else {

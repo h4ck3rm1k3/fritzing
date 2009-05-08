@@ -237,7 +237,6 @@ ModelPart *PartsBinIconView::selected() {
 }
 
 void PartsBinIconView::setSelected(int position, bool doEmit) {
-	//DebugDialog::debug(QString("<<<< setting selected %1").arg(position));
 	QGraphicsLayoutItem *glIt = m_layout->itemAt(position);
 	if(SvgIconWidget *item = dynamic_cast<SvgIconWidget*>(glIt)) {
 		m_noSelectionChangeEmition = true;
@@ -284,13 +283,11 @@ void PartsBinIconView::dropEvent(QDropEvent* event) {
 }
 
 void PartsBinIconView::moveItem(int fromIndex, int toIndex) {
-	//DebugDialog::debug(QString("<<<<< moving item in icon view from %1 to %2").arg(fromIndex).arg(toIndex));
 	itemMoved(fromIndex,toIndex);
 	emit informItemMoved(fromIndex, toIndex);
 }
 
 void PartsBinIconView::itemMoved(int fromIndex, int toIndex) {
-	//DebugDialog::debug(QString("<<<<< item moved in list view from %1 to %2").arg(fromIndex).arg(toIndex));
 	QGraphicsLayoutItem *item = m_layout->itemAt(fromIndex);
 	m_layout->removeItem(item);
 	m_layout->insertItem(toIndex,item);
@@ -299,14 +296,21 @@ void PartsBinIconView::itemMoved(int fromIndex, int toIndex) {
 }
 
 
-int PartsBinIconView::itemIndexAt(const QPoint& pos) {
+int PartsBinIconView::itemIndexAt(const QPoint& pos, bool &trustIt) {
+	trustIt = true;
 	QGraphicsWidget *item = dynamic_cast<QGraphicsWidget*>(itemAt(pos));
 	if(item) {
-		int foundIdx = m_layout->indexOf(item);;
-		if(foundIdx != -1) { // no trouble finding it
+		int foundIdx = m_layout->indexOf(item);
+		/*if(foundIdx != -1) { // no trouble finding it
 			return foundIdx;
 		} //else: something weird happened, the item exists,
 		  //      but it should have and index > -1
+		*/
+
+		if(foundIdx == -1) { // no indicator shown
+			trustIt = false;
+		}
+		return foundIdx;
 	}
 	if(!inEmptyArea(pos)) {
 		// let's see if moving around the point we can find a real item
