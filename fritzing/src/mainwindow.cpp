@@ -1759,12 +1759,8 @@ void MainWindow::swapSelected(const QVariant & currProps, const QString & family
 
 	if(moduleID == ___emptyString___) {
 		foreach (QString key, currPropsMap.keys()) {
-			if (key.compare("size") == 0) {
+			if (key.compare("shape", Qt::CaseInsensitive) == 0) {
 				QString value = currPropsMap.value(key).toString();
-				if (value.compare(ModelPart::customSizeTranslated) == 0) {
-					this->m_currentGraphicsView->resizeBoard(0, 0);
-					return;
-				}
 				if (value.compare(ModelPart::customShapeTranslated) == 0) {
 					if (!loadCustomBoardShape()) {
 						ItemBase * itemBase = m_infoView->currentItem();

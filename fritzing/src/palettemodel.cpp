@@ -275,11 +275,12 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 	else if (properties.text().contains("breadboard", Qt::CaseInsensitive)) {
 		type = ModelPart::Breadboard;
 	}
-	else if (properties.text().contains("arduino", Qt::CaseInsensitive)) {
-		type = ModelPart::Board;
-	}
-	else if (properties.text().contains("plain pcb", Qt::CaseInsensitive)) {
+	else if (properties.text().contains("plain vanilla pcb", Qt::CaseInsensitive)) {
 		type = ModelPart::ResizableBoard;
+	}
+	else if (properties.text().contains("arduino", Qt::CaseInsensitive)) {
+		// TODO: some of these are boards and some of these aren't?
+		type = ModelPart::Board;
 	}
 	else if (properties.text().contains("note", Qt::CaseInsensitive)) {
 		type = ModelPart::Note;

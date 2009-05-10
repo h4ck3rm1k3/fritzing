@@ -36,7 +36,7 @@ $Date$
 QHash<ModelPart::ItemType, QString> ModelPart::itemTypeNames;
 long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
-QString ModelPart::customSizeTranslated;
+const QString ModelPart::RectangleModuleID = "RectanglePCBModuleID";
 QString ModelPart::customShapeTranslated;
 
 ModelPart::ModelPart(ItemType type)
@@ -538,30 +538,27 @@ void ModelPart::setOrderedChildren(QList<QObject*> children) {
 }
 
 void ModelPart::collectExtraValues(const QString & prop, QString & value, QStringList & extraValues) {
+	Q_UNUSED(value);
+	
 	if (itemType() != ModelPart::ResizableBoard) return;
 
-	if (prop.compare("size") == 0) {
-		if (customSizeTranslated.isEmpty()) {
-			customSizeTranslated = tr("Custom Size");
-		}
+	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {
 		if (customShapeTranslated.isEmpty()) {
 			customShapeTranslated = tr("Import Shape...");
 		}
-		extraValues.append(customSizeTranslated);
 		extraValues.append(customShapeTranslated);
-
-		if (m_size.width() != 0) {
-			value = customSizeTranslated;
-		}
 	}
 }
 
 QString ModelPart::collectExtraHtml(const QString & prop, const QString & value) {
 	if (itemType() != ModelPart::ResizableBoard) return  ___emptyString___;
 
-	if (prop.compare("size") != 0) return ___emptyString___;
+	if (prop.compare("shape", Qt::CaseInsensitive) != 0) return ___emptyString___;
 
-	if (value.compare(customSizeTranslated) == 0) {
+	if (value.compare(customShapeTranslated) == 0) {
+		return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
+	}
+	else if (this->moduleID().compare(RectangleModuleID) == 0) {
 		if (m_size.width() == 0) return ___emptyString___;
 
 		qreal w = qRound(m_size.width() * 10) / 10.0;	// truncate to 1 decimal point
@@ -570,9 +567,6 @@ QString ModelPart::collectExtraHtml(const QString & prop, const QString & value)
 					   "&nbsp;height(mm):<input type='text' name='boardheight' id='boardheight' maxlength='5' value='%2' style='width:35px' onblur='resizeBoardHeight()' onkeypress='resizeBoardHeightEnter(event)' />"
 					   "<script language='JavaScript'>lastGoodWidth=%1;lastGoodHeight=%2;</script>"
 					   ).arg(w).arg(h);
-	}
-	else if (value.compare(customShapeTranslated) == 0) {
-		return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
 	}
 
 	return ___emptyString___;

@@ -120,7 +120,7 @@ public:
 	void setSize(QSizeF);
 
 public:
-	static QString customSizeTranslated;
+	static const QString RectangleModuleID;
 	static QString customShapeTranslated;
 
 public:

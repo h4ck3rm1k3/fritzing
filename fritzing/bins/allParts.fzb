@@ -429,48 +429,6 @@
                 </iconView >
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDE27BH" modelIndex="390" path="parts/core/pcb-plain-100x160.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="1234ABDE28BH" modelIndex="391" path="parts/core/pcb-plain-150x200.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="1234ABDE25BH" modelIndex="392" path="parts/core/pcb-plain-200x300.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="1234ABDE29BH" modelIndex="393" path="parts/core/pcb-plain-250x250.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="1234ABDE24BH" modelIndex="394" path="parts/core/pcb-plain-60x100.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
-        <instance moduleIdRef="1234ABDE26BH" modelIndex="395" path="parts/core/pcb-plain-75x100.fzp">
-            <views>
-                <iconView layer="icon">
-                    <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView>
-            </views>
-        </instance>
         <instance moduleIdRef="9e2d86a6-ca08-11dd-9c4a-001f5b3a17a4" modelIndex="396" path="parts/core/resistor_10.fzp">
             <views>
                 <iconView layer="icon">
@@ -716,7 +674,14 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="WireModuleID" modelIndex="431" path=":/resources/parts/core/wire.fzp">
+      <instance moduleIdRef="RectanglePCBModuleID" modelIndex="390" path=":/resources/parts/core/rectangle_pcb.fzp">
+        <views>
+          <iconView layer="icon">
+            <geometry z="-1" x="-1" y="-1"></geometry>
+          </iconView>
+        </views>
+      </instance>
+      <instance moduleIdRef="WireModuleID" modelIndex="431" path=":/resources/parts/core/wire.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>

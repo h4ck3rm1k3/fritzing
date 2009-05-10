@@ -51,16 +51,20 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 		file.close();
 	}
 
-	m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
-	connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-	m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
-	connect(m_resizeGripTR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-	m_resizeGripBL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png"), Qt::SizeBDiagCursor, this);
-	connect(m_resizeGripBL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-	m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), Qt::SizeFDiagCursor, this);
-	connect(m_resizeGripBR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
-
-	connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
+	if (modelPart->moduleID().compare(ModelPart::RectangleModuleID) == 0) {
+		m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
+		connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+		m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
+		connect(m_resizeGripTR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+		m_resizeGripBL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomLeft.png"), Qt::SizeBDiagCursor, this);
+		connect(m_resizeGripBL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+		m_resizeGripBR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveBottomRight.png"), Qt::SizeFDiagCursor, this);
+		connect(m_resizeGripBR, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
+		connect(m_resizeGripTL, SIGNAL(zoomChangedSignal(qreal)), this, SLOT(handleZoomChangedSlot(qreal)));
+	}
+	else {
+		m_resizeGripTL = m_resizeGripTR = m_resizeGripBL = m_resizeGripBR = NULL;
+	}
 
 	m_silkscreenRenderer = m_renderer = NULL;
 	m_inResize = NULL;
@@ -74,10 +78,17 @@ QVariant ResizableBoard::itemChange(GraphicsItemChange change, const QVariant &v
 {
 	switch (change) {
 		case ItemSelectedChange:
-			m_resizeGripBL->setVisible(value.toBool());
-			m_resizeGripBR->setVisible(value.toBool());
-			m_resizeGripTL->setVisible(value.toBool());
-			m_resizeGripTR->setVisible(value.toBool());
+			if (m_resizeGripBL) {
+				m_resizeGripBL->setVisible(value.toBool());
+				m_resizeGripBR->setVisible(value.toBool());
+				m_resizeGripTL->setVisible(value.toBool());
+				m_resizeGripTR->setVisible(value.toBool());
+			}
+			break;
+		case ItemSceneHasChanged:
+			if (m_resizeGripBL && this->scene()) {
+				setInitialSize();
+			}
 			break;
 		default:
 			break;
@@ -228,6 +239,8 @@ void ResizableBoard::handleZoomChangedSlot(qreal scale) {
 }
 
 void ResizableBoard::positionGrips() {
+	if (m_resizeGripBL == NULL) return;
+
 	QSizeF sz = this->boundingRect().size();
 	qreal scale = m_resizeGripBL->currentScale();
 

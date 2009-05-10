@@ -13,8 +13,8 @@
   <tag>fritzing user</tag>
  </tags>
  <properties>
-  <property name="Size">%4 %2 x %3mm (%1 %5 %7)</property>
-  <property name="family">Plain PCB</property>
+  <property name="Shape">%4 %2 x %3mm (%1 %5 %7)</property>
+  <property name="family">Plain Vanilla PCB</property>
  </properties>
  <taxonomy>discreteParts.pcb.custom.%4.%1</taxonomy>
  <description>Custom %4 - %1 - %2x%3mm Circuit Board %5 %7</description>
