@@ -289,12 +289,12 @@
 				</iconView>
 			</views>
 		</instance>
-        <instance moduleIdRef="1234ABDE24_ST" path="parts/core/controller_arduino_diecimila.fzp">
+        <instance moduleIdRef="4321DEAB24_ST" path="parts/core/arduino_diecimila_new.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
-                </iconView >
-             </views>
+                </iconView>
+            </views>
         </instance>
       <instance moduleIdRef="RectanglePCBModuleID" path=":/resources/parts/core/rectangle_pcb.fzp">
         <views>

@@ -268,7 +268,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="1234ABDE24_ST" modelIndex="379" path="parts/core/controller_arduino_diecimila.fzp">
+        <instance moduleIdRef="4321DEAB24_ST" path="parts/core/arduino_diecimila_new.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -667,7 +667,7 @@
                 </iconView>
             </views>
         </instance>
-        <instance moduleIdRef="RulerModuleID" modelIndex="430" path=":/resources/parts/core/cmRuler.fzp">
+        <instance moduleIdRef="423120090505" path="parts/core/pcb-arduino-shield.fzp">
             <views>
                 <iconView layer="icon">
                     <geometry z="-1" x="-1" y="-1"></geometry>
@@ -681,6 +681,13 @@
           </iconView>
         </views>
       </instance>
+              <instance moduleIdRef="RulerModuleID" modelIndex="430" path=":/resources/parts/core/cmRuler.fzp">
+            <views>
+                <iconView layer="icon">
+                    <geometry z="-1" x="-1" y="-1"></geometry>
+                </iconView>
+            </views>
+        </instance>
       <instance moduleIdRef="WireModuleID" modelIndex="431" path=":/resources/parts/core/wire.fzp">
             <views>
                 <iconView layer="icon">
