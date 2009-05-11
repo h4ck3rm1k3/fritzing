@@ -1291,9 +1291,15 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	m_droppingWire = (modelPart->itemType() == ModelPart::Wire);
 	m_droppingOffset = offset;
 
-	if (ItemDrag::_cache().contains(this)) {
+	// TODO Mariano: "ItemDrag::_cache().contains(this)" condition
+	// only true when dragging from list view. Ask Jonathan what is
+	// this exactly supposed to be for.
+	//
+	// ItemDrag::_cache().contains(this) == true, even after calling
+	// ItemDrag::_dragIsDone() in PartsBinListView::mousePressEvent()
+	//
+	if (false /*ItemDrag::_cache().contains(this)*/) {
 		m_droppingItem->setVisible(true);
-		ItemDrag::_cache().remove(this);
 	} else {
 		ViewGeometry viewGeometry;
 		QPointF p = QPointF(this->mapToScene(event->pos())) - offset;
@@ -1319,9 +1325,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 				break;
 		}
 
-		DebugDialog::debug(QString("<<<< antes rt %1").arg((long)m_droppingItem));
 		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors);
-		DebugDialog::debug(QString("<<<< despues rt %1").arg((long)m_droppingItem));
 
 		ItemDrag::_cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);

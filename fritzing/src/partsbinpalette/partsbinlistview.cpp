@@ -30,6 +30,7 @@ $Date$
 #include "../items/itembase.h"
 #include "../layerattributes.h"
 #include "../fsvgrenderer.h"
+#include "../itemdrag.h"
 
 #include "partsbinlistview.h"
 
@@ -142,6 +143,7 @@ void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 
 	m_dragStartPos = event->pos();
 	QListWidget::mousePressEvent(event);
+	ItemDrag::_dragIsDone();
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {

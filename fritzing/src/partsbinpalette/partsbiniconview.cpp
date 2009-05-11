@@ -101,8 +101,6 @@ void PartsBinIconView::mouseMoveEvent(QMouseEvent *event) {
 		SvgIconWidget * item = dynamic_cast<SvgIconWidget*>(itemAt(event->pos()));
 		if(item) showInfo(item);
 	}
-	if (event->button() == Qt::LeftButton)
-		DebugDialog::debug("mouse moved",event->pos());
 }
 
 void PartsBinIconView::showInfo(SvgIconWidget * item) {
