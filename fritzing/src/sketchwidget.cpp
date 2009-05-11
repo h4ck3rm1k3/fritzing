@@ -334,7 +334,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 	m_ignoreSelectionChangeEvents = false;
 }
 
-void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand) 
+void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QString & fromConnectorID, QStringList & alreadyConnected, QHash<long, ItemBase *> & newItems, bool doRatsnest, QUndoCommand * parentCommand)
 {
 	bool ok;
 	QHash<long, ItemBase *> otherNewItems;
@@ -383,9 +383,9 @@ void SketchWidget::handleConnect(QDomElement & connect, ModelPart * mp, const QS
 
 			toBase = findModulePart(toBase, indexes);
 			if (toBase == NULL) return;
-			
+
 			modelIndex = toBase->modelPart()->modelIndex();
-			otherNewItems.insert(modelIndex, toBase);   
+			otherNewItems.insert(modelIndex, toBase);
 		}
 		else {
 			new ModuleChangeConnectionCommand(this, BaseCommand::SingleView,
@@ -559,7 +559,7 @@ ItemBase * SketchWidget::makeModule(ModelPart * modelPart, long originalModelInd
 			dynamic_cast<GroupItem *>(toBase)->collectExternalConnectorItems();
 		}
 	}
-	
+
 	return toBase;
 }
 
@@ -597,9 +597,9 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 	PaletteItem* paletteItem = NULL;
 	switch (modelPart->itemType()) {
 		case ModelPart::Module:
-			if (doConnectors || originatingCommand || originalModelIndex > 0) 
+			if (doConnectors || originatingCommand || originalModelIndex > 0)
 			{
-				QList<ModelPart *>  modelParts; 
+				QList<ModelPart *>  modelParts;
 				return makeModule(modelPart, originalModelIndex, modelParts, viewGeometry, id);
 			}
 			break;					// module at drag-and-drop time falls through and a fake paletteItem is created for dragging
@@ -680,7 +680,7 @@ void SketchWidget::setNewPartVisible(ItemBase * itemBase) {
 	// defaults to visible, so do nothing
 }
 
-void SketchWidget::checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand * checkStickyCommand) 
+void SketchWidget::checkSticky(long id, bool doEmit, bool checkCurrent, CheckStickyCommand * checkStickyCommand)
 {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
@@ -903,7 +903,7 @@ void SketchWidget::cutDeleteAux(QString undoStackMessage) {
 
 	foreach (ItemBase * itemBase, deletedItems) {
 		if (itemBase->itemType() == ModelPart::Module) {
-			// TODO: do these need reviewDeletedConnections? 
+			// TODO: do these need reviewDeletedConnections?
 			ConnectorPairHash externalConnectors;
 			collectModuleExternalConnectors(itemBase, itemBase, externalConnectors);
 			foreach (ConnectorItem * fromConnectorItem, externalConnectors.uniqueKeys()) {
@@ -1293,8 +1293,8 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 
 	if (ItemDrag::_cache().contains(this)) {
 		m_droppingItem->setVisible(true);
-	}
-	else {
+		ItemDrag::_cache().remove(this);
+	} else {
 		ViewGeometry viewGeometry;
 		QPointF p = QPointF(this->mapToScene(event->pos())) - offset;
 		viewGeometry.setLoc(p);
@@ -1319,7 +1319,9 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 				break;
 		}
 
+		DebugDialog::debug(QString("<<<< antes rt %1").arg((long)m_droppingItem));
 		m_droppingItem = addItemAux(modelPart, viewGeometry, fromID, -1, NULL, NULL, doConnectors);
+		DebugDialog::debug(QString("<<<< despues rt %1").arg((long)m_droppingItem));
 
 		ItemDrag::_cache().insert(this, m_droppingItem);
 		//m_droppingItem->setCacheMode(QGraphicsItem::ItemCoordinateCache);
@@ -1568,7 +1570,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		ItemBase * chief = itemBase->layerKinChief();
 		m_savedItems.insert(chief);
 		if (chief->sticky()) {
-			foreach(ItemBase * sitemBase, chief->stickyList()) {		
+			foreach(ItemBase * sitemBase, chief->stickyList()) {
 				if (sitemBase->isVisible()) {
 					if (sitemBase->itemType() == ModelPart::Wire) {
 						wires.insert(dynamic_cast<Wire *>(sitemBase));
@@ -3099,7 +3101,7 @@ void SketchWidget::makeDeleteItemCommand(ItemBase * itemBase, BaseCommand::Cross
 	if (crossView == BaseCommand::CrossView) {
 		emit rememberStickySignal(itemBase->id(), parentCommand);
 	}
-			
+
 	new DeleteItemCommand(this, crossView, itemBase->modelPart()->moduleID(), itemBase->getViewGeometry(), itemBase->id(), itemBase->modelPart()->modelIndex(), itemBase->modelPart()->originalModelIndex(), parentCommand);
 }
 
@@ -3107,7 +3109,7 @@ void SketchWidget::rememberSticky(long id, QUndoCommand * parentCommand) {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
 
-	QList<ItemBase *> stickyList = itemBase->stickyList();	
+	QList<ItemBase *> stickyList = itemBase->stickyList();
 	if (stickyList.count() <= 0) return;
 
 	CheckStickyCommand * checkStickyCommand = new CheckStickyCommand(this, BaseCommand::SingleView, itemBase->id(), false, parentCommand);
@@ -3561,7 +3563,7 @@ void SketchWidget::updateInfoViewSlot() {
 	InfoGraphicsView::viewItemInfo(m_lastPaletteItemSelected);
 }
 
-void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand) 
+void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
 {
 	ItemBase * itemBase = findItem(itemID);
 	if (itemBase == NULL) return;
@@ -3577,7 +3579,7 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 										false, true, parentCommand);
-					new RatsnestCommand(this, BaseCommand::SingleView, 
+					new RatsnestCommand(this, BaseCommand::SingleView,
 										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 										false, true, parentCommand);
@@ -3597,7 +3599,7 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 	}
 }
 
-void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand) 
+void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand)
 {
 	Q_UNUSED(itemBase);
 
@@ -3620,7 +3622,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 			//			use preloadSlowParts code to set up new connectors (which layers?)
 			//			skip breadboards, skip gender changes
 			//			only look at connectors with direct m/f connections
-			//			only care about single parts, 
+			//			only care about single parts,
 			if (swappedGender(fromConnectorItem, newConnector)) {
 				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
 					if (toConnectorItem->connectorType() == newConnector->connectorType()) {
@@ -3640,27 +3642,27 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & co
 					}
 					else {
 						// can connect to the new item directly
-						new ChangeConnectionCommand(this, BaseCommand::CrossView, 
+						new ChangeConnectionCommand(this, BaseCommand::CrossView,
 													newID, newConnector->connectorSharedID(),
 													toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 													true, true, parentCommand);
 						new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(), 
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 											true, true, parentCommand);
 					}
-				}	
+				}
 			}
 			else {
 				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
 					// connect to the new item
-					new ChangeConnectionCommand(this, BaseCommand::CrossView, 
+					new ChangeConnectionCommand(this, BaseCommand::CrossView,
 												newID, newConnector->connectorSharedID(),
 												toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 												true, true, parentCommand);
 					new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(), 
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
 										true, true, parentCommand);
-				}	
+				}
 			}
 		}
 	}
@@ -4680,7 +4682,7 @@ void SketchWidget::pushCommand(QUndoCommand * command) {
 	}
 }
 
-ItemBase * SketchWidget::findModulePart(ItemBase * toBase, QList<long> & indexes) 
+ItemBase * SketchWidget::findModulePart(ItemBase * toBase, QList<long> & indexes)
 {
 	for (int i = 1; i < indexes.count(); i++) {
 		long originalModelIndex = indexes[i];
@@ -4708,7 +4710,7 @@ bool SketchWidget::spaceBarIsPressed() {
 	return m_spaceBarIsPressed;
 }
 
-void SketchWidget::restoreIndexes(long id, ModelPartTiny * modelPartTiny, bool doEmit) 
+void SketchWidget::restoreIndexes(long id, ModelPartTiny * modelPartTiny, bool doEmit)
 {
 	ItemBase * itemBase = findItem(id);
 	if (itemBase == NULL) return;
@@ -4735,7 +4737,7 @@ void SketchWidget::restoreIndexes(ModelPart * modelPart, ModelPartTiny * modelPa
 	}
 }
 
-void SketchWidget::collectModuleExternalConnectors(ItemBase * itemBase, ItemBase * parent, ConnectorPairHash & connectorHash) 
+void SketchWidget::collectModuleExternalConnectors(ItemBase * itemBase, ItemBase * parent, ConnectorPairHash & connectorHash)
 {
 	foreach (QGraphicsItem * item, itemBase->childItems()) {
 		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(item);
@@ -4772,13 +4774,13 @@ bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newC
 			((connectorItem->connectorType() == Connector::Female) && (newConnector->connectorType() == Connector::Male)));
 }
 
-void SketchWidget::setLastPaletteItemSelected(PaletteItem * paletteItem) 
+void SketchWidget::setLastPaletteItemSelected(PaletteItem * paletteItem)
 {
 	m_lastPaletteItemSelected = paletteItem;
 	//DebugDialog::debug(QString("m_lastPaletteItemSelected:%1 %2").arg(paletteItem == NULL ? "NULL" : paletteItem->instanceTitle()).arg(m_viewIdentifier));
 }
 
-void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase) 
+void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 {
 	PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(itemBase);
 	if (paletteItem == NULL) return;
@@ -4787,7 +4789,7 @@ void SketchWidget::setLastPaletteItemSelectedIf(ItemBase * itemBase)
 }
 
 // called from javascript (htmlInfoView) or mainWindow::setUpSwap
-void SketchWidget::resizeBoard(qreal mmW, qreal mmH) 
+void SketchWidget::resizeBoard(qreal mmW, qreal mmH)
 {
 	PaletteItem * item = getSelectedPart();
 	if (item == NULL) return;

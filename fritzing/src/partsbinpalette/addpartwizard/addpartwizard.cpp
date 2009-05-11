@@ -38,6 +38,9 @@ AddPartWizard::AddPartWizard(MainWindow *mainWindow, QWidget *parent) : QWizard(
 
 	m_partsEditorPage = NULL;
 	m_fileBrowserPage = NULL;
+
+	setSizeGripEnabled(true);
+	//setWizardStyle(ModernStyle);
 }
 
 AddPartWizard::~AddPartWizard() {
@@ -83,9 +86,15 @@ void AddPartWizard::fromWebGenerator() {
 
 void AddPartWizard::fromLocalFolder() {
 	removePage(1);
-	if(!m_fileBrowserPage) {
-		m_fileBrowserPage = new FileBrowserPage(this);
+
+	if(m_fileBrowserPage) {
+		m_fileBrowserPage->setParent(NULL);
+		m_fileBrowserPage->hide();
+		//delete m_fileBrowserPage;
 	}
+
+	m_fileBrowserPage = new FileBrowserPage(this);
+
 	addPage(m_fileBrowserPage);
 	next();
 }

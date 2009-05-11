@@ -51,6 +51,7 @@ class AbstractAddPartSourceWizardPage : public AbstractAddPartWizardPage {
 
 	protected:
 		void initializePage();
+		void cleanupPage();
 
 		QWidget* m_centralWidget;
 };
@@ -78,6 +79,7 @@ class PartsEditorPage : public AbstractAddPartSourceWizardPage {
 
 	protected:
 		void initializePage();
+		void cleanupPage();
 		bool validatePage();
 
 		PartsEditorMainWindow *m_partsEditor;
@@ -96,6 +98,7 @@ class FileBrowserPage : public AbstractAddPartSourceWizardPage {
 
 	protected:
 		void initializePage();
+		void cleanupPage();
 		bool validatePage();
 		void removeButtonsFrom(class QFileDialog* dlg);
 

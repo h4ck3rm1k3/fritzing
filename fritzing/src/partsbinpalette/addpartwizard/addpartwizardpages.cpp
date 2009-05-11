@@ -57,8 +57,13 @@ void AbstractAddPartSourceWizardPage::initializePage() {
 	btnlayout << QWizard::Stretch << QWizard::BackButton
 			  << QWizard::FinishButton << QWizard::CancelButton;
 	m_parent->setButtonLayout(btnlayout);
+
 	m_layout->addWidget(m_centralWidget);
-	m_parent->resize(m_centralWidget->size());
+}
+
+void AbstractAddPartSourceWizardPage::cleanupPage() {
+	QWizardPage::cleanupPage();
+	m_parent->resize(200,100);
 }
 
 //////////////////////////////////////////////////
@@ -79,6 +84,7 @@ void SourceOptionsPage::initializePage() {
 	QList<QWizard::WizardButton> btnlayout;
 	btnlayout << QWizard::Stretch << QWizard::BackButton << QWizard::CancelButton;
 	m_parent->setButtonLayout(btnlayout);
+
 	m_parent->resize(200,100);
 }
 
@@ -88,24 +94,44 @@ void SourceOptionsPage::addButton(const QString &btnText, const char *method) {
 	layout()->addWidget(btn);
 }
 
+/*void SourceOptionsPage::focusInEvent(QFocusEvent *event) {
+	QSize expectedSize = QSize(200,100);
+	if(m_parent->size() != expectedSize) {
+		m_parent->resize(expectedSize);
+	}
+	QWizardPage::focusInEvent(event);
+}*/
+
 //////////////////////////////////////////////////
 
 PartsEditorPage::PartsEditorPage(AddPartWizard* parent, PartsEditorMainWindow * partsEditor)
 	: AbstractAddPartSourceWizardPage(parent)
 {
 	m_partsEditor = partsEditor;
-	connect(
-		m_parent, SIGNAL(accepted()),
-		this, SLOT(setModelPart())
-	);
 }
 
 
 void PartsEditorPage::initializePage() {
+	connect(
+		m_parent, SIGNAL(accepted()),
+		this, SLOT(setModelPart())
+	);
+
 	if(!m_centralWidget) {
 		m_centralWidget = m_partsEditor->centralWidget();
 	}
+
 	AbstractAddPartSourceWizardPage::initializePage();
+	m_parent->resize(600,700);
+}
+
+void PartsEditorPage::cleanupPage() {
+	disconnect(
+		m_parent, SIGNAL(accepted()),
+		this, SLOT(setModelPart())
+	);
+
+	AbstractAddPartSourceWizardPage::cleanupPage();
 }
 
 bool PartsEditorPage::validatePage() {
@@ -122,35 +148,49 @@ void PartsEditorPage::setModelPart() {
 FileBrowserPage::FileBrowserPage(AddPartWizard* parent)
 	: AbstractAddPartSourceWizardPage(parent)
 {
-	m_fileDialog = NULL;
+	m_centralWidget = new QWidget(this);
+	m_fileDialog = new QFileDialog(
+		m_centralWidget,
+		QObject::tr("Select a part to import"),
+		"",
+		QObject::tr("External Part (*%1)").arg(FritzingBundledPartExtension)
+	);
+	m_fileDialog->setModal(false);
+
+	removeButtonsFrom(m_fileDialog);
+	m_centralWidget->setLayout(m_fileDialog->layout());
 }
 
 FileBrowserPage::~FileBrowserPage() {
-	if(m_fileDialog) {
-		m_fileDialog->setLayout(m_centralWidget->layout());
-	}
+	m_fileDialog->setLayout(m_centralWidget->layout());
+	m_centralWidget->setLayout(NULL);
+	m_layout->removeWidget(m_centralWidget);
+
+	m_fileDialog->setParent(NULL);
+	m_centralWidget->setParent(NULL);
+
+	delete m_fileDialog;
+	delete m_centralWidget;
 }
 
 
 void FileBrowserPage::initializePage() {
-	if(!m_fileDialog) {
-		m_fileDialog = new QFileDialog(
-			this,
-			QObject::tr("Select a part to import"),
-			"",
-			QObject::tr("External Part (*%1)").arg(FritzingBundledPartExtension)
-		);
+	connect(
+		m_parent, SIGNAL(accepted()),
+		this, SLOT(setModelPart())
+	);
 
-		connect(
-			m_parent, SIGNAL(accepted()),
-			this, SLOT(setModelPart())
-		);
-
-		removeButtonsFrom(m_fileDialog);
-		m_centralWidget = new QWidget(this);
-		m_centralWidget->setLayout(m_fileDialog->layout());
-	}
 	AbstractAddPartSourceWizardPage::initializePage();
+	m_parent->resize(400,300);
+}
+
+void FileBrowserPage::cleanupPage() {
+	disconnect(
+		m_parent, SIGNAL(accepted()),
+		this, SLOT(setModelPart())
+	);
+
+	AbstractAddPartSourceWizardPage::cleanupPage();
 }
 
 #define FILE_NEEDED_MSG QMessageBox::information(this, tr("File needed"), tr("Please, select a file to import"));
@@ -173,7 +213,6 @@ bool FileBrowserPage::validatePage() {
 			return false;
 		}
 	}
-
 }
 
 void FileBrowserPage::removeButtonsFrom(QFileDialog* dlg) {
