@@ -71,9 +71,11 @@ void Helper::initText() {
 	"<br/><br/>"
         "PCBs can be made at home or in a small lab using DIY etching processes. "
         "They also can be sent to professional PCB manufacturing services for more precise fabrication. "
-	"<br/><br/>"
-        "To lay out your PCB, first rearrange all the components so they fit nicely on the board. "
+        "<br/>"
+        "The first thing you will need is a board <img src=\":resources/parts/svg/core/icon/rectangle_pcb.svg\" /> to place your parts on. "
+        "To lay out your PCB, rearrange all the components so they fit nicely on the board. "
         "Then try to shift them around to minimize the length and confusion of connections. "
+        "You can also resize rectangular boards. "
         "Once the parts are sorted out, you can right-click on individual connections or use "
         "Autoroute to generate the copper traces between parts. "
         "The Autoroute button <img src=\":resources/images/icons/toolbarAutorouteEnabled_icon.png\" /> is on the bottom left.");
