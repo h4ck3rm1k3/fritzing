@@ -27,6 +27,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include <QMimeData>
 #include <QDragEnterEvent>
+#include <QVBoxLayout>
 
 #include "stackwidgetseparator.h"
 #include "../../debugdialog.h"
@@ -35,10 +36,14 @@ StackWidgetSeparator::StackWidgetSeparator(QWidget *parent)
 	:QFrame(parent)
 {
 	setAcceptDrops(true);
+	QVBoxLayout *lo = new QVBoxLayout(this);
+	lo->setSpacing(0);
+	lo->setMargin(0);
 	m_feedbackIcon = new QLabel(this);
+	lo->addWidget(m_feedbackIcon);
 	m_feedbackPixmap = new QPixmap(":/resources/images/icons/binRearrangeSeparator.png");
-	setMinimumHeight(5);
-	setMaximumHeight(5);
+	setMinimumHeight(3);
+	setMaximumHeight(3);
 	setPixmapWidth(width());
 	m_feedbackIcon->hide();
 }

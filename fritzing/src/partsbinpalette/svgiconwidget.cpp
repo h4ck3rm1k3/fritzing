@@ -36,7 +36,7 @@ $Date$
 #include "iconwidgetpaletteitem.h"
 
 #define SELECTED_STYLE "background-color: white;"
-#define NON_SELECTED_STYLE "background-color: #BEBEBE;"
+#define NON_SELECTED_STYLE "background-color: #C2C2C2;"
 
 SvgIconWidget::SvgIconWidget(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, long id, QMenu * itemMenu)
 	: QGraphicsProxyWidget() {

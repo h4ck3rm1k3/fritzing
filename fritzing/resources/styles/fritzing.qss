@@ -247,16 +247,10 @@ medium grey_d:	rgb(117,117,117); (shadowish border around widgets)
 dark grey:		rgb(126,126,126);
 */
 
-PartsBinIconView, PartsBinListView {
-	background-color: #B2B2B2;
-	border: 1px solid #CECECE;
-}
 
-PartsBinIconView {
-	padding: 2px;
-}
+/***************** Parts Bin *****************/
 
-#partsBinTitle {
+/*#partsBinTitle {
 	border: 1px solid #CECECE;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
@@ -269,53 +263,81 @@ PartsBinIconView {
 	font-weight: bold;
 	color: #575757;
 	font-size: 11px;
+}*/
+
+PartsBinIconView {
+	padding: 2px;
 }
 
 PartsBinListView {
 	selection-background-color: #BEBEBE;
 }
 
+PartsBinIconView,
+PartsBinListView {
+	background-color: #B2B2B2;
+	border: 0;
+	border-bottom: 1px solid white;
+}
+
 #partsBinFooter,
-#partsBinContainer,
+#partsBinContainer,-color
 PartsBinPaletteWidget,
 PartsBinPaletteWidget SimpleEditableLabelWidget,
 PartsBinPaletteWidget InfoGraphicsView {
 	background-color: rgb(179,179,179);
 }
 
+StackTabWidget::pane {
+	border: 1px solid #d8d8d8;
+	/* KDE tweaking, perhaps in other platforms, or in gnome itself
+	 * we'll need some other values
+	 */
+	position: absolute;
+	top: 0.43em;
+}
+
 StackTabBar::tab {
-	margin: 0;
-	spacing: 0;
-	padding: 0;
+	/*margin: 0;
+	padding: 0;*/
 	
-	min-width: 5.5em;
 	min-height: 1.7em;
-	text-align: left;
+	min-width: 5.5em;
+	max-width: 5.5em;
+	text-align: center;
 
 	border: 1px solid rgb(217,217,217);
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	background: rgb(179,179,179);
+
+	font-weight: bold;
 }
 
 StackTabBar::tab:hover {
 	background-color: rgb(190,190,190);
 }
 
-StackTabBar::pane {
-	background-color: rgb(217,217,217);
+StackTabBar::tab:selected {
+	border-color: #d8d8d8;
+	border-bottom: 0;
+	color: #6b3e4d;
 }
 
-StackTabBar::tab:selected {
-	background-color: rgb(217,217,217);
+StackTabBar::tab:!selected {
+	background-color: #9b9b9b;
+	border-color: #B0B0B2;
+	border-bottom-color: #d8d8d8;
+	color: #686868;
 }
 
 StackTabBar[current="true"]::tab:selected {
-	background-color: black;
-	color: white;
+	/*background-color: black;
+	color: white;*/
 }
 
 
+/**************** sketch area widgets ****************/
 
 Console {
 	background-color: black;

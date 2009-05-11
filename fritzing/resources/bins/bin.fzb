@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-	<title>Fritzing Core</title>
+	<title>Core</title>
     <instances>
         <instance moduleIdRef="1234ABDC24" path="parts/core/LED-red-5mm.fzp">
             <views>

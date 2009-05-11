@@ -73,6 +73,8 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->addWidget(m_widget);
+	lo->setMargin(0);
+	lo->setSpacing(0);
 	setMaximumHeight(500);
 
 	restoreStateAndGeometry();

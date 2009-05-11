@@ -229,6 +229,8 @@ void DockManager::addBottomMargin(FDockWidget* dock) {
 		TripleNavigator *tn = dynamic_cast<TripleNavigator*>(dock->widget());
 		if(tn) {
 			tn->showBottomMargin(true);
+		} else if(dynamic_cast<BinManager*>(dock->widget())) {
+			// already has enought space
 		} else {
 			dockMarginAux(dock, "bottomMostDock", dock->widget()->styleSheet());
 		}

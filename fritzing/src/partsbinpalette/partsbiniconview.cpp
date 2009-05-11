@@ -61,6 +61,7 @@ PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidg
     //connect(scene, SIGNAL(changed(const QList<QRectF>&)), this, SLOT(informNewSelection()));
 
     m_noSelectionChangeEmition = false;
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void PartsBinIconView::setupLayout() {

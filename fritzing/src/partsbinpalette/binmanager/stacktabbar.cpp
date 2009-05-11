@@ -37,6 +37,8 @@ StackTabBar::StackTabBar(StackTabWidget *parent) : QTabBar(parent) {
 	setAcceptDrops(true);
 	m_parent = parent;
 	setProperty("current","false");
+	setExpanding(false);
+	setElideMode(Qt::ElideRight);
 }
 
 int StackTabBar::tabIndexAtPos(const QPoint &p) const {
