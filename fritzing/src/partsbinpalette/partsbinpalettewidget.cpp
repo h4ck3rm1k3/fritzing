@@ -62,10 +62,13 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_undoStack = new WaitPushUndoStack(this);
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
-	m_iconView = new PartsBinIconView(m_refModel, this);
+	setupButtons();
+	setupFooter();
+
+	m_iconView = new PartsBinIconView(m_refModel, this, m_binContextMenu, m_partContextMenu);
 	m_iconView->setInfoView(infoView);
 
-	m_listView = new PartsBinListView(m_refModel, this);
+	m_listView = new PartsBinListView(m_refModel, this, m_binContextMenu, m_partContextMenu);
 	m_listView->setInfoView(infoView);
 
 	//m_binTitle = new SimpleEditableLabelWidget(m_undoStack,this);
@@ -75,9 +78,6 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	);*/
 
 	setObjectName("partsBinContainer");
-
-	setupButtons();
-	setupFooter();
 
 	toIconView();
 
@@ -346,7 +346,17 @@ void PartsBinPaletteWidget::createPartMenu() {
 }
 
 void PartsBinPaletteWidget::createContextMenus() {
+	m_binContextMenu = new QMenu(this);
+	m_binContextMenu->addAction(m_closeBinAction);
+	m_binContextMenu->addAction(m_saveAction);
+	m_binContextMenu->addAction(m_saveAsAction);
+	m_binContextMenu->addAction(m_renameAction);
 
+	m_partContextMenu = new QMenu(this);
+	connect(m_partContextMenu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));
+	m_partContextMenu->addAction(m_editPartAction);
+	m_partContextMenu->addAction(m_exportPartAction);
+	m_partContextMenu->addAction(m_removePartAction);
 }
 
 void PartsBinPaletteWidget::addPart() {

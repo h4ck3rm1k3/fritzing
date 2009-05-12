@@ -36,9 +36,12 @@ $Date$
 #include "../utils/misc.h"
 
 
-PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent) {
+PartsBinView::PartsBinView(ReferenceModel *refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu) {
 	m_refModel = refModel;
 	m_parent = parent;
+
+	m_binMenu  = binMenu;
+	m_partMenu = partMenu;
 }
 
 void PartsBinView::setPaletteModel(PaletteModel * model, bool clear) {

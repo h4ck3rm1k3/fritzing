@@ -42,8 +42,8 @@ $Date$
 
 #define ICON_SPACING 3
 
-PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent)
-    : InfoGraphicsView((QWidget*)parent), PartsBinView(refModel, parent)
+PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu)
+    : InfoGraphicsView((QWidget*)parent), PartsBinView(refModel, parent, binMenu, partMenu)
 {
 	setAcceptWheelEvents(false);
     setFrameStyle(QFrame::Raised | QFrame::StyledPanel);
@@ -62,6 +62,12 @@ PartsBinIconView::PartsBinIconView(ReferenceModel* refModel, PartsBinPaletteWidg
 
     m_noSelectionChangeEmition = false;
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(
+    	this, SIGNAL(customContextMenuRequested(const QPoint&)),
+    	this, SLOT(showContextMenu(const QPoint&))
+    );
 }
 
 void PartsBinIconView::setupLayout() {
@@ -362,4 +368,18 @@ QList<QObject*> PartsBinIconView::orderedChildren() {
 		}
 	}
 	return result;
+}
+
+void PartsBinIconView::showContextMenu(const QPoint& pos) {
+	QGraphicsItem *it = itemAt(pos);
+
+	QMenu *menu;
+	if(it) {
+		scene()->clearSelection();
+		it->setSelected(true);
+		menu = m_partMenu;
+	} else {
+		menu = m_binMenu;
+	}
+    menu->exec(mapToGlobal(pos));
 }

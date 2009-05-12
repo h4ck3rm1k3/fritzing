@@ -164,6 +164,7 @@ class PartsBinPaletteWidget : public QFrame {
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;
 
+		QMenu *m_binContextMenu;
 		QToolButton *m_binMenuButton;
 		QAction *m_newBinAction;
 		QAction *m_openBinAction;
@@ -173,6 +174,7 @@ class PartsBinPaletteWidget : public QFrame {
 		QAction *m_saveAsAction;
 		QAction *m_renameAction;
 
+		QMenu *m_partContextMenu;
 		QToolButton *m_partMenuButton;
 		QAction *m_newPartAction;
 		QAction *m_importPartAction;

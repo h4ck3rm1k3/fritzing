@@ -25,6 +25,8 @@ $Date$
 ********************************************************************/
 
 
+#include <QMenu>
+
 #include "../debugdialog.h"
 #include "../htmlinfoview.h"
 #include "../items/itembase.h"
@@ -34,8 +36,8 @@ $Date$
 
 #include "partsbinlistview.h"
 
-PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidget *parent)
-	: QListWidget((QWidget*)parent), PartsBinView(refModel, parent)
+PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidget *parent, QMenu *binMenu, QMenu *partMenu)
+	: QListWidget((QWidget*)parent), PartsBinView(refModel, parent, binMenu, partMenu)
 {
 	m_infoView = NULL;
 	m_hoverItem = NULL;
@@ -50,6 +52,12 @@ PartsBinListView::PartsBinListView(ReferenceModel* refModel, PartsBinPaletteWidg
 	setDropIndicatorShown(true);
 	setDragDropMode(QAbstractItemView::DragDrop);
 	setAcceptDrops(true);
+
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(
+    	this, SIGNAL(customContextMenuRequested(const QPoint&)),
+    	this, SLOT(showContextMenu(const QPoint&))
+    );
 }
 
 PartsBinListView::~PartsBinListView() {
@@ -286,4 +294,18 @@ QList<QObject*> PartsBinListView::orderedChildren() {
 		}
 	}
 	return result;
+}
+
+void PartsBinListView::showContextMenu(const QPoint& pos) {
+	QListWidgetItem *it = itemAt(pos);
+
+	QMenu *menu;
+	if(it) {
+		clearSelection();
+		it->setSelected(true);
+		menu = m_partMenu;
+	} else {
+		menu = m_binMenu;
+	}
+    menu->exec(mapToGlobal(pos));
 }
