@@ -206,6 +206,7 @@ void PartsBinListView::setSelected(int position, bool doEmit) {
 
 void PartsBinListView::dropEvent(QDropEvent* event) {
 	dropEventAux(event);
+	QListWidget::dropEvent(event);
 }
 
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {
