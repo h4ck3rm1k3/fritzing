@@ -302,15 +302,11 @@ StackTabBar::tab {
 	text-align: center;
 
 	border: 1px solid rgb(217,217,217);
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 	background: rgb(179,179,179);
 
 	font-weight: bold;
-}
-
-StackTabBar::tab:hover {
-	background-color: rgb(190,190,190);
 }
 
 StackTabBar::tab:selected {
@@ -324,6 +320,10 @@ StackTabBar::tab:!selected {
 	border-color: #B0B0B2;
 	border-bottom-color: #d8d8d8;
 	color: #686868;
+}
+
+StackTabBar::tab:!selected:hover {
+	background-color: rgb(179,179,179);
 }
 
 StackTabBar[current="true"]::tab:selected {
