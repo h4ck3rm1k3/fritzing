@@ -51,6 +51,7 @@ class PartsBinView {
 		void setInfoViewOnHover(bool infoViewOnHover);
 
 		virtual QList<QObject*> orderedChildren() = 0;
+		void dropEventAux(QDropEvent* event, bool justAppend = false);
 
 	protected:
 		virtual void doClear();
@@ -65,7 +66,6 @@ class PartsBinView {
 				const QString &moduleId, const QSize &size,
 				const QPointF &dataPoint = QPointF(0,0), const QPoint &hotspot = QPoint(0,0));
 		void dragMoveEnterEventAux(QDragMoveEvent* event);
-		void dropEventAux(QDropEvent* event);
 
 		virtual void setItemAux(ModelPart * modelPart, int position = -1) = 0;
 

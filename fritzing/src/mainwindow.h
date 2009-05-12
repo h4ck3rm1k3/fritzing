@@ -87,7 +87,7 @@ public:
 	void showAllFirstTimeHelp(bool show);
 	void enableCheckUpdates(bool enabled);
 
-	class PartsEditorMainWindow* getPartsEditor(PaletteItem *paletteItem, QWidget *parent, bool asMainWindow=true);
+	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, QWidget *parent, bool asMainWindow=true, long id=-1);
 	ModelPart *loadPartFromFile(const QString& newPartPath);
 
 public:
@@ -105,6 +105,7 @@ public slots:
 	void changeActivation(bool activate);
 	void swapSelected(const QVariant & currProps, const QString &family, const QString & name);
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
+	void partsEditorClosed(long id);
 
 protected slots:
 	void load();
@@ -183,8 +184,7 @@ protected slots:
 	void updateZoomOptionsNoMatterWhat(qreal zoom);
 	void updateViewZoom(qreal newZoom);
 
-	void loadPart(QString newPartPath);
-	void partsEditorClosed(long id);
+	void loadPart(const QString &newPartPath);
 
 	void findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &);
 

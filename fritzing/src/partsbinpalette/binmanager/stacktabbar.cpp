@@ -30,6 +30,8 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 #include "stacktabbar.h"
 #include "stacktabwidget.h"
+#include "../partsbinpalettewidget.h"
+#include "../partsbinview.h"
 #include "../../debugdialog.h"
 
 
@@ -136,8 +138,20 @@ bool StackTabBar::posCloserToTheEnd(const QPoint &pos) {
 void StackTabBar::dropEvent(QDropEvent* event) {
 	int toIndex = tabAt(event->pos());
 
-	emit setDropSink(m_parent, getButtonPos(toIndex,event->pos()), toIndex);
-	emit dropped();
+	const QMimeData *m = event->mimeData();
+	if(mimeIsAction(m, "tab-reordering")) {
+		emit setDropSink(m_parent, getButtonPos(toIndex,event->pos()), toIndex);
+		emit dropped();
+	} else if(mimeIsAction(m, "part-reordering")) {
+		// this widget shouldn't know about bin widgets,
+		// but it's already aware of "part-reordering"
+		// actions, so fuck it!
+		PartsBinPaletteWidget* bin = dynamic_cast<PartsBinPaletteWidget*>(m_parent->widget(toIndex));
+		if(bin) {
+			bin->currentView()->dropEventAux(event,true);
+		}
+	}
+
 	event->acceptProposedAction();
 }
 

@@ -85,6 +85,8 @@ class PartsBinPaletteWidget : public QFrame {
 
 		const QString &fileName();
 
+		class PartsBinView *currentView();
+
 	public slots:
 		void addPartCommand(const QString& moduleID);
 		void removePartCommand(const QString& moduleID);

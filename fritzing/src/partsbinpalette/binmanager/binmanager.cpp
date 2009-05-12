@@ -40,6 +40,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "../../palettemodel.h"
 #include "../../waitpushundostack.h"
 #include "../../debugdialog.h"
+#include "../../partseditor/partseditordialog.h"
 
 
 QString BinManager::Title;
@@ -276,7 +277,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 		bin = newBin();
 		if(bin->open(fileName)) {
 			m_openedBins[fileName] = bin;
-			insertBin(bin, tb->currentIndex(), tb);
+			insertBin(bin, tb->currentIndex()+1, tb);
 			bin->saveAsLastBin();
 		}
 	}
@@ -287,7 +288,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 PartsBinPaletteWidget* BinManager::openCoreBinIn(StackTabWidget* tb) {
 	PartsBinPaletteWidget* bin = newBin();
 	bin->openCore();
-	insertBin(bin, tb->currentIndex(), tb);
+	insertBin(bin, tb->currentIndex()+1, tb);
 	setAsCurrentBin(bin);
 	return bin;
 }
@@ -460,7 +461,7 @@ void BinManager::addPartTo(PartsBinPaletteWidget* bin) {
 }
 
 void BinManager::newPartTo(PartsBinPaletteWidget* bin) {
-	ModelPart *mp = NULL; // open parts editor
+	ModelPart *mp = PartsEditorDialog::newPart(m_mainWindow);
 	if(mp) {
 		bin->addPart(mp);
 		setDirtyTab(bin,true);
@@ -474,19 +475,21 @@ void BinManager::importPartTo(PartsBinPaletteWidget* bin) {
 		"",
 		tr("External Part (*%1)").arg(FritzingBundledPartExtension)
 	);
-	ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,false);
-	if(mp) {
-		bool alreadyIn = bin->contains(mp->moduleID());
-		bin->addPart(mp);
-		if(!alreadyIn) {
-			setDirtyTab(bin,true);
+	if(!newPartPath.isEmpty() && !newPartPath.isNull()) {
+		ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,false);
+		if(mp) {
+			bool alreadyIn = bin->contains(mp->moduleID());
+			bin->addPart(mp);
+			if(!alreadyIn) {
+				setDirtyTab(bin,true);
+			}
 		}
 	}
 }
 
 void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
-	//ModelPart *selectedMP = bin->selected();
-	ModelPart *mp = NULL; // open parts editor with moduleid
+	ModelPart *selectedMP = bin->selected();
+	ModelPart *mp = PartsEditorDialog::editPart(m_mainWindow, selectedMP);
 	if(mp) {
 		bin->addPart(mp);
 		setDirtyTab(bin,true);

@@ -815,7 +815,7 @@ ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath) {
 	return ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
 }
 
-void MainWindow::loadPart(QString newPartPath) {
+void MainWindow::loadPart(const QString &newPartPath) {
 	ModelPart * modelPart = loadPartFromFile(newPartPath);
 	if(modelPart && modelPart->isValid()) {
 		m_paletteWidget->addNewPart(modelPart);

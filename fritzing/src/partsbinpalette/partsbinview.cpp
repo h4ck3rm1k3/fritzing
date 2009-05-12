@@ -137,9 +137,16 @@ void PartsBinView::dragMoveEnterEventAux(QDragMoveEvent* event) {
 	}
 }
 
-void PartsBinView::dropEventAux(QDropEvent* event) {
+void PartsBinView::dropEventAux(QDropEvent* event, bool justAppend) {
 	bool trustResult;
-	int toIndex = itemIndexAt(event->pos(), trustResult);
+	int toIndex;
+
+	if(justAppend) {
+		toIndex = -1;
+		trustResult = true;
+	} else {
+		toIndex = itemIndexAt(event->pos(), trustResult);
+	}
 
 	if(!trustResult) return;
 

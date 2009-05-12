@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
 #ifdef Q_WS_WIN
 #ifndef QT_NO_DEBUG
 	HANDLE hLogFile;
-	hLogFile = CreateFile(L"fritzing_leak_log.txt", GENERIC_WRITE, 
-		  FILE_SHARE_WRITE, NULL, CREATE_ALWAYS, 
+	hLogFile = CreateFile(L"fritzing_leak_log.txt", GENERIC_WRITE,
+		  FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,
 		  FILE_ATTRIBUTE_NORMAL, NULL);
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
 	_CrtSetReportFile(_CRT_ERROR, hLogFile);
@@ -64,6 +64,5 @@ int main(int argc, char *argv[])
 	app->finish();
 
 	delete app;
-	
 	return result;
 }

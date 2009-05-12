@@ -117,8 +117,10 @@ QString PartsBinPaletteWidget::title() const {
 }
 
 void PartsBinPaletteWidget::setTitle(const QString &title) {
-	m_title = title;
-	m_manager->updateTitle(this, title);
+	if(m_title != title) {
+		m_title = title;
+		m_manager->updateTitle(this, title);
+	}
 }
 
 void PartsBinPaletteWidget::setTabWidget(StackTabWidget *tabWidget) {
@@ -619,7 +621,7 @@ void PartsBinPaletteWidget::rename() {
 	QString newTitle = QInputDialog::getText(
 		this,
 		tr("Rename bin"),
-		tr("Bin title:"),
+		tr("Please choose a name for the bin:"),
 		QLineEdit::Normal,
 		m_title,
 		&ok
@@ -681,3 +683,8 @@ bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {
 	}
 	return QFrame::eventFilter(obj, event);
 }
+
+PartsBinView *PartsBinPaletteWidget::currentView() {
+	return m_currentView;
+}
+
