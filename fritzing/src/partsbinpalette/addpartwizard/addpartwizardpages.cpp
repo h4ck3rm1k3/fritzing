@@ -72,10 +72,10 @@ SourceOptionsPage::SourceOptionsPage(AddPartWizard *parent) : AbstractAddPartWiz
 	m_layout->setSpacing(1);
 	m_layout->setMargin(1);
 
-	addButton( QObject::tr("Create a new part"), SLOT(fromPartsEditor()) );
+	addButton( /*QObject::tr(*/"Create a new part"/*)*/, SLOT(fromPartsEditor()) );
 	//addButton( QObject::tr("Browse all the existing parts"), SLOT(fromAllTheLibrary()) );
 	//addButton( QObject::tr("Generate new part"), SLOT(fromWebGenerator()) );
-	addButton( QObject::tr("Import part from local folder"), SLOT(fromLocalFolder()) );
+	addButton( /*QObject::tr(*/"Import part from local folder"/*)*/, SLOT(fromLocalFolder()) );
 
 	m_layout->addSpacing(3);
 }
@@ -151,9 +151,9 @@ FileBrowserPage::FileBrowserPage(AddPartWizard* parent)
 	m_centralWidget = new QWidget(this);
 	m_fileDialog = new QFileDialog(
 		m_centralWidget,
-		QObject::tr("Select a part to import"),
+		/*QObject::tr(*/"Select a part to import"/*)*/,
 		"",
-		QObject::tr("External Part (*%1)").arg(FritzingBundledPartExtension)
+		/*QObject::tr(*/QString("External Part (*%1)")/*)*/.arg(FritzingBundledPartExtension)
 	);
 	m_fileDialog->setModal(false);
 
@@ -193,7 +193,7 @@ void FileBrowserPage::cleanupPage() {
 	AbstractAddPartSourceWizardPage::cleanupPage();
 }
 
-#define FILE_NEEDED_MSG QMessageBox::information(this, tr("File needed"), tr("Please, select a file to import"));
+#define FILE_NEEDED_MSG QMessageBox::information(this, /*tr(*/"File needed"/*)*/, /*tr(*/"Please, select a file to import"/*)*/);
 
 bool FileBrowserPage::validatePage() {
 	QStringList selFiles = m_fileDialog->selectedFiles();
@@ -209,7 +209,7 @@ bool FileBrowserPage::validatePage() {
 				return false;
 			}
 		} else {
-			QMessageBox::information(this, tr("File needed"), tr("Please, select just one file to import"));
+			QMessageBox::information(this, /*tr(*/"File needed"/*)*/, /*tr(*/"Please, select just one file to import"/*)*/);
 			return false;
 		}
 	}
