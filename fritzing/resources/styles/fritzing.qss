@@ -62,7 +62,7 @@ QToolBar {
 	background-color: rgb(51,0,17);
 	color: rgb(126,54,77);
 }
-
+qtoolbutton
 #fileToolBar QToolButton,
 #editToolBar QToolButton {
 	border: 1px solid rgb(126,54,77);
@@ -331,6 +331,15 @@ StackTabBar[current="true"]::tab:selected {
 	color: white;*/
 }
 
+#binToolButton {
+	background-color: transparent;
+	font-size: 10px;
+}
+
+#titleAction {
+	font-size: 10px;
+	color: #666;
+}
 
 /**************** sketch area widgets ****************/
 

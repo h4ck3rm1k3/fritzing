@@ -32,6 +32,7 @@ $Date$
 #include <QMessageBox>
 #include <QSettings>
 #include <QInputDialog>
+#include <QWidgetAction>
 
 #include "partsbinpalettewidget.h"
 #include "partsbincommands.h"
@@ -86,8 +87,8 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));
 	connect(m_iconView, SIGNAL(selectionChanged(int)), m_listView, SLOT(setSelected(int)));
 
-	connect(m_listView, SIGNAL(currentRowChanged(int)), this, SLOT(updateButtonStates()));
-	connect(m_iconView, SIGNAL(selectionChanged(int)), this, SLOT(updateButtonStates()));
+	connect(m_listView, SIGNAL(currentRowChanged(int)), this, SLOT(updateMenus()));
+	connect(m_iconView, SIGNAL(selectionChanged(int)), this, SLOT(updateMenus()));
 
 	//connect(m_listView, SIGNAL(clicked()), this, SLOT(updateButtonStates()));
 	//connect(m_iconView, SIGNAL(clicked()(int)), this, SLOT(updateButtonStates()));
@@ -140,19 +141,13 @@ void PartsBinPaletteWidget::setupFooter() {
 	rightLayout->setDirection(QBoxLayout::RightToLeft);
 	rightLayout->setMargin(0);
 	rightLayout->setSpacing(3);
-	rightLayout->addWidget(m_removeSelectedButton);
-	rightLayout->addWidget(m_exportPartButton);
-	rightLayout->addWidget(m_addPartButton);
-	/*rightLayout->addWidget(m_coreBinButton);
-	rightLayout->addWidget(m_saveBinButton);
-	rightLayout->addWidget(m_openBinButton);*/
+	rightLayout->addWidget(m_binMenuButton);
+	rightLayout->addWidget(m_partMenuButton);
 
 	QHBoxLayout *footerLayout = new QHBoxLayout(m_footer);
 	footerLayout->setMargin(2);
 	footerLayout->setSpacing(0);
 	footerLayout->addWidget(leftButtons);
-	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
-	footerLayout->addWidget(m_menuButton);
 	footerLayout->addSpacerItem(new QSpacerItem(0,0,QSizePolicy::Expanding));
 	footerLayout->addWidget(rightButtons);
 }
@@ -261,96 +256,95 @@ void PartsBinPaletteWidget::setupButtons() {
 	m_showListViewButton->setToolTip(tr("Show as list"));
 	connect(m_showListViewButton,SIGNAL(clicked()),this,SLOT(toListView()));
 
-	m_removeSelectedButton = new ImageButton("Delete",this);
-	m_removeSelectedButton->setToolTip(tr("Remove selected part"));
-	m_removeSelectedButton->setEnabledIcon();
-	connect(m_removeSelectedButton,SIGNAL(clicked()),this,SLOT(removeSelected()));
-
-	createMenu();
-
-	m_addPartButton = new ImageButton("AddPart",this,false);
-	m_addPartButton->setToolTip(tr("Add Part"));
-	m_addPartButton->setEnabledIcon();
-	connect(m_addPartButton,SIGNAL(clicked()),this,SLOT(addPart()));
-
-	m_exportPartButton = new ImageButton("ExportPart",this);
-	m_exportPartButton->setToolTip(tr("Export Part"));
-	m_exportPartButton->setDisabled(true);
-	m_exportPartButton->setDisabledIcon();
-	connect(m_exportPartButton,SIGNAL(clicked()),this,SLOT(exportPart()));
-
-	/*m_openBinButton = new ImageButton("Open",this);
-	m_openBinButton->setToolTip(tr("Open bin"));
-	m_openBinButton->setEnabledIcon();
-	connect(m_openBinButton,SIGNAL(clicked()),this,SLOT(open()));
-
-	m_saveBinButton = new ImageButton("Save",this);
-	m_saveBinButton->setToolTip(tr("Save bin"));
-	m_saveBinButton->setDisabledIcon();
-	connect(m_saveBinButton,SIGNAL(clicked()),this,SLOT(save()));
-
-	m_coreBinButton = new ImageButton("Core",this);
-	m_coreBinButton->setToolTip(tr("Restore core bin"));
-	m_coreBinButton->setEnabledIcon();
-	connect(m_coreBinButton,SIGNAL(clicked()),this,SLOT(openCore()));
-	*/
+	createBinMenu();
+	createPartMenu();
+	createContextMenus();
 }
 
-void PartsBinPaletteWidget::createMenu() {
-	m_menuButton = new QToolButton(this);
-	m_menuButton->setPopupMode(QToolButton::InstantPopup);
-	m_menuButton->setIcon(QIcon(":/resources/images/icons/partsBinMenu_icon.png"));
-	m_menuButton->setStyleSheet("background-color: transparent;");
+QToolButton* PartsBinPaletteWidget::newToolButton(const QString& imgPath, const QString &text) {
+	QToolButton *toolBtn = new QToolButton(this);
+	toolBtn->setObjectName("binToolButton");
+	if(text != ___emptyString___) {
+		toolBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+		toolBtn->setText(text);
+	}
+	toolBtn->setPopupMode(QToolButton::InstantPopup);
+	toolBtn->setIcon(QIcon(imgPath));
+	return toolBtn;
+}
+
+QAction* PartsBinPaletteWidget::newTitleAction(const QString &text) {
+	QWidgetAction *act = new QWidgetAction(this);
+	QWidget* w = new QLabel(text,this);
+	w->setObjectName("titleAction");
+	act->setDefaultWidget(w);
+	act->setDisabled(true);
+	return act;
+}
+
+void PartsBinPaletteWidget::createBinMenu() {
+	m_binMenuButton = newToolButton(":/resources/images/icons/partsBinMenu_icon.png");
+
+	m_newBinAction = new QAction(tr("New..."), this);
+	m_openBinAction = new QAction(tr("Open..."),this);
+	m_openCoreBinAction = new QAction(tr("Open Core"),this);
+	m_closeBinAction = new QAction(tr("Close"),this);
+	m_saveAction = new QAction(tr("Save"),this);
+	m_saveAsAction = new QAction(tr("Save As..."),this);
+	m_renameAction = new QAction(tr("Rename..."),this);
+
+	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBin()));
+	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openBin()));
+	connect(m_openCoreBinAction, SIGNAL(triggered()),this, SLOT(openCoreBin()));
+	connect(m_closeBinAction, SIGNAL(triggered()),this, SLOT(closeBin()));
+	connect(m_saveAction, SIGNAL(triggered()),this, SLOT(save()));
+	connect(m_saveAsAction, SIGNAL(triggered()),this, SLOT(saveAs()));
+	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
+
 	QMenu *menu = new QMenu(this);
-
-	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateButtonStates()));
-
-	m_newBinAction = new QAction(tr("New bin"), this);
-	m_openBinAction = new QAction(tr("Open bin..."),this);
-	m_openCoreBinAction = new QAction(tr("Open core bin"),this);
-	m_closeBinAction = new QAction(tr("Close bin"),this);
-	m_saveAction = new QAction(tr("Save bin"),this);
-	m_saveAsAction = new QAction(tr("Save bin as..."),this);
-	m_renameAction = new QAction(tr("Rename bin"),this);
-
+	menu->addAction(newTitleAction(tr("Bin")));
 	menu->addAction(m_newBinAction);
 	menu->addAction(m_openBinAction);
 	menu->addAction(m_openCoreBinAction);
+	menu->addSeparator();
 	menu->addAction(m_closeBinAction);
 	menu->addAction(m_saveAction);
 	menu->addAction(m_saveAsAction);
 	menu->addAction(m_renameAction);
+	m_binMenuButton->setMenu(menu);
+}
 
-	connect(
-		m_newBinAction, SIGNAL(triggered()),
-		this, SLOT(newBin())
-	);
-	connect(
-		m_openBinAction, SIGNAL(triggered()),
-		this, SLOT(openBin())
-	);
-	connect(
-		m_openCoreBinAction, SIGNAL(triggered()),
-		this, SLOT(openCoreBin())
-	);
-	connect(
-		m_closeBinAction, SIGNAL(triggered()),
-		this, SLOT(closeBin())
-	);
-	connect(
-		m_saveAction, SIGNAL(triggered()),
-		this, SLOT(save())
-	);
-	connect(
-		m_saveAsAction, SIGNAL(triggered()),
-		this, SLOT(saveAs())
-	);
-	connect(
-		m_renameAction, SIGNAL(triggered()),
-		this, SLOT(rename())
-	);
+void PartsBinPaletteWidget::createPartMenu() {
+	m_partMenuButton = newToolButton(":/resources/images/icons/partsBinAddPart_icon.png");
 
-	m_menuButton->setMenu(menu);
+	m_newPartAction = new QAction(tr("New..."), this);
+	m_importPartAction = new QAction(tr("Import..."),this);
+	m_editPartAction = new QAction(tr("Edit..."),this);
+	m_exportPartAction = new QAction(tr("Export..."),this);
+	m_removePartAction = new QAction(tr("Remove"),this);
+
+	connect(m_newPartAction, SIGNAL(triggered()),this, SLOT(newPart()));
+	connect(m_importPartAction, SIGNAL(triggered()),this, SLOT(importPart()));
+	connect(m_editPartAction, SIGNAL(triggered()),this, SLOT(editSelected()));
+	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
+	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
+	connect(m_saveAsAction, SIGNAL(triggered()),this, SLOT(saveAs()));
+	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
+
+	QMenu *menu = new QMenu(this);
+	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));
+	menu->addAction(newTitleAction(tr("Part")));
+	menu->addAction(m_newPartAction);
+	menu->addAction(m_importPartAction);
+	menu->addSeparator();
+	menu->addAction(m_editPartAction);
+	menu->addAction(m_exportPartAction);
+	menu->addAction(m_removePartAction);
+	m_partMenuButton->setMenu(menu);
+}
+
+void PartsBinPaletteWidget::createContextMenus() {
+
 }
 
 void PartsBinPaletteWidget::addPart() {
@@ -645,6 +639,22 @@ void PartsBinPaletteWidget::rename() {
 	}
 }
 
+void PartsBinPaletteWidget::newPart() {
+
+}
+
+void PartsBinPaletteWidget::importPart() {
+
+}
+
+void PartsBinPaletteWidget::editSelected() {
+
+}
+
+void PartsBinPaletteWidget::exportSelected() {
+
+}
+
 void PartsBinPaletteWidget::itemMoved() {
 	m_orderHasChanged = true;
 	m_manager->setDirtyTab(this);
@@ -658,16 +668,10 @@ const QString &PartsBinPaletteWidget::fileName() {
 	return m_fileName;
 }
 
-void PartsBinPaletteWidget::updateButtonStates() {
-	ModelPart *mp = selected();
+void PartsBinPaletteWidget::updateMenus() {
+	/*ModelPart *mp = selected();
 	bool enabled = mp && !mp->isCore();
-	m_exportPartButton->setEnabled(enabled);
-	if(enabled) {
-		m_exportPartButton->setEnabledIcon();
-	} else {
-		m_exportPartButton->setDisabledIcon();
-	}
-	emit focused(this);
+	emit focused(this);*/
 }
 
 bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {

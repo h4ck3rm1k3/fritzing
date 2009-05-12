@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
-********************************************************************
+*********************************************** *********************
 
 $Revision$:
 $Author$:
@@ -107,7 +107,11 @@ class PartsBinPaletteWidget : public QFrame {
 		void openBin();
 		void openCoreBin();
 		void closeBin();
-		void updateButtonStates();
+		void newPart();
+		void importPart();
+		void editSelected();
+		void exportSelected();
+		void updateMenus();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -129,7 +133,12 @@ class PartsBinPaletteWidget : public QFrame {
 		void saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
-		void createMenu();
+
+		void createBinMenu();
+		void createPartMenu();
+		void createContextMenus();
+		QToolButton* newToolButton(const QString& imgPath, const QString &text = ___emptyString___);
+		QAction* newTitleAction(const QString &text);
 
 	protected:
 		PaletteModel *m_model;
@@ -152,14 +161,8 @@ class PartsBinPaletteWidget : public QFrame {
 
 		ImageButton *m_showIconViewButton;
 		ImageButton *m_showListViewButton;
-		ImageButton *m_removeSelectedButton;
-		/*ImageButton *m_openBinButton;
-		ImageButton *m_saveBinButton;
-		ImageButton *m_coreBinButton;*/
-		ImageButton *m_addPartButton;
-		ImageButton *m_exportPartButton;
 
-		QToolButton *m_menuButton;
+		QToolButton *m_binMenuButton;
 		QAction *m_newBinAction;
 		QAction *m_openBinAction;
 		QAction *m_openCoreBinAction;
@@ -167,6 +170,13 @@ class PartsBinPaletteWidget : public QFrame {
 		QAction *m_saveAction;
 		QAction *m_saveAsAction;
 		QAction *m_renameAction;
+
+		QToolButton *m_partMenuButton;
+		QAction *m_newPartAction;
+		QAction *m_importPartAction;
+		QAction *m_editPartAction;
+		QAction *m_exportPartAction;
+		QAction *m_removePartAction;
 
 		WaitPushUndoStack *m_undoStack;
 		BinManager *m_manager;
