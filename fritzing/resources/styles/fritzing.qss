@@ -290,11 +290,6 @@ PartsBinPaletteWidget InfoGraphicsView {
 
 StackTabWidget::pane {
 	border: 1px solid #d8d8d8;
-	/* KDE tweaking, perhaps in other platforms, or in gnome itself
-	 * we'll need some other values
-	 */
-	position: absolute;
-	top: 0.43em;
 }
 
 StackTabBar::tab {
