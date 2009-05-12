@@ -55,7 +55,7 @@ class StackWidgetSeparator : public QFrame, public DropSink {
 		void dropEvent(QDropEvent* event);
 		void resizeEvent(QResizeEvent *event);
 
-		void setPixmapWidth(int newWidth);
+		void resizePixmap(int newWidth, int newHeight);
 
 		QPixmap *m_feedbackPixmap;
 		QLabel *m_feedbackIcon;

@@ -42,9 +42,7 @@ StackWidgetSeparator::StackWidgetSeparator(QWidget *parent)
 	m_feedbackIcon = new QLabel(this);
 	lo->addWidget(m_feedbackIcon);
 	m_feedbackPixmap = new QPixmap(":/resources/images/icons/binRearrangeSeparator.png");
-	setMinimumHeight(3);
-	setMaximumHeight(3);
-	setPixmapWidth(width());
+	shrink();
 	m_feedbackIcon->hide();
 }
 
@@ -54,6 +52,7 @@ StackWidgetSeparator::~StackWidgetSeparator() {
 
 void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
 	// Only accept if it's an tab-reordering request
+	expand();
 	const QMimeData* m = event->mimeData();
 	QStringList formats = m->formats();
 	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
@@ -64,7 +63,7 @@ void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
 }
 
 void StackWidgetSeparator::dragLeaveEvent(QDragLeaveEvent *event) {
-	//shrink();
+	shrink();
 	emit setDropSink(NULL);
 	showFeedback(-1, QTabBar::LeftSide, false); // a little hacky, but it works
 	QFrame::dragLeaveEvent(event);
@@ -76,30 +75,32 @@ void StackWidgetSeparator::dropEvent(QDropEvent* event) {
 }
 
 void StackWidgetSeparator::expand() {
-	setMinimumHeight(200);
-	resize(width(),200);
+	setMinimumHeight(4);
+	resize(width(),4);
 }
 
 void StackWidgetSeparator::shrink() {
-	setMinimumHeight(10);
-	resize(width(),10);
+	setMinimumHeight(1);
+	resize(width(),1);
 }
 
 void StackWidgetSeparator::showFeedback(int index, QTabBar::ButtonPosition side, bool doShow) {
 	Q_UNUSED(index);
 	Q_UNUSED(side);
+	if(!doShow) shrink();
 	m_feedbackIcon->setVisible(doShow);
 }
 
 void StackWidgetSeparator::resizeEvent(QResizeEvent *event) {
 	int newWidth = event->size().width();
-	if(newWidth != event->oldSize().width()) {
-		setPixmapWidth(newWidth);
+	int newHeight = event->size().height();
+	if(newWidth != event->oldSize().width() || newHeight != event->oldSize().height()) {
+		resizePixmap(newWidth,newHeight);
 	}
 	QFrame::resizeEvent(event);
 }
 
-void StackWidgetSeparator::setPixmapWidth(int newWidth) {
-	QPixmap newPixmap = m_feedbackPixmap->scaled(newWidth,height());
+void StackWidgetSeparator::resizePixmap(int newWidth, int newHeight) {
+	QPixmap newPixmap = m_feedbackPixmap->scaled(newWidth,newHeight);
 	m_feedbackIcon->setPixmap(newPixmap);
 }
