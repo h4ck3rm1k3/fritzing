@@ -330,8 +330,6 @@ void PartsBinPaletteWidget::createPartMenu() {
 	connect(m_editPartAction, SIGNAL(triggered()),this, SLOT(editSelected()));
 	connect(m_exportPartAction, SIGNAL(triggered()),this, SLOT(exportSelected()));
 	connect(m_removePartAction, SIGNAL(triggered()),this, SLOT(removeSelected()));
-	connect(m_saveAsAction, SIGNAL(triggered()),this, SLOT(saveAs()));
-	connect(m_renameAction, SIGNAL(triggered()),this, SLOT(rename()));
 
 	QMenu *menu = new QMenu(this);
 	connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateMenus()));

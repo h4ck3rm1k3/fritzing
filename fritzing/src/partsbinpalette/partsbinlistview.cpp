@@ -126,32 +126,29 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 		}
 	}
 
-	m_hoverItem = item;
 	if (item == NULL) {
 		return;
 	}
 
+	m_hoverItem = item;
+
 	ModelPart * modelPart = item->data(Qt::UserRole).value<ModelPart *>();
 	if (modelPart == NULL) return;
 
+	DebugDialog::debug("<<<< "+modelPart->title());
 	m_infoView->hoverEnterItem(modelPart, swappingEnabled());
 }
 
 
 void PartsBinListView::mousePressEvent(QMouseEvent *event) {
-	QListWidgetItem * current = currentItem ();
-	if (current == NULL) return;
-
-	ModelPart * modelPart = current->data(Qt::UserRole).value<ModelPart *>();
-	if (modelPart == NULL) return;
-
-	if(!m_infoViewOnHover) {
-		showInfo(current);
-	}
-
 	m_dragStartPos = event->pos();
 	QListWidget::mousePressEvent(event);
 	ItemDrag::_dragIsDone();
+
+	QListWidgetItem * current = currentItem();
+	if (current == NULL) return;
+
+	showInfo(current);
 }
 
 void PartsBinListView::setInfoView(HtmlInfoView * infoView) {
