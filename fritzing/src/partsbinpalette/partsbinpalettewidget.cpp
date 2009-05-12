@@ -348,17 +348,7 @@ void PartsBinPaletteWidget::createContextMenus() {
 }
 
 void PartsBinPaletteWidget::addPart() {
-	m_manager->addPartIn(this);
-}
-
-void PartsBinPaletteWidget::exportPart() {
-	ModelPart *mp = selected();
-	if(mp) {
-		//if(!mp->isCore()) {
-			emit savePartAsBundled(mp->moduleID());
-		//} else {
-		//}
-	}
+	m_manager->addPartTo(this);
 }
 
 bool PartsBinPaletteWidget::removeSelected() {
@@ -383,14 +373,14 @@ bool PartsBinPaletteWidget::save() {
 bool PartsBinPaletteWidget::saveAs() {
 	QString fileExt;
     QString fileName = QFileDialog::getSaveFileName(
-						this,
-                        tr("Specify a file name"),
-                        (m_fileName.isNull() || m_fileName.isEmpty())?
-                        		m_defaultSaveFolder+"/"+title()+FritzingBinExtension:
-								m_fileName,
-                        tr("Fritzing Bin (*%1)").arg(FritzingBinExtension),
-                        &fileExt
-                      );
+		this,
+		tr("Specify a file name"),
+		(m_fileName.isNull() || m_fileName.isEmpty())?
+				m_defaultSaveFolder+"/"+title()+FritzingBinExtension:
+				m_fileName,
+		tr("Fritzing Bin (*%1)").arg(FritzingBinExtension),
+		&fileExt
+	  );
 
     if (fileName.isEmpty()) return false; // Cancel pressed
 
@@ -516,8 +506,8 @@ ModelPart * PartsBinPaletteWidget::selected() {
 	return m_currentView->selected();
 }
 
-bool PartsBinPaletteWidget::alreadyIn(QString moduleID) {
-	return m_iconView->alreadyIn(moduleID);
+bool PartsBinPaletteWidget::contains(const QString &moduleID) {
+	return m_iconView->contains(moduleID);
 }
 
 bool PartsBinPaletteWidget::hasAlienParts() {
@@ -640,19 +630,22 @@ void PartsBinPaletteWidget::rename() {
 }
 
 void PartsBinPaletteWidget::newPart() {
-
+	m_manager->newPartTo(this);
 }
 
 void PartsBinPaletteWidget::importPart() {
-
+	m_manager->importPartTo(this);
 }
 
 void PartsBinPaletteWidget::editSelected() {
-
+	m_manager->editSelectedPartFrom(this);
 }
 
 void PartsBinPaletteWidget::exportSelected() {
-
+	ModelPart *mp = selected();
+	if(mp) {
+		emit savePartAsBundled(mp->moduleID());
+	}
 }
 
 void PartsBinPaletteWidget::itemMoved() {
@@ -669,9 +662,11 @@ const QString &PartsBinPaletteWidget::fileName() {
 }
 
 void PartsBinPaletteWidget::updateMenus() {
-	/*ModelPart *mp = selected();
-	bool enabled = mp && !mp->isCore();
-	emit focused(this);*/
+	ModelPart *mp = selected();
+	bool enabled = mp != NULL;
+	m_editPartAction->setEnabled(enabled);
+	m_exportPartAction->setEnabled(enabled && !mp->isCore());
+	m_removePartAction->setEnabled(enabled);
 }
 
 bool PartsBinPaletteWidget::eventFilter(QObject *obj, QEvent *event) {

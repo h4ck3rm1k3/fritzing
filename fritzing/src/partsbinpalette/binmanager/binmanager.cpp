@@ -239,13 +239,13 @@ void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 	QTabWidget* tw = m_tabWidgets[w];
 	Q_ASSERT(tw);
 	int tabIdx = tw->indexOf(w);
-	tw->setTabText(tabIdx, w->title()+(dirty? " (*)": ""));
+	tw->setTabText(tabIdx, w->title()+(dirty? " *": ""));
 }
 
 void BinManager::updateTitle(PartsBinPaletteWidget* w, const QString& newTitle) {
 	QTabWidget* tw = m_tabWidgets[w];
 	if(tw) {
-		tw->setTabText(tw->indexOf(w), newTitle+" (*)");
+		tw->setTabText(tw->indexOf(w), newTitle+" *");
 		setDirtyTab(w);
 	}
 }
@@ -265,7 +265,7 @@ PartsBinPaletteWidget* BinManager::openBinIn(StackTabWidget* tb, QString fileNam
 				this,
 				tr("Select a Fritzing file to open"),
 				m_defaultSaveFolder,
-				tr("Fritzing (*%1)").arg(FritzingBinExtension) );
+				tr("Fritzing Bin (*%1)").arg(FritzingBinExtension) );
 		if (fileName.isNull()) return false;
 	}
 	PartsBinPaletteWidget* bin = NULL;
@@ -449,12 +449,46 @@ void BinManager::tabCloseRequested(StackTabWidget* tw, int index) {
 	closeBinIn(tw,index);
 }
 
-void BinManager::addPartIn(PartsBinPaletteWidget* bin) {
+void BinManager::addPartTo(PartsBinPaletteWidget* bin) {
 	QList<ModelPart*> mps = AddPartWizard::getModelParts(m_mainWindow, this);
 	foreach(ModelPart *mp, mps) {
 		bin->addPart(mp);
 	}
 	if(!mps.isEmpty()) {
+		setDirtyTab(bin,true);
+	}
+}
+
+void BinManager::newPartTo(PartsBinPaletteWidget* bin) {
+	ModelPart *mp = NULL; // open parts editor
+	if(mp) {
+		bin->addPart(mp);
+		setDirtyTab(bin,true);
+	}
+}
+
+void BinManager::importPartTo(PartsBinPaletteWidget* bin) {
+	QString newPartPath = QFileDialog::getOpenFileName(
+		this,
+		tr("Select a part to import"),
+		"",
+		tr("External Part (*%1)").arg(FritzingBundledPartExtension)
+	);
+	ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,false);
+	if(mp) {
+		bool alreadyIn = bin->contains(mp->moduleID());
+		bin->addPart(mp);
+		if(!alreadyIn) {
+			setDirtyTab(bin,true);
+		}
+	}
+}
+
+void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
+	//ModelPart *selectedMP = bin->selected();
+	ModelPart *mp = NULL; // open parts editor with moduleid
+	if(mp) {
+		bin->addPart(mp);
 		setDirtyTab(bin,true);
 	}
 }

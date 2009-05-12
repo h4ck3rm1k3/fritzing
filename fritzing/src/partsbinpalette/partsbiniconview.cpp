@@ -184,7 +184,7 @@ void PartsBinIconView::setItemAux(ModelPart * modelPart, int position) {
 
 	QString moduleID = modelPart->moduleID();
 
-	if(!alreadyIn(moduleID)) {
+	if(!contains(moduleID)) {
 		SvgIconWidget* svgicon = new SvgIconWidget(modelPart, ViewIdentifierClass::IconView, m_viewLayers, ItemBase::getNextID(), NULL);
 		if(position > -1) {
 			m_layout->insertItem(position, svgicon);

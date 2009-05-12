@@ -69,7 +69,10 @@ class BinManager : public QFrame {
 		PartsBinPaletteWidget* openCoreBinIn(StackTabWidget* tb);
 		void closeBinIn(StackTabWidget* tb, int index=-1);
 
-		void addPartIn(PartsBinPaletteWidget* bin);
+		void addPartTo(PartsBinPaletteWidget* bin);
+		void newPartTo(PartsBinPaletteWidget* bin);
+		void importPartTo(PartsBinPaletteWidget* bin);
+		void editSelectedPartFrom(PartsBinPaletteWidget* bin);
 
 	public slots:
 		void addPartCommand(const QString& moduleID);

@@ -301,9 +301,9 @@ StackTabBar::tab {
 	max-width: 5.5em;
 	text-align: center;
 
-	border: 1px solid rgb(217,217,217);
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
+	border: 1px solid rgb(217,217,217);
 	background: rgb(179,179,179);
 
 	font-weight: bold;

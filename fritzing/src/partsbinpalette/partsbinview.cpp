@@ -158,7 +158,7 @@ void PartsBinView::dropEventAux(QDropEvent* event) {
 
 		ModelPart * mp = m_refModel->retrieveModelPart(moduleID);
 		if(mp) {
-			if(m_parent->alreadyIn(moduleID)) {
+			if(m_parent->contains(moduleID)) {
 				QMessageBox::information(m_parent, QObject::tr("Part already in bin"), QObject::tr("The part that you have just added,\nis already there, we won't add it again, right?"));
 			} else {
 				m_parent->addPart(mp,toIndex);
@@ -169,7 +169,7 @@ void PartsBinView::dropEventAux(QDropEvent* event) {
 	event->acceptProposedAction();
 }
 
-bool PartsBinView::alreadyIn(QString moduleID) {
+bool PartsBinView::contains(const QString &moduleID) {
 	return m_partHash.contains(moduleID);
 }
 

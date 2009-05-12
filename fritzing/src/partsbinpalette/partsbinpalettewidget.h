@@ -70,6 +70,7 @@ class PartsBinPaletteWidget : public QFrame {
 		bool currentBinIsCore();
 		bool beforeClosing();
 
+		bool contains();
 		ModelPart * selected();
 		bool hasAlienParts();
 
@@ -79,7 +80,7 @@ class PartsBinPaletteWidget : public QFrame {
 		void removePart(const QString& moduleID);
 		void load(const QString&);
 
-		bool alreadyIn(QString moduleID);
+		bool contains(const QString &moduleID);
 		void setDirty(bool dirty=true);
 
 		const QString &fileName();
@@ -102,7 +103,6 @@ class PartsBinPaletteWidget : public QFrame {
 		bool saveAs();
 		void undoStackCleanChanged(bool isClean);
 		void addPart();
-		void exportPart();
 		void newBin();
 		void openBin();
 		void openCoreBin();

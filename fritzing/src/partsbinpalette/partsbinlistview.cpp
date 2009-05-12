@@ -68,7 +68,7 @@ void PartsBinListView::setItemAux(ModelPart * modelPart, int position) {
 	}
 
 	QString moduleID = modelPart->moduleID();
-	if(!alreadyIn(moduleID)) {
+	if(!contains(moduleID)) {
 		QListWidgetItem * lwi = new QListWidgetItem(modelPart->modelPartShared()->title());
 		lwi->setData(Qt::UserRole, qVariantFromValue( modelPart ) );
 

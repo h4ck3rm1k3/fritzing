@@ -47,7 +47,7 @@ class PartsBinView {
 
 		virtual ModelPart *selected() = 0;
 
-		bool alreadyIn(QString moduleID);
+		bool contains(const QString &moduleID);
 		void setInfoViewOnHover(bool infoViewOnHover);
 
 		virtual QList<QObject*> orderedChildren() = 0;
