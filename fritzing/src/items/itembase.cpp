@@ -801,6 +801,11 @@ bool ItemBase::isConnectedTo(ItemBase * other) {
 
 void ItemBase::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
 {
+	if ((acceptedMouseButtons() & Qt::RightButton) == 0) {
+		event->ignore();
+		return;
+	}
+
 	if (m_hidden) {
 		event->ignore();
 		return;

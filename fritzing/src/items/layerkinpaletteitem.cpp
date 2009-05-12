@@ -87,6 +87,7 @@ void LayerKinPaletteItem::updateConnections() {
 void LayerKinPaletteItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	//DebugDialog::debug("layer kin mouse press event");
 	if (m_layerKinChief->lowerConnectorLayerVisible(this)) {
+		// TODO: this code may be unnecessary
 		DebugDialog::debug("LayerKinPaletteItem::mousePressEvent isn't obsolete");
 		event->ignore();
 		return;
