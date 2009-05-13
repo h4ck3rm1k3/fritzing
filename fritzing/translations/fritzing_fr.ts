@@ -2908,7 +2908,7 @@ is already there, we won&apos;t add it again, right?</source>
     <message>
         <location filename="../src/sketchwidget.cpp" line="4818"/>
         <source>Resize board to %1 %2</source>
-        <translation type="unfinished">Redimensionner la platine  %1 %2</translation>
+        <translation>Redimensionner la platine  %1 %2</translation>
     </message>
     <message>
         <location filename="../src/sketchwidget.cpp" line="1817"/>
