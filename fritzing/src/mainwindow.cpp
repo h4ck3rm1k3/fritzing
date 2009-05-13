@@ -183,7 +183,14 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 #ifdef Q_WS_X11
 		menuStyle = " QMenuBar {background-color: rgb(240,240,240);} ";
 #endif
-		setStyleSheet(styleSheet.readAll()+___MacStyle___+menuStyle);
+		QString oxygenStyle = "";
+		if(style()->metaObject()->className()==QString("OxygenStyle")) {
+			QFile oxygenStyleSheet(":/resources/styles/kde-oxygen.qss");
+			if(oxygenStyleSheet.open(QIODevice::ReadOnly)) {
+				oxygenStyle = oxygenStyleSheet.readAll();
+			}
+		}
+		setStyleSheet(styleSheet.readAll()+___MacStyle___+menuStyle+oxygenStyle);
 	}
 
 	QMenu *breadItemMenu = breadboardItemMenu();

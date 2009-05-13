@@ -1,4 +1,0 @@
-StackTabWidget::pane {
-	position: absolute;
-	top: 0.43em;
-}
