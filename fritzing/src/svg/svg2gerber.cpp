@@ -38,6 +38,8 @@ $Date$
 
 SVG2gerber::SVG2gerber(QString svgStr, QString debugStr)
 {
+    Q_UNUSED(debugStr);
+
     m_SVGDom = QDomDocument("svg");
     m_SVGDom.setContent(svgStr);
 
@@ -517,6 +519,7 @@ QDomElement SVG2gerber::ellipse2path(QDomElement ellipseElement){
 }
 
 QString SVG2gerber::path2gerber(QDomElement pathElement){
+    Q_UNUSED(pathElement);
     QString d;
 
     return d;
@@ -581,8 +584,6 @@ void SVG2gerber::path2gerbCommandSlot(QChar command, bool relative, QList<double
                 case 'Z':
                     gerb = "X" + QString::number(m_pathstart_x) + "Y" + QString::number(m_pathstart_y) + "D01*\n";
                     gerb += "D02*\n";
-                    pathUserData->x = x;
-                    pathUserData->y = y;
                     pathUserData->string.append(gerb);
                     break;
                 default:
