@@ -1605,7 +1605,7 @@ Quantité<byte value="x9"/>Composant</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2273"/>
         <source>Select all trace wires excluded from autorouting</source>
-        <translation>Sélectionner toutes les pistes tracées manuellement</translation>
+        <translation type="unfinished">Sélectionner toutes les pistes exclues de l&apos;autoroutage</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2263"/>
