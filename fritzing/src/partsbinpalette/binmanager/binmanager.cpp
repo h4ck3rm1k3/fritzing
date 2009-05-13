@@ -34,7 +34,6 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "stacktabwidget.h"
 #include "stacktabbar.h"
 #include "../partsbinpalettewidget.h"
-#include "../addpartwizard/addpartwizard.h"
 #include "../../modelpart.h"
 #include "../../mainwindow.h"
 #include "../../palettemodel.h"
