@@ -522,7 +522,7 @@ afin de réparer le connecteur</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1867"/>
         <source>Svg file &apos;%1&apos; is missing width, height, or viewbox attribute</source>
-        <translation type="unfinished">Un ou plusieurs des propriétés suivantes sont manquantes dans le fichier svg &apos;%1&apos; : largueur, hauteur, viewbox</translation>
+        <translation>Un ou plusieurs des propriétés suivantes sont manquantes dans le fichier svg &apos;%1&apos; : width, height, viewbox</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="1878"/>
@@ -1605,7 +1605,7 @@ Quantité<byte value="x9"/>Composant</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2273"/>
         <source>Select all trace wires excluded from autorouting</source>
-        <translation type="unfinished">Sélectionner toutes les pistes exclues de l&apos;autoroutage</translation>
+        <translation>Sélectionner toutes les pistes tracées manuellement</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2263"/>
@@ -1722,7 +1722,7 @@ Nous travaillons à éliminer ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1286"/>
         <source>Raise and Lower</source>
-        <translation type="unfinished">Relever et rabaisser</translation>
+        <translation>Modifier l&apos;ordre</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1993"/>
@@ -1945,7 +1945,7 @@ Nous travaillons à éliminer ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="292"/>
         <source>Open Core</source>
-        <translation type="unfinished">Ouvrir le cœur</translation>
+        <translation type="unfinished">Ouvrir le jeu de composants standard</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="293"/>
