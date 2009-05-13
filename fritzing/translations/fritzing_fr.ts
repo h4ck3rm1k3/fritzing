@@ -1945,7 +1945,7 @@ Nous travaillons à éliminer ce message afin de pouvoir vous faire choisir entr
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="292"/>
         <source>Open Core</source>
-        <translation type="unfinished">Ouvrir le jeu de composants standard</translation>
+        <translation>Ouvrir le jeu de composants standard</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/partsbinpalettewidget.cpp" line="293"/>
