@@ -78,7 +78,8 @@ ViewSwitcherButton::ViewSwitcherButton(const QString &view, const QString & text
 				}
 
 				QString name = m_resourcePath.arg(active+focus+hover);
-				if (Pixmaps.value(name, NULL) != NULL) {
+				pixmap = Pixmaps.value(name, NULL);
+				if (pixmap != NULL) {
 					// already set this one up
 					continue;	
 				}
