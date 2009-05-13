@@ -1972,3 +1972,9 @@ void MainWindow::svgMissingLayer(const QString & layername, const QString & path
 		.arg(layername)
 	);
 }
+
+void MainWindow::addBoard() {
+	if (m_pcbGraphicsView == NULL) return;
+
+	m_pcbGraphicsView->addBoard();
+}

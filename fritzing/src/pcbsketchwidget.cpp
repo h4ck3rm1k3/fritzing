@@ -30,15 +30,18 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 #include "svg/svgfilesplitter.h"
 #include "items/tracewire.h"
 #include "items/virtualwire.h"
+#include "items/resizableboard.h"
 #include "waitpushundostack.h"
 #include "autorouter1.h"
 #include "connectoritem.h"
+#include "help/sketchmainhelp.h"
 
 static QColor labelTextColor = Qt::white;
 
 PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent)
     : PCBSchematicSketchWidget(viewIdentifier, parent)
 {
+	m_addBoard = false;
 	m_viewName = QObject::tr("PCB View");
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 }
@@ -483,4 +486,37 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 	}
 
 	return false;
+}
+
+void PCBSketchWidget::addBoard() {
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(QPointF(0, 0));
+	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModelPart::RectangleModuleID), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+
+	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
+	// so position it in setCurrent()
+	m_addBoard = true;
+}
+
+void PCBSketchWidget::setCurrent(bool current) {
+	SketchWidget::setCurrent(current);
+	if (current && m_addBoard && (m_addedBoard != NULL)) {
+		m_addBoard = false;
+
+		if (m_fixedToCenterItem != NULL) {
+			QSizeF helpsize = m_fixedToCenterItem->size();
+			QSizeF vp = this->viewport()->size();
+
+			QPointF p;
+			p.setX((int) ((vp.width() - helpsize.width()) / 2));
+			p.setY((int) ((vp.height() - helpsize.height()) / 2));
+
+			// TODO: make these constants less arbitrary
+			p += QPointF(10, 30);
+
+			m_addedBoard->setPos(p);
+			dynamic_cast<ResizableBoard *>(m_addedBoard)->resizePixels(110, helpsize.height() - 30 - 30, m_viewLayers);
+		}
+	}
 }

@@ -679,12 +679,6 @@ void MainWindow::createFileMenuActions() {
 	m_newAct->setStatusTip(tr("Create a new sketch"));
 	connect(m_newAct, SIGNAL(triggered()), this, SLOT(createNewSketch()));
 
-	/*m_newFromTemplateAct = new QAction(tr("&New from Template..."), this);
-	m_newFromTemplateAct->setShortcut(tr("Shift+Ctrl+N"));
-	m_newFromTemplateAct->setStatusTip(tr("Create a new sketch from template"));
-	connect(m_newFromTemplateAct, SIGNAL(triggered()), this, SLOT(createNewSketchFromTemplate()));
-	*/
-
 	m_openAct = new QAction(tr("&Open..."), this);
 	m_openAct->setShortcut(tr("Ctrl+O"));
 	m_openAct->setStatusTip(tr("Open a sketch"));
@@ -1215,7 +1209,6 @@ void MainWindow::createMenus()
 {
     m_fileMenu = menuBar()->addMenu(tr("&File"));
     m_fileMenu->addAction(m_newAct);
-    //m_fileMenu->addAction(m_newFromTemplateAct);
     m_fileMenu->addAction(m_openAct);
     m_fileMenu->addMenu(m_openRecentFileMenu);
     m_fileMenu->addMenu(m_openExampleMenu);
@@ -1783,14 +1776,12 @@ void MainWindow::openInPartsEditor() {
 void MainWindow::createNewSketch() {
     MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
     mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
+
+	mw->addBoard();
     mw->show();
 
     QSettings settings;
     settings.remove("lastOpenSketch");
-}
-
-void MainWindow::createNewSketchFromTemplate() {
-	notYetImplemented(tr("Create New Sketch From Template"));
 }
 
 void MainWindow::minimize() {

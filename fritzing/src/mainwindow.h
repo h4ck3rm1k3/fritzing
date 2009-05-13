@@ -89,6 +89,7 @@ public:
 
 	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id=-1, class PartsBinPaletteWidget* requester=NULL);
 	ModelPart *loadPartFromFile(const QString& newPartPath);
+	void addBoard();
 
 public:
 	static void initExportConstants();
@@ -145,7 +146,6 @@ protected slots:
     void createNewPartInOldEditor();
     void createNewPart();
     void createNewSketch();
-    void createNewSketchFromTemplate();
     void minimize();
     void toggleToolbar(bool toggle);
     void togglePartLibrary(bool toggle);
@@ -384,7 +384,6 @@ protected:
 
 	QMenu *m_fileMenu;
 	QAction *m_newAct;
-	QAction *m_newFromTemplateAct;
 	QAction *m_openAct;
 	QMenu *m_openRecentFileMenu;
     QAction *m_openRecentFileActs[MaxRecentFiles];

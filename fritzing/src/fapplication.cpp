@@ -396,13 +396,8 @@ int FApplication::startup(int & argc, char ** argv)
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = new MainWindow(m_paletteBinModel, m_referenceModel);
 
-//#ifndef WIN_DEBUG
-	// not sure why, but calling showProgress after the main window is instantiated seems to cause a deadlock in windows debug mode
-	// thought it might be the splashscreen calling QApplication::flush() but eliminating that didn't remove the deadlock
-	// now thinking that it may have something to do with DebugDialog::debug, as the bottleneck seems to disappear when DebugLevel is set to Error
 	splash.showProgress(progressIndex, 0.9);
 	processEvents();
-//#endif
 
 	int loaded = 0;
 	for(int i=1; i < argc; i++) {
@@ -424,6 +419,7 @@ int FApplication::startup(int & argc, char ** argv)
 			if(QFileInfo(lastSketchPath).exists()) {
 				settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
 				mainWindow->load(lastSketchPath);
+				loaded++;
 				settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
 			} else {
 				settings.remove("lastOpenSketch");
@@ -441,6 +437,9 @@ int FApplication::startup(int & argc, char ** argv)
 	processEvents();
 //#endif
 
+	if (!loaded) {
+		mainWindow->addBoard();
+	}
 	mainWindow->show();
 
 	/*

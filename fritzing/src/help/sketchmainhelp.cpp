@@ -75,7 +75,7 @@ SketchMainHelpPrivate::SketchMainHelpPrivate (
 
 	QLabel *imageLabel = new QLabel(this);
 	QLabel *imageLabelAux = new QLabel(imageLabel);
-	imageLabelAux->setObjectName("inviewHelpImage");
+	imageLabelAux->setObjectName(QString("inviewHelpImage%1").arg(viewString));
 	QPixmap pixmap(QString(":/resources/images/helpImage%1.png").arg(viewString));
 	imageLabelAux->setPixmap(pixmap);
 	imageLabel->setFixedWidth(pixmap.width());

@@ -51,7 +51,8 @@ public:
 	void clearRouting(QUndoCommand * parentCommand);
 	void updateRatsnestStatus(CleanUpWiresCommand*, QUndoCommand *);
 	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
-
+	void addBoard();
+	void setCurrent(bool current);
 
 protected:
 	void setWireVisible(Wire * wire);
@@ -73,6 +74,8 @@ protected:
 	int m_netRoutedCount;
 	int m_connectorsLeftToRoute;
 	int m_jumperCount;
+	bool m_addBoard;
+	ItemBase * m_addedBoard;
 
 };
 

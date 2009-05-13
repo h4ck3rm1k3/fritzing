@@ -29,8 +29,16 @@ SketchMainHelpPrivate {
 	border-left-color: #eaeaea;
 }
 
-#inviewHelpImage {
+#inviewHelpImageBreadboard {
 	border: 4px solid white;
+}
+
+#inviewHelpImageSchematic {
+	border: 4px solid white;
+}
+
+#inviewHelpImagePCB {
+	border: 0px solid white;
 }
 
 #toolHelpPartsBin, #toolHelpPartsBin QLabel,

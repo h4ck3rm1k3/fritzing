@@ -34,6 +34,7 @@ static QString SilkscreenLayerTemplate = "";
 static const int LineThickness = 4;
 
 #define mm2mils(mm) (mm / 25.4 * 1000)
+#define pixels2mm(p) (p / FSvgRenderer::printerScale() * 25.4)
 
 ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu, bool doLabel)
 	: PaletteItem(modelPart, viewIdentifier, viewGeometry, id, itemMenu, doLabel)
@@ -182,7 +183,7 @@ void ResizableBoard::mouseMoveEvent(QGraphicsSceneMouseEvent * event) {
 	}
 
 	LayerHash lh;
-	resizeMM(newR.width() / FSvgRenderer::printerScale() * 25.4, newR.height() / FSvgRenderer::printerScale() * 25.4, lh);
+	resizePixels(newR.width(), newR.height(), lh);
 	event->accept();
 }
 
@@ -265,6 +266,10 @@ bool ResizableBoard::setUpImage(ModelPart * modelPart, ViewIdentifierClass::View
 	return result;
 }
 
+void ResizableBoard::resizePixels(qreal w, qreal h, const LayerHash & viewLayers) {
+	resizeMM(pixels2mm(w), pixels2mm(h), viewLayers);
+}
+
 void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers) {
 	if (mmW == 0 || mmH == 0) {
 		setUpImage(modelPart(), m_viewIdentifier, viewLayers, m_viewLayerID, true);
@@ -326,7 +331,7 @@ void ResizableBoard::setInitialSize() {
 	if (sz.width() == 0) {
 		// set the size so the infoGraphicsView will display the size as you drag
 		sz = this->boundingRect().size();
-		modelPart()->setSize(QSizeF(sz.width() / FSvgRenderer::printerScale() * 25.4, sz.height() / FSvgRenderer::printerScale() * 25.4)); 
+		modelPart()->setSize(QSizeF(pixels2mm(sz.width()), pixels2mm(sz.height()))); 
 	}
 }
 

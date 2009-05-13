@@ -45,6 +45,7 @@ public:
 
 	bool setUpImage(ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);
 	void resizeMM(qreal w, qreal h, const LayerHash & viewLayers);
+	void resizePixels(qreal w, qreal h, const LayerHash & viewLayers);
  	void loadLayerKin(const LayerHash & viewLayers);
 	void setInitialSize();
 	QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
