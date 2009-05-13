@@ -40,7 +40,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "../../palettemodel.h"
 #include "../../waitpushundostack.h"
 #include "../../debugdialog.h"
-#include "../../partseditor/partseditordialog.h"
+#include "../../partseditor/partseditormainwindow.h"
 
 
 QString BinManager::Title;
@@ -450,22 +450,20 @@ void BinManager::tabCloseRequested(StackTabWidget* tw, int index) {
 	closeBinIn(tw,index);
 }
 
-void BinManager::addPartTo(PartsBinPaletteWidget* bin) {
-	QList<ModelPart*> mps = AddPartWizard::getModelParts(m_mainWindow, this);
-	foreach(ModelPart *mp, mps) {
+void BinManager::addPartTo(PartsBinPaletteWidget* bin, ModelPart* mp) {
+	if(mp) {
+		bool alreadyIn = bin->contains(mp->moduleID());
 		bin->addPart(mp);
-	}
-	if(!mps.isEmpty()) {
-		setDirtyTab(bin,true);
+		if(!alreadyIn) {
+			setDirtyTab(bin,true);
+		}
 	}
 }
 
 void BinManager::newPartTo(PartsBinPaletteWidget* bin) {
-	ModelPart *mp = PartsEditorDialog::newPart(m_mainWindow);
-	if(mp) {
-		bin->addPart(mp);
-		setDirtyTab(bin,true);
-	}
+	PartsEditorMainWindow *partsEditor = m_mainWindow->getPartsEditor(NULL, -1, bin);
+	partsEditor->show();
+	partsEditor->raise();
 }
 
 void BinManager::importPartTo(PartsBinPaletteWidget* bin) {
@@ -477,21 +475,13 @@ void BinManager::importPartTo(PartsBinPaletteWidget* bin) {
 	);
 	if(!newPartPath.isEmpty() && !newPartPath.isNull()) {
 		ModelPart *mp = m_mainWindow->loadBundledPart(newPartPath,false);
-		if(mp) {
-			bool alreadyIn = bin->contains(mp->moduleID());
-			bin->addPart(mp);
-			if(!alreadyIn) {
-				setDirtyTab(bin,true);
-			}
-		}
+		addPartTo(bin,mp);
 	}
 }
 
 void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
 	ModelPart *selectedMP = bin->selected();
-	ModelPart *mp = PartsEditorDialog::editPart(m_mainWindow, selectedMP);
-	if(mp) {
-		bin->addPart(mp);
-		setDirtyTab(bin,true);
-	}
+	PartsEditorMainWindow *partsEditor = m_mainWindow->getPartsEditor(selectedMP, -1, bin);
+	partsEditor->show();
+	partsEditor->raise();
 }

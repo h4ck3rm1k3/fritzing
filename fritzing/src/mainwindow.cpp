@@ -46,6 +46,7 @@ $Date$
 #include "debugdialog.h"
 #include "connector.h"
 #include "partseditor/mainpartseditorwindow.h"
+#include "partsbinpalette/partsbinpalettewidget.h"
 #include "fdockwidget.h"
 #include "htmlinfoview.h"
 #include "waitpushundostack.h"
@@ -782,8 +783,7 @@ void MainWindow::changeActivation(bool activate) {
 			}
 
 		}
-	}
-	else {
+	} else {
 		if ((activeWindow != NULL) && (activeWindow == this || activeWindow->parent() == this)) {
 			//DebugDialog::debug("skipping save");
 			return;
@@ -815,10 +815,14 @@ ModelPart *MainWindow::loadPartFromFile(const QString& newPartPath) {
 	return ((PaletteModel*)m_refModel)->addPart(newPartPath, true, true);
 }
 
-void MainWindow::loadPart(const QString &newPartPath) {
+void MainWindow::loadPart(const QString &newPartPath, long partsEditorId) {
 	ModelPart * modelPart = loadPartFromFile(newPartPath);
 	if(modelPart && modelPart->isValid()) {
-		m_paletteWidget->addNewPart(modelPart);
+		if(m_binsWithPartsEditorRequests.contains(partsEditorId)) {
+			m_paletteWidget->addPartTo(m_binsWithPartsEditorRequests[partsEditorId],modelPart);
+		} else {
+			m_paletteWidget->addNewPart(modelPart);
+		}
 		m_infoView->reloadContent(m_currentGraphicsView);
 	}
 }

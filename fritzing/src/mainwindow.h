@@ -87,7 +87,7 @@ public:
 	void showAllFirstTimeHelp(bool show);
 	void enableCheckUpdates(bool enabled);
 
-	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, QWidget *parent, bool asMainWindow=true, long id=-1);
+	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id=-1, class PartsBinPaletteWidget* requester=NULL);
 	ModelPart *loadPartFromFile(const QString& newPartPath);
 
 public:
@@ -184,7 +184,7 @@ protected slots:
 	void updateZoomOptionsNoMatterWhat(qreal zoom);
 	void updateViewZoom(qreal newZoom);
 
-	void loadPart(const QString &newPartPath);
+	void loadPart(const QString &newPartPath, long partsEditorId=-1);
 
 	void findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &);
 
@@ -357,6 +357,7 @@ protected:
     QToolBar *m_toolbar;
 
     QHash <long,class PartsEditorMainWindow*> m_partsEditorWindows;
+    QHash <long,class PartsBinPaletteWidget*> m_binsWithPartsEditorRequests;
 
     class Console * m_consoleView;
     SavedState m_savedState;

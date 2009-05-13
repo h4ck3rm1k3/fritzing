@@ -357,10 +357,6 @@ void PartsBinPaletteWidget::createContextMenus() {
 	m_partContextMenu->addAction(m_removePartAction);
 }
 
-void PartsBinPaletteWidget::addPart() {
-	m_manager->addPartTo(this);
-}
-
 bool PartsBinPaletteWidget::removeSelected() {
 	if(selected()) {
 		QString modId = selected()->moduleID();

@@ -55,8 +55,7 @@ HEADERS += \
     src/partseditor/partseditorlayerkinpaletteitem.h \
     src/partseditor/partseditorconnectorslayerkinpaletteitem.h \
     src/partseditor/partseditorview.h \
-    src/partseditor/partseditorviewswidget.h \
-    src/partseditor/partseditordialog.h
+    src/partseditor/partseditorviewswidget.h
 
 SOURCES += \
     src/partseditor/editabledatewidget.cpp \
@@ -84,6 +83,5 @@ SOURCES += \
     src/partseditor/partseditorconnectorspaletteitem.cpp \
     src/partseditor/partseditorconnectorsconnectoritem.cpp \
     src/partseditor/partseditorview.cpp \
-    src/partseditor/partseditorviewswidget.cpp \
-    src/partseditor/partseditordialog.cpp
+    src/partseditor/partseditorviewswidget.cpp
     

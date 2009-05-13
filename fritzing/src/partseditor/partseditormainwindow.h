@@ -48,7 +48,7 @@ class PartsEditorMainWindow : public FritzingWindow
 Q_OBJECT
 
 public:
-	PartsEditorMainWindow(long id, QWidget *parent=0, ModelPart * modelPart=0, bool fromTemplate=false, bool asMainWindow=true);
+	PartsEditorMainWindow(long id, QWidget *parent=0, ModelPart *modelPart=0, bool fromTemplate=false);
 	~PartsEditorMainWindow();
 
 	static const QString templatePath;
@@ -57,7 +57,7 @@ public:
 	bool validateMinRequirements();
 
 signals:
-	void partUpdated(QString);
+	void partUpdated(const QString &filename, long myId);
 	void closed(long id);
 	void changeActivationSignal(bool activate);
 

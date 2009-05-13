@@ -10,7 +10,7 @@
 #
 # Fritzing is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTIC,asMainWindowULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
@@ -39,9 +39,7 @@ HEADERS += \
     src/partsbinpalette/binmanager/stacktabbar.h \
     src/partsbinpalette/binmanager/stacktabwidget.h \
     src/partsbinpalette/binmanager/stackwidgetseparator.h \
-    src/partsbinpalette/binmanager/dropsink.h \
-    src/partsbinpalette/addpartwizard/addpartwizard.h \
-    src/partsbinpalette/addpartwizard/addpartwizardpages.h
+    src/partsbinpalette/binmanager/dropsink.h
 
 SOURCES += \
     src/partsbinpalette/simpleeditablelabelwidget.cpp \
@@ -57,7 +55,5 @@ SOURCES += \
     src/partsbinpalette/binmanager/stackwidget.cpp \
     src/partsbinpalette/binmanager/stacktabbar.cpp \
     src/partsbinpalette/binmanager/stacktabwidget.cpp \
-    src/partsbinpalette/binmanager/stackwidgetseparator.cpp \
-    src/partsbinpalette/addpartwizard/addpartwizard.cpp \
-    src/partsbinpalette/addpartwizard/addpartwizardpages.cpp
+    src/partsbinpalette/binmanager/stackwidgetseparator.cpp
  

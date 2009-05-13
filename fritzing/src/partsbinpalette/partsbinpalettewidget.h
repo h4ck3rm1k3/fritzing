@@ -104,7 +104,6 @@ class PartsBinPaletteWidget : public QFrame {
 		bool removeSelected();
 		bool saveAs();
 		void undoStackCleanChanged(bool isClean);
-		void addPart();
 		void newBin();
 		void openBin();
 		void openCoreBin();

@@ -81,7 +81,7 @@ void PartsEditorMainWindow::initText() {
 
 }
 
-PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, ModelPart *modelPart, bool fromTemplate, bool asMainWindow)
+PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart *modelPart, bool fromTemplate)
 	: FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension(), parent)
 {
     QFile styleSheet(":/resources/styles/partseditor.qss");
@@ -133,14 +133,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, ModelPar
 
 	createHeader(mp);
 	createCenter(mp);
-	if(asMainWindow) {
-		createFooter();
-	} else {
-		m_footerFrame = NULL;
-		m_saveAsNewPartButton = NULL;
-		m_saveButton = NULL;
-		m_cancelButton = NULL;
-	}
+	createFooter();
 
 	layout()->setMargin(0);
 	layout()->setSpacing(0);
@@ -151,9 +144,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget * parent, ModelPar
 	layout->setSpacing(0);
 	layout->addWidget(m_headerFrame,0,0);
 	layout->addWidget(m_centerFrame,1,0);
-	if(asMainWindow) {
-		layout->addWidget(m_footerFrame,2,0);
-	}
+	layout->addWidget(m_footerFrame,2,0);
 	setCentralWidget(m_mainFrame);
 
     if(fromTemplate) {
@@ -635,7 +626,7 @@ void PartsEditorMainWindow::closeEvent(QCloseEvent *event) {
 	if(beforeClosing()) {
 		cleanUp();
 		QMainWindow::closeEvent(event);
-		if(m_partUpdated) emit partUpdated(m_fileName);
+		if(m_partUpdated) emit partUpdated(m_fileName, m_id);
 		emit closed(m_id);
 	} else {
 		event->ignore();

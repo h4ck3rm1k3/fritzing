@@ -1703,7 +1703,6 @@ void MainWindow::createNewPartInOldEditor() {
 	openOldPartsEditor(NULL);
 }
 
-// TODO PARTS EDITOR REMOVE
 void MainWindow::createNewPart() {
 	openPartsEditor(NULL);
 }
@@ -1731,31 +1730,32 @@ void MainWindow::openOldPartsEditor(PaletteItem *paletteItem){
 void MainWindow::openPartsEditor(PaletteItem * paletteItem) {
 	ModelPart* modelPart = paletteItem? paletteItem->modelPart(): NULL;
 	long id = paletteItem? paletteItem->id(): -1;
-	QWidget *partsEditor = getPartsEditor(modelPart, this, true, id);
+	QWidget *partsEditor = getPartsEditor(modelPart, id);
 	partsEditor->show();
 	partsEditor->raise();
 }
 
-PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, QWidget *parent, bool asMainWindow, long _id) {
+PartsEditorMainWindow* MainWindow::getPartsEditor(ModelPart *modelPart, long _id, class PartsBinPaletteWidget* requester) {
 	static long nextId = -1;
 	long id = _id==-1? nextId--: _id;
 
-	PartsEditorMainWindow * mainPartsEditorWindow = new PartsEditorMainWindow(id,parent,modelPart,modelPart!=NULL,asMainWindow);
+	PartsEditorMainWindow *mainPartsEditorWindow = new PartsEditorMainWindow(id, this, modelPart, (modelPart!=NULL));
 
-	if(asMainWindow) {
-		connect(mainPartsEditorWindow, SIGNAL(partUpdated(QString)), parent, SLOT(loadPart(const QString&)));
-		connect(mainPartsEditorWindow, SIGNAL(closed(long)), parent, SLOT(partsEditorClosed(long)));
+	connect(mainPartsEditorWindow, SIGNAL(partUpdated(const QString&, long)), this, SLOT(loadPart(const QString&, long)));
+	connect(mainPartsEditorWindow, SIGNAL(closed(long)), this, SLOT(partsEditorClosed(long)));
 
-		connect(this, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
-		connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), this, SLOT(changeActivation(bool)));
+	connect(this, SIGNAL(aboutToClose()), mainPartsEditorWindow, SLOT(parentAboutToClose()));
+	connect(mainPartsEditorWindow, SIGNAL(changeActivationSignal(bool)), this, SLOT(changeActivation(bool)));
 
-		m_partsEditorWindows.insert(id, mainPartsEditorWindow);
-	}
+	m_partsEditorWindows.insert(id, mainPartsEditorWindow);
+	if(requester) m_binsWithPartsEditorRequests.insert(id,requester);
+
 	return mainPartsEditorWindow;
 }
 
 void MainWindow::partsEditorClosed(long id) {
 	m_partsEditorWindows.remove(id);
+	m_binsWithPartsEditorRequests.remove(id);
 }
 
 void MainWindow::openInOldPartsEditor() {
@@ -1775,8 +1775,7 @@ void MainWindow::openInPartsEditor() {
 
 	if(window != NULL) {
 		window->raise();
-	}
-	else {
+	} else {
 		openPartsEditor(selectedPart);
 	}
 }
