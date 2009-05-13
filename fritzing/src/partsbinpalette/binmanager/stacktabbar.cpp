@@ -106,6 +106,13 @@ void StackTabBar::dragEnterEvent(QDragEnterEvent* event) {
 	}
 }
 
+void StackTabBar::dragLeaveEvent(QDragLeaveEvent* event) {
+	for(int i=0; i < m_parent->count(); i++) {
+		m_parent->showFeedback(i, QTabBar::LeftSide, false);
+	}
+	QTabBar::dragLeaveEvent(event);
+}
+
 void StackTabBar::dragMoveEvent(QDragMoveEvent* event) {
 	const QMimeData *m = event->mimeData();
 	int index = tabAt(event->pos());

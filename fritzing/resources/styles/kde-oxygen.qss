@@ -8,6 +8,8 @@ PartsEditorMainWindow QTabWidget::pane {
 	top: 0.41em;
 }
 
+/*
 PartsEditorMainWindow QTabbar::tab {
 	min-height: 3em;
 }
+*/
