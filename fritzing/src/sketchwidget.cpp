@@ -1291,14 +1291,7 @@ bool SketchWidget::dragEnterEventAux(QDragEnterEvent *event) {
 	m_droppingWire = (modelPart->itemType() == ModelPart::Wire);
 	m_droppingOffset = offset;
 
-	// TODO Mariano: "ItemDrag::_cache().contains(this)" condition
-	// only true when dragging from list view. Ask Jonathan what is
-	// this exactly supposed to be for.
-	//
-	// ItemDrag::_cache().contains(this) == true, even after calling
-	// ItemDrag::_dragIsDone() in PartsBinListView::mousePressEvent()
-	//
-	if (false /*ItemDrag::_cache().contains(this)*/) {
+	if (ItemDrag::_cache().contains(this)) {
 		m_droppingItem->setVisible(true);
 	} else {
 		ViewGeometry viewGeometry;

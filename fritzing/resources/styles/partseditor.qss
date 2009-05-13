@@ -126,6 +126,7 @@ AbstractEditableLabelWidget QLabel {
 
 #partsEditor QTabWidget::tab-bar {
  	left: 5px;
+	top: 5px;
 }
 
 #partsEditor QTabBar::tab {

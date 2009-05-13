@@ -3,9 +3,9 @@ StackTabWidget::pane {
 	top: 0.43em;
 }
 
-PartsEditorMainWindow QTabWidget::pane {
+#partsEditor QTabWidget::pane {
 	position: absolute;
-	top: 0.41em;
+	top: 0.4em;
 }
 
 /*

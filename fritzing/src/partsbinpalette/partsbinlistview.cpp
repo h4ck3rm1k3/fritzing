@@ -135,7 +135,6 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 	ModelPart * modelPart = item->data(Qt::UserRole).value<ModelPart *>();
 	if (modelPart == NULL) return;
 
-	DebugDialog::debug("<<<< "+modelPart->title());
 	m_infoView->hoverEnterItem(modelPart, swappingEnabled());
 }
 
@@ -143,7 +142,6 @@ void PartsBinListView::showInfo(QListWidgetItem * item) {
 void PartsBinListView::mousePressEvent(QMouseEvent *event) {
 	m_dragStartPos = event->pos();
 	QListWidget::mousePressEvent(event);
-	ItemDrag::_dragIsDone();
 
 	QListWidgetItem * current = currentItem();
 	if (current == NULL) return;
@@ -207,6 +205,11 @@ void PartsBinListView::setSelected(int position, bool doEmit) {
 void PartsBinListView::dropEvent(QDropEvent* event) {
 	dropEventAux(event);
 	QListWidget::dropEvent(event);
+}
+
+void PartsBinListView::startDrag(Qt::DropActions supportedActions) {
+	QListWidget::startDrag(supportedActions);
+	ItemDrag::_dragIsDone();
 }
 
 void PartsBinListView::moveItem(int fromIndex, int toIndex) {
