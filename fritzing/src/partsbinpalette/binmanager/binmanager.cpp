@@ -116,7 +116,7 @@ void BinManager::connectTabWidget(StackTabWidget *tw) {
 }
 
 void BinManager::insertBin(PartsBinPaletteWidget* bin, int index, StackTabWidget* tb) {
-	bin->setTabWidget(tb);
+	registerBin(bin,tb);
 	tb->insertTab(index,bin,bin->title());
 	tb->setCurrentIndex(index);
 	m_tabWidgets[bin] = tb;
@@ -309,6 +309,16 @@ PartsBinPaletteWidget* BinManager::newBin() {
 	connect(bin, SIGNAL(saved(bool)), m_mainWindow, SLOT(binSaved(bool)));
 	connect(m_mainWindow, SIGNAL(alienPartsDismissed()), bin, SLOT(removeAlienParts()));
 
+	connect(
+		bin, SIGNAL(draggingCloseToSeparator(QWidget*,bool)),
+		m_widget, SLOT(draggingCloseToSeparator(QWidget*,bool))
+	);
+
+	connect(
+		bin, SIGNAL(dropToSeparator(QWidget*)),
+		m_widget, SLOT(dropToSeparator(QWidget*))
+	);
+
 	return bin;
 }
 
@@ -484,3 +494,4 @@ void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
 	partsEditor->show();
 	partsEditor->raise();
 }
+

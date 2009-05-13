@@ -52,7 +52,6 @@ StackWidgetSeparator::~StackWidgetSeparator() {
 
 void StackWidgetSeparator::dragEnterEvent(QDragEnterEvent *event) {
 	// Only accept if it's an tab-reordering request
-	expand();
 	const QMimeData* m = event->mimeData();
 	QStringList formats = m->formats();
 	if (formats.contains("action") && (m->data("action") == "tab-reordering")) {
@@ -88,6 +87,7 @@ void StackWidgetSeparator::showFeedback(int index, QTabBar::ButtonPosition side,
 	Q_UNUSED(index);
 	Q_UNUSED(side);
 	if(!doShow) shrink();
+	else expand();
 	m_feedbackIcon->setVisible(doShow);
 }
 

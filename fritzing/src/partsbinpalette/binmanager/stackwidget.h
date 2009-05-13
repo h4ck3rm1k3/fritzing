@@ -74,6 +74,9 @@ class StackWidget : public QFrame {
 		void setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPosition side, int index);
 		void dropped();
 
+		void draggingCloseToSeparator(class QWidget*, bool);
+		void dropToSeparator(QWidget*);
+
 	signals:
 		void currentChanged(int index);
 		void widgetRemoved(int index);
@@ -94,6 +97,7 @@ class StackWidget : public QFrame {
 		DragFromOrTo m_potentialDropSink;
 
 		QHash<QWidget*,StackWidgetSeparator*> m_separators;
+		StackWidgetSeparator* m_topSeparator;
 };
 
 #endif /* STACKWIDGET_H_ */

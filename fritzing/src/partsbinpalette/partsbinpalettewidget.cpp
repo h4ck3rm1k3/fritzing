@@ -50,6 +50,8 @@ $Date$
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
 	QFrame(manager)
 {
+	setAcceptDrops(true);
+
 	m_tabWidget = NULL;
 	m_manager = manager;
 
@@ -71,14 +73,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	m_listView = new PartsBinListView(m_refModel, this, m_binContextMenu, m_partContextMenu);
 	m_listView->setInfoView(infoView);
 
-	//m_binTitle = new SimpleEditableLabelWidget(m_undoStack,this);
-	/*connect(
-		m_binTitle, SIGNAL(textChanged(const QString&)),
-		this, SLOT(titleChanged(const QString&))
-	);*/
-
 	setObjectName("partsBinContainer");
-
 	toIconView();
 
 	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
@@ -692,3 +687,43 @@ PartsBinView *PartsBinPaletteWidget::currentView() {
 	return m_currentView;
 }
 
+bool PartsBinPaletteWidget::isTabReorderingEvent(QDropEvent* event) {
+	const QMimeData *m = event->mimeData();
+	QStringList formats = m->formats();
+	return formats.contains("action") && (m->data("action") == "tab-reordering");
+}
+
+bool PartsBinPaletteWidget::isOverFooter(QDropEvent* event) {
+	QRect mappedFooterRect(
+		m_footer->pos(),
+		m_footer->rect().size()
+	);
+	return mappedFooterRect.contains(event->pos());
+}
+
+void PartsBinPaletteWidget::dragEnterEvent(QDragEnterEvent *event) {
+	if(isTabReorderingEvent(event)) {
+		event->acceptProposedAction();
+	}
+	QFrame::dragEnterEvent(event);
+}
+
+void PartsBinPaletteWidget::dragLeaveEvent(QDragLeaveEvent *event) {
+	emit draggingCloseToSeparator((QWidget*)m_tabWidget,false);
+	QFrame::dragLeaveEvent(event);
+}
+
+void PartsBinPaletteWidget::dragMoveEvent(QDragMoveEvent *event) {
+	if(isOverFooter(event) && isTabReorderingEvent(event)) {
+		event->acceptProposedAction();
+		emit draggingCloseToSeparator((QWidget*)m_tabWidget,true);
+	}
+	QFrame::dragMoveEvent(event);
+}
+
+void PartsBinPaletteWidget::dropEvent(QDropEvent *event) {
+	if(isOverFooter(event) && isTabReorderingEvent(event)) {
+		emit dropToSeparator((QWidget*)m_tabWidget);
+	}
+	QFrame::dropEvent(event);
+}

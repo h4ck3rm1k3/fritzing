@@ -119,8 +119,14 @@ class PartsBinPaletteWidget : public QFrame {
 		void fileNameUpdated(PartsBinPaletteWidget*, const QString &newFileName, const QString &oldFilename);
 		void savePartAsBundled(const QString &moduleId);
 		void focused(PartsBinPaletteWidget*);
+		void draggingCloseToSeparator(QWidget*,bool);
+		void dropToSeparator(QWidget*);
 
 	protected:
+		void dragEnterEvent(QDragEnterEvent *event);
+		void dragLeaveEvent(QDragLeaveEvent *event);
+		void dragMoveEvent(QDragMoveEvent *event);
+		void dropEvent(QDropEvent *event);
 		void closeEvent(QCloseEvent *event);
 		void mousePressEvent(QMouseEvent *event);
 		bool eventFilter(QObject *obj, QEvent *event);
@@ -134,6 +140,8 @@ class PartsBinPaletteWidget : public QFrame {
 		void saveAsAux(const QString &filename);
 
 		void afterModelSetted(PaletteModel *model);
+		bool isTabReorderingEvent(QDropEvent* event);
+		bool isOverFooter(QDropEvent* event);
 
 		void createBinMenu();
 		void createPartMenu();

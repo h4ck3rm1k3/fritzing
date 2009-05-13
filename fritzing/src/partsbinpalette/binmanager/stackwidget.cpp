@@ -30,6 +30,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "stackwidget.h"
 #include "stacktabwidget.h"
 #include "stackwidgetseparator.h"
+#include "../partsbinpalettewidget.h"
 #include "../../debugdialog.h"
 
 
@@ -43,7 +44,8 @@ StackWidget::StackWidget(QWidget *parent) : QFrame(parent) {
 	m_dropSink = DragFromOrTo();
 	m_potentialDropSink = DragFromOrTo();
 
-	m_layout->addWidget(newSeparator(this));
+	m_topSeparator = newSeparator(this);
+	m_layout->addWidget(m_topSeparator);
 }
 
 int StackWidget::addWidget(QWidget *widget) {
@@ -51,6 +53,28 @@ int StackWidget::addWidget(QWidget *widget) {
 	m_layout->addWidget(newSeparator(widget));
 	if(!m_current) m_current = widget;
 	return indexOf(widget);
+}
+
+void StackWidget::insertWidget(int index, QWidget *widget) {
+	m_layout->insertWidget(index, widget);
+	m_layout->insertWidget(index+1, newSeparator(widget));
+	//if(!m_current) m_current = widget;
+}
+
+void StackWidget::removeWidget(QWidget *widget) {
+	m_layout->removeWidget(widget);
+	if(m_current == widget) m_current = NULL;
+	if(m_separators.contains(widget)) {
+		StackWidgetSeparator* sep = m_separators[widget];
+		m_separators.remove(widget);
+		m_layout->removeWidget(sep);
+		sep->hide();
+		//sep->setParent(NULL);
+		//delete sep;
+	}
+	widget->hide();
+	//widget->setParent(NULL);
+	//delete widget;
 }
 
 StackWidgetSeparator *StackWidget::newSeparator(QWidget *widget) {
@@ -87,29 +111,7 @@ QWidget *StackWidget::currentWidget() const {
 int StackWidget::indexOf(QWidget *widget) const {
 	return m_layout->indexOf(widget);
 }
-
-void StackWidget::insertWidget(int index, QWidget *widget) {
-	m_layout->insertWidget(index, widget);
-	m_layout->insertWidget(index+1, newSeparator(widget));
-	//if(!m_current) m_current = widget;
-}
-
-void StackWidget::removeWidget(QWidget *widget) {
-	m_layout->removeWidget(widget);
-	if(m_current == widget) m_current = NULL;
-	if(m_separators.contains(widget)) {
-		StackWidgetSeparator* sep = m_separators[widget];
-		m_separators.remove(widget);
-		m_layout->removeWidget(sep);
-		sep->hide();
-		//sep->setParent(NULL);
-		//delete sep;
-	}
-	widget->hide();
-	//widget->setParent(NULL);
-	//delete widget;
-}
-
+m_topSeparator
 QWidget *StackWidget::widget(int index) const {
 	QLayoutItem *item = m_layout->itemAt(index);
 	if(item) {
@@ -147,7 +149,9 @@ void StackWidget::setPotentialDropSink(DropSink* receptor, QTabBar::ButtonPositi
 		oldOne->showFeedback(m_potentialDropSink.index, side, false);
 	}
 	m_potentialDropSink = DragFromOrTo(receptor,index,side);
-	m_potentialDropSink.sink->showFeedback(m_potentialDropSink.index, side, true);
+	if(m_potentialDropSink.sink) {
+		m_potentialDropSink.sink->showFeedback(m_potentialDropSink.index, side, true);
+	}
 }
 
 void StackWidget::dropped() {
@@ -202,4 +206,21 @@ int StackWidget::closestIndexToPos(const QPoint &pos) {
     	}
 	}
     return -1;
+}
+
+void StackWidget::draggingCloseToSeparator(QWidget* w, bool really) {
+	if(m_separators.contains(w)) {
+		if(really) {
+			setPotentialDropSink(m_separators[w],QTabBar::LeftSide,-1);
+		} else {
+			setPotentialDropSink(NULL,QTabBar::LeftSide,-1);
+		}
+	}
+}
+
+void StackWidget::dropToSeparator(QWidget* w) {
+	if(m_separators.contains(w)) {
+		setDropSink(m_separators[w],QTabBar::LeftSide,true);
+		dropped();
+	}
 }
