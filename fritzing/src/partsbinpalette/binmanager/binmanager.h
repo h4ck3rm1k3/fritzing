@@ -74,6 +74,8 @@ class BinManager : public QFrame {
 		void importPartTo(PartsBinPaletteWidget* bin);
 		void editSelectedPartFrom(PartsBinPaletteWidget* bin);
 
+		void dockedInto(class FDockWidget* dock);
+
 	public slots:
 		void addPartCommand(const QString& moduleID);
 
@@ -106,7 +108,7 @@ class BinManager : public QFrame {
 		WaitPushUndoStack *m_undoStack;
 
 		MainWindow *m_mainWindow;
-		StackWidget *m_widget;
+		StackWidget *m_stackWidget;
 		PartsBinPaletteWidget *m_currentBin;
 
 		QHash<PartsBinPaletteWidget*,StackTabWidget*> m_tabWidgets;
@@ -121,6 +123,7 @@ class BinManager : public QFrame {
 	public:
 		static QString Title;
 		static QString MyPartsBinLocation;
+		static bool isTabReorderingEvent(QDropEvent* event);
 };
 
 #endif /* BINMANAGER_H_ */

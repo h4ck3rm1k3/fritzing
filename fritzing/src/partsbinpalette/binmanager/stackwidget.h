@@ -50,6 +50,22 @@ struct DragFromOrTo {
 	QTabBar::ButtonPosition side;
 };
 
+class StackWidgetDockTitleBar : public QFrame {
+	Q_OBJECT
+	public:
+		StackWidgetDockTitleBar(class StackWidget*, class FDockWidget*);
+
+	signals:
+		void draggingCloseToSeparator(QWidget*,bool);
+		void dropToSeparator(QWidget*);
+
+	protected:
+		void dragEnterEvent(QDragEnterEvent *event);
+		void dragLeaveEvent(QDragLeaveEvent *event);
+		void dragMoveEvent(QDragMoveEvent *event);
+		void dropEvent(QDropEvent *event);
+};
+
 class StackWidget : public QFrame {
 	Q_OBJECT
 	public:
@@ -64,6 +80,8 @@ class StackWidget : public QFrame {
 		void removeWidget(QWidget *widget);
 		QWidget *widget(int index) const;
 		bool contains(QWidget *widget) const;
+
+		void setDock(class FDockWidget*);
 
 	public slots:
 		void setCurrentIndex(int index);

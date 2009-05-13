@@ -30,9 +30,65 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 #include "stackwidget.h"
 #include "stacktabwidget.h"
 #include "stackwidgetseparator.h"
+#include "binmanager.h"
 #include "../partsbinpalettewidget.h"
+#include "../../fdockwidget.h"
 #include "../../debugdialog.h"
 
+
+StackWidgetDockTitleBar::StackWidgetDockTitleBar(class StackWidget* stackW, FDockWidget* dock)
+	: QFrame(stackW)
+{
+	setAcceptDrops(true);
+	QVBoxLayout *lo = new QVBoxLayout(this);
+	lo->setMargin(0);
+	lo->setSpacing(0);
+	//lo->addWidget(dock->layout()->itemAt(2)->widget());
+
+	//DebugDialog::debug(dock->layout()->itemAt(2)->widget()->metaObject()->className());
+
+	/*QLayout *dlo = dock->layout();
+	DebugDialog::debug(QString("%1").arg(dlo->count()));*/
+
+	connect(
+		this, SIGNAL(draggingCloseToSeparator(QWidget*,bool)),
+		stackW, SLOT(draggingCloseToSeparator(QWidget*,bool))
+	);
+
+	connect(
+		this, SIGNAL(dropToSeparator(QWidget*)),
+		stackW, SLOT(dropToSeparator(QWidget*))
+	);
+}
+
+void StackWidgetDockTitleBar::dragEnterEvent(QDragEnterEvent *event) {
+	if(BinManager::isTabReorderingEvent(event)) {
+		event->acceptProposedAction();
+	}
+	QFrame::dragEnterEvent(event);
+}
+
+void StackWidgetDockTitleBar::dragLeaveEvent(QDragLeaveEvent *event) {
+	emit draggingCloseToSeparator(this,false);
+	QFrame::dragLeaveEvent(event);
+}
+
+void StackWidgetDockTitleBar::dragMoveEvent(QDragMoveEvent *event) {
+	if(BinManager::isTabReorderingEvent(event)) {
+		event->acceptProposedAction();
+		emit draggingCloseToSeparator(this,true);
+	}
+	QFrame::dragMoveEvent(event);
+}
+
+void StackWidgetDockTitleBar::dropEvent(QDropEvent *event) {
+	if(BinManager::isTabReorderingEvent(event)) {
+		emit dropToSeparator(this);
+	}
+	QFrame::dropEvent(event);
+}
+
+///////////////////////////////////////////////////////////////////
 
 StackWidget::StackWidget(QWidget *parent) : QFrame(parent) {
 	m_current = NULL;
@@ -111,7 +167,7 @@ QWidget *StackWidget::currentWidget() const {
 int StackWidget::indexOf(QWidget *widget) const {
 	return m_layout->indexOf(widget);
 }
-m_topSeparator
+
 QWidget *StackWidget::widget(int index) const {
 	QLayoutItem *item = m_layout->itemAt(index);
 	if(item) {
@@ -223,4 +279,12 @@ void StackWidget::dropToSeparator(QWidget* w) {
 		setDropSink(m_separators[w],QTabBar::LeftSide,true);
 		dropped();
 	}
+}
+
+void StackWidget::setDock(FDockWidget* dock) {
+	Q_UNUSED(dock)
+	/*StackWidgetDockTitleBar* dtb = new StackWidgetDockTitleBar(this,dock);
+	m_separators.remove(this);
+	m_separators[dtb] = m_topSeparator;
+	dock->setTitleBarWidget(dtb);*/
 }

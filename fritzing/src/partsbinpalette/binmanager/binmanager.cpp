@@ -62,17 +62,17 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_mainWindow = parent;
 	m_currentBin = NULL;
 
-	m_widget = new StackWidget(this);
-	m_widget->setAcceptDrops(true);
+	m_stackWidget = new StackWidget(this);
+	m_stackWidget->setAcceptDrops(true);
 	connect(
-		m_widget, SIGNAL(widgetChangedTabParent(QWidget*, StackTabWidget*,StackTabWidget*)),
+		m_stackWidget, SIGNAL(widgetChangedTabParent(QWidget*, StackTabWidget*,StackTabWidget*)),
 		this, SLOT(widgetChangedTabParent(QWidget*, StackTabWidget*,StackTabWidget*))
 	);
 
 	m_unsavedBinsCount = 0;
 
 	QVBoxLayout *lo = new QVBoxLayout(this);
-	lo->addWidget(m_widget);
+	lo->addWidget(m_stackWidget);
 	lo->setMargin(0);
 	lo->setSpacing(0);
 	setMaximumHeight(500);
@@ -85,9 +85,9 @@ BinManager::~BinManager() {
 }
 
 void BinManager::addBin(PartsBinPaletteWidget* bin) {
-	StackTabWidget *tb = new StackTabWidget(m_widget);
+	StackTabWidget *tb = new StackTabWidget(m_stackWidget);
 	tb->addTab(bin,bin->title());
-	m_widget->addWidget(tb);
+	m_stackWidget->addWidget(tb);
 	registerBin(bin,tb);
 	connectTabWidget(tb);
 	setAsCurrentBin(bin);
@@ -138,8 +138,8 @@ void BinManager::setPaletteModel(PaletteModel *model) {
 bool BinManager::beforeClosing() {
 	bool retval = true;
 
-	for(int i=0; i < m_widget->count(); i++) {
-		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_widget->widget(i));
+	for(int i=0; i < m_stackWidget->count(); i++) {
+		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_stackWidget->widget(i));
 		if(tw) {
 			for(int j=0; j < tw->count(); j++) {
 				PartsBinPaletteWidget *bin = dynamic_cast<PartsBinPaletteWidget*>(tw->widget(j));
@@ -311,12 +311,12 @@ PartsBinPaletteWidget* BinManager::newBin() {
 
 	connect(
 		bin, SIGNAL(draggingCloseToSeparator(QWidget*,bool)),
-		m_widget, SLOT(draggingCloseToSeparator(QWidget*,bool))
+		m_stackWidget, SLOT(draggingCloseToSeparator(QWidget*,bool))
 	);
 
 	connect(
 		bin, SIGNAL(dropToSeparator(QWidget*)),
-		m_widget, SLOT(dropToSeparator(QWidget*))
+		m_stackWidget, SLOT(dropToSeparator(QWidget*))
 	);
 
 	return bin;
@@ -358,10 +358,10 @@ void BinManager::closeBinIn(StackTabWidget* tb, int index) {
 		m_openedBins.remove(w->fileName());
 
 		bool emptyTabWidget = tb->count() == 0;
-		if(emptyTabWidget && m_widget->count() == 3) { // only the two separators
+		if(emptyTabWidget && m_stackWidget->count() == 3) { // only the two separators
 			openCoreBinIn(tb);
 		} else if(emptyTabWidget) {
-			m_widget->removeWidget(tb);
+			m_stackWidget->removeWidget(tb);
 		}
 	}
 }
@@ -383,8 +383,8 @@ void BinManager::saveStateAndGeometry() {
 	QSettings settings;
 	settings.remove("bins"); // clean up previous state
 	settings.beginGroup("bins");
-	for(int i=m_widget->count()-1; i >= 0; i--) {
-		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_widget->widget(i));
+	for(int i=m_stackWidget->count()-1; i >= 0; i--) {
+		StackTabWidget *tw = dynamic_cast<StackTabWidget*>(m_stackWidget->widget(i));
 		if(tw) {
 			bool groupBegan = false;
 			for(int j=tw->count()-1; j >= 0; j--) {
@@ -409,7 +409,7 @@ void BinManager::restoreStateAndGeometry() {
 	QSettings settings;
 	settings.beginGroup("bins");
 	if(settings.childGroups().size()==0) { // first time? open core and my_parts then
-		StackTabWidget *tw = new StackTabWidget(m_widget);
+		StackTabWidget *tw = new StackTabWidget(m_stackWidget);
 
 		PartsBinPaletteWidget* core = newBin();
 		core->openCore();
@@ -421,12 +421,12 @@ void BinManager::restoreStateAndGeometry() {
 		tw->addTab(myParts,myParts->title());
 		registerBin(myParts,tw);
 
-		m_widget->addWidget(tw);
+		m_stackWidget->addWidget(tw);
 	} else {
 		foreach(QString g, settings.childGroups()) {
 			settings.beginGroup(g);
 
-			StackTabWidget *tw = new StackTabWidget(m_widget);
+			StackTabWidget *tw = new StackTabWidget(m_stackWidget);
 			foreach(QString k, settings.childKeys()) {
 				PartsBinPaletteWidget* bin = newBin();
 				QString filename = settings.value(k).toString();
@@ -438,7 +438,7 @@ void BinManager::restoreStateAndGeometry() {
 					delete bin;
 				}
 			}
-			m_widget->addWidget(tw);
+			m_stackWidget->addWidget(tw);
 
 			settings.endGroup();
 		}
@@ -495,3 +495,12 @@ void BinManager::editSelectedPartFrom(PartsBinPaletteWidget* bin) {
 	partsEditor->raise();
 }
 
+void BinManager::dockedInto(FDockWidget* dock) {
+	m_stackWidget->setDock(dock);
+}
+
+bool BinManager::isTabReorderingEvent(QDropEvent* event) {
+	const QMimeData *m = event->mimeData();
+	QStringList formats = m->formats();
+	return formats.contains("action") && (m->data("action") == "tab-reordering");
+}

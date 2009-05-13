@@ -687,12 +687,6 @@ PartsBinView *PartsBinPaletteWidget::currentView() {
 	return m_currentView;
 }
 
-bool PartsBinPaletteWidget::isTabReorderingEvent(QDropEvent* event) {
-	const QMimeData *m = event->mimeData();
-	QStringList formats = m->formats();
-	return formats.contains("action") && (m->data("action") == "tab-reordering");
-}
-
 bool PartsBinPaletteWidget::isOverFooter(QDropEvent* event) {
 	QRect mappedFooterRect(
 		m_footer->pos(),
@@ -702,7 +696,7 @@ bool PartsBinPaletteWidget::isOverFooter(QDropEvent* event) {
 }
 
 void PartsBinPaletteWidget::dragEnterEvent(QDragEnterEvent *event) {
-	if(isTabReorderingEvent(event)) {
+	if(BinManager::isTabReorderingEvent(event)) {
 		event->acceptProposedAction();
 	}
 	QFrame::dragEnterEvent(event);
@@ -714,7 +708,7 @@ void PartsBinPaletteWidget::dragLeaveEvent(QDragLeaveEvent *event) {
 }
 
 void PartsBinPaletteWidget::dragMoveEvent(QDragMoveEvent *event) {
-	if(isOverFooter(event) && isTabReorderingEvent(event)) {
+	if(isOverFooter(event) && BinManager::isTabReorderingEvent(event)) {
 		event->acceptProposedAction();
 		emit draggingCloseToSeparator((QWidget*)m_tabWidget,true);
 	}
@@ -722,7 +716,7 @@ void PartsBinPaletteWidget::dragMoveEvent(QDragMoveEvent *event) {
 }
 
 void PartsBinPaletteWidget::dropEvent(QDropEvent *event) {
-	if(isOverFooter(event) && isTabReorderingEvent(event)) {
+	if(isOverFooter(event) && BinManager::isTabReorderingEvent(event)) {
 		emit dropToSeparator((QWidget*)m_tabWidget);
 	}
 	QFrame::dropEvent(event);
