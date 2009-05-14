@@ -4883,4 +4883,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 	return true;
 }
 
+void SketchWidget::addBendpoint() {
+}
+
 

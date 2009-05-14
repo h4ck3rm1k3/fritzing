@@ -346,7 +346,9 @@ void MainWindow::exportAux(QString fileName, QImage::Format format) {
 	}
 }
 
-void MainWindow::printAux(QPrinter &printer, QString /* message */, bool removeBackground) {
+void MainWindow::printAux(QPrinter &printer, const QString & message, bool removeBackground) {
+	m_statusBar->showMessage(message);
+
 	QPainter painter;
 	if (painter.begin(&printer)) {
 		// scale the output
@@ -364,8 +366,13 @@ void MainWindow::printAux(QPrinter &printer, QString /* message */, bool removeB
 		//QRectF target(0, 0, printer.width(), printer.height());
 		//QRectF target = printer.pageRect();
 		//QRectF target = printer.paperRect();
-		QRectF target;
-		QRectF source(0, 0, printer.width() / scale2 , printer.height() / scale2);
+
+
+		QPointF sceneStart = m_currentGraphicsView->mapToScene(QPoint(0,0));
+		QPointF sceneEnd = m_currentGraphicsView->mapToScene(QPoint(m_currentGraphicsView->viewport()->width(), m_currentGraphicsView->viewport()->height()));
+		
+		QRectF source(sceneStart, sceneEnd);
+		QRectF target(0, 0, source.width() * scale2, source.height() * scale2); 
 
 		QColor color;
 		if(removeBackground) {
@@ -377,7 +384,10 @@ void MainWindow::printAux(QPrinter &printer, QString /* message */, bool removeB
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(false);
 		}
+
+		// render to printer:
 		m_currentGraphicsView->scene()->render(&painter, target, source, Qt::KeepAspectRatio);
+
 		foreach(QGraphicsItem *item, selItems) {
 			item->setSelected(true);
 		}
@@ -1097,6 +1107,10 @@ void MainWindow::createPartMenuActions() {
 	m_saveBundledPart = new QAction(tr("&Export..."), this);
 	m_saveBundledPart->setStatusTip(tr("Export selected part"));
 	connect(m_saveBundledPart, SIGNAL(triggered()), this, SLOT(saveBundledPart()));
+
+	m_addBendpointAct = new QAction(tr("Add Bendpoint"), this);
+	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
+	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
 }
 
 void MainWindow::createViewMenuActions() {
@@ -1259,7 +1273,6 @@ void MainWindow::createMenus()
     m_editMenu->addAction(m_preferencesAct);
     updateEditMenu();
     connect(m_editMenu, SIGNAL(aboutToShow()), this, SLOT(updateEditMenu()));
-
 
     m_partMenu = menuBar()->addMenu(tr("&Part"));
     connect(m_partMenu, SIGNAL(aboutToShow()), this, SLOT(updatePartMenu()));
@@ -1437,6 +1450,15 @@ void MainWindow::updatePartMenu() {
 
 	updateItemMenu();
 	updateEditMenu();
+
+	bool enableBendpoint = false;
+	if (itemCount.selCount == 1) {
+		Wire * wire = dynamic_cast<Wire *>(m_currentGraphicsView->scene()->selectedItems()[0]);
+		if (wire != NULL) {
+
+		}
+	}
+	m_addBendpointAct->setEnabled(enableBendpoint);
 }
 
 void MainWindow::updateTransformationActions() {
@@ -1889,6 +1911,11 @@ void MainWindow::flipHorizontal() {
 
 void MainWindow::flipVertical() {
 	m_currentGraphicsView->flip(Qt::Vertical);
+}
+
+void MainWindow::addBendpoint()
+{
+	m_currentGraphicsView->addBendpoint();
 }
 
 void MainWindow::sendToBack() {

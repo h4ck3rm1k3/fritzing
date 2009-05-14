@@ -100,6 +100,7 @@ public:
 	void fitInWindow();
 	void rotateX(qreal degrees);
 	void flip(Qt::Orientations orientation);
+	void addBendpoint();
 	ModelPart * group(ModelPart *);
 	void deleteItem();
 	PaletteItem *getSelectedPart();

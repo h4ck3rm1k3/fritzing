@@ -171,6 +171,7 @@ protected slots:
 	void showAllLayers();
 	void hideAllLayers();
 	void showInViewHelp();
+	void addBendpoint();
 
 	// TODO PARTS EDITOR REMOVE
 	void openInOldPartsEditor();
@@ -251,7 +252,7 @@ protected:
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
 	void closeEvent(QCloseEvent * event);
 	void saveAsAux(const QString & fileName);
-	void printAux(QPrinter &printer, QString message, bool removeBackground=true);
+	void printAux(QPrinter &printer, const QString & message, bool removeBackground=true);
 	void exportAux(QString fileName, QImage::Format format);
 	void notYetImplemented(QString action);
 	void setZoomComboBoxValue(qreal value, ZoomComboBox* zoomComboBox = NULL);
@@ -446,6 +447,8 @@ protected:
 	QAction *m_showPartLabelAct;
 	QAction *m_loadBundledPart;
 	QAction *m_saveBundledPart;
+
+	QAction *m_addBendpointAct;
 
     QAction *m_showAllLayersAct;
 	QAction *m_hideAllLayersAct;

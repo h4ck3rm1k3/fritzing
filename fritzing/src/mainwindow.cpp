@@ -1265,6 +1265,8 @@ QMenu *MainWindow::breadboardItemMenu() {
 	menu->addAction(m_rotate90ccwAct);
 	menu->addAction(m_flipHorizontalAct);
 	menu->addAction(m_flipVerticalAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
 	return viewItemMenuAux(menu);
 }
 
@@ -1275,6 +1277,8 @@ QMenu *MainWindow::schematicItemMenu() {
 	menu->addAction(m_rotate90ccwAct);
 	menu->addAction(m_flipHorizontalAct);
 	menu->addAction(m_flipVerticalAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
 	return viewItemMenuAux(menu);
 }
 
@@ -1296,6 +1300,8 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addAction(m_excludeFromAutorouteAct);
 	menu->addSeparator();
 	menu->addAction(m_deleteAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
 #ifndef QT_NO_DEBUG
 	menu->addSeparator();
 	menu->addAction(m_infoViewOnHoverAction);
@@ -1967,7 +1973,7 @@ void MainWindow::svgMissingLayer(const QString & layername, const QString & path
 		tr("Fritzing"),
 		tr("Svg %1 is missing a '%2' layer. "
 			"For more information on how to create a custom board shape, "
-			"see the tutorial at <a href='http://www.fritzing.org'>www.fritzing.org</a>.")
+			"see the tutorial at <a href='http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/'>http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/</a>.")
 		.arg(path)
 		.arg(layername)
 	);
