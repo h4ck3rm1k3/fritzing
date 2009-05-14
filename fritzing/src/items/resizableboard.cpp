@@ -242,6 +242,8 @@ void ResizableBoard::handleZoomChangedSlot(qreal scale) {
 void ResizableBoard::positionGrips() {
 	if (m_resizeGripBL == NULL) return;
 
+	// TODO:  figure out how to position these on a rotated board
+
 	QSizeF sz = this->boundingRect().size();
 	qreal scale = m_resizeGripBL->currentScale();
 
@@ -368,3 +370,23 @@ QString ResizableBoard::makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qre
 		.arg(milsW - LineThickness).arg(milsH - LineThickness);
 }
 
+void ResizableBoard::rotateItem(qreal degrees) {
+	// TODO: this hack only works for 90 degree rotations
+	// eventually need to make this work for other angles
+	// what gets screwed up is the drag handles
+
+	if (modelPart()->moduleID().compare(ModelPart::RectangleModuleID) == 0) {
+		QRectF r = this->boundingRect();
+		r.moveTopLeft(pos());
+		QPointF c = r.center();
+		ViewGeometry vg;
+		vg.setLoc(QPointF(c.x() - (r.height() / 2), c.y() - (r.width() / 2)));	
+		QSizeF sz = modelPart()->size();
+		LayerHash viewLayers;
+		resizeMM(sz.height(), sz.width(), viewLayers);
+		moveItem(vg);
+	}
+	else {
+		PaletteItem::rotateItem(degrees);
+	}
+}

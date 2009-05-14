@@ -2360,28 +2360,10 @@ ItemCount SketchWidget::calcItemCount() {
 
 			bool rotatable = true;
 			switch (itemBase->itemType()) {
-				case ModelPart::Wire:
-					rotatable = false;
-					break;
 				case ModelPart::Note:
-					rotatable = false;
 					itemCount.noteCount++;
-					break;
-				case ModelPart::Unknown:
-					rotatable = false;
-					break;
-				case ModelPart::Board:
-				case ModelPart::ResizableBoard:
-				case ModelPart::Breadboard:
-					// TODO: allow breadboard and ardiuno to rotate even when connected to something
-					if (itemBase->hasConnections()) {
-						rotatable = false;
-					}
-					else if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
-						rotatable = false;
-					}
-					break;
 				default:
+					rotatable = rotationAllowed(itemBase);
 					break;
 			}
 
@@ -2789,10 +2771,10 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 					continue;
 				}
 
-				// TODO: allow rotation with connections and stuck items
-				if (itemBase->hasConnections()) continue;
-				if (itemBase->sticky() && itemBase->stickyList().count() > 0) continue;
 			default:
+				if (!rotationAllowed(itemBase)) {
+					continue;
+				}
 				break;
 		}
 
@@ -4864,4 +4846,41 @@ void SketchWidget::resizeBoard(long itemID, qreal mmW, qreal mmH) {
 
 	dynamic_cast<ResizableBoard *>(item)->resizeMM(mmW, mmH, m_viewLayers);
 }
+
+bool SketchWidget::rotationAllowed(ItemBase * itemBase) 
+{
+	// TODO: allow breadboard and ardiuno to rotate even when connected to something
+
+	switch(itemBase->itemType()) {
+		case ModelPart::Wire:
+		case ModelPart::Note:
+		case ModelPart::Unknown:
+			return false;
+
+		case ModelPart::Board:
+		case ModelPart::ResizableBoard:
+		case ModelPart::Breadboard:
+			if (itemBase->hasConnections()) {
+				return false;
+			}
+			else if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
+				return false;
+			}
+			break;
+		default:
+			break;
+	}
+
+	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (connectorItem == NULL) continue;
+
+		if (connectorItem->connectorType() != Connector::Female) continue;
+
+		if (connectorItem->connectionsCount() > 0) return false;
+	}
+
+	return true;
+}
+
 

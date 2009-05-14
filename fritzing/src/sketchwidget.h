@@ -312,6 +312,7 @@ protected:
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
+	bool rotationAllowed(ItemBase *);
 
 
 protected:

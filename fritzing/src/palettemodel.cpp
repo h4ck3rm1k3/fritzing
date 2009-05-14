@@ -34,6 +34,7 @@ $Date$
 #include "debugdialog.h"
 #include "modelpart.h"
 #include "version/version.h"
+#include "layerattributes.h"
 
 #ifndef QT_NO_DEBUG
 bool PaletteModel::CreateAllPartsBinFile = true;
@@ -279,8 +280,10 @@ ModelPart * PaletteModel::loadPart(const QString & path, bool update) {
 		type = ModelPart::ResizableBoard;
 	}
 	else if (properties.text().contains("arduino", Qt::CaseInsensitive)) {
-		// TODO: some of these are boards and some of these aren't?
-		type = ModelPart::Board;
+		LayerAttributes la;
+		if (la.getSvgElementID(domDocument, ViewIdentifierClass::PCBView, ViewLayer::Board)) {
+			type = ModelPart::Board;
+		}
 	}
 	else if (properties.text().contains("note", Qt::CaseInsensitive)) {
 		type = ModelPart::Note;
