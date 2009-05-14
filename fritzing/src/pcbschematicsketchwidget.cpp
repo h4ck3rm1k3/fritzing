@@ -44,39 +44,6 @@ void PCBSchematicSketchWidget::setNewPartVisible(ItemBase * itemBase) {
 	}
 }
 
-/*
-void PCBSchematicSketchWidget::redrawRatsnest(QHash<long, ItemBase *> & newItems) {
-	ConnectorPairHash allConnectors;
-	foreach (ItemBase * newItem, newItems.values()) {
-		foreach (QGraphicsItem * childItem, newItem->childItems()) {
-			ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
-			if (fromConnectorItem == NULL) continue;
-
-			foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
-				
-				DebugDialog::debug(QString("restoring ratsnest: %1 %2, %3 %4")
-					.arg(fromConnectorItem->attachedToTitle())
-					.arg(fromConnectorItem->connectorSharedID())
-					.arg(toConnectorItem->attachedToTitle())
-					.arg(toConnectorItem->connectorSharedID())
-					);
-				
-				allConnectors.insert(fromConnectorItem, toConnectorItem);
-			}
-		}
-	}
-
-	// have to store these all up in a table and deal with separarately
-	// if you deal with them in the loop above, then connectors are being added/destroyed
-	// while looping and that causes crashes.
-	foreach (ConnectorItem * fromConnectorItem, allConnectors.uniqueKeys()) {
-		foreach (ConnectorItem * toConnectorItem, allConnectors.values(fromConnectorItem)) {
-			dealWithRatsnest(fromConnectorItem, toConnectorItem, true);
-		}
-	}
-}
-*/
-
 bool PCBSchematicSketchWidget::canDropModelPart(ModelPart * modelPart) {
 	if (modelPart->itemType() == ModelPart::Wire || modelPart->itemType() == ModelPart::Breadboard) {
 		// can't drag and drop these parts in these views

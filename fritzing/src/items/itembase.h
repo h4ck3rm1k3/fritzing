@@ -85,6 +85,7 @@ public:
 	virtual void setItemPos(QPointF & pos);
 	virtual void rotateItem(qreal degrees);
 	virtual void flipItem(Qt::Orientations orientation);
+	virtual void transformItem(const QMatrix &);
 	virtual void removeLayerKin();
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	QString & viewIdentifierName();
@@ -123,6 +124,7 @@ public:
 	void setConnectorTooltips();
 	void removeTooltip();
 	virtual bool hasConnectors();
+	bool hasConnections();
 	bool canFlipHorizontal();
 	void setCanFlipHorizontal(bool);
 	bool canFlipVertical();

@@ -1103,3 +1103,29 @@ QString ResizeBoardCommand::getParamString() const {
 		.arg(m_newHeight);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+TransformItemCommand::TransformItemCommand(class SketchWidget *sketchWidget, long id, const QMatrix & oldMatrix, const QMatrix & newMatrix, QUndoCommand *parent)
+    : BaseCommand(BaseCommand::SingleView, sketchWidget, parent)
+{
+    m_itemID = id;
+    m_oldMatrix = oldMatrix;
+    m_newMatrix = newMatrix;
+}
+
+void TransformItemCommand::undo()
+{
+    m_sketchWidget->transformItem(m_itemID, m_oldMatrix);
+}
+
+void TransformItemCommand::redo()
+{
+    m_sketchWidget->transformItem(m_itemID, m_newMatrix);
+}
+
+QString TransformItemCommand::getParamString() const {
+	return QString("TransformItemCommand ") 
+		+ BaseCommand::getParamString() + 
+		QString(" id:%1")
+		.arg(m_itemID);
+}

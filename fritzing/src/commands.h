@@ -173,6 +173,23 @@ protected:
     Qt::Orientations m_orientation;
 };
 
+class TransformItemCommand : public BaseCommand
+{
+
+public:
+    TransformItemCommand(class SketchWidget *sketchWidget, long id, const class QMatrix & oldMatrix, const class QMatrix & newMatrix, QUndoCommand *parent);
+    void undo();
+    void redo();
+
+protected:
+	QString getParamString() const;
+
+protected:
+    long m_itemID;
+    QMatrix m_oldMatrix;
+    QMatrix m_newMatrix;
+};
+
 class ChangeConnectionCommand : public BaseCommand
 {
 public:

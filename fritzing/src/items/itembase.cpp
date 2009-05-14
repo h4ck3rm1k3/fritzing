@@ -1054,6 +1054,11 @@ void ItemBase::transformItem(QTransform currTransf) {
 	update();
 }
 
+void ItemBase::transformItem(const QMatrix & matrix) {
+	QTransform transform(matrix);
+	transformItem(transform);
+}
+
 void ItemBase::collectWireConnectees(QSet<class Wire *> & wires) {
 	Q_UNUSED(wires);
 }
@@ -1229,3 +1234,14 @@ QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 	return ___emptyString___;
 }
 
+bool ItemBase::hasConnections() 
+{
+	foreach (QGraphicsItem * item, childItems()) {
+		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(item);
+		if (fromConnectorItem == NULL) continue;
+
+		if (fromConnectorItem->connectionsCount() > 0) return true;
+	}
+
+	return false;
+}

@@ -1079,6 +1079,17 @@ void SketchWidget::rotateItem(long id, qreal degrees) {
 	}
 
 }
+void SketchWidget::transformItem(long id, const QMatrix & matrix) {
+	//DebugDialog::debug(QString("rotating %1 %2").arg(id).arg(degrees) );
+
+	if (!isVisible()) return;
+
+	ItemBase * pitem = findItem(id);
+	if (pitem != NULL) {
+		pitem->transformItem(matrix);
+	}
+
+}
 
 void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
 	DebugDialog::debug(QString("fliping %1 %2").arg(id).arg(orientation) );
@@ -2357,11 +2368,18 @@ ItemCount SketchWidget::calcItemCount() {
 					itemCount.noteCount++;
 					break;
 				case ModelPart::Unknown:
+					rotatable = false;
+					break;
 				case ModelPart::Board:
 				case ModelPart::ResizableBoard:
 				case ModelPart::Breadboard:
-					// TODO: allow breadboard and ardiuno to rotate
-					rotatable = false;
+					// TODO: allow breadboard and ardiuno to rotate even when connected to something
+					if (itemBase->hasConnections()) {
+						rotatable = false;
+					}
+					else if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
+						rotatable = false;
+					}
 					break;
 				default:
 					break;
@@ -2760,12 +2778,20 @@ void SketchWidget::rotateFlip(qreal degrees, Qt::Orientations orientation)
 
 		switch (itemBase->itemType()) {
 			case ModelPart::Wire:
-			case ModelPart::Board:
-			case ModelPart::ResizableBoard:
-			case ModelPart::Breadboard:
 			case ModelPart::Note:
 			case ModelPart::Unknown:
 				continue;
+			case ModelPart::Board:
+			case ModelPart::ResizableBoard:
+			case ModelPart::Breadboard:
+				if (orientation != 0) {
+					// can't flip
+					continue;
+				}
+
+				// TODO: allow rotation with connections and stuck items
+				if (itemBase->hasConnections()) continue;
+				if (itemBase->sticky() && itemBase->stickyList().count() > 0) continue;
 			default:
 				break;
 		}
@@ -3583,8 +3609,23 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 		}
 	}
 
-	if (master) {
-		new AddItemCommand(this, BaseCommand::CrossView, newModuleID, itemBase->getViewGeometry(), newID, true, newModelIndex, -1, parentCommand);
+	if (master) {		
+		ViewGeometry vg = itemBase->getViewGeometry();
+		QTransform oldTransform = vg.transform();
+		bool needsTransform = false;
+		if (!oldTransform.isIdentity()) {
+			// restore identity transform
+			vg.setTransform(QTransform());
+			needsTransform = true;
+		}
+
+		new AddItemCommand(this, BaseCommand::CrossView, newModuleID, vg, newID, true, newModelIndex, -1, parentCommand);
+		if (needsTransform) {
+			QMatrix m;
+			m.setMatrix(oldTransform.m11(), oldTransform.m12(), oldTransform.m21(), oldTransform.m22(), 0, 0);
+			new TransformItemCommand(this, newID, m, m, parentCommand);
+		}
+
 		new CheckStickyCommand(this, BaseCommand::CrossView, newID, false, parentCommand);
 		setUpSwapReconnect(itemBase, connectorHash, newID, newModuleID, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);

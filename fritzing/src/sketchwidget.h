@@ -78,6 +78,7 @@ public:
     void deleteItem(ItemBase *, bool deleteModelPart, bool doEmit, bool later);
     void moveItem(long id, ViewGeometry &);
     void rotateItem(long id, qreal degrees);
+    void transformItem(long id, const QMatrix &);
     void flipItem(long id, Qt::Orientations orientation);
     void selectItem(long id, bool state, bool updateInfoView, bool doEmit);
     void selectDeselectAllCommand(bool state);
