@@ -16,7 +16,10 @@ tar -cjf ./$tarball_folder.tar.bz2 $tarball_folder
 rm -rf $tarball_folder
 
 cd compile_folder
-qmake CONFIG+=release -unix
+
+QT_HOME="/usr/local/Trolltech/Qt-4.5.1"
+
+$QT_HOME/bin/qmake CONFIG+=release -unix
 make
 
 release_folder="fritzing.$date.linux.$arch"
@@ -25,7 +28,7 @@ echo "making release folder: $release_folder"
 mkdir ../$release_folder
 
 echo "copying release files"
-cp -rf bins/ parts/ examples/ Fritzing Fritzing.sh README.txt LICENSE.GPL2 LICENSE.GPL3 ../$release_folder/
+cp -rf bins/ parts/ sketches/ Fritzing Fritzing.sh README.txt LICENSE.GPL2 LICENSE.GPL3 ../$release_folder/
 cd ../$release_folder
 chmod +x Fritzing.sh
 
@@ -37,7 +40,8 @@ mkdir lib/translations
 
 cd lib
 echo "copying libraries"
-cp /usr/lib/libQtCore.so.4 /usr/lib/libQtGui.so.4 /usr/lib/libQtNetwork.so.4 /usr/lib/libQtSql.so.4 /usr/lib/libQtSvg.so.4 /usr/lib/libQtWebKit.so.4 /usr/lib/libQtXml.so.4 .
+
+cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 .
 
 
 # if is i368 copy the libaudio
