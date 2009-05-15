@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<module uri="http://fritzing.org/modules/arduino-diecimila" moduleId="4321DEAB24_ST" >
+<module moduleId="4321DEAB24_ST" >
  <version>2.0</version>
  <creator>Brendan Howell</creator>
  <title>Arduino Diecimila</title>

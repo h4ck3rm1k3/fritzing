@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This xml file is generated through a template. Please don't edit it directly -->
-<module uri="http://fritzing.org/modules/breadboard" moduleId="TinyBreadboardModuleID">
+<module moduleId="TinyBreadboardModuleID">
   <version>1.1</version>
   <author>Dirk van Oosterbosch</author>
   <title>Tiny Breadboard</title>

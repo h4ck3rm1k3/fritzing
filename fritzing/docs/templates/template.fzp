@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module uri="http://fritzing.org/modules/npn-Transistor" moduleId="1234ABDC24">
+<module moduleId="1234ABDC24">
 	<version>1.1</version> 
 	<author>Brendan Howell</author>
 	<title>Red LED - 5mm</title>
