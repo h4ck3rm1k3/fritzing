@@ -24,7 +24,7 @@ $Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 ********************************************************************/
 
-#include "BendpointAction.h"
+#include "bendpointaction.h"
 #include "../items/itembase.h"
 #include "../connectoritem.h"
 
