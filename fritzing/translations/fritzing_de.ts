@@ -21,17 +21,17 @@
     <message>
         <location filename="../src/aboutbox.cpp" line="142"/>
         <source>&lt;p&gt;Thanks to Kurt Badelt&lt;br/&gt;for the Spanish translation,&lt;br/&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Dank geht an Kurt Badelt&lt;br/&gt;für die spanische Übersetzung,&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="145"/>
         <source>and thanks to Gianluca Urgese&lt;br/&gt;for the Italian translation.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>und and Gianluca Urgese&lt;br/&gt;für die italienische Übersetzung.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="153"/>
         <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Besonderen Dank auch an all die Studenten und &lt;br/&gt;Alpha-Tester, die mutig genug waren,&lt;br&gt;Fritzing zu testen.&lt;/p&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;</translation>
     </message>
     <message>
         <location filename="../src/aboutbox.cpp" line="71"/>
@@ -332,7 +332,7 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/help/helper.cpp" line="69"/>
         <source>The &lt;b&gt;PCB View&lt;/b&gt; is where you design how the components will appear on a physical PCB (Printed Circuit Board).&lt;br/&gt;&lt;br/&gt;PCBs can be made at home or in a small lab using DIY etching processes. They also can be sent to professional PCB manufacturing services for more precise fabrication. &lt;br/&gt;The first thing you will need is a board &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt; to place your parts on. To lay out your PCB, rearrange all the components so they fit nicely on the board. Then try to shift them around to minimize the length and confusion of connections. You can also resize rectangular boards. Once the parts are sorted out, you can right-click on individual connections or use Autoroute to generate the copper traces between parts. The Autoroute button &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; is on the bottom left.</source>
-        <translation type="unfinished"></translation>
+        <translation>In der &lt;b&gt;Leiterplattenansicht&lt;/b&gt; gestaltest Du, wie die Bauteile und Verbindungen auf der Leiterplatte (englisch: PCB, printed circuit board) angeordnet werden.&lt;br/&gt;&lt;br/&gt;(Leiterplatten können mit relativ geringem Aufwand zu Hause oder in einem kleinen Labor selber hergestellt werden. Sie können auch bei professionellen Herstellern in Auftrag gegeben werden, falls man eine höhere Qualität oder Stückzahlen benötigt.) &lt;br/&gt;&lt;br/&gt;Zunächst benötigst Du eine Leiterplatte &lt;img src=&quot;:resources/parts/svg/core/icon/rectangle_pcb.svg&quot; /&gt;, auf die Du die Bauteile platzieren kannst. Versuche dabei möglichst die Überschneidungen der Verbindungen gering zu halten. Anschließend kannst Du mit dem Autorouting-Knopf &lt;img src=&quot;:resources/images/icons/toolbarAutorouteEnabled_icon.png&quot; /&gt; die Leiterbahnen erstellen lassen, oder es manuell versuchen.</translation>
     </message>
 </context>
 <context>
@@ -578,7 +578,7 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/mainwindow.cpp" line="1974"/>
         <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der SVG-Datei %1 fehlt eine &apos;%2&apos;-Ebene. Um mehr darüber zu lernen, wie man eine eigene Leiterplattenform erstellt, schau Dir die &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;Anleitung&lt;/a&gt; an.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="86"/>
@@ -1150,12 +1150,12 @@ um die Verbindung zu reparieren</translation>
         <location filename="../src/mainwindow_menu.cpp" line="1112"/>
         <location filename="../src/mainwindow_menu.cpp" line="2439"/>
         <source>Add Bendpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Biegepunkt hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1113"/>
         <source>Add a bendpoint to the selected wire</source>
-        <translation type="unfinished"></translation>
+        <translation>Einen Biegepunkt hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1118"/>
@@ -1330,7 +1330,7 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2433"/>
         <source>Remove Bendpoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Biegepunkt entfernen</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="1017"/>
@@ -1391,12 +1391,12 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2004"/>
         <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deinem Entwurf fehlt die Leiterplatte! Um nach Gerber zu exportieren, müssen die Bauteile auf einer Leiterplatte (PCB) angeordnet sein.</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2008"/>
         <source>Choose a folder for exporting</source>
-        <translation type="unfinished"></translation>
+        <translation>Wähle einen Ordner für den Export</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2266"/>
@@ -2320,7 +2320,9 @@ Ansicht aus?</translation>
         <source>What does this
 part look like in
 the PCB view?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wie sieht dieses Bauteil
+in der Leiterplatten-
+Ansicht aus?</translation>
     </message>
     <message>
         <location filename="../src/partseditor/partseditorviewswidget.cpp" line="266"/>
