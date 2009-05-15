@@ -620,6 +620,7 @@ QString FApplication::getOpenFileName( QWidget * parent, const QString & caption
 
 QString FApplication::getSaveFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
 {
+	//DebugDialog::debug(QString("getopenfilename %1 %2 %3 %4").arg(caption).arg(dir).arg(filter).arg(*selectedFilter));
 	QString result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
 	if (!result.isNull()) {
 		setOpenSaveFolder(result);

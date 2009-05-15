@@ -78,17 +78,12 @@ void MainWindow::initExportConstants()
 	fileExportFormats[pngActionType] = QImage::Format_ARGB32;
 	fileExportFormats[jpgActionType] = QImage::Format_RGB32;
 
-	QString colons ="";
-	#ifdef Q_WS_MAC
-		colons = ";;";
-	#endif
-
-	fileExtFormats[pdfActionType] = tr("PDF (*.pdf)")+colons;
-	fileExtFormats[psActionType] = tr("PostScript (*.ps)")+colons;
-	fileExtFormats[pngActionType] = tr("PNG Image (*.png)")+colons;
-	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)")+colons;
-	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)")+colons;
-	fileExtFormats[bomActionType] = tr("BoM Text File (*.txt)")+colons;
+	fileExtFormats[pdfActionType] = tr("PDF (*.pdf)");
+	fileExtFormats[psActionType] = tr("PostScript (*.ps)");
+	fileExtFormats[pngActionType] = tr("PNG Image (*.png)");
+	fileExtFormats[jpgActionType] = tr("JPEG Image (*.jpg)");
+	fileExtFormats[svgActionType] = tr("SVG Image (*.svg)");
+	fileExtFormats[bomActionType] = tr("BoM Text File (*.txt)");
 }
 
 void MainWindow::print() {
