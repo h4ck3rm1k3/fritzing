@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>AboutBox</name>
     <message>
@@ -26,16 +28,20 @@
         <translation>&lt;p&gt;Uno speciale ringraziamento va a:&lt;br /&gt;Jussi &amp;Auml;ngeslev&amp;auml;, Massimo Banzi, Ayah Bdeir,&lt;br/&gt;Durrell Bishop, David Cuartielles, Fabian Hemmert,&lt;br /&gt;Gero Herkenrath, Jeff Hoefs, Tom Hulbert,&lt;br/&gt;Tom Igoe, Hans-Peter Kadel, Till Savelkoul,&lt;br/&gt;Jan Sieber, Yaniv Steiner, Olaf Val,&lt;br/&gt;Michaela Vieser e Julia Werner.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;And thanks to Kurt Badelt&lt;br/&gt;for the Spanish translation.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Ed un ringraziamento a Kurt Badelt&lt;br/&gt;per la traduzione in Spagnolo.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>&lt;p&gt;Fritzing is made possible with funding from the&lt;br/&gt;MWFK Brandenburg, the sponsorship of the Design&lt;br/&gt;Department of Bauhaus-University Weimar and&lt;br/&gt;IxDS.&lt;/p&gt;</source>
         <translation>&lt;p&gt;La realizzazione di Fritzing è stata possibile grazie ai fondi di&lt;br/&gt;MWFK Brandenburg, sponsor del Design&lt;br/&gt;il Dipartimento dell&apos;Università del Bauhaus di Weimar e&lt;br/&gt;IxDS.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin and who stayed with us,&lt;br/&gt;throughout our rewrite of the app.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
-        <translation>&lt;p&gt;Uno speciale ringraziamento va anche a tutti gli studenti&lt;br/&gt;e alpha testers che sono stati molto coraggiosi nel far  &lt;br/&gt;girare i test di Fritzing e a chi &amp;egrave; stato con noi,&lt;br/&gt;durante la riscrittura  dell&apos;applicazione.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</translation>
+        <source>&lt;p&gt;Thanks to Kurt Badelt&lt;br/&gt;for the Spanish translation,&lt;br/&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and thanks to Gianluca Urgese&lt;br/&gt;for the Italian translation.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;Special thanks goes out as well to all the students&lt;br/&gt;and alpha testers who were brave enough to give&lt;br/&gt;Fritzing a test spin.&lt;/p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -290,10 +296,12 @@ per aggiustare questo connettore</translation>
         <source>conn.</source>
         <translation>conn.</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>connected to %n item(s)</source>
-        <translation>connesso a %n elemento(i)
+        <translation type="unfinished">
+            <numerusform>connesso a %n elemento(i)
         
+        </numerusform>
         </translation>
     </message>
     <message>
@@ -445,16 +453,20 @@ per aggiustare questo connettore</translation>
         <source>Routing completed</source>
         <translation>Instradamento completato</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Routing completed using %n jumper(s)</source>
-        <translation>Instradamento completato usando %n ponticello(i)
+        <translation type="unfinished">
+            <numerusform>Instradamento completato usando %n ponticello(i)
         
+        </numerusform>
         </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>%1 of %2 nets routed - %n connector(s) still to be routed</source>
-        <translation>%1 di %2 reti instradate - %n connettore(i) ancora da instradare
+        <translation type="unfinished">
+            <numerusform>%1 di %2 reti instradate - %n connettore(i) ancora da instradare
         
+        </numerusform>
         </translation>
     </message>
     <message>
@@ -510,10 +522,6 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
     <message>
         <source>Sorry, Fritzing is unable to load the part template file.</source>
         <translation>Spiacente, Fritzing non &amp;egrave; in grado di caricare il file del template componente.</translation>
-    </message>
-    <message>
-        <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://www.fritzing.org&apos;&gt;www.fritzing.org&lt;/a&gt;.</source>
-        <translation>Al file Svg %1 manca il layer &apos;%2&apos; . Per maggiori informazioni su come creare una basetta personalizzata leggi il tutorial su &lt;a href=&apos;http://www.fritzing.org&apos;&gt;www.fritzing.org&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>PDF (*.pdf)</source>
@@ -920,7 +928,7 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>Aggiorna InfoView in sospeso</translation>
     </message>
     <message>
-        <source>&amp;Rotate 90&#xb0; Clockwise</source>
+        <source>&amp;Rotate 90° Clockwise</source>
         <translation>&amp;Ruota di 90° in Senso orario</translation>
     </message>
     <message>
@@ -932,7 +940,7 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>Ruota i componenti selezionati di 90 gradi in senso orario</translation>
     </message>
     <message>
-        <source>&amp;Rotate 180&#xb0;</source>
+        <source>&amp;Rotate 180°</source>
         <translation>&amp;Ruota di 180°</translation>
     </message>
     <message>
@@ -940,7 +948,7 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>Ruota i componenti selezionati di 180 gradi</translation>
     </message>
     <message>
-        <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
+        <source>&amp;Rotate 90° Counter Clockwise</source>
         <translation>&amp;Ruota di 90° in Senso anti-orario</translation>
     </message>
     <message>
@@ -1268,10 +1276,6 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>&amp;Aiuto</translation>
     </message>
     <message>
-        <source>Create New Sketch From Template</source>
-        <translation>Crea nuovo Sketch da Template</translation>
-    </message>
-    <message>
         <source>Page Setup</source>
         <translation>Impostazioni pagina</translation>
     </message>
@@ -1292,26 +1296,26 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
 </translation>
     </message>
     <message>
-        <source>Sketch: <byte value="x9"/></source>
-        <translation>Sketch:<byte value="x9"/><byte value="x9"/></translation>
+        <source>Sketch: 	</source>
+        <translation>Sketch:		</translation>
     </message>
     <message>
-        <source>Date: <byte value="x9"/></source>
-        <translation>Data:<byte value="x9"/></translation>
+        <source>Date: 	</source>
+        <translation>Data:	</translation>
     </message>
     <message>
         <source>
 
 Shopping List
 
-Quantity<byte value="x9"/>Part
+Quantity	Part
 
 </source>
         <translation>
 
 Lista della spesa
 
-Quantità<byte value="x9"/>Componente
+Quantità	Componente
 
 </translation>
     </message>
@@ -1392,12 +1396,28 @@ Quantità<byte value="x9"/>Componente
         <translation>Sollevare e Abbassare</translation>
     </message>
     <message>
-        <source>Open Directory</source>
-        <translation>Apri cartella</translation>
+        <source>Svg %1 is missing a &apos;%2&apos; layer. For more information on how to create a custom board shape, see the tutorial at &lt;a href=&apos;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&apos;&gt;http://fritzing.org/learning/tutorials/designing-pcb/pcb-custom-shape/&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your sketch does not have a board!  Add a board so you can export to Gerber.</source>
-        <translation>Il tuo sketch non ha una basetta!!  Aggiungendo una basetta  potrai esportare come Gerber.</translation>
+        <source>Add Bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a bendpoint to the selected wire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Bendpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a folder for exporting</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1486,7 +1506,7 @@ Quantità<byte value="x9"/>Componente
 <context>
     <name>PartLabel</name>
     <message>
-        <source>&amp;Rotate 90&#xb0; Clockwise</source>
+        <source>&amp;Rotate 90° Clockwise</source>
         <translation>&amp;Ruota di 90° in Senso orario</translation>
     </message>
     <message>
@@ -1494,7 +1514,7 @@ Quantità<byte value="x9"/>Componente
         <translation>Ruota i componenti selezionati di 90 gradi in senso orario</translation>
     </message>
     <message>
-        <source>&amp;Rotate 180&#xb0;</source>
+        <source>&amp;Rotate 180°</source>
         <translation>&amp;Ruota di 180°</translation>
     </message>
     <message>
@@ -1502,7 +1522,7 @@ Quantità<byte value="x9"/>Componente
         <translation>Ruota i componenti selezionati di 180 gradi</translation>
     </message>
     <message>
-        <source>&amp;Rotate 90&#xb0; Counter Clockwise</source>
+        <source>&amp;Rotate 90° Counter Clockwise</source>
         <translation>&amp;Ruota di 90° in Senso anti-orario</translation>
     </message>
     <message>
@@ -1832,6 +1852,12 @@ sullo schema?</translation>
     <message>
         <source>image ...</source>
         <translation>immagine ...</translation>
+    </message>
+    <message>
+        <source>What does this
+part look like in
+the PCB view?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
