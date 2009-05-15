@@ -2001,11 +2001,11 @@ void MainWindow::exportToGerber() {
     // barf an error if there's no board
     if (!board) {
         QMessageBox::critical(this, tr("Fritzing"),
-                   tr("Your sketch does not have a board!  Add a board so you can export to Gerber."));
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to export to Gerber."));
         return;
     }
 
-    QString exportDir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+    QString exportDir = QFileDialog::getExistingDirectory(this, tr("Choose a folder for exporting"),
                                              defaultSaveFolder(),
                                              QFileDialog::ShowDirsOnly
                                              | QFileDialog::DontResolveSymlinks);

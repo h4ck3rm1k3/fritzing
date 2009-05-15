@@ -104,7 +104,7 @@ void PartsEditorViewsWidget::init() {
 		EmptySchemViewText = tr("What does this\npart look like in\na schematic view?");
 	}
 	if(EmptyPcbViewText == ___emptyString___) {
-		EmptyPcbViewText = tr("What does this\npart look like on\nthe breadboard?");
+                EmptyPcbViewText = tr("What does this\npart look like in\nthe PCB view?");
 	}
 }
 
