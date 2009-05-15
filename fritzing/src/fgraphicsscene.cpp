@@ -80,4 +80,13 @@ void FGraphicsScene::drawItems(QPainter * painter, int numItems, QGraphicsItem *
 	QGraphicsScene::drawItems(painter, numItems, items, options, widget);
 }
 
+void FGraphicsScene::contextMenuEvent(QGraphicsSceneContextMenuEvent *contextMenuEvent)
+{
+	m_lastContextMenuPos = contextMenuEvent->scenePos();
+	QGraphicsScene::contextMenuEvent(contextMenuEvent);
+}
+
+QPointF FGraphicsScene::lastContextMenuPos() {
+	return m_lastContextMenuPos;
+}
 

@@ -18,32 +18,36 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2085 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 ********************************************************************/
 
-#ifndef FGRAPHICSSCENE_H
-#define FGRAPHICSSCENE_H
+#ifndef BENDPOINTACTION_H
+#define BENDPOINTACTION_H
 
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QGraphicsSceneHelpEvent>
+#include <QAction>
+#include <QPointF>
+#include <QString>
 
-class FGraphicsScene : public QGraphicsScene
+class BendpointAction : public QAction
 {
-	Q_OBJECT
-
+Q_OBJECT
 public:
-	FGraphicsScene(QObject * parent = 0);
-	void helpEvent(QGraphicsSceneHelpEvent *);
-	void drawItems(QPainter *, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget *);
-	void contextMenuEvent(QGraphicsSceneContextMenuEvent *contextMenuEvent);
-	QPointF lastContextMenuPos();
+	BendpointAction(const QString & text, QObject * parent);
+
+	void setLastHoverEnterConnectorItem(class ConnectorItem *);
+	void setLastHoverEnterItem(class ItemBase *);
+	void setLastLocation(QPointF);
+	class ConnectorItem * lastHoverEnterConnectorItem();
+	class ItemBase * lastHoverEnterItem();
+	QPointF lastLocation();
 
 protected:
-	QPointF m_lastContextMenuPos;
+	class ConnectorItem * m_lastHoverEnterConnectorItem;
+	class ItemBase * m_lastHoverEnterItem;
+	QPointF m_lastLocation;
 
 };
 

@@ -53,6 +53,7 @@ protected:
 	bool shareBreadboard(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, ItemBase * & breadboardItemBase);
 	bool canDropModelPart(ModelPart * modelPart); 
 	void translateToLocalItems(ConnectorPairHash & foreignMoveItems, ConnectorPairHash & moveItems,	QMultiHash<PaletteItemBase *, ConnectorItem *> & bases);
+	bool allowFemaleRotation(ItemBase *);
 };
 
 #endif

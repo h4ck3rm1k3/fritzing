@@ -18,33 +18,45 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2085 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-01-06 12:15:02 +0100 (Tue, 06 Jan 2009) $
 
 ********************************************************************/
 
-#ifndef FGRAPHICSSCENE_H
-#define FGRAPHICSSCENE_H
+#include "BendpointAction.h"
+#include "../items/itembase.h"
+#include "../connectoritem.h"
 
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QGraphicsSceneHelpEvent>
 
-class FGraphicsScene : public QGraphicsScene
+BendpointAction::BendpointAction(const QString & text, QObject * parent)
+	: QAction(text, parent)
 {
-	Q_OBJECT
+	m_lastHoverEnterConnectorItem = NULL;
+	m_lastHoverEnterItem = NULL;
+}
 
-public:
-	FGraphicsScene(QObject * parent = 0);
-	void helpEvent(QGraphicsSceneHelpEvent *);
-	void drawItems(QPainter *, int numItems, QGraphicsItem * items[], const QStyleOptionGraphicsItem options[], QWidget *);
-	void contextMenuEvent(QGraphicsSceneContextMenuEvent *contextMenuEvent);
-	QPointF lastContextMenuPos();
+void BendpointAction::setLastHoverEnterConnectorItem(ConnectorItem * connectorItem) {
+	m_lastHoverEnterConnectorItem = connectorItem;
+}
 
-protected:
-	QPointF m_lastContextMenuPos;
+void BendpointAction::setLastHoverEnterItem(ItemBase * itemBase) {
+	m_lastHoverEnterItem = itemBase;
+}
 
-};
+void BendpointAction::setLastLocation(QPointF p) {
+	m_lastLocation = p;
+}
 
-#endif
+ConnectorItem * BendpointAction::lastHoverEnterConnectorItem() {
+	return m_lastHoverEnterConnectorItem;
+}
+
+ItemBase * BendpointAction::lastHoverEnterItem() {
+	return m_lastHoverEnterItem;
+}
+
+QPointF BendpointAction::lastLocation() {
+	return m_lastLocation;
+}
+

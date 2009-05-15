@@ -76,6 +76,8 @@ QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
     : InfoGraphicsView(parent)
 {
+	m_lastHoverEnterItem = NULL;
+	m_lastHoverEnterConnectorItem = NULL;
 	m_resizingBoard = NULL;
 	m_fixedToCenterItem = NULL;
 	m_spaceBarWasPressed = m_spaceBarIsPressed = false;
@@ -3418,6 +3420,7 @@ void SketchWidget::hoverEnterItem(QGraphicsSceneHoverEvent * event, ItemBase * i
 
 	if (canChainWire(dynamic_cast<Wire *>(item))) {
 		statusMessage(tr("Shift-click to add a bend point to the wire"));
+		m_lastHoverEnterItem = item;
 	}
 }
 
@@ -3438,6 +3441,8 @@ void SketchWidget::statusMessage(QString message, int timeout) {
 }
 
 void SketchWidget::hoverLeaveItem(QGraphicsSceneHoverEvent * event, ItemBase * item){
+	m_lastHoverEnterItem = NULL;
+
 	if(m_infoViewOnHover) {
 		InfoGraphicsView::hoverLeaveItem(event, item);
 	}
@@ -3456,6 +3461,7 @@ void SketchWidget::hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, Con
 		if (!this->m_chainDrag) return;
 		if (!item->chained()) return;
 
+		m_lastHoverEnterConnectorItem = item;
 		QString msg = hoverEnterWireConnectorMessage(event, item);
 		statusMessage(msg);
 	}
@@ -3483,7 +3489,9 @@ const QString & SketchWidget::hoverEnterPartConnectorMessage(QGraphicsSceneHover
 	return ___emptyString___;
 }
 
-void SketchWidget::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item){
+void SketchWidget::hoverLeaveConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item) {
+	m_lastHoverEnterConnectorItem = NULL;
+
 	ItemBase* attachedTo = item->attachedTo();
 	if(attachedTo) {
 		if(m_infoViewOnHover || currentlyInfoviewed(attachedTo)) {
@@ -4860,10 +4868,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 		case ModelPart::Breadboard:
-			if (itemBase->hasConnections()) {
-				return false;
-			}
-			else if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
+			if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
 				return false;
 			}
 			break;
@@ -4871,19 +4876,35 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 			break;
 	}
 
-	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
-		ConnectorItem * connectorItem = dynamic_cast<ConnectorItem *>(childItem);
-		if (connectorItem == NULL) continue;
+	return allowFemaleRotation(itemBase);
+}
 
-		if (connectorItem->connectorType() != Connector::Female) continue;
-
-		if (connectorItem->connectionsCount() > 0) return false;
-	}
-
+bool SketchWidget::allowFemaleRotation(ItemBase * itemBase) {
+	Q_UNUSED(itemBase);
 	return true;
 }
 
-void SketchWidget::addBendpoint() {
+void SketchWidget::addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation) {
+	if (lastHoverEnterConnectorItem) {
+		Wire * wire = dynamic_cast<Wire *>(lastHoverEnterConnectorItem->attachedTo());
+		if (wire != NULL) {
+			wire_wireJoin(wire, lastHoverEnterConnectorItem);
+		}
+	}
+	else if (lastHoverEnterItem) {
+		Wire * wire = dynamic_cast<Wire *>(lastHoverEnterItem);
+		if (wire != NULL) {
+			wire_wireSplit(wire, lastLocation, wire->pos(), wire->line());
+		}
+	}
+}
+
+ConnectorItem * SketchWidget::lastHoverEnterConnectorItem() {
+	return m_lastHoverEnterConnectorItem;
+}
+
+ItemBase * SketchWidget::lastHoverEnterItem() {
+	return m_lastHoverEnterItem;
 }
 
 

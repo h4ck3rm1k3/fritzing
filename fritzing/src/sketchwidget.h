@@ -100,7 +100,8 @@ public:
 	void fitInWindow();
 	void rotateX(qreal degrees);
 	void flip(Qt::Orientations orientation);
-	void addBendpoint();
+	void addBendpoint(ItemBase * lastHoverEnterItem, ConnectorItem * lastHoverEnterConnectorItem, QPointF lastLocation);
+
 	ModelPart * group(ModelPart *);
 	void deleteItem();
 	PaletteItem *getSelectedPart();
@@ -205,6 +206,8 @@ public:
 	bool spaceBarIsPressed();
 	void restoreIndexes(long id, ModelPartTiny *, bool doEmit);
 	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
+	ConnectorItem * lastHoverEnterConnectorItem();
+	ItemBase * lastHoverEnterItem();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -314,6 +317,7 @@ protected:
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
 	bool rotationAllowed(ItemBase *);
+	virtual bool allowFemaleRotation(ItemBase *);
 
 
 protected:
@@ -457,6 +461,8 @@ protected:
 	class ResizableBoard * m_resizingBoard;
 	QSizeF m_resizingBoardSize;
 	QPointF m_resizingBoardPos;
+	ConnectorItem * m_lastHoverEnterConnectorItem;
+	ItemBase * m_lastHoverEnterItem;
 
 protected:
 	QString m_viewName;

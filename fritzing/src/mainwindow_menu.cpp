@@ -47,7 +47,8 @@ $Date$
 #include "partsbinpalette/binmanager/binmanager.h"
 #include "expandinglabel.h"
 #include "htmlinfoview.h"
-
+#include "utils/bendpointaction.h"
+#include "fgraphicsscene.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1108,7 +1109,7 @@ void MainWindow::createPartMenuActions() {
 	m_saveBundledPart->setStatusTip(tr("Export selected part"));
 	connect(m_saveBundledPart, SIGNAL(triggered()), this, SLOT(saveBundledPart()));
 
-	m_addBendpointAct = new QAction(tr("Add Bendpoint"), this);
+	m_addBendpointAct = new BendpointAction(tr("Add Bendpoint"), this);
 	m_addBendpointAct->setStatusTip(tr("Add a bendpoint to the selected wire"));
 	connect(m_addBendpointAct, SIGNAL(triggered()), this, SLOT(addBendpoint()));
 }
@@ -1289,6 +1290,7 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_rotate90ccwAct);
 	m_partMenu->addAction(m_flipHorizontalAct);
 	m_partMenu->addAction(m_flipVerticalAct);
+	m_partMenu->addSeparator();
 	m_zOrderMenu = m_partMenu->addMenu(tr("Raise and Lower"));
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_showPartLabelAct);
@@ -1365,7 +1367,12 @@ void MainWindow::updateLayerMenu() {
 void MainWindow::updateWireMenu() {
 	if (m_currentGraphicsView != m_pcbGraphicsView) return;
 
+
 	QList<QGraphicsItem *> items = m_pcbGraphicsView->scene()->selectedItems();
+	m_addBendpointAct->setEnabled(false);
+	if (items.count() == 1) {
+		enableAddBendpointAct(items[0]);
+	}
 	Wire * wire = NULL;
 	bool enableAll = false;
 	bool deleteOK = false;
@@ -1451,14 +1458,10 @@ void MainWindow::updatePartMenu() {
 	updateItemMenu();
 	updateEditMenu();
 
-	bool enableBendpoint = false;
+	m_addBendpointAct->setEnabled(false);
 	if (itemCount.selCount == 1) {
-		Wire * wire = dynamic_cast<Wire *>(m_currentGraphicsView->scene()->selectedItems()[0]);
-		if (wire != NULL) {
-
-		}
+		enableAddBendpointAct(m_currentGraphicsView->scene()->selectedItems()[0]);
 	}
-	m_addBendpointAct->setEnabled(enableBendpoint);
 }
 
 void MainWindow::updateTransformationActions() {
@@ -1911,11 +1914,6 @@ void MainWindow::flipHorizontal() {
 
 void MainWindow::flipVertical() {
 	m_currentGraphicsView->flip(Qt::Vertical);
-}
-
-void MainWindow::addBendpoint()
-{
-	m_currentGraphicsView->addBendpoint();
 }
 
 void MainWindow::sendToBack() {
@@ -2417,4 +2415,45 @@ bool MainWindow::alreadyOpen(const QString & fileName) {
     }
 
 	return false;
+}
+
+void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
+	Wire * wire = dynamic_cast<Wire *>(graphicsItem);
+	if (wire == NULL) return;
+	if (wire->getRatsnest()) return;
+
+	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
+	FGraphicsScene * scene = qobject_cast<FGraphicsScene *>(graphicsItem->scene());
+	if (scene != NULL) {
+		bendpointAction->setLastLocation(scene->lastContextMenuPos());
+	}
+
+	bool enabled = false;
+	if (m_currentGraphicsView->lastHoverEnterConnectorItem()) {
+		bendpointAction->setText(tr("Remove Bendpoint"));
+		bendpointAction->setLastHoverEnterConnectorItem(m_currentGraphicsView->lastHoverEnterConnectorItem());
+		bendpointAction->setLastHoverEnterItem(NULL);
+		enabled = true;
+	}
+	else if (m_currentGraphicsView->lastHoverEnterItem()) {
+		bendpointAction->setText(tr("Add Bendpoint"));
+		bendpointAction->setLastHoverEnterItem(m_currentGraphicsView->lastHoverEnterItem());
+		bendpointAction->setLastHoverEnterConnectorItem(NULL);
+		enabled = true;
+	}
+	else {
+		bendpointAction->setLastHoverEnterItem(NULL);
+		bendpointAction->setLastHoverEnterConnectorItem(NULL);
+	}
+	
+	m_addBendpointAct->setEnabled(enabled);
+}
+
+void MainWindow::addBendpoint()
+{
+	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
+
+	m_currentGraphicsView->addBendpoint(bendpointAction->lastHoverEnterItem(), 
+										bendpointAction->lastHoverEnterConnectorItem(),
+										bendpointAction->lastLocation());
 }

@@ -139,8 +139,11 @@ tr("<p>Special thanks goes out to:<br />"
    "Jan Sieber, Yaniv Steiner, Olaf Val,<br/>"
    "Michaela Vieser and Julia Werner.</p>") +
 
-tr("<p>And thanks to Kurt Badelt<br/>"
-   "for the Spanish translation.</p>") +
+tr("<p>Thanks to Kurt Badelt<br/>"
+   "for the Spanish translation,<br/>") +
+
+tr("and thanks to Gianluca Urgese<br/>"
+   "for the Italian translation.</p>") +
 
 tr("<p>Fritzing is made possible with funding from the<br/>"
    "MWFK Brandenburg, the sponsorship of the Design<br/>"
@@ -149,8 +152,7 @@ tr("<p>Fritzing is made possible with funding from the<br/>"
 
 tr("<p>Special thanks goes out as well to all the students<br/>"
    "and alpha testers who were brave enough to give<br/>"
-   "Fritzing a test spin and who stayed with us,<br/>"
-   "throughout our rewrite of the app.</p>"
+   "Fritzing a test spin.</p>"
    "<br /><br /><br /><br /><br /><br /><br /><br /><br />"
    );
 

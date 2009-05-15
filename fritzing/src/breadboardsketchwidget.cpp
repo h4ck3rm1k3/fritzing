@@ -303,3 +303,20 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 
 	return true;
 }
+
+bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
+	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
+		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
+		if (fromConnectorItem == NULL) continue;
+
+		if (fromConnectorItem->connectorType() != Connector::Female) continue;
+
+		foreach (ConnectorItem * toConnectorItem, fromConnectorItem->connectedToItems()) {
+			if (toConnectorItem->connectorType() == Connector::Male) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
