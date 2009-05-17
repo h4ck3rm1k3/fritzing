@@ -643,10 +643,12 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			}
 
 			addToScene(wire, wire->viewLayerID());
-			DebugDialog::debug(QString("adding wire %1 %2 %3")
+			DebugDialog::debug(QString("adding wire %1 %2 %3 %4 %5")
 				.arg(wire->id())
 				.arg(m_viewIdentifier)
 				.arg(viewGeometry.flagsAsInt())
+				.arg((long) wire, 0, 16)
+				.arg((long) static_cast<QGraphicsItem *>(wire), 0, 16)
 				);
 
 
@@ -669,9 +671,14 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			break;
 	}
 
-	DebugDialog::debug(QString("adding part %1 %2 %3").arg(id).arg(paletteItem->title()).arg(m_viewIdentifier) );
 	bool ok;
 	ItemBase * itemBase = addPartItem(modelPart, paletteItem, doConnectors, ok);
+	DebugDialog::debug(QString("adding part %1 %2 %4 %5 %3")
+		.arg(id)
+		.arg(paletteItem->title())
+		.arg(m_viewIdentifier)
+		.arg((long) itemBase, 0, 16)
+		.arg((long) static_cast<QGraphicsItem *>(itemBase), 0, 16));
 	setNewPartVisible(itemBase);
 	return itemBase;
 }
@@ -780,8 +787,8 @@ ItemBase * SketchWidget::findItem(long id) {
 }
 
 void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool later, RestoreIndexesCommand * restore) {
-	DebugDialog::debug(QString("delete item (1) %1 %2 %3").arg(id).arg(doEmit).arg(m_viewIdentifier) );
 	ItemBase * pitem = findItem(id);
+	DebugDialog::debug(QString("delete item (1) %1 %2 %3 %4").arg(id).arg(doEmit).arg(m_viewIdentifier).arg((long) pitem, 0, 16) );
 	if (pitem != NULL) {
 		//if (pitem->itemType() == ModelPart::Module) {
 		//	m_sketchModel->walk(m_sketchModel->root(),0);
@@ -799,7 +806,7 @@ void SketchWidget::deleteItem(long id, bool deleteModelPart, bool doEmit, bool l
 void SketchWidget::deleteItem(ItemBase * itemBase, bool deleteModelPart, bool doEmit, bool later)
 {
 	long id = itemBase->id();
-	DebugDialog::debug(QString("delete item (2) %1 %2 %3").arg(id).arg(itemBase->title()).arg(m_viewIdentifier) );
+	DebugDialog::debug(QString("delete item (2) %1 %2 %3 %4").arg(id).arg(itemBase->title()).arg(m_viewIdentifier).arg((long) itemBase, 0, 16) );
 
 	if (m_infoView != NULL) {
 		m_infoView->unregisterCurrentItemIf(itemBase->id());

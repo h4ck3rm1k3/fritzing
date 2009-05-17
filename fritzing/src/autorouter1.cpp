@@ -661,7 +661,6 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	// addItemAux calls trace->setSelected(true) so unselect it
 	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
 	trace->setSelected(false);
-
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	traceWire->setClipEnds(false);
 	traceWire->setColorString("trace", UNROUTED_OPACITY);

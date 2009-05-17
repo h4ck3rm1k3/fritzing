@@ -120,7 +120,7 @@ bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const ViewGeometry & viewGeometry, long id, QMenu * itemMenu )
 	: GraphicsSvgLineItem()
 {
-	//DebugDialog::debug(QString("itembase %1").arg(QString::number((long) static_cast<QGraphicsItem *>(this), 0, 16)));
+	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	
 	m_partLabel = NULL;

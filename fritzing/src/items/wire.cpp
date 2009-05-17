@@ -817,9 +817,9 @@ const QColor * Wire::color() {
 void Wire::setWidth(int width) {
 	if (m_pen.width() == width) return;
 
+	prepareGeometryChange();
 	m_pen.setWidth(width);
 	m_shadowPen.setWidth(width + 2);
-	prepareGeometryChange();
 	update();
 }
 

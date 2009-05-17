@@ -82,7 +82,10 @@ const QLineF & TraceWire::getPaintLine() {
 }
 
 void TraceWire::setClipEnds(bool clipEnds ) {
-	m_clipEnds = clipEnds;
+	if (m_clipEnds != clipEnds) {
+		prepareGeometryChange();
+		m_clipEnds = clipEnds;
+	}
 }
 
 QPointF TraceWire::findIntersection(ConnectorItem * connectorItem, QPointF original)

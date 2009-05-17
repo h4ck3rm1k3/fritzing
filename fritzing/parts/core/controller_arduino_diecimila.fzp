@@ -2,17 +2,17 @@
 <module moduleId="1234ABDE24_ST" >
  <version>1.1</version>
  <creator>Stefan Hermann</creator>
- <title>Arduino Diecimila</title>
+ <title>Arduino Diecimila (obsolete)</title>
  <date>2008-09-16</date>
- <label>Arduino</label>
+ <label>Arduino (obsolete)</label>
  <tags>
-  <tag>Arduino Diecimila</tag>
+  <tag>Arduino Diecimila (obsolete) </tag>
   <tag>controller</tag>
   <tag>microcontroller</tag>
   <tag>fritzing core</tag>
  </tags>
  <properties>
-  <property name="type" >Arduino Diecimila</property>
+  <property name="type" >Arduino Diecimila (obsolete)</property>
   <property name="family" >Microcontroller Board</property>
  </properties>
  <taxonomy>discreteParts.controller</taxonomy>
