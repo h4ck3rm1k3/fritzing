@@ -1082,15 +1082,10 @@ void SketchWidget::rotateItem(long id, qreal degrees) {
 
 }
 void SketchWidget::transformItem(long id, const QMatrix & matrix) {
-	//DebugDialog::debug(QString("rotating %1 %2").arg(id).arg(degrees) );
-
-	if (!isVisible()) return;
-
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
 		pitem->transformItem(matrix);
 	}
-
 }
 
 void SketchWidget::flipItem(long id, Qt::Orientations orientation) {
@@ -3583,118 +3578,120 @@ void SketchWidget::setUpSwap(long itemID, long newModelIndex, const QString & ne
 
 	long newID = ItemBase::getNextID(newModelIndex);
 
-	// first disconnect
-	ConnectorPairHash connectorHash;
-	itemBase->collectConnectors(connectorHash, this->scene());
-	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
-		foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-			new ChangeConnectionCommand(this, BaseCommand::SingleView,
-										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										false, true, parentCommand);
-					new RatsnestCommand(this, BaseCommand::SingleView,
-										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
-										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										false, true, parentCommand);
-		}
+	ViewGeometry vg = itemBase->getViewGeometry();
+	QTransform oldTransform = vg.transform();
+	bool needsTransform = false;
+	if (!oldTransform.isIdentity()) {
+		// restore identity transform
+		vg.setTransform(QTransform());
+		needsTransform = true;
 	}
 
+	new AddItemCommand(this, BaseCommand::SingleView, newModuleID, vg, newID, true, newModelIndex, -1, parentCommand);
+
+	if (needsTransform) {
+		QMatrix m;
+		m.setMatrix(oldTransform.m11(), oldTransform.m12(), oldTransform.m21(), oldTransform.m22(), 0, 0);
+		new TransformItemCommand(this, newID, m, m, parentCommand);
+	}
+
+	setUpSwapReconnect(itemBase, newID, newModuleID, master, parentCommand);
+	new CheckStickyCommand(this, BaseCommand::SingleView, newID, false, parentCommand);
+
 	if (master) {		
-		ViewGeometry vg = itemBase->getViewGeometry();
-		QTransform oldTransform = vg.transform();
-		bool needsTransform = false;
-		if (!oldTransform.isIdentity()) {
-			// restore identity transform
-			vg.setTransform(QTransform());
-			needsTransform = true;
-		}
-
-		new AddItemCommand(this, BaseCommand::CrossView, newModuleID, vg, newID, true, newModelIndex, -1, parentCommand);
-		if (needsTransform) {
-			QMatrix m;
-			m.setMatrix(oldTransform.m11(), oldTransform.m12(), oldTransform.m21(), oldTransform.m22(), 0, 0);
-			new TransformItemCommand(this, newID, m, m, parentCommand);
-		}
-
-		new CheckStickyCommand(this, BaseCommand::CrossView, newID, false, parentCommand);
-		setUpSwapReconnect(itemBase, connectorHash, newID, newModuleID, parentCommand);
 		SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
 		selectItemCommand->addRedo(newID);
 		selectItemCommand->addUndo(itemBase->id());
 		new ChangeLabelTextCommand(this, itemBase->id(), itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, parentCommand);
 		new ChangeLabelTextCommand(this, newID, itemBase->instanceTitle(), itemBase->instanceTitle(), QSizeF(), QSizeF(), true, parentCommand);
 		makeDeleteItemCommand(itemBase, BaseCommand::CrossView, parentCommand);
+		new CleanUpWiresCommand(this, false, parentCommand);
 	}
 }
 
-void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand)
+void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand)
 {
-	Q_UNUSED(itemBase);
+	ConnectorPairHash connectorHash;
+	itemBase->collectConnectors(connectorHash, this->scene());
 
 	ModelPart * newModelPart = m_refModel->retrieveModelPart(newModuleID);
 	if (newModelPart == NULL) return;
 
 	newModelPart->initConnectors();			//  make sure the connectors are set up
 	QHash<QString, Connector *> newConnectors = newModelPart->connectors();
+
 	foreach (ConnectorItem * fromConnectorItem, connectorHash.uniqueKeys()) {
+		QList<Connector *> candidates;
 		Connector * newConnector = NULL;
 		QString fromName = fromConnectorItem->connectorSharedName();
 		foreach (Connector * connector, newConnectors.values()) {
 			if (fromName.compare(connector->connectorSharedName(), Qt::CaseInsensitive) == 0) {
-				newConnector = connector;
-				break;
+				candidates.append(connector);
 			}
 		}
-		if (newConnector) {
+
+		bool swappedGenderFlag = false;
+		if (candidates.count() > 0) {
 			// TODO: check distances (for capacitors, for example)
 			//			use preloadSlowParts code to set up new connectors (which layers?)
 			//			skip breadboards, skip gender changes
 			//			only look at connectors with direct m/f connections
 			//			only care about single parts,
-			if (swappedGender(fromConnectorItem, newConnector)) {
-				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-					if (toConnectorItem->connectorType() == newConnector->connectorType()) {
-						// need a wire: connectors are same gender
-						long wireID = ItemBase::getNextID();
-						ViewGeometry vg;
-						new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, vg, wireID, false, -1, -1, parentCommand);
-						new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
-						new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-								wireID, "connector0", true, true, parentCommand);
-						new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-								wireID, "connector1", true, true, parentCommand);
-						new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-								wireID, "connector0", true, true, parentCommand);
-						new RatsnestCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-								wireID, "connector1", true, true, parentCommand);
-					}
-					else {
-						// can connect to the new item directly
-						new ChangeConnectionCommand(this, BaseCommand::CrossView,
-													newID, newConnector->connectorSharedID(),
-													toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-													true, true, parentCommand);
-						new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
-											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-											true, true, parentCommand);
+			newConnector = candidates[0];
+			if (candidates.count() > 1) {
+				foreach (Connector * connector, candidates) {
+					// this gets an exact match, if there is one
+					if (fromConnectorItem->connectorSharedID().compare(connector->connectorSharedID(), Qt::CaseInsensitive) == 0) {					
+						newConnector = connector;
+						break;
 					}
 				}
 			}
-			else {
-				foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
-					// connect to the new item
-					new ChangeConnectionCommand(this, BaseCommand::CrossView,
-												newID, newConnector->connectorSharedID(),
-												toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-												true, true, parentCommand);
-					new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
+			swappedGenderFlag = swappedGender(fromConnectorItem, newConnector);
+		}
+	
+		foreach (ConnectorItem * toConnectorItem, connectorHash.values(fromConnectorItem)) {
+			// delete connection to part being swapped out
+			new ChangeConnectionCommand(this, BaseCommand::SingleView,
+										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
 										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
-										true, true, parentCommand);
-				}
+										false, true, parentCommand);
+
+			bool cleanup = false;
+			if (swappedGenderFlag) {
+				cleanup = toConnectorItem->connectorType() == newConnector->connectorType();
+			}
+			if ((newConnector == NULL) || cleanup) {
+					// clean up after disconnect
+					new RatsnestCommand(this, BaseCommand::SingleView,
+										fromConnectorItem->attachedToID(), fromConnectorItem->connectorSharedID(),
+										toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+										false, true, parentCommand);
+			}
+			else {
+				// reconnect directly without cleaning up
+				new ChangeConnectionCommand(this, BaseCommand::SingleView,
+											newID, newConnector->connectorSharedID(),
+											toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+											true, true, parentCommand);
+			}
+
+			if (cleanup && master) {
+				long wireID = ItemBase::getNextID();
+				ViewGeometry vg;
+				new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, vg, wireID, false, -1, -1, parentCommand);
+				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
+				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
+						wireID, "connector0", true, true, parentCommand);
+				new ChangeConnectionCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+						wireID, "connector1", true, true, parentCommand);
+				new RatsnestCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
+						wireID, "connector0", true, true, parentCommand);
+				new RatsnestCommand(this, BaseCommand::CrossView, toConnectorItem->attachedToID(), toConnectorItem->connectorSharedID(),
+						wireID, "connector1", true, true, parentCommand);
 			}
 		}
 	}
-	new CleanUpWiresCommand(this, false, parentCommand);
 }
 
 void SketchWidget::changeWireColor(const QString newColor)
@@ -4796,8 +4793,8 @@ ViewLayer::ViewLayerID SketchWidget::defaultConnectorLayer(ViewIdentifierClass::
 	}
 }
 
-bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newConnector) {
-
+bool SketchWidget::swappedGender(ConnectorItem * connectorItem, Connector * newConnector) 
+{
 	return (((connectorItem->connectorType() == Connector::Male) && (newConnector->connectorType() == Connector::Female))  ||
 			((connectorItem->connectorType() == Connector::Female) && (newConnector->connectorType() == Connector::Male)));
 }

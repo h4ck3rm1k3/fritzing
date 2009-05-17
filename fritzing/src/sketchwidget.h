@@ -312,7 +312,7 @@ protected:
 	ItemBase * findModulePart(ItemBase * toBase, QList<long> & indexes);
 	ItemBase * makeModule(ModelPart *, long originalModelIndex, QList<ModelPart *> & modelParts, const ViewGeometry &, long id); 
 	void collectModuleExternalConnectors(ItemBase *, ItemBase * parent, ConnectorPairHash &);
-	void setUpSwapReconnect(ItemBase* itemBase, ConnectorPairHash & connectorHash, long newID, const QString & newModuleID, QUndoCommand * parentCommand);
+	void setUpSwapReconnect(ItemBase* itemBase, long newID, const QString & newModuleID, bool master, QUndoCommand * parentCommand);
 	bool swappedGender(ConnectorItem * originalConnectorItem, Connector * newConnector);
 	void setLastPaletteItemSelected(PaletteItem * paletteItem);
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
