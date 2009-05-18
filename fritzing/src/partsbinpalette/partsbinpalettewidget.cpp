@@ -267,6 +267,7 @@ QToolButton* PartsBinPaletteWidget::newToolButton(const QString& imgPath, const 
 	}
 	toolBtn->setPopupMode(QToolButton::InstantPopup);
 	toolBtn->setIcon(QIcon(imgPath));
+	toolBtn->setArrowType(Qt::NoArrow);
 	return toolBtn;
 }
 
