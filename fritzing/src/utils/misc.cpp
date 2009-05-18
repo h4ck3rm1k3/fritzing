@@ -115,3 +115,17 @@ bool isParent(QObject * candidateParent, QObject * candidateChild) {
 
 	return false;
 }
+
+QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue) {
+	if (element.hasAttribute(attributeName)) {
+		if (element.attribute(attributeName).compare(attributeValue) == 0) return element;
+	}
+
+     for(QDomElement e = element.firstChildElement(); !e.isNull(); e = e.nextSiblingElement())
+     {
+		 QDomElement result = findElementWithAttribute(e, attributeName, attributeValue);
+		 if (!result.isNull()) return result;
+     }
+
+	return ___emptyElement___;
+}

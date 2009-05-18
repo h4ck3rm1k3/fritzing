@@ -30,6 +30,7 @@ $Date$
 #include <QHash>
 #include <QSvgRenderer>
 #include <QXmlStreamReader>
+#include <QDomDocument>
 
 #include "viewlayer.h"
 
@@ -45,6 +46,7 @@ public:
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();
+	bool getSvgConnectorInfo(ViewLayer::ViewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth);
 
 public:
 	static void set(const QString & moduleID, ViewLayer::ViewLayerID, FSvgRenderer *);
@@ -61,6 +63,9 @@ protected:
 protected:
 	QString m_filename;
 	QSizeF m_defaultSizeF;
+	QByteArray m_svgXml;
+	QDomDocument m_svgDomDocument;
+	QDomElement m_cachedElement;
 
 protected:
 	static qreal m_printerScale;

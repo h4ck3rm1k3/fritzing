@@ -39,6 +39,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 StackWidgetDockTitleBar::StackWidgetDockTitleBar(class StackWidget* stackW, FDockWidget* dock)
 	: QFrame(stackW)
 {
+	Q_UNUSED(dock);
 	setAcceptDrops(true);
 	QVBoxLayout *lo = new QVBoxLayout(this);
 	lo->setMargin(0);

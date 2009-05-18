@@ -628,7 +628,8 @@ FSvgRenderer * Wire::setUpConnectors(ModelPart * modelPart, ViewIdentifierClass:
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
-		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, false);
+		qreal radius, strokeWidth;
+		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, radius, strokeWidth, false);
 		if (!result) continue;
 
 		ConnectorItem * connectorItem = newConnectorItem(connector);

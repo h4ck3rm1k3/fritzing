@@ -66,7 +66,7 @@ public:
 	const QString & busID();
 	class Bus * bus();
 	void setBus(class Bus *);
-	bool setUpConnector(class FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint);
+	bool setUpConnector(class FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier, ViewLayer::ViewLayerID, QRectF & connectorRect, QPointF & terminalPoint, qreal & radius, qreal & strokeWidth, bool ignoreTerminalPoint);
 	long modelIndex();
 	ModelPart * modelPart();
 	int connectorItemCount();

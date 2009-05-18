@@ -305,7 +305,9 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 		QRectF connectorRect;
 		QPointF terminalPoint;
-		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, ignoreTerminalPoints);
+		qreal radius;
+		qreal strokeWidth;
+		bool result = connector->setUpConnector(renderer, m_modelPart->moduleID(), m_viewIdentifier, m_viewLayerID, connectorRect, terminalPoint, radius, strokeWidth, ignoreTerminalPoints);
 		if (!result) continue;
 
 		//DebugDialog::debug(QString("<rect view=\"%6\" id=\"%1pin\" x=\"%2\" y=\"%3\" width=\"%4\" height=\"%5\" />")
@@ -326,6 +328,7 @@ void PaletteItemBase::setUpConnectors(FSvgRenderer * renderer, bool ignoreTermin
 
 		connectorItem->setRect(connectorRect);
 		connectorItem->setTerminalPoint(terminalPoint);
+		connectorItem->setRadius(radius, strokeWidth);
 		//DebugDialog::debug(QString("terminal point %1 %2").arg(terminalPoint.x()).arg(terminalPoint.y()) );
 
 		Bus * bus = connectorItem->bus();

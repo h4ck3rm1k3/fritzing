@@ -27,8 +27,90 @@ $Date$
 #include "tracewire.h"
 #include "../connectoritem.h"
 #include "../modelpart.h"
+#include <math.h>
 
 static double connectorRectClipInset = 0.5;
+/*
+	http://local.wasp.uwa.edu.au/~pbourke/geometry/sphereline/raysphere.c
+   Calculate the intersection of a ray and a sphere
+   The line segment is defined from p1 to p2
+   The sphere is of radius r and centered at sc
+   There are potentially two points of intersection given by
+   p = p1 + mu1 (p2 - p1)
+   p = p1 + mu2 (p2 - p1)
+   Return FALSE if the ray doesn't intersect the sphere.
+*/
+bool RaySphere(QPointF p1,QPointF p2,QPointF sc,double r,double *mu1,double *mu2)
+{
+   double a,b,c;
+   double bb4ac;
+   QPointF dp;
+
+   dp.setX(p2.x() - p1.x());
+   dp.setY(p2.y() - p1.y());
+   a = dp.x() * dp.x() + dp.y() * dp.y();
+   b = 2 * (dp.x() * (p1.x() - sc.x()) + dp.y() * (p1.y() - sc.y()));
+   c = sc.x() * sc.x() + sc.y() * sc.y();
+   c += p1.x() * p1.x() + p1.y() * p1.y();
+   c -= 2 * (sc.x() * p1.x() + sc.y() * p1.y() );
+   c -= r * r;
+   bb4ac = b * b - 4 * a * c;
+   if (qAbs(a) < .001 || bb4ac < 0) {
+      *mu1 = 0;
+      *mu2 = 0;
+      return false;
+   }
+
+   *mu1 = (-b + sqrt(bb4ac)) / (2 * a);
+   *mu2 = (-b - sqrt(bb4ac)) / (2 * a);
+
+   return true;
+}
+
+float Magnitude( QPointF *Point1, QPointF *Point2 )
+{
+    QPointF Vector;
+
+    Vector.setX(Point2->x() - Point1->x());
+    Vector.setY(Point2->y() - Point1->y());
+
+    return (float)sqrt( Vector.x() * Vector.x() + Vector.y() * Vector.y());
+}
+
+bool DistancePointLine( QPointF *Point, QPointF *LineStart, QPointF *LineEnd, float *Distance )
+{
+	Q_UNUSED(Distance);
+
+    float LineMag;
+    float U;
+    QPointF Intersection;
+ 
+    LineMag = Magnitude( LineEnd, LineStart );
+ 
+    U = ( ( ( Point->x() - LineStart->x() ) * ( LineEnd->x() - LineStart->x() ) ) +
+        ( ( Point->y() - LineStart->y() ) * ( LineEnd->y() - LineStart->y() ) )  ) /
+        ( LineMag * LineMag );
+ 
+    if( U < 0.0f || U > 1.0f )
+        return false;   // closest point does not fall within the line segment
+ 
+
+	// we don't actually care about distance, just whether we're on the line segment
+	// so comment out the rest
+
+	/* 
+    Intersection.setX(LineStart->x() + U * ( LineEnd->x() - LineStart->x() ));
+    Intersection.setY(LineStart->y() + U * ( LineEnd->y() - LineStart->y() ));
+ 
+    *Distance = Magnitude( Point, &Intersection );
+	*/
+ 
+    return true;
+}
+
+
+
+/////////////////////////////////////////////////////////
 
 TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
 	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
@@ -64,7 +146,6 @@ const QLineF & TraceWire::getPaintLine() {
 		return Wire::getPaintLine();
 	}
 
-
 	QPointF p1 = line().p1();
 	QPointF p2 = line().p2();
 	// does connector0 always go with p1?
@@ -90,6 +171,22 @@ void TraceWire::setClipEnds(bool clipEnds ) {
 
 QPointF TraceWire::findIntersection(ConnectorItem * connectorItem, QPointF original)
 {
+	if (connectorItem->radius() > 0) {
+		QRectF r = connectorItem->rect();
+		qreal mu1, mu2;
+		// was thinking the rounded end was exactly linewidth / 2 but that seems to overlap a little
+		if (RaySphere(line().p1(), line().p2(), original, connectorItem->radius() - (connectorItem->strokeWidth() / 2) + (m_pen.width() * 0.54), &mu1, &mu2)) {
+			QPointF inter1 = line().p2() * mu1;
+			QPointF p1 = line().p1();
+			QPointF p2 = line().p2();
+			float distance;
+			if (DistancePointLine(&inter1, &p1, &p2, &distance)) {
+				return inter1;
+			}
+			return line().p2() * mu2;
+		}
+	}
+
 	QRectF r = connectorItem->rect();
 	r.adjust(connectorRectClipInset, connectorRectClipInset, -connectorRectClipInset, -connectorRectClipInset);	// inset it a little bit so the wire touches
 	QPolygonF poly = this->mapFromScene(connectorItem->mapToScene(r));
@@ -105,3 +202,7 @@ QPointF TraceWire::findIntersection(ConnectorItem * connectorItem, QPointF origi
 
 	return original;
 }
+
+
+
+

@@ -50,6 +50,7 @@ QBrush ConnectorItem::chosenBrush(QColor(255,0,0));
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
+	m_radius = m_strokeWidth = 0;
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_chosen = false;
 	m_ignoreAncestorFlag = false;
@@ -815,3 +816,15 @@ bool ConnectorItem::isExternal() {
 	return m_connector->external();
 }
 
+void ConnectorItem::setRadius(qreal radius, qreal strokeWidth) {
+	m_radius = radius;
+	m_strokeWidth = strokeWidth;
+}
+
+qreal ConnectorItem::radius() {
+	return m_radius;
+}
+
+qreal ConnectorItem::strokeWidth() {
+	return m_strokeWidth;
+}

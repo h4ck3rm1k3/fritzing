@@ -91,6 +91,9 @@ public:
 	void setChosen(bool);
 	void prepareGeometryChange();
 	bool isExternal();
+	void setRadius(qreal radius, qreal strokeWidth);
+	qreal radius();
+	qreal strokeWidth();
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -127,6 +130,8 @@ protected:
 	bool m_ignoreAncestorFlag;
 	bool m_spaceBarWasPressed;
 	bool m_hoverEnterSpaceBarWasPressed;
+	qreal m_radius;
+	qreal m_strokeWidth;
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);

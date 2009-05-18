@@ -25,6 +25,8 @@ $Date$
 ********************************************************************/
 
 #include "fsvgrenderer.h"
+#include "debugdialog.h"
+
 #include <QPainter>
 
 QHash<QString, RendererHash *> FSvgRenderer::m_moduleIDRendererHash;
@@ -63,6 +65,11 @@ bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 
 	QXmlStreamReader xml(&file);
 	parseForWidthAndHeight(xml);
+
+	if (readConnectors) {
+		file.seek(0);
+		m_svgXml = file.readAll();
+	}
 	file.close();
 
 	bool result = QSvgRenderer::load(filename);
@@ -75,6 +82,9 @@ bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename, bool readConnectors) {
 	QXmlStreamReader xml(contents);
 	parseForWidthAndHeight(xml);
+	if (readConnectors) {
+		m_svgXml =  contents;
+	}
 
 	bool result = QSvgRenderer::load(contents);
 	if (result) {
@@ -208,4 +218,56 @@ void FSvgRenderer::calcPrinterScale() {
 
 qreal FSvgRenderer::printerScale() {
 	return m_printerScale;
+}
+
+bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const QString & connectorName, QRectF & bounds, qreal & radius, qreal & strokeWidth) {
+	Q_UNUSED(viewLayerID);
+	
+	if (m_svgXml.size() == 0 && m_svgDomDocument.isNull()) {
+		return false;
+	}
+
+	if (m_svgXml.size() > 0) {
+		QString errorStr;
+		int errorLine;
+		int errorColumn;
+		bool result = m_svgDomDocument.setContent(m_svgXml, &errorStr, &errorLine, &errorColumn);
+		m_svgXml.clear();
+		if (!result) {
+			return false;
+		}
+
+	}
+
+	QDomElement element;
+	if (m_cachedElement.isNull()) {
+		element = findElementWithAttribute(m_svgDomDocument.documentElement(), "id", connectorName);
+	}
+	else {
+		element = findElementWithAttribute(m_cachedElement.parentNode().toElement(), "id", connectorName);
+	}
+	if (element.isNull()) return false;
+
+
+	if (element.nodeName().compare("circle") != 0) return false;
+
+	// right now we only handle circles
+
+	bool ok;
+	qreal cx = element.attribute("cx").toDouble(&ok);
+	if (!ok) return false;
+	qreal cy = element.attribute("cy").toDouble(&ok);
+	if (!ok) return false;
+	qreal r = element.attribute("r").toDouble(&ok);
+	if (!ok) return false;
+	qreal sw = element.attribute("stroke-width").toDouble(&ok);			// for now, assumes this isn't in the style attribute
+	if (!ok) return false;
+
+	m_cachedElement = element;
+
+	bounds.setRect(cx - r - (sw / 2), cy - r - (sw / 2), (r * 2) + sw, (r * 2) + sw);
+	radius = r;
+	strokeWidth = sw;
+	return true;
+
 }

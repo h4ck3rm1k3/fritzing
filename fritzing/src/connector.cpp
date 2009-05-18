@@ -220,7 +220,7 @@ void Connector::setBus(Bus * bus) {
 	m_bus = bus;
 }
 
-bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, bool ignoreTerminalPoint) {
+bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID, ViewIdentifierClass::ViewIdentifier viewIdentifier, ViewLayer::ViewLayerID viewLayerID, QRectF & connectorRect, QPointF & terminalPoint, qreal & radius, qreal & strokeWidth, bool ignoreTerminalPoint) {
 	// this code is a bit more viewish than modelish...
 
 	Q_UNUSED(moduleID);
@@ -237,6 +237,8 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		connectorRect = svgIdLayer->m_rect;
 		terminalPoint = svgIdLayer->m_point;
+		radius = svgIdLayer->m_radius;
+		strokeWidth = svgIdLayer->m_strokeWidth;
 	}
 	else {
 
@@ -244,12 +246,19 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		QString connectorID = svgIdLayer->m_svgId; // + "pin" ;
 
-		//DebugDialog::debug(QString("bounds on element %1").arg(connectorID) );
-		QRectF bounds = renderer->boundsOnElement(connectorID);
+		QRectF bounds;
+		qreal rad = 0;
+		qreal sw = 0;
+		if (!renderer->getSvgConnectorInfo(viewLayerID, connectorID, bounds, rad, sw)) {
+			//DebugDialog::debug(QString("bounds on element %1").arg(connectorID) );
+			bounds = renderer->boundsOnElement(connectorID);
+		}
+
 		if (bounds.isNull()) {
 			svgIdLayer->m_visible = false;
 			return false;
 		}
+
 		QSizeF defaultSizeF = renderer->defaultSizeF();
 		if ((bounds.width()) == defaultSizeF.width() && (bounds.height()) == defaultSizeF.height()) {
 			svgIdLayer->m_visible = false;
@@ -258,6 +267,11 @@ bool Connector::setUpConnector(FSvgRenderer * renderer, const QString & moduleID
 
 		QMatrix matrix0 = renderer->matrixForElement(connectorID);
 		QRectF viewBox = renderer->viewBoxF();
+
+		if (rad != 0) {
+			radius = svgIdLayer->m_radius = rad * defaultSizeF.width() / viewBox.width();
+			strokeWidth = svgIdLayer->m_strokeWidth = sw * defaultSizeF.width() / viewBox.width();
+		}
 
 		// TODO: all parts should either have connectors with or without a matrix
 		if (matrix0.isIdentity()) {

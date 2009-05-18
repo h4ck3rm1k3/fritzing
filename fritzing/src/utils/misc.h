@@ -64,6 +64,8 @@ QString getUserPartsFolder();
 QDir *getApplicationSubFolder(QString);
 QString getApplicationSubFolderPath(QString);
 
+QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
+
 qreal convertToInches(const QString & string, bool * ok);
 
 bool isParent(QObject * candidateParent, QObject * candidateChild);

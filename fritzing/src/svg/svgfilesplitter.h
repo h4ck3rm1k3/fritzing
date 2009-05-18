@@ -63,7 +63,6 @@ public:
 
 
 protected:
-	QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 	void normalizeChild(QDomElement & childElement, 
 						qreal sNewWidth, qreal sNewHeight,
 						qreal vbWidth, qreal vbHeight, bool blackOnly);

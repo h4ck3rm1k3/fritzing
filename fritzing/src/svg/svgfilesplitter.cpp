@@ -94,20 +94,6 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 	return true;
 }
 
-QDomElement SvgFileSplitter::findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue) {
-	if (element.hasAttribute(attributeName)) {
-		if (element.attribute(attributeName).compare(attributeValue) == 0) return element;
-	}
-
-     for(QDomElement e = element.firstChildElement(); !e.isNull(); e = e.nextSiblingElement())
-     {
-		 QDomElement result = findElementWithAttribute(e, attributeName, attributeValue);
-		 if (!result.isNull()) return result;
-     }
-
-	return ___emptyElement___;
-}
-
 const QByteArray & SvgFileSplitter::byteArray() {
 	return m_byteArray;
 }
