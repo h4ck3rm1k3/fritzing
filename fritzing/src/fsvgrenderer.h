@@ -40,8 +40,8 @@ class FSvgRenderer : public QSvgRenderer
 public:
 	FSvgRenderer(QObject * parent = 0);
 
-	bool load(const QString & filename);
-	bool load ( const QByteArray & contents, const QString & filename );     // for SvgSplitter loads
+	bool load(const QString & filename, bool readConnectors);
+	bool load ( const QByteArray & contents, const QString & filename, bool readConnectors );     // for SvgSplitter loads
 	bool fastLoad(const QByteArray & contents);								
 	const QString & filename();
 	QSizeF defaultSizeF();

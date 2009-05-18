@@ -372,8 +372,8 @@ void MainWindow::connectPairs() {
 void MainWindow::connectPair(SketchWidget * signaller, SketchWidget * slotter)
 {
 
-	bool succeeded = connect(signaller, SIGNAL(itemAddedSignal(ModelPart *, const ViewGeometry & , long)),
-							 slotter, SLOT(sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long)));
+	bool succeeded = connect(signaller, SIGNAL(itemAddedSignal(ModelPart *, const ViewGeometry &, long, SketchWidget *)),
+							 slotter, SLOT(sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long, SketchWidget *)));
 
 	succeeded = succeeded && connect(signaller, SIGNAL(itemDeletedSignal(long)),
 									 slotter, SLOT(sketchWidget_itemDeleted(long)),

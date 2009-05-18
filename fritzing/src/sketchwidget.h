@@ -325,7 +325,7 @@ protected:
 	static bool greaterThan(int a, int b);
 
 signals:
-	void itemAddedSignal(ModelPart *, const ViewGeometry &, long id);
+	void itemAddedSignal(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
 	void itemDeletedSignal(long id);
 	void clearSelectionSignal();
 	void itemSelectedSignal(long id, bool state);
@@ -355,7 +355,7 @@ signals:
 	void rememberStickySignal(long id, QUndoCommand * parentCommand);
 
 protected slots:
-	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id);
+	void sketchWidget_itemAdded(ModelPart *, const ViewGeometry &, long id, SketchWidget * dropOrigin);
 	void sketchWidget_itemDeleted(long id);
 	void sketchWidget_clearSelection();
 	void sketchWidget_itemSelected(long id, bool state);

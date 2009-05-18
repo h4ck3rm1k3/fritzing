@@ -153,6 +153,14 @@ long AddDeleteItemCommand::itemID() const {
 	return m_itemID;
 }
 
+void AddDeleteItemCommand::setDropOrigin(SketchWidget * sketchWidget) {
+	m_dropOrigin = sketchWidget;
+}
+
+SketchWidget * AddDeleteItemCommand::dropOrigin() {
+	return m_dropOrigin;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, bool updateInfoView, long modelIndex, long originalModelIndex, QUndoCommand *parent)
@@ -162,6 +170,7 @@ AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossVie
 	m_module = false;
 	m_updateInfoView = updateInfoView;
 	m_restoreIndexesCommand = NULL;
+	m_dropOrigin = NULL;
 }
 
 void AddItemCommand::undo()
@@ -181,11 +190,9 @@ void AddItemCommand::turnOffFirstRedo() {
 	m_doFirstRedo = false;
 }
 
-
 void AddItemCommand::addRestoreIndexesCommand(RestoreIndexesCommand * restoreIndexesCommand) {
 	m_restoreIndexesCommand = restoreIndexesCommand;
 }
-
 
 QString AddItemCommand::getParamString() const {
 	return "AddItemCommand " + AddDeleteItemCommand::getParamString();

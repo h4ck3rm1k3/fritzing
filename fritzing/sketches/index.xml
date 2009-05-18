@@ -1,6 +1,6 @@
 <fritzing-sketches>
 	<sketches>
-		<sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
+		    <sketch id="555TouchSwitch" name="555 Touch Switch" src="core/555TouchSwitch.fz"/>
         <sketch id="AnalogInputFSR" name="FSR" src="core/AnalogInputFSR.fz"/>
         <sketch id="AnalogInputOutput" name="Analog Input / Output" src="core/AnalogInputOutput.fz"/>
         <sketch id="AnalogInputPot" name="Potentiometer" src="core/AnalogInputPot.fz"/>
@@ -19,7 +19,8 @@
         <sketch id="TiltSwitch" name="Tilt Switch" src="core/TiltSwitch.fz"/>
         <sketch id="TrafficLight" name="Traffic Light" src="core/TrafficLight.fz"/>
         <sketch id="VirtualColorMixer" name="Virtual Color Mixer" src="core/VirtualColorMixer.fz"/>
-        <sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator.fz"/>
+        <sketch id="VoltageRegulator" name="Voltage Regulator" src="core/VoltageRegulator_7800series.fz"/>
+        <sketch id="VoltageRegulatorSwitch" name="Voltage Regulator with Switch" src="core/VoltageRegulator_with_switch.fz"/>
         <sketch id="Window_Alarm" name="Window Alarm" src="core/Window_Alarm.fz"/>
 	</sketches>
 	<categories>
@@ -94,9 +95,10 @@
 	    </category>
 	    <category name="Power">
 				<sketch id="npnPowerTransistor"/>
-	            <sketch id="Optocoupler"/>
-	            <sketch id="VoltageRegulator"/>
-	    </category>
+	      <sketch id="Optocoupler"/>
+        <sketch id="VoltageRegulator"/>
+        <sketch id="VoltageRegulatorSwitch"/>
+      </category>
 	    <category name="Processing">
 				<sketch id="Arduino-no-FTDI"/>
 	    </category>

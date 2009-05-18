@@ -51,7 +51,7 @@ void FSvgRenderer::cleanup() {
 
 }
 
-bool FSvgRenderer::load ( const QString & filename ) {
+bool FSvgRenderer::load ( const QString & filename, bool readConnectors ) {
 	if (!QFileInfo(filename).exists() || !QFileInfo(filename).isFile()) {
 		return false;
 	}
@@ -72,7 +72,7 @@ bool FSvgRenderer::load ( const QString & filename ) {
 	return result;
 }
 
-bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename) {
+bool FSvgRenderer::load ( const QByteArray & contents, const QString & filename, bool readConnectors) {
 	QXmlStreamReader xml(contents);
 	parseForWidthAndHeight(xml);
 

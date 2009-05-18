@@ -80,6 +80,8 @@ public:
     AddDeleteItemCommand(class SketchWidget * sketchWidget, BaseCommand::CrossViewType, QString moduleID, ViewGeometry &, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent);
 
 	long itemID() const;
+	void setDropOrigin(class SketchWidget *);
+	class SketchWidget * dropOrigin();
 
 protected:
 	QString getParamString() const;
@@ -90,7 +92,7 @@ protected:
     ViewGeometry m_viewGeometry;
 	long m_modelIndex;
 	long m_originalModelIndex;
-
+	class SketchWidget * m_dropOrigin;
 };
 
 class AddItemCommand : public AddDeleteItemCommand
@@ -111,7 +113,6 @@ protected:
 	bool m_doFirstRedo;
 	bool m_module;
 	RestoreIndexesCommand * m_restoreIndexesCommand;
-
 };
 
 class DeleteItemCommand : public AddDeleteItemCommand

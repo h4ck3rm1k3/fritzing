@@ -70,7 +70,7 @@ $Date$
 #include "items/resizableboard.h"
 #include "fsvgrenderer.h"
 
-static QColor labelTextColor = Qt::black;
+static const QColor labelTextColor = Qt::black;
 QHash<ViewIdentifierClass::ViewIdentifier,QColor> SketchWidget::m_bgcolors;
 
 SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, QWidget *parent, int size, int minSize)
@@ -582,7 +582,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 
 	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, originalModelIndex, originatingCommand, partsEditorPaletteItem, true);
 	if (crossViewType == BaseCommand::CrossView) {
-		emit itemAddedSignal(modelPart, viewGeometry, id);
+		emit itemAddedSignal(modelPart, viewGeometry, id, originatingCommand->dropOrigin());
 	}
 
 	return newItem;
@@ -1425,6 +1425,8 @@ void SketchWidget::dropEvent(QDropEvent *event)
 			crossViewType = BaseCommand::SingleView;
 		}
 		AddItemCommand * addItemCommand = new AddItemCommand(this, crossViewType, modelPart->moduleID(), viewGeometry, fromID, true, -1, -1, parentCommand);
+		addItemCommand->setDropOrigin(this);
+		
 		new CheckStickyCommand(this, crossViewType, fromID, false, parentCommand);
 
 		if (modelPart->itemType() == ModelPart::Module) {
@@ -1904,8 +1906,19 @@ void SketchWidget::setSketchModel(SketchModel * sketchModel) {
 	m_sketchModel = sketchModel;
 }
 
-void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id) {
-	addItemAux(modelPart, viewGeometry, id, -1, NULL, NULL, true);
+void SketchWidget::sketchWidget_itemAdded(ModelPart * modelPart, const ViewGeometry & viewGeometry, long id, SketchWidget * dropOrigin) {
+	if (dropOrigin != NULL && dropOrigin != this) {
+		// offset the part 
+		QPointF from = dropOrigin->mapToScene(QPoint(0, 0));
+		QPointF to = this->mapToScene(QPoint(0, 0));
+		QPointF dp = viewGeometry.loc() - from;
+		ViewGeometry vg(viewGeometry);
+		vg.setLoc(to + dp);
+		addItemAux(modelPart, vg, id, -1, NULL, NULL, true);
+	}
+	else {
+		addItemAux(modelPart, viewGeometry, id, -1, NULL, NULL, true);
+	}
 }
 
 void SketchWidget::sketchWidget_itemDeleted(long id) {

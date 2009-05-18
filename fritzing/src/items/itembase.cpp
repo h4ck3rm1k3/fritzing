@@ -1145,13 +1145,14 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		if (gotOne) {
 			renderer = FSvgRenderer::getByFilename(filename, viewLayerID);
 			if (renderer == NULL) {
+				bool readConnectors = (viewLayerID == ViewLayer::Copper0) && (viewIdentifier == ViewIdentifierClass::PCBView);
 				gotOne = false;
 				renderer = new FSvgRenderer();
 				if (layerAttributes.multiLayer()) {
 					// need to treat create "virtual" svg file for each layer
-					SvgFileSplitter svgFileSplitter;
+					SvgFileSplitter svgFileSplitter; 
 					if (svgFileSplitter.split(filename, layerAttributes.layerName())) {
-						if (renderer->load(svgFileSplitter.byteArray(), filename)) {
+						if (renderer->load(svgFileSplitter.byteArray(), filename, readConnectors)) {
 							gotOne = true;
 						}
 					}
@@ -1161,7 +1162,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 //					DebugDialog::debug(QString("set up image elapsed (2.3) %1").arg(t.elapsed()) );
 //#endif
 					// only one layer, just load it directly
-					if (renderer->load(filename)) {
+					if (renderer->load(filename, readConnectors)) {
 						gotOne = true;
 					}
 //#ifndef QT_NO_DEBUG

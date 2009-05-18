@@ -832,7 +832,7 @@ void PartsEditorView::setMismatching(ViewIdentifierClass::ViewIdentifier viewId,
 void PartsEditorView::aboutToSave() {
 	if(m_item) {
 		FSvgRenderer *renderer = new FSvgRenderer();
-		if(renderer->load(m_item->flatSvgFilePath())) {
+		if(renderer->load(m_item->flatSvgFilePath(), false)) {
 			QRectF svgViewBox = renderer->viewBoxF();
 			QSizeF sceneViewBox = renderer->defaultSizeF();
 			QDomDocument *svgDom = m_item->svgDom();
