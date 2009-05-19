@@ -174,8 +174,8 @@ QPointF TraceWire::findIntersection(ConnectorItem * connectorItem, QPointF origi
 	if (connectorItem->radius() > 0) {
 		QRectF r = connectorItem->rect();
 		qreal mu1, mu2;
-		// was thinking the rounded end was exactly linewidth / 2 but that seems to overlap a little
-		if (RaySphere(line().p1(), line().p2(), original, connectorItem->radius() - (connectorItem->strokeWidth() / 2) + (m_pen.width() * 0.54), &mu1, &mu2)) {
+		// penwidth / 2 deals with the extra length of the round line caps
+		if (RaySphere(line().p1(), line().p2(), original, connectorItem->radius() - (connectorItem->strokeWidth() / 2) + (m_pen.width() * 0.5), &mu1, &mu2)) {
 			QPointF inter1 = line().p2() * mu1;
 			QPointF p1 = line().p1();
 			QPointF p2 = line().p2();
