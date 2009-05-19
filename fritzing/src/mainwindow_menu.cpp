@@ -798,17 +798,20 @@ void MainWindow::populateMenuFromXMLFile(
 		const QString &rootNode, const QString &indexNode,
 		const QString &submenuNode*/
 ) {
-	QDomDocument *dom = new QDomDocument();
+	QDomDocument dom;
 	QFile file(folderPath+indexFileName);
-	dom->setContent(&file);
+	dom.setContent(&file);
 	file.close();
 
-	QDomElement domElem = dom->documentElement();
+	QDomElement domElem = dom.documentElement();
 	QDomElement indexDomElem = domElem.firstChild().toElement();
 	QDomElement taxonomyDomElem = indexDomElem.nextSiblingElement("categories");
 
 	SketchIndex index = indexAvailableElements(indexDomElem,folderPath);
 	populateMenuWithIndex(index,parentMenu,actionsTracker,taxonomyDomElem);
+	foreach (SketchDescriptor * sketchDescriptor, index.values()) {
+		delete sketchDescriptor;
+	}
 }
 
 SketchIndex MainWindow::indexAvailableElements(QDomElement &domElem, const QString &srcPrefix) {
