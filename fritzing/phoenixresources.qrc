@@ -92,6 +92,7 @@ $Date$
     <file>resources/images/icons/partsBinMenuPressed_icon.png</file>
     <file>resources/images/icons/partsBinAddPart_icon.png</file>
     <file>resources/images/icons/partsBinAddPartPressed_icon.png</file>
+    <file>resources/images/icons/partsBinToolButtonArrow.png</file>
     <file>resources/images/icons/partsBinExportPartEnabled_icon.png</file>
     <file>resources/images/icons/partsBinExportPartDisabled_icon.png</file>
     <file>resources/images/icons/partsBinExportPartPressed_icon.png</file>
