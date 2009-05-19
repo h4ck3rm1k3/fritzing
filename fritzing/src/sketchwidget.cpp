@@ -3862,8 +3862,8 @@ void SketchWidget::addPcbViewLayers() {
 	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Board << ViewLayer::Ratsnest << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Keepout
-		<< ViewLayer::Vias << ViewLayer::Soldermask << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel << ViewLayer::Outline
+	layers << ViewLayer::Board << ViewLayer::Ratsnest << ViewLayer::Copper1 << ViewLayer::Copper0 /* << ViewLayer::Keepout */
+		<< ViewLayer::Vias /* << ViewLayer::Soldermask */ << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
 		<< ViewLayer::Jumperwires << ViewLayer::PcbNote << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);

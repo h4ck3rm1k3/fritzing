@@ -59,8 +59,8 @@ void PCBSketchWidget::addViewLayers() {
 	viewLayer->action()->setEnabled(false);
 	viewLayer = m_viewLayers.value(ViewLayer::Copper1);
 	viewLayer->action()->setEnabled(false);
-	viewLayer = m_viewLayers.value(ViewLayer::Keepout);
-	viewLayer->action()->setEnabled(false);
+	//viewLayer = m_viewLayers.value(ViewLayer::Keepout);
+	//viewLayer->action()->setEnabled(false);
 }
 
 
