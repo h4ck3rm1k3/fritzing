@@ -208,6 +208,7 @@ public:
 	void setUpSwap(long itemID, long newModelIndex, const QString & newModuleID, bool doEmit, QUndoCommand * parentCommand);
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
+	LayerHash & viewLayers();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

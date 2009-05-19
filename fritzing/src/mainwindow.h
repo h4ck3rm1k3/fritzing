@@ -262,6 +262,7 @@ protected:
 	void exportToEagle();
 	void exportToGerber();
     void exportBOM();
+    void exportSvg();
 	void exportEtchable(bool wantPDF, bool wantSVG);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
@@ -414,6 +415,7 @@ protected:
 	QAction *m_exportEtchableAct;
 	QAction *m_exportEtchableSvgAct;
 	QAction *m_exportBomAct;
+	QAction *m_exportSvgAct;
 
     // Edit Menu
     QMenu *m_editMenu;

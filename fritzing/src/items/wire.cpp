@@ -858,6 +858,10 @@ void Wire::setColorString(QString colorName, qreal op) {
 	setShadowColor(c);
 }
 
+QString Wire::hexString() {
+	return m_pen.brush().color().name();
+}
+
 QString Wire::colorString() {
 	return m_colorName;
 }

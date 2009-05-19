@@ -59,7 +59,7 @@ protected:
 	void positionGrips();
 	void mouseMoveEvent ( QGraphicsSceneMouseEvent * event );
 	void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
-	QString makeCopper0Svg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
+	QString makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 	QString makeSilkscreenSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH);
 
 protected:

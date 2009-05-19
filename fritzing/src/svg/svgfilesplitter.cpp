@@ -54,6 +54,13 @@ bool SvgFileSplitter::split(const QString & filename, const QString & elementID)
 	QString contents = file.readAll();
 	file.close();
 
+	return splitString(contents, elementID);
+}
+
+bool SvgFileSplitter::splitString(QString & contents, const QString & elementID)
+{
+	m_byteArray.clear();
+
 	// gets rid of some crap inserted by illustrator which can screw up polygons and paths
 	contents.remove(QChar('\t'));
 	contents.remove(QChar('\n'));

@@ -91,6 +91,7 @@ public:
 	void setWireFlags(ViewGeometry::WireFlags);
 
 	QString colorString();
+	QString hexString();
 	void setColorString(QString, qreal opacity);
 	void setColor(QColor &, qreal opacity);
 	qreal opacity();

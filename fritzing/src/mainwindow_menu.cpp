@@ -70,10 +70,8 @@ bool sortPartList(ItemBase * b1, ItemBase * b2){
 
 void MainWindow::initExportConstants()
 {
-	#ifndef QT_NO_PRINTER
-		filePrintFormats[pdfActionType] = QPrinter::PdfFormat;
-		filePrintFormats[psActionType] = QPrinter::PostScriptFormat;
-	#endif
+	filePrintFormats[pdfActionType] = QPrinter::PdfFormat;
+	filePrintFormats[psActionType] = QPrinter::PostScriptFormat;
 
 	fileExportFormats[pngActionType] = QImage::Format_ARGB32;
 	fileExportFormats[jpgActionType] = QImage::Format_RGB32;
@@ -266,6 +264,11 @@ void MainWindow::doExport() {
 
 	if (actionType.compare(bomActionType) == 0) {
 		exportBOM();
+		return;
+	}
+
+	if (actionType.compare(svgActionType) == 0) {
+		exportSvg();
 		return;
 	}
 
@@ -719,27 +722,32 @@ void MainWindow::createFileMenuActions() {
 
 	m_exportJpgAct = new QAction(tr("to &JPG..."), this);
 	m_exportJpgAct->setData(jpgActionType);
-	m_exportJpgAct->setStatusTip(tr("Export the current sketch as a JPG image"));
+	m_exportJpgAct->setStatusTip(tr("Export the visible area of the current sketch as a JPG image"));
 	connect(m_exportJpgAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportPngAct = new QAction(tr("to P&NG..."), this);
 	m_exportPngAct->setData(pngActionType);
-	m_exportPngAct->setStatusTip(tr("Export the current sketch as a PNG image"));
+	m_exportPngAct->setStatusTip(tr("Export the visible area of the current sketch as a PNG image"));
 	connect(m_exportPngAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportPsAct = new QAction(tr("to Post&Script..."), this);
 	m_exportPsAct->setData(psActionType);
-	m_exportPsAct->setStatusTip(tr("Export the current sketch as a PostScript image"));
+	m_exportPsAct->setStatusTip(tr("Export the visible area of the current sketch as a PostScript image"));
 	connect(m_exportPsAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportPdfAct = new QAction(tr("to &PDF..."), this);
 	m_exportPdfAct->setData(pdfActionType);
-	m_exportPdfAct->setStatusTip(tr("Export the current sketch as a PDF image"));
+	m_exportPdfAct->setStatusTip(tr("Export the visible area of the current sketch as a PDF image"));
 	connect(m_exportPdfAct, SIGNAL(triggered()), this, SLOT(doExport()));
+
+	m_exportSvgAct = new QAction(tr("to &SVG..."), this);
+	m_exportSvgAct->setData(svgActionType);
+	m_exportSvgAct->setStatusTip(tr("Export the current sketch as an SVG image"));
+	connect(m_exportSvgAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
     m_exportBomAct = new QAction(tr("List of parts (&Bill of Materials)"), this);
     m_exportBomAct->setData(bomActionType);
-    m_exportBomAct->setStatusTip(tr("Save a text Bill of Materials (BoM)/Shopping List"));
+    m_exportBomAct->setStatusTip(tr("Save a Bill of Materials (BoM)/Shopping List as text"));
     connect(m_exportBomAct, SIGNAL(triggered()), this, SLOT(doExport()));
 
 	m_exportEagleAct = new QAction(tr("to &Eagle..."), this);
@@ -1244,6 +1252,7 @@ void MainWindow::createMenus()
 	m_exportMenu->addAction(m_exportPsAct);
 	m_exportMenu->addAction(m_exportPngAct);
 	m_exportMenu->addAction(m_exportJpgAct);
+	m_exportMenu->addAction(m_exportSvgAct);
 	m_exportMenu->addSeparator();
 	m_exportMenu->addAction(m_exportBomAct);
 	m_exportMenu->addAction(m_exportEtchableAct);
@@ -2008,7 +2017,7 @@ void MainWindow::exportToGerber() {
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	viewLayerIDs << ViewLayer::Copper0;
 	QSizeF imageSize;
-        QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board);
+    QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board);
 	if (svg.isEmpty()) {
 		// tell the user something reasonable
 		return;
@@ -2159,6 +2168,37 @@ void MainWindow::exportToEagle() {
 	ADD LED@fritzing 'L_2' R0.000 (5.423622 2.425197);
 	GRID LAST;
 	*/
+}
+
+void MainWindow::exportSvg() {
+	QString path = defaultSaveFolder();
+	QString fileExt;
+	QString fileName = FApplication::getSaveFileName(this,
+		tr("Export SVG..."),
+		path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+svgActionType,
+		fileExtFormats[svgActionType],
+		&fileExt
+		);
+
+	if (fileName.isEmpty()) return;
+
+	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	foreach (ViewLayer * viewLayer, m_currentGraphicsView->viewLayers()) {
+		viewLayerIDs << viewLayer->viewLayerID();
+	}
+
+	QSizeF imageSize;
+    QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, false, imageSize, NULL);
+	if (svg.isEmpty()) {
+		// tell the user something reasonable
+		return;
+	}
+
+	QFile file(fileName);
+	file.open(QIODevice::WriteOnly);
+	QTextStream out(&file);
+	out << svg;
+	file.close();
 }
 
 void MainWindow::exportBOM() {
@@ -2413,9 +2453,11 @@ bool MainWindow::alreadyOpen(const QString & fileName) {
 }
 
 void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
+	// assumes act is disabled already
+
 	Wire * wire = dynamic_cast<Wire *>(graphicsItem);
 	if (wire == NULL) return;
-	if (wire->getRatsnest()) return;
+	if (wire->getRatsnest() && (m_currentGraphicsView != m_schematicGraphicsView)) return;
 
 	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
 	FGraphicsScene * scene = qobject_cast<FGraphicsScene *>(graphicsItem->scene());

@@ -395,7 +395,7 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 	
 	//DebugDialog::debug(QString("path: %1").arg(path));
 
-	SvgFileSplitter * splitter = svgHash.value(path, NULL);
+	SvgFileSplitter * splitter = svgHash.value(path + xmlName, NULL);
 	if (splitter == NULL) {
 		splitter = new SvgFileSplitter();
 		bool result = splitter->split(path, xmlName);
@@ -408,7 +408,7 @@ QString PaletteItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<Q
 			delete splitter;
 			return "";
 		}
-		svgHash.insert(path, splitter);
+		svgHash.insert(path + xmlName, splitter);
 	}
 
 	return splitter->elementString(xmlName);

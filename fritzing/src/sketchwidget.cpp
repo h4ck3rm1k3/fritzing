@@ -4551,6 +4551,7 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 	foreach (QGraphicsItem * item, scene()->items()) {
 		ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
 		if (itemBase == NULL) continue;
+		if (!itemBase->isVisible()) continue;
 
 		switch (itemBase->itemType()) {
 			case ModelPart::Wire:
@@ -4602,10 +4603,17 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 
 	QHash<QString, SvgFileSplitter *> svgHash;
 
+	// put them in z order
+	qSort(itemBases.begin(), itemBases.end(), ItemBase::zLessThan);
+
 	foreach (ItemBase * itemBase, itemBases) {
 		if (itemBase->itemType() != ModelPart::Wire) {
 			foreach (ViewLayer::ViewLayerID viewLayerID, partLayers) {
 				if (itemBase->viewLayerID() != viewLayerID) continue;
+
+				if (itemBase->viewLayerID() == ViewLayer::Copper0) {
+					DebugDialog::debug("alive in here");
+				}
 
 				QString itemSvg = itemBase->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 				if (itemSvg.isEmpty()) continue;
@@ -4658,12 +4666,14 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 				p2.setX(p2.x() * dpi / printerScale);
 				p2.setY(p2.y() * dpi / printerScale);
 				// TODO: use original colors, not just black
-				QString lineString = QString("<line style=\"stroke-linecap: round\" stroke=\"black\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
+				QString stroke = (blackOnly) ? "black" : wire->hexString();
+				QString lineString = QString("<line style=\"stroke-linecap: round\" stroke=\"%6\" x1=\"%1\" y1=\"%2\" x2=\"%3\" y2=\"%4\" stroke-width=\"%5\" />")
 								.arg(p1.x())
 								.arg(p1.y())
 								.arg(p2.x())
 								.arg(p2.y())
-								.arg(wire->width() * dpi / printerScale);
+								.arg(wire->width() * dpi / printerScale)
+								.arg(stroke);
 				outputSVG.append(lineString);
 			}
 		}
@@ -4924,4 +4934,6 @@ ItemBase * SketchWidget::lastHoverEnterItem() {
 	return m_lastHoverEnterItem;
 }
 
-
+LayerHash & SketchWidget::viewLayers() {
+	return m_viewLayers;
+}

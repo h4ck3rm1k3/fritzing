@@ -28,6 +28,7 @@ $Date: 2009-04-17 00:22:27 +0200 (Fri, 17 Apr 2009) $
 #include "../utils/resizehandle.h"
 #include "../fsvgrenderer.h"
 #include "../infographicsview.h"
+#include "../svg/svgfilesplitter.h"
 
 static QString BoardLayerTemplate = "";
 static QString SilkscreenLayerTemplate = "";
@@ -288,7 +289,7 @@ void ResizableBoard::resizeMM(qreal mmW, qreal mmH, const LayerHash & viewLayers
 	qreal milsW = mm2mils(mmW);
 	qreal milsH = mm2mils(mmH);
 
-	QString s = makeCopper0Svg(mmW, mmH, milsW, milsH);
+	QString s = makeBoardSvg(mmW, mmH, milsW, milsH);
 
 	bool result = m_renderer->fastLoad(s.toUtf8());
 	if (result) {
@@ -341,22 +342,37 @@ QString ResizableBoard::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QS
 {
 	QSizeF sz = modelPart()->size();
 	if (sz.width() != 0) {
+		QString xml;
 		switch (viewLayerID) {
-			case ViewLayer::Copper0:
-				return makeCopper0Svg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
+			case ViewLayer::Board:
+				xml = makeBoardSvg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
 				break;
 			case ViewLayer::Silkscreen:
-				return makeSilkscreenSvg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
+				xml = makeSilkscreenSvg(sz.width(), sz.height(), mm2mils(sz.width()), mm2mils(sz.height()));
 				break;
 			default:
 				break;
+		}
+
+		if (!xml.isEmpty()) {
+			QString xmlName = ViewLayer::viewLayerXmlNameFromID(viewLayerID);
+			SvgFileSplitter splitter;
+			bool result = splitter.splitString(xml, xmlName);
+			if (!result) {
+				return "";
+			}
+			result = splitter.normalize(dpi, xmlName, blackOnly);
+			if (!result) {
+				return "";
+			}
+			return splitter.elementString(xmlName);
 		}
 	}
 
 	return PaletteItemBase::retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 }
 
-QString ResizableBoard::makeCopper0Svg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
+QString ResizableBoard::makeBoardSvg(qreal mmW, qreal mmH, qreal milsW, qreal milsH) {
 	return BoardLayerTemplate
 		.arg(mmW).arg(mmH)			
 		.arg(milsW).arg(milsH)
