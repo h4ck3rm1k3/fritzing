@@ -355,6 +355,10 @@ StackTabBar[current="true"]::tab:selected {
 	background-repeat: no-repeat;
 }
 
+#partsBinBinMenu, #partsBinBinMenu:pressed {
+	margin-top: 3px;
+}
+
 #partsBinBinMenu {
 	background-image: url(:/resources/images/icons/partsBinMenu_icon.png);
 }
