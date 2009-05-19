@@ -87,7 +87,7 @@
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="268"/>
         <source>Fritzing Bin (*%1)</source>
-        <translation>Fritzing Sortiment</translation>
+        <translation>Fritzing Sortiment (*%1)</translation>
     </message>
     <message>
         <location filename="../src/partsbinpalette/binmanager/binmanager.cpp" line="481"/>
@@ -692,37 +692,37 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="725"/>
         <source>Export the visible area of the current sketch as a JPG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtbaren Bereich als JPEG-Bild speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="730"/>
         <source>Export the visible area of the current sketch as a PNG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtbaren Bereich als PNG-Bild speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="735"/>
         <source>Export the visible area of the current sketch as a PostScript image</source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtbaren Bereich als PostScript-Grafik speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="740"/>
         <source>Export the visible area of the current sketch as a PDF image</source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtbaren Bereich als PDF-Dokument speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="743"/>
         <source>to &amp;SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>als &amp;SVG...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="745"/>
         <source>Export the current sketch as an SVG image</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Entwurf als SVG-Grafik speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="750"/>
         <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
-        <translation type="unfinished"></translation>
+        <translation>Einkaufs- bzw. Materialliste (BoM) als Textdatei speichern</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="890"/>
@@ -1345,7 +1345,7 @@ um die Verbindung zu reparieren</translation>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2180"/>
         <source>Export SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>SVG-Datei exportieren...</translation>
     </message>
     <message>
         <location filename="../src/mainwindow_menu.cpp" line="2473"/>
