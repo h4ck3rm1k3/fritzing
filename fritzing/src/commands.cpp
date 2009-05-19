@@ -134,6 +134,7 @@ int BaseCommand::index() const {
 AddDeleteItemCommand::AddDeleteItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossViewType crossViewType, QString moduleID, ViewGeometry & viewGeometry, qint64 id, long modelIndex, long originalModelIndex, QUndoCommand *parent)
     : BaseCommand(crossViewType, sketchWidget, parent)
 {
+ 	m_dropOrigin = NULL;
     m_moduleID = moduleID;
     m_viewGeometry = viewGeometry;
     m_itemID = id;
@@ -170,7 +171,6 @@ AddItemCommand::AddItemCommand(SketchWidget* sketchWidget, BaseCommand::CrossVie
 	m_module = false;
 	m_updateInfoView = updateInfoView;
 	m_restoreIndexesCommand = NULL;
-	m_dropOrigin = NULL;
 }
 
 void AddItemCommand::undo()
