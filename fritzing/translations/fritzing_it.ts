@@ -716,40 +716,20 @@ Stiamo lavorando per evitare questo messaggio, quindi ti chiediamo di scegliere 
         <translation>come &amp;JPG...</translation>
     </message>
     <message>
-        <source>Export the current sketch as a JPG image</source>
-        <translation>Esporta lo sketch corrente come immagine JPG</translation>
-    </message>
-    <message>
         <source>to P&amp;NG...</source>
         <translation>come &amp;PNG...</translation>
-    </message>
-    <message>
-        <source>Export the current sketch as a PNG image</source>
-        <translation>Esporta lo sketch corrente come immagine PNG</translation>
     </message>
     <message>
         <source>to Post&amp;Script...</source>
         <translation>come Post&amp;Script...</translation>
     </message>
     <message>
-        <source>Export the current sketch as a PostScript image</source>
-        <translation>Esporta lo sketch corrente come immagine PostScript</translation>
-    </message>
-    <message>
         <source>to &amp;PDF...</source>
         <translation>come &amp;PDF...</translation>
     </message>
     <message>
-        <source>Export the current sketch as a PDF image</source>
-        <translation>Esporta lo sketch corrente come immagine PDF</translation>
-    </message>
-    <message>
         <source>List of parts (&amp;Bill of Materials)</source>
         <translation>Lista componenti (&amp;Bill of Materials)</translation>
-    </message>
-    <message>
-        <source>Save a text Bill of Materials (BoM)/Shopping List</source>
-        <translation>Salva lista materiali (BoM)/Lista della spesa come testo</translation>
     </message>
     <message>
         <source>to &amp;Eagle...</source>
@@ -1417,6 +1397,38 @@ Quantità	Componente
     </message>
     <message>
         <source>Choose a folder for exporting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a JPG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a PNG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a PostScript image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a PDF image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to &amp;SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch as an SVG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export SVG...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1253,9 +1253,9 @@ void MainWindow::createMenus()
 
 	m_exportMenu->addAction(m_exportPdfAct);
 	m_exportMenu->addAction(m_exportPsAct);
+	m_exportMenu->addAction(m_exportSvgAct);
 	m_exportMenu->addAction(m_exportPngAct);
 	m_exportMenu->addAction(m_exportJpgAct);
-	m_exportMenu->addAction(m_exportSvgAct);
 	m_exportMenu->addSeparator();
 	m_exportMenu->addAction(m_exportBomAct);
 	m_exportMenu->addAction(m_exportEtchableAct);

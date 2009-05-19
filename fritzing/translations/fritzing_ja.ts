@@ -650,15 +650,7 @@ in order to fix this connector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export the current sketch as a JPG image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>to P&amp;NG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch as a PNG image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -666,19 +658,7 @@ in order to fix this connector</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export the current sketch as a PostScript image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>to &amp;PDF...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export the current sketch as a PDF image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save a text Bill of Materials (BoM)/Shopping List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1400,6 +1380,38 @@ We&apos;re working to avoid this message, and only let you choose between proper
     </message>
     <message>
         <source>Choose a folder for exporting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a JPG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a PNG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a PostScript image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the visible area of the current sketch as a PDF image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to &amp;SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the current sketch as an SVG image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save a Bill of Materials (BoM)/Shopping List as text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export SVG...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
