@@ -341,6 +341,45 @@ StackTabBar[current="true"]::tab:selected {
 	color: #666;
 }
 
+#partsBinBinMenu, #partsBinPartMenu,
+#partsBinBinMenu:pressed, #partsBinPartMenu:pressed {
+	margin: 0;
+	margin-left: 2px;
+	padding: 0;
+	border: 0;
+	width: 25px;
+	background-color: transparent;
+	background-attachment: fixed;
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+#partsBinBinMenu {
+	background-image: url(:/resources/images/icons/partsBinMenu_icon.png);
+}
+
+#partsBinPartMenu {
+	background-image: url(:/resources/images/icons/partsBinAddPart_icon.png);
+}
+
+#partsBinBinMenu:pressed {
+	background-image: url(:/resources/images/icons/partsBinMenuPressed_icon.png);
+}
+
+
+#partsBinPartMenu:pressed {
+	background-image: url(:/resources/images/icons/partsBinAddPartPressed_icon.png);
+}
+
+
+#partsBinBinMenu::menu-arrow,
+#partsBinBinMenu::menu-arrow:open,
+#partsBinPartMenu::menu-arrow,
+#partsBinPartMenu::menu-arrow:open {
+	image: no-image;
+}
+
+
 /**************** sketch area widgets ****************/
 
 Console {

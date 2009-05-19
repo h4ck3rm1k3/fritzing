@@ -95,6 +95,8 @@ protected:
 	void cleanUp();
 	bool event(QEvent *);
 
+	void makeNonCore();
+
 protected:
 	long m_id;
 

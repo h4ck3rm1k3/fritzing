@@ -39,6 +39,10 @@ void EditableLineWidget::setValidator(const QValidator * v ) {
 	m_lineEdit->setValidator(v);
 }
 
+void EditableLineWidget::setText(const QString &text) {
+	m_lineEdit->setText(text);
+	m_label->setText(text);
+}
 QString EditableLineWidget::editionText() {
 	return m_lineEdit->text();
 }

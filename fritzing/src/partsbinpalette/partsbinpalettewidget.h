@@ -146,7 +146,7 @@ class PartsBinPaletteWidget : public QFrame {
 		void createBinMenu();
 		void createPartMenu();
 		void createContextMenus();
-		QToolButton* newToolButton(const QString& imgPath, const QString &text = ___emptyString___);
+		QToolButton* newToolButton(const QString& btnObjName, const QString& imgPath = ___emptyString___, const QString &text = ___emptyString___);
 		QAction* newTitleAction(const QString &text);
 
 	protected:

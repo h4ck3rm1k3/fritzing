@@ -38,6 +38,7 @@ Q_OBJECT
 	public:
 		EditableLineWidget(QString text, WaitPushUndoStack *undoStack, QWidget *parent=0, QString title="", bool edited=false, bool noSpacing=false);
 		void setValidator(const QValidator * v );
+		void setText(const QString &text);
 
 	protected:
 		QString editionText();

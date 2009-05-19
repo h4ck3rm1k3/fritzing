@@ -258,15 +258,17 @@ void PartsBinPaletteWidget::setupButtons() {
 	createContextMenus();
 }
 
-QToolButton* PartsBinPaletteWidget::newToolButton(const QString& imgPath, const QString &text) {
+QToolButton* PartsBinPaletteWidget::newToolButton(const QString& btnObjName, const QString& imgPath, const QString &text) {
 	QToolButton *toolBtn = new QToolButton(this);
-	toolBtn->setObjectName("binToolButton");
+	toolBtn->setObjectName(btnObjName);
 	if(text != ___emptyString___) {
 		toolBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		toolBtn->setText(text);
 	}
 	toolBtn->setPopupMode(QToolButton::InstantPopup);
-	toolBtn->setIcon(QIcon(imgPath));
+	if(imgPath != ___emptyString___) {
+		toolBtn->setIcon(QIcon(imgPath));
+	}
 	toolBtn->setArrowType(Qt::NoArrow);
 	return toolBtn;
 }
@@ -281,7 +283,7 @@ QAction* PartsBinPaletteWidget::newTitleAction(const QString &text) {
 }
 
 void PartsBinPaletteWidget::createBinMenu() {
-	m_binMenuButton = newToolButton(":/resources/images/icons/partsBinMenu_icon.png");
+	m_binMenuButton = newToolButton("partsBinBinMenu");
 
 	m_newBinAction = new QAction(tr("New..."), this);
 	m_openBinAction = new QAction(tr("Open..."),this);
@@ -313,7 +315,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 }
 
 void PartsBinPaletteWidget::createPartMenu() {
-	m_partMenuButton = newToolButton(":/resources/images/icons/partsBinAddPart_icon.png");
+	m_partMenuButton = newToolButton("partsBinPartMenu");
 
 	m_newPartAction = new QAction(tr("New..."), this);
 	m_importPartAction = new QAction(tr("Import..."),this);

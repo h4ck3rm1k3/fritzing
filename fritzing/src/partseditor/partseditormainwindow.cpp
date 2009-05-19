@@ -519,6 +519,7 @@ bool PartsEditorMainWindow::saveAs() {
 			filename.replace(FritzingPartExtension,guid);
 		}
 
+		makeNonCore();
 		saveAsAux(filename);
 
 		m_updateEnabled = true;
@@ -528,6 +529,12 @@ bool PartsEditorMainWindow::saveAs() {
 	} else {
 		return false;
 	}
+}
+
+void PartsEditorMainWindow::makeNonCore() {
+	QString oldTags = m_tags->text();
+	QString newTags = oldTags.replace("fritzing core","user part",Qt::CaseInsensitive);
+	m_tags->setText(newTags);
 }
 
 void PartsEditorMainWindow::saveAsAux(const QString & fileName) {
