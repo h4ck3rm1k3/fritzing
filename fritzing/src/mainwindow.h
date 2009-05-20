@@ -322,7 +322,7 @@ protected:
 	void svgMissingLayer(const QString & layername, const QString & path);
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
 	void enableAddBendpointAct(QGraphicsItem *);
-
+	class FileProgressDialog * exportProgress();
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);

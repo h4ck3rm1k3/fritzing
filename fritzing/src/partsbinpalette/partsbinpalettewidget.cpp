@@ -45,6 +45,7 @@ $Date$
 #include "../debugdialog.h"
 #include "../dockmanager.h"
 #include "../htmlinfoview.h"
+#include "../utils/fileprogressdialog.h"
 
 
 PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoView *infoView, WaitPushUndoStack *undoStack, BinManager* manager) :
@@ -182,6 +183,8 @@ void PartsBinPaletteWidget::toListView() {
 }
 
 void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
+	FileProgressDialog progress("Saving...", this);
+
 	QString oldFilename = m_fileName;
 	m_fileName = filename;
 	QString title = this->title();

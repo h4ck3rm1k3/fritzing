@@ -35,17 +35,31 @@ $Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QCloseEvent>
+#include <QApplication>
 
 /////////////////////////////////////
 
+FileProgressDialog::FileProgressDialog(const QString & title, QWidget * parent) : QDialog(parent)
+{
+	init(title);
+	setModal(true);
+	show();
+	QApplication::processEvents();
+}
+
 FileProgressDialog::FileProgressDialog(QWidget *parent) : QDialog(parent) 
+{
+	init(QObject::tr("File Progress..."));
+}
+
+void FileProgressDialog::init(const QString & title)
 {
 	Qt::WindowFlags flags = windowFlags();
 	flags ^= Qt::WindowCloseButtonHint;
 	flags ^= Qt::WindowContextHelpButtonHint;
 	setWindowFlags(flags);
 
-	this->setWindowTitle(QObject::tr("File Progress..."));
+	this->setWindowTitle(title);
 
 	QVBoxLayout * vLayout = new QVBoxLayout(this);
 

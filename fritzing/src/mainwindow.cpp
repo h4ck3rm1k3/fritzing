@@ -922,11 +922,7 @@ void MainWindow::saveBundledSketch() {
 
 	if (bundledFileName.isEmpty()) return; // Cancel pressed
 
-	FileProgressDialog progress(this);
-	progress.setWindowTitle("Saving...");
-	progress.setModal(true);
-	progress.show();
-	QApplication::processEvents();
+	FileProgressDialog progress("Saving...", this);
 
 	if(!alreadyHasExtension(bundledFileName)) {
 		fileExt = getExtFromFileDialog(fileExt);
@@ -2017,12 +2013,9 @@ void  MainWindow::clearFileProgressDialog() {
 }
 
 void MainWindow::showFileProgressDialog() {
-	m_fileProgressDialog = new FileProgressDialog(this);
-	m_fileProgressDialog->setWindowTitle("Loading...");
-	m_fileProgressDialog->setModal(true);
-	m_fileProgressDialog->show();
-	QApplication::processEvents();
+	m_fileProgressDialog = new FileProgressDialog("Loading...", this);
 }
+
 
 
 

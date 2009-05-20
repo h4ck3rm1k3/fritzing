@@ -134,6 +134,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		return; //Cancel pressed
 	}
 
+	FileProgressDialog * fileProgressDialog = exportProgress();
+
 	DebugDialog::debug(fileExt+" selected to export");
 	fileExt = getExtFromFileDialog(fileExt);
 	#ifdef Q_WS_X11
@@ -176,6 +178,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	}
 
 	m_statusBar->showMessage(tr("Sketch exported"), 2000);
+	delete fileProgressDialog;
 
 /*
 
@@ -287,6 +290,7 @@ void MainWindow::doExport() {
 		if (fileName.isEmpty()) {
 			return; //Cancel pressed
 		} else {
+			FileProgressDialog * fileProgressDialog = exportProgress();
 			DebugDialog::debug(fileExt+" selected to export");
 			fileExt = getExtFromFileDialog(fileExt);
 			#ifdef Q_WS_X11
@@ -305,6 +309,8 @@ void MainWindow::doExport() {
 				DebugDialog::debug(QString("format: %1 %2").arg(fileExt).arg(fileExportFormats[fileExt]));
 				exportAux(fileName,fileExportFormats[fileExt]);
 			}
+			delete fileProgressDialog;
+
 		}
 	#endif
 }
@@ -2206,6 +2212,7 @@ void MainWindow::exportSvg() {
 
 	if (fileName.isEmpty()) return;
 
+	FileProgressDialog * fileProgressDialog = exportProgress();
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
 	foreach (ViewLayer * viewLayer, m_currentGraphicsView->viewLayers()) {
 		viewLayerIDs << viewLayer->viewLayerID();
@@ -2223,6 +2230,8 @@ void MainWindow::exportSvg() {
 	QTextStream out(&file);
 	out << svg;
 	file.close();
+	delete fileProgressDialog;
+
 }
 
 void MainWindow::exportBOM() {
@@ -2297,6 +2306,7 @@ void MainWindow::exportBOM() {
                 return; //Cancel pressed
         }
 
+ 		FileProgressDialog * fileProgressDialog = exportProgress();
         DebugDialog::debug(fileExt+" selected to export");
         //fileExt = getExtFromFileDialog(fileExt);
         //#ifdef Q_WS_X11
@@ -2314,6 +2324,8 @@ void MainWindow::exportBOM() {
 		if (clipboard != NULL) {
 			clipboard->setText(bom);
 		}
+		delete fileProgressDialog;
+
 
 }
 
@@ -2492,4 +2504,8 @@ void MainWindow::addBendpoint()
 	m_currentGraphicsView->addBendpoint(bendpointAction->lastHoverEnterItem(), 
 										bendpointAction->lastHoverEnterConnectorItem(),
 										bendpointAction->lastLocation());
+}
+
+FileProgressDialog * MainWindow::exportProgress() {
+	return (new FileProgressDialog("Exporting...", this));
 }

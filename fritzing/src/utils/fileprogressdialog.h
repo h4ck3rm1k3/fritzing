@@ -38,6 +38,7 @@ Q_OBJECT
 
 public:
 	FileProgressDialog(QWidget *parent = 0);
+	FileProgressDialog(const QString & title, QWidget *parent = 0);
 	~FileProgressDialog();
 
 protected:
@@ -52,6 +53,9 @@ public slots:
 
 signals:
 	void cancel();
+
+protected:
+	void init(const QString & title);
 
 protected:
 	QProgressBar * m_progressBar;	

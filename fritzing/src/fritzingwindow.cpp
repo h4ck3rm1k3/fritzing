@@ -138,11 +138,7 @@ bool FritzingWindow::saveAs() {
 
 	}
 
-	FileProgressDialog progress(this);
-	progress.setWindowTitle("Saving...");
-	progress.setModal(true);
-	progress.show();
-	QApplication::processEvents();
+	FileProgressDialog progress("Saving...", this);
 
     if(!alreadyHasExtension(fileName)) {
 		fileExt = getExtFromFileDialog(fileExt);
