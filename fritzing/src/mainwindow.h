@@ -90,10 +90,9 @@ public:
 	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id=-1, class PartsBinPaletteWidget* requester=NULL);
 	ModelPart *loadPartFromFile(const QString& newPartPath);
 	void addBoard();
-	void setFileProgressDialog(class FileProgressDialog *);
-	class FileProgressDialog * fileProgressDialog();
-	void clearFileProgressDialog();
 	void init();
+	void showFileProgressDialog();
+	void clearFileProgressDialog();
 
 public:
 	static void initExportConstants();

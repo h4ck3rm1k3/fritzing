@@ -43,6 +43,7 @@ $Date$
 
 #include "lib/quazip/quazip.h"
 #include "lib/quazip/quazipfile.h"
+#include "utils/fileprogressdialog.h"
 
 QString FritzingWindow::ReadOnlyPlaceholder(" [READ-ONLY] ");
 const QString FritzingWindow::CoreBinLocation = ":/resources/bins/bin" + FritzingBinExtension;
@@ -137,10 +138,17 @@ bool FritzingWindow::saveAs() {
 
 	}
 
+	FileProgressDialog progress(this);
+	progress.setWindowTitle("Saving...");
+	progress.setModal(true);
+	progress.show();
+	QApplication::processEvents();
+
     if(!alreadyHasExtension(fileName)) {
 		fileExt = getExtFromFileDialog(fileExt);
 		fileName += fileExt;
 	}
+
     saveAsAux(fileName);
     return true;
 }

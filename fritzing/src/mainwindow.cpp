@@ -922,13 +922,20 @@ void MainWindow::saveBundledSketch() {
 
 	if (bundledFileName.isEmpty()) return; // Cancel pressed
 
+	FileProgressDialog progress(this);
+	progress.setWindowTitle("Saving...");
+	progress.setModal(true);
+	progress.show();
+	QApplication::processEvents();
+
 	if(!alreadyHasExtension(bundledFileName)) {
 		fileExt = getExtFromFileDialog(fileExt);
 		bundledFileName += fileExt;
 	}
 
-	QDir destFolder = QDir::temp();
+	QApplication::processEvents();
 
+	QDir destFolder = QDir::temp();
 	createFolderAnCdIntoIt(destFolder, getRandText());
 	QString dirToRemove = destFolder.path();
 
@@ -939,6 +946,7 @@ void MainWindow::saveBundledSketch() {
 
 	bool wasModified = isWindowModified();
 	QString prevFileName = m_fileName;
+	QApplication::processEvents();
 	saveAsAux(destSketchPath);
 	m_fileName = prevFileName;
 	setWindowModified(wasModified);
@@ -948,6 +956,8 @@ void MainWindow::saveBundledSketch() {
 	foreach(ModelPart* mp, partsToSave) {
 		saveBundledAux(mp, destFolder);
 	}
+
+	QApplication::processEvents();
 
 	if(!createZipAndSaveTo(destFolder, bundledFileName)) {
 		QMessageBox::warning(
@@ -1991,25 +2001,11 @@ void MainWindow::addBoard() {
 MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, bool showProgress) {
 	MainWindow * mw = new MainWindow(paletteModel, refModel);
 	if (showProgress) {
-		FileProgressDialog * progress = new FileProgressDialog(mw);
-		progress->setWindowTitle("Loading...");
-		mw->setFileProgressDialog(progress);
-		progress->setModal(true);
-		progress->show();
-		progress->setValue(2);
-		QApplication::processEvents();
+		mw->showFileProgressDialog();
 	}
 
 	mw->init();
 	return mw;
-}
-
-void MainWindow::setFileProgressDialog(FileProgressDialog * progressDialog) {
-	m_fileProgressDialog = progressDialog;
-}
-
-FileProgressDialog * MainWindow::fileProgressDialog() {
-	return m_fileProgressDialog;
 }
 
 void  MainWindow::clearFileProgressDialog() {
@@ -2019,6 +2015,16 @@ void  MainWindow::clearFileProgressDialog() {
 		m_fileProgressDialog = NULL;
 	}
 }
+
+void MainWindow::showFileProgressDialog() {
+	m_fileProgressDialog = new FileProgressDialog(this);
+	m_fileProgressDialog->setWindowTitle("Loading...");
+	m_fileProgressDialog->setModal(true);
+	m_fileProgressDialog->show();
+	QApplication::processEvents();
+}
+
+
 
 
 

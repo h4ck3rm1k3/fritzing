@@ -54,6 +54,8 @@ FileProgressDialog::FileProgressDialog(QWidget *parent) : QDialog(parent)
 	vLayout->addWidget(m_message);
 
 	m_progressBar = new QProgressBar(this);
+	m_progressBar->setMinimum(0);
+	m_progressBar->setMaximum(0);
 	vLayout->addWidget(m_progressBar);
 
     //QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);

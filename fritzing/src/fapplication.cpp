@@ -418,6 +418,7 @@ int FApplication::startup(int & argc, char ** argv)
 			QString lastSketchPath = settings.value("lastOpenSketch").toString();
 			if(QFileInfo(lastSketchPath).exists()) {
 				settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
+				mainWindow->showFileProgressDialog();
 				mainWindow->load(lastSketchPath);
 				loaded++;
 				settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
@@ -457,6 +458,8 @@ int FApplication::startup(int & argc, char ** argv)
 	 */
 
 	splash.finish(mainWindow);
+
+	mainWindow->clearFileProgressDialog();
 	return 0;
 }
 
@@ -477,6 +480,7 @@ void FApplication::loadNew(QString path) {
 
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 	if (loaded == 0) {
+		mw->showFileProgressDialog();
 		mw->loadWhich(path);
 	}
 	else {

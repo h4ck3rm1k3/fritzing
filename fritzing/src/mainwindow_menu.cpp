@@ -549,6 +549,10 @@ bool MainWindow::loadWhich(const QString & fileName, bool setAsLastOpened, bool 
 
 void MainWindow::load(const QString & fileName, bool setAsLastOpened, bool addToRecent) {
 
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->setMaximum(100);
+		m_fileProgressDialog->setValue(2);
+	}
 	this->show();
 	showAllFirstTimeHelp(false);
 	QApplication::processEvents();
