@@ -55,13 +55,14 @@ AutorouteProgressDialog::AutorouteProgressDialog(QWidget *parent) : QDialog(pare
 	connect(button, SIGNAL(clicked()), this, SLOT(sendSkip()));
 	vLayout->addWidget(button);
 
-	// TODO: eventually add a "stop now" button
 	// TODO: eventually allow zooming and panning during dialog
 
-    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);
+    QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 	buttonBox->button(QDialogButtonBox::Cancel)->setText(tr("Cancel"));
+	buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Stop Now"));
 
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(sendCancel()));
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(sendStop()));
 
 	vLayout->addWidget(buttonBox);
 
@@ -89,6 +90,10 @@ void AutorouteProgressDialog::sendSkip() {
 
 void AutorouteProgressDialog::sendCancel() {
 	emit cancel();
+}
+
+void AutorouteProgressDialog::sendStop() {
+	emit stop();
 }
 
 void AutorouteProgressDialog::closeEvent(QCloseEvent *event)

@@ -49,10 +49,12 @@ public slots:
 	void setValue(int);
 	void sendSkip();
 	void sendCancel();
+	void sendStop();
 
 signals:
 	void skip();
 	void cancel();
+	void stop();
 
 protected:
 	QProgressBar * m_progressBar;	

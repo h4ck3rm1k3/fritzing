@@ -80,6 +80,7 @@ public:
 public slots:
 	void cancel();
 	void cancelTrace();
+	void stopTrace();
 
 signals:
 	void setMaximumProgress(int);
@@ -92,6 +93,7 @@ protected:
 	QList<class ConnectorItem *> * m_drawingNet;
 	bool m_cancelled;
 	bool m_cancelTrace;
+	bool m_stopTrace;
 
 };
 

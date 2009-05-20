@@ -117,7 +117,7 @@ void tangent_PointPoly( QPointF P, QPolygonF & poly, int & rightTangent, int & l
 Autorouter1::Autorouter1(PCBSketchWidget * sketchWidget)
 {
 	m_sketchWidget = sketchWidget;
-	m_cancelTrace = m_cancelled = false;
+	m_stopTrace = m_cancelTrace = m_cancelled = false;
 }
 
 Autorouter1::~Autorouter1()
@@ -128,9 +128,12 @@ void Autorouter1::cancel() {
 	m_cancelled = true;
 }
 
-
 void Autorouter1::cancelTrace() {
 	m_cancelTrace = true;
+}
+
+void Autorouter1::stopTrace() {
+	m_stopTrace = true;
 }
 
 void Autorouter1::start()
@@ -192,7 +195,7 @@ void Autorouter1::start()
 	}
 	adjacency.clear();
 
-	if (m_cancelled) {
+	if (m_cancelled || m_stopTrace) {
 		restoreOriginalState(parentCommand);
 		cleanUp();
 		return;
@@ -255,11 +258,11 @@ void Autorouter1::start()
 
 		bool routedFlag = false;
 		foreach (ConnectorItem * from, fromConnectorItems) {
-			if (m_cancelled) break;
+			if (m_cancelled || m_stopTrace) break;
 			if (routedFlag) break;
 
 			foreach (ConnectorItem * to, toConnectorItems) {
-				if (m_cancelled) break;	
+				if (m_cancelled || m_stopTrace) break;	
 				if (routedFlag) break;
 
 				// find the ratsnest connecting the two connectors
@@ -302,7 +305,7 @@ void Autorouter1::start()
 			}
 		}
 
-		if (!routedFlag) {
+		if (!routedFlag && !m_stopTrace) {
 			drawJumper(edge->from, edge->to, partForBounds);
 			jumperCount++;
 		}
@@ -332,6 +335,10 @@ void Autorouter1::start()
 			cleanUp();
 			return;
 		}
+
+		if (m_stopTrace) {
+			break;
+		}
 	}
 
 	cleanUp();
@@ -344,7 +351,7 @@ void Autorouter1::start()
 
 	emit setProgressValue(edgesDone);
 	
-	updateRatsnest(true, parentCommand);
+	updateRatsnest(!m_stopTrace, parentCommand);
 	m_sketchWidget->updateRatsnestStatus(NULL, parentCommand);
 	m_sketchWidget->pushCommand(parentCommand);
 	DebugDialog::debug("\n\n\nautorouting complete\n\n\n");
@@ -536,7 +543,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		return false;
 	}
 
-	if (m_cancelTrace) {
+	if (m_cancelTrace || m_stopTrace) {
 		// clear the cancel flag so the next trace can proceed
 		m_cancelTrace = false;
 	}
@@ -618,10 +625,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	QApplication::processEvents();
 	DebugDialog::debug(QString("%5drawtrace from:%1 %2, to:%3 %4")
 		.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );
-	if (m_cancelled) {
-		return false;
-	}
-	if (m_cancelTrace) {
+	if (m_cancelled || m_cancelTrace || m_stopTrace) {
 		return false;
 	}
 

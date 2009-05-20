@@ -2378,6 +2378,7 @@ void MainWindow::autoroute() {
 
 	connect(&progress, SIGNAL(cancel()), autorouter1, SLOT(cancel()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(skip()), autorouter1, SLOT(cancelTrace()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(stop()), autorouter1, SLOT(stopTrace()), Qt::DirectConnection);
 	connect(autorouter1, SIGNAL(setMaximumProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
 	connect(autorouter1, SIGNAL(setProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
 	QApplication::processEvents();
