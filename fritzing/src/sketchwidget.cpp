@@ -57,7 +57,7 @@ $Date$
 #include "layerattributes.h"
 #include "waitpushundostack.h"
 #include "zoomcombobox.h"
-#include "autorouter1.h"
+#include "autoroute/autorouter1.h"
 #include "fgraphicsscene.h"
 #include "mainwindow.h"
 #include "version/version.h"

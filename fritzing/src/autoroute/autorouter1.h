@@ -37,7 +37,7 @@ $Date$
 #include <QProgressDialog>
 #include <QUndoCommand>
 
-#include "viewgeometry.h"
+#include "../viewgeometry.h"
 
 class Autorouter1 : public QObject
 {

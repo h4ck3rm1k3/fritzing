@@ -27,7 +27,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 #include "pcbschematicsketchwidget.h"
 #include "debugdialog.h"
-#include "autorouter1.h"
+#include "autoroute/autorouter1.h"
 #include "connectoritem.h"
 #include "items/wire.h"
 

@@ -25,7 +25,7 @@ $Date$
 ********************************************************************/
 
 #include "eventeater.h"
-#include "debugdialog.h"
+#include "../debugdialog.h"
 
 
 EventEater::EventEater(QObject * parent) : QObject(parent) {

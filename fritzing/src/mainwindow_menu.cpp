@@ -33,8 +33,8 @@ $Date$
 //#include "partseditor/mainpartseditorwindow.h"
 #include "partseditor/partseditormainwindow.h"
 #include "aboutbox.h"
-#include "autorouter1.h"
-#include "eventeater.h"
+#include "autoroute/autorouter1.h"
+#include "autoroute/autorouteprogressdialog.h"
 #include "items/virtualwire.h"
 #include "fsvgrenderer.h"
 #include "labels/note.h"
@@ -2334,48 +2334,23 @@ void MainWindow::createTraceMenuActions() {
 
 void MainWindow::autoroute() {
 	m_routingStatusLabel->setText(tr("Autorouting..."));
-	m_dontClose = true;
-	EventEater eater(this);
-	qApp->installEventFilter(&eater);
-	menuBar()->setEnabled(false);
 
-	emit autorouted();
-
-	//QProgressDialog progress(QObject::tr("Autorouting..."), QObject::tr("Cancel"), 0, 1, this);
-	//progress.show();
-
-	QProgressBar progressBar;
-	m_statusBar->addPermanentWidget (&progressBar);
-	QPushButton cancelTraceButton;
-	cancelTraceButton.setText(tr("Skip this trace"));
-	m_statusBar->addPermanentWidget(&cancelTraceButton);
-	QPushButton cancelButton;
-	cancelButton.setText(tr("Cancel autorouting"));
-	m_statusBar->addPermanentWidget(&cancelButton);
-	progressBar.show();
-	cancelButton.show();
-	cancelTraceButton.show();
-
-	eater.allowEventsIn(&cancelButton);
-	eater.allowEventsIn(&cancelTraceButton);
+	AutorouteProgressDialog progress(this);
+	progress.setModal(true);
+	progress.show();
 
 	m_pcbGraphicsView->scene()->clearSelection();
-	QApplication::processEvents();
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(true);
 	Autorouter1 * autorouter1 = new Autorouter1(m_pcbGraphicsView);
-	connect(&cancelButton, SIGNAL(clicked()), autorouter1, SLOT(cancel()), Qt::DirectConnection);
-	connect(&cancelTraceButton, SIGNAL(clicked()), autorouter1, SLOT(cancelTrace()), Qt::DirectConnection);
-	connect(autorouter1, SIGNAL(setMaximumProgress(int)), &progressBar, SLOT(setMaximum(int)), Qt::DirectConnection);
-	connect(autorouter1, SIGNAL(setProgressValue(int)), &progressBar, SLOT(setValue(int)), Qt::DirectConnection);
+
+	connect(&progress, SIGNAL(cancel()), autorouter1, SLOT(cancel()), Qt::DirectConnection);
+	connect(&progress, SIGNAL(skip()), autorouter1, SLOT(cancelTrace()), Qt::DirectConnection);
+	connect(autorouter1, SIGNAL(setMaximumProgress(int)), &progress, SLOT(setMaximum(int)), Qt::DirectConnection);
+	connect(autorouter1, SIGNAL(setProgressValue(int)), &progress, SLOT(setValue(int)), Qt::DirectConnection);
+	QApplication::processEvents();
 
 	autorouter1->start();
 	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
-	qApp->removeEventFilter(&eater);
-	menuBar()->setEnabled(true);
-	m_statusBar->removeWidget(&progressBar);
-	m_statusBar->removeWidget(&cancelButton);
-	m_statusBar->removeWidget(&cancelTraceButton);
-	m_dontClose = false;
 	delete autorouter1;
 }
 

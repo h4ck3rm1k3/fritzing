@@ -25,7 +25,7 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 ********************************************************************/
 
 #include "schematicsketchwidget.h"
-#include "autorouter1.h"
+#include "autoroute/autorouter1.h"
 #include "debugdialog.h"
 #include "items/virtualwire.h"
 #include "connectoritem.h"

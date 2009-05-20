@@ -20,7 +20,6 @@ HEADERS += \
     src/aboutbox.h \
     src/abstractimagebutton.h \
     src/abstractstatesbutton.h \
-    src/autorouter1.h \
     src/breadboardsketchwidget.h \
     src/bus.h \
     src/busshared.h \
@@ -31,7 +30,6 @@ HEADERS += \
     src/console.h \
     src/debugdialog.h \
     src/dockmanager.h \
-    src/eventeater.h \
     src/expandinglabel.h \
     src/fapplication.h \
     src/fdockwidget.h \
@@ -69,7 +67,6 @@ HEADERS += \
     
 SOURCES += \
     src/aboutbox.cpp \
-    src/autorouter1.cpp \
     src/breadboardsketchwidget.cpp \
     src/bus.cpp \
     src/busshared.cpp \
@@ -80,7 +77,6 @@ SOURCES += \
     src/console.cpp \
     src/debugdialog.cpp \
     src/dockmanager.cpp \
-    src/eventeater.cpp \
     src/fapplication.cpp \
     src/fdockwidget.cpp \
     src/fgraphicsscene.cpp \

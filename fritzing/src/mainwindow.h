@@ -97,7 +97,6 @@ public:
 signals:
 	void alienPartsDismissed();
 	void aboutToClose();
-	void autorouted();
 	void viewSwitched(int);
 	void mainWindowMoved(QWidget *);
 

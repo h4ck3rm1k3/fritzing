@@ -25,11 +25,11 @@ $Date$
 ********************************************************************/
 
 #include "autorouter1.h"
-#include "pcbsketchwidget.h"
-#include "debugdialog.h"
-#include "items/virtualwire.h"
-#include "items/tracewire.h"
-#include "connectoritem.h"
+#include "../pcbsketchwidget.h"
+#include "../debugdialog.h"
+#include "../items/virtualwire.h"
+#include "../items/tracewire.h"
+#include "../connectoritem.h"
 
 #include <math.h>
 #include <QApplication>
