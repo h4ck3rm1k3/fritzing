@@ -70,6 +70,7 @@ $Date$
 #include "viewswitcher/viewswitcher.h"
 
 #include "utils/autoclosemessagebox.h"
+#include "utils/fileprogressdialog.h"
 
 const QString MainWindow::UntitledSketchName = "Untitled Sketch";
 int MainWindow::UntitledSketchIndex = 1;
@@ -79,8 +80,9 @@ int MainWindow::CascadeFactorY = 19;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
-	QFile styleSheet(":/resources/styles/fritzing.qss");
-
+	m_fileProgressDialog = NULL;
+	m_currentGraphicsView = NULL;
+	m_comboboxChanged = false;
 	m_helper = NULL;
 
 	resize(740,600);
@@ -113,9 +115,10 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	m_tabWidget->setObjectName("sketch_tabs");
 
 	setCentralWidget(m_tabWidget);
+}
 
-
-	// all this belongs in viewLayer.xml
+void MainWindow::init() {
+		// all this belongs in viewLayer.xml
 	m_breadboardGraphicsView = new BreadboardSketchWidget(ViewIdentifierClass::BreadboardView, this);
 	initSketchWidget(m_breadboardGraphicsView);
 	m_breadboardWidget = new SketchAreaWidget(m_breadboardGraphicsView,this);
@@ -175,7 +178,7 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 		createZoomOptions(m_pcbWidget)
 	);
 
-
+	QFile styleSheet(":/resources/styles/fritzing.qss");
     if (!styleSheet.open(QIODevice::ReadOnly)) {
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
@@ -219,15 +222,12 @@ MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	connectPairs();
 
 	// do this the first time, since the current_changed signal wasn't sent
-	m_currentGraphicsView = NULL;
 	int tab = 0;
 	currentNavigatorChanged(m_navigators[tab]);
 	tabWidget_currentChanged(tab+1);
 	tabWidget_currentChanged(tab);
 
 	this->installEventFilter(this);
-
-	m_comboboxChanged = false;
 
 	QSettings settings;
 	if(!settings.value("main/state").isNull()) {
@@ -975,13 +975,15 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 	}
 
 	QDir unzipDir(unzipDirPath);
-	MainWindow *mw = new MainWindow(m_paletteModel, m_refModel);
+	MainWindow *mw = newMainWindow(m_paletteModel, m_refModel, true);
 
 	moveToPartsFolder(unzipDir,mw);
 	// the sketch itself
 	loadBundledSketchAux(unzipDir, mw);
 
 	rmdir(unzipDirPath);
+
+	mw->clearFileProgressDialog();
 }
 
 void MainWindow::loadBundledPartFromWeb() {
@@ -1484,9 +1486,10 @@ void MainWindow::editModule() {
 
 	if (itemBase == NULL) return;
 
-    MainWindow* mw = new MainWindow(m_paletteModel, m_refModel);
+    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, true);
 	mw->loadWhich(itemBase->modelPartShared()->path(), false, false);
 	mw->m_sketchModel->walk(mw->m_sketchModel->root(), 0);
+    mw->clearFileProgressDialog();
 	closeIfEmptySketch(mw);
 }
 
@@ -1984,3 +1987,39 @@ void MainWindow::addBoard() {
 
 	m_pcbGraphicsView->addBoard();
 }
+
+MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, bool showProgress) {
+	MainWindow * mw = new MainWindow(paletteModel, refModel);
+	if (showProgress) {
+		FileProgressDialog * progress = new FileProgressDialog(mw);
+		progress->setWindowTitle("Loading...");
+		mw->setFileProgressDialog(progress);
+		progress->setModal(true);
+		progress->show();
+		progress->setValue(2);
+		QApplication::processEvents();
+	}
+
+	mw->init();
+	return mw;
+}
+
+void MainWindow::setFileProgressDialog(FileProgressDialog * progressDialog) {
+	m_fileProgressDialog = progressDialog;
+}
+
+FileProgressDialog * MainWindow::fileProgressDialog() {
+	return m_fileProgressDialog;
+}
+
+void  MainWindow::clearFileProgressDialog() {
+	if (m_fileProgressDialog) {
+		m_fileProgressDialog->close();
+		delete m_fileProgressDialog;
+		m_fileProgressDialog = NULL;
+	}
+}
+
+
+
+

@@ -394,7 +394,7 @@ int FApplication::startup(int & argc, char ** argv)
 	splash.showProgress(progressIndex, 0.70);
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
-	MainWindow * mainWindow = new MainWindow(m_paletteBinModel, m_referenceModel);
+	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, false);
 
 	splash.showProgress(progressIndex, 0.9);
 	processEvents();
@@ -449,7 +449,7 @@ int FApplication::startup(int & argc, char ** argv)
 		 QString path = getApplicationSubFolderPath("examples") + "/Fritzmas/treeduino.fz";
 		 QFileInfo tree(path);
 		 if (tree.exists()) {
-			 MainWindow * treeduino = new MainWindow(paletteBinModel, referenceModel);
+			 MainWindow * treeduino = MainWindow::newMainWindow(paletteBinModel, referenceModel, false);
 			 treeduino->load(path, false);
 			 treeduino->show();
 		}
@@ -468,10 +468,11 @@ void FApplication::finish()
 }
 
 void FApplication::loadNew(QString path) {
-	MainWindow * mw = new MainWindow(m_paletteBinModel, m_referenceModel);
+	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, true);
 	if (!mw->loadWhich(path, false)) {
 		mw->close();
 	}
+	mw->clearFileProgressDialog();
 }
 
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {

@@ -90,9 +90,14 @@ public:
 	class PartsEditorMainWindow* getPartsEditor(ModelPart *modelPart, long id=-1, class PartsBinPaletteWidget* requester=NULL);
 	ModelPart *loadPartFromFile(const QString& newPartPath);
 	void addBoard();
+	void setFileProgressDialog(class FileProgressDialog *);
+	class FileProgressDialog * fileProgressDialog();
+	void clearFileProgressDialog();
+	void init();
 
 public:
 	static void initExportConstants();
+	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, bool showProgress);
 
 signals:
 	void alienPartsDismissed();
@@ -524,6 +529,7 @@ protected:
 	Helper *m_helper;
 	QTimer m_setUpDockManagerTimer;
 	class DockManager * m_dockManager;
+	class FileProgressDialog * m_fileProgressDialog;
 
 protected:
 	static const QString UntitledSketchName;

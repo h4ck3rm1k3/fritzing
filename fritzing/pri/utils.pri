@@ -21,11 +21,13 @@ HEADERS += \
 src/utils/autoclosemessagebox.h \
 src/utils/resizehandle.h \
 src/utils/bendpointaction.h \
+src/utils/fileprogressdialog.h \
 src/utils/misc.h 
  
 SOURCES += \
 src/utils/autoclosemessagebox.cpp \
 src/utils/resizehandle.cpp \
 src/utils/bendpointaction.cpp \
+src/utils/fileprogressdialog.cpp \
 src/utils/misc.cpp
 
