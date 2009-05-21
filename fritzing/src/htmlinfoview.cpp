@@ -341,6 +341,11 @@ QString HtmlInfoView::appendItemStuff(ModelPart * modelPart, long id, bool swapp
 	QPixmap *pixmap3 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Copper0, size);
 
 	// TODO (jrc): calling setUpImage here is a hack, best to do it somewhere else
+	if (pixmap1 == NULL) {
+		LayerAttributes layerAttributes;
+		ItemBase::setUpImage(modelPart, ViewIdentifierClass::IconView, ViewLayer::Icon, layerAttributes);
+		pixmap1 = FSvgRenderer::getPixmap(modelPart->moduleID(), ViewLayer::Icon, size);
+	}
 	if (pixmap2 == NULL) {
 		LayerAttributes layerAttributes;
 		ItemBase::setUpImage(modelPart, ViewIdentifierClass::SchematicView, ViewLayer::Schematic, layerAttributes);
