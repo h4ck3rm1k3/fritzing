@@ -28,7 +28,7 @@ $Date$
 #include "../connectoritem.h"
 
 VirtualWire::VirtualWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
-	: Wire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
+	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
 	if (!getRatsnest()) {
 		setAcceptedMouseButtons(Qt::NoButton);
@@ -83,4 +83,6 @@ void VirtualWire::tempRemoveAllConnections() {
 	}
 }	
 
-
+qreal VirtualWire::calcClipRadius(ConnectorItem * connectorItem) {
+	return connectorItem->radius() + (connectorItem->strokeWidth() / 2) + (m_pen.width() * 0.5);
+}

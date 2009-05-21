@@ -266,7 +266,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 			}
 
 			new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
-			if (mp->moduleID() == Wire::moduleIDName) {
+			if (mp->moduleID() == ItemBase::wireModuleIDName) {
 				addWireExtras(newID, view, parentCommand);
 			}
 			else if (mp->itemType() == ModelPart::Module) {
@@ -449,7 +449,7 @@ void SketchWidget::addWireExtras(long newID, QDomElement & view, QUndoCommand * 
 	if (!colorString.isEmpty()) {
 		qreal op = extras.attribute("opacity").toDouble(&ok);
 		if (!ok) {
-			op = UNROUTED_OPACITY;
+			op = Wire::UNROUTED_OPACITY;
 		}
 		new WireColorChangeCommand(this, newID, colorString, colorString, op, op, parentCommand);
 	}
@@ -610,9 +610,11 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 			bool virtualWire = viewGeometry.getVirtual();
 			Wire * wire = NULL;
 			if (virtualWire) {
-				wire = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+				VirtualWire * vw = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
+				setClipEnds(vw);
+				wire = vw;
              	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
-
+				
 				// prevents virtual wires from flashing up on screen
 				wire->setCanChainMultiple(canChainMultiple());
 			}
@@ -1043,7 +1045,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 		.arg(m_viewIdentifier)
 		);
 
-	new AddItemCommand(this, crossViewType, Wire::moduleIDName, viewGeometry, newID, false, -1, -1, parentCommand);
+	new AddItemCommand(this, crossViewType, ItemBase::wireModuleIDName, viewGeometry, newID, false, -1, -1, parentCommand);
 	new CheckStickyCommand(this, crossViewType, newID, false, parentCommand);
 	new ChangeConnectionCommand(this, crossViewType, from->attachedToID(), from->connectorSharedID(),
 			newID, "connector0", true, true, parentCommand);
@@ -1057,7 +1059,7 @@ long SketchWidget::createWire(ConnectorItem * from, ConnectorItem * to, ViewGeom
 	}
 
 	if (addItNow) {
-		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(Wire::moduleIDName), viewGeometry, newID, -1, NULL, NULL, true);
+		ItemBase * newItemBase = addItemAux(m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName), viewGeometry, newID, -1, NULL, NULL, true);
 		if (newItemBase) {
 			tempConnectWire(dynamic_cast<Wire *>(newItemBase), from, to);
 			m_temporaries.append(newItemBase);
@@ -1438,7 +1440,7 @@ void SketchWidget::dropEvent(QDropEvent *event)
 		selectItemCommand->addRedo(fromID);
 
 		if (modelPart->itemType() == ModelPart::Wire && !m_lastColorSelected.isEmpty()) {
-			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, UNROUTED_OPACITY, UNROUTED_OPACITY, parentCommand);
+			new WireColorChangeCommand(this, fromID, m_lastColorSelected, m_lastColorSelected, Wire::UNROUTED_OPACITY, Wire::UNROUTED_OPACITY, parentCommand);
 		}
 
 		bool gotConnector = false;
@@ -2059,7 +2061,7 @@ ModelPart * SketchWidget::group(ModelPart * modelPart) {
 	if (itemBases.count() < 2) return NULL;
 
 	if (modelPart == NULL) {
-		modelPart = m_paletteModel->retrieveModelPart(GroupItem::moduleIDName);
+		modelPart = m_paletteModel->retrieveModelPart(ItemBase::groupModuleIDName);
 	}
 	if (modelPart == NULL) return NULL;
 
@@ -2684,7 +2686,7 @@ ViewLayer::ViewLayerID SketchWidget::getWireViewLayerID(const ViewGeometry & vie
 	}
 
 	if (viewGeometry.getTrace()) {
-		return ViewLayer::Copper0;
+		return ViewLayer::Copper0Trace;
 	}
 
 	return m_wireViewLayerID;
@@ -2713,7 +2715,7 @@ ViewLayer::ViewLayerID SketchWidget::getNoteViewLayerID() {
 
 void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
 
-	ModelPart * wireModel = m_paletteModel->retrieveModelPart(Wire::moduleIDName);
+	ModelPart * wireModel = m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName);
 	if (wireModel == NULL) return;
 
 	m_tempDragWireCommand = m_holdingSelectItemCommand;
@@ -3339,7 +3341,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 
 	BaseCommand::CrossViewType crossView = wireSplitCrossView();
 
-	new AddItemCommand(this, crossView, Wire::moduleIDName, vg, newID, true, -1, -1, parentCommand);
+	new AddItemCommand(this, crossView, ItemBase::wireModuleIDName, vg, newID, true, -1, -1, parentCommand);
 	new CheckStickyCommand(this, crossView, newID, false, parentCommand);
 	new WireColorChangeCommand(this, newID, wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), parentCommand);
 	new WireWidthChangeCommand(this, newID, wire->width(), wire->width(), parentCommand);
@@ -3699,7 +3701,7 @@ void SketchWidget::setUpSwapReconnect(ItemBase* itemBase, long newID, const QStr
 			if (cleanup && master) {
 				long wireID = ItemBase::getNextID();
 				ViewGeometry vg;
-				new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, vg, wireID, false, -1, -1, parentCommand);
+				new AddItemCommand(this, BaseCommand::CrossView, ItemBase::wireModuleIDName, vg, wireID, false, -1, -1, parentCommand);
 				new CheckStickyCommand(this, BaseCommand::CrossView, wireID, false, parentCommand);
 				new ChangeConnectionCommand(this, BaseCommand::CrossView, newID, newConnector->connectorSharedID(),
 						wireID, "connector0", true, true, parentCommand);
@@ -3862,8 +3864,9 @@ void SketchWidget::addPcbViewLayers() {
 	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Board << ViewLayer::Ratsnest << ViewLayer::Copper1 << ViewLayer::Copper0 /* << ViewLayer::Keepout */
-		<< ViewLayer::Vias /* << ViewLayer::Soldermask */ << ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
+	layers << ViewLayer::Board << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
+		/* << ViewLayer::Keepout */ << ViewLayer::Vias /* << ViewLayer::Soldermask */  
+		<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
 		<< ViewLayer::Jumperwires << ViewLayer::PcbNote << ViewLayer::PcbRuler;
 
 	addViewLayersAux(layers);
@@ -3872,6 +3875,11 @@ void SketchWidget::addPcbViewLayers() {
 	ViewLayer * silkscreenLabel = m_viewLayers.value(ViewLayer::SilkscreenLabel);
 	if (silkscreen && silkscreenLabel) {
 		silkscreenLabel->setParentLayer(silkscreen);
+	}
+	ViewLayer * copper0 = m_viewLayers.value(ViewLayer::Copper0);
+	ViewLayer * copper0Trace = m_viewLayers.value(ViewLayer::Copper0Trace);
+	if (copper0 && copper0Trace) {
+		copper0Trace->setParentLayer(copper0);
 	}
 }
 
@@ -4611,10 +4619,6 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 			foreach (ViewLayer::ViewLayerID viewLayerID, partLayers) {
 				if (itemBase->viewLayerID() != viewLayerID) continue;
 
-				if (itemBase->viewLayerID() == ViewLayer::Copper0) {
-					DebugDialog::debug("alive in here");
-				}
-
 				QString itemSvg = itemBase->retrieveSvg(viewLayerID, svgHash, blackOnly, dpi);
 				if (itemSvg.isEmpty()) continue;
 
@@ -4936,4 +4940,8 @@ ItemBase * SketchWidget::lastHoverEnterItem() {
 
 LayerHash & SketchWidget::viewLayers() {
 	return m_viewLayers;
+}
+
+void SketchWidget::setClipEnds(VirtualWire * vw) {
+	Q_UNUSED(vw);
 }

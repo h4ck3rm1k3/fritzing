@@ -47,7 +47,6 @@ $Date$
 
 #include <stdlib.h>
 
-QString Wire::moduleIDName = "WireModuleID";
 QHash<QString, QString> Wire::colors;
 QHash<QString, QString> Wire::shadowColors;
 QHash<QString, QString> Wire::colorTrans;
@@ -56,6 +55,9 @@ QHash<QString, qreal> Wire::widthTrans;
 QList<QString> Wire::widthNames;
 QList<QColor *> ratsnestColors;
 QColor schematicColor;
+const qreal Wire::ROUTED_OPACITY = 0.20;
+const qreal Wire::UNROUTED_OPACITY = 1.0;
+
 
 struct ConnectThing {
 	Wire * wire;

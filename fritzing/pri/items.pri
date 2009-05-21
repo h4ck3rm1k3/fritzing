@@ -23,6 +23,7 @@ HEADERS += \
     src/items/layerkinpaletteitem.h \
     src/items/paletteitem.h \
     src/items/paletteitembase.h \
+    src/items/clipablewire.h \
     src/items/tracewire.h \
     src/items/virtualwire.h \
     src/items/wire.h \
@@ -34,6 +35,7 @@ SOURCES += \
     src/items/layerkinpaletteitem.cpp \
     src/items/paletteitem.cpp \
     src/items/paletteitembase.cpp \
+    src/items/clipablewire.cpp \
     src/items/tracewire.cpp \
     src/items/virtualwire.cpp \
     src/items/wire.cpp \

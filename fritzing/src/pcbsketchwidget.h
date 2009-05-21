@@ -66,8 +66,7 @@ protected:
 	const QColor & getLabelTextColor();
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
-
-
+	void setClipEnds(class VirtualWire *);
 
 protected:
 	int m_netCount;

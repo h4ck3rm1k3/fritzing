@@ -54,6 +54,7 @@ public:
 		Board,
 		Copper1,
 		Copper0,
+		Copper0Trace,
 		Keepout,
 		Vias,
 		Soldermask,

@@ -36,7 +36,6 @@ $Date$
 QHash<ModelPart::ItemType, QString> ModelPart::itemTypeNames;
 long ModelPart::m_nextIndex = 0;
 const int ModelPart::indexMultiplier = 10;
-const QString ModelPart::RectangleModuleID = "RectanglePCBModuleID";
 QString ModelPart::customShapeTranslated;
 
 ModelPart::ModelPart(ItemType type)
@@ -558,7 +557,7 @@ QString ModelPart::collectExtraHtml(const QString & prop, const QString & value)
 	if (value.compare(customShapeTranslated) == 0) {
 		return "<input type='button' value='image...' name='image...' id='image...' style='width:60px' onclick='loadBoardImage()'/>";
 	}
-	else if (this->moduleID().compare(RectangleModuleID) == 0) {
+	else if (this->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
 		if (m_size.width() == 0) return ___emptyString___;
 
 		qreal w = qRound(m_size.width() * 10) / 10.0;	// truncate to 1 decimal point

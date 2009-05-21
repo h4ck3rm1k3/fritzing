@@ -35,7 +35,8 @@
    <layers image="breadboard/wire.svg" >
     <layer layerId="ratsnest" />
     <layer layerId="copper0" />
-    <layer layerId="jumperwires" />
+     <layer layerId="copper0trace" />
+     <layer layerId="jumperwires" />
    </layers>
   </pcbView>
  </views>
@@ -51,8 +52,9 @@
     </schematicView>
     <pcbView>
      <p svgId="connector0pin" layer="ratsnest" />
-     <p svgId="connector0pin" layer="copper0" />
-     <p svgId="connector0pin" layer="jumperwires" />
+      <p svgId="connector0pin" layer="copper0" />
+      <p svgId="connector0pin" layer="copper0trace" />
+      <p svgId="connector0pin" layer="jumperwires" />
     </pcbView>
    </views>
   </connector>
@@ -67,8 +69,9 @@
     </schematicView>
     <pcbView>
      <p svgId="connector1pin" layer="ratsnest" />
-     <p svgId="connector1pin" layer="copper0" />
-     <p svgId="connector1pin" layer="jumperwires" />
+      <p svgId="connector1pin" layer="copper0" />
+      <p svgId="connector1pin" layer="copper0trace" />
+      <p svgId="connector1pin" layer="jumperwires" />
     </pcbView>
    </views>
   </connector>

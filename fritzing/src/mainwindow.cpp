@@ -1534,7 +1534,7 @@ void MainWindow::saveAsModule()
 
 	partViewLayerIDs.clear();
 	wireViewLayerIDs.clear();
-	partViewLayerIDs << ViewLayer::Copper0  << ViewLayer::Silkscreen;   // TODO: what layers should be visible
+	partViewLayerIDs << ViewLayer::Copper0  << ViewLayer::Copper0Trace << ViewLayer::Silkscreen;   // TODO: what layers should be visible
 	wireViewLayerIDs << ViewLayer::Jumperwires << ViewLayer::Ratsnest;
 	QString svg3 = genIcon(m_pcbGraphicsView, partViewLayerIDs, wireViewLayerIDs);
 	svgs.insert("pcb", svg3);
@@ -1635,6 +1635,7 @@ void MainWindow::saveAsModule()
 	QHash<QString, QString> layerids(svgs);
 	layerids.insert("icon", "icon");
 	layerids.insert("pcb", "copper0");
+	layerids.insert("pcb", "copper0trace");
 
 	QDomElement views = partDocument.createElement("views");
 	partModule.appendChild(views);

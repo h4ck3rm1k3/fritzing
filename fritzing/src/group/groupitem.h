@@ -60,9 +60,6 @@ protected:
 	void figureHover();
 	void addToList(ItemBase * candidate, ViewLayer::ViewLayerID, const LayerHash &, qint64 & id);
 
-public:
-	static QString moduleIDName;
-
 protected:
 	QList<ItemBase *> m_layerKin;
 	bool m_blockSyncKinMoved;

@@ -77,15 +77,6 @@ static QHash<QString, QString> ___emptyStringHash___;
 static QDir ___emptyDir___;
 static QByteArray ___emptyByteArray___;
 
-static QString ITEMBASE_FONT_PREFIX = "<font size='2'>";
-static QString ITEMBASE_FONT_SUFFIX = "</font>";
-
-static const int STANDARD_ICON_IMG_WIDTH = 32;
-static const int STANDARD_ICON_IMG_HEIGHT = 32;
-
-static const qreal ROUTED_OPACITY = 0.35;
-static const qreal UNROUTED_OPACITY = 1.0;
-
 #ifdef Q_WS_MAC
 static const QString ___MacStyle___ = " QTabBar::tab {margin-bottom: 10px; min-width: 15ex;} ";
 #else

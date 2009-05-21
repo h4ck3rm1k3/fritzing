@@ -319,6 +319,7 @@ protected:
 	void setLastPaletteItemSelectedIf(ItemBase * itemBase);
 	bool rotationAllowed(ItemBase *);
 	virtual bool allowFemaleRotation(ItemBase *);
+	virtual void setClipEnds(class VirtualWire *);
 
 
 protected:

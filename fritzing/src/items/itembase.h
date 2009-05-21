@@ -53,10 +53,18 @@ class ItemBase : public GraphicsSvgLineItem
 Q_OBJECT
 
 public:
- 
-	static QString rulerModuleIDName;
-	static QString breadboardModuleIDName;
-	static QString tinyBreadboardModuleIDName;
+	static const QString rulerModuleIDName;
+	static const QString breadboardModuleIDName;
+	static const QString tinyBreadboardModuleIDName;
+	static const QString groupModuleIDName;
+	static const QString rectangleModuleIDName;
+	static const QString noteModuleIDName;
+	static const QString wireModuleIDName;
+
+	static const QString ITEMBASE_FONT_PREFIX;
+	static const QString ITEMBASE_FONT_SUFFIX;
+
+public:
 	static void initNames();
 	static void cleanup();
 	static ItemBase * extractTopLevelItemBase(QGraphicsItem * thing);

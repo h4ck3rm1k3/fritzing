@@ -68,7 +68,6 @@ $Date$
 //		** multiple selection
 //		** icon in taskbar (why does it show up as text until you update it?)
 
-QString Note::moduleIDName = "NoteModuleID";
 const int Note::emptyMinWidth = 40;
 const int Note::emptyMinHeight = 25;
 const int Note::initialMinWidth = 140;

@@ -664,7 +664,7 @@ void ConnectorItem::updateTooltip() {
 		connections += "<br />&nbsp;&nbsp;" + toConnectorItem->attachedToTitle() + ":" + toConnectorItem->connectorSharedName();
 	}
 
-	setToolTip(m_baseTooltip + ITEMBASE_FONT_PREFIX + connections + ITEMBASE_FONT_SUFFIX);
+	setToolTip(m_baseTooltip + ItemBase::ITEMBASE_FONT_PREFIX + connections + ItemBase::ITEMBASE_FONT_SUFFIX);
 
 }
 

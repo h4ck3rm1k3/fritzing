@@ -67,6 +67,10 @@ public:
 
 	QVariant evaluateJavascript(const QString &);
 
+public:
+	static const int STANDARD_ICON_IMG_WIDTH;
+	static const int STANDARD_ICON_IMG_HEIGHT;
+
 protected slots:
 	void jsRegister();
 	void setBlockVisibility(const QString &blockId, bool value);

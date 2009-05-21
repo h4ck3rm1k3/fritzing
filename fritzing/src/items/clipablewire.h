@@ -18,23 +18,34 @@ along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
 
 ********************************************************************
 
-$Revision$:
-$Author$:
-$Date$
+$Revision: 2879 $:
+$Author: cohen@irascible.com $:
+$Date: 2009-04-30 12:26:40 +0200 (Thu, 30 Apr 2009) $
 
 ********************************************************************/
 
-#include "tracewire.h"
+#ifndef CLIPABLEWIRE_H
+#define CLIPABLEWIRE_H
 
+#include "wire.h"
 
-/////////////////////////////////////////////////////////
-
-TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu * itemMenu  ) 
-	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
+class ClipableWire : public Wire
 {
-	m_clipEnds = true;
-}
 
+public:
+	ClipableWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
+	
+	void setClipEnds(bool);
+	const QLineF & getPaintLine();	
 
+protected:
+	QPointF findIntersection(ConnectorItem * connectorItem, QPointF original);
+	virtual qreal calcClipRadius(ConnectorItem *);
 
+protected:
+	bool m_clipEnds;
+	QLineF m_cachedLine;
+	QLineF m_cachedOriginalLine;
+};
 
+#endif

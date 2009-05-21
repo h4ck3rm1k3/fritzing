@@ -52,6 +52,10 @@ static QRegExp NumberMatcher(QString("(([0-9]+(\\.[0-9]*)?)|\\.[0-9]+)([\\s]*([k
 static QHash<QString, qreal> NumberMatcherValues;
 static QHash<QString, QString> TranslatedPropertyNames;
 
+const int HtmlInfoView::STANDARD_ICON_IMG_WIDTH = 32;
+const int HtmlInfoView::STANDARD_ICON_IMG_HEIGHT = 32;
+
+
 bool valueLessThan(QString v1, QString v2)
 {
 	return NumberMatcherValues.value(v1, 0) <= NumberMatcherValues.value(v2, 0);

@@ -75,9 +75,17 @@ protected:
 
 /////////////////////////////////
 
-QString ItemBase::rulerModuleIDName = "RulerModuleID";
-QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
-QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
+const QString ItemBase::rulerModuleIDName = "RulerModuleID";
+const QString ItemBase::breadboardModuleIDName = "BreadboardModuleID";
+const QString ItemBase::tinyBreadboardModuleIDName = "TinyBreadboardModuleID";
+const QString ItemBase::groupModuleIDName = "GroupModuleID";
+const QString ItemBase::rectangleModuleIDName = "RectanglePCBModuleID";
+const QString ItemBase::noteModuleIDName = "NoteModuleID";
+const QString ItemBase::wireModuleIDName = "WireModuleID";
+
+const QString ItemBase::ITEMBASE_FONT_PREFIX = "<font size='2'>";
+const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";
+
 QString ItemBase::partInstanceDefaultTitle;
 QString ItemBase::moduleInstanceDefaultTitle;
 QList<ItemBase *> ItemBase::emptyList;

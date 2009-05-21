@@ -27,9 +27,9 @@ $Date$
 #ifndef VIRTUALWIRE_H
 #define VIRTUALWIRE_H
 
-#include "wire.h"
+#include "clipablewire.h"
 
-class VirtualWire : public Wire
+class VirtualWire : public ClipableWire
 {
 
 public:
@@ -43,6 +43,7 @@ protected:
 	void connectionChange(ConnectorItem *);
  	class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
 	void hideConnectors();	
+	qreal calcClipRadius(ConnectorItem *);
 };
 
 #endif

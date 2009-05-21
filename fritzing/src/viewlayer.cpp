@@ -63,6 +63,7 @@ void ViewLayer::initNames() {
 		names.insert(ViewLayer::Silkscreen,  new StringPair("silkscreen", QObject::tr("Silkscreen")));
 		names.insert(ViewLayer::SilkscreenLabel,  new StringPair("silkscreenLabel", QObject::tr("Part Labels (Silkscreen)")));
 		names.insert(ViewLayer::Copper0,  new StringPair("copper0", QObject::tr("Copper 0")));
+		names.insert(ViewLayer::Copper0Trace,  new StringPair("copper0trace", QObject::tr("Copper 0 Trace")));
 		names.insert(ViewLayer::Copper1,  new StringPair("copper1", QObject::tr("Copper 1")));
 		names.insert(ViewLayer::Soldermask,  new StringPair("soldermask",  QObject::tr("Solder mask")));
 		names.insert(ViewLayer::Outline,  new StringPair("outline",  QObject::tr("Outline")));

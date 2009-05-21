@@ -53,7 +53,7 @@ ResizableBoard::ResizableBoard( ModelPart * modelPart, ViewIdentifierClass::View
 		file.close();
 	}
 
-	if (modelPart->moduleID().compare(ModelPart::RectangleModuleID) == 0) {
+	if (modelPart->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
 		m_resizeGripTL = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopLeft.png"), Qt::SizeFDiagCursor, this);
 		connect(m_resizeGripTL, SIGNAL(mousePressSignal(QGraphicsSceneMouseEvent *, ResizeHandle *)), this, SLOT(handleMousePressSlot(QGraphicsSceneMouseEvent *, ResizeHandle *)));
 		m_resizeGripTR = new ResizeHandle(QPixmap(":/resources/images/itemselection/cornerHandlerActiveTopRight.png"), Qt::SizeBDiagCursor, this);
@@ -391,7 +391,7 @@ void ResizableBoard::rotateItem(qreal degrees) {
 	// eventually need to make this work for other angles
 	// what gets screwed up is the drag handles
 
-	if (modelPart()->moduleID().compare(ModelPart::RectangleModuleID) == 0) {
+	if (modelPart()->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
 		QRectF r = this->boundingRect();
 		r.moveTopLeft(pos());
 		QPointF c = r.center();

@@ -142,6 +142,7 @@ void Autorouter1::start()
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
 	
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0);
+	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0Trace);
 	m_sketchWidget->ensureLayerVisible(ViewLayer::Jumperwires);
 
 	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
@@ -382,10 +383,10 @@ void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QU
 		}
 		else if (wire->getRatsnest()) {
 			if (parentCommand) {
-				sketchWidget->makeChangeRoutedCommand(wire, false, UNROUTED_OPACITY, parentCommand);
+				sketchWidget->makeChangeRoutedCommand(wire, false, Wire::UNROUTED_OPACITY, parentCommand);
 			}
 			wire->setRouted(false);
-			wire->setOpacity(UNROUTED_OPACITY);	
+			wire->setOpacity(Wire::UNROUTED_OPACITY);	
 		}
 	}
 
@@ -412,13 +413,13 @@ void Autorouter1::updateRatsnest(bool routed, QUndoCommand * parentCommand) {
 		
 		QList<ConnectorItem *>  ends;
 		if (wire->findJumperOrTraced(ViewGeometry::TraceFlag | ViewGeometry::JumperFlag, ends)) {
-			m_sketchWidget->makeChangeRoutedCommand(wire, true, ROUTED_OPACITY, parentCommand);
-			wire->setOpacity(ROUTED_OPACITY);
+			m_sketchWidget->makeChangeRoutedCommand(wire, true, Wire::ROUTED_OPACITY, parentCommand);
+			wire->setOpacity(Wire::ROUTED_OPACITY);
 			wire->setRouted(true);
 		}
 		else {	
-			m_sketchWidget->makeChangeRoutedCommand(wire, routed, routed ? ROUTED_OPACITY : UNROUTED_OPACITY, parentCommand);
-			wire->setOpacity(routed ? ROUTED_OPACITY : UNROUTED_OPACITY);	
+			m_sketchWidget->makeChangeRoutedCommand(wire, routed, routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY, parentCommand);
+			wire->setOpacity(routed ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY);	
 			wire->setRouted(routed);
 		}
 	}
@@ -597,7 +598,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	viewGeometry.setJumper(true);
 	viewGeometry.setAutoroutable(true);
 
-	ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
+	ItemBase * jumper = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
 												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (jumper == NULL) {
 		// we're in trouble
@@ -605,7 +606,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	}
 
 	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
-	jumperWire->setColorString("jumper", UNROUTED_OPACITY);
+	jumperWire->setColorString("jumper", Wire::UNROUTED_OPACITY);
 	jumperWire->setWidth(StandardJumperWidth);
 	jumperWire->setSelected(false);
 
@@ -655,7 +656,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	viewGeometry.setTrace(true);
 	viewGeometry.setAutoroutable(true);
 
-	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
+	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
 												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
@@ -667,7 +668,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	traceWire->setClipEnds(false);
-	traceWire->setColorString("trace", UNROUTED_OPACITY);
+	traceWire->setColorString("trace", Wire::UNROUTED_OPACITY);
 	traceWire->setWidth(StandardTraceWidth + 1);
 
 	QGraphicsItem * nearestObstacle = NULL;
@@ -1145,7 +1146,7 @@ void Autorouter1::addToUndo(Wire * wire, QUndoCommand * parentCommand) {
 		return;
 	}
 
-	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), false, -1, -1, parentCommand);
+	AddItemCommand * addItemCommand = new AddItemCommand(m_sketchWidget, BaseCommand::SingleView, ItemBase::wireModuleIDName, wire->getViewGeometry(), wire->id(), false, -1, -1, parentCommand);
 	new CheckStickyCommand(m_sketchWidget, BaseCommand::SingleView, wire->id(), false, parentCommand);
 	
 	new WireWidthChangeCommand(m_sketchWidget, wire->id(), wire->width(), wire->width(), parentCommand);
@@ -1252,7 +1253,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 	viewGeometry.setTrace(true);
 	viewGeometry.setAutoroutable(true);
 
-	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(Wire::moduleIDName), 
+	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
 											BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 	if (trace == NULL) {
 		// we're in trouble
@@ -1265,7 +1266,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	traceWire->setClipEnds(false);
-	traceWire->setColorString("trace", UNROUTED_OPACITY);
+	traceWire->setColorString("trace", Wire::UNROUTED_OPACITY);
 	traceWire->setWidth(5);										// set extra width to deal with keepout
 
 	bool intersects = false;

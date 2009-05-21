@@ -145,7 +145,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	#endif
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
-	viewLayerIDs << ViewLayer::Copper0;
+	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL);
 	if (wantSVG) {
@@ -2045,7 +2045,7 @@ void MainWindow::exportToGerber() {
                                              | QFileDialog::DontResolveSymlinks);
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
-	viewLayerIDs << ViewLayer::Copper0;
+	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
     QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board);
 	if (svg.isEmpty()) {
@@ -2445,7 +2445,7 @@ void MainWindow::addNote() {
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));
 	m_currentGraphicsView->stackSelectionState(false, parentCommand);
 	m_currentGraphicsView->scene()->clearSelection();
-	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, Note::moduleIDName, vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
+	new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, ItemBase::noteModuleIDName, vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
 	m_undoStack->push(parentCommand);
 }
 

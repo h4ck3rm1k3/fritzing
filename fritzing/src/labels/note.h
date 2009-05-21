@@ -74,7 +74,6 @@ protected slots:
 	void handleMousePressSlot(QGraphicsSceneMouseEvent * event, class ResizeHandle * resizeHandle);
 
 public:
-	static QString moduleIDName;
 	static const int emptyMinWidth;
 	static const int emptyMinHeight;
 	static const int initialMinWidth;

@@ -112,7 +112,10 @@ public:
 	void collectDirectWires(QList<Wire *> & wires);
 
 public:
-	static QString moduleIDName;
+	static const qreal ROUTED_OPACITY;
+	static const qreal UNROUTED_OPACITY;
+
+public:
 	static void initNames();
 	static QRgb getRgb(const QString & name);
 	static const QColor * netColor(ViewIdentifierClass::ViewIdentifier);

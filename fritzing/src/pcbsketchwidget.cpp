@@ -207,7 +207,7 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 	}
 
 	long newID = createWire(ends[0], ends[1], flag, false, false, BaseCommand::SingleView, parentCommand);
-	new WireColorChangeCommand(this, newID, colorString, colorString, UNROUTED_OPACITY, UNROUTED_OPACITY, parentCommand);
+	new WireColorChangeCommand(this, newID, colorString, colorString, Wire::UNROUTED_OPACITY, Wire::UNROUTED_OPACITY, parentCommand);
 	new WireWidthChangeCommand(this, newID, 3, 3, parentCommand);
 	Wire* rat = NULL;
 	if (wire->getRatsnest()) {
@@ -223,7 +223,7 @@ void PCBSketchWidget::createOneJumperOrTrace(Wire * wire, ViewGeometry::WireFlag
 		QList<ConnectorItem *> uniqueEnds;
 		rat->collectChained(rats, ends, uniqueEnds);
 		foreach (Wire * r, rats) {
-			makeChangeRoutedCommand(r, true, ROUTED_OPACITY, parentCommand);
+			makeChangeRoutedCommand(r, true, Wire::ROUTED_OPACITY, parentCommand);
 		}
 	}
 
@@ -492,7 +492,7 @@ void PCBSketchWidget::addBoard() {
 	long newID = ItemBase::getNextID();
 	ViewGeometry viewGeometry;
 	viewGeometry.setLoc(QPointF(0, 0));
-	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ModelPart::RectangleModuleID), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+	m_addedBoard = addItem(paletteModel()->retrieveModelPart(ItemBase::rectangleModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
 
 	// have to put this off until later, because positioning the item doesn't work correctly until the view is visible
 	// so position it in setCurrent()
@@ -520,3 +520,8 @@ void PCBSketchWidget::setCurrent(bool current) {
 		}
 	}
 }
+
+void PCBSketchWidget::setClipEnds(VirtualWire * vw) {
+	vw->setClipEnds(true);
+}
+

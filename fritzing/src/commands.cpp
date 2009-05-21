@@ -631,7 +631,7 @@ void CleanUpWiresCommand::addWire(SketchWidget * sketchWidget, Wire * wire)
 				wire->id(), "connector1", false, true, NULL));
 	}
 
-	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), -1, NULL));
+	addSubCommand(new DeleteItemCommand(sketchWidget, BaseCommand::SingleView, ItemBase::wireModuleIDName, wire->getViewGeometry(), wire->id(), wire->modelPart()->modelIndex(), -1, NULL));
 }
 
 
@@ -758,7 +758,7 @@ void RatsnestCommand::redo() {
 
 void RatsnestCommand::addWire(SketchWidget * sketchWidget, Wire * wire, ConnectorItem * source, ConnectorItem * dest, bool select) 
 {
-	addSubCommand(new AddItemCommand(sketchWidget, BaseCommand::SingleView, Wire::moduleIDName, wire->getViewGeometry(), wire->id(), true, -1, -1, NULL));
+	addSubCommand(new AddItemCommand(sketchWidget, BaseCommand::SingleView, ItemBase::wireModuleIDName, wire->getViewGeometry(), wire->id(), true, -1, -1, NULL));
 	addSubCommand(new WireColorChangeCommand(sketchWidget, wire->id(), wire->colorString(), wire->colorString(), wire->opacity(), wire->opacity(), NULL));
 	addSubCommand(new WireWidthChangeCommand(sketchWidget, wire->id(), wire->width(), wire->width(), NULL));
 	addSubCommand(new ChangeConnectionCommand(sketchWidget, BaseCommand::SingleView, source->attachedToID(), source->connectorSharedID(),

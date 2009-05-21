@@ -123,7 +123,7 @@ void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fro
 		}
 		foreach (Wire * wire, ratsnestWires) {
 			QColor colorAsQColor = (QColor) *color;
-			wire->setColor(colorAsQColor, wire->getRouted() ? ROUTED_OPACITY : UNROUTED_OPACITY);
+			wire->setColor(colorAsQColor, wire->getRouted() ? Wire::ROUTED_OPACITY : Wire::UNROUTED_OPACITY);
 			checkSticky(wire->id(), false, false, NULL);
 		}
 	}
@@ -320,7 +320,7 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 	 );
 	 */
 
-	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(Wire::moduleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);		
+	ItemBase * newItemBase = addItem(m_paletteModel->retrieveModelPart(ItemBase::wireModuleIDName), BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);		
 	Wire * wire = dynamic_cast<Wire *>(newItemBase);
 	tempConnectWire(wire, source, dest);
 	if (!select) {
@@ -329,7 +329,7 @@ Wire * PCBSchematicSketchWidget::makeOneRatsnestWire(ConnectorItem * source, Con
 
 	Wire * tempWire = source->wiredTo(dest, ViewGeometry::TraceFlag);
 	if (tempWire) {
-		wire->setOpacity(ROUTED_OPACITY);
+		wire->setOpacity(Wire::ROUTED_OPACITY);
 	}
 
 	ratsnestCommand->addWire(this, wire, source, dest, select);

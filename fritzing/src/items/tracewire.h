@@ -27,23 +27,14 @@ $Date$
 #ifndef TRACEWIRE_H
 #define TRACEWIRE_H
 
-#include "wire.h"
+#include "clipablewire.h"
 
-class TraceWire : public Wire
+class TraceWire : public ClipableWire
 {
 
 public:
 	TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier,  const ViewGeometry & , long id, QMenu* itemMenu  ); 
-	
-	void setClipEnds(bool);
-	const QLineF & getPaintLine();	
 
-protected:
-	QPointF findIntersection(ConnectorItem * connectorItem, QPointF original);
-
-protected:
-	bool m_clipEnds;
-	QLineF m_cachedLine;
 };
 
 #endif

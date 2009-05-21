@@ -851,7 +851,7 @@ void SchematicSketchWidget::makeTwoWires(Wire * dragWire, ConnectorItem * fromDr
 
 	DebugDialog::debug(QString("new second wire %1").arg(newID));
 
-	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, viewGeometry, newID, true, -1, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::CrossView, ItemBase::wireModuleIDName, viewGeometry, newID, true, -1, -1, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::CrossView, newID, false, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::CrossView,
 								newID, "connector0",
@@ -1054,7 +1054,7 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 {
 	DebugDialog::debug(QString("new real wire %1").arg(m_connectorDragWire->id()));
 	// create a new "real" wire with the same id as the temporary wire
-	new AddItemCommand(this, BaseCommand::CrossView, Wire::moduleIDName, m_connectorDragWire->getViewGeometry(), m_connectorDragWire->id(), true, -1, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::CrossView, ItemBase::wireModuleIDName, m_connectorDragWire->getViewGeometry(), m_connectorDragWire->id(), true, -1, -1, parentCommand);
 	new CheckStickyCommand(this, BaseCommand::CrossView, m_connectorDragWire->id(), false, parentCommand);
 
 	ConnectorItem * anchor = wire->otherConnector(fromDragWire);
@@ -1086,7 +1086,7 @@ void SchematicSketchWidget::makeModifiedWire(Wire * wire, ConnectorItem * fromDr
 
 	DebugDialog::debug(QString("new ratsnest wire %1").arg(newID));
 
-	new AddItemCommand(this, BaseCommand::SingleView, Wire::moduleIDName, vg, newID, true, -1, -1, parentCommand);
+	new AddItemCommand(this, BaseCommand::SingleView, ItemBase::wireModuleIDName, vg, newID, true, -1, -1, parentCommand);
 	new ChangeConnectionCommand(this, BaseCommand::SingleView,
 								newID, "connector0",
 								originalFromConnectorItem->attachedToID(), originalFromConnectorItem->connectorSharedID(),
