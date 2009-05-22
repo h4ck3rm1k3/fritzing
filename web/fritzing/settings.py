@@ -150,12 +150,12 @@ INSTALLED_APPS = (
 #    'south',
     'licenses',
     'dregni',
-
     # internal (for now)
     'basic_profiles',
     'account',
     'misc',
     'fritzing.apps.*',
+    'imagekit',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
