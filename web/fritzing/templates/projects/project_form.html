@@ -1,0 +1,245 @@
+{% extends "site_base.html" %}
+
+{% block title %}
+  Create project
+{% endblock %}
+
+{% block page_title %}
+    Create a project
+{% endblock %}
+
+{% block teaser %}
+    Lalala traalala
+{% endblock %}
+
+{% block extra_head %}
+  {{ form.media }}
+  <link rel="stylesheet" href="{{ MEDIA_URL }}/fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.MultiFile.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.example.min.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.autogrow.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/projects.js"></script>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post" enctype="multipart/form-data" class="uniForm">
+    <table class="plain project">
+    <tbody>
+        <tr>
+            <td width="60%">
+              <div class="project_title">
+                {% if form.title.field.required %}
+                  <label for="{{ form.title.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.title.auto_id }}">
+                {% endif %}
+                  {{ form.title.label }}
+                </label>
+                <span class="help">
+                  {{ form.title.help_text }}
+                </span>
+                {% if form.title.errors %}
+                  <span class="error">{{ form.title.errors }}</span>
+                {% endif %}
+                <p>{{ form.title }}</p>
+              </div>
+              <div class="project_fritzing_files">
+                {% if form.fritzing_files.field.required %}
+                  <label for="{{ form.fritzing_files.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.fritzing_files.auto_id }}">
+                {% endif %}
+                  {{ form.fritzing_files.label }}
+                </label>
+                <span class="help">
+                  {{ form.fritzing_files.help_text }}
+                </span>
+                {% if form.fritzing_files.errors %}
+                  <span class="error">{{ form.fritzing_files.errors }}</span>
+                {% endif %}
+                <p>{{ form.fritzing_files }}</p>
+                <ul id="fritzing_files_selection" class="selection"></ul>
+              </div>
+              <div class="main_image">
+                  {% if form.main_image.field.required %}
+                    <label for="{{ form.main_image.auto_id }}" class="required">
+                  {% else %}
+                    <label for="{{ form.main_image.auto_id }}">
+                  {% endif %}
+                    {{ form.main_image.label }}
+                  </label>
+                  <span class="help">
+                    {{ form.main_image.help_text }}
+                  </span>
+                  {% if form.main_image.errors %}
+                    <span class="error">{{ form.main_image.errors }}</span>
+                  {% endif %}
+                  <p>{{ form.main_image }}</p>
+                  <ul id="main_image_selection" class="selection"></ul>
+              </div>
+              <div class="project_description">
+                {% if form.description.field.required %}
+                  <label for="{{ form.description.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.description.auto_id }}">
+                {% endif %}
+                  {{ form.description.label }}
+                </label>
+                <span class="help">
+                  {{ form.description.help_text }}
+                </span>
+                {% if form.description.errors %}
+                  <span class="error">{{ form.description.errors }}</span>
+                {% endif %}
+                <p>{{ form.description }}</p>
+              </div>
+              <div class="project_instructions">
+                {% if form.instructions.field.required %}
+                  <label for="{{ form.instructions.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.instructions.auto_id }}">
+                {% endif %}
+                  {{ form.instructions.label }}
+                </label>
+                <span class="help">
+                  {{ form.instructions.help_text }}
+                </span>
+                {% if form.instructions.errors %}
+                  <span class="error">{{ form.instructions.errors }}</span>
+                {% endif %}
+                <p>{{ form.instructions }}</p>
+              </div>
+              <p class="submit_line">
+                <a href="{% firstof request.META.HTTP_REFFERER ".." %}">Cancel</a>
+                <input type="submit" value="Submit">
+              </p>
+            </td>
+            <td width="40%" class="right_col">
+              <div class="project_difficulty">
+                {% if form.difficulty.field.required %}
+                  <label for="{{ form.difficulty.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.difficulty.auto_id }}">
+                {% endif %}
+                  {{ form.difficulty.label }}
+                </label>
+                <span class="help">
+                  {{ form.difficulty.help_text }}
+                </span>
+                {% if form.difficulty.errors %}
+                  <span class="error">{{ form.difficulty.errors }}</span>
+                {% endif %}
+                <p>{{ form.difficulty }}</p>
+              </div>
+              <div class="project_license">
+                {% if form.license.field.required %}
+                  <label for="{{ form.license.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.license.auto_id }}">
+                {% endif %}
+                  {{ form.license.label }}
+                </label>
+                <span class="help">
+                  {{ form.license.help_text }}
+                </span>
+                {% if form.license.errors %}
+                  <span class="error">{{ form.license.errors }}</span>
+                {% endif %}
+                <p>{{ form.license }}</p>
+              </div>
+              <div class="project_category">
+                {% if form.category.field.required %}
+                  <label for="{{ form.category.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.category.auto_id }}">
+                {% endif %}
+                  {{ form.category.label }}
+                </label>
+                <span class="help">
+                  {{ form.category.help_text }}
+                </span>
+                {% if form.category.errors %}
+                  <span class="error">{{ form.category.errors }}</span>
+                {% endif %}
+                <p>{{ form.category }}</p>
+              </div>
+
+              <div class="project_tags">
+                {% if form.tags.field.required %}
+                  <label for="{{ form.tags.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.tags.auto_id }}">
+                {% endif %}
+                  {{ form.tags.label }}
+                </label>
+                <span class="help">
+                  {{ form.tags.help_text }}
+                </span>
+                {% if form.tags.errors %}
+                  <span class="error">{{ form.tags.errors }}</span>
+                {% endif %}
+                <p>{{ form.tags }}</p>
+              </div>
+              <div class="project_other_images">
+                {% if form.other_images.field.required %}
+                  <label for="{{ form.other_images.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.other_images.auto_id }}">
+                {% endif %}
+                  {{ form.other_images.label }}
+                </label>
+                <span class="help">
+                  {{ form.other_images.help_text }}
+                </span>
+                {% if form.other_images.errors %}
+                  <span class="error">{{ form.other_images.errors }}</span>
+                {% endif %}
+                <p>{{ form.other_images }}</p>
+                <ul id="other_images_selection" class="selection"></ul>
+              </div>
+              <div class="project_other_files">
+                {% if form.other_files.field.required %}
+                  <label for="{{ form.other_files.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.other_files.auto_id }}">
+                {% endif %}
+                  {{ form.other_files.label }}
+                </label>
+                <span class="help">
+                  {{ form.other_files.help_text }}
+                </span>
+                {% if form.other_files.errors %}
+                  <span class="error">{{ form.other_files.errors }}</span>
+                {% endif %}
+                <p>{{ form.other_files }}</p>
+                <ul id="other_files_selection" class="selection"></ul>
+              </div>
+              <div class="project_links">
+                {% if form.links.field.required %}
+                  <label for="{{ form.links.auto_id }}" class="required">
+                {% else %}
+                  <label for="{{ form.links.auto_id }}">
+                {% endif %}
+                  {{ form.links.label }}
+                </label>
+                <a href="javascript:;" id="add_link" style="border:none" title="Add another link">
+                  <img src="/media/admin/img/admin/icon_addlink.gif" />
+                </a>
+                <span class="help">
+                  {{ form.links.help_text }}
+                </span>
+                {% if form.links.errors %}
+                  <span class="error">{{ form.links.errors }}</span>
+                {% endif %}
+                <p>{{ form.links }}</p>
+              </div>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+    </form>
+{% endblock %}
+
+{% block footer_script %}
+  <script type="text/javascript" charset="utf-8"></script>
+{% endblock %}
