@@ -38,7 +38,10 @@ class Category(TitleSlugDescriptionModel):
         return ('project_category_detail', (), { 'slug': self.slug })
     get_absolute_url = models.permalink(get_absolute_url)
 
-mptt.register(Category)
+try:
+    mptt.register(Category)
+except mptt.AlreadyRegistered:
+    pass
 
 class Resource(TimeStampedModel):
     title = models.CharField(_('title'), max_length=255)
@@ -51,29 +54,6 @@ class Resource(TimeStampedModel):
 
     def __unicode__(self):
         return self.url
-
-def handle_project_images(instance, filename):
-    slug = instance.project.slug
-    if len(slug) >= 3:
-        return os.path.join("projects", slug[0], slug[1], slug[2], slug, "images", filename)
-    return os.path.join("projects", slug, "images", filename)
-
-class Image(ImageModel):
-    title = models.CharField(max_length=255, blank=True, null=True, help_text=_('leave empty to populate with filename'))
-    image = models.ImageField(upload_to=handle_project_images)
-    project = models.ForeignKey('Project', related_name='images')
-    user = models.ForeignKey(User, blank=True, null=True, related_name='project_images')
-    view_count = models.PositiveIntegerField(editable=False, default=0)
-    is_heading = models.BooleanField(default=False)
-
-    class IKOptions:
-        cache_dir = 'images'
-        save_count_as = 'view_count'
-
-    def save(self, force_insert=False, force_update=False):
-        if not self.pk and not self.title:
-            _, self.title = os.path.split(self.image.name)
-        super(Image, self).save(force_insert, force_update)
 
 class Project(TitleSlugDescriptionModel, TimeStampedModel):
     KIDS = 1
@@ -99,7 +79,9 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
     difficulty = models.IntegerField(_('difficulty'), choices=DIFFICULTIES, blank=True, null=True)
 
     # categorization
-    category = models.ForeignKey(Category, verbose_name=_('category'), related_name='projects')
+    category = models.ForeignKey(
+        Category, verbose_name=_('category'), related_name='projects',
+        blank=True, null=True)
     tags = TagField(help_text=_('Comma separated list of tags.'))
     license = LicenseField(related_name='projects', required=False)
 
@@ -132,6 +114,29 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
         return ('project_detail', (), { 'slug': self.slug })
     get_absolute_url = models.permalink(get_absolute_url)
 
+def handle_project_images(instance, filename):
+    slug = instance.project.slug
+    if len(slug) >= 3:
+        return os.path.join("projects", slug[0], slug[1], slug[2], slug, "images", filename)
+    return os.path.join("projects", slug, "images", filename)
+
+class Image(ImageModel):
+    title = models.CharField(max_length=255, blank=True, null=True, help_text=_('leave empty to populate with filename'))
+    image = models.ImageField(upload_to=handle_project_images)
+    project = models.ForeignKey(Project, related_name='images')
+    user = models.ForeignKey(User, blank=True, null=True, related_name='project_images')
+    view_count = models.PositiveIntegerField(editable=False, default=0)
+    is_heading = models.BooleanField(default=False)
+
+    class IKOptions:
+        cache_dir = 'images'
+        save_count_as = 'view_count'
+
+    def save(self, force_insert=False, force_update=False):
+        if not self.pk and not self.title:
+            self.title = self.image.name
+        super(Image, self).save(force_insert, force_update)
+
 def handle_project_attachment(instance, filename):
     slug = instance.project.slug
     if len(slug) >= 3:
@@ -139,10 +144,13 @@ def handle_project_attachment(instance, filename):
     return os.path.join("projects", slug, instance.kind, filename)
 
 class Attachment(models.Model):
+    FRITZING_TYPE = 'fritzing'
+    CODE_TYPE = 'code'
+    EXAMPLE_TYPE = 'example'
     ATTACHMENT_TYPES = (
-        ('fritzing', _('fritzing file')),
-        ('code', _('code')),
-        ('example', _('example')),
+        (FRITZING_TYPE, _('fritzing file')),
+        (CODE_TYPE, _('code')),
+        (EXAMPLE_TYPE, _('example')),
     )
     title = models.CharField(_('title'), max_length=255, blank=True, null=True, help_text=_('Leave empty to populate with filename'))
     attachment = models.FileField(upload_to=handle_project_attachment)
@@ -158,5 +166,5 @@ class Attachment(models.Model):
 
     def save(self, force_insert=False, force_update=False):
         if not self.pk and not self.title:
-            _, self.title = os.path.split(self.attachment.name)
+            self.title = self.attachment.name
         super(Attachment, self).save(force_insert, force_update)
