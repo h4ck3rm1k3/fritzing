@@ -1,6 +1,10 @@
 from django.db.models import get_model
 from django import template
+from django.utils.text import truncate_html_words
+
 from template_utils.nodes import GenericContentNode
+
+register = template.Library()
 
 class RelatedContentNode(GenericContentNode):
     """
@@ -10,6 +14,7 @@ class RelatedContentNode(GenericContentNode):
     def _get_query_set(self):
         return self.query_set.select_related()
 
+@register.tag('get_latest_objects_with_relatives')
 def do_latest_objects_with_relatives(parser, token):
     """
     Retrieves the latest ``num`` objects from a given model, in that
@@ -31,5 +36,7 @@ def do_latest_objects_with_relatives(parser, token):
         raise template.TemplateSyntaxError("third argument to '%s' tag must be 'as'" % bits[0])
     return RelatedContentNode(bits[1], bits[2], bits[4])
 
-register = template.Library()
-register.tag('get_latest_objects_with_relatives', do_latest_objects_with_relatives)
+@register.filter
+def truncatehtml(string, length):
+    return truncate_html_words(string, length)
+truncatehtml.is_safe = True
