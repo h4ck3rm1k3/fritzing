@@ -4,8 +4,18 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
+from django.shortcuts import get_object_or_404, get_list_or_404
+
 from fritzing.apps.projects.models import Project, Category, Image, Attachment
 from fritzing.apps.projects.forms import ProjectForm, RESOURCE_DELIMITER
+
+@cache_page(60*15)
+def overview(request):
+    projects = Project.published.all()
+    return render_to_response("projects/project_list.html", {
+        'projects': projects,
+    }, context_instance=RequestContext(request))
 
 @login_required
 def create(request, form_class=ProjectForm):
@@ -46,6 +56,12 @@ def create(request, form_class=ProjectForm):
         form = form_class()
     #print dir(form['title'])
     return render_to_response("projects/project_form.html", {
-        'form': form
-    }, context_instance = RequestContext(request))
+        'form': form,
+    }, context_instance=RequestContext(request))
 
+def detail(request, slug):
+    project = get_object_or_404(Project.published.all(), slug=slug)
+
+    return render_to_response("projects/project_detail.html", {
+        'project': project,
+    }, context_instance=RequestContext(request))
