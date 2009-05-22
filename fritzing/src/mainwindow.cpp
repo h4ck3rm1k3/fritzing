@@ -978,6 +978,9 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 			tr("Fritzing"),
 			tr("Unable to open shareable sketch %1").arg(fileName)
 		);
+
+		// gotta return now, or loadBundledSketchAux will crash
+		return;
 	}
 
 	QDir unzipDir(unzipDirPath);
