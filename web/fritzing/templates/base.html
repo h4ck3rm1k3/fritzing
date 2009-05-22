@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery-cachekey.js"></script>
+        {% block extra_script %}{% endblock %}
         <style type="text/css">
         /*<![CDATA[*/
         <!-- @import url({{ MEDIA_URL }}fritzing/css/base-cachekey.css); -->
@@ -22,7 +23,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="home" href="http://fritzing.org" title="Front page" />
         <meta http-equiv="imagetoolbar" content="no" /><!-- Disable IE6 image toolbar -->
-        {% block extrea_head %}{% endblock %}
+        {% block extra_head %}{% endblock %}
     </head>
     <body class="section-learning template-folder_listing" dir="ltr">
         <div id="visual-portal-wrapper">
@@ -172,6 +173,7 @@
                 <!-- -->
             </div>
         </div>
+    {% block footer_script %}{% endblock %}
     <script type="text/javascript">
         var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
