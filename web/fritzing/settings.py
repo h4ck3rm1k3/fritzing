@@ -147,15 +147,15 @@ INSTALLED_APPS = (
     'ticker',
     'tinymce',
     'markitup',
-#    'south',
+    'south',
     'licenses',
     'dregni',
     # internal (for now)
     'basic_profiles',
     'account',
     'misc',
-    'fritzing.apps.*',
     'imagekit',
+    'fritzing.apps.*',
 )
 
 ABSOLUTE_URL_OVERRIDES = {
@@ -199,6 +199,7 @@ FILEBROWSER_EXTENSIONS = {
     'Achives':['.tgz','.tar', '.zip', '.rar', '.dmg', '.gz', '.bz2'],
     'Fritzing':['.fz', '.fzb', '.fzp', '.ts'],
 }
+FILEBROWSER_STRICT_PIL = True
 
 INTERNAL_IPS = ('127.0.0.1',)
 
