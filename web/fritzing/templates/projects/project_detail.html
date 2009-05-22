@@ -1,0 +1,97 @@
+{% extends "site_base.html" %}
+
+{% block title %}
+  Project – {{ project.title }}
+{% endblock %}
+
+{% block page_title %}
+    {{ project.title }}
+{% endblock %}
+
+{% block teaser %}
+    by {% firstof project.author.get_fullname project.author.username %}
+{% endblock %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
+    {# <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.lightbox.js"></script> #}
+    {# <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/jquery.lightbox.css" type="text/css" media="screen" charset="utf-8" /> #}
+{% endblock %}
+
+{% block content %}
+    <table class="plain project">
+    <tbody>
+        <tr>
+            <td width="60%">
+                <div class="project detail header">
+                {% for image in project.main_images %}
+                <p><img src="{{ image.header.url }}" alt="{{ image.title }}" /></p>
+                {% endfor %}
+                </div>
+        
+                <div class="project detail date">
+                    Created at {{ project.created|date:"F j, Y, H:i" }}
+                </div>
+                <div class="project detail description">
+                    {{ project.description_html|safe }}
+                </div>
+                {% if  project.instructions_html %}
+                    <h2>Instructions</h2>
+                    <div class="project detail instructions">
+                        {{ project.instructions_html|safe }}
+                    </div>
+                {% endif %}
+            </td>
+            <td width="40%" class="right_col">
+                <div class="project detail meta">
+                {% if project.category %}
+                    <p><strong>Category:</strong> {{ project.category }}</p>
+                {% endif %}
+                {% if project.difficulty %}
+                    <p><strong>Difficulty:</strong> {{ project.get_difficulty }}</p>
+                {% endif %}
+                {% if project.license %}
+                    <p><strong>License:</strong> {{ project.license }}</p>
+                {% endif %}
+                {% if project.members.count %}
+                    <p><strong>Members:</strong> {% for member in members %}{{ member }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                {% endif %}
+                {% if project.tags %}
+                    {{ tags }}
+                {% endif %}
+                </div>
+                {% if project.sidebar_images.count %}
+                <h2>Images</h2>
+                <div class="project detail side_images">
+                    {% for image in project.sidebar_images %}
+                    <a href="{{ image.image.url }}">
+                        <img src="{{ image.sidebar.url }}" alt="{{ image.title }}" width="{{ image.sidebar.width }}" height="{{ image.sidebar.height }}"/>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if project.attachments.count %}
+                <h2>Files</h2>
+                <div class="project detail attachement">
+                    {% for attachment in project.attachments.all %}
+                    <div class="project detail attachement table {% cycle "grey" "" %}">
+                        <a href="{{ attachment.attachment.url }}">
+                        {% firstof attachment.filename attachment.title %}
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </td>
+        </tr>
+    </tbody>
+    </table>
+{% endblock %}
+
+{# {% block footer_script %} #}
+{#     <script type="text/javascript" charset="utf-8"> #}
+{#         $(document).ready(function() { #}
+{#             $('.project.detail.side_images a').lightBox(); #}
+{#         }); #}
+{#     </script> #}
+{# {% endblock %} #}
