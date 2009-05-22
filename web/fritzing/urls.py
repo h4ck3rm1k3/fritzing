@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     (r'^news/', include('ticker.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
     (r'^markitup/', include('markitup.urls')),
+    (r'^projects/', include('projects.urls')),
     (r'^parts/generator/', include('fritzing.apps.parts.urls.generator')),
     (r'^admin/(.*)', admin.site.root),
     url(r'^faq/$', 'faq.views.faq_list', name='faq_list'),
@@ -33,5 +34,5 @@ urlpatterns = patterns('',
 
 if settings.SERVE_MEDIA:
     urlpatterns += patterns('', 
-        (r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], 'misc.views.serve')
+        (r'^%s(?P<path>.*)$' % settings.MEDIA_URL[1:], 'staticfiles.views.serve')
     )
