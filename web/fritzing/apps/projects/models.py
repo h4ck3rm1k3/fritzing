@@ -114,6 +114,21 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
         return ('project_detail', (), { 'slug': self.slug })
     get_absolute_url = models.permalink(get_absolute_url)
 
+    @property
+    def main_images(self):
+        return self.images.filter(is_heading=True)
+
+    @property
+    def sidebar_images(self):
+        return self.images.filter(is_heading=False)
+
+    @property
+    def get_difficulty(self):
+        if self.difficulty:
+            diffs = dict(self.DIFFICULTIES)
+            return diffs.get(self.difficulty, None)
+        return None
+
 def handle_project_images(instance, filename):
     slug = instance.project.slug
     if len(slug) >= 3:
@@ -129,8 +144,10 @@ class Image(ImageModel):
     is_heading = models.BooleanField(default=False)
 
     class IKOptions:
-        cache_dir = 'images'
+        cache_dir = 'projects/thumbs'
+        cache_filename_format = '%(specname)s/%(filename)s.%(extension)s'
         save_count_as = 'view_count'
+        spec_module = 'fritzing.apps.projects.specs'
 
     def save(self, force_insert=False, force_update=False):
         if not self.pk and not self.title:
@@ -168,3 +185,10 @@ class Attachment(models.Model):
         if not self.pk and not self.title:
             self.title = self.attachment.name
         super(Attachment, self).save(force_insert, force_update)
+
+    @property
+    def filename(self):
+        if self.attachment:
+            filename = os.path.split(self.attachment.name)
+            return filename[1]
+        return None
