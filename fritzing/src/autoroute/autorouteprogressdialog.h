@@ -42,6 +42,7 @@ public:
 protected:
 	void closeEvent(QCloseEvent *);
 	void wheelEvent(QWheelEvent *);
+	void mouseMoveEvent(QMouseEvent *);
 
 public slots:
 	void setMinimum(int);

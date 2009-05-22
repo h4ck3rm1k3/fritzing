@@ -38,7 +38,7 @@ Q_OBJECT
 
 public:
 	FileProgressDialog(QWidget *parent = 0);
-	FileProgressDialog(const QString & title, QWidget *parent = 0);
+	FileProgressDialog(const QString & title, int initialMaximum, QWidget *parent = 0);
 	~FileProgressDialog();
 
 protected:
@@ -55,7 +55,7 @@ signals:
 	void cancel();
 
 protected:
-	void init(const QString & title);
+	void init(const QString & title, int initialMaximum);
 
 protected:
 	QProgressBar * m_progressBar;	

@@ -394,7 +394,7 @@ int FApplication::startup(int & argc, char ** argv)
 	splash.showProgress(progressIndex, 0.70);
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
-	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, false);
+	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
 
 	splash.showProgress(progressIndex, 0.9);
 	processEvents();
@@ -418,7 +418,7 @@ int FApplication::startup(int & argc, char ** argv)
 			QString lastSketchPath = settings.value("lastOpenSketch").toString();
 			if(QFileInfo(lastSketchPath).exists()) {
 				settings.remove("lastOpenSketch");				// clear the preference, in case the load crashes
-				mainWindow->showFileProgressDialog();
+				mainWindow->showFileProgressDialog(lastSketchPath);
 				mainWindow->load(lastSketchPath);
 				loaded++;
 				settings.setValue("lastOpenSketch", lastSketchPath);	// the load works, so restore the preference
@@ -471,7 +471,7 @@ void FApplication::finish()
 }
 
 void FApplication::loadNew(QString path) {
-	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, true);
+	MainWindow * mw = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, path, true);
 	if (!mw->loadWhich(path, false)) {
 		mw->close();
 	}
@@ -480,7 +480,7 @@ void FApplication::loadNew(QString path) {
 
 void FApplication::loadOne(MainWindow * mw, QString path, int loaded) {
 	if (loaded == 0) {
-		mw->showFileProgressDialog();
+		mw->showFileProgressDialog(path);
 		mw->loadWhich(path);
 	}
 	else {

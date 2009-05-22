@@ -183,7 +183,7 @@ void PartsBinPaletteWidget::toListView() {
 }
 
 void PartsBinPaletteWidget::saveAsAux(const QString &filename) {
-	FileProgressDialog progress("Saving...", this);
+	FileProgressDialog progress("Saving...", 0, this);
 
 	QString oldFilename = m_fileName;
 	m_fileName = filename;

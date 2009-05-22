@@ -91,12 +91,12 @@ public:
 	ModelPart *loadPartFromFile(const QString& newPartPath);
 	void addBoard();
 	void init();
-	void showFileProgressDialog();
+	void showFileProgressDialog(const QString & path);
 	void clearFileProgressDialog();
 
 public:
 	static void initExportConstants();
-	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, bool showProgress);
+	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress);
 
 signals:
 	void alienPartsDismissed();

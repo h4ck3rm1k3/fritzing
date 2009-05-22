@@ -138,7 +138,7 @@ bool FritzingWindow::saveAs() {
 
 	}
 
-	FileProgressDialog progress("Saving...", this);
+	FileProgressDialog progress("Saving...", 0, this);
 
     if(!alreadyHasExtension(fileName)) {
 		fileExt = getExtFromFileDialog(fileExt);

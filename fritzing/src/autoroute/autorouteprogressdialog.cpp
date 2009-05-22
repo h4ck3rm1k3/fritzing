@@ -109,3 +109,10 @@ void AutorouteProgressDialog::wheelEvent(QWheelEvent *event)
 	QDialog::wheelEvent(event);
 }
 
+void AutorouteProgressDialog::mouseMoveEvent(QMouseEvent *event)
+{
+	// pass it to the sketch?
+	DebugDialog::debug("got mouse move event");
+	QDialog::mouseMoveEvent(event);
+}
+

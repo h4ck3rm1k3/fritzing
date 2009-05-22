@@ -922,7 +922,7 @@ void MainWindow::saveBundledSketch() {
 
 	if (bundledFileName.isEmpty()) return; // Cancel pressed
 
-	FileProgressDialog progress("Saving...", this);
+	FileProgressDialog progress("Saving...", 0, this);
 
 	if(!alreadyHasExtension(bundledFileName)) {
 		fileExt = getExtFromFileDialog(fileExt);
@@ -981,15 +981,12 @@ void MainWindow::loadBundledSketch(const QString &fileName) {
 	}
 
 	QDir unzipDir(unzipDirPath);
-	MainWindow *mw = newMainWindow(m_paletteModel, m_refModel, true);
 
-	moveToPartsFolder(unzipDir,mw);
+	moveToPartsFolder(unzipDir,this);
 	// the sketch itself
-	loadBundledSketchAux(unzipDir, mw);
+	loadBundledSketchAux(unzipDir, this);
 
 	rmdir(unzipDirPath);
-
-	mw->clearFileProgressDialog();
 }
 
 void MainWindow::loadBundledPartFromWeb() {
@@ -1492,7 +1489,7 @@ void MainWindow::editModule() {
 
 	if (itemBase == NULL) return;
 
-    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, true);
+    MainWindow* mw = newMainWindow(m_paletteModel, m_refModel, itemBase->modelPartShared()->path(), true);
 	mw->loadWhich(itemBase->modelPartShared()->path(), false, false);
 	mw->m_sketchModel->walk(mw->m_sketchModel->root(), 0);
     mw->clearFileProgressDialog();
@@ -1995,10 +1992,10 @@ void MainWindow::addBoard() {
 	m_pcbGraphicsView->addBoard();
 }
 
-MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, bool showProgress) {
+MainWindow * MainWindow::newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress) {
 	MainWindow * mw = new MainWindow(paletteModel, refModel);
 	if (showProgress) {
-		mw->showFileProgressDialog();
+		mw->showFileProgressDialog(path);
 	}
 
 	mw->init();
@@ -2013,8 +2010,11 @@ void  MainWindow::clearFileProgressDialog() {
 	}
 }
 
-void MainWindow::showFileProgressDialog() {
-	m_fileProgressDialog = new FileProgressDialog("Loading...", this);
+void MainWindow::showFileProgressDialog(const QString & path) {
+	m_fileProgressDialog = new FileProgressDialog("Loading...", 100, this);
+	if (!path.isEmpty()) {
+		m_fileProgressDialog->setMessage(QString("loading %1").arg(QFileInfo(path).baseName()));
+	}
 }
 
 

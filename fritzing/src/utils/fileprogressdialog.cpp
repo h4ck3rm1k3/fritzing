@@ -39,9 +39,9 @@ $Date: 2009-03-10 12:44:55 +0100 (Tue, 10 Mar 2009) $
 
 /////////////////////////////////////
 
-FileProgressDialog::FileProgressDialog(const QString & title, QWidget * parent) : QDialog(parent)
+FileProgressDialog::FileProgressDialog(const QString & title, int initialMaximum, QWidget * parent) : QDialog(parent)
 {
-	init(title);
+	init(title, initialMaximum);
 	setModal(true);
 	show();
 	QApplication::processEvents();
@@ -49,10 +49,10 @@ FileProgressDialog::FileProgressDialog(const QString & title, QWidget * parent) 
 
 FileProgressDialog::FileProgressDialog(QWidget *parent) : QDialog(parent) 
 {
-	init(QObject::tr("File Progress..."));
+	init(QObject::tr("File Progress..."), 0);
 }
 
-void FileProgressDialog::init(const QString & title)
+void FileProgressDialog::init(const QString & title, int initialMaximum)
 {
 	Qt::WindowFlags flags = windowFlags();
 	flags ^= Qt::WindowCloseButtonHint;
@@ -69,7 +69,7 @@ void FileProgressDialog::init(const QString & title)
 
 	m_progressBar = new QProgressBar(this);
 	m_progressBar->setMinimum(0);
-	m_progressBar->setMaximum(0);
+	m_progressBar->setMaximum(initialMaximum);
 	vLayout->addWidget(m_progressBar);
 
     //QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel);
@@ -94,6 +94,7 @@ void FileProgressDialog::setMaximum(int maximum) {
 
 void FileProgressDialog::setValue(int value) {
 	m_progressBar->setValue(value);
+	QApplication::processEvents();
 }
 
 void FileProgressDialog::sendCancel() {
@@ -107,6 +108,7 @@ void FileProgressDialog::closeEvent(QCloseEvent *event)
 
 void FileProgressDialog::setMessage(const QString & message) {
 	m_message->setText(message);
+	QApplication::processEvents();
 }
 
 
