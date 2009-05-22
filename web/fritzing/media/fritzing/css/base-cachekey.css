@@ -1643,9 +1643,11 @@ color: Black;
 background-color: #fd7 !important;
 }
 
+/*
 #region-content img {
 max-width: 100%;
 }
+*/
 
 #region-content ul {
 list-style-type: disc;
