@@ -65,3 +65,22 @@ ul.selection {
     min-height: 200px;
     line-height: 16px;
 }
+
+.project.date.detail {
+    float: right;
+    clear: both;
+    padding: 5px;
+    color: #666;
+}
+
+.project.description.detail {
+    clear: right;
+}
+
+.project.detail.attachement.table {
+    padding: 2px 4px;
+}
+
+.project.detail.attachement.grey {
+    background-color: #eaeaea;
+}
