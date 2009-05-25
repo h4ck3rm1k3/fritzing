@@ -301,6 +301,8 @@ void PaletteItem::figureHover() {
 	// if you make all layers accept hover events, then the topmost layer will get the event
 	// and lower layers won't
 
+	// note: this affects which layer responds to tooltips: see FGraphicsScene::helpEvent()
+
 	QList<ItemBase *> allKin;
 	allKin.append(this);
 	foreach(ItemBase * lkpi, m_layerKin) {

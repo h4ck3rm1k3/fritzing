@@ -58,9 +58,7 @@ void FGraphicsScene::helpEvent(QGraphicsSceneHelpEvent *helpEvent)
 		else {
 			if (itemBase->hidden()) continue;
 
-			if (itemBase->lowerConnectorLayerVisible(itemBase) != NULL) {
-				continue;
-			}
+			if (!itemBase->acceptsHoverEvents()) continue;
 		
 			if (!itemBase->toolTip2().isEmpty()) {
 				text = itemBase->toolTip2();
