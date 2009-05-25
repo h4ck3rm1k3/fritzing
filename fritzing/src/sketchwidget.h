@@ -410,6 +410,8 @@ protected:
 	LayerHash m_viewLayers;
 	QHash<ViewLayer::ViewLayerID, bool> m_viewLayerVisibility;
 	Wire * m_connectorDragWire;
+	Wire * m_bendpointWire;
+	ViewGeometry m_bendpointVG;
 	ConnectorItem * m_connectorDragConnector;
 	bool m_droppingWire;
 	QPointF m_droppingOffset;

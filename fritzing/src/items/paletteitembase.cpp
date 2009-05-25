@@ -85,8 +85,6 @@ QVariant PaletteItemBase::itemChange(GraphicsItemChange change, const QVariant &
 {
      if (change == ItemPositionChange && scene()) {
 
-		 emit posChangedSignal();
-
      	// snap to grid
 
         // QVariant argument is the new position.

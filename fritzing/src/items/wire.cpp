@@ -355,7 +355,6 @@ void Wire::setConnector1Rect() {
 	rect.moveTo(this->line().dx() - (rect.width()  / 2.0)  ,
 				this->line().dy() - (rect.height()  / 2.0) );
 	m_connector1->setRect(rect);
-	emit posChangedSignal();
 }
 
 void Wire::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {

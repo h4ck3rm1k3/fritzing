@@ -375,9 +375,15 @@ void ChangeWireCommand::redo()
 QString ChangeWireCommand::getParamString() const {
 	return QString("ChangeWireCommand ") 
 		+ BaseCommand::getParamString() + 
-		QString(" fromid:%1")
-		.arg(m_fromID);
+		QString(" fromid:%1 oldp:%2,%3 newP:%4,%5 oldr:%7,%8,%9,%10 newr:%11,%12,%13,%14")
+		.arg(m_fromID)
+		.arg(m_oldPos.x()).arg(m_oldPos.y())
+		.arg(m_newPos.x()).arg(m_newPos.y())
+		.arg(m_oldLine.x1()).arg(m_oldLine.y1()).arg(m_oldLine.x2()).arg(m_oldLine.y2())		
+		.arg(m_newLine.x1()).arg(m_newLine.y1()).arg(m_newLine.x2()).arg(m_newLine.y2())		
+		;
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

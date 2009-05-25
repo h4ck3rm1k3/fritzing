@@ -183,9 +183,6 @@ public slots:
 	void partLabelChanged(const QString &newText);
 	qint64 id();
 
-signals:
-	void posChangedSignal();
-
 public:
 	static bool zLessThan(ItemBase * & p1, ItemBase * & p2);
 	static qint64 getNextID();
