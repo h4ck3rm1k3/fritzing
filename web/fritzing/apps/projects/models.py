@@ -38,7 +38,7 @@ class Category(TitleSlugDescriptionModel):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('project-category-detail', (), {'slug': self.slug})
+        return ('projects-category-detail', (), {'slug': self.slug})
 
 try:
     mptt.register(Category)
@@ -122,7 +122,7 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('project-detail', (), {'slug': self.slug})
+        return ('projects-detail', (), {'slug': self.slug})
 
     @property
     def main_images(self):
