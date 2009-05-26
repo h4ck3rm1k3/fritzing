@@ -200,9 +200,9 @@ PartsBinPaletteWidget* BinManager::getOrOpenMyPartsBin() {
 }
 
 QString BinManager::createIfMyPartsNotExists() {
-	QDateTime now = QDateTime::currentDateTime();
-	/*QString binPath = getApplicationSubFolderPath("bins")+
-		QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));*/
+	/*QDateTime now = QDateTime::currentDateTime();
+	QString binPath = getApplicationSubFolderPath("bins")+
+	QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));*/
 	QString binPath = MyPartsBinLocation;
 	QFile file(":/resources/bins/my_parts.fzb");
 	file.copy(binPath);

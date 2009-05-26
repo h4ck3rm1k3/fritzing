@@ -140,9 +140,9 @@ bool FritzingWindow::saveAs() {
 
 	FileProgressDialog progress("Saving...", 0, this);
 
-    if(!alreadyHasExtension(fileName)) {
-		fileExt = getExtFromFileDialog(fileExt);
-		fileName += fileExt;
+    if(!alreadyHasExtension(fileName, fileExtension())) {
+		//fileExt = getExtFromFileDialog(fileExt);
+		fileName += fileExtension();
 	}
 
     saveAsAux(fileName);
@@ -158,11 +158,11 @@ void FritzingWindow::undoStackCleanChanged(bool isClean) {
 }
 
 void FritzingWindow::replicateDir(QDir srcDir, QDir targDir) {
-	// copy all files from template source to new random temp dir
-	QStringList files = srcDir.entryList();
+	// copy all files from srcDir source to tagDir
+	QStringList files = srcDir.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
 	for(int i=0; i < files.size(); i++) {
 		QFile tempFile(srcDir.path() + "/" +files.at(i));
-		DebugDialog::debug("copying " + tempFile.fileName());
+		DebugDialog::debug(tr("Copying file %1").arg(tempFile.fileName()));
 		QFileInfo fi(files.at(i));
 		QString newFilePath = targDir.path() + "/" + fi.fileName();
 		if(QFileInfo(tempFile.fileName()).isDir()) {
@@ -171,21 +171,27 @@ void FritzingWindow::replicateDir(QDir srcDir, QDir targDir) {
 			newTargDir.cd(files.at(i));
 			replicateDir(QDir(tempFile.fileName()),newTargDir);
 		} else {
-			tempFile.copy(newFilePath);
+			if(!tempFile.copy(newFilePath)) {
+				DebugDialog::debug(tr("File %1 already exists: it won't be overwritten").arg(newFilePath));
+			}
 		}
 	}
 }
 
-bool FritzingWindow::alreadyHasExtension(const QString &fileName) {
+bool FritzingWindow::alreadyHasExtension(const QString &fileName, const QString &fileExt) {
 	// TODO: Make something preattier to manage all the supported formats at once
-	foreach (QString extension, fritzingExtensions()) {
-		if (fileName.indexOf(extension) != -1) return true;
-	}
+	if(fileExt != ___emptyString___) {
+		return fileName.endsWith(fileExt);
+	} else {
+		foreach (QString extension, fritzingExtensions()) {
+			if (fileName.endsWith(extension)) return true;
+		}
 
-	return fileName.indexOf(".pdf")  != -1
-		|| fileName.indexOf(".ps")  != -1
-		|| fileName.indexOf(".png")  != -1
-		|| fileName.indexOf(".jpg")  != -1;
+		return fileName.endsWith(".pdf")
+			|| fileName.endsWith(".ps")
+			|| fileName.endsWith(".png")
+			|| fileName.endsWith(".jpg");
+	}
 }
 
 QString FritzingWindow::getRandText() {

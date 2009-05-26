@@ -34,6 +34,7 @@ $Date$
 #include <QStatusBar>
 
 #include "waitpushundostack.h"
+#include "utils/misc.h"
 
 class FritzingWindow : public QMainWindow {
 	Q_OBJECT
@@ -77,7 +78,7 @@ class FritzingWindow : public QMainWindow {
 	public:
 		// TODO: these probably belong in some separate file i/o class
 		static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);
-		static bool alreadyHasExtension(const QString &fileName);
+		static bool alreadyHasExtension(const QString &fileName, const QString &extension=___emptyString___);
 		static QString getExtFromFileDialog(const QString &extOpt);
 		static bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 		static void rmdir(const QString &dirPath);

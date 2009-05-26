@@ -175,6 +175,7 @@ protected slots:
 	void hideAllLayers();
 	void showInViewHelp();
 	void addBendpoint();
+	void importFilesFromPrevInstall();
 
 	// TODO PARTS EDITOR REMOVE
 	void openInOldPartsEditor();
@@ -269,7 +270,6 @@ protected:
 	void exportEtchable(bool wantPDF, bool wantSVG);
 
 	QList<QWidget*> getButtonsForView(ViewIdentifierClass::ViewIdentifier viewId);
-
 	const QString untitledFileName();
 	int &untitledFileCount();
 	const QString fileExtension();
@@ -305,7 +305,6 @@ protected:
 	SketchToolButton *createExportEtchableButton(SketchAreaWidget *parent);
 	SketchToolButton *createNoteButton(SketchAreaWidget *parent);
 	QWidget *createToolbarSpacer(SketchAreaWidget *parent);
-
 	SketchAreaWidget *currentSketchArea();
 	const QString fritzingTitle();
 
@@ -500,6 +499,7 @@ protected:
     QAction *m_checkForUpdatesAct;
     QAction *m_aboutQtAct;
     QAction *m_reportBugAct;
+    QAction *m_importFilesFromPrevInstallAct;
 
     // Dot icons
     QIcon m_dotIcon;

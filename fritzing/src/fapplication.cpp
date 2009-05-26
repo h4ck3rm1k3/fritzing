@@ -393,6 +393,10 @@ int FApplication::startup(int & argc, char ** argv)
 
 	splash.showProgress(progressIndex, 0.70);
 
+	importFilesFromPrevInstall();
+
+	splash.showProgress(progressIndex, 0.8);
+
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
 
@@ -441,11 +445,6 @@ int FApplication::startup(int & argc, char ** argv)
 	if (!loaded) {
 		mainWindow->addBoard();
 	}
-
-	DebugDialog::debug("<<<<<<<<<<<");
-	QString settingsFile = QSettings(QSettings::IniFormat,QSettings::UserScope,"Fritzing","Fritzing").fileName();
-	DebugDialog::debug(QFileInfo(settingsFile).dir().absolutePath());
-	DebugDialog::debug(">>>>>>>>>>>");
 
 	mainWindow->show();
 
@@ -621,6 +620,7 @@ void FApplication::enableCheckUpdates(bool enabled)
 	}
 }
 
+
 QString FApplication::getOpenFileName( QWidget * parent, const QString & caption, const QString & dir, const QString & filter, QString * selectedFilter, QFileDialog::Options options )
 {
 	QString result = QFileDialog::getOpenFileName(parent, caption, dir, filter, selectedFilter, options);
@@ -638,5 +638,21 @@ QString FApplication::getSaveFileName( QWidget * parent, const QString & caption
 		setOpenSaveFolder(result);
 	}
 	return result;
+}
 
+void FApplication::importFilesFromPrevInstall() {
+	// make sure that the folder structure for parts and bins, exists
+	QString userDataStorePath = getUserDataStorePath();
+	QDir dataStore(userDataStorePath);
+	QStringList dataFolders = getUserDataStoreFolders();
+	foreach(QString folder, dataFolders) {
+		if(!QFileInfo(dataStore.absolutePath()+folder).exists()) {
+			QString folderaux = folder.startsWith("/")? folder.remove(0,1): folder;
+			dataStore.mkpath(folder);
+		}
+	}
+
+	QString myPartsBinPath = "/my_parts.fzb";
+	QFile(getApplicationSubFolderPath("bins")+myPartsBinPath)
+		.copy(userDataStorePath+"/bins"+myPartsBinPath);
 }

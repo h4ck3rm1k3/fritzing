@@ -376,9 +376,9 @@ void MainWindow::printAux(QPrinter &printer, const QString & message, bool remov
 
 		QPointF sceneStart = m_currentGraphicsView->mapToScene(QPoint(0,0));
 		QPointF sceneEnd = m_currentGraphicsView->mapToScene(QPoint(m_currentGraphicsView->viewport()->width(), m_currentGraphicsView->viewport()->height()));
-		
+
 		QRectF source(sceneStart, sceneEnd);
-		QRectF target(0, 0, source.width() * scale2, source.height() * scale2); 
+		QRectF target(0, 0, source.width() * scale2, source.height() * scale2);
 
 		QColor color;
 		if(removeBackground) {
@@ -1244,6 +1244,10 @@ void MainWindow::createHelpMenuActions() {
 	m_reportBugAct = new QAction(tr("&Report a bug..."), this);
 	m_reportBugAct->setStatusTip(tr("Report a but you've found in Fritzing"));
 	connect(m_reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
+
+	m_importFilesFromPrevInstallAct = new QAction(tr("&Import data from old version..."), this);
+	m_importFilesFromPrevInstallAct->setStatusTip(tr("Import parts and bins from previous installation"));
+	connect(m_importFilesFromPrevInstallAct, SIGNAL(triggered()), this, SLOT(importFilesFromPrevInstall()));
 }
 
 void MainWindow::createMenus()
@@ -1373,6 +1377,7 @@ void MainWindow::createMenus()
     m_helpMenu->addAction(m_partsRefAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_checkForUpdatesAct);
+	m_helpMenu->addAction(m_importFilesFromPrevInstallAct);
 	m_helpMenu->addAction(m_reportBugAct);
 	m_helpMenu->addSeparator();
 	m_helpMenu->addAction(m_aboutAct);
@@ -2490,7 +2495,7 @@ void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
 		bendpointAction->setLastHoverEnterItem(NULL);
 		bendpointAction->setLastHoverEnterConnectorItem(NULL);
 	}
-	
+
 	m_addBendpointAct->setEnabled(enabled);
 }
 
@@ -2498,11 +2503,46 @@ void MainWindow::addBendpoint()
 {
 	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
 
-	m_currentGraphicsView->addBendpoint(bendpointAction->lastHoverEnterItem(), 
+	m_currentGraphicsView->addBendpoint(bendpointAction->lastHoverEnterItem(),
 										bendpointAction->lastHoverEnterConnectorItem(),
 										bendpointAction->lastLocation());
 }
 
 FileProgressDialog * MainWindow::exportProgress() {
 	return (new FileProgressDialog("Exporting...", 0, this));
+}
+
+void MainWindow::importFilesFromPrevInstall() {
+	QString prevInstallPath = QFileDialog::getExistingDirectory(this, tr("Old Frtizing Installation folder"),
+            QDir::homePath(),
+            QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	if(prevInstallPath.isNull()) return;
+
+	QString userDataPath = getUserDataStorePath();
+
+	// replicate dirs
+	QStringList foldersToCopy = getUserDataStoreFolders();
+	foreach(QString folder, foldersToCopy) {
+		replicateDir(prevInstallPath+folder, userDataPath+folder);
+	}
+
+	// cleanup old bins
+	QDir dataStoreBins(userDataPath);
+	dataStoreBins.cd("bins");
+	QStringList binsToRemove;
+	binsToRemove
+		<< "allParts.fzb" << "artreenoBin.fzb"
+		<< "E6SetBin.fzb" << "pin_headers.fzb";
+	foreach(QString binToRemove, binsToRemove) {
+		dataStoreBins.remove(binToRemove);
+	}
+
+	// make sure to add the old my_parts.fzp to the folder
+	QString myPartsBinRelPath = "/bins/my_parts.fzb";
+	QFile myOldPartsBinFile(prevInstallPath+myPartsBinRelPath);
+	if(myOldPartsBinFile.exists()) {
+		QDateTime now = QDateTime::currentDateTime();
+		QString newNamePostfix = QString("__imported_on__%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));
+		myOldPartsBinFile.copy(userDataPath+myPartsBinRelPath.replace(".fzb",newNamePostfix));
+	}
 }

@@ -48,19 +48,20 @@ public:
 
 public:
 	static QString getOpenFileName( QWidget * parent = 0, const QString & caption = QString(), const QString & dir = QString(), const QString & filter = QString(), QString * selectedFilter = 0, QFileDialog::Options options = 0 );
-	static QString getSaveFileName( QWidget * parent = 0, const QString & caption = QString(), const QString & dir = QString(), const QString & filter = QString(), QString * selectedFilter = 0, QFileDialog::Options options = 0 ); 
+	static QString getSaveFileName( QWidget * parent = 0, const QString & caption = QString(), const QString & dir = QString(), const QString & filter = QString(), QString * selectedFilter = 0, QFileDialog::Options options = 0 );
 	static void setOpenSaveFolder(const QString& path);
 	static const QString openSaveFolder();
 	static bool spaceBarIsPressed();
-	
+
 signals:
 	void spaceBarIsPressedSignal(bool);
-	
+
 public slots:
 	void preferences();
 	void checkForUpdates();
 	void checkForUpdates(bool atUserRequest);
 	void enableCheckUpdates(bool enabled);
+	void importFilesFromPrevInstall();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

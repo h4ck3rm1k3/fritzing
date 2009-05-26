@@ -30,6 +30,7 @@ $Date$
 #include <QDesktopServices>
 #include <QCoreApplication>
 #include <QDir>
+#include <QSettings>
 
 static QList<QString> ___fritzingExtensions___;
 
@@ -71,6 +72,19 @@ QString getApplicationSubFolderPath(QString search) {
 	QString result = dir->path();
 	delete dir;
 	return result;
+}
+
+QString getUserDataStorePath() {
+	QString settingsFile = QSettings(QSettings::IniFormat,QSettings::UserScope,"Fritzing","Fritzing").fileName();
+	return QFileInfo(settingsFile).dir().absolutePath();
+}
+
+QStringList getUserDataStoreFolders() {
+	QStringList folders;
+	folders << "/bins"
+		<< "/parts/user" << "/parts/contrib"
+		<< "/parts/svg/user" << "/parts/svg/contrib";
+	return folders;
 }
 
 qreal convertToInches(const QString & s, bool * ok) {

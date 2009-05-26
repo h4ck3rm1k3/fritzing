@@ -63,6 +63,8 @@ typedef QPair<QString, QString> StringPair;
 QString getUserPartsFolder();
 QDir *getApplicationSubFolder(QString);
 QString getApplicationSubFolderPath(QString);
+QString getUserDataStorePath();
+QStringList getUserDataStoreFolders();
 
 QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 
