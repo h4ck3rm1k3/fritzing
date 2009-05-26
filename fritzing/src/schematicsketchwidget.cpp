@@ -66,3 +66,24 @@ const QColor * SchematicSketchWidget::getRatsnestColor()
 	}
 	return &schematicColor;
 }
+
+bool SchematicSketchWidget::autorouteDoesJumpers() {
+	return false;
+}
+
+bool SchematicSketchWidget::autorouteNeedsBounds() {
+	return false;
+}
+
+bool SchematicSketchWidget::autorouteCheckWires() {
+	return false;
+}
+
+bool SchematicSketchWidget::autorouteCheckConnectors() {
+	return false;
+}
+
+bool SchematicSketchWidget::autorouteCheckParts() {
+	return true;
+}
+

@@ -94,7 +94,6 @@ protected:
 	bool m_cancelled;
 	bool m_cancelTrace;
 	bool m_stopTrace;
-
 };
 
 #endif

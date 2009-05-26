@@ -209,6 +209,8 @@ void Autorouter1::start()
 	// TODO: for each edge, determine a measure of pin density, and use that, weighted with length, as the sort order
 	qSort(edges.begin(), edges.end(), edgeGreaterThan);
 
+	QPolygonF boundsPoly(m_sketchWidget->scene()->itemsBoundingRect().adjusted(-50, -50, 50, 50));
+
 	int edgesDone = 0;
 	int jumperCount = 0;
 	foreach (Edge * edge, edges) {
@@ -241,20 +243,22 @@ void Autorouter1::start()
 		// if both connections are stuck to or attached to the same part
 		// then use that part's boundary to constrain the path
 		ItemBase * partForBounds = NULL;
-		if (edge->from->attachedTo()->stuckTo() != NULL && edge->from->attachedTo()->stuckTo() == edge->to->attachedTo()->stuckTo()) {
-			partForBounds = edge->from->attachedTo()->stuckTo();
-		}
-		else if (edge->from->attachedTo()->sticky() && edge->from->attachedTo() == edge->to->attachedTo()->stuckTo()) {
-			partForBounds = edge->from->attachedTo();
-		}
-		else if (edge->to->attachedTo()->sticky() && edge->to->attachedTo() == edge->from->attachedTo()->stuckTo()) {
-			partForBounds = edge->to->attachedTo();
-		}
-		else if (edge->to->attachedTo() == edge->from->attachedTo()) {
-			partForBounds = edge->from->attachedTo();
-		}
-		else {
-			// TODO:  if we're stuck on two boards, use the union as the constraint?
+		if (m_sketchWidget->autorouteNeedsBounds()) {
+			if (edge->from->attachedTo()->stuckTo() != NULL && edge->from->attachedTo()->stuckTo() == edge->to->attachedTo()->stuckTo()) {
+				partForBounds = edge->from->attachedTo()->stuckTo();
+			}
+			else if (edge->from->attachedTo()->sticky() && edge->from->attachedTo() == edge->to->attachedTo()->stuckTo()) {
+				partForBounds = edge->from->attachedTo();
+			}
+			else if (edge->to->attachedTo()->sticky() && edge->to->attachedTo() == edge->from->attachedTo()->stuckTo()) {
+				partForBounds = edge->to->attachedTo();
+			}
+			else if (edge->to->attachedTo() == edge->from->attachedTo()) {
+				partForBounds = edge->from->attachedTo();
+			}
+			else {
+				// TODO:  if we're stuck on two boards, use the union as the constraint?
+			}
 		}
 
 		bool routedFlag = false;
@@ -286,7 +290,11 @@ void Autorouter1::start()
 					ratsnest->setWidth(5);
 				};
 
-				if (partForBounds) {
+				if (!m_sketchWidget->autorouteNeedsBounds()) {
+					QList<Wire *> wires;
+					routedFlag = drawTrace(from, to, boundsPoly, wires);
+				}
+				else if (partForBounds) {
 					QList<Wire *> wires;
 					QRectF boundingRect = partForBounds->boundingRect();
 					boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
@@ -306,7 +314,7 @@ void Autorouter1::start()
 			}
 		}
 
-		if (!routedFlag && !m_stopTrace) {
+		if (!routedFlag && !m_stopTrace && m_sketchWidget->autorouteDoesJumpers()) {
 			drawJumper(edge->from, edge->to, partForBounds);
 			jumperCount++;
 		}
@@ -680,8 +688,8 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		if (item == from) continue;
 		if (item == to) continue;
 
-		ConnectorItem * candidateConnectorItem = NULL;
-		Wire * candidateWire = dynamic_cast<Wire *>(item);
+		bool gotOne = false;
+		Wire * candidateWire = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<Wire *>(item) : NULL;
 		if (candidateWire != NULL) {
 			if (candidateWire->getTrace() &&
 				candidateWire->connector0()->connectionsCount() == 0 &&
@@ -708,6 +716,8 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 				// it's the same potential, so it's safe to cross
 				continue;
 			}
+
+			gotOne = true;
 			/*
 
 			DebugDialog::debug(QString("candidate wire %1, trace:%2, %3 %4, %5 %6")
@@ -720,45 +730,82 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 				*/
 		}
-		else {
-			candidateConnectorItem = dynamic_cast<ConnectorItem *>(item);
-			if (candidateConnectorItem == NULL) {
-				// only want wires or connectorItems
-				continue;
-			}
+		if (!gotOne) {
+			ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteCheckConnectors() ? dynamic_cast<ConnectorItem *>(item) : NULL;
+			if (candidateConnectorItem != NULL) {
+				candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
+				if (candidateWire != NULL) {
+					// handle this from the wire rather than the connector
+					continue;
+				}
 
-			candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
-			if (candidateWire != NULL) {
-				// handle this from the wire rather than the connector
-				continue;
-			}
+				if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+					// needs to be on the same layer
+					continue;
+				}
 
-			if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
-				// needs to be on the same layer
-				continue;
-			}
+				if (m_drawingNet != NULL && m_drawingNet->contains(candidateConnectorItem)) {
+					// it's the same potential, so it's safe to cross
+					continue;
+				}
 
-			if (m_drawingNet != NULL && m_drawingNet->contains(candidateConnectorItem)) {
-				// it's the same potential, so it's safe to cross
-				continue;
+				//QPolygonF poly = candidateConnectorItem->mapToScene(candidateConnectorItem->boundingRect());
+				//QString temp = "";
+				//foreach (QPointF p, poly) {
+					//temp += QString("(%1,%2) ").arg(p.x()).arg(p.y());
+				//}
+				/*
+				DebugDialog::debug(QString("candidate connectoritem %1 %2 %3\n\t%4")
+									.arg(candidateConnectorItem->connectorSharedID())
+									.arg(candidateConnectorItem->attachedToTitle())
+									.arg(candidateConnectorItem->attachedToID())
+									.arg(temp) );
+									*/
+				gotOne = true;
 			}
+		}
+		if (!gotOne) {
+			ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
+			if (candidateItemBase != NULL) {
+				if (candidateItemBase->itemType() == ModelPart::Wire) {
+					continue;
+				}
 
-			QPolygonF poly = candidateConnectorItem->mapToScene(candidateConnectorItem->boundingRect());
-			QString temp = "";
-			foreach (QPointF p, poly) {
-				temp += QString("(%1,%2) ").arg(p.x()).arg(p.y());
+				if (from->attachedTo() == candidateItemBase) {
+					continue;
+				}
+
+				if (to->attachedTo() == candidateItemBase) {
+					continue;
+				}
+
+
+
+				//if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+					// needs to be on the same layer
+					//continue;
+				//}
+
+
+				//QPolygonF poly = candidateItemBase->mapToScene(candidateItemBase->boundingRect());
+				//QString temp = "";
+				//foreach (QPointF p, poly) {
+					//temp += QString("(%1,%2) ").arg(p.x()).arg(p.y());
+				//}
+				/*
+				DebugDialog::debug(QString("candidate connectoritem %1 %2 %3\n\t%4")
+									.arg(candidateConnectorItem->connectorSharedID())
+									.arg(candidateConnectorItem->attachedToTitle())
+									.arg(candidateConnectorItem->attachedToID())
+									.arg(temp) );
+									*/
+				gotOne = true;
 			}
-			/*
-			DebugDialog::debug(QString("candidate connectoritem %1 %2 %3\n\t%4")
-								.arg(candidateConnectorItem->connectorSharedID())
-								.arg(candidateConnectorItem->attachedToTitle())
-								.arg(candidateConnectorItem->attachedToID())
-								.arg(temp) );
-								*/
 		}
 
-
-		calcDistance(nearestObstacle, nearestObstacleDistance, fromPos, item);
+		if (gotOne) {
+			calcDistance(nearestObstacle, nearestObstacleDistance, fromPos, item);
+		}
 	}
 
 	bool inBounds = true;
@@ -1274,7 +1321,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 		if (item == from) continue;
 		if (item == to) continue;
 
-		Wire * candidateWire = dynamic_cast<Wire *>(item);
+		Wire * candidateWire = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<Wire *>(item) : NULL;
 		if (candidateWire) {
 			if (!candidateWire->getTrace()) {
 				continue;
@@ -1293,7 +1340,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 			break;
 		}
 
-		ConnectorItem * candidateConnectorItem = dynamic_cast<ConnectorItem *>(item);
+		ConnectorItem * candidateConnectorItem = m_sketchWidget->autorouteCheckWires() ? dynamic_cast<ConnectorItem *>(item) : NULL;
 		if (candidateConnectorItem) {
 			candidateWire = dynamic_cast<Wire *>(candidateConnectorItem->attachedTo());
 			if (candidateWire != NULL) {
@@ -1309,6 +1356,19 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 			intersects = true;
 			break;
 		}
+
+		ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
+		if (candidateItemBase) {
+
+			//if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+				// needs to be on the same layer
+				//continue;
+			//}
+
+			intersects = true;
+			break;
+		}
+
 	}	
 	if (intersects) {
 		m_sketchWidget->deleteItem(trace, true, false, false);

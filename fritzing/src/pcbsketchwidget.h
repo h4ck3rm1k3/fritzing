@@ -53,6 +53,11 @@ public:
 	void addBoard();
 	void setCurrent(bool current);
 	void initWire(Wire *, int penWidth);
+	virtual bool autorouteDoesJumpers();
+	virtual bool autorouteNeedsBounds();
+	virtual bool autorouteCheckWires();
+	virtual bool autorouteCheckConnectors();
+	virtual bool autorouteCheckParts();
 
 protected:
 	void setWireVisible(Wire * wire);

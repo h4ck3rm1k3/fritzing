@@ -500,3 +500,24 @@ void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setColorString("unrouted", Wire::UNROUTED_OPACITY);
 	wire->setPenWidth(1);
 }
+
+bool PCBSketchWidget::autorouteDoesJumpers() {
+	return true;
+}
+
+bool PCBSketchWidget::autorouteNeedsBounds() {
+	return true;
+}
+
+bool PCBSketchWidget::autorouteCheckWires() {
+	return true;
+}
+
+bool PCBSketchWidget::autorouteCheckConnectors() {
+	return true;
+}
+
+bool PCBSketchWidget::autorouteCheckParts() {
+	return false;
+}
+
