@@ -336,7 +336,7 @@ int FApplication::startup(int & argc, char ** argv)
 		settings2.setValue(".", "Fritzing");
 	}
 	QSettings settings3("HKEY_CLASSES_ROOT\\Fritzing\\shell\\open\\command", QSettings::NativeFormat);
-	settings3.setValue(".", QString("\"%1\" \"%2\"")
+	settings3.setValue("." APPDATA, QString("\"%1\" \"%2\"")
 					   .arg(QDir::toNativeSeparators(QApplication::applicationFilePath()))
 					   .arg("%1") );
 #endif
@@ -441,6 +441,12 @@ int FApplication::startup(int & argc, char ** argv)
 	if (!loaded) {
 		mainWindow->addBoard();
 	}
+
+	DebugDialog::debug("<<<<<<<<<<<");
+	QString settingsFile = QSettings(QSettings::IniFormat,QSettings::UserScope,"Fritzing","Fritzing").fileName();
+	DebugDialog::debug(QFileInfo(settingsFile).dir().absolutePath());
+	DebugDialog::debug(">>>>>>>>>>>");
+
 	mainWindow->show();
 
 	/*
