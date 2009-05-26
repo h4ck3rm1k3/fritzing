@@ -55,6 +55,7 @@ $Date$
 #include <QFileOpenEvent>
 #include <QThread>
 #include <QMessageBox>
+#include <QTextStream>
 
 bool FApplication::m_spaceBarIsPressed = false;
 bool FApplication::m_mousePressed = false;
@@ -652,7 +653,18 @@ void FApplication::importFilesFromPrevInstall() {
 		}
 	}
 
-	// this will silently fail if the file already exists, and that's ok
-	QFile(":/resources/bins/my_parts.fzb")
-		.copy(BinManager::MyPartsBinLocation);
+	// this copy action, is not working on windows, because is a resources file
+	//QFile(":/resources/bins/my_parts.fzb").copy(BinManager::MyPartsBinLocation);
+	if(!QFileInfo(BinManager::MyPartsBinLocation).exists()) {
+		QFile myPartsBinTemplate(":/resources/bins/my_parts.fzb");
+		myPartsBinTemplate.open(QIODevice::ReadOnly);
+		QString content = myPartsBinTemplate.readAll();
+		myPartsBinTemplate.close();
+
+		QFile myPartsBin(BinManager::MyPartsBinLocation);
+		Q_ASSERT(myPartsBin.open(QIODevice::WriteOnly));
+		QTextStream out(&myPartsBin);
+		out << content;
+		myPartsBin.close();
+	}
 }
