@@ -73,6 +73,7 @@ protected:
 	static QBrush normalBrush;
 	static QBrush connectedBrush;
 	static QBrush chosenBrush;
+	static const qreal normalConnectorOpacity;
 
 public:
 	static void initNames();
@@ -174,10 +175,10 @@ public:
 	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
 
 public:
-	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &);
-	virtual void getNormalColor(ConnectorItem *, QBrush * &, QPen * &);
-	virtual void getChosenColor(ConnectorItem *, QBrush * &, QPen * &);
-	virtual void getHoverColor(ConnectorItem *, QBrush * &, QPen * &);
+	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity);
+	virtual void getNormalColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity);
+	virtual void getChosenColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity);
+	virtual void getHoverColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity);
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);

@@ -182,20 +182,17 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 	m_shadowPen.setCapStyle(Qt::RoundCap);
 	switch (m_viewIdentifier) {
 		case ViewIdentifierClass::BreadboardView:
-			m_pen.setWidth(penWidth - 2);
+			setPenWidth(penWidth - 2);
 			m_shadowPen.setWidth(penWidth);
-			m_bendpointPen.setWidth(penWidth - 3);
             setColorString("blue", UNROUTED_OPACITY);
 			break;
 		case ViewIdentifierClass::SchematicView:
-			setColorString("routed", UNROUTED_OPACITY);
-			m_pen.setWidth(2);
-			m_bendpointPen.setWidth(1);
+			setColorString("schematicGrey", UNROUTED_OPACITY);
+			setPenWidth(2);
 			break;
 		case ViewIdentifierClass::PCBView:
 			setColorString("unrouted", UNROUTED_OPACITY);
-			m_pen.setWidth(1);
-			m_bendpointPen.setWidth(1);
+			setPenWidth(1);
 			break;
 		default:
 			break;
@@ -827,9 +824,8 @@ void Wire::setWidth(int width) {
 	if (m_pen.width() == width) return;
 
 	prepareGeometryChange();
-	m_pen.setWidth(width);
+	setPenWidth(width);
 	m_shadowPen.setWidth(width + 2);
-	m_bendpointPen.setWidth(qMin(1, width - 1));
 	m_connector0->restoreColor();
 	m_connector1->restoreColor();
 	update();
@@ -919,7 +915,7 @@ void Wire::initNames() {
     colors.insert("jumper", "#6699cc");
 	colors.insert("trace",  "#ffbf00");
 	colors.insert("unrouted", "#000000");
-	colors.insert("routed", "#7d7d7d");
+	colors.insert("schematicGrey", "#7d7d7d");
 	colors.insert("purple", "#b673e6");
 	colors.insert("brown", "#8c3b00");
 
@@ -934,7 +930,7 @@ void Wire::initNames() {
     shadowColors.insert("jumper",	"#2d6563");
 	shadowColors.insert("trace",	"#d69b00");
 	shadowColors.insert("unrouted", "#000000");
-	shadowColors.insert("routed",	"#7d7d7d");
+	shadowColors.insert("schematicGrey", "#1d1d1d");
 
 	netColorIndex.insert(ViewIdentifierClass::BreadboardView, 0);
 	netColorIndex.insert(ViewIdentifierClass::SchematicView, 0);
@@ -1174,12 +1170,12 @@ void Wire::cleanup() {
 	ratsnestColors.clear();
 }
 
-void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen) {
+void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity) {
 
 	int count = 0;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
-			ItemBase::getConnectedColor(connectorItem, brush, pen);
+			ItemBase::getConnectedColor(connectorItem, brush, pen, opacity);
 			return;
 		}
 
@@ -1187,10 +1183,18 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	}
 
 	if (count == 0) {
-		ItemBase::getConnectedColor(connectorItem, brush, pen);
+		ItemBase::getConnectedColor(connectorItem, brush, pen, opacity);
 		return;
 	}
 
 	pen = &m_bendpointPen;
 	brush = &m_shadowBrush;
+	opacity = 1.0;
 }
+
+void Wire::setPenWidth(int w) {
+	m_pen.setWidth(w);
+	int dw = (getRatsnest()) ? 4 : 3;
+	m_bendpointPen.setWidth(w - dw);
+}
+

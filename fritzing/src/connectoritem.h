@@ -75,7 +75,6 @@ public:
 	void tempConnectTo(ConnectorItem * item, bool applyColor);
 	void tempRemove(ConnectorItem * item, bool applyColor);
 	void setCircular(bool);
-	void setOpacity(qreal);
 	Connector::ConnectorType connectorType();
 	bool chained();
 	void saveInstance(QXmlStreamWriter & );

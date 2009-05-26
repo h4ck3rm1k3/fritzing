@@ -43,7 +43,6 @@ ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
 	m_chosen = false;
 	m_ignoreAncestorFlag = false;
-	m_opacity = 0.4;
 	m_circular = false;
 	m_overConnectorItem = NULL;
 	m_connectorHovering = false;
@@ -182,7 +181,8 @@ void ConnectorItem::setConnectedColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;	
-	m_attachedTo->getConnectedColor(this, brush, pen);
+	m_attachedTo->getConnectedColor(this, brush, pen, m_opacity);
+	DebugDialog::debug(QString("set connected %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, true);
 }
 
@@ -191,7 +191,8 @@ void ConnectorItem::setNormalColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;	
-	m_attachedTo->getNormalColor(this, brush, pen);
+	m_attachedTo->getNormalColor(this, brush, pen, m_opacity);
+	DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, false);
 }
 
@@ -200,7 +201,7 @@ void ConnectorItem::setChosenColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;	
-	m_attachedTo->getChosenColor(this, brush, pen);
+	m_attachedTo->getChosenColor(this, brush, pen, m_opacity);
 	setColorAux(*brush, *pen, true);
 }
 
@@ -209,7 +210,7 @@ void ConnectorItem::setHoverColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;	
-	m_attachedTo->getHoverColor(this, brush, pen);
+	m_attachedTo->getHoverColor(this, brush, pen, m_opacity);
 	setColorAux(*brush, *pen, true);
 }
 
@@ -313,9 +314,19 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 
 	painter->setOpacity(m_opacity);
 	if (m_circular) {
-		painter->setPen(pen());
+		DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
 		painter->setBrush(brush());
-		painter->drawEllipse(rect());
+		int pw = pen().width();
+		if (pw < 0) {
+			painter->setPen(Qt::NoPen);
+			pw++;
+			painter->drawEllipse(rect().adjusted(-pw, -pw, pw, pw));
+		} 
+		else 
+		{
+			painter->setPen(pen());
+			painter->drawEllipse(rect());
+		}
 	}
 	else {
 		QGraphicsRectItem::paint(painter, option, widget);
@@ -420,10 +431,6 @@ Bus * ConnectorItem::bus() {
 
 void ConnectorItem::setCircular(bool circular) {
 	m_circular = circular;
-}
-
-void ConnectorItem::setOpacity(qreal opacity) {
-	m_opacity = opacity;
 }
 
 int ConnectorItem::attachedToItemType() {
