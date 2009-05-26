@@ -60,10 +60,17 @@ $Date$
 typedef QPair<qreal, qreal> RealPair;
 typedef QPair<QString, QString> StringPair;
 
+static QString ___emptyString___;
+static QDomElement ___emptyElement___;
+static QStringList ___emptyStringList___;
+static QHash<QString, QString> ___emptyStringHash___;
+static QDir ___emptyDir___;
+static QByteArray ___emptyByteArray___;
+
 QString getUserPartsFolder();
 QDir *getApplicationSubFolder(QString);
 QString getApplicationSubFolderPath(QString);
-QString getUserDataStorePath();
+QString getUserDataStorePath(QString folder=___emptyString___);
 QStringList getUserDataStoreFolders();
 
 QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
@@ -71,13 +78,6 @@ QDomElement findElementWithAttribute(QDomElement element, const QString & attrib
 qreal convertToInches(const QString & string, bool * ok);
 
 bool isParent(QObject * candidateParent, QObject * candidateChild);
-
-static QString ___emptyString___;
-static QDomElement ___emptyElement___;
-static QStringList ___emptyStringList___;
-static QHash<QString, QString> ___emptyStringHash___;
-static QDir ___emptyDir___;
-static QByteArray ___emptyByteArray___;
 
 #ifdef Q_WS_MAC
 static const QString ___MacStyle___ = " QTabBar::tab {margin-bottom: 10px; min-width: 15ex;} ";

@@ -320,7 +320,7 @@ int FApplication::startup(int & argc, char ** argv)
     ZoomComboBox::loadFactors();
 	Helper::initText();
 	PartsEditorMainWindow::initText();
-	BinManager::MyPartsBinLocation = getApplicationSubFolderPath("bins")+"/my_parts.fzb";
+	BinManager::MyPartsBinLocation = getUserDataStorePath("bins")+"/my_parts.fzb";
 
 	splash.showProgress(progressIndex, 0.085);
 	processEvents();
@@ -351,6 +351,10 @@ int FApplication::startup(int & argc, char ** argv)
 	if(prevVersion != currVersion) {
 		settings.clear();
 	}
+
+	splash.showProgress(progressIndex, 0.1);
+	importFilesFromPrevInstall();
+
 
 	splash.showProgress(progressIndex, 0.2);
 	processEvents();
@@ -392,10 +396,6 @@ int FApplication::startup(int & argc, char ** argv)
 	checkForUpdates(false);
 
 	splash.showProgress(progressIndex, 0.70);
-
-	importFilesFromPrevInstall();
-
-	splash.showProgress(progressIndex, 0.8);
 
 	// our MainWindows use WA_DeleteOnClose so this has to be added to the heap (via new) rather than the stack (for local vars)
 	MainWindow * mainWindow = MainWindow::newMainWindow(m_paletteBinModel, m_referenceModel, "", false);
@@ -652,7 +652,7 @@ void FApplication::importFilesFromPrevInstall() {
 		}
 	}
 
-	QString myPartsBinPath = "/my_parts.fzb";
-	QFile(getApplicationSubFolderPath("bins")+myPartsBinPath)
-		.copy(userDataStorePath+"/bins"+myPartsBinPath);
+	// this will silently fail if the file already exists, and that's ok
+	QFile(":/resources/bins/my_parts.fzb")
+		.copy(BinManager::MyPartsBinLocation);
 }

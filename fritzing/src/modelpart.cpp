@@ -484,7 +484,7 @@ QList<SvgAndPartFilePath> ModelPart::getAvailableViewFiles() {
 void ModelPart::grabImagePath(QHash<ViewIdentifierClass::ViewIdentifier, SvgAndPartFilePath> &viewImages, QDomElement &viewsElems, ViewIdentifierClass::ViewIdentifier viewId) {
 	QDomElement viewElem = viewsElems.firstChildElement(ViewIdentifierClass::viewIdentifierXmlName(viewId));
 	if(!viewElem.isNull()) {
-		QString partspath = getApplicationSubFolderPath("parts")+"/svg";
+		QString partspath = getUserDataStorePath("parts")+"/svg";
 		QDomElement layerElem = viewElem.firstChildElement("layers");
 		if (!layerElem.isNull()) {
 			QString imagepath = layerElem.attribute("image");
@@ -538,7 +538,7 @@ void ModelPart::setOrderedChildren(QList<QObject*> children) {
 
 void ModelPart::collectExtraValues(const QString & prop, QString & value, QStringList & extraValues) {
 	Q_UNUSED(value);
-	
+
 	if (itemType() != ModelPart::ResizableBoard) return;
 
 	if (prop.compare("shape", Qt::CaseInsensitive) == 0) {

@@ -2513,10 +2513,16 @@ FileProgressDialog * MainWindow::exportProgress() {
 }
 
 void MainWindow::importFilesFromPrevInstall() {
-	QString prevInstallPath = QFileDialog::getExistingDirectory(this, tr("Old Frtizing Installation folder"),
+	QString prevInstallPath = QFileDialog::getExistingDirectory(this, tr("Old Fritzing Installation folder"),
             QDir::homePath(),
             QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if(prevInstallPath.isNull()) return;
+	if(!QFileInfo(prevInstallPath+"/parts").exists()) {
+		QMessageBox::critical(
+			this, QObject::tr("Fritzing"),
+			tr("The folder \"%1\" isn't a Friting installation folder").arg(prevInstallPath));
+		return;
+	}
 
 	QString userDataPath = getUserDataStorePath();
 
@@ -2545,4 +2551,8 @@ void MainWindow::importFilesFromPrevInstall() {
 		QString newNamePostfix = QString("__imported_on__%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));
 		myOldPartsBinFile.copy(userDataPath+myPartsBinRelPath.replace(".fzb",newNamePostfix));
 	}
+
+	QMessageBox::information(
+		this, QObject::tr("Fritzing"),
+		tr("You will have to restart Fritzing, in order to use the imported parts"));
 }

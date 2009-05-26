@@ -78,7 +78,7 @@ void ConnectorItem::hoverEnterEvent ( QGraphicsSceneHoverEvent * event ) {
 		event->ignore();
 		return;
 	}
-	
+
 	m_hoverEnterSpaceBarWasPressed = false;
 	setHoverColor();
 	if (infoGraphicsView != NULL) {
@@ -180,7 +180,7 @@ void ConnectorItem::setConnectedColor() {
 	if (m_attachedTo == NULL) return;
 
 	QBrush * brush = NULL;
-	QPen * pen = NULL;	
+	QPen * pen = NULL;
 	m_attachedTo->getConnectedColor(this, brush, pen, m_opacity);
 	DebugDialog::debug(QString("set connected %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, true);
@@ -190,7 +190,7 @@ void ConnectorItem::setNormalColor() {
 	if (m_attachedTo == NULL) return;
 
 	QBrush * brush = NULL;
-	QPen * pen = NULL;	
+	QPen * pen = NULL;
 	m_attachedTo->getNormalColor(this, brush, pen, m_opacity);
 	DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, false);
@@ -200,7 +200,7 @@ void ConnectorItem::setChosenColor() {
 	if (m_attachedTo == NULL) return;
 
 	QBrush * brush = NULL;
-	QPen * pen = NULL;	
+	QPen * pen = NULL;
 	m_attachedTo->getChosenColor(this, brush, pen, m_opacity);
 	setColorAux(*brush, *pen, true);
 }
@@ -209,7 +209,7 @@ void ConnectorItem::setHoverColor() {
 	if (m_attachedTo == NULL) return;
 
 	QBrush * brush = NULL;
-	QPen * pen = NULL;	
+	QPen * pen = NULL;
 	m_attachedTo->getHoverColor(this, brush, pen, m_opacity);
 	setColorAux(*brush, *pen, true);
 }
@@ -235,7 +235,7 @@ void ConnectorItem::setColorAux(const QColor &color, bool paint) {
 
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
-	if (infographics != NULL && infographics->spaceBarIsPressed()) { 
+	if (infographics != NULL && infographics->spaceBarIsPressed()) {
 		event->ignore();
 		return;
 	}
@@ -314,15 +314,15 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 
 	painter->setOpacity(m_opacity);
 	if (m_circular) {
-		DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
+		//DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
 		painter->setBrush(brush());
 		int pw = pen().width();
 		if (pw < 0) {
 			painter->setPen(Qt::NoPen);
 			pw++;
 			painter->drawEllipse(rect().adjusted(-pw, -pw, pw, pw));
-		} 
-		else 
+		}
+		else
 		{
 			painter->setPen(pen());
 			painter->drawEllipse(rect());
@@ -490,7 +490,7 @@ void ConnectorItem::saveInstance(QXmlStreamWriter & writer) {
 }
 
 
-void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & elementName) 
+void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & elementName)
 {
 	writer.writeStartElement(elementName);
 	writer.writeAttribute("connectorId", connectorSharedID());
@@ -514,7 +514,7 @@ void ConnectorItem::writeConnector(QXmlStreamWriter & writer, const QString & el
 			writer.writeStartElement("mp");
 			// now write the indices from the original file
 			writer.writeAttribute("i", QString::number(itemBase->modelPart()->originalModelIndex()));
-		}	
+		}
 		for (int i = 0; i < parents.count(); i++) {
 			writer.writeEndElement();
 		}

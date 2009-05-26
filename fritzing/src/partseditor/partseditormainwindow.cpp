@@ -478,7 +478,7 @@ bool PartsEditorMainWindow::saveAs() {
 		m_fileName = title != ___emptyString___ ? title+FritzingPartExtension : m_fileName;
 
 		// TODO Mariano: This folder should be defined in the preferences... some day
-		QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
+		QString userPartsFolderPath = getUserDataStorePath("parts")+"/user/";
 
 		bool firstTime = true; // Perhaps the user wants to use the default file name, confirm first
 		while(m_fileName.isEmpty()
@@ -504,7 +504,7 @@ bool PartsEditorMainWindow::saveAs() {
 
 		Qt::CaseSensitivity cs = Qt::CaseSensitive;
 	#ifdef Q_WS_WIN
-		// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
+		// seems to be necessary for Windows: getUserDataStorePath() returns a string starting with "c:"
 		// but the file dialog returns a string beginning with "C:"
 		cs = Qt::CaseInsensitive;
 	#endif

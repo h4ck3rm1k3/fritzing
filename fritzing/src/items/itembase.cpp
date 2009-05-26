@@ -144,7 +144,7 @@ ItemBase::ItemBase( ModelPart* modelPart, ViewIdentifierClass::ViewIdentifier vi
 {
 	//DebugDialog::debug(QString("itembase %1 %2").arg(id).arg((long) static_cast<QGraphicsItem *>(this), 0, 16));
 	m_hoverEnterSpaceBarWasPressed = m_spaceBarWasPressed = false;
-	
+
 	m_partLabel = NULL;
 	m_itemMenu = itemMenu;
 	m_hoverCount = m_connectorHoverCount = m_connectorHoverCount2 = 0;
@@ -181,7 +181,7 @@ ItemBase::~ItemBase() {
 		}
 	}
 
-	foreach (ItemBase * itemBase, m_stickyList) {		
+	foreach (ItemBase * itemBase, m_stickyList) {
 		itemBase->addSticky(this, false);
 	}
 
@@ -648,7 +648,7 @@ void ItemBase::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 	InfoGraphicsView *infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infoGraphicsView != NULL && infoGraphicsView->spaceBarIsPressed()) {
 		event->ignore();
-		return; 
+		return;
 	}
 
 	//scene()->setItemIndexMethod(QGraphicsScene::NoIndex);
@@ -695,7 +695,7 @@ void ItemBase::setSticky(bool s)
 void ItemBase::addSticky(ItemBase * sticky, bool stickem) {
 	if (stickem) {
 		if (!m_sticky) {
-			foreach (ItemBase * oldStuckTo, m_stickyList) {		
+			foreach (ItemBase * oldStuckTo, m_stickyList) {
 				if (oldStuckTo == sticky->layerKinChief()) continue;
 
 				oldStuckTo->addSticky(this, false);
@@ -722,7 +722,7 @@ ItemBase * ItemBase::stuckTo() {
 		DebugDialog::debug(QString("error: sticky list > 1 %1").arg(title()));
 	}
 
-	return m_stickyList[0];	
+	return m_stickyList[0];
 }
 
 QList<ItemBase *> & ItemBase::stickyList() {
@@ -1136,14 +1136,18 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 	//DebugDialog::debug(QString("set up image elapsed (1) %1").arg(t.elapsed()) );
 	FSvgRenderer * renderer = FSvgRenderer::getByModuleID(modelPartShared->moduleID(), viewLayerID);
 	if (renderer == NULL) {
-		QString tempPath;
+		QString tempPath1;
+		QString tempPath2;
 		if(modelPartShared->path() != ___emptyString___) {
 			QDir dir(modelPartShared->path());			// is a path to a filename
 			dir.cdUp();									// lop off the filename
 			dir.cdUp();									// parts root
-			tempPath = dir.absolutePath() + "/" + ItemBase::SvgFilesDir +"/%1/" + layerAttributes.filename();
+			tempPath1 = dir.absolutePath() + "/" + ItemBase::SvgFilesDir +"/%1/" + layerAttributes.filename();
+			tempPath2 = tempPath1;
 		} else { // for fake models
-			tempPath = getApplicationSubFolderPath("parts") +"/"+ ItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
+			QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
+			tempPath1 = getApplicationSubFolderPath("parts")+postfix;
+			tempPath2 = getUserDataStorePath("parts")+postfix;
 		}
 
 		//DebugDialog::debug(QString("got tempPath %1").arg(tempPath));
@@ -1153,10 +1157,16 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 		bool gotOne = false;
 		QString filename;
 		foreach (QString possibleFolder, possibleFolders) {
-			filename = tempPath.arg(possibleFolder);
-			if (QFileInfo( filename ).exists()) {
+			filename = tempPath1.arg(possibleFolder);
+			if (QFileInfo(filename).exists()) {
 				gotOne = true;
 				break;
+			} else {
+				filename = tempPath2.arg(possibleFolder);
+				if (QFileInfo(filename).exists()) {
+					gotOne = true;
+					break;
+				}
 			}
 		}
 
@@ -1172,7 +1182,7 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 				renderer = new FSvgRenderer();
 				if (layerAttributes.multiLayer()) {
 					// need to treat create "virtual" svg file for each layer
-					SvgFileSplitter svgFileSplitter; 
+					SvgFileSplitter svgFileSplitter;
 					if (svgFileSplitter.split(filename, layerAttributes.layerName())) {
 						if (renderer->load(svgFileSplitter.byteArray(), filename, readConnectors)) {
 							gotOne = true;
@@ -1248,7 +1258,7 @@ ItemBase * ItemBase::lowerConnectorLayerVisible(ItemBase * itemBase) {
 void ItemBase::figureHover() {
 }
 
-QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi) 
+QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString, SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi)
 {
 	Q_UNUSED(viewLayerID);
 	Q_UNUSED(svgHash);
@@ -1257,7 +1267,7 @@ QString ItemBase::retrieveSvg(ViewLayer::ViewLayerID viewLayerID, QHash<QString,
 	return ___emptyString___;
 }
 
-bool ItemBase::hasConnections() 
+bool ItemBase::hasConnections()
 {
 	foreach (QGraphicsItem * item, childItems()) {
 		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(item);

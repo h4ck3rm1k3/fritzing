@@ -100,21 +100,25 @@ void PaletteModel::loadParts() {
 		writeAllPartsBinHeader();
 	}
 
-	QDir * dir = getApplicationSubFolder("parts");
-	if (dir != NULL) {
-		loadPartsAux(*dir, nameFilters);
-		delete dir;
+	QDir * dir1 = getApplicationSubFolder("parts");
+	if (dir1 != NULL) {
+		loadPartsAux(*dir1, nameFilters);
+		delete dir1;
+		dir1 = NULL;
 	}
 
-	dir = new QDir(":/resources/parts");
-	loadPartsAux(*dir, nameFilters);
+	QDir dir2(getUserDataStorePath("parts"));
+	loadPartsAux(dir2, nameFilters);
+
+	dir1 = new QDir(":/resources/parts");
+	loadPartsAux(*dir1, nameFilters);
 
 	if(CreateAllPartsBinFile) {
 		writeAllPartsBinFooter();
 		JustAppendAllPartsInstances = false;
 	}
 
-	delete dir;
+	delete dir1;
 }
 
 void PaletteModel::writeAllPartsBinHeader() {

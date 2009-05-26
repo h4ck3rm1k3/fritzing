@@ -254,7 +254,7 @@ ModelPart *PartsEditorView::createFakeModelPart(const QHash<QString,StringPair*>
   	ModelPart *retval = m_sketchModel->root();
   	retval->modelPartShared()->setDomDocument(domDoc);
   	retval->modelPartShared()->resetConnectorsInitialization();
-  	retval->modelPartShared()->setPath(getApplicationSubFolderPath("parts")+"/svg/user");
+  	retval->modelPartShared()->setPath(getUserDataStorePath("parts")+"/svg/user");
   	retval->initConnectors(true /*redo connectors*/);
 	return retval;
 }
@@ -352,7 +352,7 @@ bool PartsEditorView::isEmpty() {
 }
 
 bool PartsEditorView::ensureFilePath(const QString &filePath) {
-	QString svgFolder = getApplicationSubFolderPath("parts")+"/svg";
+	QString svgFolder = getUserDataStorePath("parts")+"/svg";
 
 	Qt::CaseSensitivity cs = Qt::CaseSensitive;
 #ifdef Q_WS_WIN
@@ -472,7 +472,7 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 	if(m_svgFilePath->absolutePath().startsWith(m_tempFolder.absolutePath(),cs)) {
 		QString origFile = svgFilePath();
 		setFriendlierSvgFileName(partFileName);
-		QString destFile = getApplicationSubFolderPath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
+		QString destFile = getUserDataStorePath("parts")+"/svg/user/"+m_svgFilePath->relativePath();
 
 		ensureFilePath(origFile);
 		QFile tempFile(origFile);
@@ -487,7 +487,7 @@ void PartsEditorView::copySvgFileToDestiny(const QString &partFileName) {
 void PartsEditorView::loadFile() {
 	QString origPath = QFileDialog::getOpenFileName(this,
 		tr("Open Image"),
-		m_originalSvgFilePath.isEmpty() ? getApplicationSubFolderPath("parts")+"/parts/svg/" : m_originalSvgFilePath,
+		m_originalSvgFilePath.isEmpty() ? getUserDataStorePath("parts")+"/parts/svg/" : m_originalSvgFilePath,
 		tr("Image Files (%1 %2 %3);;SVG Files (%1);;JPEG Files (%2);;PNG Files(%3)")
 			.arg("*.svg").arg("*.jpg *.jpeg").arg("*.png")
 	);
@@ -562,7 +562,7 @@ void PartsEditorView::loadFromModel(PaletteModel *paletteModel, ModelPart * mode
 
 void PartsEditorView::copyToTempAndRenameIfNecessary(SvgAndPartFilePath *filePathOrig) {
 	m_originalSvgFilePath = filePathOrig->absolutePath();
-	QString svgFolderPath = getApplicationSubFolderPath("parts")+"/svg";
+	QString svgFolderPath = getUserDataStorePath("parts")+"/svg";
 
 	if(!filePathOrig->absolutePath().startsWith(svgFolderPath)) { // it's outside the parts folder
 		DebugDialog::debug(QString("copying from %1").arg(m_originalSvgFilePath));
@@ -607,7 +607,7 @@ void PartsEditorView::setSvgFilePath(const QString &filePath) {
 	ensureFilePath(filePath);
 	m_originalSvgFilePath = filePath;
 
-	QString svgFolder = getApplicationSubFolderPath("parts")+"/svg";
+	QString svgFolder = getUserDataStorePath("parts")+"/svg";
 	QString tempFolder = m_tempFolder.absolutePath();
 
 	QString relative;
@@ -615,7 +615,7 @@ void PartsEditorView::setSvgFilePath(const QString &filePath) {
 	QString filePathAux = filePath;
 
 #ifdef Q_WS_WIN
-	// seems to be necessary for Windows: getApplicationSubFolderPath() returns a string starting with "c:"
+	// seems to be necessary for Windows: getUserDataStorePath() returns a string starting with "c:"
 	// but the file dialog returns a string beginning with "C:"
 	cs = Qt::CaseInsensitive;
 #endif

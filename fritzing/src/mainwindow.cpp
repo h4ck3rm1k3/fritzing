@@ -1157,7 +1157,7 @@ void MainWindow::copyToSvgFolder(const QFileInfo& file, const QString &destFolde
 	fileName.remove(viewFolder+".");
 
 	QString destFilePath =
-		getApplicationSubFolderPath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
+		getUserDataStorePath("parts")+"/svg/"+destFolder+"/"+viewFolder+"/"+fileName;
 
 	backupExistingFileIfExists(destFilePath);
 	if(svgfile.copy(destFilePath)) {
@@ -1169,7 +1169,7 @@ ModelPart* MainWindow::copyToPartsFolder(const QFileInfo& file, bool addToBin, c
 	QFile partfile(file.filePath());
 	// let's make sure that we remove just the suffix
 	QString destFilePath =
-		getApplicationSubFolderPath("parts")+"/"+destFolder+"/"+file.fileName().remove(QRegExp("^"+ZIP_PART));
+		getUserDataStorePath("parts")+"/"+destFolder+"/"+file.fileName().remove(QRegExp("^"+ZIP_PART));
 
 	backupExistingFileIfExists(destFilePath);
 	if(partfile.copy(destFilePath)) {
@@ -1618,7 +1618,7 @@ void MainWindow::saveAsModule()
 	sketchModule.removeChild(instances);
 	partModule.appendChild(instances);
 
-	QString userPartsSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg/user/";
+	QString userPartsSvgFolderPath = getUserDataStorePath("parts")+"/svg/user/";
 	foreach (QString view, svgs.keys()) {
 		QFile file(userPartsSvgFolderPath + view + "/" + moduleID + ".svg");
 		file.open(QIODevice::WriteOnly);
@@ -1687,7 +1687,7 @@ void MainWindow::saveAsModule()
 	tempModule.removeChild(externals);
 	partModule.appendChild(externals);
 
-	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
+	QString userPartsFolderPath = getUserDataStorePath("parts")+"/user/";
 
 	QFile file2(userPartsFolderPath + moduleID + FritzingModuleExtension);
 	file2.open(QIODevice::WriteOnly);
@@ -1919,7 +1919,7 @@ bool MainWindow::loadCustomBoardShape()
 
 
 	QString moduleID = FritzingWindow::getRandText();
-	QString userPartsSvgFolderPath = getApplicationSubFolderPath("parts")+"/svg/user/";
+	QString userPartsSvgFolderPath = getUserDataStorePath("parts")+"/svg/user/";
 	QString newName = userPartsSvgFolderPath + "pcb" + "/" + moduleID + ".svg";
 	bool result = QFile(path).copy(newName);
 	if (result == false) {
@@ -1963,7 +1963,7 @@ bool MainWindow::loadCustomBoardShape()
 		.arg(QTime::currentTime().toString("HH:mm:ss"));
 
 
-	QString userPartsFolderPath = getApplicationSubFolderPath("parts")+"/user/";
+	QString userPartsFolderPath = getUserDataStorePath("parts")+"/user/";
 	QFile file2(userPartsFolderPath + moduleID + FritzingPartExtension);
 	file2.open(QIODevice::WriteOnly);
 	QTextStream out2(&file2);

@@ -74,16 +74,20 @@ QString getApplicationSubFolderPath(QString search) {
 	return result;
 }
 
-QString getUserDataStorePath() {
+QString getUserDataStorePath(QString folder) {
 	QString settingsFile = QSettings(QSettings::IniFormat,QSettings::UserScope,"Fritzing","Fritzing").fileName();
-	return QFileInfo(settingsFile).dir().absolutePath();
+	return QFileInfo(settingsFile).dir()
+		.absolutePath()+(folder!=___emptyString___?"/"+folder:"");
 }
 
 QStringList getUserDataStoreFolders() {
 	QStringList folders;
 	folders << "/bins"
 		<< "/parts/user" << "/parts/contrib"
-		<< "/parts/svg/user" << "/parts/svg/contrib";
+		<< "/parts/svg/user/icon" << "/parts/svg/user/breadboard"
+		<< "/parts/svg/user/schematic" << "/parts/svg/user/pcb"
+		<< "/parts/svg/contrib/icon" << "/parts/svg/contrib/breadboard"
+		<< "/parts/svg/contrib/schematic" << "/parts/svg/contrib/pcb";
 	return folders;
 }
 

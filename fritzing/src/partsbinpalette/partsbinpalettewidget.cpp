@@ -77,7 +77,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	setObjectName("partsBinContainer");
 	toIconView();
 
-	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
+	m_defaultSaveFolder = getUserDataStorePath("bins");
 	m_untitledFileName = tr("Untitled Bin");
 
 	connect(m_listView, SIGNAL(currentRowChanged(int)), m_iconView, SLOT(setSelected(int)));

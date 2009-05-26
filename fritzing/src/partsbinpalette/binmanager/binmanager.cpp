@@ -58,7 +58,7 @@ BinManager::BinManager(class ReferenceModel *refModel, class HtmlInfoView *infoV
 	m_paletteModel = NULL;
 	m_infoView = infoView;
 	m_undoStack = undoStack;
-	m_defaultSaveFolder = getApplicationSubFolderPath("bins");
+	m_defaultSaveFolder = getUserDataStorePath("bins");
 	m_mainWindow = parent;
 	m_currentBin = NULL;
 
@@ -201,7 +201,7 @@ PartsBinPaletteWidget* BinManager::getOrOpenMyPartsBin() {
 
 QString BinManager::createIfMyPartsNotExists() {
 	/*QDateTime now = QDateTime::currentDateTime();
-	QString binPath = getApplicationSubFolderPath("bins")+
+	QString binPath = getUserDataStorePath("bins")+
 	QString("/my_parts_%1.fzb").arg(now.toString("yyyy-MM-dd_hh-mm-ss"));*/
 	QString binPath = MyPartsBinLocation;
 	QFile file(":/resources/bins/my_parts.fzb");
