@@ -147,15 +147,8 @@ void Connector::writeLayerAttr(QXmlStreamWriter &writer, ViewLayer::ViewLayerID 
 }
 
 void Connector::writeSvgIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString connId) {
-	QString attrValue = "";
-	if(view == ViewIdentifierClass::BreadboardView || view == ViewIdentifierClass::SchematicView) {
-		attrValue = connId /*+"pin"*/;
-	} else if(view == ViewIdentifierClass::PCBView) {
-		attrValue = connId /*+"pad" */;
-	} else {
-		return;
-	}
-	writer.writeAttribute("svgId",attrValue);
+	Q_UNUSED(view);
+	writer.writeAttribute("svgId",connId);
 }
 
 void Connector::writeTerminalIdAttr(QXmlStreamWriter &writer, ViewIdentifierClass::ViewIdentifier view, QString terminalId) {

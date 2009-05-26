@@ -45,7 +45,6 @@ public:
 	void createTrace();
 	void excludeFromAutoroute(bool exclude);
 	bool ratsAllRouted();
-	void selectAllWires(ViewGeometry::WireFlag);
 	void selectAllExcludedTraces();
 	void makeChangeRoutedCommand(Wire * wire, bool routed, qreal opacity, QUndoCommand * parentCommand);
 	void clearRouting(QUndoCommand * parentCommand);
@@ -53,6 +52,7 @@ public:
 	void forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount);
 	void addBoard();
 	void setCurrent(bool current);
+	void initWire(Wire *, int penWidth);
 
 protected:
 	void setWireVisible(Wire * wire);
@@ -67,6 +67,8 @@ protected:
 	const QString & hoverEnterPartConnectorMessage(QGraphicsSceneHoverEvent * event, ConnectorItem * item);
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void setClipEnds(class VirtualWire *);
+	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+
 
 protected:
 	int m_netCount;
@@ -75,7 +77,6 @@ protected:
 	int m_jumperCount;
 	bool m_addBoard;
 	ItemBase * m_addedBoard;
-
 };
 
 #endif

@@ -80,6 +80,7 @@ int MainWindow::CascadeFactorY = 19;
 MainWindow::MainWindow(PaletteModel * paletteModel, ReferenceModel *refModel) :
 	FritzingWindow(untitledFileName(), untitledFileCount(), fileExtension())
 {
+	m_checkForUpdatesAct = NULL;
 	m_fileProgressDialog = NULL;
 	m_currentGraphicsView = NULL;
 	m_comboboxChanged = false;
@@ -143,7 +144,7 @@ void MainWindow::init() {
 	//connectSwitcherToView(m_pcbViewSwitcher,m_pcbGraphicsView);
 	m_tabWidget->addWidget(m_pcbWidget);
 
-	m_schematicGraphicsView->addRatnestTarget(m_pcbGraphicsView);
+	//m_schematicGraphicsView->addRatnestTarget(m_pcbGraphicsView);
 
     m_undoView = new QUndoView();
     m_undoGroup = new QUndoGroup(this);
@@ -153,7 +154,6 @@ void MainWindow::init() {
     m_dockManager = new DockManager(this);
     m_dockManager->createBinAndInfoViewDocks();
     createActions();
-    createSketchButtons();
     createMenus();
     createToolBars();
     createStatusBar();
@@ -205,7 +205,7 @@ void MainWindow::init() {
 
     QMenu *schemItemMenu = schematicItemMenu();
     m_schematicGraphicsView->setItemMenu(schemItemMenu);
-    m_schematicGraphicsView->setWireMenu(schemItemMenu);
+    m_schematicGraphicsView->setWireMenu(schematicWireMenu());
 
     m_breadboardGraphicsView->setInfoView(m_infoView);
     m_pcbGraphicsView->setInfoView(m_infoView);
@@ -342,8 +342,8 @@ void MainWindow::connectPairs() {
 							 this, SLOT(findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
 							 Qt::DirectConnection);
 
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(int, int, int, int)),
-						this, SLOT(routingStatusSlot(int, int, int, int)));
+	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
+						this, SLOT(routingStatusSlot(SketchWidget *, int, int, int, int)));
 
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
@@ -357,9 +357,9 @@ void MainWindow::connectPairs() {
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
-						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
-						Qt::DirectConnection);
+	//succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
+						//m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
+						//Qt::DirectConnection);
 
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
 	if (fapp != NULL) {
@@ -500,11 +500,12 @@ void MainWindow::createToolBars() {
     */
 }
 
-void MainWindow::createSketchButtons() {
-	m_routingStatusLabel = new ExpandingLabel(m_pcbWidget);
-	m_routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
-
-	routingStatusSlot(0,0,0,0);			// call this after the buttons have been created, because it calls updateTraceMenu
+ExpandingLabel * MainWindow::createRoutingStatusLabel(SketchAreaWidget * parent) {
+	ExpandingLabel * routingStatusLabel = new ExpandingLabel(m_pcbWidget);
+	routingStatusLabel->setObjectName(SketchAreaWidget::RoutingStateLabelName);
+	parent->setRoutingStatusLabel(routingStatusLabel);
+	routingStatusSlot(parent->graphicsView(), 0,0,0,0);
+	return routingStatusLabel;
 }
 
 SketchToolButton *MainWindow::createRotateButton(SketchAreaWidget *parent) {
@@ -567,18 +568,17 @@ QList<QWidget*> MainWindow::getButtonsForView(ViewIdentifierClass::ViewIdentifie
 		case ViewIdentifierClass::PCBView: parent = m_pcbWidget; break;
 		default: return retval;
 	}
-	/*if(viewId != ItemBase::PCBView) {
-		retval << createExportToPdfButton(parent);
-	}*/
 	retval << createNoteButton(parent) << createRotateButton(parent);
 	switch (viewId) {
 		case ViewIdentifierClass::BreadboardView:
+			retval << createFlipButton(parent);
+			break;
 		case ViewIdentifierClass::SchematicView:
-			retval << createFlipButton(parent) << createToolbarSpacer(parent);
+			retval << createFlipButton(parent) << createToolbarSpacer(parent) << createAutorouteButton(parent) << createRoutingStatusLabel(parent);
 			break;
 		case ViewIdentifierClass::PCBView:
 			retval << SketchAreaWidget::separator(parent) << createAutorouteButton(parent)
-				   << createExportEtchableButton(parent) << m_routingStatusLabel;
+				   << createExportEtchableButton(parent) << createRoutingStatusLabel(parent);
 			break;
 		default:
 			break;
@@ -1238,7 +1238,7 @@ void MainWindow::resetTempFolder() {
 	m_filesReplacedByAlienOnes.clear();
 }
 
-void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers) {
+void MainWindow::routingStatusSlot(SketchWidget * sketchWidget, int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers) {
 	QString theText;
 	if (netCount == 0) {
 		theText = tr("No connections to route");
@@ -1254,7 +1254,8 @@ void MainWindow::routingStatusSlot(int netCount, int netRoutedCount, int connect
 			.arg(netRoutedCount)
 			.arg(netCount);
 	}
-	m_routingStatusLabel->setLabelText(theText);
+
+	dynamic_cast<SketchAreaWidget *>(sketchWidget->parent())->routingStatusLabel()->setLabelText(theText);
 
 	updateTraceMenu();
 }
@@ -1285,8 +1286,6 @@ QMenu *MainWindow::schematicItemMenu() {
 	menu->addAction(m_rotate90ccwAct);
 	menu->addAction(m_flipHorizontalAct);
 	menu->addAction(m_flipVerticalAct);
-	menu->addSeparator();
-	menu->addAction(m_addBendpointAct);
 	return viewItemMenuAux(menu);
 }
 
@@ -1315,12 +1314,27 @@ QMenu *MainWindow::pcbWireMenu() {
 	menu->addAction(m_infoViewOnHoverAction);
 #endif
 
-    connect(
-    	menu,
-    	SIGNAL(aboutToShow()),
-    	this,
-    	SLOT(updateWireMenu())
-    );
+    connect(menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
+
+	return menu;
+}
+
+QMenu *MainWindow::schematicWireMenu() {
+	QMenu *menu = new QMenu(QObject::tr("Wire"), this);
+	menu->addMenu(m_zOrderMenu);
+	menu->addSeparator();
+	menu->addAction(m_createTraceAct);
+	menu->addAction(m_excludeFromAutorouteAct);
+	menu->addSeparator();
+	menu->addAction(m_deleteAct);
+	menu->addSeparator();
+	menu->addAction(m_addBendpointAct);
+#ifndef QT_NO_DEBUG
+	menu->addSeparator();
+	menu->addAction(m_infoViewOnHoverAction);
+#endif
+
+    connect( menu, SIGNAL(aboutToShow()), this, SLOT(updateWireMenu()));
 
 	return menu;
 }
@@ -1477,7 +1491,9 @@ void MainWindow::showAllFirstTimeHelp(bool show) {
 
 void MainWindow::enableCheckUpdates(bool enabled)
 {
-	m_checkForUpdatesAct->setEnabled(enabled);
+	if (m_checkForUpdatesAct != NULL) {
+		m_checkForUpdatesAct->setEnabled(enabled);
+	}
 }
 
 void MainWindow::editModule() {

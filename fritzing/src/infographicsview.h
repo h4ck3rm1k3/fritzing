@@ -65,6 +65,7 @@ public:
 	virtual void noteSizeChanged(ItemBase * itemBase, const QRectF & oldRect, const QRectF & newRect);
 
 	virtual bool spaceBarIsPressed(); 
+	virtual void initWire(class Wire *, int penWidth);
 
 	QVariant evaluateJavascript(const QString &);
 

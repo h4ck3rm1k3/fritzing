@@ -182,7 +182,7 @@ void ConnectorItem::setConnectedColor() {
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
 	m_attachedTo->getConnectedColor(this, brush, pen, m_opacity);
-	DebugDialog::debug(QString("set connected %1 %2").arg(attachedToID()).arg(pen->width()));
+	//DebugDialog::debug(QString("set connected %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, true);
 }
 
@@ -192,7 +192,7 @@ void ConnectorItem::setNormalColor() {
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
 	m_attachedTo->getNormalColor(this, brush, pen, m_opacity);
-	DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
+	//DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, false);
 }
 

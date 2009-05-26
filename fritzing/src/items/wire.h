@@ -63,7 +63,7 @@ public:
 	ConnectorItem * otherConnector(ConnectorItem *);
 	ConnectorItem * connector0();
 	ConnectorItem * connector1();
-	void setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers);
+	void setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash & viewLayers, class InfoGraphicsView *);
 	void findConnectorsUnder();
 	void collectChained(QList<Wire *> &, QList<ConnectorItem *> & ends, QList<ConnectorItem *> & uniqueEnds);
 	void collectWires(QList<Wire *> & wires);
@@ -98,6 +98,7 @@ public:
 	void setOpacity(qreal opacity);
 	const QColor * color();
 	void setWidth(int);
+	void setPenWidth(int width);
 	int width();
 	void setExtras(QDomElement &);
 	void setColor(QDomElement & element);
@@ -120,6 +121,7 @@ public:
 	static QRgb getRgb(const QString & name);
 	static const QColor * netColor(ViewIdentifierClass::ViewIdentifier);
 	static void cleanup();
+	static void getColor(QColor & color, const QString & name);
 
 protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
@@ -127,7 +129,7 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void paintHover(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget); 
-	void initEnds(const ViewGeometry &, QRectF defaultRect);
+	void initEnds(const ViewGeometry &, QRectF defaultRect, class InfoGraphicsView *);
 	void connectionChange(ConnectorItem *);
 	void mousePressConnectorEvent(ConnectorItem *, QGraphicsSceneMouseEvent *);
  	virtual class FSvgRenderer * setUpConnectors(class ModelPart *, ViewIdentifierClass::ViewIdentifier);
@@ -142,7 +144,6 @@ protected:
 	void collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 	void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity);
-	void setPenWidth(int width);
 
 protected:
 	QPointF m_wireDragOrigin;

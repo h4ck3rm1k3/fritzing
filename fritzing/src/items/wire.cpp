@@ -54,7 +54,6 @@ QList<QString> Wire::colorNames;
 QHash<QString, qreal> Wire::widthTrans;
 QList<QString> Wire::widthNames;
 QList<QColor *> ratsnestColors;
-QColor schematicColor;
 const qreal Wire::ROUTED_OPACITY = 0.20;
 const qreal Wire::UNROUTED_OPACITY = 1.0;
 
@@ -83,6 +82,7 @@ bool alphaLessThan(QColor * c1, QColor * c2)
 Wire::Wire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier,  const ViewGeometry & viewGeometry, long id, QMenu* itemMenu)
 	: ItemBase(modelPart, viewIdentifier, viewGeometry, id, itemMenu)
 {
+	m_connector0 = m_connector1 = NULL;
 	m_partLabel = new PartLabel(this, "", NULL);
 	m_canChainMultiple = false;
     setFlag(QGraphicsItem::ItemIsSelectable, true );
@@ -105,11 +105,11 @@ Wire::~Wire() {
 
 }
 
-void Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers ) {
+void Wire::setUp(ViewLayer::ViewLayerID viewLayerID, const LayerHash &  viewLayers, InfoGraphicsView * infoGraphicsView ) {
 	ItemBase::setViewLayerID(viewLayerID, viewLayers);
 	FSvgRenderer * svgRenderer = setUpConnectors(m_modelPart, m_viewIdentifier);
 	if (svgRenderer != NULL) {
-		initEnds(m_viewGeometry, svgRenderer->viewBox());
+		initEnds(m_viewGeometry, svgRenderer->viewBox(), infoGraphicsView);
 		setConnectorTooltips();
 	}
 	setZValue(this->z());
@@ -137,7 +137,7 @@ void Wire::moveItem(ViewGeometry & viewGeometry) {
 	this->setPos(viewGeometry.loc());
 }
 
-void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
+void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect, InfoGraphicsView * infoGraphicsView) {
 	bool gotOne = false;
 	bool gotTwo = false;
 	int penWidth = 1;
@@ -180,22 +180,8 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 
 	m_pen.setCapStyle(Qt::RoundCap);
 	m_shadowPen.setCapStyle(Qt::RoundCap);
-	switch (m_viewIdentifier) {
-		case ViewIdentifierClass::BreadboardView:
-			setPenWidth(penWidth - 2);
-			m_shadowPen.setWidth(penWidth);
-            setColorString("blue", UNROUTED_OPACITY);
-			break;
-		case ViewIdentifierClass::SchematicView:
-			setColorString("schematicGrey", UNROUTED_OPACITY);
-			setPenWidth(2);
-			break;
-		case ViewIdentifierClass::PCBView:
-			setColorString("unrouted", UNROUTED_OPACITY);
-			setPenWidth(1);
-			break;
-		default:
-			break;
+	if (infoGraphicsView != NULL) {
+		infoGraphicsView->initWire(this, penWidth);
 	}
 
 	prepareGeometryChange();
@@ -205,27 +191,6 @@ void Wire::paint (QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 	if (m_hidden) return;
 
 	painter->setOpacity(m_opacity);
-	/*
-	switch (m_viewIdentifier) {
-		case ItemBase::BreadboardView:
-			{
-			painter->save();
-			painter->setPen(m_shadowPen);
-			QLineF line = this->line();
-			painter->drawLine(line);
-			painter->restore();
-			ItemBase::paint(painter, option, widget);
-			}
-			break;
-		case ItemBase::PCBView:
-		case ItemBase::SchematicView:
-		default:
-			// assumes all wires in these views are selectable: jumper, ratsnest, trace
-			ItemBase::paint(painter, option, widget);
-			break;
-	}
-	*/
-
 	if (!getRatsnest() && !getTrace()) {
 		painter->save();
 		painter->setPen(m_shadowPen);
@@ -811,8 +776,8 @@ void Wire::setShadowColor(QColor & color) {
 	m_shadowBrush = QBrush(color);
 	m_shadowPen.setBrush(m_shadowBrush);
 	m_bendpointPen.setBrush(m_shadowBrush);
-	m_connector0->restoreColor();
-	m_connector1->restoreColor();
+	if (m_connector0) m_connector0->restoreColor();
+	if (m_connector0) m_connector1->restoreColor();
 	this->update();
 }
 
@@ -825,9 +790,8 @@ void Wire::setWidth(int width) {
 
 	prepareGeometryChange();
 	setPenWidth(width);
-	m_shadowPen.setWidth(width + 2);
-	m_connector0->restoreColor();
-	m_connector1->restoreColor();
+	if (m_connector0) m_connector0->restoreColor();
+	if (m_connector1) m_connector1->restoreColor();
 	update();
 }
 
@@ -915,7 +879,7 @@ void Wire::initNames() {
     colors.insert("jumper", "#6699cc");
 	colors.insert("trace",  "#ffbf00");
 	colors.insert("unrouted", "#000000");
-	colors.insert("schematicGrey", "#7d7d7d");
+	colors.insert("schematicGrey", "#9d9d9d");
 	colors.insert("purple", "#b673e6");
 	colors.insert("brown", "#8c3b00");
 
@@ -951,8 +915,6 @@ void Wire::initNames() {
 		}
 	}
 	file.close();
-
-	schematicColor.setNamedColor(colors.value("black"));
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)
@@ -1003,10 +965,6 @@ void Wire::setOpacity(qreal opacity) {
 }
 
 const QColor * Wire::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier) {
-	if (viewIdentifier == ViewIdentifierClass::SchematicView) {
-		return &schematicColor;
-	}
-
 	int csi = netColorIndex.value(viewIdentifier);
 	QColor * c = ratsnestColors[csi];
 	csi = (csi + 1) % ratsnestColors.count();
@@ -1196,5 +1154,9 @@ void Wire::setPenWidth(int w) {
 	m_pen.setWidth(w);
 	int dw = (getRatsnest()) ? 4 : 3;
 	m_bendpointPen.setWidth(w - dw);
+	m_shadowPen.setWidth(w + 2);
 }
 
+void Wire::getColor(QColor & color, const QString & name) {
+	color.setNamedColor(colors.value(name));
+}

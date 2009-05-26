@@ -59,6 +59,8 @@ protected:
 	bool doRatsnestOnCopy();
 	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
 	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
+	virtual const QColor * getRatsnestColor(); 
+
 };
 
 #endif

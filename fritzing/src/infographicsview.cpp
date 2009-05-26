@@ -159,3 +159,6 @@ InfoGraphicsView * InfoGraphicsView::getInfoGraphicsView(QGraphicsItem * item)
 	return dynamic_cast<InfoGraphicsView *>(scene->parent());
 }
 
+void InfoGraphicsView::initWire(Wire *, int penWidth) {
+	Q_UNUSED(penWidth);
+}

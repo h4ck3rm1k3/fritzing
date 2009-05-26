@@ -134,3 +134,11 @@ QWidget *SketchAreaWidget::separator(QWidget* parent) {
 	separator->setStyleSheet("margin-left: 10px; margin-right: 10px;");
 	return separator;
 }
+
+void SketchAreaWidget::setRoutingStatusLabel(ExpandingLabel * rsl) {
+	m_routingStatusLabel = rsl;
+}
+
+ExpandingLabel * SketchAreaWidget::routingStatusLabel() {
+	return m_routingStatusLabel;
+}

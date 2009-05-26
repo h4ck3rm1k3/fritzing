@@ -1397,10 +1397,9 @@ void MainWindow::updateLayerMenu() {
 }
 
 void MainWindow::updateWireMenu() {
-	if (m_currentGraphicsView != m_pcbGraphicsView) return;
+	if (m_currentGraphicsView == m_breadboardGraphicsView) return;
 
-
-	QList<QGraphicsItem *> items = m_pcbGraphicsView->scene()->selectedItems();
+	QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->selectedItems();
 	m_addBendpointAct->setEnabled(false);
 	if (items.count() == 1) {
 		enableAddBendpointAct(items[0]);
@@ -1615,7 +1614,7 @@ void MainWindow::updateTraceMenu() {
 	bool exChecked = true;
 
 	if (m_currentGraphicsView != NULL) {
-		if (m_currentGraphicsView == this->m_pcbGraphicsView) {
+		if (m_currentGraphicsView != this->m_breadboardGraphicsView) {
 			QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
 			foreach (QGraphicsItem * item, items) {
 				Wire * wire = dynamic_cast<Wire *>(item);
@@ -1653,7 +1652,7 @@ void MainWindow::updateTraceMenu() {
 	}
 
 	m_createTraceAct->setEnabled(ctEnabled);
-	m_createJumperAct->setEnabled(cjEnabled);
+	m_createJumperAct->setEnabled(cjEnabled && (m_currentGraphicsView == m_pcbGraphicsView));
 	m_excludeFromAutorouteAct->setEnabled(exEnabled);
 	m_excludeFromAutorouteAct->setChecked(exChecked);
 	m_autorouteAct->setEnabled(rEnabled);
@@ -1661,7 +1660,7 @@ void MainWindow::updateTraceMenu() {
 	m_exportEtchableSvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
-	m_selectAllJumpersAct->setEnabled(jEnabled);
+	m_selectAllJumpersAct->setEnabled(jEnabled && (m_currentGraphicsView == m_pcbGraphicsView));
 
 }
 
@@ -2236,102 +2235,100 @@ void MainWindow::exportSvg() {
 }
 
 void MainWindow::exportBOM() {
-        QList <ItemBase*> partList;
-        QMap<QString, int> shoppingList;
+    QList <ItemBase*> partList;
+    QMap<QString, int> shoppingList;
 
-        int maxLabelWidth = 0;
+    int maxLabelWidth = 0;
 
-        QString bom = tr("Fritzing Bill of Materials\n\n");
+    QString bom = tr("Fritzing Bill of Materials\n\n");
 
-        bom += tr("Sketch: \t") + QFileInfo(m_fileName).fileName() + "\n";
-        //TODO:  add the Author ID - system specific crap
-        //bom += tr("Printed by: ") +
+    bom += tr("Sketch: \t") + QFileInfo(m_fileName).fileName() + "\n";
+    //TODO:  add the Author ID - system specific crap
+    //bom += tr("Printed by: ") +
 
-        bom += tr("Date: \t") + QDateTime::currentDateTime().toString() + "\n\n";
+    bom += tr("Date: \t") + QDateTime::currentDateTime().toString() + "\n\n";
 
-        // bail out if something is wrong
-        // TODO: show an error in QMessageBox
-        if(m_currentWidget == NULL) {
-            return;
+    // bail out if something is wrong
+    // TODO: show an error in QMessageBox
+    if(m_currentWidget == NULL) {
+        return;
+    }
+
+    m_currentGraphicsView->collectParts(partList);
+
+    qSort(partList.begin(), partList.end(), sortPartList);
+
+    for(int i=0; i < partList.size(); i++){
+        QString label = partList.at(i)->instanceTitle();
+        QString desc = partList.at(i)->modelPartShared()->title();
+        if(label.length() > maxLabelWidth) {
+            maxLabelWidth = label.length();
         }
-
-        m_currentGraphicsView->collectParts(partList);
-
-        qSort(partList.begin(), partList.end(), sortPartList);
-
-        for(int i=0; i < partList.size(); i++){
-            QString label = partList.at(i)->instanceTitle();
-            QString desc = partList.at(i)->modelPartShared()->title();
-            if(label.length() > maxLabelWidth) {
-                maxLabelWidth = label.length();
-            }
-            if(!shoppingList.contains(desc)){
-                shoppingList.insert(desc, 1);
-            }
-            else {
-                shoppingList[desc]++;
-            }
+        if(!shoppingList.contains(desc)){
+            shoppingList.insert(desc, 1);
         }
-
-        for(int i=0; i < partList.size(); i++){
-            QString spacer = "   ";
-            QString label = partList.at(i)->instanceTitle();
-
-            spacer += QString(maxLabelWidth - label.length(), QChar(' '));
-            bom += label + spacer +
-                   partList.at(i)->modelPartShared()->title() + "\n";
+        else {
+            shoppingList[desc]++;
         }
+    }
 
-        bom += tr("\n\nShopping List\n\nQuantity\tPart\n\n");
-        QMapIterator<QString, int> it(shoppingList);
-        while (it.hasNext()) {
-            it.next();
-            bom += QString::number(it.value()) + "\t\t" + it.key() + "\n";
-        }
+    for(int i=0; i < partList.size(); i++){
+        QString spacer = "   ";
+        QString label = partList.at(i)->instanceTitle();
 
-        QString path = defaultSaveFolder();
+        spacer += QString(maxLabelWidth - label.length(), QChar(' '));
+        bom += label + spacer +
+               partList.at(i)->modelPartShared()->title() + "\n";
+    }
 
-        QString fileExt;
-        QString extFmt = fileExtFormats.value(bomActionType);
-        QString fname = path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
-        DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
+    bom += tr("\n\nShopping List\n\nQuantity\tPart\n\n");
+    QMapIterator<QString, int> it(shoppingList);
+    while (it.hasNext()) {
+        it.next();
+        bom += QString::number(it.value()) + "\t\t" + it.key() + "\n";
+    }
 
-        QString fileName = FApplication::getSaveFileName(this,
-                tr("Export Bill of Materials (BoM)..."),
-                fname,
-                extFmt,
-                &fileExt
-        );
+    QString path = defaultSaveFolder();
 
-        if (fileName.isEmpty()) {
-                return; //Cancel pressed
-        }
+    QString fileExt;
+    QString extFmt = fileExtFormats.value(bomActionType);
+    QString fname = path+"/"+QFileInfo(m_fileName).fileName().remove(FritzingSketchExtension)+".bom"+getExtFromFileDialog(extFmt);
+    DebugDialog::debug(QString("fname %1\n%2").arg(fname).arg(extFmt));
 
- 		FileProgressDialog * fileProgressDialog = exportProgress();
-        DebugDialog::debug(fileExt+" selected to export");
-        //fileExt = getExtFromFileDialog(fileExt);
-        //#ifdef Q_WS_X11
+    QString fileName = FApplication::getSaveFileName(this,
+            tr("Export Bill of Materials (BoM)..."),
+            fname,
+            extFmt,
+            &fileExt
+    );
+
+    if (fileName.isEmpty()) {
+            return; //Cancel pressed
+    }
+
+	FileProgressDialog * fileProgressDialog = exportProgress();
+    DebugDialog::debug(fileExt+" selected to export");
+    //fileExt = getExtFromFileDialog(fileExt);
+    //#ifdef Q_WS_X11
 //                if(!alreadyHasExtension(fileName)) {
 //                        fileName += fileExt;
 //                }
 //        #endif
 
-        QFile fp( fileName );
-        fp.open(QIODevice::WriteOnly);
-        fp.write(bom.toUtf8(),bom.length());
-        fp.close();
+    QFile fp( fileName );
+    fp.open(QIODevice::WriteOnly);
+    fp.write(bom.toUtf8(),bom.length());
+    fp.close();
 
-		QClipboard *clipboard = QApplication::clipboard();
-		if (clipboard != NULL) {
-			clipboard->setText(bom);
-		}
-		delete fileProgressDialog;
-
-
+	QClipboard *clipboard = QApplication::clipboard();
+	if (clipboard != NULL) {
+		clipboard->setText(bom);
+	}
+	delete fileProgressDialog;
 }
 
 void MainWindow::hideShowTraceMenu() {
-	m_traceMenu->menuAction()->setVisible(m_currentGraphicsView == m_pcbGraphicsView);
+	m_traceMenu->menuAction()->setVisible(m_currentGraphicsView != m_breadboardGraphicsView);
 }
 
 void MainWindow::createTraceMenuActions() {
@@ -2367,15 +2364,18 @@ void MainWindow::createTraceMenuActions() {
 }
 
 void MainWindow::autoroute() {
-	m_routingStatusLabel->setText(tr("Autorouting..."));
+	PCBSketchWidget * pcbSketchWidget = qobject_cast<PCBSketchWidget *>(m_currentGraphicsView);
+	if (pcbSketchWidget == NULL) return;
+
+	dynamic_cast<SketchAreaWidget *>(pcbSketchWidget->parent())->routingStatusLabel()->setText(tr("Autorouting..."));
 
 	AutorouteProgressDialog progress(this);
 	progress.setModal(true);
 	progress.show();
 
-	m_pcbGraphicsView->scene()->clearSelection();
-	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(true);
-	Autorouter1 * autorouter1 = new Autorouter1(m_pcbGraphicsView);
+	pcbSketchWidget->scene()->clearSelection();
+	pcbSketchWidget->setIgnoreSelectionChangeEvents(true);
+	Autorouter1 * autorouter1 = new Autorouter1(pcbSketchWidget);
 
 	connect(&progress, SIGNAL(cancel()), autorouter1, SLOT(cancel()), Qt::DirectConnection);
 	connect(&progress, SIGNAL(skip()), autorouter1, SLOT(cancelTrace()), Qt::DirectConnection);
@@ -2385,12 +2385,12 @@ void MainWindow::autoroute() {
 	QApplication::processEvents();
 
 	autorouter1->start();
-	m_pcbGraphicsView->setIgnoreSelectionChangeEvents(false);
+	pcbSketchWidget->setIgnoreSelectionChangeEvents(false);
 	delete autorouter1;
 }
 
 void MainWindow::createTrace() {
-	m_pcbGraphicsView->createTrace();
+	m_currentGraphicsView->createTrace();
 }
 
 void MainWindow::createJumper() {
@@ -2402,7 +2402,7 @@ void MainWindow::excludeFromAutoroute() {
 }
 
 void MainWindow::selectAllTraces() {
-	m_pcbGraphicsView->selectAllWires(ViewGeometry::TraceFlag);
+	m_currentGraphicsView->selectAllWires(ViewGeometry::TraceFlag);
 }
 
 void MainWindow::selectAllExcludedTraces() {
@@ -2410,7 +2410,7 @@ void MainWindow::selectAllExcludedTraces() {
 }
 
 void MainWindow::selectAllJumpers() {
-	m_pcbGraphicsView->selectAllWires(ViewGeometry::JumperFlag);
+	m_currentGraphicsView->selectAllWires(ViewGeometry::JumperFlag);
 }
 
 void MainWindow::notClosableForAWhile() {
@@ -2470,7 +2470,7 @@ void MainWindow::enableAddBendpointAct(QGraphicsItem * graphicsItem) {
 
 	Wire * wire = dynamic_cast<Wire *>(graphicsItem);
 	if (wire == NULL) return;
-	if (wire->getRatsnest() && (m_currentGraphicsView != m_schematicGraphicsView)) return;
+	if (wire->getRatsnest()) return;
 
 	BendpointAction * bendpointAction = qobject_cast<BendpointAction *>(m_addBendpointAct);
 	FGraphicsScene * scene = qobject_cast<FGraphicsScene *>(graphicsItem->scene());

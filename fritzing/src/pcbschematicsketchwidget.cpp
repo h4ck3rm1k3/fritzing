@@ -119,7 +119,7 @@ void PCBSchematicSketchWidget::dealWithRatsnest(long fromID, const QString & fro
 			color = modelWire->color();
 		}
 		else {
-			color = Wire::netColor(m_viewIdentifier);
+			color = getRatsnestColor();
 		}
 		foreach (Wire * wire, ratsnestWires) {
 			QColor colorAsQColor = (QColor) *color;
@@ -395,4 +395,9 @@ void PCBSchematicSketchWidget::makeWiresChangeConnectionCommands(const QList<Wir
 			}
 		}
 	}
+}
+
+const QColor * PCBSchematicSketchWidget::getRatsnestColor() 
+{
+	return Wire::netColor(m_viewIdentifier);
 }

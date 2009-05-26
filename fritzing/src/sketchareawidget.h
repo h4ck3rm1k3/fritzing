@@ -50,6 +50,8 @@ public:
 	void setContent(QList<QWidget*> buttons, ZoomComboBox *zoomComboBox);
 	void addStatusBar(QStatusBar *);
 	static QWidget *separator(QWidget* parent);
+	class ExpandingLabel * routingStatusLabel();
+	void setRoutingStatusLabel(ExpandingLabel *);
 
 protected:
 	void createLayout();
@@ -66,6 +68,8 @@ protected:
 	QVBoxLayout *m_labelContainer;
 	QHBoxLayout *m_zoomContainer;
 	QFrame *m_statusBarArea;
+	class ExpandingLabel * m_routingStatusLabel;
+
 };
 
 #endif /* SKETCHAREAWIDGET_H_ */

@@ -28,7 +28,8 @@
   </breadboardView>
   <schematicView>
    <layers image="breadboard/wire.svg" >
-    <layer layerId="schematicWire" />
+     <layer layerId="schematicWire" />
+     <layer layerId="schematicTrace" />
    </layers>
   </schematicView>
   <pcbView>
@@ -48,7 +49,8 @@
      <p svgId="connector0pin" layer="breadboardWire" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector0pin" layer="schematicWire" />
+      <p svgId="connector0pin" layer="schematicWire" />
+      <p svgId="connector0pin" layer="schematicTrace" />
     </schematicView>
     <pcbView>
      <p svgId="connector0pin" layer="ratsnest" />
@@ -65,7 +67,8 @@
      <p svgId="connector1pin" layer="breadboardWire" />
     </breadboardView>
     <schematicView>
-     <p svgId="connector1pin" layer="schematicWire" />
+      <p svgId="connector1pin" layer="schematicWire" />
+      <p svgId="connector1pin" layer="schematicTrace" />
     </schematicView>
     <pcbView>
      <p svgId="connector1pin" layer="ratsnest" />

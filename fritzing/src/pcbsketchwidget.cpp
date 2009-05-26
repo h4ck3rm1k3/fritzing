@@ -44,6 +44,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	m_addBoard = false;
 	m_viewName = QObject::tr("PCB View");
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
+	m_traceColor = "trace";
 }
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
@@ -142,8 +143,7 @@ void PCBSketchWidget::createJumper() {
 
 void PCBSketchWidget::createTrace() {
 	QString commandString = tr("Create Trace from this Wire");
-	QString colorString = ("trace");
-	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, colorString);
+	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, m_traceColor);
 	ensureLayerVisible(ViewLayer::Copper0);
 }
 
@@ -367,7 +367,7 @@ void PCBSketchWidget::updateRatsnestStatus(CleanUpWiresCommand* command, QUndoCo
 											netCount, netRoutedCount, connectorsLeftToRoute, jumperCount, undoCommand);
 		}
 
-		emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+		emit routingStatusSignal(this, netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 
 		m_netCount = netCount;
 		m_jumperCount = jumperCount;
@@ -387,49 +387,6 @@ void PCBSketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCoun
 
 const QColor & PCBSketchWidget::getLabelTextColor() {
 	return labelTextColor;
-}
-
-void PCBSketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
-{
-	QList<Wire *> wires;
-	foreach (QGraphicsItem * item, scene()->items()) {
-		Wire * wire = dynamic_cast<Wire *>(item);
-		if (wire == NULL) continue;
-
-		if (wire->hasFlag(flag)) {
-			if (wire->parentItem() != NULL) {
-				// skip module wires
-				continue;
-			}
-
-			wires.append(wire);
-		}
-	}
-
-	if (wires.count() <= 0) {
-		// TODO: tell user?
-	}
-
-	QString wireName;
-	if (flag == ViewGeometry::JumperFlag) {
-		wireName = QObject::tr("Jumper wires");
-	}
-	else if (flag == ViewGeometry::TraceFlag) {
-		wireName = QObject::tr("Trace wires");
-	}
-	else if (flag == ViewGeometry::RatsnestFlag) {
-		wireName = QObject::tr("Ratsnest wires");
-	}
-	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all %1").arg(wireName));
-
-	stackSelectionState(false, parentCommand);
-	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
-	foreach (Wire * wire, wires) {
-		selectItemCommand->addRedo(wire->id());
-	}
-
-	scene()->clearSelection();
-	m_undoStack->push(parentCommand);
 }
 
 void PCBSketchWidget::selectAllExcludedTraces() 
@@ -480,7 +437,7 @@ bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * 
 		QList<Wire *> done;
 		dragWire->connector0()->tempConnectTo(fromConnectorItem, false);
 		dragWire->connector1()->tempConnectTo(toConnectorItem, false);
-		createOneJumperOrTrace(dragWire, ViewGeometry::TraceFlag, true, done, parentCommand, ___emptyString___, "trace");
+		createOneJumperOrTrace(dragWire, ViewGeometry::TraceFlag, true, done, parentCommand, ___emptyString___, m_traceColor);
 		dragWire->connector0()->tempRemove(fromConnectorItem, false);
 		dragWire->connector1()->tempRemove(toConnectorItem, false);
 	}
@@ -525,3 +482,21 @@ void PCBSketchWidget::setClipEnds(VirtualWire * vw) {
 	vw->setClipEnds(true);
 }
 
+ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
+	if (viewGeometry.getJumper()) {
+
+		return ViewLayer::Jumperwires;
+	}
+
+	if (viewGeometry.getTrace()) {
+		return ViewLayer::Copper0Trace;
+	}
+
+	return SketchWidget::getWireViewLayerID(viewGeometry);
+}
+
+void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
+	Q_UNUSED(penWidth);
+	wire->setColorString("unrouted", Wire::UNROUTED_OPACITY);
+	wire->setPenWidth(1);
+}

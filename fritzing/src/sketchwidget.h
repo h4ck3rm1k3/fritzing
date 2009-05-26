@@ -209,6 +209,8 @@ public:
 	ConnectorItem * lastHoverEnterConnectorItem();
 	ItemBase * lastHoverEnterItem();
 	LayerHash & viewLayers();
+	virtual void createTrace();
+	void selectAllWires(ViewGeometry::WireFlag);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
@@ -228,7 +230,7 @@ protected:
 	void continueZChange(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
 	void continueZChangeMax(QList<ItemBase *> & bases, int start, int end, bool (*test)(int current, int start), int inc, const QString & text);
 	void continueZChangeAux(QList<ItemBase *> & bases, const QString & text);
-	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+	virtual ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	ViewLayer::ViewLayerID getPartViewLayerID();
 	ViewLayer::ViewLayerID getRulerViewLayerID();
 	ViewLayer::ViewLayerID getConnectorViewLayerID();
@@ -343,7 +345,7 @@ signals:
 
 	void resizeSignal();
 	void dropSignal(const QPoint &pos);
-	void routingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
+	void routingStatusSignal(SketchWidget *, int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void ratsnestChangeSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void movingSignal(SketchWidget *, QUndoCommand * parentCommand);
 	void rotatingFlippingSignal(SketchWidget *, QUndoCommand * parentCommand);
@@ -467,6 +469,7 @@ protected:
 	QPointF m_resizingBoardPos;
 	ConnectorItem * m_lastHoverEnterConnectorItem;
 	ItemBase * m_lastHoverEnterItem;
+	QString m_traceColor;
 
 protected:
 	QString m_viewName;

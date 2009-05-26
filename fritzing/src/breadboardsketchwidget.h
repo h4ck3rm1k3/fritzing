@@ -39,6 +39,7 @@ public:
     BreadboardSketchWidget(ViewIdentifierClass::ViewIdentifier, QWidget *parent=0);
 
 	void addViewLayers();
+	void initWire(Wire *, int penWidth);
 
 protected slots:
 	void schematicDisconnectWireSlot(ConnectorPairHash & moveItems, QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash *> & deletedConnections, QUndoCommand * parentCommand);

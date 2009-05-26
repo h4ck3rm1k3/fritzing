@@ -613,7 +613,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 				VirtualWire * vw = new VirtualWire(modelPart, m_viewIdentifier, viewGeometry, id, m_wireMenu);
 				setClipEnds(vw);
 				wire = vw;
-             	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
+             	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
 				
 				// prevents virtual wires from flashing up on screen
 				wire->setCanChainMultiple(canChainMultiple());
@@ -628,7 +628,7 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
 						wire->setNormal(true);
 					}
 				}
-				wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers);
+				wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
 			}
 
 			setWireVisible(wire);
@@ -1574,7 +1574,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	}
 
 	Wire * wire = dynamic_cast<Wire *>(item);
-	if ((wire != NULL) && canChainWire(wire) && wire->hasConnections()) {
+	if ((event->button() == Qt::LeftButton) && (wire != NULL) && canChainWire(wire) && wire->hasConnections()) {
 		// want to add a bendpoint
 		m_bendpointWire = wire;
 		wire->saveGeometry();
@@ -2764,15 +2764,7 @@ void SketchWidget::changeZ(QHash<long, RealPair * > triplets, qreal (*pairAccess
 }
 
 ViewLayer::ViewLayerID SketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
-	if (viewGeometry.getJumper()) {
-
-		return ViewLayer::Jumperwires;
-	}
-
-	if (viewGeometry.getTrace()) {
-		return ViewLayer::Copper0Trace;
-	}
-
+	Q_UNUSED(viewGeometry);
 	return m_wireViewLayerID;
 }
 
@@ -3896,14 +3888,16 @@ void SketchWidget::changeWireWidth(const QString newWidthStr)
 
 void SketchWidget::changeWireColor(long wireId, const QString& color, qreal opacity) {
 	ItemBase *item = findItem(wireId);
-	if(Wire* wire = dynamic_cast<Wire*>(item)) {
+	Wire* wire = dynamic_cast<Wire*>(item);
+	if (wire) {
 		wire->setColorString(color, opacity);
 	}
 }
 
 void SketchWidget::changeWireWidth(long wireId, int width) {
 	ItemBase *item = findItem(wireId);
-	if(Wire* wire = dynamic_cast<Wire*>(item)) {
+	Wire* wire = dynamic_cast<Wire*>(item);
+	if (wire) {
 		wire->setWidth(width);
 	}
 }
@@ -3939,7 +3933,7 @@ void SketchWidget::addSchematicViewLayers() {
 	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
+	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
 
 	addViewLayersAux(layers);
 }
@@ -4265,7 +4259,7 @@ void SketchWidget::setWireVisible(Wire * wire) {
 
 void SketchWidget::forwardRoutingStatusSignal(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumperCount) {
 
-	emit routingStatusSignal(netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
+	emit routingStatusSignal(this, netCount, netRoutedCount, connectorsLeftToRoute, jumperCount);
 }
 
 void SketchWidget::addFixedToTopLeftItem(QGraphicsItem *item) {
@@ -5029,3 +5023,50 @@ LayerHash & SketchWidget::viewLayers() {
 void SketchWidget::setClipEnds(VirtualWire * vw) {
 	Q_UNUSED(vw);
 }
+
+void SketchWidget::createTrace() {
+}
+
+void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag) 
+{
+	QList<Wire *> wires;
+	foreach (QGraphicsItem * item, scene()->items()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+
+		if (wire->hasFlag(flag)) {
+			if (wire->parentItem() != NULL) {
+				// skip module wires
+				continue;
+			}
+
+			wires.append(wire);
+		}
+	}
+
+	if (wires.count() <= 0) {
+		// TODO: tell user?
+	}
+
+	QString wireName;
+	if (flag == ViewGeometry::JumperFlag) {
+		wireName = QObject::tr("Jumper wires");
+	}
+	else if (flag == ViewGeometry::TraceFlag) {
+		wireName = QObject::tr("Trace wires");
+	}
+	else if (flag == ViewGeometry::RatsnestFlag) {
+		wireName = QObject::tr("Ratsnest wires");
+	}
+	QUndoCommand * parentCommand = new QUndoCommand(QObject::tr("Select all %1").arg(wireName));
+
+	stackSelectionState(false, parentCommand);
+	SelectItemCommand * selectItemCommand = new SelectItemCommand(this, SelectItemCommand::NormalSelect, parentCommand);
+	foreach (Wire * wire, wires) {
+		selectItemCommand->addRedo(wire->id());
+	}
+
+	scene()->clearSelection();
+	m_undoStack->push(parentCommand);
+}
+

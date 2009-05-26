@@ -214,7 +214,7 @@ protected slots:
 	void editModule();
 
 	void binSaved(bool hasAlienParts);
-	void routingStatusSlot(int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
+	void routingStatusSlot(SketchWidget *, int netCount, int netRoutedCount, int connectorsLeftToRoute, int jumpers);
 	void clearRoutingSlot(SketchWidget *, QUndoCommand * parentCommand);
 
 	void applyReadOnlyChange(bool isReadOnly);
@@ -250,7 +250,6 @@ protected:
     void createHelpMenuActions();
     void createMenus();
     void createToolBars();
-    void createSketchButtons();
     void createStatusBar();
 	void connectPairs();
 	void connectPair(SketchWidget * signaller, SketchWidget * slotter);
@@ -295,6 +294,7 @@ protected:
 	QMenu *schematicItemMenu();
 	QMenu *pcbItemMenu();
 	QMenu *pcbWireMenu();
+	QMenu *schematicWireMenu();
 
 	QMenu *viewItemMenuAux(QMenu* menu);
 
@@ -302,6 +302,7 @@ protected:
 	SketchToolButton *createRotateButton(SketchAreaWidget *parent);
 	SketchToolButton *createFlipButton(SketchAreaWidget *parent);
 	SketchToolButton *createAutorouteButton(SketchAreaWidget *parent);
+	class ExpandingLabel * createRoutingStatusLabel(SketchAreaWidget *);
 	SketchToolButton *createExportEtchableButton(SketchAreaWidget *parent);
 	SketchToolButton *createNoteButton(SketchAreaWidget *parent);
 	QWidget *createToolbarSpacer(SketchAreaWidget *parent);
@@ -505,7 +506,6 @@ protected:
     QIcon m_dotIcon;
     QIcon m_emptyIcon;
 
-	class ExpandingLabel *m_routingStatusLabel;
 	QList<SketchToolButton*> m_rotateButtons;
 	QList<SketchToolButton*> m_flipButtons;
 
