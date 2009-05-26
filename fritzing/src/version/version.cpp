@@ -15,23 +15,23 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with Fritzing.  If not, see <http://www.gnu.org/licenses/>.
-				
+
 ********************************************************************
-					
-$Revision$:  
+
+$Revision$:
 $Author$:
 $Date$
 
 ********************************************************************/
-													
-#include "version.h"				
-					
+
+#include "version.h"
+
 #include <QString>
-#include <QStringList>		
-						
+#include <QStringList>
+
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("3");
-QString Version::m_minorSubVersion("0");
+QString Version::m_minorSubVersion("1");
 QString Version::m_modifier("b");
 QString Version::m_svnRevision("$Revision$:");
 QString Version::m_svnDate("$Date$");
@@ -41,9 +41,9 @@ QString Version::m_shortDate;
 QString Version::m_versionString;
 QString Version::m_year;
 QStringList Version::m_modifiers;
-								
+
 Version * Version::m_singleton = new Version();
-			
+
 Version::Version() {
 	if (m_modifiers.count() == 0) {
 		m_modifiers << "a" << "b" << "rc" << "";
@@ -104,7 +104,7 @@ const QString & Version::year() {
 	return m_year;
 }
 
-bool Version::candidateGreaterThanCurrent(const VersionThing & candidateVersionThing) 
+bool Version::candidateGreaterThanCurrent(const VersionThing & candidateVersionThing)
 {
 	VersionThing myVersionThing;
 	myVersionThing.majorVersion = majorVersion().toInt();
@@ -154,9 +154,9 @@ void Version::toVersionThing(const QString & candidate, VersionThing & versionTh
 		modString += s + "|";
 	}
 	modString.chop(1);
-	QRegExp sw(QString("([\\d]+)\\.([\\d]+)\\.([\\d]+)(%1)$").arg(modString));   
+	QRegExp sw(QString("([\\d]+)\\.([\\d]+)\\.([\\d]+)(%1)$").arg(modString));
 	if (sw.indexIn(candidate) != 0) {
-		return;				
+		return;
 	}
 
 	versionThing.majorVersion = sw.cap(1).toInt(&versionThing.ok);

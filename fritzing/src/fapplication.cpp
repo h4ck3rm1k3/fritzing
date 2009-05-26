@@ -466,6 +466,16 @@ int FApplication::startup(int & argc, char ** argv)
 	splash.finish(mainWindow);
 
 	mainWindow->clearFileProgressDialog();
+
+	/*VersionThing deattachedUserDataVersion;
+	Version::toVersionThing("",deattachedUserDataVersion);
+	VersionThing prevVersionThing;
+	Version::toVersionThing(prevVersion,prevVersionThing);
+
+	if(Version::greaterThan(deattachedUserDataVersion,prevVersionThing)) {
+
+	}*/
+
 	return 0;
 }
 
