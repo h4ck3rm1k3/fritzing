@@ -36,17 +36,6 @@ $Date$
 #include "items/wire.h"
 #include "modelpart.h"
 
-QPen ConnectorItem::normalPen(QColor(255,0,0));
-QPen ConnectorItem::hoverPen(QColor(0, 0, 255));
-QPen ConnectorItem::connectedPen(QColor(0, 255, 0));
-QPen ConnectorItem::chosenPen(QColor(255,0,0));
-
-QBrush ConnectorItem::normalBrush(QColor(255,0,0));
-QBrush ConnectorItem::hoverBrush(QColor(0,0,255));
-QBrush ConnectorItem::connectedBrush(QColor(0,255,0));
-QBrush ConnectorItem::chosenBrush(QColor(255,0,0));
-
-
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
@@ -189,19 +178,39 @@ void ConnectorItem::restoreColor() {
 }
 
 void ConnectorItem::setConnectedColor() {
-	setColorAux(connectedBrush, connectedPen, true);
+	if (m_attachedTo == NULL) return;
+
+	QBrush * brush = NULL;
+	QPen * pen = NULL;	
+	m_attachedTo->getConnectedColor(this, brush, pen);
+	setColorAux(*brush, *pen, true);
 }
 
 void ConnectorItem::setNormalColor() {
-	setColorAux(normalBrush, normalPen, false);
+	if (m_attachedTo == NULL) return;
+
+	QBrush * brush = NULL;
+	QPen * pen = NULL;	
+	m_attachedTo->getNormalColor(this, brush, pen);
+	setColorAux(*brush, *pen, false);
 }
 
 void ConnectorItem::setChosenColor() {
-	setColorAux(chosenBrush, chosenPen, true);
+	if (m_attachedTo == NULL) return;
+
+	QBrush * brush = NULL;
+	QPen * pen = NULL;	
+	m_attachedTo->getChosenColor(this, brush, pen);
+	setColorAux(*brush, *pen, true);
 }
 
 void ConnectorItem::setHoverColor() {
-	setColorAux(hoverBrush, hoverPen, true);
+	if (m_attachedTo == NULL) return;
+
+	QBrush * brush = NULL;
+	QPen * pen = NULL;	
+	m_attachedTo->getHoverColor(this, brush, pen);
+	setColorAux(*brush, *pen, true);
 }
 
 void ConnectorItem::setChosen(bool chosen)

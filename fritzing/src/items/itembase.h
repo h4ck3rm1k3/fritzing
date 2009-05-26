@@ -64,6 +64,16 @@ public:
 	static const QString ITEMBASE_FONT_PREFIX;
 	static const QString ITEMBASE_FONT_SUFFIX;
 
+protected:
+	static QPen normalPen;
+	static QPen hoverPen;
+	static QPen connectedPen;
+	static QPen chosenPen;
+	static QBrush hoverBrush;
+	static QBrush normalBrush;
+	static QBrush connectedBrush;
+	static QBrush chosenBrush;
+
 public:
 	static void initNames();
 	static void cleanup();
@@ -162,6 +172,12 @@ public:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual void figureHover();
 	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+
+public:
+	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &);
+	virtual void getNormalColor(ConnectorItem *, QBrush * &, QPen * &);
+	virtual void getChosenColor(ConnectorItem *, QBrush * &, QPen * &);
+	virtual void getHoverColor(ConnectorItem *, QBrush * &, QPen * &);
 
 public:
 	virtual void hoverEnterConnectorItem(QGraphicsSceneHoverEvent * event, ConnectorItem * item);

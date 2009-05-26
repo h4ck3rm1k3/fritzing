@@ -71,14 +71,14 @@ public:
 	const QString & busID();
 	ModelPartShared * modelPartShared();
 	ModelPart * modelPart();
-	virtual class Bus * bus();
+	class Bus * bus();
 	void tempConnectTo(ConnectorItem * item, bool applyColor);
 	void tempRemove(ConnectorItem * item, bool applyColor);
 	void setCircular(bool);
 	void setOpacity(qreal);
 	Connector::ConnectorType connectorType();
 	bool chained();
-	virtual void saveInstance(QXmlStreamWriter & );
+	void saveInstance(QXmlStreamWriter & );
 	void writeConnector(QXmlStreamWriter & writer, const QString & elementName);
 	bool maleToFemale(ConnectorItem * other);
 	bool wiredTo(ConnectorItem *);
@@ -94,21 +94,21 @@ public:
 	void setRadius(qreal radius, qreal strokeWidth);
 	qreal radius();
 	qreal strokeWidth();
+	void restoreColor();
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
 	virtual void hoverLeaveEvent( QGraphicsSceneHoverEvent * event );
-	virtual void setHoverColor();
-	virtual void setNormalColor();
-	virtual void setConnectedColor();
-	virtual void setChosenColor();
-	virtual void restoreColor();
+	void setHoverColor();
+	void setNormalColor();
+	void setConnectedColor();
+	void setChosenColor();
 	void setColorAux(QBrush brush, QPen pen, bool paint);
 	void setColorAux(const QColor &color, bool paint=true);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
-	virtual void writeTopLevelAttributes(QXmlStreamWriter & writer);
-	virtual void writeOtherElements(QXmlStreamWriter & writer);
+	void writeTopLevelAttributes(QXmlStreamWriter & writer);
+	void writeOtherElements(QXmlStreamWriter & writer);
 	void updateTooltip();
 	bool sceneEvent(QEvent *event);
 
@@ -138,15 +138,6 @@ public:
 	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
 
-public:
-	static QPen normalPen;
-	static QPen hoverPen;
-	static QPen connectedPen;
-	static QPen chosenPen;
-	static QBrush hoverBrush;
-	static QBrush normalBrush;
-	static QBrush connectedBrush;
-	static QBrush chosenBrush;
 };
 
 #endif

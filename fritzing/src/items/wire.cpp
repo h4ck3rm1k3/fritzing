@@ -184,15 +184,18 @@ void Wire::initEnds(const ViewGeometry & vg, QRectF defaultRect) {
 		case ViewIdentifierClass::BreadboardView:
 			m_pen.setWidth(penWidth - 2);
 			m_shadowPen.setWidth(penWidth);
+			m_bendpointPen.setWidth(penWidth - 3);
             setColorString("blue", UNROUTED_OPACITY);
 			break;
 		case ViewIdentifierClass::SchematicView:
 			setColorString("routed", UNROUTED_OPACITY);
 			m_pen.setWidth(2);
+			m_bendpointPen.setWidth(1);
 			break;
 		case ViewIdentifierClass::PCBView:
 			setColorString("unrouted", UNROUTED_OPACITY);
 			m_pen.setWidth(1);
+			m_bendpointPen.setWidth(1);
 			break;
 		default:
 			break;
@@ -808,7 +811,11 @@ void Wire::setColor(QColor & color, qreal op) {
 }
 
 void Wire::setShadowColor(QColor & color) {
-	m_shadowPen.setBrush(QBrush(color));
+	m_shadowBrush = QBrush(color);
+	m_shadowPen.setBrush(m_shadowBrush);
+	m_bendpointPen.setBrush(m_shadowBrush);
+	m_connector0->restoreColor();
+	m_connector1->restoreColor();
 	this->update();
 }
 
@@ -822,6 +829,9 @@ void Wire::setWidth(int width) {
 	prepareGeometryChange();
 	m_pen.setWidth(width);
 	m_shadowPen.setWidth(width + 2);
+	m_bendpointPen.setWidth(qMin(1, width - 1));
+	m_connector0->restoreColor();
+	m_connector1->restoreColor();
 	update();
 }
 
@@ -922,7 +932,7 @@ void Wire::initNames() {
 	shadowColors.insert("white",	"#999999");
 	shadowColors.insert("orange",	"#d95821");
     shadowColors.insert("jumper",	"#2d6563");
-	shadowColors.insert("trace",	"#ffbf00");
+	shadowColors.insert("trace",	"#d69b00");
 	shadowColors.insert("unrouted", "#000000");
 	shadowColors.insert("routed",	"#7d7d7d");
 
@@ -947,32 +957,6 @@ void Wire::initNames() {
 	file.close();
 
 	schematicColor.setNamedColor(colors.value("black"));
-
-	/*
-	makeHues(80, 340, 5, 0, ratsnestColors);
-	qSort(ratsnestColors.begin(), ratsnestColors.end(), alphaLessThan);
-	foreach (QColor * c, ratsnestColors) {
-		c->setAlpha(255);
-	}
-	*/
-
-}
-
-void Wire::makeHues(int hue1, int hue2, int maxCount, int currentCount, QList<QColor *> & hues) {
-	if (currentCount >= maxCount) return;
-
-	int avg = (hue1 + hue2) / 2;
-	//DebugDialog::debug(QString("making hue %1 from %2 %3").arg(avg).arg(hue1).arg(hue2) );
-	makeHue(avg, hues, currentCount);
-	makeHues(hue1, avg, maxCount, currentCount + 1, hues);
-	makeHues(avg, hue2, maxCount, currentCount + 1, hues);
-}
-
-void Wire::makeHue(int hue, QList<QColor *> & hues, int currentCount) {
-	QColor * c = new QColor();
-	c->setHsv(hue, 40 * 255 / 100, 90 * 255 / 100);
-	c->setAlpha(currentCount);							// this is a hack so we can sort them later
-	hues.append(c);
 }
 
 bool Wire::hasFlag(ViewGeometry::WireFlag flag)
@@ -1188,4 +1172,25 @@ void Wire::cleanup() {
 	}
 
 	ratsnestColors.clear();
+}
+
+void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen) {
+
+	int count = 0;
+	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
+		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
+			ItemBase::getConnectedColor(connectorItem, brush, pen);
+			return;
+		}
+
+		count++;
+	}
+
+	if (count == 0) {
+		ItemBase::getConnectedColor(connectorItem, brush, pen);
+		return;
+	}
+
+	pen = &m_bendpointPen;
+	brush = &m_shadowBrush;
 }

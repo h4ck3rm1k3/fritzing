@@ -96,6 +96,18 @@ const qreal ItemBase::hoverOpacity = .20;
 const QColor ItemBase::connectorHoverColor(0,0,255);
 const qreal ItemBase::connectorHoverOpacity = .40;
 
+QPen ItemBase::normalPen(QColor(255,0,0));
+QPen ItemBase::hoverPen(QColor(0, 0, 255));
+QPen ItemBase::connectedPen(QColor(0, 255, 0));
+QPen ItemBase::chosenPen(QColor(255,0,0));
+
+QBrush ItemBase::normalBrush(QColor(255,0,0));
+QBrush ItemBase::hoverBrush(QColor(0,0,255));
+QBrush ItemBase::connectedBrush(QColor(0,255,0));
+QBrush ItemBase::chosenBrush(QColor(255,0,0));
+
+
+
 bool wireLessThan(ConnectorItem * c1, ConnectorItem * c2)
 {
 	if (c1->connectorType() == c2->connectorType()) {
@@ -1254,3 +1266,24 @@ bool ItemBase::hasConnections()
 
 	return false;
 }
+
+void ItemBase::getConnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen) {
+	brush = &connectedBrush;
+	pen = &connectedPen;
+}
+
+void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen) {
+	brush = &normalBrush;
+	pen = &normalPen;
+}
+
+void ItemBase::getChosenColor(ConnectorItem *, QBrush * &brush, QPen * &pen) {
+	brush = &chosenBrush;
+	pen = &chosenPen;
+}
+
+void ItemBase::getHoverColor(ConnectorItem *, QBrush * &brush, QPen * &pen) {
+	brush = &hoverBrush;
+	pen = &hoverPen;
+}
+
