@@ -61,7 +61,7 @@ public slots:
 	void checkForUpdates();
 	void checkForUpdates(bool atUserRequest);
 	void enableCheckUpdates(bool enabled);
-	void importFilesFromPrevInstall();
+	void createUserDataStoreFolderStructure();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

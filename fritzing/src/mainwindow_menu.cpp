@@ -2513,7 +2513,9 @@ FileProgressDialog * MainWindow::exportProgress() {
 }
 
 void MainWindow::importFilesFromPrevInstall() {
-	QString prevInstallPath = QFileDialog::getExistingDirectory(this, tr("Old Fritzing Installation folder"),
+	QString prevInstallPath = QFileDialog::getExistingDirectory(
+			this,
+			tr("Please choose the previous Fritzing folder..."),
             QDir::homePath(),
             QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if(prevInstallPath.isNull()) return;

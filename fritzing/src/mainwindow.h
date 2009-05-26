@@ -110,6 +110,7 @@ public slots:
 	void swapSelected(const QVariant & currProps, const QString &family, const QString & name);
 	ModelPart* loadBundledPart(const QString &fileName, bool addToBin=true);
 	void partsEditorClosed(long id);
+	void importFilesFromPrevInstall();
 
 protected slots:
 	void load();
@@ -175,7 +176,6 @@ protected slots:
 	void hideAllLayers();
 	void showInViewHelp();
 	void addBendpoint();
-	void importFilesFromPrevInstall();
 
 	// TODO PARTS EDITOR REMOVE
 	void openInOldPartsEditor();

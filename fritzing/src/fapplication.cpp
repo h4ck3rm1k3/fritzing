@@ -354,7 +354,7 @@ int FApplication::startup(int & argc, char ** argv)
 	}
 
 	splash.showProgress(progressIndex, 0.1);
-	importFilesFromPrevInstall();
+	createUserDataStoreFolderStructure();
 
 
 	splash.showProgress(progressIndex, 0.2);
@@ -467,14 +467,28 @@ int FApplication::startup(int & argc, char ** argv)
 
 	mainWindow->clearFileProgressDialog();
 
-	/*VersionThing deattachedUserDataVersion;
-	Version::toVersionThing("",deattachedUserDataVersion);
+	VersionThing deattachedUserDataVersion;
+	Version::toVersionThing(Version::FirstVersionWithDeattachedUserData,deattachedUserDataVersion);
 	VersionThing prevVersionThing;
 	Version::toVersionThing(prevVersion,prevVersionThing);
 
-	if(Version::greaterThan(deattachedUserDataVersion,prevVersionThing)) {
-
-	}*/
+	if(prevVersion != ___emptyString___
+	&& Version::greaterThan(deattachedUserDataVersion,prevVersionThing))
+	{
+		QMessageBox::StandardButton answer = QMessageBox::question(
+			mainWindow,
+			tr("Import files from previous version?"),
+			tr("It seems that you're updating Fritzing.\n"
+			   "Do you want to import parts and bins that you have created before?\n"
+			   "\nNote: You can also, do it later through the \"Help\" > \"Import data "
+			   "from old version...\" menu action."),
+			QMessageBox::Ok | QMessageBox::No,
+			QMessageBox::Ok
+		);
+		if(answer == QMessageBox::Ok) {
+			mainWindow->importFilesFromPrevInstall();
+		}
+	}
 
 	return 0;
 }
@@ -651,7 +665,7 @@ QString FApplication::getSaveFileName( QWidget * parent, const QString & caption
 	return result;
 }
 
-void FApplication::importFilesFromPrevInstall() {
+void FApplication::createUserDataStoreFolderStructure() {
 	// make sure that the folder structure for parts and bins, exists
 	QString userDataStorePath = getUserDataStorePath();
 	QDir dataStore(userDataStorePath);
