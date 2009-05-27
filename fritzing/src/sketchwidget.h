@@ -339,7 +339,6 @@ signals:
 								long toID, QString toConnectorID,
 								bool connect, bool updateConnections);
 	void copyItemSignal(long itemID, QHash<ViewIdentifierClass::ViewIdentifier, ViewGeometry *> &);
-	void findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &);
 	void cleanUpWiresSignal(CleanUpWiresCommand *);
 	void selectionChangedSignal();
 
@@ -469,7 +468,6 @@ protected:
 	QPointF m_resizingBoardPos;
 	ConnectorItem * m_lastHoverEnterConnectorItem;
 	ItemBase * m_lastHoverEnterItem;
-	QString m_traceColor;
 
 protected:
 	QString m_viewName;

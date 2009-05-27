@@ -39,6 +39,7 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 {
 	m_viewName = QObject::tr("Schematic View");
 	m_traceColor = "black";
+	m_jumperColor = "red";
 }
 
 void SchematicSketchWidget::addViewLayers() {
@@ -57,18 +58,6 @@ void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
 	wire->setColorString("schematicGrey", Wire::UNROUTED_OPACITY);
 	wire->setPenWidth(2);
-}
-
-const QColor * SchematicSketchWidget::getRatsnestColor() 
-{
-	if (!schematicColor.isValid()) {
-		Wire::getColor(schematicColor, "schematicGrey");
-	}
-	return &schematicColor;
-}
-
-bool SchematicSketchWidget::autorouteDoesJumpers() {
-	return false;
 }
 
 bool SchematicSketchWidget::autorouteNeedsBounds() {

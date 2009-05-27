@@ -45,6 +45,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	m_viewName = QObject::tr("PCB View");
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 	m_traceColor = "trace";
+	m_jumperColor = "jumper";
 }
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
@@ -136,8 +137,7 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 
 void PCBSketchWidget::createJumper() {
 	QString commandString = tr("Create Jumper from this Wire");
-	QString colorString = ("jumper");
-	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, colorString);
+	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, m_jumperColor);
 	ensureLayerVisible(ViewLayer::Jumperwires);
 }
 
@@ -501,10 +501,6 @@ void PCBSketchWidget::initWire(Wire * wire, int penWidth) {
 	wire->setPenWidth(1);
 }
 
-bool PCBSketchWidget::autorouteDoesJumpers() {
-	return true;
-}
-
 bool PCBSketchWidget::autorouteNeedsBounds() {
 	return true;
 }
@@ -521,3 +517,10 @@ bool PCBSketchWidget::autorouteCheckParts() {
 	return false;
 }
 
+const QString & PCBSketchWidget::traceColor() {
+	return m_traceColor;
+}
+
+const QString & PCBSketchWidget::jumperColor() {
+	return m_jumperColor;
+}

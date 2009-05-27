@@ -1356,16 +1356,26 @@ void MainWindow::createMenus()
 	updateWindowMenu();
 	connect(m_windowMenu, SIGNAL(aboutToShow()), this, SLOT(updateWindowMenu()));
 
-	m_traceMenu = menuBar()->addMenu(tr("&Trace"));
-	m_traceMenu->addAction(m_autorouteAct);
-	m_traceMenu->addAction(m_createTraceAct);
-	m_traceMenu->addAction(m_createJumperAct);
-	m_traceMenu->addAction(m_excludeFromAutorouteAct);
-	m_traceMenu->addAction(m_selectAllTracesAct);
-	m_traceMenu->addAction(m_selectAllExcludedTracesAct);
-	m_traceMenu->addAction(m_selectAllJumpersAct);
+	m_pcbTraceMenu = menuBar()->addMenu(tr("&Trace"));
+	m_pcbTraceMenu->addAction(m_autorouteAct);
+	m_pcbTraceMenu->addAction(m_createTraceAct);
+	m_pcbTraceMenu->addAction(m_createJumperAct);
+	m_pcbTraceMenu->addAction(m_excludeFromAutorouteAct);
+	m_pcbTraceMenu->addAction(m_selectAllTracesAct);
+	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
+	m_pcbTraceMenu->addAction(m_selectAllJumpersAct);
+
+	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
+	m_schematicTraceMenu->addAction(m_autorouteAct);
+	m_schematicTraceMenu->addAction(m_createTraceAct);
+	m_schematicTraceMenu->addAction(m_excludeFromAutorouteAct);
+	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
+	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
+	m_schematicTraceMenu->addAction(m_selectAllJumpersAct);
+
 	updateTraceMenu();
-	connect(m_traceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
+	connect(m_pcbTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
+	connect(m_schematicTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
 
 
     menuBar()->addSeparator();
@@ -1660,7 +1670,7 @@ void MainWindow::updateTraceMenu() {
 	m_exportEtchableSvgAct->setEnabled(true);
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
-	m_selectAllJumpersAct->setEnabled(jEnabled && (m_currentGraphicsView == m_pcbGraphicsView));
+	m_selectAllJumpersAct->setEnabled(jEnabled);
 
 }
 
@@ -2328,7 +2338,8 @@ void MainWindow::exportBOM() {
 }
 
 void MainWindow::hideShowTraceMenu() {
-	m_traceMenu->menuAction()->setVisible(m_currentGraphicsView != m_breadboardGraphicsView);
+	m_pcbTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_pcbGraphicsView);
+	m_schematicTraceMenu->menuAction()->setVisible(m_currentGraphicsView == m_schematicGraphicsView);
 }
 
 void MainWindow::createTraceMenuActions() {

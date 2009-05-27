@@ -191,8 +191,6 @@ protected slots:
 
 	void loadPart(const QString &newPartPath, long partsEditorId=-1);
 
-	void findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &);
-
 	void setInfoViewOnHover(bool infoViewOnHover);
 	void updateItemMenu();
 
@@ -480,7 +478,8 @@ protected:
 	QAction *m_toggleDebuggerOutputAct;
 
 	// Trace Menu
-	QMenu *m_traceMenu;
+	QMenu *m_pcbTraceMenu;
+	QMenu *m_schematicTraceMenu;
 	QAction *m_autorouteAct;
 	QAction *m_createTraceAct;
 	QAction *m_createJumperAct;

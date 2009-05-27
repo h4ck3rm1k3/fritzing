@@ -330,21 +330,12 @@ void MainWindow::connectPairs() {
 	connectPair(m_pcbGraphicsView, m_breadboardGraphicsView);
 	connectPair(m_pcbGraphicsView, m_schematicGraphicsView);
 
-	bool succeeded = connect(m_breadboardGraphicsView, SIGNAL(findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
-							 this, SLOT(findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
-							 Qt::DirectConnection);
-
-	succeeded = connect(m_schematicGraphicsView, SIGNAL(findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
-							 this, SLOT(findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
-							 Qt::DirectConnection);
-
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(findSketchWidgetSignal(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
-							 this, SLOT(findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier, SketchWidget * &)),
-							 Qt::DirectConnection);
-
-	succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
+	bool succeeded = connect(m_pcbGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
+						this, SLOT(routingStatusSlot(SketchWidget *, int, int, int, int)));
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(routingStatusSignal(SketchWidget *, int, int, int, int)),
 						this, SLOT(routingStatusSlot(SketchWidget *, int, int, int, int)));
 
+	/*
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 	succeeded = connect(m_pcbGraphicsView, SIGNAL(movingSignal(SketchWidget *, QUndoCommand *)),
@@ -356,10 +347,13 @@ void MainWindow::connectPairs() {
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
 	succeeded = connect(m_breadboardGraphicsView, SIGNAL(ratsnestChangeSignal(SketchWidget *, QUndoCommand *)),
 						this, SLOT(clearRoutingSlot(SketchWidget *, QUndoCommand *)));
+	*/
 
-	//succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
-						//m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
-						//Qt::DirectConnection);
+	/*
+	succeeded = connect(m_schematicGraphicsView, SIGNAL(schematicDisconnectWireSignal(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
+						m_breadboardGraphicsView, SLOT(schematicDisconnectWireSlot(ConnectorPairHash &, QSet<ItemBase *> &, QHash<ItemBase *, ConnectorPairHash *> &, QUndoCommand *)),
+						Qt::DirectConnection);
+	*/
 
 	FApplication * fapp = dynamic_cast<FApplication *>(qApp);
 	if (fapp != NULL) {
@@ -852,26 +846,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 	}
 
 	return QMainWindow::eventFilter(object, event);
-}
-
-void MainWindow::findSketchWidgetSlot(ViewIdentifierClass::ViewIdentifier viewIdentifier, SketchWidget * & sketchWidget ) {
-	if (m_breadboardGraphicsView->viewIdentifier() == viewIdentifier) {
-		sketchWidget = m_breadboardGraphicsView;
-		return;
-	}
-
-	if (m_schematicGraphicsView->viewIdentifier() == viewIdentifier) {
-		sketchWidget = m_schematicGraphicsView;
-		return;
-	}
-
-	if (m_pcbGraphicsView->viewIdentifier() == viewIdentifier) {
-		sketchWidget = m_pcbGraphicsView;
-		return;
-	}
-
-	sketchWidget = NULL;
-
 }
 
 const QString MainWindow::untitledFileName() {

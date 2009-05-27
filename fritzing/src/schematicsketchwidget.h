@@ -41,14 +41,10 @@ public:
 	void addViewLayers();
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 	void initWire(Wire *, int penWidth);
-	bool autorouteDoesJumpers();
 	bool autorouteNeedsBounds();
 	bool autorouteCheckWires();
 	bool autorouteCheckConnectors();
 	bool autorouteCheckParts();
-
-protected:
-	const QColor * getRatsnestColor(); 
 
 };
 

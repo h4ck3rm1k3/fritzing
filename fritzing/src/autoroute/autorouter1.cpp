@@ -314,7 +314,10 @@ void Autorouter1::start()
 			}
 		}
 
-		if (!routedFlag && !m_stopTrace && m_sketchWidget->autorouteDoesJumpers()) {
+		if (routedFlag && !m_stopTrace) {
+		}
+
+		if (!routedFlag && !m_stopTrace) {
 			drawJumper(edge->from, edge->to, partForBounds);
 			jumperCount++;
 		}
@@ -614,7 +617,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 	}
 
 	Wire * jumperWire = dynamic_cast<Wire *>(jumper);
-	jumperWire->setColorString("jumper", Wire::UNROUTED_OPACITY);
+	jumperWire->setColorString(m_sketchWidget->jumperColor(), Wire::UNROUTED_OPACITY);
 	jumperWire->setWidth(StandardJumperWidth);
 	jumperWire->setSelected(false);
 
@@ -676,7 +679,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	trace->setSelected(false);
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	traceWire->setClipEnds(false);
-	traceWire->setColorString("trace", Wire::UNROUTED_OPACITY);
+	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
 	traceWire->setWidth(StandardTraceWidth + 1);
 
 	QGraphicsItem * nearestObstacle = NULL;
@@ -1313,7 +1316,7 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 
 	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
 	traceWire->setClipEnds(false);
-	traceWire->setColorString("trace", Wire::UNROUTED_OPACITY);
+	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
 	traceWire->setWidth(5);										// set extra width to deal with keepout
 
 	bool intersects = false;

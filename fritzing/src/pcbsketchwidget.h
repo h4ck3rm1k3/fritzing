@@ -53,11 +53,12 @@ public:
 	void addBoard();
 	void setCurrent(bool current);
 	void initWire(Wire *, int penWidth);
-	virtual bool autorouteDoesJumpers();
 	virtual bool autorouteNeedsBounds();
 	virtual bool autorouteCheckWires();
 	virtual bool autorouteCheckConnectors();
 	virtual bool autorouteCheckParts();
+	const QString & traceColor();
+	const QString & jumperColor();
 
 protected:
 	void setWireVisible(Wire * wire);
@@ -74,7 +75,6 @@ protected:
 	void setClipEnds(class VirtualWire *);
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
 
-
 protected:
 	int m_netCount;
 	int m_netRoutedCount;
@@ -82,6 +82,8 @@ protected:
 	int m_jumperCount;
 	bool m_addBoard;
 	ItemBase * m_addedBoard;
+	QString m_jumperColor;
+	QString m_traceColor;
 };
 
 #endif
