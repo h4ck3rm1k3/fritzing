@@ -262,10 +262,12 @@ void Autorouter1::start()
 		}
 
 		bool routedFlag = false;
+		QList<Wire *> wires;
+		ConnectorItem * lastFrom;
+		ConnectorItem * lastTo;
 		foreach (ConnectorItem * from, fromConnectorItems) {
 			if (m_cancelled || m_stopTrace) break;
 			if (routedFlag) break;
-
 			foreach (ConnectorItem * to, toConnectorItems) {
 				if (m_cancelled || m_stopTrace) break;	
 				if (routedFlag) break;
@@ -290,12 +292,13 @@ void Autorouter1::start()
 					ratsnest->setWidth(5);
 				};
 
+				wires.clear();
+				lastFrom = from;
+				lastTo = to;
 				if (!m_sketchWidget->autorouteNeedsBounds()) {
-					QList<Wire *> wires;
 					routedFlag = drawTrace(from, to, boundsPoly, wires);
 				}
 				else if (partForBounds) {
-					QList<Wire *> wires;
 					QRectF boundingRect = partForBounds->boundingRect();
 					boundingRect.adjust(boundingKeepOut, boundingKeepOut, -boundingKeepOut, -boundingKeepOut);
 					routedFlag = drawTrace(from, to, partForBounds->mapToScene(boundingRect), wires);
@@ -315,6 +318,14 @@ void Autorouter1::start()
 		}
 
 		if (routedFlag && !m_stopTrace) {
+			switch (m_sketchWidget->cleanType()) {
+				case PCBSketchWidget::noClean:
+					break;
+				case PCBSketchWidget::ninetyClean:
+					QList<Wire *> newWires;
+					bool success = clean90(lastFrom, lastTo, wires, newWires);
+					break;
+			}
 		}
 
 		if (!routedFlag && !m_stopTrace) {
@@ -659,35 +670,15 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		}
 	}
 
-	long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(fromPos);
-	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
-	viewGeometry.setLine(line);
-	viewGeometry.setTrace(true);
-	viewGeometry.setAutoroutable(true);
+	TraceWire * traceWire = drawOneTrace(fromPos, toPos, StandardTraceWidth + 1);
+	if (traceWire == NULL) return false;
 
-	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
-												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
-	if (trace == NULL) {
-		// we're in trouble
-		return false;
-	}
-
-	// addItemAux calls trace->setSelected(true) so unselect it
-	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
-	trace->setSelected(false);
-	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
-	traceWire->setClipEnds(false);
-	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
-	traceWire->setWidth(StandardTraceWidth + 1);
-
-	QGraphicsItem * nearestObstacle = NULL;
+	QGraphicsItem * nearestObstacle = m_nearestObstacle = NULL;
 	double nearestObstacleDistance = -1;
 
 	// TODO: if a trace is chained, make set trace on the chained wire
 
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(trace)) {
+	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(traceWire)) {
 		if (item == from) continue;
 		if (item == to) continue;
 
@@ -774,11 +765,11 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					continue;
 				}
 
-				if (from->attachedTo() == candidateItemBase) {
+				if (from && (from->attachedTo() == candidateItemBase)) {
 					continue;
 				}
 
-				if (to->attachedTo() == candidateItemBase) {
+				if (to && (to->attachedTo() == candidateItemBase)) {
 					continue;
 				}
 
@@ -813,31 +804,11 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 	bool inBounds = true;
 	QPointF nearestBoundsIntersection;
-	double nearestBoundsIntersectionDistance = 0;
+	double nearestBoundsIntersectionDistance;
 	// now make sure it fits into the bounds
 	if (!boundingPoly.isEmpty()) {
 		QLineF l1(fromPos, toPos);
-		int count = boundingPoly.count();
-		for (int i = 0; i < count; i++) {
-			QLineF l2(boundingPoly[i], boundingPoly[(i + 1) % count]);
-			QPointF intersectingPoint;
-			if (l1.intersect(l2, &intersectingPoint) == QLineF::BoundedIntersection) {
-				if (inBounds == true) {
-					nearestBoundsIntersection = intersectingPoint;
-					inBounds = false;
-					nearestBoundsIntersectionDistance = (intersectingPoint.x() - fromPos.x()) * (intersectingPoint.x() - fromPos.x()) +
-														(intersectingPoint.y() - fromPos.y()) * (intersectingPoint.y() - fromPos.y());
-				}
-				else {
-					double d = (intersectingPoint.x() - fromPos.x()) * (intersectingPoint.x() - fromPos.x()) +
-							   (intersectingPoint.y() - fromPos.y()) * (intersectingPoint.y() - fromPos.y());
-					if (d < nearestBoundsIntersectionDistance) {
-						nearestBoundsIntersectionDistance = d;
-						nearestBoundsIntersection = intersectingPoint;
-					}
-				}
-			}
-		}
+		findNearestIntersection(l1, fromPos, boundingPoly, inBounds, nearestBoundsIntersection, nearestBoundsIntersectionDistance);
 	}
 
 	if ((nearestObstacle == NULL) && inBounds) {
@@ -845,7 +816,9 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 		return true;
 	}
 
-	m_sketchWidget->deleteItem(trace, true, false, false);
+	m_sketchWidget->deleteItem(traceWire, true, false, false);
+
+	m_nearestObstacle = nearestObstacle;
 
 	if (!recurse) return false;
 
@@ -1280,9 +1253,6 @@ void Autorouter1::reduceWires(QList<Wire *> & wires, ConnectorItem * from, Conne
 
 Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, QPointF fromPos, QPointF toPos, const QPolygonF & boundingPoly)
 {
-	long newID = ItemBase::getNextID();
-	ViewGeometry viewGeometry;
-	viewGeometry.setLoc(fromPos);
 	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
 
 	bool insidePoly = true;
@@ -1299,28 +1269,11 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 	}
 	if (!insidePoly) return NULL;
 
-	viewGeometry.setLine(line);
-	viewGeometry.setTrace(true);
-	viewGeometry.setAutoroutable(true);
-
-	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
-											BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
-	if (trace == NULL) {
-		// we're in trouble
-		return NULL;
-	}
-
-	// addItemAux calls trace->setSelected(true) so unselect it
-	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
-	trace->setSelected(false);
-
-	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
-	traceWire->setClipEnds(false);
-	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
-	traceWire->setWidth(5);										// set extra width to deal with keepout
+	TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5);
+	if (traceWire == NULL) return NULL;
 
 	bool intersects = false;
-	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(trace)) {
+	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(traceWire)) {
 		if (item == from) continue;
 		if (item == to) continue;
 
@@ -1374,10 +1327,264 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 
 	}	
 	if (intersects) {
-		m_sketchWidget->deleteItem(trace, true, false, false);
+		m_sketchWidget->deleteItem(traceWire, true, false, false);
 		return NULL;
 	}
 
 	traceWire->setWidth(StandardTraceWidth);									// restore normal width
 	return traceWire;
+}
+
+QPointF Autorouter1::calcPrimePoint(ConnectorItem * connectorItem) {
+	QPointF c = connectorItem->sceneAdjustedTerminalPoint();
+	QLineF lh(QPointF(c.x() - 999999, c.y()), QPointF(c.x() + 99999, c.y()));
+	QLineF lv(QPointF(c.x(), c.y() - 999999), QPointF(c.x(), c.y() + 999999));
+	QRectF r = connectorItem->attachedTo()->boundingRect();
+	r.adjust(-keepOut, -keepOut, keepOut, keepOut);		
+	QPolygonF poly = connectorItem->attachedTo()->mapToScene(r);
+	bool inBounds;
+	QPointF lhIntersection;
+	qreal lhDistance;
+	findNearestIntersection(lh, c, poly, inBounds, lhIntersection, lhDistance);
+	QPointF lvIntersection;
+	qreal lvDistance;
+	findNearestIntersection(lv, c, poly, inBounds, lvIntersection, lvDistance);
+	if (lhDistance <= lvDistance) return lhIntersection;
+
+	return lvIntersection;
+}
+
+void Autorouter1::findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance) 
+{
+	inBounds = true;
+	nearestBoundsIntersectionDistance = 0;
+	int count = boundingPoly.count();
+	for (int i = 0; i < count; i++) {
+		QLineF l2(boundingPoly[i], boundingPoly[(i + 1) % count]);
+		QPointF intersectingPoint;
+		if (l1.intersect(l2, &intersectingPoint) == QLineF::BoundedIntersection) {
+			if (inBounds == true) {
+				nearestBoundsIntersection = intersectingPoint;
+				inBounds = false;
+				nearestBoundsIntersectionDistance = (intersectingPoint.x() - fromPos.x()) * (intersectingPoint.x() - fromPos.x()) +
+													(intersectingPoint.y() - fromPos.y()) * (intersectingPoint.y() - fromPos.y());
+			}
+			else {
+				double d = (intersectingPoint.x() - fromPos.x()) * (intersectingPoint.x() - fromPos.x()) +
+						   (intersectingPoint.y() - fromPos.y()) * (intersectingPoint.y() - fromPos.y());
+				if (d < nearestBoundsIntersectionDistance) {
+					nearestBoundsIntersectionDistance = d;
+					nearestBoundsIntersection = intersectingPoint;
+				}
+			}
+		}
+	}
+}
+
+TraceWire * Autorouter1::drawOneTrace(QPointF fromPos, QPointF toPos, int width)
+{
+	long newID = ItemBase::getNextID();
+	ViewGeometry viewGeometry;
+	viewGeometry.setLoc(fromPos);
+	QLineF line(0, 0, toPos.x() - fromPos.x(), toPos.y() - fromPos.y());
+	viewGeometry.setLine(line);
+	viewGeometry.setTrace(true);
+	viewGeometry.setAutoroutable(true);
+
+	ItemBase * trace = m_sketchWidget->addItem(m_sketchWidget->paletteModel()->retrieveModelPart(ItemBase::wireModuleIDName), 
+												BaseCommand::SingleView, viewGeometry, newID, -1, -1, NULL, NULL);
+	if (trace == NULL) {
+		// we're in trouble
+		return NULL;
+	}
+
+	// addItemAux calls trace->setSelected(true) so unselect it
+	// note: modifying selection is dangerous unless you've called SketchWidget::setIgnoreSelectionChangeEvents(true)
+	trace->setSelected(false);
+	TraceWire * traceWire = dynamic_cast<TraceWire *>(trace);
+	traceWire->setClipEnds(false);
+	traceWire->setColorString(m_sketchWidget->traceColor(), Wire::UNROUTED_OPACITY);
+	traceWire->setWidth(width);
+
+	return traceWire;
+}
+
+bool Autorouter1::hitsObstacle(ItemBase * traceWire, ItemBase * ignore) 
+{
+	foreach (QGraphicsItem * item, m_sketchWidget->scene()->collidingItems(traceWire)) {
+
+		ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
+		if (candidateItemBase) {
+			if (ignore == candidateItemBase) continue;
+			if (candidateItemBase->itemType() == ModelPart::Wire) continue;
+
+			//if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
+				// needs to be on the same layer
+				//continue;
+			//}
+
+			return true;
+		}
+
+	}	
+
+	return false;
+}
+
+bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & oldWires, QList<Wire *> & newWires) {
+	// 1. draw wire from FROM to just outside its nearest part border
+	QPointF fromPrime = calcPrimePoint(from);
+	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(), fromPrime, StandardTraceWidth + 1);
+	if (fromWire == NULL) return false;
+
+	if (hitsObstacle(fromWire, from->attachedTo())) {
+		m_sketchWidget->deleteItem(fromWire, true, false, false);
+		return false;
+	}
+
+	// 2. draw wire from TO to just outside its nearest part border
+	QPointF toPrime = calcPrimePoint(to);
+	TraceWire * toWire = drawOneTrace(to->sceneAdjustedTerminalPoint(), toPrime, StandardTraceWidth + 1);
+	if (toWire == NULL) return false;
+
+	if (hitsObstacle(toWire, to->attachedTo())) {
+		m_sketchWidget->deleteItem(fromWire, true, false, false);
+		m_sketchWidget->deleteItem(toWire, true, false, false);
+		return false;
+	}
+
+	newWires.append(fromWire);
+	newWires.append(toWire);
+	bool result = clean90(fromPrime, toPrime, newWires, 0);
+	if (result) {
+		foreach (Wire * w, oldWires) {
+			m_sketchWidget->deleteItem(w, true, false, false);
+		}
+		foreach (Wire * w, newWires) {
+			oldWires.append(w);
+		}
+	}
+	else {
+		foreach (Wire * w, newWires) {
+			m_sketchWidget->deleteItem(w, true, false, false);
+		}
+	}
+	newWires.clear();
+
+	return result;
+}
+
+bool Autorouter1::clean90(QPointF fromPos, QPointF toPos, QList<Wire *> newWires, int level)
+{
+	// 3. figure the center between FROM' and TO' and try to draw as three straight lines, recursing if blocked
+	QPointF center((fromPos.x() + toPos.x()) / 2.0, (fromPos.y() + toPos.y()) / 2.0);
+	QPointF d1(center.x(), fromPos.y());
+	QPointF d2(d1.x(), toPos.y());
+	if (drawThree(fromPos, toPos, d1, d2, newWires, level)) {
+		if (level > 0) {
+			DebugDialog::debug("hello");
+		}
+		return true;
+	}
+
+	QPointF e1(fromPos.x(), center.y());
+	QPointF e2(toPos.x(), center.y());
+	if (drawThree(fromPos, toPos, e1, e2, newWires, level)) {
+		if (level > 0) {
+			DebugDialog::debug("hello");
+		}
+		return true;
+	}
+
+	// 4. if step 3 fails, try to draw as two straight lines, recursing if blocked
+	QPointF f1(fromPos.x(), toPos.y());
+	if (drawTwo(fromPos, toPos, f1, newWires, level)) {
+		if (level > 0) {
+			DebugDialog::debug("hello");
+		}
+		return true;
+	}
+
+	QPointF g1(toPos.x(), fromPos.y());
+	if (drawTwo(fromPos, toPos, g1, newWires, level)) {
+		if (level > 0) {
+			DebugDialog::debug("hello");
+		}
+		return true;
+	}
+
+	return false;
+}
+
+bool Autorouter1::drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> newWires, int level) {
+	bool shortcut = false;
+	bool skipToNext = false;
+	QList<Wire *> temp;
+	if (!drawTrace(fromPos, d1, NULL, NULL, temp, QPolygonF(), 0, d1, false, shortcut)) {
+		return false;
+	}
+
+	if (!drawTrace(d1, d2, NULL, NULL, temp, QPolygonF(), 0, d2, false, shortcut)) {
+		if (clean90(d1, toPos, temp, level + 1)) {
+			foreach (Wire * w, temp) {
+				newWires.append(w);
+			}
+			return true;
+		}
+		else {
+			skipToNext = true;
+		}
+	}
+
+	if (!skipToNext) {
+		if (drawTrace(d2, toPos, NULL, NULL, temp, QPolygonF(), 0, toPos, false, shortcut)) {
+			foreach (Wire * w, temp) {
+				newWires.append(w);
+			}
+			return true;
+		}
+		else {
+			if (clean90(d2, toPos, temp, level + 1)) {
+				foreach (Wire * w, temp) {
+					newWires.append(w);
+				}
+				return true;
+			}
+		}
+	}
+
+	foreach (Wire * w, temp) {
+		m_sketchWidget->deleteItem(w, true, false, false);
+	}
+
+	return false;
+}
+
+bool Autorouter1::drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> newWires, int level) {
+	bool shortcut = false;
+	QList<Wire *> temp;
+	if (!drawTrace(fromPos, d1, NULL, NULL, temp, QPolygonF(), 0, d1, false, shortcut)) {
+		return false;
+	}
+
+	if (drawTrace(d1, toPos, NULL, NULL, temp, QPolygonF(), 0, toPos, false, shortcut)) {
+		foreach (Wire * w, temp) {
+			newWires.append(w);
+		}
+		return true;
+	}
+	else {
+		if (clean90(d1, toPos, temp, level + 1)) {
+			foreach (Wire * w, temp) {
+				newWires.append(w);
+			}
+			return true;
+		}
+	}
+
+	foreach (Wire * w, temp) {
+		m_sketchWidget->deleteItem(w, true, false, false);
+	}
+
+	return false;
 }

@@ -60,6 +60,14 @@ public:
 	const QString & traceColor();
 	const QString & jumperColor();
 
+public:
+	enum CleanType {
+		noClean,
+		ninetyClean
+	};
+
+	CleanType cleanType();
+
 protected:
 	void setWireVisible(Wire * wire);
 	void makeWires(QList<ConnectorItem *> & partsConnectorItems, QList <Wire *> & ratsnestWires, Wire * & modelWire, RatsnestCommand *);
@@ -84,6 +92,7 @@ protected:
 	ItemBase * m_addedBoard;
 	QString m_jumperColor;
 	QString m_traceColor;
+	CleanType m_cleanType;
 };
 
 #endif

@@ -46,6 +46,7 @@ PCBSketchWidget::PCBSketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentif
 	m_netCount = m_netRoutedCount = m_connectorsLeftToRoute = m_jumperCount = 0;
 	m_traceColor = "trace";
 	m_jumperColor = "jumper";
+	m_cleanType = noClean;
 }
 
 void PCBSketchWidget::setWireVisible(Wire * wire)
@@ -523,4 +524,8 @@ const QString & PCBSketchWidget::traceColor() {
 
 const QString & PCBSketchWidget::jumperColor() {
 	return m_jumperColor;
+}
+
+PCBSketchWidget::CleanType PCBSketchWidget::cleanType() {
+	return m_cleanType;
 }
