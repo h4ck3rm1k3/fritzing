@@ -123,6 +123,7 @@ class BinManager : public QFrame {
 	public:
 		static QString Title;
 		static QString MyPartsBinLocation;
+		static QString MyPartsBinTemplateLocation;
 		static bool isTabReorderingEvent(QDropEvent* event);
 };
 

@@ -44,6 +44,7 @@ $Date: 2009-04-02 13:54:08 +0200 (Thu, 02 Apr 2009) $
 
 QString BinManager::Title;
 QString BinManager::MyPartsBinLocation;
+QString BinManager::MyPartsBinTemplateLocation;
 
 QString BinManager::StandardBinStyle = "background-color: gray;";
 QString BinManager::CurrentBinStyle = "background-color: black;";

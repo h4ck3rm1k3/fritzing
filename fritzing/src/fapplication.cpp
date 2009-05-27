@@ -322,6 +322,7 @@ int FApplication::startup(int & argc, char ** argv)
 	Helper::initText();
 	PartsEditorMainWindow::initText();
 	BinManager::MyPartsBinLocation = getUserDataStorePath("bins")+"/my_parts.fzb";
+	BinManager::MyPartsBinTemplateLocation =":/resources/bins/my_parts.fzb";
 
 	splash.showProgress(progressIndex, 0.085);
 	processEvents();
@@ -467,22 +468,17 @@ int FApplication::startup(int & argc, char ** argv)
 
 	mainWindow->clearFileProgressDialog();
 
-	VersionThing deattachedUserDataVersion;
-	Version::toVersionThing(Version::FirstVersionWithDeattachedUserData,deattachedUserDataVersion);
-	VersionThing prevVersionThing;
-	Version::toVersionThing(prevVersion,prevVersionThing);
-
 	if(prevVersion != ___emptyString___
-	&& Version::greaterThan(deattachedUserDataVersion,prevVersionThing))
+	   && Version::greaterThan(prevVersion,Version::FirstVersionWithDetachedUserData))
 	{
 		QMessageBox::StandardButton answer = QMessageBox::question(
 			mainWindow,
 			tr("Import files from previous version?"),
 			tr("It seems that you're updating Fritzing.\n"
 			   "Do you want to import parts and bins that you have created before?\n"
-			   "\nNote: You can also, do it later through the \"Help\" > \"Import data "
+			   "\nNote: You can also, do it later through the \"Help\" > \"Import parts and bins "
 			   "from old version...\" menu action."),
-			QMessageBox::Ok | QMessageBox::No,
+			QMessageBox::Ok | QMessageBox::Cancel,
 			QMessageBox::Ok
 		);
 		if(answer == QMessageBox::Ok) {
@@ -677,18 +673,19 @@ void FApplication::createUserDataStoreFolderStructure() {
 		}
 	}
 
-	// this copy action, is not working on windows, because is a resources file
-	//QFile(":/resources/bins/my_parts.fzb").copy(BinManager::MyPartsBinLocation);
 	if(!QFileInfo(BinManager::MyPartsBinLocation).exists()) {
-		QFile myPartsBinTemplate(":/resources/bins/my_parts.fzb");
-		myPartsBinTemplate.open(QIODevice::ReadOnly);
-		QString content = myPartsBinTemplate.readAll();
-		myPartsBinTemplate.close();
+		// this copy action, is not working on windows, because is a resources file
+		if(!QFile(BinManager::MyPartsBinTemplateLocation).copy(BinManager::MyPartsBinLocation)) {
+			QFile myPartsBinTemplate(BinManager::MyPartsBinTemplateLocation);
+			myPartsBinTemplate.open(QIODevice::ReadOnly);
+			QString content = myPartsBinTemplate.readAll();
+			myPartsBinTemplate.close();
 
-		QFile myPartsBin(BinManager::MyPartsBinLocation);
-		Q_ASSERT(myPartsBin.open(QIODevice::WriteOnly));
-		QTextStream out(&myPartsBin);
-		out << content;
-		myPartsBin.close();
+			QFile myPartsBin(BinManager::MyPartsBinLocation);
+			Q_ASSERT(myPartsBin.open(QIODevice::WriteOnly));
+			QTextStream out(&myPartsBin);
+			out << content;
+			myPartsBin.close();
+		}
 	}
 }

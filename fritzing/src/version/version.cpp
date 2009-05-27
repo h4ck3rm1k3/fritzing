@@ -29,6 +29,8 @@ $Date$
 #include <QString>
 #include <QStringList>
 
+#include "../debugdialog.h"
+
 QString Version::m_majorVersion("0");
 QString Version::m_minorVersion("3");
 QString Version::m_minorSubVersion("1");
@@ -44,7 +46,7 @@ QStringList Version::m_modifiers;
 
 Version * Version::m_singleton = new Version();
 
-QString Version::FirstVersionWithDeattachedUserData = "0.3.1.b.05.26.3016";
+QString Version::FirstVersionWithDetachedUserData = "0.3.1b.05.26.3016";
 
 Version::Version() {
 	if (m_modifiers.count() == 0) {
@@ -67,7 +69,7 @@ Version::Version() {
 		}
 	}
 
-	m_versionString = QString("%1.%2.%3.%4.%5.%6").arg(m_majorVersion).arg(m_minorVersion).arg(m_minorSubVersion).arg(m_modifier).arg(m_shortDate).arg(m_revision);
+	m_versionString = QString("%1.%2.%3%4.%5.%6").arg(m_majorVersion).arg(m_minorVersion).arg(m_minorSubVersion).arg(m_modifier).arg(m_shortDate).arg(m_revision);
 }
 
 const QString & Version::majorVersion() {
@@ -117,6 +119,13 @@ bool Version::candidateGreaterThanCurrent(const VersionThing & candidateVersionT
 	return greaterThan(myVersionThing, candidateVersionThing);
 }
 
+bool Version::greaterThan(const QString & myVersionStr, const QString & yourVersionStr) {
+	VersionThing myVersionThing;
+	Version::toVersionThing(myVersionStr,myVersionThing);
+	VersionThing yourVersionThing;
+	Version::toVersionThing(yourVersionStr,yourVersionThing);
+	return greaterThan(myVersionThing,yourVersionThing);
+}
 
 bool Version::greaterThan(const VersionThing & myVersionThing, const VersionThing & yourVersionThing)
 {
@@ -156,7 +165,7 @@ void Version::toVersionThing(const QString & candidate, VersionThing & versionTh
 		modString += s + "|";
 	}
 	modString.chop(1);
-	QRegExp sw(QString("([\\d]+)\\.([\\d]+)\\.([\\d]+)(%1)$").arg(modString));
+	QRegExp sw(QString("([\\d]+)\\.([\\d]+)\\.([\\d]+)(%1)").arg(modString));
 	if (sw.indexIn(candidate) != 0) {
 		return;
 	}
@@ -171,5 +180,4 @@ void Version::toVersionThing(const QString & candidate, VersionThing & versionTh
 	if (!versionThing.ok) return;
 
 	versionThing.releaseModifier = sw.cap(4);
-
 }

@@ -1245,7 +1245,7 @@ void MainWindow::createHelpMenuActions() {
 	m_reportBugAct->setStatusTip(tr("Report a but you've found in Fritzing"));
 	connect(m_reportBugAct, SIGNAL(triggered()), this, SLOT(reportBug()));
 
-	m_importFilesFromPrevInstallAct = new QAction(tr("&Import data from old version..."), this);
+	m_importFilesFromPrevInstallAct = new QAction(tr("&Import parts and bins from old version..."), this);
 	m_importFilesFromPrevInstallAct->setStatusTip(tr("Import parts and bins from previous installation"));
 	connect(m_importFilesFromPrevInstallAct, SIGNAL(triggered()), this, SLOT(importFilesFromPrevInstall()));
 }

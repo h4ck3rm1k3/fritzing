@@ -51,9 +51,10 @@ public:
 	static const QString & year();
 	static bool candidateGreaterThanCurrent(const VersionThing &);
 	static bool greaterThan(const VersionThing & myVersionThing, const VersionThing & yourVersionThing);
+	static bool greaterThan(const QString & myVersionStr, const QString & yourVersionStr);
 	static bool modifierGreaterThan(const QString & myReleaseModifier, const QString & yourReleaseModifier);
 	static void toVersionThing(const QString & candidate, VersionThing & versionThing);
-	static QString FirstVersionWithDeattachedUserData;
+	static QString FirstVersionWithDetachedUserData;
 
 protected:
 	Version();
