@@ -60,7 +60,7 @@ protected:
 	bool tryOne(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QPointF midPos, QList<class Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut);
 	bool tryWithWires(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, class ConnectorItem * end, QList<class Wire *> & chainedWires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut);
 	bool tryWithWire(QPointF fromPos, QPointF toPos, class ConnectorItem * from, class ConnectorItem * to, QList<class Wire *> & wires, QPointF midpoint, QList<class Wire *> & chainedWires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut);
-	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint);
+	bool prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos, QPointF & leftPoint, QPointF & rightPoint, bool adjust);
 	void cleanUp();
 	void updateRatsnest(bool routed, QUndoCommand * parentCommand);
 	void drawJumper(ConnectorItem * from, ConnectorItem * to, class ItemBase * partForBounds);
@@ -75,8 +75,9 @@ protected:
 	void findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance); 
 	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width);
 	bool hitsObstacle(ItemBase * traceWire, ItemBase * ignore); 
-	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> newWires, int level);
-	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> newWires, int level);
+	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> newWires, int level, bool recurse);
+	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> newWires, int level, bool recurse);
+	void clearLastDrawTraces();
 
 public:
 	static void calcDistance(QGraphicsItem * & nearestObstacle, double & nearestObstacleDistance, QPointF fromPos, QGraphicsItem * item);

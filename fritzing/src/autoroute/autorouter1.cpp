@@ -323,6 +323,7 @@ void Autorouter1::start()
 					break;
 				case PCBSketchWidget::ninetyClean:
 					QList<Wire *> newWires;
+					//clearLastDrawTraces();
 					bool success = clean90(lastFrom, lastTo, wires, newWires);
 					break;
 			}
@@ -385,11 +386,14 @@ void Autorouter1::cleanUp() {
 		delete connectorItems;
 	}
 	m_allPartConnectorItems.clear();
+	clearLastDrawTraces();
+}
+
+void Autorouter1::clearLastDrawTraces() {
 	foreach (QLine * lastDrawTrace, m_lastDrawTraces) {
 		delete lastDrawTrace;
 	}
 	m_lastDrawTraces.clear();
-
 }
 
 void Autorouter1::clearTraces(PCBSketchWidget * sketchWidget, bool deleteAll, QUndoCommand * parentCommand) {
@@ -664,6 +668,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 	m_lastDrawTraces.prepend(new QLine(fp, tp));   // push most recent
 
+
 	if (!boundingPoly.isEmpty()) {
 		if (!boundingPoly.containsPoint(fromPos, Qt::OddEvenFill)) {
 			return false;
@@ -671,7 +676,9 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 	}
 
 	TraceWire * traceWire = drawOneTrace(fromPos, toPos, StandardTraceWidth + 1);
-	if (traceWire == NULL) return false;
+	if (traceWire == NULL) {
+		return false;
+	}
 
 	QGraphicsItem * nearestObstacle = m_nearestObstacle = NULL;
 	double nearestObstacleDistance = -1;
@@ -820,7 +827,9 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 
 	m_nearestObstacle = nearestObstacle;
 
-	if (!recurse) return false;
+	if (!recurse) {
+		return false;
+	}
 
 	if (toPos != endPos) {
 		// just for grins, try a direct line to the end point
@@ -849,7 +858,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					.arg(ci->attachedToID()) );
 					*/
 
-		prePolyResult = prePoly(nearestObstacle, fromPos, toPos, leftPoint, rightPoint);
+		prePolyResult = prePoly(nearestObstacle, fromPos, toPos, leftPoint, rightPoint, true);
 		if (!prePolyResult) return false;
 
 		/*
@@ -911,7 +920,7 @@ bool Autorouter1::tryWithWires(QPointF fromPos, QPointF toPos, ConnectorItem * f
 							   const QPolygonF & boundingPoly, int level, QPointF endPos, bool & shortcut) {
 	QPointF leftPoint, rightPoint;
 
-	bool prePolyResult = prePoly(end, fromPos, toPos, leftPoint, rightPoint);
+	bool prePolyResult = prePoly(end, fromPos, toPos, leftPoint, rightPoint, true);
 	if (!prePolyResult) return false;
 
 	bool result = tryWithWire(fromPos, toPos, from, to, wires, leftPoint, chainedWires, boundingPoly, level, endPos, shortcut);
@@ -941,7 +950,7 @@ bool Autorouter1::tryWithWire(QPointF fromPos, QPointF toPos, ConnectorItem * fr
 
 
 bool Autorouter1::prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPointF toPos,
-						  QPointF & leftPoint, QPointF & rightPoint)
+						  QPointF & leftPoint, QPointF & rightPoint, bool adjust)
 {
 	QRectF r = nearestObstacle->boundingRect();
 	r.adjust(-keepOut, -keepOut, keepOut, keepOut);			// TODO: make this a variable
@@ -1013,16 +1022,21 @@ bool Autorouter1::prePoly(QGraphicsItem * nearestObstacle, QPointF fromPos, QPoi
 
 	*/
 
-
-	// extend just a little bit past the tangent
 	Q_UNUSED(toPos);
-	QLineF fl0(fromPos, l0);
-	fl0.setLength(fl0.length() + 2);
-	QLineF fr0(fromPos, r0);
-	fr0.setLength(fr0.length() + 2);
+	if (adjust) {
+		// extend just a little bit past the tangent
+		QLineF fl0(fromPos, l0);
+		fl0.setLength(fl0.length() + 2);
+		QLineF fr0(fromPos, r0);
+		fr0.setLength(fr0.length() + 2);
 
-	leftPoint = fl0.p2();
-	rightPoint = fr0.p2();
+		leftPoint = fl0.p2();
+		rightPoint = fr0.p2();
+	}
+	else {
+		leftPoint = l0;
+		rightPoint = r0;
+	}
 
 	return true;
 }
@@ -1476,115 +1490,201 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 
 bool Autorouter1::clean90(QPointF fromPos, QPointF toPos, QList<Wire *> newWires, int level)
 {
-	// 3. figure the center between FROM' and TO' and try to draw as three straight lines, recursing if blocked
+	// 3. figure the center between fromPos and toPos and try to draw as three straight lines, recursing if blocked
 	QPointF center((fromPos.x() + toPos.x()) / 2.0, (fromPos.y() + toPos.y()) / 2.0);
 	QPointF d1(center.x(), fromPos.y());
 	QPointF d2(d1.x(), toPos.y());
-	if (drawThree(fromPos, toPos, d1, d2, newWires, level)) {
-		if (level > 0) {
-			DebugDialog::debug("hello");
-		}
+	if (drawThree(fromPos, toPos, d1, d2, newWires, level, false)) {
 		return true;
 	}
 
 	QPointF e1(fromPos.x(), center.y());
 	QPointF e2(toPos.x(), center.y());
-	if (drawThree(fromPos, toPos, e1, e2, newWires, level)) {
-		if (level > 0) {
-			DebugDialog::debug("hello");
-		}
+	if (drawThree(fromPos, toPos, e1, e2, newWires, level, false)) {
 		return true;
 	}
 
 	// 4. if step 3 fails, try to draw as two straight lines, recursing if blocked
 	QPointF f1(fromPos.x(), toPos.y());
-	if (drawTwo(fromPos, toPos, f1, newWires, level)) {
-		if (level > 0) {
-			DebugDialog::debug("hello");
-		}
+	if (drawTwo(fromPos, toPos, f1, newWires, level, false)) {
 		return true;
 	}
 
 	QPointF g1(toPos.x(), fromPos.y());
-	if (drawTwo(fromPos, toPos, g1, newWires, level)) {
-		if (level > 0) {
-			DebugDialog::debug("hello");
-		}
+	if (drawTwo(fromPos, toPos, g1, newWires, level, false)) {
+		return true;
+	}
+
+	// once more with recursion
+	if (drawThree(fromPos, toPos, d1, d2, newWires, level, true)) {
+		return true;
+	}
+
+	if (drawThree(fromPos, toPos, e1, e2, newWires, level, true)) {
+		return true;
+	}
+
+	if (drawTwo(fromPos, toPos, f1, newWires, level, true)) {
+		return true;
+	}
+
+	if (drawTwo(fromPos, toPos, g1, newWires, level, true)) {
 		return true;
 	}
 
 	return false;
 }
 
-bool Autorouter1::drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> newWires, int level) {
+#define clearTemp() { foreach (Wire * w, temp) { m_sketchWidget->deleteItem(w, true, false, false); } }
+#define copyTemp() { foreach (Wire * w, temp) { newWires.append(w); } }
+
+bool Autorouter1::drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> newWires, int level, bool recurse) {
 	bool shortcut = false;
-	bool skipToNext = false;
 	QList<Wire *> temp;
 	if (!drawTrace(fromPos, d1, NULL, NULL, temp, QPolygonF(), 0, d1, false, shortcut)) {
+		if (!recurse || (m_nearestObstacle == NULL)) {
+			clearTemp();
+			return false;
+		}
+
+		QPointF leftPoint, rightPoint;
+		bool prePolyResult = prePoly(m_nearestObstacle, fromPos, toPos, leftPoint, rightPoint, false);
+		m_nearestObstacle = NULL;
+		if (!prePolyResult) return false;
+		
+		if (clean90(fromPos, leftPoint, temp, level + 1) && clean90(leftPoint, toPos, temp, level + 1)) {
+			copyTemp();
+			return true;
+		}
+
+		clearTemp();
+
+		if (clean90(fromPos, rightPoint, temp, level + 1) && clean90(rightPoint, toPos, temp, level + 1)) {
+			copyTemp();
+			return true;
+		}
+
+		clearTemp();
 		return false;
 	}
 
 	if (!drawTrace(d1, d2, NULL, NULL, temp, QPolygonF(), 0, d2, false, shortcut)) {
-		if (clean90(d1, toPos, temp, level + 1)) {
-			foreach (Wire * w, temp) {
-				newWires.append(w);
-			}
+		if (!recurse || (m_nearestObstacle == NULL)) {
+			clearTemp();
+			return false;
+		}
+
+		QPointF leftPoint, rightPoint;
+		bool prePolyResult = prePoly(m_nearestObstacle, d1, toPos, leftPoint, rightPoint, false);
+		m_nearestObstacle = NULL;
+		if (!prePolyResult) return false;
+		
+		if (clean90(d1, leftPoint, temp, level + 1) && clean90(leftPoint, toPos, temp, level + 1)) {
+			copyTemp();
 			return true;
 		}
-		else {
-			skipToNext = true;
-		}
-	}
 
-	if (!skipToNext) {
-		if (drawTrace(d2, toPos, NULL, NULL, temp, QPolygonF(), 0, toPos, false, shortcut)) {
-			foreach (Wire * w, temp) {
-				newWires.append(w);
-			}
+		clearTemp();
+
+		if (clean90(d1, rightPoint, temp, level + 1) && clean90(rightPoint, toPos, temp, level + 1)) {
+			copyTemp();
 			return true;
 		}
-		else {
-			if (clean90(d2, toPos, temp, level + 1)) {
-				foreach (Wire * w, temp) {
-					newWires.append(w);
-				}
-				return true;
-			}
-		}
-	}
 
-	foreach (Wire * w, temp) {
-		m_sketchWidget->deleteItem(w, true, false, false);
-	}
-
-	return false;
-}
-
-bool Autorouter1::drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> newWires, int level) {
-	bool shortcut = false;
-	QList<Wire *> temp;
-	if (!drawTrace(fromPos, d1, NULL, NULL, temp, QPolygonF(), 0, d1, false, shortcut)) {
+		clearTemp();
 		return false;
 	}
 
-	if (drawTrace(d1, toPos, NULL, NULL, temp, QPolygonF(), 0, toPos, false, shortcut)) {
-		foreach (Wire * w, temp) {
-			newWires.append(w);
-		}
+	if (drawTrace(d2, toPos, NULL, NULL, temp, QPolygonF(), 0, toPos, false, shortcut)) {
+		copyTemp();
 		return true;
 	}
-	else {
-		if (clean90(d1, toPos, temp, level + 1)) {
-			foreach (Wire * w, temp) {
-				newWires.append(w);
-			}
-			return true;
-		}
+
+	if (!recurse || (m_nearestObstacle == NULL)) {
+		clearTemp();
+		return false;
 	}
 
-	foreach (Wire * w, temp) {
-		m_sketchWidget->deleteItem(w, true, false, false);
+	QPointF leftPoint, rightPoint;
+	bool prePolyResult = prePoly(m_nearestObstacle, d2, toPos, leftPoint, rightPoint, false);
+	m_nearestObstacle = NULL;
+	if (!prePolyResult) return false;
+	
+	if (clean90(d2, leftPoint, temp, level + 1) && clean90(leftPoint, toPos, temp, level + 1)) {
+		copyTemp();
+		return true;
 	}
 
+	clearTemp();
+
+	if (clean90(d2, rightPoint, temp, level + 1) && clean90(rightPoint, toPos, temp, level + 1)) {
+		copyTemp();
+		return true;
+	}
+
+	clearTemp();
 	return false;
 }
+
+bool Autorouter1::drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> newWires, int level, bool recurse) {
+	bool shortcut = false;
+	QList<Wire *> temp;
+	if (!drawTrace(fromPos, d1, NULL, NULL, temp, QPolygonF(), 0, d1, false, shortcut)) {
+		if (!recurse || (m_nearestObstacle == NULL)) {
+			clearTemp();
+			return false;
+		}
+
+		QPointF leftPoint, rightPoint;
+		bool prePolyResult = prePoly(m_nearestObstacle, fromPos, toPos, leftPoint, rightPoint, false);
+		m_nearestObstacle = NULL;
+		if (!prePolyResult) return false;
+		
+		if (clean90(fromPos, leftPoint, temp, level + 1) && clean90(leftPoint, toPos, temp, level + 1)) {
+			copyTemp();
+			return true;
+		}
+
+		clearTemp();
+
+		if (clean90(fromPos, rightPoint, temp, level + 1) && clean90(rightPoint, toPos, temp, level + 1)) {
+			copyTemp();
+			return true;
+		}
+
+		clearTemp();
+		return false;
+
+	}
+
+	if (drawTrace(d1, toPos, NULL, NULL, temp, QPolygonF(), 0, toPos, false, shortcut)) {
+		copyTemp();
+		return true;
+	}
+
+	if (!recurse || (m_nearestObstacle == NULL)) {
+		clearTemp();
+		return false;
+	}
+
+	QPointF leftPoint, rightPoint;
+	bool prePolyResult = prePoly(m_nearestObstacle, d1, toPos, leftPoint, rightPoint, false);
+	m_nearestObstacle = NULL;
+	if (!prePolyResult) return false;
+	
+	if (clean90(d1, leftPoint, temp, level + 1) && clean90(leftPoint, toPos, temp, level + 1)) {
+		copyTemp();
+		return true;
+	}
+
+	clearTemp();
+
+	if (clean90(d1, rightPoint, temp, level + 1) && clean90(rightPoint, toPos, temp, level + 1)) {
+		copyTemp();
+		return true;
+	}
+
+	clearTemp();
+	return false;
+}
+
