@@ -676,16 +676,16 @@ void FApplication::createUserDataStoreFolderStructure() {
 	if(!QFileInfo(BinManager::MyPartsBinLocation).exists()) {
 		// this copy action, is not working on windows, because is a resources file
 		if(!QFile(BinManager::MyPartsBinTemplateLocation).copy(BinManager::MyPartsBinLocation)) {
-			QFile myPartsBinTemplate(BinManager::MyPartsBinTemplateLocation);
-			myPartsBinTemplate.open(QIODevice::ReadOnly);
-			QString content = myPartsBinTemplate.readAll();
-			myPartsBinTemplate.close();
-
-			QFile myPartsBin(BinManager::MyPartsBinLocation);
-			Q_ASSERT(myPartsBin.open(QIODevice::WriteOnly));
-			QTextStream out(&myPartsBin);
-			out << content;
-			myPartsBin.close();
+#ifdef Q_WS_WIN
+			QDir binsFolder = QFileInfo(BinManager::MyPartsBinLocation).dir().absolutePath();
+			QStringList binFiles = binsFolder.entryList(QDir::AllEntries | QDir::NoDotAndDotDot);
+			foreach(QString binName, binFiles) {
+				if(binName.startsWith("qt_temp.")) {
+					QFile(binName).rename("my_parts.fzb");
+					break;
+				}
+			}
+#endif
 		}
 	}
 }
