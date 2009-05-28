@@ -1128,12 +1128,12 @@ void Wire::cleanup() {
 	ratsnestColors.clear();
 }
 
-void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity) {
+void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPen * &pen, qreal & opacity, int & negativePenWidth) {
 
 	int count = 0;
 	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 		if (toConnectorItem->attachedToItemType() != ModelPart::Wire) {
-			ItemBase::getConnectedColor(connectorItem, brush, pen, opacity);
+			ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth);
 			return;
 		}
 
@@ -1141,19 +1141,21 @@ void Wire::getConnectedColor(ConnectorItem * connectorItem, QBrush * &brush, QPe
 	}
 
 	if (count == 0) {
-		ItemBase::getConnectedColor(connectorItem, brush, pen, opacity);
+		ItemBase::getConnectedColor(connectorItem, brush, pen, opacity, negativePenWidth);
 		return;
 	}
 
 	pen = &m_bendpointPen;
 	brush = &m_shadowBrush;
 	opacity = 1.0;
+	negativePenWidth = m_bendpointWidth;
 }
 
 void Wire::setPenWidth(int w) {
 	m_pen.setWidth(w);
-	int dw = (getRatsnest()) ? 4 : 3;
-	m_bendpointPen.setWidth(w - dw);
+	int dw = (getTrace() && (w > 1)) ? 4 : 3;
+	m_bendpointPen.setWidth(qAbs(w - dw));
+	m_bendpointWidth = (w - dw);
 	m_shadowPen.setWidth(w + 2);
 }
 

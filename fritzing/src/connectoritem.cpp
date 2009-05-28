@@ -181,7 +181,7 @@ void ConnectorItem::setConnectedColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getConnectedColor(this, brush, pen, m_opacity);
+	m_attachedTo->getConnectedColor(this, brush, pen, m_opacity, m_negativePenWidth);
 	//DebugDialog::debug(QString("set connected %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, true);
 }
@@ -191,7 +191,7 @@ void ConnectorItem::setNormalColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getNormalColor(this, brush, pen, m_opacity);
+	m_attachedTo->getNormalColor(this, brush, pen, m_opacity, m_negativePenWidth);
 	//DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, false);
 }
@@ -201,7 +201,7 @@ void ConnectorItem::setChosenColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getChosenColor(this, brush, pen, m_opacity);
+	m_attachedTo->getChosenColor(this, brush, pen, m_opacity, m_negativePenWidth);
 	setColorAux(*brush, *pen, true);
 }
 
@@ -210,7 +210,7 @@ void ConnectorItem::setHoverColor() {
 
 	QBrush * brush = NULL;
 	QPen * pen = NULL;
-	m_attachedTo->getHoverColor(this, brush, pen, m_opacity);
+	m_attachedTo->getHoverColor(this, brush, pen, m_opacity, m_negativePenWidth);
 	setColorAux(*brush, *pen, true);
 }
 
@@ -316,10 +316,9 @@ void ConnectorItem::paint( QPainter * painter, const QStyleOptionGraphicsItem * 
 	if (m_circular) {
 		//DebugDialog::debug(QString("id:%1 w:%2 %3").arg(attachedToID()).arg(pen().width()).arg(pen().color().name()) );
 		painter->setBrush(brush());
-		int pw = pen().width();
-		if (pw < 0) {
+		if (m_negativePenWidth < 0) {
+			int pw = m_negativePenWidth + 1;
 			painter->setPen(Qt::NoPen);
-			pw++;
 			painter->drawEllipse(rect().adjusted(-pw, -pw, pw, pw));
 		}
 		else

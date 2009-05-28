@@ -131,6 +131,7 @@ protected:
 	bool m_hoverEnterSpaceBarWasPressed;
 	qreal m_radius;
 	qreal m_strokeWidth;
+	int m_negativePenWidth;
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);
