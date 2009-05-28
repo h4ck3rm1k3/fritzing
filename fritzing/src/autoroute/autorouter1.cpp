@@ -559,11 +559,11 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		m_cancelTrace = false;
 	}
 	else if (!result) {
-		DebugDialog::debug("backwards?");
+		//DebugDialog::debug("backwards?");
 		result = drawTrace(toPos, fromPos, to, from, wires, boundingPoly, 0, fromPos, true, shortcut);
 		if (result) {
 			backwards = true;
-			DebugDialog::debug("backwards.");
+			//DebugDialog::debug("backwards.");
 		}
 	}
 	if (m_cancelled) {
@@ -648,7 +648,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from, ConnectorItem * to, QList<Wire *> & wires, const QPolygonF & boundingPoly, int level, QPointF endPos, bool recurse, bool & shortcut)
 {
 	QApplication::processEvents();
-	DebugDialog::debug(QString("%5drawtrace from:%1 %2, to:%3 %4")
+	DebugDialog::debug(QString("%5 drawtrace from:%1 %2, to:%3 %4")
 		.arg(fromPos.x()).arg(fromPos.y()).arg(toPos.x()).arg(toPos.y()).arg(QString(level, ' ')) );
 	if (m_cancelled || m_cancelTrace || m_stopTrace) {
 		return false;
@@ -775,7 +775,7 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 					QPointF toPos0 = candidateWire->connector0()->sceneAdjustedTerminalPoint();
 					QPointF toPos1 = candidateWire->connector1()->sceneAdjustedTerminalPoint();
 
-					if ((toPos1.y() == fromPos1.y()) && (toPos0.y() == fromPos0.y()) && (toPos0.y() == toPos1.y())) {
+					if (sameY(fromPos0, fromPos1, toPos0, toPos1)) {
 						// if we're going in the same direction it's an obstacle
 						// eventually, if it's the same potential, combine it
 						if (qMax(fromPos0.x(), fromPos1.x()) <= qMin(toPos0.x(), toPos1.x()) || 
@@ -784,16 +784,16 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 							// no overlap
 							continue;
 						}
-						DebugDialog::debug("hello");
+						//DebugDialog::debug("got an obstacle in y");
 					}
-					else if ((toPos1.x() == fromPos1.x()) && (toPos0.x() == fromPos0.x()) && (toPos0.x() == toPos1.x())) {
+					else if (sameX(fromPos0, fromPos1, toPos0, toPos1)) {
 						if (qMax(fromPos0.y(), fromPos1.y()) <= qMin(toPos0.y(), toPos1.y()) || 
 							qMax(toPos0.y(), toPos1.y()) <= qMin(fromPos0.y(), fromPos1.y())) 
 						{
 							// no overlap
 							continue;
 						}
-						DebugDialog::debug("hello");
+						//DebugDialog::debug("got an obstacle in x");
 					}
 					else {
 						continue;
@@ -1280,7 +1280,7 @@ void Autorouter1::reduceColinearWires(QList<Wire *> & wires)
 		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint();
 		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint();
 
-		if (fromPos.y() == toPos.y() || fromPos.x() == toPos.x()) {
+		if (qAbs(fromPos.y() - toPos.y()) < .001 || qAbs(fromPos.x() - toPos.x()) < .001) {
 			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5);
 			if (traceWire == NULL)continue;
 
@@ -1522,6 +1522,12 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 			oldWires.append(w);
 			if (w != toWire && w != fromWire) {
 				m_cleanWires.append(w);
+				QPointF p0 = w->connector0()->sceneAdjustedTerminalPoint();
+				QPointF p1 = w->connector1()->sceneAdjustedTerminalPoint();
+				//DebugDialog::debug(QString("adding clean %1 (%2,%3) (%4,%5)")
+					//.arg(w->id())
+					//.arg(p0.x()).arg(p0.y())
+					//.arg(p1.x()).arg(p1.y()) );
 			}
 		}
 	}
@@ -1735,3 +1741,16 @@ bool Autorouter1::drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire
 	return false;
 }
 
+bool Autorouter1::sameY(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1) {
+	return  qAbs(toPos1.y() - fromPos1.y()) < .001 &&
+		    qAbs(toPos0.y() - fromPos0.y()) < .001 &&
+			qAbs(toPos0.y() - toPos1.y()) < .001;
+}
+
+bool Autorouter1::sameX(const QPointF & fromPos0, const QPointF & fromPos1, const QPointF & toPos0, const QPointF & toPos1) {
+	return  qAbs(toPos1.x() - fromPos1.x()) < .001 &&
+		    qAbs(toPos0.x() - fromPos0.x()) < .001 &&
+			qAbs(toPos0.x() - toPos1.x()) < .001;
+}
+
+						
