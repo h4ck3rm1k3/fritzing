@@ -587,7 +587,7 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 		}
 
 		if (cleaned) {
-			// eliminate multiple lines in the same direction
+			reduceColinearWires(wires);
 		}
 		else {
 			reduceWires(wires, from, to, boundingPoly);
@@ -1236,6 +1236,31 @@ void Autorouter1::addUndoConnections(PCBSketchWidget * sketchWidget, bool connec
 												wire->id(), connector0->connectorSharedID(),
 												connect, true, parentCommand);
 			ccc->setUpdateConnections(false);
+		}
+	}
+}
+
+void Autorouter1::reduceColinearWires(QList<Wire *> & wires)
+{
+	if (wires.count() < 2) return;
+
+	for (int i = 0; i < wires.count() - 1; i++) {
+		Wire * w0 = wires[i];
+		Wire * w1 = wires[i + 1];
+
+		QPointF fromPos = w0->connector0()->sceneAdjustedTerminalPoint();
+		QPointF toPos = w1->connector1()->sceneAdjustedTerminalPoint();
+
+		if (fromPos.y() == toPos.y() || fromPos.x() == toPos.x()) {
+			TraceWire * traceWire = drawOneTrace(fromPos, toPos, 5);
+			if (traceWire == NULL)continue;
+
+			m_sketchWidget->deleteItem(wires[i], true, false, false);
+			m_sketchWidget->deleteItem(wires[i + 1], true, false, false);
+
+			wires[i] = traceWire;
+			wires.removeAt(i + 1);
+			i--;								// don't forget to check the new wire
 		}
 	}
 }
