@@ -552,6 +552,7 @@ Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags fl
 				return wire;
 			}
 			if (otherConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				//DebugDialog::debug(QString("wired from %1 to %2").arg(wire->id()).arg(otherConnectorItem->attachedToID()));
 				chained = true;
 			}
 		}

@@ -69,14 +69,14 @@ protected:
 	void addToUndo(QUndoCommand * parentCommand);
 	void reduceWires(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, const QPolygonF & boundingPoly);
 	Wire * reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, ConnectorItem * to, QPointF fromPos, QPointF toPos, const QPolygonF & boundingPoly);
-	bool clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & oldWires, QList<Wire *> & newWires);
-	bool clean90(QPointF fromPos, QPointF toPos, QList<Wire *> newWires, int level);
+	bool clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & oldWires);
+	bool clean90(QPointF fromPos, QPointF toPos, QList<Wire *> & newWires, int level);
 	QPointF calcPrimePoint(ConnectorItem *);
 	void findNearestIntersection(QLineF & l1, QPointF & fromPos, const QPolygonF & boundingPoly, bool & inBounds, QPointF & nearestBoundsIntersection, qreal & nearestBoundsIntersectionDistance); 
 	class TraceWire * drawOneTrace(QPointF fromPos, QPointF toPos, int width);
 	bool hitsObstacle(ItemBase * traceWire, ItemBase * ignore); 
-	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> newWires, int level, bool recurse);
-	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> newWires, int level, bool recurse);
+	bool drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> & newWires, int level, bool recurse);
+	bool drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> & newWires, int level, bool recurse);
 	void clearLastDrawTraces();
 
 public:

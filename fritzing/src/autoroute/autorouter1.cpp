@@ -263,8 +263,6 @@ void Autorouter1::start()
 
 		bool routedFlag = false;
 		QList<Wire *> wires;
-		ConnectorItem * lastFrom;
-		ConnectorItem * lastTo;
 		foreach (ConnectorItem * from, fromConnectorItems) {
 			if (m_cancelled || m_stopTrace) break;
 			if (routedFlag) break;
@@ -293,8 +291,6 @@ void Autorouter1::start()
 				};
 
 				wires.clear();
-				lastFrom = from;
-				lastTo = to;
 				if (!m_sketchWidget->autorouteNeedsBounds()) {
 					routedFlag = drawTrace(from, to, boundsPoly, wires);
 				}
@@ -314,18 +310,6 @@ void Autorouter1::start()
 				if (ratsnest) {
 					ratsnest->setWidth(ratsnestWidth);
 				}
-			}
-		}
-
-		if (routedFlag && !m_stopTrace) {
-			switch (m_sketchWidget->cleanType()) {
-				case PCBSketchWidget::noClean:
-					break;
-				case PCBSketchWidget::ninetyClean:
-					QList<Wire *> newWires;
-					//clearLastDrawTraces();
-					bool success = clean90(lastFrom, lastTo, wires, newWires);
-					break;
 			}
 		}
 
@@ -593,7 +577,21 @@ void Autorouter1::dijkstra(QList<ConnectorItem *> & vertices, QHash<ConnectorIte
 			to = temp;
 		}
 
-		reduceWires(wires, from, to, boundingPoly);
+		bool cleaned = false;
+		switch (m_sketchWidget->cleanType()) {
+			case PCBSketchWidget::noClean:
+				break;
+			case PCBSketchWidget::ninetyClean:
+				cleaned = clean90(from, to, wires);
+				break;
+		}
+
+		if (cleaned) {
+			// eliminate multiple lines in the same direction
+		}
+		else {
+			reduceWires(wires, from, to, boundingPoly);
+		}
 
 		// hook everyone up
 		from->tempConnectTo(wires[0]->connector0(), false);
@@ -1445,7 +1443,8 @@ bool Autorouter1::hitsObstacle(ItemBase * traceWire, ItemBase * ignore)
 	return false;
 }
 
-bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & oldWires, QList<Wire *> & newWires) {
+bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *> & oldWires) {
+	QList<Wire *> newWires;
 	// 1. draw wire from FROM to just outside its nearest part border
 	QPointF fromPrime = calcPrimePoint(from);
 	TraceWire * fromWire = drawOneTrace(from->sceneAdjustedTerminalPoint(), fromPrime, StandardTraceWidth + 1);
@@ -1458,8 +1457,11 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 
 	// 2. draw wire from TO to just outside its nearest part border
 	QPointF toPrime = calcPrimePoint(to);
-	TraceWire * toWire = drawOneTrace(to->sceneAdjustedTerminalPoint(), toPrime, StandardTraceWidth + 1);
-	if (toWire == NULL) return false;
+	TraceWire * toWire = drawOneTrace(toPrime, to->sceneAdjustedTerminalPoint(), StandardTraceWidth + 1);
+	if (toWire == NULL) {
+		m_sketchWidget->deleteItem(fromWire, true, false, false);
+		return false;
+	}
 
 	if (hitsObstacle(toWire, to->attachedTo())) {
 		m_sketchWidget->deleteItem(fromWire, true, false, false);
@@ -1468,12 +1470,13 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 	}
 
 	newWires.append(fromWire);
-	newWires.append(toWire);
 	bool result = clean90(fromPrime, toPrime, newWires, 0);
+	newWires.append(toWire);
 	if (result) {
 		foreach (Wire * w, oldWires) {
 			m_sketchWidget->deleteItem(w, true, false, false);
 		}
+		oldWires.clear();
 		foreach (Wire * w, newWires) {
 			oldWires.append(w);
 		}
@@ -1488,7 +1491,7 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 	return result;
 }
 
-bool Autorouter1::clean90(QPointF fromPos, QPointF toPos, QList<Wire *> newWires, int level)
+bool Autorouter1::clean90(QPointF fromPos, QPointF toPos, QList<Wire *> & newWires, int level)
 {
 	// 3. figure the center between fromPos and toPos and try to draw as three straight lines, recursing if blocked
 	QPointF center((fromPos.x() + toPos.x()) / 2.0, (fromPos.y() + toPos.y()) / 2.0);
@@ -1535,10 +1538,10 @@ bool Autorouter1::clean90(QPointF fromPos, QPointF toPos, QList<Wire *> newWires
 	return false;
 }
 
-#define clearTemp() { foreach (Wire * w, temp) { m_sketchWidget->deleteItem(w, true, false, false); } }
-#define copyTemp() { foreach (Wire * w, temp) { newWires.append(w); } }
+#define clearTemp() { foreach (Wire * w, temp) { m_sketchWidget->deleteItem(w, true, false, false); } temp.clear(); }
+#define copyTemp() { foreach (Wire * w, temp) { newWires.append(w); } temp.clear(); }
 
-bool Autorouter1::drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> newWires, int level, bool recurse) {
+bool Autorouter1::drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF d2, QList<Wire *> & newWires, int level, bool recurse) {
 	bool shortcut = false;
 	QList<Wire *> temp;
 	if (!drawTrace(fromPos, d1, NULL, NULL, temp, QPolygonF(), 0, d1, false, shortcut)) {
@@ -1626,7 +1629,7 @@ bool Autorouter1::drawThree(QPointF fromPos, QPointF toPos, QPointF d1, QPointF 
 	return false;
 }
 
-bool Autorouter1::drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> newWires, int level, bool recurse) {
+bool Autorouter1::drawTwo(QPointF fromPos, QPointF toPos, QPointF d1, QList<Wire *> & newWires, int level, bool recurse) {
 	bool shortcut = false;
 	QList<Wire *> temp;
 	if (!drawTrace(fromPos, d1, NULL, NULL, temp, QPolygonF(), 0, d1, false, shortcut)) {
