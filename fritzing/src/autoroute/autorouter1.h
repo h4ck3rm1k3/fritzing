@@ -105,6 +105,7 @@ protected:
 	bool m_cancelTrace;
 	bool m_stopTrace;
 	QGraphicsItem * m_nearestObstacle;
+	QList<Wire *> m_cleanWires;
 };
 
 #endif

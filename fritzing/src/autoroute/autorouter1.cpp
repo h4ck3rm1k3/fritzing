@@ -767,18 +767,47 @@ bool Autorouter1::drawTrace(QPointF fromPos, QPointF toPos, ConnectorItem * from
 			ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
 			if (candidateItemBase != NULL) {
 				if (candidateItemBase->itemType() == ModelPart::Wire) {
-					continue;
+					Wire * candidateWire = qobject_cast<Wire *>(candidateItemBase);
+					if (!m_cleanWires.contains(candidateWire)) continue;
+
+					QPointF fromPos0 = traceWire->connector0()->sceneAdjustedTerminalPoint();
+					QPointF fromPos1 = traceWire->connector1()->sceneAdjustedTerminalPoint();
+					QPointF toPos0 = candidateWire->connector0()->sceneAdjustedTerminalPoint();
+					QPointF toPos1 = candidateWire->connector1()->sceneAdjustedTerminalPoint();
+
+					if ((toPos1.y() == fromPos1.y()) && (toPos0.y() == fromPos0.y()) && (toPos0.y() == toPos1.y())) {
+						// if we're going in the same direction it's an obstacle
+						// eventually, if it's the same potential, combine it
+						if (qMax(fromPos0.x(), fromPos1.x()) <= qMin(toPos0.x(), toPos1.x()) || 
+							qMax(toPos0.x(), toPos1.x()) <= qMin(fromPos0.x(), fromPos1.x())) 
+						{
+							// no overlap
+							continue;
+						}
+						DebugDialog::debug("hello");
+					}
+					else if ((toPos1.x() == fromPos1.x()) && (toPos0.x() == fromPos0.x()) && (toPos0.x() == toPos1.x())) {
+						if (qMax(fromPos0.y(), fromPos1.y()) <= qMin(toPos0.y(), toPos1.y()) || 
+							qMax(toPos0.y(), toPos1.y()) <= qMin(fromPos0.y(), fromPos1.y())) 
+						{
+							// no overlap
+							continue;
+						}
+						DebugDialog::debug("hello");
+					}
+					else {
+						continue;
+					}
 				}
+				else {
+					if (from && (from->attachedTo() == candidateItemBase)) {
+						continue;
+					}
 
-				if (from && (from->attachedTo() == candidateItemBase)) {
-					continue;
+					if (to && (to->attachedTo() == candidateItemBase)) {
+						continue;
+					}
 				}
-
-				if (to && (to->attachedTo() == candidateItemBase)) {
-					continue;
-				}
-
-
 
 				//if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
 					// needs to be on the same layer
@@ -1349,19 +1378,6 @@ Wire * Autorouter1::reduceWiresAux(QList<Wire *> & wires, ConnectorItem * from, 
 			intersects = true;
 			break;
 		}
-
-		ItemBase * candidateItemBase = m_sketchWidget->autorouteCheckParts() ? dynamic_cast<ItemBase *>(item) : NULL;
-		if (candidateItemBase) {
-
-			//if (candidateConnectorItem->attachedTo()->viewLayerID() != traceWire->viewLayerID()) {
-				// needs to be on the same layer
-				//continue;
-			//}
-
-			intersects = true;
-			break;
-		}
-
 	}	
 	if (intersects) {
 		m_sketchWidget->deleteItem(traceWire, true, false, false);
@@ -1504,6 +1520,9 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 		oldWires.clear();
 		foreach (Wire * w, newWires) {
 			oldWires.append(w);
+			if (w != toWire && w != fromWire) {
+				m_cleanWires.append(w);
+			}
 		}
 	}
 	else {
