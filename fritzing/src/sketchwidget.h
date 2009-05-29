@@ -324,6 +324,9 @@ protected:
 	virtual bool allowFemaleRotation(ItemBase *);
 	virtual void setClipEnds(class VirtualWire *);
 	void prepDragBendpoint(Wire *, QPoint eventPos);
+	void prepDragWire(Wire *);
+	void clickBackground(QMouseEvent *);
+	void categorizeDragWires(QSet<Wire *> & wires);
 
 protected:
 	static bool lessThan(int a, int b);

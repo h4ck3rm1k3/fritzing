@@ -57,17 +57,6 @@ QList<QColor *> ratsnestColors;
 const qreal Wire::ROUTED_OPACITY = 0.20;
 const qreal Wire::UNROUTED_OPACITY = 1.0;
 
-
-struct ConnectThing {
-	Wire * wire;
-	bool hasNone0;
-	bool hasNone1;
-	bool connectedIn0;
-	bool connectedIn1;
-	bool connectedOut0;
-	bool connectedOut1;
-};
-
 ////////////////////////////////////////////////////////////
 
 static QHash<ViewIdentifierClass::ViewIdentifier, int> netColorIndex;
@@ -963,105 +952,6 @@ const QColor * Wire::netColor(ViewIdentifierClass::ViewIdentifier viewIdentifier
 
 bool Wire::draggingEnd() {
 	return m_dragEnd;
-}
-
-void Wire::connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> & out) {
-	QList<Wire *> chained;
-	QList<ConnectorItem *> ends;
-	QList<ConnectorItem *> uniqueEnds;
-	collectChained(chained, ends, uniqueEnds);
-	bool selected = false;
-	
-	QVector<ConnectThing> connectThings(chained.count());
-
-	int ix = 0;
-	foreach (Wire * wire, chained) {
-		if (wire->isSelected()) {
-			// if one is selected, all are selected
-			selected = true;
-		}
-		ConnectThing * ct = &connectThings[ix++];
-		ct->wire = wire;
-		wire->connectsWithin(wire->connector0(), in, chained, ct->hasNone0, ct->connectedIn0, ct->connectedOut0);
-		wire->connectsWithin(wire->connector1(), in, chained, ct->hasNone1, ct->connectedIn1, ct->connectedOut1);
-	}
-
-	// do the easy case first
-	bool hasNone = false;
-	bool connectedOut = false;
-	foreach (ConnectThing ct, connectThings) {
-		if (ct.hasNone0 || ct.hasNone1) hasNone = true;
-		if (ct.connectedOut0 || ct.connectedOut1) connectedOut = true;
-	}
-
-	if (!connectedOut) {
-		if ((!hasNone) || selected) {
-			// either the wires all connect to the parts, or there are some dangling ends, but the wires are all selected
-			foreach (Wire * wire, chained) {
-				in.insert(wire);
-			}
-			return;
-		}
-	}
-
-	foreach (ConnectThing ct, connectThings) {
-		if ((ct.connectedIn0 || (ct.hasNone0 && selected)) && (ct.connectedIn1 || (ct.hasNone1 && selected))) {
-			// can drag this one
-			in.insert(ct.wire);
-			continue;
-		}
-
-		if (ct.connectedIn0) {
-			out.insert(ct.wire, ct.wire->connector0());
-			continue;
-		}
-
-		if (ct.connectedIn1) {
-			out.insert(ct.wire, ct.wire->connector1());
-			continue;
-		}
-
-		if (ct.connectedOut0 || (ct.hasNone0 && !selected)) {
-			out.insert(ct.wire, ct.wire->connector1());
-			continue;
-		}
-
-		if (ct.connectedOut1 || (ct.hasNone1 && !selected)) {
-			out.insert(ct.wire, ct.wire->connector0());
-			continue;
-		}			
-	}
-}
-
-void Wire::connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires,
-						  bool & hasNone, bool & connectedIn, bool & connectedOut) 
-{
-	hasNone = connectedIn = connectedOut = false;
-	if (connectorItem->connectionsCount() == 0) {
-		hasNone = true;
-		return;
-	}
-	
-	foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
-		ItemBase * attachedTo = toConnectorItem->attachedTo();
-		while (attachedTo->parentItem() != NULL) {
-			attachedTo = dynamic_cast<ItemBase *>(attachedTo->parentItem());
-		}
-
-		if (in.contains(attachedTo)) {
-			connectedIn = true;
-			continue;
-		}
-
-		if (attachedTo->itemType() == ModelPart::Wire) {
-			if (wires.contains(dynamic_cast<Wire *>(attachedTo))) {
-				// connected to another wire in our set, don't mark anything
-				continue;
-			}
-		}
-
-		connectedOut = true;
-	}
 }
 
 void Wire::setCanChainMultiple(bool can) {

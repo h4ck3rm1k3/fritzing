@@ -104,7 +104,6 @@ public:
 	void setColor(QDomElement & element);
 	Wire * findJumperOrTraced(ViewGeometry::WireFlags flags, QList<ConnectorItem *>  & ends);
 	bool draggingEnd();
-	void connectsWithin(QSet<ItemBase *> & in, QHash<Wire *, ConnectorItem *> & out);
 	void simpleConnectedMoved(ConnectorItem * to);
 	void simpleConnectedMoved(ConnectorItem * from, ConnectorItem * to);
 	void setCanChainMultiple(bool);
@@ -138,8 +137,6 @@ protected:
 	void setConnector1Rect();
 	void collectWiresAux(QList<Wire *> & wires, ConnectorItem * start);
 	void setShadowColor(QColor &);
-	void connectsWithin(ConnectorItem * connectorItem, QSet<ItemBase *> & in, QList<Wire *> & wires,
-		bool & hasNone, bool & connectedIn, bool & connectedOut);
 	void calcNewLine(ConnectorItem * from, ConnectorItem * to, QPointF & p1, QPointF & p2);
 	void collectDirectWires(ConnectorItem * connectorItem, QList<Wire *> & wires);
 	QVariant itemChange(GraphicsItemChange change, const QVariant &value);

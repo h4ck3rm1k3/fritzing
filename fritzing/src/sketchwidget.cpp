@@ -1543,23 +1543,14 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		}
 	}
 
-	if (item == NULL || (item != wasItem)) {
-		// in here if you clicked on the sketch itself,
-		// or the item was deleted during mousePressEvent
-		// (for example, by shift-clicking a connectorItem)
+	if (item != wasItem) {
+		// if the item was deleted during mousePressEvent
+		// for example, by shift-clicking a connectorItem
+		return;
+	}
 
-		if (item == NULL && m_fixedToCenterItem && m_fixedToCenterItem->getVisible()) {
-			QRectF r(m_fixedToCenterItemOffset, m_fixedToCenterItem->size());
-			if (r.contains(event->pos())) {
-				QMouseEvent newEvent(event->type(), event->pos() - m_fixedToCenterItemOffset,
-					event->globalPos(), event->button(), event->buttons(), event->modifiers());
-				if (m_fixedToCenterItem->forwardMousePressEvent(&newEvent)) {
-					// update background
-					setBackground(background());
-				}
-			}
-		}
-
+	if (item == NULL) {
+		clickBackground(event);
 		return;
 	}
 
@@ -1594,39 +1585,7 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	if ((event->button() == Qt::LeftButton) && (wire != NULL) && !wire->getRatsnest()) {
 		if (canChainWire(wire) && wire->hasConnections() ) {
 			if (event->modifiers() & Qt::AltModifier) {
-				bool drag = true;
-				foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {
-					if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-						m_savedWires.insert(qobject_cast<Wire *>(toConnectorItem->attachedTo()), toConnectorItem);
-					}
-					else {
-						drag = false;
-						break;
-					}
-				}
-				if (drag) {
-					foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
-						if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
-							m_savedWires.insert(qobject_cast<Wire *>(toConnectorItem->attachedTo()), toConnectorItem);
-						}
-						else {
-							drag = false;
-							break;
-						}
-					}
-				}
-				if (!drag) {
-					m_savedWires.clear();
-					return;
-				}
-
-				m_savedItems.clear();
-				m_savedItems.insert(wire);
-				wire->saveGeometry();
-				foreach (Wire * w, m_savedWires.keys()) {
-					w->saveGeometry();
-				}
-				setupAutoscroll(true);
+				prepDragWire(wire);
 				return;
 			}
 			else {
@@ -1667,33 +1626,234 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		chief->collectWireConnectees(wires);
 	}
 
-	foreach (Wire * wire, wires) {
-		if (m_savedItems.contains(wire)) continue;
-
-		// if wire is stuck to a board, then it just gets dragged
-		ItemBase * stuckTo = wire->stuckTo();
-		if (stuckTo != NULL && m_savedItems.contains(stuckTo)) {
-			m_savedItems.insert(wire);
-			continue;
-		}
-
-		// if wire is connected between parts that are moving then move it, otherwise stretch it
-		wire->connectsWithin(m_savedItems, m_savedWires);
+	if (wires.count() > 0) {
+		categorizeDragWires(wires);
 	}
 
 	foreach (ItemBase * itemBase, m_savedItems) {
 		itemBase->saveGeometry();
 	}
 
-	foreach (Wire * wire, wires) {
-		wire->saveGeometry();
+	foreach (Wire * w, m_savedWires.keys()) {
+		w->saveGeometry();
 	}
 
 	setupAutoscroll(true);
+}
 
-	// do something with wires--chained, wires within, wires without
-	// don't forget about checking connections-to-be
 
+void SketchWidget::categorizeDragWires(QSet<Wire *> & wires) 
+{
+	enum ConnectionStatus {
+		IN,
+		OUT,
+		FREE,
+		UNDETERMINED
+	};
+
+	struct ConnectionThing {
+		Wire * wire;
+		ConnectionStatus status[2];
+	};
+
+	foreach (Wire * w, wires) {
+		QList<Wire *> chainedWires;
+		QList<ConnectorItem *> uniqueEnds;
+		QList<ConnectorItem *> ends;
+		w->collectChained(chainedWires, ends, uniqueEnds);
+		foreach (Wire * ww, chainedWires) {
+			wires.insert(ww);
+		}
+	}
+
+	QList<ConnectionThing *> connectionThings;
+	foreach (Wire * w, wires) {
+		ConnectionThing * ct = new ConnectionThing;
+		ct->wire = w;
+		ct->status[0] = ct->status[1] = UNDETERMINED;
+		connectionThings.append(ct);
+	}
+
+	int noChangeCount = 0;
+	QList<ItemBase *> outWires;
+	while (connectionThings.count() > 0) {
+		ConnectionThing * ct = connectionThings.takeFirst();
+		bool changed = false;
+
+		QList<ConnectorItem *> from;
+		from.append(ct->wire->connector0());
+		from.append(ct->wire->connector1());
+		for (int i = 0; i < 2; i++) {
+			if (ct->status[i] != UNDETERMINED) continue;
+
+			foreach (ConnectorItem * toConnectorItem, from.at(i)->connectedToItems()) {
+				if (m_savedItems.contains(toConnectorItem->attachedTo())) {
+					changed = true;
+					ct->status[i] = IN;
+					break;
+				}
+
+				if ((toConnectorItem->attachedToItemType() != ModelPart::Wire) || 
+					outWires.contains(toConnectorItem->attachedTo())) 
+				{
+					changed = true;
+					ct->status[i] = OUT;
+					break;
+				}
+			}
+			if (ct->status[i] != UNDETERMINED) continue;
+
+			ItemBase * stuckTo = ct->wire->stuckTo();
+			if (stuckTo != NULL) {
+				QPointF p = from.at(i)->sceneAdjustedTerminalPoint();
+				if (stuckTo->contains(stuckTo->mapFromScene(p))) {
+					ct->status[i] = IN;
+					changed = true;
+				}
+			}
+			if (ct->status[i] != UNDETERMINED) continue;
+
+			// if it's not connected at either end and not stuck
+			if (from.at(i)->connectionsCount() == 0) {
+				changed = true;
+				ct->status[i] = FREE;
+			}
+		}
+
+		if (ct->status[0] != UNDETERMINED && ct->status[1] != UNDETERMINED) {
+			if (ct->status[0] == IN) {
+				if (ct->status[1] == IN) {
+					m_savedItems.insert(ct->wire);
+				}
+				else {
+					// OUT == FREE in this case
+					// attach the connector that stays IN
+					m_savedWires.insert(ct->wire, ct->wire->connector0());
+				}
+			}
+			else if (ct->status[0] == OUT) {
+				if (ct->status[1] == IN) {
+					// attach the connector that stays in
+					m_savedWires.insert(ct->wire, ct->wire->connector1());
+				}
+				else {
+					// don't drag this; both ends are connected OUT
+					outWires.append(ct->wire);
+				}
+			}
+			else /* ct->status[0] == FREE */ {  
+				if (ct->status[1] == IN) {
+					// attach the connector that stays IN
+					m_savedWires.insert(ct->wire, ct->wire->connector1());
+				}
+				else if (ct->status[1] == FREE) {
+					// both sides are free, so if the wire is selected, drag it
+					if (ct->wire->isSelected()) {
+						m_savedItems.insert(ct->wire);
+					}
+				}
+				else {
+					// don't drag this; both ends are connected OUT
+					outWires.append(ct->wire);
+				}
+			}
+			delete ct;
+			noChangeCount = 0;
+		}
+		else {
+			connectionThings.append(ct);
+			if (changed) {
+				noChangeCount = 0;
+			}
+			else {
+				if (++noChangeCount > connectionThings.count()) {
+					QList<ConnectionThing *> cts;
+					foreach (ConnectionThing * ct, connectionThings) {
+						// if one end is OUT and the other end is unaccounted for at this pass, then both ends are OUT
+						if ((ct->status[0] == FREE || ct->status[0] == OUT) || 
+							(ct->status[1] == FREE || ct->status[1] == OUT)) 
+						{
+							noChangeCount = 0;
+							outWires.append(ct->wire);
+							delete ct;
+						}
+						else {
+							cts.append(ct);
+						}
+					}
+					if (noChangeCount == 0) {
+						// get ready for another pass, we got rid of some 
+						connectionThings.clear();
+						foreach (ConnectionThing * ct, cts) {
+							connectionThings.append(ct);
+						}
+					}
+					else {
+						// we've elimated all OUT items so mark everybody IN
+						foreach (ConnectionThing * ct, connectionThings) {
+							m_savedItems.insert(ct->wire);
+							delete ct;
+						}						
+						connectionThings.clear();
+					}
+				}
+			}
+		}
+	}
+}
+
+void SketchWidget::clickBackground(QMouseEvent * event) 
+{
+	// in here if you clicked on the sketch itself,
+
+	if (m_fixedToCenterItem && m_fixedToCenterItem->getVisible()) {
+		QRectF r(m_fixedToCenterItemOffset, m_fixedToCenterItem->size());
+		if (r.contains(event->pos())) {
+			QMouseEvent newEvent(event->type(), event->pos() - m_fixedToCenterItemOffset,
+				event->globalPos(), event->button(), event->buttons(), event->modifiers());
+			if (m_fixedToCenterItem->forwardMousePressEvent(&newEvent)) {
+				// update background
+				setBackground(background());
+			}
+		}
+	}
+}
+
+void SketchWidget::prepDragWire(Wire * wire) 
+{
+	bool drag = true;
+	foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {
+		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+			m_savedWires.insert(qobject_cast<Wire *>(toConnectorItem->attachedTo()), toConnectorItem);
+		}
+		else {
+			drag = false;
+			break;
+		}
+	}
+	if (drag) {
+		foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
+			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+				m_savedWires.insert(qobject_cast<Wire *>(toConnectorItem->attachedTo()), toConnectorItem);
+			}
+			else {
+				drag = false;
+				break;
+			}
+		}
+	}
+	if (!drag) {
+		m_savedWires.clear();
+		return;
+	}
+
+	m_savedItems.clear();
+	m_savedItems.insert(wire);
+	wire->saveGeometry();
+	foreach (Wire * w, m_savedWires.keys()) {
+		w->saveGeometry();
+	}
+	setupAutoscroll(true);
 }
 
 void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos) 
