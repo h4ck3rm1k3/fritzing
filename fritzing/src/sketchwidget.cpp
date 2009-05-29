@@ -3482,7 +3482,6 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 	long fromID = wire->id();
 
 	QLineF newLine(oldLine.p1(), newPos - oldPos);
-	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, oldPos, true, parentCommand);
 
 	long newID = ItemBase::getNextID();
 	ViewGeometry vg(wire->getViewGeometry());
@@ -3507,6 +3506,8 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 			newID, connector1->connectorSharedID(),
 			true, true, parentCommand);
 	}
+
+	new ChangeWireCommand(this, fromID, oldLine, newLine, oldPos, oldPos, true, parentCommand);
 
 	// connect the two wires
 	new ChangeConnectionCommand(this, crossView, wire->id(), connector1->connectorSharedID(),

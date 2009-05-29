@@ -222,6 +222,7 @@ void Wire::mousePressEvent(QGraphicsSceneMouseEvent *event)
 	ItemBase::mousePressEvent(event);
 	if (m_spaceBarWasPressed) return;
 
+	//DebugDialog::debug("checking press event");
 	if (event->modifiers() & Qt::ShiftModifier) {
 		emit wireSplitSignal(this, event->scenePos(), this->pos(), this->line());
 	}
@@ -427,8 +428,8 @@ void Wire::connectionChange(ConnectorItem * ) {
 }
 
 void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsSceneMouseEvent * event) {
-	if (event->modifiers() == Qt::ShiftModifier) {
-
+	//DebugDialog::debug("checking press connector event");
+	if (event->modifiers() & Qt::ShiftModifier) {
 		int chained = 0;
 		foreach (ConnectorItem * toConnectorItem, connectorItem->connectedToItems()) {
 			if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
