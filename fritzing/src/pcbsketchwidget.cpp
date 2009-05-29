@@ -139,13 +139,13 @@ bool PCBSketchWidget::canChainWire(Wire * wire) {
 void PCBSketchWidget::createJumper() {
 	QString commandString = tr("Create Jumper from this Wire");
 	createJumperOrTrace(commandString, ViewGeometry::JumperFlag, m_jumperColor);
-	ensureLayerVisible(ViewLayer::Jumperwires);
+	ensureJumperLayerVisible();
 }
 
 void PCBSketchWidget::createTrace() {
 	QString commandString = tr("Create Trace from this Wire");
 	createJumperOrTrace(commandString, ViewGeometry::TraceFlag, m_traceColor);
-	ensureLayerVisible(ViewLayer::Copper0);
+	ensureTraceLayerVisible();
 }
 
 void PCBSketchWidget::createJumperOrTrace(const QString & commandString, ViewGeometry::WireFlag flag, const QString & colorString)
@@ -485,7 +485,6 @@ void PCBSketchWidget::setClipEnds(VirtualWire * vw) {
 
 ViewLayer::ViewLayerID PCBSketchWidget::getWireViewLayerID(const ViewGeometry & viewGeometry) {
 	if (viewGeometry.getJumper()) {
-
 		return ViewLayer::Jumperwires;
 	}
 
@@ -528,4 +527,19 @@ const QString & PCBSketchWidget::jumperColor() {
 
 PCBSketchWidget::CleanType PCBSketchWidget::cleanType() {
 	return m_cleanType;
+}
+
+void PCBSketchWidget::ensureTraceLayersVisible() {
+	ensureLayerVisible(ViewLayer::Copper0);
+	ensureLayerVisible(ViewLayer::Copper0Trace);
+	ensureLayerVisible(ViewLayer::Jumperwires);
+}
+
+void PCBSketchWidget::ensureTraceLayerVisible() {
+	ensureLayerVisible(ViewLayer::Copper0);
+	ensureLayerVisible(ViewLayer::Copper0Trace);
+}
+
+void PCBSketchWidget::ensureJumperLayerVisible() {
+	ensureLayerVisible(ViewLayer::Jumperwires);
 }

@@ -40,7 +40,6 @@ $Date$
 #include "itemdrag.h"
 #include "viewswitcher/viewswitcher.h"
 #include "items/wire.h"
-#include "htmlinfoview.h"
 #include "partsbinpalette/binmanager/binmanager.h"
 
 // dependency injection :P
@@ -173,6 +172,7 @@ FApplication::~FApplication(void)
 	DebugDialog::cleanup();
 	ViewSwitcher::cleanup();
 	ItemDrag::cleanup();
+	Version::cleanup();
 
 }
 

@@ -181,3 +181,10 @@ void Version::toVersionThing(const QString & candidate, VersionThing & versionTh
 
 	versionThing.releaseModifier = sw.cap(4);
 }
+
+void Version::cleanup() {
+	if (m_singleton) {
+		delete m_singleton;
+		m_singleton = NULL;
+	}
+}

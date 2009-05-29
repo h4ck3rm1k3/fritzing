@@ -52,6 +52,10 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 		return ViewLayer::SchematicTrace;
 	}
 
+	if (viewGeometry.getJumper()) {
+		return ViewLayer::SchematicJumper;
+	}
+
 	return SketchWidget::getWireViewLayerID(viewGeometry);
 }
 
@@ -77,3 +81,27 @@ bool SchematicSketchWidget::autorouteCheckParts() {
 	return true;
 }
 
+void SchematicSketchWidget::tidyWires() {
+	QList<Wire *> wires;
+	QList<Wire *> visited;
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
+		Wire * wire = dynamic_cast<Wire *>(item);
+		if (wire == NULL) continue;
+		if (!wire->getTrace()) continue;
+		if (visited.contains(wire)) continue;
+	}
+}
+
+void SchematicSketchWidget::ensureTraceLayersVisible() {
+	ensureLayerVisible(ViewLayer::SchematicTrace);
+	ensureLayerVisible(ViewLayer::SchematicJumper);
+}
+
+void SchematicSketchWidget::ensureTraceLayerVisible() {
+	ensureLayerVisible(ViewLayer::SchematicTrace);
+}
+
+void SchematicSketchWidget::ensureJumperLayerVisible() {
+	ensureLayerVisible(ViewLayer::SchematicTrace);
+	ensureLayerVisible(ViewLayer::SchematicJumper);
+}

@@ -94,6 +94,7 @@ public:
 	qreal radius();
 	qreal strokeWidth();
 	void restoreColor();
+	void showEqualPotential(bool show);
 
 protected:
 	virtual void hoverEnterEvent( QGraphicsSceneHoverEvent * event );
@@ -105,6 +106,7 @@ protected:
 	void setColorAux(QBrush brush, QPen pen, bool paint);
 	void setColorAux(const QColor &color, bool paint=true);
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 	void paint( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget = 0 );
 	void writeTopLevelAttributes(QXmlStreamWriter & writer);
 	void writeOtherElements(QXmlStreamWriter & writer);
@@ -132,12 +134,15 @@ protected:
 	qreal m_radius;
 	qreal m_strokeWidth;
 	int m_negativePenWidth;
+	
+protected:	
+	static QList<ConnectorItem *>  m_equalPotentialDisplayItems;
 
 public:
 	static void collectEqualPotential(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags skipFlags = ViewGeometry::TraceJumperRatsnestFlags);
 	static void collectEqualPotentialParts(QList<ConnectorItem *> & connectorItems, ViewGeometry::WireFlags flags);
 	static void collectParts(QList<ConnectorItem *> & connectorItems, QList<ConnectorItem *> & partsConnectors);
-
+	static void clearEqualPotentialDisplay();
 };
 
 #endif

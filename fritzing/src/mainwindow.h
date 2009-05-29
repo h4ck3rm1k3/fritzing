@@ -224,6 +224,7 @@ protected slots:
 	void showPartLabels();
 	void addNote();
 	void reportBug();
+	void tidyWires();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -487,6 +488,7 @@ protected:
 	QAction *m_selectAllTracesAct;
 	QAction *m_selectAllExcludedTracesAct;
 	QAction *m_selectAllJumpersAct;
+	QAction *m_tidyWiresAct;
 
 
 	// Help Menu

@@ -100,11 +100,13 @@ QPen ItemBase::normalPen(QColor(255,0,0));
 QPen ItemBase::hoverPen(QColor(0, 0, 255));
 QPen ItemBase::connectedPen(QColor(0, 255, 0));
 QPen ItemBase::chosenPen(QColor(255,0,0));
+QPen ItemBase::equalPotentialPen(QColor(255,255,0));
 
 QBrush ItemBase::normalBrush(QColor(255,0,0));
 QBrush ItemBase::hoverBrush(QColor(0,0,255));
 QBrush ItemBase::connectedBrush(QColor(0,255,0));
 QBrush ItemBase::chosenBrush(QColor(255,0,0));
+QBrush ItemBase::equalPotentialBrush(QColor(255,255,0));
 
 const qreal ItemBase::normalConnectorOpacity = 0.4;
 
@@ -1307,3 +1309,9 @@ void ItemBase::getHoverColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qrea
 	negativePenWidth = 0;
 }
 
+void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, int & negativePenWidth) {
+	brush = &equalPotentialBrush;
+	pen = &equalPotentialPen;
+	opacity = 1.0;
+	negativePenWidth = 0;
+}

@@ -36,6 +36,8 @@ $Date$
 #include "items/wire.h"
 #include "modelpart.h"
 
+QList<ConnectorItem *>  ConnectorItem::m_equalPotentialDisplayItems;
+
 ConnectorItem::ConnectorItem( Connector * connector, ItemBase * attachedTo )
 	: QGraphicsRectItem(attachedTo)
 {
@@ -233,11 +235,25 @@ void ConnectorItem::setColorAux(const QColor &color, bool paint) {
 	m_paint = paint;
 }
 
+void ConnectorItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+	clearEqualPotentialDisplay();
+	QGraphicsRectItem::mouseReleaseEvent(event);
+}
+
 void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+	clearEqualPotentialDisplay();
+
 	InfoGraphicsView *infographics = InfoGraphicsView::getInfoGraphicsView(this);
 	if (infographics != NULL && infographics->spaceBarIsPressed()) {
 		event->ignore();
 		return;
+	}
+
+	m_equalPotentialDisplayItems.append(this);
+	collectEqualPotential(m_equalPotentialDisplayItems, ViewGeometry::NoFlag);
+	m_equalPotentialDisplayItems.removeAt(0);
+	foreach (ConnectorItem * connectorItem, m_equalPotentialDisplayItems) {
+		connectorItem->showEqualPotential(true);
 	}
 
 	if (this->m_attachedTo != NULL && m_attachedTo->acceptsMousePressConnectorEvent(this, event)) {
@@ -843,4 +859,25 @@ qreal ConnectorItem::radius() {
 
 qreal ConnectorItem::strokeWidth() {
 	return m_strokeWidth;
+}
+
+void ConnectorItem::showEqualPotential(bool show) {
+	if (!show) {
+		restoreColor();
+		return;
+	}
+
+	QBrush * brush = NULL;
+	QPen * pen = NULL;
+	m_attachedTo->getEqualPotentialColor(this, brush, pen, m_opacity, m_negativePenWidth);
+	//DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
+	setColorAux(*brush, *pen, true);
+
+}
+
+void ConnectorItem::clearEqualPotentialDisplay() {
+	foreach (ConnectorItem * connectorItem, m_equalPotentialDisplayItems) {
+		connectorItem->showEqualPotential(false);
+	}
+	m_equalPotentialDisplayItems.clear();
 }

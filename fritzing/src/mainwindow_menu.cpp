@@ -1372,6 +1372,8 @@ void MainWindow::createMenus()
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllJumpersAct);
+	m_schematicTraceMenu->addAction(m_tidyWiresAct);
+
 
 	updateTraceMenu();
 	connect(m_pcbTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));
@@ -1622,6 +1624,7 @@ void MainWindow::updateTraceMenu() {
 	bool cjEnabled = false;
 	bool exEnabled = false;
 	bool exChecked = true;
+	bool twEnabled = false;
 
 	if (m_currentGraphicsView != NULL) {
 		if (m_currentGraphicsView != this->m_breadboardGraphicsView) {
@@ -1649,6 +1652,7 @@ void MainWindow::updateTraceMenu() {
 				}
 				else if (wire->getTrace()) {
 					tEnabled = true;
+					twEnabled = true;
 					if (wire->isSelected()) {
 						cjEnabled = true;
 						exEnabled = true;
@@ -1671,6 +1675,7 @@ void MainWindow::updateTraceMenu() {
 	m_selectAllTracesAct->setEnabled(tEnabled);
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumpersAct->setEnabled(jEnabled);
+	m_tidyWiresAct->setEnabled(twEnabled);
 
 }
 
@@ -2372,6 +2377,10 @@ void MainWindow::createTraceMenuActions() {
 	m_selectAllJumpersAct->setStatusTip(tr("Select all jumper wires"));
 	connect(m_selectAllJumpersAct, SIGNAL(triggered()), this, SLOT(selectAllJumpers()));
 
+	m_tidyWiresAct = new QAction(tr("Tidy Wires"), this);
+	m_tidyWiresAct->setStatusTip(tr("Tidy selected wires"));
+	connect(m_tidyWiresAct, SIGNAL(triggered()), this, SLOT(tidyWires()));
+
 }
 
 void MainWindow::autoroute() {
@@ -2568,4 +2577,8 @@ void MainWindow::importFilesFromPrevInstall() {
 	QMessageBox::information(
 		this, QObject::tr("Fritzing"),
 		tr("You will have to restart Fritzing, in order to use the imported parts"));
+}
+
+void MainWindow::tidyWires() {
+	m_currentGraphicsView->tidyWires();
 }

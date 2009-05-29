@@ -1791,6 +1791,8 @@ void SketchWidget::findConnectorsUnder(ItemBase * item) {
 void SketchWidget::mouseReleaseEvent(QMouseEvent *event) {
 	//setRenderHint(QPainter::Antialiasing, true);
 
+	ConnectorItem::clearEqualPotentialDisplay();
+
 	if (m_spaceBarWasPressed) {
 		InfoGraphicsView::mouseReleaseEvent(event);
 		return;
@@ -3950,7 +3952,7 @@ void SketchWidget::addSchematicViewLayers() {
 	setViewLayerIDs(ViewLayer::Schematic, ViewLayer::SchematicWire, ViewLayer::Schematic, ViewLayer::SchematicRuler, ViewLayer::SchematicLabel, ViewLayer::SchematicNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
+	layers << ViewLayer::Schematic << ViewLayer::SchematicWire << ViewLayer::SchematicTrace << ViewLayer::SchematicJumper << ViewLayer::SchematicLabel << ViewLayer::SchematicNote <<  ViewLayer::SchematicRuler;
 
 	addViewLayersAux(layers);
 }
@@ -3977,8 +3979,6 @@ void SketchWidget::addPcbViewLayers() {
 		copper0Trace->setParentLayer(copper0);
 	}
 }
-
-
 
 void SketchWidget::addViewLayers() {
 }
@@ -5087,3 +5087,5 @@ void SketchWidget::selectAllWires(ViewGeometry::WireFlag flag)
 	m_undoStack->push(parentCommand);
 }
 
+void SketchWidget::tidyWires() {
+}

@@ -54,6 +54,9 @@ public:
 	static bool greaterThan(const QString & myVersionStr, const QString & yourVersionStr);
 	static bool modifierGreaterThan(const QString & myReleaseModifier, const QString & yourReleaseModifier);
 	static void toVersionThing(const QString & candidate, VersionThing & versionThing);
+	static void cleanup();
+
+public:
 	static QString FirstVersionWithDetachedUserData;
 
 protected:

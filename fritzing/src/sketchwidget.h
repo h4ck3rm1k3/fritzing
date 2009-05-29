@@ -211,6 +211,7 @@ public:
 	LayerHash & viewLayers();
 	virtual void createTrace();
 	void selectAllWires(ViewGeometry::WireFlag);
+	virtual void tidyWires();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

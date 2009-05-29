@@ -59,6 +59,9 @@ public:
 	virtual bool autorouteCheckParts();
 	const QString & traceColor();
 	const QString & jumperColor();
+	virtual void ensureTraceLayersVisible();
+	virtual void ensureTraceLayerVisible();
+	virtual void ensureJumperLayerVisible();
 
 public:
 	enum CleanType {

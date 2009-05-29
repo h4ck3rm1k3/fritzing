@@ -45,7 +45,10 @@ public:
 	bool autorouteCheckWires();
 	bool autorouteCheckConnectors();
 	bool autorouteCheckParts();
-
+	void tidyWires();
+	void ensureTraceLayersVisible();
+	void ensureTraceLayerVisible();
+	void ensureJumperLayerVisible();
 };
 
 #endif

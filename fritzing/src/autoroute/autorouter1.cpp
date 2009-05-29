@@ -141,9 +141,7 @@ void Autorouter1::start()
 	// TODO: tighten path between connectors once trace has succeeded
 	// TODO: for a given net, after each trace, recalculate subsequent path based on distance to existing equipotential traces
 	
-	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0);
-	m_sketchWidget->ensureLayerVisible(ViewLayer::Copper0Trace);
-	m_sketchWidget->ensureLayerVisible(ViewLayer::Jumperwires);
+	m_sketchWidget->ensureTraceLayersVisible();
 
 	QUndoCommand * parentCommand = new QUndoCommand("Autoroute");
 
