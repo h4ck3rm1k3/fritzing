@@ -79,12 +79,6 @@ qreal convertToInches(const QString & string, bool * ok);
 
 bool isParent(QObject * candidateParent, QObject * candidateChild);
 
-#ifdef Q_WS_MAC
-//static const QString ___MacStyle___ = " QTabBar::tab {margin-bottom: 10px; min-width: 15ex;} ";
-static const QString ___MacStyle___ = "";
-#else
-static const QString ___MacStyle___ = "";
-#endif
 
 static const QString FritzingSketchExtension(".fz");
 static const QString FritzingBinExtension(".fzb");

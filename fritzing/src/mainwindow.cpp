@@ -182,18 +182,31 @@ void MainWindow::init() {
     if (!styleSheet.open(QIODevice::ReadOnly)) {
 		qWarning("Unable to open :/resources/styles/fritzing.qss");
 	} else {
-		QString menuStyle = "";
+		QString platformDependantStyle = "";
+		QString platformDependantStylePath;
 #ifdef Q_WS_X11
-		menuStyle = " QMenuBar {background-color: rgb(240,240,240);} ";
-#endif
-		QString oxygenStyle = "";
 		if(style()->metaObject()->className()==QString("OxygenStyle")) {
-			QFile oxygenStyleSheet(":/resources/styles/kde-oxygen.qss");
+			QFile oxygenStyleSheet(":/resources/styles/linux-kde-oxygen.qss");
 			if(oxygenStyleSheet.open(QIODevice::ReadOnly)) {
-				oxygenStyle = oxygenStyleSheet.readAll();
+				platformDependantStyle += oxygenStyleSheet.readAll();
 			}
 		}
-		setStyleSheet(styleSheet.readAll()+___MacStyle___+menuStyle+oxygenStyle);
+		platformDependantStylePath = ":/resources/styles/linux.qss";
+#endif
+
+#ifdef Q_WS_MAC
+		platformDependantStylePath = ":/resources/styles/mac.qss";
+#endif
+
+#ifdef Q_WS_WIN
+		platformDependantStylePath = ":/resources/styles/win.qss";
+#endif
+
+		QFile platformDependantStyleSheet(platformDependantStylePath);
+		if(platformDependantStyleSheet.open(QIODevice::ReadOnly)) {
+			platformDependantStyle += platformDependantStyleSheet.readAll();
+		}
+		setStyleSheet(styleSheet.readAll()+platformDependantStyle);
 	}
 
 	QMenu *breadItemMenu = breadboardItemMenu();

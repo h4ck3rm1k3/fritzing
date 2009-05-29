@@ -91,7 +91,7 @@ PartsEditorMainWindow::PartsEditorMainWindow(long id, QWidget *parent, ModelPart
     if (!styleSheet.open(QIODevice::ReadOnly)) {
         qWarning("Unable to open :/resources/styles/partseditor.qss");
     } else {
-    	m_mainFrame->setStyleSheet(styleSheet.readAll()+___MacStyle___);
+    	m_mainFrame->setStyleSheet(styleSheet.readAll());
     }
 
     resize(500,700);
