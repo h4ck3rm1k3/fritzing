@@ -1,4 +1,4 @@
-StackTabWidget::pane {
+/*StackTabWidget::pane {
 	position: absolute;
 	top: 0.43em;
 }
@@ -6,7 +6,7 @@ StackTabWidget::pane {
 #partsEditor QTabWidget::pane {
 	position: absolute;
 	top: 0.4em;
-}
+}*/
 
 /*
 PartsEditorMainWindow QTabbar::tab {
