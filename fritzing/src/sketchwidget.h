@@ -323,7 +323,7 @@ protected:
 	bool rotationAllowed(ItemBase *);
 	virtual bool allowFemaleRotation(ItemBase *);
 	virtual void setClipEnds(class VirtualWire *);
-
+	void prepDragBendpoint(Wire *, QPoint eventPos);
 
 protected:
 	static bool lessThan(int a, int b);

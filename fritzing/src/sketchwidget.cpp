@@ -1591,42 +1591,53 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	}
 
 	Wire * wire = dynamic_cast<Wire *>(item);
-	if ((event->button() == Qt::LeftButton) && (wire != NULL) && canChainWire(wire) && wire->hasConnections()) {
-		// want to add a bendpoint
-		m_bendpointWire = wire;
-		wire->saveGeometry();
-		ViewGeometry vg = m_bendpointVG = wire->getViewGeometry();
-		QPointF newPos = mapToScene(event->pos()); 
-		QPointF oldPos = wire->pos();
-		QLineF oldLine = wire->line();
-		DebugDialog::debug(QString("oldpos"), oldPos);
-		DebugDialog::debug(QString("oldline p1"), oldLine.p1());
-		DebugDialog::debug(QString("oldline p2"), oldLine.p2());
-		QLineF newLine(oldLine.p1(), newPos - oldPos);
-		wire->setLine(newLine);
-		vg.setLoc(newPos);
-		QLineF newLine2(QPointF(0,0), oldLine.p2() + oldPos - newPos);
-		vg.setLine(newLine2);
-		long newID = ItemBase::getNextID();
-		ConnectorItem * oldConnector1 = wire->connector1();
-		m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), vg, newID, -1, NULL, NULL, true));
-		ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
-		foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
-			oldConnector1->tempRemove(toConnectorItem, false);
-			toConnectorItem->tempRemove(oldConnector1, false);
-			newConnector1->tempConnectTo(toConnectorItem, false);
-			toConnectorItem->tempConnectTo(newConnector1, false);
+	if ((event->button() == Qt::LeftButton) && (wire != NULL) && !wire->getRatsnest()) {
+		if (canChainWire(wire) && wire->hasConnections() ) {
+			if (event->modifiers() & Qt::AltModifier) {
+				bool drag = true;
+				foreach (ConnectorItem * toConnectorItem, wire->connector0()->connectedToItems()) {
+					if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+						m_savedWires.insert(qobject_cast<Wire *>(toConnectorItem->attachedTo()), toConnectorItem);
+					}
+					else {
+						drag = false;
+						break;
+					}
+				}
+				if (drag) {
+					foreach (ConnectorItem * toConnectorItem, wire->connector1()->connectedToItems()) {
+						if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
+							m_savedWires.insert(qobject_cast<Wire *>(toConnectorItem->attachedTo()), toConnectorItem);
+						}
+						else {
+							drag = false;
+							break;
+						}
+					}
+				}
+				if (!drag) {
+					m_savedWires.clear();
+					return;
+				}
+
+				m_savedItems.clear();
+				m_savedItems.insert(wire);
+				wire->saveGeometry();
+				foreach (Wire * w, m_savedWires.keys()) {
+					w->saveGeometry();
+				}
+				setupAutoscroll(true);
+				return;
+			}
+			else {
+				prepDragBendpoint(wire, event->pos());
+				return;	
+			}
 		}
-		oldConnector1->tempConnectTo(m_connectorDragWire->connector0(), false);
-		m_connectorDragWire->connector0()->tempConnectTo(oldConnector1, false);
-		m_connectorDragConnector = oldConnector1;
-		m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
-		m_connectorDragWire->grabMouse();
-		return;		
 	}
 
 	QSet<Wire *> wires;
-	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems ()) {
+	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
 		ItemBase *itemBase = dynamic_cast<ItemBase *>(gitem);
 		if (itemBase == NULL) continue;
 
@@ -1684,6 +1695,40 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	// don't forget about checking connections-to-be
 
 }
+
+void SketchWidget::prepDragBendpoint(Wire * wire, QPoint eventPos) 
+{
+	m_bendpointWire = wire;
+	wire->saveGeometry();
+	ViewGeometry vg = m_bendpointVG = wire->getViewGeometry();
+	QPointF newPos = mapToScene(eventPos); 
+	QPointF oldPos = wire->pos();
+	QLineF oldLine = wire->line();
+	DebugDialog::debug(QString("oldpos"), oldPos);
+	DebugDialog::debug(QString("oldline p1"), oldLine.p1());
+	DebugDialog::debug(QString("oldline p2"), oldLine.p2());
+	QLineF newLine(oldLine.p1(), newPos - oldPos);
+	wire->setLine(newLine);
+	vg.setLoc(newPos);
+	QLineF newLine2(QPointF(0,0), oldLine.p2() + oldPos - newPos);
+	vg.setLine(newLine2);
+	long newID = ItemBase::getNextID();
+	ConnectorItem * oldConnector1 = wire->connector1();
+	m_connectorDragWire = dynamic_cast<Wire *>(addItemAux(wire->modelPart(), vg, newID, -1, NULL, NULL, true));
+	ConnectorItem * newConnector1 = m_connectorDragWire->connector1();
+	foreach (ConnectorItem * toConnectorItem, oldConnector1->connectedToItems()) {
+		oldConnector1->tempRemove(toConnectorItem, false);
+		toConnectorItem->tempRemove(oldConnector1, false);
+		newConnector1->tempConnectTo(toConnectorItem, false);
+		toConnectorItem->tempConnectTo(newConnector1, false);
+	}
+	oldConnector1->tempConnectTo(m_connectorDragWire->connector0(), false);
+	m_connectorDragWire->connector0()->tempConnectTo(oldConnector1, false);
+	m_connectorDragConnector = oldConnector1;
+	m_connectorDragWire->initDragEnd(m_connectorDragWire->connector0());
+	m_connectorDragWire->grabMouse();
+}
+
 
 void SketchWidget::collectFemaleConnectees(ItemBase * itemBase) {
 	Q_UNUSED(itemBase);
@@ -1925,6 +1970,17 @@ bool SketchWidget::checkMoved()
 		if (item->itemType() == ModelPart::Board || item->itemType() == ModelPart::ResizableBoard) {
 			hasBoard = true;
 		}
+	}
+
+	foreach (ItemBase * item, m_savedWires.keys()) {
+		if (item == NULL) continue;
+
+		ViewGeometry viewGeometry(item->getViewGeometry());
+		item->saveGeometry();
+		ViewGeometry newViewGeometry(item->getViewGeometry());
+
+		new ChangeWireCommand(this, item->id(), viewGeometry.line(), newViewGeometry.line(), viewGeometry.loc(), newViewGeometry.loc(), true, parentCommand);
+		new CheckStickyCommand(this, BaseCommand::SingleView, item->id(), false, parentCommand);
 	}
 
 	foreach (ConnectorItem * fromConnectorItem, m_moveDisconnectedFromFemale.uniqueKeys()) {

@@ -250,7 +250,7 @@ void AboutBox::closeEvent(QCloseEvent *event) {
 }
 
 void AboutBox::keyPressEvent ( QKeyEvent * event ) {
-	if (event->key() == Qt::Key_W && event->modifiers() == Qt::CTRL ) {
+	if ((event->key() == Qt::Key_W) && (event->modifiers() & Qt::ControlModifier) ) {
 		// We get the ctrl + W / command + W key event
 		//DebugDialog::debug("W key!");
 		this->closeAbout();

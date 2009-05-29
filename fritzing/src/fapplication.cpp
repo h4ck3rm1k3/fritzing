@@ -684,6 +684,7 @@ void FApplication::createUserDataStoreFolderStructure() {
 				if(binName.startsWith("qt_temp.")) {
 					QString filePath = binsFolder.absoluteFilePath(binName);
 					bool success = QFile(filePath).rename(BinManager::MyPartsBinLocation);
+					Q_UNUSED(success);
 					break;
 				}
 			}

@@ -261,18 +261,6 @@ void Wire::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
 	}
 
 	if (m_dragEnd == false) {
-		if (event->modifiers() & Qt::ShiftModifier) {
-			// bendpoint
-			return;
-		}
-
-		// can't move a connected wire
-		if (m_connector0->connectionsCount() > 0) return;
-		if (m_connector1->connectionsCount() > 0) return;
-
-		ItemBase::mouseMoveEvent(event);
-		//updateConnections(m_connector0);
-		//updateConnections(m_connector1);
 		return;
 	}
 
