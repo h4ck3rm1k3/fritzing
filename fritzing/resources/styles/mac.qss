@@ -4,5 +4,5 @@ StackTabWidget::pane {
 }
 
 #partsEditor QTabWidget::pane {
-	top: 0.75em;
+	top: 0.88em;
 }
