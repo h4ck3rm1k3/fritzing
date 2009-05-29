@@ -1,0 +1,3 @@
+#partsEditor QTabWidget::pane {
+	top: 0.34em;
+}
