@@ -582,7 +582,7 @@ ItemBase * SketchWidget::addItem(ModelPart * modelPart, BaseCommand::CrossViewTy
 
 	ItemBase * newItem = addItemAux(modelPart, viewGeometry, id, originalModelIndex, originatingCommand, partsEditorPaletteItem, true);
 	if (crossViewType == BaseCommand::CrossView) {
-		emit itemAddedSignal(modelPart, viewGeometry, id, originatingCommand->dropOrigin());
+		emit itemAddedSignal(modelPart, viewGeometry, id, originatingCommand ? originatingCommand->dropOrigin() : NULL);
 	}
 
 	return newItem;
