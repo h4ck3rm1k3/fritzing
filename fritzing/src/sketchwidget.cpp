@@ -1707,7 +1707,7 @@ void SketchWidget::categorizeDragWires(QSet<Wire *> & wires)
 			if (stuckTo != NULL) {
 				QPointF p = from.at(i)->sceneAdjustedTerminalPoint();
 				if (stuckTo->contains(stuckTo->mapFromScene(p))) {
-					ct->status[i] = IN;
+					ct->status[i] = m_savedItems.contains(stuckTo) ? IN : OUT;
 					changed = true;
 				}
 			}
@@ -3066,6 +3066,14 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 }
 
 void SketchWidget::rotateX(qreal degrees) {
+	// prep it like move
+	// group all saved items
+	// rotate
+	// ungroup
+	// restore all z values
+	// figure out how to unrotate everybody and apply individual moves and transforms
+	// fix up the wires
+
 	rotateFlip(degrees, 0);
 }
 

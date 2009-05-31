@@ -252,7 +252,7 @@ void ConnectorItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 	m_equalPotentialDisplayItems.append(this);
 	collectEqualPotential(m_equalPotentialDisplayItems, ViewGeometry::NoFlag);
-	m_equalPotentialDisplayItems.removeAt(0);
+	//m_equalPotentialDisplayItems.removeAt(0);									// not sure whether to leave the clicked one in or out of the list
 	foreach (ConnectorItem * connectorItem, m_equalPotentialDisplayItems) {
 		connectorItem->showEqualPotential(true);
 	}
