@@ -2576,7 +2576,7 @@ void MainWindow::importFilesFromPrevInstall() {
 
 	QMessageBox::information(
 		this, QObject::tr("Fritzing"),
-		tr("You will have to restart Fritzing, in order to use the imported parts"));
+		tr("You will have to restart Fritzing in order to use the imported parts"));
 }
 
 void MainWindow::tidyWires() {

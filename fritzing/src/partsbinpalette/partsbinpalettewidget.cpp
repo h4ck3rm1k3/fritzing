@@ -463,7 +463,7 @@ bool PartsBinPaletteWidget::beforeClosing() {
 	bool retval;
 	if (this->isWindowModified()) {
 		QMessageBox::StandardButton reply;
-		QMessageBox *messageBox = new QMessageBox(
+		QMessageBox messageBox(
 				tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
 				tr("Do you want to save the changes you made in this bin \"%1\"?")
 					.arg(QFileInfo(m_fileName).baseName()),
@@ -473,12 +473,12 @@ bool PartsBinPaletteWidget::beforeClosing() {
 				QMessageBox::Cancel | QMessageBox::Escape | QMessageBox::Default,
 				this, Qt::Sheet);
 
-		messageBox->setButtonText(QMessageBox::Yes, tr("Save"));
-		messageBox->setButtonText(QMessageBox::No, tr("Don't Save"));
-		messageBox->button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
-		messageBox->setInformativeText(tr("Your changes will be lost if you don't save them."));
+		messageBox.setButtonText(QMessageBox::Yes, tr("Save"));
+		messageBox.setButtonText(QMessageBox::No, tr("Don't Save"));
+		messageBox.button(QMessageBox::No)->setShortcut(tr("Ctrl+D"));
+		messageBox.setInformativeText(tr("Your changes will be lost if you don't save them."));
 
-		reply = (QMessageBox::StandardButton)messageBox->exec();
+		reply = (QMessageBox::StandardButton)messageBox.exec();
 
      	if (reply == QMessageBox::Yes) {
      		retval = save();

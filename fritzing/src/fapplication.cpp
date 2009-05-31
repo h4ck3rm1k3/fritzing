@@ -471,16 +471,35 @@ int FApplication::startup(int & argc, char ** argv)
 	if(prevVersion != ___emptyString___
 	   && Version::greaterThan(prevVersion,Version::FirstVersionWithDetachedUserData))
 	{
+		QMessageBox messageBox( 
+			QMessageBox::Question, 
+			tr("Import files from previous version?"), 
+			tr("Do you want to import parts and bins that you have created with earlier versions of Fritzing?\n"
+			   "\nNote: You can import them later using the \"Help\" > \"Import parts and bins "
+			   "from old version...\" menu action."),
+			   QMessageBox::Ok | QMessageBox::Cancel, 
+			   mainWindow, 
+			   Qt::Sheet );
+	    messageBox.setButtonText(QMessageBox::Ok, tr("Import"));
+		messageBox.setButtonText(QMessageBox::Cancel, tr("Do not import now"));
+		messageBox.setDefaultButton(QMessageBox::Cancel);
+		QMessageBox::StandardButton answer = (QMessageBox::StandardButton) messageBox.exec();
+
+		/*
+
 		QMessageBox::StandardButton answer = QMessageBox::question(
 			mainWindow,
 			tr("Import files from previous version?"),
-			tr("It seems that you're updating Fritzing.\n"
-			   "Do you want to import parts and bins that you have created before?\n"
-			   "\nNote: You can also, do it later through the \"Help\" > \"Import parts and bins "
+			tr("Do you want to import parts and bins that you have created with earlier versions of Fritzing?\n"
+			   "\nNote: You can also import them later through the \"Help\" > \"Import parts and bins "
 			   "from old version...\" menu action."),
 			QMessageBox::Ok | QMessageBox::Cancel,
 			QMessageBox::Ok
 		);
+
+		*/
+
+
 		if(answer == QMessageBox::Ok) {
 			mainWindow->importFilesFromPrevInstall();
 		}
