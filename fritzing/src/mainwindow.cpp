@@ -749,6 +749,7 @@ bool MainWindow::whatToDoWithAlienFiles() {
 						 m_alienPartsMsg
 						 .arg(QFileInfo(m_fileName).baseName()),
 						 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		// TODO: translate button text
 		if (reply == QMessageBox::Yes) {
 			return true;
 		} else if (reply == QMessageBox::No) {

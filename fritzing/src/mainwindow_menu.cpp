@@ -114,6 +114,8 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 		msgBox.setText(tr("All traces have not yet been routed."));
 		msgBox.setInformativeText(tr("Do you want to proceed anyway?"));
 		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+		msgBox.button(QMessageBox::Yes)->setText(tr("Proceed"));
+		msgBox.button(QMessageBox::No)->setText(tr("Cancel"));
 		msgBox.setDefaultButton(QMessageBox::Yes);
 		int ret = msgBox.exec();
 		if (ret != QMessageBox::Yes) return;

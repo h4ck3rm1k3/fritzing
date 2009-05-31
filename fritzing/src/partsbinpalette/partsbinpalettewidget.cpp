@@ -574,6 +574,7 @@ void PartsBinPaletteWidget::addPartCommand(const QString& moduleID) {
 		QMessageBox::Yes | QMessageBox::No,
 		QMessageBox::Yes
 	);
+	// TODO: make button texts translatable
 	if(answer == QMessageBox::Yes) {
 		int index = m_listView->position(moduleID);
 		m_undoStack->push(new QUndoCommand("Parts bin: part added"));
@@ -598,6 +599,7 @@ void PartsBinPaletteWidget::removePartCommand(const QString& moduleID) {
 		QMessageBox::Yes | QMessageBox::No,
 		QMessageBox::Yes
 	);
+	// TODO: make button texts translatable
 	if(answer == QMessageBox::Yes) {
 		m_undoStack->push(new QUndoCommand("Parts bin: part removed"));
 		removePart(moduleID);

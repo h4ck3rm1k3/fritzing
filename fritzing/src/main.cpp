@@ -38,8 +38,10 @@ $Date$
 int main(int argc, char *argv[])
 {
 
+#define WIN_CHECK_LEAKS
 #ifdef Q_WS_WIN
 #ifndef QT_NO_DEBUG
+#ifdef WIN_CHECK_LEAKS
 	HANDLE hLogFile;
 	hLogFile = CreateFile(L"fritzing_leak_log.txt", GENERIC_WRITE,
 		  FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,
@@ -51,7 +53,8 @@ int main(int argc, char *argv[])
 	_CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
 	_CrtSetReportFile(_CRT_ASSERT, hLogFile);
 	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	//_CrtSetBreakAlloc(24378);
+	//_CrtSetBreakAlloc(24378);					// sets a break when this memory id is allocated
+#endif
 #endif
 #endif
 

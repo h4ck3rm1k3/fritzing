@@ -432,6 +432,11 @@ const QString & PCBSketchWidget::hoverEnterPartConnectorMessage(QGraphicsSceneHo
 bool PCBSketchWidget::modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromDragWire, ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand)
 {	
 	Q_UNUSED(fromDragWire);
+	if (fromConnectorItem == toConnectorItem) {
+		// can't drag a wire to itself
+		return false;
+	}
+
 	if (fromConnectorItem->attachedToItemType() != ModelPart::Wire && 
 		toConnectorItem->attachedToItemType() != ModelPart::Wire)
 	{

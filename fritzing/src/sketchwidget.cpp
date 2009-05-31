@@ -2477,8 +2477,9 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 		m_connectorDragConnector->tempRemove(m_connectorDragWire->connector1(), false);
 		m_connectorDragWire->connector1()->tempRemove(m_connectorDragConnector, false);
 
-		// if to == NULL and it's pcb or schematic view, bail out
-		if (!canCreateWire(wire, fromOnWire, to)) {
+		// if to and from are the same connector, you can't draw a wire to yourself 
+		// or to == NULL and it's pcb or schematic view, bail out
+		if ((m_connectorDragConnector == to) || !canCreateWire(wire, fromOnWire, to)) {
 			clearDragWireTempCommand();
 			this->scene()->removeItem(m_connectorDragWire);
 			return;

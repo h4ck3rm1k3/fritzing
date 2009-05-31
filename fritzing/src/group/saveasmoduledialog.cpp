@@ -258,6 +258,8 @@ void SaveAsModuleDialog::checkAccept() {
 		msgBox.setInformativeText(tr("Do you want to proceed anyway?"));
 		msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 		msgBox.setDefaultButton(QMessageBox::Yes);
+		msgBox.button(QMessageBox::Yes)->setText(tr("Proceed"));
+		msgBox.button(QMessageBox::No)->setText(tr("Cancel"));
 		int ret = msgBox.exec();
 		if (ret != QMessageBox::Yes) return;
 	}

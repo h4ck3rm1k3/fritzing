@@ -218,7 +218,6 @@ QString FritzingWindow::getExtFromFileDialog(const QString &extOpt) {
 
 bool FritzingWindow::beforeClosing(bool showCancel) {
 	if (this->isWindowModified()) {
-     	QMessageBox::StandardButton reply;
      	QMessageBox messageBox(
      			tr("Save \"%1\"").arg(QFileInfo(m_fileName).baseName()),
      			tr("Do you want to save the changes you made in the document \"%1\"?")
@@ -237,8 +236,7 @@ bool FritzingWindow::beforeClosing(bool showCancel) {
 		if (showCancel) {
 			messageBox.setButtonText(QMessageBox::Cancel, tr("Cancel"));
 		}
-		reply = (QMessageBox::StandardButton)messageBox.exec();
-
+		QMessageBox::StandardButton reply = (QMessageBox::StandardButton)messageBox.exec();
      	if (reply == QMessageBox::Yes) {
      		return save();
     	} else if (reply == QMessageBox::No) {
