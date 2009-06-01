@@ -327,6 +327,7 @@ protected:
 	void prepDragWire(Wire *);
 	void clickBackground(QMouseEvent *);
 	void categorizeDragWires(QSet<Wire *> & wires);
+	void prepMove();
 
 protected:
 	static bool lessThan(int a, int b);

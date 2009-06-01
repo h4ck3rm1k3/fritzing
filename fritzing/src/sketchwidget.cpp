@@ -117,11 +117,13 @@ SketchWidget::SketchWidget(ViewIdentifierClass::ViewIdentifier viewIdentifier, Q
     // the first item dropped into the scene doesn't leap to the top left corner
     // as the scene resizes to fit the new item
    	QGraphicsLineItem * item = new QGraphicsLineItem();
-    item->setLine(1,1,1,1);
+    item->setLine(0, 0, rect().width(), rect().height());
     this->scene()->addItem(item);
     item->setVisible(false);
 
-    connect(this->scene(), SIGNAL(selectionChanged()), this, SLOT(scene_selectionChanged()));
+	
+	
+	connect(this->scene(), SIGNAL(selectionChanged()), this, SLOT(scene_selectionChanged()));
 
     connect(QApplication::clipboard(),SIGNAL(changed(QClipboard::Mode)),this,SLOT(restartPasteCount()));
     restartPasteCount(); // the first time
@@ -1595,6 +1597,12 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 		}
 	}
 
+	prepMove();
+
+	setupAutoscroll(true);
+}
+
+void SketchWidget::prepMove() {
 	QSet<Wire *> wires;
 	foreach (QGraphicsItem * gitem,  this->scene()->selectedItems()) {
 		ItemBase *itemBase = dynamic_cast<ItemBase *>(gitem);
@@ -1637,8 +1645,6 @@ void SketchWidget::mousePressEvent(QMouseEvent *event) {
 	foreach (Wire * w, m_savedWires.keys()) {
 		w->saveGeometry();
 	}
-
-	setupAutoscroll(true);
 }
 
 
@@ -3067,13 +3073,60 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 }
 
 void SketchWidget::rotateX(qreal degrees) {
-	// prep it like move
-	// group all saved items
-	// rotate
-	// ungroup
-	// restore all z values
-	// figure out how to unrotate everybody and apply individual moves and transforms
+
+	/*
+	clearHoldingSelectItem();
+	m_savedItems.clear();
+	m_savedWires.clear();
+	prepMove();
+	QGraphicsItemGroup * group = new QGraphicsItemGroup();
+	scene()->addItem(group);
+
+	QRectF itemsBoundingRect;
+	foreach (ItemBase * item, m_savedItems) {
+		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
+                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
+	}
+	foreach (ItemBase * item, m_savedWires.keys()) {
+		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
+                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
+	}
+	group->setPos(itemsBoundingRect.center());
+	foreach (ItemBase * item, m_savedItems) {
+		group->addToGroup(item);
+	}
+	foreach (ItemBase * item, m_savedWires.keys()) {
+		group->addToGroup(item);
+	}
+
+	QTransform transform;
+	transform.rotate(degrees);
+	group->setTransform(transform);
+
+	QString string = tr("Rotate %2 (%1)")
+			.arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
+			.arg((m_savedItems.count() == 1) ? m_savedItems.values()[0]->modelPart()->title() : QString::number(m_savedItems.count() + m_savedWires.count()) + " items" );
+	QUndoCommand * parentCommand = new QUndoCommand(string);
+
+	foreach (ItemBase * item, m_savedItems) {
+		group->removeFromGroup(item);
+		ViewGeometry vg1 = item->getViewGeometry();
+		ViewGeometry vg2(vg1);
+		vg2.setLoc(item->pos());
+		item->setPos(vg1.loc());
+		item->setZValue(vg1.z());
+		new RotateItemCommand(this, item->id(), degrees, parentCommand);
+		new MoveItemCommand(this, item->id(), vg1, vg2, parentCommand);
+	}
+	
+	delete group;
+	
+
 	// fix up the wires
+
+	m_undoStack->push(parentCommand);
+
+	*/
 
 	rotateFlip(degrees, 0);
 }
