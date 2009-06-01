@@ -1374,8 +1374,10 @@ void MainWindow::createMenus()
 	m_schematicTraceMenu->addAction(m_selectAllTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_schematicTraceMenu->addAction(m_selectAllJumpersAct);
-	m_schematicTraceMenu->addAction(m_tidyWiresAct);
 
+#ifndef QT_NO_DEBUG
+	m_schematicTraceMenu->addAction(m_tidyWiresAct);
+#endif
 
 	updateTraceMenu();
 	connect(m_pcbTraceMenu, SIGNAL(aboutToShow()), this, SLOT(updateTraceMenu()));

@@ -1647,20 +1647,20 @@ void SketchWidget::prepMove() {
 	}
 }
 
+enum ConnectionStatus {
+	IN,
+	OUT,
+	FREE,
+	UNDETERMINED
+};
+
+struct ConnectionThing {
+	Wire * wire;
+	ConnectionStatus status[2];
+};
 
 void SketchWidget::categorizeDragWires(QSet<Wire *> & wires) 
 {
-	enum ConnectionStatus {
-		IN,
-		OUT,
-		FREE,
-		UNDETERMINED
-	};
-
-	struct ConnectionThing {
-		Wire * wire;
-		ConnectionStatus status[2];
-	};
 
 	foreach (Wire * w, wires) {
 		QList<Wire *> chainedWires;
@@ -3108,7 +3108,7 @@ void SketchWidget::rotateX(qreal degrees)
 			if (item->modelPart()->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
 				// because these boards don't actually rotate yet
 				QRectF r = item->boundingRect();
-				QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
+				//QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
 				QPointF p0 = item->pos();
 				if (degrees == 90) {
 					p0 += r.bottomLeft();
