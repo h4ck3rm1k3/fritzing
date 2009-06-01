@@ -1067,10 +1067,10 @@ void ItemBase::flipItem(Qt::Orientations orientation) {
 	transformItem(QTransform().scale(xScale,yScale));
 }
 
-void ItemBase::transformItem(QTransform currTransf) {
+void ItemBase::transformItem(const QTransform & currTransf) {
 	QRectF rect = this->boundingRect();
-	qreal x = rect.width() / 2;
-	qreal y = rect.height() / 2;
+	qreal x = rect.width() / 2.0;
+	qreal y = rect.height() / 2.0;
 	QTransform transf = QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
 	getViewGeometry().setTransform(getViewGeometry().transform()*transf);
 	this->setTransform(getViewGeometry().transform());
@@ -1078,7 +1078,7 @@ void ItemBase::transformItem(QTransform currTransf) {
 	update();
 }
 
-void ItemBase::transformItem(const QMatrix & matrix) {
+void ItemBase::transformItem2(const QMatrix & matrix) {
 	QTransform transform(matrix);
 	transformItem(transform);
 }

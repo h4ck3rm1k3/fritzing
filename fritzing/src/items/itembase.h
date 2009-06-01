@@ -94,7 +94,8 @@ public:
 	virtual void setItemPos(QPointF & pos);
 	virtual void rotateItem(qreal degrees);
 	virtual void flipItem(Qt::Orientations orientation);
-	virtual void transformItem(const QMatrix &);
+	void transformItem(const QTransform &);
+	virtual void transformItem2(const QMatrix &);
 	virtual void removeLayerKin();
 	ViewIdentifierClass::ViewIdentifier viewIdentifier();
 	QString & viewIdentifierName();
@@ -224,7 +225,6 @@ protected:
 	void setInstanceTitleAux(const QString & title);
 	void ensureUniqueTitle(QString &title);
 	int getNextTitle(QList<QGraphicsItem*> & items, const QString &title);
-	void transformItem(QTransform currTransf);
 	void saveLocAndTransform(QXmlStreamWriter & streamWriter);
 
 protected:

@@ -185,6 +185,13 @@ void PaletteItem::flipItem(Qt::Orientations orientation) {
 	}
 }
 
+void PaletteItem::transformItem2(const QMatrix & matrix) {
+	PaletteItemBase::transformItem2(matrix);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->transformItem2(matrix);
+	}
+}
+
 void PaletteItem::setTransforms() {
 	setTransform(getViewGeometry().transform());
 	for (int i = 0; i < m_layerKin.count(); i++) {

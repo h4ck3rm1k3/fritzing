@@ -247,8 +247,8 @@ QPointF BreadboardSketchWidget::calcNewLoc(PaletteItemBase * moveBase, PaletteIt
 
 	QPointF pos = moveBase->pos();
 	QRectF r = moveBase->boundingRect();
-	pos.setX(pos.x() + (r.width() / 2));
-	pos.setY(pos.y() + (r.height() / 2));
+	pos.setX(pos.x() + (r.width() / 2.0));
+	pos.setY(pos.y() + (r.height() / 2.0));
 	qreal d[4];
 	d[0] = qAbs(pos.y() - dr.top());
 	d[1] = qAbs(pos.y() - dr.bottom());
@@ -305,6 +305,8 @@ bool BreadboardSketchWidget::canDropModelPart(ModelPart * modelPart) {
 }
 
 bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
+	Q_UNUSED(itemBase);
+	/*
 	foreach (QGraphicsItem * childItem, itemBase->childItems()) {
 		ConnectorItem * fromConnectorItem = dynamic_cast<ConnectorItem *>(childItem);
 		if (fromConnectorItem == NULL) continue;
@@ -317,6 +319,7 @@ bool BreadboardSketchWidget::allowFemaleRotation(ItemBase * itemBase) {
 			}
 		}
 	}
+	*/
 
 	return true;
 }

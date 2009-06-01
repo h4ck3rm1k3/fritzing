@@ -1095,7 +1095,7 @@ void SketchWidget::rotateItem(long id, qreal degrees) {
 void SketchWidget::transformItem(long id, const QMatrix & matrix) {
 	ItemBase * pitem = findItem(id);
 	if (pitem != NULL) {
-		pitem->transformItem(matrix);
+		pitem->transformItem2(matrix);
 	}
 }
 
@@ -2719,6 +2719,7 @@ ItemCount SketchWidget::calcItemCount() {
 	}
 
 	if (itemCount.selCount != itemCount.selRotatable) {
+		// if you can't rotate them all, then you can't rotate any
 		itemCount.selRotatable = 0;
 	}
 	if (itemCount.selCount != itemCount.selVFlipable) {
@@ -3072,36 +3073,24 @@ void SketchWidget::mousePressConnectorEvent(ConnectorItem * connectorItem, QGrap
 	}
 }
 
-void SketchWidget::rotateX(qreal degrees) {
-
-	/*
+void SketchWidget::rotateX(qreal degrees) 
+{
 	clearHoldingSelectItem();
 	m_savedItems.clear();
 	m_savedWires.clear();
 	prepMove();
-	QGraphicsItemGroup * group = new QGraphicsItemGroup();
-	scene()->addItem(group);
 
 	QRectF itemsBoundingRect;
-	foreach (ItemBase * item, m_savedItems) {
+	// want the bounding rect of the original selected items, not all the items that are secondarily being rotated
+	foreach (QGraphicsItem * item, scene()->selectedItems()) {
 		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
                             .mapRect(item->boundingRect() | item->childrenBoundingRect());
-	}
-	foreach (ItemBase * item, m_savedWires.keys()) {
-		itemsBoundingRect |= (item->transform() * QTransform().translate(item->x(), item->y()))
-                            .mapRect(item->boundingRect() | item->childrenBoundingRect());
-	}
-	group->setPos(itemsBoundingRect.center());
-	foreach (ItemBase * item, m_savedItems) {
-		group->addToGroup(item);
-	}
-	foreach (ItemBase * item, m_savedWires.keys()) {
-		group->addToGroup(item);
 	}
 
-	QTransform transform;
-	transform.rotate(degrees);
-	group->setTransform(transform);
+	QPointF center = itemsBoundingRect.center();
+
+	QTransform rotation;
+	rotation.rotate(degrees);
 
 	QString string = tr("Rotate %2 (%1)")
 			.arg(ViewIdentifierClass::viewIdentifierName(m_viewIdentifier))
@@ -3109,26 +3098,84 @@ void SketchWidget::rotateX(qreal degrees) {
 	QUndoCommand * parentCommand = new QUndoCommand(string);
 
 	foreach (ItemBase * item, m_savedItems) {
-		group->removeFromGroup(item);
+		if (!rotationAllowed(item)) {
+			continue;
+		}
+
 		ViewGeometry vg1 = item->getViewGeometry();
 		ViewGeometry vg2(vg1);
-		vg2.setLoc(item->pos());
-		item->setPos(vg1.loc());
-		item->setZValue(vg1.z());
-		new RotateItemCommand(this, item->id(), degrees, parentCommand);
-		new MoveItemCommand(this, item->id(), vg1, vg2, parentCommand);
+		if (item->itemType() != ModelPart::Wire) {
+			if (item->modelPart()->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
+				// because these boards don't actually rotate yet
+				QRectF r = item->boundingRect();
+				QPointF test(center.x() - (r.height() / 2.0), center.y() - (r.width() / 2.0));
+				QPointF p0 = item->pos();
+				if (degrees == 90) {
+					p0 += r.bottomLeft();
+				}
+				else if (degrees == -90) {
+					p0 += r.topRight();
+				}
+				else if (degrees == 180) {
+					p0 += r.bottomRight();
+				}
+				else {
+					// we're screwed: only multiples of 90 for now.
+				}
+				QPointF d0 = p0 - center;
+				QPointF d0t = rotation.map(d0);
+				vg2.setLoc(d0t + center);
+			}
+			else {
+				QPointF dp = center - item->pos();
+				QTransform tp = QTransform().translate(-dp.x(), -dp.y()) * rotation * QTransform().translate(dp.x(), dp.y());
+				QPointF dc = item->boundingRect().center();
+				QTransform tc = QTransform().translate(-dc.x(), -dc.y()) * rotation * QTransform().translate(dc.x(), dc.y());
+				QPointF mp = tp.map(QPointF(0,0));
+				QPointF mc = tc.map(QPointF(0,0));
+				vg2.setLoc(vg1.loc() + mp - mc);
+			}
+			new MoveItemCommand(this, item->id(), vg1, vg1, parentCommand);
+			new RotateItemCommand(this, item->id(), degrees, parentCommand);
+			new MoveItemCommand(this, item->id(), vg2, vg2, parentCommand);
+		}
+		else {
+			Wire * wire = qobject_cast<Wire *>(item);
+			QPointF p0 = wire->connector0()->sceneAdjustedTerminalPoint();
+			QPointF d0 = p0 - center;
+			QPointF d0t = rotation.map(d0);
+
+			QPointF p1 = wire->connector1()->sceneAdjustedTerminalPoint();
+			QPointF d1 = p1 - center;
+			QPointF d1t = rotation.map(d1);
+
+			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d1t - d0t), vg1.loc(), d0t + center, true, parentCommand);
+		}
 	}
 	
-	delete group;
-	
+	foreach (Wire * wire, m_savedWires.keys()) {
+		ViewGeometry vg1 = wire->getViewGeometry();
+		ViewGeometry vg2(vg1);
 
-	// fix up the wires
+		ConnectorItem * rotater = m_savedWires.value(wire);
+		QPointF p0 = rotater->sceneAdjustedTerminalPoint();
+		QPointF d0 = p0 - center;
+		QPointF d0t = rotation.map(d0);
+
+		QPointF p1 = wire->otherConnector(rotater)->sceneAdjustedTerminalPoint();
+		if (rotater == wire->connector0()) {
+			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), p1 - (d0t + center)), vg1.loc(), d0t + center, true, parentCommand);
+		}
+		else {
+			new ChangeWireCommand(this, wire->id(), vg1.line(), QLineF(QPointF(0,0), d0t + center - p1), vg1.loc(), vg1.loc(), true, parentCommand);
+		}
+	}
 
 	m_undoStack->push(parentCommand);
 
-	*/
+	
 
-	rotateFlip(degrees, 0);
+	//rotateFlip(degrees, 0);
 }
 
 
@@ -5096,8 +5143,8 @@ void SketchWidget::drawBackground( QPainter * painter, const QRectF & rect )
 				}
 				*/
 
-				m_fixedToCenterItemOffset.setX((int) ((vp.width() - helpsize.width()) / 2));
-				m_fixedToCenterItemOffset.setY((int) ((vp.height() - helpsize.height()) / 2));
+				m_fixedToCenterItemOffset.setX((int) ((vp.width() - helpsize.width()) / 2.0));
+				m_fixedToCenterItemOffset.setY((int) ((vp.height() - helpsize.height()) / 2.0));
 				painter->save();
 				painter->setWindow(painter->viewport());
 				painter->setTransform(QTransform());
@@ -5265,7 +5312,7 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 	// TODO: allow breadboard and ardiuno to rotate even when connected to something
 
 	switch(itemBase->itemType()) {
-		case ModelPart::Wire:
+		//case ModelPart::Wire:
 		case ModelPart::Note:
 		case ModelPart::Unknown:
 			return false;
@@ -5273,9 +5320,9 @@ bool SketchWidget::rotationAllowed(ItemBase * itemBase)
 		case ModelPart::Board:
 		case ModelPart::ResizableBoard:
 		case ModelPart::Breadboard:
-			if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
-				return false;
-			}
+			//if (itemBase->sticky() && itemBase->stickyList().count() > 0) {
+				//return false;
+			//}
 			break;
 		default:
 			break;

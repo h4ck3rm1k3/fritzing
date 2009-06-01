@@ -132,7 +132,7 @@ QPixmap * FSvgRenderer::getPixmap(const QString & moduleID, ViewLayer::ViewLayer
 			newH = size.height();
 			newW = newH * def.width() / def.height();
 		}
-		QRectF bounds((size.width() - newW) / 2, (size.height() - newH) / 2, newW, newH);
+		QRectF bounds((size.width() - newW) / 2.0, (size.height() - newH) / 2.0, newW, newH);
 		renderer->render(&painter, bounds);
 		painter.end();
 	}
@@ -265,7 +265,7 @@ bool FSvgRenderer::getSvgConnectorInfo(ViewLayer::ViewLayerID viewLayerID, const
 
 	m_cachedElement = element;
 
-	bounds.setRect(cx - r - (sw / 2), cy - r - (sw / 2), (r * 2) + sw, (r * 2) + sw);
+	bounds.setRect(cx - r - (sw / 2.0), cy - r - (sw / 2.0), (r * 2) + sw, (r * 2) + sw);
 	radius = r;
 	strokeWidth = sw;
 	return true;

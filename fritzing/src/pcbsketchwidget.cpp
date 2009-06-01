@@ -472,8 +472,8 @@ void PCBSketchWidget::setCurrent(bool current) {
 			QSizeF vp = this->viewport()->size();
 
 			QPointF p;
-			p.setX((int) ((vp.width() - helpsize.width()) / 2));
-			p.setY((int) ((vp.height() - helpsize.height()) / 2));
+			p.setX((int) ((vp.width() - helpsize.width()) / 2.0));
+			p.setY((int) ((vp.height() - helpsize.height()) / 2.0));
 
 			// TODO: make these constants less arbitrary
 			p += QPointF(10, 30);

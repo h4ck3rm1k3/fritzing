@@ -392,15 +392,17 @@ void ResizableBoard::rotateItem(qreal degrees) {
 	// what gets screwed up is the drag handles
 
 	if (modelPart()->moduleID().compare(ItemBase::rectangleModuleIDName) == 0) {
-		QRectF r = this->boundingRect();
-		r.moveTopLeft(pos());
-		QPointF c = r.center();
-		ViewGeometry vg;
-		vg.setLoc(QPointF(c.x() - (r.height() / 2), c.y() - (r.width() / 2)));	
-		QSizeF sz = modelPart()->size();
-		LayerHash viewLayers;
-		resizeMM(sz.height(), sz.width(), viewLayers);
-		moveItem(vg);
+		if (degrees == 90 || degrees == -90) {
+			QRectF r = this->boundingRect();
+			r.moveTopLeft(pos());
+			QPointF c = r.center();
+			ViewGeometry vg;
+			vg.setLoc(QPointF(c.x() - (r.height() / 2.0), c.y() - (r.width() / 2.0)));	
+			QSizeF sz = modelPart()->size();
+			LayerHash viewLayers;
+			resizeMM(sz.height(), sz.width(), viewLayers);
+			moveItem(vg);
+		}
 	}
 	else {
 		PaletteItem::rotateItem(degrees);

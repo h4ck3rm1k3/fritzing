@@ -84,5 +84,5 @@ void VirtualWire::tempRemoveAllConnections() {
 }	
 
 qreal VirtualWire::calcClipRadius(ConnectorItem * connectorItem) {
-	return connectorItem->radius() + (connectorItem->strokeWidth() / 2) + (m_pen.width() * 0.5);
+	return connectorItem->radius() + (connectorItem->strokeWidth() / 2.0) + (m_pen.width() / 2.0);
 }

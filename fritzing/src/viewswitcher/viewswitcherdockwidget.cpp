@@ -178,8 +178,8 @@ void ViewSwitcherDockWidget::topLevelChangedSlot(bool topLevel) {
 	QSize sz = size();
 	this->setMinimumSize(vssz);
 	DebugDialog::debug(QString("mask size %1 %2").arg(vssz.width()).arg(vssz.height()));
-	r.setRect(r.left() + ((sz.width() - vssz.width()) / 2), 
-				r.top() + ((sz.height() - vssz.height()) / 2), 
+	r.setRect(r.left() + ((sz.width() - vssz.width()) / 2.0), 
+				r.top() + ((sz.height() - vssz.height()) / 2.0), 
 				vssz.width(), 
 				vssz.height());
 	this->setGeometry(r);

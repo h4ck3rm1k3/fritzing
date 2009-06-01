@@ -2461,8 +2461,8 @@ void MainWindow::addNote() {
 	vg.setRect(0, 0, Note::initialMinWidth, Note::initialMinHeight);
 	QPointF tl = m_currentGraphicsView->mapToScene(QPoint(0, 0));
 	QSizeF vpSize = m_currentGraphicsView->viewport()->size();
-	tl.setX(tl.x() + ((vpSize.width() - Note::initialMinWidth) / 2));
-	tl.setY(tl.y() + ((vpSize.height() - Note::initialMinHeight) / 2));
+	tl.setX(tl.x() + ((vpSize.width() - Note::initialMinWidth) / 2.0));
+	tl.setY(tl.y() + ((vpSize.height() - Note::initialMinHeight) / 2.0));
 	vg.setLoc(tl);
 
 	QUndoCommand * parentCommand = new QUndoCommand(tr("Add Note"));

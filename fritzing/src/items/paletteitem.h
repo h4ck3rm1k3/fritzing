@@ -52,6 +52,7 @@ public:
 	void rotateItem(qreal degrees);
 	void flipItem(Qt::Orientations orientation);
 	void moveItem(ViewGeometry & viewGeometry);
+	void transformItem2(const QMatrix &);
 	void setItemPos(QPointF & pos);
 
 	bool renderImage(ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier viewIdentifier, const LayerHash & viewLayers, ViewLayer::ViewLayerID, bool doConnectors);

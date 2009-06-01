@@ -80,7 +80,7 @@ void MiniViewContainer::setView(QGraphicsView * view)
 
 void MiniViewContainer::forceResize() {
 	// force a resize on a view change because otherwise some size or sceneRect isn't updated and the navigator is off
-	m_miniView->resize(this->size() / 2);
+	m_miniView->resize(this->size() / 2.0);
 	m_miniView->resize(this->size());
 }
 
@@ -135,8 +135,8 @@ void MiniViewContainer::updateFrame()
 			w = trueW;
 		}
 
-		dw = (this->width() - w) / 2;
-		dh = (this->height() - h) / 2;
+		dw = (this->width() - w) / 2.0;
+		dh = (this->height() - h) / 2.0;
 
 		//DebugDialog::debug(QString("dw:%1 dh%2 w:%3 h:%4").arg(dw).arg(dh).arg(w).arg(h));
 
@@ -155,12 +155,12 @@ void MiniViewContainer::updateFrame()
 
 		QMatrix matrix = m_miniView->matrix();
 		w = (int) (sceneRect.width() * matrix.m11());
-		dw = (this->width() - w) / 2;
+		dw = (this->width() - w) / 2.0;
 		newW = w * page / (max + page - min);
 		newX = w * (value - min) / (max + page - min);
 
 		h = (int) (sceneRect.height() * matrix.m22());
-		dh = (this->height() - h) / 2;
+		dh = (this->height() - h) / 2.0;
 		newY = 0;
 		newH = h;
 
@@ -175,24 +175,24 @@ void MiniViewContainer::updateFrame()
 
 		QMatrix matrix = m_miniView->matrix();
 		h = (int) (sceneRect.height() * matrix.m22());
-		dh = (this->height() - h) / 2;
+		dh = (this->height() - h) / 2.0;
 		newH = h * page / (max + page - min);
 		newY = h * (value - min) / (max + page - min);
 
 		w = (int) (sceneRect.width() * matrix.m11());
-		dw = (this->width() - w) / 2;
+		dw = (this->width() - w) / 2.0;
 		newX = 0;
 		newW = w;
 	}
 	else if ((sceneRect.width() > 0) && (sceneRect.height() > 0)) {
 		QMatrix matrix = m_miniView->matrix();
 		w = (int) (sceneRect.width() * matrix.m11());
-		dw = (this->width() - w) / 2;
+		dw = (this->width() - w) / 2.0;
 		newX = 0;
 		newW = w;
 
 		h = (int) (sceneRect.height() * matrix.m22());
-		dh = (this->height() - h) / 2;
+		dh = (this->height() - h) / 2.0;
 		newY = 0;
 		newH = h;
 	}

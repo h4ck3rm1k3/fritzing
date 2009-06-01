@@ -457,8 +457,8 @@ void PartLabel::rotateFlipLabel(qreal degrees, Qt::Orientations orientation) {
 void PartLabel::transformLabel(QTransform currTransf) 
 {
 	QRectF rect = this->boundingRect();
-	qreal x = rect.width() / 2;
-	qreal y = rect.height() / 2;
+	qreal x = rect.width() / 2.0;
+	qreal y = rect.height() / 2.0;
 	QTransform transf = transform() * QTransform().translate(-x, -y) * currTransf * QTransform().translate(x, y);
 	setTransform(transf);
 }
