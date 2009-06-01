@@ -2015,8 +2015,8 @@ void MainWindow::openRecentOrExampleFile() {
 		bool readOnly = m_openExampleActions.contains(action->text());
 		mw->setReadOnly(readOnly);
 		mw->load(action->data().toString(),!readOnly,!readOnly);
-		mw->move(x()+CascadeFactorX,y()+CascadeFactorY);
 		mw->clearFileProgressDialog();
+		closeIfEmptySketch(mw);
 	}
 }
 
