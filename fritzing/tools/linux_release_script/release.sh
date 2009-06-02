@@ -44,14 +44,15 @@ echo "copying libraries"
 cp $QT_HOME/lib/libQtCore.so.4 $QT_HOME/lib/libQtGui.so.4 $QT_HOME/lib/libQtNetwork.so.4 $QT_HOME/lib/libQtSql.so.4 $QT_HOME/lib/libQtSvg.so.4 $QT_HOME/lib/libQtWebKit.so.4 $QT_HOME/lib/libQtXml.so.4 .
 
 
+# seems not to be needed anymore
 # if is i368 copy the libaudio
-if [ $arch == 'i386' ]
-	then 
-	    cp /usr/lib/libaudio.so /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 .
-	    echo "copying libaudio files"
-	else
-	    echo "skipping libaudio files"
-fi
+#if [ $arch == 'i386' ]
+#	then 
+#	    cp /usr/lib/libaudio.so /usr/lib/libaudio.so.2 /usr/lib/libaudio.so.2.4 .
+#	    echo "copying libaudio files"
+#	else
+#	    echo "skipping libaudio files"
+#fi
 
 echo "copying plugins"
 cp $QT_HOME/plugins/imageformats/libqjpeg.so imageformats
