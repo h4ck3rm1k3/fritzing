@@ -3,7 +3,7 @@ www.fritzing.org
 
 
 ABOUT THIS RELEASE
-This is a preview release of Fritzing 0.1. Try it out on your project 
+This is a preview release of Fritzing. Try it out on your project 
 and let us know what requirements you have. Contribute to the part 
 library and if you're a developer, have a look at the code. We greatly 
 appreciate every contribution. Please join the discussion in our forums.  
