@@ -2610,7 +2610,9 @@ void MainWindow::tidyWires() {
 	m_currentGraphicsView->tidyWires();
 }
 
-void MainWindow::groundFill()
+#define MINYSECTION 4
+
+void MainWindow::groundFill() 
 {
 	ItemBase * board = NULL;
     foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
@@ -2648,10 +2650,10 @@ void MainWindow::groundFill()
 	}
 
 	int res = 1000 / 10;
-	qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
-	qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
+	qreal iWidth = res * imageSize.width() / FSvgRenderer::printerScale();
+	qreal iHeight = res * imageSize.height() / FSvgRenderer::printerScale();
 	QSvgRenderer renderer(byteArray);
-	QImage image(trueWidth * res, trueHeight * res, QImage::Format_Indexed8);
+	QImage image(iWidth, iHeight, QImage::Format_Indexed8);
 	image.setColor(0, Qt::black);
 	for (int i = 0; i < 256; i++) {
 		image.setColor(i, Qt::white);
@@ -2662,13 +2664,48 @@ void MainWindow::groundFill()
 	renderer.render(&painter);
 	painter.end();
 
-	qreal useWidth = res * board->boundingRect().width() / FSvgRenderer::printerScale();
-	qreal useHeight = res * board->boundingRect().height() / FSvgRenderer::printerScale();
+	qreal useWidth = qMin(iWidth, res * board->boundingRect().width() / FSvgRenderer::printerScale());
+	qreal useHeight = qMin(iHeight, res * board->boundingRect().height() / FSvgRenderer::printerScale());
 
+	QList<QRect> rects;
 	// TODO deal with irregular board outline
-	for (int i = 0; i < useWidth; i++) {
+	for (int i = 0; i < useHeight; i++) {
 		bool inWhite = true;
 		int whiteStart = 0;
+		uchar * scanLine = image.scanLine(i);
+		for (int j = 0; j < useWidth; j++) {
+			uchar  current = *(scanLine + j);
+			if (inWhite) {
+				if (current != 0) {
+					// another white pixel, keep moving
+					continue;
+				}
+				
+				// got black: close up this segment;
+				inWhite = false;
+				if (j - whiteStart < MINYSECTION) {
+					// not a big enough section
+					continue;
+				}
+
+				rects.append(QRect(whiteStart, i, j - whiteStart + 1, 0));
+			}
+			else {
+				if (current == 0) {
+					// another black pixel, keep moving
+					continue;
+				}
+
+				inWhite = true;
+				whiteStart = j;
+			}		
+		}
+		if (inWhite) {
+			// close up the last segment
+			if (j - whiteStart >= MINYSECTION) {
+				rects.append(QRect(whiteStart, i, j - whiteStart, 0));
+			}
+		}
 	}
 
 

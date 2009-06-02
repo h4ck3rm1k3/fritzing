@@ -39,7 +39,7 @@ SchematicSketchWidget::SchematicSketchWidget(ViewIdentifierClass::ViewIdentifier
 {
 	m_viewName = QObject::tr("Schematic View");
 	m_traceColor = "black";
-	m_jumperColor = "red";
+	m_jumperColor = "black";			
 	m_cleanType = ninetyClean;
 }
 
