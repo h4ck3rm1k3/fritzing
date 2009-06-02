@@ -172,8 +172,13 @@ void ConnectorItem::restoreColor() {
 	}
 
 	if (m_connectedTo.count() <= 0) {
-		setNormalColor();
-		return;
+		if (connectorType() == Connector::Female) {
+			setNormalColor();
+			return;
+		}
+
+		setUnconnectedColor();
+		return;	
 	}
 
 	setConnectedColor();
@@ -197,6 +202,16 @@ void ConnectorItem::setNormalColor() {
 	m_attachedTo->getNormalColor(this, brush, pen, m_opacity, m_negativePenWidth);
 	//DebugDialog::debug(QString("set normal %1 %2").arg(attachedToID()).arg(pen->width()));
 	setColorAux(*brush, *pen, false);
+}
+
+void ConnectorItem::setUnconnectedColor() {
+	if (m_attachedTo == NULL) return;
+
+	QBrush * brush = NULL;
+	QPen * pen = NULL;
+	m_attachedTo->getUnconnectedColor(this, brush, pen, m_opacity, m_negativePenWidth);
+	//DebugDialog::debug(QString("set unconnected %1 %2").arg(attachedToID()).arg(pen->width()));
+	setColorAux(*brush, *pen, true);
 }
 
 void ConnectorItem::setChosenColor() {

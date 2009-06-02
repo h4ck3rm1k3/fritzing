@@ -99,12 +99,14 @@ const qreal ItemBase::connectorHoverOpacity = .40;
 QPen ItemBase::normalPen(QColor(255,0,0));
 QPen ItemBase::hoverPen(QColor(0, 0, 255));
 QPen ItemBase::connectedPen(QColor(0, 255, 0));
+QPen ItemBase::unconnectedPen(QColor(255, 0, 0));
 QPen ItemBase::chosenPen(QColor(255,0,0));
 QPen ItemBase::equalPotentialPen(QColor(255,255,0));
 
 QBrush ItemBase::normalBrush(QColor(255,0,0));
 QBrush ItemBase::hoverBrush(QColor(0,0,255));
 QBrush ItemBase::connectedBrush(QColor(0,255,0));
+QBrush ItemBase::unconnectedBrush(QColor(255,0,0));
 QBrush ItemBase::chosenBrush(QColor(255,0,0));
 QBrush ItemBase::equalPotentialBrush(QColor(255,255,0));
 
@@ -1284,7 +1286,7 @@ bool ItemBase::hasConnections()
 void ItemBase::getConnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, int & negativePenWidth) {
 	brush = &connectedBrush;
 	pen = &connectedPen;
-	opacity = normalConnectorOpacity;
+	opacity = 0.2;
 	negativePenWidth = 0;
 }
 
@@ -1292,6 +1294,13 @@ void ItemBase::getNormalColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qre
 	brush = &normalBrush;
 	pen = &normalPen;
 	opacity = normalConnectorOpacity;
+	negativePenWidth = 0;
+}
+
+void ItemBase::getUnconnectedColor(ConnectorItem *, QBrush * &brush, QPen * &pen, qreal & opacity, int & negativePenWidth) {
+	brush = &unconnectedBrush;
+	pen = &unconnectedPen;
+	opacity = 0.6;
 	negativePenWidth = 0;
 }
 

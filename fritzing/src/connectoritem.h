@@ -102,6 +102,7 @@ protected:
 	void setHoverColor();
 	void setNormalColor();
 	void setConnectedColor();
+	void setUnconnectedColor();
 	void setChosenColor();
 	void setColorAux(QBrush brush, QPen pen, bool paint);
 	void setColorAux(const QColor &color, bool paint=true);
