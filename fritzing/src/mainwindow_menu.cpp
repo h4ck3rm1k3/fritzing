@@ -295,8 +295,8 @@ void MainWindow::doExport() {
 			return; //Cancel pressed
 		} else {
 			FileProgressDialog * fileProgressDialog = exportProgress();
+			fileExt = getExtFromFileDialog(extFmt);
 			DebugDialog::debug(fileExt+" selected to export");
-			fileExt = getExtFromFileDialog(fileExt);
 			#ifdef Q_WS_X11
 				if(!alreadyHasExtension(fileName)) {
 					fileName += fileExt;
@@ -2610,7 +2610,7 @@ void MainWindow::tidyWires() {
 	m_currentGraphicsView->tidyWires();
 }
 
-void MainWindow::groundFill() 
+void MainWindow::groundFill()
 {
 	ItemBase * board = NULL;
     foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
@@ -2647,7 +2647,7 @@ void MainWindow::groundFill()
 		return;
 	}
 
-	int res = 1000 / 10;  
+	int res = 1000 / 10;
 	qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
 	qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
 	QSvgRenderer renderer(byteArray);
@@ -2671,9 +2671,9 @@ void MainWindow::groundFill()
 		int whiteStart = 0;
 	}
 
-	
 
- 
+
+
 
 	// render it back as svgs by figuring out the beginning and end of each separate horizontal line
 	//		skip lines that are too small
