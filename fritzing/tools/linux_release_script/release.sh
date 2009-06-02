@@ -54,8 +54,8 @@ if [ $arch == 'i386' ]
 fi
 
 echo "copying plugins"
-cp /usr/lib/qt4/plugins/imageformats/libqjpeg.so imageformats
-cp /usr/lib/qt4/plugins/sqldrivers/libqsqlite.so sqldrivers
+cp $QT_HOME/plugins/imageformats/libqjpeg.so imageformats
+cp $QT_HOME/plugins/sqldrivers/libqsqlite.so sqldrivers
 
 echo "copying translations"
 cp ../../compile_folder/translations/*.qm translations
