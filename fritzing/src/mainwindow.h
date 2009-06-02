@@ -225,6 +225,7 @@ protected slots:
 	void addNote();
 	void reportBug();
 	void tidyWires();
+	void groundFill();
 
 protected:
 	void initSketchWidget(SketchWidget *);
@@ -488,6 +489,7 @@ protected:
 	QAction *m_selectAllTracesAct;
 	QAction *m_selectAllExcludedTracesAct;
 	QAction *m_selectAllJumpersAct;
+	QAction *m_groundFillAct;
 	QAction *m_tidyWiresAct;
 
 

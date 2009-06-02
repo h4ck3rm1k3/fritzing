@@ -551,3 +551,41 @@ bool SvgFileSplitter::getSvgSizeAttributes(const QString & path, QString & width
 
 	return true;
 }
+
+bool SvgFileSplitter::changeStrokeWidth(const QString & svg, qreal delta, QByteArray & byteArray) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+
+	if (!domDocument.setContent(svg, true, &errorStr, &errorLine, &errorColumn)) {
+		return false;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) {
+		return false;
+	}
+
+	if (root.tagName() != "svg") {
+		return false;
+	}
+
+	changeStrokeWidth(root, delta);
+	byteArray = domDocument.toByteArray();
+	return true;
+}
+
+void SvgFileSplitter::changeStrokeWidth(QDomElement & element, qreal delta) {
+	bool ok;
+	qreal sw = element.attribute("stroke-width").toDouble(&ok);
+	if (ok) {
+		element.setAttribute("stroke-width", QString::number(sw + delta));
+	}
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		changeStrokeWidth(child, delta);
+		child = child.nextSiblingElement();
+	}
+}

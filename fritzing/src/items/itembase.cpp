@@ -1140,14 +1140,14 @@ FSvgRenderer * ItemBase::setUpImage(ModelPart * modelPart, ViewIdentifierClass::
 	if (renderer == NULL) {
 		QString tempPath1;
 		QString tempPath2;
+		QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
 		if(modelPartShared->path() != ___emptyString___) {
 			QDir dir(modelPartShared->path());			// is a path to a filename
 			dir.cdUp();									// lop off the filename
 			dir.cdUp();									// parts root
 			tempPath1 = dir.absolutePath() + "/" + ItemBase::SvgFilesDir +"/%1/" + layerAttributes.filename();
-			tempPath2 = tempPath1;
+			tempPath2 = getApplicationSubFolderPath("parts")+postfix;    // some svgs may still be in the fritzing parts folder, though the other svgs are in the user folder
 		} else { // for fake models
-			QString postfix = +"/"+ ItemBase::SvgFilesDir +"/%1/"+ layerAttributes.filename();
 			tempPath1 = getApplicationSubFolderPath("parts")+postfix;
 			tempPath2 = getUserDataStorePath("parts")+postfix;
 		}

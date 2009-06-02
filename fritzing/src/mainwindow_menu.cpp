@@ -26,6 +26,7 @@ $Date$
 
 #include <QtGui>
 #include <QSvgGenerator>
+#include <QColor>
 
 #include "mainwindow.h"
 #include "debugdialog.h"
@@ -50,6 +51,7 @@ $Date$
 #include "utils/bendpointaction.h"
 #include "fgraphicsscene.h"
 #include "utils/fileprogressdialog.h"
+#include "svg/svgfilesplitter.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -1367,6 +1369,10 @@ void MainWindow::createMenus()
 	m_pcbTraceMenu->addAction(m_selectAllExcludedTracesAct);
 	m_pcbTraceMenu->addAction(m_selectAllJumpersAct);
 
+#ifndef QT_NO_DEBUG
+	m_pcbTraceMenu->addAction(m_groundFillAct);
+#endif
+
 	m_schematicTraceMenu = menuBar()->addMenu(tr("&Diagram"));
 	m_schematicTraceMenu->addAction(m_autorouteAct);
 	m_schematicTraceMenu->addAction(m_createTraceAct);
@@ -1629,13 +1635,26 @@ void MainWindow::updateTraceMenu() {
 	bool exEnabled = false;
 	bool exChecked = true;
 	bool twEnabled = false;
+	bool gfEnabled = false;
 
 	if (m_currentGraphicsView != NULL) {
 		if (m_currentGraphicsView != this->m_breadboardGraphicsView) {
 			QList<QGraphicsItem *> items = m_currentGraphicsView->scene()->items();
 			foreach (QGraphicsItem * item, items) {
 				Wire * wire = dynamic_cast<Wire *>(item);
-				if (wire == NULL) continue;
+				if (wire == NULL) {
+					if (m_currentGraphicsView != m_pcbGraphicsView) continue;
+					if (gfEnabled) continue;
+
+					ItemBase * itemBase = dynamic_cast<ItemBase *>(item);
+					if (itemBase == NULL) continue;
+
+					if (itemBase->itemType() == ModelPart::Board ||  itemBase->itemType() == ModelPart::ResizableBoard) {
+						gfEnabled = true;
+					}
+
+					continue;
+				}
 
 				if (wire->getRatsnest()) {
 					rEnabled = true;
@@ -1680,6 +1699,7 @@ void MainWindow::updateTraceMenu() {
 	m_selectAllExcludedTracesAct->setEnabled(tEnabled);
 	m_selectAllJumpersAct->setEnabled(jEnabled);
 	m_tidyWiresAct->setEnabled(twEnabled);
+	m_groundFillAct->setEnabled(gfEnabled);
 
 }
 
@@ -2385,6 +2405,9 @@ void MainWindow::createTraceMenuActions() {
 	m_tidyWiresAct->setStatusTip(tr("Tidy selected wires"));
 	connect(m_tidyWiresAct, SIGNAL(triggered()), this, SLOT(tidyWires()));
 
+	m_groundFillAct = new QAction(tr("Ground Fill"), this);
+	m_groundFillAct->setStatusTip(tr("Fill up the ground plane"));
+	connect(m_groundFillAct, SIGNAL(triggered()), this, SLOT(groundFill()));
 }
 
 void MainWindow::autoroute() {
@@ -2585,4 +2608,76 @@ void MainWindow::importFilesFromPrevInstall() {
 
 void MainWindow::tidyWires() {
 	m_currentGraphicsView->tidyWires();
+}
+
+void MainWindow::groundFill() 
+{
+	ItemBase * board = NULL;
+    foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
+        board = dynamic_cast<ItemBase *>(childItem);
+        if (board == NULL) continue;
+
+        //for now take the first board you find
+        if (board->itemType() == ModelPart::ResizableBoard || board->itemType() == ModelPart::Board) {
+            break;
+        }
+        board = NULL;
+    }
+
+    // barf an error if there's no board
+    if (!board) {
+        QMessageBox::critical(this, tr("Fritzing"),
+                   tr("Your sketch does not have a board yet!  Please add a PCB in order to fill the ground plane."));
+        return;
+    }
+
+	//FileProgressDialog * fileProgressDialog = exportProgress();
+	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	QSizeF imageSize;
+    QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board);
+	if (svg.isEmpty()) {
+		// tell the user something reasonable
+		return;
+	}
+
+	QByteArray byteArray;
+	if (!SvgFileSplitter::changeStrokeWidth(svg, 5, byteArray)) {
+		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to create ground fill"));
+		return;
+	}
+
+	int res = 1000 / 10;  
+	qreal trueWidth = imageSize.width() / FSvgRenderer::printerScale();
+	qreal trueHeight = imageSize.height() / FSvgRenderer::printerScale();
+	QSvgRenderer renderer(byteArray);
+	QImage image(trueWidth * res, trueHeight * res, QImage::Format_Indexed8);
+	image.setColor(0, Qt::black);
+	for (int i = 0; i < 256; i++) {
+		image.setColor(i, Qt::white);
+	}
+
+	QPainter painter;
+	painter.begin(&image);
+	renderer.render(&painter);
+	painter.end();
+
+	qreal useWidth = res * board->boundingRect().width() / FSvgRenderer::printerScale();
+	qreal useHeight = res * board->boundingRect().height() / FSvgRenderer::printerScale();
+
+	// TODO deal with irregular board outline
+	for (int i = 0; i < useWidth; i++) {
+		bool inWhite = true;
+		int whiteStart = 0;
+	}
+
+	
+
+ 
+
+	// render it back as svgs by figuring out the beginning and end of each separate horizontal line
+	//		skip lines that are too small
+	//		designate each line as a connector, and attach each line that intersects to a bus
+	// call the whole thing a part
+	// stick it on its own layer
 }
