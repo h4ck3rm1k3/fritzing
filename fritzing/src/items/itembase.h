@@ -164,6 +164,7 @@ public:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 	virtual void figureHover();
 	virtual QString retrieveSvg(ViewLayer::ViewLayerID, QHash<QString, class SvgFileSplitter *> & svgHash, bool blackOnly, qreal dpi);
+	virtual void slamZ(qreal newZ);
 
 public:
 	virtual void getConnectedColor(ConnectorItem *, QBrush * &, QPen * &, qreal & opacity, int & negativePenWidth);

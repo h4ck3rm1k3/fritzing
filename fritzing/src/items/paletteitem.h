@@ -73,6 +73,7 @@ public:
 	ItemBase * lowerConnectorLayerVisible(ItemBase *);
 	void resetID();
 	void blockSyncKinMoved(bool block);
+	void slamZ(qreal z);
 
 protected:
 	void syncKinSelection(bool selected, PaletteItemBase * originator);

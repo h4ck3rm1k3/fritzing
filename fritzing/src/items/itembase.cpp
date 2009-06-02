@@ -1324,3 +1324,8 @@ void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &
 	opacity = 1.0;
 	negativePenWidth = 0;
 }
+
+void ItemBase::slamZ(qreal newZ) {
+	m_viewGeometry.setZ(newZ);
+	setZValue(newZ);
+}

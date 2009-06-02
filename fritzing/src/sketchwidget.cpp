@@ -221,9 +221,9 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		if (view.isNull()) continue;
 
 		QDomElement geometry = view.firstChildElement("geometry");
-		if (geometry.isNull()) continue;
-
+		if (geometry.isNull()) continue;;
 		ViewGeometry viewGeometry(geometry);
+		//DebugDialog::debug(QString("z from file %1").arg(viewGeometry.z()));
 
 		QDomElement labelGeometry = view.firstChildElement("titleGeometry");
 
@@ -232,6 +232,8 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		if (parentCommand == NULL) {
 			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true);
 			if (item != NULL) {
+				item->slamZ(viewGeometry.z());
+				//DebugDialog::debug(QString("zs from item %1 %2").arg(viewGeometry.z()).arg(item->getViewGeometry().z()));
 				const char * className = item->metaObject()->className();
 				if (strcmp(className, "PaletteItem") == 0) {
 					PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);

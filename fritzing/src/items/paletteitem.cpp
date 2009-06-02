@@ -385,3 +385,12 @@ void PaletteItem::resetID() {
 void PaletteItem::blockSyncKinMoved(bool block) {
 	m_blockSyncKinMoved = block;
 }
+
+void PaletteItem::slamZ(qreal z) {
+	PaletteItemBase::slamZ(z);
+	qreal dz = z - floor(z);
+	foreach (ItemBase * lkpi, m_layerKin) {
+		lkpi->slamZ(floor(lkpi->zValue()) + dz);
+	}
+
+}
