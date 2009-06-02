@@ -2612,8 +2612,9 @@ void MainWindow::tidyWires() {
 
 #define MINYSECTION 4
 
-void MainWindow::groundFill() 
+void MainWindow::groundFill()
 {
+	/*
 	ItemBase * board = NULL;
     foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
         board = dynamic_cast<ItemBase *>(childItem);
@@ -2680,7 +2681,7 @@ void MainWindow::groundFill()
 					// another white pixel, keep moving
 					continue;
 				}
-				
+
 				// got black: close up this segment;
 				inWhite = false;
 				if (j - whiteStart < MINYSECTION) {
@@ -2698,7 +2699,7 @@ void MainWindow::groundFill()
 
 				inWhite = true;
 				whiteStart = j;
-			}		
+			}
 		}
 		if (inWhite) {
 			// close up the last segment
@@ -2706,8 +2707,7 @@ void MainWindow::groundFill()
 				rects.append(QRect(whiteStart, i, j - whiteStart, 0));
 			}
 		}
-	}
-
+	}*/
 
 
 
