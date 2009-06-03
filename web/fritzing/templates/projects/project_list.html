@@ -22,27 +22,34 @@
     <table class="plain project">
     <tbody>
         <tr>
-            <td width="60%">
-                <div class="project detail header">
-                {% for image in project.main_images %}
-                <p><img src="{{ image.header.url }}" alt="{{ image.title }}" /></p>
-                {% endfor %}
+            {% for project in projects %}
+            <td>
+                <div class="project overview item">
+                  <span class="project overview image">
+                    {% if project.main_images %}
+                        <p><a href="{{ project.main_images.0.image.url }}"><img
+                            width="{{ project.main_images.0.sidebar.width }}"
+                            height="{{ project.main_images.0.sidebar.height }}"
+                            src="{{ project.main_images.0.sidebar.url }}" 
+                            alt="{{ project.main_images.0.title }}" /></a></p>
+                    {% endif %}
+                  </span>
+                  <ul>
+                    <li>
+                      <h3><a href="{{ project.get_absolute_url }}">{{ project.title }}</h3>
+                    </li>
+                    <li>by {{ project.author }}</li>
+                    {% if project.difficulty %}
+                    <li>for {{ project.get_difficulty }}</li>
+                    {% endif %}
+                  </ul>
                 </div>
-        
-                <div class="project detail date">
-                    Created at {{ project.created|date:"F j, Y, H:i" }}
-                </div>
-                <div class="project detail description">
-                    {{ project.description_html|safe }}
-                </div>
-                {% if  project.instructions_html %}
-                    <h2>Instructions</h2>
-                    <div class="project detail instructions">
-                        {{ project.instructions_html|safe }}
-                    </div>
-                {% endif %}
             </td>
-            <td width="40%" class="right_col">
+            {% if forloop.counter|divisibleby:"3"  %}
+                </tr><tr>
+            {% endif %}
+            {% endfor %}
+            <td width="30%">
                 <div class="project detail meta">
                 {% if project.category %}
                     <p><strong>Category:</strong> {{ project.category }}</p>
@@ -82,6 +89,9 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+            </td>
+            <td width="30%">
+              
             </td>
         </tr>
     </tbody>
