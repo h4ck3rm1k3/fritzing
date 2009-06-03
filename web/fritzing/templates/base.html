@@ -139,16 +139,22 @@
                         {% endif %}
                         {% endcache %}
                         {% cache 600 sidebar_forum %}
-                        {% get_latest_objects_with_relatives forum.post 10 as latest_forum_posts %}
+                        {% get_latest_objects_with_relatives forum.thread 5 order_by -latest_post_time as latest_forum_threads %}
                         <div class="portletWrapper">
                             <dl class="portlet portletPloneboardRecent">
                                 <dt class="portletHeader">
                                     <a href="/forum/" class="tile">Recent discussions</a>
                                 </dt>
-                                {% for post in latest_forum_posts %}
+                                {% for thread in latest_forum_threads %}
                                 <dd class="portletItem">
                                     <div class="contenttype-ploneboardconversation">
-                                        <a href="{{ post.get_feed_url }}" class="state-active tile" title="{{ post.thread.title }}">{{ post.thread.title }}</a> <a class="portletItemDetails" href="{{ post.thread.forum.get_absolute_url }}">{{ post.thread.forum.title }}</a>
+                                        <a href="{{ thread.thread_latest_post.get_feed_url }}"
+                                           class="state-active tile"
+                                           title="{{ thread.title }}"
+                                        >{{ thread.title }}</a>
+                                        <a class="portletItemDetails"
+                                           href="{{ thread.forum.get_absolute_url }}"
+                                        >{{ thread.forum.title }}</a>
                                     </div>
                                 </dd>
                                 {% endfor %}
