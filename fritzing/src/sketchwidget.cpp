@@ -208,6 +208,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 	m_ignoreSelectionChangeEvents = true;
 
 	QString viewName = ViewIdentifierClass::viewIdentifierXmlName(m_viewIdentifier);
+	QMultiMap<qreal, ItemBase *> zmap;
 
 	// make parts
 	foreach (ModelPart * mp, modelParts) {
@@ -223,7 +224,6 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		QDomElement geometry = view.firstChildElement("geometry");
 		if (geometry.isNull()) continue;;
 		ViewGeometry viewGeometry(geometry);
-		//DebugDialog::debug(QString("z from file %1").arg(viewGeometry.z()));
 
 		QDomElement labelGeometry = view.firstChildElement("titleGeometry");
 
@@ -232,8 +232,7 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 		if (parentCommand == NULL) {
 			ItemBase * item = addItemAux(mp, viewGeometry, newID, -1, NULL, NULL, true);
 			if (item != NULL) {
-				//item->slamZ(viewGeometry.z());
-				//DebugDialog::debug(QString("zs from item %1 %2").arg(viewGeometry.z()).arg(item->getViewGeometry().z()));
+				zmap.insert(viewGeometry.z() - floor(viewGeometry.z()), item);   
 				const char * className = item->metaObject()->className();
 				if (strcmp(className, "PaletteItem") == 0) {
 					PaletteItem * paletteItem = dynamic_cast<PaletteItem *>(item);
@@ -277,6 +276,17 @@ void SketchWidget::loadFromModel(QList<ModelPart *> & modelParts, BaseCommand::C
 				RestoreIndexesCommand * restoreIndexesCommand = new RestoreIndexesCommand(this, newID, NULL, true, parentCommand);
 				addItemCommand->addRestoreIndexesCommand(restoreIndexesCommand);
 			}
+		}
+	}
+
+	if (zmap.count() > 0) {
+		qreal z = 0.5;
+		foreach (ItemBase * itemBase, zmap.values()) {
+			itemBase->slamZ(z);
+			z += ViewLayer::getZIncrement();
+		}
+		foreach (ViewLayer * viewLayer, m_viewLayers) {
+			if (viewLayer != NULL) viewLayer->resetNextZ(z);
 		}
 	}
 

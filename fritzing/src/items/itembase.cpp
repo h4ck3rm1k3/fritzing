@@ -42,6 +42,7 @@ $Date$
 #include <QTimer>
 #include <QVector>
 #include <QSet>
+#include <math.h>
 
 /////////////////////////////////
 
@@ -1326,6 +1327,7 @@ void ItemBase::getEqualPotentialColor(ConnectorItem *, QBrush * &brush, QPen * &
 }
 
 void ItemBase::slamZ(qreal newZ) {
-	m_viewGeometry.setZ(newZ);
-	setZValue(newZ);
+	qreal z = floor(m_viewGeometry.z()) + newZ;
+	m_viewGeometry.setZ(z);
+	setZValue(z);
 }

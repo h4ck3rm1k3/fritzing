@@ -2614,7 +2614,7 @@ void MainWindow::tidyWires() {
 
 void MainWindow::groundFill()
 {
-	/*
+	
 	ItemBase * board = NULL;
     foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
         board = dynamic_cast<ItemBase *>(childItem);
@@ -2650,32 +2650,40 @@ void MainWindow::groundFill()
 		return;
 	}
 
+	QFile file("testGroundFill.svg");
+	file.open(QIODevice::WriteOnly);
+	QTextStream out(&file);
+	out << byteArray;
+	file.close();
+
 	int res = 1000 / 10;
 	qreal iWidth = res * imageSize.width() / FSvgRenderer::printerScale();
 	qreal iHeight = res * imageSize.height() / FSvgRenderer::printerScale();
 	QSvgRenderer renderer(byteArray);
 	QImage image(iWidth, iHeight, QImage::Format_Indexed8);
-	image.setColor(0, Qt::black);
-	for (int i = 0; i < 256; i++) {
-		image.setColor(i, Qt::white);
-	}
+	//image.setColor(0, Qt::black);
+	//for (int i = 0; i < 256; i++) {
+		//image.setColor(i, Qt::white);
+	//}
 
 	QPainter painter;
 	painter.begin(&image);
 	renderer.render(&painter);
 	painter.end();
 
+	image.save("testGroundFill.png");
+
 	qreal useWidth = qMin(iWidth, res * board->boundingRect().width() / FSvgRenderer::printerScale());
 	qreal useHeight = qMin(iHeight, res * board->boundingRect().height() / FSvgRenderer::printerScale());
 
 	QList<QRect> rects;
 	// TODO deal with irregular board outline
-	for (int i = 0; i < useHeight; i++) {
+	for (int y = 0; y < useHeight; y++) {
 		bool inWhite = true;
 		int whiteStart = 0;
-		uchar * scanLine = image.scanLine(i);
-		for (int j = 0; j < useWidth; j++) {
-			uchar  current = *(scanLine + j);
+		uchar * scanLine = image.scanLine(y);
+		for (int x = 0; x < useWidth; x++) {
+			uchar current = *(scanLine + x);
 			if (inWhite) {
 				if (current != 0) {
 					// another white pixel, keep moving
@@ -2684,12 +2692,12 @@ void MainWindow::groundFill()
 
 				// got black: close up this segment;
 				inWhite = false;
-				if (j - whiteStart < MINYSECTION) {
+				if (x - whiteStart < MINYSECTION) {
 					// not a big enough section
 					continue;
 				}
 
-				rects.append(QRect(whiteStart, i, j - whiteStart + 1, 0));
+				rects.append(QRect(whiteStart, y, x - whiteStart + 1, 1));
 			}
 			else {
 				if (current == 0) {
@@ -2698,16 +2706,16 @@ void MainWindow::groundFill()
 				}
 
 				inWhite = true;
-				whiteStart = j;
+				whiteStart = x;
 			}
 		}
 		if (inWhite) {
 			// close up the last segment
-			if (j - whiteStart >= MINYSECTION) {
-				rects.append(QRect(whiteStart, i, j - whiteStart, 0));
+			if (floor(useWidth) - whiteStart + 1 >= MINYSECTION) {
+				rects.append(QRect(whiteStart, y, floor(useWidth) - whiteStart + 1, 1));
 			}
 		}
-	}*/
+	}
 
 
 

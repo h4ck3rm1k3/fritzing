@@ -26,6 +26,7 @@ $Date$
 
 #include "viewlayer.h"
 #include "debugdialog.h"
+#include <math.h>
 
 qreal ViewLayer::zIncrement = 0.00001;  // 0.000000001;
 
@@ -39,6 +40,9 @@ ViewLayer::ViewLayer(ViewLayerID viewLayerID, bool visible, qreal initialZ )
 	m_action = NULL;
 	m_initialZ = m_nextZ = initialZ;	
 	m_parentLayer = NULL;
+}
+
+ViewLayer::~ViewLayer() {
 }
 
 void ViewLayer::initNames() {
@@ -185,4 +189,8 @@ void ViewLayer::cleanup() {
 		delete sp;
 	}
 	names.clear();
+}
+
+void ViewLayer::resetNextZ(qreal z) {
+	m_nextZ = floor(m_initialZ) + z - floor(z);
 }
