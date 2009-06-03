@@ -1,5 +1,6 @@
 import datetime
 from django.views.generic.list_detail import object_detail, object_list
+from django.conf import settings
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -10,12 +11,14 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from fritzing.apps.projects.models import Project, Category, Image, Attachment
 from fritzing.apps.projects.forms import ProjectForm, RESOURCE_DELIMITER
 
-@cache_page(60*15)
 def overview(request):
     projects = Project.published.all()
     return render_to_response("projects/project_list.html", {
         'projects': projects,
     }, context_instance=RequestContext(request))
+    
+if not settings.DEBUG:
+    overview = cache_page(overview, 60*15)
 
 @login_required
 def create(request, form_class=ProjectForm):
