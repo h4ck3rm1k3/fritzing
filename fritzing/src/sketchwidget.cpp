@@ -3798,7 +3798,7 @@ void SketchWidget::wire_wireSplit(Wire* wire, QPointF newPos, QPointF oldPos, QL
 }
 
 void SketchWidget::wire_wireJoin(Wire* wire, ConnectorItem * clickedConnectorItem) {
-	if (!canChainWire(wire)) return;  // can't join a wire in some views (for now)
+	// if (!canChainWire(wire)) return;  // can't join a wire in some views (for now)
 
 	this->clearHoldingSelectItem();
 	this->m_moveEventCount = 0;  // clear this so an extra MoveItemCommand isn't posted
