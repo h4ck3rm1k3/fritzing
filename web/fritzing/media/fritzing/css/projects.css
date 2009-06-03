@@ -77,6 +77,10 @@ ul.selection {
     clear: right;
 }
 
+.project.detail.side_images a {
+    border-bottom: none !important;
+}
+
 .project.detail.attachement.table {
     padding: 2px 4px;
 }
