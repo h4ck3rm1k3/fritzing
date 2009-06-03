@@ -168,14 +168,10 @@ class Image(ImageModel):
             self.title = self.image.name
         super(Image, self).save(force_insert, force_update)
 
-
-def handle_project_attachment(instance, filename):
-    slug = instance.project.slug
-    if len(slug) >= 3:
-        return os.path.join("projects",
-            slug[0], slug[1], slug[2], slug, instance.kind, filename)
-    return os.path.join("projects", slug, instance.kind, filename)
-
+# from vcstorage.fields import VcFileField
+# from vcstorage.storage import VcStorage
+#
+# attachment_storage = VcStorage(location='/Users/Jannis/repos')
 
 class Attachment(models.Model):
     FRITZING_TYPE = 'fritzing'
@@ -186,9 +182,17 @@ class Attachment(models.Model):
         (CODE_TYPE, _('code')),
         (EXAMPLE_TYPE, _('example')),
     )
+    def project_attachment_path(self, filename):
+        slug = self.project.slug
+        if len(slug) >= 3:
+            path = "/".join(list(slug[:3]))
+            return os.path.join("projects", path, slug, self.kind, filename)
+        return os.path.join("projects", slug, self.kind, filename)
+
     title = models.CharField(_('title'), max_length=255, blank=True,
         null=True, help_text=_('Leave empty to populate with filename'))
-    attachment = models.FileField(upload_to=handle_project_attachment)
+    attachment = models.FileField(upload_to=project_attachment_path)
+    #attachment = VcFileField(upload_to=project_attachment_path, storage=attachment_storage)
     project = models.ForeignKey(Project,
         verbose_name=_('project'), related_name='attachments')
     user = models.ForeignKey(User,
