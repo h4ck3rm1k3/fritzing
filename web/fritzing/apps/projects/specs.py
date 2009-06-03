@@ -4,12 +4,9 @@ from imagekit import processors
 class HeaderThumbnail(processors.Resize):
     width = 400
     height = 160
-    crop = True
 
 class SidebarThumbnail(processors.Resize):
     width = 100
-    height = 75
-    crop = True
 
 class EnhanceSmall(processors.Adjustment):
     contrast = 1.2
