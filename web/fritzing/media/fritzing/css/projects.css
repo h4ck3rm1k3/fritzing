@@ -84,3 +84,28 @@ ul.selection {
 .project.detail.attachement.grey {
     background-color: #eaeaea;
 }
+
+.project.overview.image {
+    float: left;
+    padding: 2px 4px;
+}
+
+.project.overview.image {
+    float:left;
+}
+.project.overview.item {
+    width: 222px;
+}
+
+.project.overview h3 {
+    font-size: 1.1em !important;
+}
+.project.overview.item ul {
+    float: left;
+    margin: 0px 6px !important;
+}
+
+.project.overview.item ul li {
+    list-style: none;
+    color: #333;
+}

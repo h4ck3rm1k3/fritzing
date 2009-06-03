@@ -88,6 +88,14 @@
                     {% endfor %}
                 </div>
                 {% endif %}
+                {% if project.resources.count %}
+                <h2>Links</h2>
+                <div class="project detail link">
+                    {% for resource in project.resources.all %}
+                      <a href="{{ resource.url }}">{{ resource.title }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </td>
         </tr>
     </tbody>

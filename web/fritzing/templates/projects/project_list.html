@@ -27,7 +27,7 @@
                 <div class="project overview item">
                   <span class="project overview image">
                     {% if project.main_images %}
-                        <p><a href="{{ project.main_images.0.image.url }}"><img
+                        <p><a href="{{ project.get_absolute_url }}"><img
                             width="{{ project.main_images.0.sidebar.width }}"
                             height="{{ project.main_images.0.sidebar.height }}"
                             src="{{ project.main_images.0.sidebar.url }}" 
