@@ -302,7 +302,7 @@ void PartsBinPaletteWidget::createBinMenu() {
 	m_renameAction = new QAction(tr("Rename..."),this);
 
 	connect(m_newBinAction, SIGNAL(triggered()),this, SLOT(newBin()));
-	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openBin()));
+	connect(m_openBinAction, SIGNAL(triggered()),this, SLOT(openNewBin()));
 	connect(m_openCoreBinAction, SIGNAL(triggered()),this, SLOT(openCoreBin()));
 	connect(m_closeBinAction, SIGNAL(triggered()),this, SLOT(closeBin()));
 	connect(m_saveAction, SIGNAL(triggered()),this, SLOT(save()));
@@ -615,8 +615,8 @@ void PartsBinPaletteWidget::newBin() {
 	m_manager->newBinIn(m_tabWidget);
 }
 
-void PartsBinPaletteWidget::openBin() {
-	m_manager->openBinIn(m_tabWidget);
+void PartsBinPaletteWidget::openNewBin(const QString &filename) {
+	m_manager->openBinIn(m_tabWidget,filename);
 }
 
 void PartsBinPaletteWidget::openCoreBin() {

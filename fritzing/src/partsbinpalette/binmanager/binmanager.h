@@ -65,6 +65,7 @@ class BinManager : public QFrame {
 		void updateTitle(PartsBinPaletteWidget* w, const QString& newTitle);
 
 		PartsBinPaletteWidget* newBinIn(StackTabWidget* tb);
+		void openBin(const QString &fileName);
 		PartsBinPaletteWidget* openBinIn(StackTabWidget* tb, QString fileName="");
 		PartsBinPaletteWidget* openCoreBinIn(StackTabWidget* tb);
 		void closeBinIn(StackTabWidget* tb, int index=-1);

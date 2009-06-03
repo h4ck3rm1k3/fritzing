@@ -228,8 +228,7 @@ void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, in
 }
 
 void BinManager::load(const QString& filename) {
-	Q_UNUSED(filename);
-	// should open the bin
+	openBin(filename);
 }
 
 
@@ -519,4 +518,8 @@ QList<QAction*> BinManager::openedBinsActions(const QString &moduleId) {
 	}
 
 	return titlesAndActions.values();
+}
+
+void BinManager::openBin(const QString &filename) {
+	m_tabWidgets.keys()[0]->openNewBin(filename);
 }
