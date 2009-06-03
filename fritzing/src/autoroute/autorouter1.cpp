@@ -1541,6 +1541,17 @@ bool Autorouter1::clean90(ConnectorItem * from, ConnectorItem * to, QList<Wire *
 
 bool Autorouter1::clean90(QPointF fromPos, QPointF toPos, QList<Wire *> & newWires, int level)
 {
+	// 4. if step 3 fails, try to draw as two straight lines, recursing if blocked
+	QPointF f1(fromPos.x(), toPos.y());
+	if (drawTwo(fromPos, toPos, f1, newWires, level, false)) {
+		return true;
+	}
+
+	QPointF g1(toPos.x(), fromPos.y());
+	if (drawTwo(fromPos, toPos, g1, newWires, level, false)) {
+		return true;
+	}
+
 	// 3. figure the center between fromPos and toPos and try to draw as three straight lines, recursing if blocked
 	QPointF center((fromPos.x() + toPos.x()) / 2.0, (fromPos.y() + toPos.y()) / 2.0);
 	QPointF d1(center.x(), fromPos.y());
@@ -1555,31 +1566,20 @@ bool Autorouter1::clean90(QPointF fromPos, QPointF toPos, QList<Wire *> & newWir
 		return true;
 	}
 
-	// 4. if step 3 fails, try to draw as two straight lines, recursing if blocked
-	QPointF f1(fromPos.x(), toPos.y());
-	if (drawTwo(fromPos, toPos, f1, newWires, level, false)) {
-		return true;
-	}
-
-	QPointF g1(toPos.x(), fromPos.y());
-	if (drawTwo(fromPos, toPos, g1, newWires, level, false)) {
-		return true;
-	}
-
 	// once more with recursion
-	if (drawThree(fromPos, toPos, d1, d2, newWires, level, true)) {
-		return true;
-	}
-
-	if (drawThree(fromPos, toPos, e1, e2, newWires, level, true)) {
-		return true;
-	}
-
 	if (drawTwo(fromPos, toPos, f1, newWires, level, true)) {
 		return true;
 	}
 
 	if (drawTwo(fromPos, toPos, g1, newWires, level, true)) {
+		return true;
+	}
+
+	if (drawThree(fromPos, toPos, d1, d2, newWires, level, true)) {
+		return true;
+	}
+
+	if (drawThree(fromPos, toPos, e1, e2, newWires, level, true)) {
 		return true;
 	}
 

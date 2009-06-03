@@ -432,7 +432,8 @@ void Wire::mousePressConnectorEvent(ConnectorItem * connectorItem, QGraphicsScen
 		}
 	}
 
-	if (m_canChainMultiple && event->modifiers() == Qt::ControlModifier) {
+	if (m_canChainMultiple && event->modifiers() == Qt::AltModifier) {
+		// dragging a wire out of a bendpoint
 		InfoGraphicsView * infoGraphicsView = InfoGraphicsView::getInfoGraphicsView(this);
 		if (infoGraphicsView != NULL) {
 			infoGraphicsView->mousePressConnectorEvent(connectorItem, event);

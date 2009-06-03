@@ -33,6 +33,7 @@ TraceWire::TraceWire( ModelPart * modelPart, ViewIdentifierClass::ViewIdentifier
 	: ClipableWire(modelPart, viewIdentifier,  viewGeometry,  id, itemMenu)
 {
 	m_clipEnds = true;
+	m_canChainMultiple = true;
 }
 
 

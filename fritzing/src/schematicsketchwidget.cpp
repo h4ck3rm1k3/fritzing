@@ -61,8 +61,14 @@ ViewLayer::ViewLayerID SchematicSketchWidget::getWireViewLayerID(const ViewGeome
 
 void SchematicSketchWidget::initWire(Wire * wire, int penWidth) {
 	Q_UNUSED(penWidth);
-	wire->setColorString("schematicGrey", Wire::UNROUTED_OPACITY);
-	wire->setPenWidth(2);
+	if (wire->getRatsnest()) {
+		wire->setPenWidth(1);
+		wire->setColorString("schematicGrey", 0.7);
+	}
+	else {
+		wire->setPenWidth(2);
+		wire->setColorString("black", Wire::UNROUTED_OPACITY);
+	}
 }
 
 bool SchematicSketchWidget::autorouteNeedsBounds() {
@@ -104,4 +110,8 @@ void SchematicSketchWidget::ensureTraceLayerVisible() {
 void SchematicSketchWidget::ensureJumperLayerVisible() {
 	ensureLayerVisible(ViewLayer::SchematicTrace);
 	ensureLayerVisible(ViewLayer::SchematicJumper);
+}
+
+qreal SchematicSketchWidget::getRatsnestOpacity(Wire * wire) {
+	return (wire->getRouted() ? 0.1 : 0.7);
 }

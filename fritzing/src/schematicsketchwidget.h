@@ -49,6 +49,10 @@ public:
 	void ensureTraceLayersVisible();
 	void ensureTraceLayerVisible();
 	void ensureJumperLayerVisible();
+
+protected:
+	qreal getRatsnestOpacity(Wire *);
+
 };
 
 #endif

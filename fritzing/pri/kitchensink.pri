@@ -50,7 +50,6 @@ HEADERS += \
     src/modelpartshared.h \
     src/palettemodel.h \
     src/pcbsketchwidget.h \
-    src/pcbschematicsketchwidget.h \
     src/prefsdialog.h \
     src/schematicsketchwidget.h \
     src/sketchareawidget.h \
@@ -97,7 +96,6 @@ SOURCES += \
     src/modelpartshared.cpp \
     src/palettemodel.cpp \
     src/pcbsketchwidget.cpp \
-    src/pcbschematicsketchwidget.cpp \
     src/prefsdialog.cpp \
     src/schematicsketchwidget.cpp \
     src/sketchareawidget.cpp \

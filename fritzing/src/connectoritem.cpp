@@ -565,6 +565,14 @@ bool ConnectorItem::maleToFemale(ConnectorItem * other) {
 }
 
 Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags flags) {
+	QList<ConnectorItem *> visited;
+	return wiredToAux(target, flags, visited);
+}
+
+Wire * ConnectorItem::wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited) {
+	if (visited.contains(this)) return NULL;
+	visited.append(this);
+
 	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
 		ItemBase * toItem = toConnectorItem->attachedTo();
 		if (toItem == NULL) {
@@ -589,7 +597,7 @@ Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags fl
 		}
 
 		if (chained) {
-			if (otherEnd->wiredTo(target, flags)) {
+			if (otherEnd->wiredToAux(target, flags, visited)) {
 				return wire;
 			}
 		}
@@ -600,6 +608,15 @@ Wire * ConnectorItem::wiredTo(ConnectorItem * target, ViewGeometry::WireFlags fl
 
 bool ConnectorItem::wiredTo(ConnectorItem * target)
 {
+	QList<ConnectorItem *> visited;
+	return wiredToAux(target, visited);
+}
+
+bool ConnectorItem::wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited)
+{
+	if (visited.contains(this)) return false;
+	visited.append(this);
+
 	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
 		if (target == toConnectorItem)
 		{
@@ -610,7 +627,7 @@ bool ConnectorItem::wiredTo(ConnectorItem * target)
 	foreach (ConnectorItem * toConnectorItem, m_connectedTo) {
 		if (toConnectorItem->attachedToItemType() == ModelPart::Wire) {
 			ConnectorItem * otherConnector = dynamic_cast<Wire *>(toConnectorItem->attachedTo())->otherConnector(toConnectorItem);
-			if (otherConnector->wiredTo(target)) {
+			if (otherConnector->wiredToAux(target, visited)) {
 				return true;
 			}
 		}

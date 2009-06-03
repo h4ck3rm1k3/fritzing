@@ -113,6 +113,8 @@ protected:
 	void writeOtherElements(QXmlStreamWriter & writer);
 	void updateTooltip();
 	bool sceneEvent(QEvent *event);
+	class Wire * ConnectorItem::wiredToAux(ConnectorItem * target, ViewGeometry::WireFlags flags, QList<ConnectorItem *> & visited);
+	bool ConnectorItem::wiredToAux(ConnectorItem * target, QList<ConnectorItem *> & visited);
 
 	virtual void setRectAux(qreal x1, qreal y1, qreal x2, qreal y2);
 

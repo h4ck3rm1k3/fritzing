@@ -630,7 +630,6 @@ ItemBase * SketchWidget::addItemAux(ModelPart * modelPart, const ViewGeometry & 
              	wire->setUp(getWireViewLayerID(viewGeometry), m_viewLayers, this);
 				
 				// prevents virtual wires from flashing up on screen
-				wire->setCanChainMultiple(canChainMultiple());
 			}
 			else {
 				if (viewGeometry.getTrace()) {
@@ -2516,7 +2515,6 @@ void SketchWidget::dragWireChanged(Wire* wire, ConnectorItem * fromOnWire, Conne
 	m_connectorDragWire->saveGeometry();
 	bool doEmit = false;
 	if ((m_bendpointWire == NULL) && modifyNewWireConnections(wire, fromOnWire, m_connectorDragConnector, to, parentCommand)) {
-		doEmit = true;
 	}
 	else {
 		long fromID = wire->id();

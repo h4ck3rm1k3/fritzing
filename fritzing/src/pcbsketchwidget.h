@@ -24,14 +24,12 @@ $Date: 2008-11-22 20:32:44 +0100 (Sat, 22 Nov 2008) $
 
 ********************************************************************/
 
-
-
 #ifndef PCBSKETCHWIDGET_H
 #define PCBSKETCHWIDGET_H
 
-#include "pcbschematicsketchwidget.h"
+#include "sketchwidget.h"
 
-class PCBSketchWidget : public PCBSchematicSketchWidget
+class PCBSketchWidget : public SketchWidget
 {
 	Q_OBJECT
 
@@ -62,6 +60,8 @@ public:
 	virtual void ensureTraceLayersVisible();
 	virtual void ensureTraceLayerVisible();
 	virtual void ensureJumperLayerVisible();
+	bool canChainMultiple();
+	void setNewPartVisible(ItemBase *);
 
 public:
 	enum CleanType {
@@ -85,6 +85,43 @@ protected:
 	bool modifyNewWireConnections(Wire * dragWire, ConnectorItem * fromOnWire, ConnectorItem * from, ConnectorItem * to, QUndoCommand * parentCommand);
 	void setClipEnds(class VirtualWire *);
 	ViewLayer::ViewLayerID getWireViewLayerID(const ViewGeometry & viewGeometry);
+	void dealWithRatsnest(long fromID, const QString & fromConnectorID, 
+								  long toID, const QString & toConnectorID,
+								  bool connect, class RatsnestCommand *, bool doEmit);
+	bool dealWithRatsnestAux(ConnectorItem * & from, ConnectorItem * & to,
+							long fromID, const QString & fromConnectorID, 
+							long toID, const QString & toConnectorID,
+							bool connect, class RatsnestCommand *, bool doEmit);
+	bool canDropModelPart(ModelPart * modelPart);
+	virtual void removeRatsnestWires(QList< QList<ConnectorItem *>* > & allPartConnectorItems, CleanUpWiresCommand *);
+	bool reviewDeletedConnections(QSet<ItemBase *> & deletedItems, QHash<ItemBase *, ConnectorPairHash * > & deletedConnections, QUndoCommand * parentCommand);
+	bool alreadyRatsnest(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem);
+	bool canCreateWire(Wire * dragWire, ConnectorItem * from, ConnectorItem * to);
+	bool bothEndsConnected(Wire * wire, ViewGeometry::WireFlags, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems);
+	Wire * makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand *, bool select);
+	bool doRatsnestOnCopy();
+	void makeRatsnestViewGeometry(ViewGeometry & viewGeometry, ConnectorItem * source, ConnectorItem * dest); 
+	void makeWiresChangeConnectionCommands(const QList<Wire *> & wires, QUndoCommand * parentCommand);
+	virtual const QColor * getRatsnestColor(); 
+	virtual qreal getRatsnestOpacity(Wire *);
+	ConnectorItem * lookForBreadboardConnection(ConnectorItem * connectorItem);
+	ConnectorItem * findEmptyBusConnectorItem(ConnectorItem * busConnectorItem);
+	long makeModifiedWire(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, BaseCommand::CrossViewType, ViewGeometry::WireFlags, QUndoCommand * parentCommand);
+	void modifyNewWireConnectionsAux(ConnectorItem * fromConnectorItem, ConnectorItem * toConnectorItem, QUndoCommand * parentCommand);
+	void makeTwoWires(ConnectorItem * originalFromConnectorItem, ConnectorItem * fromConnectorItem,
+						ConnectorItem * originalToConnectorItem, ConnectorItem * toConnectorItem, 
+						QUndoCommand * parentCommand); 
+	ConnectorItem * lookForNewBreadboardConnection(ConnectorItem * connectorItem, ItemBase * & newBreadboard);
+	ConnectorItem * findNearestPartConnectorItem(ConnectorItem * fromConnectorItem);
+	ConnectorItem * findEmptyBus(ItemBase * breadboard);
+	bool bothEndsConnectedAux(Wire * wire, ViewGeometry::WireFlags flag, ConnectorItem * oneEnd, QList<Wire *> & wires, QList<ConnectorItem *> & partConnectorItems, QList<Wire *> & visited);
+
+
+protected:
+	static void calcDistances(Wire * wire, QList<ConnectorItem *> & ends);
+	static void clearDistances();
+	static int calcDistance(Wire * wire, ConnectorItem * end, int distance, QList<Wire *> & distanceWires, bool & fromConnector0);
+	static int calcDistanceAux(ConnectorItem * from, ConnectorItem * to, int distance, QList<Wire *> & distanceWires);
 
 protected:
 	int m_netCount;
