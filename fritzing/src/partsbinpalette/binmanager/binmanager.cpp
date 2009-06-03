@@ -229,11 +229,9 @@ void BinManager::addPartAux(PartsBinPaletteWidget *bin, ModelPart *modelPart, in
 
 void BinManager::load(const QString& filename) {
 	Q_UNUSED(filename);
+	// should open the bin
 }
 
-void BinManager::addPartCommand(const QString& moduleID) {
-	Q_UNUSED(moduleID);
-}
 
 void BinManager::setDirtyTab(PartsBinPaletteWidget* w, bool dirty) {
 	w->setWindowModified(dirty);
@@ -504,4 +502,21 @@ bool BinManager::isTabReorderingEvent(QDropEvent* event) {
 	const QMimeData *m = event->mimeData();
 	QStringList formats = m->formats();
 	return formats.contains("action") && (m->data("action") == "tab-reordering");
+}
+
+const QString &BinManager::getSelectedModuleIDFromSketch() {
+	return m_mainWindow->selectedModuleID();
+}
+
+QList<QAction*> BinManager::openedBinsActions(const QString &moduleId) {
+	QMap<QString,QAction*> titlesAndActions; // QMap sorts values by key
+	QList<PartsBinPaletteWidget*> bins = m_tabWidgets.keys();
+
+	foreach(PartsBinPaletteWidget* b, bins) {
+		QAction *act = b->addPartToMeAction();
+		act->setEnabled(!b->contains(moduleId));
+		titlesAndActions[b->title()] = act;
+	}
+
+	return titlesAndActions.values();
 }

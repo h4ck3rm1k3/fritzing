@@ -1049,9 +1049,8 @@ void MainWindow::createPartMenuActions() {
 	m_openInPartsEditorAct->setStatusTip(tr("Open the old parts editor"));
 	connect(m_openInPartsEditorAct, SIGNAL(triggered()), this, SLOT(openInPartsEditor()));
 
-	/*m_addToBinAct = new QAction(tr("&Add to bin"), this);
-	m_addToBinAct->setStatusTip(tr("Add selected part to bin"));
-	connect(m_addToBinAct, SIGNAL(triggered()), this, SLOT(addToBin()));*/
+	m_addToBinMenu = new QMenu(tr("&Add to bin..."), this);
+	m_addToBinMenu->setStatusTip(tr("Add selected part to bin"));
 
 	// TODO PARTS EDITOR REMOVE
 	/*m_openInOldPartsEditorAct = new QAction(tr("&Open in Old Parts Editor"), this);
@@ -1317,7 +1316,6 @@ void MainWindow::createMenus()
 	m_partMenu->addAction(m_loadBundledPart);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_openInPartsEditorAct);
-	//m_partMenu->addAction(m_addToBinAct);
 	m_partMenu->addAction(m_saveBundledPart);
 	m_partMenu->addSeparator();
 	m_partMenu->addAction(m_rotate90cwAct);
@@ -1328,6 +1326,7 @@ void MainWindow::createMenus()
 	m_partMenu->addSeparator();
 	m_zOrderMenu = m_partMenu->addMenu(tr("Raise and Lower"));
 	m_partMenu->addSeparator();
+	m_partMenu->addMenu(m_addToBinMenu);
 	m_partMenu->addAction(m_showPartLabelAct);
 
 #ifndef QT_NO_DEBUG
@@ -1581,7 +1580,12 @@ void MainWindow::updateItemMenu() {
 
 	PaletteItem *selected = dynamic_cast<PaletteItem *>(itemBase);
 	bool enabled = (selCount == 1) && (selected != NULL);
-	//m_addToBinAct->setEnabled(enabled);
+	m_addToBinMenu->setEnabled(enabled);
+	m_addToBinMenu->clear();
+	if(enabled) {
+		QList<QAction*> acts = m_paletteWidget->openedBinsActions(selectedModuleID());
+		m_addToBinMenu->addActions(acts);
+	}
 	m_saveBundledPart->setEnabled(enabled && !selected->modelPart()->isCore());
 
 	//TODO PARTS EDITOR REMOVE
@@ -1710,10 +1714,6 @@ void MainWindow::group() {
 	ModelPart * mp = m_pcbGraphicsView->group(NULL);
 	m_breadboardGraphicsView->group(mp);
 	m_schematicGraphicsView->group(mp);
-}
-
-void MainWindow::addToBin() {
-	m_paletteWidget->addPartCommand(m_currentGraphicsView->selectedModuleID());
 }
 
 void MainWindow::zoomIn() {

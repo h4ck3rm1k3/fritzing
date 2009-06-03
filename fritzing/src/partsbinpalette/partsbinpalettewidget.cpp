@@ -62,7 +62,7 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 
 	Q_UNUSED(undoStack);
 
-	m_undoStack = new WaitPushUndoStack(this);
+	m_undoStack = new WaitPushUndoStack(this);PartsBinPaletteWidget::
 	connect(m_undoStack, SIGNAL(cleanChanged(bool)), this, SLOT(undoStackCleanChanged(bool)) );
 
 	setupButtons();
@@ -94,6 +94,9 @@ PartsBinPaletteWidget::PartsBinPaletteWidget(ReferenceModel *refModel, HtmlInfoV
 	connect(m_listView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 	connect(m_iconView, SIGNAL(informItemMoved(int,int)), this, SLOT(itemMoved()));
 
+	m_addPartToMeAction = new QAction(m_title,this);
+	connect(m_addPartToMeAction, SIGNAL(triggered()),this, SLOT(addSketchPartToMe()));
+
 	installEventFilter(this);
 }
 
@@ -115,6 +118,7 @@ QString PartsBinPaletteWidget::title() const {
 void PartsBinPaletteWidget::setTitle(const QString &title) {
 	if(m_title != title) {
 		m_title = title;
+		m_addPartToMeAction->setText(title);
 		m_manager->updateTitle(this, title);
 	}
 }
@@ -233,6 +237,7 @@ void PartsBinPaletteWidget::afterModelSetted(PaletteModel *model) {
 
 void PartsBinPaletteWidget::grabTitle(PaletteModel *model) {
 	m_title = model->root()->modelPartShared()->title();
+	m_addPartToMeAction->setText(m_title);
 }
 
 void PartsBinPaletteWidget::addPart(ModelPart *modelPart, int position) {
@@ -728,4 +733,18 @@ void PartsBinPaletteWidget::dropEvent(QDropEvent *event) {
 		emit dropToSeparator((QWidget*)m_tabWidget);
 	}
 	QFrame::dropEvent(event);
+}
+
+
+QAction *PartsBinPaletteWidget::addPartToMeAction() {
+	return m_addPartToMeAction;
+}
+
+void PartsBinPaletteWidget::addSketchPartToMe() {
+	QString moduleID = m_manager->getSelectedModuleIDFromSketch();
+	bool wasAlreadyIn = contains(moduleID);
+	addPart(moduleID);
+	if(!wasAlreadyIn) {
+		setDirty();
+	}
 }

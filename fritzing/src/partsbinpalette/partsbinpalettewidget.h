@@ -70,7 +70,6 @@ class PartsBinPaletteWidget : public QFrame {
 		bool currentBinIsCore();
 		bool beforeClosing();
 
-		bool contains();
 		ModelPart * selected();
 		bool hasAlienParts();
 
@@ -86,6 +85,7 @@ class PartsBinPaletteWidget : public QFrame {
 		const QString &fileName();
 
 		class PartsBinView *currentView();
+		QAction *addPartToMeAction();
 
 	public slots:
 		void addPartCommand(const QString& moduleID);
@@ -113,6 +113,7 @@ class PartsBinPaletteWidget : public QFrame {
 		void editSelected();
 		void exportSelected();
 		void updateMenus();
+		void addSketchPartToMe();
 
 	signals:
 		void saved(bool hasPartsFromBundled);
@@ -180,6 +181,8 @@ class PartsBinPaletteWidget : public QFrame {
 		QAction *m_saveAction;
 		QAction *m_saveAsAction;
 		QAction *m_renameAction;
+
+		QAction *m_addPartToMeAction;
 
 		QMenu *m_partContextMenu;
 		QToolButton *m_partMenuButton;

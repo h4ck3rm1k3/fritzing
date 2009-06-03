@@ -76,8 +76,8 @@ class BinManager : public QFrame {
 
 		void dockedInto(class FDockWidget* dock);
 
-	public slots:
-		void addPartCommand(const QString& moduleID);
+		const QString &getSelectedModuleIDFromSketch();
+		QList<QAction*> openedBinsActions(const QString &moduleId);
 
 	protected slots:
 		void updateFileName(PartsBinPaletteWidget* bin, const QString &newFileName, const QString &oldFilename);

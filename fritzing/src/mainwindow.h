@@ -94,6 +94,8 @@ public:
 	void showFileProgressDialog(const QString & path);
 	void clearFileProgressDialog();
 
+	const QString &selectedModuleID();
+
 public:
 	static void initExportConstants();
 	static MainWindow * newMainWindow(PaletteModel * paletteModel, ReferenceModel *refModel, const QString & path, bool showProgress);
@@ -183,7 +185,6 @@ protected slots:
 	// TODO PARTS EDITOR REMOVE
 	void openOldPartsEditor(PaletteItem *);
 	void openPartsEditor(PaletteItem *);
-	void addToBin();
 
 	void updateZoomOptions(qreal zoom);
 	void updateZoomOptionsNoMatterWhat(qreal zoom);
@@ -442,7 +443,7 @@ protected:
 	QAction *m_infoViewOnHoverAction;
 	// TODO PARTS EDITOR REMOVE
     QAction *m_openInPartsEditorAct;
-    QAction *m_addToBinAct;
+    QMenu *m_addToBinMenu;
 	QAction *m_rotate90cwAct;
 	QAction *m_rotate180Act;
 	QAction *m_rotate90ccwAct;

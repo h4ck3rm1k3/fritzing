@@ -1336,7 +1336,7 @@ QMenu *MainWindow::viewItemMenuAux(QMenu* menu) {
 	menu->addAction(m_deleteAct);
 	menu->addSeparator();
 	menu->addAction(m_openInPartsEditorAct);
-	//menu->addAction(m_addToBinAct);
+	menu->addMenu(m_addToBinMenu);
 	menu->addSeparator();
 	menu->addAction(m_showPartLabelAct);
 #ifndef QT_NO_DEBUG
@@ -2024,9 +2024,10 @@ void MainWindow::showFileProgressDialog(const QString & path) {
 	}
 }
 
-
-
-
-
-
-
+const QString &MainWindow::selectedModuleID() {
+	if(m_currentGraphicsView) {
+		return m_currentGraphicsView->selectedModuleID();
+	} else {
+		return ___emptyString___;
+	}
+}
