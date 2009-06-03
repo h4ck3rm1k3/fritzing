@@ -79,10 +79,6 @@
        sodipodi:type="arc"
        style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:11.11111164;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path2413"
-       sodipodi:cx="144.07169"
-       sodipodi:cy="205.39981"
-       sodipodi:rx="84.871323"
-       sodipodi:ry="52.651653"
        d="M 228.94301,205.39981 A 84.871323,52.651653 0 0 1 59.205909,206.00169"
        sodipodi:start="0"
        sodipodi:end="3.130161"
@@ -103,30 +99,18 @@
        cy="114"
        r="28"
        id="connector0pin"
-       sodipodi:cx="50"
-       sodipodi:cy="114"
-       sodipodi:rx="28"
-       sodipodi:ry="28"
        style="fill:none;stroke:#ffbf00;stroke-width:15" />
     <circle
        cx="150"
        cy="114"
        r="28"
        id="connector1pin"
-       sodipodi:cx="150"
-       sodipodi:cy="114"
-       sodipodi:rx="28"
-       sodipodi:ry="28"
        style="fill:none;stroke:#ffbf00;stroke-width:15" />
     <circle
        cx="250"
        cy="114"
        r="28"
        id="connector2pin"
-       sodipodi:cx="250"
-       sodipodi:cy="114"
-       sodipodi:rx="28"
-       sodipodi:ry="28"
        style="fill:none;stroke:#ffbf00;stroke-width:15" />
   </g>
   <g

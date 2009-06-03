@@ -5018,7 +5018,11 @@ QString SketchWidget::renderToSVG(qreal printerScale, const QList<ViewLayer::Vie
 	QPointF offset = itemsBoundingRect.topLeft();
 
 	if (offsetPart) {
-		offset = offsetPart->scenePos();
+		QPointF p = offsetPart->scenePos();
+		QPointF dp = offset - p;
+		width += dp.x();
+		height += dp.y();
+		offset = p;
 	}
 
 	imageSize.setWidth(width);

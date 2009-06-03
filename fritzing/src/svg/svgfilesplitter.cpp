@@ -187,6 +187,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 {
 
 	if (element.nodeName().compare("circle") == 0) {
+		killSodipodi(element);
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "cx", sNewWidth, vbWidth);
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
@@ -195,6 +196,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("line") == 0) {
+		killSodipodi(element);
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "x1", sNewWidth, vbWidth);
 		normalizeAttribute(element, "y1", sNewHeight, vbHeight);
@@ -204,6 +206,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("rect") == 0) {
+		killSodipodi(element);
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "width", sNewWidth, vbWidth);
 		normalizeAttribute(element, "height", sNewHeight, vbHeight);
@@ -221,6 +224,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("ellipse") == 0) {
+		killSodipodi(element);
 		fixStyleAttribute(element);
 		normalizeAttribute(element, "cx", sNewWidth, vbWidth);
 		normalizeAttribute(element, "cy", sNewHeight, vbHeight);
@@ -230,6 +234,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("polygon") == 0 || element.nodeName().compare("polyline") == 0) {
+		killSodipodi(element);
 		fixStyleAttribute(element);
 		QString data = element.attribute("points");
 		if (!data.isEmpty()) {
@@ -250,6 +255,7 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		setStrokeOrFill(element, blackOnly);
 	}
 	else if (element.nodeName().compare("path") == 0) {
+		killSodipodi(element);
 		fixStyleAttribute(element);
 		setStrokeOrFill(element, blackOnly);
 		QString data = element.attribute("d");
@@ -276,6 +282,25 @@ void SvgFileSplitter::normalizeChild(QDomElement & element,
 		}
 	}
 }
+
+ void SvgFileSplitter::killSodipodi(QDomElement & element) {
+	 /*
+	 QDomNamedNodeMap namedNodeMap  = element.attributes();
+	 for (int i = namedNodeMap.length() - 1; i >= 0; i--) {
+		 QDomNode node = namedNodeMap.item(i);
+		 if (node.prefix().compare("sodipodi") == 0) {
+			 DebugDialog::debug(QString("%1 %2").arg(node.namespaceURI()).arg(node.localName()));
+			 QDomAttr da = element.attributeNodeNS(node.namespaceURI(), node.localName());
+			 element.removeAttributeNode(da);
+		 }
+		 else if (node.prefix().compare("inkscape") == 0) {
+			 DebugDialog::debug(QString("%1 %2").arg(node.namespaceURI()).arg(node.localName()));
+			 QDomAttr da = element.attributeNodeNS(node.namespaceURI(), node.localName());
+			 element.removeAttributeNode(da);
+		 }
+	 }
+	 */
+ }
 
 bool SvgFileSplitter::normalizeAttribute(QDomElement & element, const char * attributeName, qreal num, qreal denom)
 {

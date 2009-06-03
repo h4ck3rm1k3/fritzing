@@ -2656,33 +2656,33 @@ void MainWindow::groundFill()
 	out << byteArray;
 	file.close();
 
-	int res = 1000 / 10;
-	qreal iWidth = res * imageSize.width() / FSvgRenderer::printerScale();
-	qreal iHeight = res * imageSize.height() / FSvgRenderer::printerScale();
+	int res = 1000 / 10;   // 100 dpi = 10 mils
+	qreal svgWidth = res * imageSize.width() / FSvgRenderer::printerScale();
+	qreal svgHeight = res * imageSize.height() / FSvgRenderer::printerScale();
 	QSvgRenderer renderer(byteArray);
-	QImage image(iWidth, iHeight, QImage::Format_Indexed8);
-	//image.setColor(0, Qt::black);
-	//for (int i = 0; i < 256; i++) {
-		//image.setColor(i, Qt::white);
-	//}
+
+	QRectF br =  board->sceneBoundingRect();
+	qreal bWidth = res * br.width() / FSvgRenderer::printerScale();
+	qreal bHeight = res * br.height() / FSvgRenderer::printerScale();
+	QImage image(qMax(svgWidth, bWidth), qMax(svgHeight, bHeight), QImage::Format_RGB32);
+	image.setDotsPerMeterX(res * 39.3700787);
+	image.setDotsPerMeterY(res * 39.3700787);
+	image.fill(0xffffffff);
 
 	QPainter painter;
 	painter.begin(&image);
-	renderer.render(&painter);
+	renderer.render(&painter, QRectF(0, 0, svgWidth, svgHeight));
 	painter.end();
 
 	image.save("testGroundFill.png");
 
-	qreal useWidth = qMin(iWidth, res * board->boundingRect().width() / FSvgRenderer::printerScale());
-	qreal useHeight = qMin(iHeight, res * board->boundingRect().height() / FSvgRenderer::printerScale());
-
 	QList<QRect> rects;
 	// TODO deal with irregular board outline
-	for (int y = 0; y < useHeight; y++) {
+	for (int y = 0; y < bHeight; y++) {
 		bool inWhite = true;
 		int whiteStart = 0;
 		uchar * scanLine = image.scanLine(y);
-		for (int x = 0; x < useWidth; x++) {
+		for (int x = 0; x < bWidth; x++) {
 			uchar current = *(scanLine + x);
 			if (inWhite) {
 				if (current != 0) {
@@ -2711,12 +2711,33 @@ void MainWindow::groundFill()
 		}
 		if (inWhite) {
 			// close up the last segment
-			if (floor(useWidth) - whiteStart + 1 >= MINYSECTION) {
-				rects.append(QRect(whiteStart, y, floor(useWidth) - whiteStart + 1, 1));
+			if (floor(bWidth) - whiteStart + 1 >= MINYSECTION) {
+				rects.append(QRect(whiteStart, y, floor(bWidth) - whiteStart + 1, 1));
 			}
 		}
 	}
 
+	QString newSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
+		.arg(bWidth / res)
+		.arg(bHeight / res)
+		.arg(bWidth)
+		.arg(bHeight);
+	newSvg += "<g id='groundfill'>\n";
+	int ix = 0;
+	foreach (QRectF r, rects) {
+		newSvg += QString("<line stroke-width='1' stroke='#338040' x1='%1' y1='%2' x2='%3' y2='%2' id='connector%4' />/n")
+			.arg(r.left())
+			.arg(r.top())
+			.arg(r.right())
+			.arg(ix++);
+	}
+	newSvg += "</g>\n</svg>/n";
+
+	QFile file2("testGroundFillLines.svg");
+	file2.open(QIODevice::WriteOnly);
+	QTextStream out2(&file2);
+	out2 << newSvg;
+	file2.close();
 
 
 

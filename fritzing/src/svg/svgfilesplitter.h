@@ -75,11 +75,12 @@ protected:
 	void fixStyleAttribute(QDomElement & element);
 	void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
 	static void changeStrokeWidth(QDomElement & element, qreal delta);
+	void killSodipodi(QDomElement & element);
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
 	void shiftCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
-        virtual void rotateCommandSlot(QChar, bool, QList<double> &, void *){}
+    virtual void rotateCommandSlot(QChar, bool, QList<double> &, void *){}
 
 protected:
 	QByteArray m_byteArray;
