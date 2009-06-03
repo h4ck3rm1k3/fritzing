@@ -1,23 +1,21 @@
 {% extends "site_base.html" %}
 
 {% block title %}
-  Project – {{ project.title }}
+  Projects
 {% endblock %}
 
 {% block page_title %}
-    {{ project.title }}
+    Projects
 {% endblock %}
 
 {% block teaser %}
-    by {% firstof project.author.get_fullname project.author.username %}
+    This section presents a collection of learning materials for beginners as well as for advanced users.
 {% endblock %}
 
 {% block extra_head %}
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/projects.css" type="text/css" media="screen" charset="utf-8">
-    <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.lightbox.js"></script>
-    <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/jquery.lightbox.css" type="text/css" media="screen" charset="utf-8" />
-    <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/projects.detail.js"></script>
+    {# <script type="text/javascript" src="{{ MEDIA_URL }}fritzing/js/jquery.lightbox.js"></script> #}
+    {# <link rel="stylesheet" href="{{ MEDIA_URL }}fritzing/css/jquery.lightbox.css" type="text/css" media="screen" charset="utf-8" /> #}
 {% endblock %}
 
 {% block content %}
@@ -27,13 +25,10 @@
             <td width="60%">
                 <div class="project detail header">
                 {% for image in project.main_images %}
-                <p>
-                    <a href="{{ image.image.url }}" rel="lightbox">
-                        <img src="{{ image.header.url }}" alt="{{ image.title }}" />
-                    </a>
-                </p>
+                <p><img src="{{ image.header.url }}" alt="{{ image.title }}" /></p>
                 {% endfor %}
                 </div>
+        
                 <div class="project detail date">
                     Created at {{ project.created|date:"F j, Y, H:i" }}
                 </div>
@@ -69,7 +64,7 @@
                 <h2>Images</h2>
                 <div class="project detail side_images">
                     {% for image in project.sidebar_images %}
-                    <a href="{{ image.image.url }}" rel="lightbox">
+                    <a href="{{ image.image.url }}">
                         <img src="{{ image.sidebar.url }}" alt="{{ image.title }}" width="{{ image.sidebar.width }}" height="{{ image.sidebar.height }}"/>
                     </a>
                     {% endfor %}
@@ -92,3 +87,11 @@
     </tbody>
     </table>
 {% endblock %}
+
+{# {% block footer_script %} #}
+{#     <script type="text/javascript" charset="utf-8"> #}
+{#         $(document).ready(function() { #}
+{#             $('.project.detail.side_images a').lightBox(); #}
+{#         }); #}
+{#     </script> #}
+{# {% endblock %} #}

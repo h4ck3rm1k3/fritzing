@@ -140,18 +140,17 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
         return None
 
 
-def handle_project_images(instance, filename):
-    slug = instance.project.slug
-    if len(slug) >= 3:
-        return os.path.join(
-            "projects", slug[0], slug[1], slug[2], slug, "images", filename)
-    return os.path.join("projects", slug, "images", filename)
-
-
 class Image(ImageModel):
+    def project_images_path(self, filename):
+        slug = self.project.slug
+        if len(slug) >= 3:
+            path = "/".join(list(slug[:3]))
+            return os.path.join("projects", path, slug, "images", filename)
+        return os.path.join("projects", slug, "images", filename)
+
     title = models.CharField(max_length=255, blank=True, null=True,
         help_text=_('leave empty to populate with filename'))
-    image = models.ImageField(upload_to=handle_project_images)
+    image = models.ImageField(upload_to=project_images_path)
     project = models.ForeignKey(Project, related_name='images')
     user = models.ForeignKey(User, blank=True,
         null=True, related_name='project_images')
