@@ -2647,7 +2647,8 @@ void MainWindow::groundFill()
 	QByteArray boardByteArray;
 	QStringList exceptions;
 	//exceptions << holeColor;
-	if (!SvgFileSplitter::changeColors(boardSvg, QString("#ffffff"), exceptions, boardByteArray)) {
+        QString tempColor("#ffffff");
+        if (!SvgFileSplitter::changeColors(boardSvg, tempColor, exceptions, boardByteArray)) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (2)."));
 		return;
 	}
