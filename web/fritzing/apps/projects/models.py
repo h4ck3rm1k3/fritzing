@@ -143,6 +143,7 @@ class Project(TitleSlugDescriptionModel, TimeStampedModel):
 class Image(ImageModel):
     def project_images_path(self, filename):
         slug = self.project.slug
+        filename = "%s_%s" % (slug, filename)
         if len(slug) >= 3:
             path = "/".join(list(slug[:3]))
             return os.path.join("projects", path, slug, "images", filename)
@@ -184,6 +185,7 @@ class Attachment(models.Model):
     )
     def project_attachment_path(self, filename):
         slug = self.project.slug
+        filename = "%s_%s" % (slug, filename)
         if len(slug) >= 3:
             path = "/".join(list(slug[:3]))
             return os.path.join("projects", path, slug, self.kind, filename)
