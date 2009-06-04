@@ -2636,30 +2636,56 @@ void MainWindow::groundFill()
 
 	//FileProgressDialog * fileProgressDialog = exportProgress();
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
+	viewLayerIDs << ViewLayer::Board;
+	QSizeF boardImageSize;
+    QString boardSvg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, boardImageSize, board);
+	if (boardSvg.isEmpty()) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (1)."));
+		return;
+	}
+
+	QByteArray boardByteArray;
+	QStringList exceptions;
+	//exceptions << holeColor;
+	if (!SvgFileSplitter::changeColors(boardSvg, QString("#ffffff"), exceptions, boardByteArray)) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (2)."));
+		return;
+	}
+
+	/*
+	QFile file0("testGroundFillBoard.svg");
+	file0.open(QIODevice::WriteOnly);
+	QTextStream out0(&file0);
+	out0 << boardByteArray;
+	file0.close();
+	*/
+
+	viewLayerIDs.clear();
 	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
-	QSizeF imageSize;
-    QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board);
+	QSizeF copperImageSize;
+    QString svg = m_currentGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, copperImageSize, board);
 	if (svg.isEmpty()) {
-		// tell the user something reasonable
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (1)."));
 		return;
 	}
 
-	QByteArray byteArray;
-	if (!SvgFileSplitter::changeStrokeWidth(svg, 5, byteArray)) {
-		QMessageBox::warning(this, tr("Fritzing"), tr("Unable to create ground fill"));
+	QByteArray copperByteArray;
+	if (!SvgFileSplitter::changeStrokeWidth(svg, 25, copperByteArray)) {
+        QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (2)."));
 		return;
 	}
 
-	QFile file("testGroundFill.svg");
-	file.open(QIODevice::WriteOnly);
-	QTextStream out(&file);
-	out << byteArray;
-	file.close();
+	/*
+	QFile file1("testGroundFill.svg");
+	file1.open(QIODevice::WriteOnly);
+	QTextStream out1(&file1);
+	out1 << copperByteArray;
+	file1.close();
+	*/
 
-	int res = 1000 / 10;   // 100 dpi = 10 mils
-	qreal svgWidth = res * imageSize.width() / FSvgRenderer::printerScale();
-	qreal svgHeight = res * imageSize.height() / FSvgRenderer::printerScale();
-	QSvgRenderer renderer(byteArray);
+	qreal res = 1000 / 10;   // 100 dpi = 10 mils
+	qreal svgWidth = res * qMax(boardImageSize.width(), copperImageSize.width()) / FSvgRenderer::printerScale();
+	qreal svgHeight = res * qMax(boardImageSize.height(), copperImageSize.height()) / FSvgRenderer::printerScale();
 
 	QRectF br =  board->sceneBoundingRect();
 	qreal bWidth = res * br.width() / FSvgRenderer::printerScale();
@@ -2667,25 +2693,33 @@ void MainWindow::groundFill()
 	QImage image(qMax(svgWidth, bWidth), qMax(svgHeight, bHeight), QImage::Format_RGB32);
 	image.setDotsPerMeterX(res * 39.3700787);
 	image.setDotsPerMeterY(res * 39.3700787);
-	image.fill(0xffffffff);
+	image.fill(0x0);
 
+	QSvgRenderer renderer(boardByteArray);
 	QPainter painter;
 	painter.begin(&image);
-	renderer.render(&painter, QRectF(0, 0, svgWidth, svgHeight));
+	renderer.render(&painter, QRectF(0, 0, res * boardImageSize.width() / FSvgRenderer::printerScale(), res * boardImageSize.height() / FSvgRenderer::printerScale()));
 	painter.end();
 
-	image.save("testGroundFill.png");
+	//image.save("testGroundFillBoard.png");
+
+	QSvgRenderer renderer2(copperByteArray);
+	painter.begin(&image);
+	renderer2.render(&painter, QRectF(0, 0, res * copperImageSize.width() / FSvgRenderer::printerScale(), res * copperImageSize.height() / FSvgRenderer::printerScale()));
+	painter.end();
+
+	//image.save("testGroundFill.png");
 
 	QList<QRect> rects;
 	// TODO deal with irregular board outline
 	for (int y = 0; y < bHeight; y++) {
-		bool inWhite = true;
+		bool inWhite = false;
 		int whiteStart = 0;
-		uchar * scanLine = image.scanLine(y);
+		QRgb* scanLine = (QRgb *) image.scanLine(y);
 		for (int x = 0; x < bWidth; x++) {
-			uchar current = *(scanLine + x);
+			QRgb current = *(scanLine + x);
 			if (inWhite) {
-				if (current != 0) {
+				if (qBlue(current) == 0xff) {
 					// another white pixel, keep moving
 					continue;
 				}
@@ -2700,7 +2734,7 @@ void MainWindow::groundFill()
 				rects.append(QRect(whiteStart, y, x - whiteStart + 1, 1));
 			}
 			else {
-				if (current == 0) {
+				if (qBlue(current) != 0xff) {
 					// another black pixel, keep moving
 					continue;
 				}
@@ -2720,18 +2754,18 @@ void MainWindow::groundFill()
 	QString newSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
 		.arg(bWidth / res)
 		.arg(bHeight / res)
-		.arg(bWidth)
-		.arg(bHeight);
+		.arg(bWidth * 10)
+		.arg(bHeight * 10);
 	newSvg += "<g id='groundfill'>\n";
 	int ix = 0;
 	foreach (QRectF r, rects) {
-		newSvg += QString("<line stroke-width='1' stroke='#338040' x1='%1' y1='%2' x2='%3' y2='%2' id='connector%4' />/n")
-			.arg(r.left())
-			.arg(r.top())
-			.arg(r.right())
+		newSvg += QString("<line stroke-width='10' stroke='#ffbf00' x1='%1' y1='%2' x2='%3' y2='%2' id='connector%4pad' />\n")
+			.arg(r.left() * 10)
+			.arg(r.top() * 10)
+			.arg(r.right() * 10)
 			.arg(ix++);
 	}
-	newSvg += "</g>\n</svg>/n";
+	newSvg += "</g>\n</svg>\n";
 
 	QFile file2("testGroundFillLines.svg");
 	file2.open(QIODevice::WriteOnly);
@@ -2739,11 +2773,8 @@ void MainWindow::groundFill()
 	out2 << newSvg;
 	file2.close();
 
-
-
-	// render it back as svgs by figuring out the beginning and end of each separate horizontal line
-	//		skip lines that are too small
-	//		designate each line as a connector, and attach each line that intersects to a bus
+	// designate each line as a connector, and attach each line that intersects to a bus
+	// split each line into two lines (l1, l2) and add a terminal point at the left of l1 and the right of l2?
 	// call the whole thing a part
 	// stick it on its own layer
 }

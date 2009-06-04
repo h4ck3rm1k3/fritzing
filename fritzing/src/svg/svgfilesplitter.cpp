@@ -522,6 +522,7 @@ void SvgFileSplitter::fixStyleAttribute(QDomElement & element)
 	fixStyleAttribute(element, style, "stroke-width");
 	fixStyleAttribute(element, style, "stroke");
 	fixStyleAttribute(element, style, "fill");
+	fixStyleAttribute(element, style, "fill-opacity");
 
 	element.setAttribute("style", style);
 }
@@ -611,6 +612,53 @@ void SvgFileSplitter::changeStrokeWidth(QDomElement & element, qreal delta) {
 	QDomElement child = element.firstChildElement();
 	while (!child.isNull()) {
 		changeStrokeWidth(child, delta);
+		child = child.nextSiblingElement();
+	}
+}
+
+bool SvgFileSplitter::changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray & byteArray) {
+	QString errorStr;
+	int errorLine;
+	int errorColumn;
+
+	QDomDocument domDocument;
+
+	if (!domDocument.setContent(svg, true, &errorStr, &errorLine, &errorColumn)) {
+		return false;
+	}
+
+	QDomElement root = domDocument.documentElement();
+	if (root.isNull()) {
+		return false;
+	}
+
+	if (root.tagName() != "svg") {
+		return false;
+	}
+
+	changeColors(root, toColor, exceptions);
+	byteArray = domDocument.toByteArray();
+	return true;
+}
+
+void SvgFileSplitter::changeColors(QDomElement & element, QString & toColor, QStringList & exceptions) {
+	QString c = element.attribute("stroke");
+	if (!exceptions.contains(c)) {
+		element.setAttribute("stroke", toColor);
+	}
+	c = element.attribute("fill");
+	if (!exceptions.contains(c)) {
+		element.setAttribute("fill", toColor);
+	}
+
+	QString fillo = element.attribute("fill-opacity");
+	if (!fillo.isEmpty()) {
+		element.setAttribute("fill-opacity", "1.0");
+	}
+
+	QDomElement child = element.firstChildElement();
+	while (!child.isNull()) {
+		changeColors(child, toColor, exceptions);
 		child = child.nextSiblingElement();
 	}
 }

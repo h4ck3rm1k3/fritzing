@@ -58,10 +58,11 @@ public:
 	QString shift(qreal x, qreal y, const QString & elementID);
 	QString elementString(const QString & elementID);
     virtual bool parsePath(const QString & data, const char * slot, PathUserData &, QObject * slotTarget);
-	static bool changeStrokeWidth(const QString & svg, qreal delta, QByteArray &);
 
 public:
 	static bool getSvgSizeAttributes(const QString & path, QString & width, QString & height, QString & viewBox);
+	static bool changeStrokeWidth(const QString & svg, qreal delta, QByteArray &);
+	static bool changeColors(const QString & svg, QString & toColor, QStringList & exceptions, QByteArray &);
 
 
 protected:
@@ -74,8 +75,12 @@ protected:
 	void setStrokeOrFill(QDomElement & element, bool blackOnly);
 	void fixStyleAttribute(QDomElement & element);
 	void fixStyleAttribute(QDomElement & element, QString & style, const QString & attributeName);
-	static void changeStrokeWidth(QDomElement & element, qreal delta);
 	void killSodipodi(QDomElement & element);
+
+protected:
+	static void changeStrokeWidth(QDomElement & element, qreal delta);
+	static void changeColors(QDomElement & element, QString & toColor, QStringList & exceptions);
+
 
 protected slots:
 	void normalizeCommandSlot(QChar command, bool relative, QList<double> & args, void * userData);
