@@ -267,6 +267,7 @@ void MainWindow::init() {
 
 MainWindow::~MainWindow()
 {
+	clearLastGroundPlane();
 	delete m_sketchModel;
 	m_dockManager->dontKeepMargins();
 	m_setUpDockManagerTimer.stop();
@@ -1538,7 +1539,7 @@ void MainWindow::saveAsModule()
 
 	partViewLayerIDs.clear();
 	wireViewLayerIDs.clear();
-	partViewLayerIDs << ViewLayer::Copper0  << ViewLayer::Copper0Trace << ViewLayer::Silkscreen;   // TODO: what layers should be visible
+	partViewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0  << ViewLayer::Copper0Trace << ViewLayer::Silkscreen;   // TODO: what layers should be visible
 	wireViewLayerIDs << ViewLayer::Jumperwires << ViewLayer::Ratsnest;
 	QString svg3 = genIcon(m_pcbGraphicsView, partViewLayerIDs, wireViewLayerIDs);
 	svgs.insert("pcb", svg3);
@@ -1638,6 +1639,7 @@ void MainWindow::saveAsModule()
 
 	QHash<QString, QString> layerids(svgs);
 	layerids.insert("icon", "icon");
+	layerids.insert("pcb", "groundplane");
 	layerids.insert("pcb", "copper0");
 	layerids.insert("pcb", "copper0trace");
 

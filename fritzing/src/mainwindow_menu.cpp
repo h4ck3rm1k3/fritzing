@@ -52,6 +52,7 @@ $Date$
 #include "fgraphicsscene.h"
 #include "utils/fileprogressdialog.h"
 #include "svg/svgfilesplitter.h"
+#include "version/version.h"
 
 static QString eagleActionType = ".eagle";
 static QString gerberActionType = ".gerber";
@@ -149,7 +150,7 @@ void MainWindow::exportEtchable(bool wantPDF, bool wantSVG)
 	#endif
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
-	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
 	QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, NULL);
 	if (wantSVG) {
@@ -2084,7 +2085,7 @@ void MainWindow::exportToGerber() {
                                              | QFileDialog::DontResolveSymlinks);
 
 	QList<ViewLayer::ViewLayerID> viewLayerIDs;
-	viewLayerIDs << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
+	viewLayerIDs << ViewLayer::GroundPlane << ViewLayer::Copper0 << ViewLayer::Copper0Trace;
 	QSizeF imageSize;
     QString svg = m_pcbGraphicsView->renderToSVG(FSvgRenderer::printerScale(), viewLayerIDs, viewLayerIDs, true, imageSize, board);
 	if (svg.isEmpty()) {
@@ -2614,6 +2615,9 @@ void MainWindow::tidyWires() {
 
 void MainWindow::groundFill()
 {
+	clearLastGroundPlane();
+
+	QString suffix = getRandText();
 	
 	ItemBase * board = NULL;
     foreach (QGraphicsItem * childItem, m_pcbGraphicsView->items()) {
@@ -2646,9 +2650,9 @@ void MainWindow::groundFill()
 
 	QByteArray boardByteArray;
 	QStringList exceptions;
-	//exceptions << holeColor;
-        QString tempColor("#ffffff");
-        if (!SvgFileSplitter::changeColors(boardSvg, tempColor, exceptions, boardByteArray)) {
+	exceptions << m_currentGraphicsView->background().name();    // the color of holes in the board
+    QString tempColor("#ffffff");
+    if (!SvgFileSplitter::changeColors(boardSvg, tempColor, exceptions, boardByteArray)) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render board svg (2)."));
 		return;
 	}
@@ -2671,7 +2675,7 @@ void MainWindow::groundFill()
 	}
 
 	QByteArray copperByteArray;
-	if (!SvgFileSplitter::changeStrokeWidth(svg, 25, copperByteArray)) {
+	if (!SvgFileSplitter::changeStrokeWidth(svg, 50, copperByteArray)) {
         QMessageBox::critical(this, tr("Fritzing"), tr("Fritzing error: unable to render copper svg (2)."));
 		return;
 	}
@@ -2710,6 +2714,8 @@ void MainWindow::groundFill()
 	painter.end();
 
 	//image.save("testGroundFill.png");
+	if (bHeight > image.height()) bHeight = image.height();
+	if (bWidth > image.width()) bWidth = image.width();
 
 	QList<QRect> rects;
 	// TODO deal with irregular board outline
@@ -2757,25 +2763,219 @@ void MainWindow::groundFill()
 		.arg(bHeight / res)
 		.arg(bWidth * 10)
 		.arg(bHeight * 10);
-	newSvg += "<g id='groundfill'>\n";
+	newSvg += "<g id='groundplane'>\n";
+
+	// ?split each line into two lines (l1, l2) and add a terminal point at the left of l1 and the right of l2?
+
 	int ix = 0;
 	foreach (QRectF r, rects) {
-		newSvg += QString("<line stroke-width='10' stroke='#ffbf00' x1='%1' y1='%2' x2='%3' y2='%2' id='connector%4pad' />\n")
+		newSvg += QString("<rect fill='#ffbf00' x='%1' y='%2' width='%3' height='10' id='connector%4pad' />\n")
 			.arg(r.left() * 10)
 			.arg(r.top() * 10)
-			.arg(r.right() * 10)
+			.arg(r.width() * 10)
 			.arg(ix++);
 	}
 	newSvg += "</g>\n</svg>\n";
 
-	QFile file2("testGroundFillLines.svg");
+	QString newFzp = "<?xml version='1.0' encoding='UTF-8'?>\n";
+	newFzp += QString("<module fritzingVersion='%1' moduleId='%2' >\n").arg(Version::versionString()).arg(ItemBase::groundPlaneModuleIDName);
+	newFzp += "<version>1.1</version>\n";
+	newFzp += "<author>Fritzing</author>\n";
+	newFzp += "<title>Ground Plane</title>\n";
+	newFzp += "<label>Ground Plane</label>\n";
+	newFzp += QString("<date>%1</date>\n").arg(QDate::currentDate().toString("yyyy-MM-dd"));
+	newFzp += "<properties>\n";
+	newFzp += "<property name='family'>groundplane</property>\n";
+	newFzp += "</properties>\n";
+	newFzp += "<description>A ground plane</description>\n";
+	newFzp += "<views>\n";
+	newFzp += "<iconView>\n";
+	newFzp += QString("<layers image='pcb/groundplane%1.svg' >\n").arg(suffix);
+    newFzp += "<layer layerId='icon' />\n";
+	newFzp += "</layers>\n";
+	newFzp += "</iconView>\n";
+	newFzp += "<pcbView>\n";
+	newFzp += QString("<layers image='pcb/groundplane%1.svg' >\n").arg(suffix);
+    newFzp += "<layer layerId='groundplane' />\n";
+	newFzp += "</layers>\n";
+	newFzp += "</pcbView>\n";
+	newFzp += "</views>\n";
+	newFzp += "<connectors>\n";
+	ix = 0;
+	foreach (QRectF r, rects) {
+		newFzp += QString("<connector type='male' id='connector%1' name='connector%1' >\n").arg(ix);
+		newFzp += "<description></description>\n";
+		newFzp += "<views>\n";
+		newFzp += "<pcbView>\n";
+		newFzp += QString("<p svgId='connector%1pad' layer='groundplane' />\n").arg(ix);
+		newFzp += "</pcbView>\n";
+		newFzp += "</views>\n";
+		newFzp += "</connector>\n";
+		ix++;
+	}
+	newFzp += "</connectors>\n";
+
+
+	ix = 0;
+	int prevFirst = -1;
+	int prevLast = -1;
+	QList< QSet<int> * > buses;
+	while (ix < rects.count()) {
+		int first = ix;
+		QRectF firstR = rects.at(ix);
+		while (++ix < rects.count()) {
+			QRectF nextR = rects.at(ix);
+			if (nextR.y() != firstR.y()) {
+				break;
+			}
+		}
+		int last = ix - 1;  // this was a lookahead so step back one
+		if (prevFirst >= 0) {
+			for (int i = first; i <= last; i++) {
+				QRectF candidate = rects.at(i);
+				int gotCount = 0;
+				for (int j = prevFirst; j <= prevLast; j++) {
+					QRectF prev = rects.at(j);
+					if (prev.y() + 1 != candidate.y()) {
+						// skipped a line; no intersection possible
+						break;
+					}
+
+					if ((prev.x() + prev.width() <= candidate.x()) && (candidate.x() + candidate.width() <= prev.x())) {
+						// candidate and prev didn't intersect
+						continue;
+					}
+
+					if (++gotCount > 1) {
+						QSet<int> * busi = NULL;
+						QSet<int> * busj = NULL;
+						foreach (QSet<int> * bus, buses) {
+							if (bus->contains(j)) {
+								busj = bus;
+								break;
+							}
+						}
+						foreach (QSet<int> * bus, buses) {
+							if (bus->contains(i)) {
+								busi = bus;
+								break;
+							}
+						}
+						if (busi != NULL && busj != NULL) {
+							if (busi != busj) {
+								foreach (int b, busj->values()) {
+									busi->insert(b);
+								}
+								busj->clear();
+								buses.removeOne(busj);
+								delete busj;
+							}
+							busi->insert(i);
+						}
+						else {
+							DebugDialog::debug("we are really screwed here, what should we do about it?");
+						}
+					}
+					else {
+						// put the candidate (i) in j's bus
+						foreach (QSet<int> * bus, buses) {
+							if (bus->contains(j)) {
+								bus->insert(i);
+								break;
+							}
+						}
+					}
+				}
+
+				if (gotCount == 0) {
+					// candidate is an orphan line at this point
+					QSet<int> * bus = new QSet<int>;
+					bus->insert(i);
+					buses.append(bus);
+				}
+
+			}
+		}
+		else {
+			for (int i = first; i <= last; i++) {
+				QSet<int> * bus = new QSet<int>;
+				bus->insert(i);
+				buses.append(bus);
+			}
+		}
+
+		prevFirst = first;
+		prevLast = last;
+	}
+
+	newFzp += "<buses>\n";
+	ix = 0;
+	foreach (QSet<int> * bus, buses) {
+		newFzp += QString("<bus id='b%1'>\n").arg(ix++);
+		foreach (int b, bus->values()) {
+			newFzp += QString("<nodeMember connectorId='connector%1' />\n").arg(b);
+		}
+		delete bus;
+		newFzp += "</bus>\n";
+	}
+	newFzp += "</buses>\n";
+
+	newFzp += "</module>\n";
+
+
+	QDir destFolder = QDir::temp();
+	createFolderAnCdIntoIt(destFolder, suffix);
+	createFolderAnCdIntoIt(destFolder, "parts");
+	createFolderAnCdIntoIt(destFolder, "user");
+
+	QString newPartPath = destFolder.absoluteFilePath(QString("groundplane%1.fzp").arg(suffix));
+	QFile file3(newPartPath);
+	file3.open(QIODevice::WriteOnly);
+	QTextStream out3(&file3);
+	out3 << newFzp;
+	file3.close();
+
+	destFolder.cdUp();
+	createFolderAnCdIntoIt(destFolder, "svg");
+	createFolderAnCdIntoIt(destFolder, "user");
+	createFolderAnCdIntoIt(destFolder, "pcb");
+
+	QFile file2(destFolder.absoluteFilePath(QString("groundplane%1.svg").arg(suffix)));
 	file2.open(QIODevice::WriteOnly);
 	QTextStream out2(&file2);
 	out2 << newSvg;
 	file2.close();
 
-	// designate each line as a connector, and attach each line that intersects to a bus
-	// split each line into two lines (l1, l2) and add a terminal point at the left of l1 and the right of l2?
-	// call the whole thing a part
-	// stick it on its own layer
+	m_lastGroundPlaneSuffix = suffix;
+
+	ModelPart * modelPart = loadPartFromFile(newPartPath);
+	if (modelPart != NULL) {
+		ViewGeometry vg;
+		vg.setLoc(board->pos());
+		AddItemCommand * cmd = new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, ItemBase::getNextID(), false, -1, -1, NULL);
+		cmd->setText(tr("Ground Fill"));
+		m_undoStack->push(cmd);
+	}
+}
+
+void MainWindow::clearLastGroundPlane() {
+	if (m_lastGroundPlaneSuffix.isEmpty()) return;
+
+	QDir destFolder = QDir::temp();
+	destFolder.cd(m_lastGroundPlaneSuffix);
+	destFolder.cd("parts");
+	destFolder.cd("user");
+	destFolder.remove(QString("groundplane%1.fzp").arg(m_lastGroundPlaneSuffix));
+	destFolder.cdUp();
+	destFolder.cd("svg");
+	destFolder.cd("user");
+	destFolder.cd("pcb");
+	destFolder.remove(QString("groundplane%1.svg").arg(m_lastGroundPlaneSuffix));
+	destFolder = QDir::temp();
+	destFolder.rmdir(m_lastGroundPlaneSuffix);
+
+	m_lastGroundPlaneSuffix = "";
+
+	// TODO: clear the part from the palette and renderer cache
+
 }

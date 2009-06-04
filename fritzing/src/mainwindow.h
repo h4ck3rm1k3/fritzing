@@ -324,6 +324,7 @@ protected:
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
+	void clearLastGroundPlane();
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);
@@ -533,6 +534,7 @@ protected:
 	QTimer m_setUpDockManagerTimer;
 	class DockManager * m_dockManager;
 	class FileProgressDialog * m_fileProgressDialog;
+	QString m_lastGroundPlaneSuffix;
 
 protected:
 	static const QString UntitledSketchName;

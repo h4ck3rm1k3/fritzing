@@ -83,6 +83,7 @@ const QString ItemBase::groupModuleIDName = "GroupModuleID";
 const QString ItemBase::rectangleModuleIDName = "RectanglePCBModuleID";
 const QString ItemBase::noteModuleIDName = "NoteModuleID";
 const QString ItemBase::wireModuleIDName = "WireModuleID";
+const QString ItemBase::groundPlaneModuleIDName = "GroundPlaneModuleID";
 
 const QString ItemBase::ITEMBASE_FONT_PREFIX = "<font size='2'>";
 const QString ItemBase::ITEMBASE_FONT_SUFFIX = "</font>";

@@ -120,9 +120,11 @@ void PCBSketchWidget::makeWires(QList<ConnectorItem *> & partsConnectorItems, QL
 			Wire* tempWire = source->wiredTo(dest, ViewGeometry::RatsnestFlag);
 			if (tempWire == NULL) {
 				Wire * newWire = makeOneRatsnestWire(source, dest, ratsnestCommand, source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag) == NULL);
-				ratsnestWires.append(newWire);
-				if (source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
-					newWire->setRouted(true);
+				if (newWire != NULL) {
+					ratsnestWires.append(newWire);
+					if (source->wiredTo(dest, ViewGeometry::TraceFlag | ViewGeometry::JumperFlag)) {
+						newWire->setRouted(true);
+					}
 				}
 
 			}
@@ -804,6 +806,9 @@ void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & all
 			if (wires.count() == 0) break;
 		}
 
+		/*
+		// no longer allowing internal  ratsnest wires to be created 
+
 		if (ends.count() > 1 && wires.count() == 0) {
 			// if wire connects two connectors on the same bus on the same part
 			// and there are no outside connections, remove the wire
@@ -841,6 +846,8 @@ void PCBSketchWidget::removeRatsnestWires(QList< QList<ConnectorItem *>* > & all
 				}
 			}
 		}
+
+		*/
 
 		foreach (Wire * w, wires) {
 			deleteWires.insert(w);
@@ -929,6 +936,10 @@ bool PCBSketchWidget::canCreateWire(Wire * dragWire, ConnectorItem * from, Conne
 }
 
 Wire * PCBSketchWidget::makeOneRatsnestWire(ConnectorItem * source, ConnectorItem * dest, RatsnestCommand * ratsnestCommand, bool select) {
+	if (source->attachedTo() == dest->attachedTo()) {
+		return NULL;				// don't draw a wire within the same part
+	}
+	
 	long newID = ItemBase::getNextID();
 
 	ViewGeometry viewGeometry;

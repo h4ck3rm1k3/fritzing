@@ -60,6 +60,7 @@ public:
 	static const QString rectangleModuleIDName;
 	static const QString noteModuleIDName;
 	static const QString wireModuleIDName;
+	static const QString groundPlaneModuleIDName;
 
 public:
 	static const QString ITEMBASE_FONT_PREFIX;

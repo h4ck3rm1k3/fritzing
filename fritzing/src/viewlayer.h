@@ -55,6 +55,7 @@ public:
 		SchematicRuler,
 		Board,
 		Copper1,
+		GroundPlane,
 		Copper0,
 		Copper0Trace,
 		Keepout,

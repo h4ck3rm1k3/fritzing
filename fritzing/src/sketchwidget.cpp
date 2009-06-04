@@ -4297,7 +4297,7 @@ void SketchWidget::addPcbViewLayers() {
 	setViewLayerIDs(ViewLayer::Silkscreen, ViewLayer::Ratsnest, ViewLayer::Copper0, ViewLayer::PcbRuler, ViewLayer::SilkscreenLabel, ViewLayer::PcbNote);
 
 	QList<ViewLayer::ViewLayerID> layers;
-	layers << ViewLayer::Board << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
+	layers << ViewLayer::Board << ViewLayer::GroundPlane << ViewLayer::Copper1 << ViewLayer::Copper0 << ViewLayer::Ratsnest << ViewLayer::Copper0Trace
 		/* << ViewLayer::Keepout */ << ViewLayer::Vias /* << ViewLayer::Soldermask */  
 		<< ViewLayer::Silkscreen << ViewLayer::SilkscreenLabel /* << ViewLayer::Outline */
 		<< ViewLayer::Jumperwires << ViewLayer::PcbNote << ViewLayer::PcbRuler;
@@ -4313,6 +4313,10 @@ void SketchWidget::addPcbViewLayers() {
 	ViewLayer * copper0Trace = m_viewLayers.value(ViewLayer::Copper0Trace);
 	if (copper0 && copper0Trace) {
 		copper0Trace->setParentLayer(copper0);
+	}
+	ViewLayer * groundPlane = m_viewLayers.value(ViewLayer::GroundPlane);
+	if (copper0 && groundPlane) {
+		groundPlane->setParentLayer(copper0);
 	}
 }
 
