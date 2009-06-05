@@ -72,6 +72,7 @@ QDir *getApplicationSubFolder(QString);
 QString getApplicationSubFolderPath(QString);
 QString getUserDataStorePath(QString folder=___emptyString___);
 QStringList getUserDataStoreFolders();
+bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 
 QDomElement findElementWithAttribute(QDomElement element, const QString & attributeName, const QString & attributeValue);
 

@@ -147,3 +147,10 @@ QDomElement findElementWithAttribute(QDomElement element, const QString & attrib
 
 	return ___emptyElement___;
 }
+
+bool createFolderAnCdIntoIt(QDir &dir, QString newFolder) {
+	if(!dir.mkdir(newFolder)) return false;
+	if(!dir.cd(newFolder)) return false;
+
+	return true;
+}

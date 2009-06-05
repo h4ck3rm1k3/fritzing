@@ -267,7 +267,7 @@ void MainWindow::init() {
 
 MainWindow::~MainWindow()
 {
-	clearLastGroundPlane();
+	clearGroundPlanes();
 	delete m_sketchModel;
 	m_dockManager->dontKeepMargins();
 	m_setUpDockManagerTimer.stop();

@@ -80,7 +80,6 @@ class FritzingWindow : public QMainWindow {
 		static bool isEmptyFileName(const QString &filename, const QString &unsavedFilename);
 		static bool alreadyHasExtension(const QString &fileName, const QString &extension=___emptyString___);
 		static QString getExtFromFileDialog(const QString &extOpt);
-		static bool createFolderAnCdIntoIt(QDir &dir, QString newFolder);
 		static void rmdir(const QString &dirPath);
 		static void rmdir(QDir & dir);
 		static bool createZipAndSaveTo(const QDir &dirToCompress, const QString &filename);

@@ -324,12 +324,7 @@ protected:
 	void swapSelectedAux(ItemBase * itemBase, const QString & moduleID);
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
-	void clearLastGroundPlane();
-	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects);
-	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
-	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
-	QString makePolyFzp(QList<QPolygon> & polygons, const QString & moduleID);
-	QString makePolySvg(QList<QPolygon> & polygons, int res, qreal bWidth, qreal bHeight);
+	void clearGroundPlanes();
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);
@@ -539,7 +534,7 @@ protected:
 	QTimer m_setUpDockManagerTimer;
 	class DockManager * m_dockManager;
 	class FileProgressDialog * m_fileProgressDialog;
-	QString m_lastGroundPlaneSuffix;
+	QList<QString> m_groundPlaneSuffixes;
 
 protected:
 	static const QString UntitledSketchName;

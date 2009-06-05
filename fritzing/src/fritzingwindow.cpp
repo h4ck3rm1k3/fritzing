@@ -250,13 +250,6 @@ bool FritzingWindow::beforeClosing(bool showCancel) {
 	}
 }
 
-bool FritzingWindow::createFolderAnCdIntoIt(QDir &dir, QString newFolder) {
-	if(!dir.mkdir(newFolder)) return false;
-	if(!dir.cd(newFolder)) return false;
-
-	return true;
-}
-
 void FritzingWindow::rmdir(const QString &dirPath) {
 	QDir dir = QDir(dirPath);
 	rmdir(dir);
