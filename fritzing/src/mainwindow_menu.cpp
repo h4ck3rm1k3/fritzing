@@ -2717,8 +2717,118 @@ void MainWindow::groundFill()
 	if (bHeight > image.height()) bHeight = image.height();
 	if (bWidth > image.width()) bWidth = image.width();
 
+	QDir fzpFolder = QDir::temp();
+	createFolderAnCdIntoIt(fzpFolder, suffix);
+	createFolderAnCdIntoIt(fzpFolder, "parts");
+	QDir svgFolder(fzpFolder);
+	createFolderAnCdIntoIt(fzpFolder, "user");
+
+	createFolderAnCdIntoIt(svgFolder, "svg");
+	createFolderAnCdIntoIt(svgFolder, "user");
+	createFolderAnCdIntoIt(svgFolder, "pcb");
+
+	QUndoCommand * parentCommand = new QUndoCommand(tr("Ground Fill"));
+
 	QList<QRect> rects;
-	// TODO deal with irregular board outline
+	scanLines(image, bWidth, bHeight, rects);
+	QList< QList<int> * > pieces;
+	splitScanLines(rects, pieces);
+	int pieceCount = 0;
+	foreach (QList<int> * piece, pieces) {
+		QList<QPolygon> polygons;
+		QList<QRect> newRects;
+		foreach (int i, *piece) {
+			QRect r = rects.at(i);
+			newRects.append(QRect(r.x() * 10, r.y() * 10, r.width() * 10, 10));
+		}
+		joinScanLines(newRects, polygons);
+		QString pSvg = makePolySvg(polygons, res, bWidth, bHeight);
+		QString moduleID = QString("%1%2%3").arg(ItemBase::groundPlaneModuleIDName).arg(suffix).arg(pieceCount++);
+		QString pFzp = makePolyFzp(polygons, moduleID);
+
+		QString newPartPath = fzpFolder.absoluteFilePath(QString("%1.fzp").arg(moduleID));
+		QFile file3(newPartPath);
+		file3.open(QIODevice::WriteOnly);
+		QTextStream out3(&file3);
+		out3 << pFzp;
+		file3.close();
+
+		QFile file2(svgFolder.absoluteFilePath(QString("%1.svg").arg(moduleID)));
+		file2.open(QIODevice::WriteOnly);
+		QTextStream out2(&file2);
+		out2 << pSvg;
+		file2.close();
+
+		ModelPart * modelPart = loadPartFromFile(newPartPath);
+		if (modelPart != NULL) {
+			ViewGeometry vg;
+			vg.setLoc(board->pos());
+			new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, ItemBase::getNextID(), false, -1, -1, parentCommand);
+		}
+
+
+		/*
+		QFile file4("testPoly.svg");
+		file4.open(QIODevice::WriteOnly);
+		QTextStream out4(&file4);
+		out4 << pSvg;
+		file4.close();
+		*/
+
+	}
+
+
+	m_undoStack->push(parentCommand);
+
+
+	/*
+	QString newSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
+		.arg(bWidth / res)
+		.arg(bHeight / res)
+		.arg(bWidth * 10)
+		.arg(bHeight * 10);
+	newSvg += "<g id='groundplane'>\n";
+
+	// ?split each line into two lines (l1, l2) and add a terminal point at the left of l1 and the right of l2?
+
+	ix = 0;
+	foreach (QRectF r, rects) {
+		newSvg += QString("<rect fill='#ffbf00' x='%1' y='%2' width='%3' height='10' id='connector%4pad' />\n")
+			.arg(r.left() * 10)
+			.arg(r.top() * 10)
+			.arg(r.width() * 10)
+			.arg(ix++);
+	}
+	newSvg += "</g>\n</svg>\n";
+	*/
+
+	m_lastGroundPlaneSuffix = suffix;
+}
+
+void MainWindow::clearLastGroundPlane() {
+	if (m_lastGroundPlaneSuffix.isEmpty()) return;
+
+	QDir destFolder = QDir::temp();
+	destFolder.cd(m_lastGroundPlaneSuffix);
+	destFolder.cd("parts");
+	destFolder.cd("user");
+	destFolder.remove(QString("groundplane%1.fzp").arg(m_lastGroundPlaneSuffix));
+	destFolder.cdUp();
+	destFolder.cd("svg");
+	destFolder.cd("user");
+	destFolder.cd("pcb");
+	destFolder.remove(QString("groundplane%1.svg").arg(m_lastGroundPlaneSuffix));
+	destFolder = QDir::temp();
+	destFolder.rmdir(m_lastGroundPlaneSuffix);
+
+	m_lastGroundPlaneSuffix = "";
+
+	// TODO: clear the part from the palette and renderer cache
+
+}
+
+void MainWindow::scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects)
+{
 	for (int y = 0; y < bHeight; y++) {
 		bool inWhite = false;
 		int whiteStart = 0;
@@ -2752,74 +2862,18 @@ void MainWindow::groundFill()
 		}
 		if (inWhite) {
 			// close up the last segment
-			if (floor(bWidth) - whiteStart + 1 >= MINYSECTION) {
-				rects.append(QRect(whiteStart, y, floor(bWidth) - whiteStart + 1, 1));
+			if (bWidth - whiteStart + 1 >= MINYSECTION) {
+				rects.append(QRect(whiteStart, y, bWidth - whiteStart + 1, 1));
 			}
 		}
 	}
+}
 
-	QString newSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
-		.arg(bWidth / res)
-		.arg(bHeight / res)
-		.arg(bWidth * 10)
-		.arg(bHeight * 10);
-	newSvg += "<g id='groundplane'>\n";
-
-	// ?split each line into two lines (l1, l2) and add a terminal point at the left of l1 and the right of l2?
-
+void MainWindow::splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces) 
+{
 	int ix = 0;
-	foreach (QRectF r, rects) {
-		newSvg += QString("<rect fill='#ffbf00' x='%1' y='%2' width='%3' height='10' id='connector%4pad' />\n")
-			.arg(r.left() * 10)
-			.arg(r.top() * 10)
-			.arg(r.width() * 10)
-			.arg(ix++);
-	}
-	newSvg += "</g>\n</svg>\n";
-
-	QString newFzp = "<?xml version='1.0' encoding='UTF-8'?>\n";
-	newFzp += QString("<module fritzingVersion='%1' moduleId='%2' >\n").arg(Version::versionString()).arg(ItemBase::groundPlaneModuleIDName);
-	newFzp += "<version>1.1</version>\n";
-	newFzp += "<author>Fritzing</author>\n";
-	newFzp += "<title>Ground Plane</title>\n";
-	newFzp += "<label>Ground Plane</label>\n";
-	newFzp += QString("<date>%1</date>\n").arg(QDate::currentDate().toString("yyyy-MM-dd"));
-	newFzp += "<properties>\n";
-	newFzp += "<property name='family'>groundplane</property>\n";
-	newFzp += "</properties>\n";
-	newFzp += "<description>A ground plane</description>\n";
-	newFzp += "<views>\n";
-	newFzp += "<iconView>\n";
-	newFzp += QString("<layers image='pcb/groundplane%1.svg' >\n").arg(suffix);
-    newFzp += "<layer layerId='icon' />\n";
-	newFzp += "</layers>\n";
-	newFzp += "</iconView>\n";
-	newFzp += "<pcbView>\n";
-	newFzp += QString("<layers image='pcb/groundplane%1.svg' >\n").arg(suffix);
-    newFzp += "<layer layerId='groundplane' />\n";
-	newFzp += "</layers>\n";
-	newFzp += "</pcbView>\n";
-	newFzp += "</views>\n";
-	newFzp += "<connectors>\n";
-	ix = 0;
-	foreach (QRectF r, rects) {
-		newFzp += QString("<connector type='male' id='connector%1' name='connector%1' >\n").arg(ix);
-		newFzp += "<description></description>\n";
-		newFzp += "<views>\n";
-		newFzp += "<pcbView>\n";
-		newFzp += QString("<p svgId='connector%1pad' layer='groundplane' />\n").arg(ix);
-		newFzp += "</pcbView>\n";
-		newFzp += "</views>\n";
-		newFzp += "</connector>\n";
-		ix++;
-	}
-	newFzp += "</connectors>\n";
-
-
-	ix = 0;
 	int prevFirst = -1;
 	int prevLast = -1;
-	QList< QSet<int> * > buses;
 	while (ix < rects.count()) {
 		int first = ix;
 		QRectF firstR = rects.at(ix);
@@ -2841,46 +2895,46 @@ void MainWindow::groundFill()
 						break;
 					}
 
-					if ((prev.x() + prev.width() <= candidate.x()) && (candidate.x() + candidate.width() <= prev.x())) {
+					if ((prev.x() + prev.width() <= candidate.x()) || (candidate.x() + candidate.width() <= prev.x())) {
 						// candidate and prev didn't intersect
 						continue;
 					}
 
 					if (++gotCount > 1) {
-						QSet<int> * busi = NULL;
-						QSet<int> * busj = NULL;
-						foreach (QSet<int> * bus, buses) {
-							if (bus->contains(j)) {
-								busj = bus;
+						QList<int> * piecei = NULL;
+						QList<int> * piecej = NULL;
+						foreach (QList<int> * piece, pieces) {
+							if (piece->contains(j)) {
+								piecej = piece;
 								break;
 							}
 						}
-						foreach (QSet<int> * bus, buses) {
-							if (bus->contains(i)) {
-								busi = bus;
+						foreach (QList<int> * piece, pieces) {
+							if (piece->contains(i)) {
+								piecei = piece;
 								break;
 							}
 						}
-						if (busi != NULL && busj != NULL) {
-							if (busi != busj) {
-								foreach (int b, busj->values()) {
-									busi->insert(b);
+						if (piecei != NULL && piecej != NULL) {
+							if (piecei != piecej) {
+								foreach (int b, *piecej) {
+									piecei->append(b);
 								}
-								busj->clear();
-								buses.removeOne(busj);
-								delete busj;
+								piecej->clear();
+								pieces.removeOne(piecej);
+								delete piecej;
 							}
-							busi->insert(i);
+							piecei->append(i);
 						}
 						else {
 							DebugDialog::debug("we are really screwed here, what should we do about it?");
 						}
 					}
 					else {
-						// put the candidate (i) in j's bus
-						foreach (QSet<int> * bus, buses) {
-							if (bus->contains(j)) {
-								bus->insert(i);
+						// put the candidate (i) in j's piece
+						foreach (QList<int> * piece, pieces) {
+							if (piece->contains(j)) {
+								piece->append(i);
 								break;
 							}
 						}
@@ -2889,18 +2943,18 @@ void MainWindow::groundFill()
 
 				if (gotCount == 0) {
 					// candidate is an orphan line at this point
-					QSet<int> * bus = new QSet<int>;
-					bus->insert(i);
-					buses.append(bus);
+					QList<int> * piece = new QList<int>;
+					piece->append(i);
+					pieces.append(piece);
 				}
 
 			}
 		}
 		else {
 			for (int i = first; i <= last; i++) {
-				QSet<int> * bus = new QSet<int>;
-				bus->insert(i);
-				buses.append(bus);
+				QList<int> * piece = new QList<int>;
+				piece->append(i);
+				pieces.append(piece);
 			}
 		}
 
@@ -2908,74 +2962,204 @@ void MainWindow::groundFill()
 		prevLast = last;
 	}
 
-	newFzp += "<buses>\n";
-	ix = 0;
-	foreach (QSet<int> * bus, buses) {
-		newFzp += QString("<bus id='b%1'>\n").arg(ix++);
-		foreach (int b, bus->values()) {
-			newFzp += QString("<nodeMember connectorId='connector%1' />\n").arg(b);
-		}
-		delete bus;
-		newFzp += "</bus>\n";
+	foreach (QList<int> * piece, pieces) {
+		qSort(*piece);
 	}
+}
+
+void MainWindow::joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons) {
+	QList< QList<int> * > pieces;
+	int ix = 0;
+	int prevFirst = -1;
+	int prevLast = -1;
+	while (ix < rects.count()) {
+		int first = ix;
+		QRectF firstR = rects.at(ix);
+		while (++ix < rects.count()) {
+			QRectF nextR = rects.at(ix);
+			if (nextR.y() != firstR.y()) {
+				break;
+			}
+		}
+		int last = ix - 1;  
+		if (prevFirst >= 0) {
+			QVector<int> holdPrevs(last - first + 1);
+			QVector<int> gotCounts(last - first + 1);
+			for (int i = first; i <= last; i++) {
+				int index = i - first;
+				holdPrevs[index] = 0;
+				gotCounts[index] = 0;
+				QRectF candidate = rects.at(i);
+				for (int j = prevFirst; j <= prevLast; j++) {
+					QRectF prev = rects.at(j);
+
+					if ((prev.x() + prev.width() <= candidate.x()) || (candidate.x() + candidate.width() <= prev.x())) {
+						// candidate and prev didn't intersect
+						continue;
+					}
+
+					holdPrevs[index] = j;
+					gotCounts[index]++;
+				}
+				if (gotCounts[index] > 1) {
+					holdPrevs[index] = -1;			// clear this to allow one of the others in this scanline to capture a previous
+				}
+			}
+			for (int i = first; i <= last; i++) {
+				int index = i - first;
+
+				bool gotOne = false;
+				if (gotCounts[index] == 1) {
+					bool unique = true;
+					for (int j = first; j <= last; j++) {
+						if (j - first == index) continue;			// don't compare against yourself
+
+						if (holdPrevs[index] == holdPrevs[j - first]) {
+							unique = false;
+							break;
+						}
+					}
+
+					if (unique) {
+						// add this to the previous chunk
+						gotOne = true;
+						foreach (QList<int> * piece, pieces) {
+							if (piece->contains(holdPrevs[index])) {
+								piece->append(i);
+								break;
+							
+							}
+						}
+					}
+				}
+				if (!gotOne) {
+					// start a new chunk
+					holdPrevs[index] = -1;						// allow others to capture the prev
+					QList<int> * piece = new QList<int>;
+					piece->append(i);
+					pieces.append(piece);
+				}
+			}
+		}
+		else {
+			for (int i = first; i <= last; i++) {
+				QList<int> * piece = new QList<int>;
+				piece->append(i);
+				pieces.append(piece);
+			}
+		}
+
+		prevFirst = first;
+		prevLast = last;
+	}
+
+	foreach (QList<int> * piece, pieces) {
+		QPolygon poly;
+
+		// left side
+		for (int i = 0; i < piece->length(); i++) {
+			QRect r = rects.at(piece->at(i));
+			if ((poly.count() > 0) && (poly.last().x() == r.left())) {
+				poly.pop_back();
+			}
+			else {
+				poly.append(QPoint(r.left(), r.top()));
+			}
+			poly.append(QPoint(r.left(), r.bottom()));
+		}
+		// right side
+		for (int i = piece->length() - 1; i >= 0; i--) {
+			QRect r = rects.at(piece->at(i));
+			if ((poly.count() > 0) && (poly.last().x() == r.right())) {
+				poly.pop_back();
+			}
+			else {
+				poly.append(QPoint(r.right(), r.bottom()));
+			}
+			poly.append(QPoint(r.right(), r.top()));
+		}
+
+		polygons.append(poly);
+		delete piece;
+	}
+}
+
+QString MainWindow::makePolySvg(QList<QPolygon> & polygons, int res, qreal bWidth, qreal bHeight) 
+{
+	QString pSvg = QString("<svg xmlns='http://www.w3.org/2000/svg' width='%1in' height='%2in' viewBox='0 0 %3 %4' >\n")
+		.arg(bWidth / res)
+		.arg(bHeight / res)
+		.arg(bWidth * 10)
+		.arg(bHeight * 10);
+	pSvg += "<g id='groundplane'>\n";
+	pSvg += "<g id='connector0pad'>\n";
+	int ix = 0;
+	foreach (QPolygon poly, polygons) {
+		pSvg += QString("<polygon fill='#ffbf00' points='\n").arg(ix++);
+		int space = 0;
+		foreach (QPoint p, poly) {
+			pSvg += QString("%1,%2%3").arg(p.x()).arg(p.y()).arg((++space % 8 == 0) ?  "\n" : " ");
+		}
+		pSvg += "'/>\n";
+	}
+	pSvg += "</g></g>\n</svg>\n";
+
+	return pSvg;
+}
+
+QString MainWindow::makePolyFzp(QList<QPolygon> & polygons, const QString & moduleID) 
+{
+	QString newFzp = "<?xml version='1.0' encoding='UTF-8'?>\n";
+	newFzp += QString("<module fritzingVersion='%1' moduleId='%2' >\n").arg(Version::versionString()).arg(moduleID);
+	newFzp += "<version>1.1</version>\n";
+	newFzp += "<author>Fritzing</author>\n";
+	newFzp += "<title>Ground Plane</title>\n";
+	newFzp += "<label>Ground Plane</label>\n";
+	newFzp += QString("<date>%1</date>\n").arg(QDate::currentDate().toString("yyyy-MM-dd"));
+	newFzp += "<properties>\n";
+	newFzp += "<property name='family'>groundplane</property>\n";
+	newFzp += "</properties>\n";
+	newFzp += "<description>A ground plane</description>\n";
+	newFzp += "<views>\n";
+	newFzp += "<iconView>\n";
+	newFzp += QString("<layers image='pcb/%1.svg' >\n").arg(moduleID);
+    newFzp += "<layer layerId='icon' />\n";
+	newFzp += "</layers>\n";
+	newFzp += "</iconView>\n";
+	newFzp += "<pcbView>\n";
+	newFzp += QString("<layers image='pcb/%1.svg' >\n").arg(moduleID);
+    newFzp += "<layer layerId='groundplane' />\n";
+	newFzp += "</layers>\n";
+	newFzp += "</pcbView>\n";
+	newFzp += "</views>\n";
+	newFzp += "<connectors>\n";
+	int ix = 0;
+	//foreach (QPolygon poly, polygons) {
+		newFzp += QString("<connector type='male' id='connector%1' name='connector%1' >\n").arg(ix);
+		newFzp += "<description></description>\n";
+		newFzp += "<views>\n";
+		newFzp += "<pcbView>\n";
+		newFzp += QString("<p svgId='connector%1pad' layer='groundplane' />\n").arg(ix);
+		newFzp += "</pcbView>\n";
+		newFzp += "</views>\n";
+		newFzp += "</connector>\n";
+		ix++;
+	//}
+	newFzp += "</connectors>\n";
+
+	/*
+	newFzp += "<buses>\n";
+	newFzp += QString("<bus id='b1'>\n");
+	ix = 0;
+	foreach (QPolygon poly, polygons) {
+		newFzp += QString("<nodeMember connectorId='connector%1' />\n").arg(ix++);
+	}
+	newFzp += "</bus>\n";
 	newFzp += "</buses>\n";
+	*/
 
 	newFzp += "</module>\n";
 
-
-	QDir destFolder = QDir::temp();
-	createFolderAnCdIntoIt(destFolder, suffix);
-	createFolderAnCdIntoIt(destFolder, "parts");
-	createFolderAnCdIntoIt(destFolder, "user");
-
-	QString newPartPath = destFolder.absoluteFilePath(QString("groundplane%1.fzp").arg(suffix));
-	QFile file3(newPartPath);
-	file3.open(QIODevice::WriteOnly);
-	QTextStream out3(&file3);
-	out3 << newFzp;
-	file3.close();
-
-	destFolder.cdUp();
-	createFolderAnCdIntoIt(destFolder, "svg");
-	createFolderAnCdIntoIt(destFolder, "user");
-	createFolderAnCdIntoIt(destFolder, "pcb");
-
-	QFile file2(destFolder.absoluteFilePath(QString("groundplane%1.svg").arg(suffix)));
-	file2.open(QIODevice::WriteOnly);
-	QTextStream out2(&file2);
-	out2 << newSvg;
-	file2.close();
-
-	m_lastGroundPlaneSuffix = suffix;
-
-	ModelPart * modelPart = loadPartFromFile(newPartPath);
-	if (modelPart != NULL) {
-		ViewGeometry vg;
-		vg.setLoc(board->pos());
-		AddItemCommand * cmd = new AddItemCommand(m_currentGraphicsView, BaseCommand::SingleView, modelPart->moduleID(), vg, ItemBase::getNextID(), false, -1, -1, NULL);
-		cmd->setText(tr("Ground Fill"));
-		m_undoStack->push(cmd);
-	}
+	return newFzp;
 }
 
-void MainWindow::clearLastGroundPlane() {
-	if (m_lastGroundPlaneSuffix.isEmpty()) return;
-
-	QDir destFolder = QDir::temp();
-	destFolder.cd(m_lastGroundPlaneSuffix);
-	destFolder.cd("parts");
-	destFolder.cd("user");
-	destFolder.remove(QString("groundplane%1.fzp").arg(m_lastGroundPlaneSuffix));
-	destFolder.cdUp();
-	destFolder.cd("svg");
-	destFolder.cd("user");
-	destFolder.cd("pcb");
-	destFolder.remove(QString("groundplane%1.svg").arg(m_lastGroundPlaneSuffix));
-	destFolder = QDir::temp();
-	destFolder.rmdir(m_lastGroundPlaneSuffix);
-
-	m_lastGroundPlaneSuffix = "";
-
-	// TODO: clear the part from the palette and renderer cache
-
-}

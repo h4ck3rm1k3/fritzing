@@ -325,6 +325,11 @@ protected:
 	void enableAddBendpointAct(QGraphicsItem *);
 	class FileProgressDialog * exportProgress();
 	void clearLastGroundPlane();
+	void scanLines(QImage & image, int bWidth, int bHeight, QList<QRect> & rects);
+	void splitScanLines(QList<QRect> & rects, QList< QList<int> * > & pieces);
+	void joinScanLines(QList<QRect> & rects, QList<QPolygon> & polygons);
+	QString makePolyFzp(QList<QPolygon> & polygons, const QString & moduleID);
+	QString makePolySvg(QList<QPolygon> & polygons, int res, qreal bWidth, qreal bHeight);
 
 protected:
 	//static qreal getSvgWidthInInches(const QString & filename);
